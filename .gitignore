@@ -1,0 +1,164 @@
+# FSMGen - Finite State Machine HDL Generator .gitignore
+
+## Generated HDL Output Files
+# SystemVerilog output
+*.sv
+# Verilog output  
+*.v
+# VHDL output
+*.vhd
+# Generated files pattern
+*_generated.*
+
+## Debug and Log Files
+# FSMGen debug logs (created with --debug flag)
+*.log
+# Session files and temporary debug output
+last_session.txt
+*.session
+
+## Development and Editor Files
+# Vim/Vi editor files
+*.swp
+*.swo
+*~
+.*.swp
+.*.swo
+
+# Emacs editor files
+*~
+\#*\#
+.\#*
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# Cursor IDE
+.cursor/
+
+# Sublime Text
+*.sublime-*
+
+# IntelliJ/JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# TextMate
+*.tmproj
+*.tmproject
+tmtags
+
+## Backup Files
+*.bak
+*.backup
+*.orig
+
+## Temporary Files
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+## OS Generated Files
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+## Git Development Files  
+# Git commit message files (cleared after commits per project workflow)
+git_message_brief.txt
+
+## Perl Development Files
+# Perl temporary files
+*.pl.bak
+*.pm.bak
+
+# Perl debugger files
+perldb.out
+
+# Cover database
+cover_db/
+
+# Devel::NYTProf
+nytprof.out
+nytprof/
+
+## FSM Development Artifacts
+# Temporary FSM files during development
+*.fsm.tmp
+*.fsm.bak
+
+# Test output directories
+test_output/
+temp_fsm/
+
+## Build and Distribution
+# Build directories
+build/
+dist/
+
+# Package files
+*.tar.gz
+*.zip
+*.tar.bz2
+
+## Documentation Build Artifacts
+# Generated documentation
+docs/build/
+docs/_build/
+
+## IDE and Tool Configuration (keep project-level configs)
+# But ignore user-specific configs
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+
+## Performance and Profiling
+# Perl profiling
+*.prof
+
+## Cache Directories
+.cache/
+cache/
+
+## Node.js (if any tooling uses it)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+## Python (if any tooling uses it)
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+
+## Keep Important Files (negative patterns)
+# Keep example FSM files
+!fsm/*.fsm
+# Keep documentation
+!docs/*.md
+# Keep license and readme files
+!LICENSE*
+!README*
+!*.md

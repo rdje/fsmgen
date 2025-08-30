@@ -1,0 +1,406 @@
+#!/usr/bin/perl
+use v5.20;
+use strict;
+use warnings;
+use feature qw(signatures postderef);
+use Getopt::Long;
+use File::Basename;
+use File::Spec;
+
+use FindBin;
+use lib "$FindBin::Bin";
+
+# Load required modules
+use FSM::Debug;  # Global debug system
+use FSM::Pipeline::HDLGenerator;
+use FSM::OutputTee;  # Dual output (console + log file)
+
+# FSM file resolution function using FSMLIB environment variable
+sub resolve_fsm_file {
+    my ($fsm_input) = @_;
+    
+    # Case 3 & 4: Path contains slash - treat as relative or absolute path
+    if ($fsm_input =~ m{/}) {
+        # Path specified - don't search FSMLIB, use path as-is
+        unless (-f $fsm_input) {
+            die "Error: FSM file not found at specified path: $fsm_input\n";
+        }
+        return $fsm_input;
+    }
+    
+    # Cases 1 & 2: No slash - search in FSMLIB paths and current directory
+    my $target_filename;
+    
+    # Case 1: Bare name (no .fsm extension) - append .fsm
+    if ($fsm_input !~ /\.fsm$/i) {
+        $target_filename = "$fsm_input.fsm";
+    } else {
+        # Case 2: Already has .fsm extension
+        $target_filename = $fsm_input;
+    }
+    
+    my @search_paths = ();
+    my @searched_paths = ();  # For error reporting
+    
+    # Get FSMLIB paths (colon-separated like PATH)
+    my $fsmlib = $ENV{FSMLIB} || '';
+    if ($fsmlib) {
+        @search_paths = split /:/, $fsmlib;
+        # Remove empty paths and expand ~ to home directory
+        @search_paths = grep { $_ } map {
+            my $path = $_;
+            $path =~ s/^~/$ENV{HOME}/;  # Expand ~ to home directory
+            $path;
+        } @search_paths;
+    }
+    
+    # Always add current directory as fallback
+    push @search_paths, '.';
+    
+    # Search for the file in each path
+    for my $search_path (@search_paths) {
+        my $candidate = File::Spec->catfile($search_path, $target_filename);
+        push @searched_paths, $candidate;
+        
+        if (-f $candidate) {
+            return $candidate;
+        }
+    }
+    
+    # File not found - generate comprehensive error message
+    my $error_msg = "Error: FSM file '$target_filename' not found\n";
+    $error_msg .= "Original input: $fsm_input\n";
+    
+    if ($fsmlib) {
+        $error_msg .= "FSMLIB paths searched: " . join(':', split(/:/, $fsmlib)) . "\n";
+    } else {
+        $error_msg .= "FSMLIB environment variable not set\n";
+    }
+    
+    $error_msg .= "Searched locations:\n";
+    for my $path (@searched_paths) {
+        $error_msg .= "  - $path\n";
+    }
+    
+    # Suggest available .fsm files in search paths
+    my @available_fsm_files = ();
+    for my $search_path (@search_paths) {
+        if (-d $search_path) {
+            opendir(my $dh, $search_path) or next;
+            my @fsm_files = grep { /\.fsm$/i && -f File::Spec->catfile($search_path, $_) } readdir($dh);
+            closedir($dh);
+            
+            for my $fsm_file (@fsm_files) {
+                my $full_path = File::Spec->catfile($search_path, $fsm_file);
+                push @available_fsm_files, "$fsm_file (in $search_path)";
+            }
+        }
+    }
+    
+    if (@available_fsm_files) {
+        $error_msg .= "\nAvailable .fsm files in search paths:\n";
+        for my $available (@available_fsm_files) {
+            $error_msg .= "  - $available\n";
+        }
+    }
+    
+    die $error_msg;
+}
+
+# Command line options
+my $debug_level = 0;  # Changed from debug_mode to debug_level
+my $help = 0;
+my $quiet = 0;
+my $output_file = "";
+my $target_language = "systemverilog";  # Default to SystemVerilog
+
+# Store original ARGV to check for bare --debug flag before GetOptions processes it
+my $has_bare_debug_flag = grep { /^--?d(ebug)?$/ } @ARGV;
+
+GetOptions(
+    'debug|d:i'   => \$debug_level,  # Optional integer value (0-3)
+    'quiet|q'     => \$quiet,
+    'help|h'      => \$help,
+    'output|o=s'  => \$output_file,
+    'language|l=s' => \$target_language,
+) or die "Error in command line arguments\n";
+
+# Handle legacy --debug flag behavior: if no value specified, default to level 3
+if (defined $debug_level && $debug_level == 0 && $has_bare_debug_flag) {
+    $debug_level = 3;  # Default to full debug when just --debug is used
+}
+
+# Initialize global debug system based on command line flag
+# We'll set up logging after we have the output file path
+set_fsm_debug_level($debug_level);
+
+# Validate target language
+$target_language = lc($target_language);  # Convert to lowercase
+my %valid_languages = (
+    'systemverilog' => { ext => '.sv', name => 'SystemVerilog' },
+    'sv'           => { ext => '.sv', name => 'SystemVerilog' },
+    'verilog'      => { ext => '.v',  name => 'Verilog' },
+    'v'            => { ext => '.v',  name => 'Verilog' },
+    'vhdl'         => { ext => '.vhd', name => 'VHDL' },
+);
+
+unless (exists $valid_languages{$target_language}) {
+    die "Error: Unsupported target language '$target_language'\n" .
+        "Supported languages: " . join(", ", sort keys %valid_languages) . "\n";
+}
+
+my $lang_info = $valid_languages{$target_language};
+
+if ($help) {
+    print <<'EOF';
+FSM HDL Generator - Generate HDL code (SystemVerilog, Verilog, VHDL) from FSM specifications
+
+Usage: perl generate_fsm_hdl.pl [OPTIONS] <fsm_file>
+
+Arguments:
+  fsm_file        FSM file specification - one of:
+                  • bare_name         - searches FSMLIB paths for bare_name.fsm
+                  • bare_name.fsm     - searches FSMLIB paths for bare_name.fsm  
+                  • relative/path.fsm - uses relative path (no FSMLIB search)
+                  • /absolute/path.fsm - uses absolute path (no FSMLIB search)
+
+Options:
+  -d, --debug[=N] Enable debug mode with optional level (0-3, default: 3 when no level specified)
+                  0 = No debug messages
+                  1 = Basic debug messages
+                  2 = Detailed debug messages  
+                  3 = Very detailed debug messages (default when -d used alone)
+                  When debug is enabled, a log file (.log extension) is automatically
+                  created alongside the output file containing all debug output
+  -q, --quiet     Suppress informational messages
+  -l, --language  Target HDL language: systemverilog|sv|verilog|v|vhdl (default: systemverilog)
+  -o, --output    Specify output file (default: <fsm_name>.<ext> in script directory)
+  -h, --help      Show this help message
+
+Environment Variables:
+  FSMLIB          Colon-separated list of directories to search for .fsm files
+                  Example: export FSMLIB="/path/to/fsm1:/path/to/fsm2:~/fsm"
+                  If not set, only current directory is searched for bare names
+
+FSM File Resolution:
+  The tool uses different strategies based on the fsm_file argument:
+  
+  1. Bare name (e.g., 'lte_dif_pmaster')
+     • Appends '.fsm' to get 'lte_dif_pmaster.fsm'
+     • Searches each FSMLIB directory in order
+     • Falls back to current directory if not found in FSMLIB
+  
+  2. Name with .fsm extension (e.g., 'lte_dif_pmaster.fsm')
+     • Searches each FSMLIB directory in order
+     • Falls back to current directory if not found in FSMLIB
+  
+  3. Relative path (e.g., '../fsm/lte_dif_pmaster.fsm')
+     • Uses the specified path directly (no FSMLIB search)
+     • Path is relative to current working directory
+  
+  4. Absolute path (e.g., '/home/user/fsm/lte_dif_pmaster.fsm')
+     • Uses the specified path directly (no FSMLIB search)
+
+Supported Languages:
+  - SystemVerilog (systemverilog, sv) - generates .sv files
+  - Verilog       (verilog, v)        - generates .v files  
+  - VHDL          (vhdl)              - generates .vhd files
+
+FSMLIB Examples:
+  # Set up FSMLIB environment
+  export FSMLIB="/project/fsm:~/my_fsm:/shared/fsm_lib"
+  
+  # Use bare name - searches FSMLIB paths
+  perl generate_fsm_hdl.pl lte_dif_pmaster
+  
+  # Use .fsm name - searches FSMLIB paths  
+  perl generate_fsm_hdl.pl lte_dif_pmaster.fsm
+  
+  # Use relative path - no FSMLIB search
+  perl generate_fsm_hdl.pl ../fsm/lte_dif_pmaster.fsm
+  
+  # Use absolute path - no FSMLIB search
+  perl generate_fsm_hdl.pl /full/path/to/lte_dif_pmaster.fsm
+
+Debug Examples:
+  # No debug (default)
+  perl generate_fsm_hdl.pl my_fsm
+  
+  # Basic debug (level 1)
+  perl generate_fsm_hdl.pl --debug=1 my_fsm
+  
+  # Detailed debug (level 2)
+  perl generate_fsm_hdl.pl --debug=2 my_fsm
+  
+  # Full debug (level 3) - two equivalent ways
+  perl generate_fsm_hdl.pl --debug=3 my_fsm
+  perl generate_fsm_hdl.pl --debug my_fsm
+  
+  # Short form debug
+  perl generate_fsm_hdl.pl -d2 my_fsm
+
+Other Examples:
+  # Generate Verilog RTL with debug tracing using FSMLIB lookup
+  perl generate_fsm_hdl.pl --language verilog --debug=2 lte_dif_pmaster
+  
+  # Generate VHDL RTL quietly to specific file using relative path
+  perl generate_fsm_hdl.pl --language vhdl --quiet --output my_output.vhd ../fsm/my_fsm.fsm
+  
+  # Debug SystemVerilog with custom output using FSMLIB lookup
+  perl generate_fsm_hdl.pl -l sv -d3 -o debug_output.sv my_fsm
+
+EOF
+    exit 0;
+}
+
+# Check for required positional argument
+if (@ARGV != 1) {
+    die "Error: Exactly one FSM file must be specified as argument\n" .
+        "Usage: perl generate_fsm_hdl.pl [OPTIONS] <fsm_file>\n" .
+        "Use --help for more information\n";
+}
+
+my $fsm_input = $ARGV[0];
+
+# Resolve FSM file path using FSMLIB-aware logic
+my $fsm_file = resolve_fsm_file($fsm_input);
+
+# Convert to absolute path for consistency
+$fsm_file = File::Spec->rel2abs($fsm_file);
+
+# Set default output file if not specified
+if (!$output_file) {
+    # Extract FSM bare name from the original input
+    my $fsm_bare_name;
+    if ($fsm_input =~ m{/}) {
+        # Path provided - extract basename and remove .fsm extension
+        my ($name, $path, $suffix) = fileparse($fsm_input, qr/\.[^.]*/);
+        $fsm_bare_name = $name;
+    } else {
+        # Bare name or name.fsm provided - extract bare name
+        $fsm_bare_name = $fsm_input;
+        $fsm_bare_name =~ s/\.fsm$//i;  # Remove .fsm extension if present
+    }
+    
+    # Generate output file in current working directory
+    $output_file = "${fsm_bare_name}$lang_info->{ext}";
+}
+
+# Convert output file to absolute path
+$output_file = File::Spec->rel2abs($output_file);
+
+# Set up debug logging if debug is enabled
+my $log_file;
+my $original_stdout;
+if ($debug_level > 0) {
+    # Generate log file name based on output file
+    my ($name, $path, $suffix) = fileparse($output_file, qr/\.[^.]*/);
+    $log_file = File::Spec->catfile($path, "${name}.log");
+    
+    # Open log file for writing
+    open my $log_fh, '>', $log_file or die "Cannot create log file $log_file: $!\n";
+    
+    # Duplicate STDOUT so we can restore it later
+    open $original_stdout, '>&', \*STDOUT or die "Cannot duplicate STDOUT: $!\n";
+    
+    # Create a custom output handler that writes to both console and log file
+    my $tee_output = sub {
+        my $text = shift;
+        print $original_stdout $text;  # Write to original console
+        print $log_fh $text;          # Write to log file
+        $log_fh->flush();              # Ensure log is written immediately
+    };
+    
+    # Redirect STDOUT to our tee function
+    tie *STDOUT, 'FSM::OutputTee', $tee_output;
+    
+    print "Debug logging enabled - output will be saved to: $log_file\n\n";
+}
+
+print "=== FSM HDL Generator ===\n\n";
+print "Processing FSM file: $fsm_file\n" unless $quiet;
+
+# Create and run the HDL generation pipeline
+my $pipeline = FSM::Pipeline::HDLGenerator->new(
+    debug_level => $debug_level,
+    target_language => $target_language,
+    quiet => $quiet
+);
+
+my $result = $pipeline->generate_hdl_from_file($fsm_file);
+my $hdl_code = $result->{hdl_code};
+my $module_info = $result->{module_info};
+my $statistics = $result->{statistics};
+
+# Output HDL code to stdout unless quiet mode
+unless ($quiet) {
+    print "\n=== Generated $lang_info->{name} Code ===\n\n";
+    print $hdl_code;
+}
+
+# Save to file
+open my $fh, '>', $output_file or die "Cannot write to $output_file: $!\n";
+print $fh $hdl_code;
+close $fh;
+
+unless ($quiet) {
+    print "\n=== Code Generation Summary ===\n";
+    print "$lang_info->{name} code saved to: $output_file\n";
+    
+    # Print FSM module information
+    print "\nModule: " . $module_info->{module_name} . "\n";
+    print "States: " . $module_info->{state_count} . "\n";
+    print "Signals: " . $module_info->{signal_count} . "\n";
+    
+    # Print signal breakdown
+    my $signal_analysis = $module_info->{signal_analysis};
+    print "  - Input signals: " . scalar(@{$signal_analysis->{inputs}}) . "\n";
+    print "  - Output signals: " . scalar(@{$signal_analysis->{outputs}}) . "\n";
+    print "  - Multi-bit signals: " . scalar(@{$signal_analysis->{multi_bit}}) . "\n";
+}
+
+# Print expression factoring statistics only if not quiet
+unless ($quiet) {
+    if ($statistics->{factoring_enabled}) {
+        print "\n=== Expression Factoring Statistics ===\n";
+        print "Total Intermediate Signals: " . $statistics->{intermediate_signals} . "\n";
+        print "Global Expressions Factored: " . $statistics->{global_expressions} . "\n";
+        
+        my $raw_intermediate = $statistics->{raw_intermediate_signals} || {};
+        my $raw_usage = $statistics->{raw_expression_usage} || {};
+        
+        if (%$raw_intermediate) {
+            print "\nIntermediate Signals Created:\n";
+            for my $signal_name (sort keys %$raw_intermediate) {
+                my $expression = $raw_intermediate->{$signal_name};
+                my $usage = $raw_usage->{$signal_name} || 1;
+                print "  - $signal_name = $expression (used $usage time" . ($usage > 1 ? "s" : "") . ")\n";
+            }
+        }
+        
+        # Print reused expressions from pipeline results
+        if (@{$statistics->{reused_expressions}}) {
+            print "\nMost Reused Expressions:\n";
+            for my $reused (@{$statistics->{reused_expressions}}) {
+                print "  - $reused->{signal}: $reused->{usage_count} uses ($reused->{expression})\n";
+            }
+        }
+    } else {
+        print "\nNo complex expressions found requiring factoring.\n";
+    }
+    
+    print "\n=== Code Generation Complete ===\n";
+}
+
+# Cleanup: Restore STDOUT and close log file if debug logging was enabled
+if ($debug_level > 0 && defined $original_stdout) {
+    # Restore original STDOUT
+    untie *STDOUT;
+    open STDOUT, '>&', $original_stdout or warn "Cannot restore STDOUT: $!";
+    close $original_stdout;
+    
+    # Inform user about log file (using restored STDOUT)
+    unless ($quiet) {
+        print "\nDebug log saved to: $log_file\n";
+    }
+}

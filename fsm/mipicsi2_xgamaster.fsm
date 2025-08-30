@@ -1,0 +1,17 @@
+(?fsm:mipicsi2_xgamaster_ctrl
+
+  (+system (clock  clk) (asreset rstn))
+  
+  (+size  (xgam_rd 64) (gendata 64))
+  (:= gendata=64'x0123456789abcdef)
+  
+  (start (-> go))
+  
+  (go
+   (<req
+     (write   = 1)
+     (xgam_rd = gendata)
+     (++ gendata)
+   )
+  )
+)

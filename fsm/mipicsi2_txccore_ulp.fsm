@@ -1,0 +1,30 @@
+(+fsm mipicsi2_txccore_ulp
+
+  (+system (clock  clk) (asreset rstn))
+  
+  (tx_top
+   (<ulpm_enter (<!clk_hson (disable_clkhs_clkdpn <- 1)
+  			     (txtimer <- tlpx)
+  			     (-> tx_ulpm_rqst))) 
+  )
+  
+  (tx_ulpm_rqst
+   (clkdpn = lp_10)
+   (-> tx_ulpm <txtimer_done)
+  )
+  
+  (tx_ulpm
+   (clkdpn = lp_00)
+   (<clk_ulpm_exit  (txtimer <- twakeup) (-> tx_ulpm_exit))
+  )
+  
+  (tx_ulpm_exit
+   (clkdpn = lp_10)
+   (<txtimer_done (disable_clkhs_clkdpn <- 0) (-> tx_top))
+  )
+  
+  (+size
+   (clkdpn           3)
+   (txtimer          20)
+  )
+)

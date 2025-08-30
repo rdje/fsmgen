@@ -1,0 +1,88 @@
+(+fsm  foo)
+
+(+system
+(clock clk)
+(sreset rstn)
+)
+
+(-myfoo
+  (z <- a1 <sel1)
+)
+
+;;(+asreset arstn)
+;
+;(state0
+;  (?mytest
+;   (!=1010 (ZOO <- ZVAL))  
+;   (<=16'xFF65 (ZOO <- ZVU))  
+;  )
+;
+;  (<!foooooooo_man=5'18 (CAMARCHE = ON_DIRAIT))
+;  (<foooooooo_damn=7'32 (CAMARCHE = SANS_BLAGUE))
+;
+;  (A <- B)
+;  (D <- C)
+;  (?(!& in1 (! abcdefg))
+;   (=0 (CB = 0 <!yessss) 
+;       (F <- F1)
+;       (-> state1))
+;
+;   (=1 (?in2
+;         (=0  (F <- F1) (-> state1))
+;	 (=1   (CB = 0 <yasiiiiiig) (F <- F2))
+;	 ;(=2  (CB = 1) (F <- F4))
+;       )
+;       (-> state0))
+;  )
+;)
+;
+;(state1 
+; (Z <- Z3)
+; (?start
+;   (=0110 (<dojo (A <- C) (F <- F1 <!invert)) (-> state2))
+;   (=1101 (A <- B) (F <- F2) (-> state0 <!yes_i_mean_i_goto_sleep))
+;   ;(=2  (F <- F2) (-> state3))
+;   ;(Q <- R <zoo)
+;   ;(Y <- X <!yo)
+; )
+;
+; (<!(| foothing bababababa) (damn = ohoh <toumtoum) (U <- U0))
+; (P <- P0)
+;)
+;
+;(state2
+; (A <- B <yayoyu)
+; (?azerty
+;  (=0 (QQQQ <= 1) (F <- F1 <!booboo))
+; )
+; (CB = 1 <yeyoooooo)
+; (-> state0 <youknowwhat_i_am_i_am___________)
+;)
+;
+;(state3
+; (?yasignal
+;  (=0 (F <- F1))
+;  (=1 (F <- F2))
+; )
+; (A <- C)
+; (-> state0 <!goodnight)
+;)
+;
+(+size
+(damn 8)
+(A 8)
+(D 8)
+(F 8)
+(P 8)
+(U 8)
+(Z 8)
+(ZOO 8)
+(CAMARCHE 32)
+(z  12)
+(z1  12)
+(z2  12)
+(z3  12)
+(z4  12)
+(pas  12)
+)
+

@@ -1,0 +1,116 @@
+(?fsm:mipicsi2_txdcore_lp
+
+  (+system (clock  clk) (asreset rstn))
+  (+size
+    (dpn             3)
+    (bitpt           3)
+    (txtimer         20)
+    (txdbuf          8)
+    (txbyte_sel      2)
+  )
+  
+  (tx_stop
+    ;(dpn = lp_11)
+    (<esc_enter
+      (<!txhs_on (esc_enter_clear <- 1)
+                 (txtimer    <- tlpx)
+                 (txbyte_sel <- sel_esc_entry_cmd)
+                 (bitpt      <- zero)
+  	       (txlp_on    <- 1)
+  	       (-> tx_lp_rqst))
+    )
+  )
+  
+  (tx_lp_rqst
+    (dpn = lp_10)
+    (txtimer <- tlpx <txtimer_done)
+    (-> tx_lp_bridge <txtimer_done)
+  )
+  
+  (tx_lp_bridge
+    (dpn = lp_00)
+    (txtimer <- tlpx <txtimer_done)
+    (-> tx_esc_rqst   <txtimer_done)
+  )
+  
+  (tx_esc_rqst
+    (dpn = lp_01)
+    (txtimer <- tlpx <txtimer_done)
+    (-> tx_esc_go     <txtimer_done)
+  )
+  
+  (tx_esc_go
+    (dpn = lp_00)
+    (txtimer <- tlpx <txtimer_done)
+    (esc_enter_clear <- 0)
+    (-> tx_esc_cmd    <txtimer_done)
+  )
+  
+  (tx_esc_cmd
+    (dpn = lp_01 <!txbit)
+    (dpn = lp_10 <txbit )
+    (txtimer <- tlpx     <txtimer_done)
+    (-> tx_esc_cmd_space <txtimer_done)
+  )
+  
+  (tx_esc_cmd_space
+    (dpn = lp_00)
+    (<txtimer_done 
+      (?is_msb
+        (=0 (++ bitpt)
+            (txtimer <- tlpx)
+            (-> tx_esc_cmd))
+  
+        (=1 (?escmd_is_trigger_or_notsupported 
+             (=0  (<escmd_is_ulp 
+  		  (txtimer <- ulpm_timer <ulpm_timer_enable)
+               	  (-> tx_ulp))
+  
+                  (<escmd_is_lpdt (txbyte_sel     <- sel_data_stream)
+  				(bitpt          <- zero)
+  				(txtimer        <- tlpx)
+  				(txdata_load    = 1)
+  				(txread         = 1)
+  				(txfifo_src_sel <- 1) ; LPDT stream
+  				(-> tx_lpdt)))
+  
+             (=1 (txtimer <- tlpx) (-> tx_mark))
+            )
+        ))
+    )
+  )
+  
+  (tx_ulp
+   (dpn = lp_00)
+   (?ulpm_timer_enable
+    (=0 (-> tx_mark <ulpm_exit))
+    (=1 (<txtimer_done (txtimer <- twakeup) (-> tx_mark)))
+   )
+  )
+  
+  (tx_lpdt
+   (dpn = lp_01 <!txbit)
+   (dpn = lp_10 <txbit )
+   (<txtimer_done (-> tx_lpdt_space) (txtimer <- tlpx))
+  )
+  
+  (tx_lpdt_space
+    (dpn = lp_00)
+    (<txtimer_done
+      (?is_last
+        (=0 (++ bitpt)
+  	  (?is_msb 
+              (=0 (txtimer <- tlpx))
+              (=1 (txdata_load = 1) (txread = 1)))
+  	  (-> tx_lpdt))
+  
+        (=1 (txfifo_src_sel <- 0) (txtimer <- tlpx) (-> tx_mark))
+      )
+    )
+  )
+  
+  (tx_mark
+   (dpn = tx_marker)
+   (<txtimer_done (txlp_on    <- 0)  (-> tx_stop))
+  )
+)

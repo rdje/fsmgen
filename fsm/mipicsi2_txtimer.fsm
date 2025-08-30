@@ -1,0 +1,13 @@
+(?fsm:mipicsi2_txtimer
+
+  (+system (clock  clk) (asreset rstn))
+  
+  (wwait (<txtimer>20'x1 (-- txtimer) (-> hsdec)))
+  
+  (hsdec
+    (?txtimer
+      (!=20'x1  (-- txtimer))
+      ( =20'x1  (txtimer_done = 1) (-> wwait))
+    )
+  )
+)

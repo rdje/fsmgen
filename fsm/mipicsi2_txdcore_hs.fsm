@@ -1,0 +1,123 @@
+(?fsm:mipicsi2_txdcore_hs
+
+  (+system (clock  clk) (asreset rstn))
+  
+  (+size
+    (dpn        3)
+    (bitpt      3)
+    (txtimer    20)
+    (txdbuf     8)
+    (txbyte_sel 2)
+    (was_fepkt  1)
+    (was_lepkt  1)
+  )
+  
+  (tx_stop
+   (dpn = lp_11 <!txlp_on)
+  
+   (txbyte_sel <- sel_sync_sequence)
+   (bitpt      <-= zero)
+   ; HS Transmission is requested 
+   ; when txvalid is asserted
+   (<txvalid 
+     (<!txlp_on (txhs_on> <- 1)
+                (?trail2stop
+                  (=0 (txdata_load = 1)
+                      (txread      = 1)
+  	            (txtimer <- tlpx)
+  	            (-> tx_hs_rqst))
+  
+                  (=1 (?(| is_fe2fs is_le2ls is_pf2ph) 
+                        (=0 (txdata_load = 1)
+                            (txread      = 1)
+  	                  (txtimer <- tlpx)
+  	                  (-> tx_hs_rqst))
+  
+  		      (=1 (bsel = 1 <is_fe2fs)
+  			  (txtimer <- pkt_blanking) 
+                            (-> pckt_blanking))
+  		    )
+  
+                      (pkt_check = 1)
+                      (was_lepkt <- is_lepkt)
+                      (was_fepkt <- is_fepkt)
+                      (was_pfpkt <- is_pfpkt)
+  
+  		    ;(trail2stop <- 0)
+  		    )
+                )
+  
+     )
+   )
+  
+   ; =============== Temporary Solution ==================
+   (trail2stop <- 0)
+  )
+  
+  (pckt_blanking 
+   (<txtimer_done
+     (txdata_load = 1)
+     (txread      = 1)
+     (txtimer <- tlpx) 
+     (-> tx_hs_rqst)
+   )
+  )
+  
+  (tx_hs_rqst (dpn = lp_01) (<txtimer_done (txtimer <- ths_prepare) (-> tx_hs_prpr)))
+  (tx_hs_prpr (dpn = lp_00) (<txtimer_done (txtimer <- ths_zero)    (-> tx_hs_go)))
+  (tx_hs_go   (dpn = hs_0)  (-> tx_hs_sync <txtimer_done))
+  
+  (tx_hs_sync
+   (dpn = hs_0 <!txbit)
+   (dpn = hs_1 <txbit )
+  
+   (++ bitpt)
+   (<is_msb (-> tx_hs_0 <!txdatabit_0) 
+            (-> tx_hs_1 <txdatabit_0)
+            (txbyte_sel <- sel_data_stream))
+  )
+  
+  (tx_hs_0
+   (dpn = hs_0)
+   (++ bitpt)
+  
+   (?is_last
+    (=0 (?is_msb 
+          (=0 (-> tx_hs_1 <next_txbit))
+          (=1 ;(-> tx_hs_0 <!txfifo_0)
+              (-> tx_hs_1 <txfifo_0)
+              (txdata_load = 1)
+              (txread = 1))
+        ))
+  
+    (=1 (txtimer <- ths_trail) (packet_closed <- 1) (-> trail_hs_1))
+   )
+  )
+  
+  (tx_hs_1
+   (dpn = hs_1)
+   (++ bitpt)
+  
+   (?is_last
+    (=0 (?is_msb 
+          (=0 (-> tx_hs_0 <!next_txbit))
+          (=1 (-> tx_hs_0 <!txfifo_0)
+              ;(-> tx_hs_1 <txfifo_0)
+              (txdata_load = 1)
+              (txread = 1))
+        ))
+  
+    (=1 (txtimer <- ths_trail) (packet_closed <- 1) (-> trail_hs_0))
+   )
+  )
+  
+  (trail_hs_0 (dpn = hs_0) (<txtimer_done (txhs_on <- 0) (trail2stop <- 1) (-> tx_stop)))
+  (trail_hs_1 (dpn = hs_1) (<txtimer_done (txhs_on <- 0) (trail2stop <- 1) (-> tx_stop)))
+  
+  (-clear_packet_closed (packet_closed> <- 0 <packet_closed))
+  (-packet
+   (is_le2ls = 1 <(& was_lepkt  is_lspkt)) 
+   (is_fe2fs = 1 <(& was_fepkt  is_fspkt))
+   (is_pf2ph = 1 <(& was_pfpkt  is_phpkt))
+  )
+)

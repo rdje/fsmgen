@@ -1,0 +1,43 @@
+(?fsm:mipicsi2_pkt_nx4B_fifo
+
+  (+system (clock  clk) (asreset rstn))
+  (+size (fifout 32) (fifoin 64))
+  
+  (-rw
+   (<(& !write read valid)
+     (++ rdpt)
+     (-- cnt)
+     (full  <- 0)
+     (valid <- 0 <cnt=3'x1)
+   )
+  
+   (<(& write !full)
+     (?wrpt
+      (=2'0 (z0 <- fifoin[31:0])
+            (z1 <- fifoin[63:32]))  
+  
+      (=2'2 (z2 <- fifoin[31:0])
+            (z3 <- fifoin[63:32]))  
+     )
+  
+     (+=2 wrpt)
+  
+     (valid <- 1)
+     (?read
+       (=0  (+=2 cnt) (full <- 1 <cnt=3'2))
+       (=1  (?valid (=1 (++  cnt) (++ rdpt)) 
+         	          (=0 (+=2 cnt) (full <- 1 <cnt=3'2))))
+     )
+   )
+  
+   (fifout = z0 <rdpt=2'0)
+   (fifout = z1 <rdpt=2'1)
+   (fifout = z2 <rdpt=2'2)
+   (fifout = z3 <rdpt=2'3)
+  )
+  
+  ; request for a new 8B word when there is room for it
+  (-rq
+   (req = 1 <(& cnt[2:1]!=2'2 !cnt[0]))
+  )
+)

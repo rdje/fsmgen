@@ -1,0 +1,37 @@
+(?fsm:mipicsi2_byteserial
+
+  (+system (clock  clk) (asreset rstn))
+  
+  (sendout
+   (<!lastseen 
+    (<valid_nostall
+      (wren = 1)
+      (++ bytept)
+      (-> wwait)
+    )  
+   )
+  
+   (lastseen <- 0)
+  )
+  
+  (wwait   (wren = 0) (-> msendout))
+  (msendout
+   (<valid_nostall
+     (wren = 1)
+     (++ bytept)
+     (?bytept 
+       ( =2'3 (read = 1) (lastseen <- 1) (-> sendout))
+       (!=2'3 (-> wwait))
+     )
+   )  
+  )
+  
+  
+  (-go (valid_nostall = 1 <(& valid !stall)))
+  (-bout
+   (byteso = fifout[7:0]   <bytept=2'0)
+   (byteso = fifout[15:8]  <bytept=2'1)
+   (byteso = fifout[23:16] <bytept=2'2)
+   (byteso = fifout[31:24] <bytept=2'3)
+  )
+)

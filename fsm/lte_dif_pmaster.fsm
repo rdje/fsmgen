@@ -1,0 +1,95 @@
+(?fsm:lte_dif_pmaster
+
+(idle (<s_rst_n
+
+   (<apb_rq
+     (psel    <- 1)
+     (penable <- 0)
+     (pwrite> <- apb_wrn)
+
+     (?apb_wrn
+      (=0  (paddr'8 <- apb_read_addr))
+      (=1  (paddr   <- apb_waddr) (pwdata'16 <- apb_wdata))
+     )
+
+     (apb_ack = 1)
+     (-> setup)
+   )
+  )
+ )
+
+ (setup  (<s_rst_n
+   (penable <- 1)
+   (-> end_write  <pwrite)
+   (-> end_read   <!pwrite)
+  )
+ )
+
+
+ (end_write (<s_rst_n
+   (<pready
+
+     (penable <- 0)
+
+     (<apb_rq
+       (pwrite>  <- apb_wrn)
+
+       (?apb_wrn
+        (=0  (paddr <- apb_read_addr))
+        (=1  (paddr <- apb_waddr) (pwdata <- apb_wdata))
+       )
+
+       (apb_ack = 1)
+       (-> setup)
+     )
+
+     (<!apb_rq
+       (psel    <- 0)
+       (-> idle)
+     )
+   )
+  )
+ )
+
+
+ (end_read (<s_rst_n
+   (<pready
+
+     (penable <- 0)
+
+     (<apb_rq
+       (pwrite>  <- apb_wrn)
+
+       (?apb_wrn
+        (=0  (paddr <- apb_read_addr))
+        (=1  (paddr <- apb_waddr) (pwdata <- apb_wdata))
+       )
+
+       (apb_ack = 1)
+       (-> setup)
+     )
+
+     (<!apb_rq
+       (psel    <- 0)
+       (-> idle)
+     )
+
+
+     (apb_rdata'16 <- prdata)
+     (apb_rvalid> <- 1)
+   )
+  )
+ )
+
+ (-syncreset (<!s_rst_n
+   (psel       <- 0)
+   (penable    <- 0)
+   (pwrite     <- 0)
+   (paddr'8    <- const_8b0)
+   (pwdata'16  <- const_16b0)
+   (-> idle)
+  )
+ )
+
+ (-clr_valid    (apb_rvalid <- 0 <apb_rvalid))
+)

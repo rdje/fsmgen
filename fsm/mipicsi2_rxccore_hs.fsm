@@ -1,0 +1,5 @@
+(?fsm:mipicsi2_rxccore_hs
+
+  (+system (clock  clk) (asreset rstn))
+  (+size )
+)

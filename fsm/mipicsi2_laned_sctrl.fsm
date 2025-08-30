@@ -1,0 +1,28 @@
+(?fsm:mipicsi2_laned_sctrl
+
+  (+system (clock  clk) (asreset rstn))
+  
+  (init
+   (<tester_start 
+     (byte_countdown <- bs_packet_len <stream_type=2'0) ; byte  stream
+     (-> wait4tx <stream_type=2'0) ; byte  stream
+     (start_granted <- 1)
+   )
+  )
+  
+  (wait4tx
+   (<!byte_countdown=16'0 (<wren (-- byte_countdown))) 
+   (<byte_countdown=16'1  (<wren (bcdown_is_null <- 1) (-> wait4pclosed)))
+  )
+  
+  
+  (wait4pclosed
+   (<packet_closed (bcdown_is_null <- 0) 
+                   (byte_countdown <- bs_packet_len)
+  		 (-> wait4tx))
+  )
+  
+  (-clear_grant
+   (start_granted> <- 0 <start_granted)
+  )
+)

@@ -1,0 +1,115 @@
+(?fsm:mipicsi2_configreg
+
+  (+system (clock  clk) (asreset rstn))
+  (+size (cmd_di 32) (cmd_do 32))
+  
+  ; Reset value
+  (:= tester_reset=1)
+  (:= hs_sync_sequence=8'x1d)
+  (:= lpdt_cmd=8'xE1)
+  (:= ulp_cmd=8'x1E)
+  (:= trig_reset_cmd=8'x62)
+  (:= ths_zero=8'x8)
+  (:= tclk_zero=8'x10)
+  
+  (:= fs_pkt=6'0)
+  (:= fe_pkt=6'1)
+  (:= ls_pkt=6'2)
+  (:= le_pkt=6'3)
+  (:= line_blanking=16'1)
+  (:= frame_blanking=16'1)
+  
+  
+  (-cr
+   (<(& cmd_valid cmd_wrn)
+     (hs_sync_sequence>   <- cmd_di[7:0]  <cmd_addr=8'0 ); RW
+     (esc_enter>          <- cmd_di[0]    <cmd_addr=8'1 ); RW
+     (esc_entry_cmd>      <- cmd_di[7:0]  <cmd_addr=8'2 ); RW
+     (lpdt_cmd>           <- cmd_di[7:0]  <cmd_addr=8'3 ); RW
+     (ulp_cmd>            <- cmd_di[7:0]  <cmd_addr=8'4 ); RW
+     (trig_reset_cmd>     <- cmd_di[7:0]  <cmd_addr=8'5 ); RW
+     (tx_marker>          <- cmd_di[0]    <cmd_addr=8'6 ); RW
+     (ulpm_timer>         <- cmd_di[15:0] <cmd_addr=8'7 ); RW
+     (ulpm_timer_enable>  <- cmd_di[0]    <cmd_addr=8'8 ); RW
+     (ulpm_exit           = 1             <cmd_addr=8'9 ); WP
+     (lpdt_ffwen          = 1             <cmd_addr=8'10); WP
+     (lpdt_ffdata>        <- cmd_di[7:0]  <cmd_addr=8'11); RW
+     (tlpx>               <- cmd_di[7:0]  <cmd_addr=8'12); RW
+     (ths_prepare>        <- cmd_di[7:0]  <cmd_addr=8'13); RW
+     (ths_zero>           <- cmd_di[7:0]  <cmd_addr=8'14); RW
+     (ths_trail>          <- cmd_di[7:0]  <cmd_addr=8'15); RW
+     (ths_exit>           <- cmd_di[7:0]  <cmd_addr=8'16); RW
+     (twakeup>            <- cmd_di[19:0] <cmd_addr=8'17); RW
+     (tclk_zero>          <- cmd_di[7:0]  <cmd_addr=8'18); RW
+     (tclk_trail>         <- cmd_di[7:0]  <cmd_addr=8'19); RW
+     (tclk_settle>        <- cmd_di[7:0]  <cmd_addr=8'20); RW
+     (tclk_post>          <- cmd_di[7:0]  <cmd_addr=8'21); RW
+     (tester_start        = 1             <cmd_addr=8'22); WP
+     (tester_done>        <- 0            <cmd_addr=8'23); WC
+     (tester_reset>       <- cmd_di[0]    <cmd_addr=8'24); RW
+     (stream_type>        <- cmd_di[1:0]  <cmd_addr=8'25); RW
+     (both_lanes>         <- cmd_di[0]    <cmd_addr=8'26); RW
+     (default_lane>       <- cmd_di[0]    <cmd_addr=8'27); RW
+     (hs_transfer_done>   <- 0            <cmd_addr=8'28); WC
+     (line_blanking>      <- cmd_di[15:0] <cmd_addr=8'29); RW
+     (frame_blanking>     <- cmd_di[15:0] <cmd_addr=8'30); RW
+     (bs_packet_len>      <- cmd_di[15:0] <cmd_addr=8'31); RW
+     (clock_ratio>        <- cmd_di[15:0] <cmd_addr=8'32); RW
+     (ulpm_enter>         <- cmd_di[0]    <cmd_addr=8'33); RW
+     (clk_ulpm_exit       = 1             <cmd_addr=8'34); WP
+  
+     ; ================= Hidden Registers ================= @128 --> @255
+     (llprotocol_start   = 1              <cmd_addr=8'128) ; WP
+     (fs_pkt             <- cmd_di[5:0]   <cmd_addr=8'129) ; RW
+     (fe_pkt             <- cmd_di[5:0]   <cmd_addr=8'130) ; RW
+     (ls_pkt             <- cmd_di[5:0]   <cmd_addr=8'131) ; RW
+     (le_pkt             <- cmd_di[5:0]   <cmd_addr=8'132) ; RW
+   )      
+                     
+   (esc_enter        <- 0 <esc_enter_clear)
+   (ulpm_enter       <- 0 <ulpm_enter_clear)
+   (tester_done      <- 1 <tester_done_set)
+   (hs_transfer_done <- 1 <hs_done)
+  
+   (<(& cmd_valid !cmd_wrn)
+     (cmd_do[7:0]    <- hs_sync_sequence  <cmd_addr=8'0 ); RW
+     (cmd_do[0]      <- esc_enter         <cmd_addr=8'1 ); RW
+     (cmd_do[7:0]    <- esc_entry_cmd     <cmd_addr=8'2 ); RW
+     (cmd_do[7:0]    <- lpdt_cmd          <cmd_addr=8'3 ); RW
+     (cmd_do[7:0]    <- ulp_cmd           <cmd_addr=8'4 ); RW
+     (cmd_do[7:0]    <- trig_reset_cmd    <cmd_addr=8'5 ); RW
+     (cmd_do[0]      <- tx_marker         <cmd_addr=8'6 ); RW
+     (cmd_do[15:0]   <- ulpm_timer        <cmd_addr=8'7 ); RW
+     (cmd_do[0]      <- ulpm_timer_enable <cmd_addr=8'8 ); RW
+     ;(ulpm_exit      = 1                 <cmd_addr=8'9 ); WP
+     ;(lpdt_ffwen     = 1                 <cmd_addr=8'10); WP
+     (cmd_do[7:0]    <- lpdt_ffdata       <cmd_addr=8'11); RW
+     (cmd_do[7:0]    <- tlpx              <cmd_addr=8'12); RW
+     (cmd_do[7:0]    <- ths_prepare       <cmd_addr=8'13); RW
+     (cmd_do[7:0]    <- ths_zero          <cmd_addr=8'14); RW
+     (cmd_do[7:0]    <- ths_trail         <cmd_addr=8'15); RW
+     (cmd_do[7:0]    <- ths_exit          <cmd_addr=8'16); RW
+     (cmd_do[19:0]   <- twakeup           <cmd_addr=8'17); RW
+     (cmd_do[7:0]    <- tclk_zero         <cmd_addr=8'18); RW
+     (cmd_do[7:0]    <- tclk_trail        <cmd_addr=8'19); RW
+     (cmd_do[7:0]    <- tclk_settle       <cmd_addr=8'20); RW
+     (cmd_do[7:0]    <- tclk_post         <cmd_addr=8'21); RW
+     ;(tester_start   = 1                 <cmd_addr=8'22); WP
+     (cmd_do[0]      <- tester_done       <cmd_addr=8'23); WC
+     (cmd_do[0]      <- tester_reset      <cmd_addr=8'24); RW
+     (cmd_do[1:0]    <- stream_type       <cmd_addr=8'25); RW
+     (cmd_do[0]      <- both_lanes        <cmd_addr=8'26); RW
+     (cmd_do[0]      <- default_lane      <cmd_addr=8'27); RW
+     (cmd_do[0]      <- hs_transfer_done  <cmd_addr=8'28); WC
+     (cmd_do[15:0]   <- line_blanking     <cmd_addr=8'29); RW
+     (cmd_do[15:0]   <- frame_blanking    <cmd_addr=8'30); RW
+     (cmd_do[15:0]   <- bs_packet_len     <cmd_addr=8'31); RW
+     (cmd_do[15:0]   <- clock_ratio       <cmd_addr=8'32); RW
+     (cmd_do[0]      <- ulpm_enter        <cmd_addr=8'33); RW
+     ;(clk_ulpm_exit      = 1             <cmd_addr=8'34); WP
+  
+     ; ================= Hidden Registers ================= @128 --> @255
+     ;(llprotocol_start   = 1              <cmd_addr=8'128) ; WP
+   )      
+  )
+)                

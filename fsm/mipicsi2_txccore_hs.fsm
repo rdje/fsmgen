@@ -1,0 +1,39 @@
+(+fsm mipicsi2_txccore_hs
+
+  (+system (clock  clk) (asreset rstn))
+  (+size
+   (clkdpn            3)
+   (txtimer           20)
+  )
+  
+  (tx_stop    (clkdpn = lp_11 <!disable_clkhs_clkdpn) (<txvalid (txtimer <- tlpx) (clk_hson <- 1) (-> tx_hs_rqst)))
+  (tx_hs_rqst (clkdpn = lp_01) (<txtimer_done (txtimer <- ths_prepare) (-> tx_hs_prpr)))
+  (tx_hs_prpr (clkdpn = lp_00) (<txtimer_done (txtimer <- tclk_zero) (-> tx_hs_go)))
+  (tx_hs_go   (clkdpn = hs_0)  (-> tx_hs_1 <txtimer_done))
+  (tx_hs_0    (clkdpn = hs_0)  (-> tx_hs_1))
+  
+  (tx_hs_1
+   (clkdpn = hs_1)
+   (?ulpm_enter
+    (=1 (<(& !txhs_on !hs_post) (txtimer <- tclk_post)
+         				    (hs_post <- 1))
+        (<(& hs_post txtimer_done) 
+           (txtimer <- tclk_trail)
+           (ulpm_enter_clear = 1)
+           (-> trail_hs_0)
+        ))
+  
+    (=0 (-> tx_hs_0))
+   )
+  )
+  
+  (trail_hs_0
+   (clkdpn = hs_0)
+   (?hs_post
+    (=0  (<txtimer_done (clk_hson <- 0) (-> tx_stop)))
+    (=1  (txtimer <- ths_exit) (-> tx_hs_post))
+   )
+  )
+  
+  (tx_hs_post (clkdpn = lp_11) (<txtimer_done (hs_post <- 0) (-> tx_stop)))
+)

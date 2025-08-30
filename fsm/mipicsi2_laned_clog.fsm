@@ -1,0 +1,98 @@
+(?fsm:mipicsi2_laned_clog
+
+  (+system (clock  clk) (asreset rstn))
+  
+  (+size
+    
+   (stall 1)  
+   (wren 1)  
+   (right_full 1)  
+  )
+  
+  (-combi
+   (<!lane_select  (wren_0 = wren) (right_full = full_0))
+   (<lane_select   (wren_1 = wren) (right_full = full_1))
+  
+   (stall = 1 <(| bcdown_is_null nxpack_stall right_full))
+  
+   (<both_lanes  (lane_select = lane_select_rin))
+   (<!both_lanes (lane_select = default_lane   ))
+  
+   (bcdown_is_null = 1 <(| bcdown_is_null_0 bcdown_is_null_1))
+  )
+  
+  (-stall_nx_packet
+   (<stream_type!=2'0 ; if not in byte stream mode
+    (nxpack_stall <= 1 <(| pfon_end lson_end leon_end fson_end feon_end)) 
+    (nxpack_stall <= 0 <right_close) 
+   )
+  )
+  
+  
+  (-which_close
+   (<both_lanes
+    (?stream_type
+      (=2'1   ; Long Packets Only Stream
+       (right_close = packet_closed_1 <!lane_select)
+       (right_close = packet_closed_0 <lane_select)
+      )
+  
+      (=2'2   ; (Line-Packet (Long-Packet)+)
+        (?lane_select
+          (=0 (right_close = packet_closed_0 <pf_o_xs_event)
+              (right_close = packet_closed_1 <leon_event))
+  
+          (=1 (right_close = packet_closed_1 <pf_o_xs_event)
+              (right_close = packet_closed_0 <leon_event))
+        )
+      )
+  
+      (=2'3   ; (Frame-Packet (Long-Packet (Long-Packet)+)+)
+        (?lane_select
+          (=0 (right_close = packet_closed_0 <pf_o_le_o_xs_event)
+              (right_close = packet_closed_1 <feon_event))
+  
+          (=1 (right_close = packet_closed_1 <pf_o_le_o_xs_event)
+              (right_close = packet_closed_0 <feon_event))
+        )
+      )
+    )
+   )
+  
+   (<!both_lanes
+    ; In this mode there is no Data Lane switching. That means the *lane_select* does not change after _end events, so there is no
+    ; opposite mapping between the *lane_select* polarity and the index value (0/1) of the packet_closed signals to be routed.
+    (right_close = packet_closed_0 <!lane_select)
+    (right_close = packet_closed_1 <lane_select)
+   )
+  )
+  
+  (-events
+    (xson_event <- 1 <(| lson_end fson_end))
+    (pfon_event <- 1 <pfon_end)
+    (leon_event <- 1 <leon_end)
+    (feon_event <- 1 <feon_end)
+  
+    (<right_close
+      (xson_event <- 0)
+      (pfon_event <- 0)
+      (leon_event <- 0)
+      (feon_event <- 0)
+    )
+  
+    (pf_o_le_o_xs_event = 1 <(| pfon_event leon_event xson_event))
+    (pf_o_xs_event      = 1 <(| pfon_event xson_event))
+    ;(xson_event <- 0 <(| pfon_end leon_end feon_end))
+  )
+  
+  
+  (-lane_toggle
+   (<tester_start    (lane_select_rin <- default_lane          ))
+   (<stream_type=2'0 (lane_select_rin <- not_lselrin  <wren    )) ; byte  stream
+   (<stream_type=2'1 (lane_select_rin <- not_lselrin  <pfon_end)) ; long  packet stream end of PF
+   (<stream_type=2'2 (lane_select_rin <- not_lselrin  <leon_end)) ; line  stream end of LE short packet
+   (<stream_type=2'3 (lane_select_rin <- not_lselrin  <feon_end)) ; frame stream end of FE short packet
+  )
+  
+  (-invert_rin (not_lselrin = 1 <!lane_select_rin))
+)

@@ -1,0 +1,44 @@
+(?fsm:mipicsi2_fifo_4x8_ctrl
+
+  (+system (clock  clk) (asreset rstn))
+  
+  (+size (txinfo 8))
+  
+  
+  (-rw_ctrl
+    (<(& !wren txread txvalid)
+      (++ rdpt)
+      (-- cnt)
+      (full> <- 0)
+      (txvalid <- 0 <cnt=3'x1)
+    )
+  
+    (<(& wren !full)
+      (z0 <- txinfo <wrpt=2'0)
+      (z1 <- txinfo <wrpt=2'1)
+      (z2 <- txinfo <wrpt=2'2)
+      (z3 <- txinfo <wrpt=2'3)
+      ;(z4 <- txinfo <wrpt=3'4)
+      ;(z5 <- txinfo <wrpt=3'5)
+      ;(z6 <- txinfo <wrpt=3'6)
+      ;(z7 <- txinfo <wrpt=3'7)
+  
+      (++ wrpt)
+  
+      (?txread
+        (=0  (++ cnt) (txvalid <- 1) (full <- 1 <cnt=3'3))
+        (=1  (?txvalid (=1  (++ rdpt)) 
+  		     (=0  (++ cnt) (txvalid> <- 1) (full <- 1 <cnt=3'3))))
+      )
+    )
+  
+    (txfifo = z0 <rdpt=2'0)
+    (txfifo = z1 <rdpt=2'1)
+    (txfifo = z2 <rdpt=2'2)
+    (txfifo = z3 <rdpt=2'3)
+    ;(txfifo = z4 <rdpt=3'4)
+    ;(txfifo = z5 <rdpt=3'5)
+    ;(txfifo = z6 <rdpt=3'6)
+    ;(txfifo = z7 <rdpt=3'7)
+  )
+)

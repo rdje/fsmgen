@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FSM::CoreAST::SignalRef - Class Details</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .class-header { background: #e6f3ff; padding: 10px; border: 2px solid #0066cc; border-radius: 5px; }
+        .inheritance { background: #f0f8ff; padding: 5px; margin: 10px 0; }
+        .section { margin: 15px 0; }
+        .method-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        .method-table th, .method-table td { border: 1px solid #ccc; padding: 5px; text-align: left; }
+        .method-table th { background: #f0f0f0; }
+        .code { background: #f8f8f8; padding: 10px; border-left: 3px solid #0066cc; font-family: monospace; }
+        .issue { background: #ffe6e6; border: 1px solid #cc0000; padding: 10px; margin: 10px 0; border-radius: 3px; }
+        .fix { background: #e6ffe6; border: 1px solid #00cc00; padding: 10px; margin: 10px 0; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="class-header">
+        <h1>FSM::CoreAST::SignalRef</h1>
+        <p><strong>Package:</strong> FSM::CoreAST</p>
+        <p><strong>File:</strong> FSM/CoreAST.pm (lines 435-464)</p>
+    </div>
+    
+    <div class="inheritance">
+        <strong>Inheritance Chain:</strong><br>
+        FSM::CoreAST::Expression ← FSM::CoreAST::SignalRef
+    </div>
+    
+    <div class="section">
+        <h2>Purpose</h2>
+        <p>Represents a reference to a signal within expressions. This class acts as a wrapper around FSM::CoreAST::Signal objects and provides access to signal properties through delegation.</p>
+    </div>
+    
+    <div class="section">
+        <h2>Instance Variables</h2>
+        <table class="method-table">
+            <tr><th>Variable</th><th>Type</th><th>Description</th></tr>
+            <tr><td>{signal}</td><td>FSM::CoreAST::Signal</td><td>The signal object this reference points to</td></tr>
+            <tr><td>{slice}</td><td>[high, low] | undef</td><td>Optional bit slice range</td></tr>
+            <tr><td>{type}</td><td>string</td><td>Always 'signal_ref' (inherited from Expression)</td></tr>
+            <tr><td>{operands}</td><td>array ref</td><td>Empty array (inherited from Expression)</td></tr>
+            <tr><td>{attributes}</td><td>hash ref</td><td>Additional attributes (inherited from Expression)</td></tr>
+        </table>
+    </div>
+    
+    <div class="section">
+        <h2>Methods</h2>
+        <table class="method-table">
+            <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+            <tr><td>new($class, $signal, %args)</td><td>SignalRef</td><td>Constructor - requires a signal object</td></tr>
+            <tr><td>signal($self)</td><td>Signal</td><td>Returns the wrapped signal object</td></tr>
+            <tr><td>slice($self)</td><td>[high, low] | undef</td><td>Returns the bit slice range if any</td></tr>
+            <tr><td>name($self)</td><td>string</td><td><strong>Convenience method - delegates to signal->name</strong></td></tr>
+            <tr><td>get_signals($self)</td><td>array ref</td><td>Returns array containing the signal object</td></tr>
+            <tr><td>to_verilog($self)</td><td>string</td><td>Generates Verilog representation</td></tr>
+            <tr><td>to_vhdl($self)</td><td>string</td><td>Generates VHDL representation</td></tr>
+            <tr><td>to_systemverilog($self)</td><td>string</td><td>Generates SystemVerilog representation</td></tr>
+        </table>
+    </div>
+    
+    <div class="issue">
+        <h3>🚨 Current Issue</h3>
+        <p>The <code>name()</code> method is failing because it assumes <code>$self->{signal}</code> exists and has a <code>name()</code> method, but it doesn't handle edge cases properly.</p>
+        
+        <h4>Current Implementation:</h4>
+        <div class="code">
+sub name($self) { $self->{signal}->name }  # Convenience method for HDL generators
+        </div>
+        
+        <h4>Error Message:</h4>
+        <div class="code">
+Can't locate object method "name" via package "FSM::CoreAST::SignalRef=HASH(0x160875fc8)" 
+(perhaps you forgot to load "FSM::CoreAST::SignalRef=HASH(0x160875fc8)"?)
+        </div>
+        
+        <h4>Root Cause:</h4>
+        <ul>
+            <li>The <code>$self->{signal}</code> might be undefined</li>
+            <li>The <code>$self->{signal}</code> object might not have a <code>name()</code> method</li>
+            <li>The SignalRef object might not be properly initialized</li>
+        </ul>
+    </div>
+    
+    <div class="fix">
+        <h3>✅ Proposed Fix</h3>
+        <p>Make the <code>name()</code> method more robust by properly handling edge cases while maintaining the delegation pattern:</p>
+        
+        <div class="code">
+sub name($self) { 
+    # Convenience method for HDL generators - delegate to signal's name
+    return $self->{signal} && $self->{signal}->can('name') ? 
+        $self->{signal}->name : 
+        (defined $self->{signal} ? "unnamed_signal" : "null_signal");
+}
+        </div>
+        
+        <h4>Benefits:</h4>
+        <ul>
+            <li>✅ Maintains encapsulation - doesn't expose internal structure</li>
+            <li>✅ Handles undefined signal gracefully</li>
+            <li>✅ Checks if the signal has a name() method before calling it</li>
+            <li>✅ Provides meaningful fallback values for debugging</li>
+            <li>✅ Follows object-oriented design principles</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>Usage Pattern</h2>
+        <div class="code">
+# Create a signal first
+my $signal = FSM::CoreAST::Signal->new(name => "my_signal", width => 8);
+
+# Create a reference to the signal
+my $signal_ref = FSM::CoreAST::SignalRef->new($signal);
+
+# Now you can call name() safely
+my $name = $signal_ref->name();  # Returns "my_signal"
+
+# With bit slice
+my $sliced_ref = FSM::CoreAST::SignalRef->new($signal, slice => [7, 0]);
+my $verilog = $sliced_ref->to_verilog();  # Returns "my_signal[7:0]"
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Related Classes</h2>
+        <ul>
+            <li><strong>FSM::CoreAST::Signal:</strong> The wrapped signal object</li>
+            <li><strong>FSM::CoreAST::Expression:</strong> Parent class providing base functionality</li>
+            <li><strong>FSM::CoreAST::BinaryOp, UnaryOp:</strong> Other Expression subclasses that may contain SignalRef</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>Design Notes</h2>
+        <ul>
+            <li>This class follows the Decorator pattern - it wraps a Signal and adds expression-specific behavior</li>
+            <li>The delegation in name() is intentional to maintain the single source of truth for signal names</li>
+            <li>The class supports bit slicing for hardware description purposes</li>
+            <li>All HDL generation methods properly handle the optional slice parameter</li>
+        </ul>
+    </div>
+</body>
+</html>

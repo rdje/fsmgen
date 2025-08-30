@@ -1,0 +1,276 @@
+;(?top:foo
+;
+;  aaaaaaaa_bbbbbbbbbbb
+;  frm_Acri_busy>12
+;  frm_applied_cri>4
+;
+;  newname_retx_frm_lcid>3
+;
+;  
+; ; newname_retx_frm_lcid
+;
+;
+;  (?top:subfoo1_1
+;    
+;   (?fsmc: mipicsi2_txdcore_hs)
+;
+;   (?ports:frm_info_buffer
+;     tx_clk
+;     tx_rstn
+;     waddr<4
+;     wr
+;     lcindic
+;     lcid<3
+;     start_waddr<10
+;     busy>12
+;     rd
+;     start_raddr>10
+;     raddr<4
+;     retx_frm_type>
+;     retx_frm_lcid>3
+;     dft_ctrl_in<:dft_ctrl_in_t
+;     dft_ctrl_out>:dft_ctrl_out_t
+;   )
+;   
+;  (?top:misc_logic_bis input1 input2 output>)
+;
+;   (?top:subfoo2_1_1
+;    ;(?fsmc: mipicsi2_configreg)
+;    (?ports:block_test
+;      AA
+;      BB>10
+;      CCC<7
+;    )
+;
+;   )
+;  )
+; 
+;
+;  (?fsmc:duo datapath_test newone)
+;
+;  (?toplink:lte_dif_tasu)
+;  (?fsmc: lte_dif_txif_req_syncnack)
+;
+;  (?top:txdu_txif_10to8
+;    txdu_valid
+;    txdu_pl_data<40
+;    txdu_rd>
+;    txdu_pl_2send>8
+;    txdu_dnxt
+;  )
+;)
+
+
+(?top:lte_dif_tasu last_bit localsig<4 tasu_pl_data>8 tasu_sendack<7 txclk aaaa inputvec<32
+		   boooo<7 bbbb<2 cccc<101 dfdfdf<24
+ 
+  (?ports:lte_dif_tasu_fifo
+     clk
+     rstn
+     tasu_data_port<16
+     tasu_data_wr
+     tasu_fifo_full>
+     tasu_fifo_empty>
+     tasu_valid>
+     tasu_rd
+     tasu_fifo_data_o>24
+
+     {/data_o/{tasu_timestamp, tasu_pl_data}/}
+     /clk/dif_104_clk/
+  )
+
+  (?ports:lte_dif_tasu_reqgen
+     clk
+     rstn
+     global_start
+     tasu_start
+     tasu_valid
+     tasu_send>
+     tasu_rd
+     tasu_timestamp<16
+
+     /clk/dif_104_clk/
+  )
+
+;  (?ports:gfifo g:h=34,w=45
+;   wr_en
+;   wdata<w
+;   full
+;   almost_full
+;   rdata>w
+;   rd_en
+;   valid
+;   empty
+;   almost_empty
+;  )
+
+  (?ports:lte_dif_pulsync g:g1=23,g2=45 
+    rstn_in
+    clkin
+    pulsin
+    pulsout>
+    clkout
+    rstn_out
+    dft_ctrl_in<:dft_ctrl_in_t
+
+    /pulsin/tasu_sendack[6]/ 
+    /pulsout/tasu_rd/
+    {/clkin/{txclk, dfdfdf[23:1] {aaaa bbbb[1] , cccc[100:20],  {{inputvec[31:16], localsig[3:1]}  boooo[6] last_bit}}}/}
+    /clkout/dif_104_clk/
+  )
+)
+
+(?fsm:lte_dif_txif_req_syncnack
+
+  (+system (clock clk) (asreset rstn)) 
+ 
+  (-aio
+    ; TAS requests
+    (<(| tasu_sendsync tasu_reqack)
+      (tasu_sendasap  <=+ 1 <!tasu_sendasap_r)
+      (tasu_sendasap  <=+ 0 <tasu_sendasap_r)
+    )
+
+    (<tasu_sendsync
+      (tasu_pl_2send'8 <- tasu_pl_data)
+    )
+
+    ; RFCU requests
+    (<(| rfcu_reqsync rfcu_reqack)
+      (rfcu_req_2send  <=+ 1 <!rfcu_req_2send_r)
+      (rfcu_req_2send  <=+ 0 <rfcu_req_2send_r)
+    )
+
+    (<rfcu_reqsync
+      (rfcu_len_2send'7  <= rfcu_len)
+      (rfcu_lcid_2send'3 <= rfcu_lcid)
+    )
+
+    ; TXDU requests
+    (<(| txdu_reqsync txdu_reqack)
+      (txdu_req_2send  <=+ 1 <!txdu_req_2send_r)
+      (txdu_req_2send  <=+ 0 <txdu_req_2send_r)
+    )
+
+
+    ; RACLC requests from rxmain
+    (<raclc_acknack_wren
+      (raclc_ackonack_in'1 <= rxmain_raclc_ackonack)
+      (raclc_cri_in'4      <= rxmain_raclc_cri)
+    )
+  )
+)
+
+
+(?fsm:datapath_test
+
+  (+system (clock clk) (asreset rstn))
+
+  (dummy  (output <- 1 <stopit) (-> stop))
+  (stop   (iam_done <- 1) (-> dp))
+
+  (-clear_o  (output <- 0 <output))
+  (dp
+     
+   (<inc_frm_cri
+    (?frm_cri
+       (!=4'9 (++ frm_cri))
+       ( =4'9 (frm_cri <- 4'0))
+    )
+   )  
+
+   (frm_cri <- 4'0 <clear_frm_cri)  
+
+   (frm_applied_cri = 4'10 <v1_en)
+   (frm_applied_cri = 4'11 <v2_en)
+   (frm_applied_cri = frm_cri <!(| v1_en v2_en))
+
+   (temp_reg <= 4'5 <save_temp)
+   (temp_reg <= frm_applied_cri <copy_frm_applied)
+   (temp_reg <= 4'0 <clear_temp_reg)
+
+   ;(rfcu_req_2send <= (! rfcu_req_2send) <(| rfcu_req_sync rfcu_reqack))
+   
+   ;(AAA = (+ frm_cri temp_reg) )
+    (AAA_1 <- frm_cri (+= 2))
+    (AAA_2 <- frm_cri (+= 1))
+
+    (AAA_3 <- frm_cri (+= 7))
+    (AAA_3 <- frm_cri (-= 1))
+
+    (AAA_4 <- frm_cri (-= 7))
+    (<yes (AAA_5 <- frm_cri (-= 7)))
+    (AAA_6 <- frm_cri (-= 7))
+    (AAA_7 <- frm_cri (-= 7))
+
+    (AAA_8 = frm_cri (+= 3))
+
+    (combi_out = 5'0  <sel_comb0)
+    (combi_out = 5'1  <sel_comb1)
+    (combi_out = 5'3  <sel_comb3)
+    (combi_out = 5'4  <sel_comb4)
+    (combi_out = 5'5  <sel_comb5)
+    (combi_out = 5'6  <sel_comb6)
+
+    (just_one_case'8 = for_renaming)
+    (just_one_bit'1  = from_bit_input <do_it)
+
+    (one_bit = 1 <now)
+    (one_bit = 1 <!or_when_this_signal_is_false)
+    (one_bit_bis = 0 <now_inverted)
+  )
+)
+
+(?fsm:newone
+
+  (+system (clock clk) (asreset rstn))
+  (+size (slice 5) 
+	 (insig2 5) 
+	 (varbbb2 6) 
+	 (boooooo 10) 
+	 (combi_out 5) 
+	 (yeeesbooo 4) 
+	 (vraoom 10)
+	 (tatata_10b 10)
+	 (tototo 24))
+
+  (s0
+    (just_one_case = another_case <start)
+    (-> s1)
+  )
+
+  (s1 (AAA_3 <- Yeeeeeeeees) (-> s0))
+
+  (-sa
+    (<if_zero
+     (slice[4:2] = combi_out[2:0])
+     (slice[1]   = combi_out[4])
+     (slice[0]   = combi_out[3])
+    )
+  )
+
+  (-sa2 (slice[4:0] = five_bit_input <if_one))
+  
+  (-atest (?insig1 (=insig2  (entre_deux_signaux  = 1 <(| vaaar1!=varbbb2[5]  
+							  boooooo[9:7]>=yeeesbooo[2:0] 
+							  (^ aaaaaaaa 
+							     bbbbbbbb 
+							     fofofofo[4:0]!=fafafafafa
+							     wwwwwwww!=0101010101010101
+							     qqqqqqqq=10'xabcde
+
+							     (& fooooobar foooQQQQ combi_out[4]))))))
+  )
+
+  (-another_test
+    
+   (<tatata!=tototo[23:14]   (gogogo = 1))  
+   (<tatata[2:1]>=vraoom[1:0]   (ahahaha <- 1))  
+   (<tatata[6]=vraoom[5]   (ohohoh = 5'x3))  
+   (<tatata_10b=vraoom   (ohohoh = 5'x7))  
+   (combit_p2 = combi_out (+= 2))
+   (combit_p1 = combi_out (+= 1))
+   (<combit_p2=tatata_10b[4:0]   (gotit = 1))
+  )
+)
+

@@ -1,0 +1,156 @@
+(?define:generic_fifo
+
+  (?fsm:[FIFO_NAME]
+
+     (+system (clock  [CLOCK]) (asreset [RESETN]))
+     (+size   ([DATAIN] [WIDTH]))
+     
+     (-rw_ctrl
+       (<(& ![WRITE] [READ] [VALID])
+         (++ rdpt)
+         (-- cnt)
+         ([FULL]> <- 0)
+         ([VALID] <- 0 <cnt=[?size: MAX_COUNT]'x1)
+       )
+     
+       (<(& [WRITE] ![FULL])
+         (?repeat:[MAX_COUNT]  (z\CI <- [DATAIN] <wrpt=[?size: MAX_COUNT -1]'\CI))
+     
+         (++ wrpt)
+     
+         (?[READ]
+           (=0  (++ cnt) ([VALID] <- 1) ([FULL] <- 1 <cnt=[?size: MAX_COUNT]'[MAX_COUNT-1]))
+           (=1  (?[VALID] (=1  (++ rdpt)) 
+     		          (=0  (++ cnt) ([VALID]> <- 1) ([FULL] <- 1 <cnt=[?size: MAX_COUNT]'[MAX_COUNT-1]))))
+         )
+       )
+     
+       (?repeat:[MAX_COUNT] ([DATAOUT] = z\CI <rdpt=[?size: MAX_COUNT -1]'\CI))
+     )
+  )
+)
+
+
+
+(?top:foo
+
+  aaaaaaaa_bbbbbbbbbbb
+  frm_Acri_busy>12
+  frm_applied_cri>4
+
+  (?&generic_fifo FIFO_NAME=myfifo0
+                  CLOCK=myclock
+                  RESETN=myresetn
+                  DATAIN=mydatain
+                  DATAOUT=mydataout
+                  WIDTH=32
+                  WRITE=mywrite
+                  READ=myread
+                  VALID=myvalid
+                  FULL=myfull
+                  MAX_COUNT=40)
+
+  (?&generic_fifo FIFO_NAME=myfifo1 
+		  CLOCK=myclock1 
+		  RESETN=myresetn1 
+		  DATAIN=mydatain1 
+		  WIDTH=32 
+		  WRITE=mywrite1 
+		  READ=myread1 
+		  VALID=myvalid1 
+		  FULL=myfull1 
+		  MAX_COUNT=5)
+
+
+
+  (?fsmc:mipicsi2_llp_serial  (merge)  mipicsi2_pkt_nx4B_fifo mipicsi2_byteserial)
+  (?fsmc: mipicsi2_configreg)
+  (?fsmc: mipicsi2_txtimer)
+
+  (?top:subfoo1_1
+    (?&generic_fifo FIFO_NAME=myfifo10
+                    CLOCK=myclock1
+                    RESETN=myresetn1
+                    DATAIN=mydatain1
+                    WIDTH=32
+                    WRITE=mywrite1
+                    READ=myread1
+                    VALID=myvalid1
+                    FULL=myfull1
+                    MAX_COUNT=5)
+
+   (?fsmc: mipicsi2_txdcore_hs)
+
+   (?ports:frm_info_buffer
+     waddr<4
+     wr
+     lcindic
+     lcid<3
+     start_waddr<10
+     busy>12
+     rd
+     start_raddr>10
+     raddr<4
+     retx_frm_type>
+     retx_frm_lcid>3
+   )
+   
+   ;(?rtl:dif_rx_fifo_top)
+
+   (?top:subfoo2_1_1
+     
+    ;(?fsmc: mipicsi2_configreg)
+    (?&generic_fifo FIFO_NAME=myfifo_ab
+                    CLOCK=myclock
+                    RESETN=myresetn
+                    DATAIN=mydatain
+                    WIDTH=9
+                    WRITE=mywrite
+                    READ=myread
+                    VALID=myvalid
+                    FULL=myfull
+                    MAX_COUNT=16)
+
+   )
+  )
+
+ (?top:subfoo_2
+    
+   ;(?fsmc: mipicsi2_configreg)
+
+   (?&generic_fifo
+
+     FIFO_NAME=myfifo__xx
+     CLOCK=myclock
+     RESETN=myresetn
+     DATAIN=mydatain
+     WIDTH=9
+     WRITE=mywrite
+     READ=myread
+     VALID=myvalid
+     FULL=myfull
+     MAX_COUNT=16
+   )
+
+  )
+
+  (?top:subfoo_3
+    
+   ;(?fsmc: mipicsi2_configreg)
+
+   (?&generic_fifo
+
+     FIFO_NAME=myfifo33
+     CLOCK=myclock
+     RESETN=myresetn
+     DATAIN=mydatain
+     WIDTH=9
+     WRITE=mywrite
+     READ=myread
+     VALID=myvalid
+     FULL=myfull
+     MAX_COUNT=16
+   )
+
+  )
+)
