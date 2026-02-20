@@ -4,6 +4,7 @@ package FSM::AST::Node;
 use v5.20;
 use strict;
 use warnings;
+use Carp qw(confess);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
@@ -29,15 +30,15 @@ sub type ($self) {
 }
 
 sub to_systemverilog ($self) {
-    die "to_systemverilog must be implemented by subclasses";
+    Carp::confess "to_systemverilog must be implemented by subclasses";
 }
 
 sub clone ($self) {
-    die "clone must be implemented by subclasses";
+    Carp::confess "clone must be implemented by subclasses";
 }
 
 sub equals ($self, $other) {
-    die "equals must be implemented by subclasses";
+    Carp::confess "equals must be implemented by subclasses";
 }
 
 # Signal Reference Node

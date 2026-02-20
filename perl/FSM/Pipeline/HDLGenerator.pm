@@ -4,6 +4,7 @@ package FSM::Pipeline::HDLGenerator;
 use v5.20;
 use strict;
 use warnings;
+use Carp qw(confess);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
@@ -93,7 +94,7 @@ sub parse_fsm_file ($self, $fsm_file) {
     my $raw_ast = Lispish::multi($fsm_file);
     
     unless ($raw_ast) {
-        die "Error: Failed to parse FSM file with Lispish\n";
+        Carp::confess "Error: Failed to parse FSM file with Lispish\n";
     }
     
     # Debug: Dump the raw AST if debug mode is enabled
@@ -125,11 +126,11 @@ sub create_fsm_module ($self, $raw_ast) {
     };
     
     if ($@) {
-        die "Error parsing FSM with adapter: $@\n";
+        Carp::confess "Error parsing FSM with adapter: $@\n";
     }
     
     unless ($fsm_module) {
-        die "Error: Failed to create FSM module\n";
+        Carp::confess "Error: Failed to create FSM module\n";
     }
     
     # Debug: Dump the parsed FSM module structure if debug mode is enabled
@@ -274,7 +275,7 @@ sub generate_hdl_code ($self, $fsm_module) {
     };
     
     if ($@) {
-        die "Error generating HDL: $@\n";
+        Carp::confess "Error generating HDL: $@\n";
     }
     
     fsm_debug("HDL code generation completed", 1);

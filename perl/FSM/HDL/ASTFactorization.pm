@@ -2,6 +2,7 @@ package FSM::HDL::ASTFactorization;
 
 use strict;
 use warnings;
+use Carp qw(confess);
 use Scalar::Util qw(blessed refaddr);
 use Digest::SHA qw(sha256_hex);
 use Data::Dumper;
@@ -879,13 +880,14 @@ sub create_unary_op_ast {
 package FSM::AST::IntermediateSignal;
 use strict;
 use warnings;
+use Carp qw(confess);
 use Scalar::Util qw(blessed);
 
 sub new {
     my ($class, %args) = @_;
     return bless {
-        name => $args{name} || die "IntermediateSignal requires name",
-        original_expression => $args{original_expression} || die "IntermediateSignal requires original_expression",
+        name => $args{name} || Carp::confess "IntermediateSignal requires name",
+        original_expression => $args{original_expression} || Carp::confess "IntermediateSignal requires original_expression",
         usage_count => $args{usage_count} || 0,
         contexts => $args{contexts} || [],
         signal_type => $args{signal_type} || "wire",
@@ -920,14 +922,15 @@ sub debug_info {
 package FSM::HDL::SubstitutedBinaryOp;
 use strict;
 use warnings;
+use Carp qw(confess);
 use Scalar::Util qw(blessed);
 
 sub new {
     my ($class, %args) = @_;
     return bless {
-        operator => $args{operator} || die "SubstitutedBinaryOp requires operator",
-        left => $args{left} || die "SubstitutedBinaryOp requires left",
-        right => $args{right} || die "SubstitutedBinaryOp requires right",
+        operator => $args{operator} || Carp::confess "SubstitutedBinaryOp requires operator",
+        left => $args{left} || Carp::confess "SubstitutedBinaryOp requires left",
+        right => $args{right} || Carp::confess "SubstitutedBinaryOp requires right",
         type => 'binary_op'
     }, $class;
 }
@@ -949,13 +952,14 @@ sub to_systemverilog {
 package FSM::HDL::SubstitutedUnaryOp;
 use strict;
 use warnings;
+use Carp qw(confess);
 use Scalar::Util qw(blessed);
 
 sub new {
     my ($class, %args) = @_;
     return bless {
-        operator => $args{operator} || die "SubstitutedUnaryOp requires operator",
-        operand => $args{operand} || die "SubstitutedUnaryOp requires operand",
+        operator => $args{operator} || Carp::confess "SubstitutedUnaryOp requires operator",
+        operand => $args{operand} || Carp::confess "SubstitutedUnaryOp requires operand",
         type => 'unary_op'
     }, $class;
 }
@@ -974,6 +978,7 @@ sub to_systemverilog {
 package FSM::HDL::IntermediateSignalRef;
 use strict;
 use warnings;
+use Carp qw(confess);
 use Scalar::Util qw(blessed);
 
 # This represents a reference to an intermediate signal
@@ -981,7 +986,7 @@ use Scalar::Util qw(blessed);
 sub new {
     my ($class, %args) = @_;
     return bless {
-        signal_name => $args{signal_name} || die "IntermediateSignalRef requires signal_name",
+        signal_name => $args{signal_name} || Carp::confess "IntermediateSignalRef requires signal_name",
         type => 'intermediate_signal_ref'
     }, $class;
 }

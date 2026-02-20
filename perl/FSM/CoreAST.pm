@@ -3,6 +3,7 @@ package FSM::CoreAST;
 use v5.20;
 use strict;
 use warnings;
+use Carp qw(confess);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use Scalar::Util qw(blessed);
@@ -20,7 +21,7 @@ package FSM::CoreAST::Signal;
         
         # Construct hash step by step to avoid Perl hash construction issues with undef values
         my $hash_to_bless = {};
-        $hash_to_bless->{name} = $args{name} // die "Signal name required";
+        $hash_to_bless->{name} = $args{name} // Carp::confess "Signal name required";
         $hash_to_bless->{_width} = $final_width;
         $hash_to_bless->{type} = $args{type} // 'wire';
         $hash_to_bless->{clock_domain} = $args{clock_domain};
@@ -118,7 +119,7 @@ package FSM::CoreAST::ASTNode;
     # Base class for ALL nodes in the AST web (signals, gates, modules, etc.)
     sub new($class, %args) {
         my $hash_to_bless = {};
-        $hash_to_bless->{node_type} = $args{node_type} // die "AST node type required";
+        $hash_to_bless->{node_type} = $args{node_type} // Carp::confess "AST node type required";
         $hash_to_bless->{name} = $args{name};
         $hash_to_bless->{input_ports} = $args{input_ports} // {};
         $hash_to_bless->{output_ports} = $args{output_ports} // {};
@@ -163,8 +164,8 @@ package FSM::CoreAST::ASTNode;
     }
     
     # Override in subclasses
-    sub to_verilog($self) { die "to_verilog() must be implemented by subclass" }
-    sub to_vhdl($self) { die "to_vhdl() must be implemented by subclass" }
+    sub to_verilog($self) { Carp::confess "to_verilog() must be implemented by subclass" }
+    sub to_vhdl($self) { Carp::confess "to_vhdl() must be implemented by subclass" }
     sub to_systemverilog($self) { return $self->to_verilog() }
 
 #=============================================================================
@@ -175,7 +176,7 @@ package FSM::CoreAST::PrimaryGate;
     our @ISA = qw(FSM::CoreAST::ASTNode);
     
     sub new($class, %args) {
-        my $gate_type = $args{gate_type} // die "Gate type required";
+        my $gate_type = $args{gate_type} // Carp::confess "Gate type required";
         
         # Create input/output port structure based on gate type
         my ($input_ports, $output_ports) = $class->_create_gate_ports($gate_type, %args);
@@ -321,7 +322,7 @@ package FSM::CoreAST::UserDefinedBlock;
     sub new($class, %args) {
         my $self = $class->SUPER::new(
             node_type => 'user_defined_block',
-            name => $args{name} // die "User-defined block name required",
+            name => $args{name} // Carp::confess("User-defined block name required"),
             input_ports => $args{input_ports} // {},
             output_ports => $args{output_ports} // {},
             %args
@@ -374,8 +375,8 @@ package FSM::CoreAST::UserDefinedBlock;
 package FSM::CoreAST::Port;
     sub new($class, %args) {
         bless {
-            name => $args{name} // die "Port name required",
-            direction => $args{direction} // die "Port direction required",
+            name => $args{name} // Carp::confess("Port name required"),
+            direction => $args{direction} // Carp::confess("Port direction required"),
             port_type => $args{port_type} // 'data',  # data, clock, reset, etc.
             width => $args{width} // 1,
             connected_signal => $args{connected_signal},
@@ -412,7 +413,7 @@ package FSM::CoreAST::Expression;
     sub new($class, %args) {
         # Construct hash step by step to avoid Perl hash construction issues with undef values
         my $hash_to_bless = {};
-        $hash_to_bless->{type} = $args{type} // die "Expression type required";
+        $hash_to_bless->{type} = $args{type} // Carp::confess "Expression type required";
         $hash_to_bless->{operands} = $args{operands} // [];
         $hash_to_bless->{attributes} = $args{attributes} // {};
         
@@ -424,10 +425,10 @@ package FSM::CoreAST::Expression;
     sub attributes($self) { $self->{attributes} }
     
     # Override in subclasses
-    sub evaluate($self, $context) { die "evaluate() must be implemented by subclass" }
+    sub evaluate($self, $context) { Carp::confess "evaluate() must be implemented by subclass" }
     sub get_signals($self) { [] }
-    sub to_verilog($self) { die "to_verilog() must be implemented by subclass" }
-    sub to_vhdl($self) { die "to_vhdl() must be implemented by subclass" }
+    sub to_verilog($self) { Carp::confess "to_verilog() must be implemented by subclass" }
+    sub to_vhdl($self) { Carp::confess "to_vhdl() must be implemented by subclass" }
     sub to_systemverilog($self) { 
         # Default implementation falls back to Verilog
         return $self->to_verilog();
@@ -828,8 +829,8 @@ package FSM::CoreAST::UnaryOp;
     
     sub new($class, %args) {
         # Handle named parameter calling style
-        my $operator = $args{operator} // die "UnaryOp operator required";
-        my $operand = $args{operand} // die "UnaryOp operand required";
+        my $operator = $args{operator} // Carp::confess "UnaryOp operator required";
+        my $operand = $args{operand} // Carp::confess "UnaryOp operand required";
         
         # Remove these from args to avoid conflicts
         delete $args{operator};
@@ -1049,7 +1050,7 @@ package FSM::CoreAST::Action;
     # Base class for all actions that can occur in Decision Trees
     sub new($class, %args) {
         bless {
-            type => $args{type} // die "Action type required",
+            type => $args{type} // Carp::confess("Action type required"),
             condition => $args{condition},  # Optional enabling condition
             priority => $args{priority} // 0,  # For conflict resolution
             attributes => $args{attributes} // {},
@@ -1078,8 +1079,8 @@ package FSM::CoreAST::Assignment;
     
     sub new($class, %args) {
         my $self = $class->SUPER::new(type => 'assignment', %args);
-        $self->{target} = $args{target} // die "Assignment target required";
-        $self->{source} = $args{source} // die "Assignment source required";
+        $self->{target} = $args{target} // Carp::confess "Assignment target required";
+        $self->{source} = $args{source} // Carp::confess "Assignment source required";
         $self->{assignment_type} = $args{assignment_type} // 'combinatorial';
         $self->{timing_semantics} = $args{timing_semantics} // {};
         return $self;
@@ -1116,7 +1117,7 @@ package FSM::CoreAST::StateTransition;
     
     sub new($class, %args) {
         my $self = $class->SUPER::new(type => 'state_transition', %args);
-        $self->{target_state} = $args{target_state} // die "Target state required";
+        $self->{target_state} = $args{target_state} // Carp::confess "Target state required";
         $self->{transition_type} = $args{transition_type} // 'immediate';
         return $self;
     }
@@ -1132,7 +1133,7 @@ package FSM::CoreAST::SideEffect;
     # For actions that don't fit assignment/transition model (debugging, etc.)
     sub new($class, %args) {
         my $self = $class->SUPER::new(type => 'side_effect', %args);
-        $self->{effect_type} = $args{effect_type} // die "Side effect type required";
+        $self->{effect_type} = $args{effect_type} // Carp::confess "Side effect type required";
         $self->{parameters} = $args{parameters} // {};
         return $self;
     }
@@ -1218,7 +1219,7 @@ package FSM::CoreAST::PulseAssignment;
             assignment_type => 'pulse',
             %args
         );
-        $self->{pulse_cycles} = $args{pulse_cycles} // die "Pulse cycles required";
+        $self->{pulse_cycles} = $args{pulse_cycles} // Carp::confess "Pulse cycles required";
         $self->{fsm_type} = 'p' . $self->{pulse_cycles};
         return $self;
     }
@@ -1351,7 +1352,7 @@ package FSM::CoreAST::IncrementAssignment;
     
     sub new($class, %args) {
         my $self = $class->SUPER::new(type => 'increment', %args);
-        $self->{target} = $args{target} // die "Increment target required";
+        $self->{target} = $args{target} // Carp::confess "Increment target required";
         $self->{step} = $args{step} // 1;
         $self->{fsm_type} = 'inc';
         return $self;
@@ -1383,7 +1384,7 @@ package FSM::CoreAST::DecrementAssignment;
     
     sub new($class, %args) {
         my $self = $class->SUPER::new(type => 'decrement', %args);
-        $self->{target} = $args{target} // die "Decrement target required";
+        $self->{target} = $args{target} // Carp::confess "Decrement target required";
         $self->{step} = $args{step} // 1;
         $self->{fsm_type} = 'dec';
         return $self;
@@ -1438,7 +1439,7 @@ package FSM::CoreAST::TestNode;
     
     sub new($class, %args) {
         my $self = $class->SUPER::new(type => 'test_node', %args);
-        $self->{test_signal} = $args{test_signal} // die "Test signal required";
+        $self->{test_signal} = $args{test_signal} // Carp::confess "Test signal required";
         $self->{test_branches} = $args{test_branches} // [];  # [{value => val, actions => [...]}]
         $self->{fsm_type} = 'test';
         return $self;
@@ -1494,7 +1495,7 @@ package FSM::CoreAST::ControlFlow;
     # Base class for control flow constructs
     sub new($class, %args) {
         my $hash_ref = {};
-        $hash_ref->{type} = $args{type} // die "Control flow type required";
+        $hash_ref->{type} = $args{type} // Carp::confess "Control flow type required";
         $hash_ref->{condition} = $args{condition};
         $hash_ref->{branches} = $args{branches} // [];
         $hash_ref->{attributes} = $args{attributes} // {};
@@ -1559,7 +1560,7 @@ package FSM::CoreAST::CaseBranch;
 package FSM::CoreAST::DecisionTree;
     sub new($class, %args) {
         bless {
-            name => $args{name} // die "Decision tree name required",
+            name => $args{name} // Carp::confess("Decision tree name required"),
             enable_condition => $args{enable_condition},
             elements => $args{elements} // [],  # Mix of actions and control flow
             priority => $args{priority} // 0,
@@ -1676,7 +1677,7 @@ package FSM::CoreAST::DecisionTree;
 package FSM::CoreAST::State;
     sub new($class, %args) {
         bless {
-            name => $args{name} // die "State name required",
+            name => $args{name} // Carp::confess("State name required"),
             decision_trees => $args{decision_trees} // [],
             encoding => $args{encoding},
             attributes => $args{attributes} // {},
@@ -1699,7 +1700,7 @@ package FSM::CoreAST::State;
 package FSM::CoreAST::FSMModule;
     sub new($class, %args) {
         bless {
-            name => $args{name} // die "FSM module name required",
+            name => $args{name} // Carp::confess("FSM module name required"),
             states => $args{states} // [],
             signals => $args{signals} // {},
             clock_domains => $args{clock_domains} // {},

@@ -8,7 +8,9 @@ use File::Basename;
 use File::Spec;
 
 use FindBin;
-use lib "$FindBin::Bin";
+use File::Spec;
+use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, '..', '..', 'pgen', 'fx', 'specs');
 
 # Load required modules
 use FSM::Debug;  # Global debug system

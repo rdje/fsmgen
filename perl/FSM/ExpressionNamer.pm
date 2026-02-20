@@ -2,6 +2,7 @@ package FSM::ExpressionNamer;
 
 use strict;
 use warnings;
+use Carp qw(confess);
 use v5.20;
 use feature 'signatures';
 no warnings 'experimental::signatures';
@@ -32,7 +33,7 @@ sub new($class, %options) {
 sub name_ast_expression($self, $ast_expr) {
     # Sanity check
     unless (ref($ast_expr)) {
-        die "name_ast_expression requires an AST node, got a scalar: $ast_expr";
+        Carp::confess "name_ast_expression requires an AST node, got a scalar: $ast_expr";
     }
     
     # Handle different AST node types
