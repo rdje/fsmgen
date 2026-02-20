@@ -10,3 +10,11 @@ The `FSMGenFull.pm` adapter, written around earlier iterations of Lispish AST tr
 
 **Architectural Choices:**
 We chose a `Test::More` based IPC regression script over in-memory mocking for `t/01-regression.t` to ensure the compilation environment exactly perfectly mimics the target `SV` deployment. By aggressively ignoring the user-facing output directory `Entities/*` alongside a `File::Temp` interceptor, the automated suite leaves zero environment footprint. We chose not to test `generic_fifo.fsm` during regression as it employs topological module instantiation headers rather than parseable raw sequential states.
+
+# Context and Design Decisions: FSMGen Environment decoupling and CI Setup
+
+**The Designer View:**
+The FSMGen compiler originally hardcoded rigid absolute paths to a separate `pgen` package assuming it would permanently exist at `../pgen/fx`. Rather than contorting the tool into requiring an environment `$PGEN_HOME` configuration which bloats execution, we verified the repository can self-resolve these dependencies via `PathSearch.pm` assuming the `specs/` and `plugin/` folders exist locally in the `cwd`. Integrating these directly into the file system yields a self-contained, frictionless Perl FSM toolkit immediately accessible out of the box.
+
+**Architectural Choices:**
+We introduced a GitHub Actions `.yml` workflow binding `prove t/01-regression.t` strictly to PR events. This natively integrates the isolated `Test::More` IPC wrapper suite into the repo's lifecycle, ensuring all future core Perl `.pm` parser development maintains topological API compilation compatibility across Linux runners mechanically.

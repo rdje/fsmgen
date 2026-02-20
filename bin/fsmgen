@@ -10,7 +10,6 @@ use File::Spec;
 use FindBin;
 use File::Spec;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
-use lib File::Spec->catdir($FindBin::Bin, '..', '..', 'pgen', 'fx', 'specs');
 
 # Load required modules
 use FSM::Debug;  # Global debug system

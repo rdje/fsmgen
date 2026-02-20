@@ -1220,7 +1220,7 @@ my ($label, $code) = @_;
 }
 
 
-sub get_parser {use PathSearch; Get(\(my $o = do {open (my $f, PathSearch->go($_[0], 'spec')); local $/; <$f>}))}
+sub get_parser {use PathSearch; my $p = PathSearch->go($_[0], 'spec'); die "No spec $_[0]" unless $p; open(my $f, '<', $p) or die "Can't open $p: $!"; local $/; my $o = <$f>; Get(\$o)}
 
 sub AUTOLOAD   {PPlugin->exec($AUTOLOAD, @_)}
 

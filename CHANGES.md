@@ -20,3 +20,19 @@
 
 *   **Tracing Standardisation:**
     *   Replaced scattered string `die` statements across `FSM/` module structure with rigorously scoped stack-tracing via `Carp::confess` tracing libraries.
+
+# FSMGen Environment decoupling and GitHub CI Setup
+
+*   **PGen Decoupling:**
+    *   FSMGen dependencies (`specs/` and `plugin/`) have been adopted natively into the file system out of the `pgen/fx` external dependency path.
+    *   Removed `PPlugin.pm` `$top, '..', 'pgen', 'fx', 'plugin'` hotfix.
+    *   Removed `PathSearch.pm` hardcoded `../pgen` `@INC` addition.
+    *   Removed `FindBin` relative path from `bin/fsmgen`. 
+    *   All parsing is fully independent and dynamically resolved from the `cwd` or execution context!
+
+*   **Repository Onboarding:**
+    *   Drafted `README.md` at project root covering execution semantics, options, CI/CD testing guarantees and syntax pointing toward `WARP.md`.
+
+*   **Continuous Automation:**
+    *   Adopted `ubuntu-latest` GitHub Runner deploying Perl `5.32`.
+    *   Configured `.github/workflows/regression.yml` to trigger on PRs enforcing 100% green compliance of the IPC `01-regression.t` parsing suite against `fsm/`.
