@@ -99,6 +99,7 @@ sub generate_systemverilog ($self, $fsm_module) {
     $hdl .= $self->generate_module_declaration($fsm_module);
     $hdl .= $self->generate_state_encoding($fsm_module);
     $hdl .= $self->generate_state_register($fsm_module);
+    $hdl .= $self->generate_internal_signal_declarations($fsm_module);
     fsm_debug("Step 2 - Basic HDL structure generated", 3);
     
     # Step 3: Generate enable conditions FIRST (this will track intermediate signal requirements)
@@ -127,6 +128,120 @@ sub generate_systemverilog ($self, $fsm_module) {
     fsm_debug("*** PIPELINE TIMING DEBUG: HDL Generation Pipeline Complete ***\n", 3);
     
     return $hdl;
+}
+
+sub generate_verilog ($self, $fsm_module) {
+    fsm_debug("[FlattenedDT.pm][generate_verilog()] Starting flattened DT Verilog generation for " . $fsm_module->name, 3);
+    my $sv_hdl = $self->generate_systemverilog($fsm_module);
+    return $self->convert_systemverilog_to_verilog($sv_hdl);
+}
+
+sub convert_systemverilog_to_verilog ($self, $sv_hdl) {
+    my $verilog_hdl = $sv_hdl;
+    
+    # SystemVerilog procedural blocks -> Verilog-2001 compatible forms.
+    $verilog_hdl =~ s/\balways_comb\b/always @*/g;
+    $verilog_hdl =~ s/\balways_ff\s*@\s*\(/always @(/g;
+    
+    return $verilog_hdl;
+}
+
+sub generate_vhdl ($self, $fsm_module) {
+    die "[FlattenedDT.pm][generate_vhdl()] VHDL backend is not implemented yet. Use --language systemverilog or --language verilog.\n";
+}
+
+sub generate_internal_signal_declarations ($self, $fsm_module) {
+    my %declared_ports = %{$self->{declared_port_signals} || {}};
+    my %signal_decls;
+    my %aux_decls;
+    
+    my @regular_states = grep { $_->name !~ /^-/ } @{$fsm_module->states};
+    my $has_state_registers = scalar(@regular_states) > 0;
+    if ($has_state_registers) {
+        $declared_ports{current_state} = 1;
+        $declared_ports{next_state} = 1;
+    }
+    
+    for my $lhs (sort keys %{$self->{assignment_analysis} || {}}) {
+        my $lhs_analysis = $self->{assignment_analysis}{$lhs};
+        next unless $lhs_analysis;
+        
+        my $width = $self->get_lhs_width_from_analysis($lhs_analysis);
+        my $assignment_type = $self->get_signal_assignment_type($lhs, $lhs_analysis);
+        my $multiplexer_type = $lhs_analysis->{multiplexer}->{type} || 'comb';
+        
+        # Declare the main LHS only when it's not already a module port/state register.
+        unless ($declared_ports{$lhs}) {
+            $signal_decls{$lhs} = $width;
+        }
+        
+        # Declare mux helper registers only for flop-style multiplexers that consume them.
+        if ($multiplexer_type eq 'flop' && $assignment_type eq 'register_out') {
+            my $next_name = "${lhs}_next";
+            $aux_decls{$next_name} = $width unless $declared_ports{$next_name};
+        } elsif ($multiplexer_type eq 'flop' && $assignment_type eq 'register_in') {
+            my $q_name = "${lhs}_q";
+            $aux_decls{$q_name} = $width unless $declared_ports{$q_name};
+        }
+    }
+    
+    return "" unless (%signal_decls || %aux_decls);
+    
+    my $hdl = "  // Internal signal declarations\n";
+    for my $signal_name (sort keys %signal_decls) {
+        my $width = $signal_decls{$signal_name} || 1;
+        my $width_str = ($width > 1) ? "[" . ($width - 1) . ":0] " : "";
+        $hdl .= "  reg ${width_str}${signal_name};\n";
+    }
+    
+    if (%aux_decls) {
+        $hdl .= "  // Internal mux helper registers\n";
+        for my $signal_name (sort keys %aux_decls) {
+            my $width = $aux_decls{$signal_name} || 1;
+            my $width_str = ($width > 1) ? "[" . ($width - 1) . ":0] " : "";
+            $hdl .= "  reg ${width_str}${signal_name};\n";
+        }
+    }
+    $hdl .= "\n";
+    
+    return $hdl;
+}
+
+sub get_lhs_width_from_analysis ($self, $lhs_analysis) {
+    my $width;
+    my $lhs_ast = $lhs_analysis->{lhs_ast};
+    
+    if ($lhs_analysis->{signal_info} && $lhs_analysis->{signal_info}->{width}) {
+        my $signal_width = $lhs_analysis->{signal_info}->{width};
+        if (defined($signal_width) && $signal_width > 0) {
+            $width = $signal_width;
+        }
+    }
+    
+    if ($lhs_ast && blessed($lhs_ast)) {
+        if ((!defined($width) || $width < 1) && $lhs_ast->can('signal') && $lhs_ast->signal && $lhs_ast->signal->can('width')) {
+            my $signal_width = $lhs_ast->signal->width;
+            if (defined($signal_width) && $signal_width > 0) {
+                $width = $signal_width;
+            }
+        } elsif ((!defined($width) || $width < 1) && $lhs_ast->can('width')) {
+            my $ast_width = $lhs_ast->width;
+            if (defined($ast_width) && $ast_width > 0) {
+                $width = $ast_width;
+            }
+        }
+        
+        # Fallback via FSM module signal metadata when width isn't available on the AST node.
+        if ((!defined($width) || $width < 1) && $lhs_ast->can('name')) {
+            my $signal_info = $self->get_signal_info($lhs_ast->name);
+            if ($signal_info && $signal_info->{width} && $signal_info->{width} > 0) {
+                $width = $signal_info->{width};
+            }
+        }
+    }
+    
+    $width = 1 unless (defined($width) && $width > 0);
+    return $width;
 }
 
 sub flatten_all_decision_trees ($self, $fsm_module) {
@@ -521,6 +636,31 @@ sub build_multiplexer_config ($self, $lhs) {
     
     fsm_debug("  Multiplexer: type=$lhs_analysis->{multiplexer}->{type}, " . scalar(@mux_enables) . " enables", 3);
 }
+sub extract_lhs_name_from_ast ($self, $lhs_ast) {
+    return 'unknown_lhs' unless $lhs_ast;
+    
+    if ($lhs_ast->can('name')) {
+        my $name = eval { $lhs_ast->name() };
+        return $name if defined($name) && $name ne '';
+    }
+    
+    if ($lhs_ast->isa('FSM::CoreAST::SignalRef') && $lhs_ast->signal && $lhs_ast->signal->can('name')) {
+        return $lhs_ast->signal->name;
+    }
+    
+    if ($lhs_ast->isa('FSM::CoreAST::IndexedRef') && $lhs_ast->signal && ref($lhs_ast->signal) && $lhs_ast->signal->can('name')) {
+        return $lhs_ast->signal->name;
+    }
+    
+    if ($lhs_ast->can('to_systemverilog')) {
+        my $sv = eval { $lhs_ast->to_systemverilog() };
+        if (defined($sv) && $sv =~ /^([a-zA-Z_]\w*)/) {
+            return $1;
+        }
+    }
+    
+    return 'unknown_lhs';
+}
 
 sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
     return unless $dt_node;
@@ -616,7 +756,8 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
         }
         
     } elsif ($dt_node->isa('FSM::CoreAST::Assignment') || $dt_node->isa('FSM::CoreAST::RegisterAssignment')) {
-        fsm_debug("  Assignment: " . $dt_node->target->name . " <- " . ref($dt_node->source), 3);
+        my $assignment_target_name = $self->extract_lhs_name_from_ast($dt_node->target);
+        fsm_debug("  Assignment: " . $assignment_target_name . " <- " . ref($dt_node->source), 3);
         
         # Record this assignment with current condition stack (now AST nodes)
         $self->record_assignment_from_ast($dt_name, $dt_node, $condition_stack);
@@ -982,8 +1123,10 @@ sub generate_header ($self, $fsm_module) {
 
 sub generate_module_declaration ($self, $fsm_module) {
     my $hdl = "module " . $fsm_module->name . " (\n";
-    $hdl .= "  input  wire clk,\n";
-    $hdl .= "  input  wire rstn,\n";
+    my @base_ports = (
+        "  input  wire clk",
+        "  input  wire rstn",
+    );
     
     # Add all the signal ports based on the parsed FSM
     my $signals = $fsm_module->signals;
@@ -993,7 +1136,8 @@ sub generate_module_declaration ($self, $fsm_module) {
     fsm_debug("HDL Generation: Processing " . scalar(keys %$signals) . " signals for module declaration", 3);
     
     # Track seen signals to avoid duplicates
-    my %seen_signals = ('clk' => 1, 'rstn' => 1);  # Already added above
+    my %seen_signals = ('clk' => 1, 'rstn' => 1);  # Base ports
+    my %port_directions = ('clk' => 'input', 'rstn' => 'input');
     
     # Check which signals are driven (outputs) vs used (inputs)
     my %driven_signals = $self->get_driven_signals();
@@ -1067,27 +1211,15 @@ sub generate_module_declaration ($self, $fsm_module) {
         
         if ($is_output) {
             push @outputs, "  output reg  ${width_str}${sig_name}";
+            $port_directions{$sig_name} = 'output';
         } else {
             push @inputs, "  input  wire ${width_str}${sig_name}";
+            $port_directions{$sig_name} = 'input';
         }
     }
     
-    # Add basic signals if not already present
-    unless ($seen_signals{apb_rq}) {
-        push @inputs, "  input  wire apb_rq";
-        $seen_signals{apb_rq} = 1;
-    }
-    unless ($seen_signals{apb_wrn}) {
-        push @inputs, "  input  wire apb_wrn";
-        $seen_signals{apb_wrn} = 1;
-    }
-    unless ($seen_signals{pready}) {
-        push @inputs, "  input  wire pready";
-        $seen_signals{pready} = 1;
-    }
-    
     # Join all port declarations with proper ANSI-C SystemVerilog syntax
-    my @all_ports = (@inputs, @outputs);
+    my @all_ports = (@base_ports, @inputs, @outputs);
     for my $i (0 .. $#all_ports) {
         $hdl .= $all_ports[$i];
         if ($i < $#all_ports) {
@@ -1097,6 +1229,10 @@ sub generate_module_declaration ($self, $fsm_module) {
         }
     }
     $hdl .= ");\n\n";
+    
+    # Save port declarations for downstream internal declaration generation.
+    $self->{declared_port_signals} = { %seen_signals };
+    $self->{port_directions} = { %port_directions };
     
     return $hdl;
 }
@@ -1541,23 +1677,8 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
     
     fsm_debug("*** DEPENDENCY-AWARE FILTERING COMPLETE ***\n", 3);
     
-    # Step 4a: Generate wire declarations for combinational LHS signals
-    my %combinational_lhs_signals = $self->get_combinational_lhs_signals();
-    if (%combinational_lhs_signals) {
-        $hdl .= "  // Wire declarations for combinational LHS signals\n";
-        for my $signal_name (sort keys %combinational_lhs_signals) {
-            my $signal_info = $combinational_lhs_signals{$signal_name};
-            my $width = $signal_info->{width} || 1;
-            
-            # Generate wire declaration
-            if ($width > 1) {
-                $hdl .= "  wire [" . ($width - 1) . ":0] $signal_name;\n";
-            } else {
-                $hdl .= "  wire $signal_name;\n";
-            }
-        }
-        $hdl .= "\n";
-    }
+    # Step 4a: LHS signal declarations are emitted once in generate_internal_signal_declarations().
+    # Avoid redeclaring them here with incompatible types.
     
     # Step 4b: Generate HDL for consolidated intermediate signals
     if (%filtered_signals) {
@@ -3550,12 +3671,13 @@ sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_st
     # AST WEB IMPLEMENTATION: Store AST nodes directly, not strings!
     my $lhs_signal_ast = $assignment_node->target;  # Keep the AST node
     my $rhs_expr = $assignment_node->source;
+    my $lhs_name = $self->extract_lhs_name_from_ast($lhs_signal_ast);
     
     # PURE AST/OOP: Ask the AST node directly for debugging information
     fsm_debug("\n*** PHASE1 ASSIGNMENT NODE REACHED (AST WEB) ***", 3);
     fsm_debug("  DT: $dt_name", 3);
     fsm_debug("  LHS AST Node: " . ref($lhs_signal_ast), 3);
-    fsm_debug("  LHS Name: " . $lhs_signal_ast->name(), 3);
+    fsm_debug("  LHS Name: " . $lhs_name, 3);
     
     # CRITICAL: Debug the condition stack contents at assignment time
     fsm_debug("  CONDITION STACK ANALYSIS:", 3);
@@ -3584,7 +3706,7 @@ sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_st
     
     fsm_debug("  SEMANTIC ASSIGNMENT RESULT:", 3);
     fsm_debug("    LHS AST Node: " . ref($lhs_signal_ast), 3);
-    fsm_debug("    LHS Name: " . $lhs_signal_ast->name(), 3);
+    fsm_debug("    LHS Name: " . $lhs_name, 3);
     fsm_debug("    RHS: $actual_rhs", 3);
     fsm_debug("    Operator: $operator", 3);
     fsm_debug("    Condition AST: " . (blessed($condition_ast) ? ref($condition_ast) : 'NOT_BLESSED'), 3);
@@ -3592,10 +3714,10 @@ sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_st
     fsm_debug("    Condition Signal Name: '$condition_signal_name'", 3);
     
     # Track this actual LHS/RHS pair for validation (still need strings for validation)
-    $self->track_actual_lhs_rhs($lhs_signal_ast->name(), $actual_rhs, "ast_assignment:$dt_name");
+    $self->track_actual_lhs_rhs($lhs_name, $actual_rhs, "ast_assignment:$dt_name");
     
     # AST WEB: Use signal name as key but maintain AST mapping
-    my $lhs_name_key = $lhs_signal_ast->name();
+    my $lhs_name_key = $lhs_name;
     
     # Record the assignment with the signal name as key
     push @{$self->{lhs_assignments}->{$lhs_name_key}}, {

@@ -1,20 +1,58 @@
-# Context and Design Decisions: FSMGen Parser Modernization
+# DEVELOPMENT_NOTES
+This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
 
-**The Designer View:**
-The `FSMGenFull.pm` adapter, written around earlier iterations of Lispish AST traversal, had evolved into a "God object" accumulating over 2,000 lines. The sheer complexity of evaluating syntactic tokens concurrently with abstract semantic routing meant any bugs across specific architectures (like MIPICSI or LTE cores) were impossible to trace without enormous cognitive load. By factoring this monolithic logic out using Solid design paradigms into discrete domains (`SignalManager`, `ExpressionBuilder`, `Parser`, `SignalAnalyzer`), the system is fundamentally cleaner to read and debug for subsequent FSM developers. 
+## Current parser/generator model
+- Parse flow is modularized into `SignalManager`, `ExpressionBuilder`, `Parser`, and `SignalAnalyzer`.
+- Fail-fast behavior uses `Carp::confess` with stack traces instead of silent parser failures.
+- The regression baseline remains CLI-level (`prove -v t/01-regression.t`) to validate real generation paths.
 
-**The Picky View & Execution Context:**
-- We discovered recursive edge cases deep in the Lispish parser logic (like `mipicsi2_txdcore_hs.fsm` leveraging complex `?(| a b c)` expressions). Because boolean AST nodes were intrinsically nested as arrays with leading operands rather than binary trees, the original parsing routinely passed implicit `undef` signal tags downward, terminating FSM instantiation silently and destroying the FSM output state block.
-- A profound Perl compiler behavioral quirk was also identified. Syntaxes using `bless { var => $val // die "msg", next_var => "test" }` behave erroneously; the unparenthesized `die` falls into list-context logic and assumes trailing keys/values as function parameters! By meticulously enforcing `Carp::confess` execution with strict parenthesis, this unhinged bug is permanently neutralized.
-- Moving forward, all FSM compiler faults trigger strict `Carp::confess` bindings, surfacing precise stack traces. This directly prevents topological macro implementations matching silently and crashing.
+## Assignment semantics and safety policy
+### Semantics
+- `=` is combinational.
+- `<-` and `<=` are synchronous/flopped forms.
 
-**Architectural Choices:**
-We chose a `Test::More` based IPC regression script over in-memory mocking for `t/01-regression.t` to ensure the compilation environment exactly perfectly mimics the target `SV` deployment. By aggressively ignoring the user-facing output directory `Entities/*` alongside a `File::Temp` interceptor, the automated suite leaves zero environment footprint. We chose not to test `generic_fifo.fsm` during regression as it employs topological module instantiation headers rather than parseable raw sequential states.
+### Safety rule
+- Combinational assignments must not create self-dependency:
+  - direct (`A = A`)
+  - indirect/transitive (`A = f(B)`, `B = g(A)`)
+- Synchronous feedback is valid (`A <- A`) and intentionally preserved.
 
-# Context and Design Decisions: FSMGen Environment decoupling and CI Setup
+## Why graph-based combinational validation was chosen
+Direct text checks are insufficient because harmful dependence can be indirect.  
+Decision:
+- Track combinational dependencies as graph edges (`lhs -> rhs signal`) during parse.
+- Validate cycle reachability per combinational target before module return.
+- Reject with explicit error if any path returns to the same target.
 
-**The Designer View:**
-The FSMGen compiler originally hardcoded rigid absolute paths to a separate `pgen` package assuming it would permanently exist at `../pgen/fx`. Rather than contorting the tool into requiring an environment `$PGEN_HOME` configuration which bloats execution, we verified the repository can self-resolve these dependencies via `PathSearch.pm` assuming the `specs/` and `plugin/` folders exist locally in the `cwd`. Integrating these directly into the file system yields a self-contained, frictionless Perl FSM toolkit immediately accessible out of the box.
+Benefits:
+- One generalized guard handles all `A = f(...)` cases.
+- Order-independent detection (works regardless of statement order in source).
+- Clear extension point for future combinational rule checks.
 
-**Architectural Choices:**
-We introduced a GitHub Actions `.yml` workflow binding `prove t/01-regression.t` strictly to PR events. This natively integrates the isolated `Test::More` IPC wrapper suite into the repo's lifecycle, ensuring all future core Perl `.pm` parser development maintains topological API compilation compatibility across Linux runners mechanically.
+## Parser improvements retained
+- Compound update shorthand and inline forms are supported:
+  - `(++ sig)`, `(-- sig)`, `(+=K sig)`, `(-=K sig)`
+  - `(A <- B (+= 2))`, `(A = B (-= 1))`
+- Packed nested condition encoding is handled:
+  - `['<', [cond, ...]]`
+  - `['<!', [cond, ...]]`
+- Scalar negation tokens and packed operands are normalized in expression parsing.
+
+## Backend status rationale
+- Verilog path exists via SystemVerilog emission followed by deterministic textual lowering.
+- VHDL path is intentionally explicit not-implemented rather than failing with missing method errors.
+- This prevents ambiguous failures and keeps CLI behavior predictable.
+
+## Documentation consolidation policy (current)
+- Canonical top-level docs:
+  - `README.md` (overview + quickstart)
+  - `CHANGES.md` (persistent technical history)
+  - `DEVELOPMENT_NOTES.md` (this file; rationale and context)
+- Canonical user guide:
+  - `docs/USER_GUIDE.md`
+- Investigation-era and duplicate docs are removed once their conclusions are merged into canonical files.
+
+## Ongoing engineering expectations
+- Keep debug messages traceable with clear `[file][function()]` context.
+- Prefer AST-based generation/transforms over regex-driven rewrites.
+- Add focused regression tests for every parser/generator rule that can silently regress.

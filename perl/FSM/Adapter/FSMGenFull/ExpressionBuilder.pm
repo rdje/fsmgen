@@ -34,26 +34,49 @@ sub parse_condition($self, $condition) {
         return $self->parse_expression($condition);
     }
     
-    # OLD FORMAT: string condition like '<signal_name' or '<!signal_name'
+    # OLD FORMAT: string condition like '<signal_name', '<!signal_name', '<signal=value'
     if ($condition =~ /^<!(.+)$/) {
-        # Negative condition: <!signal
-        my $signal_name = $1;
-        fsm_debug("          Parsing negative condition: !$signal_name", 3);
-        my $signal_expr = $self->parse_signal_reference($signal_name);
+        # Negative condition: <!signal or <!signal=value
+        my $condition_spec = $1;
+        fsm_debug("          Parsing negative condition: !$condition_spec", 3);
+        my $condition_expr = $self->parse_legacy_condition_spec($condition_spec);
         return FSM::CoreAST::UnaryOp->new(
             operator => '!',
-            operand => $signal_expr
+            operand => $condition_expr
         );
     } elsif ($condition =~ /^<(.+)$/) {
-        # Positive condition: <signal
-        my $signal_name = $1;
-        fsm_debug("          Parsing positive condition: $signal_name", 3);
-        return $self->parse_signal_reference($signal_name);
+        # Positive condition: <signal or <signal=value
+        my $condition_spec = $1;
+        fsm_debug("          Parsing positive condition: $condition_spec", 3);
+        return $self->parse_legacy_condition_spec($condition_spec);
     } else {
         # Unexpected format like 'signal_name'
         fsm_debug("          WARNING: Unexpected condition string string='$condition'. Treating as positive condition.", 3);
         return $self->parse_signal_reference($condition);
     }
+}
+
+sub parse_legacy_condition_spec($self, $condition_spec) {
+    # Parse legacy condition payload found after < or <! prefixes.
+    # Supports:
+    #   signal          -> SignalRef(signal)
+    #   signal=value    -> BinaryOp('==', SignalRef(signal), parse_expression(value))
+    $condition_spec =~ s/^\s+|\s+$//g;
+    
+    # Equality form used heavily in .fsm files: <s=8'0
+    if ($condition_spec =~ /^([a-zA-Z_]\w*)=(.+)$/) {
+        my ($lhs_signal, $rhs_expr) = ($1, $2);
+        $rhs_expr =~ s/^\s+|\s+$//g;
+        
+        my $lhs = $self->parse_signal_reference($lhs_signal);
+        my $rhs = $self->parse_expression($rhs_expr);
+        
+        fsm_debug("          Legacy condition parsed as equality: $lhs_signal == $rhs_expr", 3);
+        return FSM::CoreAST::BinaryOp->new('==', $lhs, $rhs);
+    }
+    
+    # Simple signal presence condition
+    return $self->parse_signal_reference($condition_spec);
 }
 
 sub is_recursive_expression($self, $expr) {
@@ -68,6 +91,14 @@ sub is_recursive_expression($self, $expr) {
 
 sub parse_recursive_expression($self, $expr) {
     my ($operator, @operands) = @$expr;
+    
+    # Lispish often packs n-ary operands in a single array:
+    #   ['&', ['a', 'b', 'c']]
+    # Normalize to a flat list.
+    if (@operands == 1 && ref($operands[0]) eq 'ARRAY') {
+        @operands = @{$operands[0]};
+    }
+    
     fsm_debug("          Recursive expr: $operator with " . scalar(@operands) . " operands", 3);
     
     my @parsed_operands;
@@ -188,10 +219,10 @@ sub parse_expression($self, $expr) {
 sub parse_scalar_expression($self, $scalar) {
     fsm_debug("        PARSE_SCALAR: Processing scalar '$scalar'", 3);
     
-    if ($scalar =~ /^(\d+)'([bdhBDH])([0-9a-fA-F_]+)$/) {
+    if ($scalar =~ /^(\d+)'([bdhxBDHX])([0-9a-fA-F_]+)$/) {
         my ($width, $radix_char, $value) = ($1, lc($2), $3);
         $value =~ s/_//g;
-        my %radix_map = ('b' => 'binary', 'd' => 'decimal', 'h' => 'hex');
+        my %radix_map = ('b' => 'binary', 'd' => 'decimal', 'h' => 'hex', 'x' => 'hex');
         my $radix = $radix_map{$radix_char} // 'decimal';
         return FSM::CoreAST::Literal->new($value, width => $width, radix => $radix);
     } elsif ($scalar =~ /^(\d+)'([0-9a-fA-F_]+)$/) {
@@ -200,10 +231,19 @@ sub parse_scalar_expression($self, $scalar) {
         return FSM::CoreAST::Literal->new($value, width => $width, radix => 'decimal');
     } elsif ($scalar =~ /^(\d+)$/) {
         return FSM::CoreAST::Literal->new($scalar);
-    } elsif ($scalar =~ /^const_\d+b\d+$/) {
-        fsm_debug("          CONST SIGNAL: '$scalar' - treating as regular input signal (no width inference from name)", 3);
-        my $signal = $self->{signal_manager}->register_signal($scalar, type => 'input');
-        return FSM::CoreAST::SignalRef->new($signal);
+    } elsif ($scalar =~ /^const_(\d+)b([01xXzZ_]+)$/) {
+        # Common FSMGen constant encoding, e.g. const_8b0 / const_16b0000_1111
+        my ($width, $value) = ($1, $2);
+        $value =~ s/_//g;
+        fsm_debug("          CONST LITERAL: '$scalar' -> ${width}'b$value", 3);
+        return FSM::CoreAST::Literal->new($value, width => $width, radix => 'binary');
+    } elsif ($scalar =~ /^!([a-zA-Z_]\w*(?:\[[\d:]+\])?)$/) {
+        # Legacy compact negation token, e.g. !wren
+        my $operand = $self->parse_signal_reference($1);
+        return FSM::CoreAST::UnaryOp->new(
+            operator => '!',
+            operand => $operand
+        );
     } elsif ($scalar =~ /^([a-zA-Z_]\w*)(\.[a-zA-Z_]\w*)?(\[[\d:]+\])?('(\d+))?(\>)?$/) {
         my ($base_name, $member_name, $slice, $width_annotation, $width, $output_marker) = ($1, $2, $3, $4, $5, $6);
         my $full_name = $member_name ? "$base_name$member_name" : $base_name;
@@ -224,7 +264,7 @@ sub parse_scalar_expression($self, $scalar) {
             if ($slice =~ /\[(\d+):(\d+)\]/) {
                 return FSM::CoreAST::SignalRef->new($signal, slice => [$1, $2]);
             } elsif ($slice =~ /\[(\d+)\]/) {
-                return FSM::CoreAST::IndexedRef->new(signal => $signal, index => FSM::CoreAST::Literal->new($1));
+                return FSM::CoreAST::IndexedRef->new($signal, FSM::CoreAST::Literal->new($1));
             }
         }
         

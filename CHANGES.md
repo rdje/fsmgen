@@ -1,38 +1,50 @@
-# FSMGen parser refactoring and error handling modernization
+# CHANGES
+This is the persistent technical change history for FSMGen.
 
-*   **FSMGenFull Monolith Decomposition:**
-    *   Removed `perl/FSM/Adapter/FSMGenFull.pm` 2.1k line execution and rewrote it as a facade orchestrating 4 distinct parsing sub-modules.
-    *   Created `FSM::Adapter::FSMGenFull::SignalManager`: responsible for traversing the topology and registering input/output signals dynamically, factoring away symbol registry properties.
-    *   Created `FSM::Adapter::FSMGenFull::ExpressionBuilder`: extracts complex nested expressions and factors them iteratively into isolated combinational intermediates to ensure correct multi-width matching and syntax.
-    *   Created `FSM::Adapter::FSMGenFull::Parser`: Dispatches states and action elements across decision-trees cleanly using topological semantics.
-    *   Created `FSM::Adapter::FSMGenFull::SignalAnalyzer`: Passes over the completely unified FSMModule AST after instantiation to correctly verify all assignments and dependencies.
+## 2026-02-21
+### Parser and expression handling
+- Added parser support for compound update shorthand and inline modifiers:
+  - `(++ sig)`, `(-- sig)`, `(+=K sig)`, `(-=K sig)`
+  - Inline forms in assignments such as `(A <- B (+= 2))` and `(A = B (-= 1))`
+- Fixed nested packed conditional parsing for forms encoded as:
+  - `['<',  [cond, action1, ...]]`
+  - `['<!', [cond, action1, ...]]`
+- Improved expression parsing for packed recursive operands and scalar negation tokens (e.g. `!wren`).
 
-*   **Lispish Nested Expression AST Parsing:**
-    *   Mitigated a subtle implicit array traversal failure in the Lispish string representation parsing logic.
-    *   `?(| is_fe2fs is_le2ls is_pf2ph)` in `mipicsi` was throwing AST errors because group conditions returned layered Arrays. Handled via the AST Extractor to route recursive boolean logic cleanly.
+### Backend behavior hardening
+- Added explicit `generate_verilog()` path in `perl/FSM/HDL/FlattenedDT.pm` with SystemVerilog-to-Verilog conversion (`always_comb`→`always @*`, `always_ff` lowering).
+- Added explicit `generate_vhdl()` method that fails with a clear not-implemented error instead of method-missing crashes.
+- Fixed indexed-target handling in flattening paths where direct `->name` assumptions caused runtime failures.
 
-*   **CoreAST Perl Hash Execution Fix:**
-    *   Replaced subtle but lethal `$hash->{target} = $source // die "err",` constructor logic over 20+ files. The un-parenthesized `die` syntax was covertly swallowing successive hash keys due to list-context parsing, destroying AST object properties.
+### Combinational self-dependency safety rule (`=`)
+- Enforced generalized rule: combinational assignment RHS must not depend (directly or transitively) on the same LHS.
+- Implemented graph-based dependency tracking for `=` assignments in `perl/FSM/Adapter/FSMGenFull/Parser.pm`:
+  - Record `LHS -> RHS signals` for each combinational assignment.
+  - Detect cycles per LHS and reject with `Carp::confess`.
+- Preserved synchronous legality: loopback forms like `(A <- A)` remain allowed.
 
-*   **Regression Infrastructure:**
-    *   Removed untested unused classes (`ASTv1.pm` -> `ASTv5.pm`).
-    *   Built `t/01-regression.t` running `Test::More` IPC wrapper verifying end-to-end `fsmgen` translation across `fsm/*.fsm` directory instances, safely ignoring templates (`generic_fifo.fsm`).
+### Tests
+- Added focused regression file: `t/02-combinational-self-dependency.t`
+  - Direct reject: `(A = A)`
+  - Indirect reject: `(A = B)` + `(B = A)`
+  - Positive allow: `(A <- A)`
+- Validated with:
+  - `prove -v t/02-combinational-self-dependency.t`
+  - `prove -v t/01-regression.t` (20/20 pass).
 
-*   **Tracing Standardisation:**
-    *   Replaced scattered string `die` statements across `FSM/` module structure with rigorously scoped stack-tracing via `Carp::confess` tracing libraries.
+### Documentation consolidation
+- Consolidated and refreshed root docs (`README.md`, `CHANGES.md`, `DEVELOPMENT_NOTES.md`).
+- Promoted and renamed user guide to `docs/USER_GUIDE.md`.
+- Removed stale/duplicate investigation-era markdown files from `docs/`.
 
-# FSMGen Environment decoupling and GitHub CI Setup
+## 2025-08 (consolidated historical highlights)
+- Fixed intermediate signal declaration/filtering defects in `FlattenedDT.pm`, including reference-aware and multi-registry dependency tracking.
+- Fixed intermediate self-reference generation during multi-pass substitution.
+- Fixed conditional transition suffix parsing (`<sig`, `<!sig`) for correct enable differentiation.
+- Fixed operator selection and register feedback defaults for cleaner, synthesis-friendly RTL.
+- Stabilized width inference behavior and parser/generator robustness across large FSM inputs.
 
-*   **PGen Decoupling:**
-    *   FSMGen dependencies (`specs/` and `plugin/`) have been adopted natively into the file system out of the `pgen/fx` external dependency path.
-    *   Removed `PPlugin.pm` `$top, '..', 'pgen', 'fx', 'plugin'` hotfix.
-    *   Removed `PathSearch.pm` hardcoded `../pgen` `@INC` addition.
-    *   Removed `FindBin` relative path from `bin/fsmgen`. 
-    *   All parsing is fully independent and dynamically resolved from the `cwd` or execution context!
-
-*   **Repository Onboarding:**
-    *   Drafted `README.md` at project root covering execution semantics, options, CI/CD testing guarantees and syntax pointing toward `WARP.md`.
-
-*   **Continuous Automation:**
-    *   Adopted `ubuntu-latest` GitHub Runner deploying Perl `5.32`.
-    *   Configured `.github/workflows/regression.yml` to trigger on PRs enforcing 100% green compliance of the IPC `01-regression.t` parsing suite against `fsm/`.
+## Earlier foundational changes
+- Refactored monolithic FSM adapter flow into modular parser components (`SignalManager`, `ExpressionBuilder`, `Parser`, `SignalAnalyzer`).
+- Standardized fatal error reporting with `Carp::confess`.
+- Established baseline regression infrastructure (`t/01-regression.t`) and project self-containment.

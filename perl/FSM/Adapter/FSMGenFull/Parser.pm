@@ -19,6 +19,7 @@ sub new($class, %args) {
         signal_manager => $args{signal_manager},
         expression_builder => $args{expression_builder},
         fsm_module => undef,
+        combinational_dependency_graph => {},
     }, $class;
 }
 
@@ -28,6 +29,7 @@ sub get_fsm_module($self) {
 
 sub parse_fsm($self, $raw_ast) {
     fsm_debug("Starting full FSMGen parsing", 3);
+    $self->reset_combinational_dependency_tracking();
     
     if (ref($raw_ast) eq 'ARRAY') {
         if (@$raw_ast > 0 && !ref($raw_ast->[0]) && $raw_ast->[0] =~ /^\?fsm:/) {
@@ -49,6 +51,7 @@ sub parse_fsm($self, $raw_ast) {
 }
 
 sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
+    $self->reset_combinational_dependency_tracking();
     my $module_name;
     my $fsm_contents;
     
@@ -104,6 +107,8 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
             $module->add_state($state) if $state;
         }
     }
+
+    $self->validate_no_combinational_self_dependency();
     
     return $module;
 }
@@ -115,6 +120,190 @@ sub parse_constants_section($self, $constants_ast) {
         my $literal_expr = $self->{expression_builder}->parse_scalar_expression($value);
         $self->{signal_manager}->store_constant($name, $literal_expr);
     }
+}
+sub is_compound_update_shorthand($self, $action_target, $action_spec) {
+    return 0 unless defined $action_target;
+    return 0 unless ref($action_spec) eq 'ARRAY' && @$action_spec >= 1;
+    
+    # Supported forms:
+    #   (++ signal)
+    #   (-- signal)
+    #   (+=2 signal) / (-=4 signal)
+    #   (+= signal amount) / (-= signal amount)
+    return ($action_target =~ /^(?:\+\+|--|\+=.*|-=.*)$/) ? 1 : 0;
+}
+
+sub parse_compound_update_shorthand($self, $action) {
+    my ($compound_token, $args) = @$action;
+    return undef unless ref($args) eq 'ARRAY' && @$args >= 1;
+    
+    my ($compound_op, $delta_spec);
+    
+    if ($compound_token eq '++') {
+        $compound_op = '+=';
+        $delta_spec = '1';
+    } elsif ($compound_token eq '--') {
+        $compound_op = '-=';
+        $delta_spec = '1';
+    } elsif ($compound_token =~ /^(\+=|-=)(.+)$/) {
+        $compound_op = $1;
+        $delta_spec = $2;
+        $delta_spec =~ s/^\s+|\s+$//g;
+    } elsif ($compound_token eq '+=' || $compound_token eq '-=') {
+        $compound_op = $compound_token;
+    } else {
+        return undef;
+    }
+    
+    my $signal_name = $args->[0];
+    return undef unless defined $signal_name && !ref($signal_name);
+    
+    my @remaining = @$args[1 .. $#$args];
+    if (!defined($delta_spec) && @remaining) {
+        $delta_spec = shift @remaining;
+    }
+    $delta_spec = '1' unless defined $delta_spec;
+    
+    fsm_debug("[Parser.pm][parse_compound_update_shorthand()] Expanding '$compound_token' for '$signal_name' with delta '$delta_spec'", 3);
+    
+    # Canonical expansion:
+    #   (++ x)      => (x <- x (+= 1))
+    #   (+=2 x)     => (x <- x (+= 2))
+    #   (-=4 x)     => (x <- x (-= 4))
+    my @operation_spec = ('<-', $signal_name, [$compound_op, [$delta_spec]], @remaining);
+    my $expanded_action = [$signal_name, \@operation_spec];
+    
+    return $self->parse_signal_action($expanded_action);
+}
+
+sub build_full_condition_from_parts($self, @condition_parts) {
+    return undef unless @condition_parts;
+    
+    # New-format encoded condition payloads:
+    #   ['<',  <expr-ast>]
+    #   ['<!', <expr-ast>]
+    if (@condition_parts >= 2 && !ref($condition_parts[0]) && ($condition_parts[0] eq '<' || $condition_parts[0] eq '<!')) {
+        my ($prefix, $payload) = @condition_parts[0, 1];
+        if (ref($payload) eq 'ARRAY') {
+            return ($prefix eq '<!') ? ['!', $payload] : $payload;
+        } elsif (defined $payload && !ref($payload)) {
+            return ($prefix eq '<!') ? "<!$payload" : "<$payload";
+        }
+    }
+    
+    # Legacy/string forms:
+    #   '<signal', '<!signal', '<signal=value'
+    return $condition_parts[0];
+}
+sub reset_combinational_dependency_tracking($self) {
+    $self->{combinational_dependency_graph} = {};
+}
+
+sub normalize_signal_name($self, $signal_name) {
+    my $normalized = $signal_name // '';
+    $normalized =~ s/\..*$//;       # Strip member suffix
+    $normalized =~ s/\[.*$//;       # Strip bit/slice suffix
+    $normalized =~ s/'.*$//;        # Strip width suffix
+    $normalized =~ s/>$//;          # Strip output marker
+    $normalized =~ s/^\s+|\s+$//g;
+    return $normalized;
+}
+
+sub extract_expression_signal_names($self, $expr) {
+    return [] unless $expr && ref($expr);
+
+    my %unique_names;
+    if ($expr->can('get_signals')) {
+        my $signals = eval { $expr->get_signals() };
+        if ($signals && ref($signals) eq 'ARRAY') {
+            for my $signal (@$signals) {
+                next unless $signal && ref($signal) && $signal->can('name');
+                my $name = eval { $signal->name() };
+                next unless defined $name;
+                my $normalized = $self->normalize_signal_name($name);
+                $unique_names{$normalized} = 1 if $normalized ne '';
+            }
+        }
+    }
+
+    return [sort keys %unique_names];
+}
+
+sub record_combinational_dependencies($self, $target_signal_name, $source_expr) {
+    my $target_name = $self->normalize_signal_name($target_signal_name);
+    return if $target_name eq '';
+
+    my $sources = $self->extract_expression_signal_names($source_expr);
+    $self->{combinational_dependency_graph}{$target_name} //= {};
+    for my $source_name (@$sources) {
+        next if !defined($source_name) || $source_name eq '';
+        $self->{combinational_dependency_graph}{$target_name}{$source_name} = 1;
+    }
+
+    fsm_debug(
+        "[Parser.pm][record_combinational_dependencies()] Recorded '=' dependencies for '$target_name': "
+        . (@$sources ? join(', ', @$sources) : '<none>'),
+        3
+    );
+}
+
+sub find_cycle_path_from_target($self, $target_signal_name) {
+    my $graph = $self->{combinational_dependency_graph} || {};
+    return undef unless exists $graph->{$target_signal_name};
+
+    my @queue = map { [$target_signal_name, $_] } sort keys $graph->{$target_signal_name}->%*;
+    my %visited;
+
+    while (@queue) {
+        my $path = shift @queue;
+        my $node = $path->[-1];
+        return $path if $node eq $target_signal_name;
+
+        next if $visited{$node}++;
+        next unless exists $graph->{$node};
+
+        for my $next_node (sort keys $graph->{$node}->%*) {
+            push @queue, [@$path, $next_node];
+        }
+    }
+
+    return undef;
+}
+
+sub validate_no_combinational_self_dependency($self) {
+    my $graph = $self->{combinational_dependency_graph} || {};
+    return unless keys %$graph;
+
+    for my $target_signal_name (sort keys %$graph) {
+        my $cycle_path = $self->find_cycle_path_from_target($target_signal_name);
+        next unless $cycle_path && @$cycle_path >= 2;
+
+        my $path_str = join(' -> ', @$cycle_path);
+        fsm_debug(
+            "[Parser.pm][validate_no_combinational_self_dependency()] Illegal combinational cycle detected: $path_str",
+            3
+        );
+        Carp::confess(
+            "[Parser.pm][validate_no_combinational_self_dependency()] Illegal combinational self-dependency for '$target_signal_name' using '='. "
+            . "RHS depends on LHS through combinational chain ($path_str); use '<-' or rewrite expression."
+        );
+    }
+}
+sub get_target_base_signal_name($self, $raw_signal_name, $target_expr) {
+    if ($target_expr) {
+        if ($target_expr->isa('FSM::CoreAST::SignalRef') && $target_expr->signal && $target_expr->signal->can('name')) {
+            my $name = eval { $target_expr->signal->name() };
+            my $normalized = $self->normalize_signal_name($name);
+            return $normalized if $normalized ne '';
+        }
+        if ($target_expr->isa('FSM::CoreAST::IndexedRef') && $target_expr->signal && $target_expr->signal->can('name')) {
+            my $name = eval { $target_expr->signal->name() };
+            my $normalized = $self->normalize_signal_name($name);
+            return $normalized if $normalized ne '';
+        }
+    }
+
+    return $self->normalize_signal_name($raw_signal_name);
 }
 
 sub parse_enums_section($self, $enums_ast) {
@@ -213,6 +402,8 @@ sub parse_action($self, $action) {
         return $self->parse_transition_new_format($action);
     } elsif ($action_target =~ /^\?/) {
         return $self->parse_test_node_new_format($action);
+    } elsif ($self->is_compound_update_shorthand($action_target, $action_spec)) {
+        return $self->parse_compound_update_shorthand($action);
     } elsif ($action_target =~ /^[<>]/) {
         return $self->parse_nested_condition_new_format($action);
     } elsif (ref($action_spec) eq 'ARRAY' && @$action_spec >= 2) {
@@ -319,11 +510,38 @@ sub parse_test_node_new_format($self, $action) {
 sub parse_nested_condition_new_format($self, $action) {
     my ($condition, $nested_actions) = @$action;
     
-    my $condition_expr = $self->{expression_builder}->parse_condition($condition);
+    my $condition_expr;
+    my @actions_to_parse;
+    
+    # Lispish parser often encodes nested blocks as:
+    #   ['<',  [ <condition_expr>, <action1>, <action2>, ... ]]
+    #   ['<!', [ <condition_expr>, <action1>, <action2>, ... ]]
+    if (($condition eq '<' || $condition eq '<!') && ref($nested_actions) eq 'ARRAY' && @$nested_actions >= 1) {
+        my ($condition_payload, @nested_body_actions) = @$nested_actions;
+        my $parsed_payload = $self->{expression_builder}->parse_condition($condition_payload);
+        
+        if ($condition eq '<!' && $parsed_payload) {
+            $condition_expr = FSM::CoreAST::UnaryOp->new(
+                operator => '!',
+                operand  => $parsed_payload
+            );
+        } else {
+            $condition_expr = $parsed_payload;
+        }
+        @actions_to_parse = @nested_body_actions;
+    } else {
+        $condition_expr = $self->{expression_builder}->parse_condition($condition);
+        @actions_to_parse = @$nested_actions if ref($nested_actions) eq 'ARRAY';
+    }
     
     my @parsed_actions;
-    if (ref($nested_actions) eq 'ARRAY') {
-        for my $nested_action (@$nested_actions) {
+    for my $nested_action (@actions_to_parse) {
+        if (ref($nested_action) eq 'ARRAY' && @$nested_action > 0 && ref($nested_action->[0]) eq 'ARRAY') {
+            for my $inner_action (@$nested_action) {
+                my $parsed_action = $self->parse_action($inner_action);
+                push @parsed_actions, $parsed_action if $parsed_action;
+            }
+        } else {
             my $parsed_action = $self->parse_action($nested_action);
             push @parsed_actions, $parsed_action if $parsed_action;
         }
@@ -346,17 +564,46 @@ sub parse_signal_action($self, $action) {
     my ($signal_name, $operation_spec) = @$action;
     return undef unless ref($operation_spec) eq 'ARRAY' && @$operation_spec >= 2;
     
-    my ($operator, $value_expr, $condition_suffix, $condition_expr) = @$operation_spec;
+    my ($operator, $value_expr, @operation_tail) = @$operation_spec;
     
-    my $full_condition;
-    if ($condition_suffix && $condition_suffix eq '<' && ref($condition_expr) eq 'ARRAY') {
-        $full_condition = $condition_expr;
-    } elsif ($condition_suffix) {
-        $full_condition = $condition_suffix;
+    my $compound_spec;
+    my @condition_parts;
+    for my $tail (@operation_tail) {
+        if (!$compound_spec && ref($tail) eq 'ARRAY' && @$tail >= 1 && !ref($tail->[0]) && ($tail->[0] eq '+=' || $tail->[0] eq '-=')) {
+            $compound_spec = $tail;
+            next;
+        }
+        push @condition_parts, $tail;
     }
+    my $full_condition = $self->build_full_condition_from_parts(@condition_parts);
 
     my $target_expr = $self->{expression_builder}->parse_signal_reference($signal_name);
     my $source_expr = $self->{expression_builder}->parse_expression($value_expr);
+    
+    if ($compound_spec) {
+        my ($compound_op, $compound_payload) = @$compound_spec;
+        my $delta_spec;
+        
+        if (ref($compound_payload) eq 'ARRAY' && @$compound_payload) {
+            $delta_spec = $compound_payload->[0];
+        } elsif (defined $compound_payload) {
+            $delta_spec = $compound_payload;
+        }
+        $delta_spec = '1' unless defined $delta_spec;
+        
+        my $delta_expr = $self->{expression_builder}->parse_expression($delta_spec);
+        $delta_expr //= FSM::CoreAST::Literal->new('1');
+        
+        my $arith_op = ($compound_op eq '+=') ? '+' : '-';
+        $source_expr = FSM::CoreAST::BinaryOp->new($arith_op, $source_expr, $delta_expr);
+        
+        fsm_debug("[Parser.pm][parse_signal_action()] Applied compound modifier '$compound_op' with delta '$delta_spec' on '$signal_name'", 3);
+    }
+    
+    my $target_base_signal = $self->get_target_base_signal_name($signal_name, $target_expr);
+    if ($operator eq '=') {
+        $self->record_combinational_dependencies($target_base_signal, $source_expr);
+    }
 
     my ($lhs_width, $rhs_width, $final_width);
     my ($lhs_explicit, $rhs_explicit) = (0, 0);
