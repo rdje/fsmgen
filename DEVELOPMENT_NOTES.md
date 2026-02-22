@@ -351,3 +351,7 @@ It is an exact-delay pulse request:
   - AST reset-value lookup (`get_reset_value_from_ast`) now runs through `EnableGraph`,
   - `EnableGraph` unified flop-mux emission now calls local AST reset-value ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for AST reset-value queries.
+- Newest behavior-preserving increment:
+  - AST default-value lookup (`get_default_value_from_ast`) now runs through `EnableGraph`,
+  - `EnableGraph` multiplexer config assembly now calls local AST default-value ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for AST default-value queries.

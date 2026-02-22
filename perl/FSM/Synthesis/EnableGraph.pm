@@ -404,7 +404,7 @@ sub generate_unified_flop_mux($self, $lhs, $lhs_analysis) {
         $hdl .= "  end\n";
         
         # AST WEB: Get reset value using direct AST method calls
-        my $reset_value = $ctx->get_reset_value_from_ast($lhs_ast);
+        my $reset_value = $self->get_reset_value_from_ast($lhs_ast);
         
         # Generate the flip-flop (output is A_q, input is A)
         $hdl .= "  always_ff @(posedge clk or negedge rstn) begin\n";
@@ -764,6 +764,51 @@ sub get_reset_value_from_ast($self, $lhs_ast) {
     fsm_debug("  No AST reset value, using fallback", 3);
     return $self->get_reset_value($lhs_name);
 }
+sub get_default_value_from_ast($self, $lhs_ast) {
+    # AST WEB: Get default value using direct AST queries
+    # DEBUG: Check what type of object we have
+    my $ctx = $self->{flattened_dt};
+    
+    fsm_debug("DEBUG: lhs_ast object type: " . ref($lhs_ast), 3);
+    fsm_debug("DEBUG: lhs_ast blessed: " . (blessed($lhs_ast) || 'NOT BLESSED'), 3);
+    if (blessed($lhs_ast)) {
+        fsm_debug("DEBUG: lhs_ast can name: " . ($lhs_ast->can('name') ? 'YES' : 'NO'), 3);
+        my @methods = qw(name signal type operands);
+        for my $method (@methods) {
+            fsm_debug("DEBUG: lhs_ast can $method: " . ($lhs_ast->can($method) ? 'YES' : 'NO'), 3);
+        }
+    }
+    
+    # Use proper signal name extraction that handles different AST types
+    my $lhs_name = $ctx->extract_signal_name_from_ast($lhs_ast);
+    unless (defined $lhs_name) {
+        fsm_debug("WARNING: Could not extract signal name from AST, using fallback", 3);
+        $lhs_name = 'unknown_signal';
+    }
+    fsm_debug("GET_DEFAULT_VALUE_FROM_AST: Getting default value for '$lhs_name'", 3);
+    
+    # Try AST methods first
+    if ($lhs_ast->can('default_value')) {
+        my $default_val = $lhs_ast->default_value();
+        if (defined $default_val) {
+            fsm_debug("  AST default_value: '$default_val'", 3);
+            return $default_val;
+        }
+    }
+    
+    # Fallback to reset_value if available
+    if ($lhs_ast->can('reset_value')) {
+        my $reset_val = $lhs_ast->reset_value();
+        if (defined $reset_val) {
+            fsm_debug("  Using AST reset_value as default: '$reset_val'", 3);
+            return $reset_val;
+        }
+    }
+    
+    # Fallback to name-based logic
+    fsm_debug("  No AST default value, using fallback", 3);
+    return $self->get_default_value($lhs_name);
+}
 sub group_assignments_by_rhs($self, $lhs) {
     my $ctx = $self->{flattened_dt};
     my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
@@ -945,7 +990,7 @@ sub build_multiplexer_config($self, $lhs) {
     my $mux_type = $is_register ? 'flop' : 'comb';
     
     # Get default value using direct AST method calls
-    my $default_value = $ctx->get_default_value_from_ast($lhs_ast);
+    my $default_value = $self->get_default_value_from_ast($lhs_ast);
     
     # Build complete multiplexer configuration
     $lhs_analysis->{multiplexer} = {

@@ -51,11 +51,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - `get_explicit_reset_value`
 - `get_fsm_reset_state`
 - `get_reset_value_from_ast`
+- `get_default_value_from_ast`
 ### Still strong candidates for next slices
-- remaining phase-3/per-assignment support helpers still owned by `FlattenedDT` (for example AST default-value helper and configuration setter seams) are narrowing; continue incremental extraction with parity checks.
+- remaining phase-3/per-assignment support helpers still owned by `FlattenedDT` (for example configuration setter seams) are narrowing; continue incremental extraction with parity checks.
 - broader synthesis-layer boundary tightening once helper ownership is sufficiently centralized in `EnableGraph`.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Delegate AST reset-value helper ownership to `EnableGraph` (`get_reset_value_from_ast`) with compatibility delegation in `FlattenedDT`
+- `WORKTREE (pending commit)` Delegate AST default-value helper ownership to `EnableGraph` (`get_default_value_from_ast`) with compatibility delegation in `FlattenedDT`
+- `c3dcf04` Delegate AST reset-value helper ownership to `EnableGraph`
 - `7705725` Delegate FSM reset-state helper ownership to `EnableGraph`
 - `0465b90` Delegate explicit-reset helper ownership to `EnableGraph`
 - `0aeb0fc` Delegate signal-info helper ownership to `EnableGraph`
