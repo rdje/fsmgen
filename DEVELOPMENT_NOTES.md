@@ -72,3 +72,183 @@ Benefits:
 - Keep debug messages traceable with clear `[file][function()]` context.
 - Prefer AST-based generation/transforms over regex-driven rewrites.
 - Add focused regression tests for every parser/generator rule that can silently regress.
+
+## Legacy `fx/perl/FSMGen.pm` reference analysis (full)
+This section preserves the detailed legacy analysis so future work can port behavior intentionally, not accidentally.
+
+### Scope analyzed
+The legacy flow analysis covered:
+- `fx/bin/fsmgen`
+- `fx/perl/FSMGen.pm`
+- `fx/perl/PPlugin.pm`, `PathSearch.pm`, `Lispish.pm`, `LinkedSpec.pm`, `LinkedRE.pm`, `RTLUtils.pm`, `Global.pm`, `HUtils.pm`
+- `fx/conf/fsmgen.conf`, `fx/conf/fxstart.conf`, `fx/perl/env.conf`
+- `fx/plugin/fsmgen.plg`
+- `fx/specs/Lispish.spec`, `fx/specs/DT.spec`, `fx/specs/pplugin.spec`
+
+### Legacy execution model
+Primary invocation:
+- `fx/bin/fsmgen` parsed CLI options, then called `FSMGen::start_from_file(...)`.
+
+Entry functions in `FSMGen.pm`:
+- `start_from_file`
+- `top_from_tree`
+- `top_from_string`
+
+Initialization chain:
+1. Merge user config with `Global->set('fsmgen')`.
+2. Parse source into Lispish ATree (`fsm_file_load` / `Lispish::multi`).
+3. Classify top-level forms (`?define:*`, `?fsm:*`, `?top:*`) in `fsm_initialize`.
+4. Run either FSM compile flow (`fsm_analyze`/`fsm_top_gen`) or top composition flow (`top_exec`) depending on form.
+
+### Legacy FSM compile pipeline (from `FSMGen.pm`)
+Main path:
+- `fsm_analyze` -> `fsm_analyze_jo` -> `fsm_walk` -> `fsm_drive_wen` -> `fsm_entity_gen` -> `fsm_architecture_gen` -> `create_data_path` -> `create_top` -> `drive_modules`.
+
+#### `fsm_walk` responsibilities
+Handled per-FSM top entries:
+- state decision trees (`state_name`)
+- standalone decision trees (`-name`)
+- async reset (`:=`)
+- sync reset (`:<`; hook present, effectively not fully realized)
+- shared sections (`+system`, `+size`, etc.)
+
+#### DT propagation and node types
+`dtree_walk` / `dtree_node_iterate` handled:
+- assignments
+- transitions (`->`)
+- test nodes (`?signal`, boolean and shortcut forms)
+- repeat expansion (`?repeat:N`)
+- logical expressions
+- increment/decrement shorthand rewrites
+
+### Assignment semantics in legacy flow
+Legacy intent encoded by operator families:
+- `A <- B` : register output named `A` (`Q`-named style)
+- `A <= B` : register input/mux side named `A` (D-input named style)
+- `A = B`  : combinational
+- `A <-= B` (`rm`) and `A <=+ B` (`mr`) variants for dual visibility needs
+- `A <N B` (`pN`) pulse-style form with exact-delay intent (`Q+N`) for a one-cycle pulse
+- auto update shorthands rewritten to canonical assignment structures:
+  - `++`, `--`, `+=K`, `-=K`
+
+RHS elaborations supported:
+- slices (`sig[i]`, `sig[i:j]`)
+- literal handling with width inference/normalization
+- local helper RHS signals for slice/incdec elaboration
+
+### Authoritative clarification for `<N` / `pN`
+- User-intended semantics: `<N` means an exact delayed pulse request where the one-cycle pulse is emitted at decision cycle `Q+N`.
+- `N` is a delay/latency parameter, not a pulse-width parameter.
+- Legacy comments/code paths mention pulse behavior but pulse-specific backend realization was not completed in the original implementation.
+
+### WEN/OWEN architecture (core legacy strength)
+Legacy flow constructed enables in layered steps:
+1. DT-local WENs:
+   - built from condition stack (`cstack`) at each traversal point.
+2. DT-level per-(assignment_type,LHS,RHS) OR enables:
+   - `dtowens` aggregation.
+3. FSM-level per-(assignment_type,LHS,RHS) enable:
+   - OR across all controlling DTs (`fsmowens` mapping).
+
+Notable behavior:
+- State-variable-targeted enables were treated differently from non-state outputs.
+- State-selection constants and selection signals were generated as one-hot controls.
+- Enable naming and grouping were deterministic and central to generated mux/control structure.
+
+### Legacy entity/architecture generation
+`fsm_entity_gen` and `fsm_architecture_gen` emitted:
+- system/control/output ports
+- EQ signals
+- local WEN and OR-WEN signals
+- state type/encoding support
+- state register process
+- slice/helper assignments
+
+This produced a control block with explicit, traceable control enables.
+
+### Legacy datapath generation
+`create_data_path` built datapath logic from assignment groupings:
+- Grouped all assignments by LHS/RHS and assignment type.
+- Built selection constants (typically one-hot) and selection signals.
+- Built per-LHS mux-style next/output equations.
+- Generated register processes for non-combinational classes.
+- Applied hold/feedback defaults when no enable path active.
+- Handled tricky LHS/RHS overlap cases (avoid accidental top exposure by default).
+
+### Legacy top generation and interface policy
+`create_top` and related architecture wiring implemented:
+- connect-by-name composition across generated modules
+- automatic top interface synthesis
+- signal vs port classification based on producer/consumer directions
+- explicit output override via `>` suffix semantics
+- filtering of internal feedback nets from top outputs unless explicitly requested
+
+This behavior was practical and production-oriented for control/datapath partitioning.
+
+### Legacy composition DSL capabilities (`top_exec`)
+`top_exec` supported a composition/meta flow with forms like:
+- `?fsmc` (compile FSM collections)
+- `?rtl` (bind external RTL entities)
+- `?ports`
+- `?toplink`
+- `?top`
+- macro expansion via `?&...`
+
+Plus plugin hook phases (via `.plg`):
+- `cclausearch`, `declarch`, `beginarch`, `endarch`, etc.
+
+### Legacy strengths worth preserving
+1. Layered enable architecture (DT local -> DT grouped -> FSM grouped).
+2. Clear semantic split of `<-` vs `<=`.
+3. Robust practical interface policy (`auto` + explicit override).
+4. Datapath/control decomposition based on grouped assignment intent.
+5. Rich composition workflow for building larger tops.
+
+### Legacy fragilities to avoid reintroducing
+1. Dynamic/eval-heavy parser/plugin infrastructure (`LinkedSpec` + plugin eval model).
+2. Large mutable global hash state and implicit contracts between passes.
+3. Partially implemented branches mixed into production paths.
+4. Width/type inference scattered across many late-stage transformations.
+
+### Modernization mapping (why this analysis matters)
+Current modernization direction is to port legacy strengths into:
+- explicit AST intent metadata (now in phase 1)
+- deterministic synthesis passes (future `EnableGraph`/composition layers)
+- backend-independent lowering
+- typed extension APIs instead of eval-based plugin semantics
+
+This section is the reference baseline for deciding whether a behavior is:
+- intentionally preserved,
+- intentionally changed,
+- or still pending implementation.
+
+## 2026-02-22: Assignment-family reference (`c`, `r`, `m`, `rm`, `mr`, `pN`)
+This section captures the authoritative operator mapping and the finalized implementation intent.
+
+### Operator family mapping (legacy intent, now explicit in modern metadata)
+- `A = B`  -> `c` (combinational)
+- `A <- B` -> `r` (register-output named; LHS is Q-facing)
+- `A <= B` -> `m` (mux/D-input named; LHS is D-facing visible net)
+- `A <-= B` -> `rm` (`r` + expose `next_A`)
+- `A <=+ B` -> `mr` (`m` + expose `A_r`)
+- `A <N B` -> `pN` (delayed pulse family)
+
+### `<=+` (`mr`) behavior
+- Classified as `mr`, with regular `m` behavior for main LHS datapath semantics.
+- Also exposes a Q-side mirror output `<lhs>_r`.
+- In generated HDL this is realized by driving `<lhs>_r` from the corresponding flop-feedback node.
+
+### Authoritative `pN` interpretation (must not regress)
+`pN` is **not** a duration operator.  
+It is an exact-delay pulse request:
+- Decision cycle is `Q`.
+- Pulse emission cycle is exactly `Q+N`.
+- Pulse width is exactly one cycle.
+- Polarity is defined by RHS level:
+  - `<N 1`: positive pulse (rest `0`, pulse `1`, i.e. `0->1->0`)
+  - `<N 0`: negative pulse (rest `1`, pulse `0`, i.e. `1->0->1`)
+
+### Legacy note vs modern implementation
+- Legacy comments in `fx/perl/FSMGen.pm` mention pulse semantics and may read like “N-cycle pulse length”.
+- Legacy backend path was incomplete for dedicated pulse realization.
+- Modernized backend now treats `pN` as exact `Q+N` one-cycle pulse semantics (delay, not duration), matching the clarified framework intent.

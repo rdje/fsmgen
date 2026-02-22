@@ -40,15 +40,34 @@ sub register_signal($self, $signal_name, %attributes) {
         }
     }
     
+    # Normalize caller attributes into constructor fields + signal attribute bag.
+    # Keys like is_output/is_intermediate are semantic attributes and must live
+    # under Signal->{attributes} so later stages can query them.
+    my %normalized_attrs = %attributes;
+    my %attribute_bag;
+    if (exists $normalized_attrs{attributes} && ref($normalized_attrs{attributes}) eq 'HASH') {
+        %attribute_bag = %{ delete $normalized_attrs{attributes} };
+    } else {
+        delete $normalized_attrs{attributes};
+    }
+    for my $attr_key (qw(is_output is_intermediate is_aux_output signal_role)) {
+        if (exists $normalized_attrs{$attr_key}) {
+            $attribute_bag{$attr_key} = delete $normalized_attrs{$attr_key};
+        }
+    }
+    if (%attribute_bag) {
+        $normalized_attrs{attributes} = \%attribute_bag;
+    }
+    
     # Track usage patterns for later analysis
     my $usage = $self->initialize_signal_usage($signal_name);
     
     # Update usage flags based on attributes
-    if ($attributes{is_intermediate}) {
+    if ($attribute_bag{is_intermediate}) {
         $usage->{is_intermediate} = 1;
         fsm_debug("        USAGE: '$signal_name' marked as intermediate", 3);
     }
-    if ($attributes{is_output}) {
+    if ($attribute_bag{is_output}) {
         $usage->{has_output_marker} = 1;
         fsm_debug("        USAGE: '$signal_name' marked with output marker", 3);
     }
@@ -58,28 +77,29 @@ sub register_signal($self, $signal_name, %attributes) {
         my $existing = $self->{signal_registry}{$signal_name};
         fsm_debug("        SIGNAL EXISTS: '$signal_name' width=" . ($existing->width || 'undef'), 3);
         
-        # Check if new attributes would override existing ones
-        if (%attributes) {
-            fsm_debug("        NEW ATTRIBUTES: " . Dumper(\%attributes), 3);
+        # Apply refinements directly to the existing object so all previously-created
+        # AST signal references see the updated width/attributes.
+        if (%normalized_attrs) {
+            fsm_debug("        NEW ATTRIBUTES: " . Dumper(\%normalized_attrs), 3);
             
             # Update width if the new width is more specific (larger) than existing
-            if (defined($attributes{width}) && $attributes{width} > ($existing->width || 1)) {
-                fsm_debug("        UPDATING SIGNAL WIDTH: '$signal_name' from " . 
-                    ($existing->width || 'undef') . " to $attributes{width}", 3);
-                
-                # Create new signal with updated attributes
-                my %updated_attrs = (
-                    name => $signal_name,
-                    type => $existing->type,
-                    width => $attributes{width},
-                    %{$existing->{attributes} || {}},
-                    %attributes
-                );
-                
-                my $updated_signal = FSM::CoreAST::Signal->new(%updated_attrs);
-                $self->{signal_registry}{$signal_name} = $updated_signal;
-                
-                return $updated_signal;
+            if (defined($normalized_attrs{width}) && $normalized_attrs{width} > ($existing->width || 1)) {
+                fsm_debug("        UPDATING SIGNAL WIDTH: '$signal_name' from " .
+                    ($existing->width || 'undef') . " to $normalized_attrs{width}", 3);
+                $existing->{_width} = $normalized_attrs{width};
+            }
+            
+            # Update core fields when explicitly provided
+            $existing->{type} = $normalized_attrs{type} if defined $normalized_attrs{type};
+            $existing->{clock_domain} = $normalized_attrs{clock_domain} if exists $normalized_attrs{clock_domain};
+            $existing->{reset_domain} = $normalized_attrs{reset_domain} if exists $normalized_attrs{reset_domain};
+            
+            # Merge semantic attributes
+            if (ref($normalized_attrs{attributes}) eq 'HASH') {
+                $existing->{attributes} //= {};
+                for my $k (keys %{$normalized_attrs{attributes}}) {
+                    $existing->{attributes}{$k} = $normalized_attrs{attributes}{$k};
+                }
             }
         }
         
@@ -90,7 +110,7 @@ sub register_signal($self, $signal_name, %attributes) {
     my %signal_attrs = (
         name => $signal_name,
         type => 'wire',  # Default type
-        %attributes
+        %normalized_attrs
     );
     
     fsm_debug("        REGISTER SIGNAL: '$signal_name' with attrs: " . Dumper(\%signal_attrs), 3);

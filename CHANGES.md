@@ -30,6 +30,33 @@ This is the persistent technical change history for FSMGen.
 - Validation run:
   - `prove -v t/03-assignment-intent-metadata.t t/02-combinational-self-dependency.t t/01-regression.t` (pass).
 
+### Legacy reference documentation and semantic clarification
+- Archived the full legacy `fx/perl/FSMGen.pm` analysis in `DEVELOPMENT_NOTES.md` for future modernization work.
+- Clarified authoritative `<N` / `pN` semantics from framework intent:
+  - `<N` means an exact one-cycle pulse emitted at decision cycle `Q+N` (N is delay, not pulse width).
+  - Legacy code has intent markers/comments for pulse behavior but does not implement a dedicated pulse backend yet.
+
+### Assignment-family completion (`c`, `r`, `m`, `rm`, `mr`, `pN`)
+- Extended parser/operator handling to cover all requested operator families:
+  - `=`, `<-`, `<=`, `<-=`, `<=+`, `<N`.
+- Added/normalized intent metadata and backend classification for:
+  - `register_out`, `register_in`, `register_out_dual`, `register_in_dual`, `pulse_delayed`, `mux_out`.
+- Implemented rm/mr auxiliary exposure behavior in emitted HDL:
+  - `<-=` exposes `next_<lhs>`
+  - `<=+` exposes `<lhs>_r`
+- Implemented delayed pulse backend generation for `<N` with authoritative semantics:
+  - exact `Q+N` emission,
+  - fixed one-cycle pulse width,
+  - polarity from RHS (`<N 1` positive pulse, `<N 0` negative pulse),
+  - **delay** semantics (not duration).
+- Fixed signal metadata/width propagation issues that affected auxiliary port direction/width:
+  - auxiliary outputs now emit as outputs (not inferred inputs),
+  - auxiliary widths track parent signal widths even when `+size` appears after assignment actions.
+- Validation:
+  - `prove -I perl t/03-assignment-intent-metadata.t` (pass)
+  - `prove -I perl t/02-combinational-self-dependency.t t/01-regression.t` (pass)
+  - `prove -I perl t` (full suite pass)
+
 ## 2026-02-21
 ### Parser and expression handling
 - Added parser support for compound update shorthand and inline modifiers:

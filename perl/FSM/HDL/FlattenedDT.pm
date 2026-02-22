@@ -176,12 +176,18 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
         }
         
         # Declare mux helper registers only for flop-style multiplexers that consume them.
-        if ($multiplexer_type eq 'flop' && $assignment_type eq 'register_out') {
+        if ($multiplexer_type eq 'flop' && ($assignment_type eq 'register_out' || $assignment_type eq 'register_out_dual')) {
             my $next_name = "${lhs}_next";
             $aux_decls{$next_name} = $width unless $declared_ports{$next_name};
-        } elsif ($multiplexer_type eq 'flop' && $assignment_type eq 'register_in') {
+        } elsif ($multiplexer_type eq 'flop' && ($assignment_type eq 'register_in' || $assignment_type eq 'register_in_dual')) {
             my $q_name = "${lhs}_q";
             $aux_decls{$q_name} = $width unless $declared_ports{$q_name};
+        } elsif ($assignment_type eq 'pulse_delayed') {
+            my $delay_cycles = $self->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
+            if ($delay_cycles > 0) {
+                my $pipe_name = "${lhs}_pulse_delay_pipe";
+                $aux_decls{$pipe_name} = $delay_cycles unless $declared_ports{$pipe_name};
+            }
         }
     }
     
@@ -413,10 +419,10 @@ sub fallback_register_analysis_from_assignments ($self, $lhs_name) {
     for my $assignment (@$assignments) {
         my $operator = $assignment->{operator} || '=';
         
-        if ($operator eq '<-') {
-            # Register assignment - indicates this should be a register
+        if ($operator eq '<-' || $operator eq '<=' || $operator eq '<-=' || $operator eq '<=+' || $operator =~ /^<\d+$/) {
+            # Sequential assignment variants - indicate this should be a register-driven path
             $has_register_assignment = 1;
-            fsm_debug("      Found register assignment (operator: '<-')", 3);
+            fsm_debug("      Found sequential assignment (operator: '$operator')", 3);
         } elsif ($operator eq '=') {
             # Combinational assignment - indicates this should be combinational
             $has_combinational_assignment = 1;
@@ -3081,16 +3087,19 @@ sub generate_signal_assignments ($self, $fsm_module) {
     for my $lhs (sort keys %{$self->{assignment_analysis}}) {
         my $lhs_analysis = $self->{assignment_analysis}->{$lhs};
         my $multiplexer = $lhs_analysis->{multiplexer};
+        my $assignment_type = $self->get_signal_assignment_type($lhs, $lhs_analysis);
         
         $hdl .= "\n  // Unified Multiplexer for LHS: $lhs\n";
         
-        if ($multiplexer->{type} eq 'flop') {
+        if ($assignment_type eq 'pulse_delayed') {
+            $hdl .= $self->generate_unified_pulse_delay_logic($lhs, $lhs_analysis);
+        } elsif ($multiplexer->{type} eq 'flop') {
             $hdl .= $self->generate_unified_flop_mux($lhs, $lhs_analysis);
         } else {
             $hdl .= $self->generate_unified_comb_mux($lhs, $lhs_analysis);
         }
         
-        fsm_debug("  Generated unified multiplexer for $lhs (type: $multiplexer->{type})", 3);
+        fsm_debug("  Generated unified multiplexer for $lhs (type: $multiplexer->{type}, assignment_type: $assignment_type)", 3);
     }
     
     fsm_debug("*** UNIFIED PHASE 3 COMPLETE ***", 3);
@@ -3110,8 +3119,10 @@ sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
     
     my $hdl = "  // Unified flop with mux for: $lhs_name ($assignment_type assignment)\n";
     
-    if ($assignment_type eq 'register_out') {
-        # <- assignment: A is a register, A_next is the mux output
+    if ($assignment_type eq 'register_out' || $assignment_type eq 'register_out_dual') {
+        # <- / <-= assignment: A is a register, A_next is the mux output
+        my $emit_next_output = ($assignment_type eq 'register_out_dual') ? 1 : 0;
+        my $next_output_name = "next_${lhs_name}";
         
         # Generate the combinational multiplexer logic
         $hdl .= "  always_comb begin\n";
@@ -3129,6 +3140,11 @@ sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
             fsm_debug("    Unified flop mux (<-): $enable_signal -> $rhs_value", 3);
         }
         
+        if ($emit_next_output) {
+            $hdl .= "    $next_output_name = ${lhs_name}_next;\n";
+            fsm_debug("    Unified flop mux (<-=): exposing '$next_output_name'", 3);
+        }
+        
         $hdl .= "  end\n";
         
         # AST WEB: Get reset value using direct AST method calls
@@ -3143,12 +3159,17 @@ sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
         $hdl .= "    end\n";
         $hdl .= "  end\n";
         
-    } else {
-        # <= assignment: A is the mux output, A_q is the flop output that provides feedback
+    } elsif ($assignment_type eq 'register_in' || $assignment_type eq 'register_in_dual') {
+        # <= / <=+ assignment: A is the mux output, A_q is the flop output that provides feedback
+        my $emit_q_output = ($assignment_type eq 'register_in_dual') ? 1 : 0;
+        my $q_output_name = "${lhs_name}_r";
         
         # Generate the combinational multiplexer logic
         $hdl .= "  always_comb begin\n";
         $hdl .= "    $lhs_name = ${lhs_name}_q;  // Default value is feedback from flop output\n";
+        if ($emit_q_output) {
+            $hdl .= "    $q_output_name = ${lhs_name}_q;\n";
+        }
         
         # Use enables from unified analysis - these match exactly with generated signals
         for my $enable_info (@{$multiplexer->{enables}}) {
@@ -3175,9 +3196,119 @@ sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
         $hdl .= "      ${lhs_name}_q <= $lhs_name;\n";
         $hdl .= "    end\n";
         $hdl .= "  end\n";
+    } else {
+        die "[FlattenedDT.pm][generate_unified_flop_mux()] Unsupported flop assignment_type '$assignment_type' for LHS '$lhs_name'";
     }
     
     return $hdl;
+}
+
+sub generate_unified_pulse_delay_logic ($self, $lhs, $lhs_analysis) {
+    my $lhs_ast = $lhs_analysis->{lhs_ast};
+    my $lhs_name = blessed($lhs_ast) && $lhs_ast->can('name') ? $lhs_ast->name() : $lhs;
+    my $delay_cycles = $self->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
+    my $active_level = $self->get_pulse_active_level_for_lhs($lhs, $lhs_analysis);
+    my $rest_level = $active_level ? "1'b0" : "1'b1";
+    my $pulse_level = $active_level ? "1'b1" : "1'b0";
+    my $width = $self->get_lhs_width_from_analysis($lhs_analysis);
+    
+    if ($width != 1) {
+        die "[FlattenedDT.pm][generate_unified_pulse_delay_logic()] Delayed pulse target '$lhs_name' must be 1-bit, got width '$width'";
+    }
+    
+    my @request_signals = map { $_->{enable_signal} } @{$lhs_analysis->{multiplexer}->{enables} || []};
+    my $request_expr = @request_signals ? join(' | ', @request_signals) : "1'b0";
+    
+    my $hdl = "  // Delayed pulse logic for: $lhs_name (<$delay_cycles, exact Q+$delay_cycles)\n";
+    
+    if ($delay_cycles == 0) {
+        $hdl .= "  always_ff @(posedge clk or negedge rstn) begin\n";
+        $hdl .= "    if (!rstn) begin\n";
+        $hdl .= "      $lhs_name <= $rest_level;\n";
+        $hdl .= "    end else begin\n";
+        $hdl .= "      $lhs_name <= ($request_expr) ? $pulse_level : $rest_level;\n";
+        $hdl .= "    end\n";
+        $hdl .= "  end\n";
+        return $hdl;
+    }
+    
+    my $pipe_name = "${lhs_name}_pulse_delay_pipe";
+    my $pipe_tap = $delay_cycles == 1 ? $pipe_name : "${pipe_name}[" . ($delay_cycles - 1) . "]";
+    my $shift_rhs = $delay_cycles == 1
+        ? $request_expr
+        : "{${pipe_name}[" . ($delay_cycles - 2) . ":0], $request_expr}";
+    my $pipe_reset = $delay_cycles == 1
+        ? "1'b0"
+        : '{' . $delay_cycles . "{1'b0}}";
+    
+    $hdl .= "  always_ff @(posedge clk or negedge rstn) begin\n";
+    $hdl .= "    if (!rstn) begin\n";
+    $hdl .= "      $lhs_name <= $rest_level;\n";
+    $hdl .= "      $pipe_name <= $pipe_reset;\n";
+    $hdl .= "    end else begin\n";
+    $hdl .= "      $lhs_name <= $rest_level;\n";
+    $hdl .= "      if ($pipe_tap) begin\n";
+    $hdl .= "        $lhs_name <= $pulse_level;\n";
+    $hdl .= "      end\n";
+    $hdl .= "      $pipe_name <= $shift_rhs;\n";
+    $hdl .= "    end\n";
+    $hdl .= "  end\n";
+    
+    return $hdl;
+}
+
+sub get_pulse_delay_cycles_for_lhs ($self, $lhs, $lhs_analysis) {
+    my %delay_values;
+    for my $assignment (@{$lhs_analysis->{assignments} || []}) {
+        my $op = $assignment->{operator} // '';
+        if ($op =~ /^<(\d+)$/) {
+            $delay_values{$1} = 1;
+            next;
+        }
+        my $intent = $assignment->{assignment_intent};
+        if (ref($intent) eq 'HASH' && defined($intent->{pulse_delay_cycles})) {
+            $delay_values{$intent->{pulse_delay_cycles}} = 1;
+        }
+    }
+    my @delays = sort { $a <=> $b } keys %delay_values;
+    if (!@delays) {
+        die "[FlattenedDT.pm][get_pulse_delay_cycles_for_lhs()] Missing pulse delay metadata for LHS '$lhs'";
+    }
+    if (@delays > 1) {
+        die "[FlattenedDT.pm][get_pulse_delay_cycles_for_lhs()] Multiple pulse delays for LHS '$lhs' are unsupported: " . join(', ', @delays);
+    }
+    return $delays[0];
+}
+
+sub get_pulse_active_level_for_lhs ($self, $lhs, $lhs_analysis) {
+    my %active_levels;
+    for my $assignment (@{$lhs_analysis->{assignments} || []}) {
+        my $intent = $assignment->{assignment_intent};
+        if (ref($intent) eq 'HASH' && defined($intent->{pulse_active_level})) {
+            $active_levels{int($intent->{pulse_active_level} ? 1 : 0)} = 1;
+            next;
+        }
+        my $rhs = $assignment->{rhs};
+        my $normalized = $self->normalize_rhs_logic_level($rhs);
+        if (defined $normalized) {
+            $active_levels{$normalized} = 1;
+        }
+    }
+    my @levels = sort { $a <=> $b } keys %active_levels;
+    if (!@levels) {
+        die "[FlattenedDT.pm][get_pulse_active_level_for_lhs()] Missing pulse active level metadata for LHS '$lhs'";
+    }
+    if (@levels > 1) {
+        die "[FlattenedDT.pm][get_pulse_active_level_for_lhs()] Conflicting pulse active levels for LHS '$lhs': " . join(', ', @levels);
+    }
+    return $levels[0];
+}
+
+sub normalize_rhs_logic_level ($self, $rhs) {
+    return undef unless defined $rhs;
+    return 0 if $rhs =~ /^(?:0|1'b0|1'd0|1'h0)$/i;
+    return 1 if $rhs =~ /^(?:1|1'b1|1'd1|1'h1)$/i;
+    return undef;
 }
 
 sub signal_uses_register_assignment ($self, $lhs, $lhs_analysis) {
@@ -3189,7 +3320,7 @@ sub signal_uses_register_assignment ($self, $lhs, $lhs_analysis) {
     for my $assignment (@$assignments) {
         my $operator = $assignment->{operator} || '=';
         
-        if ($operator eq '<-') {
+        if ($operator eq '<-' || $operator eq '<=' || $operator eq '<-=' || $operator eq '<=+' || $operator =~ /^<\d+$/) {
             return 1;  # Uses register assignment
         }
     }
@@ -3199,10 +3330,13 @@ sub signal_uses_register_assignment ($self, $lhs, $lhs_analysis) {
 
 sub get_signal_assignment_type ($self, $lhs, $lhs_analysis) {
     # Determine the assignment type for a signal by examining the operators used
-    # Returns: 
-    #   'register_out' for <- assignments (A is register, A_next is mux output)
-    #   'register_in'  for <= assignments (A is mux output, A_q is flop output) 
-    #   'mux_out'      for =  assignments (A is mux output, no flop)
+    # Returns:
+    #   'register_out'      for <- assignments
+    #   'register_in'       for <= assignments
+    #   'register_out_dual' for <-= assignments (rm)
+    #   'register_in_dual'  for <=+ assignments (mr)
+    #   'pulse_delayed'     for <N assignments (pN, exact Q+N pulse)
+    #   'mux_out'           for = assignments
     
     # Add error handling for missing or empty assignments
     my $assignments = $lhs_analysis->{assignments};
@@ -3211,9 +3345,13 @@ sub get_signal_assignment_type ($self, $lhs, $lhs_analysis) {
         return 'mux_out';  # Default to combinational assignment
     }
     
-    my $has_register_assignment = 0;  # <-
-    my $has_flop_assignment = 0;      # <=
-    my $has_comb_assignment = 0;      # =
+    my $has_register_assignment = 0;       # <-
+    my $has_flop_assignment = 0;           # <=
+    my $has_register_dual_assignment = 0;  # <-=
+    my $has_flop_dual_assignment = 0;      # <=+
+    my $has_comb_assignment = 0;           # =
+    my $has_pulse_assignment = 0;          # <N
+    my %pulse_delays;
     
     for my $assignment (@$assignments) {
         my $operator = $assignment->{operator};
@@ -3225,19 +3363,61 @@ sub get_signal_assignment_type ($self, $lhs, $lhs_analysis) {
             $has_register_assignment = 1;
         } elsif ($operator eq '<=') {
             $has_flop_assignment = 1;
+        } elsif ($operator eq '<-=') {
+            $has_register_dual_assignment = 1;
+        } elsif ($operator eq '<=+') {
+            $has_flop_dual_assignment = 1;
         } elsif ($operator eq '=') {
             $has_comb_assignment = 1;
+        } elsif ($operator =~ /^<(\d+)$/) {
+            $has_pulse_assignment = 1;
+            $pulse_delays{$1} = 1;
+        } else {
+            die "[FlattenedDT.pm][get_signal_assignment_type()] Unsupported operator '$operator' in assignment analysis for LHS '$lhs'";
         }
     }
     
-    # Priority: <- takes precedence over <=, which takes precedence over =
-    if ($has_register_assignment) {
-        return 'register_out';  # A <- style: mux output A_next, flop output A
-    } elsif ($has_flop_assignment) {
-        return 'register_in';   # A <= style: mux output A, flop output A_q
-    } else {
-        return 'mux_out';       # A = style: mux output A, no flop
+    my $sequential_family_count = 0;
+    $sequential_family_count++ if $has_register_assignment;
+    $sequential_family_count++ if $has_flop_assignment;
+    $sequential_family_count++ if $has_register_dual_assignment;
+    $sequential_family_count++ if $has_flop_dual_assignment;
+    $sequential_family_count++ if $has_pulse_assignment;
+    
+    if ($has_comb_assignment && $sequential_family_count > 0) {
+        die "[FlattenedDT.pm][get_signal_assignment_type()] Mixed combinational '=' and sequential operators for LHS '$lhs' is unsupported";
     }
+    
+    if (keys(%pulse_delays) > 1) {
+        die "[FlattenedDT.pm][get_signal_assignment_type()] Multiple pulse delays for LHS '$lhs' are unsupported: " . join(', ', sort keys %pulse_delays);
+    }
+    
+    if ($has_pulse_assignment && ($has_register_assignment || $has_flop_assignment || $has_register_dual_assignment || $has_flop_dual_assignment)) {
+        die "[FlattenedDT.pm][get_signal_assignment_type()] Mixed pulse-delayed and non-pulse sequential operators for LHS '$lhs' is unsupported";
+    }
+    
+    if ($has_register_dual_assignment) {
+        if ($has_flop_assignment || $has_flop_dual_assignment) {
+            die "[FlattenedDT.pm][get_signal_assignment_type()] Mixed '<-=' with '<='/'<=+' for LHS '$lhs' is unsupported";
+        }
+        return 'register_out_dual';
+    }
+    if ($has_flop_dual_assignment) {
+        if ($has_register_assignment || $has_register_dual_assignment) {
+            die "[FlattenedDT.pm][get_signal_assignment_type()] Mixed '<=+' with '<-'/'<-=' for LHS '$lhs' is unsupported";
+        }
+        return 'register_in_dual';
+    }
+    if ($has_pulse_assignment) {
+        return 'pulse_delayed';
+    }
+    if ($has_register_assignment) {
+        return 'register_out';
+    }
+    if ($has_flop_assignment) {
+        return 'register_in';
+    }
+    return 'mux_out';
 }
 
 sub generate_unified_comb_mux ($self, $lhs, $lhs_analysis) {
@@ -3328,6 +3508,25 @@ sub get_driven_signals ($self) {
     for my $lhs (keys %{$self->{all_lhs}}) {
         $driven_signals{$lhs} = 1;
     fsm_debug("DRIVEN_SIGNALS: '$lhs' is driven by FSM logic", 3);
+    }
+    
+    # Include auxiliary outputs exposed by sequential dual families:
+    #   rm (<-=): next_<lhs>
+    #   mr (<=+): <lhs>_r
+    for my $lhs (keys %{$self->{assignment_analysis} || {}}) {
+        my $lhs_analysis = $self->{assignment_analysis}{$lhs};
+        next unless $lhs_analysis;
+        my $assignment_type = $self->get_signal_assignment_type($lhs, $lhs_analysis);
+        
+        if ($assignment_type eq 'register_out_dual') {
+            my $next_name = "next_$lhs";
+            $driven_signals{$next_name} = 1;
+            fsm_debug("DRIVEN_SIGNALS: '$next_name' is driven by rm auxiliary output logic", 3);
+        } elsif ($assignment_type eq 'register_in_dual') {
+            my $q_name = "${lhs}_r";
+            $driven_signals{$q_name} = 1;
+            fsm_debug("DRIVEN_SIGNALS: '$q_name' is driven by mr auxiliary output logic", 3);
+        }
     }
     
     return %driven_signals;
@@ -3714,9 +3913,20 @@ sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_st
     my $operator = $assignment_node->can('operator_symbol')
         ? $assignment_node->operator_symbol
         : undef;
-    if (!defined($operator) || $operator !~ /^(?:<-|<=|=)$/) {
+    if ((!defined($operator) || $operator eq '') && ref($assignment_intent) eq 'HASH') {
+        $operator = $assignment_intent->{operator_symbol};
+    }
+    if (($assignment_node->isa('FSM::CoreAST::PulseAssignment') || $assignment_node->can('pulse_cycles'))
+            && (!defined($operator) || $operator eq '' || $operator eq '=')
+            && $assignment_node->can('pulse_cycles')) {
+        my $cycles = eval { $assignment_node->pulse_cycles };
+        $operator = '<' . $cycles if defined $cycles && $cycles =~ /^\d+$/;
+    }
+    if (!defined($operator) || $operator !~ /^(?:<-|<=|=|<-=|<=\+|<[0-9]+)$/) {
         my $node_type = ref($assignment_node) || 'UNKNOWN';
-        die "[FlattenedDT.pm][record_assignment_from_ast()] Missing or invalid operator_symbol for assignment node '$node_type'";
+        my $intent_operator = (ref($assignment_intent) eq 'HASH') ? ($assignment_intent->{operator_symbol} // 'UNDEF') : 'NO_INTENT';
+        my $pulse_cycles = $assignment_node->can('pulse_cycles') ? (eval { $assignment_node->pulse_cycles } // 'UNDEF') : 'N/A';
+        die "[FlattenedDT.pm][record_assignment_from_ast()] Missing or invalid operator_symbol for assignment node '$node_type' (resolved='$operator', intent='$intent_operator', pulse_cycles='$pulse_cycles')";
     }
     
     fsm_debug("  SEMANTIC ASSIGNMENT RESULT:", 3);
@@ -4352,7 +4562,14 @@ sub _traverse_raw_ast_for_lhs_rhs {
             (ref($node->[0]) eq '' || (ref($node->[0]) eq 'SCALAR' && ${$node->[0]})) &&
             ref($node->[1]) eq 'ARRAY' &&
             @{$node->[1]} >= 1 &&
-            ($node->[1][0] eq '<-' || $node->[1][0] eq '='))
+            (
+                $node->[1][0] eq '<-'  ||
+                $node->[1][0] eq '<='  ||
+                $node->[1][0] eq '<-=' ||
+                $node->[1][0] eq '<=+' ||
+                $node->[1][0] eq '='   ||
+                $node->[1][0] =~ /^<\d+$/
+            ))
         {
             my $lhs = ref($node->[0]) eq 'SCALAR' ? ${$node->[0]} : $node->[0];
             my $op = $node->[1][0];

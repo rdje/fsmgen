@@ -84,7 +84,29 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
             if (ref($element->[1]) eq 'ARRAY') {
                 for my $size_def (@{$element->[1]}) {
                     my ($sig, $width) = @$size_def;
-                    $self->{signal_manager}->register_signal($sig, width => $width->[0]);
+                    my $resolved_width = (ref($width) eq 'ARRAY') ? $width->[0] : $width;
+                    $self->{signal_manager}->register_signal($sig, width => $resolved_width);
+                    
+                    # Keep rm/mr auxiliary outputs width-aligned with their parent signal
+                    # even when +size appears after assignment actions.
+                    my $next_aux = "next_$sig";
+                    if ($self->{signal_manager}->get_signal($next_aux)) {
+                        $self->{signal_manager}->register_signal(
+                            $next_aux,
+                            width => $resolved_width,
+                            is_output => 1,
+                            is_aux_output => 1,
+                        );
+                    }
+                    my $q_aux = "${sig}_r";
+                    if ($self->{signal_manager}->get_signal($q_aux)) {
+                        $self->{signal_manager}->register_signal(
+                            $q_aux,
+                            width => $resolved_width,
+                            is_output => 1,
+                            is_aux_output => 1,
+                        );
+                    }
                 }
             }
         } elsif ($element_name eq '+constants') {
@@ -703,6 +725,31 @@ sub parse_signal_action($self, $action) {
                 hold_policy => 'q_feedback_when_no_enable',
             },
         );
+    } elsif ($operator eq '<-=') {
+        my $next_output_name = "next_$target_base_signal";
+        $self->{signal_manager}->register_signal(
+            $next_output_name,
+            width => $final_width,
+            is_output => 1,
+            is_aux_output => 1,
+        );
+        $assignment = FSM::CoreAST::RegisterAssignment->new(
+            target => $target_expr,
+            source => $source_expr,
+            register_style => 'output_named',
+            output_exposure => $output_exposure,
+            source_provenance => \%source_provenance,
+            assignment_intent => {
+                operator_symbol => '<-=',
+                sequencing => 'clocked',
+                register_style => 'output_named',
+                assignment_family => 'register_dual_output',
+                lhs_binding => 'flop_q_output',
+                hold_policy => 'q_feedback_when_no_enable',
+                expose_next_output => 1,
+                auxiliary_output_name => $next_output_name,
+            },
+        );
     } elsif ($operator eq '<=') {
         $assignment = FSM::CoreAST::RegisterAssignment->new(
             target => $target_expr,
@@ -720,6 +767,57 @@ sub parse_signal_action($self, $action) {
                 hold_policy => 'q_feedback_when_no_enable',
             },
         );
+    } elsif ($operator eq '<=+') {
+        my $q_output_name = $target_base_signal . '_r';
+        $self->{signal_manager}->register_signal(
+            $q_output_name,
+            width => $final_width,
+            is_output => 1,
+            is_aux_output => 1,
+        );
+        $assignment = FSM::CoreAST::RegisterAssignment->new(
+            target => $target_expr,
+            source => $source_expr,
+            register_style => 'input_named',
+            output_exposure => $output_exposure,
+            source_provenance => \%source_provenance,
+            assignment_intent => {
+                operator_symbol => '<=+',
+                sequencing => 'clocked',
+                register_style => 'input_named',
+                assignment_family => 'mux_dual_output',
+                lhs_binding => 'flop_d_input',
+                immediate_visibility => 'same_cycle_on_d_input',
+                hold_policy => 'q_feedback_when_no_enable',
+                expose_q_output => 1,
+                auxiliary_output_name => $q_output_name,
+            },
+        );
+    } elsif ($operator =~ /^<(\d+)$/) {
+        my $delay_cycles = $1;
+        my $active_level = $self->resolve_single_bit_logic_level($source_expr, $value_expr);
+        my $rest_level = $active_level ? 0 : 1;
+        $source_provenance{pulse_delay_cycles} = $delay_cycles;
+        $source_provenance{pulse_active_level} = $active_level;
+        $source_provenance{pulse_rest_level} = $rest_level;
+        $assignment = FSM::CoreAST::PulseAssignment->new(
+            target => $target_expr,
+            source => $source_expr,
+            pulse_cycles => $delay_cycles,
+            output_exposure => $output_exposure,
+            source_provenance => \%source_provenance,
+            assignment_intent => {
+                operator_symbol => $operator,
+                sequencing => 'clocked',
+                register_style => 'pulse_delayed',
+                assignment_family => 'pulse_delay',
+                pulse_delay_cycles => $delay_cycles,
+                pulse_width_cycles => 1,
+                pulse_active_level => $active_level,
+                pulse_rest_level => $rest_level,
+                pulse_timing_reference => 'decision_cycle_q_plus_n',
+            },
+        );
     } elsif ($operator eq '=') {
         $assignment = FSM::CoreAST::Assignment->new(
             target => $target_expr,
@@ -735,7 +833,7 @@ sub parse_signal_action($self, $action) {
             },
         );
     } else {
-        return undef;
+        Carp::confess "[Parser.pm][parse_signal_action()] Unsupported assignment operator '$operator' for signal '$signal_name'";
     }
     
     if (defined $full_condition) {
@@ -752,6 +850,35 @@ sub parse_signal_action($self, $action) {
     }
     
     return $assignment;
+}
+
+sub resolve_single_bit_logic_level($self, $source_expr, $raw_value_expr) {
+    my $logic_level;
+    if ($source_expr && $source_expr->isa('FSM::CoreAST::Literal')) {
+        my $value = $source_expr->value;
+        my $width = $source_expr->width;
+        my $radix = $source_expr->radix // 'decimal';
+        if (defined($width) && $width != 1) {
+            Carp::confess "[Parser.pm][resolve_single_bit_logic_level()] Delayed pulse RHS must be 1-bit literal 0/1, got width '$width'";
+        }
+        if (defined($value) && $value =~ /^[01]$/) {
+            $logic_level = int($value);
+        } elsif ($radix eq 'binary' && defined($value) && $value =~ /^[01]$/) {
+            $logic_level = int($value);
+        } elsif ($radix eq 'decimal' && defined($value) && $value =~ /^[01]$/) {
+            $logic_level = int($value);
+        } elsif ($radix eq 'hex' && defined($value) && ($value eq '0' || $value eq '1')) {
+            $logic_level = int($value);
+        }
+    }
+    if (!defined($logic_level) && defined($raw_value_expr) && !ref($raw_value_expr) && $raw_value_expr =~ /^[01]$/) {
+        $logic_level = int($raw_value_expr);
+    }
+    if (!defined($logic_level)) {
+        my $rhs_desc = defined($raw_value_expr) ? (ref($raw_value_expr) ? ref($raw_value_expr) : $raw_value_expr) : 'undef';
+        Carp::confess "[Parser.pm][resolve_single_bit_logic_level()] Delayed pulse '<N' requires RHS literal 0 or 1, got '$rhs_desc'";
+    }
+    return $logic_level;
 }
 
 1;
