@@ -79,6 +79,9 @@ This is the persistent technical change history for FSMGen.
 - Follow-up extraction increment:
   - moved RHS grouping orchestration (`group_assignments_by_rhs`) from `FlattenedDT` into `EnableGraph`,
   - `FlattenedDT` now delegates this step to the synthesis layer as part of unified assignment analysis.
+- Latest extraction increment:
+  - moved multiplexer configuration assembly (`build_multiplexer_config`) from `FlattenedDT` into `EnableGraph`,
+  - `FlattenedDT` now delegates this step as well, expanding the synthesis-layer seam while preserving behavior.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

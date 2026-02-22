@@ -282,3 +282,6 @@ It is an exact-delay pulse request:
 - Latest behavior-preserving increment:
   - RHS grouping (`group_assignments_by_rhs`) now also runs through `EnableGraph`,
   - `FlattenedDT` delegates that step instead of owning the grouping implementation directly.
+- Newest behavior-preserving increment:
+  - multiplexer configuration assembly (`build_multiplexer_config`) now also runs through `EnableGraph`,
+  - `FlattenedDT` delegates that step, further separating synthesis orchestration from backend monolith code.

@@ -166,5 +166,47 @@ sub generate_complete_enable_structure($self, $lhs) {
         fsm_debug("    [EnableGraph.pm] LHS-level enable: $lhs_enable_name = $debug_expr", 3);
     }
 }
+sub build_multiplexer_config($self, $lhs) {
+    my $ctx = $self->{flattened_dt};
+    my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
+    my $lhs_ast = $lhs_analysis->{lhs_ast};  # Get AST node for direct queries
+    
+    # AST WEB: Get signal name for debugging
+    my $lhs_name = blessed($lhs_ast) && $lhs_ast->can('name') ? $lhs_ast->name() : 'UNKNOWN';
+    
+    # Collect all enable/value pairs for the multiplexer
+    my @mux_enables = ();
+    my $priority = 0;
+    
+    for my $rhs (sort keys %{$lhs_analysis->{rhs_groups}}) {
+        my $rhs_group = $lhs_analysis->{rhs_groups}->{$rhs};
+        my $lhs_enable = $rhs_group->{lhs_level_enable};
+        
+        # Store multiplexer enable info
+        $rhs_group->{multiplexer_info} = {
+            enable_signal => $lhs_enable->{name},
+            rhs_value => $rhs,
+            priority => $priority++,
+        };
+        
+        push @mux_enables, $rhs_group->{multiplexer_info};
+    }
+    
+    # Determine multiplexer type using direct AST method calls
+    my $is_register = $ctx->is_register($lhs_ast, $lhs_name);
+    my $mux_type = $is_register ? 'flop' : 'comb';
+    
+    # Get default value using direct AST method calls
+    my $default_value = $ctx->get_default_value_from_ast($lhs_ast);
+    
+    # Build complete multiplexer configuration
+    $lhs_analysis->{multiplexer} = {
+        type => $mux_type,
+        enables => \@mux_enables,
+        default_value => $default_value,
+    };
+    
+    fsm_debug("  [EnableGraph.pm][build_multiplexer_config()] Multiplexer: type=$lhs_analysis->{multiplexer}->{type}, " . scalar(@mux_enables) . " enables", 3);
+}
 
 1;
