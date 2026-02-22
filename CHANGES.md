@@ -104,6 +104,10 @@ This is the persistent technical change history for FSMGen.
   - added new live recovery document `MEMORY.md` for crash/session-handoff continuity,
   - documented mandatory workflow: update `MEMORY.md` and other live docs before every commit workflow,
   - documented compact resume checklist and current extraction status snapshot for successor agents.
+- Newest extraction increment:
+  - moved unified pulse-delay emitter (`generate_unified_pulse_delay_logic`) into `EnableGraph`,
+  - updated phase-3 orchestration in `EnableGraph` to call its local pulse-delay emitter,
+  - `FlattenedDT` now delegates the pulse-delay emitter entrypoint to the synthesis layer.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

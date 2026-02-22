@@ -2756,57 +2756,7 @@ sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
 }
 
 sub generate_unified_pulse_delay_logic ($self, $lhs, $lhs_analysis) {
-    my $lhs_ast = $lhs_analysis->{lhs_ast};
-    my $lhs_name = blessed($lhs_ast) && $lhs_ast->can('name') ? $lhs_ast->name() : $lhs;
-    my $delay_cycles = $self->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
-    my $active_level = $self->get_pulse_active_level_for_lhs($lhs, $lhs_analysis);
-    my $rest_level = $active_level ? "1'b0" : "1'b1";
-    my $pulse_level = $active_level ? "1'b1" : "1'b0";
-    my $width = $self->get_lhs_width_from_analysis($lhs_analysis);
-    
-    if ($width != 1) {
-        die "[FlattenedDT.pm][generate_unified_pulse_delay_logic()] Delayed pulse target '$lhs_name' must be 1-bit, got width '$width'";
-    }
-    
-    my @request_signals = map { $_->{enable_signal} } @{$lhs_analysis->{multiplexer}->{enables} || []};
-    my $request_expr = @request_signals ? join(' | ', @request_signals) : "1'b0";
-    
-    my $hdl = "  // Delayed pulse logic for: $lhs_name (<$delay_cycles, exact Q+$delay_cycles)\n";
-    
-    if ($delay_cycles == 0) {
-        $hdl .= "  always_ff @(posedge clk or negedge rstn) begin\n";
-        $hdl .= "    if (!rstn) begin\n";
-        $hdl .= "      $lhs_name <= $rest_level;\n";
-        $hdl .= "    end else begin\n";
-        $hdl .= "      $lhs_name <= ($request_expr) ? $pulse_level : $rest_level;\n";
-        $hdl .= "    end\n";
-        $hdl .= "  end\n";
-        return $hdl;
-    }
-    
-    my $pipe_name = "${lhs_name}_pulse_delay_pipe";
-    my $pipe_tap = $delay_cycles == 1 ? $pipe_name : "${pipe_name}[" . ($delay_cycles - 1) . "]";
-    my $shift_rhs = $delay_cycles == 1
-        ? $request_expr
-        : "{${pipe_name}[" . ($delay_cycles - 2) . ":0], $request_expr}";
-    my $pipe_reset = $delay_cycles == 1
-        ? "1'b0"
-        : '{' . $delay_cycles . "{1'b0}}";
-    
-    $hdl .= "  always_ff @(posedge clk or negedge rstn) begin\n";
-    $hdl .= "    if (!rstn) begin\n";
-    $hdl .= "      $lhs_name <= $rest_level;\n";
-    $hdl .= "      $pipe_name <= $pipe_reset;\n";
-    $hdl .= "    end else begin\n";
-    $hdl .= "      $lhs_name <= $rest_level;\n";
-    $hdl .= "      if ($pipe_tap) begin\n";
-    $hdl .= "        $lhs_name <= $pulse_level;\n";
-    $hdl .= "      end\n";
-    $hdl .= "      $pipe_name <= $shift_rhs;\n";
-    $hdl .= "    end\n";
-    $hdl .= "  end\n";
-    
-    return $hdl;
+    return $self->{enable_graph}->generate_unified_pulse_delay_logic($lhs, $lhs_analysis);
 }
 
 sub get_pulse_delay_cycles_for_lhs ($self, $lhs, $lhs_analysis) {

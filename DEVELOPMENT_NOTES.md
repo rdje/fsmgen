@@ -307,3 +307,7 @@ It is an exact-delay pulse request:
   - added `MEMORY.md` as a live, compact resumption artifact for crash/session-handoff recovery,
   - mandated update order after each completed task: `MEMORY.md` first, then other affected live docs, then commit workflow,
   - `MEMORY.md` now carries fast-start context (recent milestones, active architecture status, and immediate next-step orientation).
+- Latest behavior-preserving increment:
+  - unified pulse-delay emission (`generate_unified_pulse_delay_logic`) now runs through `EnableGraph`,
+  - phase-3 orchestration in `EnableGraph` now invokes its local pulse-delay emitter,
+  - `FlattenedDT` delegates the pulse-delay emitter entrypoint to the synthesis layer.

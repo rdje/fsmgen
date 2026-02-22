@@ -36,10 +36,12 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - `generate_signal_assignments`
 - `generate_unified_comb_mux`
 - `generate_unified_flop_mux`
+- `generate_unified_pulse_delay_logic`
 ### Still strong candidates for next slices
-- `generate_unified_pulse_delay_logic` (currently still in `FlattenedDT` and called via phase-3 orchestration context).
-- Additional phase-3/per-assignment emit helpers and related support functions once parity is preserved.
+- pulse-related helper analysis methods (`get_pulse_delay_cycles_for_lhs`, `get_pulse_active_level_for_lhs`, `normalize_rhs_logic_level`) if we decide to keep pushing extraction depth.
+- additional shared phase-3/per-assignment support helpers once parity is preserved.
 ## Recent milestone commits (most recent first)
+- `a2725c9` Add live MEMORY.md continuity document and update workflow policy
 - `0bf08d4` Delegate unified flop mux emission to EnableGraph
 - `1f29750` Delegate unified combinational mux emission to EnableGraph
 - `d4dc317` Delegate unified phase-3 assignment orchestration to EnableGraph
@@ -49,7 +51,6 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - `36a574f` Extract RHS grouping orchestration into EnableGraph synthesis layer
 - `2a05831` Add assignment edge/snapshot regressions and extract initial EnableGraph layer
 - `fe1cc3c` Implement c/r/m/rm/mr/pN assignment semantics and document pN as Q+N delay
-- `8355a9a` Add explicit assignment intent metadata for <-/<=/= and enforce intent-driven assignment handling
 ## Quick resume checklist
 1. Read `MEMORY.md` first.
 2. Read latest entries in `CHANGES.md` and `DEVELOPMENT_NOTES.md`.
