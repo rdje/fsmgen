@@ -82,6 +82,9 @@ This is the persistent technical change history for FSMGen.
 - Latest extraction increment:
   - moved multiplexer configuration assembly (`build_multiplexer_config`) from `FlattenedDT` into `EnableGraph`,
   - `FlattenedDT` now delegates this step as well, expanding the synthesis-layer seam while preserving behavior.
+- Newest extraction increment:
+  - moved unified assignment-analysis orchestration (`build_unified_assignment_analysis`) from `FlattenedDT` into `EnableGraph`,
+  - `FlattenedDT` now delegates the top-level per-LHS analysis loop to the synthesis layer.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

@@ -16,6 +16,46 @@ sub new($class, %args) {
         flattened_dt => $args{flattened_dt},
     }, $class;
 }
+sub build_unified_assignment_analysis($self, $fsm_module) {
+    my $ctx = $self->{flattened_dt};
+    fsm_debug("\n\n*** UNIFIED PHASE 1: BUILDING COMPLETE ASSIGNMENT ANALYSIS (AST WEB) ***", 3);
+    
+    # For each LHS signal name key, build complete analysis
+    for my $lhs_name_key (keys %{$ctx->{all_lhs}}) {
+        next unless $ctx->{lhs_assignments}->{$lhs_name_key};
+        
+        # Get AST node using mapping
+        my $lhs_ast = $ctx->{lhs_ast_map}->{$lhs_name_key};
+        
+        # AST WEB: get signal name directly from AST node for debugging
+        my $lhs_name = blessed($lhs_ast) && $lhs_ast->can('name') ? $lhs_ast->name() : $lhs_name_key;
+        
+        fsm_debug("\n=== ANALYZING LHS AST: $lhs_name ===", 3);
+        fsm_debug("  Found " . scalar(@{$ctx->{lhs_assignments}->{$lhs_name_key}}) . " assignments", 3);
+        
+        # Initialize unified structure - signal_info intentionally omitted;
+        # properties are queried directly from the LHS AST node when needed.
+        $ctx->{assignment_analysis}->{$lhs_name_key} = {
+            assignments => $ctx->{lhs_assignments}->{$lhs_name_key},
+            rhs_groups => {},
+            lhs_ast => $lhs_ast,
+            multiplexer => {},
+        };
+        
+        # Group assignments by RHS value and build enable structures
+        $ctx->group_assignments_by_rhs($lhs_name_key);
+        
+        # Generate all enable signal names and expressions
+        $ctx->generate_complete_enable_structure($lhs_name_key);
+        
+        # Build multiplexer configuration using direct AST queries
+        $ctx->build_multiplexer_config($lhs_name_key);
+        
+        fsm_debug("  *** COMPLETED ANALYSIS FOR LHS AST: $lhs_name ***", 3);
+    }
+    
+    fsm_debug("\n*** UNIFIED PHASE 1 COMPLETE (AST WEB) ***", 3);
+}
 sub group_assignments_by_rhs($self, $lhs) {
     my $ctx = $self->{flattened_dt};
     my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};

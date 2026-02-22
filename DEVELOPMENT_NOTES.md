@@ -285,3 +285,6 @@ It is an exact-delay pulse request:
 - Newest behavior-preserving increment:
   - multiplexer configuration assembly (`build_multiplexer_config`) now also runs through `EnableGraph`,
   - `FlattenedDT` delegates that step, further separating synthesis orchestration from backend monolith code.
+- Latest behavior-preserving increment:
+  - unified assignment-analysis orchestration (`build_unified_assignment_analysis`) now runs through `EnableGraph`,
+  - `FlattenedDT` delegates the full per-LHS phase-1 analysis loop to the synthesis layer while reusing existing delegated sub-steps.

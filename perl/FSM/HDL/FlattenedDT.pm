@@ -308,43 +308,7 @@ sub flatten_all_decision_trees ($self, $fsm_module) {
 }
 
 sub build_unified_assignment_analysis ($self, $fsm_module) {
-    fsm_debug("\n\n*** UNIFIED PHASE 1: BUILDING COMPLETE ASSIGNMENT ANALYSIS (AST WEB) ***", 3);
-    
-    # For each LHS signal name key, build complete analysis
-    for my $lhs_name_key (keys %{$self->{all_lhs}}) {
-        next unless $self->{lhs_assignments}->{$lhs_name_key};
-        
-        # Get the AST node using the mapping
-        my $lhs_ast = $self->{lhs_ast_map}->{$lhs_name_key};
-        
-        # AST WEB: Get signal name directly from AST node for debugging
-        my $lhs_name = blessed($lhs_ast) && $lhs_ast->can('name') ? $lhs_ast->name() : $lhs_name_key;
-            
-        fsm_debug("\n=== ANALYZING LHS AST: $lhs_name ===", 3);
-        fsm_debug("  Found " . scalar(@{$self->{lhs_assignments}->{$lhs_name_key}}) . " assignments", 3);
-        
-        # AST WEB: Initialize unified structure - NO signal_info needed!
-        # All properties will be queried directly from the LHS AST node when needed
-        $self->{assignment_analysis}->{$lhs_name_key} = {
-            assignments => $self->{lhs_assignments}->{$lhs_name_key},  # Copy assignments
-            rhs_groups => {},
-            lhs_ast => $lhs_ast,  # Store reference to AST node for direct access
-            multiplexer => {}
-        };
-        
-        # Group assignments by RHS value and build enable structures
-        $self->group_assignments_by_rhs($lhs_name_key);
-        
-        # Generate all enable signal names and expressions  
-        $self->generate_complete_enable_structure($lhs_name_key);
-        
-        # Build multiplexer configuration using direct AST queries
-        $self->build_multiplexer_config($lhs_name_key);
-        
-        fsm_debug("  *** COMPLETED ANALYSIS FOR LHS AST: $lhs_name ***", 3);
-    }
-    
-    fsm_debug("\n*** UNIFIED PHASE 1 COMPLETE (AST WEB) ***", 3);
+    return $self->{enable_graph}->build_unified_assignment_analysis($fsm_module);
 }
 
 sub get_signal_ast_node ($self, $lhs_name) {
