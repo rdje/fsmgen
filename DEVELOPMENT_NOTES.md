@@ -363,3 +363,7 @@ It is an exact-delay pulse request:
   - FSM module-reference setter (`set_fsm_module_reference`) now runs through `EnableGraph`,
   - `FlattenedDT` retains a compatibility delegation entrypoint for FSM module-reference storage,
   - `EnableGraph` now owns writes to the shared FSM module reference used by signal-info/reset helper paths.
+- Latest behavior-preserving increment:
+  - register-classification helpers (`is_register`, `fallback_register_analysis_from_assignments`) now run through `EnableGraph`,
+  - `EnableGraph` multiplexer configuration assembly now resolves register-vs-combinational classification through local helper ownership,
+  - `FlattenedDT` retains compatibility delegation entrypoints for these register-classification helper paths.

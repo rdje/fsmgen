@@ -325,99 +325,11 @@ sub get_signal_ast_node ($self, $lhs_name) {
 }
 
 sub is_register ($self, $lhs_signal_ast, $lhs_name_for_debug) {
-    # Determine if this signal AST node should be implemented as a register
-    # Uses the signal AST node as the single source of truth
-    
-    fsm_debug("IS_REGISTER: Analyzing signal '$lhs_name_for_debug' using AST node", 3);
-    
-    unless ($lhs_signal_ast) {
-        fsm_debug("  WARNING: No signal AST node - using fallback assignment analysis", 3);
-        return $self->fallback_register_analysis_from_assignments($lhs_name_for_debug);
-    }
-    
-    fsm_debug("  Signal AST node type: " . ref($lhs_signal_ast), 3);
-    
-    # CRITICAL FIX: Check if this is the FSM state next signal (combinational)
-    # This signal should NEVER be a register because the FSM architecture provides
-    # a dedicated state register
-    if ($lhs_signal_ast->can('is_fsm_state_next') && $lhs_signal_ast->is_fsm_state_next()) {
-        fsm_debug("  IS_REGISTER: Signal is FSM state next (combinational) - NOT a register", 3);
-        return 0;
-    }
-    
-    # Check if this is the FSM state register (should not get an additional register here
-    # because it's handled by the dedicated FSM state register generation)
-    if ($lhs_signal_ast->can('is_fsm_state_register') && $lhs_signal_ast->is_fsm_state_register()) {
-        fsm_debug("  IS_REGISTER: Signal is FSM state register - handled by dedicated FSM logic", 3);
-        return 0;
-    }
-    
-    # Check for explicit register attribute in the signal AST node
-    if ($lhs_signal_ast->can('is_register') && defined($lhs_signal_ast->is_register)) {
-        my $is_register = $lhs_signal_ast->is_register();
-        fsm_debug("  IS_REGISTER: Signal has explicit is_register attribute: $is_register", 3);
-        return $is_register ? 1 : 0;
-    }
-    
-    # Fallback to assignment-based analysis when AST doesn't provide explicit info
-    fsm_debug("  IS_REGISTER: No explicit AST attribute - using assignment-based analysis", 3);
-    return $self->fallback_register_analysis_from_assignments($lhs_name_for_debug);
+    return $self->{enable_graph}->is_register($lhs_signal_ast, $lhs_name_for_debug);
 }
 
 sub fallback_register_analysis_from_assignments ($self, $lhs_name) {
-    # Fallback register analysis based on assignment patterns
-    # This is used when the signal AST node doesn't have explicit register attributes
-    
-    fsm_debug("  FALLBACK_REGISTER_ANALYSIS: Analyzing assignment patterns for '$lhs_name'", 3);
-    
-    # Analyze assignment patterns to determine signal behavior
-    my $assignments = $self->{lhs_assignments}->{$lhs_name} || [];
-    my $assignment_count = scalar(@$assignments);
-    
-    fsm_debug("    Signal has $assignment_count assignments", 3);
-    
-    if ($assignment_count == 0) {
-        # No assignments - likely an input signal or constant
-        fsm_debug("    No assignments - NOT a register", 3);
-        return 0;
-    }
-    
-    # Check assignment operators to understand signal behavior
-    my $has_register_assignment = 0;
-    my $has_combinational_assignment = 0;
-    
-    for my $assignment (@$assignments) {
-        my $operator = $assignment->{operator} || '=';
-        
-        if ($operator eq '<-' || $operator eq '<=' || $operator eq '<-=' || $operator eq '<=+' || $operator =~ /^<\d+$/) {
-            # Sequential assignment variants - indicate this should be a register-driven path
-            $has_register_assignment = 1;
-            fsm_debug("      Found sequential assignment (operator: '$operator')", 3);
-        } elsif ($operator eq '=') {
-            # Combinational assignment - indicates this should be combinational
-            $has_combinational_assignment = 1;
-            fsm_debug("      Found combinational assignment (operator: '=')", 3);
-        }
-    }
-    
-    # Determine final register status based on assignment analysis
-    if ($has_register_assignment && !$has_combinational_assignment) {
-        # Only register assignments - this should be a register
-        fsm_debug("    Only register assignments - IS a register", 3);
-        return 1;
-    } elsif ($has_combinational_assignment && !$has_register_assignment) {
-        # Only combinational assignments - this should be combinational
-        fsm_debug("    Only combinational assignments - NOT a register", 3);
-        return 0;
-    } elsif ($has_register_assignment && $has_combinational_assignment) {
-        # Mixed assignments - this is unusual, default to register to be safe
-        fsm_debug("    Mixed assignments - defaulting to register for safety", 3);
-        return 1;
-    } else {
-        # No clear assignment pattern - default to combinational
-        fsm_debug("    No clear assignment pattern - defaulting to combinational", 3);
-        return 0;
-    }
+    return $self->{enable_graph}->fallback_register_analysis_from_assignments($lhs_name);
 }
 
 sub group_assignments_by_rhs ($self, $lhs) {

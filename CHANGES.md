@@ -160,6 +160,10 @@ This is the persistent technical change history for FSMGen.
   - moved FSM module-reference setter (`set_fsm_module_reference`) into `EnableGraph`,
   - `FlattenedDT` now delegates FSM module-reference storage to `EnableGraph` via compatibility shim,
   - `EnableGraph` now owns writes to the shared FSM module reference used by signal-info/reset helper paths.
+- Latest extraction increment:
+  - moved register-classification helpers (`is_register`, `fallback_register_analysis_from_assignments`) into `EnableGraph`,
+  - updated `EnableGraph` multiplexer configuration assembly to resolve register-vs-combinational selection through local helper ownership,
+  - `FlattenedDT` now delegates register-classification helper entrypoints to `EnableGraph` via compatibility shims.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)
