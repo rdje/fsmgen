@@ -303,3 +303,7 @@ It is an exact-delay pulse request:
   - unified flop mux emission (`generate_unified_flop_mux`) now runs through `EnableGraph`,
   - phase-3 orchestration in `EnableGraph` now invokes its local flop mux emitter,
   - `FlattenedDT` delegates the flop mux emitter entrypoint to the synthesis layer.
+- Session continuity policy increment:
+  - added `MEMORY.md` as a live, compact resumption artifact for crash/session-handoff recovery,
+  - mandated update order after each completed task: `MEMORY.md` first, then other affected live docs, then commit workflow,
+  - `MEMORY.md` now carries fast-start context (recent milestones, active architecture status, and immediate next-step orientation).

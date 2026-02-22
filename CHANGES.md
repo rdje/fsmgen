@@ -100,6 +100,10 @@ This is the persistent technical change history for FSMGen.
   - moved unified flop mux emitter (`generate_unified_flop_mux`) into `EnableGraph`,
   - updated phase-3 orchestration in `EnableGraph` to call its local flop mux emitter,
   - `FlattenedDT` now delegates the flop mux emitter entrypoint to the synthesis layer.
+- Latest continuity increment:
+  - added new live recovery document `MEMORY.md` for crash/session-handoff continuity,
+  - documented mandatory workflow: update `MEMORY.md` and other live docs before every commit workflow,
+  - documented compact resume checklist and current extraction status snapshot for successor agents.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)
