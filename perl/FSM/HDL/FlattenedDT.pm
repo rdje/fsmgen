@@ -3216,7 +3216,10 @@ sub get_signal_assignment_type ($self, $lhs, $lhs_analysis) {
     my $has_comb_assignment = 0;      # =
     
     for my $assignment (@$assignments) {
-        my $operator = $assignment->{operator} || '=';
+        my $operator = $assignment->{operator};
+        if (!defined($operator) || $operator eq '') {
+            die "[FlattenedDT.pm][get_signal_assignment_type()] Missing operator in assignment analysis for LHS '$lhs'";
+        }
         
         if ($operator eq '<-') {
             $has_register_assignment = 1;
@@ -3701,8 +3704,20 @@ sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_st
     # Extract RHS value from expression
     my $actual_rhs = $self->extract_rhs_from_expression($rhs_expr);
     
-    # Determine operator based on assignment type
-    my $operator = ($assignment_node->isa('FSM::CoreAST::RegisterAssignment')) ? '<-' : '=';
+    # Determine operator directly from assignment intent metadata (strict mode)
+    my $assignment_intent = {};
+    if ($assignment_node->can('assignment_intent')) {
+        my $intent = $assignment_node->assignment_intent;
+        $assignment_intent = { %$intent } if ref($intent) eq 'HASH';
+    }
+    
+    my $operator = $assignment_node->can('operator_symbol')
+        ? $assignment_node->operator_symbol
+        : undef;
+    if (!defined($operator) || $operator !~ /^(?:<-|<=|=)$/) {
+        my $node_type = ref($assignment_node) || 'UNKNOWN';
+        die "[FlattenedDT.pm][record_assignment_from_ast()] Missing or invalid operator_symbol for assignment node '$node_type'";
+    }
     
     fsm_debug("  SEMANTIC ASSIGNMENT RESULT:", 3);
     fsm_debug("    LHS AST Node: " . ref($lhs_signal_ast), 3);
@@ -3726,6 +3741,9 @@ sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_st
         conditions_ast => $condition_ast,      # Store condition AST
         rhs => $actual_rhs,
         operator => $operator,
+        assignment_intent => $assignment_intent,
+        source_provenance => ($assignment_node->can('source_provenance') ? $assignment_node->source_provenance : {}),
+        output_exposure => ($assignment_node->can('output_exposure') ? $assignment_node->output_exposure : 'auto'),
         is_state_trans => 0
     };
     
@@ -3754,6 +3772,17 @@ my $condition_ast = $self->create_condition_expression($condition_stack);
         conditions_ast => $condition_ast,      # Store the original AST
         rhs => $state_value,
         operator => '<-',
+        assignment_intent => {
+            operator_symbol => '<-',
+            sequencing => 'clocked',
+            register_style => 'output_named',
+            assignment_family => 'state_transition',
+        },
+        source_provenance => {
+            origin => 'state_transition',
+            raw_target_state => $target_state,
+        },
+        output_exposure => 'auto',
         is_state_trans => 1
     };
     

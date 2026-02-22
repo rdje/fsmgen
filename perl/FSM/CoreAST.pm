@@ -1083,6 +1083,9 @@ package FSM::CoreAST::Assignment;
         $self->{source} = $args{source} // Carp::confess "Assignment source required";
         $self->{assignment_type} = $args{assignment_type} // 'combinatorial';
         $self->{timing_semantics} = $args{timing_semantics} // {};
+        $self->{assignment_intent} = $class->_normalize_assignment_intent(\%args, $self->{assignment_type});
+        $self->{source_provenance} = $args{source_provenance} // {};
+        $self->{output_exposure} = $args{output_exposure} // 'auto';
         return $self;
     }
     
@@ -1090,6 +1093,24 @@ package FSM::CoreAST::Assignment;
     sub source($self) { $self->{source} }
     sub assignment_type($self) { $self->{assignment_type} }
     sub timing_semantics($self) { $self->{timing_semantics} }
+    sub assignment_intent($self) { $self->{assignment_intent} // {} }
+    sub source_provenance($self) { $self->{source_provenance} // {} }
+    sub output_exposure($self) { $self->{output_exposure} // 'auto' }
+    sub register_style($self) { ($self->{assignment_intent} // {})->{register_style} }
+    sub operator_symbol($self) {
+        my $intent = $self->assignment_intent;
+        if (defined $intent->{operator_symbol} && $intent->{operator_symbol} ne '') {
+            return $intent->{operator_symbol};
+        }
+        
+        if ($self->{assignment_type} eq 'register') {
+            my $style = $intent->{register_style} // '';
+            return '<=' if $style eq 'input_named';
+            return '<-';
+        }
+        
+        return '=';
+    }
     
     sub get_target_signals($self) { [$self->{target}->get_signals->@*] }
     sub get_source_signals($self) { [$self->{source}->get_signals->@*] }
@@ -1110,6 +1131,25 @@ package FSM::CoreAST::Assignment;
             return 1 if grep { $_ eq $my_target } @other_targets;
         }
         return 0;
+    }
+    
+    sub _normalize_assignment_intent($class, $args, $assignment_type) {
+        my $incoming = (ref($args->{assignment_intent}) eq 'HASH') ? {%{$args->{assignment_intent}}} : {};
+        
+        my $default_register_style = $incoming->{register_style}
+            // $args->{register_style}
+            // ($assignment_type eq 'register' ? 'output_named' : 'none');
+        
+        my $default_operator = $assignment_type eq 'register'
+            ? ($default_register_style eq 'input_named' ? '<=' : '<-')
+            : '=';
+        
+        $incoming->{assignment_family} //= $assignment_type;
+        $incoming->{sequencing} //= ($assignment_type eq 'register' ? 'clocked' : 'combinational');
+        $incoming->{register_style} //= $default_register_style;
+        $incoming->{operator_symbol} //= $default_operator;
+        
+        return $incoming;
     }
 
 package FSM::CoreAST::StateTransition;

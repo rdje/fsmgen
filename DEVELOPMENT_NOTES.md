@@ -1,6 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
 
+## 2026-02-22: Phase-1 intent model clarification (`<-` vs `<=`)
+- Assignment intent is now explicitly captured at AST assignment nodes (`assignment_intent`, `source_provenance`, `output_exposure`).
+- The `<=` semantic intent is explicitly encoded as:
+  - `register_style = input_named`
+  - `lhs_binding = flop_d_input`
+  - `immediate_visibility = same_cycle_on_d_input`
+  - `hold_policy = q_feedback_when_no_enable`
+- The `<-` semantic intent is explicitly encoded as:
+  - `register_style = output_named`
+  - `lhs_binding = flop_q_output`
+  - `hold_policy = q_feedback_when_no_enable`
+
+This preserves the intended modeling distinction:
+- `<-` names/registers the flop output (`Q`) as LHS.
+- `<=` names the flop input side (`D`) as LHS while maintaining storage behavior by feedback when enables are inactive.
+
 ## Current parser/generator model
 - Parse flow is modularized into `SignalManager`, `ExpressionBuilder`, `Parser`, and `SignalAnalyzer`.
 - Fail-fast behavior uses `Carp::confess` with stack traces instead of silent parser failures.

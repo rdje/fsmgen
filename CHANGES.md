@@ -1,6 +1,35 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 
+## 2026-02-22
+### Phase 1 modernization slice: explicit assignment intent metadata
+- Added explicit assignment-intent metadata to CoreAST assignment objects:
+  - `assignment_intent` (operator symbol, sequencing mode, register style, assignment family)
+  - `source_provenance` (raw operator/signal/value context)
+  - `output_exposure` (`auto`/`explicit`)
+- Added assignment-level accessors:
+  - `assignment_intent`, `source_provenance`, `output_exposure`, `operator_symbol`, `register_style`.
+
+### Parser wiring for intent-first semantics
+- Updated `perl/FSM/Adapter/FSMGenFull/Parser.pm` signal-action construction to emit explicit intent for:
+  - `<-` => clocked `output_named`, `lhs_binding=flop_q_output`
+  - `<=` => clocked `input_named`, `lhs_binding=flop_d_input`, `immediate_visibility=same_cycle_on_d_input`, `hold_policy=q_feedback_when_no_enable`
+  - `=`  => combinatorial
+- Added parser provenance capture and explicit-output exposure propagation from `>` LHS marker.
+
+### Backend updates
+- Updated `perl/FSM/HDL/FlattenedDT.pm` assignment recording to consume assignment-intent metadata directly and fail fast on missing/invalid operator intent.
+- Added intent metadata to synthesized state-transition assignment records for uniform downstream handling.
+- Tightened assignment-type classification (`register_out` / `register_in` / `mux_out`) to require explicit operator presence in analysis records.
+
+### Tests
+- Added `t/03-assignment-intent-metadata.t` to validate:
+  - parser metadata emission for `<-`, `<=`, `=`
+  - explicit-output exposure from `>` marker
+  - backend assignment-type classifier behavior.
+- Validation run:
+  - `prove -v t/03-assignment-intent-metadata.t t/02-combinational-self-dependency.t t/01-regression.t` (pass).
+
 ## 2026-02-21
 ### Parser and expression handling
 - Added parser support for compound update shorthand and inline modifiers:

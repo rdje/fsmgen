@@ -579,6 +579,7 @@ sub parse_signal_action($self, $action) {
 
     my $target_expr = $self->{expression_builder}->parse_signal_reference($signal_name);
     my $source_expr = $self->{expression_builder}->parse_expression($value_expr);
+    my ($compound_operator_used, $compound_delta_used);
     
     if ($compound_spec) {
         my ($compound_op, $compound_payload) = @$compound_spec;
@@ -596,6 +597,8 @@ sub parse_signal_action($self, $action) {
         
         my $arith_op = ($compound_op eq '+=') ? '+' : '-';
         $source_expr = FSM::CoreAST::BinaryOp->new($arith_op, $source_expr, $delta_expr);
+        $compound_operator_used = $compound_op;
+        $compound_delta_used = $delta_spec;
         
         fsm_debug("[Parser.pm][parse_signal_action()] Applied compound modifier '$compound_op' with delta '$delta_spec' on '$signal_name'", 3);
     }
@@ -661,27 +664,75 @@ sub parse_signal_action($self, $action) {
     }
     
     $target_expr = $self->{expression_builder}->parse_signal_reference($signal_name); 
+    
+    my $output_exposure = ($signal_name =~ />$/) ? 'explicit' : 'auto';
+    if ($output_exposure eq 'auto') {
+        if (ref($target_expr) eq 'FSM::CoreAST::SignalRef' && $target_expr->signal && $target_expr->signal->can('get_attribute')) {
+            $output_exposure = $target_expr->signal->get_attribute('is_output') ? 'explicit' : 'auto';
+        } elsif (ref($target_expr) eq 'FSM::CoreAST::IndexedRef' && $target_expr->signal && $target_expr->signal->can('get_attribute')) {
+            $output_exposure = $target_expr->signal->get_attribute('is_output') ? 'explicit' : 'auto';
+        }
+    }
+    
+    my %source_provenance = (
+        raw_signal_name => $signal_name,
+        raw_operator => $operator,
+        raw_value_expr => ref($value_expr) ? ref($value_expr) : $value_expr,
+        raw_condition_suffix => defined($full_condition) ? (ref($full_condition) ? ref($full_condition) : $full_condition) : undef,
+        had_compound_modifier => $compound_spec ? 1 : 0,
+    );
+    if (defined $compound_operator_used) {
+        $source_provenance{compound_operator} = $compound_operator_used;
+        $source_provenance{compound_delta} = $compound_delta_used;
+    }
 
     my $assignment;
     if ($operator eq '<-') {
         $assignment = FSM::CoreAST::RegisterAssignment->new(
             target => $target_expr,
             source => $source_expr,
-            assignment_type => 'clocked',
-            register_style => 'output_named'
+            register_style => 'output_named',
+            output_exposure => $output_exposure,
+            source_provenance => \%source_provenance,
+            assignment_intent => {
+                operator_symbol => '<-',
+                sequencing => 'clocked',
+                register_style => 'output_named',
+                assignment_family => 'register',
+                lhs_binding => 'flop_q_output',
+                hold_policy => 'q_feedback_when_no_enable',
+            },
         );
     } elsif ($operator eq '<=') {
         $assignment = FSM::CoreAST::RegisterAssignment->new(
             target => $target_expr,
             source => $source_expr,
-            assignment_type => 'clocked',
-            register_style => 'input_named'
+            register_style => 'input_named',
+            output_exposure => $output_exposure,
+            source_provenance => \%source_provenance,
+            assignment_intent => {
+                operator_symbol => '<=',
+                sequencing => 'clocked',
+                register_style => 'input_named',
+                assignment_family => 'register',
+                lhs_binding => 'flop_d_input',
+                immediate_visibility => 'same_cycle_on_d_input',
+                hold_policy => 'q_feedback_when_no_enable',
+            },
         );
     } elsif ($operator eq '=') {
         $assignment = FSM::CoreAST::Assignment->new(
             target => $target_expr,
             source => $source_expr,
-            assignment_type => 'combinational'
+            assignment_type => 'combinatorial',
+            output_exposure => $output_exposure,
+            source_provenance => \%source_provenance,
+            assignment_intent => {
+                operator_symbol => '=',
+                sequencing => 'combinational',
+                register_style => 'none',
+                assignment_family => 'combinatorial',
+            },
         );
     } else {
         return undef;
