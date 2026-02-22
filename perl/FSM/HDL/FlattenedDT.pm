@@ -457,40 +457,7 @@ sub fallback_register_analysis_from_assignments ($self, $lhs_name) {
 }
 
 sub group_assignments_by_rhs ($self, $lhs) {
-    # Group assignments by RHS value for unified analysis
-    my $lhs_analysis = $self->{assignment_analysis}->{$lhs};
-    
-    fsm_debug("  Grouping assignments by RHS value:", 3);
-    
-    for my $assignment (@{$lhs_analysis->{assignments}}) {
-        my $rhs = $assignment->{rhs};
-        my $dt = $assignment->{dt};
-        my $conditions = $assignment->{conditions} || 'NONE';
-        my $conditions_ast = $assignment->{conditions_ast};
-        
-        # Initialize RHS group if not exists
-        unless (exists $lhs_analysis->{rhs_groups}->{$rhs}) {
-            $lhs_analysis->{rhs_groups}->{$rhs} = {
-                assignments => [],
-                dt_specific_enables => [],
-                lhs_level_enable => undef,
-                multiplexer_info => undef
-            };
-        }
-        
-        # Add this assignment to the RHS group
-        push @{$lhs_analysis->{rhs_groups}->{$rhs}->{assignments}}, $assignment;
-        
-        # Debug with proper handling of both old and new condition formats
-        my $debug_condition = $conditions;
-        if ($conditions_ast && blessed($conditions_ast) && $conditions_ast->can('to_systemverilog')) {
-            $debug_condition = $conditions_ast->to_systemverilog();
-        }
-        fsm_debug("    RHS '$rhs' from DT '$dt' with condition '$debug_condition'", 3);
-    }
-    
-    my $rhs_count = scalar(keys %{$lhs_analysis->{rhs_groups}});
-    fsm_debug("  Grouped into $rhs_count unique RHS values", 3);
+    return $self->{enable_graph}->group_assignments_by_rhs($lhs);
 }
 
 sub generate_complete_enable_structure ($self, $lhs) {

@@ -279,3 +279,6 @@ It is an exact-delay pulse request:
 - This is an intentional first extraction step:
   - behavior-preserving refactor first,
   - deeper decomposition can proceed in subsequent slices with reduced risk.
+- Latest behavior-preserving increment:
+  - RHS grouping (`group_assignments_by_rhs`) now also runs through `EnableGraph`,
+  - `FlattenedDT` delegates that step instead of owning the grouping implementation directly.

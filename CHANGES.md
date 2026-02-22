@@ -76,6 +76,9 @@ This is the persistent technical change history for FSMGen.
   - `perl/FSM/Synthesis/EnableGraph.pm`
 - Refactored `FlattenedDT` to delegate complete enable-structure synthesis via `EnableGraph`:
   - keeps current behavior unchanged while establishing an extraction seam for subsequent slices.
+- Follow-up extraction increment:
+  - moved RHS grouping orchestration (`group_assignments_by_rhs`) from `FlattenedDT` into `EnableGraph`,
+  - `FlattenedDT` now delegates this step to the synthesis layer as part of unified assignment analysis.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)
