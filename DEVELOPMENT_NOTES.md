@@ -252,3 +252,30 @@ It is an exact-delay pulse request:
 - Legacy comments in `fx/perl/FSMGen.pm` mention pulse semantics and may read like “N-cycle pulse length”.
 - Legacy backend path was incomplete for dedicated pulse realization.
 - Modernized backend now treats `pN` as exact `Q+N` one-cycle pulse semantics (delay, not duration), matching the clarified framework intent.
+
+## 2026-02-22: Hardening pass after assignment-family implementation
+### Edge-case semantics now regression-locked
+- Added explicit tests for `pN` with `N=0` to lock immediate-cycle delayed pulse behavior:
+  - `<0 1` -> positive one-cycle pulse with rest `0`.
+  - `<0 0` -> negative one-cycle pulse with rest `1`.
+- Added explicit conflict-rejection regression coverage:
+  - mixed combinational + sequential operators on same LHS,
+  - mixed pulse-delayed + non-pulse sequential operators on same LHS,
+  - multiple pulse delays on same LHS.
+- Added explicit parser rejection coverage for invalid `<N` RHS (must be literal `0` or `1`).
+
+### Snapshot strategy for rm/mr/pN
+- Introduced targeted HDL golden snapshots (not only regex-based checks) for:
+  - module ports (`next_*` and `*_r` exposure/width),
+  - rm (`<-=`) emitted block,
+  - mr (`<=+`) emitted block,
+  - pN delayed pulse blocks.
+- Rationale:
+  - protect behavioral semantics *and* emitted structural shape from accidental drift.
+
+### Enable-synthesis extraction seam (slice start)
+- Added `FSM::Synthesis::EnableGraph` as an orchestration seam for enable synthesis.
+- `FlattenedDT` now delegates complete enable-structure generation through this layer.
+- This is an intentional first extraction step:
+  - behavior-preserving refactor first,
+  - deeper decomposition can proceed in subsequent slices with reduced risk.

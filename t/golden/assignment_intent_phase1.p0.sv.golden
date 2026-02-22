@@ -1,0 +1,14 @@
+  // Unified Multiplexer for LHS: P0
+  // Delayed pulse logic for: P0 (<2, exact Q+2)
+  always_ff @(posedge clk or negedge rstn) begin
+    if (!rstn) begin
+      P0 <= 1'b1;
+      P0_pulse_delay_pipe <= {2{1'b0}};
+    end else begin
+      P0 <= 1'b1;
+      if (P0_pulse_delay_pipe[1]) begin
+        P0 <= 1'b0;
+      end
+      P0_pulse_delay_pipe <= {P0_pulse_delay_pipe[0:0], p0_0_en};
+    end
+  end

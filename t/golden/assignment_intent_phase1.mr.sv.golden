@@ -1,0 +1,16 @@
+  // Unified Multiplexer for LHS: K
+  // Unified flop with mux for: K (register_in_dual assignment)
+  always_comb begin
+    K = K_q;  // Default value is feedback from flop output
+    K_r = K_q;
+    if (k_l_en) begin
+      K = L;
+    end
+  end
+  always_ff @(posedge clk or negedge rstn) begin
+    if (!rstn) begin
+      K_q <= 1'b0;
+    end else begin
+      K_q <= K;
+    end
+  end

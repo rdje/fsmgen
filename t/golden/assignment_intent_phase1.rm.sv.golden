@@ -1,0 +1,16 @@
+  // Unified Multiplexer for LHS: I
+  // Unified flop with mux for: I (register_out_dual assignment)
+  always_comb begin
+    I_next = I;  // Default value
+    if (i_j_en) begin
+      I_next = J;
+    end
+    next_I = I_next;
+  end
+  always_ff @(posedge clk or negedge rstn) begin
+    if (!rstn) begin
+      I <= 1'b0;
+    end else begin
+      I <= I_next;
+    end
+  end

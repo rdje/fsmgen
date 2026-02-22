@@ -1,0 +1,13 @@
+module assignment_intent_phase1 (
+  input  wire clk,
+  input  wire rstn,
+  input  wire [7:0] B,
+  input  wire [7:0] D,
+  input  wire F,
+  input  wire H,
+  input  wire [7:0] J,
+  input  wire [7:0] L,
+  output reg  G,
+  output reg  [7:0] K_r,
+  output reg  [7:0] next_I
+);

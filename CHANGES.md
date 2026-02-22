@@ -57,6 +57,31 @@ This is the persistent technical change history for FSMGen.
   - `prove -I perl t/02-combinational-self-dependency.t t/01-regression.t` (pass)
   - `prove -I perl t` (full suite pass)
 
+### Assignment semantics hardening: edge cases + golden snapshots
+- Added focused edge-case regression `t/04-assignment-edge-cases.t`:
+  - validates `<0 1` / `<0 0` immediate delayed-pulse semantics (`Q+0`, no delay pipeline register),
+  - rejects invalid `<N` RHS values (must be literal `0` or `1`),
+  - rejects mixed incompatible assignment families on same LHS:
+    - combinational + sequential,
+    - pulse-delayed + non-pulse sequential,
+    - multiple conflicting pulse delays.
+- Added golden snapshot regression `t/05-assignment-hdl-snapshots.t` and fixtures under `t/golden/` for:
+  - module port exposure/widths (including `next_*` and `*_r`),
+  - rm (`<-=`) emitted block shape,
+  - mr (`<=+`) emitted block shape,
+  - pN delayed pulse blocks for `<2 0` and `<3 1`.
+
+### Architecture slice start: enable synthesis extraction
+- Added initial dedicated enable-synthesis layer:
+  - `perl/FSM/Synthesis/EnableGraph.pm`
+- Refactored `FlattenedDT` to delegate complete enable-structure synthesis via `EnableGraph`:
+  - keeps current behavior unchanged while establishing an extraction seam for subsequent slices.
+- Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
+
+### Validation (post-hardening + extraction)
+- `prove -I perl t/04-assignment-edge-cases.t t/05-assignment-hdl-snapshots.t` (pass)
+- `prove -I perl t` (full suite pass: 5 files, 117 tests)
+
 ## 2026-02-21
 ### Parser and expression handling
 - Added parser support for compound update shorthand and inline modifiers:
