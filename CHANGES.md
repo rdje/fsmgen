@@ -96,6 +96,10 @@ This is the persistent technical change history for FSMGen.
   - moved unified combinational mux emitter (`generate_unified_comb_mux`) into `EnableGraph`,
   - updated phase-3 orchestration in `EnableGraph` to call its local combinational mux emitter,
   - `FlattenedDT` now delegates the combinational mux emitter entrypoint to the synthesis layer.
+- Newest extraction increment:
+  - moved unified flop mux emitter (`generate_unified_flop_mux`) into `EnableGraph`,
+  - updated phase-3 orchestration in `EnableGraph` to call its local flop mux emitter,
+  - `FlattenedDT` now delegates the flop mux emitter entrypoint to the synthesis layer.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

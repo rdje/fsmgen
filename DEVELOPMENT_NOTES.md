@@ -299,3 +299,7 @@ It is an exact-delay pulse request:
   - unified combinational mux emission (`generate_unified_comb_mux`) now runs through `EnableGraph`,
   - phase-3 orchestration in `EnableGraph` now invokes its local combinational mux emitter,
   - `FlattenedDT` delegates the combinational mux emitter entrypoint to the synthesis layer.
+- Latest behavior-preserving increment:
+  - unified flop mux emission (`generate_unified_flop_mux`) now runs through `EnableGraph`,
+  - phase-3 orchestration in `EnableGraph` now invokes its local flop mux emitter,
+  - `FlattenedDT` delegates the flop mux emitter entrypoint to the synthesis layer.
