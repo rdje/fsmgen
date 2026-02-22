@@ -295,3 +295,7 @@ It is an exact-delay pulse request:
 - Latest behavior-preserving increment:
   - unified phase-3 assignment emission orchestration (`generate_signal_assignments`) now runs through `EnableGraph`,
   - `FlattenedDT` delegates this phase-3 multiplexer-emission entrypoint while retaining existing per-assignment-type mux emitters in `FlattenedDT`.
+- Newest behavior-preserving increment:
+  - unified combinational mux emission (`generate_unified_comb_mux`) now runs through `EnableGraph`,
+  - phase-3 orchestration in `EnableGraph` now invokes its local combinational mux emitter,
+  - `FlattenedDT` delegates the combinational mux emitter entrypoint to the synthesis layer.

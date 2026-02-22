@@ -208,13 +208,40 @@ sub generate_signal_assignments($self, $fsm_module) {
         } elsif ($multiplexer->{type} eq 'flop') {
             $hdl .= $ctx->generate_unified_flop_mux($lhs, $lhs_analysis);
         } else {
-            $hdl .= $ctx->generate_unified_comb_mux($lhs, $lhs_analysis);
+            $hdl .= $self->generate_unified_comb_mux($lhs, $lhs_analysis);
         }
         
         fsm_debug("  Generated unified multiplexer for $lhs (type: $multiplexer->{type}, assignment_type: $assignment_type)", 3);
     }
     
     fsm_debug("*** UNIFIED PHASE 3 COMPLETE ***", 3);
+    
+    return $hdl;
+}
+sub generate_unified_comb_mux($self, $lhs, $lhs_analysis) {
+    my $multiplexer = $lhs_analysis->{multiplexer};
+    
+    my $hdl = "  // Unified combinational mux for: $lhs\n";
+    
+    $hdl .= "  always_comb begin\n";
+    # For combinational logic, default to 1'b0 to avoid feedback loops
+    # CRITICAL FIX: Never use signal name as default for combinational multiplexers
+    my $safe_default = "1'b0";  # Safe default for combinational logic
+    $hdl .= "    $lhs = $safe_default;  // Default value\n";
+    
+    # Use enables from unified analysis - these match exactly with generated signals
+    for my $enable_info (@{$multiplexer->{enables}}) {
+        my $enable_signal = $enable_info->{enable_signal};
+        my $rhs_value = $enable_info->{rhs_value};
+        
+        $hdl .= "    if ($enable_signal) begin\n";
+        $hdl .= "      $lhs = $rhs_value;\n";
+        $hdl .= "    end\n";
+        
+        fsm_debug("    Unified comb mux: $enable_signal -> $rhs_value", 3);
+    }
+    
+    $hdl .= "  end\n";
     
     return $hdl;
 }
