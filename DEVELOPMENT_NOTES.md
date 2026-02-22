@@ -359,3 +359,7 @@ It is an exact-delay pulse request:
   - explicit-reset configuration setter (`set_explicit_reset_values`) now runs through `EnableGraph`,
   - `FlattenedDT` retains a compatibility delegation entrypoint for explicit-reset configuration updates,
   - `EnableGraph` now owns writes to explicit reset configuration consumed by reset-resolution helper paths.
+- Newest behavior-preserving increment:
+  - FSM module-reference setter (`set_fsm_module_reference`) now runs through `EnableGraph`,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for FSM module-reference storage,
+  - `EnableGraph` now owns writes to the shared FSM module reference used by signal-info/reset helper paths.

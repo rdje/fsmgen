@@ -156,6 +156,10 @@ This is the persistent technical change history for FSMGen.
   - moved explicit-reset configuration setter (`set_explicit_reset_values`) into `EnableGraph`,
   - `FlattenedDT` now delegates explicit-reset configuration to `EnableGraph` via compatibility shim,
   - `EnableGraph` now owns writes to explicit reset-value configuration consumed by reset-resolution helpers.
+- Newest extraction increment:
+  - moved FSM module-reference setter (`set_fsm_module_reference`) into `EnableGraph`,
+  - `FlattenedDT` now delegates FSM module-reference storage to `EnableGraph` via compatibility shim,
+  - `EnableGraph` now owns writes to the shared FSM module reference used by signal-info/reset helper paths.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

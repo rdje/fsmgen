@@ -739,6 +739,12 @@ sub get_signal_info($self, $lhs) {
     
     return undef;
 }
+sub set_fsm_module_reference($self, $fsm_module) {
+    # Store a reference to the FSM module for accessing signal information
+    my $ctx = $self->{flattened_dt};
+    $ctx->{fsm_module} = $fsm_module;
+    fsm_debug("FSM_MODULE_REF: Stored reference to FSM module: " . ($fsm_module ? $fsm_module->name : 'undef'), 3);
+}
 sub set_explicit_reset_values($self, $reset_values) {
     # Allow explicit configuration of reset values
     # $reset_values is a hash: { signal_name => reset_value }

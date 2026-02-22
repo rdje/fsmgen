@@ -2793,9 +2793,7 @@ sub get_signal_info ($self, $lhs) {
 }
 
 sub set_fsm_module_reference ($self, $fsm_module) {
-    # Store a reference to the FSM module for accessing signal information
-    $self->{fsm_module} = $fsm_module;
-    fsm_debug("FSM_MODULE_REF: Stored reference to FSM module: " . ($fsm_module ? $fsm_module->name : 'undef'), 3);
+    return $self->{enable_graph}->set_fsm_module_reference($fsm_module);
 }
 
 sub set_explicit_reset_values ($self, $reset_values) {
