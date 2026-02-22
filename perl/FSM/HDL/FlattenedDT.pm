@@ -2854,27 +2854,7 @@ sub get_default_value_from_ast ($self, $lhs_ast) {
 }
 
 sub get_reset_value_from_ast ($self, $lhs_ast) {
-    # AST WEB: Get reset value using direct AST queries  
-    # Use proper signal name extraction that handles different AST types
-    my $lhs_name = $self->extract_signal_name_from_ast($lhs_ast);
-    unless (defined $lhs_name) {
-        fsm_debug("WARNING: Could not extract signal name from AST, using fallback", 3);
-        $lhs_name = 'unknown_signal';
-    }
-    fsm_debug("GET_RESET_VALUE_FROM_AST: Getting reset value for '$lhs_name'", 3);
-    
-    # Try AST method first
-    if ($lhs_ast->can('reset_value')) {
-        my $reset_val = $lhs_ast->reset_value();
-        if (defined $reset_val) {
-            fsm_debug("  AST reset_value: '$reset_val'", 3);
-            return $reset_val;
-        }
-    }
-    
-    # Fallback to name-based logic
-    fsm_debug("  No AST reset value, using fallback", 3);
-    return $self->get_reset_value($lhs_name);
+    return $self->{enable_graph}->get_reset_value_from_ast($lhs_ast);
 }
 
 sub get_default_value ($self, $lhs) {

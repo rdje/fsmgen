@@ -347,3 +347,7 @@ It is an exact-delay pulse request:
   - reset-state discovery (`get_fsm_reset_state`) now runs through `EnableGraph`,
   - `FlattenedDT` retains a compatibility delegation entrypoint for reset-state queries,
   - `EnableGraph` reset-value resolution now calls local reset-state ownership for state-variable reset behavior.
+- Latest behavior-preserving increment:
+  - AST reset-value lookup (`get_reset_value_from_ast`) now runs through `EnableGraph`,
+  - `EnableGraph` unified flop-mux emission now calls local AST reset-value ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for AST reset-value queries.

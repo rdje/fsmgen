@@ -144,6 +144,10 @@ This is the persistent technical change history for FSMGen.
   - moved FSM reset-state helper (`get_fsm_reset_state`) into `EnableGraph`,
   - `FlattenedDT` now delegates reset-state lookup to `EnableGraph` via compatibility shim,
   - reset-value resolution in `EnableGraph` now uses local reset-state ownership for `next_state` semantics.
+- Latest extraction increment:
+  - moved AST reset-value helper (`get_reset_value_from_ast`) into `EnableGraph`,
+  - updated `EnableGraph` flop-mux emission to call local AST reset-value ownership,
+  - `FlattenedDT` now delegates AST reset-value lookup to `EnableGraph` via compatibility shim.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

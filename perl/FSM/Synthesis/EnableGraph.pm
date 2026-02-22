@@ -365,7 +365,8 @@ sub generate_unified_flop_mux($self, $lhs, $lhs_analysis) {
         $hdl .= "  end\n";
         
         # AST WEB: Get reset value using direct AST method calls
-        my $reset_value = $ctx->get_reset_value_from_ast($lhs_ast);
+        my $reset_value = $self->get_reset_value_from_ast($lhs_ast);
+
         
         # Generate the flip-flop
         $hdl .= "  always_ff @(posedge clk or negedge rstn) begin\n";
@@ -737,6 +738,31 @@ sub get_signal_info($self, $lhs) {
     }
     
     return undef;
+}
+sub get_reset_value_from_ast($self, $lhs_ast) {
+    # AST WEB: Get reset value using direct AST queries
+    my $ctx = $self->{flattened_dt};
+    
+    # Use proper signal name extraction that handles different AST types
+    my $lhs_name = $ctx->extract_signal_name_from_ast($lhs_ast);
+    unless (defined $lhs_name) {
+        fsm_debug("WARNING: Could not extract signal name from AST, using fallback", 3);
+        $lhs_name = 'unknown_signal';
+    }
+    fsm_debug("GET_RESET_VALUE_FROM_AST: Getting reset value for '$lhs_name'", 3);
+    
+    # Try AST method first
+    if ($lhs_ast->can('reset_value')) {
+        my $reset_val = $lhs_ast->reset_value();
+        if (defined $reset_val) {
+            fsm_debug("  AST reset_value: '$reset_val'", 3);
+            return $reset_val;
+        }
+    }
+    
+    # Fallback to name-based logic
+    fsm_debug("  No AST reset value, using fallback", 3);
+    return $self->get_reset_value($lhs_name);
 }
 sub group_assignments_by_rhs($self, $lhs) {
     my $ctx = $self->{flattened_dt};
