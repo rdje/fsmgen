@@ -220,40 +220,7 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
 }
 
 sub get_lhs_width_from_analysis ($self, $lhs_analysis) {
-    my $width;
-    my $lhs_ast = $lhs_analysis->{lhs_ast};
-    
-    if ($lhs_analysis->{signal_info} && $lhs_analysis->{signal_info}->{width}) {
-        my $signal_width = $lhs_analysis->{signal_info}->{width};
-        if (defined($signal_width) && $signal_width > 0) {
-            $width = $signal_width;
-        }
-    }
-    
-    if ($lhs_ast && blessed($lhs_ast)) {
-        if ((!defined($width) || $width < 1) && $lhs_ast->can('signal') && $lhs_ast->signal && $lhs_ast->signal->can('width')) {
-            my $signal_width = $lhs_ast->signal->width;
-            if (defined($signal_width) && $signal_width > 0) {
-                $width = $signal_width;
-            }
-        } elsif ((!defined($width) || $width < 1) && $lhs_ast->can('width')) {
-            my $ast_width = $lhs_ast->width;
-            if (defined($ast_width) && $ast_width > 0) {
-                $width = $ast_width;
-            }
-        }
-        
-        # Fallback via FSM module signal metadata when width isn't available on the AST node.
-        if ((!defined($width) || $width < 1) && $lhs_ast->can('name')) {
-            my $signal_info = $self->get_signal_info($lhs_ast->name);
-            if ($signal_info && $signal_info->{width} && $signal_info->{width} > 0) {
-                $width = $signal_info->{width};
-            }
-        }
-    }
-    
-    $width = 1 unless (defined($width) && $width > 0);
-    return $width;
+    return $self->{enable_graph}->get_lhs_width_from_analysis($lhs_analysis);
 }
 
 sub flatten_all_decision_trees ($self, $fsm_module) {

@@ -371,3 +371,7 @@ It is an exact-delay pulse request:
   - AST signal-name extraction helper (`extract_signal_name_from_ast`) now runs through `EnableGraph`,
   - `EnableGraph` AST reset/default helper paths now resolve signal names through local helper ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for AST signal-name extraction.
+- Latest behavior-preserving increment:
+  - LHS-width analysis helper (`get_lhs_width_from_analysis`) now runs through `EnableGraph`,
+  - `EnableGraph` pulse-delay emission now resolves target width through local helper ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for LHS-width analysis.

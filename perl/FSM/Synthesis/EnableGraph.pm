@@ -226,7 +226,7 @@ sub generate_unified_pulse_delay_logic($self, $lhs, $lhs_analysis) {
     my $active_level = $self->get_pulse_active_level_for_lhs($lhs, $lhs_analysis);
     my $rest_level = $active_level ? "1'b0" : "1'b1";
     my $pulse_level = $active_level ? "1'b1" : "1'b0";
-    my $width = $ctx->get_lhs_width_from_analysis($lhs_analysis);
+    my $width = $self->get_lhs_width_from_analysis($lhs_analysis);
     
     if ($width != 1) {
         die "[EnableGraph.pm][generate_unified_pulse_delay_logic()] Delayed pulse target '$lhs_name' must be 1-bit, got width '$width'";
@@ -738,6 +738,42 @@ sub get_signal_info($self, $lhs) {
     }
     
     return undef;
+}
+sub get_lhs_width_from_analysis($self, $lhs_analysis) {
+    my $width;
+    my $lhs_ast = $lhs_analysis->{lhs_ast};
+    
+    if ($lhs_analysis->{signal_info} && $lhs_analysis->{signal_info}->{width}) {
+        my $signal_width = $lhs_analysis->{signal_info}->{width};
+        if (defined($signal_width) && $signal_width > 0) {
+            $width = $signal_width;
+        }
+    }
+    
+    if ($lhs_ast && blessed($lhs_ast)) {
+        if ((!defined($width) || $width < 1) && $lhs_ast->can('signal') && $lhs_ast->signal && $lhs_ast->signal->can('width')) {
+            my $signal_width = $lhs_ast->signal->width;
+            if (defined($signal_width) && $signal_width > 0) {
+                $width = $signal_width;
+            }
+        } elsif ((!defined($width) || $width < 1) && $lhs_ast->can('width')) {
+            my $ast_width = $lhs_ast->width;
+            if (defined($ast_width) && $ast_width > 0) {
+                $width = $ast_width;
+            }
+        }
+        
+        # Fallback via FSM module signal metadata when width isn't available on the AST node.
+        if ((!defined($width) || $width < 1) && $lhs_ast->can('name')) {
+            my $signal_info = $self->get_signal_info($lhs_ast->name);
+            if ($signal_info && $signal_info->{width} && $signal_info->{width} > 0) {
+                $width = $signal_info->{width};
+            }
+        }
+    }
+    
+    $width = 1 unless (defined($width) && $width > 0);
+    return $width;
 }
 sub set_fsm_module_reference($self, $fsm_module) {
     # Store a reference to the FSM module for accessing signal information

@@ -168,6 +168,10 @@ This is the persistent technical change history for FSMGen.
   - moved AST signal-name extraction helper (`extract_signal_name_from_ast`) into `EnableGraph`,
   - updated `EnableGraph` AST reset/default helper paths to resolve signal names through local helper ownership,
   - `FlattenedDT` now delegates AST signal-name extraction to `EnableGraph` via compatibility shim.
+- Latest extraction increment:
+  - moved LHS-width analysis helper (`get_lhs_width_from_analysis`) into `EnableGraph`,
+  - updated `EnableGraph` pulse-delay emission path to resolve target width through local helper ownership,
+  - `FlattenedDT` now delegates LHS-width analysis to `EnableGraph` via compatibility shim.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)
