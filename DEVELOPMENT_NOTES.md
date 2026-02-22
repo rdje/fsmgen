@@ -339,3 +339,7 @@ It is an exact-delay pulse request:
   - signal-info discovery (`get_signal_info`) now runs through `EnableGraph`,
   - `FlattenedDT` retains a compatibility delegation entrypoint for signal-info queries,
   - `EnableGraph` reset-value resolution now calls local signal-info ownership while preserving staged delegation for reset-state/explicit-reset helpers.
+- Latest behavior-preserving increment:
+  - explicit-reset discovery (`get_explicit_reset_value`) now runs through `EnableGraph`,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for explicit-reset queries,
+  - `EnableGraph` reset-value resolution now calls local explicit-reset ownership while preserving staged delegation for reset-state helper logic.

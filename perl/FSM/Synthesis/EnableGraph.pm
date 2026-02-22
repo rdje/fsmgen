@@ -601,7 +601,7 @@ sub get_reset_value($self, $lhs) {
     }
     
     # Check if this LHS has explicit reset information from the FSM specification
-    my $explicit_reset = $ctx->get_explicit_reset_value($lhs);
+    my $explicit_reset = $self->get_explicit_reset_value($lhs);
     if (defined $explicit_reset) {
         fsm_debug("GET_RESET_VALUE: Explicit reset for '$lhs' -> '$explicit_reset'", 3);
         return $explicit_reset;
@@ -635,6 +635,48 @@ sub get_default_value($self, $lhs) {
     # This ensures proper flop behavior where the register maintains its value
     # unless explicitly overridden by an enable condition
     return $lhs;  # Use the signal itself as feedback (current register value)
+}
+sub get_explicit_reset_value($self, $lhs) {
+    # Check if this LHS has explicit reset information from the FSM specification
+    # This could come from signal attributes, FSM metadata, or explicit configuration
+    my $ctx = $self->{flattened_dt};
+    
+    fsm_debug("EXPLICIT_RESET: Checking for explicit reset value for '$lhs'", 3);
+    
+    # Check if we have explicit reset values configured
+    if ($ctx->{explicit_reset_values} && $ctx->{explicit_reset_values}{$lhs}) {
+        my $reset_val = $ctx->{explicit_reset_values}{$lhs};
+        fsm_debug("EXPLICIT_RESET: Found configured reset for '$lhs' -> '$reset_val'", 3);
+        return $reset_val;
+    }
+    
+    # Check signal attributes if available through FSM module
+    if ($ctx->{fsm_module} && $ctx->{fsm_module}->signals) {
+        my $signals = $ctx->{fsm_module}->signals;
+        if ($signals->{$lhs}) {
+            my $signal = $signals->{$lhs};
+            
+            # Check for reset_value attribute
+            if ($signal->can('attributes') && $signal->attributes && $signal->attributes->{reset_value}) {
+                my $reset_val = $signal->attributes->{reset_value};
+                fsm_debug("EXPLICIT_RESET: Found signal attribute reset for '$lhs' -> '$reset_val'", 3);
+                return $reset_val;
+            }
+            
+            # Check for reset_value method
+            if ($signal->can('reset_value')) {
+                my $reset_val = $signal->reset_value;
+                if (defined $reset_val) {
+                    fsm_debug("EXPLICIT_RESET: Found signal method reset for '$lhs' -> '$reset_val'", 3);
+                    return $reset_val;
+                }
+            }
+        }
+    }
+    
+    # No explicit reset value found
+    fsm_debug("EXPLICIT_RESET: No explicit reset value found for '$lhs'", 3);
+    return undef;
 }
 sub get_signal_info($self, $lhs) {
     # Get signal information from the FSM module
