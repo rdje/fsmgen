@@ -608,7 +608,7 @@ sub get_reset_value($self, $lhs) {
     }
     
     # Check signal width to determine appropriate default reset value
-    my $signal_info = $ctx->get_signal_info($lhs);
+    my $signal_info = $self->get_signal_info($lhs);
     if ($signal_info && $signal_info->{width}) {
         my $width = $signal_info->{width};
         if ($width > 1) {
@@ -635,6 +635,47 @@ sub get_default_value($self, $lhs) {
     # This ensures proper flop behavior where the register maintains its value
     # unless explicitly overridden by an enable condition
     return $lhs;  # Use the signal itself as feedback (current register value)
+}
+sub get_signal_info($self, $lhs) {
+    # Get signal information from the FSM module
+    # Returns: { width => N, ... } or undef if not found
+    my $ctx = $self->{flattened_dt};
+    
+    fsm_debug("SIGNAL_INFO: Getting info for '$lhs'", 3);
+    
+    # Check if we have FSM module with signals
+    if ($ctx->{fsm_module} && $ctx->{fsm_module}->signals) {
+        my $signals = $ctx->{fsm_module}->signals;
+        if ($signals->{$lhs}) {
+            my $signal = $signals->{$lhs};
+            
+            my $signal_info = {};
+            
+            # Get width if available
+            if ($signal->can('width')) {
+                my $width = $signal->width;
+                if ($width && $width > 0) {
+                    $signal_info->{width} = $width;
+                    fsm_debug("SIGNAL_INFO: Found width for '$lhs' -> $width", 3);
+                } else {
+                    fsm_debug("SIGNAL_INFO: Width method returned invalid value for '$lhs'", 3);
+                }
+            } else {
+                fsm_debug("SIGNAL_INFO: No width method for '$lhs'", 3);
+            }
+            
+            # Get other attributes if needed
+            # ... (can add more signal attributes here in the future)
+            
+            return $signal_info if %$signal_info;
+        } else {
+            fsm_debug("SIGNAL_INFO: Signal '$lhs' not found in FSM signals", 3);
+        }
+    } else {
+        fsm_debug("SIGNAL_INFO: No FSM module or signals available", 3);
+    }
+    
+    return undef;
 }
 sub group_assignments_by_rhs($self, $lhs) {
     my $ctx = $self->{flattened_dt};

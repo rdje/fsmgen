@@ -2842,44 +2842,7 @@ sub get_explicit_reset_value ($self, $lhs) {
 }
 
 sub get_signal_info ($self, $lhs) {
-    # Get signal information from the FSM module
-    # Returns: { width => N, ... } or undef if not found
-    
-    fsm_debug("SIGNAL_INFO: Getting info for '$lhs'", 3);
-    
-    # Check if we have FSM module with signals
-    if ($self->{fsm_module} && $self->{fsm_module}->signals) {
-        my $signals = $self->{fsm_module}->signals;
-        if ($signals->{$lhs}) {
-            my $signal = $signals->{$lhs};
-            
-            my $signal_info = {};
-            
-            # Get width if available
-            if ($signal->can('width')) {
-                my $width = $signal->width;
-                if ($width && $width > 0) {
-                    $signal_info->{width} = $width;
-                    fsm_debug("SIGNAL_INFO: Found width for '$lhs' -> $width", 3);
-                } else {
-                    fsm_debug("SIGNAL_INFO: Width method returned invalid value for '$lhs'", 3);
-                }
-            } else {
-                fsm_debug("SIGNAL_INFO: No width method for '$lhs'", 3);
-            }
-            
-            # Get other attributes if needed
-            # ... (can add more signal attributes here in the future)
-            
-            return $signal_info if %$signal_info;
-        } else {
-            fsm_debug("SIGNAL_INFO: Signal '$lhs' not found in FSM signals", 3);
-        }
-    } else {
-        fsm_debug("SIGNAL_INFO: No FSM module or signals available", 3);
-    }
-    
-    return undef;
+    return $self->{enable_graph}->get_signal_info($lhs);
 }
 
 sub set_fsm_module_reference ($self, $fsm_module) {

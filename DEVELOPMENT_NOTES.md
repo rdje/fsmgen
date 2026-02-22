@@ -335,3 +335,7 @@ It is an exact-delay pulse request:
   - default-value resolution (`get_default_value`) now runs through `EnableGraph`,
   - `FlattenedDT` retains a compatibility delegation entrypoint for default-value queries,
   - AST-based default-value lookup flow (`get_default_value_from_ast`) remains behavior-identical and now lands on `EnableGraph` ownership through delegation.
+- Newest behavior-preserving increment:
+  - signal-info discovery (`get_signal_info`) now runs through `EnableGraph`,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for signal-info queries,
+  - `EnableGraph` reset-value resolution now calls local signal-info ownership while preserving staged delegation for reset-state/explicit-reset helpers.
