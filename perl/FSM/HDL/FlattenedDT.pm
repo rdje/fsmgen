@@ -2781,22 +2781,7 @@ sub get_reset_value ($self, $lhs) {
 }
 
 sub get_fsm_reset_state ($self) {
-    # Get the reset state for the FSM from the FSM module
-    # The reset state is conventionally the first state in the state list
-    
-    # If we have access to the FSM module, get the first regular state
-    if ($self->{fsm_module}) {
-        my @regular_states = grep { $_->name !~ /^-/ } @{$self->{fsm_module}->states};
-        if (@regular_states) {
-            my $reset_state = uc($regular_states[0]->name);
-            fsm_debug("FSM_RESET_STATE: Using first state as reset: '$reset_state'", 3);
-            return $reset_state;
-        }
-    }
-    
-    # If no FSM module available or no states, default to IDLE
-    fsm_debug("FSM_RESET_STATE: Defaulting to IDLE", 3);
-    return "IDLE";
+    return $self->{enable_graph}->get_fsm_reset_state();
 }
 
 sub get_explicit_reset_value ($self, $lhs) {

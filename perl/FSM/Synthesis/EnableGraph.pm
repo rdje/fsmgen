@@ -595,7 +595,7 @@ sub get_reset_value($self, $lhs) {
     # Check if this is the FSM state variable (semantic check)
     if ($lhs eq 'next_state') {
         # For the FSM state variable, get the reset state from the FSM module
-        my $reset_state = $ctx->get_fsm_reset_state();
+        my $reset_state = $self->get_fsm_reset_state();
         fsm_debug("GET_RESET_VALUE: State variable '$lhs' -> reset to '$reset_state'", 3);
         return $reset_state;
     }
@@ -635,6 +635,25 @@ sub get_default_value($self, $lhs) {
     # This ensures proper flop behavior where the register maintains its value
     # unless explicitly overridden by an enable condition
     return $lhs;  # Use the signal itself as feedback (current register value)
+}
+sub get_fsm_reset_state($self) {
+    # Get the reset state for the FSM from the FSM module
+    # The reset state is conventionally the first state in the state list
+    my $ctx = $self->{flattened_dt};
+    
+    # If we have access to the FSM module, get the first regular state
+    if ($ctx->{fsm_module}) {
+        my @regular_states = grep { $_->name !~ /^-/ } @{$ctx->{fsm_module}->states};
+        if (@regular_states) {
+            my $reset_state = uc($regular_states[0]->name);
+            fsm_debug("FSM_RESET_STATE: Using first state as reset: '$reset_state'", 3);
+            return $reset_state;
+        }
+    }
+    
+    # If no FSM module available or no states, default to IDLE
+    fsm_debug("FSM_RESET_STATE: Defaulting to IDLE", 3);
+    return "IDLE";
 }
 sub get_explicit_reset_value($self, $lhs) {
     # Check if this LHS has explicit reset information from the FSM specification

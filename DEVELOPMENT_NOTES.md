@@ -343,3 +343,7 @@ It is an exact-delay pulse request:
   - explicit-reset discovery (`get_explicit_reset_value`) now runs through `EnableGraph`,
   - `FlattenedDT` retains a compatibility delegation entrypoint for explicit-reset queries,
   - `EnableGraph` reset-value resolution now calls local explicit-reset ownership while preserving staged delegation for reset-state helper logic.
+- Newest behavior-preserving increment:
+  - reset-state discovery (`get_fsm_reset_state`) now runs through `EnableGraph`,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for reset-state queries,
+  - `EnableGraph` reset-value resolution now calls local reset-state ownership for state-variable reset behavior.
