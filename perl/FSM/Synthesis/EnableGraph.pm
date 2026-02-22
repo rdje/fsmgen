@@ -541,8 +541,8 @@ sub generate_complete_enable_structure($self, $lhs) {
             my $complete_enable_ast = FSM::AST::Utils::and_op($dt_enable_ast, $or_tree_of_conditions_ast);
             
             # Generate DT-specific enable signal name
-            my $clean_rhs = $ctx->clean_signal_name($rhs);
-            my $clean_lhs = $ctx->clean_signal_name($lhs);
+            my $clean_rhs = $self->clean_signal_name($rhs);
+            my $clean_lhs = $self->clean_signal_name($lhs);
             my $dt_enable_name = "${clean_dt_name}_${clean_lhs}_${clean_rhs}_en";
             
             # Store DT-specific enable info
@@ -580,7 +580,7 @@ sub generate_complete_enable_structure($self, $lhs) {
         }
         
         # Generate meaningful LHS-level enable name based on RHS
-        my $lhs_enable_name = $ctx->generate_rhs_based_enable_name($lhs, $rhs);
+        my $lhs_enable_name = $self->generate_rhs_based_enable_name($lhs, $rhs);
         
         # Store LHS-level enable info with AST
         $rhs_group->{lhs_level_enable} = {
@@ -637,6 +637,74 @@ sub build_multiplexer_config($self, $lhs) {
     };
     
     fsm_debug("  [EnableGraph.pm][build_multiplexer_config()] Multiplexer: type=$lhs_analysis->{multiplexer}->{type}, " . scalar(@mux_enables) . " enables", 3);
+}
+sub clean_signal_name($self, $name) {
+    # Clean signal names for use in Verilog identifiers
+    $name = lc($name);             # Convert to lowercase for consistent WEN/EN naming
+    $name =~ s/[^a-zA-Z0-9_]/_/g;  # Replace non-alphanumeric with underscore
+    $name =~ s/__+/_/g;            # Replace multiple consecutive underscores with single underscore
+    $name =~ s/^_+//;              # Remove leading underscores
+    $name =~ s/_+$//;              # Remove trailing underscores
+    
+    # Handle special cases for numeric RHS values BEFORE digit prefixing
+    # Don't prefix simple numeric values with underscores to avoid double underscores
+    if ($name eq '0') {
+        return '0';
+    } elsif ($name eq '1') {
+        return '1';
+    }
+    
+    # Only prefix with underscore if starts with digit (for complex numeric identifiers)
+    $name =~ s/^(\d)/_$1/;         # Prefix with underscore if starts with digit
+    
+    return $name;
+}
+sub generate_rhs_based_enable_name($self, $lhs, $rhs) {
+    my $ctx = $self->{flattened_dt};
+    
+    # Generate meaningful enable signal names based on RHS expression type
+    # Following the naming convention: <LHS>_<RHS_description>_en
+    my $clean_lhs = $self->clean_signal_name($lhs);
+    my $rhs_suffix;
+    
+    # Handle different RHS expression types
+    if ($rhs =~ /^\d+$/) {
+        # Simple numeric values: 0, 1, 42
+        $rhs_suffix = $rhs;
+        
+    } elsif ($rhs =~ /^\d+'[bdhBDH]([0-9a-fA-F_]+)$/) {
+        # Sized literals: 8'h00, 16'b1010, etc.
+        my $value_part = $1;
+        $rhs_suffix = $rhs;
+        $rhs_suffix =~ s/'/_/g;  # Replace ' with _ : 8'h00 -> 8_h00
+        $rhs_suffix = $self->clean_signal_name($rhs_suffix);
+        
+    } elsif ($rhs =~ /^([a-zA-Z_][a-zA-Z0-9_]*)\[(\d+):(\d+)\]$/) {
+        # Bit slice: signal[7:0], data[15:8]
+        my ($signal, $high, $low) = ($1, $2, $3);
+        $rhs_suffix = "${signal}_${high}_${low}";
+        
+    } elsif ($rhs =~ /^([a-zA-Z_][a-zA-Z0-9_]*)\[(\d+)\]$/) {
+        # Single bit index: signal[5], enable[0]
+        my ($signal, $index) = ($1, $2);
+        $rhs_suffix = "${signal}_${index}";
+        
+    } elsif ($rhs =~ /^[a-zA-Z_][a-zA-Z0-9_]*$/) {
+        # Simple identifier: signal_name, apb_wrn, const_8b0
+        $rhs_suffix = $rhs;
+        
+    } else {
+        # Complex expression: use expression namer to create meaningful name
+        my $expr_name = $ctx->{expr_namer}->parse_and_name_expression($rhs);
+        # Remove common prefixes/suffixes to keep name concise
+        $expr_name =~ s/_expr\d*$//;  # Remove _expr suffix
+        $expr_name =~ s/^expr_//;     # Remove expr_ prefix
+        $rhs_suffix = $expr_name || "complex";
+    }
+    
+    # Clean the suffix and combine with LHS
+    $rhs_suffix = $self->clean_signal_name($rhs_suffix);
+    return "${clean_lhs}_${rhs_suffix}_en";
 }
 
 1;

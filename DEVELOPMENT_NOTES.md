@@ -315,3 +315,7 @@ It is an exact-delay pulse request:
   - pulse helper analysis methods (`get_pulse_delay_cycles_for_lhs`, `get_pulse_active_level_for_lhs`, `normalize_rhs_logic_level`) now run through `EnableGraph`,
   - `EnableGraph` pulse-delay emission now resolves delay/active-level metadata through local helper ownership,
   - `FlattenedDT` retains compatibility delegations for these helper methods.
+- Latest behavior-preserving increment:
+  - enable naming helpers (`clean_signal_name`, `generate_rhs_based_enable_name`) now run through `EnableGraph`,
+  - `EnableGraph` enable-structure generation now resolves naming through local helper ownership,
+  - `FlattenedDT` retains compatibility delegations for these naming helper methods.

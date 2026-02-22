@@ -2679,72 +2679,11 @@ sub generate_lhs_level_wens ($self, $fsm_module) {
 }
 
 sub clean_signal_name ($self, $name) {
-    # Clean signal names for use in Verilog identifiers
-    $name = lc($name);             # Convert to lowercase for consistent WEN/EN naming
-    $name =~ s/[^a-zA-Z0-9_]/_/g;  # Replace non-alphanumeric with underscore
-    $name =~ s/__+/_/g;            # Replace multiple consecutive underscores with single underscore
-    $name =~ s/^_+//;              # Remove leading underscores
-    $name =~ s/_+$//;              # Remove trailing underscores  
-    
-    # Handle special cases for numeric RHS values BEFORE digit prefixing
-    # Don't prefix simple numeric values with underscores to avoid double underscores
-    if ($name eq '0') {
-        return '0';
-    } elsif ($name eq '1') {
-        return '1';
-    }
-    
-    # Only prefix with underscore if starts with digit (for complex numeric identifiers)
-    $name =~ s/^(\d)/_$1/;         # Prefix with underscore if starts with digit
-    
-    return $name;
+    return $self->{enable_graph}->clean_signal_name($name);
 }
 
 sub generate_rhs_based_enable_name ($self, $lhs, $rhs) {
-    # Generate meaningful enable signal names based on RHS expression type
-    # Following the naming convention: <LHS>_<RHS_description>_en
-    
-    my $clean_lhs = $self->clean_signal_name($lhs);
-    my $rhs_suffix;
-    
-    # Handle different RHS expression types
-    if ($rhs =~ /^\d+$/) {
-        # Simple numeric values: 0, 1, 42
-        $rhs_suffix = $rhs;
-        
-    } elsif ($rhs =~ /^\d+'[bdhBDH]([0-9a-fA-F_]+)$/) {
-        # Sized literals: 8'h00, 16'b1010, etc.
-        my $value_part = $1;
-        $rhs_suffix = $rhs;
-        $rhs_suffix =~ s/'/_/g;  # Replace ' with _ : 8'h00 -> 8_h00
-        $rhs_suffix = $self->clean_signal_name($rhs_suffix);
-        
-    } elsif ($rhs =~ /^([a-zA-Z_][a-zA-Z0-9_]*)\[(\d+):(\d+)\]$/) {
-        # Bit slice: signal[7:0], data[15:8]
-        my ($signal, $high, $low) = ($1, $2, $3);
-        $rhs_suffix = "${signal}_${high}_${low}";
-        
-    } elsif ($rhs =~ /^([a-zA-Z_][a-zA-Z0-9_]*)\[(\d+)\]$/) {
-        # Single bit index: signal[5], enable[0]
-        my ($signal, $index) = ($1, $2);
-        $rhs_suffix = "${signal}_${index}";
-        
-    } elsif ($rhs =~ /^[a-zA-Z_][a-zA-Z0-9_]*$/) {
-        # Simple identifier: signal_name, apb_wrn, const_8b0
-        $rhs_suffix = $rhs;
-        
-    } else {
-        # Complex expression: use expression namer to create meaningful name
-        my $expr_name = $self->{expr_namer}->parse_and_name_expression($rhs);
-        # Remove common prefixes/suffixes to keep name concise
-        $expr_name =~ s/_expr\d*$//;  # Remove _expr suffix
-        $expr_name =~ s/^expr_//;     # Remove expr_ prefix
-        $rhs_suffix = $expr_name || "complex";
-    }
-    
-    # Clean the suffix and combine with LHS
-    $rhs_suffix = $self->clean_signal_name($rhs_suffix);
-    return "${clean_lhs}_${rhs_suffix}_en";
+    return $self->{enable_graph}->generate_rhs_based_enable_name($lhs, $rhs);
 }
 
 sub generate_signal_assignments ($self, $fsm_module) {

@@ -40,10 +40,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - `get_pulse_delay_cycles_for_lhs`
 - `get_pulse_active_level_for_lhs`
 - `normalize_rhs_logic_level`
+- `clean_signal_name`
+- `generate_rhs_based_enable_name`
 ### Still strong candidates for next slices
 - remaining phase-3/per-assignment support helpers still owned by `FlattenedDT` (for example assignment-type classification and reset/default helper seams), extracted incrementally with parity checks.
 - broader synthesis-layer boundary tightening once helper ownership is sufficiently centralized in `EnableGraph`.
 ## Recent milestone commits (most recent first)
+- `59a86d3` Delegate pulse helper analysis ownership to EnableGraph
 - `d65e86a` Delegate unified pulse-delay emission to EnableGraph
 - `a2725c9` Add live MEMORY.md continuity document and update workflow policy
 - `0bf08d4` Delegate unified flop mux emission to EnableGraph

@@ -112,6 +112,10 @@ This is the persistent technical change history for FSMGen.
   - moved pulse helper analysis methods (`get_pulse_delay_cycles_for_lhs`, `get_pulse_active_level_for_lhs`, `normalize_rhs_logic_level`) into `EnableGraph`,
   - updated `EnableGraph` pulse-delay emission path to use local helper methods,
   - `FlattenedDT` now keeps compatibility delegations for those helper entrypoints.
+- Newest extraction increment:
+  - moved enable naming helpers (`clean_signal_name`, `generate_rhs_based_enable_name`) into `EnableGraph`,
+  - updated enable-structure generation in `EnableGraph` to use local naming helper ownership,
+  - `FlattenedDT` now keeps compatibility delegations for those naming helper entrypoints.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)
