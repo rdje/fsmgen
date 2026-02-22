@@ -46,11 +46,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - `get_signal_assignment_type`
 - `get_driven_signals`
 - `get_reset_value`
+- `get_default_value`
 ### Still strong candidates for next slices
-- remaining phase-3/per-assignment support helpers still owned by `FlattenedDT` (for example default-value and reset-info helper seams), extracted incrementally with parity checks.
+- remaining phase-3/per-assignment support helpers still owned by `FlattenedDT` (for example reset-info helper seams), extracted incrementally with parity checks.
 - broader synthesis-layer boundary tightening once helper ownership is sufficiently centralized in `EnableGraph`.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Delegate reset-value helper ownership to `EnableGraph` (`get_reset_value`) with compatibility delegation in `FlattenedDT`
+- `WORKTREE (pending commit)` Delegate default-value helper ownership to `EnableGraph` (`get_default_value`) with compatibility delegation in `FlattenedDT`
+- `820481c` Delegate reset-value helper ownership to `EnableGraph`
 - `dfc92dd` Delegate driven-signal classification to `EnableGraph`
 - `c18c35b` Delegate assignment-type helper ownership to EnableGraph
 - `a82d5cd` Delegate enable naming helper ownership to EnableGraph

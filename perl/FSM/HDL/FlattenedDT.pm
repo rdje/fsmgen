@@ -2968,18 +2968,7 @@ sub get_reset_value_from_ast ($self, $lhs_ast) {
 }
 
 sub get_default_value ($self, $lhs) {
-    # For flop assignments (A <-), the default should be the current register value (feedback)
-    # This is different from reset values, which are used for initialization
-    
-    # For state variable, use proper feedback
-    if ($lhs eq 'next_state') {
-        return "current_state";
-    }
-    
-    # For all other register assignments, use feedback from the register itself
-    # This ensures proper flop behavior where the register maintains its value
-    # unless explicitly overridden by an enable condition
-    return $lhs;  # Use the signal itself as feedback (current register value)
+    return $self->{enable_graph}->get_default_value($lhs);
 }
 
 # Helper methods for FSMGen adapter AST nodes

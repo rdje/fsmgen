@@ -622,6 +622,20 @@ sub get_reset_value($self, $lhs) {
     fsm_debug("GET_RESET_VALUE: Default single-bit reset for '$lhs' -> '1'b0'", 3);
     return "1'b0";
 }
+sub get_default_value($self, $lhs) {
+    # For flop assignments (A <-), the default should be the current register value (feedback)
+    # This is different from reset values, which are used for initialization
+    
+    # For state variable, use proper feedback
+    if ($lhs eq 'next_state') {
+        return "current_state";
+    }
+    
+    # For all other register assignments, use feedback from the register itself
+    # This ensures proper flop behavior where the register maintains its value
+    # unless explicitly overridden by an enable condition
+    return $lhs;  # Use the signal itself as feedback (current register value)
+}
 sub group_assignments_by_rhs($self, $lhs) {
     my $ctx = $self->{flattened_dt};
     my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};

@@ -331,3 +331,7 @@ It is an exact-delay pulse request:
   - reset-value resolution (`get_reset_value`) now runs through `EnableGraph`,
   - `FlattenedDT` retains a compatibility delegation entrypoint for reset-value queries,
   - reset-state and reset-metadata discovery remains in existing `FlattenedDT` helper methods for now, enabling staged extraction without semantic drift.
+- Latest behavior-preserving increment:
+  - default-value resolution (`get_default_value`) now runs through `EnableGraph`,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for default-value queries,
+  - AST-based default-value lookup flow (`get_default_value_from_ast`) remains behavior-identical and now lands on `EnableGraph` ownership through delegation.

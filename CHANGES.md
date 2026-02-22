@@ -128,6 +128,10 @@ This is the persistent technical change history for FSMGen.
   - moved reset-value resolution helper (`get_reset_value`) into `EnableGraph`,
   - `FlattenedDT` now delegates reset-value lookup to `EnableGraph` via compatibility shim,
   - `EnableGraph` currently resolves reset-state and signal reset metadata through existing `FlattenedDT` reset-info helpers to preserve behavior during staged extraction.
+- Latest extraction increment:
+  - moved default-value resolution helper (`get_default_value`) into `EnableGraph`,
+  - `FlattenedDT` now delegates default-value lookup to `EnableGraph` via compatibility shim,
+  - `get_default_value_from_ast` behavior remains unchanged and now resolves through the delegated default-value ownership path.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)
