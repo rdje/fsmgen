@@ -120,6 +120,10 @@ This is the persistent technical change history for FSMGen.
   - moved assignment-type helpers (`signal_uses_register_assignment`, `get_signal_assignment_type`) into `EnableGraph`,
   - updated `EnableGraph` phase-3 paths to resolve assignment family through local helper ownership,
   - `FlattenedDT` now keeps compatibility delegations for these assignment-type helper entrypoints.
+- Latest extraction increment:
+  - moved driven-signal classification (`get_driven_signals`) into `EnableGraph`,
+  - module declaration output-direction inference still resolves driven signals through `FlattenedDT` compatibility delegation,
+  - `EnableGraph` now owns auxiliary-output driven classification for `rm` (`next_<lhs>`) and `mr` (`<lhs>_r`) using local assignment-type ownership.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

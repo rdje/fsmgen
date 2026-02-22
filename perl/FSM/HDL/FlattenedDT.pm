@@ -2773,37 +2773,7 @@ sub generate_comb_mux ($self, $lhs, $clean_lhs) {
 }
 
 sub get_driven_signals ($self) {
-    # Return hash of signals that are driven by the FSM (should be outputs)
-    # This is determined by checking if they appear as LHS in assignments
-    
-    my %driven_signals;
-    
-    # Check all recorded LHS assignments
-    for my $lhs (keys %{$self->{all_lhs}}) {
-        $driven_signals{$lhs} = 1;
-    fsm_debug("DRIVEN_SIGNALS: '$lhs' is driven by FSM logic", 3);
-    }
-    
-    # Include auxiliary outputs exposed by sequential dual families:
-    #   rm (<-=): next_<lhs>
-    #   mr (<=+): <lhs>_r
-    for my $lhs (keys %{$self->{assignment_analysis} || {}}) {
-        my $lhs_analysis = $self->{assignment_analysis}{$lhs};
-        next unless $lhs_analysis;
-        my $assignment_type = $self->get_signal_assignment_type($lhs, $lhs_analysis);
-        
-        if ($assignment_type eq 'register_out_dual') {
-            my $next_name = "next_$lhs";
-            $driven_signals{$next_name} = 1;
-            fsm_debug("DRIVEN_SIGNALS: '$next_name' is driven by rm auxiliary output logic", 3);
-        } elsif ($assignment_type eq 'register_in_dual') {
-            my $q_name = "${lhs}_r";
-            $driven_signals{$q_name} = 1;
-            fsm_debug("DRIVEN_SIGNALS: '$q_name' is driven by mr auxiliary output logic", 3);
-        }
-    }
-    
-    return %driven_signals;
+    return $self->{enable_graph}->get_driven_signals();
 }
 
 sub get_reset_value ($self, $lhs) {

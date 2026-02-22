@@ -323,3 +323,7 @@ It is an exact-delay pulse request:
   - assignment-type helpers (`signal_uses_register_assignment`, `get_signal_assignment_type`) now run through `EnableGraph`,
   - `EnableGraph` phase-3 mux/pulse selection path now resolves assignment families through local helper ownership,
   - `FlattenedDT` retains compatibility delegations for these assignment-type helper methods.
+- Latest behavior-preserving increment:
+  - driven-signal classification (`get_driven_signals`) now runs through `EnableGraph`,
+  - `EnableGraph` now owns auxiliary output exposure classification for sequential dual families (`next_<lhs>` for `rm`, `<lhs>_r` for `mr`) using local assignment-type helper ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint so module declaration logic remains behavior-identical while ownership shifts.
