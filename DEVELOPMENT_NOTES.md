@@ -311,3 +311,7 @@ It is an exact-delay pulse request:
   - unified pulse-delay emission (`generate_unified_pulse_delay_logic`) now runs through `EnableGraph`,
   - phase-3 orchestration in `EnableGraph` now invokes its local pulse-delay emitter,
   - `FlattenedDT` delegates the pulse-delay emitter entrypoint to the synthesis layer.
+- Newest behavior-preserving increment:
+  - pulse helper analysis methods (`get_pulse_delay_cycles_for_lhs`, `get_pulse_active_level_for_lhs`, `normalize_rhs_logic_level`) now run through `EnableGraph`,
+  - `EnableGraph` pulse-delay emission now resolves delay/active-level metadata through local helper ownership,
+  - `FlattenedDT` retains compatibility delegations for these helper methods.

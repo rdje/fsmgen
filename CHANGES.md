@@ -108,6 +108,10 @@ This is the persistent technical change history for FSMGen.
   - moved unified pulse-delay emitter (`generate_unified_pulse_delay_logic`) into `EnableGraph`,
   - updated phase-3 orchestration in `EnableGraph` to call its local pulse-delay emitter,
   - `FlattenedDT` now delegates the pulse-delay emitter entrypoint to the synthesis layer.
+- Latest extraction increment:
+  - moved pulse helper analysis methods (`get_pulse_delay_cycles_for_lhs`, `get_pulse_active_level_for_lhs`, `normalize_rhs_logic_level`) into `EnableGraph`,
+  - updated `EnableGraph` pulse-delay emission path to use local helper methods,
+  - `FlattenedDT` now keeps compatibility delegations for those helper entrypoints.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

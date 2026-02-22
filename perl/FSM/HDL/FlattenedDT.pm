@@ -2760,57 +2760,15 @@ sub generate_unified_pulse_delay_logic ($self, $lhs, $lhs_analysis) {
 }
 
 sub get_pulse_delay_cycles_for_lhs ($self, $lhs, $lhs_analysis) {
-    my %delay_values;
-    for my $assignment (@{$lhs_analysis->{assignments} || []}) {
-        my $op = $assignment->{operator} // '';
-        if ($op =~ /^<(\d+)$/) {
-            $delay_values{$1} = 1;
-            next;
-        }
-        my $intent = $assignment->{assignment_intent};
-        if (ref($intent) eq 'HASH' && defined($intent->{pulse_delay_cycles})) {
-            $delay_values{$intent->{pulse_delay_cycles}} = 1;
-        }
-    }
-    my @delays = sort { $a <=> $b } keys %delay_values;
-    if (!@delays) {
-        die "[FlattenedDT.pm][get_pulse_delay_cycles_for_lhs()] Missing pulse delay metadata for LHS '$lhs'";
-    }
-    if (@delays > 1) {
-        die "[FlattenedDT.pm][get_pulse_delay_cycles_for_lhs()] Multiple pulse delays for LHS '$lhs' are unsupported: " . join(', ', @delays);
-    }
-    return $delays[0];
+    return $self->{enable_graph}->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
 }
 
 sub get_pulse_active_level_for_lhs ($self, $lhs, $lhs_analysis) {
-    my %active_levels;
-    for my $assignment (@{$lhs_analysis->{assignments} || []}) {
-        my $intent = $assignment->{assignment_intent};
-        if (ref($intent) eq 'HASH' && defined($intent->{pulse_active_level})) {
-            $active_levels{int($intent->{pulse_active_level} ? 1 : 0)} = 1;
-            next;
-        }
-        my $rhs = $assignment->{rhs};
-        my $normalized = $self->normalize_rhs_logic_level($rhs);
-        if (defined $normalized) {
-            $active_levels{$normalized} = 1;
-        }
-    }
-    my @levels = sort { $a <=> $b } keys %active_levels;
-    if (!@levels) {
-        die "[FlattenedDT.pm][get_pulse_active_level_for_lhs()] Missing pulse active level metadata for LHS '$lhs'";
-    }
-    if (@levels > 1) {
-        die "[FlattenedDT.pm][get_pulse_active_level_for_lhs()] Conflicting pulse active levels for LHS '$lhs': " . join(', ', @levels);
-    }
-    return $levels[0];
+    return $self->{enable_graph}->get_pulse_active_level_for_lhs($lhs, $lhs_analysis);
 }
 
 sub normalize_rhs_logic_level ($self, $rhs) {
-    return undef unless defined $rhs;
-    return 0 if $rhs =~ /^(?:0|1'b0|1'd0|1'h0)$/i;
-    return 1 if $rhs =~ /^(?:1|1'b1|1'd1|1'h1)$/i;
-    return undef;
+    return $self->{enable_graph}->normalize_rhs_logic_level($rhs);
 }
 
 sub signal_uses_register_assignment ($self, $lhs, $lhs_analysis) {
