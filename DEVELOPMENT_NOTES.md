@@ -367,3 +367,7 @@ It is an exact-delay pulse request:
   - register-classification helpers (`is_register`, `fallback_register_analysis_from_assignments`) now run through `EnableGraph`,
   - `EnableGraph` multiplexer configuration assembly now resolves register-vs-combinational classification through local helper ownership,
   - `FlattenedDT` retains compatibility delegation entrypoints for these register-classification helper paths.
+- Newest behavior-preserving increment:
+  - AST signal-name extraction helper (`extract_signal_name_from_ast`) now runs through `EnableGraph`,
+  - `EnableGraph` AST reset/default helper paths now resolve signal names through local helper ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for AST signal-name extraction.

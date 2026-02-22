@@ -164,6 +164,10 @@ This is the persistent technical change history for FSMGen.
   - moved register-classification helpers (`is_register`, `fallback_register_analysis_from_assignments`) into `EnableGraph`,
   - updated `EnableGraph` multiplexer configuration assembly to resolve register-vs-combinational selection through local helper ownership,
   - `FlattenedDT` now delegates register-classification helper entrypoints to `EnableGraph` via compatibility shims.
+- Newest extraction increment:
+  - moved AST signal-name extraction helper (`extract_signal_name_from_ast`) into `EnableGraph`,
+  - updated `EnableGraph` AST reset/default helper paths to resolve signal names through local helper ownership,
+  - `FlattenedDT` now delegates AST signal-name extraction to `EnableGraph` via compatibility shim.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

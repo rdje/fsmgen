@@ -756,12 +756,35 @@ sub set_explicit_reset_values($self, $reset_values) {
         fsm_debug("  $signal -> $reset_values->{$signal}", 3);
     }
 }
+sub extract_signal_name_from_ast($self, $signal_ast) {
+    # Extract signal name from a signal reference AST node
+    
+    return undef unless $signal_ast && blessed($signal_ast);
+    
+    # Try different methods to get the signal name
+    if ($signal_ast->can('name') && defined($signal_ast->name)) {
+        return $signal_ast->name;
+    } elsif ($signal_ast->can('signal_name') && defined($signal_ast->signal_name)) {
+        return $signal_ast->signal_name;
+    } elsif ($signal_ast->can('signal') && $signal_ast->signal && $signal_ast->signal->can('name')) {
+        return $signal_ast->signal->name;
+    } else {
+        # Try to extract from SystemVerilog representation
+        my $sv_repr = eval { $signal_ast->to_systemverilog() };
+        if ($sv_repr && $sv_repr =~ /^([a-zA-Z_][a-zA-Z0-9_]*)$/) {
+            return $1;
+        }
+    }
+    
+    return undef;
+}
 sub get_reset_value_from_ast($self, $lhs_ast) {
     # AST WEB: Get reset value using direct AST queries
     my $ctx = $self->{flattened_dt};
     
     # Use proper signal name extraction that handles different AST types
-    my $lhs_name = $ctx->extract_signal_name_from_ast($lhs_ast);
+    my $lhs_name = $self->extract_signal_name_from_ast($lhs_ast);
+
     unless (defined $lhs_name) {
         fsm_debug("WARNING: Could not extract signal name from AST, using fallback", 3);
         $lhs_name = 'unknown_signal';
@@ -797,7 +820,7 @@ sub get_default_value_from_ast($self, $lhs_ast) {
     }
     
     # Use proper signal name extraction that handles different AST types
-    my $lhs_name = $ctx->extract_signal_name_from_ast($lhs_ast);
+    my $lhs_name = $self->extract_signal_name_from_ast($lhs_ast);
     unless (defined $lhs_name) {
         fsm_debug("WARNING: Could not extract signal name from AST, using fallback", 3);
         $lhs_name = 'unknown_signal';

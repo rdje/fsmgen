@@ -56,11 +56,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - `set_fsm_module_reference`
 - `is_register`
 - `fallback_register_analysis_from_assignments`
+- `extract_signal_name_from_ast`
 ### Still strong candidates for next slices
 - remaining phase-3/per-assignment support helpers still owned by `FlattenedDT` are narrowing; continue incremental extraction with parity checks.
 - broader synthesis-layer boundary tightening once helper ownership is sufficiently centralized in `EnableGraph`.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Delegate register-classification helper ownership to `EnableGraph` (`is_register`, `fallback_register_analysis_from_assignments`) with compatibility delegation in `FlattenedDT`
+- `WORKTREE (pending commit)` Delegate AST signal-name extraction helper ownership to `EnableGraph` (`extract_signal_name_from_ast`) with compatibility delegation in `FlattenedDT`
+- `01312fa` Delegate register-classification helper ownership to `EnableGraph`
 - `9ebea2f` Delegate FSM module-reference setter ownership to `EnableGraph`
 - `250a55f` Delegate explicit-reset config setter ownership to `EnableGraph`
 - `30d21cc` Delegate AST default-value helper ownership to `EnableGraph`
