@@ -56,6 +56,139 @@ sub build_unified_assignment_analysis($self, $fsm_module) {
     
     fsm_debug("\n*** UNIFIED PHASE 1 COMPLETE (AST WEB) ***", 3);
 }
+sub generate_unified_wen_en_signals($self, $fsm_module) {
+    my $ctx = $self->{flattened_dt};
+    my $hdl = "  // Unified WEN/EN Signal Generation from Phase 1 Analysis\n";
+    
+    fsm_debug("\n\n*** UNIFIED PHASE 2: GENERATING WEN/EN SIGNALS FROM ANALYSIS ***", 3);
+    
+    # Generate DT-specific enables first
+    $hdl .= $self->generate_dt_enables_from_analysis();
+    
+    # Generate LHS-level enables
+    $hdl .= $self->generate_lhs_enables_from_analysis();
+    
+    fsm_debug("*** UNIFIED PHASE 2 COMPLETE ***", 3);
+    
+    return $hdl;
+}
+sub generate_dt_enables_from_analysis($self) {
+    my $ctx = $self->{flattened_dt};
+    
+    fsm_debug("GENERATE_DT_ENABLES: [ENTRY] Starting DT-specific enable generation from analysis", 3);
+    my $hdl = "  // DT-Specific Enable Signals from Unified Analysis\n";
+    
+    # Track all intermediate signals referenced in enable expressions
+    $ctx->{referenced_intermediate_signals} //= {};
+    fsm_debug("GENERATE_DT_ENABLES: [INIT] Initialized referenced_intermediate_signals tracking", 3);
+    
+    # REORGANIZED: Group by DT first, then show all LHS signals within each DT
+    # Build a mapping from DT -> LHS -> RHS -> enable_info
+    my %dt_to_lhs_enables;
+    fsm_debug("GENERATE_DT_ENABLES: [INIT] Starting to build DT->LHS->RHS mapping", 3);
+    
+for my $lhs (sort keys %{$ctx->{assignment_analysis}}) {
+        fsm_debug("GENERATE_DT_ENABLES: [LHS_PROCESSING] Processing LHS '$lhs'", 3);
+        my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
+        my $rhs_count = scalar(keys %{$lhs_analysis->{rhs_groups}});
+        fsm_debug("GENERATE_DT_ENABLES: [LHS_RHS_COUNT] LHS '$lhs' has $rhs_count RHS groups", 3);
+        
+        for my $rhs (sort keys %{$lhs_analysis->{rhs_groups}}) {
+            fsm_debug("GENERATE_DT_ENABLES: [RHS_PROCESSING] Processing LHS '$lhs' RHS '$rhs'", 3);
+            my $rhs_group = $lhs_analysis->{rhs_groups}->{$rhs};
+            my $dt_enable_count = scalar(@{$rhs_group->{dt_specific_enables}});
+            fsm_debug("GENERATE_DT_ENABLES: [DT_ENABLE_COUNT] RHS '$rhs' has $dt_enable_count DT-specific enables", 3);
+            
+            for my $dt_enable_info (@{$rhs_group->{dt_specific_enables}}) {
+                my $enable_name = $dt_enable_info->{enable_name};
+                my $enable_ast = $dt_enable_info->{enable_ast};
+                my $dt_name = $dt_enable_info->{dt};
+                
+                fsm_debug("GENERATE_DT_ENABLES: [DT_ENABLE_INFO] Processing DT enable:", 3);
+                fsm_debug("  Enable name: $enable_name", 3);
+                fsm_debug("  DT name: $dt_name", 3);
+                fsm_debug("  Enable AST type: " . (blessed($enable_ast) ? ref($enable_ast) : 'NOT_BLESSED'));
+                
+                # Track intermediate signals in this AST
+                fsm_debug("GENERATE_DT_ENABLES: [TRACK_INTERMEDIATE] Tracking intermediate signals for '$enable_name'", 3);
+                $ctx->track_ast_intermediate_signals($enable_ast);
+                
+                # Group by DT first
+                $dt_to_lhs_enables{$dt_name} //= {};
+                $dt_to_lhs_enables{$dt_name}{$lhs} //= [];
+                fsm_debug("GENERATE_DT_ENABLES: [GROUPING] Grouping enable '$enable_name' under DT '$dt_name' LHS '$lhs'", 3);
+                
+                push @{$dt_to_lhs_enables{$dt_name}{$lhs}}, {
+                    enable_name => $enable_name,
+                    enable_ast => $enable_ast,
+                    rhs => $rhs
+                };
+            }
+        }
+    }
+    
+    # Generate output grouped by DT
+    for my $dt_name (sort keys %dt_to_lhs_enables) {
+        my $clean_dt_name = $dt_name;
+        $clean_dt_name =~ s/^-//;  # Remove leading dash for standalone DTs
+        
+        $hdl .= "\n\n  // === DT: $dt_name ===\n";
+        
+        # Show all LHS signals within this DT
+        for my $lhs (sort keys %{$dt_to_lhs_enables{$dt_name}}) {
+            $hdl .= "  // $lhs\n";
+            
+            for my $enable_info (@{$dt_to_lhs_enables{$dt_name}{$lhs}}) {
+                my $enable_name = $enable_info->{enable_name};
+                my $enable_ast = $enable_info->{enable_ast};
+                my $rhs = $enable_info->{rhs};
+                
+                # Convert AST to SystemVerilog for output (without outer parentheses)
+                my $enable_expr = $ctx->ast_to_systemverilog($enable_ast);
+                
+                $hdl .= "  assign $enable_name = $enable_expr;  // $lhs <- $rhs\n";
+                
+                fsm_debug("  Generated DT-specific enable: $enable_name = $enable_expr", 3);
+            }
+        }
+    }
+    
+    return $hdl;
+}
+sub generate_lhs_enables_from_analysis($self) {
+    my $ctx = $self->{flattened_dt};
+    my $hdl = "\n  // LHS-Level Enable Signals from Unified Analysis\n";
+    
+    # Process each LHS from the unified analysis
+    for my $lhs (sort keys %{$ctx->{assignment_analysis}}) {
+        my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
+        
+        $hdl .= "\n  // LHS-level enables for: $lhs\n";
+        
+        # Generate LHS-level enables for each RHS
+        for my $rhs (sort keys %{$lhs_analysis->{rhs_groups}}) {
+            my $rhs_group = $lhs_analysis->{rhs_groups}->{$rhs};
+            my $lhs_enable = $rhs_group->{lhs_level_enable};
+            
+            if ($lhs_enable) {
+                my $enable_name = $lhs_enable->{name};
+                my $enable_ast = $lhs_enable->{ast};
+                
+                # Track intermediate signals in this AST
+                $ctx->track_ast_intermediate_signals($enable_ast);
+                
+                # Convert AST to SystemVerilog for output (without outer parentheses)
+                my $enable_expr = $ctx->ast_to_systemverilog($enable_ast);
+                
+                $hdl .= "  assign $enable_name = $enable_expr;\n";
+                
+                fsm_debug("  Generated LHS-level enable: $enable_name = $enable_expr", 3);
+            }
+        }
+    }
+    
+    return $hdl;
+}
 sub group_assignments_by_rhs($self, $lhs) {
     my $ctx = $self->{flattened_dt};
     my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
