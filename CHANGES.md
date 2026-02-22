@@ -89,6 +89,9 @@ This is the persistent technical change history for FSMGen.
   - moved unified phase-2 WEN/EN generation (`generate_unified_wen_en_signals`) into `EnableGraph`,
   - moved DT-specific and LHS-level enable emission helpers (`generate_dt_enables_from_analysis`, `generate_lhs_enables_from_analysis`) into `EnableGraph`,
   - `FlattenedDT` now delegates these phase-2 enable emission entrypoints to the synthesis layer.
+- Newest extraction increment:
+  - moved unified phase-3 multiplexer orchestration (`generate_signal_assignments`) into `EnableGraph`,
+  - `FlattenedDT` now delegates the phase-3 assignment-emission entrypoint to the synthesis layer while keeping mux-specific emitters behavior-identical.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

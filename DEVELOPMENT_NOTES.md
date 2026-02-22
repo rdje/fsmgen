@@ -292,3 +292,6 @@ It is an exact-delay pulse request:
   - unified phase-2 enable emission orchestration (`generate_unified_wen_en_signals`) now runs through `EnableGraph`,
   - DT-specific and LHS-level enable emitters (`generate_dt_enables_from_analysis`, `generate_lhs_enables_from_analysis`) now run through `EnableGraph`,
   - `FlattenedDT` delegates these phase-2 WEN/EN generation entrypoints to the synthesis layer.
+- Latest behavior-preserving increment:
+  - unified phase-3 assignment emission orchestration (`generate_signal_assignments`) now runs through `EnableGraph`,
+  - `FlattenedDT` delegates this phase-3 multiplexer-emission entrypoint while retaining existing per-assignment-type mux emitters in `FlattenedDT`.

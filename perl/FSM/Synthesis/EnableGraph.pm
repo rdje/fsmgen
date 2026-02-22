@@ -189,6 +189,35 @@ sub generate_lhs_enables_from_analysis($self) {
     
     return $hdl;
 }
+sub generate_signal_assignments($self, $fsm_module) {
+    my $ctx = $self->{flattened_dt};
+    my $hdl = "\n  // Unified Multiplexer Logic from Phase 1 Analysis\n";
+    
+    fsm_debug("\n\n*** UNIFIED PHASE 3: GENERATING MULTIPLEXERS FROM ANALYSIS ***", 3);
+    
+    # Generate multiplexers for all LHS signals from unified analysis
+    for my $lhs (sort keys %{$ctx->{assignment_analysis}}) {
+        my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
+        my $multiplexer = $lhs_analysis->{multiplexer};
+        my $assignment_type = $ctx->get_signal_assignment_type($lhs, $lhs_analysis);
+        
+        $hdl .= "\n  // Unified Multiplexer for LHS: $lhs\n";
+        
+        if ($assignment_type eq 'pulse_delayed') {
+            $hdl .= $ctx->generate_unified_pulse_delay_logic($lhs, $lhs_analysis);
+        } elsif ($multiplexer->{type} eq 'flop') {
+            $hdl .= $ctx->generate_unified_flop_mux($lhs, $lhs_analysis);
+        } else {
+            $hdl .= $ctx->generate_unified_comb_mux($lhs, $lhs_analysis);
+        }
+        
+        fsm_debug("  Generated unified multiplexer for $lhs (type: $multiplexer->{type}, assignment_type: $assignment_type)", 3);
+    }
+    
+    fsm_debug("*** UNIFIED PHASE 3 COMPLETE ***", 3);
+    
+    return $hdl;
+}
 sub group_assignments_by_rhs($self, $lhs) {
     my $ctx = $self->{flattened_dt};
     my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};

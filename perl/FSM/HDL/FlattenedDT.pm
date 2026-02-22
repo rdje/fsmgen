@@ -2748,32 +2748,7 @@ sub generate_rhs_based_enable_name ($self, $lhs, $rhs) {
 }
 
 sub generate_signal_assignments ($self, $fsm_module) {
-    my $hdl = "\n  // Unified Multiplexer Logic from Phase 1 Analysis\n";
-    
-    fsm_debug("\n\n*** UNIFIED PHASE 3: GENERATING MULTIPLEXERS FROM ANALYSIS ***", 3);
-    
-    # Generate multiplexers for all LHS signals from unified analysis
-    for my $lhs (sort keys %{$self->{assignment_analysis}}) {
-        my $lhs_analysis = $self->{assignment_analysis}->{$lhs};
-        my $multiplexer = $lhs_analysis->{multiplexer};
-        my $assignment_type = $self->get_signal_assignment_type($lhs, $lhs_analysis);
-        
-        $hdl .= "\n  // Unified Multiplexer for LHS: $lhs\n";
-        
-        if ($assignment_type eq 'pulse_delayed') {
-            $hdl .= $self->generate_unified_pulse_delay_logic($lhs, $lhs_analysis);
-        } elsif ($multiplexer->{type} eq 'flop') {
-            $hdl .= $self->generate_unified_flop_mux($lhs, $lhs_analysis);
-        } else {
-            $hdl .= $self->generate_unified_comb_mux($lhs, $lhs_analysis);
-        }
-        
-        fsm_debug("  Generated unified multiplexer for $lhs (type: $multiplexer->{type}, assignment_type: $assignment_type)", 3);
-    }
-    
-    fsm_debug("*** UNIFIED PHASE 3 COMPLETE ***", 3);
-    
-    return $hdl;
+    return $self->{enable_graph}->generate_signal_assignments($fsm_module);
 }
 
 sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
