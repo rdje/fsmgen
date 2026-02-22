@@ -327,3 +327,7 @@ It is an exact-delay pulse request:
   - driven-signal classification (`get_driven_signals`) now runs through `EnableGraph`,
   - `EnableGraph` now owns auxiliary output exposure classification for sequential dual families (`next_<lhs>` for `rm`, `<lhs>_r` for `mr`) using local assignment-type helper ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint so module declaration logic remains behavior-identical while ownership shifts.
+- Newest behavior-preserving increment:
+  - reset-value resolution (`get_reset_value`) now runs through `EnableGraph`,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for reset-value queries,
+  - reset-state and reset-metadata discovery remains in existing `FlattenedDT` helper methods for now, enabling staged extraction without semantic drift.

@@ -124,6 +124,10 @@ This is the persistent technical change history for FSMGen.
   - moved driven-signal classification (`get_driven_signals`) into `EnableGraph`,
   - module declaration output-direction inference still resolves driven signals through `FlattenedDT` compatibility delegation,
   - `EnableGraph` now owns auxiliary-output driven classification for `rm` (`next_<lhs>`) and `mr` (`<lhs>_r`) using local assignment-type ownership.
+- Newest extraction increment:
+  - moved reset-value resolution helper (`get_reset_value`) into `EnableGraph`,
+  - `FlattenedDT` now delegates reset-value lookup to `EnableGraph` via compatibility shim,
+  - `EnableGraph` currently resolves reset-state and signal reset metadata through existing `FlattenedDT` reset-info helpers to preserve behavior during staged extraction.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

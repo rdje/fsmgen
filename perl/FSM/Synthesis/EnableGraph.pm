@@ -585,6 +585,43 @@ sub get_driven_signals($self) {
     
     return %driven_signals;
 }
+sub get_reset_value($self, $lhs) {
+    # Provide appropriate reset values for different signals
+    # Use semantic information and explicit conventions, NOT name-based heuristics
+    my $ctx = $self->{flattened_dt};
+    
+    fsm_debug("GET_RESET_VALUE: Determining reset value for LHS '$lhs'", 3);
+    
+    # Check if this is the FSM state variable (semantic check)
+    if ($lhs eq 'next_state') {
+        # For the FSM state variable, get the reset state from the FSM module
+        my $reset_state = $ctx->get_fsm_reset_state();
+        fsm_debug("GET_RESET_VALUE: State variable '$lhs' -> reset to '$reset_state'", 3);
+        return $reset_state;
+    }
+    
+    # Check if this LHS has explicit reset information from the FSM specification
+    my $explicit_reset = $ctx->get_explicit_reset_value($lhs);
+    if (defined $explicit_reset) {
+        fsm_debug("GET_RESET_VALUE: Explicit reset for '$lhs' -> '$explicit_reset'", 3);
+        return $explicit_reset;
+    }
+    
+    # Check signal width to determine appropriate default reset value
+    my $signal_info = $ctx->get_signal_info($lhs);
+    if ($signal_info && $signal_info->{width}) {
+        my $width = $signal_info->{width};
+        if ($width > 1) {
+            my $reset_val = sprintf("%d'h%s", $width, "0" x int(($width + 3) / 4));
+            fsm_debug("GET_RESET_VALUE: Multi-bit signal '$lhs' ($width bits) -> '$reset_val'", 3);
+            return $reset_val;
+        }
+    }
+    
+    # Default: single-bit signals reset to 0
+    fsm_debug("GET_RESET_VALUE: Default single-bit reset for '$lhs' -> '1'b0'", 3);
+    return "1'b0";
+}
 sub group_assignments_by_rhs($self, $lhs) {
     my $ctx = $self->{flattened_dt};
     my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
