@@ -152,6 +152,10 @@ This is the persistent technical change history for FSMGen.
   - moved AST default-value helper (`get_default_value_from_ast`) into `EnableGraph`,
   - updated `EnableGraph` multiplexer config assembly to call local AST default-value ownership,
   - `FlattenedDT` now delegates AST default-value lookup to `EnableGraph` via compatibility shim.
+- Latest extraction increment:
+  - moved explicit-reset configuration setter (`set_explicit_reset_values`) into `EnableGraph`,
+  - `FlattenedDT` now delegates explicit-reset configuration to `EnableGraph` via compatibility shim,
+  - `EnableGraph` now owns writes to explicit reset-value configuration consumed by reset-resolution helpers.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

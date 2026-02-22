@@ -739,6 +739,17 @@ sub get_signal_info($self, $lhs) {
     
     return undef;
 }
+sub set_explicit_reset_values($self, $reset_values) {
+    # Allow explicit configuration of reset values
+    # $reset_values is a hash: { signal_name => reset_value }
+    my $ctx = $self->{flattened_dt};
+    $ctx->{explicit_reset_values} = $reset_values;
+    fsm_debug("EXPLICIT_RESET_CONFIG: Configured explicit reset values for " . scalar(keys %$reset_values) . " signals", 3);
+    
+    for my $signal (keys %$reset_values) {
+        fsm_debug("  $signal -> $reset_values->{$signal}", 3);
+    }
+}
 sub get_reset_value_from_ast($self, $lhs_ast) {
     # AST WEB: Get reset value using direct AST queries
     my $ctx = $self->{flattened_dt};

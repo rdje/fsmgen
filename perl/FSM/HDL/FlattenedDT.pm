@@ -2799,14 +2799,7 @@ sub set_fsm_module_reference ($self, $fsm_module) {
 }
 
 sub set_explicit_reset_values ($self, $reset_values) {
-    # Allow explicit configuration of reset values
-    # $reset_values is a hash: { signal_name => reset_value }
-    $self->{explicit_reset_values} = $reset_values;
-    fsm_debug("EXPLICIT_RESET_CONFIG: Configured explicit reset values for " . scalar(keys %$reset_values) . " signals", 3);
-    
-    for my $signal (keys %$reset_values) {
-        fsm_debug("  $signal -> $reset_values->{$signal}", 3);
-    }
+    return $self->{enable_graph}->set_explicit_reset_values($reset_values);
 }
 
 sub get_default_value_from_ast ($self, $lhs_ast) {
