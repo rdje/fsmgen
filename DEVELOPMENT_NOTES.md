@@ -319,3 +319,7 @@ It is an exact-delay pulse request:
   - enable naming helpers (`clean_signal_name`, `generate_rhs_based_enable_name`) now run through `EnableGraph`,
   - `EnableGraph` enable-structure generation now resolves naming through local helper ownership,
   - `FlattenedDT` retains compatibility delegations for these naming helper methods.
+- Newest behavior-preserving increment:
+  - assignment-type helpers (`signal_uses_register_assignment`, `get_signal_assignment_type`) now run through `EnableGraph`,
+  - `EnableGraph` phase-3 mux/pulse selection path now resolves assignment families through local helper ownership,
+  - `FlattenedDT` retains compatibility delegations for these assignment-type helper methods.

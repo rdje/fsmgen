@@ -116,6 +116,10 @@ This is the persistent technical change history for FSMGen.
   - moved enable naming helpers (`clean_signal_name`, `generate_rhs_based_enable_name`) into `EnableGraph`,
   - updated enable-structure generation in `EnableGraph` to use local naming helper ownership,
   - `FlattenedDT` now keeps compatibility delegations for those naming helper entrypoints.
+- Latest extraction increment:
+  - moved assignment-type helpers (`signal_uses_register_assignment`, `get_signal_assignment_type`) into `EnableGraph`,
+  - updated `EnableGraph` phase-3 paths to resolve assignment family through local helper ownership,
+  - `FlattenedDT` now keeps compatibility delegations for these assignment-type helper entrypoints.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

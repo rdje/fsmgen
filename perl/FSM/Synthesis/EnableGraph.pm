@@ -199,7 +199,7 @@ sub generate_signal_assignments($self, $fsm_module) {
     for my $lhs (sort keys %{$ctx->{assignment_analysis}}) {
         my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
         my $multiplexer = $lhs_analysis->{multiplexer};
-        my $assignment_type = $ctx->get_signal_assignment_type($lhs, $lhs_analysis);
+        my $assignment_type = $self->get_signal_assignment_type($lhs, $lhs_analysis);
         
         $hdl .= "\n  // Unified Multiplexer for LHS: $lhs\n";
         
@@ -332,7 +332,7 @@ sub generate_unified_flop_mux($self, $lhs, $lhs_analysis) {
     my $lhs_name = blessed($lhs_ast) && $lhs_ast->can('name') ? $lhs_ast->name() : 'UNKNOWN';
     
     # Determine the assignment type by examining the operators used
-    my $assignment_type = $ctx->get_signal_assignment_type($lhs, $lhs_analysis);
+    my $assignment_type = $self->get_signal_assignment_type($lhs, $lhs_analysis);
     
     my $hdl = "  // Unified flop with mux for: $lhs_name ($assignment_type assignment)\n";
     
@@ -445,6 +445,112 @@ sub generate_unified_comb_mux($self, $lhs, $lhs_analysis) {
     $hdl .= "  end\n";
     
     return $hdl;
+}
+sub signal_uses_register_assignment($self, $lhs, $lhs_analysis) {
+    # Determine if a signal uses <- assignments (register assignments)
+    # Returns: boolean (1 if uses <-, 0 otherwise)
+    my $assignments = $lhs_analysis->{assignments};
+    
+    for my $assignment (@$assignments) {
+        my $operator = $assignment->{operator} || '=';
+        
+        if ($operator eq '<-' || $operator eq '<=' || $operator eq '<-=' || $operator eq '<=+' || $operator =~ /^<\d+$/) {
+            return 1;  # Uses register assignment
+        }
+    }
+    
+    return 0;  # Does not use register assignment
+}
+sub get_signal_assignment_type($self, $lhs, $lhs_analysis) {
+    # Determine the assignment type for a signal by examining the operators used
+    # Returns:
+    #   'register_out'      for <- assignments
+    #   'register_in'       for <= assignments
+    #   'register_out_dual' for <-= assignments (rm)
+    #   'register_in_dual'  for <=+ assignments (mr)
+    #   'pulse_delayed'     for <N assignments (pN, exact Q+N pulse)
+    #   'mux_out'           for = assignments
+    
+    # Add error handling for missing or empty assignments
+    my $assignments = $lhs_analysis->{assignments};
+    unless ($assignments && @$assignments) {
+        fsm_debug("WARNING: No assignments found for LHS '$lhs', defaulting to 'mux_out'", 3);
+        return 'mux_out';  # Default to combinational assignment
+    }
+    
+    my $has_register_assignment = 0;       # <-
+    my $has_flop_assignment = 0;           # <=
+    my $has_register_dual_assignment = 0;  # <-=
+    my $has_flop_dual_assignment = 0;      # <=+
+    my $has_comb_assignment = 0;           # =
+    my $has_pulse_assignment = 0;          # <N
+    my %pulse_delays;
+    
+    for my $assignment (@$assignments) {
+        my $operator = $assignment->{operator};
+        if (!defined($operator) || $operator eq '') {
+            die "[EnableGraph.pm][get_signal_assignment_type()] Missing operator in assignment analysis for LHS '$lhs'";
+        }
+        
+        if ($operator eq '<-') {
+            $has_register_assignment = 1;
+        } elsif ($operator eq '<=') {
+            $has_flop_assignment = 1;
+        } elsif ($operator eq '<-=') {
+            $has_register_dual_assignment = 1;
+        } elsif ($operator eq '<=+') {
+            $has_flop_dual_assignment = 1;
+        } elsif ($operator eq '=') {
+            $has_comb_assignment = 1;
+        } elsif ($operator =~ /^<(\d+)$/) {
+            $has_pulse_assignment = 1;
+            $pulse_delays{$1} = 1;
+        } else {
+            die "[EnableGraph.pm][get_signal_assignment_type()] Unsupported operator '$operator' in assignment analysis for LHS '$lhs'";
+        }
+    }
+    
+    my $sequential_family_count = 0;
+    $sequential_family_count++ if $has_register_assignment;
+    $sequential_family_count++ if $has_flop_assignment;
+    $sequential_family_count++ if $has_register_dual_assignment;
+    $sequential_family_count++ if $has_flop_dual_assignment;
+    $sequential_family_count++ if $has_pulse_assignment;
+    
+    if ($has_comb_assignment && $sequential_family_count > 0) {
+        die "[EnableGraph.pm][get_signal_assignment_type()] Mixed combinational '=' and sequential operators for LHS '$lhs' is unsupported";
+    }
+    
+    if (keys(%pulse_delays) > 1) {
+        die "[EnableGraph.pm][get_signal_assignment_type()] Multiple pulse delays for LHS '$lhs' are unsupported: " . join(', ', sort keys %pulse_delays);
+    }
+    
+    if ($has_pulse_assignment && ($has_register_assignment || $has_flop_assignment || $has_register_dual_assignment || $has_flop_dual_assignment)) {
+        die "[EnableGraph.pm][get_signal_assignment_type()] Mixed pulse-delayed and non-pulse sequential operators for LHS '$lhs' is unsupported";
+    }
+    
+    if ($has_register_dual_assignment) {
+        if ($has_flop_assignment || $has_flop_dual_assignment) {
+            die "[EnableGraph.pm][get_signal_assignment_type()] Mixed '<-=' with '<='/'<=+' for LHS '$lhs' is unsupported";
+        }
+        return 'register_out_dual';
+    }
+    if ($has_flop_dual_assignment) {
+        if ($has_register_assignment || $has_register_dual_assignment) {
+            die "[EnableGraph.pm][get_signal_assignment_type()] Mixed '<=+' with '<-'/'<-=' for LHS '$lhs' is unsupported";
+        }
+        return 'register_in_dual';
+    }
+    if ($has_pulse_assignment) {
+        return 'pulse_delayed';
+    }
+    if ($has_register_assignment) {
+        return 'register_out';
+    }
+    if ($has_flop_assignment) {
+        return 'register_in';
+    }
+    return 'mux_out';
 }
 sub group_assignments_by_rhs($self, $lhs) {
     my $ctx = $self->{flattened_dt};
