@@ -2155,13 +2155,7 @@ sub is_arithmetic_operation ($self, $ast) {
 }
 
 sub is_logical_operation ($self, $ast) {
-    # Check if an AST node represents a logical operation
-    return 0 unless $ast && blessed($ast);
-    return 0 unless $ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp');
-    return 0 unless $ast->can('operator');
-    
-    my $op = $ast->operator || '';
-    return $op =~ /^(&&|\|\||&|\|)$/;
+    return $self->{enable_graph}->is_logical_operation($ast);
 }
 
 sub should_factor_logical_operation ($self, $ast) {

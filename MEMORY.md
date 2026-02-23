@@ -14,7 +14,7 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
-## Current technical status (updated 2026-02-22)
+## Current technical status (updated 2026-02-23)
 - Assignment families are implemented and stabilized: `c`, `r`, `m`, `rm`, `mr`, `pN`.
 - `pN` semantics are authoritative and must not regress:
   - `<N` means exact delay to cycle `Q+N` (not duration).
@@ -63,11 +63,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - `is_signal_ast_based_intermediate`
 - `_ast_contains_factorizable_operators`
 - `is_arithmetic_operation`
+- `is_logical_operation`
 ### Still strong candidates for next slices
 - remaining phase-3/per-assignment support helpers still owned by `FlattenedDT` are narrowing; continue incremental extraction with parity checks.
 - broader synthesis-layer boundary tightening once helper ownership is sufficiently centralized in `EnableGraph`.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Delegate arithmetic-operation helper ownership to `EnableGraph` (`is_arithmetic_operation`) with compatibility delegation in `FlattenedDT`
+- `WORKTREE (pending commit)` Delegate logical-operation helper ownership to `EnableGraph` (`is_logical_operation`) with compatibility delegation in `FlattenedDT`
+- `7b1f2b8` Delegate arithmetic-operation helper ownership to `EnableGraph`
 - `ddaaabe` Delegate AST factorization operator helper ownership to `EnableGraph`
 - `eb1de0d` Delegate AST-based intermediate classification helper ownership to `EnableGraph`
 - `8c5f23b` Delegate intermediate-signal classification helper ownership to `EnableGraph`

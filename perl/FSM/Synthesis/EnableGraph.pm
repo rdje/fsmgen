@@ -1023,7 +1023,7 @@ sub _ast_contains_factorizable_operators($self, $ast) {
         }
         
         # Logical operations: Factor if used multiple times (per specification)
-        if ($ctx->is_logical_operation($ast)) {
+        if ($self->is_logical_operation($ast)) {
             if ($ctx->should_factor_logical_operation($ast)) {
                 fsm_debug("    AST_OPERATORS: Found multi-use logical operation - FACTORIZABLE", 3);
                 return 1;
@@ -1067,6 +1067,15 @@ sub is_arithmetic_operation($self, $ast) {
     
     my $op = $ast->operator || '';
     return $op =~ /^[\+\-\*\/\%\<<\>>]$/;
+}
+sub is_logical_operation($self, $ast) {
+    # Check if an AST node represents a logical operation
+    return 0 unless $ast && blessed($ast);
+    return 0 unless $ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp');
+    return 0 unless $ast->can('operator');
+    
+    my $op = $ast->operator || '';
+    return $op =~ /^(&&|\|\||&|\|)$/;
 }
 sub track_ast_intermediate_signals($self, $ast) {
     # Recursively traverse an AST and track all intermediate signals that need to be declared
