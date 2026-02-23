@@ -3628,53 +3628,7 @@ sub convert_test_value_to_ast ($self, $test_value) {
 # Methods for tracking intermediate signals and dependencies
 
 sub track_ast_intermediate_signals ($self, $ast) {
-    # Recursively traverse an AST and track all intermediate signals that need to be declared
-    return unless $ast && blessed($ast);
-    
-    fsm_debug("TRACK_INTERMEDIATE: Traversing AST: " . ref($ast));
-    
-    # If this is a signal reference, check if it's an intermediate signal
-    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
-        my $signal_name;
-        
-        # Handle different signal reference structures - try multiple approaches
-        if ($ast->can('name') && defined($ast->name)) {
-            $signal_name = $ast->name;
-        } elsif ($ast->can('signal_name') && defined($ast->signal_name)) {
-            $signal_name = $ast->signal_name;
-        } elsif ($ast->can('signal') && $ast->signal && $ast->signal->can('name')) {
-            $signal_name = $ast->signal->name;
-        } else {
-            # Try to extract from string representation as fallback
-            my $ast_str = eval { $ast->to_systemverilog() };
-            if ($ast_str && $ast_str =~ /^([a-zA-Z_][a-zA-Z0-9_]*)$/) {
-                $signal_name = $1;
-                fsm_debug("TRACK_INTERMEDIATE: Extracted signal name from string: $signal_name", 3);
-            } else {
-                fsm_debug("TRACK_INTERMEDIATE: WARNING - Could not extract signal name from " . ref($ast) . 
-                            " (available methods: " . join(", ", grep { $ast->can($_) } qw(name signal_name signal to_systemverilog)) . ")");
-                return;
-            }
-        }
-        
-        # Check if this is an intermediate signal that needs to be declared
-        if ($self->is_intermediate_signal($signal_name)) {
-            $self->{referenced_intermediate_signals}->{$signal_name} = {
-                name => $signal_name,
-                ast => $ast,
-                needs_declaration => 1
-            };
-            fsm_debug("TRACK_INTERMEDIATE: Found intermediate signal: $signal_name", 3);
-        }
-    }
-    # Recursively traverse operands
-    elsif ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
-        $self->track_ast_intermediate_signals($ast->left) if $ast->can('left');
-        $self->track_ast_intermediate_signals($ast->right) if $ast->can('right');
-    }
-    elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
-        $self->track_ast_intermediate_signals($ast->operand) if $ast->can('operand');
-    }
+    return $self->{enable_graph}->track_ast_intermediate_signals($ast);
 }
 
 sub is_intermediate_signal ($self, $signal_name) {

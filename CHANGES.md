@@ -172,6 +172,10 @@ This is the persistent technical change history for FSMGen.
   - moved LHS-width analysis helper (`get_lhs_width_from_analysis`) into `EnableGraph`,
   - updated `EnableGraph` pulse-delay emission path to resolve target width through local helper ownership,
   - `FlattenedDT` now delegates LHS-width analysis to `EnableGraph` via compatibility shim.
+- Newest extraction increment:
+  - moved intermediate-signal AST tracker (`track_ast_intermediate_signals`) into `EnableGraph`,
+  - updated `EnableGraph` DT/LHS enable emission paths to call local intermediate-signal tracking ownership,
+  - `FlattenedDT` now delegates intermediate-signal AST tracking to `EnableGraph` via compatibility shim.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

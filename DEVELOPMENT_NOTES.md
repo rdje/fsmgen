@@ -375,3 +375,7 @@ It is an exact-delay pulse request:
   - LHS-width analysis helper (`get_lhs_width_from_analysis`) now runs through `EnableGraph`,
   - `EnableGraph` pulse-delay emission now resolves target width through local helper ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for LHS-width analysis.
+- Newest behavior-preserving increment:
+  - intermediate-signal AST tracker (`track_ast_intermediate_signals`) now runs through `EnableGraph`,
+  - `EnableGraph` DT/LHS enable emission paths now call local intermediate-signal tracking ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for intermediate-signal AST tracking.
