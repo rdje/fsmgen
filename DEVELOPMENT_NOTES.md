@@ -387,3 +387,7 @@ It is an exact-delay pulse request:
   - AST-based intermediate classification helper (`is_signal_ast_based_intermediate`) now runs through `EnableGraph`,
   - `EnableGraph` intermediate-signal classification path now calls local AST-based classification ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for AST-based intermediate classification.
+- Latest behavior-preserving increment:
+  - AST factorization operator helper (`_ast_contains_factorizable_operators`) now runs through `EnableGraph`,
+  - `EnableGraph` AST-based intermediate classification path now calls local operator-analysis ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for AST factorization operator analysis.

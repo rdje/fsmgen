@@ -3640,62 +3640,7 @@ sub is_signal_ast_based_intermediate ($self, $signal_name) {
 }
 
 sub _ast_contains_factorizable_operators ($self, $ast) {
-    # Check if an AST contains operators that would qualify it as an intermediate signal
-    # This uses the same logic as the AST factorization to determine if expressions
-    # should be factored into intermediate signals.
-    
-    return 0 unless $ast && blessed($ast);
-    
-    # UNARY OPERATIONS: Always factor (per specification)
-    if ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
-        fsm_debug("    AST_OPERATORS: Found unary operation - FACTORIZABLE", 3);
-        return 1;
-    }
-    
-    # BINARY OPERATIONS: Check type and usage patterns
-    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
-        # Arithmetic operations: Always factor (per specification)
-        if ($self->is_arithmetic_operation($ast)) {
-            fsm_debug("    AST_OPERATORS: Found arithmetic operation - FACTORIZABLE", 3);
-            return 1;
-        }
-        
-        # Logical operations: Factor if used multiple times (per specification)
-        if ($self->is_logical_operation($ast)) {
-            if ($self->should_factor_logical_operation($ast)) {
-                fsm_debug("    AST_OPERATORS: Found multi-use logical operation - FACTORIZABLE", 3);
-                return 1;
-            } else {
-                fsm_debug("    AST_OPERATORS: Found single-use logical operation - NOT factorizable", 3);
-                return 0;
-            }
-        }
-        
-        # Other binary operations (comparisons, etc.): Generally factor
-        fsm_debug("    AST_OPERATORS: Found other binary operation - FACTORIZABLE", 3);
-        return 1;
-    }
-    
-    # Literals and signal references are not factorizable
-    if ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal') ||
-        $ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
-        fsm_debug("    AST_OPERATORS: Found literal/signal reference - NOT factorizable", 3);
-        return 0;
-    }
-    
-    # Recursively check child nodes
-    if ($ast->can('left') && $self->_ast_contains_factorizable_operators($ast->left)) {
-        return 1;
-    }
-    if ($ast->can('right') && $self->_ast_contains_factorizable_operators($ast->right)) {
-        return 1;
-    }
-    if ($ast->can('operand') && $self->_ast_contains_factorizable_operators($ast->operand)) {
-        return 1;
-    }
-    
-    # No factorizable operators found
-    return 0;
+    return $self->{enable_graph}->_ast_contains_factorizable_operators($ast);
 }
 
 sub _signal_name_indicates_ast_operators ($self, $signal_name) {

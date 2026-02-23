@@ -184,6 +184,10 @@ This is the persistent technical change history for FSMGen.
   - moved AST-based intermediate classification helper (`is_signal_ast_based_intermediate`) into `EnableGraph`,
   - updated `EnableGraph` intermediate-signal classification path to call local AST-based classification ownership,
   - `FlattenedDT` now delegates AST-based intermediate classification to `EnableGraph` via compatibility shim.
+- Latest extraction increment:
+  - moved AST factorization operator helper (`_ast_contains_factorizable_operators`) into `EnableGraph`,
+  - updated `EnableGraph` AST-based intermediate classification path to call local operator-analysis ownership,
+  - `FlattenedDT` now delegates AST operator-analysis helper entrypoints to `EnableGraph` via compatibility shim.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)
