@@ -403,3 +403,7 @@ It is an exact-delay pulse request:
   - logical-factorization policy helper (`should_factor_logical_operation`) now runs through `EnableGraph`,
   - `EnableGraph` AST factorization operator-analysis path now calls local logical-factorization policy ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for logical-factorization policy helper paths.
+- Latest behavior-preserving increment:
+  - frequent-logical-usage helper (`contains_frequently_used_operations`) now runs through `EnableGraph`,
+  - `EnableGraph` logical-factorization policy path now calls local frequent-logical-usage ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for frequent-logical-usage helper paths.

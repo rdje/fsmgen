@@ -1079,12 +1079,52 @@ sub is_logical_operation($self, $ast) {
 }
 sub should_factor_logical_operation($self, $ast) {
     # Determine if a logical operation should be factored based on occurrence count
-    my $ctx = $self->{flattened_dt};
     return 0 unless $self->is_logical_operation($ast);
     
     # FIXED: Check if ANY of the sub-operations in this expression appears multiple times
     # instead of looking for the exact compound expression
-    return $ctx->contains_frequently_used_operations($ast);
+    return $self->contains_frequently_used_operations($ast);
+}
+sub contains_frequently_used_operations($self, $ast) {
+    # Check if this AST contains any frequently used operations
+    my $ctx = $self->{flattened_dt};
+    return 0 unless $ast && blessed($ast);
+    return 0 unless exists $ctx->{binary_logical_op_counts};
+    
+    # Convert the AST to SystemVerilog and check if it contains any high-count operations
+    my $ast_str = eval { $ast->to_systemverilog() } || '';
+    
+    # Check if this expression contains any of our high-count operations
+    for my $op_signature (keys %{$ctx->{binary_logical_op_counts}}) {
+        my $count = $ctx->{binary_logical_op_counts}{$op_signature};
+        if ($count > 1 && $ast_str =~ /\Q$op_signature\E/) {
+            fsm_debug("FACTOR_LOGICAL_CHECK: Expression '$ast_str' contains high-count operation '$op_signature' ($count times) - FACTOR", 3);
+            return 1;
+        }
+    }
+    
+    # NEW: also check inside intermediate signals
+    my @potential_signals = ($ast_str =~ /([a-zA-Z_][a-zA-Z0-9_]+)/g);
+    my %visited;
+    for my $sig (@potential_signals) {
+        next if $visited{$sig}++;
+        if ($self->is_intermediate_signal($sig)) {
+            my $expr = $ctx->get_intermediate_signal_expression($sig);
+            if ($expr) {
+                # To avoid infinite recursion, let's not call contains_frequently_used_operations recursively
+                for my $op_signature (keys %{$ctx->{binary_logical_op_counts}}) {
+                    my $count = $ctx->{binary_logical_op_counts}{$op_signature};
+                    if ($count > 1 && $expr =~ /\Q$op_signature\E/) {
+                        fsm_debug("FACTOR_LOGICAL_CHECK: Expression '$ast_str' contains intermediate signal '$sig' which contains high-count operation '$op_signature' ($count times) - FACTOR", 3);
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+    
+    fsm_debug("FACTOR_LOGICAL_CHECK: Expression '$ast_str' contains no high-count operations - DON'T FACTOR", 3);
+    return 0;
 }
 sub track_ast_intermediate_signals($self, $ast) {
     # Recursively traverse an AST and track all intermediate signals that need to be declared
