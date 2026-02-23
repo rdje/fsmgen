@@ -64,11 +64,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - `_ast_contains_factorizable_operators`
 - `is_arithmetic_operation`
 - `is_logical_operation`
+- `should_factor_logical_operation`
 ### Still strong candidates for next slices
 - remaining phase-3/per-assignment support helpers still owned by `FlattenedDT` are narrowing; continue incremental extraction with parity checks.
 - broader synthesis-layer boundary tightening once helper ownership is sufficiently centralized in `EnableGraph`.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Delegate logical-operation helper ownership to `EnableGraph` (`is_logical_operation`) with compatibility delegation in `FlattenedDT`
+- `WORKTREE (pending commit)` Delegate logical-factorization policy helper ownership to `EnableGraph` (`should_factor_logical_operation`) with compatibility delegation in `FlattenedDT`
+- `b3f5f73` Delegate logical-operation helper ownership to `EnableGraph`
 - `7b1f2b8` Delegate arithmetic-operation helper ownership to `EnableGraph`
 - `ddaaabe` Delegate AST factorization operator helper ownership to `EnableGraph`
 - `eb1de0d` Delegate AST-based intermediate classification helper ownership to `EnableGraph`

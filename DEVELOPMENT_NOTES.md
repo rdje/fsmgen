@@ -399,3 +399,7 @@ It is an exact-delay pulse request:
   - logical-operation helper (`is_logical_operation`) now runs through `EnableGraph`,
   - `EnableGraph` AST factorization operator-analysis path now calls local logical-operation ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for logical-operation helper paths.
+- Newest behavior-preserving increment:
+  - logical-factorization policy helper (`should_factor_logical_operation`) now runs through `EnableGraph`,
+  - `EnableGraph` AST factorization operator-analysis path now calls local logical-factorization policy ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for logical-factorization policy helper paths.

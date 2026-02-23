@@ -1024,7 +1024,7 @@ sub _ast_contains_factorizable_operators($self, $ast) {
         
         # Logical operations: Factor if used multiple times (per specification)
         if ($self->is_logical_operation($ast)) {
-            if ($ctx->should_factor_logical_operation($ast)) {
+            if ($self->should_factor_logical_operation($ast)) {
                 fsm_debug("    AST_OPERATORS: Found multi-use logical operation - FACTORIZABLE", 3);
                 return 1;
             } else {
@@ -1076,6 +1076,15 @@ sub is_logical_operation($self, $ast) {
     
     my $op = $ast->operator || '';
     return $op =~ /^(&&|\|\||&|\|)$/;
+}
+sub should_factor_logical_operation($self, $ast) {
+    # Determine if a logical operation should be factored based on occurrence count
+    my $ctx = $self->{flattened_dt};
+    return 0 unless $self->is_logical_operation($ast);
+    
+    # FIXED: Check if ANY of the sub-operations in this expression appears multiple times
+    # instead of looking for the exact compound expression
+    return $ctx->contains_frequently_used_operations($ast);
 }
 sub track_ast_intermediate_signals($self, $ast) {
     # Recursively traverse an AST and track all intermediate signals that need to be declared

@@ -196,6 +196,10 @@ This is the persistent technical change history for FSMGen.
   - moved logical-operation helper (`is_logical_operation`) into `EnableGraph`,
   - updated `EnableGraph` AST factorization operator-analysis path to call local logical-operation ownership,
   - `FlattenedDT` now delegates logical-operation helper entrypoints to `EnableGraph` via compatibility shim.
+- Newest extraction increment:
+  - moved logical-factorization policy helper (`should_factor_logical_operation`) into `EnableGraph`,
+  - updated `EnableGraph` AST factorization operator-analysis path to call local logical-factorization policy ownership,
+  - `FlattenedDT` now delegates logical-factorization policy helper entrypoints to `EnableGraph` via compatibility shim.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

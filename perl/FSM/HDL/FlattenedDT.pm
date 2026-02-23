@@ -2159,12 +2159,7 @@ sub is_logical_operation ($self, $ast) {
 }
 
 sub should_factor_logical_operation ($self, $ast) {
-    # Determine if a logical operation should be factored based on occurrence count
-    return 0 unless $self->is_logical_operation($ast);
-    
-    # FIXED: Check if ANY of the sub-operations in this expression appears multiple times
-    # instead of looking for the exact compound expression
-    return $self->contains_frequently_used_operations($ast);
+    return $self->{enable_graph}->should_factor_logical_operation($ast);
 }
 
 sub contains_frequently_used_operations ($self, $ast) {
