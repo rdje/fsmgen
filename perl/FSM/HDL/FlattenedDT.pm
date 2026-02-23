@@ -3632,43 +3632,7 @@ sub track_ast_intermediate_signals ($self, $ast) {
 }
 
 sub is_intermediate_signal ($self, $signal_name) {
-    # Determine if a signal is an intermediate signal that needs to be declared
-    # USES AST-BASED OPERATOR TYPE CHECKING - No string pattern matching!
-    
-    fsm_debug("IS_INTERMEDIATE_SIGNAL: Checking '$signal_name'", 3);
-    
-    # Check against our intermediate signals registry first (highest priority)
-    if (exists $self->{intermediate_signals}->{$signal_name}) {
-        fsm_debug("  -> YES: Found in intermediate_signals registry", 3);
-        return 1;
-    }
-    if (exists $self->{global_expressions}->{$signal_name}) {
-        fsm_debug("  -> YES: Found in global_expressions registry", 3);
-        return 1;
-    }
-    
-    # Check if this signal is tracked in AST factorization results
-    if ($self->{ast_factorizer} && $self->{ast_factorizer}->{intermediate_signals}) {
-        if (exists $self->{ast_factorizer}->{intermediate_signals}->{$signal_name}) {
-            fsm_debug("  -> YES: Found in AST factorizer results", 3);
-            return 1;
-        }
-    }
-    
-    # Check if this signal has been pre-scanned as needing declaration
-    if ($self->{referenced_intermediate_signals} && exists $self->{referenced_intermediate_signals}->{$signal_name}) {
-        fsm_debug("  -> YES: Found in pre-scan referenced signals", 3);
-        return 1;
-    }
-    
-    # AST-BASED CHECK: Look for this signal in our AST-based operator type registry
-    if ($self->is_signal_ast_based_intermediate($signal_name)) {
-        fsm_debug("  -> YES: AST-based intermediate signal detected", 3);
-        return 1;
-    }
-    
-    fsm_debug("  -> NO: Not an intermediate signal", 3);
-    return 0;
+    return $self->{enable_graph}->is_intermediate_signal($signal_name);
 }
 
 sub is_signal_ast_based_intermediate ($self, $signal_name) {

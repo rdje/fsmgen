@@ -379,3 +379,7 @@ It is an exact-delay pulse request:
   - intermediate-signal AST tracker (`track_ast_intermediate_signals`) now runs through `EnableGraph`,
   - `EnableGraph` DT/LHS enable emission paths now call local intermediate-signal tracking ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for intermediate-signal AST tracking.
+- Latest behavior-preserving increment:
+  - intermediate-signal classification helper (`is_intermediate_signal`) now runs through `EnableGraph`,
+  - `EnableGraph` intermediate-signal AST tracking path now calls local classification ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for intermediate-signal classification.

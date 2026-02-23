@@ -59,11 +59,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - `extract_signal_name_from_ast`
 - `get_lhs_width_from_analysis`
 - `track_ast_intermediate_signals`
+- `is_intermediate_signal`
 ### Still strong candidates for next slices
 - remaining phase-3/per-assignment support helpers still owned by `FlattenedDT` are narrowing; continue incremental extraction with parity checks.
 - broader synthesis-layer boundary tightening once helper ownership is sufficiently centralized in `EnableGraph`.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Delegate intermediate-signal AST tracker ownership to `EnableGraph` (`track_ast_intermediate_signals`) with compatibility delegation in `FlattenedDT`
+- `WORKTREE (pending commit)` Delegate intermediate-signal classification helper ownership to `EnableGraph` (`is_intermediate_signal`) with compatibility delegation in `FlattenedDT`
+- `9bb41eb` Delegate intermediate-signal AST tracker ownership to `EnableGraph`
 - `fe6360c` Delegate LHS-width analysis helper ownership to `EnableGraph`
 - `e087dac` Delegate AST signal-name extraction helper ownership to `EnableGraph`
 - `01312fa` Delegate register-classification helper ownership to `EnableGraph`
