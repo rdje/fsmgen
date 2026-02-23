@@ -391,3 +391,7 @@ It is an exact-delay pulse request:
   - AST factorization operator helper (`_ast_contains_factorizable_operators`) now runs through `EnableGraph`,
   - `EnableGraph` AST-based intermediate classification path now calls local operator-analysis ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for AST factorization operator analysis.
+- Newest behavior-preserving increment:
+  - arithmetic-operation helper (`is_arithmetic_operation`) now runs through `EnableGraph`,
+  - `EnableGraph` AST factorization operator-analysis path now calls local arithmetic-operation ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for arithmetic-operation helper paths.

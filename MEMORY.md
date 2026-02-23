@@ -62,11 +62,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - `is_intermediate_signal`
 - `is_signal_ast_based_intermediate`
 - `_ast_contains_factorizable_operators`
+- `is_arithmetic_operation`
 ### Still strong candidates for next slices
 - remaining phase-3/per-assignment support helpers still owned by `FlattenedDT` are narrowing; continue incremental extraction with parity checks.
 - broader synthesis-layer boundary tightening once helper ownership is sufficiently centralized in `EnableGraph`.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Delegate AST factorization operator helper ownership to `EnableGraph` (`_ast_contains_factorizable_operators`) with compatibility delegation in `FlattenedDT`
+- `WORKTREE (pending commit)` Delegate arithmetic-operation helper ownership to `EnableGraph` (`is_arithmetic_operation`) with compatibility delegation in `FlattenedDT`
+- `ddaaabe` Delegate AST factorization operator helper ownership to `EnableGraph`
 - `eb1de0d` Delegate AST-based intermediate classification helper ownership to `EnableGraph`
 - `8c5f23b` Delegate intermediate-signal classification helper ownership to `EnableGraph`
 - `9bb41eb` Delegate intermediate-signal AST tracker ownership to `EnableGraph`

@@ -188,6 +188,10 @@ This is the persistent technical change history for FSMGen.
   - moved AST factorization operator helper (`_ast_contains_factorizable_operators`) into `EnableGraph`,
   - updated `EnableGraph` AST-based intermediate classification path to call local operator-analysis ownership,
   - `FlattenedDT` now delegates AST operator-analysis helper entrypoints to `EnableGraph` via compatibility shim.
+- Newest extraction increment:
+  - moved arithmetic-operation helper (`is_arithmetic_operation`) into `EnableGraph`,
+  - updated `EnableGraph` AST factorization operator-analysis path to call local arithmetic-operation ownership,
+  - `FlattenedDT` now delegates arithmetic-operation helper entrypoints to `EnableGraph` via compatibility shim.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

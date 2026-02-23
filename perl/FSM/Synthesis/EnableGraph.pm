@@ -1017,7 +1017,7 @@ sub _ast_contains_factorizable_operators($self, $ast) {
     # BINARY OPERATIONS: Check type and usage patterns
     if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
         # Arithmetic operations: Always factor (per specification)
-        if ($ctx->is_arithmetic_operation($ast)) {
+        if ($self->is_arithmetic_operation($ast)) {
             fsm_debug("    AST_OPERATORS: Found arithmetic operation - FACTORIZABLE", 3);
             return 1;
         }
@@ -1058,6 +1058,15 @@ sub _ast_contains_factorizable_operators($self, $ast) {
     
     # No factorizable operators found
     return 0;
+}
+sub is_arithmetic_operation($self, $ast) {
+    # Check if an AST node represents an arithmetic operation
+    return 0 unless $ast && blessed($ast);
+    return 0 unless $ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp');
+    return 0 unless $ast->can('operator');
+    
+    my $op = $ast->operator || '';
+    return $op =~ /^[\+\-\*\/\%\<<\>>]$/;
 }
 sub track_ast_intermediate_signals($self, $ast) {
     # Recursively traverse an AST and track all intermediate signals that need to be declared
