@@ -10,9 +10,14 @@ This is the persistent technical change history for FSMGen.
   - `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`.
 - Moved `generate_systemverilog` pipeline sequencing ownership out of `FlattenedDT` into `FlattenedDT::Orchestrator` without changing generated HDL behavior.
 - Updated `FlattenedDT` to instantiate the orchestrator and delegate `generate_systemverilog(...)` through a compatibility facade.
+- Added dedicated backend module namespace:
+  - `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- Moved module declaration emission ownership (`generate_module_declaration`) out of `FlattenedDT` into `FlattenedDT::Backend::SystemVerilog` without changing generated HDL behavior.
+- Updated `FlattenedDT` to instantiate the backend module and delegate `generate_module_declaration(...)` through a compatibility facade.
 - Validation:
   - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
   - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
   - `prove -I perl t` (pass: 5 files, 117 tests)
 
 ## 2026-02-22

@@ -10,6 +10,10 @@ This document captures engineering rationale, design constraints, and working de
   - created `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`,
   - moved `generate_systemverilog` pipeline sequencing into the orchestrator,
   - kept `FlattenedDT` as compatibility facade delegating `generate_systemverilog(...)`.
+- Next extraction slice for this phase is complete:
+  - created `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - moved `generate_module_declaration` backend emission into the backend module,
+  - kept `FlattenedDT` as compatibility facade delegating `generate_module_declaration(...)`.
 - Rationale:
   - reduce monolithic file size and cognitive load,
   - improve ownership clarity before deeper backend splits,
