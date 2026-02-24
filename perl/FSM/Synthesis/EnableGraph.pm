@@ -146,7 +146,8 @@ for my $lhs (sort keys %{$ctx->{assignment_analysis}}) {
                 my $rhs = $enable_info->{rhs};
                 
                 # Convert AST to SystemVerilog for output (without outer parentheses)
-                my $enable_expr = $ctx->ast_to_systemverilog($enable_ast);
+                my $enable_expr = $self->ast_to_systemverilog($enable_ast);
+
                 
                 $hdl .= "  assign $enable_name = $enable_expr;  // $lhs <- $rhs\n";
                 
@@ -1163,6 +1164,23 @@ sub _signal_name_indicates_ast_operators($self, $signal_name) {
     # We removed METHOD 3 (late-stage conversion signals) as it violates the pipeline design.
     fsm_debug("    AST_NAME_METADATA: Signal '$signal_name' not found in any registry - NOT intermediate", 3);
     return 0;
+}
+sub ast_to_systemverilog($self, $ast) {
+    my $ctx = $self->{flattened_dt};
+    
+    # Convert AST to SystemVerilog with proper operator selection and parentheses
+    return "1'b1" unless $ast && blessed($ast);
+    
+    # Use AST-based conversion with proper operator precedence
+    my $sv = $ctx->_ast_to_systemverilog_internal($ast, undef);
+    
+    # DEBUGGING: Track where AST-to-SV conversion is called from
+    my ($package, $filename, $line, $subroutine) = caller(1);
+    fsm_debug("*** AST_TO_SV_DEBUG: $sv ***", 3);
+    fsm_debug("    Called from: $subroutine at line $line", 3);
+    fsm_debug("    AST type: " . ref($ast), 3);
+    
+    return $sv;
 }
 sub _ast_contains_factorizable_operators($self, $ast) {
     # Check if an AST contains operators that would qualify it as an intermediate signal

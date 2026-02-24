@@ -419,3 +419,7 @@ It is an exact-delay pulse request:
   - AST-based intermediate-name metadata helper (`_signal_name_indicates_ast_operators`) now runs through `EnableGraph`,
   - `EnableGraph` AST intermediate classification path now calls local intermediate-name metadata ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for AST-based intermediate-name metadata helper paths.
+- Latest behavior-preserving increment:
+  - AST-to-SystemVerilog rendering helper (`ast_to_systemverilog`) now runs through `EnableGraph`,
+  - `EnableGraph` DT/LHS enable emission paths now call local AST rendering ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for AST-to-SystemVerilog rendering helper paths.

@@ -216,6 +216,10 @@ This is the persistent technical change history for FSMGen.
   - moved AST-based intermediate-name metadata helper (`_signal_name_indicates_ast_operators`) into `EnableGraph`,
   - updated `EnableGraph` AST intermediate classification path to call local intermediate-name metadata ownership,
   - `FlattenedDT` now delegates AST-based intermediate-name metadata helper entrypoints to `EnableGraph` via compatibility shim.
+- Latest extraction increment:
+  - moved AST-to-SystemVerilog rendering helper (`ast_to_systemverilog`) into `EnableGraph`,
+  - updated `EnableGraph` DT/LHS enable emission paths to call local AST rendering ownership,
+  - `FlattenedDT` now delegates AST-to-SystemVerilog rendering helper entrypoints to `EnableGraph` via compatibility shim.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

@@ -3594,19 +3594,7 @@ sub _signal_name_indicates_ast_operators ($self, $signal_name) {
 }
 
 sub ast_to_systemverilog ($self, $ast) {
-    # Convert AST to SystemVerilog with proper operator selection and parentheses
-    return "1'b1" unless $ast && blessed($ast);
-    
-    # Use AST-based conversion with proper operator precedence
-    my $sv = $self->_ast_to_systemverilog_internal($ast, undef);
-    
-    # DEBUGGING: Track where AST-to-SV conversion is called from
-    my ($package, $filename, $line, $subroutine) = caller(1);
-    fsm_debug("*** AST_TO_SV_DEBUG: $sv ***", 3);
-    fsm_debug("    Called from: $subroutine at line $line", 3);
-    fsm_debug("    AST type: " . ref($ast), 3);
-    
-    return $sv;
+    return $self->{enable_graph}->ast_to_systemverilog($ast);
 }
 
 sub _ast_to_systemverilog_internal ($self, $ast, $parent_precedence) {
