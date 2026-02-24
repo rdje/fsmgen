@@ -68,11 +68,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - `contains_frequently_used_operations`
 - `get_intermediate_signal_expression`
 - `generate_expression_from_signal_name`
+- `_signal_name_indicates_ast_operators`
 ### Still strong candidates for next slices
 - remaining phase-3/per-assignment support helpers still owned by `FlattenedDT` are narrowing; continue incremental extraction with parity checks.
 - broader synthesis-layer boundary tightening once helper ownership is sufficiently centralized in `EnableGraph`.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Delegate intermediate-signal expression synthesis helper ownership to `EnableGraph` (`generate_expression_from_signal_name`) with compatibility delegation in `FlattenedDT`
+- `WORKTREE (pending commit)` Delegate AST-based intermediate-name metadata helper ownership to `EnableGraph` (`_signal_name_indicates_ast_operators`) with compatibility delegation in `FlattenedDT`
+- `ac9b39e` Delegate intermediate-signal expression synthesis helper ownership to `EnableGraph`
 - `4fec56e` Delegate intermediate-signal expression resolver ownership to `EnableGraph`
 - `4a0cd02` Delegate frequent-logical-usage helper ownership to `EnableGraph`
 - `0a4dd6e` Delegate logical-factorization policy helper ownership to `EnableGraph`

@@ -415,3 +415,7 @@ It is an exact-delay pulse request:
   - intermediate-signal expression synthesis helper (`generate_expression_from_signal_name`) now runs through `EnableGraph`,
   - `EnableGraph` intermediate-signal expression resolver path now calls local expression-synthesis ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for intermediate-signal expression synthesis helper paths.
+- Newest behavior-preserving increment:
+  - AST-based intermediate-name metadata helper (`_signal_name_indicates_ast_operators`) now runs through `EnableGraph`,
+  - `EnableGraph` AST intermediate classification path now calls local intermediate-name metadata ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for AST-based intermediate-name metadata helper paths.
