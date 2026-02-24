@@ -134,5 +134,19 @@ sub generate_module_declaration ($self, $fsm_module) {
     
     return $hdl;
 }
+sub generate_state_encoding ($self, $fsm_module) {
+    my @regular_states = grep { $_->name !~ /^-/ } @{$fsm_module->states};
+    my $state_count = scalar(@regular_states);
+    my $state_bits = $state_count > 1 ? int(log($state_count)/log(2)) + 1 : 1;
+    
+    my $hdl = "  // State encoding\n";
+    for my $i (0 .. $#regular_states) {
+        my $state_name = uc($regular_states[$i]->name);
+        $hdl .= "  localparam $state_name = ${state_bits}'d$i;\n";
+    }
+    $hdl .= "\n";
+    
+    return $hdl;
+}
 
 1;

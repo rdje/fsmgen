@@ -14,6 +14,9 @@ This document captures engineering rationale, design constraints, and working de
   - created `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - moved `generate_module_declaration` backend emission into the backend module,
   - kept `FlattenedDT` as compatibility facade delegating `generate_module_declaration(...)`.
+- Current extraction slice for this phase:
+  - moved `generate_state_encoding` backend emission into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - kept `FlattenedDT` as compatibility facade delegating `generate_state_encoding(...)`.
 - Rationale:
   - reduce monolithic file size and cognitive load,
   - improve ownership clarity before deeper backend splits,
