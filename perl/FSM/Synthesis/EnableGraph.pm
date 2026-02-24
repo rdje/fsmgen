@@ -181,7 +181,7 @@ sub generate_lhs_enables_from_analysis($self) {
                 $ctx->track_ast_intermediate_signals($enable_ast);
                 
                 # Convert AST to SystemVerilog for output (without outer parentheses)
-                my $enable_expr = $ctx->ast_to_systemverilog($enable_ast);
+                my $enable_expr = $self->ast_to_systemverilog($enable_ast);
                 
                 $hdl .= "  assign $enable_name = $enable_expr;\n";
                 

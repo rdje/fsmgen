@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-24: FlattenedDT decomposition model formalized (Orchestrator + Backend, with EnableGraph as helper)
+- The next architecture phase keeps `FSM::Synthesis::EnableGraph` as a synthesis helper module used by `FlattenedDT` (not a direct `FlattenedDT` submodule breakdown track).
+- `FlattenedDT` decomposition is explicitly tracked as two direct module tracks:
+  - `Orchestrator`: top-level generation pipeline sequencing ownership,
+  - `Backend` modules: rendering/emitter ownership.
+- Enable-synthesis helper extraction into `EnableGraph` continues in parallel with the direct `FlattenedDT` breakdown.
+- First extraction slice for this phase is complete:
+  - created `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`,
+  - moved `generate_systemverilog` pipeline sequencing into the orchestrator,
+  - kept `FlattenedDT` as compatibility facade delegating `generate_systemverilog(...)`.
+- Rationale:
+  - reduce monolithic file size and cognitive load,
+  - improve ownership clarity before deeper backend splits,
+  - preserve behavior by changing structure first and semantics later only when explicitly intended.
+- Near-term follow-through:
+  - continue backend-focused extractions in small parity-validated slices,
+  - retain compatibility delegates until call sites converge and regressions remain stable.
 
 ## 2026-02-22: Phase-1 intent model clarification (`<-` vs `<=`)
 - Assignment intent is now explicitly captured at AST assignment nodes (`assignment_intent`, `source_provenance`, `output_exposure`).

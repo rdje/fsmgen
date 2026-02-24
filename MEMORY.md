@@ -23,6 +23,13 @@ After each completed task, always do this in order:
 - Regression baseline is currently green:
   - `prove -I perl t`
   - `Files=5, Tests=117, PASS`.
+- FlattenedDT decomposition direction is now explicitly two-track:
+  - `Orchestrator` (pipeline sequencing ownership),
+  - `Backend` (render/emitter ownership).
+- `EnableGraph` remains a synthesis helper module (`FSM::Synthesis::EnableGraph`) used by `FlattenedDT`, not a direct submodule in the `FlattenedDT` breakdown.
+- First orchestrator decomposition slice is in progress:
+  - `generate_systemverilog` orchestration has been moved into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`,
+  - `FlattenedDT` now delegates this entrypoint through a compatibility facade.
 ## EnableGraph extraction status
 Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active and working.
 ### Already moved into `perl/FSM/Synthesis/EnableGraph.pm`
@@ -72,9 +79,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - `ast_to_systemverilog`
 ### Still strong candidates for next slices
 - the direct EnableGraph-to-FlattenedDT helper seam is now essentially exhausted for this extraction lane; any further moves would be deeper AST-render internals.
-- broader synthesis-layer boundary tightening remains the next architectural lever.
+- broader decomposition remains the next architectural lever:
+  - continue `EnableGraph` helper ownership where clear,
+  - extract backend emitters into dedicated modules,
+  - keep `FlattenedDT` as thin facade/compatibility shell.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Delegate AST-to-SystemVerilog rendering helper ownership to `EnableGraph` (`ast_to_systemverilog`) with compatibility delegation in `FlattenedDT`
+- `WORKTREE (pending commit)` Start explicit `FlattenedDT` decomposition by extracting `generate_systemverilog` pipeline sequencing into `FlattenedDT::Orchestrator` with compatibility delegation in `FlattenedDT`
+- `1b1036a` Delegate AST-to-SystemVerilog rendering helper ownership to `EnableGraph` (`ast_to_systemverilog`) with compatibility delegation in `FlattenedDT`
 - `4840580` Delegate AST-based intermediate-name metadata helper ownership to `EnableGraph`
 - `ac9b39e` Delegate intermediate-signal expression synthesis helper ownership to `EnableGraph`
 - `4fec56e` Delegate intermediate-signal expression resolver ownership to `EnableGraph`

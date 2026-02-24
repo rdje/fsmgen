@@ -15,6 +15,7 @@ use FSM::GlobalASTManager;
 use FSM::AST::Node;
 use FSM::CoreAST;  # Core AST classes with SignalRef->name() method
 use FSM::Synthesis::EnableGraph;
+use FSM::HDL::FlattenedDT::Orchestrator;
 use Data::Dumper;
 use Scalar::Util qw(blessed);
 use List::Util qw(min max);
@@ -83,57 +84,14 @@ sub new ($class, %args) {
     
     # Initial extraction slice: dedicated enable synthesis/orchestration layer.
     $self->{enable_graph} = FSM::Synthesis::EnableGraph->new(flattened_dt => $self);
+    $self->{orchestrator} = FSM::HDL::FlattenedDT::Orchestrator->new(flattened_dt => $self);
     
     return $self;
 }
 
 
 sub generate_systemverilog ($self, $fsm_module) {
-    fsm_debug("Starting flattened DT SystemVerilog generation for " . $fsm_module->name, 3);
-    fsm_debug("\n*** PIPELINE TIMING DEBUG: HDL Generation Pipeline Start ***", 3);
-    
-    # Step 0: Store FSM module reference for proper signal and reset value analysis
-    $self->set_fsm_module_reference($fsm_module);
-    fsm_debug("Step 0 - FSM module reference stored", 3);
-    
-    # Step 1: Analyze and flatten all decision trees
-    $self->flatten_all_decision_trees($fsm_module);
-    fsm_debug("Step 1 - Decision trees flattened", 3);
-    
-    # Step 2: Generate SystemVerilog with enable-based methodology
-    my $hdl = $self->generate_header($fsm_module);
-    $hdl .= $self->generate_module_declaration($fsm_module);
-    $hdl .= $self->generate_state_encoding($fsm_module);
-    $hdl .= $self->generate_state_register($fsm_module);
-    $hdl .= $self->generate_internal_signal_declarations($fsm_module);
-    fsm_debug("Step 2 - Basic HDL structure generated", 3);
-    
-    # Step 3: Generate enable conditions FIRST (this will track intermediate signal requirements)
-    $hdl .= $self->generate_enable_conditions($fsm_module);
-    fsm_debug("Step 3 - Enable conditions generated", 3);
-    
-    # TIMING FIX: Count logical operations BEFORE any intermediate signal creation!
-    fsm_debug("\n*** TIMING FIX: Running logical operation counting BEFORE pre-scan ***", 3);
-    $self->count_binary_logical_operation_occurrences();
-    fsm_debug("Step 4 - Logical operation counting completed (BEFORE pre-scan!)", 3);
-    
-    # Step 5: PRE-SCAN all WEN/EN expressions to identify needed intermediate signals (now with counts available)
-    $self->prescan_wen_en_for_intermediate_signals();
-    fsm_debug("Step 5 - PRE-SCAN completed (AFTER logical operation counting!)", 3);
-    
-    # Step 6: Generate consolidated intermediate signals (combining AST factorization + pre-scan)
-    $hdl .= $self->generate_consolidated_intermediate_signals($fsm_module);
-    fsm_debug("Step 6 - Consolidated intermediate signals generated", 3);
-    
-    # Step 7: Generate WEN/EN signals (using pre-declared intermediate signals)
-    $hdl .= $self->generate_wen_en_signals($fsm_module);
-    fsm_debug("Step 7 - WEN/EN signals generated", 3);
-    
-    $hdl .= $self->generate_signal_assignments($fsm_module);
-    $hdl .= "endmodule\n";
-    fsm_debug("*** PIPELINE TIMING DEBUG: HDL Generation Pipeline Complete ***\n", 3);
-    
-    return $hdl;
+    return $self->{orchestrator}->generate_systemverilog($fsm_module);
 }
 
 sub generate_verilog ($self, $fsm_module) {

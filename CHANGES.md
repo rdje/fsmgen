@@ -1,5 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-02-24
+### FlattenedDT decomposition kickoff: explicit orchestrator track
+- Recorded and aligned roadmap direction to decompose remaining `FlattenedDT` responsibilities across two direct breakdown tracks:
+  - `Orchestrator` for top-level generation sequencing,
+  - backend emitter modules for rendering ownership.
+- Clarified ownership language: `FSM::Synthesis::EnableGraph` remains a synthesis helper module used by `FlattenedDT`, not a direct `FlattenedDT` submodule breakdown track.
+- Added a dedicated orchestrator module:
+  - `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`.
+- Moved `generate_systemverilog` pipeline sequencing ownership out of `FlattenedDT` into `FlattenedDT::Orchestrator` without changing generated HDL behavior.
+- Updated `FlattenedDT` to instantiate the orchestrator and delegate `generate_systemverilog(...)` through a compatibility facade.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `prove -I perl t` (pass: 5 files, 117 tests)
 
 ## 2026-02-22
 ### Phase 1 modernization slice: explicit assignment intent metadata
