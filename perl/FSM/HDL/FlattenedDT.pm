@@ -750,24 +750,7 @@ sub generate_state_register ($self, $fsm_module) {
 }
 
 sub generate_enable_conditions ($self, $fsm_module) {
-    my $hdl = "  // State and DT Enable Conditions\n";
-    
-    # Generate state enables
-    for my $state_name (sort keys %{$self->{state_enables}}) {
-        my $enable_expr = $self->{state_enables}->{$state_name};
-        $hdl .= "  assign ${state_name}_en = $enable_expr;\n";
-    }
-    
-    # Generate standalone DT enables
-    for my $dt_name (sort keys %{$self->{dt_enables}}) {
-        my $enable_expr = $self->{dt_enables}->{$dt_name};
-        my $clean_name = $dt_name;
-        $clean_name =~ s/^-//;  # Remove leading dash
-        $hdl .= "  assign ${clean_name}_en = $enable_expr;\n";
-    }
-    
-    $hdl .= "\n";
-    return $hdl;
+    return $self->{backend_sv}->generate_enable_conditions($fsm_module);
 }
 
 sub generate_consolidated_intermediate_signals ($self, $fsm_module) {

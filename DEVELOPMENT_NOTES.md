@@ -20,6 +20,9 @@ This document captures engineering rationale, design constraints, and working de
 - Latest extraction slice for this phase:
   - moved `generate_state_register` backend emission into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - kept `FlattenedDT` as compatibility facade delegating `generate_state_register(...)`.
+- Current extraction slice for this phase:
+  - moved `generate_enable_conditions` backend emission into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - kept `FlattenedDT` as compatibility facade delegating `generate_enable_conditions(...)`.
 - Rationale:
   - reduce monolithic file size and cognitive load,
   - improve ownership clarity before deeper backend splits,
