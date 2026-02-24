@@ -407,3 +407,7 @@ It is an exact-delay pulse request:
   - frequent-logical-usage helper (`contains_frequently_used_operations`) now runs through `EnableGraph`,
   - `EnableGraph` logical-factorization policy path now calls local frequent-logical-usage ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for frequent-logical-usage helper paths.
+- Newest behavior-preserving increment:
+  - intermediate-signal expression resolver (`get_intermediate_signal_expression`) now runs through `EnableGraph`,
+  - `EnableGraph` frequent-logical-usage helper path now calls local intermediate-signal expression ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for intermediate-signal expression resolver paths.

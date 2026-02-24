@@ -1109,7 +1109,7 @@ sub contains_frequently_used_operations($self, $ast) {
     for my $sig (@potential_signals) {
         next if $visited{$sig}++;
         if ($self->is_intermediate_signal($sig)) {
-            my $expr = $ctx->get_intermediate_signal_expression($sig);
+            my $expr = $self->get_intermediate_signal_expression($sig);
             if ($expr) {
                 # To avoid infinite recursion, let's not call contains_frequently_used_operations recursively
                 for my $op_signature (keys %{$ctx->{binary_logical_op_counts}}) {
@@ -1125,6 +1125,25 @@ sub contains_frequently_used_operations($self, $ast) {
     
     fsm_debug("FACTOR_LOGICAL_CHECK: Expression '$ast_str' contains no high-count operations - DON'T FACTOR", 3);
     return 0;
+}
+sub get_intermediate_signal_expression($self, $signal_name) {
+    # Get the expression for an intermediate signal from various sources
+    my $ctx = $self->{flattened_dt};
+    
+    # Check the intermediate_signals registry
+    if (exists $ctx->{intermediate_signals}->{$signal_name}) {
+        return $ctx->{intermediate_signals}->{$signal_name};
+    }
+    
+    # Check global expressions registry
+    for my $expr (keys %{$ctx->{global_expressions}}) {
+        if ($ctx->{global_expressions}->{$expr} eq $signal_name) {
+            return $expr;
+        }
+    }
+    
+    # Try to generate the expression based on naming patterns
+    return $ctx->generate_expression_from_signal_name($signal_name);
 }
 sub track_ast_intermediate_signals($self, $ast) {
     # Recursively traverse an AST and track all intermediate signals that need to be declared

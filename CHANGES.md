@@ -204,6 +204,10 @@ This is the persistent technical change history for FSMGen.
   - moved frequent-logical-usage helper (`contains_frequently_used_operations`) into `EnableGraph`,
   - updated `EnableGraph` logical-factorization policy path to call local frequent-logical-usage ownership,
   - `FlattenedDT` now delegates frequent-logical-usage helper entrypoints to `EnableGraph` via compatibility shim.
+- Newest extraction increment:
+  - moved intermediate-signal expression resolver (`get_intermediate_signal_expression`) into `EnableGraph`,
+  - updated `EnableGraph` frequent-logical-usage helper path to call local intermediate-signal expression ownership,
+  - `FlattenedDT` now delegates intermediate-signal expression resolver entrypoints to `EnableGraph` via compatibility shim.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

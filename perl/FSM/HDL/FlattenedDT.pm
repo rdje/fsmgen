@@ -4246,22 +4246,7 @@ sub generate_intermediate_signal_declarations ($self) {
 }
 
 sub get_intermediate_signal_expression ($self, $signal_name) {
-    # Get the expression for an intermediate signal from various sources
-    
-    # Check the intermediate_signals registry
-    if (exists $self->{intermediate_signals}->{$signal_name}) {
-        return $self->{intermediate_signals}->{$signal_name};
-    }
-    
-    # Check global expressions registry
-    for my $expr (keys %{$self->{global_expressions}}) {
-        if ($self->{global_expressions}->{$expr} eq $signal_name) {
-            return $expr;
-        }
-    }
-    
-    # Try to generate the expression based on naming patterns
-    return $self->generate_expression_from_signal_name($signal_name);
+    return $self->{enable_graph}->get_intermediate_signal_expression($signal_name);
 }
 
 sub generate_expression_from_signal_name ($self, $signal_name) {
