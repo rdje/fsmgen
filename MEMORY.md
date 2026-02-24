@@ -33,8 +33,11 @@ After each completed task, always do this in order:
 - First backend decomposition slice is complete:
   - module declaration emission (`generate_module_declaration`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
-- Second backend decomposition slice is in progress (worktree pending commit):
+- Second backend decomposition slice is complete:
   - state-encoding emission (`generate_state_encoding`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
+- Third backend decomposition slice is in progress (worktree pending commit):
+  - state-register emission (`generate_state_register`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
 ## EnableGraph extraction status
 Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active and working.
@@ -90,7 +93,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - extract backend emitters into dedicated modules,
   - keep `FlattenedDT` as thin facade/compatibility shell.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Continue backend decomposition by extracting `generate_state_encoding` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
+- `WORKTREE (pending commit)` Continue backend decomposition by extracting `generate_state_register` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
+- `7dc5461` Continue backend decomposition by extracting `generate_state_encoding` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
 - `082eab2` Start backend decomposition by extracting `generate_module_declaration` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
 - `dd82368` Start explicit `FlattenedDT` decomposition by extracting `generate_systemverilog` pipeline sequencing into `FlattenedDT::Orchestrator` with compatibility delegation in `FlattenedDT`
 - `1b1036a` Delegate AST-to-SystemVerilog rendering helper ownership to `EnableGraph` (`ast_to_systemverilog`) with compatibility delegation in `FlattenedDT`

@@ -148,5 +148,31 @@ sub generate_state_encoding ($self, $fsm_module) {
     
     return $hdl;
 }
+sub generate_state_register ($self, $fsm_module) {
+    my @regular_states = grep { $_->name !~ /^-/ } @{$fsm_module->states};
+    my $state_count = scalar(@regular_states);
+    
+    # Check if this FSM has no regular states (only standalone decision trees)
+    if ($state_count == 0) {
+        fsm_debug("FSM has no regular states - only standalone decision trees. Skipping state register generation.", 3);
+        return "  // No state registers needed - FSM contains only decision trees\n\n";
+    }
+    
+    my $state_bits = $state_count > 1 ? int(log($state_count)/log(2)) + 1 : 1;
+    
+    my $hdl = "  // State registers\n";
+    $hdl .= "  reg [" . ($state_bits - 1) . ":0] current_state, next_state;\n\n";
+    
+    $hdl .= "  // State sequential logic\n";
+    $hdl .= "  always_ff @(posedge clk or negedge rstn) begin\n";
+    $hdl .= "    if (!rstn) begin\n";
+    $hdl .= "      current_state <= " . uc($regular_states[0]->name) . ";\n";
+    $hdl .= "    end else begin\n";
+    $hdl .= "      current_state <= next_state;\n";
+    $hdl .= "    end\n";
+    $hdl .= "  end\n\n";
+    
+    return $hdl;
+}
 
 1;

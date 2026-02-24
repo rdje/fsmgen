@@ -16,6 +16,8 @@ This is the persistent technical change history for FSMGen.
 - Updated `FlattenedDT` to instantiate the backend module and delegate `generate_module_declaration(...)` through a compatibility facade.
 - Continued backend decomposition with state-encoding emission ownership (`generate_state_encoding`) moved out of `FlattenedDT` into `FlattenedDT::Backend::SystemVerilog` without changing generated HDL behavior.
 - Updated `FlattenedDT` to delegate `generate_state_encoding(...)` through the backend compatibility facade.
+- Continued backend decomposition with state-register emission ownership (`generate_state_register`) moved out of `FlattenedDT` into `FlattenedDT::Backend::SystemVerilog` without changing generated HDL behavior.
+- Updated `FlattenedDT` to delegate `generate_state_register(...)` through the backend compatibility facade.
 - Validation:
   - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
   - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
