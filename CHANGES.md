@@ -208,6 +208,10 @@ This is the persistent technical change history for FSMGen.
   - moved intermediate-signal expression resolver (`get_intermediate_signal_expression`) into `EnableGraph`,
   - updated `EnableGraph` frequent-logical-usage helper path to call local intermediate-signal expression ownership,
   - `FlattenedDT` now delegates intermediate-signal expression resolver entrypoints to `EnableGraph` via compatibility shim.
+- Latest extraction increment:
+  - moved intermediate-signal expression synthesis helper (`generate_expression_from_signal_name`) into `EnableGraph`,
+  - updated `EnableGraph` intermediate-signal expression resolver path to call local expression-synthesis ownership,
+  - `FlattenedDT` now delegates intermediate-signal expression synthesis helper entrypoints to `EnableGraph` via compatibility shim.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

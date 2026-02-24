@@ -411,3 +411,7 @@ It is an exact-delay pulse request:
   - intermediate-signal expression resolver (`get_intermediate_signal_expression`) now runs through `EnableGraph`,
   - `EnableGraph` frequent-logical-usage helper path now calls local intermediate-signal expression ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for intermediate-signal expression resolver paths.
+- Latest behavior-preserving increment:
+  - intermediate-signal expression synthesis helper (`generate_expression_from_signal_name`) now runs through `EnableGraph`,
+  - `EnableGraph` intermediate-signal expression resolver path now calls local expression-synthesis ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for intermediate-signal expression synthesis helper paths.

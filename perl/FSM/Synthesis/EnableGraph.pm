@@ -1143,7 +1143,42 @@ sub get_intermediate_signal_expression($self, $signal_name) {
     }
     
     # Try to generate the expression based on naming patterns
-    return $ctx->generate_expression_from_signal_name($signal_name);
+    return $self->generate_expression_from_signal_name($signal_name);
+}
+sub generate_expression_from_signal_name($self, $signal_name) {
+    # Generate SystemVerilog expression from intermediate signal name patterns
+    
+    # s_rst_n_and_* patterns
+    if ($signal_name =~ /^s_rst_n_and_(.+)$/) {
+        my $rest = $1;
+        $rest =~ s/_and_/ & /g;
+        return "s_rst_n & $rest";
+    }
+    
+    # not_* patterns
+    if ($signal_name =~ /^not_(.+)$/) {
+        return "!$1";
+    }
+    
+    # *_and_* patterns
+    if ($signal_name =~ /^(.+)_and_(.+)$/) {
+        my ($left, $right) = ($1, $2);
+        $left =~ s/_and_/ & /g;
+        $right =~ s/_and_/ & /g;
+        return "$left & $right";
+    }
+    
+    # *_or_* patterns
+    if ($signal_name =~ /^(.+)_or_(.+)$/) {
+        my ($left, $right) = ($1, $2);
+        $left =~ s/_or_/ | /g;
+        $right =~ s/_or_/ | /g;
+        return "$left | $right";
+    }
+    
+    # Default: return the signal name itself (might be an error)
+    fsm_debug("WARNING: Could not generate expression for intermediate signal: $signal_name", 3);
+    return "1'b0"; # Safe default
 }
 sub track_ast_intermediate_signals($self, $ast) {
     # Recursively traverse an AST and track all intermediate signals that need to be declared
