@@ -2011,12 +2011,7 @@ sub generate_factorized_signals ($self, $factorization_candidates) {
 }
 
 sub generate_wen_en_signals ($self, $fsm_module) {
-    my $hdl = "";
-    
-    # UNIFIED APPROACH: Generate WEN/EN signals from Phase 1 unified data
-    $hdl .= $self->generate_unified_wen_en_signals($fsm_module);
-    
-    return $hdl;
+    return $self->{backend_sv}->generate_wen_en_signals($fsm_module);
 }
 
 sub generate_unified_wen_en_signals ($self, $fsm_module) {

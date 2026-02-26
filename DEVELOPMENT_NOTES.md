@@ -33,6 +33,10 @@ This document captures engineering rationale, design constraints, and working de
   - created `perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm`,
   - moved Verilog generation ownership (`generate_verilog`, `convert_systemverilog_to_verilog`) into the dedicated Verilog backend module,
   - kept `FlattenedDT` as compatibility facade delegating Verilog-generation entrypoints.
+- Current extraction slice for this phase:
+  - moved WEN/EN emission entrypoint ownership (`generate_wen_en_signals`) into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - kept `FlattenedDT` as compatibility facade delegating `generate_wen_en_signals(...)`,
+  - maintained strict behavior-preserving structure-first decomposition (no intended HDL semantic deltas).
 - Rationale:
   - reduce monolithic file size and cognitive load,
   - improve ownership clarity before deeper backend splits,

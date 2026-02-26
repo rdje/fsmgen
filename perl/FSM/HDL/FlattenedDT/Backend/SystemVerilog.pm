@@ -210,6 +210,15 @@ sub generate_enable_conditions ($self, $fsm_module) {
     $hdl .= "\n";
     return $hdl;
 }
+sub generate_wen_en_signals ($self, $fsm_module) {
+    my $ctx = $self->{flattened_dt};
+    my $hdl = "";
+    
+    # UNIFIED APPROACH: Generate WEN/EN signals from Phase 1 unified data
+    $hdl .= $ctx->generate_unified_wen_en_signals($fsm_module);
+    
+    return $hdl;
+}
 sub generate_internal_signal_declarations ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     my %declared_ports = %{$ctx->{declared_port_signals} || {}};

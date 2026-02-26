@@ -14,7 +14,7 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
-## Current technical status (updated 2026-02-24)
+## Current technical status (updated 2026-02-26)
 - Assignment families are implemented and stabilized: `c`, `r`, `m`, `rm`, `mr`, `pN`.
 - `pN` semantics are authoritative and must not regress:
   - `<N` means exact delay to cycle `Q+N` (not duration).
@@ -48,9 +48,12 @@ After each completed task, always do this in order:
 - Sixth backend decomposition slice is complete:
   - internal-signal declaration emission (`generate_internal_signal_declarations`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
-- Seventh backend decomposition slice is in progress (worktree pending commit):
+- Seventh backend decomposition slice is complete:
   - Verilog generation ownership (`generate_verilog`, `convert_systemverilog_to_verilog`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm`,
   - `FlattenedDT` now delegates these Verilog backend entrypoints through a compatibility facade.
+- Eighth backend decomposition slice is in progress (worktree pending commit):
+  - WEN/EN emission entrypoint ownership (`generate_wen_en_signals`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
 ## EnableGraph extraction status
 Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active and working.
 ### Already moved into `perl/FSM/Synthesis/EnableGraph.pm`
@@ -105,7 +108,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - extract backend emitters into dedicated modules,
   - keep `FlattenedDT` as thin facade/compatibility shell.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Add dedicated `FlattenedDT::Backend::Verilog` and move `generate_verilog`/`convert_systemverilog_to_verilog` ownership there with compatibility delegation in `FlattenedDT`
+- `WORKTREE (pending commit)` Continue backend decomposition by extracting `generate_wen_en_signals` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
+- `5de2f44` Add dedicated `FlattenedDT::Backend::Verilog` and move `generate_verilog`/`convert_systemverilog_to_verilog` ownership there with compatibility delegation in `FlattenedDT`
 - `1f0b44b` Continue backend decomposition by extracting `generate_internal_signal_declarations` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
 - `0313969` Continue backend decomposition by extracting `generate_header` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
 - `0d80108` Continue backend decomposition by extracting `generate_enable_conditions` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
