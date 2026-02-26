@@ -41,6 +41,10 @@ This document captures engineering rationale, design constraints, and working de
   - moved intermediate-signal declaration emission ownership (`generate_intermediate_signal_declarations`) into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - kept `FlattenedDT` as compatibility facade delegating `generate_intermediate_signal_declarations(...)`,
   - maintained strict behavior-preserving structure-first decomposition (no intended HDL semantic deltas).
+- Current extraction slice for this phase:
+  - moved combinational-mux emission ownership (`generate_comb_mux`) into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - kept `FlattenedDT` as compatibility facade delegating `generate_comb_mux(...)`,
+  - maintained strict behavior-preserving structure-first decomposition (no intended HDL semantic deltas).
 - Rationale:
   - reduce monolithic file size and cognitive load,
   - improve ownership clarity before deeper backend splits,

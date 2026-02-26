@@ -319,5 +319,25 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
     
     return $hdl;
 }
+sub generate_comb_mux ($self, $lhs, $clean_lhs) {
+    my $ctx = $self->{flattened_dt};
+    my $hdl = "  // Combinational mux for: $lhs\n";
+    
+    $hdl .= "  always_comb begin\n";
+    $hdl .= "    $lhs = " . $ctx->get_default_value($lhs) . ";  // Default value\n";
+    
+    # Use the enable/value pairs passed down from LHS-Level WEN generation
+    for my $pair (@{$ctx->{lhs_to_enable_value_pairs}{$lhs}}) {
+        my $enable_signal_name = $pair->{enable_signal};
+        my $rhs_value = $pair->{rhs_value};
+        $hdl .= "    if ($enable_signal_name) begin\n";
+        $hdl .= "      $lhs = $rhs_value;\n";
+        $hdl .= "    end\n";
+    }
+    
+    $hdl .= "  end\n";
+    
+    return $hdl;
+}
 
 1;
