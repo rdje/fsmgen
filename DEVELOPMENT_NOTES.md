@@ -29,6 +29,10 @@ This document captures engineering rationale, design constraints, and working de
 - Current extraction slice for this phase:
   - moved `generate_internal_signal_declarations` backend emission into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - kept `FlattenedDT` as compatibility facade delegating `generate_internal_signal_declarations(...)`.
+- Latest extraction slice for this phase:
+  - created `perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm`,
+  - moved Verilog generation ownership (`generate_verilog`, `convert_systemverilog_to_verilog`) into the dedicated Verilog backend module,
+  - kept `FlattenedDT` as compatibility facade delegating Verilog-generation entrypoints.
 - Rationale:
   - reduce monolithic file size and cognitive load,
   - improve ownership clarity before deeper backend splits,

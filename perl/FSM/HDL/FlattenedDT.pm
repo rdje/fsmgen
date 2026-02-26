@@ -17,6 +17,7 @@ use FSM::CoreAST;  # Core AST classes with SignalRef->name() method
 use FSM::Synthesis::EnableGraph;
 use FSM::HDL::FlattenedDT::Orchestrator;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog;
+use FSM::HDL::FlattenedDT::Backend::Verilog;
 use Data::Dumper;
 use Scalar::Util qw(blessed);
 use List::Util qw(min max);
@@ -87,6 +88,7 @@ sub new ($class, %args) {
     $self->{enable_graph} = FSM::Synthesis::EnableGraph->new(flattened_dt => $self);
     $self->{orchestrator} = FSM::HDL::FlattenedDT::Orchestrator->new(flattened_dt => $self);
     $self->{backend_sv} = FSM::HDL::FlattenedDT::Backend::SystemVerilog->new(flattened_dt => $self);
+    $self->{backend_verilog} = FSM::HDL::FlattenedDT::Backend::Verilog->new(flattened_dt => $self);
     
     return $self;
 }
@@ -97,19 +99,11 @@ sub generate_systemverilog ($self, $fsm_module) {
 }
 
 sub generate_verilog ($self, $fsm_module) {
-    fsm_debug("[FlattenedDT.pm][generate_verilog()] Starting flattened DT Verilog generation for " . $fsm_module->name, 3);
-    my $sv_hdl = $self->generate_systemverilog($fsm_module);
-    return $self->convert_systemverilog_to_verilog($sv_hdl);
+    return $self->{backend_verilog}->generate_verilog($fsm_module);
 }
 
 sub convert_systemverilog_to_verilog ($self, $sv_hdl) {
-    my $verilog_hdl = $sv_hdl;
-    
-    # SystemVerilog procedural blocks -> Verilog-2001 compatible forms.
-    $verilog_hdl =~ s/\balways_comb\b/always @*/g;
-    $verilog_hdl =~ s/\balways_ff\s*@\s*\(/always @(/g;
-    
-    return $verilog_hdl;
+    return $self->{backend_verilog}->convert_systemverilog_to_verilog($sv_hdl);
 }
 
 sub generate_vhdl ($self, $fsm_module) {

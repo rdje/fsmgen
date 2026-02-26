@@ -24,10 +24,15 @@ This is the persistent technical change history for FSMGen.
 - Updated `FlattenedDT` to delegate `generate_header(...)` through the backend compatibility facade.
 - Continued backend decomposition with internal-signal declaration ownership (`generate_internal_signal_declarations`) moved out of `FlattenedDT` into `FlattenedDT::Backend::SystemVerilog` without changing generated HDL behavior.
 - Updated `FlattenedDT` to delegate `generate_internal_signal_declarations(...)` through the backend compatibility facade.
+- Added dedicated Verilog backend module:
+  - `perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm`.
+- Moved Verilog generation ownership (`generate_verilog`, `convert_systemverilog_to_verilog`) out of `FlattenedDT` into `FlattenedDT::Backend::Verilog` without changing generated HDL behavior.
+- Updated `FlattenedDT` to instantiate `Backend::Verilog` and delegate Verilog-generation entrypoints through the compatibility facade.
 - Validation:
   - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
   - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
   - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm` (pass)
   - `prove -I perl t` (pass: 5 files, 117 tests)
 
 ## 2026-02-22
