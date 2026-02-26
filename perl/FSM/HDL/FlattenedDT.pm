@@ -721,19 +721,7 @@ sub resolve_rhs_value ($self, $rhs, $operator) {
 }
 
 sub generate_header ($self, $fsm_module) {
-    my $hdl = "";
-    $hdl .= "//=============================================================================\n";
-    $hdl .= "// Flattened Decision Tree FSM: " . $fsm_module->name . "\n";
-    $hdl .= "// Generated using Enable-based Methodology with WEN/EN Signals\n";
-    $hdl .= "// Date: " . localtime() . "\n";
-    $hdl .= "// \n";
-    $hdl .= "// This implementation uses:\n";
-    $hdl .= "// - Flattened decision tree approach\n";
-    $hdl .= "// - Enable-based logic with assign statements\n";
-    $hdl .= "// - Write Enable (WEN) and Enable (EN) signals for each LHS\n";
-    $hdl .= "// - Flat Boolean expressions from DT traversal\n";
-    $hdl .= "//=============================================================================\n\n";
-    return $hdl;
+    return $self->{backend_sv}->generate_header($fsm_module);
 }
 
 sub generate_module_declaration ($self, $fsm_module) {
