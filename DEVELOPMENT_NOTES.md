@@ -37,6 +37,10 @@ This document captures engineering rationale, design constraints, and working de
   - moved WEN/EN emission entrypoint ownership (`generate_wen_en_signals`) into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - kept `FlattenedDT` as compatibility facade delegating `generate_wen_en_signals(...)`,
   - maintained strict behavior-preserving structure-first decomposition (no intended HDL semantic deltas).
+- Latest extraction slice for this phase:
+  - moved intermediate-signal declaration emission ownership (`generate_intermediate_signal_declarations`) into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - kept `FlattenedDT` as compatibility facade delegating `generate_intermediate_signal_declarations(...)`,
+  - maintained strict behavior-preserving structure-first decomposition (no intended HDL semantic deltas).
 - Rationale:
   - reduce monolithic file size and cognitive load,
   - improve ownership clarity before deeper backend splits,

@@ -3754,40 +3754,7 @@ sub schedule_intermediate_signal_for_declaration ($self, $signal_name, $expressi
 }
 
 sub generate_intermediate_signal_declarations ($self) {
-    # Generate declarations for all intermediate signals that were referenced
-    my $hdl = "";
-    
-    # Check if we have any intermediate signals to declare
-    return $hdl unless $self->{referenced_intermediate_signals} && %{$self->{referenced_intermediate_signals}};
-    
-    $hdl .= "\n  // Intermediate signals referenced in enable expressions\n";
-    
-    for my $signal_name (sort keys %{$self->{referenced_intermediate_signals}}) {
-        my $signal_info = $self->{referenced_intermediate_signals}->{$signal_name};
-        
-        # Skip if already declared
-        next if $signal_info->{declared};
-        
-        # Get the expression for this intermediate signal
-        my $expression = $self->get_intermediate_signal_expression($signal_name);
-        if ($expression) {
-            # Generate wire declaration and assign statement
-            $hdl .= "  wire $signal_name;\n";
-            $hdl .= "  assign $signal_name = $expression;\n";
-            
-            # Mark as declared
-            $signal_info->{declared} = 1;
-            
-            fsm_debug("DECLARED_INTERMEDIATE: wire $signal_name = $expression", 3);
-        } else {
-            fsm_debug("WARNING: No expression found for intermediate signal: $signal_name", 3);
-        }
-    }
-    
-    # Add empty line after intermediate signals
-    $hdl .= "\n" if $hdl;
-    
-    return $hdl;
+    return $self->{backend_sv}->generate_intermediate_signal_declarations();
 }
 
 sub get_intermediate_signal_expression ($self, $signal_name) {
