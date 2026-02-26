@@ -26,6 +26,9 @@ This document captures engineering rationale, design constraints, and working de
 - Latest extraction slice for this phase:
   - moved `generate_header` backend emission into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - kept `FlattenedDT` as compatibility facade delegating `generate_header(...)`.
+- Current extraction slice for this phase:
+  - moved `generate_internal_signal_declarations` backend emission into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - kept `FlattenedDT` as compatibility facade delegating `generate_internal_signal_declarations(...)`.
 - Rationale:
   - reduce monolithic file size and cognitive load,
   - improve ownership clarity before deeper backend splits,

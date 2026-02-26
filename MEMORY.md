@@ -42,8 +42,11 @@ After each completed task, always do this in order:
 - Fourth backend decomposition slice is complete:
   - enable-conditions emission (`generate_enable_conditions`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
-- Fifth backend decomposition slice is in progress (worktree pending commit):
+- Fifth backend decomposition slice is complete:
   - header emission (`generate_header`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
+- Sixth backend decomposition slice is in progress (worktree pending commit):
+  - internal-signal declaration emission (`generate_internal_signal_declarations`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
 ## EnableGraph extraction status
 Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active and working.
@@ -99,7 +102,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - extract backend emitters into dedicated modules,
   - keep `FlattenedDT` as thin facade/compatibility shell.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Continue backend decomposition by extracting `generate_header` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
+- `WORKTREE (pending commit)` Continue backend decomposition by extracting `generate_internal_signal_declarations` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
+- `0313969` Continue backend decomposition by extracting `generate_header` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
 - `0d80108` Continue backend decomposition by extracting `generate_enable_conditions` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
 - `637678f` Continue backend decomposition by extracting `generate_state_register` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
 - `7dc5461` Continue backend decomposition by extracting `generate_state_encoding` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`

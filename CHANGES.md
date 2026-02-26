@@ -22,6 +22,8 @@ This is the persistent technical change history for FSMGen.
 - Updated `FlattenedDT` to delegate `generate_enable_conditions(...)` through the backend compatibility facade.
 - Continued backend decomposition with header emission ownership (`generate_header`) moved out of `FlattenedDT` into `FlattenedDT::Backend::SystemVerilog` without changing generated HDL behavior.
 - Updated `FlattenedDT` to delegate `generate_header(...)` through the backend compatibility facade.
+- Continued backend decomposition with internal-signal declaration ownership (`generate_internal_signal_declarations`) moved out of `FlattenedDT` into `FlattenedDT::Backend::SystemVerilog` without changing generated HDL behavior.
+- Updated `FlattenedDT` to delegate `generate_internal_signal_declarations(...)` through the backend compatibility facade.
 - Validation:
   - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
   - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)

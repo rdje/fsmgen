@@ -210,5 +210,68 @@ sub generate_enable_conditions ($self, $fsm_module) {
     $hdl .= "\n";
     return $hdl;
 }
+sub generate_internal_signal_declarations ($self, $fsm_module) {
+    my $ctx = $self->{flattened_dt};
+    my %declared_ports = %{$ctx->{declared_port_signals} || {}};
+    my %signal_decls;
+    my %aux_decls;
+    
+    my @regular_states = grep { $_->name !~ /^-/ } @{$fsm_module->states};
+    my $has_state_registers = scalar(@regular_states) > 0;
+    if ($has_state_registers) {
+        $declared_ports{current_state} = 1;
+        $declared_ports{next_state} = 1;
+    }
+    
+    for my $lhs (sort keys %{$ctx->{assignment_analysis} || {}}) {
+        my $lhs_analysis = $ctx->{assignment_analysis}{$lhs};
+        next unless $lhs_analysis;
+        
+        my $width = $ctx->get_lhs_width_from_analysis($lhs_analysis);
+        my $assignment_type = $ctx->get_signal_assignment_type($lhs, $lhs_analysis);
+        my $multiplexer_type = $lhs_analysis->{multiplexer}->{type} || 'comb';
+        
+        # Declare the main LHS only when it's not already a module port/state register.
+        unless ($declared_ports{$lhs}) {
+            $signal_decls{$lhs} = $width;
+        }
+        
+        # Declare mux helper registers only for flop-style multiplexers that consume them.
+        if ($multiplexer_type eq 'flop' && ($assignment_type eq 'register_out' || $assignment_type eq 'register_out_dual')) {
+            my $next_name = "${lhs}_next";
+            $aux_decls{$next_name} = $width unless $declared_ports{$next_name};
+        } elsif ($multiplexer_type eq 'flop' && ($assignment_type eq 'register_in' || $assignment_type eq 'register_in_dual')) {
+            my $q_name = "${lhs}_q";
+            $aux_decls{$q_name} = $width unless $declared_ports{$q_name};
+        } elsif ($assignment_type eq 'pulse_delayed') {
+            my $delay_cycles = $ctx->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
+            if ($delay_cycles > 0) {
+                my $pipe_name = "${lhs}_pulse_delay_pipe";
+                $aux_decls{$pipe_name} = $delay_cycles unless $declared_ports{$pipe_name};
+            }
+        }
+    }
+    
+    return "" unless (%signal_decls || %aux_decls);
+    
+    my $hdl = "  // Internal signal declarations\n";
+    for my $signal_name (sort keys %signal_decls) {
+        my $width = $signal_decls{$signal_name} || 1;
+        my $width_str = ($width > 1) ? "[" . ($width - 1) . ":0] " : "";
+        $hdl .= "  reg ${width_str}${signal_name};\n";
+    }
+    
+    if (%aux_decls) {
+        $hdl .= "  // Internal mux helper registers\n";
+        for my $signal_name (sort keys %aux_decls) {
+            my $width = $aux_decls{$signal_name} || 1;
+            my $width_str = ($width > 1) ? "[" . ($width - 1) . ":0] " : "";
+            $hdl .= "  reg ${width_str}${signal_name};\n";
+        }
+    }
+    $hdl .= "\n";
+    
+    return $hdl;
+}
 
 1;
