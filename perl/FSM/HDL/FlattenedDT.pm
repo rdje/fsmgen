@@ -3590,32 +3590,7 @@ sub update_original_asts_with_second_pass_substitutions ($self, $second_pass_fac
 }
 
 sub get_substituted_ast_for_signal ($self, $signal_name, $signal_info) {
-    # Get the substituted AST for an intermediate signal from the factorizer results
-    # This fixes the core issue where intermediate signal definitions use original ASTs
-    # instead of substituted ASTs that reference other intermediate signals
-    
-    fsm_debug("GET_SUBSTITUTED_AST: Looking for substituted AST for signal '$signal_name'", 3);
-    
-    # CRITICAL FIX: Get the substituted AST directly from the factorizer's intermediate signals
-    # After substitution, the factorizer stores the final substituted AST in its intermediate_signals structure
-    if ($self->{ast_factorizer} && $self->{ast_factorizer}->{intermediate_signals}) {
-        my $factorizer_signal_info = $self->{ast_factorizer}->{intermediate_signals}->{$signal_name};
-        
-        if ($factorizer_signal_info && $factorizer_signal_info->{ast}) {
-            my $substituted_ast = $factorizer_signal_info->{ast};
-            my $substituted_sv = eval { $self->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
-            
-            fsm_debug("  FOUND substituted AST from factorizer: '$substituted_sv'", 3);
-            return $substituted_ast;
-        } else {
-            fsm_debug("  Signal '$signal_name' not found in factorizer intermediate signals", 3);
-        }
-    } else {
-        fsm_debug("  WARNING: No AST factorizer results available", 3);
-    }
-    
-    # If no substituted version found, return nil to indicate original should be used
-    return undef;
+    return $self->{backend_sv}->get_substituted_ast_for_signal($signal_name, $signal_info);
 }
 
 sub ast_contains_intermediate_signal_references ($self, $ast) {

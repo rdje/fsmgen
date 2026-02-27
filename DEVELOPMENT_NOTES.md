@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-27: Backend extraction of substituted-intermediate AST resolver
+- Continued structure-first `FlattenedDT` decomposition by moving `get_substituted_ast_for_signal` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->get_substituted_ast_for_signal(...)`).
+- Rationale:
+  - this helper is consumed in backend consolidated-intermediate emission and belongs with adjacent backend-owned factorization/substitution helpers,
+  - extraction reduces `FlattenedDT` monolith size and improves backend-local helper ownership coherence.
+- Safety/compatibility:
+  - no intended semantic change to substituted-AST lookup behavior from factorizer intermediate-signal results,
+  - backend emission path now calls backend-local resolver (`$self->get_substituted_ast_for_signal(...)`) while using the same source data.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+## 2026-02-27: Terminology and roadmap clarification
+- Clarified project term: `fsmc` means FSM Compile / FSM Compiler.
+- Sequencing intent:
+  - first ensure `(?fsm:name ...)`, `(+fsm ...)`, and related FSM description forms are handled robustly,
+  - then proceed to composition DSL capability work.
+- Legacy `.plg` plugin surface is expected to be redesigned or retired in its current form.
+- Prior macro-like attempts (`cclausearch`, `declarch`, `beginarch`, `endarch`, etc.) are treated as historical prototypes rather than target architecture.
 ## 2026-02-27: Backend extraction of recursive intermediate-signal detector
 - Continued structure-first `FlattenedDT` decomposition by moving `ast_has_intermediate_signals_recursive` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->ast_has_intermediate_signals_recursive(...)`).
