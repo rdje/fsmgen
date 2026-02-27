@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-27: Backend extraction of AST substitution-backpropagation helper
+- Continued structure-first `FlattenedDT` decomposition by moving `update_original_asts_with_substituted_versions` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- `FlattenedDT` now retains only compatibility delegation for this entrypoint (`backend_sv->update_original_asts_with_substituted_versions(...)`).
+- Rationale:
+  - this helper is part of backend-side AST-factorization orchestration where substitution results are propagated back into analysis structures,
+  - extracting it co-locates substitution orchestration helpers with the backend factorization flow and reduces `FlattenedDT` monolith size.
+- Safety/compatibility:
+  - no intended semantic change in AST substitution synchronization behavior,
+  - migrated routine continues using the same `FlattenedDT` analysis data and AST conversion helpers through backend context delegation.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
 ## 2026-02-27: Backend extraction of unary-negation counting helper
 - Continued structure-first `FlattenedDT` decomposition by moving `count_unary_negations_in_original_expressions` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - `FlattenedDT` now retains only compatibility delegation for this entrypoint (`backend_sv->count_unary_negations_in_original_expressions()`).

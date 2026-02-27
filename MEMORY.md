@@ -75,6 +75,9 @@ After each completed task, always do this in order:
 - Fifteenth backend decomposition slice is complete:
   - unary-negation counting helper ownership (`count_unary_negations_in_original_expressions`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
+- Sixteenth backend decomposition slice is complete:
+  - AST substitution-backpropagation helper ownership (`update_original_asts_with_substituted_versions`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
 - Commit workflow documentation is now explicit and tracked:
   - added `COMMIT.md` as the canonical workflow reference for future AI handoff,
   - includes involved files, exact execution order, and run frequency (after each completed task/activity).
@@ -145,7 +148,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - extract backend emitters into dedicated modules,
   - keep `FlattenedDT` as thin facade/compatibility shell.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Continue backend decomposition by extracting `count_unary_negations_in_original_expressions` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
+- `WORKTREE (pending commit)` Continue backend decomposition by extracting `update_original_asts_with_substituted_versions` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
+- `586a2f8` Extract unary-negation counter helper into SV backend
 - `f2c4422` Extract AST factorizer input feeding into SV backend
 - `c9db9e2` Extract global AST factorization orchestration into SV backend
 - `07329fb` Extract consolidated intermediate signal emission into SV backend
