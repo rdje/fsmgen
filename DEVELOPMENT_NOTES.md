@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-27: Backend extraction of AST-factorizer input feeding
+- Continued structure-first `FlattenedDT` decomposition by moving `feed_asts_to_factorizer` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- `FlattenedDT` now retains only compatibility delegation for this entrypoint (`backend_sv->feed_asts_to_factorizer(...)`).
+- Rationale:
+  - this routine is part of the same backend-side AST-factorization pipeline as `run_global_ast_factorization`,
+  - extracting it keeps factorization orchestration and its input collection logic co-located in backend ownership.
+- Safety/compatibility:
+  - no intended semantic change in factorizer inputs (DT enables, LHS enables, assignment conditions, FSMGen intermediate ASTs),
+  - migrated routine continues operating on existing `FlattenedDT` state through context delegation.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
 ## 2026-02-27: Backend extraction of global AST-factorization orchestration
 - Continued structure-first `FlattenedDT` decomposition by moving `run_global_ast_factorization` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - `FlattenedDT` now retains only compatibility delegation for this entrypoint (`backend_sv->run_global_ast_factorization()`).

@@ -69,6 +69,9 @@ After each completed task, always do this in order:
 - Thirteenth backend decomposition slice is complete:
   - global AST-factorization orchestration ownership (`run_global_ast_factorization`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
+- Fourteenth backend decomposition slice is complete:
+  - AST-factorizer input feeding ownership (`feed_asts_to_factorizer`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
 - Commit workflow documentation is now explicit and tracked:
   - added `COMMIT.md` as the canonical workflow reference for future AI handoff,
   - includes involved files, exact execution order, and run frequency (after each completed task/activity).
@@ -139,7 +142,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - extract backend emitters into dedicated modules,
   - keep `FlattenedDT` as thin facade/compatibility shell.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Continue backend decomposition by extracting `run_global_ast_factorization` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
+- `WORKTREE (pending commit)` Continue backend decomposition by extracting `feed_asts_to_factorizer` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
+- `c9db9e2` Extract global AST factorization orchestration into SV backend
 - `07329fb` Extract consolidated intermediate signal emission into SV backend
 - `c2dfaaf` Add first-class multi-level tracing with structured metadata, trace.log routing, CLI controls, parser/pipeline hooks, and regression coverage
 - `886b5f1` Add canonical `COMMIT.md` with precise commit workflow definition for AI handoff continuity
