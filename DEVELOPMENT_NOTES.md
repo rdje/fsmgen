@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-27: Backend extraction of second-pass AST substitution update helper
+- Continued structure-first `FlattenedDT` decomposition by moving `update_original_asts_with_second_pass_substitutions` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->update_original_asts_with_second_pass_substitutions(...)`).
+- Rationale:
+  - this helper is part of the same backend-side factorization orchestration lane as the newly extracted second-pass feed helper and primary substitution update helper,
+  - extraction further reduces `FlattenedDT` monolith size while preserving call-surface compatibility for `FSM::HDL::Factorization::Fixpoint`.
+- Safety/compatibility:
+  - no intended semantic change in second-pass AST synchronization behavior back into assignment analysis and assignment-condition structures,
+  - helper still operates on the same `FlattenedDT` state and AST conversion helpers through backend context delegation.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
 ## 2026-02-27: Backend extraction of second-pass AST feeding helper
 - Continued structure-first `FlattenedDT` decomposition by moving `feed_current_asts_to_second_pass` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->feed_current_asts_to_second_pass(...)`).

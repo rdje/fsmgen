@@ -1225,6 +1225,106 @@ sub feed_current_asts_to_second_pass ($self, $second_pass_factorizer) {
     fsm_debug("SECOND_PASS_FEED: Fed $total_fed expressions to second-pass factorizer", 3);
     return $total_fed;
 }
+sub update_original_asts_with_second_pass_substitutions ($self, $second_pass_factorizer) {
+    my $ctx = $self->{flattened_dt};
+    # Update original AST expressions with second-pass substitutions
+    # This is similar to the first-pass update but for the second round of substitutions
+    
+    fsm_debug("UPDATE_SECOND_PASS: Updating original ASTs with second-pass substitutions", 3);
+    
+    my $ast_expressions = $second_pass_factorizer->{ast_expressions};
+    my $updated_count = 0;
+    
+    # Build context-to-AST mapping from second-pass results
+    my %second_pass_context_to_ast;
+    for my $expr_info (@$ast_expressions) {
+        my $context = $expr_info->{context};
+        my $substituted_ast = $expr_info->{ast};
+        $second_pass_context_to_ast{$context} = $substituted_ast;
+    }
+    
+    # Update assignment_analysis structure with second-pass substitutions
+    if ($ctx->{assignment_analysis}) {
+        for my $lhs (keys %{$ctx->{assignment_analysis}}) {
+            my $lhs_analysis = $ctx->{assignment_analysis}{$lhs};
+            
+            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
+                my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
+                
+                # Update DT-specific enables
+                for my $dt_enable_info (@{$rhs_group->{dt_specific_enables}}) {
+                    my $enable_name = $dt_enable_info->{enable_name};
+                    my $context_key = "second_pass_dt_enable:$enable_name";
+                    
+                    if (exists $second_pass_context_to_ast{$context_key}) {
+                        my $original_ast = $dt_enable_info->{enable_ast};
+                        my $substituted_ast = $second_pass_context_to_ast{$context_key};
+                        
+                        my $original_sv = eval { $ctx->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                        my $substituted_sv = eval { $ctx->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+                        
+                        $dt_enable_info->{enable_ast} = $substituted_ast;
+                        $updated_count++;
+                        
+                        fsm_debug("  *** SECOND-PASS UPDATED DT-specific enable AST: $enable_name ***", 3);
+                        fsm_debug("    Original:  $original_sv", 3);
+                        fsm_debug("    Updated:   $substituted_sv", 3);
+                    }
+                }
+                
+                # Update LHS-level enables
+                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}{ast}) {
+                    my $lhs_enable = $rhs_group->{lhs_level_enable};
+                    my $enable_name = $lhs_enable->{name};
+                    my $context_key = "second_pass_lhs_enable:$enable_name";
+                    
+                    if (exists $second_pass_context_to_ast{$context_key}) {
+                        my $original_ast = $lhs_enable->{ast};
+                        my $substituted_ast = $second_pass_context_to_ast{$context_key};
+                        
+                        my $original_sv = eval { $ctx->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                        my $substituted_sv = eval { $ctx->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+                        
+                        $lhs_enable->{ast} = $substituted_ast;
+                        $updated_count++;
+                        
+                        fsm_debug("  *** SECOND-PASS UPDATED LHS-level enable AST: $enable_name ***", 3);
+                        fsm_debug("    Original:  $original_sv", 3);
+                        fsm_debug("    Updated:   $substituted_sv", 3);
+                    }
+                }
+            }
+        }
+    }
+    
+    # Update lhs_assignments structure
+    for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
+        for my $assignment (@{$ctx->{lhs_assignments}{$lhs}}) {
+            if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
+                my $dt_name = $assignment->{dt};
+                my $context_key = "second_pass_assignment:$lhs:$dt_name";
+                
+                if (exists $second_pass_context_to_ast{$context_key}) {
+                    my $original_ast = $assignment->{conditions_ast};
+                    my $substituted_ast = $second_pass_context_to_ast{$context_key};
+                    
+                    my $original_sv = eval { $ctx->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                    my $substituted_sv = eval { $ctx->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+                    
+                    $assignment->{conditions_ast} = $substituted_ast;
+                    $updated_count++;
+                    
+                    fsm_debug("  *** SECOND-PASS UPDATED assignment condition AST: $lhs from $dt_name ***", 3);
+                    fsm_debug("    Original:  $original_sv", 3);
+                    fsm_debug("    Updated:   $substituted_sv", 3);
+                }
+            }
+        }
+    }
+    
+    fsm_debug("UPDATE_SECOND_PASS: Updated $updated_count AST expressions with second-pass substitutions", 3);
+    return $updated_count;
+}
 sub generate_wen_en_signals ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     my $hdl = "";
