@@ -11,6 +11,9 @@ This is the persistent technical change history for FSMGen.
 - Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving combinational-mux emission ownership (`generate_comb_mux`) out of `FlattenedDT`.
 - Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->generate_comb_mux(...)`.
 - Scope remains behavior-preserving structural decomposition only, with no intended HDL semantic change.
+- Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving flop-mux emission ownership (`generate_flop_mux`) out of `FlattenedDT`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->generate_flop_mux(...)`.
+- Scope remains behavior-preserving structural decomposition only, with no intended HDL semantic change.
 ## 2026-02-24
 ### FlattenedDT decomposition kickoff: explicit orchestrator track
 - Recorded and aligned roadmap direction to decompose remaining `FlattenedDT` responsibilities across two direct breakdown tracks:

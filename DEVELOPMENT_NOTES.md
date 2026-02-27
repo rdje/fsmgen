@@ -45,6 +45,10 @@ This document captures engineering rationale, design constraints, and working de
   - moved combinational-mux emission ownership (`generate_comb_mux`) into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - kept `FlattenedDT` as compatibility facade delegating `generate_comb_mux(...)`,
   - maintained strict behavior-preserving structure-first decomposition (no intended HDL semantic deltas).
+- Latest extraction slice for this phase:
+  - moved flop-mux emission ownership (`generate_flop_mux`) into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - kept `FlattenedDT` as compatibility facade delegating `generate_flop_mux(...)`,
+  - maintained strict behavior-preserving structure-first decomposition (no intended HDL semantic deltas).
 - Rationale:
   - reduce monolithic file size and cognitive load,
   - improve ownership clarity before deeper backend splits,

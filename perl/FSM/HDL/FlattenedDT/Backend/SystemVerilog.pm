@@ -339,5 +339,35 @@ sub generate_comb_mux ($self, $lhs, $clean_lhs) {
     
     return $hdl;
 }
+sub generate_flop_mux ($self, $lhs, $clean_lhs) {
+    my $ctx = $self->{flattened_dt};
+    my $hdl = "  // Flop with mux for: $lhs\n";
+    
+    # Generate the multiplexer logic
+    $hdl .= "  always_comb begin\n";
+    $hdl .= "    ${lhs}_next = " . $ctx->get_default_value($lhs) . ";  // Default value\n";
+    
+    # Use the enable/value pairs passed down from LHS-Level WEN generation
+    for my $pair (@{$ctx->{lhs_to_enable_value_pairs}{$lhs}}) {
+        my $enable_signal_name = $pair->{enable_signal};
+        my $rhs_value = $pair->{rhs_value};
+        $hdl .= "    if ($enable_signal_name) begin\n";
+        $hdl .= "      ${lhs}_next = $rhs_value;\n";
+        $hdl .= "    end\n";
+    }
+    
+    $hdl .= "  end\n";
+    
+    # Generate the flop
+    $hdl .= "  always_ff @(posedge clk or negedge rstn) begin\n";
+    $hdl .= "    if (!rstn) begin\n";
+    $hdl .= "      $lhs <= " . $ctx->get_reset_value($lhs) . ";\n";
+    $hdl .= "    end else begin\n";
+    $hdl .= "      $lhs <= ${lhs}_next;\n";
+    $hdl .= "    end\n";
+    $hdl .= "  end\n";
+    
+    return $hdl;
+}
 
 1;
