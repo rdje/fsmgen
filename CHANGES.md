@@ -1,5 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-02-27
+### Commit workflow documentation hardening
+- Added new tracked workflow document `COMMIT.md` as the canonical commit-process reference for AI handoff continuity.
+- Documented precise commit workflow scope and cadence:
+  - run after each completed task/activity,
+  - include required file update order and post-commit cleanup.
+- Documented exact role of involved files:
+  - `COMMIT.md`, `MEMORY.md`, `CHANGES.md`, `DEVELOPMENT_NOTES.md`, `git_message_brief.txt`, and task-touched source/test files.
+- Documented exact operational sequence:
+  - task completion, ordered doc updates, validation, commit message preparation, staging, commit, message-file truncation, and final status verification.
 ## 2026-02-26
 ### FlattenedDT backend decomposition continuation
 - Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving WEN/EN emission entrypoint ownership (`generate_wen_en_signals`) out of `FlattenedDT`.

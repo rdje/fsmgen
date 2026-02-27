@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-27: Canonical commit workflow document added
+- Added `COMMIT.md` as a tracked, canonical workflow contract for future AI handoffs.
+- The document defines:
+  - when to execute commit workflow (after each completed task/activity, and on explicit commit-workflow requests),
+  - exact file responsibilities (`COMMIT.md`, `MEMORY.md`, `CHANGES.md`, `DEVELOPMENT_NOTES.md`, `git_message_brief.txt`, changed source/test files),
+  - exact operation order (task completion -> ordered doc updates -> validation -> stage/commit -> truncate brief message file -> status verification).
+- Rationale:
+  - reduce ambiguity across AI session boundaries,
+  - enforce consistent commit hygiene and file-update ordering,
+  - preserve a single authoritative process reference in-repo.
 ## 2026-02-24: FlattenedDT decomposition model formalized (Orchestrator + Backend, with EnableGraph as helper)
 - The next architecture phase keeps `FSM::Synthesis::EnableGraph` as a synthesis helper module used by `FlattenedDT` (not a direct `FlattenedDT` submodule breakdown track).
 - `FlattenedDT` decomposition is explicitly tracked as two direct module tracks:
