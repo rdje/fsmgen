@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-02-27
+### FlattenedDT backend decomposition continuation (recursive intermediate-signal detector)
+- Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving recursive intermediate-signal detector ownership (`ast_has_intermediate_signals_recursive`) out of `FlattenedDT`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->ast_has_intermediate_signals_recursive(...)`.
+- Scope remains behavior-preserving structural decomposition only, with no intended HDL semantic change.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend decomposition continuation (second-pass intermediate-expression filter)
 - Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving second-pass intermediate-expression filter ownership (`ast_contains_intermediate_signals`) out of `FlattenedDT`.
 - Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->ast_contains_intermediate_signals(...)`.

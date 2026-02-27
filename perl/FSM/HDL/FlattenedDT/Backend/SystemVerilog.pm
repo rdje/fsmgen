@@ -1257,8 +1257,8 @@ sub ast_contains_intermediate_signals ($self, $ast) {
     
     if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
         # This is a compound expression with an operator - check if it contains intermediate signals
-        my $left_has_intermediate = $ast->can('left') && $ctx->ast_has_intermediate_signals_recursive($ast->left);
-        my $right_has_intermediate = $ast->can('right') && $ctx->ast_has_intermediate_signals_recursive($ast->right);
+        my $left_has_intermediate = $ast->can('left') && $self->ast_has_intermediate_signals_recursive($ast->left);
+        my $right_has_intermediate = $ast->can('right') && $self->ast_has_intermediate_signals_recursive($ast->right);
         
         if ($left_has_intermediate || $right_has_intermediate) {
             fsm_debug("  SECOND_PASS_FILTER: Compound binary expression contains intermediate signals - factorizable", 3);
@@ -1269,7 +1269,7 @@ sub ast_contains_intermediate_signals ($self, $ast) {
     }
     elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
         # This is a compound expression with a unary operator - check if it contains intermediate signals
-        my $operand_has_intermediate = $ast->can('operand') && $ctx->ast_has_intermediate_signals_recursive($ast->operand);
+        my $operand_has_intermediate = $ast->can('operand') && $self->ast_has_intermediate_signals_recursive($ast->operand);
         
         if ($operand_has_intermediate) {
             fsm_debug("  SECOND_PASS_FILTER: Compound unary expression contains intermediate signals - factorizable", 3);
@@ -1284,6 +1284,37 @@ sub ast_contains_intermediate_signals ($self, $ast) {
     }
     
     return $is_compound_with_intermediates;
+}
+sub ast_has_intermediate_signals_recursive ($self, $ast) {
+    my $ctx = $self->{flattened_dt};
+    # Helper function to recursively check if an AST contains intermediate signals
+    # This is used by ast_contains_intermediate_signals to identify compound expressions
+    
+    return 0 unless $ast && blessed($ast);
+    
+    # Check if this node itself is an intermediate signal reference
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+        my $signal_name = $ctx->extract_signal_name_from_ast($ast);
+        if ($signal_name && $ctx->is_intermediate_signal($signal_name)) {
+            return 1;
+        }
+    }
+    
+    # Check for substituted node types from factorization
+    if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
+        return 1;
+    }
+    
+    # Recursively check children
+    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
+        return 1 if $ast->can('left') && $self->ast_has_intermediate_signals_recursive($ast->left);
+        return 1 if $ast->can('right') && $self->ast_has_intermediate_signals_recursive($ast->right);
+    }
+    elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
+        return 1 if $ast->can('operand') && $self->ast_has_intermediate_signals_recursive($ast->operand);
+    }
+    
+    return 0;
 }
 sub update_original_asts_with_second_pass_substitutions ($self, $second_pass_factorizer) {
     my $ctx = $self->{flattened_dt};

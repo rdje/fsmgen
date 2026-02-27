@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-27: Backend extraction of recursive intermediate-signal detector
+- Continued structure-first `FlattenedDT` decomposition by moving `ast_has_intermediate_signals_recursive` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->ast_has_intermediate_signals_recursive(...)`).
+- Rationale:
+  - this helper is the direct recursive partner of `ast_contains_intermediate_signals` and belongs in the same backend-owned second-pass filtering cluster,
+  - extraction further reduces `FlattenedDT` monolith size and improves locality of second-pass factorization helper ownership.
+- Safety/compatibility:
+  - no intended semantic change in recursive intermediate-signal detection behavior,
+  - backend implementation uses the same `FlattenedDT` state/helpers through context delegation while keeping recursion local to backend method ownership.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
 ## 2026-02-27: Backend extraction of second-pass intermediate-expression filter
 - Continued structure-first `FlattenedDT` decomposition by moving `ast_contains_intermediate_signals` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->ast_contains_intermediate_signals(...)`).

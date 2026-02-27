@@ -3582,34 +3582,7 @@ sub ast_contains_intermediate_signals ($self, $ast) {
 }
 
 sub ast_has_intermediate_signals_recursive ($self, $ast) {
-    # Helper function to recursively check if an AST contains intermediate signals
-    # This is used by ast_contains_intermediate_signals to identify compound expressions
-    
-    return 0 unless $ast && blessed($ast);
-    
-    # Check if this node itself is an intermediate signal reference
-    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
-        my $signal_name = $self->extract_signal_name_from_ast($ast);
-        if ($signal_name && $self->is_intermediate_signal($signal_name)) {
-            return 1;
-        }
-    }
-    
-    # Check for substituted node types from factorization
-    if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
-        return 1;
-    }
-    
-    # Recursively check children
-    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
-        return 1 if $ast->can('left') && $self->ast_has_intermediate_signals_recursive($ast->left);
-        return 1 if $ast->can('right') && $self->ast_has_intermediate_signals_recursive($ast->right);
-    }
-    elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
-        return 1 if $ast->can('operand') && $self->ast_has_intermediate_signals_recursive($ast->operand);
-    }
-    
-    return 0;
+    return $self->{backend_sv}->ast_has_intermediate_signals_recursive($ast);
 }
 
 sub update_original_asts_with_second_pass_substitutions ($self, $second_pass_factorizer) {
