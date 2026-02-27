@@ -56,6 +56,7 @@ sub new ($class, %args) {
         # Global expression factoring for cross-DT reuse
         global_expressions => {}, # canonical_expr => signal_name (for reuse)
         expression_usage => {},   # signal_name => usage_count (for optimization)
+        factorization_fixpoint_max_passes => $args{factorization_fixpoint_max_passes} // 16,
         # LHS/RHS tracking and validation
         expected_lhs_rhs => {},   # Track expected LHS/RHS pairs from FSM parsing
         actual_lhs_rhs => {},     # Track actual LHS/RHS pairs that made it to HDL generation
@@ -3569,66 +3570,7 @@ sub find_substituted_ast ($self, $original_ast, $ast_expressions) {
 }
 
 sub run_second_pass_factorization ($self, $factorizer) {
-    # SECOND-PASS FACTORIZATION: Handle expressions created after initial substitution
-    # This catches compound expressions like (idle_en && s_rst_n_and_apb_rq_and_apb_wrn_eq_const_1b0)
-    # that were created during the first pass but didn't get factorized themselves
-    
-    fsm_debug("\n*** SECOND-PASS FACTORIZATION: Analyzing post-substitution expressions ***", 3);
-    
-    # Create a new factorizer for the second pass
-    require FSM::HDL::ASTFactorization;
-    my $second_pass_factorizer = FSM::HDL::ASTFactorization->new(
-        min_usage_count => 2,
-        debug => debug_enabled(),
-        debug_level => 3
-    );
-    
-    # Collect all current AST expressions (which now contain intermediate signals)
-    my $second_pass_count = $self->feed_current_asts_to_second_pass($second_pass_factorizer);
-    fsm_debug("Fed $second_pass_count expressions to second-pass factorizer", 3);
-    
-    if ($second_pass_count == 0) {
-        fsm_debug("No expressions for second-pass - returning empty result", 3);
-        return { intermediate_signals => {} };
-    }
-    
-    # Perform second-pass analysis
-    my $second_pass_result = $second_pass_factorizer->analyze_and_factorize();
-    
-    fsm_debug("Second-pass analysis results:", 3);
-    fsm_debug("  Total expressions: $second_pass_result->{total_expressions}", 3);
-    fsm_debug("  Unique structures: $second_pass_result->{unique_structures}", 3);
-    fsm_debug("  Factorization candidates: $second_pass_result->{factorization_candidates}", 3);
-    
-    # Show the additional intermediate signals that were generated
-    my $second_pass_signals = $second_pass_result->{intermediate_signals};
-    if (%$second_pass_signals) {
-        fsm_debug("Second-pass generated intermediate signals:", 3);
-        for my $signal_name (sort keys %$second_pass_signals) {
-            my $signal_info = $second_pass_signals->{$signal_name};
-            my $sv = eval { $self->ast_to_systemverilog($signal_info->{ast}) } || "[NO SV REPRESENTATION]";
-            fsm_debug("  $signal_name = $sv (usage: $signal_info->{usage_count})", 3);
-        }
-    } else {
-        fsm_debug("No additional intermediate signals created in second pass", 3);
-    }
-    
-    # Substitute the second-pass intermediate signals back into expressions
-    if (%$second_pass_signals) {
-        fsm_debug("\n*** SECOND-PASS SUBSTITUTION ***", 3);
-        my $second_substitution_count = $second_pass_factorizer->substitute_expressions_with_intermediate_signals(
-            $second_pass_factorizer->{ast_expressions}
-        );
-        fsm_debug("Second-pass substitution affected $second_substitution_count expressions", 3);
-        
-        # Update the original ASTs again with the second-pass substitutions
-        my $second_update_count = $self->update_original_asts_with_second_pass_substitutions($second_pass_factorizer);
-        fsm_debug("Updated $second_update_count original ASTs with second-pass substitutions", 3);
-    }
-    
-    fsm_debug("*** SECOND-PASS FACTORIZATION COMPLETE ***\n", 3);
-    
-    return $second_pass_result;
+    return $self->{backend_sv}->run_second_pass_factorization($factorizer);
 }
 
 sub feed_current_asts_to_second_pass ($self, $second_pass_factorizer) {

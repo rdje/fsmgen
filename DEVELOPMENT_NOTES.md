@@ -1,5 +1,34 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-27: Shared factorization engine package (`FSM::HDL::Factorization::Fixpoint`)
+- Added backend-neutral package `perl/FSM/HDL/Factorization/Fixpoint.pm` with package name `FSM::HDL::Factorization::Fixpoint`.
+- Moved iterative post-substitution convergence logic out of `FlattenedDT::Backend::SystemVerilog` and into the shared package.
+- `Backend::SystemVerilog` now keeps compatibility ownership at API surface level (`run_second_pass_factorization`) but delegates execution to the shared package.
+- Rationale:
+  - convergence/fixpoint factorization is synthesis-stage logic and should not be tied to one HDL emitter,
+  - package naming now reflects algorithm purpose and is reusable by all present/future backends,
+  - this preserves ongoing decomposition strategy (`FlattenedDT` facade + backend delegation + shared synthesis utilities).
+- Convergence/termination policy preserved in shared module:
+  - no factorable post-substitution expressions,
+  - no new factorization candidates,
+  - repeated expression signature (oscillation/replay guard),
+  - no substitution progress in pass,
+  - max pass cap reached.
+- Verification:
+  - syntax checks for `Fixpoint.pm`, `Backend/SystemVerilog.pm`, and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+## 2026-02-27: Backend extraction of second-pass factorization orchestration
+- Continued structure-first `FlattenedDT` decomposition by moving `run_second_pass_factorization` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- `FlattenedDT` now retains only compatibility delegation for this entrypoint (`backend_sv->run_second_pass_factorization(...)`).
+- Rationale:
+  - this method is orchestration logic for second-pass AST factorization and belongs with adjacent backend factorization helpers already moved,
+  - co-locating this orchestration in backend ownership further reduces `FlattenedDT` monolith pressure.
+- Safety/compatibility:
+  - no intended semantic change in second-pass factorization behavior, substitution, or diagnostics,
+  - migrated routine continues to use existing `FlattenedDT` helper/state interfaces through backend context delegation.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
 ## 2026-02-27: Backend extraction of AST substitution-backpropagation helper
 - Continued structure-first `FlattenedDT` decomposition by moving `update_original_asts_with_substituted_versions` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - `FlattenedDT` now retains only compatibility delegation for this entrypoint (`backend_sv->update_original_asts_with_substituted_versions(...)`).

@@ -7,6 +7,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 use FSM::Debug;
+use FSM::HDL::Factorization::Fixpoint;
 use Data::Dumper;
 use Scalar::Util qw(blessed);
 use List::Util qw(min);
@@ -797,10 +798,11 @@ sub run_global_ast_factorization ($self) {
     fsm_debug("\n--- AFTER AST UPDATE: Counting unary negations in updated expressions ---", 3);
     $ctx->count_unary_negations_in_original_expressions();
     
-    # STEP 5: SECOND-PASS FACTORIZATION - Check for new compound expressions created by substitution
-    fsm_debug("\n*** STEP 5: SECOND-PASS FACTORIZATION FOR POST-SUBSTITUTION EXPRESSIONS ***", 3);
+    # STEP 5: FIXPOINT FACTORIZATION - Iterate on post-substitution expressions until convergence
+    fsm_debug("\n*** STEP 5: FIXPOINT FACTORIZATION FOR POST-SUBSTITUTION EXPRESSIONS ***", 3);
     my $second_pass_result = $ctx->run_second_pass_factorization($factorizer);
-    fsm_debug("*** SECOND-PASS FACTORIZATION COMPLETE: " . scalar(keys %{$second_pass_result->{intermediate_signals}}) . " additional signals created ***", 3);
+    fsm_debug("*** FIXPOINT FACTORIZATION COMPLETE: " . scalar(keys %{$second_pass_result->{intermediate_signals}}) . " additional signals created across "
+        . ($second_pass_result->{passes_run} // 0) . " pass(es); reason=$second_pass_result->{termination_reason} ***", 3);
     
     # Merge second-pass results into the main intermediate signals
     for my $signal_name (keys %{$second_pass_result->{intermediate_signals}}) {
@@ -817,6 +819,8 @@ sub run_global_ast_factorization ($self) {
     fsm_debug("  Intermediate signals generated: " . scalar(keys %$intermediate_signals), 3);
     fsm_debug("  Substitution count: $substitution_count", 3);
     fsm_debug("  Original AST update count: $update_count", 3);
+    fsm_debug("  Fixpoint passes run: " . ($second_pass_result->{passes_run} // 0), 3);
+    fsm_debug("  Fixpoint termination reason: " . ($second_pass_result->{termination_reason} // 'unknown'), 3);
     
     return $result->{intermediate_signals};
 }
@@ -1134,6 +1138,12 @@ sub update_original_asts_with_substituted_versions ($self, $factorizer) {
     }
     
     return $updated_count;
+}
+sub run_second_pass_factorization ($self, $factorizer) {
+    my $ctx = $self->{flattened_dt};
+    fsm_debug("[SystemVerilog.pm][run_second_pass_factorization()] Delegating iterative post-substitution factorization to FSM::HDL::Factorization::Fixpoint", 3);
+    my $factorization_fixpoint = FSM::HDL::Factorization::Fixpoint->new(flattened_dt => $ctx);
+    return $factorization_fixpoint->run_post_substitution_factorization(primary_factorizer => $factorizer);
 }
 sub generate_wen_en_signals ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};

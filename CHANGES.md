@@ -1,7 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-02-27
+### Shared post-substitution factorization package extraction
+- Added new backend-neutral package `perl/FSM/HDL/Factorization/Fixpoint.pm` with purpose-specific naming: `FSM::HDL::Factorization::Fixpoint`.
+- Moved iterative post-substitution factorization algorithm ownership from `Backend::SystemVerilog` into this shared package so all backends can consume the same convergence engine.
+- Updated `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
+  - imports `FSM::HDL::Factorization::Fixpoint`,
+  - `run_second_pass_factorization(...)` is now a compatibility delegate that calls the shared package.
+- Factorization convergence behavior remains deterministic and bounded by explicit termination guards (no candidates/progress, repeated signature, max-pass cap).
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/Factorization/Fixpoint.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend decomposition continuation
+- Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving second-pass factorization orchestration ownership (`run_second_pass_factorization`) out of `FlattenedDT`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->run_second_pass_factorization(...)`.
+- Scope remains behavior-preserving structural decomposition only, with no intended HDL semantic change.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 - Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving AST substitution-backpropagation helper ownership (`update_original_asts_with_substituted_versions`) out of `FlattenedDT`.
 - Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->update_original_asts_with_substituted_versions(...)`.
 - Scope remains behavior-preserving structural decomposition only, with no intended HDL semantic change.

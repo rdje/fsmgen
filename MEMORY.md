@@ -78,6 +78,15 @@ After each completed task, always do this in order:
 - Sixteenth backend decomposition slice is complete:
   - AST substitution-backpropagation helper ownership (`update_original_asts_with_substituted_versions`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
+- Seventeenth backend decomposition slice is complete:
+  - second-pass factorization orchestration ownership (`run_second_pass_factorization`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
+- Eighteenth backend decomposition slice is complete:
+  - created shared backend-neutral factorization package `perl/FSM/HDL/Factorization/Fixpoint.pm`,
+  - moved iterative post-substitution factorization loop ownership into `FSM::HDL::Factorization::Fixpoint`,
+  - `Backend::SystemVerilog` now delegates `run_second_pass_factorization` to the shared package via compatibility entrypoint.
+- Post-substitution factorization behavior now uses iterative convergence until stable with deterministic termination guards:
+  - stops on no factorizable expressions, no new candidates, repeated expression signature, no substitution progress, or max-pass cap.
 - Commit workflow documentation is now explicit and tracked:
   - added `COMMIT.md` as the canonical workflow reference for future AI handoff,
   - includes involved files, exact execution order, and run frequency (after each completed task/activity).
@@ -148,7 +157,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - extract backend emitters into dedicated modules,
   - keep `FlattenedDT` as thin facade/compatibility shell.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Continue backend decomposition by extracting `update_original_asts_with_substituted_versions` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
+- `WORKTREE (pending commit)` Extract shared iterative post-substitution factorization into `FSM::HDL::Factorization::Fixpoint` and delegate `Backend::SystemVerilog` compatibility entrypoint to it
+- `7c44abc` Extract AST substitution-backpropagation helper into SV backend
 - `586a2f8` Extract unary-negation counter helper into SV backend
 - `f2c4422` Extract AST factorizer input feeding into SV backend
 - `c9db9e2` Extract global AST factorization orchestration into SV backend
