@@ -85,6 +85,9 @@ After each completed task, always do this in order:
   - created shared backend-neutral factorization package `perl/FSM/HDL/Factorization/Fixpoint.pm`,
   - moved iterative post-substitution factorization loop ownership into `FSM::HDL::Factorization::Fixpoint`,
   - `Backend::SystemVerilog` now delegates `run_second_pass_factorization` to the shared package via compatibility entrypoint.
+- Nineteenth backend decomposition slice is complete:
+  - second-pass AST feeding ownership (`feed_current_asts_to_second_pass`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
 - Post-substitution factorization behavior now uses iterative convergence until stable with deterministic termination guards:
   - stops on no factorizable expressions, no new candidates, repeated expression signature, no substitution progress, or max-pass cap.
 - Commit workflow documentation is now explicit and tracked:
@@ -157,7 +160,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - extract backend emitters into dedicated modules,
   - keep `FlattenedDT` as thin facade/compatibility shell.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Extract shared iterative post-substitution factorization into `FSM::HDL::Factorization::Fixpoint` and delegate `Backend::SystemVerilog` compatibility entrypoint to it
+- `WORKTREE (pending commit)` Continue backend decomposition by extracting `feed_current_asts_to_second_pass` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
 - `7c44abc` Extract AST substitution-backpropagation helper into SV backend
 - `586a2f8` Extract unary-negation counter helper into SV backend
 - `f2c4422` Extract AST factorizer input feeding into SV backend

@@ -1145,6 +1145,86 @@ sub run_second_pass_factorization ($self, $factorizer) {
     my $factorization_fixpoint = FSM::HDL::Factorization::Fixpoint->new(flattened_dt => $ctx);
     return $factorization_fixpoint->run_post_substitution_factorization(primary_factorizer => $factorizer);
 }
+sub feed_current_asts_to_second_pass ($self, $second_pass_factorizer) {
+    my $ctx = $self->{flattened_dt};
+    # Feed the current state of all AST expressions to the second-pass factorizer
+    # These expressions now contain intermediate signal references from the first pass
+    
+    fsm_debug("SECOND_PASS_FEED: Collecting current AST expressions", 3);
+    
+    my $total_fed = 0;
+    
+    # Feed from assignment_analysis (which should now contain substituted ASTs)
+    if ($ctx->{assignment_analysis}) {
+        for my $lhs (keys %{$ctx->{assignment_analysis}}) {
+            my $lhs_analysis = $ctx->{assignment_analysis}{$lhs};
+            
+            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
+                my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
+                
+                # Feed DT-specific enable ASTs (now with intermediate signals)
+                for my $dt_enable (@{$rhs_group->{dt_specific_enables} || []}) {
+                    if ($dt_enable->{enable_ast} && blessed($dt_enable->{enable_ast})) {
+                        my $sv = eval { $ctx->ast_to_systemverilog($dt_enable->{enable_ast}) } || "[NO SV REPRESENTATION]";
+                        
+                        # Only feed if the expression contains intermediate signals (signs of substitution)
+                        if ($ctx->ast_contains_intermediate_signals($dt_enable->{enable_ast})) {
+                            $second_pass_factorizer->add_ast_expression(
+                                $dt_enable->{enable_ast},
+                                "second_pass_dt_enable:$dt_enable->{enable_name}"
+                            );
+                            $total_fed++;
+                            fsm_debug("  Fed second-pass DT enable: $dt_enable->{enable_name}", 3);
+                            fsm_debug("    Expression: $sv", 3);
+                        }
+                    }
+                }
+                
+                # Feed LHS-level enable ASTs (now with intermediate signals)
+                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}{ast}) {
+                    my $lhs_enable = $rhs_group->{lhs_level_enable};
+                    if (blessed($lhs_enable->{ast})) {
+                        my $sv = eval { $ctx->ast_to_systemverilog($lhs_enable->{ast}) } || "[NO SV REPRESENTATION]";
+                        
+                        # Only feed if the expression contains intermediate signals
+                        if ($ctx->ast_contains_intermediate_signals($lhs_enable->{ast})) {
+                            $second_pass_factorizer->add_ast_expression(
+                                $lhs_enable->{ast},
+                                "second_pass_lhs_enable:$lhs_enable->{name}"
+                            );
+                            $total_fed++;
+                            fsm_debug("  Fed second-pass LHS enable: $lhs_enable->{name}", 3);
+                            fsm_debug("    Expression: $sv", 3);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    # Feed from lhs_assignments (condition ASTs that may now have intermediate signals)
+    for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
+        for my $assignment (@{$ctx->{lhs_assignments}{$lhs}}) {
+            if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
+                my $sv = eval { $ctx->ast_to_systemverilog($assignment->{conditions_ast}) } || "[NO SV REPRESENTATION]";
+                
+                # Only feed if the expression contains intermediate signals
+                if ($ctx->ast_contains_intermediate_signals($assignment->{conditions_ast})) {
+                    $second_pass_factorizer->add_ast_expression(
+                        $assignment->{conditions_ast},
+                        "second_pass_assignment:$lhs:$assignment->{dt}"
+                    );
+                    $total_fed++;
+                    fsm_debug("  Fed second-pass assignment condition: $lhs from $assignment->{dt}", 3);
+                    fsm_debug("    Expression: $sv", 3);
+                }
+            }
+        }
+    }
+    
+    fsm_debug("SECOND_PASS_FEED: Fed $total_fed expressions to second-pass factorizer", 3);
+    return $total_fed;
+}
 sub generate_wen_en_signals ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     my $hdl = "";

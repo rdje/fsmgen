@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-27: Backend extraction of second-pass AST feeding helper
+- Continued structure-first `FlattenedDT` decomposition by moving `feed_current_asts_to_second_pass` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->feed_current_asts_to_second_pass(...)`).
+- Rationale:
+  - this helper is directly coupled to backend-side AST-factorization orchestration and now aligns with adjacent backend-owned factorization methods,
+  - extraction reduces `FlattenedDT` monolith size while preserving call-surface compatibility used by `FSM::HDL::Factorization::Fixpoint`.
+- Safety/compatibility:
+  - no intended semantic change in candidate-expression collection for iterative post-substitution factorization,
+  - helper behavior still uses the same `FlattenedDT` analysis state and AST filtering rules through backend context delegation.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
 ## 2026-02-27: Shared factorization engine package (`FSM::HDL::Factorization::Fixpoint`)
 - Added backend-neutral package `perl/FSM/HDL/Factorization/Fixpoint.pm` with package name `FSM::HDL::Factorization::Fixpoint`.
 - Moved iterative post-substitution convergence logic out of `FlattenedDT::Backend::SystemVerilog` and into the shared package.

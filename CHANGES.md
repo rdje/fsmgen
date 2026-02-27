@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-02-27
+### FlattenedDT backend decomposition continuation (second-pass AST feed helper)
+- Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving second-pass AST feeding ownership (`feed_current_asts_to_second_pass`) out of `FlattenedDT`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->feed_current_asts_to_second_pass(...)`.
+- Scope remains behavior-preserving structural decomposition only, with no intended HDL semantic change.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### Shared post-substitution factorization package extraction
 - Added new backend-neutral package `perl/FSM/HDL/Factorization/Fixpoint.pm` with purpose-specific naming: `FSM::HDL::Factorization::Fixpoint`.
 - Moved iterative post-substitution factorization algorithm ownership from `Backend::SystemVerilog` into this shared package so all backends can consume the same convergence engine.
