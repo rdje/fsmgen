@@ -2,6 +2,13 @@
 This is the persistent technical change history for FSMGen.
 ## 2026-02-27
 ### FlattenedDT backend decomposition continuation
+- Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving unary-negation counting helper ownership (`count_unary_negations_in_original_expressions`) out of `FlattenedDT`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->count_unary_negations_in_original_expressions()`.
+- Scope remains behavior-preserving structural decomposition only, with no intended HDL semantic change.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 - Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving AST-factorizer input feeding ownership (`feed_asts_to_factorizer`) out of `FlattenedDT`.
 - Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->feed_asts_to_factorizer(...)`.
 - Scope remains behavior-preserving structural decomposition only, with no intended HDL semantic change.

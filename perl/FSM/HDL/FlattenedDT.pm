@@ -3203,46 +3203,7 @@ sub feed_asts_to_factorizer ($self, $factorizer) {
 
 sub count_unary_negations_in_original_expressions {
     my ($self) = @_;
-    
-    my $neg_count = 0;
-    my %neg_patterns;
-    
-    # Check all assignment analysis expressions
-    if ($self->{assignment_analysis}) {
-        for my $lhs (keys %{$self->{assignment_analysis}}) {
-            my $lhs_analysis = $self->{assignment_analysis}{$lhs};
-            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
-                my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
-                
-                # Check DT-specific enables
-                for my $dt_enable (@{$rhs_group->{dt_specific_enables} || []}) {
-                    if ($dt_enable->{enable_ast} && blessed($dt_enable->{enable_ast})) {
-                        my $sv = eval { $dt_enable->{enable_ast}->to_systemverilog() } || "[NO SV]";
-                        if ($sv =~ /!\w+/) {
-                            $neg_count++;
-                            $neg_patterns{$sv}++;
-                            fsm_debug("    UNARY_NEG: $sv in DT enable $dt_enable->{enable_name}", 3);
-                        }
-                    }
-                }
-                
-                # Check LHS-level enables
-                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}{ast}) {
-                    my $sv = eval { $rhs_group->{lhs_level_enable}{ast}->to_systemverilog() } || "[NO SV]";
-                    if ($sv =~ /!\w+/) {
-                        $neg_count++;
-                        $neg_patterns{$sv}++;
-                        fsm_debug("    UNARY_NEG: $sv in LHS enable $rhs_group->{lhs_level_enable}{name}", 3);
-                    }
-                }
-            }
-        }
-    }
-    
-    fsm_debug("  Found $neg_count unary negations in expressions:", 3);
-    for my $pattern (sort keys %neg_patterns) {
-        fsm_debug("    '$pattern' appears $neg_patterns{$pattern} times", 3);
-    }
+    return $self->{backend_sv}->count_unary_negations_in_original_expressions();
 }
 
 sub should_filter_consolidated_signal ($self, $expression, $signal_name, $signal_info) {

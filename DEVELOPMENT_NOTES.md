@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-27: Backend extraction of unary-negation counting helper
+- Continued structure-first `FlattenedDT` decomposition by moving `count_unary_negations_in_original_expressions` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- `FlattenedDT` now retains only compatibility delegation for this entrypoint (`backend_sv->count_unary_negations_in_original_expressions()`).
+- Rationale:
+  - this helper is part of backend-side AST-factorization orchestration diagnostics and belongs with adjacent factorization backend methods,
+  - extracting it further reduces `FlattenedDT` monolith size while preserving existing call flow.
+- Safety/compatibility:
+  - no intended semantic change in unary-negation diagnostics or debug output,
+  - migrated routine continues operating on the same `FlattenedDT` analysis data through backend context access.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
 ## 2026-02-27: Backend extraction of AST-factorizer input feeding
 - Continued structure-first `FlattenedDT` decomposition by moving `feed_asts_to_factorizer` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - `FlattenedDT` now retains only compatibility delegation for this entrypoint (`backend_sv->feed_asts_to_factorizer(...)`).

@@ -959,6 +959,49 @@ sub feed_asts_to_factorizer ($self, $factorizer) {
     
     return $total_fed;
 }
+sub count_unary_negations_in_original_expressions ($self) {
+    my $ctx = $self->{flattened_dt};
+    
+    my $neg_count = 0;
+    my %neg_patterns;
+    
+    # Check all assignment analysis expressions
+    if ($ctx->{assignment_analysis}) {
+        for my $lhs (keys %{$ctx->{assignment_analysis}}) {
+            my $lhs_analysis = $ctx->{assignment_analysis}{$lhs};
+            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
+                my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
+                
+                # Check DT-specific enables
+                for my $dt_enable (@{$rhs_group->{dt_specific_enables} || []}) {
+                    if ($dt_enable->{enable_ast} && blessed($dt_enable->{enable_ast})) {
+                        my $sv = eval { $dt_enable->{enable_ast}->to_systemverilog() } || "[NO SV]";
+                        if ($sv =~ /!\w+/) {
+                            $neg_count++;
+                            $neg_patterns{$sv}++;
+                            fsm_debug("    UNARY_NEG: $sv in DT enable $dt_enable->{enable_name}", 3);
+                        }
+                    }
+                }
+                
+                # Check LHS-level enables
+                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}{ast}) {
+                    my $sv = eval { $rhs_group->{lhs_level_enable}{ast}->to_systemverilog() } || "[NO SV]";
+                    if ($sv =~ /!\w+/) {
+                        $neg_count++;
+                        $neg_patterns{$sv}++;
+                        fsm_debug("    UNARY_NEG: $sv in LHS enable $rhs_group->{lhs_level_enable}{name}", 3);
+                    }
+                }
+            }
+        }
+    }
+    
+    fsm_debug("  Found $neg_count unary negations in expressions:", 3);
+    for my $pattern (sort keys %neg_patterns) {
+        fsm_debug("    '$pattern' appears $neg_patterns{$pattern} times", 3);
+    }
+}
 sub generate_wen_en_signals ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     my $hdl = "";
