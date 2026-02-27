@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-27: Backend extraction of global AST-factorization orchestration
+- Continued structure-first `FlattenedDT` decomposition by moving `run_global_ast_factorization` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- `FlattenedDT` now retains only compatibility delegation for this entrypoint (`backend_sv->run_global_ast_factorization()`).
+- Rationale:
+  - this routine is tightly coupled to intermediate-signal emission flow and is part of backend-side SystemVerilog generation orchestration,
+  - extracting it further reduces `FlattenedDT` monolith size while preserving runtime call sites.
+- Safety/compatibility:
+  - behavior remains unchanged (factorizer setup, substitution flow, second-pass factorization, and trace output preserved),
+  - migrated routine continues using existing `FlattenedDT` helper methods through context delegation,
+  - added `List::Util::min` import in backend module to preserve existing debug/report loops.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
 ## 2026-02-27: Backend extraction of consolidated intermediate signal emission
 - Continued the structure-first `FlattenedDT` decomposition by moving `generate_consolidated_intermediate_signals` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - `FlattenedDT` now retains only compatibility delegation for this entrypoint (`backend_sv->generate_consolidated_intermediate_signals(...)`).
