@@ -63,6 +63,9 @@ After each completed task, always do this in order:
 - Eleventh backend decomposition slice is complete:
   - flop-mux emission ownership (`generate_flop_mux`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
   - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
+- Twelfth backend decomposition slice is complete:
+  - consolidated intermediate-signal emission ownership (`generate_consolidated_intermediate_signals`) has been moved into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - `FlattenedDT` now delegates this backend entrypoint through a compatibility facade.
 - Commit workflow documentation is now explicit and tracked:
   - added `COMMIT.md` as the canonical workflow reference for future AI handoff,
   - includes involved files, exact execution order, and run frequency (after each completed task/activity).
@@ -133,7 +136,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - extract backend emitters into dedicated modules,
   - keep `FlattenedDT` as thin facade/compatibility shell.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Add first-class multi-level tracing with structured metadata, trace.log routing, CLI controls, parser/pipeline hooks, and regression coverage
+- `WORKTREE (pending commit)` Continue backend decomposition by extracting `generate_consolidated_intermediate_signals` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
+- `c2dfaaf` Add first-class multi-level tracing with structured metadata, trace.log routing, CLI controls, parser/pipeline hooks, and regression coverage
 - `886b5f1` Add canonical `COMMIT.md` with precise commit workflow definition for AI handoff continuity
 - `3adf1f8` Continue backend decomposition by extracting `generate_flop_mux` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
 - `ebf90f2` Continue backend decomposition by extracting `generate_comb_mux` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`

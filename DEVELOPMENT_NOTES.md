@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-27: Backend extraction of consolidated intermediate signal emission
+- Continued the structure-first `FlattenedDT` decomposition by moving `generate_consolidated_intermediate_signals` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- `FlattenedDT` now retains only compatibility delegation for this entrypoint (`backend_sv->generate_consolidated_intermediate_signals(...)`).
+- Rationale:
+  - this method is pure SystemVerilog emission/control-flow in the generation pipeline and belongs with backend ownership,
+  - extracting it reduces monolithic pressure in `FlattenedDT` while preserving call-site compatibility.
+- Safety/compatibility:
+  - no intended semantic changes in intermediate-signal filtering/factorization behavior,
+  - existing helper calls remain anchored through `FlattenedDT` context methods,
+  - added `Scalar::Util::blessed` import in backend module to preserve runtime behavior of migrated signal-introspection logic.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
 ## 2026-02-27: First-class tracing architecture and policy
 - FSMGen tracing is now treated as a first-class runtime capability, not a best-effort debug print layer.
 - Decision:
