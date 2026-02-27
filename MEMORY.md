@@ -14,7 +14,7 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
-## Current technical status (updated 2026-02-26)
+## Current technical status (updated 2026-02-27)
 - Assignment families are implemented and stabilized: `c`, `r`, `m`, `rm`, `mr`, `pN`.
 - `pN` semantics are authoritative and must not regress:
   - `<N` means exact delay to cycle `Q+N` (not duration).
@@ -22,7 +22,7 @@ After each completed task, always do this in order:
   - `<N 1`: positive pulse (`0->1->0`), `<N 0`: negative pulse (`1->0->1`).
 - Regression baseline is currently green:
   - `prove -I perl t`
-  - `Files=5, Tests=117, PASS`.
+  - `Files=6, Tests=125, PASS`.
 - FlattenedDT decomposition direction is now explicitly two-track:
   - `Orchestrator` (pipeline sequencing ownership),
   - `Backend` (render/emitter ownership).
@@ -66,6 +66,19 @@ After each completed task, always do this in order:
 - Commit workflow documentation is now explicit and tracked:
   - added `COMMIT.md` as the canonical workflow reference for future AI handoff,
   - includes involved files, exact execution order, and run frequency (after each completed task/activity).
+- First-class tracing is now integrated into FSMGen runtime surfaces:
+  - canonical trace verbosity names are supported: `none`, `low`, `medium`, `high`, `debug` (mapped to levels `0..4`),
+  - numeric debug compatibility remains supported through `--debug[=N]` with bare `--debug` mapped to level `4`,
+  - CLI now supports trace controls: `--trace-verbosity`, `--trace-log[=FILE]`, `--trace-emojis`/`--notrace-emojis`,
+  - when trace-file routing is enabled, trace output is routed to `trace.log` (or configured file) instead of stdout,
+  - trace records include source metadata (`file`, `function`, `line`) and structured kinds (`topic`, `enter`, `exit`, `decision`) with indentation-aware formatting.
+- Trace instrumentation was integrated in key pipeline/parser facades:
+  - `perl/FSM/Pipeline/HDLGenerator.pm`,
+  - `perl/FSM/Adapter/FSMGenFull.pm`,
+  - `perl/FSM/Adapter/FSMGenFull/Parser.pm`.
+- User-facing and regression coverage for tracing were updated:
+  - docs updated in `README.md` and `docs/USER_GUIDE.md`,
+  - new trace regression `t/06-tracing-system.t` added and passing.
 ## EnableGraph extraction status
 Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active and working.
 ### Already moved into `perl/FSM/Synthesis/EnableGraph.pm`
@@ -120,7 +133,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - extract backend emitters into dedicated modules,
   - keep `FlattenedDT` as thin facade/compatibility shell.
 ## Recent milestone commits (most recent first)
-- `WORKTREE (pending commit)` Add canonical `COMMIT.md` with precise commit workflow definition for AI handoff continuity
+- `WORKTREE (pending commit)` Add first-class multi-level tracing with structured metadata, trace.log routing, CLI controls, parser/pipeline hooks, and regression coverage
+- `886b5f1` Add canonical `COMMIT.md` with precise commit workflow definition for AI handoff continuity
 - `3adf1f8` Continue backend decomposition by extracting `generate_flop_mux` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
 - `ebf90f2` Continue backend decomposition by extracting `generate_comb_mux` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`
 - `a89fa9c` Continue backend decomposition by extracting `generate_intermediate_signal_declarations` into `FlattenedDT::Backend::SystemVerilog` with compatibility delegation in `FlattenedDT`

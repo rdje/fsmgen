@@ -14,7 +14,6 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 # Load required modules
 use FSM::Debug;  # Global debug system
 use FSM::Pipeline::HDLGenerator;
-use FSM::OutputTee;  # Dual output (console + log file)
 
 # FSM file resolution function using FSMLIB environment variable
 sub resolve_fsm_file {
@@ -109,31 +108,51 @@ sub resolve_fsm_file {
 }
 
 # Command line options
-my $debug_level = 0;  # Changed from debug_mode to debug_level
+my $debug_level = 0;  # Numeric compatibility mode (0..4)
 my $help = 0;
 my $quiet = 0;
 my $output_file = "";
 my $target_language = "systemverilog";  # Default to SystemVerilog
+my $trace_verbosity = "";               # Named mode: none|low|medium|high|debug
+my $trace_log_path = "trace.log";       # Default trace output file path
+my $trace_log_enabled = 0;
+my $trace_emojis = 1;
 
-# Store original ARGV to check for bare --debug flag before GetOptions processes it
+# Store original ARGV to check for bare flags before GetOptions processes them
 my $has_bare_debug_flag = grep { /^--?d(ebug)?$/ } @ARGV;
+my $has_trace_log_flag = grep { /^--trace-log(?:=.*)?$/ } @ARGV;
 
 GetOptions(
-    'debug|d:i'   => \$debug_level,  # Optional integer value (0-3)
+    'debug|d:i'   => \$debug_level,  # Optional integer value (0-4)
     'quiet|q'     => \$quiet,
     'help|h'      => \$help,
     'output|o=s'  => \$output_file,
     'language|l=s' => \$target_language,
+    'trace-verbosity|verbosity=s' => \$trace_verbosity,
+    'trace-log:s' => \$trace_log_path,
+    'trace-emojis!' => \$trace_emojis,
 ) or die "Error in command line arguments\n";
 
-# Handle legacy --debug flag behavior: if no value specified, default to level 3
+# Handle legacy --debug flag behavior: if no value specified, default to level 4
 if (defined $debug_level && $debug_level == 0 && $has_bare_debug_flag) {
-    $debug_level = 3;  # Default to full debug when just --debug is used
+    $debug_level = 4;  # Default to full trace when just --debug is used
 }
 
-# Initialize global debug system based on command line flag
-# We'll set up logging after we have the output file path
-set_fsm_debug_level($debug_level);
+# Resolve effective trace verbosity from explicit named option or numeric compatibility option.
+my $effective_trace_verbosity = (defined($trace_verbosity) && $trace_verbosity ne '')
+    ? $trace_verbosity
+    : $debug_level;
+set_fsm_trace_verbosity($effective_trace_verbosity);
+set_fsm_trace_emojis($trace_emojis);
+
+# Enable trace log routing whenever tracing is enabled, or when --trace-log is explicitly requested.
+# Note: Getopt sets the optional-string target to '' when --trace-log is passed with no value.
+if ($has_trace_log_flag || get_fsm_debug_level() > 0) {
+    $trace_log_enabled = 1;
+    if (!defined($trace_log_path) || $trace_log_path eq '') {
+        $trace_log_path = 'trace.log';
+    }
+}
 
 # Validate target language
 $target_language = lc($target_language);  # Convert to lowercase
@@ -166,13 +185,16 @@ Arguments:
                   • /absolute/path.fsm - uses absolute path (no FSMLIB search)
 
 Options:
-  -d, --debug[=N] Enable debug mode with optional level (0-3, default: 3 when no level specified)
-                  0 = No debug messages
-                  1 = Basic debug messages
-                  2 = Detailed debug messages  
-                  3 = Very detailed debug messages (default when -d used alone)
-                  When debug is enabled, a log file (.log extension) is automatically
-                  created alongside the output file containing all debug output
+  -d, --debug[=N] Numeric trace compatibility level (0-4, default: 4 when no level specified)
+                  0 = none, 1 = low, 2 = medium, 3 = high, 4 = debug
+  --trace-verbosity <none|low|medium|high|debug>
+                  Preferred named verbosity selector
+  --trace-log[=FILE]
+                  Route all trace output to FILE (default: trace.log)
+                  When trace logging is active, trace lines are written to FILE
+                  instead of stdout
+  --trace-emojis / --notrace-emojis
+                  Enable/disable emoji markers in trace formatting
   -q, --quiet     Suppress informational messages
   -l, --language  Target HDL language: systemverilog|sv|verilog|v|vhdl (default: systemverilog)
   -o, --output    Specify output file (default: <fsm_name>.<ext> in script directory)
@@ -224,20 +246,24 @@ FSMLIB Examples:
   perl generate_fsm_hdl.pl /full/path/to/lte_dif_pmaster.fsm
 
 Debug Examples:
-  # No debug (default)
+  # No trace output (default)
   perl generate_fsm_hdl.pl my_fsm
   
-  # Basic debug (level 1)
+  # Low trace verbosity (numeric compatibility)
   perl generate_fsm_hdl.pl --debug=1 my_fsm
   
-  # Detailed debug (level 2)
+  # Medium trace verbosity
   perl generate_fsm_hdl.pl --debug=2 my_fsm
   
-  # Full debug (level 3) - two equivalent ways
+  # High / debug trace verbosity
   perl generate_fsm_hdl.pl --debug=3 my_fsm
+  perl generate_fsm_hdl.pl --debug=4 my_fsm
   perl generate_fsm_hdl.pl --debug my_fsm
   
-  # Short form debug
+  # Named verbosity with trace file routing
+  perl generate_fsm_hdl.pl --trace-verbosity=debug --trace-log=trace.log my_fsm
+  
+  # Short form numeric trace
   perl generate_fsm_hdl.pl -d2 my_fsm
 
 Other Examples:
@@ -289,33 +315,11 @@ if (!$output_file) {
 
 # Convert output file to absolute path
 $output_file = File::Spec->rel2abs($output_file);
-
-# Set up debug logging if debug is enabled
-my $log_file;
-my $original_stdout;
-if ($debug_level > 0) {
-    # Generate log file name based on output file
-    my ($name, $path, $suffix) = fileparse($output_file, qr/\.[^.]*/);
-    $log_file = File::Spec->catfile($path, "${name}.log");
-    
-    # Open log file for writing
-    open my $log_fh, '>', $log_file or die "Cannot create log file $log_file: $!\n";
-    
-    # Duplicate STDOUT so we can restore it later
-    open $original_stdout, '>&', \*STDOUT or die "Cannot duplicate STDOUT: $!\n";
-    
-    # Create a custom output handler that writes to both console and log file
-    my $tee_output = sub {
-        my $text = shift;
-        print $original_stdout $text;  # Write to original console
-        print $log_fh $text;          # Write to log file
-        $log_fh->flush();              # Ensure log is written immediately
-    };
-    
-    # Redirect STDOUT to our tee function
-    tie *STDOUT, 'FSM::OutputTee', $tee_output;
-    
-    print "Debug logging enabled - output will be saved to: $log_file\n\n";
+# Set up trace routing
+if ($trace_log_enabled) {
+    $trace_log_path = File::Spec->rel2abs($trace_log_path);
+    set_fsm_trace_output_file($trace_log_path);
+    print "Trace logging enabled - trace output will be saved to: $trace_log_path\n\n";
 }
 
 print "=== FSM HDL Generator ===\n\n";
@@ -323,7 +327,7 @@ print "Processing FSM file: $fsm_file\n" unless $quiet;
 
 # Create and run the HDL generation pipeline
 my $pipeline = FSM::Pipeline::HDLGenerator->new(
-    debug_level => $debug_level,
+    debug_level => get_fsm_debug_level(),
     target_language => $target_language,
     quiet => $quiet
 );
@@ -393,15 +397,10 @@ unless ($quiet) {
     print "\n=== Code Generation Complete ===\n";
 }
 
-# Cleanup: Restore STDOUT and close log file if debug logging was enabled
-if ($debug_level > 0 && defined $original_stdout) {
-    # Restore original STDOUT
-    untie *STDOUT;
-    open STDOUT, '>&', $original_stdout or warn "Cannot restore STDOUT: $!";
-    close $original_stdout;
-    
-    # Inform user about log file (using restored STDOUT)
+# Cleanup trace output file and report location
+if ($trace_log_enabled) {
+    clear_fsm_trace_output_file();
     unless ($quiet) {
-        print "\nDebug log saved to: $log_file\n";
+        print "\nTrace log saved to: $trace_log_path\n";
     }
 }

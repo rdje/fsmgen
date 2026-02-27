@@ -28,39 +28,53 @@ sub get_fsm_module($self) {
 }
 
 sub parse_fsm($self, $raw_ast) {
+    fsm_trace_enter('Parser parse_fsm() entry', 2);
     fsm_debug("Starting full FSMGen parsing", 3);
     $self->reset_combinational_dependency_tracking();
     
     if (ref($raw_ast) eq 'ARRAY') {
         if (@$raw_ast > 0 && !ref($raw_ast->[0]) && $raw_ast->[0] =~ /^\?fsm:/) {
-            return $self->parse_fsm_module($raw_ast);
+            fsm_trace_decision(1, "Detected '?fsm:' structured AST header", 2);
+            my $module = $self->parse_fsm_module($raw_ast);
+            fsm_trace_exit('Parser parse_fsm() completed via ?fsm path', 2);
+            return $module;
         }
         
         if (@$raw_ast > 0 && ref($raw_ast->[0]) eq 'ARRAY' && $raw_ast->[0][0] eq '+fsm') {
-            return $self->parse_fsm_module(['root_array', $raw_ast], 1);
+            fsm_trace_decision(1, "Detected '+fsm' flattened AST header", 2);
+            my $module = $self->parse_fsm_module(['root_array', $raw_ast], 1);
+            fsm_trace_exit('Parser parse_fsm() completed via +fsm path', 2);
+            return $module;
         }
         
         for my $ast_node (@$raw_ast) {
             if (ref($ast_node) eq 'ARRAY' && @$ast_node > 0 && !ref($ast_node->[0]) && $ast_node->[0] =~ /^\?fsm:/) {
-                return $self->parse_fsm_module($ast_node);
+                fsm_trace_decision(1, "Detected nested '?fsm:' AST node", 2);
+                my $module = $self->parse_fsm_module($ast_node);
+                fsm_trace_exit('Parser parse_fsm() completed via nested ?fsm path', 2);
+                return $module;
             }
         }
     }
     
+    fsm_trace_decision(0, "AST root did not match expected FSM shape", 1);
     Carp::confess "Expected FSM structure containing '?fsm:name' or '+fsm'";
 }
 
 sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
+    fsm_trace_enter('Parser parse_fsm_module() entry', 2);
     $self->reset_combinational_dependency_tracking();
     my $module_name;
     my $fsm_contents;
     
     if ($is_flat_ast) {
+        fsm_trace_decision(1, 'Using flat AST module header decoding path', 2);
         my $ast_array = $fsm_ast->[1];
         my $fsm_header = $ast_array->[0];
         $module_name = $fsm_header->[1][0];
         $fsm_contents = $ast_array;
     } else {
+        fsm_trace_decision(1, 'Using standard AST module header decoding path', 2);
         my ($fsm_header, $contents) = @$fsm_ast;
         ($module_name) = $fsm_header =~ /\?fsm:(\w+)/;
         $fsm_contents = $contents;
@@ -131,7 +145,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
     }
 
     $self->validate_no_combinational_self_dependency();
-    
+    fsm_trace_exit("Parser parse_fsm_module() completed for '$module_name'", 2);
     return $module;
 }
 

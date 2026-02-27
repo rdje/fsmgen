@@ -1,5 +1,32 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-27: First-class tracing architecture and policy
+- FSMGen tracing is now treated as a first-class runtime capability, not a best-effort debug print layer.
+- Decision:
+  - canonical verbosity model uses named levels (`none`, `low`, `medium`, `high`, `debug`) mapped to numeric levels `0..4`,
+  - numeric `--debug` compatibility is preserved to avoid breaking existing workflows/scripts.
+- Tracing substrate design in `perl/FSM/Debug.pm`:
+  - centralized trace-level parsing/normalization,
+  - structured trace events (`topic`, `enter`, `exit`, `decision`),
+  - source metadata embedding (`file`, `function`, `line`) for each trace line,
+  - indentation-aware formatting and optional emoji markers for readability in long runs.
+- Routing policy:
+  - when trace-log routing is enabled, trace output is written to `trace.log` (or configured path) instead of stdout,
+  - trace sink lifecycle is explicitly managed (open/set, flush/close, clear) to avoid fd leaks and stale handles.
+- CLI policy in `bin/fsmgen`:
+  - explicit trace controls are provided (`--trace-verbosity`, `--trace-log[=FILE]`, `--trace-emojis`, `--notrace-emojis`),
+  - legacy tee-based debug output plumbing was removed to avoid split behavior and to make trace routing deterministic.
+- Instrumentation scope for this slice:
+  - added structured enter/exit/decision/topic tracing in key adapter/pipeline facades:
+    - `perl/FSM/Pipeline/HDLGenerator.pm`,
+    - `perl/FSM/Adapter/FSMGenFull.pm`,
+    - `perl/FSM/Adapter/FSMGenFull/Parser.pm`.
+- Verification outcome:
+  - syntax checks for touched files are clean,
+  - added `t/06-tracing-system.t` and full suite remains green (`Files=6`, `Tests=125`).
+- Boundaries:
+  - this slice instruments current Perl pipeline surfaces only;
+  - no Rust pipeline instrumentation was added because no active `rust/` tree exists in this repository.
 ## 2026-02-27: Canonical commit workflow document added
 - Added `COMMIT.md` as a tracked, canonical workflow contract for future AI handoffs.
 - The document defines:

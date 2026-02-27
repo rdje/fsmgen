@@ -43,6 +43,7 @@ that separates the processing logic from the command line interface.
 =cut
 
 sub new ($class, %args) {
+    fsm_trace_enter('Initialize HDLGenerator pipeline', 2);
     my $self = bless {
         debug_level => $args{debug_level} // 0,
         target_language => $args{target_language} // 'systemverilog',
@@ -56,10 +57,12 @@ sub new ($class, %args) {
     fsm_debug("  Debug level: $self->{debug_level}", 1);
     fsm_debug("  Target language: $self->{target_language}", 1);
     
+    fsm_trace_exit('HDLGenerator pipeline initialized', 2);
     return $self;
 }
 
 sub generate_hdl_from_file ($self, $fsm_file) {
+    fsm_trace_enter("Generate HDL from file '$fsm_file'", 1);
     fsm_debug("Starting HDL generation pipeline for: $fsm_file", 1);
     
     # Step 1: Parse the FSM file
@@ -79,21 +82,25 @@ sub generate_hdl_from_file ($self, $fsm_file) {
     
     fsm_debug("HDL generation pipeline completed successfully", 1);
     
-    return {
+    my $result = {
         fsm_module => $fsm_module,
         module_info => $module_info,
         hdl_code => $hdl_code,
         statistics => $statistics,
         raw_ast => $raw_ast
     };
+    fsm_trace_exit("HDL generation complete for '$fsm_file'", 1);
+    return $result;
 }
 
 sub parse_fsm_file ($self, $fsm_file) {
+    fsm_trace_enter('Parse FSM file with Lispish', 2);
     fsm_debug("Parsing FSM file with Lispish parser", 1);
     
     my $raw_ast = Lispish::multi($fsm_file);
     
     unless ($raw_ast) {
+        fsm_trace_decision(0, "Lispish parser returned undefined AST for '$fsm_file'", 1);
         Carp::confess "Error: Failed to parse FSM file with Lispish\n";
     }
     
@@ -110,10 +117,12 @@ sub parse_fsm_file ($self, $fsm_file) {
     }
     
     fsm_debug("FSM file parsed successfully", 1);
+    fsm_trace_exit('FSM file parsed', 2);
     return $raw_ast;
 }
 
 sub create_fsm_module ($self, $raw_ast) {
+    fsm_trace_enter('Build semantic FSM module from raw AST', 2);
     fsm_debug("Creating semantic FSM module from raw AST", 1);
     
     # Create FSMGen adapter to convert to semantic AST
@@ -126,10 +135,12 @@ sub create_fsm_module ($self, $raw_ast) {
     };
     
     if ($@) {
+        fsm_trace_decision(0, 'Adapter parse_fsm() raised exception', 1);
         Carp::confess "Error parsing FSM with adapter: $@\n";
     }
     
     unless ($fsm_module) {
+        fsm_trace_decision(0, 'Adapter parse_fsm() returned undefined module', 1);
         Carp::confess "Error: Failed to create FSM module\n";
     }
     
@@ -146,10 +157,12 @@ sub create_fsm_module ($self, $raw_ast) {
     }
     
     fsm_debug("FSM module created successfully", 1);
+    fsm_trace_exit('Semantic FSM module created', 2);
     return $fsm_module;
 }
 
 sub analyze_fsm_module ($self, $fsm_module) {
+    fsm_trace_enter('Analyze FSM module structure and signals', 2);
     fsm_debug("Analyzing FSM module structure", 1);
     
     my $module_name = $fsm_module->name;
@@ -169,7 +182,7 @@ sub analyze_fsm_module ($self, $fsm_module) {
     # Analyze signals in detail
     my %signal_analysis = $self->analyze_signals(\%all_signals);
     
-    return {
+    my $result = {
         module_name => $module_name,
         regular_states => \@regular_states,
         standalone_dts => \@standalone_dts,
@@ -178,9 +191,12 @@ sub analyze_fsm_module ($self, $fsm_module) {
         state_count => scalar(@regular_states),
         signal_count => scalar(keys %all_signals),
     };
+    fsm_trace_exit('FSM module analysis complete', 2);
+    return $result;
 }
 
 sub analyze_signals ($self, $signals) {
+    fsm_trace_enter('Analyze signal roles, width, and direction', 3);
     fsm_debug("Analyzing signal properties", 2);
     
     my %analysis = (
@@ -241,23 +257,34 @@ sub analyze_signals ($self, $signals) {
     fsm_debug("  Multi-bit signals: " . scalar(@{$analysis{multi_bit}}), 2);
     fsm_debug("  Single-bit signals: " . scalar(@{$analysis{single_bit}}), 2);
     
+    fsm_trace_exit('Signal analysis complete', 3);
     return %analysis;
 }
 
 sub determine_signal_direction ($self, $signal, $sig_name) {
+    fsm_trace_enter("Determine signal direction for '$sig_name'", 4);
     # Try to determine signal direction
     if ($signal->can('is_output') && $signal->is_output) {
+        fsm_trace_decision(1, "Signal '$sig_name' is_output accessor reports true", 4);
+        fsm_trace_exit("Direction resolved for '$sig_name' => output", 4);
         return "output";
     } elsif ($signal->can('attributes') && $signal->attributes && $signal->attributes->{is_output}) {
+        fsm_trace_decision(1, "Signal '$sig_name' attributes->{is_output} is true", 4);
+        fsm_trace_exit("Direction resolved for '$sig_name' => output", 4);
         return "output";
     } elsif ($sig_name =~ />$/ || ($sig_name =~ /^p/ && $sig_name !~ /^p(ready|rdata)$/)) {
+        fsm_trace_decision(1, "Signal '$sig_name' inferred output by naming policy", 4);
+        fsm_trace_exit("Direction resolved for '$sig_name' => output", 4);
         return "output";
     } else {
+        fsm_trace_decision(1, "Signal '$sig_name' defaulted to input direction", 4);
+        fsm_trace_exit("Direction resolved for '$sig_name' => input", 4);
         return "input";
     }
 }
 
 sub generate_hdl_code ($self, $fsm_module) {
+    fsm_trace_enter('Generate HDL code from semantic FSM module', 2);
     fsm_debug("Generating HDL code", 1);
     
     # Create HDL generator
@@ -275,6 +302,7 @@ sub generate_hdl_code ($self, $fsm_module) {
     };
     
     if ($@) {
+        fsm_trace_decision(0, "HDL backend method '$generator_method' raised exception", 1);
         Carp::confess "Error generating HDL: $@\n";
     }
     
@@ -283,10 +311,12 @@ sub generate_hdl_code ($self, $fsm_module) {
     # Store generator for statistics gathering
     $self->{hdl_generator} = $hdl_gen;
     
+    fsm_trace_exit("HDL generation complete via '$generator_method'", 2);
     return $hdl_code;
 }
 
 sub get_generator_method ($self) {
+    fsm_trace_enter('Resolve backend generator method for target language', 4);
     my %language_methods = (
         'vhdl' => 'generate_vhdl',
         'verilog' => 'generate_verilog',
@@ -295,10 +325,13 @@ sub get_generator_method ($self) {
         'sv' => 'generate_systemverilog',
     );
     
-    return $language_methods{$self->{target_language}} || 'generate_systemverilog';
+    my $method = $language_methods{$self->{target_language}} || 'generate_systemverilog';
+    fsm_trace_exit("Generator method resolved => $method", 4);
+    return $method;
 }
 
 sub gather_statistics ($self, $fsm_module) {
+    fsm_trace_enter('Gather pipeline generation statistics', 2);
     fsm_debug("Gathering generation statistics", 1);
     
     my $stats = {
@@ -342,6 +375,7 @@ sub gather_statistics ($self, $fsm_module) {
     fsm_debug("  Global expressions: $stats->{global_expressions}", 1);
     fsm_debug("  Reused expressions: " . scalar(@{$stats->{reused_expressions}}), 1);
     
+    fsm_trace_exit('Statistics gathering complete', 2);
     return $stats;
 }
 

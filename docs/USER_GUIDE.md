@@ -70,7 +70,10 @@ Examples:
 ## 4) Useful options
 - `-o, --output <file>` : output file path
 - `-l, --language <systemverilog|sv|verilog|v|vhdl>` : target language
-- `-d, --debug[=N]` : debug level (`1..3`; bare `--debug` implies `3`)
+- `-d, --debug[=N]` : numeric trace compatibility level (`0..4`; bare `--debug` implies `4`)
+- `--trace-verbosity <none|low|medium|high|debug>` : named trace verbosity selector
+- `--trace-log[=FILE]` : route trace output to FILE (default: `trace.log`)
+- `--trace-emojis` / `--notrace-emojis` : enable/disable emoji markers in trace formatting
 - `-q, --quiet` : suppress informational messages
 - `-h, --help` : full CLI help
 
@@ -89,10 +92,14 @@ export FSMLIB="/project/fsm:/shared/fsm"
 ## 6) Debug workflow
 Recommended debug run:
 ```bash
-./bin/fsmgen --debug=3 --output /tmp/example.sv fsm/trial_1.fsm
+./bin/fsmgen --trace-verbosity=debug --trace-log=trace.log --output /tmp/example.sv fsm/trial_1.fsm
 ```
 
-With debug enabled, a `.log` file is generated next to the output file.
+Tracing behavior:
+- Verbosity levels: `none`, `low`, `medium`, `high`, `debug`
+- Every trace line includes origin metadata (file, function, line number)
+- Trace output uses indentation-aware formatting and topic separation
+- When trace logging is enabled, trace lines are written to `trace.log` (or chosen file) instead of stdout
 
 ## 7) External compatibility flow (legacy environment)
 If working in the external flow that uses `generate_fsm_hdl.pl`, the equivalent command pattern is:

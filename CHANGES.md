@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-02-27
+### First-class multi-level tracing rollout
+- Implemented first-class tracing core in `perl/FSM/Debug.pm` with named verbosity levels (`none`, `low`, `medium`, `high`, `debug`) mapped to `0..4`.
+- Preserved numeric compatibility via existing debug-level flow (`--debug[=N]`), with bare `--debug` treated as max verbosity.
+- Added structured trace helpers and formatting primitives for topic/enter/exit/decision tracing with source metadata (`file`, `function`, `line`) and indentation-aware output.
+- Added configurable trace output routing:
+  - new trace filehandle controls in debug core,
+  - trace output now routes to `trace.log` (or selected file) instead of stdout when trace-log routing is enabled.
+- Integrated CLI trace controls in `bin/fsmgen`:
+  - `--trace-verbosity <none|low|medium|high|debug>`,
+  - `--trace-log[=FILE]` (default `trace.log`),
+  - `--trace-emojis` / `--notrace-emojis`.
+- Removed legacy tee-based debug-log handling from `bin/fsmgen` and aligned run-finalization cleanup with trace-file lifecycle handling.
+- Added structured trace hooks across key generation/parsing surfaces:
+  - `perl/FSM/Pipeline/HDLGenerator.pm`,
+  - `perl/FSM/Adapter/FSMGenFull.pm`,
+  - `perl/FSM/Adapter/FSMGenFull/Parser.pm`.
+- Updated user-facing docs:
+  - `README.md`,
+  - `docs/USER_GUIDE.md`.
+- Added tracing regression coverage:
+  - `t/06-tracing-system.t` validating trace-file capture and trace metadata format.
+- Validation:
+  - syntax checks for touched Perl modules/scripts: pass,
+  - full suite: `prove -I perl t` -> `Files=6, Tests=125, PASS`.
 ### Commit workflow documentation hardening
 - Added new tracked workflow document `COMMIT.md` as the canonical commit-process reference for AI handoff continuity.
 - Documented precise commit workflow scope and cadence:

@@ -5,7 +5,7 @@ FSMGen compiles Lisp-like `.fsm` state machine files into HDL, with SystemVerilo
 - Parses FSM descriptions into semantic ASTs.
 - Builds decision-tree driven assignments and transitions.
 - Generates HDL output (`.sv` by default, `.v` optional).
-- Supports detailed debug tracing for parser and generation internals.
+- Supports first-class multi-level tracing for parser and generation internals.
 
 ## Quick start
 ```bash
@@ -22,13 +22,17 @@ FSMGen compiles Lisp-like `.fsm` state machine files into HDL, with SystemVerilo
 Key options:
 - `-o, --output <file>`: explicit output path.
 - `-l, --language <systemverilog|sv|verilog|v|vhdl>`: target language.
-- `-d, --debug[=N]`: debug level (`1..3`; bare `--debug` implies `3`).
+- `-d, --debug[=N]`: numeric trace compatibility level (`0..4`; bare `--debug` implies `4`).
+- `--trace-verbosity <none|low|medium|high|debug>`: preferred named verbosity selector.
+- `--trace-log[=FILE]`: route trace output to a file (default: `trace.log`).
+- `--trace-emojis` / `--notrace-emojis`: enable/disable emoji markers in trace formatting.
 - `-q, --quiet`: suppress informational output.
 - `-h, --help`: help text.
 
 Notes:
 - Verilog generation is available through SystemVerilog-to-Verilog conversion.
 - VHDL backend currently reports explicit not-implemented status.
+- Trace lines include origin metadata (`file`, `function`, `line`) and indentation-aware formatting.
 
 ## Assignment semantics
 - `A <- expr`: synchronous/flopped assignment.

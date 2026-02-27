@@ -15,6 +15,7 @@ use FSM::Adapter::FSMGenFull::SignalAnalyzer;
 
 # Full FSMGen Adapter - Facade pattern implementation
 sub new($class, %args) {
+    fsm_trace_enter('Initialize FSMGenFull adapter facade', 2);
     my $debug = $args{debug} // 0;
     
     my $signal_manager = FSM::Adapter::FSMGenFull::SignalManager->new(debug => $debug);
@@ -35,23 +36,27 @@ sub new($class, %args) {
         signal_manager => $signal_manager
     );
     
-    return bless {
+    my $self = bless {
         debug => $debug,
         signal_manager => $signal_manager,
         expression_builder => $expression_builder,
         parser => $parser,
         signal_analyzer => $signal_analyzer,
     }, $class;
+    fsm_trace_exit('FSMGenFull adapter facade initialized', 2);
+    return $self;
 }
 
 # Main entry point - parse FSM from Lispish output
 sub parse_fsm($self, $raw_ast) {
+    fsm_trace_enter('FSMGenFull facade parse_fsm()', 2);
     fsm_debug("Starting full FSMGen parsing", 3);
     
     # Phase 1: Parse the AST and build the CoreAST structures
     my $fsm_module = $self->{parser}->parse_fsm($raw_ast);
     
     if (!$fsm_module) {
+        fsm_trace_decision(0, 'Parser returned undefined FSM module', 1);
         Carp::confess "Failed to parse FSM module from AST";
     }
     
@@ -59,11 +64,13 @@ sub parse_fsm($self, $raw_ast) {
     $self->{signal_analyzer}->analyze_signal_roles($fsm_module);
     $self->{signal_analyzer}->generate_fsm_interface($fsm_module);
     
+    fsm_trace_exit('FSMGenFull facade parse_fsm() completed', 2);
     return $fsm_module;
 }
 
 # Analysis and debugging methods
 sub debug_summary($self) {
+    fsm_trace_enter('FSMGenFull debug summary', 4);
     return unless debug_enabled();
     
     my $fsm_module = $self->{parser}->get_fsm_module();
@@ -87,6 +94,7 @@ sub debug_summary($self) {
             fsm_debug("  $name$width$output", 3);
         }
     }
+    fsm_trace_exit('FSMGenFull debug summary complete', 4);
 }
 
 1;
