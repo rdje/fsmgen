@@ -3578,63 +3578,7 @@ sub feed_current_asts_to_second_pass ($self, $second_pass_factorizer) {
 }
 
 sub ast_contains_intermediate_signals ($self, $ast) {
-    # Check if an AST contains references to intermediate signals as part of COMPOUND expressions
-    # CRITICAL RULE: Only compound expressions (with operators) should be considered for factorization!
-    # Bare signal references should NEVER be factorized, even if they are intermediate signals.
-    
-    return 0 unless $ast && blessed($ast);
-    
-    # RULE 1: Bare signal references are NEVER factorizable, even if intermediate
-    # This includes both regular signals and intermediate signals
-    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
-        # Bare signal reference - never factorize
-        my $signal_name = $self->extract_signal_name_from_ast($ast) || 'unknown';
-        my $ast_sv = eval { $self->ast_to_systemverilog($ast) } || 'unknown';
-        fsm_debug("  SECOND_PASS_FILTER: Bare signal reference '$signal_name' (AST: $ast_sv) - NOT factorizable", 3);
-        return 0;
-    }
-    
-    # RULE 2: IntermediateSignalRef nodes are also bare signal references - never factorize
-    if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
-        # Bare intermediate signal reference - never factorize
-        my $signal_name = $ast->{signal_name} || 'unknown';
-        my $ast_sv = eval { $self->ast_to_clean_systemverilog($ast) } || 'unknown';
-        fsm_debug("  SECOND_PASS_FILTER: Bare intermediate signal reference '$signal_name' (AST: $ast_sv) - NOT factorizable", 3);
-        return 0;
-    }
-    
-    # RULE 3: Only compound expressions (with operators) can contain intermediate signals worth factoring
-    my $is_compound_with_intermediates = 0;
-    
-    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
-        # This is a compound expression with an operator - check if it contains intermediate signals
-        my $left_has_intermediate = $ast->can('left') && $self->ast_has_intermediate_signals_recursive($ast->left);
-        my $right_has_intermediate = $ast->can('right') && $self->ast_has_intermediate_signals_recursive($ast->right);
-        
-        if ($left_has_intermediate || $right_has_intermediate) {
-            fsm_debug("  SECOND_PASS_FILTER: Compound binary expression contains intermediate signals - factorizable", 3);
-            $is_compound_with_intermediates = 1;
-        } else {
-            fsm_debug("  SECOND_PASS_FILTER: Compound binary expression has no intermediate signals - not factorizable", 3);
-        }
-    }
-    elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
-        # This is a compound expression with a unary operator - check if it contains intermediate signals
-        my $operand_has_intermediate = $ast->can('operand') && $self->ast_has_intermediate_signals_recursive($ast->operand);
-        
-        if ($operand_has_intermediate) {
-            fsm_debug("  SECOND_PASS_FILTER: Compound unary expression contains intermediate signals - factorizable", 3);
-            $is_compound_with_intermediates = 1;
-        } else {
-            fsm_debug("  SECOND_PASS_FILTER: Compound unary expression has no intermediate signals - not factorizable", 3);
-        }
-    }
-    else {
-        # Not a compound expression (no operators) - not factorizable
-        fsm_debug("  SECOND_PASS_FILTER: Not a compound expression - NOT factorizable", 3);
-    }
-    
-    return $is_compound_with_intermediates;
+    return $self->{backend_sv}->ast_contains_intermediate_signals($ast);
 }
 
 sub ast_has_intermediate_signals_recursive ($self, $ast) {

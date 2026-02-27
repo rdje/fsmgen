@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-27: Backend extraction of second-pass intermediate-expression filter
+- Continued structure-first `FlattenedDT` decomposition by moving `ast_contains_intermediate_signals` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->ast_contains_intermediate_signals(...)`).
+- Rationale:
+  - this helper is tightly coupled to second-pass factorization expression collection and belongs with adjacent backend-owned second-pass helpers,
+  - extraction further reduces `FlattenedDT` monolith size while preserving current shared factorization call paths.
+- Safety/compatibility:
+  - no intended semantic change to second-pass filter rules (bare-signal rejection, intermediate-signal detection, compound-expression gating),
+  - backend implementation uses the same `FlattenedDT` state/helpers through context delegation.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
 ## 2026-02-27: Backend extraction of second-pass AST substitution update helper
 - Continued structure-first `FlattenedDT` decomposition by moving `update_original_asts_with_second_pass_substitutions` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->update_original_asts_with_second_pass_substitutions(...)`).
