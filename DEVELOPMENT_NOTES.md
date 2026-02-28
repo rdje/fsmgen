@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-28: Backend extraction of simple-negation helper
+- Continued structure-first `FlattenedDT` decomposition by moving `is_simple_negation` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->is_simple_negation(...)`).
+- Rationale:
+  - simple-negation classification is consumed directly in backend-owned AST filtering flow and is better co-located with that logic,
+  - extraction continues reducing `FlattenedDT` monolith size while preserving facade compatibility.
+- Safety/compatibility:
+  - no intended semantic change in simple-negation detection behavior,
+  - backend AST filtering now invokes backend-local helper (`$self->is_simple_negation(...)`) while preserving all existing downstream filtering decisions.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
 ## 2026-02-28: Backend extraction of AST-based filtering helper
 - Continued structure-first `FlattenedDT` decomposition by moving `should_filter_ast_based` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->should_filter_ast_based(...)`).

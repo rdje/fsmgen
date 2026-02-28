@@ -3216,19 +3216,7 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
 }
 
 sub is_simple_negation ($self, $ast) {
-    # Check if this is a simple negation of a signal (like !signal_name)
-    return 0 unless $ast && blessed($ast);
-    return 0 unless $ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp');
-    return 0 unless $ast->can('operator') && $ast->can('operand');
-    
-    my $op = $ast->operator || '';
-    return 0 unless $op =~ /^(!|not)$/;
-    
-    my $operand = $ast->operand;
-    return 0 unless $operand && blessed($operand);
-    
-    # Check if operand is a simple signal reference
-    return ($operand->isa('FSM::AST::SignalRef') || $operand->isa('FSM::CoreAST::SignalRef'));
+    return $self->{backend_sv}->is_simple_negation($ast);
 }
 
 sub is_simple_comparison ($self, $ast) {

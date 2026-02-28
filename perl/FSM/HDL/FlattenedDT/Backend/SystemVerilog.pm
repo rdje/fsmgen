@@ -225,7 +225,7 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
     # AST_FILTER 4: Handle unary operations (like negation)
     if ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
         # Check if it's a simple negation of a signal
-        if ($ctx->is_simple_negation($ast)) {
+        if ($self->is_simple_negation($ast)) {
             # Only factor if used multiple times
             if ($usage_count >= 2) {
                 fsm_debug("  AST_FILTER: Simple negation used $usage_count times - KEEPING", 3);
@@ -286,6 +286,21 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
         fsm_debug("  AST_FILTER: Complex single-use expression - FILTERING", 3);
         return 1;
     }
+}
+sub is_simple_negation ($self, $ast) {
+    # Check if this is a simple negation of a signal (like !signal_name)
+    return 0 unless $ast && blessed($ast);
+    return 0 unless $ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp');
+    return 0 unless $ast->can('operator') && $ast->can('operand');
+    
+    my $op = $ast->operator || '';
+    return 0 unless $op =~ /^(!|not)$/;
+    
+    my $operand = $ast->operand;
+    return 0 unless $operand && blessed($operand);
+    
+    # Check if operand is a simple signal reference
+    return ($operand->isa('FSM::AST::SignalRef') || $operand->isa('FSM::CoreAST::SignalRef'));
 }
 sub generate_state_encoding ($self, $fsm_module) {
     my @regular_states = grep { $_->name !~ /^-/ } @{$fsm_module->states};
