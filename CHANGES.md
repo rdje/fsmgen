@@ -1,5 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-02-28
+### FlattenedDT backend decomposition continuation (consolidated-signal filtering entrypoint)
+- Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving consolidated-signal filtering ownership (`should_filter_consolidated_signal`) out of `FlattenedDT`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->should_filter_consolidated_signal(...)`.
+- Updated backend consolidated intermediate-signal generation callsite to use backend-local helper invocation (`$self->should_filter_consolidated_signal(...)`) while preserving behavior.
+- Scope remains behavior-preserving structural decomposition only, with no intended HDL semantic change.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ## 2026-02-27
 ### FlattenedDT backend decomposition continuation (intermediate-reference extraction helper)
 - Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving intermediate-reference extraction ownership (`extract_intermediate_signals_from_expression`) out of `FlattenedDT`.

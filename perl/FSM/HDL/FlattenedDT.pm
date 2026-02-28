@@ -3208,36 +3208,7 @@ sub count_unary_negations_in_original_expressions {
 }
 
 sub should_filter_consolidated_signal ($self, $expression, $signal_name, $signal_info) {
-    # AST-BASED FILTERING - Use semantic analysis instead of string patterns
-    # This replaces the old string-based regex filtering with proper AST analysis
-    
-    fsm_debug("\n*** AST_FILTER_CHECK: Analyzing signal '$signal_name' ***", 3);
-    fsm_debug("  Expression: '$expression'", 3);
-    fsm_debug("  Source: $signal_info->{source}", 3);
-    fsm_debug("  Usage count: " . ($signal_info->{usage_count} || 'unknown'));
-    
-    # Try to get the AST for this signal if available
-    my $ast = undef;
-    if ($signal_info->{ast}) {
-        $ast = $signal_info->{ast};
-        fsm_debug("  Using AST from signal_info: " . ref($ast));
-    } else {
-        # Try to parse the expression back to AST for analysis
-        $ast = eval { $self->{expr_namer}->parse_expression($expression) };
-        if ($ast) {
-            fsm_debug("  Parsed expression to AST: " . ref($ast));
-        } else {
-            fsm_debug("  Could not parse expression to AST - falling back to string analysis", 3);
-        }
-    }
-    
-    # AST-based filtering when AST is available
-    if ($ast && blessed($ast)) {
-        return $self->should_filter_ast_based($ast, $signal_name, $signal_info);
-    }
-    
-    # Fallback to string-based filtering (legacy compatibility)
-    return $self->should_filter_string_based($expression, $signal_name, $signal_info);
+    return $self->{backend_sv}->should_filter_consolidated_signal($expression, $signal_name, $signal_info);
 }
 
 sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-28: Backend extraction of consolidated-signal filtering entrypoint
+- Continued structure-first `FlattenedDT` decomposition by moving `should_filter_consolidated_signal` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->should_filter_consolidated_signal(...)`).
+- Rationale:
+  - this filtering entrypoint is consumed directly in backend consolidated intermediate-signal generation and is better owned in `Backend::SystemVerilog`,
+  - extraction reduces `FlattenedDT` monolith size while preserving compatibility at the facade surface.
+- Safety/compatibility:
+  - no intended semantic change in AST-first filtering behavior or fallback path,
+  - backend filtering callsite now invokes backend-local helper (`$self->should_filter_consolidated_signal(...)`) while still using unchanged `FlattenedDT` analysis helpers through context access.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
 ## 2026-02-27: Backend extraction of intermediate-reference helper
 - Continued structure-first `FlattenedDT` decomposition by moving `extract_intermediate_signals_from_expression` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->extract_intermediate_signals_from_expression(...)`).

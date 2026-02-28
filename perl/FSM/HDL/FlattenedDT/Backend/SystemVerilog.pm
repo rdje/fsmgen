@@ -152,6 +152,39 @@ sub generate_module_declaration ($self, $fsm_module) {
     
     return $hdl;
 }
+sub should_filter_consolidated_signal ($self, $expression, $signal_name, $signal_info) {
+    my $ctx = $self->{flattened_dt};
+    # AST-BASED FILTERING - Use semantic analysis instead of string patterns
+    # This replaces the old string-based regex filtering with proper AST analysis
+    
+    fsm_debug("\n*** AST_FILTER_CHECK: Analyzing signal '$signal_name' ***", 3);
+    fsm_debug("  Expression: '$expression'", 3);
+    fsm_debug("  Source: $signal_info->{source}", 3);
+    fsm_debug("  Usage count: " . ($signal_info->{usage_count} || 'unknown'));
+    
+    # Try to get the AST for this signal if available
+    my $ast = undef;
+    if ($signal_info->{ast}) {
+        $ast = $signal_info->{ast};
+        fsm_debug("  Using AST from signal_info: " . ref($ast));
+    } else {
+        # Try to parse the expression back to AST for analysis
+        $ast = eval { $ctx->{expr_namer}->parse_expression($expression) };
+        if ($ast) {
+            fsm_debug("  Parsed expression to AST: " . ref($ast));
+        } else {
+            fsm_debug("  Could not parse expression to AST - falling back to string analysis", 3);
+        }
+    }
+    
+    # AST-based filtering when AST is available
+    if ($ast && blessed($ast)) {
+        return $ctx->should_filter_ast_based($ast, $signal_name, $signal_info);
+    }
+    
+    # Fallback to string-based filtering (legacy compatibility)
+    return $ctx->should_filter_string_based($expression, $signal_name, $signal_info);
+}
 sub generate_state_encoding ($self, $fsm_module) {
     my @regular_states = grep { $_->name !~ /^-/ } @{$fsm_module->states};
     my $state_count = scalar(@regular_states);
@@ -526,7 +559,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         }
         
         # Apply filtering logic
-        my $should_filter = $ctx->should_filter_consolidated_signal($expression, $signal_name, $signal_info);
+        my $should_filter = $self->should_filter_consolidated_signal($expression, $signal_name, $signal_info);
         if ($should_filter) {
             $initially_filtered_signals{$signal_name} = $signal_info;
             fsm_debug("  INITIAL FILTER: '$signal_name' = $expression (would be filtered)", 3);
