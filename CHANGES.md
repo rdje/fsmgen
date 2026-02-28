@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-02-28
+### FlattenedDT backend decomposition continuation (AST-based filtering helper)
+- Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving AST-based filtering helper ownership (`should_filter_ast_based`) out of `FlattenedDT`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->should_filter_ast_based(...)`.
+- Updated backend consolidated-signal filtering flow to invoke backend-local AST filtering helper (`$self->should_filter_ast_based(...)`) while preserving behavior.
+- Scope remains behavior-preserving structural decomposition only, with no intended HDL semantic change.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend decomposition continuation (consolidated-signal filtering entrypoint)
 - Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving consolidated-signal filtering ownership (`should_filter_consolidated_signal`) out of `FlattenedDT`.
 - Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->should_filter_consolidated_signal(...)`.

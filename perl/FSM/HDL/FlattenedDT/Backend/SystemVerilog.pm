@@ -179,11 +179,113 @@ sub should_filter_consolidated_signal ($self, $expression, $signal_name, $signal
     
     # AST-based filtering when AST is available
     if ($ast && blessed($ast)) {
-        return $ctx->should_filter_ast_based($ast, $signal_name, $signal_info);
+        return $self->should_filter_ast_based($ast, $signal_name, $signal_info);
     }
     
     # Fallback to string-based filtering (legacy compatibility)
     return $ctx->should_filter_string_based($expression, $signal_name, $signal_info);
+}
+sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
+    my $ctx = $self->{flattened_dt};
+    # Pure AST-based filtering using semantic analysis
+    
+    fsm_debug("  AST_FILTER: Using AST-based filtering for " . ref($ast));
+    
+    my $usage_count = $signal_info->{usage_count} || 0;
+    my $actually_used = $ctx->is_signal_actually_used_in_final_expressions($signal_name);
+    
+    # REFERENCE-AWARE FILTERING: Check if signal is referenced in substituted expressions
+    # This is the fix for the bug where intermediate signals are referenced but not declared
+    my $referenced_in_substitutions = $ctx->is_signal_referenced_in_substitutions($signal_name);
+    if ($referenced_in_substitutions) {
+        fsm_debug("  AST_FILTER: Signal '$signal_name' is referenced in AST substitutions - KEEPING", 3);
+        return 0; # Keep signals that are already referenced in substituted expressions
+    }
+    
+    # AST_FILTER 1: TEMPORARILY DISABLED - Filter if not actually used
+    # The usage tracking is not working correctly after AST substitution
+    # So we're temporarily disabling this aggressive filtering
+    if (!$actually_used || $usage_count == 0) {
+        fsm_debug("  AST_FILTER: Signal appears unused (usage_count=$usage_count, actually_used=$actually_used) - but KEEPING due to usage tracking issues", 3);
+        # return 1;  # DISABLED - usage tracking is broken
+    }
+    
+    # AST_FILTER 2: Filter simple literals
+    if ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal')) {
+        fsm_debug("  AST_FILTER: Simple literal - FILTERING", 3);
+        return 1;
+    }
+    
+    # AST_FILTER 3: Filter bare signal references (signal = signal)
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+        fsm_debug("  AST_FILTER: Bare signal reference - FILTERING", 3);
+        return 1;
+    }
+    
+    # AST_FILTER 4: Handle unary operations (like negation)
+    if ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
+        # Check if it's a simple negation of a signal
+        if ($ctx->is_simple_negation($ast)) {
+            # Only factor if used multiple times
+            if ($usage_count >= 2) {
+                fsm_debug("  AST_FILTER: Simple negation used $usage_count times - KEEPING", 3);
+                return 0;
+            } else {
+                fsm_debug("  AST_FILTER: Simple negation used only once - FILTERING", 3);
+                return 1;
+            }
+        } else {
+            # Complex unary operation - always keep
+            fsm_debug("  AST_FILTER: Complex unary operation - KEEPING", 3);
+            return 0;
+        }
+    }
+    
+    # AST_FILTER 5: Handle binary operations
+    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
+        # Check if it's a simple comparison
+        if ($ctx->is_simple_comparison($ast)) {
+            fsm_debug("  AST_FILTER: Simple comparison - FILTERING", 3);
+            return 1;
+        }
+        
+        # Check if it's an arithmetic operation (always keep)
+        if ($ctx->is_arithmetic_operation($ast)) {
+            fsm_debug("  AST_FILTER: Arithmetic operation - KEEPING", 3);
+            return 0;
+        }
+        
+        # Check if it's a logical operation
+        if ($ctx->is_logical_operation($ast)) {
+            # Use the existing AST-based logical operation factorization logic
+            my $should_factor = $ctx->should_factor_logical_operation($ast);
+            if ($should_factor && $usage_count >= 2) {
+                fsm_debug("  AST_FILTER: Multi-use logical operation - KEEPING", 3);
+                return 0;
+            } else {
+                fsm_debug("  AST_FILTER: Low-use logical operation - FILTERING", 3);
+                return 1;
+            }
+        }
+        
+        # Other binary operations - keep if used multiple times
+        if ($usage_count >= 2) {
+            fsm_debug("  AST_FILTER: Multi-use binary operation - KEEPING", 3);
+            return 0;
+        } else {
+            fsm_debug("  AST_FILTER: Single-use binary operation - FILTERING", 3);
+            return 1;
+        }
+    }
+    
+    # Default: keep complex expressions that are used multiple times
+    if ($usage_count >= 2) {
+        fsm_debug("  AST_FILTER: Complex multi-use expression - KEEPING", 3);
+        return 0;
+    } else {
+        fsm_debug("  AST_FILTER: Complex single-use expression - FILTERING", 3);
+        return 1;
+    }
 }
 sub generate_state_encoding ($self, $fsm_module) {
     my @regular_states = grep { $_->name !~ /^-/ } @{$fsm_module->states};
