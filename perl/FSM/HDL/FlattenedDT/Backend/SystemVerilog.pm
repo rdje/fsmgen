@@ -244,7 +244,7 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
     # AST_FILTER 5: Handle binary operations
     if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
         # Check if it's a simple comparison
-        if ($ctx->is_simple_comparison($ast)) {
+        if ($self->is_simple_comparison($ast)) {
             fsm_debug("  AST_FILTER: Simple comparison - FILTERING", 3);
             return 1;
         }
@@ -301,6 +301,27 @@ sub is_simple_negation ($self, $ast) {
     
     # Check if operand is a simple signal reference
     return ($operand->isa('FSM::AST::SignalRef') || $operand->isa('FSM::CoreAST::SignalRef'));
+}
+sub is_simple_comparison ($self, $ast) {
+    # Check if this is a simple comparison like signal == constant
+    return 0 unless $ast && blessed($ast);
+    return 0 unless $ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp');
+    return 0 unless $ast->can('operator') && $ast->can('left') && $ast->can('right');
+    
+    my $op = $ast->operator || '';
+    return 0 unless $op =~ /^(==|!=|<|>|<=|>=)$/;
+    
+    my $left = $ast->left;
+    my $right = $ast->right;
+    return 0 unless $left && blessed($left) && $right && blessed($right);
+    
+    # Check if one side is a signal and the other is a literal
+    my $has_signal = ($left->isa('FSM::AST::SignalRef') || $left->isa('FSM::CoreAST::SignalRef')) ||
+                     ($right->isa('FSM::AST::SignalRef') || $right->isa('FSM::CoreAST::SignalRef'));
+    my $has_literal = ($left->isa('FSM::AST::Literal') || $left->isa('FSM::CoreAST::Literal')) ||
+                      ($right->isa('FSM::AST::Literal') || $right->isa('FSM::CoreAST::Literal'));
+    
+    return $has_signal && $has_literal;
 }
 sub generate_state_encoding ($self, $fsm_module) {
     my @regular_states = grep { $_->name !~ /^-/ } @{$fsm_module->states};

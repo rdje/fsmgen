@@ -3220,25 +3220,7 @@ sub is_simple_negation ($self, $ast) {
 }
 
 sub is_simple_comparison ($self, $ast) {
-    # Check if this is a simple comparison like signal == constant
-    return 0 unless $ast && blessed($ast);
-    return 0 unless $ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp');
-    return 0 unless $ast->can('operator') && $ast->can('left') && $ast->can('right');
-    
-    my $op = $ast->operator || '';
-    return 0 unless $op =~ /^(==|!=|<|>|<=|>=)$/;
-    
-    my $left = $ast->left;
-    my $right = $ast->right;
-    return 0 unless $left && blessed($left) && $right && blessed($right);
-    
-    # Check if one side is a signal and the other is a literal
-    my $has_signal = ($left->isa('FSM::AST::SignalRef') || $left->isa('FSM::CoreAST::SignalRef')) ||
-                     ($right->isa('FSM::AST::SignalRef') || $right->isa('FSM::CoreAST::SignalRef'));
-    my $has_literal = ($left->isa('FSM::AST::Literal') || $left->isa('FSM::CoreAST::Literal')) ||
-                      ($right->isa('FSM::AST::Literal') || $right->isa('FSM::CoreAST::Literal'));
-    
-    return $has_signal && $has_literal;
+    return $self->{backend_sv}->is_simple_comparison($ast);
 }
 
 sub should_filter_string_based ($self, $expression, $signal_name, $signal_info) {

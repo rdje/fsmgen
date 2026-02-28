@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-02-28
+### FlattenedDT backend decomposition continuation (simple-comparison helper)
+- Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving simple-comparison helper ownership (`is_simple_comparison`) out of `FlattenedDT`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->is_simple_comparison(...)`.
+- Updated backend AST-based filtering flow to invoke backend-local simple-comparison helper (`$self->is_simple_comparison(...)`) while preserving behavior.
+- Scope remains behavior-preserving structural decomposition only, with no intended HDL semantic change.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend decomposition continuation (simple-negation helper)
 - Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving simple-negation helper ownership (`is_simple_negation`) out of `FlattenedDT`.
 - Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->is_simple_negation(...)`.
