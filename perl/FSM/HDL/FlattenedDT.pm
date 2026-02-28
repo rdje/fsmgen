@@ -3224,29 +3224,7 @@ sub is_simple_comparison ($self, $ast) {
 }
 
 sub should_filter_string_based ($self, $expression, $signal_name, $signal_info) {
-    # NO STRING-BASED FILTERING ALLOWED!
-    # This method is now purely AST-based and will NOT use any string patterns or heuristics.
-    
-    fsm_debug("  NO_STRING_FILTER: Refusing to use string-based filtering - using AST-only approach", 3);
-    fsm_debug("  This signals a design issue - all filtering should be AST-based by now!", 3);
-    
-    # Check if signal is referenced in substitutions (AST-based check)
-    my $referenced_in_substitutions = $self->is_signal_referenced_in_substitutions($signal_name);
-    if ($referenced_in_substitutions) {
-        fsm_debug("  NO_STRING_FILTER: Signal '$signal_name' is referenced in AST substitutions - KEEPING", 3);
-        return 0;
-    }
-    
-    # Check if signal is actually used in final expressions (AST-based check)
-    my $actually_used = $self->is_signal_actually_used_in_final_expressions($signal_name);
-    if ($actually_used) {
-        fsm_debug("  NO_STRING_FILTER: Signal '$signal_name' is used in final AST expressions - KEEPING", 3);
-        return 0;
-    }
-    
-    # If no AST-based evidence of usage, filter it out
-    fsm_debug("  NO_STRING_FILTER: No AST-based evidence of usage for '$signal_name' - FILTERING", 3);
-    return 1;
+    return $self->{backend_sv}->should_filter_string_based($expression, $signal_name, $signal_info);
 }
 
 sub is_signal_actually_used_in_final_expressions ($self, $signal_name) {

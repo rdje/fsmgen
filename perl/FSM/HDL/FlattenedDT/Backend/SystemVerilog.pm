@@ -183,7 +183,7 @@ sub should_filter_consolidated_signal ($self, $expression, $signal_name, $signal
     }
     
     # Fallback to string-based filtering (legacy compatibility)
-    return $ctx->should_filter_string_based($expression, $signal_name, $signal_info);
+    return $self->should_filter_string_based($expression, $signal_name, $signal_info);
 }
 sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
     my $ctx = $self->{flattened_dt};
@@ -286,6 +286,32 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
         fsm_debug("  AST_FILTER: Complex single-use expression - FILTERING", 3);
         return 1;
     }
+}
+sub should_filter_string_based ($self, $expression, $signal_name, $signal_info) {
+    my $ctx = $self->{flattened_dt};
+    # NO STRING-BASED FILTERING ALLOWED!
+    # This method is now purely AST-based and will NOT use any string patterns or heuristics.
+    
+    fsm_debug("  NO_STRING_FILTER: Refusing to use string-based filtering - using AST-only approach", 3);
+    fsm_debug("  This signals a design issue - all filtering should be AST-based by now!", 3);
+    
+    # Check if signal is referenced in substitutions (AST-based check)
+    my $referenced_in_substitutions = $ctx->is_signal_referenced_in_substitutions($signal_name);
+    if ($referenced_in_substitutions) {
+        fsm_debug("  NO_STRING_FILTER: Signal '$signal_name' is referenced in AST substitutions - KEEPING", 3);
+        return 0;
+    }
+    
+    # Check if signal is actually used in final expressions (AST-based check)
+    my $actually_used = $ctx->is_signal_actually_used_in_final_expressions($signal_name);
+    if ($actually_used) {
+        fsm_debug("  NO_STRING_FILTER: Signal '$signal_name' is used in final AST expressions - KEEPING", 3);
+        return 0;
+    }
+    
+    # If no AST-based evidence of usage, filter it out
+    fsm_debug("  NO_STRING_FILTER: No AST-based evidence of usage for '$signal_name' - FILTERING", 3);
+    return 1;
 }
 sub is_simple_negation ($self, $ast) {
     # Check if this is a simple negation of a signal (like !signal_name)
