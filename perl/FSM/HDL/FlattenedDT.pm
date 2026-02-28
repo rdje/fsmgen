@@ -3228,54 +3228,7 @@ sub should_filter_string_based ($self, $expression, $signal_name, $signal_info) 
 }
 
 sub is_signal_actually_used_in_final_expressions ($self, $signal_name) {
-    # Check if a signal is actually referenced in the final WEN/EN expressions
-    # This is a more accurate usage check than just counting AST factorization usage
-    
-    fsm_debug("USAGE_CHECK: Checking if '$signal_name' is actually used in final expressions", 3);
-    
-    # Check if the signal appears in any of the final enable expressions
-    if ($self->{assignment_analysis}) {
-        for my $lhs (keys %{$self->{assignment_analysis}}) {
-            my $lhs_analysis = $self->{assignment_analysis}->{$lhs};
-            
-            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
-                my $rhs_group = $lhs_analysis->{rhs_groups}->{$rhs};
-                
-                # Check DT-specific enable expressions
-                for my $dt_enable_info (@{$rhs_group->{dt_specific_enables}}) {
-                    my $enable_ast = $dt_enable_info->{enable_ast};
-                    if ($enable_ast && blessed($enable_ast) && $self->ast_contains_signal($enable_ast, $signal_name)) {
-                        fsm_debug("    FOUND: Signal used in DT-specific enable $dt_enable_info->{enable_name}", 3);
-                        return 1;
-                    }
-                }
-                
-                # Check LHS-level enable expressions
-                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}->{ast}) {
-                    my $lhs_enable_ast = $rhs_group->{lhs_level_enable}->{ast};
-                    if ($lhs_enable_ast && blessed($lhs_enable_ast) && $self->ast_contains_signal($lhs_enable_ast, $signal_name)) {
-                        fsm_debug("    FOUND: Signal used in LHS-level enable $rhs_group->{lhs_level_enable}->{name}", 3);
-                        return 1;
-                    }
-                }
-            }
-        }
-    }
-    
-    # Also check if it appears in any assignment conditions
-    for my $lhs (keys %{$self->{lhs_assignments} || {}}) {
-        for my $assignment (@{$self->{lhs_assignments}->{$lhs}}) {
-            if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
-                if ($self->ast_contains_signal($assignment->{conditions_ast}, $signal_name)) {
-                    fsm_debug("    FOUND: Signal used in assignment condition for $lhs", 3);
-                    return 1;
-                }
-            }
-        }
-    }
-    
-    fsm_debug("    NOT FOUND: Signal '$signal_name' is not used in any final expressions", 3);
-    return 0;
+    return $self->{backend_sv}->is_signal_actually_used_in_final_expressions($signal_name);
 }
 
 sub ast_contains_signal ($self, $ast, $signal_name) {

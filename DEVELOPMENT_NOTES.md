@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-28: Backend extraction of final-expression usage-check helper
+- Continued structure-first `FlattenedDT` decomposition by moving `is_signal_actually_used_in_final_expressions` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->is_signal_actually_used_in_final_expressions(...)`).
+- Rationale:
+  - final-expression usage checking is consumed directly in backend-owned filtering paths and is better co-located with that logic,
+  - extraction continues reducing `FlattenedDT` monolith size while preserving facade compatibility.
+- Safety/compatibility:
+  - no intended semantic change in usage-check behavior,
+  - backend AST/string filtering now calls backend-local usage-check helper while keeping recursive signal-reference checks anchored through existing `FlattenedDT` helper context.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
 ## 2026-02-28: Backend extraction of string-fallback filtering helper
 - Continued structure-first `FlattenedDT` decomposition by moving `should_filter_string_based` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->should_filter_string_based(...)`).
