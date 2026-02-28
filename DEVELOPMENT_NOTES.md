@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-02-27: Backend extraction of intermediate-reference helper
+- Continued structure-first `FlattenedDT` decomposition by moving `extract_intermediate_signals_from_expression` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->extract_intermediate_signals_from_expression(...)`).
+- Rationale:
+  - this helper is consumed by backend-owned dependency analysis and substitution trace paths, so ownership is more coherent in `Backend::SystemVerilog`,
+  - extraction reduces `FlattenedDT` monolith size while preserving existing call-surface compatibility.
+- Safety/compatibility:
+  - no intended semantic change in how referenced intermediate signals are identified across AST-factorizer/global/FSMGenFull/pre-scan registries,
+  - backend callsites now invoke backend-local helper (`$self->extract_intermediate_signals_from_expression(...)`) while using unchanged analysis state.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+## 2026-02-27: Clarified legacy `?fsmc` semantics for composition work
+- `?fsmc` is treated as composition-layer interface extraction/wiring support for child FSM blocks in parent compositions.
+- `?fsmc` intent is interface visibility/port exposure to the parent layer; WEN/EN generation is not the purpose of `?fsmc` itself.
+- This clarification is now the working interpretation for ongoing composition-oriented roadmap work.
 ## 2026-02-27: Backend extraction of substituted-intermediate AST resolver
 - Continued structure-first `FlattenedDT` decomposition by moving `get_substituted_ast_for_signal` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->get_substituted_ast_for_signal(...)`).

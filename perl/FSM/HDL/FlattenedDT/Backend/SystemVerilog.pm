@@ -501,7 +501,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         }
         
         # Find all intermediate signals referenced in this expression
-        my @referenced_signals = $ctx->extract_intermediate_signals_from_expression($expression);
+        my @referenced_signals = $self->extract_intermediate_signals_from_expression($expression);
         if (@referenced_signals) {
             $signal_dependencies{$signal_name} = [@referenced_signals];
             fsm_debug("  DEPENDENCY: '$signal_name' depends on: " . join(", ", @referenced_signals), 3);
@@ -767,7 +767,7 @@ sub run_global_ast_factorization ($self) {
                 fsm_debug("  SUBSTITUTED_BY: FSM::HDL::ASTFactorization->substitute_expressions_with_intermediate_signals()", 3);
                 
                 # Try to identify which intermediate signals are referenced
-                my @referenced_intermediates = $ctx->extract_intermediate_signals_from_expression($sv);
+                my @referenced_intermediates = $self->extract_intermediate_signals_from_expression($sv);
                 if (@referenced_intermediates) {
                     fsm_debug("  REFERENCES_INTERMEDIATES: " . join(", ", @referenced_intermediates), 3);
                 }
@@ -1444,6 +1444,99 @@ sub get_substituted_ast_for_signal ($self, $signal_name, $signal_info) {
     
     # If no substituted version found, return nil to indicate original should be used
     return undef;
+}
+sub extract_intermediate_signals_from_expression ($self, $expression) {
+    my $ctx = $self->{flattened_dt};
+    # Extract all intermediate signal names referenced in a SystemVerilog expression
+    # This is used to track which intermediate signals are actually referenced
+
+    my @intermediate_signals;
+
+    fsm_debug("EXTRACT_INTERMEDIATES: Analyzing expression '$expression'", 3);
+
+    # Extract all signal-like identifiers from the expression
+    my @potential_signals = ($expression =~ /\b([a-zA-Z_][a-zA-Z0-9_]+)\b/g);
+
+    # Check each potential signal to see if it's an intermediate signal
+    my %seen;
+    for my $signal_name (@potential_signals) {
+        next if $seen{$signal_name}++;  # Skip duplicates
+
+        # Skip SystemVerilog keywords and built-in functions
+        next if $signal_name =~ /^(wire|reg|logic|always|assign|if|else|case|begin|end|posedge|negedge|clk|rst|reset)$/;
+
+        # CRITICAL FIX: Check ALL available intermediate signal registries
+        # This ensures we find intermediate signals from all sources:
+        # 1. AST factorization results
+        # 2. Global expressions registry
+        # 3. FSMGenFull parsing intermediate signals
+        # 4. Pre-scan referenced signals
+
+        my $is_intermediate = 0;
+
+        # Check method 1: AST factorizer intermediate signals
+        if ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{intermediate_signals}) {
+            if (exists $ctx->{ast_factorizer}->{intermediate_signals}->{$signal_name}) {
+                $is_intermediate = 1;
+                fsm_debug("  FOUND intermediate signal (AST factorizer): $signal_name", 3);
+            }
+        }
+
+        # Check method 2: Global expressions registry
+        if (!$is_intermediate) {
+            for my $expr (keys %{$ctx->{global_expressions} || {}}) {
+                if ($ctx->{global_expressions}->{$expr} eq $signal_name) {
+                    $is_intermediate = 1;
+                    fsm_debug("  FOUND intermediate signal (global expressions): $signal_name", 3);
+                    last;
+                }
+            }
+        }
+
+        # Check method 3: FSMGenFull parsing intermediate signals
+        if (!$is_intermediate && $ctx->{fsm_module} && $ctx->{fsm_module}->can('signals') && $ctx->{fsm_module}->signals) {
+            my $fsm_signals = $ctx->{fsm_module}->signals;
+            if (exists $fsm_signals->{$signal_name}) {
+                my $signal = $fsm_signals->{$signal_name};
+                if ($signal) {
+                    # Check for is_intermediate attribute
+                    my $has_intermediate_attr = 0;
+                    if (blessed($signal) && $signal->can('attributes') && $signal->attributes) {
+                        $has_intermediate_attr = $signal->attributes->{is_intermediate} || 0;
+                    } elsif (blessed($signal) && $signal->can('get_attribute')) {
+                        $has_intermediate_attr = $signal->get_attribute('is_intermediate') || 0;
+                    } elsif (ref($signal) eq 'HASH' && exists $signal->{is_intermediate}) {
+                        $has_intermediate_attr = $signal->{is_intermediate} || 0;
+                    }
+
+                    if ($has_intermediate_attr) {
+                        $is_intermediate = 1;
+                        fsm_debug("  FOUND intermediate signal (FSMGenFull): $signal_name", 3);
+                    }
+                }
+            }
+        }
+
+        # Check method 4: Pre-scan referenced signals
+        if (!$is_intermediate && $ctx->{referenced_intermediate_signals}) {
+            if (exists $ctx->{referenced_intermediate_signals}->{$signal_name}) {
+                $is_intermediate = 1;
+                fsm_debug("  FOUND intermediate signal (pre-scan): $signal_name", 3);
+            }
+        }
+
+        # Add to result if found to be intermediate
+        if ($is_intermediate) {
+            push @intermediate_signals, $signal_name;
+        } else {
+            fsm_debug("  NOT intermediate: $signal_name", 3);
+        }
+    }
+
+    my $count = scalar(@intermediate_signals);
+    fsm_debug("EXTRACT_INTERMEDIATES: Found $count intermediate signals in expression", 3);
+
+    return @intermediate_signals;
 }
 sub generate_wen_en_signals ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
