@@ -464,6 +464,10 @@ This is the persistent technical change history for FSMGen.
   - moved AST-to-SystemVerilog rendering helper (`ast_to_systemverilog`) into `EnableGraph`,
   - updated `EnableGraph` DT/LHS enable emission paths to call local AST rendering ownership,
   - `FlattenedDT` now delegates AST-to-SystemVerilog rendering helper entrypoints to `EnableGraph` via compatibility shim.
+- Newest extraction increment:
+  - moved AST signal-reference traversal helper (`ast_contains_signal`) into `Backend::SystemVerilog`,
+  - updated backend final-expression usage checks to call local AST signal-reference traversal ownership,
+  - `FlattenedDT` now delegates AST signal-reference traversal entrypoints to backend ownership via compatibility shim.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

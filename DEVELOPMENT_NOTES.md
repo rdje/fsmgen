@@ -762,3 +762,7 @@ It is an exact-delay pulse request:
   - AST-to-SystemVerilog rendering helper (`ast_to_systemverilog`) now runs through `EnableGraph`,
   - `EnableGraph` DT/LHS enable emission paths now call local AST rendering ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for AST-to-SystemVerilog rendering helper paths.
+- Newest behavior-preserving increment:
+  - AST signal-reference traversal helper (`ast_contains_signal`) now runs through `Backend::SystemVerilog`,
+  - backend final-expression usage-check paths now call local AST signal-reference traversal ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for AST signal-reference traversal helper paths.

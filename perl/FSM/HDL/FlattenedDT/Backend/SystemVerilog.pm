@@ -331,7 +331,7 @@ sub is_signal_actually_used_in_final_expressions ($self, $signal_name) {
                 # Check DT-specific enable expressions
                 for my $dt_enable_info (@{$rhs_group->{dt_specific_enables}}) {
                     my $enable_ast = $dt_enable_info->{enable_ast};
-                    if ($enable_ast && blessed($enable_ast) && $ctx->ast_contains_signal($enable_ast, $signal_name)) {
+                    if ($enable_ast && blessed($enable_ast) && $self->ast_contains_signal($enable_ast, $signal_name)) {
                         fsm_debug("    FOUND: Signal used in DT-specific enable $dt_enable_info->{enable_name}", 3);
                         return 1;
                     }
@@ -340,7 +340,7 @@ sub is_signal_actually_used_in_final_expressions ($self, $signal_name) {
                 # Check LHS-level enable expressions
                 if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}->{ast}) {
                     my $lhs_enable_ast = $rhs_group->{lhs_level_enable}->{ast};
-                    if ($lhs_enable_ast && blessed($lhs_enable_ast) && $ctx->ast_contains_signal($lhs_enable_ast, $signal_name)) {
+                    if ($lhs_enable_ast && blessed($lhs_enable_ast) && $self->ast_contains_signal($lhs_enable_ast, $signal_name)) {
                         fsm_debug("    FOUND: Signal used in LHS-level enable $rhs_group->{lhs_level_enable}->{name}", 3);
                         return 1;
                     }
@@ -353,7 +353,7 @@ sub is_signal_actually_used_in_final_expressions ($self, $signal_name) {
     for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
         for my $assignment (@{$ctx->{lhs_assignments}->{$lhs}}) {
             if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
-                if ($ctx->ast_contains_signal($assignment->{conditions_ast}, $signal_name)) {
+                if ($self->ast_contains_signal($assignment->{conditions_ast}, $signal_name)) {
                     fsm_debug("    FOUND: Signal used in assignment condition for $lhs", 3);
                     return 1;
                 }
@@ -362,6 +362,46 @@ sub is_signal_actually_used_in_final_expressions ($self, $signal_name) {
     }
     
     fsm_debug("    NOT FOUND: Signal '$signal_name' is not used in any final expressions", 3);
+    return 0;
+}
+sub ast_contains_signal ($self, $ast, $signal_name) {
+    my $ctx = $self->{flattened_dt};
+    # Recursively check if an AST contains a reference to a specific signal
+    return 0 unless $ast && blessed($ast);
+    
+    # If this is a signal reference, check if it matches
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+        my $ast_signal_name = $ctx->extract_signal_name_from_ast($ast);
+        return 1 if $ast_signal_name && $ast_signal_name eq $signal_name;
+    }
+    
+    # CRITICAL FIX: Also check for intermediate signal references from AST substitution
+    if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
+        my $ast_signal_name = $ast->{signal_name};
+        if ($ast_signal_name && $ast_signal_name eq $signal_name) {
+            fsm_debug("    FOUND INTERMEDIATE: Signal '$signal_name' found as IntermediateSignalRef", 3);
+            return 1;
+        }
+    }
+    
+    # Also check substituted binary and unary ops (which may contain intermediate signal refs)
+    if ($ast->isa('FSM::HDL::SubstitutedBinaryOp')) {
+        return 1 if $ast->{left} && $self->ast_contains_signal($ast->{left}, $signal_name);
+        return 1 if $ast->{right} && $self->ast_contains_signal($ast->{right}, $signal_name);
+    }
+    elsif ($ast->isa('FSM::HDL::SubstitutedUnaryOp')) {
+        return 1 if $ast->{operand} && $self->ast_contains_signal($ast->{operand}, $signal_name);
+    }
+    
+    # Recursively check operands in standard AST nodes
+    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
+        return 1 if $ast->can('left') && $self->ast_contains_signal($ast->left, $signal_name);
+        return 1 if $ast->can('right') && $self->ast_contains_signal($ast->right, $signal_name);
+    }
+    elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
+        return 1 if $ast->can('operand') && $self->ast_contains_signal($ast->operand, $signal_name);
+    }
+    
     return 0;
 }
 sub is_simple_negation ($self, $ast) {

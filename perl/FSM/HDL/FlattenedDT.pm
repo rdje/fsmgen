@@ -3232,43 +3232,7 @@ sub is_signal_actually_used_in_final_expressions ($self, $signal_name) {
 }
 
 sub ast_contains_signal ($self, $ast, $signal_name) {
-    # Recursively check if an AST contains a reference to a specific signal
-    return 0 unless $ast && blessed($ast);
-    
-    # If this is a signal reference, check if it matches
-    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
-        my $ast_signal_name = $self->extract_signal_name_from_ast($ast);
-        return 1 if $ast_signal_name && $ast_signal_name eq $signal_name;
-    }
-    
-    # CRITICAL FIX: Also check for intermediate signal references from AST substitution
-    if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
-        my $ast_signal_name = $ast->{signal_name};
-        if ($ast_signal_name && $ast_signal_name eq $signal_name) {
-            fsm_debug("    FOUND INTERMEDIATE: Signal '$signal_name' found as IntermediateSignalRef", 3);
-            return 1;
-        }
-    }
-    
-    # Also check substituted binary and unary ops (which may contain intermediate signal refs)
-    if ($ast->isa('FSM::HDL::SubstitutedBinaryOp')) {
-        return 1 if $ast->{left} && $self->ast_contains_signal($ast->{left}, $signal_name);
-        return 1 if $ast->{right} && $self->ast_contains_signal($ast->{right}, $signal_name);
-    }
-    elsif ($ast->isa('FSM::HDL::SubstitutedUnaryOp')) {
-        return 1 if $ast->{operand} && $self->ast_contains_signal($ast->{operand}, $signal_name);
-    }
-    
-    # Recursively check operands in standard AST nodes
-    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
-        return 1 if $ast->can('left') && $self->ast_contains_signal($ast->left, $signal_name);
-        return 1 if $ast->can('right') && $self->ast_contains_signal($ast->right, $signal_name);
-    }
-    elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
-        return 1 if $ast->can('operand') && $self->ast_contains_signal($ast->operand, $signal_name);
-    }
-    
-    return 0;
+    return $self->{backend_sv}->ast_contains_signal($ast, $signal_name);
 }
 
 sub signal_name_matches_operation ($self, $signal_name, $op_signature) {
