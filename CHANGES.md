@@ -468,6 +468,10 @@ This is the persistent technical change history for FSMGen.
   - moved AST signal-reference traversal helper (`ast_contains_signal`) into `Backend::SystemVerilog`,
   - updated backend final-expression usage checks to call local AST signal-reference traversal ownership,
   - `FlattenedDT` now delegates AST signal-reference traversal entrypoints to backend ownership via compatibility shim.
+- Latest extraction increment:
+  - moved substitution-reference usage helper (`is_signal_referenced_in_substitutions`) into `Backend::SystemVerilog`,
+  - updated backend AST/string filtering paths to call local substitution-reference usage ownership,
+  - `FlattenedDT` now delegates substitution-reference usage entrypoints to backend ownership via compatibility shim.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

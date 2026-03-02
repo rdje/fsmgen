@@ -766,3 +766,7 @@ It is an exact-delay pulse request:
   - AST signal-reference traversal helper (`ast_contains_signal`) now runs through `Backend::SystemVerilog`,
   - backend final-expression usage-check paths now call local AST signal-reference traversal ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for AST signal-reference traversal helper paths.
+- Latest behavior-preserving increment:
+  - substitution-reference usage helper (`is_signal_referenced_in_substitutions`) now runs through `Backend::SystemVerilog`,
+  - backend AST/string filtering paths now call local substitution-reference usage ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for substitution-reference usage helper paths.

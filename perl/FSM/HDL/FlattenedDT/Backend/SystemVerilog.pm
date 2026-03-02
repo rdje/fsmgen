@@ -196,7 +196,8 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
     
     # REFERENCE-AWARE FILTERING: Check if signal is referenced in substituted expressions
     # This is the fix for the bug where intermediate signals are referenced but not declared
-    my $referenced_in_substitutions = $ctx->is_signal_referenced_in_substitutions($signal_name);
+    my $referenced_in_substitutions = $self->is_signal_referenced_in_substitutions($signal_name);
+
     if ($referenced_in_substitutions) {
         fsm_debug("  AST_FILTER: Signal '$signal_name' is referenced in AST substitutions - KEEPING", 3);
         return 0; # Keep signals that are already referenced in substituted expressions
@@ -312,6 +313,77 @@ sub should_filter_string_based ($self, $expression, $signal_name, $signal_info) 
     # If no AST-based evidence of usage, filter it out
     fsm_debug("  NO_STRING_FILTER: No AST-based evidence of usage for '$signal_name' - FILTERING", 3);
     return 1;
+}
+sub is_signal_referenced_in_substitutions ($self, $signal_name) {
+    my $ctx = $self->{flattened_dt};
+    # REFERENCE-AWARE FILTERING: Check if a signal is actually referenced in substituted expressions
+    # This is the critical fix for the intermediate signal bug where signals are referenced but not declared
+    
+    fsm_debug("REFERENCE_CHECK: Checking if '$signal_name' is referenced in substitutions", 3);
+    
+    # Check if we have AST factorizer results available
+    if ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{ast_expressions}) {
+        my $ast_expressions = $ctx->{ast_factorizer}->{ast_expressions};
+        fsm_debug("  Checking " . scalar(@$ast_expressions) . " factorized expressions");
+        
+        # Check each factorized (substituted) expression for references to this signal
+        for my $expr_info (@$ast_expressions) {
+            my $ast = $expr_info->{ast};
+            my $context = $expr_info->{context};
+            
+            # Check if this AST contains a reference to our signal
+            if ($ast && blessed($ast) && $self->ast_contains_signal($ast, $signal_name)) {
+                fsm_debug("  REFERENCE FOUND: Signal '$signal_name' is referenced in context '$context'", 3);
+                return 1;
+            }
+        }
+    } else {
+        fsm_debug("  WARNING: No AST factorizer results available for reference checking", 3);
+    }
+    
+    # Also check in current assignment_analysis structures (post-substitution)
+    if ($ctx->{assignment_analysis}) {
+        for my $lhs (keys %{$ctx->{assignment_analysis}}) {
+            my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
+            
+            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
+                my $rhs_group = $lhs_analysis->{rhs_groups}->{$rhs};
+                
+                # Check DT-specific enable expressions
+                for my $dt_enable_info (@{$rhs_group->{dt_specific_enables}}) {
+                    my $enable_ast = $dt_enable_info->{enable_ast};
+                    if ($enable_ast && blessed($enable_ast) && $self->ast_contains_signal($enable_ast, $signal_name)) {
+                        fsm_debug("  REFERENCE FOUND: Signal '$signal_name' in DT enable '$dt_enable_info->{enable_name}'", 3);
+                        return 1;
+                    }
+                }
+                
+                # Check LHS-level enable expressions
+                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}->{ast}) {
+                    my $lhs_enable_ast = $rhs_group->{lhs_level_enable}->{ast};
+                    if ($lhs_enable_ast && blessed($lhs_enable_ast) && $self->ast_contains_signal($lhs_enable_ast, $signal_name)) {
+                        fsm_debug("  REFERENCE FOUND: Signal '$signal_name' in LHS enable '$rhs_group->{lhs_level_enable}->{name}'", 3);
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+    
+    # Check in lhs_assignments condition ASTs (post-substitution)
+    for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
+        for my $assignment (@{$ctx->{lhs_assignments}->{$lhs}}) {
+            if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
+                if ($self->ast_contains_signal($assignment->{conditions_ast}, $signal_name)) {
+                    fsm_debug("  REFERENCE FOUND: Signal '$signal_name' in assignment condition for LHS '$lhs'", 3);
+                    return 1;
+                }
+            }
+        }
+    }
+    
+    fsm_debug("  REFERENCE NOT FOUND: Signal '$signal_name' is not referenced in any substituted expressions", 3);
+    return 0;
 }
 sub is_signal_actually_used_in_final_expressions ($self, $signal_name) {
     my $ctx = $self->{flattened_dt};
