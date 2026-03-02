@@ -770,3 +770,7 @@ It is an exact-delay pulse request:
   - substitution-reference usage helper (`is_signal_referenced_in_substitutions`) now runs through `Backend::SystemVerilog`,
   - backend AST/string filtering paths now call local substitution-reference usage ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for substitution-reference usage helper paths.
+- Newest behavior-preserving increment:
+  - intermediate-signal dependency ordering helper (`topologically_sort_signals`) now runs through `Backend::SystemVerilog`,
+  - backend consolidated intermediate-signal emission now calls local dependency ordering ownership,
+  - `FlattenedDT` retains a compatibility delegation entrypoint for dependency ordering helper paths.

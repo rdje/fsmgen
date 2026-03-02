@@ -959,7 +959,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         $hdl .= "  // Consolidated intermediate signals (AST factorization + pre-scan)\n";
         
         # Perform topological sort to ensure dependencies are declared before use
-        my @sorted_signals = $ctx->topologically_sort_signals(\%filtered_signals, \%signal_dependencies);
+        my @sorted_signals = $self->topologically_sort_signals(\%filtered_signals, \%signal_dependencies);
         
         # First pass: Generate all wire declarations
         for my $signal_name (@sorted_signals) {
@@ -1010,6 +1010,82 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
     fsm_debug("*** CONSOLIDATED INTERMEDIATE SIGNAL GENERATION COMPLETE ***\n", 3);
     
     return $hdl;
+}
+sub topologically_sort_signals ($self, $filtered_signals, $signal_dependencies) {
+    fsm_debug("TOPO_SORT: Starting topological sort of intermediate signals", 3);
+    fsm_debug("TOPO_SORT: Input signals: " . scalar(keys %$filtered_signals), 3);
+    fsm_debug("TOPO_SORT: Dependencies: " . scalar(keys %$signal_dependencies), 3);
+    
+    # Initialize tracking structures
+    my @sorted_signals;
+    my %visited;           # Permanent mark (already processed)
+    my %temp_visited;      # Temporary mark (currently being processed)
+    my %in_degree;         # Count of dependencies for each signal
+    
+    # Calculate in-degrees for all signals
+    for my $signal (keys %$filtered_signals) {
+        $in_degree{$signal} = 0;
+    }
+    
+    for my $signal (keys %$signal_dependencies) {
+        my $deps = $signal_dependencies->{$signal};
+        for my $dep (@$deps) {
+            if (exists $filtered_signals->{$dep}) {
+                $in_degree{$signal}++;
+            }
+        }
+    }
+    
+    # Debug initial in-degrees
+    fsm_debug("TOPO_SORT: Initial in-degrees:", 3);
+    for my $signal (sort keys %in_degree) {
+        fsm_debug("  $signal: $in_degree{$signal} dependencies", 3);
+    }
+    
+    # Kahn's algorithm: start with signals that have no dependencies
+    my @queue = grep { $in_degree{$_} == 0 } keys %$filtered_signals;
+    
+    fsm_debug("TOPO_SORT: Starting with " . scalar(@queue) . " signals with no dependencies: " . join(", ", @queue), 3);
+    
+    while (@queue) {
+        my $current = shift @queue;
+        push @sorted_signals, $current;
+        $visited{$current} = 1;
+        
+        fsm_debug("  Processing signal: $current", 3);
+        
+        # Find signals that depend on the current signal
+        for my $signal (keys %$signal_dependencies) {
+            next if $visited{$signal};
+            
+            my $deps = $signal_dependencies->{$signal};
+            if (grep { $_ eq $current } @$deps) {
+                $in_degree{$signal}--;
+                fsm_debug("    Reduced in-degree of $signal to $in_degree{$signal}", 3);
+                
+                if ($in_degree{$signal} == 0) {
+                    push @queue, $signal;
+                    fsm_debug("    Added $signal to queue (all dependencies satisfied)", 3);
+                }
+            }
+        }
+    }
+    
+    # Check for circular dependencies
+    my @remaining_signals = grep { !$visited{$_} } keys %$filtered_signals;
+    if (@remaining_signals) {
+        fsm_debug("TOPO_SORT: WARNING - Potential circular dependencies detected:", 3);
+        for my $signal (@remaining_signals) {
+            fsm_debug("  $signal (in-degree: $in_degree{$signal})", 3);
+            # Add remaining signals to the end in alphabetical order as fallback
+            push @sorted_signals, $signal;
+        }
+    }
+    
+    fsm_debug("TOPO_SORT: Final sorted order: " . join(", ", @sorted_signals), 3);
+    fsm_debug("TOPO_SORT: Topological sort complete", 3);
+    
+    return @sorted_signals;
 }
 sub run_global_ast_factorization ($self) {
     my $ctx = $self->{flattened_dt};

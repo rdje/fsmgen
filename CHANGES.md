@@ -472,6 +472,10 @@ This is the persistent technical change history for FSMGen.
   - moved substitution-reference usage helper (`is_signal_referenced_in_substitutions`) into `Backend::SystemVerilog`,
   - updated backend AST/string filtering paths to call local substitution-reference usage ownership,
   - `FlattenedDT` now delegates substitution-reference usage entrypoints to backend ownership via compatibility shim.
+- Newest extraction increment:
+  - moved intermediate-signal dependency ordering helper (`topologically_sort_signals`) into `Backend::SystemVerilog`,
+  - updated backend consolidated intermediate-signal emission to call local dependency ordering ownership,
+  - `FlattenedDT` now delegates dependency ordering entrypoints to backend ownership via compatibility shim.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)
