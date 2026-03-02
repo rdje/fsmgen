@@ -774,3 +774,7 @@ It is an exact-delay pulse request:
   - intermediate-signal dependency ordering helper (`topologically_sort_signals`) now runs through `Backend::SystemVerilog`,
   - backend consolidated intermediate-signal emission now calls local dependency ordering ownership,
   - `FlattenedDT` retains a compatibility delegation entrypoint for dependency ordering helper paths.
+- Latest behavior-preserving increment:
+  - backend factorization/filtering callsites were converged to backend-local ownership in `Backend::SystemVerilog`,
+  - callsites now invoke local helper ownership for `is_signal_referenced_in_substitutions`, `run_global_ast_factorization`, `feed_asts_to_factorizer`, `count_unary_negations_in_original_expressions`, `update_original_asts_with_substituted_versions`, and `run_second_pass_factorization`,
+  - this removes backend round-trips through `FlattenedDT` delegation while preserving output and test behavior.

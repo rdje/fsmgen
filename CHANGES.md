@@ -476,6 +476,10 @@ This is the persistent technical change history for FSMGen.
   - moved intermediate-signal dependency ordering helper (`topologically_sort_signals`) into `Backend::SystemVerilog`,
   - updated backend consolidated intermediate-signal emission to call local dependency ordering ownership,
   - `FlattenedDT` now delegates dependency ordering entrypoints to backend ownership via compatibility shim.
+- Latest extraction increment:
+  - localized backend factorization/filtering callsites to backend-owned helpers in `Backend::SystemVerilog`,
+  - updated backend paths to call local ownership for `is_signal_referenced_in_substitutions`, `run_global_ast_factorization`, `feed_asts_to_factorizer`, `count_unary_negations_in_original_expressions`, `update_original_asts_with_substituted_versions`, and `run_second_pass_factorization`,
+  - reduced backend round-trips through `FlattenedDT` compatibility shims without changing behavior.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

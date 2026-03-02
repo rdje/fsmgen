@@ -297,7 +297,7 @@ sub should_filter_string_based ($self, $expression, $signal_name, $signal_info) 
     fsm_debug("  This signals a design issue - all filtering should be AST-based by now!", 3);
     
     # Check if signal is referenced in substitutions (AST-based check)
-    my $referenced_in_substitutions = $ctx->is_signal_referenced_in_substitutions($signal_name);
+    my $referenced_in_substitutions = $self->is_signal_referenced_in_substitutions($signal_name);
     if ($referenced_in_substitutions) {
         fsm_debug("  NO_STRING_FILTER: Signal '$signal_name' is referenced in AST substitutions - KEEPING", 3);
         return 0;
@@ -674,7 +674,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
     my $hdl = "";
     
     # Step 1: Run AST factorization to identify common sub-expressions
-    my $ast_intermediate_signals = $ctx->run_global_ast_factorization();
+    my $ast_intermediate_signals = $self->run_global_ast_factorization();
     
     # Step 2: Merge with pre-scan results to get comprehensive list
     my %all_intermediate_signals;
@@ -1127,7 +1127,7 @@ sub run_global_ast_factorization ($self) {
     
     # STEP 1: Collect and add all AST expressions to factorizer
     fsm_debug("*** STEP 1: FEEDING ASTs TO FACTORIZER ***", 3);
-    my $ast_count = $ctx->feed_asts_to_factorizer($factorizer);
+    my $ast_count = $self->feed_asts_to_factorizer($factorizer);
     fsm_debug("Fed $ast_count AST expressions to factorizer", 3);
     
     # Show what ASTs we have in the factorizer
@@ -1225,18 +1225,19 @@ sub run_global_ast_factorization ($self) {
     
     # COUNT UNARY NEGATIONS BEFORE UPDATE
     fsm_debug("\n--- BEFORE AST UPDATE: Counting unary negations in original expressions ---", 3);
-    $ctx->count_unary_negations_in_original_expressions();
+    $self->count_unary_negations_in_original_expressions();
+
     
-    my $update_count = $ctx->update_original_asts_with_substituted_versions($factorizer);
+    my $update_count = $self->update_original_asts_with_substituted_versions($factorizer);
     fsm_debug("*** ORIGINAL AST UPDATE COMPLETE: $update_count ASTs updated ***", 3);
     
     # COUNT UNARY NEGATIONS AFTER UPDATE  
     fsm_debug("\n--- AFTER AST UPDATE: Counting unary negations in updated expressions ---", 3);
-    $ctx->count_unary_negations_in_original_expressions();
+    $self->count_unary_negations_in_original_expressions();
     
     # STEP 5: FIXPOINT FACTORIZATION - Iterate on post-substitution expressions until convergence
     fsm_debug("\n*** STEP 5: FIXPOINT FACTORIZATION FOR POST-SUBSTITUTION EXPRESSIONS ***", 3);
-    my $second_pass_result = $ctx->run_second_pass_factorization($factorizer);
+    my $second_pass_result = $self->run_second_pass_factorization($factorizer);
     fsm_debug("*** FIXPOINT FACTORIZATION COMPLETE: " . scalar(keys %{$second_pass_result->{intermediate_signals}}) . " additional signals created across "
         . ($second_pass_result->{passes_run} // 0) . " pass(es); reason=$second_pass_result->{termination_reason} ***", 3);
     
