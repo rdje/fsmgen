@@ -782,3 +782,7 @@ It is an exact-delay pulse request:
   - second-pass AST feed checks were converged to backend-local `ast_contains_intermediate_signals` ownership in `Backend::SystemVerilog`,
   - DT/LHS/assignment condition second-pass gating now calls local intermediate-signal detection ownership,
   - this removes remaining backend delegation round-trips for this helper path while preserving output/test behavior.
+- Latest behavior-preserving increment:
+  - backend unified WEN/EN generation callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - phase-2 WEN/EN emission now invokes `enable_graph->generate_unified_wen_en_signals(...)` directly,
+  - this removes the backend delegation round-trip through `FlattenedDT` for this path while preserving output/test behavior.

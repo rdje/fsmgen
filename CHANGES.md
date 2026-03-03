@@ -484,6 +484,10 @@ This is the persistent technical change history for FSMGen.
   - localized second-pass AST feed checks to backend-owned intermediate-signal detection in `Backend::SystemVerilog`,
   - updated second-pass DT/LHS/assignment condition gating to call local `ast_contains_intermediate_signals` ownership,
   - removed remaining backend round-trips through `FlattenedDT` for this helper path without behavior changes.
+- Latest extraction increment:
+  - localized backend unified WEN/EN generation callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - updated backend WEN/EN emission to call `enable_graph->generate_unified_wen_en_signals(...)` directly,
+  - removed the remaining backend round-trip through `FlattenedDT` for this phase-2 generation path.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

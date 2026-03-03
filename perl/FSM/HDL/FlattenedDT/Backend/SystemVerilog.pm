@@ -1980,7 +1980,7 @@ sub generate_wen_en_signals ($self, $fsm_module) {
     my $hdl = "";
     
     # UNIFIED APPROACH: Generate WEN/EN signals from Phase 1 unified data
-    $hdl .= $ctx->generate_unified_wen_en_signals($fsm_module);
+    $hdl .= $ctx->{enable_graph}->generate_unified_wen_en_signals($fsm_module);
     
     return $hdl;
 }
