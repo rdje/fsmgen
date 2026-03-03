@@ -778,3 +778,7 @@ It is an exact-delay pulse request:
   - backend factorization/filtering callsites were converged to backend-local ownership in `Backend::SystemVerilog`,
   - callsites now invoke local helper ownership for `is_signal_referenced_in_substitutions`, `run_global_ast_factorization`, `feed_asts_to_factorizer`, `count_unary_negations_in_original_expressions`, `update_original_asts_with_substituted_versions`, and `run_second_pass_factorization`,
   - this removes backend round-trips through `FlattenedDT` delegation while preserving output and test behavior.
+- Newest behavior-preserving increment:
+  - second-pass AST feed checks were converged to backend-local `ast_contains_intermediate_signals` ownership in `Backend::SystemVerilog`,
+  - DT/LHS/assignment condition second-pass gating now calls local intermediate-signal detection ownership,
+  - this removes remaining backend delegation round-trips for this helper path while preserving output/test behavior.

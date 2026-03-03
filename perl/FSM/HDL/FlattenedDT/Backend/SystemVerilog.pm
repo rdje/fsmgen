@@ -1605,7 +1605,7 @@ sub feed_current_asts_to_second_pass ($self, $second_pass_factorizer) {
                         my $sv = eval { $ctx->ast_to_systemverilog($dt_enable->{enable_ast}) } || "[NO SV REPRESENTATION]";
                         
                         # Only feed if the expression contains intermediate signals (signs of substitution)
-                        if ($ctx->ast_contains_intermediate_signals($dt_enable->{enable_ast})) {
+                        if ($self->ast_contains_intermediate_signals($dt_enable->{enable_ast})) {
                             $second_pass_factorizer->add_ast_expression(
                                 $dt_enable->{enable_ast},
                                 "second_pass_dt_enable:$dt_enable->{enable_name}"
@@ -1624,7 +1624,7 @@ sub feed_current_asts_to_second_pass ($self, $second_pass_factorizer) {
                         my $sv = eval { $ctx->ast_to_systemverilog($lhs_enable->{ast}) } || "[NO SV REPRESENTATION]";
                         
                         # Only feed if the expression contains intermediate signals
-                        if ($ctx->ast_contains_intermediate_signals($lhs_enable->{ast})) {
+                        if ($self->ast_contains_intermediate_signals($lhs_enable->{ast})) {
                             $second_pass_factorizer->add_ast_expression(
                                 $lhs_enable->{ast},
                                 "second_pass_lhs_enable:$lhs_enable->{name}"
@@ -1646,7 +1646,7 @@ sub feed_current_asts_to_second_pass ($self, $second_pass_factorizer) {
                 my $sv = eval { $ctx->ast_to_systemverilog($assignment->{conditions_ast}) } || "[NO SV REPRESENTATION]";
                 
                 # Only feed if the expression contains intermediate signals
-                if ($ctx->ast_contains_intermediate_signals($assignment->{conditions_ast})) {
+                if ($self->ast_contains_intermediate_signals($assignment->{conditions_ast})) {
                     $second_pass_factorizer->add_ast_expression(
                         $assignment->{conditions_ast},
                         "second_pass_assignment:$lhs:$assignment->{dt}"
