@@ -694,7 +694,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         for my $signal_name (keys %{$ctx->{referenced_intermediate_signals}}) {
             # Only add if not already in AST factorization results
             unless (exists $all_intermediate_signals{$signal_name}) {
-                my $expression = $ctx->get_intermediate_signal_expression($signal_name);
+                my $expression = $ctx->{enable_graph}->get_intermediate_signal_expression($signal_name);
                 if ($expression) {
                     $all_intermediate_signals{$signal_name} = {
                         source => 'prescan_reference',
@@ -2001,7 +2001,7 @@ sub generate_intermediate_signal_declarations ($self) {
         next if $signal_info->{declared};
         
         # Get the expression for this intermediate signal
-        my $expression = $ctx->get_intermediate_signal_expression($signal_name);
+        my $expression = $ctx->{enable_graph}->get_intermediate_signal_expression($signal_name);
         if ($expression) {
             # Generate wire declaration and assign statement
             $hdl .= "  wire $signal_name;\n";

@@ -786,3 +786,7 @@ It is an exact-delay pulse request:
   - backend unified WEN/EN generation callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - phase-2 WEN/EN emission now invokes `enable_graph->generate_unified_wen_en_signals(...)` directly,
   - this removes the backend delegation round-trip through `FlattenedDT` for this path while preserving output/test behavior.
+- Newest behavior-preserving increment:
+  - backend intermediate-signal expression lookup callsites were converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - consolidated and declaration emission paths now invoke `enable_graph->get_intermediate_signal_expression(...)` directly,
+  - this removes remaining backend delegation round-trips through `FlattenedDT` for intermediate-signal expression resolution while preserving output/test behavior.

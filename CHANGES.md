@@ -488,6 +488,10 @@ This is the persistent technical change history for FSMGen.
   - localized backend unified WEN/EN generation callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - updated backend WEN/EN emission to call `enable_graph->generate_unified_wen_en_signals(...)` directly,
   - removed the remaining backend round-trip through `FlattenedDT` for this phase-2 generation path.
+- Newest extraction increment:
+  - localized backend intermediate-signal expression lookup callsites to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - updated consolidated and declaration emission paths to call `enable_graph->get_intermediate_signal_expression(...)` directly,
+  - removed remaining backend round-trips through `FlattenedDT` for intermediate-signal expression resolution.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)
