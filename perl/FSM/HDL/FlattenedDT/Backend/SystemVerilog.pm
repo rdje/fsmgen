@@ -56,7 +56,7 @@ sub generate_module_declaration ($self, $fsm_module) {
     my %port_directions = ('clk' => 'input', 'rstn' => 'input');
     
     # Check which signals are driven (outputs) vs used (inputs)
-    my %driven_signals = $ctx->get_driven_signals();
+    my %driven_signals = $ctx->{enable_graph}->get_driven_signals();
     
     for my $sig_name (sort keys %$signals) {
         # Skip duplicates

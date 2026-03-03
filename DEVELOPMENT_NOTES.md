@@ -790,3 +790,7 @@ It is an exact-delay pulse request:
   - backend intermediate-signal expression lookup callsites were converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - consolidated and declaration emission paths now invoke `enable_graph->get_intermediate_signal_expression(...)` directly,
   - this removes remaining backend delegation round-trips through `FlattenedDT` for intermediate-signal expression resolution while preserving output/test behavior.
+- Latest behavior-preserving increment:
+  - backend driven-signal classification callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - module-declaration port-direction analysis now invokes `enable_graph->get_driven_signals(...)` directly,
+  - this removes the backend delegation round-trip through `FlattenedDT` for driven-signal lookup while preserving output/test behavior.

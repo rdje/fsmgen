@@ -492,6 +492,10 @@ This is the persistent technical change history for FSMGen.
   - localized backend intermediate-signal expression lookup callsites to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - updated consolidated and declaration emission paths to call `enable_graph->get_intermediate_signal_expression(...)` directly,
   - removed remaining backend round-trips through `FlattenedDT` for intermediate-signal expression resolution.
+- Latest extraction increment:
+  - localized backend driven-signal classification callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - updated module-declaration port-direction analysis to call `enable_graph->get_driven_signals(...)` directly,
+  - removed the backend round-trip through `FlattenedDT` for driven-signal lookup in this path.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)
