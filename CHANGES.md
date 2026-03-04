@@ -504,6 +504,10 @@ This is the persistent technical change history for FSMGen.
   - localized backend LHS-width analysis callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - updated internal-signal declaration analysis to call `enable_graph->get_lhs_width_from_analysis(...)` directly,
   - removed the backend round-trip through `FlattenedDT` for LHS-width lookup in this path.
+- Newest extraction increment:
+  - localized backend pulse-delay-cycle lookup callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - updated internal-signal declaration analysis to call `enable_graph->get_pulse_delay_cycles_for_lhs(...)` directly,
+  - removed the backend round-trip through `FlattenedDT` for pulse-delay-cycle lookup in this path.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

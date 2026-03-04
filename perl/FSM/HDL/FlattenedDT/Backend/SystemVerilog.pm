@@ -2055,7 +2055,7 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
             my $q_name = "${lhs}_q";
             $aux_decls{$q_name} = $width unless $declared_ports{$q_name};
         } elsif ($assignment_type eq 'pulse_delayed') {
-            my $delay_cycles = $ctx->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
+            my $delay_cycles = $ctx->{enable_graph}->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
             if ($delay_cycles > 0) {
                 my $pipe_name = "${lhs}_pulse_delay_pipe";
                 $aux_decls{$pipe_name} = $delay_cycles unless $declared_ports{$pipe_name};

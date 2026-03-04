@@ -802,3 +802,7 @@ It is an exact-delay pulse request:
   - backend LHS-width analysis callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - internal-signal declaration analysis now invokes `enable_graph->get_lhs_width_from_analysis(...)` directly,
   - this removes the backend delegation round-trip through `FlattenedDT` for LHS-width lookup while preserving output/test behavior.
+- Newest behavior-preserving increment:
+  - backend pulse-delay-cycle lookup callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - internal-signal declaration analysis now invokes `enable_graph->get_pulse_delay_cycles_for_lhs(...)` directly,
+  - this removes the backend delegation round-trip through `FlattenedDT` for pulse-delay-cycle lookup while preserving output/test behavior.
