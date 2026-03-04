@@ -496,6 +496,10 @@ This is the persistent technical change history for FSMGen.
   - localized backend driven-signal classification callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - updated module-declaration port-direction analysis to call `enable_graph->get_driven_signals(...)` directly,
   - removed the backend round-trip through `FlattenedDT` for driven-signal lookup in this path.
+- Newest extraction increment:
+  - localized backend assignment-type classification callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - updated internal-signal declaration analysis to call `enable_graph->get_signal_assignment_type(...)` directly,
+  - removed the backend round-trip through `FlattenedDT` for assignment-type lookup in this path.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

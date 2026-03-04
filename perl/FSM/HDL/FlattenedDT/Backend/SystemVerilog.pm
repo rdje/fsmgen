@@ -2039,7 +2039,7 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
         next unless $lhs_analysis;
         
         my $width = $ctx->get_lhs_width_from_analysis($lhs_analysis);
-        my $assignment_type = $ctx->get_signal_assignment_type($lhs, $lhs_analysis);
+        my $assignment_type = $ctx->{enable_graph}->get_signal_assignment_type($lhs, $lhs_analysis);
         my $multiplexer_type = $lhs_analysis->{multiplexer}->{type} || 'comb';
         
         # Declare the main LHS only when it's not already a module port/state register.
