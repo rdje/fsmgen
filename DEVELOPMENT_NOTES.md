@@ -798,3 +798,7 @@ It is an exact-delay pulse request:
   - backend assignment-type classification callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - internal-signal declaration analysis now invokes `enable_graph->get_signal_assignment_type(...)` directly,
   - this removes the backend delegation round-trip through `FlattenedDT` for assignment-type lookup while preserving output/test behavior.
+- Latest behavior-preserving increment:
+  - backend LHS-width analysis callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - internal-signal declaration analysis now invokes `enable_graph->get_lhs_width_from_analysis(...)` directly,
+  - this removes the backend delegation round-trip through `FlattenedDT` for LHS-width lookup while preserving output/test behavior.

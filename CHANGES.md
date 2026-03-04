@@ -500,6 +500,10 @@ This is the persistent technical change history for FSMGen.
   - localized backend assignment-type classification callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - updated internal-signal declaration analysis to call `enable_graph->get_signal_assignment_type(...)` directly,
   - removed the backend round-trip through `FlattenedDT` for assignment-type lookup in this path.
+- Latest extraction increment:
+  - localized backend LHS-width analysis callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - updated internal-signal declaration analysis to call `enable_graph->get_lhs_width_from_analysis(...)` directly,
+  - removed the backend round-trip through `FlattenedDT` for LHS-width lookup in this path.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)
