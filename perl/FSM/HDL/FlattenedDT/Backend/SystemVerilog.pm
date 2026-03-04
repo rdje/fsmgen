@@ -2126,7 +2126,7 @@ sub generate_flop_mux ($self, $lhs, $clean_lhs) {
     # Generate the flop
     $hdl .= "  always_ff @(posedge clk or negedge rstn) begin\n";
     $hdl .= "    if (!rstn) begin\n";
-    $hdl .= "      $lhs <= " . $ctx->get_reset_value($lhs) . ";\n";
+    $hdl .= "      $lhs <= " . $ctx->{enable_graph}->get_reset_value($lhs) . ";\n";
     $hdl .= "    end else begin\n";
     $hdl .= "      $lhs <= ${lhs}_next;\n";
     $hdl .= "    end\n";

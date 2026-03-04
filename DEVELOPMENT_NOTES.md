@@ -806,3 +806,7 @@ It is an exact-delay pulse request:
   - backend pulse-delay-cycle lookup callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - internal-signal declaration analysis now invokes `enable_graph->get_pulse_delay_cycles_for_lhs(...)` directly,
   - this removes the backend delegation round-trip through `FlattenedDT` for pulse-delay-cycle lookup while preserving output/test behavior.
+- Latest behavior-preserving increment:
+  - backend reset-value lookup callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - flop-mux reset emission now invokes `enable_graph->get_reset_value(...)` directly,
+  - this removes the backend delegation round-trip through `FlattenedDT` for reset-value lookup while preserving output/test behavior.

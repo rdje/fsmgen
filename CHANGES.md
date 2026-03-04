@@ -508,6 +508,10 @@ This is the persistent technical change history for FSMGen.
   - localized backend pulse-delay-cycle lookup callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - updated internal-signal declaration analysis to call `enable_graph->get_pulse_delay_cycles_for_lhs(...)` directly,
   - removed the backend round-trip through `FlattenedDT` for pulse-delay-cycle lookup in this path.
+- Latest extraction increment:
+  - localized backend reset-value lookup callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - updated flop-mux reset emission to call `enable_graph->get_reset_value(...)` directly,
+  - removed the backend round-trip through `FlattenedDT` for reset-value lookup in this path.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)
