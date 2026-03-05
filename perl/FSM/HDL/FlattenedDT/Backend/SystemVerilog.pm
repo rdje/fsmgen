@@ -2089,7 +2089,7 @@ sub generate_comb_mux ($self, $lhs, $clean_lhs) {
     my $hdl = "  // Combinational mux for: $lhs\n";
     
     $hdl .= "  always_comb begin\n";
-    $hdl .= "    $lhs = " . $ctx->get_default_value($lhs) . ";  // Default value\n";
+    $hdl .= "    $lhs = " . $ctx->{enable_graph}->get_default_value($lhs) . ";  // Default value\n";
     
     # Use the enable/value pairs passed down from LHS-Level WEN generation
     for my $pair (@{$ctx->{lhs_to_enable_value_pairs}{$lhs}}) {
@@ -2110,7 +2110,7 @@ sub generate_flop_mux ($self, $lhs, $clean_lhs) {
     
     # Generate the multiplexer logic
     $hdl .= "  always_comb begin\n";
-    $hdl .= "    ${lhs}_next = " . $ctx->get_default_value($lhs) . ";  // Default value\n";
+    $hdl .= "    ${lhs}_next = " . $ctx->{enable_graph}->get_default_value($lhs) . ";  // Default value\n";
     
     # Use the enable/value pairs passed down from LHS-Level WEN generation
     for my $pair (@{$ctx->{lhs_to_enable_value_pairs}{$lhs}}) {

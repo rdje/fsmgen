@@ -512,6 +512,10 @@ This is the persistent technical change history for FSMGen.
   - localized backend reset-value lookup callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - updated flop-mux reset emission to call `enable_graph->get_reset_value(...)` directly,
   - removed the backend round-trip through `FlattenedDT` for reset-value lookup in this path.
+- Newest extraction increment:
+  - localized backend default-value lookup callsites to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - updated comb/flop mux default assignment emission to call `enable_graph->get_default_value(...)` directly,
+  - removed backend round-trips through `FlattenedDT` for default-value lookup in these paths.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

@@ -810,3 +810,7 @@ It is an exact-delay pulse request:
   - backend reset-value lookup callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - flop-mux reset emission now invokes `enable_graph->get_reset_value(...)` directly,
   - this removes the backend delegation round-trip through `FlattenedDT` for reset-value lookup while preserving output/test behavior.
+- Newest behavior-preserving increment:
+  - backend default-value lookup callsites were converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - comb/flop mux default assignment emission now invokes `enable_graph->get_default_value(...)` directly,
+  - this removes backend delegation round-trips through `FlattenedDT` for default-value lookup while preserving output/test behavior.
