@@ -520,6 +520,10 @@ This is the persistent technical change history for FSMGen.
   - localized backend intermediate-signal classification callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - updated recursive intermediate-signal detection to call `enable_graph->is_intermediate_signal(...)` directly,
   - removed the backend round-trip through `FlattenedDT` for this classification path.
+- Newest extraction increment:
+  - localized backend arithmetic-operation classification callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - updated AST filtering to call `enable_graph->is_arithmetic_operation(...)` directly,
+  - removed the backend round-trip through `FlattenedDT` for this arithmetic classification path.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

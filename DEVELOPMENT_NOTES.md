@@ -818,3 +818,7 @@ It is an exact-delay pulse request:
   - backend intermediate-signal classification callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - recursive intermediate-signal detection now invokes `enable_graph->is_intermediate_signal(...)` directly,
   - this removes the backend delegation round-trip through `FlattenedDT` for this classification path while preserving output/test behavior.
+- Newest behavior-preserving increment:
+  - backend arithmetic-operation classification callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - AST filtering now invokes `enable_graph->is_arithmetic_operation(...)` directly,
+  - this removes the backend delegation round-trip through `FlattenedDT` for arithmetic classification while preserving output/test behavior.

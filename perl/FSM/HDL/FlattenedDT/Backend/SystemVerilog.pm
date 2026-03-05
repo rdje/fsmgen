@@ -251,7 +251,7 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
         }
         
         # Check if it's an arithmetic operation (always keep)
-        if ($ctx->is_arithmetic_operation($ast)) {
+        if ($ctx->{enable_graph}->is_arithmetic_operation($ast)) {
             fsm_debug("  AST_FILTER: Arithmetic operation - KEEPING", 3);
             return 0;
         }
