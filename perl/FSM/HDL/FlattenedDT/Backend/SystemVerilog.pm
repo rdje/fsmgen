@@ -257,7 +257,7 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
         }
         
         # Check if it's a logical operation
-        if ($ctx->is_logical_operation($ast)) {
+        if ($ctx->{enable_graph}->is_logical_operation($ast)) {
             # Use the existing AST-based logical operation factorization logic
             my $should_factor = $ctx->should_factor_logical_operation($ast);
             if ($should_factor && $usage_count >= 2) {

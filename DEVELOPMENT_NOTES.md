@@ -822,3 +822,7 @@ It is an exact-delay pulse request:
   - backend arithmetic-operation classification callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - AST filtering now invokes `enable_graph->is_arithmetic_operation(...)` directly,
   - this removes the backend delegation round-trip through `FlattenedDT` for arithmetic classification while preserving output/test behavior.
+- Latest behavior-preserving increment:
+  - backend logical-operation classification callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - AST filtering now invokes `enable_graph->is_logical_operation(...)` directly,
+  - this removes the backend delegation round-trip through `FlattenedDT` for logical classification while preserving output/test behavior.
