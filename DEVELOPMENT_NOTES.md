@@ -814,3 +814,7 @@ It is an exact-delay pulse request:
   - backend default-value lookup callsites were converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - comb/flop mux default assignment emission now invokes `enable_graph->get_default_value(...)` directly,
   - this removes backend delegation round-trips through `FlattenedDT` for default-value lookup while preserving output/test behavior.
+- Latest behavior-preserving increment:
+  - backend intermediate-signal classification callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - recursive intermediate-signal detection now invokes `enable_graph->is_intermediate_signal(...)` directly,
+  - this removes the backend delegation round-trip through `FlattenedDT` for this classification path while preserving output/test behavior.

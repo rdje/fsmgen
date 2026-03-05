@@ -516,6 +516,10 @@ This is the persistent technical change history for FSMGen.
   - localized backend default-value lookup callsites to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - updated comb/flop mux default assignment emission to call `enable_graph->get_default_value(...)` directly,
   - removed backend round-trips through `FlattenedDT` for default-value lookup in these paths.
+- Latest extraction increment:
+  - localized backend intermediate-signal classification callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - updated recursive intermediate-signal detection to call `enable_graph->is_intermediate_signal(...)` directly,
+  - removed the backend round-trip through `FlattenedDT` for this classification path.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)
