@@ -931,7 +931,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
     if (%rescued_signals) {
         for my $rescued_signal (sort keys %rescued_signals) {
             my $signal_info = $rescued_signals{$rescued_signal};
-            my $expression = $signal_info->{ast} ? $ctx->ast_to_systemverilog($signal_info->{ast}) : $signal_info->{expression};
+            my $expression = $signal_info->{ast} ? $ctx->{enable_graph}->ast_to_systemverilog($signal_info->{ast}) : $signal_info->{expression};
             fsm_debug("    RESCUED: $rescued_signal = $expression", 3);
         }
     }
