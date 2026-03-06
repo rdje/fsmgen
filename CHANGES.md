@@ -532,6 +532,10 @@ This is the persistent technical change history for FSMGen.
   - localized backend logical-factorization policy callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - updated AST filtering to call `enable_graph->should_factor_logical_operation(...)` directly,
   - removed the backend round-trip through `FlattenedDT` for this logical-factorization policy path.
+- Latest extraction increment:
+  - localized one backend AST signal-name extraction callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - updated backend AST signal-reference traversal (`ast_contains_signal`) to call `enable_graph->extract_signal_name_from_ast(...)` directly,
+  - removed one backend round-trip through `FlattenedDT` for AST signal-name extraction in this traversal path.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

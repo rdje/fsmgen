@@ -443,7 +443,7 @@ sub ast_contains_signal ($self, $ast, $signal_name) {
     
     # If this is a signal reference, check if it matches
     if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
-        my $ast_signal_name = $ctx->extract_signal_name_from_ast($ast);
+        my $ast_signal_name = $ctx->{enable_graph}->extract_signal_name_from_ast($ast);
         return 1 if $ast_signal_name && $ast_signal_name eq $signal_name;
     }
     

@@ -830,3 +830,7 @@ It is an exact-delay pulse request:
   - backend logical-factorization policy callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - AST filtering now invokes `enable_graph->should_factor_logical_operation(...)` directly,
   - this removes the backend delegation round-trip through `FlattenedDT` for logical-factorization policy while preserving output/test behavior.
+- Latest behavior-preserving increment:
+  - one backend AST signal-name extraction callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - backend AST signal-reference traversal (`ast_contains_signal`) now invokes `enable_graph->extract_signal_name_from_ast(...)` directly,
+  - this removes one backend delegation round-trip through `FlattenedDT` for AST signal-name extraction while preserving output/test behavior.
