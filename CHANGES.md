@@ -1,5 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-06
+### README promoted as project single entry point
+- Reworked `README.md` into the canonical onboarding hub for the repository.
+- Added explicit project objective and ramp-up sequence.
+- Added complete markdown index for all repository `.md` files:
+  - `README.md`
+  - `CHANGES.md`
+  - `DEVELOPMENT_NOTES.md`
+  - `MEMORY.md`
+  - `COMMIT.md`
+  - `WARP.md`
+  - `docs/USER_GUIDE.md`
+  - `.agents/workflows/commit.md`
+- Added key project file/path references for core pipeline, backend, synthesis, tests, and support directories.
+- Added README maintenance policy clarifying that README is updated when onboarding-critical information changes, not necessarily on every commit.
 ## 2026-02-28
 ### FlattenedDT backend decomposition continuation (final-expression usage-check helper)
 - Continued backend extraction in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by moving final-expression usage-check helper ownership (`is_signal_actually_used_in_final_expressions`) out of `FlattenedDT`.

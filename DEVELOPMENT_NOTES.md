@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-06: README as canonical onboarding entrypoint
+- Decision:
+  - treat `README.md` as the single onboarding entry point for humans and successor agents.
+- Rationale:
+  - onboarding speed and navigation quality improve when objective, doc map, and code-path map are centralized in one stable location.
+  - avoids context fragmentation across multiple markdown files at session start.
+- Implementation notes:
+  - added objective-focused summary, fast ramp-up order, full markdown index, and key project file/path map.
+  - added maintenance policy to keep README current only when onboarding-critical information changes.
+- Compatibility/scope:
+  - documentation-only change, no runtime behavior or test expectations modified.
 ## 2026-02-28: Backend extraction of final-expression usage-check helper
 - Continued structure-first `FlattenedDT` decomposition by moving `is_signal_actually_used_in_final_expressions` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - `FlattenedDT` now retains compatibility delegation for this entrypoint (`backend_sv->is_signal_actually_used_in_final_expressions(...)`).

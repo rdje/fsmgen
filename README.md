@@ -1,11 +1,48 @@
 # FSMGen
-FSMGen compiles Lisp-like `.fsm` state machine files into HDL, with SystemVerilog as the primary target.
+This file is the **single entry point** for the project.
+Use it first for objective, navigation, and where to find code/docs quickly.
 
-## What it does
-- Parses FSM descriptions into semantic ASTs.
-- Builds decision-tree driven assignments and transitions.
-- Generates HDL output (`.sv` by default, `.v` optional).
-- Supports first-class multi-level tracing for parser and generation internals.
+## Project objective
+FSMGen compiles Lisp-like `.fsm` state machine specifications into synthesizable HDL.
+Current primary target is SystemVerilog, with Verilog conversion support and explicit VHDL not-implemented signaling.
+The project objective is robust, traceable FSM-to-HDL generation with clear assignment semantics, optimization via AST factorization, and behavior-preserving refactoring toward a modular architecture.
+
+## Fast ramp-up order
+1. `README.md` (this file): project objective + navigation.
+2. `docs/USER_GUIDE.md`: usage and CLI behavior.
+3. `CHANGES.md`: chronological technical changes.
+4. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+5. `MEMORY.md`: continuity/handoff state.
+6. `COMMIT.md`: commit workflow requirements.
+7. `WARP.md`: repository-specific agent/development guidance.
+8. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+
+## Documentation index (all `.md` files in this repo)
+- `README.md` — single entry point and navigation hub.
+- `docs/USER_GUIDE.md` — end-user guide and command usage.
+- `CHANGES.md` — persistent technical change history.
+- `DEVELOPMENT_NOTES.md` — architecture notes and engineering rationale.
+- `MEMORY.md` — live continuity context and recovery notes.
+- `COMMIT.md` — canonical commit workflow specification.
+- `WARP.md` — project guidance for Warp/agent workflows.
+- `.agents/workflows/commit.md` — agent workflow definition for commit operations.
+
+## Project file and directory map
+### Core entrypoints and pipeline
+- `bin/fsmgen` — main CLI entrypoint.
+- `perl/FSM/Pipeline/HDLGenerator.pm` — generation orchestration.
+- `perl/FSM/Adapter/FSMGenFull.pm` — FSM adapter/parsing entry.
+- `perl/FSM/HDL/FlattenedDT.pm` — Flattened decision-tree facade.
+- `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` — SystemVerilog backend implementation.
+- `perl/FSM/Synthesis/EnableGraph.pm` — enable synthesis/helper ownership.
+
+### Input, tests, and support
+- `fsm/` — sample/input `.fsm` files.
+- `t/` — regression and behavior tests.
+- `docs/` — user and technical docs.
+- `generated/` — generated parser/output artifacts.
+- `grammars/` — grammar definitions.
+- `rust/Makefile` — makefile used for rust-side build/management tasks.
 
 ## Quick start
 ```bash
@@ -14,41 +51,29 @@ FSMGen compiles Lisp-like `.fsm` state machine files into HDL, with SystemVerilo
 ./bin/fsmgen --debug=3 fsm/trial_1.fsm
 ```
 
-## CLI
+## CLI quick reference
 ```bash
 ./bin/fsmgen [options] <fsm_file>
 ```
-
-Key options:
 - `-o, --output <file>`: explicit output path.
 - `-l, --language <systemverilog|sv|verilog|v|vhdl>`: target language.
-- `-d, --debug[=N]`: numeric trace compatibility level (`0..4`; bare `--debug` implies `4`).
-- `--trace-verbosity <none|low|medium|high|debug>`: preferred named verbosity selector.
-- `--trace-log[=FILE]`: route trace output to a file (default: `trace.log`).
-- `--trace-emojis` / `--notrace-emojis`: enable/disable emoji markers in trace formatting.
+- `-d, --debug[=N]`: numeric debug compatibility level (`0..4`; bare `--debug` implies `4`).
+- `--trace-verbosity <none|low|medium|high|debug>`: named trace verbosity.
+- `--trace-log[=FILE]`: trace output file (default `trace.log`).
+- `--trace-emojis` / `--notrace-emojis`: emoji marker toggle.
 - `-q, --quiet`: suppress informational output.
-- `-h, --help`: help text.
 
-Notes:
-- Verilog generation is available through SystemVerilog-to-Verilog conversion.
-- VHDL backend currently reports explicit not-implemented status.
-- Trace lines include origin metadata (`file`, `function`, `line`) and indentation-aware formatting.
-
-## Assignment semantics
+## Assignment semantics (quick reference)
 - `A <- expr`: synchronous/flopped assignment.
-- `A <= expr`: synchronous/flopped assignment variant.
+- `A <= expr`: synchronous/flopped variant.
 - `A = expr`: combinational assignment.
+- Safety rule: combinational `=` cannot create direct/indirect RHS feedback to same LHS.
 
-Combinational safety rule:
-- `=` assignments cannot create direct or indirect dependence of RHS on the same LHS through combinational chains.
-- `A <- A` remains legal for register loopback behavior.
-
-## Documentation map
-- User guide: `docs/USER_GUIDE.md`
-- Change history: `CHANGES.md`
-- Design rationale and engineering context: `DEVELOPMENT_NOTES.md`
-
-## Development test
-```bash
-prove -v t/01-regression.t
-```
+## README maintenance policy
+- Keep `README.md` as the canonical onboarding hub.
+- Update it when any of the following changes materially:
+  - project objective/scope,
+  - document set or purpose,
+  - key file paths / architecture entrypoints,
+  - onboarding workflow.
+- It does **not** need to be updated on every commit—only when meaningful for onboarding accuracy.

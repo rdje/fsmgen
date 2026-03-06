@@ -14,6 +14,14 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-06: README onboarding hub update
+- `README.md` was restructured to serve as the single entry point to the project.
+- README now includes:
+  - explicit project objective,
+  - full markdown index for fast ramp-up (`README.md`, `CHANGES.md`, `DEVELOPMENT_NOTES.md`, `MEMORY.md`, `COMMIT.md`, `WARP.md`, `docs/USER_GUIDE.md`, `.agents/workflows/commit.md`),
+  - key project file/path map for core entrypoints and supporting directories,
+  - README maintenance policy clarifying update cadence (when it materially affects onboarding).
+- `README.md` remains tracked in git; change is prepared for commit workflow completion.
 ## Current technical status (updated 2026-02-27)
 - Assignment families are implemented and stabilized: `c`, `r`, `m`, `rm`, `mr`, `pN`.
 - `pN` semantics are authoritative and must not regress:
