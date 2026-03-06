@@ -852,7 +852,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         # Get the expression to analyze for dependencies
         my $expression;
         if ($signal_info->{ast}) {
-            $expression = $ctx->ast_to_systemverilog($signal_info->{ast});
+            $expression = $ctx->{enable_graph}->ast_to_systemverilog($signal_info->{ast});
         } elsif ($signal_info->{expression}) {
             $expression = $signal_info->{expression};
         } else {

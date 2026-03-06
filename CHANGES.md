@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-06
+### FlattenedDT backend convergence (dependency-map AST render callsite)
+- Localized one remaining backend AST-render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `$ctx->ast_to_systemverilog(...)` to `$ctx->{enable_graph}->ast_to_systemverilog(...)`.
+- The change is in consolidated intermediate-signal dependency-map construction (`generate_consolidated_intermediate_signals`), further aligning backend callsites with direct `EnableGraph` ownership.
+- Scope remains behavior-preserving structural convergence only, with no intended HDL semantic change.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### README promoted as project single entry point
 - Reworked `README.md` into the canonical onboarding hub for the repository.
 - Added explicit project objective and ramp-up sequence.

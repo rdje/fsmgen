@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-06: FlattenedDT backend convergence (dependency-map AST render callsite)
+- Continued backend convergence by localizing one dependency-map AST-render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `FlattenedDT` pass-through (`$ctx->ast_to_systemverilog(...)`) to direct `EnableGraph` ownership (`$ctx->{enable_graph}->ast_to_systemverilog(...)`).
+- Rationale:
+  - this callsite belongs to backend enable/dependency expression rendering and is more coherent when directly bound to `EnableGraph`,
+  - micro-slice continues reducing transitional `FlattenedDT` helper indirection without broad refactor risk.
+- Safety/compatibility:
+  - single-callsite change only in dependency-map expression rendering path,
+  - no intended semantic change to filtering, dependency propagation, or emitted HDL text.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
 ## 2026-03-06: README as canonical onboarding entrypoint
 - Decision:
   - treat `README.md` as the single onboarding entry point for humans and successor agents.
