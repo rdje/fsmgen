@@ -552,6 +552,10 @@ This is the persistent technical change history for FSMGen.
   - localized one second-pass DT-enable AST render callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - updated second-pass DT-enable debug rendering (`feed_current_asts_to_second_pass`) to call `enable_graph->ast_to_systemverilog(...)` directly,
   - removed one backend round-trip through `FlattenedDT` for AST rendering in this second-pass DT-enable path.
+- Newest extraction increment:
+  - localized one second-pass LHS-enable AST render callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - updated second-pass LHS-enable debug rendering (`feed_current_asts_to_second_pass`) to call `enable_graph->ast_to_systemverilog(...)` directly,
+  - removed one backend round-trip through `FlattenedDT` for AST rendering in this second-pass LHS-enable path.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

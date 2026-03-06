@@ -1621,7 +1621,7 @@ sub feed_current_asts_to_second_pass ($self, $second_pass_factorizer) {
                 if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}{ast}) {
                     my $lhs_enable = $rhs_group->{lhs_level_enable};
                     if (blessed($lhs_enable->{ast})) {
-                        my $sv = eval { $ctx->ast_to_systemverilog($lhs_enable->{ast}) } || "[NO SV REPRESENTATION]";
+                        my $sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($lhs_enable->{ast}) } || "[NO SV REPRESENTATION]";
                         
                         # Only feed if the expression contains intermediate signals
                         if ($self->ast_contains_intermediate_signals($lhs_enable->{ast})) {
