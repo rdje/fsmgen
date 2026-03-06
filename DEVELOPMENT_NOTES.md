@@ -882,3 +882,7 @@ It is an exact-delay pulse request:
   - one assignment-condition substituted-AST updated-render callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - assignment-condition substitution debug rendering (`update_original_asts_with_substituted_versions`) now invokes `enable_graph->ast_to_systemverilog(...)` directly for `substituted_sv`,
   - this removes one backend delegation round-trip through `FlattenedDT` for AST rendering in the assignment-condition substitution-update path while preserving output/test behavior.
+- Newest behavior-preserving increment:
+  - one second-pass DT-specific original-render callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - second-pass DT-specific substitution debug rendering (`update_original_asts_with_second_pass_substitutions`) now invokes `enable_graph->ast_to_systemverilog(...)` directly for `original_sv`,
+  - this removes one backend delegation round-trip through `FlattenedDT` for AST rendering in the second-pass DT-specific substitution path while preserving output/test behavior.

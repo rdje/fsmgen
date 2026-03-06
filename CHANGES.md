@@ -584,6 +584,10 @@ This is the persistent technical change history for FSMGen.
   - localized one assignment-condition substituted-AST updated-render callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - updated assignment-condition substitution debug rendering (`update_original_asts_with_substituted_versions`) to call `enable_graph->ast_to_systemverilog(...)` directly for `substituted_sv`,
   - removed one backend round-trip through `FlattenedDT` for AST rendering in this assignment-condition substitution-update path.
+- Newest extraction increment:
+  - localized one second-pass DT-specific original-render callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - updated second-pass DT-specific substitution debug rendering (`update_original_asts_with_second_pass_substitutions`) to call `enable_graph->ast_to_systemverilog(...)` directly for `original_sv`,
+  - removed one backend round-trip through `FlattenedDT` for AST rendering in this second-pass DT-specific substitution path.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)
