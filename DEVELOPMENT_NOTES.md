@@ -854,3 +854,7 @@ It is an exact-delay pulse request:
   - one second-pass LHS-enable AST render callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - second-pass LHS-enable debug rendering (`feed_current_asts_to_second_pass`) now invokes `enable_graph->ast_to_systemverilog(...)` directly,
   - this removes one backend delegation round-trip through `FlattenedDT` for AST rendering in the second-pass LHS-enable path while preserving output/test behavior.
+- Latest behavior-preserving increment:
+  - one second-pass assignment-condition AST render callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - second-pass assignment-condition debug rendering (`feed_current_asts_to_second_pass`) now invokes `enable_graph->ast_to_systemverilog(...)` directly,
+  - this removes one backend delegation round-trip through `FlattenedDT` for AST rendering in the second-pass assignment-condition path while preserving output/test behavior.

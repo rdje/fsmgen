@@ -1643,7 +1643,7 @@ sub feed_current_asts_to_second_pass ($self, $second_pass_factorizer) {
     for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
         for my $assignment (@{$ctx->{lhs_assignments}{$lhs}}) {
             if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
-                my $sv = eval { $ctx->ast_to_systemverilog($assignment->{conditions_ast}) } || "[NO SV REPRESENTATION]";
+                my $sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($assignment->{conditions_ast}) } || "[NO SV REPRESENTATION]";
                 
                 # Only feed if the expression contains intermediate signals
                 if ($self->ast_contains_intermediate_signals($assignment->{conditions_ast})) {
