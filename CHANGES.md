@@ -528,6 +528,10 @@ This is the persistent technical change history for FSMGen.
   - localized backend logical-operation classification callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - updated AST filtering to call `enable_graph->is_logical_operation(...)` directly,
   - removed the backend round-trip through `FlattenedDT` for this logical classification path.
+- Newest extraction increment:
+  - localized backend logical-factorization policy callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - updated AST filtering to call `enable_graph->should_factor_logical_operation(...)` directly,
+  - removed the backend round-trip through `FlattenedDT` for this logical-factorization policy path.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

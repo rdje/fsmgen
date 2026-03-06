@@ -826,3 +826,7 @@ It is an exact-delay pulse request:
   - backend logical-operation classification callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - AST filtering now invokes `enable_graph->is_logical_operation(...)` directly,
   - this removes the backend delegation round-trip through `FlattenedDT` for logical classification while preserving output/test behavior.
+- Newest behavior-preserving increment:
+  - backend logical-factorization policy callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - AST filtering now invokes `enable_graph->should_factor_logical_operation(...)` directly,
+  - this removes the backend delegation round-trip through `FlattenedDT` for logical-factorization policy while preserving output/test behavior.
