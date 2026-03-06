@@ -1516,7 +1516,7 @@ sub update_original_asts_with_substituted_versions ($self, $factorizer) {
                         my $substituted_ast = $context_to_substituted_ast{$context_key};
                         
                         my $original_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
-                        my $substituted_sv = eval { $ctx->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+                        my $substituted_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
                         
                         $lhs_enable->{ast} = $substituted_ast;
                         $updated_count++;
