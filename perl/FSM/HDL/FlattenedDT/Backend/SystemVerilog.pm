@@ -1602,7 +1602,7 @@ sub feed_current_asts_to_second_pass ($self, $second_pass_factorizer) {
                 # Feed DT-specific enable ASTs (now with intermediate signals)
                 for my $dt_enable (@{$rhs_group->{dt_specific_enables} || []}) {
                     if ($dt_enable->{enable_ast} && blessed($dt_enable->{enable_ast})) {
-                        my $sv = eval { $ctx->ast_to_systemverilog($dt_enable->{enable_ast}) } || "[NO SV REPRESENTATION]";
+                        my $sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($dt_enable->{enable_ast}) } || "[NO SV REPRESENTATION]";
                         
                         # Only feed if the expression contains intermediate signals (signs of substitution)
                         if ($self->ast_contains_intermediate_signals($dt_enable->{enable_ast})) {
