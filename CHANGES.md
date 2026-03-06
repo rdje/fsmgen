@@ -540,6 +540,10 @@ This is the persistent technical change history for FSMGen.
   - localized one second-pass bare-signal AST name-extraction callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - updated second-pass AST intermediate-signal gating (`ast_contains_intermediate_signals`) to call `enable_graph->extract_signal_name_from_ast(...)` directly,
   - removed one backend round-trip through `FlattenedDT` for AST signal-name extraction in this second-pass filtering path.
+- Latest extraction increment:
+  - localized one recursive AST intermediate-signal name-extraction callsite to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - updated recursive second-pass AST intermediate detection (`ast_has_intermediate_signals_recursive`) to call `enable_graph->extract_signal_name_from_ast(...)` directly,
+  - removed one backend round-trip through `FlattenedDT` for AST signal-name extraction in this recursive detection path.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
 
 ### Validation (post-hardening + extraction)

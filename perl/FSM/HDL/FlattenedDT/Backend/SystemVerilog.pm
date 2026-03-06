@@ -1731,7 +1731,7 @@ sub ast_has_intermediate_signals_recursive ($self, $ast) {
     
     # Check if this node itself is an intermediate signal reference
     if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
-        my $signal_name = $ctx->extract_signal_name_from_ast($ast);
+        my $signal_name = $ctx->{enable_graph}->extract_signal_name_from_ast($ast);
         if ($signal_name && $ctx->{enable_graph}->is_intermediate_signal($signal_name)) {
             return 1;
         }
