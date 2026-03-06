@@ -14,6 +14,16 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-06: Backend convergence micro-slice (initial-filtering AST render callsite)
+- Current worktree localizes one remaining backend AST-render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `FlattenedDT` pass-through (`$ctx->ast_to_systemverilog(...)`) to direct `EnableGraph` ownership (`$ctx->{enable_graph}->ast_to_systemverilog(...)`).
+- The slice is in the initial filtering pass inside consolidated intermediate-signal generation (`generate_consolidated_intermediate_signals`).
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue remaining backend `ast_to_systemverilog` round-trips in `Backend/SystemVerilog.pm`,
+  - keep the same one-callsite micro-slice cadence with full validation and commit workflow.
 ## 2026-03-06: README onboarding hub update
 - `README.md` was restructured to serve as the single entry point to the project.
 - README now includes:
