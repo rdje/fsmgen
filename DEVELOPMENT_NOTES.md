@@ -842,3 +842,7 @@ It is an exact-delay pulse request:
   - one recursive AST intermediate-signal name-extraction callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - recursive second-pass AST intermediate detection (`ast_has_intermediate_signals_recursive`) now invokes `enable_graph->extract_signal_name_from_ast(...)` directly,
   - this removes one backend delegation round-trip through `FlattenedDT` for AST signal-name extraction in the recursive detection path while preserving output/test behavior.
+- Newest behavior-preserving increment:
+  - one second-pass AST render callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - second-pass bare-signal debug rendering (`ast_contains_intermediate_signals`) now invokes `enable_graph->ast_to_systemverilog(...)` directly,
+  - this removes one backend delegation round-trip through `FlattenedDT` for AST rendering in the second-pass filtering path while preserving output/test behavior.
