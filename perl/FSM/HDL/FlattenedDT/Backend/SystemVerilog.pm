@@ -944,7 +944,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
     if (%finally_filtered) {
         for my $filtered_signal (sort keys %finally_filtered) {
             my $signal_info = $finally_filtered{$filtered_signal};
-            my $expression = $signal_info->{ast} ? $ctx->ast_to_systemverilog($signal_info->{ast}) : $signal_info->{expression};
+            my $expression = $signal_info->{ast} ? $ctx->{enable_graph}->ast_to_systemverilog($signal_info->{ast}) : $signal_info->{expression};
             fsm_debug("    FILTERED OUT: $filtered_signal = $expression", 3);
         }
     }
