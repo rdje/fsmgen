@@ -1490,7 +1490,7 @@ sub update_original_asts_with_substituted_versions ($self, $factorizer) {
                         my $original_ast = $dt_enable_info->{enable_ast};
                         my $substituted_ast = $context_to_substituted_ast{$context_key};
                         
-                        my $original_sv = eval { $ctx->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                        my $original_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
                         my $substituted_sv = eval { $ctx->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
                         
                         $dt_enable_info->{enable_ast} = $substituted_ast;
