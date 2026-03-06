@@ -866,3 +866,7 @@ It is an exact-delay pulse request:
   - one DT-specific substituted-AST updated-render callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - DT-specific substitution debug rendering (`update_original_asts_with_substituted_versions`) now invokes `enable_graph->ast_to_systemverilog(...)` directly for `substituted_sv`,
   - this removes one backend delegation round-trip through `FlattenedDT` for AST rendering in the DT-specific substitution-update path while preserving output/test behavior.
+- Newest behavior-preserving increment:
+  - one LHS-level substituted-AST original-render callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - LHS-level substitution debug rendering (`update_original_asts_with_substituted_versions`) now invokes `enable_graph->ast_to_systemverilog(...)` directly for `original_sv`,
+  - this removes one backend delegation round-trip through `FlattenedDT` for AST rendering in the LHS-level substitution path while preserving output/test behavior.
