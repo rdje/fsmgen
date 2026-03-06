@@ -1674,7 +1674,7 @@ sub ast_contains_intermediate_signals ($self, $ast) {
     # This includes both regular signals and intermediate signals
     if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
         # Bare signal reference - never factorize
-        my $signal_name = $ctx->extract_signal_name_from_ast($ast) || 'unknown';
+        my $signal_name = $ctx->{enable_graph}->extract_signal_name_from_ast($ast) || 'unknown';
         my $ast_sv = eval { $ctx->ast_to_systemverilog($ast) } || 'unknown';
         fsm_debug("  SECOND_PASS_FILTER: Bare signal reference '$signal_name' (AST: $ast_sv) - NOT factorizable", 3);
         return 0;

@@ -834,3 +834,7 @@ It is an exact-delay pulse request:
   - one backend AST signal-name extraction callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - backend AST signal-reference traversal (`ast_contains_signal`) now invokes `enable_graph->extract_signal_name_from_ast(...)` directly,
   - this removes one backend delegation round-trip through `FlattenedDT` for AST signal-name extraction while preserving output/test behavior.
+- Newest behavior-preserving increment:
+  - one second-pass bare-signal AST name-extraction callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
+  - second-pass AST intermediate-signal gating (`ast_contains_intermediate_signals`) now invokes `enable_graph->extract_signal_name_from_ast(...)` directly,
+  - this removes one backend delegation round-trip through `FlattenedDT` for AST signal-name extraction in the second-pass path while preserving output/test behavior.
