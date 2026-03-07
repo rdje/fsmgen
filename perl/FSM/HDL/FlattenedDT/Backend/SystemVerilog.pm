@@ -1810,7 +1810,7 @@ sub update_original_asts_with_second_pass_substitutions ($self, $second_pass_fac
                         my $original_ast = $lhs_enable->{ast};
                         my $substituted_ast = $second_pass_context_to_ast{$context_key};
                         
-                        my $original_sv = eval { $ctx->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                        my $original_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
                         my $substituted_sv = eval { $ctx->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
                         
                         $lhs_enable->{ast} = $substituted_ast;
