@@ -987,7 +987,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
                 # CRITICAL FIX: Use substituted AST from factorizer, not original AST
                 my $substituted_ast = $self->get_substituted_ast_for_signal($signal_name, $signal_info);
                 if ($substituted_ast) {
-                    $expression = $ctx->ast_to_systemverilog($substituted_ast);
+                    $expression = $ctx->{enable_graph}->ast_to_systemverilog($substituted_ast);
                     fsm_debug("CONSOL_INTER_SIG: Using substituted AST for $signal_name: $expression", 3);
                 } else {
                     $expression = $ctx->ast_to_systemverilog($signal_info->{ast});

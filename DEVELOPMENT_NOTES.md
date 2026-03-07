@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-07: FlattenedDT backend convergence (substituted-AST consolidated render callsite)
+- Continued backend convergence by localizing one substituted-AST consolidated render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `FlattenedDT` pass-through (`$ctx->ast_to_systemverilog(...)`) to direct `EnableGraph` ownership (`$ctx->{enable_graph}->ast_to_systemverilog(...)`).
+- Rationale:
+  - this substituted-AST render belongs to backend-owned consolidated intermediate-signal emission and fits the same direct `EnableGraph` rendering ownership as the surrounding dependency/filter/debug paths,
+  - keeping the slice to one render branch preserves the established low-risk convergence cadence while shrinking another backend round-trip.
+- Safety/compatibility:
+  - single-callsite change only in the substituted-AST branch of consolidated intermediate-signal assign generation,
+  - no intended semantic change to substituted-AST selection, assignment emission, or emitted HDL text.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - the adjacent original-AST fallback render callsite in consolidated assign generation,
+  - remaining second-pass update render callsites.
 ## 2026-03-06: FlattenedDT backend convergence (final-filtered debug AST render callsite)
 - Continued backend convergence by localizing one final-filtered debug AST-render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `FlattenedDT` pass-through (`$ctx->ast_to_systemverilog(...)`) to direct `EnableGraph` ownership (`$ctx->{enable_graph}->ast_to_systemverilog(...)`).
 - Rationale:
