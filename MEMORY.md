@@ -14,6 +14,16 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-07: Backend convergence micro-slice (WEN/EN prescan entrypoint ownership)
+- Current worktree moves `prescan_wen_en_for_intermediate_signals()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`, while keeping `FlattenedDT` as a compatibility delegate.
+- This slice picks the smallest still-live helper on the active SystemVerilog generation path after confirming the nearby AST-based naming helpers are mostly idle compatibility code.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue through the remaining active helper/ownership seams in `FlattenedDT`,
+  - prioritize another behavior-preserving seam that is still exercised by the live Orchestrator/backend path rather than the mostly idle legacy naming utilities.
 ## 2026-03-07: Backend convergence micro-slice (AST sub-expression analysis helper ownership)
 - Current worktree moves `analyze_ast_sub_expressions()`, `find_all_ast_sub_expressions()`, and `is_simple_ast_expression()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`, while keeping `FlattenedDT` as compatibility delegates.
 - This slice localizes a small cohesive AST-analysis trio from the adjacent factorization helper cluster without pulling in the larger legacy string-based factorization family.

@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-07: FlattenedDT backend convergence (WEN/EN prescan entrypoint ownership)
+- Continued backend convergence by moving `prescan_wen_en_for_intermediate_signals()` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for that entrypoint.
+- Rationale:
+  - the nearby AST-based signal-naming helpers are currently mostly idle compatibility code, while the prescan step is still exercised directly by `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` on the live SystemVerilog generation path,
+  - the moved entrypoint already depends on backend/EnableGraph-owned behavior (`track_ast_intermediate_signals`) and therefore forms a small truthful ownership seam.
+- Safety/compatibility:
+  - the prescan logic and Orchestrator call order are unchanged apart from ownership and delegation,
+  - no intended semantic change to intermediate-signal discovery, declaration rescue, or emitted HDL behavior.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue scanning `FlattenedDT` for the next smallest active helper still exercised by the live Orchestrator/backend path,
+  - keep deferring mostly idle legacy naming helpers until an active call path needs them.
 ## 2026-03-07: FlattenedDT backend convergence (AST sub-expression analysis helper ownership)
 - Continued backend convergence by moving `analyze_ast_sub_expressions()`, `find_all_ast_sub_expressions()`, and `is_simple_ast_expression()` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to compatibility delegates for that trio.
 - Rationale:

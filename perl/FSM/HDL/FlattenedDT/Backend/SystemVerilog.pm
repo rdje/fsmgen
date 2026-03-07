@@ -573,6 +573,73 @@ sub generate_enable_conditions ($self, $fsm_module) {
     $hdl .= "\n";
     return $hdl;
 }
+sub prescan_wen_en_for_intermediate_signals ($self) {
+    my $ctx = $self->{flattened_dt};
+    # PRE-SCAN all WEN/EN expressions to identify intermediate signals that need to be declared
+    # This runs BEFORE generating intermediate signals so we know which ones to create
+    
+    fsm_debug("\n*** PRE-SCAN: IDENTIFYING INTERMEDIATE SIGNALS NEEDED FOR WEN/EN ***", 3);
+    fsm_debug("*** TIMING DEBUG: PRE-SCAN running WITHOUT logical operation counts! ***", 3);
+    
+    # Check if we have logical operation counts available
+    if (exists $ctx->{binary_logical_op_counts}) {
+        my $total_ops = 0;
+        for my $count (values %{$ctx->{binary_logical_op_counts}}) {
+            $total_ops += $count;
+        }
+        fsm_debug("PRE-SCAN: Logical operation counts ARE available: $total_ops total ops", 3);
+        fsm_debug("PRE-SCAN: Counts: " . Data::Dumper::Dumper($ctx->{binary_logical_op_counts}));
+    } else {
+        fsm_debug("*** PRE-SCAN: CRITICAL - Logical operation counts NOT available yet! ***", 3);
+        fsm_debug("*** This means pre-scan is creating intermediate signals blindly! ***", 3);
+    }
+    
+    # Initialize tracking structure
+    $ctx->{referenced_intermediate_signals} //= {};
+    
+    # Process each LHS from the unified analysis to scan all enable expressions
+    for my $lhs (sort keys %{$ctx->{assignment_analysis}}) {
+        my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
+        
+        # Scan all DT-specific enable ASTs for intermediate signal references
+        for my $rhs (sort keys %{$lhs_analysis->{rhs_groups}}) {
+            my $rhs_group = $lhs_analysis->{rhs_groups}->{$rhs};
+            
+            for my $dt_enable_info (@{$rhs_group->{dt_specific_enables}}) {
+                my $enable_ast = $dt_enable_info->{enable_ast};
+                
+                if ($enable_ast && blessed($enable_ast)) {
+                    fsm_debug("  PRE-SCAN: Scanning DT-specific enable: $dt_enable_info->{enable_name}", 3);
+                    $ctx->track_ast_intermediate_signals($enable_ast);
+                }
+            }
+            
+            # Scan LHS-level enable ASTs for intermediate signal references
+            if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}->{ast}) {
+                my $lhs_enable = $rhs_group->{lhs_level_enable};
+                my $enable_ast = $lhs_enable->{ast};
+                
+                if ($enable_ast && blessed($enable_ast)) {
+                    fsm_debug("  PRE-SCAN: Scanning LHS-level enable: $lhs_enable->{name}", 3);
+                    $ctx->track_ast_intermediate_signals($enable_ast);
+                }
+            }
+        }
+    }
+    
+    # Count discovered intermediate signals
+    my $signal_count = scalar(keys %{$ctx->{referenced_intermediate_signals}});
+    fsm_debug("PRE-SCAN: Identified $signal_count intermediate signals that need declaration", 3);
+    
+    # Debug list of discovered signals
+    if ($signal_count > 0) {
+        for my $signal_name (sort keys %{$ctx->{referenced_intermediate_signals}}) {
+            fsm_debug("  - $signal_name", 3);
+        }
+    }
+    
+    fsm_debug("*** PRE-SCAN COMPLETE ***\n", 3);
+}
 sub generate_intermediate_signals ($self, $fsm_module) {
     my $hdl = "";
     
