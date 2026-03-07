@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-07
+### FlattenedDT backend convergence (assignment-condition second-pass substituted-AST debug render callsite)
+- Localized one remaining backend AST-render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `$ctx->ast_to_systemverilog(...)` to `$ctx->{enable_graph}->ast_to_systemverilog(...)`.
+- The change is in the assignment-condition substituted-AST debug render inside `update_original_asts_with_second_pass_substitutions`, continuing direct `EnableGraph` ownership convergence inside backend code.
+- Scope remains behavior-preserving structural convergence only, with no intended HDL semantic change.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (assignment-condition second-pass original-AST debug render callsite)
 - Localized one remaining backend AST-render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `$ctx->ast_to_systemverilog(...)` to `$ctx->{enable_graph}->ast_to_systemverilog(...)`.
 - The change is in the assignment-condition original-AST debug render inside `update_original_asts_with_second_pass_substitutions`, continuing direct `EnableGraph` ownership convergence inside backend code.
