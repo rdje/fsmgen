@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-07: FlattenedDT backend convergence (AST sub-expression analysis helper ownership)
+- Continued backend convergence by moving `analyze_ast_sub_expressions()`, `find_all_ast_sub_expressions()`, and `is_simple_ast_expression()` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to compatibility delegates for that trio.
+- Rationale:
+  - after the intermediate-signal generation entrypoint move, this trio was the next smallest cohesive AST-analysis seam in the neighboring factorization helper cluster,
+  - moving the trio together avoids leaving recursive helper behavior split across facade and backend ownership.
+- Safety/compatibility:
+  - helper logic is unchanged apart from ownership and delegation,
+  - no intended semantic change to AST sub-expression discovery, factorization simplicity classification, or emitted HDL behavior.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue through the remaining adjacent factorization/helper cluster in `FlattenedDT`,
+  - keep the same smallest-cohesive-family extraction cadence.
 ## 2026-03-07: FlattenedDT backend convergence (intermediate-signal generation entrypoint ownership)
 - Continued backend convergence by moving `generate_intermediate_signals()` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for that entrypoint.
 - Rationale:

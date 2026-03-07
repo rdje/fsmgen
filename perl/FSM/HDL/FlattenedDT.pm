@@ -965,78 +965,11 @@ sub collect_all_wen_en_ast_expressions ($self) {
 }
 
 sub analyze_ast_sub_expressions ($self, $ast_expressions) {
-    # Analyze all collected AST expressions to find common sub-expressions
-    my %sub_expression_usage;
-    
-    fsm_debug("ANALYZE_AST: Analyzing sub-expressions in " . scalar(@$ast_expressions) . " AST expressions");
-    
-    for my $ast_info (@$ast_expressions) {
-        my $ast = $ast_info->{ast};
-        my $context = $ast_info->{context};
-        
-        # Find all sub-expressions in this AST
-        my @sub_expressions = $self->find_all_ast_sub_expressions($ast);
-        
-        for my $sub_expr_ast (@sub_expressions) {
-            # Convert to canonical string for comparison
-            my $canonical = eval { $sub_expr_ast->to_systemverilog() } || "invalid_ast";
-            
-            # Skip simple expressions
-            next if $self->is_simple_ast_expression($sub_expr_ast);
-            
-            # Record usage
-            $sub_expression_usage{$canonical} ||= {
-                ast => $sub_expr_ast,
-                usage_count => 0,
-                contexts => []
-            };
-            
-            $sub_expression_usage{$canonical}->{usage_count}++;
-            push @{$sub_expression_usage{$canonical}->{contexts}}, $context;
-            
-            fsm_debug("  Found sub-expression: '$canonical' in $context", 3);
-        }
-    }
-    
-    # Log summary
-    my $total_unique = scalar(keys %sub_expression_usage);
-    my $multi_use = grep { $sub_expression_usage{$_}->{usage_count} > 1 } keys %sub_expression_usage;
-    fsm_debug("ANALYZE_AST: Found $total_unique unique sub-expressions, $multi_use used multiple times", 3);
-    
-    return %sub_expression_usage;
+    return $self->{backend_sv}->analyze_ast_sub_expressions($ast_expressions);
 }
 
 sub find_all_ast_sub_expressions ($self, $ast) {
-    # Recursively find all meaningful sub-expressions in an AST
-    my @sub_expressions;
-    
-    return @sub_expressions unless $ast && blessed($ast);
-    
-    # Binary operations: include operands as sub-expressions
-    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
-        # Add operands if they're complex enough
-        if ($ast->can('left') && $ast->left && !$self->is_simple_ast_expression($ast->left)) {
-            push @sub_expressions, $ast->left;
-        }
-        if ($ast->can('right') && $ast->right && !$self->is_simple_ast_expression($ast->right)) {
-            push @sub_expressions, $ast->right;
-        }
-        
-        # Recursively find sub-expressions in operands
-        push @sub_expressions, $self->find_all_ast_sub_expressions($ast->left) if $ast->can('left');
-        push @sub_expressions, $self->find_all_ast_sub_expressions($ast->right) if $ast->can('right');
-    }
-    # Unary operations: include operand as sub-expression
-    elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
-        if ($ast->can('operand') && $ast->operand && !$self->is_simple_ast_expression($ast->operand)) {
-            push @sub_expressions, $ast->operand;
-        }
-        
-        # Recursively find sub-expressions in operand
-        push @sub_expressions, $self->find_all_ast_sub_expressions($ast->operand) if $ast->can('operand');
-    }
-    
-    return @sub_expressions;
+    return $self->{backend_sv}->find_all_ast_sub_expressions($ast);
 }
 
 sub count_binary_logical_operation_occurrences ($self) {
@@ -1068,53 +1001,7 @@ sub contains_frequently_used_operations ($self, $ast) {
 }
 
 sub is_simple_ast_expression ($self, $ast) {
-    # Refined factorization logic:
-    # - Always factor unary operations 
-    # - Only factor binary logical ops that appear multiple times
-    # - Always factor binary arithmetic operations
-    # - Literals and bare signal references remain simple
-    
-    return 1 unless $ast && blessed($ast);
-    
-    # Literals are always simple
-    return 1 if $ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal');
-    
-    # Signal references are simple
-    return 1 if $ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef');
-    
-    # UNARY OPERATIONS: Always factor (never simple)
-    if ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
-        fsm_debug("SIMPLE_CHECK: Unary operation - ALWAYS FACTOR (not simple)", 3);
-        return 0;  # Force factorization of all unary operations
-    }
-    
-    # BINARY OPERATIONS: Check type and occurrence count
-    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
-        # Always factor arithmetic operations
-        if ($self->is_arithmetic_operation($ast)) {
-            fsm_debug("SIMPLE_CHECK: Arithmetic operation - ALWAYS FACTOR (not simple)", 3);
-            return 0;  # Force factorization of all arithmetic operations
-        }
-        
-        # For logical operations, only factor if they appear multiple times
-        if ($self->is_logical_operation($ast)) {
-            my $should_factor = $self->should_factor_logical_operation($ast);
-            if ($should_factor) {
-                fsm_debug("SIMPLE_CHECK: Multi-use logical operation - FACTOR (not simple)", 3);
-                return 0;
-            } else {
-                fsm_debug("SIMPLE_CHECK: Single-use logical operation - DON'T FACTOR (simple)", 3);
-                return 1;
-            }
-        }
-        
-        # Other binary operations (comparisons, etc.) - factor if complex
-        fsm_debug("SIMPLE_CHECK: Other binary operation - FACTOR (not simple)", 3);
-        return 0;
-    }
-    
-    # Everything else is complex
-    return 0;
+    return $self->{backend_sv}->is_simple_ast_expression($ast);
 }
 
 sub identify_factorization_candidates ($self, $sub_expression_usage) {
