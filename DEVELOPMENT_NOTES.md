@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-07: FlattenedDT backend convergence (assignment-condition second-pass original-AST debug render callsite)
+- Continued backend convergence by localizing one assignment-condition second-pass original-AST debug render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `FlattenedDT` pass-through (`$ctx->ast_to_systemverilog(...)`) to direct `EnableGraph` ownership (`$ctx->{enable_graph}->ast_to_systemverilog(...)`).
+- Rationale:
+  - this original-AST debug render sits in the assignment-condition branch of backend-owned second-pass synchronization tracing and is the next smallest direct `EnableGraph` ownership seam after the LHS-level pair,
+  - keeping the slice to one assignment-condition debug callsite preserves the established low-risk convergence cadence while shrinking another backend round-trip.
+- Safety/compatibility:
+  - single-callsite change only in assignment-condition second-pass debug reporting inside `update_original_asts_with_second_pass_substitutions`,
+  - no intended semantic change to second-pass substitution updates, condition AST storage, or emitted HDL text.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - the adjacent assignment-condition second-pass substituted-AST debug render callsite,
+  - the later factorizer substituted-AST trace render.
 ## 2026-03-07: FlattenedDT backend convergence (LHS-level second-pass substituted-AST debug render callsite)
 - Continued backend convergence by localizing one LHS-level second-pass substituted-AST debug render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `FlattenedDT` pass-through (`$ctx->ast_to_systemverilog(...)`) to direct `EnableGraph` ownership (`$ctx->{enable_graph}->ast_to_systemverilog(...)`).
 - Rationale:
