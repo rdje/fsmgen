@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-07: FlattenedDT backend convergence (logical-op-count wrapper callsite)
+- Continued backend convergence by localizing the direct `run_global_ast_factorization` fallback callsite for `count_binary_logical_operation_occurrences()` behind a backend-local helper in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- Rationale:
+  - this was the remaining direct `FlattenedDT` method call in the active backend factorization flow, and wrapping it behind a backend-local helper is the smallest truthful slice before moving the heavier logical-op-count implementation family itself,
+  - keeping the slice to one helper addition plus one callsite change preserves the established low-risk convergence cadence while shrinking the visible backend/facade round-trip surface in operational code.
+- Safety/compatibility:
+  - single operational callsite change in `run_global_ast_factorization` plus a backend-local delegating helper,
+  - no intended semantic change to logical-op counting, factorization decisions, or emitted HDL text.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - move the logical-op-count implementation family (`count_binary_logical_operation_occurrences`, `_count_logical_ops_in_ast`, `_is_factorizable_sub_expression`, and any tightly coupled collection logic) into backend ownership,
+  - then re-scan for the next smallest backend/helper ownership seam.
 ## 2026-03-07: FlattenedDT backend convergence (bare intermediate-signal trace render callsite)
 - Continued backend convergence by localizing one bare `FSM::HDL::IntermediateSignalRef` trace render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from a `FlattenedDT` method call (`$ctx->ast_to_clean_systemverilog(...)`) to direct `EnableGraph` ownership (`$ctx->{enable_graph}->ast_to_systemverilog(...)`).
 - Rationale:

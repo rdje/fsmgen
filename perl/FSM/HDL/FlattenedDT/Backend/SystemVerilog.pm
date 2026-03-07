@@ -1087,6 +1087,10 @@ sub topologically_sort_signals ($self, $filtered_signals, $signal_dependencies) 
     
     return @sorted_signals;
 }
+sub count_binary_logical_operation_occurrences ($self) {
+    my $ctx = $self->{flattened_dt};
+    return $ctx->count_binary_logical_operation_occurrences();
+}
 sub run_global_ast_factorization ($self) {
     my $ctx = $self->{flattened_dt};
     # GENERIC AST-BASED GLOBAL FACTORIZATION
@@ -1112,7 +1116,7 @@ sub run_global_ast_factorization ($self) {
     } else {
         fsm_debug("GLOBAL_AST_FACT: [NOT_EXISTS] binary_logical_op_counts NOT found - running count now", 3);
         fsm_debug("*** WARNING: No logical operation counts available - this shouldn't happen! ***", 3);
-        $ctx->count_binary_logical_operation_occurrences();
+        $self->count_binary_logical_operation_occurrences();
     }
     
     # Load the generic AST factorization system

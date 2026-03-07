@@ -14,6 +14,16 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-07: Backend convergence micro-slice (logical-op-count wrapper callsite)
+- Current worktree localizes the remaining direct `run_global_ast_factorization` backend method-call round-trip in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by routing `count_binary_logical_operation_occurrences()` through a backend-local helper instead of calling `FlattenedDT` directly from the factorization flow.
+- The slice adds a backend-local `count_binary_logical_operation_occurrences()` helper and switches the `run_global_ast_factorization` fallback callsite to `$self->count_binary_logical_operation_occurrences()`.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - move the logical-op-count implementation family itself into backend ownership so the new backend-local helper stops delegating through `FlattenedDT`,
+  - then re-scan for the next smallest backend/helper ownership seam.
 ## 2026-03-07: Backend convergence micro-slice (bare intermediate-signal trace render callsite)
 - Current worktree localizes one remaining backend render/helper round-trip in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from a `FlattenedDT` method call (`$ctx->ast_to_clean_systemverilog(...)`) to direct `EnableGraph` ownership (`$ctx->{enable_graph}->ast_to_systemverilog(...)`).
 - The slice is the bare `FSM::HDL::IntermediateSignalRef` trace render in `ast_contains_intermediate_signals`.
