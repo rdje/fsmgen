@@ -14,6 +14,16 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-07: Backend convergence micro-slice (LHS-level second-pass substituted-AST debug render callsite)
+- Current worktree localizes one remaining backend AST-render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `FlattenedDT` pass-through (`$ctx->ast_to_systemverilog(...)`) to direct `EnableGraph` ownership (`$ctx->{enable_graph}->ast_to_systemverilog(...)`).
+- The slice is the LHS-level substituted-AST debug render in `update_original_asts_with_second_pass_substitutions`.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue remaining backend `ast_to_systemverilog` round-trips in `Backend/SystemVerilog.pm`,
+  - prioritize the assignment-condition second-pass original/substituted debug render callsites and then the later factorizer substituted-AST trace render.
 ## 2026-03-07: Backend convergence micro-slice (LHS-level second-pass original-AST debug render callsite)
 - Current worktree localizes one remaining backend AST-render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `FlattenedDT` pass-through (`$ctx->ast_to_systemverilog(...)`) to direct `EnableGraph` ownership (`$ctx->{enable_graph}->ast_to_systemverilog(...)`).
 - The slice is the LHS-level original-AST debug render in `update_original_asts_with_second_pass_substitutions`.
