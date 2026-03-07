@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-07: FlattenedDT backend convergence (logical-op-count collector ownership)
+- Continued backend convergence by moving `collect_all_wen_en_ast_expressions()` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for that helper.
+- Rationale:
+  - after the logical-op-count entrypoint move, the collector was the next smallest self-contained ownership seam because it only traverses existing `FlattenedDT` state and does not depend on the remaining counting/policy helpers,
+  - switching the backend-owned count flow to `$self->collect_all_wen_en_ast_expressions()` removes one more active backend/facade round-trip while keeping the slice to a single helper family boundary.
+- Safety/compatibility:
+  - the collector logic is unchanged apart from ownership and callsite relocation,
+  - the remaining direct backend dependency in this family is `_count_logical_ops_in_ast()`, which still couples through `_is_factorizable_sub_expression()`,
+  - no intended semantic change to logical-op counting, factorization policy, or emitted HDL text.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - move `_count_logical_ops_in_ast()` into backend ownership together with `_is_factorizable_sub_expression()`,
+  - then re-scan for any remaining direct backend/facade round-trips in the logical-op-count family.
 ## 2026-03-07: FlattenedDT backend convergence (logical-op-count entrypoint ownership)
 - Continued backend convergence by moving `count_binary_logical_operation_occurrences()` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for that entrypoint.
 - Rationale:

@@ -1110,7 +1110,7 @@ sub count_binary_logical_operation_occurrences ($self) {
     fsm_debug("COUNT_LOGICAL_OPS: Counting binary logical operation occurrences", 3);
     
     # Collect all AST expressions
-    my @ast_expressions = $ctx->collect_all_wen_en_ast_expressions();
+    my @ast_expressions = $self->collect_all_wen_en_ast_expressions();
     
     # Count logical operations in each expression
     for my $ast_info (@ast_expressions) {
@@ -1152,6 +1152,60 @@ sub count_binary_logical_operation_occurrences ($self) {
     
     fsm_debug("*** COUNT_LOGICAL_OPS: LOGICAL OPERATION COUNTING COMPLETE ***\n", 3);
     return \%logical_op_counts;
+}
+sub collect_all_wen_en_ast_expressions ($self) {
+    my $ctx = $self->{flattened_dt};
+    # Collect ALL AST expressions used in WEN/EN signals across the design
+    my @ast_expressions;
+    
+    fsm_debug("COLLECT_AST: Collecting all WEN/EN AST expressions", 3);
+    
+    # Collect from unified assignment analysis
+    if ($ctx->{assignment_analysis}) {
+        for my $lhs (keys %{$ctx->{assignment_analysis}}) {
+            my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
+            
+            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
+                my $rhs_group = $lhs_analysis->{rhs_groups}->{$rhs};
+                
+                # Collect DT-specific enable ASTs
+                for my $dt_enable (@{$rhs_group->{dt_specific_enables} || []}) {
+                    if ($dt_enable->{enable_ast}) {
+                        push @ast_expressions, {
+                            ast => $dt_enable->{enable_ast},
+                            context => "dt_enable:$dt_enable->{enable_name}",
+                            usage_type => 'dt_enable'
+                        };
+                    }
+                }
+                
+                # Collect LHS-level enable ASTs
+                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}->{ast}) {
+                    push @ast_expressions, {
+                        ast => $rhs_group->{lhs_level_enable}->{ast},
+                        context => "lhs_enable:$rhs_group->{lhs_level_enable}->{name}",
+                        usage_type => 'lhs_enable'
+                    };
+                }
+            }
+        }
+    }
+    
+    # Collect from any other AST sources (assignments with stored ASTs)
+    for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
+        for my $assignment (@{$ctx->{lhs_assignments}->{$lhs}}) {
+            if ($assignment->{conditions_ast}) {
+                push @ast_expressions, {
+                    ast => $assignment->{conditions_ast},
+                    context => "assignment_condition:$lhs:$assignment->{dt}",
+                    usage_type => 'assignment_condition'
+                };
+            }
+        }
+    }
+    
+    fsm_debug("COLLECT_AST: Collected " . scalar(@ast_expressions) . " AST expressions", 3);
+    return @ast_expressions;
 }
 sub run_global_ast_factorization ($self) {
     my $ctx = $self->{flattened_dt};

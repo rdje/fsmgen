@@ -14,6 +14,16 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-07: Backend convergence micro-slice (logical-op-count collector ownership)
+- Current worktree moves `collect_all_wen_en_ast_expressions()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`, while keeping `FlattenedDT` as a compatibility delegate.
+- The backend logical-op-count flow now calls `$self->collect_all_wen_en_ast_expressions()` locally; the remaining direct backend `FlattenedDT` helper round-trip inside this family is `_count_logical_ops_in_ast()`, which still relies on `_is_factorizable_sub_expression()`.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - move `_count_logical_ops_in_ast()` ownership into backend together with the coupled `_is_factorizable_sub_expression()` policy helper,
+  - then re-scan the logical-op-count family for any remaining backend/facade round-trips.
 ## 2026-03-07: Backend convergence micro-slice (logical-op-count entrypoint ownership)
 - Current worktree moves `count_binary_logical_operation_occurrences()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`, while keeping `FlattenedDT` as a compatibility delegate.
 - The backend entrypoint now owns the counting flow directly; remaining direct backend `FlattenedDT` helper calls inside this family are:
