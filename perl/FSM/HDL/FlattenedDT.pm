@@ -953,44 +953,7 @@ sub is_redundant_intermediate_signal ($self, $canonical_expr, $signal_name) {
 }
 
 sub generate_intermediate_signals ($self, $fsm_module) {
-    my $hdl = "";
-    
-    fsm_debug("\n*** PHASE: GENERATE INTERMEDIATE SIGNALS (FULLY AST-BASED) ***", 3);
-    
-    # STEP 1: Run global AST factorization on all WEN/EN expressions
-    my $intermediate_signals = $self->run_global_ast_factorization();
-    
-    # STEP 2: Generate SystemVerilog declarations and assignments
-    if (%$intermediate_signals) {
-        $hdl .= "  // Intermediate signals for complex expressions\n";
-        
-        # Sort for deterministic output
-        for my $signal_name (sort keys %$intermediate_signals) {
-            my $signal_info = $intermediate_signals->{$signal_name};
-            my $ast = $signal_info->{ast};
-            my $width = $signal_info->{width} || 1;
-            my $usage_count = $signal_info->{usage_count};
-            
-            fsm_debug("  Generating intermediate signal: $signal_name (width=$width, usage=$usage_count)", 3);
-            
-            # Generate wire declaration
-            if ($width > 1) {
-                $hdl .= "  wire [" . ($width - 1) . ":0] $signal_name;\n";
-            } else {
-                $hdl .= "  wire $signal_name;\n";
-            }
-            
-            # Generate assign statement from AST
-            my $systemverilog_expr = $ast->to_systemverilog();
-            $hdl .= "  assign $signal_name = $systemverilog_expr;\n";
-        }
-    } else {
-        fsm_debug("  No intermediate signals needed", 3);
-    }
-    
-    fsm_debug("*** END PHASE: GENERATE INTERMEDIATE SIGNALS ***\n", 3);
-    
-    return $hdl;
+    return $self->{backend_sv}->generate_intermediate_signals($fsm_module);
 }
 
 sub run_global_ast_factorization ($self) {

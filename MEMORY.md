@@ -14,6 +14,16 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-07: Backend convergence micro-slice (intermediate-signal generation entrypoint ownership)
+- Current worktree moves `generate_intermediate_signals()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`, while keeping `FlattenedDT` as a compatibility delegate.
+- The moved entrypoint is a clean backend-facing seam because its active dependency, `run_global_ast_factorization()`, is already backend-owned.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue shrinking the adjacent legacy factorization/helper cluster around intermediate-signal generation in `FlattenedDT`,
+  - prioritize the next smallest backend-owned entrypoint or helper family that can move without changing behavior.
 ## 2026-03-07: Backend convergence micro-slice (logical-op-count helper-pair ownership)
 - Current worktree moves `_count_logical_ops_in_ast()` and `_is_factorizable_sub_expression()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`, while keeping `FlattenedDT` as compatibility delegates.
 - The backend logical-op-count family is now locally self-contained for the active counting flow:

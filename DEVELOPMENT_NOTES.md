@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-07: FlattenedDT backend convergence (intermediate-signal generation entrypoint ownership)
+- Continued backend convergence by moving `generate_intermediate_signals()` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for that entrypoint.
+- Rationale:
+  - after localizing the logical-op-count family, `generate_intermediate_signals()` was the next small backend-facing entrypoint whose active dependency chain was already mostly backend-local,
+  - this preserves the micro-slice cadence while shrinking `FlattenedDT` by one more explicit backend ownership boundary.
+- Safety/compatibility:
+  - the entrypoint body is unchanged apart from ownership and delegation,
+  - no intended semantic change to factorization results, intermediate declaration text, or emitted HDL behavior.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue through the adjacent intermediate-signal / legacy factorization helper cluster in `FlattenedDT`,
+  - keep choosing the smallest behavior-preserving backend-owned seam each time.
 ## 2026-03-07: FlattenedDT backend convergence (logical-op-count helper-pair ownership)
 - Continued backend convergence by moving `_count_logical_ops_in_ast()` and `_is_factorizable_sub_expression()` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to compatibility delegates for both helpers.
 - Rationale:
