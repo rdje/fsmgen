@@ -14,6 +14,18 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-07: Backend convergence micro-slice (logical-op-count entrypoint ownership)
+- Current worktree moves `count_binary_logical_operation_occurrences()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`, while keeping `FlattenedDT` as a compatibility delegate.
+- The backend entrypoint now owns the counting flow directly; remaining direct backend `FlattenedDT` helper calls inside this family are:
+  - `collect_all_wen_en_ast_expressions()`
+  - `_count_logical_ops_in_ast()`
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue shrinking the logical-op-count family by localizing the remaining backend helper round-trips,
+  - likely start with `collect_all_wen_en_ast_expressions()` before the deeper `_count_logical_ops_in_ast()` / `_is_factorizable_sub_expression()` pair.
 ## 2026-03-07: Backend convergence micro-slice (logical-op-count wrapper callsite)
 - Current worktree localizes the remaining direct `run_global_ast_factorization` backend method-call round-trip in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by routing `count_binary_logical_operation_occurrences()` through a backend-local helper instead of calling `FlattenedDT` directly from the factorization flow.
 - The slice adds a backend-local `count_binary_logical_operation_occurrences()` helper and switches the `run_global_ast_factorization` fallback callsite to `$self->count_binary_logical_operation_occurrences()`.

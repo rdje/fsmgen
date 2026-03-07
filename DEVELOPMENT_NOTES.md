@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-07: FlattenedDT backend convergence (logical-op-count entrypoint ownership)
+- Continued backend convergence by moving `count_binary_logical_operation_occurrences()` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for that entrypoint.
+- Rationale:
+  - after the previous wrapper slice, the entrypoint itself was the next smallest truthful ownership move and could be relocated without forcing the entire logical-op-count helper family across at once,
+  - this preserves the established low-risk cadence while making the active backend factorization flow own its logical-op-count entrypoint directly.
+- Safety/compatibility:
+  - the moved backend entrypoint still relies on `FlattenedDT` for the currently unmoved helper methods `collect_all_wen_en_ast_expressions()` and `_count_logical_ops_in_ast()`,
+  - no intended semantic change to logical-op counting, factorization policy, or emitted HDL text.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - move `collect_all_wen_en_ast_expressions()` into backend ownership,
+  - then tackle `_count_logical_ops_in_ast()` together with the tightly coupled `_is_factorizable_sub_expression()` helper.
 ## 2026-03-07: FlattenedDT backend convergence (logical-op-count wrapper callsite)
 - Continued backend convergence by localizing the direct `run_global_ast_factorization` fallback callsite for `count_binary_logical_operation_occurrences()` behind a backend-local helper in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - Rationale:

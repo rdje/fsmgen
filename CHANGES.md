@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-07
+### FlattenedDT backend convergence (logical-op-count entrypoint ownership)
+- Moved `count_binary_logical_operation_occurrences()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->count_binary_logical_operation_occurrences()`.
+- The backend-owned entrypoint still calls back into `FlattenedDT` for the currently unmoved helpers `collect_all_wen_en_ast_expressions()` and `_count_logical_ops_in_ast()`, so scope remains a small behavior-preserving ownership step rather than a full family move.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (logical-op-count wrapper callsite)
 - Localized the remaining direct `run_global_ast_factorization` backend method-call round-trip in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by routing `count_binary_logical_operation_occurrences()` through a backend-local helper.
 - Added backend-local helper `count_binary_logical_operation_occurrences()` and switched the factorization fallback callsite from direct `FlattenedDT` invocation to `$self->count_binary_logical_operation_occurrences()`.

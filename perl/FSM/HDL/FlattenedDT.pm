@@ -1127,69 +1127,7 @@ sub find_all_ast_sub_expressions ($self, $ast) {
 }
 
 sub count_binary_logical_operation_occurrences ($self) {
-    # Count occurrences of specific binary logical operations across all FSM expressions
-    # This is used to determine if binary logical operations should be factorized
-    
-    my %logical_op_counts;
-    
-    fsm_debug("\n*** COUNT_LOGICAL_OPS: STARTING LOGICAL OPERATION COUNTING ***", 3);
-    fsm_debug("COUNT_LOGICAL_OPS: This should happen BEFORE any intermediate signal creation!", 3);
-    
-    # Check if pre-scan has already run
-    if (exists $self->{referenced_intermediate_signals} && %{$self->{referenced_intermediate_signals}}) {
-        my $prescan_count = scalar(keys %{$self->{referenced_intermediate_signals}});
-        fsm_debug("*** COUNT_LOGICAL_OPS: WARNING - Pre-scan has already identified $prescan_count intermediate signals! ***", 3);
-        fsm_debug("*** This means the logical operation counting is happening TOO LATE! ***", 3);
-        fsm_debug("Pre-scan signals: " . join(", ", sort keys %{$self->{referenced_intermediate_signals}}));
-    } else {
-        fsm_debug("COUNT_LOGICAL_OPS: Good - No pre-scan signals created yet", 3);
-    }
-    
-    fsm_debug("COUNT_LOGICAL_OPS: Counting binary logical operation occurrences", 3);
-    
-    # Collect all AST expressions
-    my @ast_expressions = $self->collect_all_wen_en_ast_expressions();
-    
-    # Count logical operations in each expression
-    for my $ast_info (@ast_expressions) {
-        my $ast = $ast_info->{ast};
-        $self->_count_logical_ops_in_ast($ast, \%logical_op_counts);
-    }
-    
-    # Also count from any intermediate signal expressions
-    for my $signal_name (keys %{$self->{intermediate_signals} || {}}) {
-        my $expression = $self->{intermediate_signals}->{$signal_name};
-        # Try to parse the string expression back to AST for counting
-        my $ast = eval { $self->{expr_namer}->parse_expression($expression) } if $expression;
-        if ($ast) {
-            $self->_count_logical_ops_in_ast($ast, \%logical_op_counts);
-        }
-    }
-    
-    # Store the counts for later use
-    $self->{binary_logical_op_counts} = \%logical_op_counts;
-    
-    # Debug output
-    my $total_ops = 0;
-    my @high_count_ops;
-    for my $op_signature (keys %logical_op_counts) {
-        my $count = $logical_op_counts{$op_signature};
-        $total_ops += $count;
-        fsm_debug("  Logical operation '$op_signature' appears $count times", 3);
-        if ($count > 1) {
-            push @high_count_ops, "$op_signature ($count times)";
-        }
-    }
-    
-    fsm_debug("COUNT_LOGICAL_OPS: Found $total_ops total logical operations", 3);
-    fsm_debug("COUNT_LOGICAL_OPS: Operations appearing multiple times: " . (@high_count_ops ? join(", ", @high_count_ops) : "None"));
-    
-    # Show the full counts structure for debugging
-    fsm_debug("COUNT_LOGICAL_OPS: Complete counts structure:", 3);
-    fsm_debug(Data::Dumper::Dumper(\%logical_op_counts));
-    
-    fsm_debug("*** COUNT_LOGICAL_OPS: LOGICAL OPERATION COUNTING COMPLETE ***\n", 3);
-    return \%logical_op_counts;
+    return $self->{backend_sv}->count_binary_logical_operation_occurrences();
 }
 
 sub _count_logical_ops_in_ast ($self, $ast, $counts_ref) {
