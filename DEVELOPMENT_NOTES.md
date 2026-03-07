@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-07: FlattenedDT backend convergence (logical-op-count helper-pair ownership)
+- Continued backend convergence by moving `_count_logical_ops_in_ast()` and `_is_factorizable_sub_expression()` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to compatibility delegates for both helpers.
+- Rationale:
+  - after the collector move, these two methods formed the remaining coupled backend/facade dependency inside the logical-op-count family,
+  - moving them together keeps the slice truthful and avoids leaving recursion in backend code dependent on a facade-owned policy helper.
+- Safety/compatibility:
+  - the recursion and factorization-policy logic are unchanged apart from ownership and callsite relocation,
+  - `FlattenedDT` still exposes compatibility delegates for both helper names,
+  - no intended semantic change to logical-op counting, factorization policy, or emitted HDL text.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - re-scan `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` for the next smallest backend/facade ownership seam now that the logical-op-count family is locally owned,
+  - continue the same micro-slice convergence cadence.
+## 2026-03-07: Roadmap decision update (legacy plugin retirement)
+- The roadmap direction for extension points is now to retire legacy `.plg` / `PPlugin.pm` support rather than carry it forward as a compatibility feature.
+- Intended replacement direction:
+  - use a more standard, typed, and robust extension mechanism when roadmap item 5 is executed,
+  - treat current plugin artifacts as legacy behavior to replace, not architecture to preserve.
 ## 2026-03-07: FlattenedDT backend convergence (logical-op-count collector ownership)
 - Continued backend convergence by moving `collect_all_wen_en_ast_expressions()` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for that helper.
 - Rationale:

@@ -1081,82 +1081,11 @@ sub count_binary_logical_operation_occurrences ($self) {
 }
 
 sub _count_logical_ops_in_ast ($self, $ast, $counts_ref) {
-    # Recursively count ALL factorizable sub-expressions in an AST
-    # This traverses the ENTIRE AST tree to find every possible sub-expression that could be factored
-    return unless $ast && blessed($ast);
-    
-    # COUNT THIS ENTIRE EXPRESSION: Check if this entire AST node is factorizable
-    if ($self->_is_factorizable_sub_expression($ast)) {
-        my $signature = eval { $ast->to_systemverilog() } || 'unknown';
-        $counts_ref->{$signature}++;
-        fsm_debug("    Found factorizable sub-expression: '$signature' (count: $counts_ref->{$signature})", 3);
-    }
-    
-    # RECURSE INTO ALL CHILDREN: Walk the entire AST tree to find nested factorizable expressions
-    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
-        # Recursively analyze both operands
-        $self->_count_logical_ops_in_ast($ast->left, $counts_ref) if $ast->can('left');
-        $self->_count_logical_ops_in_ast($ast->right, $counts_ref) if $ast->can('right');
-    }
-    elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
-        # Recursively analyze operand
-        $self->_count_logical_ops_in_ast($ast->operand, $counts_ref) if $ast->can('operand');
-    }
-    
-    # Note: Literals and SignalRefs are leaf nodes - they don't need recursion
+    return $self->{backend_sv}->_count_logical_ops_in_ast($ast, $counts_ref);
 }
 
 sub _is_factorizable_sub_expression ($self, $ast) {
-    # Determine if an AST node represents a sub-expression worth factoring
-    # Based on the spec:
-    # - Unary operations: ALWAYS create intermediate signals
-    # - Binary logical operations: Only if used more than once 
-    # - Binary arithmetic operations: ALWAYS create intermediate signals
-    
-    return 0 unless $ast && blessed($ast);
-    
-    # DON'T factor simple literals or bare signal references
-    if ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal')) {
-        return 0;
-    }
-    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
-        return 0;
-    }
-    
-    # UNARY OPERATIONS: Always factor (per spec)
-    if ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
-        fsm_debug("FACTORIZABLE: Unary operation - ALWAYS FACTOR", 3);
-        return 1;
-    }
-    
-    # BINARY OPERATIONS: Check type to determine factorization policy
-    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
-        # Arithmetic operations: Always factor (per spec)
-        if ($self->is_arithmetic_operation($ast)) {
-            fsm_debug("FACTORIZABLE: Arithmetic operation - ALWAYS FACTOR", 3);
-            return 1;
-        }
-        
-        # Logical operations: Only if used multiple times (per spec)
-        if ($self->is_logical_operation($ast)) {
-            my $signature = eval { $ast->to_systemverilog() } || 'unknown';
-            my $count = ($self->{binary_logical_op_counts} || {})->{$signature} || 0;
-            if ($count > 1) {
-                fsm_debug("FACTORIZABLE: Logical operation '$signature' used $count times - FACTOR", 3);
-                return 1;
-            } else {
-                fsm_debug("FACTORIZABLE: Logical operation '$signature' used only $count time - DON'T FACTOR", 3);
-                return 0;
-            }
-        }
-        
-        # Other binary operations (comparisons, etc.): Always factor
-        fsm_debug("FACTORIZABLE: Other binary operation - ALWAYS FACTOR", 3);
-        return 1;
-    }
-    
-    # DO factor other complex expressions
-    return 1;
+    return $self->{backend_sv}->_is_factorizable_sub_expression($ast);
 }
 
 sub is_arithmetic_operation ($self, $ast) {

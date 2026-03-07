@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-07
+### FlattenedDT backend convergence (logical-op-count helper-pair ownership)
+- Moved `_count_logical_ops_in_ast()` and `_is_factorizable_sub_expression()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->_count_logical_ops_in_ast(...)` and `backend_sv->_is_factorizable_sub_expression(...)`.
+- Updated the backend-owned logical-op-count flow to recurse through `$self->_count_logical_ops_in_ast(...)` instead of round-tripping back through `FlattenedDT`.
+- Scope remains behavior-preserving structural convergence only; this completes backend-local ownership of the active logical-op-count helper family.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (logical-op-count collector ownership)
 - Moved `collect_all_wen_en_ast_expressions()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `backend_sv->collect_all_wen_en_ast_expressions()`.
