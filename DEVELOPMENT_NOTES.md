@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-07: FlattenedDT backend convergence (factorizer substituted-AST trace render callsite)
+- Continued backend convergence by localizing one factorizer substituted-AST trace render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `FlattenedDT` pass-through (`$ctx->ast_to_systemverilog(...)`) to direct `EnableGraph` ownership (`$ctx->{enable_graph}->ast_to_systemverilog(...)`).
+- Rationale:
+  - this trace render sits in `get_substituted_ast_for_signal`, where factorizer-owned substituted AST lookup is already backend-local and fits the same direct `EnableGraph` rendering ownership as the recently completed second-pass debug paths,
+  - keeping the slice to one factorizer trace callsite preserves the established low-risk convergence cadence while removing the last exact backend `$ctx->ast_to_systemverilog(...)` round-trip in this file cluster.
+- Safety/compatibility:
+  - single-callsite change only in factorizer substituted-AST debug tracing inside `get_substituted_ast_for_signal`,
+  - no intended semantic change to factorizer lookup, substituted AST selection, or emitted HDL text.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - re-scan for remaining backend ownership seams now that exact backend `$ctx->ast_to_systemverilog(...)` pass-throughs are exhausted,
+  - choose the next smallest render/helper round-trip beyond this exact pattern.
 ## 2026-03-07: FlattenedDT backend convergence (assignment-condition second-pass substituted-AST debug render callsite)
 - Continued backend convergence by localizing one assignment-condition second-pass substituted-AST debug render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `FlattenedDT` pass-through (`$ctx->ast_to_systemverilog(...)`) to direct `EnableGraph` ownership (`$ctx->{enable_graph}->ast_to_systemverilog(...)`).
 - Rationale:
