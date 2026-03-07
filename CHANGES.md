@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-07
+### FlattenedDT backend convergence (bare intermediate-signal trace render callsite)
+- Localized one remaining backend render/helper round-trip in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `$ctx->ast_to_clean_systemverilog(...)` to `$ctx->{enable_graph}->ast_to_systemverilog(...)`.
+- The change is in the bare `FSM::HDL::IntermediateSignalRef` trace render inside `ast_contains_intermediate_signals`, continuing direct `EnableGraph` ownership convergence inside backend code.
+- Scope remains behavior-preserving structural convergence only, with no intended HDL semantic change.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (factorizer substituted-AST trace render callsite)
 - Localized one remaining backend AST-render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `$ctx->ast_to_systemverilog(...)` to `$ctx->{enable_graph}->ast_to_systemverilog(...)`.
 - The change is in the factorizer substituted-AST trace render inside `get_substituted_ast_for_signal`, continuing direct `EnableGraph` ownership convergence inside backend code.

@@ -1684,7 +1684,7 @@ sub ast_contains_intermediate_signals ($self, $ast) {
     if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
         # Bare intermediate signal reference - never factorize
         my $signal_name = $ast->{signal_name} || 'unknown';
-        my $ast_sv = eval { $ctx->ast_to_clean_systemverilog($ast) } || 'unknown';
+        my $ast_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($ast) } || 'unknown';
         fsm_debug("  SECOND_PASS_FILTER: Bare intermediate signal reference '$signal_name' (AST: $ast_sv) - NOT factorizable", 3);
         return 0;
     }

@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-07: FlattenedDT backend convergence (bare intermediate-signal trace render callsite)
+- Continued backend convergence by localizing one bare `FSM::HDL::IntermediateSignalRef` trace render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from a `FlattenedDT` method call (`$ctx->ast_to_clean_systemverilog(...)`) to direct `EnableGraph` ownership (`$ctx->{enable_graph}->ast_to_systemverilog(...)`).
+- Rationale:
+  - this trace render sits in `ast_contains_intermediate_signals`, directly beside the already localized signal-name and regular-AST trace handling and is a smaller seam than the remaining logical-op-count helper call,
+  - keeping the slice to one debug render callsite preserves the established low-risk convergence cadence while shrinking the remaining direct backend method-call round-trips to one.
+- Safety/compatibility:
+  - single-callsite change only in bare intermediate-signal debug tracing inside `ast_contains_intermediate_signals`,
+  - no intended semantic change to second-pass factorization decisions, AST classification, or emitted HDL text.
+- Verification:
+  - syntax checks for touched modules pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - the remaining direct backend `count_binary_logical_operation_occurrences()` round-trip in `run_global_ast_factorization`,
+  - any next-smallest backend ownership seam after that callsite is exhausted.
 ## 2026-03-07: FlattenedDT backend convergence (factorizer substituted-AST trace render callsite)
 - Continued backend convergence by localizing one factorizer substituted-AST trace render callsite in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from `FlattenedDT` pass-through (`$ctx->ast_to_systemverilog(...)`) to direct `EnableGraph` ownership (`$ctx->{enable_graph}->ast_to_systemverilog(...)`).
 - Rationale:
