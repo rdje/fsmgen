@@ -14,6 +14,17 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-08: Backend convergence micro-slice (flatten-all-decision-trees orchestration ownership)
+- Current worktree moves `flatten_all_decision_trees()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`, while keeping `FlattenedDT` as a compatibility delegate.
+- This slice follows the recent live-path focus: the moved entrypoint is exercised directly by `generate_systemverilog()` and is a smaller truthful orchestration seam than the adjacent deeper flattener helper family.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue scanning the live flattening/orchestration path for the next smallest helper family adjacent to this entrypoint,
+  - keep deprioritizing dormant legacy factorization helpers until they become operationally relevant again.
 ## 2026-03-08: Backend convergence micro-slice (AST condition-helper ownership)
 - Current worktree moves `create_condition_expression()`, `convert_condition_to_ast()`, and `convert_test_value_to_ast()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`, while keeping `FlattenedDT` as compatibility delegates.
 - This slice targets the next smallest still-live helper family after confirming the nearby legacy factorization and AST naming helpers are mostly dormant, while the moved trio is exercised directly during branch/test flattening and assignment/transition condition construction.

@@ -16,6 +16,58 @@ sub new ($class, %args) {
         flattened_dt => $flattened_dt,
     }, $class;
 }
+sub flatten_all_decision_trees ($self, $fsm_module) {
+    my $ctx = $self->{flattened_dt};
+
+    fsm_debug("Flattening all decision trees", 3);
+    
+    # Process regular states
+    for my $state (@{$fsm_module->states}) {
+        next if $state->name =~ /^-/; # Skip standalone DTs for now
+        
+        fsm_debug("Flattening state: " . $state->name, 3);
+        
+        # State enable condition
+        my $state_enable = "current_state == " . uc($state->name);
+        $ctx->{state_enables}->{$state->name} = $state_enable;
+        
+        # Flatten the state's decision trees
+        if ($state->decision_trees && @{$state->decision_trees}) {
+            for my $dt (@{$state->decision_trees}) {
+                $ctx->flatten_decision_tree(
+                    $state->name,
+                    $dt,
+                    []  # Initial condition stack
+                );
+            }
+        }
+    }
+    
+    # Process standalone decision trees
+    for my $state (@{$fsm_module->states}) {
+        next unless $state->name =~ /^-/; # Only standalone DTs
+        
+        fsm_debug("Flattening standalone DT: " . $state->name, 3);
+        
+        # Standalone DT enable condition (always active, but may have internal conditions)
+        my $dt_enable = "1'b1"; # Default to always enabled, refined by internal conditions
+        $ctx->{dt_enables}->{$state->name} = $dt_enable;
+        
+        # Flatten the standalone decision trees
+        if ($state->decision_trees && @{$state->decision_trees}) {
+            for my $dt (@{$state->decision_trees}) {
+                $ctx->flatten_decision_tree(
+                    $state->name,
+                    $dt,
+                    []  # Initial condition stack
+                );
+            }
+        }
+    }
+    
+    # UNIFIED PHASE 1: Build complete assignment analysis structure
+    $ctx->build_unified_assignment_analysis($fsm_module);
+}
 
 sub generate_systemverilog ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
@@ -28,7 +80,7 @@ sub generate_systemverilog ($self, $fsm_module) {
     fsm_debug("Step 0 - FSM module reference stored", 3);
     
     # Step 1: Analyze and flatten all decision trees
-    $ctx->flatten_all_decision_trees($fsm_module);
+    $self->flatten_all_decision_trees($fsm_module);
     fsm_debug("Step 1 - Decision trees flattened", 3);
     
     # Step 2: Generate SystemVerilog with enable-based methodology

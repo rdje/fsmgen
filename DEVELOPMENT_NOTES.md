@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-08: FlattenedDT backend convergence (flatten-all-decision-trees orchestration ownership)
+- Continued backend convergence by moving `flatten_all_decision_trees()` ownership into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for that entrypoint.
+- Rationale:
+  - after the recent live-path slices, this entrypoint was the next smallest still-exercised orchestration seam because `generate_systemverilog()` is its only operational caller and the body already behaves like orchestration glue over `flatten_decision_tree()` plus unified-analysis setup,
+  - moving the entrypoint first keeps the slice smaller and safer than immediately pulling the deeper recursive flattener helper family.
+- Safety/compatibility:
+  - the moved body is unchanged apart from ownership and delegation,
+  - no intended semantic change to state/DT traversal, assignment collection, unified analysis setup, or emitted HDL behavior.
+- Verification:
+  - syntax checks for `FlattenedDT.pm`, `FlattenedDT/Orchestrator.pm`, and `Backend/SystemVerilog.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue scanning the adjacent live flattening helper family (`flatten_decision_tree()` and nearby AST-capture helpers) for the next smallest truthful move,
+  - continue ignoring dormant legacy factorization helpers until they matter to the active path again.
 ## 2026-03-08: FlattenedDT backend convergence (AST condition-helper ownership)
 - Continued backend convergence by moving `create_condition_expression()`, `convert_condition_to_ast()`, and `convert_test_value_to_ast()` ownership into `perl/FSM/Synthesis/EnableGraph.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to compatibility delegates for that trio.
 - Rationale:
