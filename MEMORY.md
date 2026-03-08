@@ -14,6 +14,18 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-08: Backend convergence micro-slice (Orchestrator unified-assignment-analysis callsite convergence)
+- Current worktree localizes the unified phase-1 `build_unified_assignment_analysis()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` ownership.
+- Scope remains a single active stage-level callsite convergence step:
+  - `flatten_all_decision_trees()` now invokes `$ctx->{enable_graph}->build_unified_assignment_analysis(...)`,
+  - the `FlattenedDT` compatibility delegate remains in place for any non-local callers.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue through the remaining active stage-level Orchestrator round-trips in `generate_systemverilog()`, likely starting with the earliest backend-emission callsites,
+  - keep prioritizing live callsite convergence over dormant validation/helper families.
 ## 2026-03-08: Backend convergence micro-slice (Orchestrator stage-0 FSM-module-reference callsite convergence)
 - Current worktree localizes the stage-0 `set_fsm_module_reference()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` ownership.
 - Scope remains a single active callsite convergence step:

@@ -67,7 +67,7 @@ sub flatten_all_decision_trees ($self, $fsm_module) {
     }
     
     # UNIFIED PHASE 1: Build complete assignment analysis structure
-    $ctx->build_unified_assignment_analysis($fsm_module);
+    $ctx->{enable_graph}->build_unified_assignment_analysis($fsm_module);
 }
 sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
     my $ctx = $self->{flattened_dt};
