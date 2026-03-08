@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-08: Repository tracking scope for legacy plugin/spec assets
+- Added `plugin/` and `specs/` to version control as repository assets.
+- Rationale:
+  - preserve the legacy plugin inventory and spec/reference files inside the repo for continuity and future modernization work,
+  - keep this scope strictly about repository tracking rather than changing plugin loading semantics or backend behavior.
+- Verification:
+  - post-commit short status leaves only `fx/` untracked.
+- Working rule:
+  - keep `fx/` outside version control for now unless explicitly requested.
 ## 2026-03-08: FlattenedDT backend convergence (Orchestrator WEN/EN prescan callsite convergence)
 - Continued backend convergence by localizing the stage-5 `prescan_wen_en_for_intermediate_signals()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `SystemVerilog` backend ownership.
 - Rationale:

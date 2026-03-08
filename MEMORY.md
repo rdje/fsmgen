@@ -14,6 +14,16 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-08: Repository tracking change (plugin/ and specs/ now versioned)
+- Added the existing `plugin/` and `specs/` trees to git so the repository now carries the legacy `.plg` plugin assets and spec/reference files directly.
+- Scope is repository tracking only:
+  - no content changes were made inside `plugin/` or `specs/`,
+  - no intended HDL generation or runtime behavior changes were introduced by tracking these files.
+- Validation for this scope:
+  - post-commit `git --no-pager status --short` should leave only `?? fx/`
+- Immediate next direction after commit:
+  - keep `fx/` untracked for now,
+  - resume backend convergence at the next live Orchestrator/backend seam, most likely stage-6 `generate_consolidated_intermediate_signals()`.
 ## 2026-03-08: Backend convergence micro-slice (Orchestrator WEN/EN prescan callsite convergence)
 - Current worktree localizes the stage-5 `prescan_wen_en_for_intermediate_signals()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `SystemVerilog` backend ownership.
 - Scope remains a single active backend-analysis callsite convergence step:

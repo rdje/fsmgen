@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-08
+### Repository asset tracking (plugin/ and specs/ now versioned)
+- Added the existing `plugin/` and `specs/` trees to version control without changing their contents.
+- This records the legacy `.plg` plugin inventory and spec/reference files directly in the repository for continuity and future modernization work.
+- Validation:
+  - post-commit `git --no-pager status --short` leaves only `?? fx/`
 ### FlattenedDT backend convergence (Orchestrator WEN/EN prescan callsite convergence)
 - Localized the stage-5 `prescan_wen_en_for_intermediate_signals()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `SystemVerilog` backend ownership.
 - Updated `generate_systemverilog()` so the post-count pre-scan step now goes through `$ctx->{backend_sv}->prescan_wen_en_for_intermediate_signals()`.
