@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-08
+### Architecture documentation (frontend parser/input-format decoupling direction)
+- Added a living architecture note to `DEVELOPMENT_NOTES.md` describing how FSMGen should decouple source file format / parser concerns from the semantic core.
+- Recorded the current validated boundary:
+  - `FSM::Pipeline::HDLGenerator` still directly depends on `Lispish`,
+  - `FSM::Adapter::FSMGenFull::*` still decodes current `.fsm` / Lispish syntax,
+  - downstream analysis and backend code already operate mostly on `FSM::CoreAST`.
+- Recorded the architectural rule that future frontends should lower into `FSM::CoreAST` rather than teaching synthesis/backend code multiple parser-specific raw AST shapes.
+- Scope is documentation-only; no HDL-generation behavior changed.
 ### FlattenedDT backend convergence (assignment-capture orchestration ownership)
 - Moved `extract_lhs_name_from_ast()`, `record_assignment_from_ast()`, and `extract_rhs_from_expression()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`.
 - Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `orchestrator->extract_lhs_name_from_ast(...)`, `orchestrator->record_assignment_from_ast(...)`, and `orchestrator->extract_rhs_from_expression(...)`.

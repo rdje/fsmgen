@@ -1,5 +1,44 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-08: Living architecture note (parser/input-format independence vs FSMGen core)
+This section is the living design note for decoupling FSM source syntax parsing from the FSMGen semantic core.
+### Current validated state
+- `FSM::Pipeline::HDLGenerator` still hardwires source parsing to `Lispish::multi(...)`.
+- The pipeline then hands that raw parser output into `FSM::Adapter::FSMGenFull`, which lowers it into `FSM::CoreAST::FSMModule`.
+- Downstream analysis and HDL generation mostly operate on `FSM::CoreAST` objects rather than on raw Lispish arrays.
+- Conclusion:
+  - the core is already semantically centered on `FSM::CoreAST`,
+  - the frontend boundary is still specifically Lispish / `.fsm` oriented.
+### Canonical architectural boundary
+- The contract between any frontend and the rest of FSMGen should be `FSM::CoreAST::FSMModule` plus related semantic node types.
+- Only frontend/lowering code should know about parser-specific raw trees, token spellings, or source-format quirks.
+- Synthesis and backend code should not branch on input format once a valid `FSM::CoreAST` module exists.
+### Important nuance about the current adapter
+- The current adapter layer is not merely a thin syntax bridge.
+- `FSM::Adapter::FSMGenFull::Parser`, `ExpressionBuilder`, and `SignalAnalyzer` currently perform meaningful semantic lowering and validation, including:
+  - assignment-family interpretation (`=`, `<-`, `<=`, `<-=`, `<=+`, `<N`),
+  - condition lowering,
+  - width propagation and mismatch handling,
+  - combinational self-dependency checks,
+  - signal registration and signal-role/interface classification.
+- Therefore, future format support should reuse shared lowering and semantic policy instead of duplicating backend-visible meaning separately inside each new parser.
+### Desired end state
+- Source text / file format -> frontend parser -> lowering / normalization -> `FSM::CoreAST` -> analysis / synthesis / backend emission.
+- The existing Lispish `.fsm` reader becomes one frontend among potentially several.
+- Future formats are acceptable if they can express the same semantic model and lower cleanly into `FSM::CoreAST`.
+### Explicit non-goals
+- Do not make synthesis/backend layers understand multiple raw parser AST shapes.
+- Do not let syntax-specific array structures leak past the frontend boundary.
+- Do not replace one parser dependency with many parser dependencies deeper in the pipeline.
+### Direction for future work
+- Move the direct `Lispish` dependency behind a dedicated frontend boundary instead of keeping it in `FSM::Pipeline::HDLGenerator`.
+- Keep `FSM::CoreAST` as the canonical semantic IR unless a clearer lowered IR becomes necessary later.
+- If multiple frontends are introduced, split “syntax parse” from “semantic lowering” more explicitly so shared semantic rules live once.
+- Treat `raw_ast` as a frontend/debug artifact, not as required core state.
+### Working summary
+- Parser independence is not fully implemented today.
+- Semantic-core independence is partially implemented already.
+- The right long-term target is frontend independence around a stable semantic `FSM::CoreAST` boundary, not raw-AST pluralism.
 ## 2026-03-08: FlattenedDT backend convergence (assignment-capture orchestration ownership)
 - Continued backend convergence by moving `extract_lhs_name_from_ast()`, `record_assignment_from_ast()`, and `extract_rhs_from_expression()` ownership into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to compatibility delegates for that trio.
 - Rationale:

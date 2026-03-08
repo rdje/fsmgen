@@ -14,6 +14,17 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-08: Living architecture note added (frontend parser/input-format decoupling)
+- Added a living design note in `DEVELOPMENT_NOTES.md` describing the desired boundary between source-format parsing and the FSMGen semantic core.
+- Current validated read captured there:
+  - the pipeline already has a partial separation because `FSM::Pipeline::HDLGenerator` parses source first, then lowers into `FSM::CoreAST::FSMModule`, and downstream analysis/backend code mostly consumes semantic CoreAST objects,
+  - the remaining hard coupling is still at the frontend boundary because `HDLGenerator` directly calls `Lispish`, and `FSM::Adapter::FSMGenFull::*` still decodes the current `.fsm` / Lispish surface syntax directly.
+- Architectural rule now recorded:
+  - `FSM::CoreAST` is the canonical semantic contract,
+  - parser-specific raw ASTs and syntax tokens should stop at the frontend/lowering boundary rather than leaking into synthesis/backend layers.
+- Immediate next direction:
+  - treat any future non-Lispish format as another frontend that lowers into `FSM::CoreAST`, not as a reason to branch backend behavior by input format,
+  - when implementation work begins, isolate the direct `Lispish` dependency behind a dedicated frontend boundary first.
 ## 2026-03-08: Backend convergence micro-slice (assignment-capture orchestration ownership)
 - Current worktree moves `extract_lhs_name_from_ast()`, `record_assignment_from_ast()`, and `extract_rhs_from_expression()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`, while keeping `FlattenedDT` as compatibility delegates.
 - This slice completes the active assignment-capture trio on the live recursive flattener path:
