@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-08: FlattenedDT backend convergence (Orchestrator generate-state-register callsite convergence)
+- Continued backend convergence by localizing the stage-2 `generate_state_register()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `SystemVerilog` backend ownership.
+- Rationale:
+  - helper ownership for `generate_state_register()` already lives in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - after the previous `generate_state_encoding()` callsite cleanup, this became the next earliest remaining backend-emission round-trip inside `generate_systemverilog()`.
+- Safety/compatibility:
+  - no helper logic changed; only the active runtime call path changed,
+  - the `FlattenedDT` compatibility delegate remains available for any non-local callers,
+  - no intended semantic change to state-register emission, pipeline ordering, or emitted HDL behavior.
+- Verification:
+  - syntax checks for `FlattenedDT/Orchestrator.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue through the remaining stage-2 backend-emission Orchestrator round-trips in `generate_systemverilog()`, most likely `generate_internal_signal_declarations()`,
+  - keep prioritizing live callsite convergence over dormant validation/support helpers.
 ## 2026-03-08: FlattenedDT backend convergence (Orchestrator generate-state-encoding callsite convergence)
 - Continued backend convergence by localizing the stage-2 `generate_state_encoding()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `SystemVerilog` backend ownership.
 - Rationale:

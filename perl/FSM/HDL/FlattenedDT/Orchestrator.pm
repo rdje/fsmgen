@@ -422,7 +422,7 @@ sub generate_systemverilog ($self, $fsm_module) {
     my $hdl = $ctx->{backend_sv}->generate_header($fsm_module);
     $hdl .= $ctx->{backend_sv}->generate_module_declaration($fsm_module);
     $hdl .= $ctx->{backend_sv}->generate_state_encoding($fsm_module);
-    $hdl .= $ctx->generate_state_register($fsm_module);
+    $hdl .= $ctx->{backend_sv}->generate_state_register($fsm_module);
     $hdl .= $ctx->generate_internal_signal_declarations($fsm_module);
     fsm_debug("Step 2 - Basic HDL structure generated", 3);
     
