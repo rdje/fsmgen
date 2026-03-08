@@ -7,6 +7,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 use FSM::Debug;
+use Scalar::Util qw(blessed);
 
 sub new ($class, %args) {
     my $flattened_dt = $args{flattened_dt}
@@ -34,7 +35,7 @@ sub flatten_all_decision_trees ($self, $fsm_module) {
         # Flatten the state's decision trees
         if ($state->decision_trees && @{$state->decision_trees}) {
             for my $dt (@{$state->decision_trees}) {
-                $ctx->flatten_decision_tree(
+                $self->flatten_decision_tree(
                     $state->name,
                     $dt,
                     []  # Initial condition stack
@@ -56,7 +57,7 @@ sub flatten_all_decision_trees ($self, $fsm_module) {
         # Flatten the standalone decision trees
         if ($state->decision_trees && @{$state->decision_trees}) {
             for my $dt (@{$state->decision_trees}) {
-                $ctx->flatten_decision_tree(
+                $self->flatten_decision_tree(
                     $state->name,
                     $dt,
                     []  # Initial condition stack
@@ -67,6 +68,135 @@ sub flatten_all_decision_trees ($self, $fsm_module) {
     
     # UNIFIED PHASE 1: Build complete assignment analysis structure
     $ctx->build_unified_assignment_analysis($fsm_module);
+}
+sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
+    my $ctx = $self->{flattened_dt};
+    return unless $dt_node;
+    
+    fsm_debug("=== FLATTEN_DT_NODE ====", 3);
+    fsm_debug("  DT: $dt_name", 3);
+    fsm_debug("  Node Type: " . ref($dt_node), 3);
+    # Safe debug of condition stack
+    my $debug_stack = "";
+    if (@$condition_stack) {
+        my @debug_conditions = ();
+        for my $condition_ast (@$condition_stack) {
+            if (blessed($condition_ast) && $condition_ast->can('to_systemverilog')) {
+                push @debug_conditions, $condition_ast->to_systemverilog();
+            } else {
+                push @debug_conditions, ref($condition_ast) || "UNBLESSED";
+            }
+        }
+        $debug_stack = join(", ", @debug_conditions);
+    }
+    fsm_debug("  Condition Stack: [$debug_stack]", 3);
+    
+    # Handle different node types from FSMGen adapter
+    if ($dt_node->isa('FSM::CoreAST::ConditionalBranch')) {
+        fsm_debug("  Conditional branch with condition: " . ($dt_node->condition ? ref($dt_node->condition) : 'none'), 3);
+        
+        # Process each branch - branches() returns an array reference
+        my $branches = $dt_node->branches;
+        for my $branch (@$branches) {
+            if ($branch->{condition}) {
+                # Convert condition to AST node and create isolated stack copy
+                my $condition_ast = $ctx->convert_condition_to_ast($branch->{condition});
+                my @new_stack = (@$condition_stack);  # Create isolated copy
+                push @new_stack, $condition_ast;      # Add condition to isolated copy
+                
+                # Safe debug of condition AST
+                my $condition_debug = blessed($condition_ast) && $condition_ast->can('to_systemverilog')
+                    ? $condition_ast->to_systemverilog()
+                    : (ref($condition_ast) || "UNBLESSED");
+                fsm_debug("    CONDITIONAL_BRANCH: Adding condition '$condition_debug'", 3);
+                
+                # Safe debug of new condition stack
+                my @stack_debug = map {
+                    blessed($_) && $_->can('to_systemverilog')
+                        ? $_->to_systemverilog()
+                        : (ref($_) || "UNBLESSED")
+                } @new_stack;
+                fsm_debug("    New condition stack: [" . join(", ", @stack_debug) . "]", 3);
+                
+                # Process branch actions
+                for my $action (@{$branch->{actions}}) {
+                    $self->flatten_decision_tree($dt_name, $action, \@new_stack);
+                }
+            } else {
+                # Else branch - process with current stack
+                for my $action (@{$branch->{actions}}) {
+                    $self->flatten_decision_tree($dt_name, $action, $condition_stack);
+                }
+            }
+        }
+        
+    } elsif ($dt_node->isa('FSM::CoreAST::TestNode')) {
+        fsm_debug("  Test node: " . $dt_node->test_signal->name, 3);
+        
+        # Process each test branch - test_branches() returns an array reference
+        my $test_branches = $dt_node->test_branches;
+        for my $branch (@$test_branches) {
+            # Create AST node for test condition: signal == value
+            my $signal_ast = FSM::AST::Utils::signal_ref($dt_node->test_signal->name);
+            my $value_ast = $ctx->convert_test_value_to_ast($branch->{value});
+            my $test_condition_ast = FSM::AST::Utils::equals_op($signal_ast, $value_ast);
+            
+            my @test_stack = (@$condition_stack);  # Create isolated copy
+            push @test_stack, $test_condition_ast;  # Add condition to isolated copy
+            
+            # Safe debug of test condition AST
+            my $test_condition_debug = blessed($test_condition_ast) && $test_condition_ast->can('to_systemverilog')
+                ? $test_condition_ast->to_systemverilog()
+                : (ref($test_condition_ast) || "UNBLESSED");
+            fsm_debug("    TEST_NODE: Adding test condition '$test_condition_debug'", 3);
+            
+            # Safe debug of test stack
+            my @test_stack_debug = map {
+                blessed($_) && $_->can('to_systemverilog')
+                    ? $_->to_systemverilog()
+                    : (ref($_) || "UNBLESSED")
+            } @test_stack;
+            fsm_debug("    New test stack: [" . join(", ", @test_stack_debug) . "]", 3);
+            
+            for my $action (@{$branch->{actions}}) {
+                $self->flatten_decision_tree($dt_name, $action, \@test_stack);
+            }
+        }
+        
+    } elsif ($dt_node->isa('FSM::CoreAST::Assignment') || $dt_node->isa('FSM::CoreAST::RegisterAssignment')) {
+        my $assignment_target_name = $ctx->extract_lhs_name_from_ast($dt_node->target);
+        fsm_debug("  Assignment: " . $assignment_target_name . " <- " . ref($dt_node->source), 3);
+        
+        # Record this assignment with current condition stack (now AST nodes)
+        $ctx->record_assignment_from_ast($dt_name, $dt_node, $condition_stack);
+        
+    } elsif ($dt_node->isa('FSM::CoreAST::StateTransition')) {
+        fsm_debug("  Transition: -> " . $dt_node->target_state, 3);
+        
+        # Treat state transition as special assignment to next_state
+        $ctx->record_transition_from_ast($dt_name, $dt_node, $condition_stack);
+        
+    } elsif (ref($dt_node) eq 'ARRAY') {
+        # Handle arrays of nodes
+        for my $child (@$dt_node) {
+            $self->flatten_decision_tree($dt_name, $child, $condition_stack);
+        }
+    } elsif ($dt_node->isa('FSM::CoreAST::DecisionTree')) {
+        my $elements = $dt_node->elements;
+        if ($elements && ref($elements) eq 'ARRAY') {
+            fsm_debug("  DecisionTree with " . scalar(@$elements) . " elements", 3);
+            
+            # Process all elements in the decision tree
+            for my $element (@$elements) {
+                $self->flatten_decision_tree($dt_name, $element, $condition_stack);
+            }
+        } else {
+            fsm_debug("  DecisionTree has no elements or elements is not an array", 3);
+        }
+        
+    } else {
+        fsm_debug("  Unknown node type: " . ref($dt_node), 3);
+    }
 }
 
 sub generate_systemverilog ($self, $fsm_module) {

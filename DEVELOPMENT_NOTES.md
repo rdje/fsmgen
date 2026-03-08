@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-08: FlattenedDT backend convergence (recursive flattener orchestration ownership)
+- Continued backend convergence by moving `flatten_decision_tree()` ownership into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for the recursive flattener.
+- Rationale:
+  - after the prior `flatten_all_decision_trees()` slice, the recursive traversal body was the next smallest still-live adjacent seam because it is now called only from the orchestrator-owned entrypoint and from itself,
+  - moving the recursive traversal first keeps the slice smaller and safer than immediately pulling the lower-level AST-capture/storage helpers that it invokes.
+- Safety/compatibility:
+  - traversal logic is unchanged apart from ownership and local recursion routing,
+  - the recursive flattener still calls back into the existing `FlattenedDT` helpers for condition conversion, AST capture, and assignment/transition recording,
+  - no intended semantic change to traversal order, assignment collection, unified analysis inputs, or emitted HDL behavior.
+- Verification:
+  - syntax checks for `FlattenedDT.pm` and `FlattenedDT/Orchestrator.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue on the adjacent AST-capture helper family used by the recursive flattener (`record_assignment_from_ast()`, `record_transition_from_ast()`, `extract_rhs_from_expression()`, and any tightly coupled support),
+  - continue deferring dormant legacy factorization helpers until they matter to the active path again.
 ## 2026-03-08: FlattenedDT backend convergence (flatten-all-decision-trees orchestration ownership)
 - Continued backend convergence by moving `flatten_all_decision_trees()` ownership into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for that entrypoint.
 - Rationale:
