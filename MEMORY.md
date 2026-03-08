@@ -14,6 +14,22 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-08: Backend convergence micro-slice (Orchestrator condition-helper callsite convergence)
+- Current worktree localizes the active Orchestrator condition-helper round-trips from `FlattenedDT` facade delegates to direct `EnableGraph` ownership.
+- Updated runtime callsites in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`:
+  - `convert_condition_to_ast()` for conditional-branch traversal,
+  - `convert_test_value_to_ast()` for test-node branch construction,
+  - `create_condition_expression()` for assignment capture and transition capture.
+- Scope remains callsite convergence only:
+  - helper ownership stays in `perl/FSM/Synthesis/EnableGraph.pm`,
+  - `FlattenedDT` compatibility delegates remain for non-local or dormant callers.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue through the remaining active stage-level Orchestrator round-trips, most likely `build_unified_assignment_analysis()` or `set_fsm_module_reference()`,
+  - keep treating dormant validation helpers and legacy code as lower priority than live callsite convergence.
 ## 2026-03-08: Backend convergence micro-slice (actual LHS/RHS tracking orchestration ownership)
 - Current worktree moves `track_actual_lhs_rhs()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`, while keeping `FlattenedDT` as a compatibility delegate.
 - This slice follows the now-orchestrator-owned assignment/transition capture flow:

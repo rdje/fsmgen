@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-08
+### FlattenedDT backend convergence (Orchestrator condition-helper callsite convergence)
+- Localized the active Orchestrator condition-helper round-trips from `FlattenedDT` facade delegates to direct `EnableGraph` ownership in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`.
+- Updated the following runtime callsites:
+  - `convert_condition_to_ast()` in conditional-branch traversal,
+  - `convert_test_value_to_ast()` in test-node branch construction,
+  - `create_condition_expression()` in assignment and transition capture.
+- Scope remains behavior-preserving callsite convergence only; helper ownership was already in `perl/FSM/Synthesis/EnableGraph.pm`, and `FlattenedDT` compatibility delegates remain unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (actual LHS/RHS tracking orchestration ownership)
 - Moved `track_actual_lhs_rhs()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`.
 - Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `orchestrator->track_actual_lhs_rhs(...)`.

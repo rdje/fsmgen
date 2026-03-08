@@ -100,7 +100,7 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
         for my $branch (@$branches) {
             if ($branch->{condition}) {
                 # Convert condition to AST node and create isolated stack copy
-                my $condition_ast = $ctx->convert_condition_to_ast($branch->{condition});
+                my $condition_ast = $ctx->{enable_graph}->convert_condition_to_ast($branch->{condition});
                 my @new_stack = (@$condition_stack);  # Create isolated copy
                 push @new_stack, $condition_ast;      # Add condition to isolated copy
                 
@@ -138,7 +138,7 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
         for my $branch (@$test_branches) {
             # Create AST node for test condition: signal == value
             my $signal_ast = FSM::AST::Utils::signal_ref($dt_node->test_signal->name);
-            my $value_ast = $ctx->convert_test_value_to_ast($branch->{value});
+            my $value_ast = $ctx->{enable_graph}->convert_test_value_to_ast($branch->{value});
             my $test_condition_ast = FSM::AST::Utils::equals_op($signal_ast, $value_ast);
             
             my @test_stack = (@$condition_stack);  # Create isolated copy
@@ -254,7 +254,7 @@ sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_st
     }
     
     # Create condition expression as pure AST
-    my $condition_ast = $ctx->create_condition_expression($condition_stack);
+    my $condition_ast = $ctx->{enable_graph}->create_condition_expression($condition_stack);
     
     # Extract RHS value from expression
     my $actual_rhs = $self->extract_rhs_from_expression($rhs_expr);
@@ -362,7 +362,7 @@ sub record_transition_from_ast ($self, $dt_name, $transition_node, $condition_st
     my $target_state = $transition_node->target_state;
     
     # Create condition expression as pure AST
-    my $condition_ast = $ctx->create_condition_expression($condition_stack);
+    my $condition_ast = $ctx->{enable_graph}->create_condition_expression($condition_stack);
     
     # Convert target state to state encoding value
     my $state_value = uc($target_state);

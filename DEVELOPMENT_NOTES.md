@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-08: FlattenedDT backend convergence (Orchestrator condition-helper callsite convergence)
+- Continued backend convergence by localizing the active Orchestrator condition-helper round-trips from `FlattenedDT` facade delegates to direct `EnableGraph` ownership in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`.
+- Rationale:
+  - helper ownership for `convert_condition_to_ast()`, `convert_test_value_to_ast()`, and `create_condition_expression()` already lives in `EnableGraph`,
+  - after the recent Orchestrator ownership moves, these condition-construction callsites are all on the live traversal/capture path and no longer need to bounce through the `FlattenedDT` facade.
+- Safety/compatibility:
+  - no helper logic changed; only the active runtime call path changed,
+  - `FlattenedDT` compatibility delegates remain in place for any non-local or dormant callers,
+  - no intended semantic change to condition AST construction, branch/test traversal, assignment capture, transition capture, or emitted HDL behavior.
+- Verification:
+  - syntax checks for `FlattenedDT/Orchestrator.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue through the remaining active stage-level Orchestrator round-trips such as `build_unified_assignment_analysis()` or `set_fsm_module_reference()`,
+  - keep deprioritizing dormant validation and legacy helper clusters relative to live callsite convergence.
 ## 2026-03-08: FlattenedDT backend convergence (actual LHS/RHS tracking orchestration ownership)
 - Continued backend convergence by moving `track_actual_lhs_rhs()` ownership into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for that helper.
 - Rationale:
