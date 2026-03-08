@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-08
+### FlattenedDT backend convergence (actual LHS/RHS tracking orchestration ownership)
+- Moved `track_actual_lhs_rhs()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `orchestrator->track_actual_lhs_rhs(...)`.
+- Updated the orchestrator-owned assignment and transition capture paths so actual LHS/RHS validation tracking now stays local to `FlattenedDT::Orchestrator` instead of round-tripping through the façade.
+- Scope remains behavior-preserving structural convergence only; the dormant expected/raw-AST completeness helpers were intentionally left in `FlattenedDT` because they are not part of the active runtime path.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### Architecture documentation (frontend parser/input-format decoupling direction)
 - Added a living architecture note to `DEVELOPMENT_NOTES.md` describing how FSMGen should decouple source file format / parser concerns from the semantic core.
 - Recorded the current validated boundary:

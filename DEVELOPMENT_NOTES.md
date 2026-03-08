@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-08: FlattenedDT backend convergence (actual LHS/RHS tracking orchestration ownership)
+- Continued backend convergence by moving `track_actual_lhs_rhs()` ownership into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for that helper.
+- Rationale:
+  - after the assignment-capture and state-transition moves, actual LHS/RHS tracking had become a tiny single-purpose seam with only orchestrator-owned callers,
+  - the adjacent expected/raw-AST validation family is not on the active runtime path, so moving only `track_actual_lhs_rhs()` keeps the slice truthful and low risk.
+- Safety/compatibility:
+  - tracking logic is unchanged apart from ownership and local call routing,
+  - the moved helper still writes to the same `actual_lhs_rhs` state stored on the shared `FlattenedDT` context,
+  - no intended semantic change to validation counters, captured assignment/transition metadata, or emitted HDL behavior.
+- Verification:
+  - syntax checks for `FlattenedDT.pm` and `FlattenedDT/Orchestrator.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - re-scan the remaining live Orchestrator/backend call surface for the next smallest active ownership seam,
+  - continue deferring the dormant `track_expected_lhs_rhs()` / raw-AST completeness helpers until they justify extraction as a cohesive validation/support block.
 ## 2026-03-08: Living architecture note (parser/input-format independence vs FSMGen core)
 This section is the living design note for decoupling FSM source syntax parsing from the FSMGen semantic core.
 ### Current validated state

@@ -1683,16 +1683,7 @@ sub track_expected_lhs_rhs ($self, $lhs, $rhs, $context) {
 }
 
 sub track_actual_lhs_rhs ($self, $lhs, $rhs, $context) {
-    # Track an actual LHS/RHS pair that made it to HDL generation
-    my $key = "$lhs:$rhs";
-    $self->{actual_lhs_rhs}->{$key} = {
-        lhs => $lhs,
-        rhs => $rhs,
-        context => $context,
-        seen_count => ($self->{actual_lhs_rhs}->{$key}->{seen_count} || 0) + 1
-    };
-    
-    fsm_debug("ACTUAL_LHS_RHS: Tracking $key (count: $self->{actual_lhs_rhs}->{$key}->{seen_count}) from $context", 3);
+    return $self->{orchestrator}->track_actual_lhs_rhs($lhs, $rhs, $context);
 }
 
 sub validate_lhs_rhs_completeness ($self) {

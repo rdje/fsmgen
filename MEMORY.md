@@ -14,6 +14,18 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-08: Backend convergence micro-slice (actual LHS/RHS tracking orchestration ownership)
+- Current worktree moves `track_actual_lhs_rhs()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`, while keeping `FlattenedDT` as a compatibility delegate.
+- This slice follows the now-orchestrator-owned assignment/transition capture flow:
+  - `record_assignment_from_ast()` and `record_transition_from_ast()` now both keep actual-pair validation tracking local to the orchestrator instead of round-tripping through the facade,
+  - the adjacent `track_expected_lhs_rhs()` / raw-AST completeness helpers remain in `FlattenedDT` for now because they are dormant validation support rather than part of the active runtime path.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - re-scan the remaining live Orchestrator/backend call surface for the next smallest active ownership seam now that actual-pair tracking is local,
+  - continue deferring the dormant expected/raw-AST validation family until it becomes worth extracting as a cohesive support block.
 ## 2026-03-08: Living architecture note added (frontend parser/input-format decoupling)
 - Added a living design note in `DEVELOPMENT_NOTES.md` describing the desired boundary between source-format parsing and the FSMGen semantic core.
 - Current validated read captured there:
