@@ -447,7 +447,7 @@ sub generate_systemverilog ($self, $fsm_module) {
     $hdl .= $ctx->{backend_sv}->generate_wen_en_signals($fsm_module);
     fsm_debug("Step 7 - WEN/EN signals generated", 3);
     
-    $hdl .= $ctx->generate_signal_assignments($fsm_module);
+    $hdl .= $ctx->{enable_graph}->generate_signal_assignments($fsm_module);
     $hdl .= "endmodule\n";
     fsm_debug("*** PIPELINE TIMING DEBUG: HDL Generation Pipeline Complete ***\n", 3);
     

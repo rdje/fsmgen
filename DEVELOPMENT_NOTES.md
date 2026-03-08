@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-08: FlattenedDT backend convergence (Orchestrator signal-assignment callsite convergence)
+- Continued backend convergence by localizing the stage-8 `generate_signal_assignments()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` ownership.
+- Rationale:
+  - helper ownership for `generate_signal_assignments()` already lives in `perl/FSM/Synthesis/EnableGraph.pm`,
+  - after the stage-7 WEN/EN callsite cleanup, this was the final remaining active `generate_systemverilog()` stage call still round-tripping through the `FlattenedDT` facade.
+- Safety/compatibility:
+  - no helper logic changed; only the active runtime call path changed,
+  - the `FlattenedDT` compatibility delegate remains available for any non-local callers,
+  - no intended semantic change to final signal-assignment emission, stage ordering, or emitted HDL behavior.
+- Verification:
+  - syntax checks for `FlattenedDT/Orchestrator.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - re-scan the remaining live `FlattenedDT` facade round-trips now that the active `generate_systemverilog()` stage chain is fully localized,
+  - prioritize the next smallest behavior-preserving runtime seam outside this now-clean stage pipeline before considering delegate retirement.
 ## 2026-03-08: FlattenedDT backend convergence (Orchestrator WEN/EN-signal callsite convergence)
 - Continued backend convergence by localizing the stage-7 `generate_wen_en_signals()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `SystemVerilog` backend ownership.
 - Rationale:
