@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-08
+### FlattenedDT backend convergence (Orchestrator WEN/EN-signal callsite convergence)
+- Localized the stage-7 `generate_wen_en_signals()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `SystemVerilog` backend ownership.
+- Updated `generate_systemverilog()` so WEN/EN signal emission now goes through `$ctx->{backend_sv}->generate_wen_en_signals(...)`.
+- Scope remains behavior-preserving callsite convergence only; helper ownership already lived in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`, and the `FlattenedDT` compatibility delegate remains unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (Orchestrator consolidated-intermediate-signals callsite convergence)
 - Localized the stage-6 `generate_consolidated_intermediate_signals()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `SystemVerilog` backend ownership.
 - Updated `generate_systemverilog()` so consolidated intermediate signal emission now goes through `$ctx->{backend_sv}->generate_consolidated_intermediate_signals(...)`.
