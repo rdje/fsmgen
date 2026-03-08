@@ -14,6 +14,16 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-08: Backend convergence micro-slice (state-transition capture orchestration ownership)
+- Current worktree moves `record_transition_from_ast()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`, while keeping `FlattenedDT` as a compatibility delegate.
+- This slice is the next smallest active seam in the post-flattener AST-capture family: `record_transition_from_ast()` now has a single live caller inside the orchestrator-owned recursive flattener and is materially smaller than the adjacent assignment-capture path.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue on the adjacent assignment-capture path (`record_assignment_from_ast()` together with `extract_rhs_from_expression()` and any tightly coupled support),
+  - keep deferring dormant legacy factorization helpers until they matter to the active path again.
 ## 2026-03-08: Backend convergence micro-slice (recursive flattener orchestration ownership)
 - Current worktree moves `flatten_decision_tree()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`, while keeping `FlattenedDT` as a compatibility delegate.
 - This slice extends the immediately adjacent orchestration move from `flatten_all_decision_trees()`: the orchestrator now owns both the live entrypoint and its recursive traversal body, while still calling back into `FlattenedDT` for the unmoved AST-capture helpers.

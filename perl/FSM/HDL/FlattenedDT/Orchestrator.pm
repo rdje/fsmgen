@@ -174,7 +174,7 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
         fsm_debug("  Transition: -> " . $dt_node->target_state, 3);
         
         # Treat state transition as special assignment to next_state
-        $ctx->record_transition_from_ast($dt_name, $dt_node, $condition_stack);
+        $self->record_transition_from_ast($dt_name, $dt_node, $condition_stack);
         
     } elsif (ref($dt_node) eq 'ARRAY') {
         # Handle arrays of nodes
@@ -197,6 +197,52 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
     } else {
         fsm_debug("  Unknown node type: " . ref($dt_node), 3);
     }
+}
+sub record_transition_from_ast ($self, $dt_name, $transition_node, $condition_stack) {
+    my $ctx = $self->{flattened_dt};
+    my $target_state = $transition_node->target_state;
+    
+    # Create condition expression as pure AST
+    my $condition_ast = $ctx->create_condition_expression($condition_stack);
+    
+    # Convert target state to state encoding value
+    my $state_value = uc($target_state);
+    
+    # Track this actual LHS/RHS pair for validation
+    $ctx->track_actual_lhs_rhs('next_state', $state_value, "ast_transition:$dt_name");
+    
+    # Record as assignment to next_state with both signal name and AST
+    push @{$ctx->{lhs_assignments}->{next_state}}, {
+        dt => $dt_name,
+        conditions_ast => $condition_ast,      # Store the original AST
+        rhs => $state_value,
+        operator => '<-',
+        assignment_intent => {
+            operator_symbol => '<-',
+            sequencing => 'clocked',
+            register_style => 'output_named',
+            assignment_family => 'state_transition',
+        },
+        source_provenance => {
+            origin => 'state_transition',
+            raw_target_state => $target_state,
+        },
+        output_exposure => 'auto',
+        is_state_trans => 1
+    };
+    
+    # Track next_state as LHS and create synthetic AST mapping
+    $ctx->{all_lhs}->{next_state} = 1;
+    
+    # Create synthetic AST node for next_state if not already exists
+    unless ($ctx->{lhs_ast_map}->{next_state}) {
+        # Create a synthetic signal reference for next_state
+        $ctx->{lhs_ast_map}->{next_state} = FSM::AST::Utils::signal_ref('next_state');
+        fsm_debug("    Created synthetic AST node for next_state", 3);
+    }
+    
+    my $condition_signal_name = defined($condition_ast) ? $condition_ast->to_systemverilog() : 'UNDEFINED';
+    fsm_debug("    Recorded AST transition: next_state <= $state_value when (signal: '$condition_signal_name')", 3);
 }
 
 sub generate_systemverilog ($self, $fsm_module) {

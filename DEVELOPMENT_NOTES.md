@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-08: FlattenedDT backend convergence (state-transition capture orchestration ownership)
+- Continued backend convergence by moving `record_transition_from_ast()` ownership into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for that entrypoint.
+- Rationale:
+  - after the recursive flattener move, this transition-capture helper became a clean single-caller seam because it is now invoked only from the orchestrator-owned traversal body,
+  - moving this smaller transition path first keeps the slice lower risk than immediately pulling the larger assignment-capture helper and its RHS-extraction dependency.
+- Safety/compatibility:
+  - transition-capture logic is unchanged apart from ownership and local call routing,
+  - the moved helper still uses the existing shared condition-construction, tracking, and AST-map helpers on `FlattenedDT`,
+  - no intended semantic change to next-state capture, validation tracking, or emitted HDL behavior.
+- Verification:
+  - syntax checks for `FlattenedDT.pm` and `FlattenedDT/Orchestrator.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue on the adjacent assignment-capture path (`record_assignment_from_ast()` together with `extract_rhs_from_expression()` and any tightly coupled support),
+  - keep deferring dormant legacy factorization helpers until they matter to the active path again.
 ## 2026-03-08: FlattenedDT backend convergence (recursive flattener orchestration ownership)
 - Continued backend convergence by moving `flatten_decision_tree()` ownership into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for the recursive flattener.
 - Rationale:
