@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-08: FlattenedDT backend convergence (Orchestrator logical-op-count callsite convergence)
+- Continued backend convergence by localizing the stage-4 `count_binary_logical_operation_occurrences()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `SystemVerilog` backend ownership.
+- Rationale:
+  - helper ownership for `count_binary_logical_operation_occurrences()` already lives in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`,
+  - after the stage-3 callsite cleanup, this became the next earliest active non-emission round-trip in `generate_systemverilog()`.
+- Safety/compatibility:
+  - no helper logic changed; only the active runtime call path changed,
+  - the `FlattenedDT` compatibility delegate remains available for any non-local callers,
+  - no intended semantic change to logical-op counting, pre-scan ordering, or emitted HDL behavior.
+- Verification:
+  - syntax checks for `FlattenedDT/Orchestrator.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue with the next active Orchestrator/backend round-trip, most likely the stage-5 `prescan_wen_en_for_intermediate_signals()` callsite in `generate_systemverilog()`,
+  - keep prioritizing live callsite convergence over dormant validation/support helpers.
 ## 2026-03-08: FlattenedDT backend convergence (Orchestrator generate-enable-conditions callsite convergence)
 - Continued backend convergence by localizing the stage-3 `generate_enable_conditions()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `SystemVerilog` backend ownership.
 - Rationale:

@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-08
+### FlattenedDT backend convergence (Orchestrator logical-op-count callsite convergence)
+- Localized the stage-4 `count_binary_logical_operation_occurrences()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `SystemVerilog` backend ownership.
+- Updated `generate_systemverilog()` so the pre-prescan logical-op counting step now goes through `$ctx->{backend_sv}->count_binary_logical_operation_occurrences()`.
+- Scope remains behavior-preserving callsite convergence only; helper ownership already lived in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`, and the `FlattenedDT` compatibility delegate remains unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (Orchestrator generate-enable-conditions callsite convergence)
 - Localized the stage-3 `generate_enable_conditions()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `SystemVerilog` backend ownership.
 - Updated `generate_systemverilog()` so enable-condition emission now goes through `$ctx->{backend_sv}->generate_enable_conditions(...)`.

@@ -14,6 +14,18 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-08: Backend convergence micro-slice (Orchestrator logical-op-count callsite convergence)
+- Current worktree localizes the stage-4 `count_binary_logical_operation_occurrences()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `SystemVerilog` backend ownership.
+- Scope remains a single active backend-analysis callsite convergence step:
+  - `generate_systemverilog()` now performs the pre-prescan logical-op counting through `$ctx->{backend_sv}->count_binary_logical_operation_occurrences()`,
+  - the `FlattenedDT` compatibility delegate remains in place for any non-local callers.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue with the next active Orchestrator/backend round-trip, most likely the stage-5 `prescan_wen_en_for_intermediate_signals()` callsite in `generate_systemverilog()`,
+  - keep prioritizing live callsite convergence over dormant validation/helper families.
 ## 2026-03-08: Backend convergence micro-slice (Orchestrator generate-enable-conditions callsite convergence)
 - Current worktree localizes the stage-3 `generate_enable_conditions()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `SystemVerilog` backend ownership.
 - Scope remains a single active backend-emission callsite convergence step:
