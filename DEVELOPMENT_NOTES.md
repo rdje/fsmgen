@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-08: FlattenedDT backend convergence (Orchestrator stage-0 FSM-module-reference callsite convergence)
+- Continued backend convergence by localizing the stage-0 `set_fsm_module_reference()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` ownership.
+- Rationale:
+  - helper ownership for `set_fsm_module_reference()` already lives in `EnableGraph`,
+  - after the previous condition-helper callsite cleanup, this stage-0 call became the smallest remaining active stage-level round-trip inside `generate_systemverilog()`.
+- Safety/compatibility:
+  - no helper logic changed; only the active runtime call path changed,
+  - the `FlattenedDT` compatibility delegate remains available for any non-local callers,
+  - no intended semantic change to FSM-module reference storage, reset/default analysis setup, or emitted HDL behavior.
+- Verification:
+  - syntax checks for `FlattenedDT/Orchestrator.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue with the next stage-level Orchestrator round-trip, most likely `build_unified_assignment_analysis()` in `flatten_all_decision_trees()`,
+  - keep prioritizing live callsite convergence over dormant validation/support helpers.
 ## 2026-03-08: FlattenedDT backend convergence (Orchestrator condition-helper callsite convergence)
 - Continued backend convergence by localizing the active Orchestrator condition-helper round-trips from `FlattenedDT` facade delegates to direct `EnableGraph` ownership in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`.
 - Rationale:
