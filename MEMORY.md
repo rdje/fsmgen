@@ -14,6 +14,19 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-08: Backend convergence micro-slice (AST condition-helper ownership)
+- Current worktree moves `create_condition_expression()`, `convert_condition_to_ast()`, and `convert_test_value_to_ast()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`, while keeping `FlattenedDT` as compatibility delegates.
+- This slice targets the next smallest still-live helper family after confirming the nearby legacy factorization and AST naming helpers are mostly dormant, while the moved trio is exercised directly during branch/test flattening and assignment/transition condition construction.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Important note:
+  - explicit `use FSM::AST::Utils;` in `EnableGraph` is currently unsafe in this repo because it exposes an incompatible helper load path; the moved methods work when left on the existing runtime path without that import.
+- Immediate next direction after commit:
+  - continue scanning for the next smallest active helper or entrypoint still exercised by the live flattening/orchestration/backend path,
+  - keep deprioritizing dormant legacy helper blocks until they become operationally relevant.
 ## 2026-03-07: Backend convergence micro-slice (WEN/EN prescan entrypoint ownership)
 - Current worktree moves `prescan_wen_en_for_intermediate_signals()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`, while keeping `FlattenedDT` as a compatibility delegate.
 - This slice picks the smallest still-live helper on the active SystemVerilog generation path after confirming the nearby AST-based naming helpers are mostly idle compatibility code.

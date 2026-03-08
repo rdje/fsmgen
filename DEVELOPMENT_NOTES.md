@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-08: FlattenedDT backend convergence (AST condition-helper ownership)
+- Continued backend convergence by moving `create_condition_expression()`, `convert_condition_to_ast()`, and `convert_test_value_to_ast()` ownership into `perl/FSM/Synthesis/EnableGraph.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to compatibility delegates for that trio.
+- Rationale:
+  - after the prescan slice, the nearby legacy factorization and AST naming helpers were re-checked and remain mostly dormant, while this trio is still exercised directly when flattening conditional branches, test nodes, and assignment/transition condition stacks,
+  - the moved trio already represents enable-oriented AST construction, so `EnableGraph` is a better ownership fit than leaving the logic in the façade module.
+- Safety/compatibility:
+  - helper logic and callsites are unchanged apart from ownership and delegation,
+  - no intended semantic change to condition AST construction, flattened assignment capture, or emitted HDL behavior.
+- Validation/implementation note:
+  - syntax checks for `FlattenedDT.pm`, `Backend/SystemVerilog.pm`, and `EnableGraph.pm` all pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`),
+  - explicit `use FSM::AST::Utils;` in `EnableGraph` is currently unsafe because it exposes an incompatible helper load path in this repository; the final change deliberately relies on the pre-existing working runtime path instead.
+- Next likely slices:
+  - continue scanning for the next smallest active helper or entrypoint still exercised by the live flattening/orchestration/backend path,
+  - keep ignoring dormant legacy helper blocks until they become part of an active call chain again.
 ## 2026-03-07: FlattenedDT backend convergence (WEN/EN prescan entrypoint ownership)
 - Continued backend convergence by moving `prescan_wen_en_for_intermediate_signals()` ownership into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for that entrypoint.
 - Rationale:

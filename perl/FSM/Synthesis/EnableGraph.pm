@@ -17,6 +17,128 @@ sub new($class, %args) {
         flattened_dt => $args{flattened_dt},
     }, $class;
 }
+sub create_condition_expression($self, $condition_stack) {
+    # PURE AST APPROACH: Return AST node, not string
+    return FSM::AST::Utils::literal("1'b1") if !@$condition_stack;
+
+    # Create AND tree of all conditions
+    if (@$condition_stack == 1) {
+        return $condition_stack->[0];
+    } else {
+        return FSM::AST::Utils::and_tree(@$condition_stack);
+    }
+}
+sub convert_condition_to_ast($self, $condition_node) {
+    # Convert FSMGen condition nodes to pure AST nodes
+    
+    unless ($condition_node) {
+        fsm_debug("    CONVERT_CONDITION_AST: WARNING - undefined condition node", 3);
+        return FSM::AST::Utils::literal("1'b1");
+    }
+    
+    fsm_debug("    CONVERT_CONDITION_AST: Node type: " . ref($condition_node));
+    
+    if ($condition_node->isa('FSM::CoreAST::SignalRef')) {
+        my $signal_name = $condition_node->signal->name;
+        fsm_debug("    CONVERT_CONDITION_AST: SignalRef -> signal_ref('$signal_name')", 3);
+        return FSM::AST::Utils::signal_ref($signal_name);
+        
+    } elsif (ref($condition_node) eq 'FSM::CoreAST::UnaryOp' || ($condition_node->can('operator') && $condition_node->can('operand'))) {
+        # Handle UnaryOp - check the type field which seems to contain the actual operator type
+        my $operator_type = 'unknown';
+        if (ref($condition_node) eq 'HASH' && $condition_node->{type}) {
+            $operator_type = $condition_node->{type};
+        } elsif ($condition_node->can('type')) {
+            $operator_type = $condition_node->type;
+        }
+        
+        fsm_debug("    CONVERT_CONDITION_AST: UnaryOp with type: $operator_type", 3);
+        
+        # For negation operations
+        if ($operator_type eq 'unary_op' || $operator_type eq 'not' || $operator_type eq '!') {
+            my $operand_ast = $self->convert_condition_to_ast($condition_node->operand);
+            my $result = FSM::AST::Utils::not_op($operand_ast);
+            fsm_debug("    CONVERT_CONDITION_AST: UnaryOp(negation) -> NOT node", 3);
+            return $result;
+        } else {
+            # Other unary operators
+            my $operand_ast = $self->convert_condition_to_ast($condition_node->operand);
+            my $result = FSM::AST::UnaryOp->new($operator_type, $operand_ast);
+            fsm_debug("    CONVERT_CONDITION_AST: UnaryOp($operator_type) -> UnaryOp node", 3);
+            return $result;
+        }
+        
+    } elsif (ref($condition_node) eq 'FSM::CoreAST::BinaryOp' || ($condition_node->can('left') && $condition_node->can('right') && $condition_node->can('operator'))) {
+        my $left_ast = $self->convert_condition_to_ast($condition_node->left);
+        my $right_ast = $self->convert_condition_to_ast($condition_node->right);
+        my $op = $condition_node->operator;
+        
+        my $result;
+        if ($op eq '==') {
+            $result = FSM::AST::Utils::equals_op($left_ast, $right_ast);
+        } elsif ($op eq '&&' || $op eq '&') {
+            $result = FSM::AST::Utils::and_op($left_ast, $right_ast);
+        } elsif ($op eq '||' || $op eq '|') {
+            $result = FSM::AST::Utils::or_op($left_ast, $right_ast);
+        } else {
+            $result = FSM::AST::BinaryOp->new($op, $left_ast, $right_ast);
+        }
+        
+        fsm_debug("    CONVERT_CONDITION_AST: BinaryOp($op) -> BinaryOp node", 3);
+        return $result;
+        
+    } elsif ($condition_node->isa('FSM::CoreAST::Literal')) {
+        my $value = $condition_node->value;
+        fsm_debug("    CONVERT_CONDITION_AST: Literal -> literal('$value')", 3);
+        return FSM::AST::Utils::literal($value);
+        
+    } else {
+        # Enhanced fallback - try to get more information
+        my $node_type = ref($condition_node);
+        fsm_debug("    CONVERT_CONDITION_AST: Unknown type '$node_type' - creating generic signal", 3);
+        
+        # Try to see if we can extract any useful information
+        if ($condition_node->can('name')) {
+            my $name = eval { $condition_node->name };
+            if ($name) {
+                fsm_debug("    CONVERT_CONDITION_AST: Found name attribute: $name", 3);
+                return FSM::AST::Utils::signal_ref($name);
+            }
+        }
+        
+        # Final fallback
+        return FSM::AST::Utils::signal_ref("condition");
+    }
+}
+sub convert_test_value_to_ast($self, $test_value) {
+    # Convert test values to AST literal nodes
+    
+    fsm_debug("    CONVERT_TEST_VALUE_AST: Converting test value: '$test_value'", 3);
+    
+    # Handle different test value formats
+    if ($test_value =~ /^=(\d+)$/) {
+        my $val = $1;
+        if ($val eq '0') {
+            return FSM::AST::Utils::literal("1'b0");
+        } elsif ($val eq '1') {
+            return FSM::AST::Utils::literal("1'b1");
+        } else {
+            return FSM::AST::Utils::literal($val);
+        }
+    } elsif ($test_value =~ /^\d+$/) {
+        # Plain number
+        if ($test_value eq '0') {
+            return FSM::AST::Utils::literal("1'b0");
+        } elsif ($test_value eq '1') {
+            return FSM::AST::Utils::literal("1'b1");
+        } else {
+            return FSM::AST::Utils::literal($test_value);
+        }
+    } else {
+        # Other formats - use as-is
+        return FSM::AST::Utils::literal($test_value);
+    }
+}
 sub build_unified_assignment_analysis($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     fsm_debug("\n\n*** UNIFIED PHASE 1: BUILDING COMPLETE ASSIGNMENT ANALYSIS (AST WEB) ***", 3);

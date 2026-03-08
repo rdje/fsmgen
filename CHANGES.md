@@ -1,5 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-08
+### FlattenedDT backend convergence (AST condition-helper ownership)
+- Moved `create_condition_expression()`, `convert_condition_to_ast()`, and `convert_test_value_to_ast()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `enable_graph` for all three helpers.
+- Scope remains behavior-preserving structural convergence only; this localizes the live AST condition-construction helper trio beside the existing enable-synthesis helper layer without changing flattening callsites.
+- Important implementation note:
+  - an explicit `use FSM::AST::Utils;` in `EnableGraph` was intentionally not kept because it exposes an incompatible AST helper load path in this repository; the final slice preserves the existing working runtime path.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ## 2026-03-07
 ### FlattenedDT backend convergence (WEN/EN prescan entrypoint ownership)
 - Moved `prescan_wen_en_for_intermediate_signals()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
