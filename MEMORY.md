@@ -14,6 +14,18 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-08: Backend convergence micro-slice (Orchestrator consolidated-intermediate-signals callsite convergence)
+- Current worktree localizes the stage-6 `generate_consolidated_intermediate_signals()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `SystemVerilog` backend ownership.
+- Scope remains a single active backend-emission callsite convergence step:
+  - `generate_systemverilog()` now emits consolidated intermediate signals through `$ctx->{backend_sv}->generate_consolidated_intermediate_signals(...)`,
+  - the `FlattenedDT` compatibility delegate remains in place for any non-local callers.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue with the next active Orchestrator/backend round-trip, most likely the stage-7 `generate_wen_en_signals()` callsite in `generate_systemverilog()`,
+  - keep prioritizing live callsite convergence over dormant validation/helper families.
 ## 2026-03-08: Repository tracking change (plugin/ and specs/ now versioned)
 - Added the existing `plugin/` and `specs/` trees to git so the repository now carries the legacy `.plg` plugin assets and spec/reference files directly.
 - Scope is repository tracking only:
