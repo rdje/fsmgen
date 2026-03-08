@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-08: FlattenedDT backend convergence (assignment-capture orchestration ownership)
+- Continued backend convergence by moving `extract_lhs_name_from_ast()`, `record_assignment_from_ast()`, and `extract_rhs_from_expression()` ownership into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to compatibility delegates for that trio.
+- Rationale:
+  - after the recursive flattener and state-transition moves, the assignment path became the next smallest still-live cohesive seam because its only operational callers were the orchestrator-owned traversal body and its own RHS recursion,
+  - moving the LHS-name helper together avoids leaving a tiny facade-owned helper that would otherwise serve only the orchestrator-owned assignment path.
+- Safety/compatibility:
+  - assignment-capture logic is unchanged apart from ownership and local call routing,
+  - the moved helpers still use the existing shared `FlattenedDT` state for condition construction, LHS/RHS validation tracking, and AST-map storage,
+  - no intended semantic change to assignment intent interpretation, recorded assignment structures, or emitted HDL behavior.
+- Verification:
+  - syntax checks for `FlattenedDT.pm` and `FlattenedDT/Orchestrator.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue on the nearby shared tracking helper seam now used only from the orchestrator-owned assignment/transition capture path, most likely `track_actual_lhs_rhs()`,
+  - keep deferring dormant legacy helpers such as `extract_condition_string()` until they become part of an active ownership path again.
 ## 2026-03-08: FlattenedDT backend convergence (state-transition capture orchestration ownership)
 - Continued backend convergence by moving `record_transition_from_ast()` ownership into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and reducing `perl/FSM/HDL/FlattenedDT.pm` to a compatibility delegate for that entrypoint.
 - Rationale:

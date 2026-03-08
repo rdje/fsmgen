@@ -14,6 +14,19 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-08: Backend convergence micro-slice (assignment-capture orchestration ownership)
+- Current worktree moves `extract_lhs_name_from_ast()`, `record_assignment_from_ast()`, and `extract_rhs_from_expression()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`, while keeping `FlattenedDT` as compatibility delegates.
+- This slice completes the active assignment-capture trio on the live recursive flattener path:
+  - `flatten_decision_tree()` now routes assignment capture locally through orchestrator-owned helpers instead of round-tripping through the facade,
+  - the RHS extraction helper moved with the assignment recorder to avoid leaving that recursion split across facade/orchestrator ownership,
+  - the LHS-name helper moved too because its only live callers are now the orchestrator-owned assignment traversal/capture path.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue on the remaining shared tracking helper seam now adjacent to the orchestrator-owned assignment/transition capture path, most likely `track_actual_lhs_rhs()`,
+  - keep deferring dormant legacy helpers such as `extract_condition_string()` until they become part of an active ownership path again.
 ## 2026-03-08: Backend convergence micro-slice (state-transition capture orchestration ownership)
 - Current worktree moves `record_transition_from_ast()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`, while keeping `FlattenedDT` as a compatibility delegate.
 - This slice is the next smallest active seam in the post-flattener AST-capture family: `record_transition_from_ast()` now has a single live caller inside the orchestrator-owned recursive flattener and is materially smaller than the adjacent assignment-capture path.

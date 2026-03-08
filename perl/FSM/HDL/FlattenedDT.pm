@@ -160,29 +160,7 @@ sub build_multiplexer_config ($self, $lhs) {
     return $self->{enable_graph}->build_multiplexer_config($lhs);
 }
 sub extract_lhs_name_from_ast ($self, $lhs_ast) {
-    return 'unknown_lhs' unless $lhs_ast;
-    
-    if ($lhs_ast->can('name')) {
-        my $name = eval { $lhs_ast->name() };
-        return $name if defined($name) && $name ne '';
-    }
-    
-    if ($lhs_ast->isa('FSM::CoreAST::SignalRef') && $lhs_ast->signal && $lhs_ast->signal->can('name')) {
-        return $lhs_ast->signal->name;
-    }
-    
-    if ($lhs_ast->isa('FSM::CoreAST::IndexedRef') && $lhs_ast->signal && ref($lhs_ast->signal) && $lhs_ast->signal->can('name')) {
-        return $lhs_ast->signal->name;
-    }
-    
-    if ($lhs_ast->can('to_systemverilog')) {
-        my $sv = eval { $lhs_ast->to_systemverilog() };
-        if (defined($sv) && $sv =~ /^([a-zA-Z_]\w*)/) {
-            return $1;
-        }
-    }
-    
-    return 'unknown_lhs';
+    return $self->{orchestrator}->extract_lhs_name_from_ast($lhs_ast);
 }
 
 sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
@@ -1278,98 +1256,7 @@ sub extract_condition_string ($self, $condition_node) {
 }
 
 sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_stack) {
-    # AST WEB IMPLEMENTATION: Store AST nodes directly, not strings!
-    my $lhs_signal_ast = $assignment_node->target;  # Keep the AST node
-    my $rhs_expr = $assignment_node->source;
-    my $lhs_name = $self->extract_lhs_name_from_ast($lhs_signal_ast);
-    
-    # PURE AST/OOP: Ask the AST node directly for debugging information
-    fsm_debug("\n*** PHASE1 ASSIGNMENT NODE REACHED (AST WEB) ***", 3);
-    fsm_debug("  DT: $dt_name", 3);
-    fsm_debug("  LHS AST Node: " . ref($lhs_signal_ast), 3);
-    fsm_debug("  LHS Name: " . $lhs_name, 3);
-    
-    # CRITICAL: Debug the condition stack contents at assignment time
-    fsm_debug("  CONDITION STACK ANALYSIS:", 3);
-    fsm_debug("    Stack size: " . scalar(@$condition_stack), 3);
-    if (@$condition_stack) {
-        for my $i (0 .. $#$condition_stack) {
-            my $cond = $condition_stack->[$i];
-            if (blessed($cond) && $cond->can('to_systemverilog')) {
-                fsm_debug("    Stack[$i]: '" . $cond->to_systemverilog() . "' (" . ref($cond) . ")", 3);
-            } else {
-                fsm_debug("    Stack[$i]: INVALID - " . (ref($cond) || 'SCALAR') . " - " . ($cond || 'UNDEF'), 3);
-            }
-        }
-    } else {
-        fsm_debug("    Stack: EMPTY", 3);
-    }
-    
-    # Create condition expression as pure AST
-    my $condition_ast = $self->create_condition_expression($condition_stack);
-    
-    # Extract RHS value from expression
-    my $actual_rhs = $self->extract_rhs_from_expression($rhs_expr);
-    
-    # Determine operator directly from assignment intent metadata (strict mode)
-    my $assignment_intent = {};
-    if ($assignment_node->can('assignment_intent')) {
-        my $intent = $assignment_node->assignment_intent;
-        $assignment_intent = { %$intent } if ref($intent) eq 'HASH';
-    }
-    
-    my $operator = $assignment_node->can('operator_symbol')
-        ? $assignment_node->operator_symbol
-        : undef;
-    if ((!defined($operator) || $operator eq '') && ref($assignment_intent) eq 'HASH') {
-        $operator = $assignment_intent->{operator_symbol};
-    }
-    if (($assignment_node->isa('FSM::CoreAST::PulseAssignment') || $assignment_node->can('pulse_cycles'))
-            && (!defined($operator) || $operator eq '' || $operator eq '=')
-            && $assignment_node->can('pulse_cycles')) {
-        my $cycles = eval { $assignment_node->pulse_cycles };
-        $operator = '<' . $cycles if defined $cycles && $cycles =~ /^\d+$/;
-    }
-    if (!defined($operator) || $operator !~ /^(?:<-|<=|=|<-=|<=\+|<[0-9]+)$/) {
-        my $node_type = ref($assignment_node) || 'UNKNOWN';
-        my $intent_operator = (ref($assignment_intent) eq 'HASH') ? ($assignment_intent->{operator_symbol} // 'UNDEF') : 'NO_INTENT';
-        my $pulse_cycles = $assignment_node->can('pulse_cycles') ? (eval { $assignment_node->pulse_cycles } // 'UNDEF') : 'N/A';
-        die "[FlattenedDT.pm][record_assignment_from_ast()] Missing or invalid operator_symbol for assignment node '$node_type' (resolved='$operator', intent='$intent_operator', pulse_cycles='$pulse_cycles')";
-    }
-    
-    fsm_debug("  SEMANTIC ASSIGNMENT RESULT:", 3);
-    fsm_debug("    LHS AST Node: " . ref($lhs_signal_ast), 3);
-    fsm_debug("    LHS Name: " . $lhs_name, 3);
-    fsm_debug("    RHS: $actual_rhs", 3);
-    fsm_debug("    Operator: $operator", 3);
-    fsm_debug("    Condition AST: " . (blessed($condition_ast) ? ref($condition_ast) : 'NOT_BLESSED'), 3);
-    my $condition_signal_name = defined($condition_ast) ? $condition_ast->to_systemverilog() : 'UNDEFINED';
-    fsm_debug("    Condition Signal Name: '$condition_signal_name'", 3);
-    
-    # Track this actual LHS/RHS pair for validation (still need strings for validation)
-    $self->track_actual_lhs_rhs($lhs_name, $actual_rhs, "ast_assignment:$dt_name");
-    
-    # AST WEB: Use signal name as key but maintain AST mapping
-    my $lhs_name_key = $lhs_name;
-    
-    # Record the assignment with the signal name as key
-    push @{$self->{lhs_assignments}->{$lhs_name_key}}, {
-        dt => $dt_name,
-        lhs_ast => $lhs_signal_ast,           # Store the AST node
-        conditions_ast => $condition_ast,      # Store condition AST
-        rhs => $actual_rhs,
-        operator => $operator,
-        assignment_intent => $assignment_intent,
-        source_provenance => ($assignment_node->can('source_provenance') ? $assignment_node->source_provenance : {}),
-        output_exposure => ($assignment_node->can('output_exposure') ? $assignment_node->output_exposure : 'auto'),
-        is_state_trans => 0
-    };
-    
-    # Track this LHS with name key and maintain AST mapping
-    $self->{all_lhs}->{$lhs_name_key} = 1;
-    $self->{lhs_ast_map}->{$lhs_name_key} = $lhs_signal_ast;  # Map name to AST
-    
-    fsm_debug("*** PHASE1 ASSIGNMENT NODE COMPLETE (AST WEB) ***\n", 3);
+    return $self->{orchestrator}->record_assignment_from_ast($dt_name, $assignment_node, $condition_stack);
 }
 
 sub record_transition_from_ast ($self, $dt_name, $transition_node, $condition_stack) {
@@ -1377,28 +1264,7 @@ sub record_transition_from_ast ($self, $dt_name, $transition_node, $condition_st
 }
 
 sub extract_rhs_from_expression ($self, $expr) {
-    # Extract RHS value from expression nodes
-    if ($expr->isa('FSM::CoreAST::Literal')) {
-        return $expr->value;
-    } elsif ($expr->isa('FSM::CoreAST::SignalRef')) {
-        return $expr->signal->name;
-    } elsif ($expr->isa('FSM::CoreAST::BinaryOp')) {
-        my $left = $self->extract_rhs_from_expression($expr->left);
-        my $right = $self->extract_rhs_from_expression($expr->right);
-        return "$left " . $expr->operator . " $right";
-    } elsif ($expr->isa('FSM::CoreAST::Concatenation')) {
-        # Handle concatenation expressions: {a, b, c}
-        my @operand_strings;
-        for my $operand (@{$expr->operands}) {
-            push @operand_strings, $self->extract_rhs_from_expression($operand);
-        }
-        return '{' . join(', ', @operand_strings) . '}';
-    } else {
-        # Try to get a meaningful name from the expression object
-        my $expr_type = ref($expr);
-        $expr_type =~ s/^.*:://;  # Remove package prefix
-        return lc($expr_type) . '_expr';
-    }
+    return $self->{orchestrator}->extract_rhs_from_expression($expr);
 }
 
 sub is_complex_expression ($self, $expr) {
