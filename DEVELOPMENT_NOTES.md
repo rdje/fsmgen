@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-09: FlattenedDT backend convergence (EnableGraph binary AST-to-SV render helper ownership)
+- Continued backend convergence by moving `_render_binary_op()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - with the unary-render lane complete, `_render_binary_op()` became the next truthful entry seam into the remaining binary-render cluster,
+  - moving the entrypoint first keeps the ownership shift aligned with the active runtime path,
+  - the helper has a broader dependency surface than the unary path, so this slice keeps the move behavior-preserving via narrow bridges rather than pulling the whole operator-selection cluster at once.
+- Safety/compatibility:
+  - no binary render semantics changed; only helper ownership and compatibility delegation changed,
+  - `FlattenedDT` now forwards `_render_binary_op()` to `EnableGraph`,
+  - `EnableGraph` temporarily forwards `_get_operator_precedence()`, `_choose_operator_symbol()`, `_needs_parentheses()`, and `_operand_is_single_bit()` back to `FlattenedDT`, preserving the existing binary render behavior while shrinking the facade boundary.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue with the smallest isolated binary-support helpers, most likely `_get_operator_precedence()` and/or `_needs_parentheses()` before `_choose_operator_symbol()`,
+  - keep deferring the larger operator-selection and bit-width analysis helpers until those smaller seams are exhausted.
 ## 2026-03-09: FlattenedDT backend convergence (EnableGraph unary negation parenthesization helper ownership)
 - Continued backend convergence by moving `_operand_needs_parens_for_negation()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:

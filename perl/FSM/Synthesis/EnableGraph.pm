@@ -1366,8 +1366,57 @@ sub _ast_to_systemverilog_internal($self, $ast, $parent_precedence) {
     }
 }
 sub _render_binary_op($self, $ast, $parent_precedence) {
+    my $operator = eval { $ast->operator } || 'unknown';
+    my $left = $ast->left;
+    my $right = $ast->right;
+    
+    # Get precedence for this operator
+    my $my_precedence = $self->_get_operator_precedence($operator);
+    
+    # Convert operands recursively
+    my $left_sv = $self->_ast_to_systemverilog_internal($left, $my_precedence);
+    my $right_sv = $self->_ast_to_systemverilog_internal($right, $my_precedence);
+    
+    # Choose the right operator symbol
+    my $op_symbol = $self->_choose_operator_symbol($operator, $left, $right);
+    
+    # *** OPERATOR DEBUG: Log the operator choice decision ***
+    fsm_debug("*** OPERATOR_CHOICE_DEBUG: ***", 3);
+    fsm_debug("  Original operator: '$operator'", 3);
+    fsm_debug("  Chosen symbol: '$op_symbol'", 3);
+    fsm_debug("  Left operand: '$left_sv' (AST type: " . (blessed($left) ? ref($left) : 'UNBLESSED') . ")", 3);
+    fsm_debug("  Right operand: '$right_sv' (AST type: " . (blessed($right) ? ref($right) : 'UNBLESSED') . ")", 3);
+    fsm_debug("  Left is 1-bit: " . ($self->_operand_is_single_bit($left) ? 'YES' : 'NO'), 3);
+    fsm_debug("  Right is 1-bit: " . ($self->_operand_is_single_bit($right) ? 'YES' : 'NO'), 3);
+    
+    # Build expression
+    my $expr = "$left_sv $op_symbol $right_sv";
+    
+    fsm_debug("  Final expression: '$expr'", 3);
+    fsm_debug("*** END OPERATOR_CHOICE_DEBUG ***", 3);
+    
+    # Add parentheses only if needed based on precedence
+    if ($self->_needs_parentheses($my_precedence, $parent_precedence)) {
+        return "($expr)";
+    } else {
+        return $expr;
+    }
+}
+sub _get_operator_precedence($self, $operator) {
     my $ctx = $self->{flattened_dt};
-    return $ctx->_render_binary_op($ast, $parent_precedence);
+    return $ctx->_get_operator_precedence($operator);
+}
+sub _choose_operator_symbol($self, $operator, $left, $right) {
+    my $ctx = $self->{flattened_dt};
+    return $ctx->_choose_operator_symbol($operator, $left, $right);
+}
+sub _needs_parentheses($self, $my_precedence, $parent_precedence) {
+    my $ctx = $self->{flattened_dt};
+    return $ctx->_needs_parentheses($my_precedence, $parent_precedence);
+}
+sub _operand_is_single_bit($self, $ast) {
+    my $ctx = $self->{flattened_dt};
+    return $ctx->_operand_is_single_bit($ast);
 }
 sub _render_unary_op($self, $ast) {
     my $operator = eval { $ast->operator } || 'not';

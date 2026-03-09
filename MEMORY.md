@@ -14,6 +14,19 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-09: Backend convergence micro-slice (EnableGraph binary AST-to-SV render helper ownership)
+- Current worktree moves `_render_binary_op()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Scope remains a single binary-render helper convergence step:
+  - `FlattenedDT::_render_binary_op()` is now a compatibility delegate to `enable_graph`,
+  - `EnableGraph` now owns binary AST rendering,
+  - narrow compatibility delegates for `_get_operator_precedence()`, `_choose_operator_symbol()`, `_needs_parentheses()`, and `_operand_is_single_bit()` preserve behavior while the deeper binary-support helpers remain in `FlattenedDT`.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue with the smallest isolated binary-support helpers, most likely `_get_operator_precedence()` and/or `_needs_parentheses()` before the larger `_choose_operator_symbol()` path,
+  - keep the compatibility facade in `FlattenedDT` intact until the binary-render cluster converges further.
 ## 2026-03-09: Backend convergence micro-slice (EnableGraph unary negation parenthesization helper ownership)
 - Current worktree moves `_operand_needs_parens_for_negation()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Scope remains a single unary-support helper convergence step:
