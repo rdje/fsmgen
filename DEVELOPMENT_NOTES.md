@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-09: FlattenedDT backend convergence (EnableGraph AST-to-SV internal delegate callsite convergence)
+- Continued backend convergence by localizing the `ast_to_systemverilog()` render-internal callsite in `perl/FSM/Synthesis/EnableGraph.pm` away from a direct `FlattenedDT` object method call.
+- Rationale:
+  - the previous `EnableGraph` self-owned round-trip lane was exhausted,
+  - a full ownership move for `_ast_to_systemverilog_internal()` would immediately pull in a larger render-helper family (`_render_binary_op()`, `_render_unary_op()`, precedence helpers, operator-selection helpers), which is too large for the current micro-slice discipline,
+  - introducing an `EnableGraph` compatibility delegate keeps the active entrypoint local without forcing that larger move yet.
+- Safety/compatibility:
+  - no render logic changed; only the active runtime call path changed,
+  - `EnableGraph` now exposes `_ast_to_systemverilog_internal()` as a compatibility delegate to the existing `FlattenedDT` implementation,
+  - no intended semantic change to AST rendering, operator choice, precedence handling, or emitted HDL behavior.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - if this render-boundary lane continues, the next truthful seam is the `_ast_to_systemverilog_internal()` helper family itself together with its adjacent render helpers,
+  - keep preferring behavior-preserving slices over broad render-cluster moves.
 ## 2026-03-09: FlattenedDT backend convergence (EnableGraph LHS-enable intermediate tracking callsite convergence)
 - Continued backend convergence by localizing the `track_ast_intermediate_signals()` callsite in `perl/FSM/Synthesis/EnableGraph.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` self ownership.
 - Rationale:

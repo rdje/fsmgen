@@ -14,6 +14,19 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-09: Backend convergence micro-slice (EnableGraph AST-to-SV internal delegate callsite convergence)
+- Current worktree localizes the `ast_to_systemverilog()` render-internal callsite in `perl/FSM/Synthesis/EnableGraph.pm` away from a direct `FlattenedDT` object method reach-in.
+- Scope remains a single active runtime callsite convergence step:
+  - `ast_to_systemverilog()` now routes through `$self->_ast_to_systemverilog_internal(...)`,
+  - the new `EnableGraph` compatibility delegate still forwards to `FlattenedDT`'s `_ast_to_systemverilog_internal(...)`,
+  - deeper render-helper ownership remains unchanged for this slice.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - if this render-boundary lane continues, the next truthful seam is the heavier `_ast_to_systemverilog_internal()` helper family itself together with the adjacent render/precedence/operator helpers it depends on,
+  - keep preferring behavior-preserving slices over broad render-cluster moves.
 ## 2026-03-09: Backend convergence micro-slice (EnableGraph LHS-enable intermediate tracking callsite convergence)
 - Current worktree localizes the `track_ast_intermediate_signals()` callsite in `perl/FSM/Synthesis/EnableGraph.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` self ownership.
 - Scope remains a single active runtime callsite convergence step:

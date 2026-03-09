@@ -13,6 +13,14 @@ This is the persistent technical change history for FSMGen.
   - full regression passed (`Files=6`, `Tests=125`)
   - audited tracked `.github`, `bin`, `perl`, `t`, `README.md`, and `docs` content and found no active references to untracked `fx/`, `plugin/`, `specs/`, or machine-specific `/Users/...` paths
 ## 2026-03-09
+### FlattenedDT backend convergence (EnableGraph AST-to-SV internal delegate callsite convergence)
+- Localized the `ast_to_systemverilog()` render-internal callsite in `perl/FSM/Synthesis/EnableGraph.pm` so it no longer reaches directly into the `FlattenedDT` object for `_ast_to_systemverilog_internal(...)`.
+- Updated `ast_to_systemverilog()` to route through a new `EnableGraph` compatibility delegate, `$self->_ast_to_systemverilog_internal(...)`, which preserves the existing `FlattenedDT` implementation boundary for now.
+- Scope remains behavior-preserving callsite convergence only; the deeper render-helper family still lives in `perl/FSM/HDL/FlattenedDT.pm`, and no operator-selection or precedence behavior changed.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (EnableGraph LHS-enable intermediate tracking callsite convergence)
 - Localized the `track_ast_intermediate_signals()` callsite in `perl/FSM/Synthesis/EnableGraph.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` self ownership.
 - Updated `generate_lhs_enables_from_analysis()` so LHS-enable intermediate-signal tracking now goes through `$self->track_ast_intermediate_signals(...)`.

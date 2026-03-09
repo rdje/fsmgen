@@ -1288,13 +1288,11 @@ sub _signal_name_indicates_ast_operators($self, $signal_name) {
     return 0;
 }
 sub ast_to_systemverilog($self, $ast) {
-    my $ctx = $self->{flattened_dt};
-    
     # Convert AST to SystemVerilog with proper operator selection and parentheses
     return "1'b1" unless $ast && blessed($ast);
     
     # Use AST-based conversion with proper operator precedence
-    my $sv = $ctx->_ast_to_systemverilog_internal($ast, undef);
+    my $sv = $self->_ast_to_systemverilog_internal($ast, undef);
     
     # DEBUGGING: Track where AST-to-SV conversion is called from
     my ($package, $filename, $line, $subroutine) = caller(1);
@@ -1303,6 +1301,10 @@ sub ast_to_systemverilog($self, $ast) {
     fsm_debug("    AST type: " . ref($ast), 3);
     
     return $sv;
+}
+sub _ast_to_systemverilog_internal($self, $ast, $parent_precedence) {
+    my $ctx = $self->{flattened_dt};
+    return $ctx->_ast_to_systemverilog_internal($ast, $parent_precedence);
 }
 sub _ast_contains_factorizable_operators($self, $ast) {
     # Check if an AST contains operators that would qualify it as an intermediate signal
