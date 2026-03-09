@@ -1434,6 +1434,65 @@ sub _map_binary_operator($self, $operator) {
     );
     return $op_map{$operator} || $operator;
 }
+sub _signal_is_single_bit($self, $name) {
+    fsm_debug("    SIGNAL_IS_1BIT: Checking if signal '$name' is single-bit", 3);
+    
+    unless (defined $name) {
+        fsm_debug("      RESULT: NOT single-bit (undefined name)", 3);
+        return 0;
+    }
+    
+    my $ctx = $self->{flattened_dt};
+    
+    # Check FSM module signal info if available
+    if ($ctx->{fsm_module} && $ctx->{fsm_module}->signals && $ctx->{fsm_module}->signals->{$name}) {
+        fsm_debug("      PATH: Found signal in FSM module", 3);
+        my $signal = $ctx->{fsm_module}->signals->{$name};
+        fsm_debug("      Signal object type: " . ref($signal), 3);
+        
+        if ($signal->can('width')) {
+            my $width = $signal->width;
+            fsm_debug("      FSM module signal width: " . (defined($width) ? $width : 'UNDEFINED'), 3);
+            my $result = (!$width || $width == 1) ? 1 : 0;
+            fsm_debug("      RESULT: " . ($result ? 'single-bit' : 'multi-bit') . " (from FSM module)", 3);
+            return $result;
+        } else {
+            fsm_debug("      Signal has no width() method", 3);
+        }
+    } else {
+        fsm_debug("      PATH: Signal not found in FSM module (using heuristics)", 3);
+        if (!$ctx->{fsm_module}) {
+            fsm_debug("        Reason: No FSM module available", 3);
+        } elsif (!$ctx->{fsm_module}->signals) {
+            fsm_debug("        Reason: FSM module has no signals", 3);
+        } else {
+            fsm_debug("        Reason: Signal '$name' not in FSM module signals", 3);
+            # Debug: list available signals
+            my @available = keys %{$ctx->{fsm_module}->signals};
+            my $count = scalar(@available);
+            fsm_debug("        Available signals ($count): " . join(", ", sort @available), 3);
+        }
+    }
+    
+    # Check if this is an intermediate signal (should be 1-bit)
+    if ($self->is_intermediate_signal($name)) {
+        fsm_debug("      PATH: Intermediate signal (assuming 1-bit)", 3);
+        fsm_debug("      RESULT: single-bit (intermediate signals are boolean)", 3);
+        return 1;
+    }
+    
+    
+    if ($name =~ /^current_state$/) {
+        fsm_debug("      PATH: State comparison signal", 3);
+        fsm_debug("      RESULT: single-bit (state comparison)", 3);
+        return 1;
+    }
+    
+    # Default: assume multi-bit to be safe
+    fsm_debug("      PATH: Default fallback", 3);
+    fsm_debug("      RESULT: multi-bit (conservative default)", 3);
+    return 0;
+}
 sub _operand_is_single_bit($self, $ast) {
     my $ctx = $self->{flattened_dt};
     return $ctx->_operand_is_single_bit($ast);

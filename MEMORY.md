@@ -14,19 +14,19 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
-## 2026-03-09: Backend convergence micro-slice (EnableGraph binary operator-mapping helper ownership)
-- Current worktree moves `_map_binary_operator()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+## 2026-03-09: Backend convergence micro-slice (EnableGraph binary signal-width helper ownership)
+- Current worktree moves `_signal_is_single_bit()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Scope remains a single binary-support helper convergence step:
-  - `FlattenedDT::_map_binary_operator()` is now a compatibility delegate to `enable_graph`,
-  - `EnableGraph` now owns the standard binary operator symbol lookup table,
-  - `_signal_is_single_bit()`, `_operand_is_single_bit()`, and `_choose_operator_symbol()` remain as the next binary-support helpers on the heavier bit-width/operator-selection path.
+  - `FlattenedDT::_signal_is_single_bit()` is now a compatibility delegate to `enable_graph`,
+  - `EnableGraph` now owns single-bit signal classification, including FSM-module metadata access retargeted through `$self->{flattened_dt}`,
+  - `_operand_is_single_bit()` and `_choose_operator_symbol()` remain as the next binary-support helpers on the heavier operand-analysis/operator-selection path.
 - Validation is green for this slice:
   - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
   - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
   - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
 - Immediate next direction after commit:
-  - re-evaluate `_signal_is_single_bit()` as the next smallest binary-support seam because `_operand_is_single_bit()` depends on it,
-  - then move `_operand_is_single_bit()` before revisiting `_choose_operator_symbol()`.
+  - move `_operand_is_single_bit()` as the next truthful binary-support seam now that its `_signal_is_single_bit()` dependency is local,
+  - then re-evaluate `_choose_operator_symbol()` once operand-width analysis is fully localized.
 ## 2026-03-09: Backend convergence micro-slice (EnableGraph binary AST-to-SV render helper ownership)
 - Current worktree moves `_render_binary_op()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Scope remains a single binary-render helper convergence step:

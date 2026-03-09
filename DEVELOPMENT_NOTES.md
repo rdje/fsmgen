@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-09: FlattenedDT backend convergence (EnableGraph binary signal-width helper ownership)
+- Continued backend convergence by moving `_signal_is_single_bit()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - after `_map_binary_operator()` moved, `_signal_is_single_bit()` became the next smallest truthful helper feeding the remaining operand-analysis lane,
+  - its behavior is locally self-contained apart from FSM-module metadata access and `is_intermediate_signal()`, both of which are already reachable from `EnableGraph`,
+  - retargeting the FSM-module lookup through `$self->{flattened_dt}` keeps the move behavior-preserving while shrinking the support boundary under `_operand_is_single_bit()`.
+- Safety/compatibility:
+  - no binary render semantics changed; only helper ownership and compatibility delegation changed,
+  - `FlattenedDT` now forwards `_signal_is_single_bit()` to `EnableGraph`,
+  - `_operand_is_single_bit()` and `_choose_operator_symbol()` remain as the next helpers in the heavier operand-analysis/operator-selection lane.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - move `_operand_is_single_bit()` as the next truthful binary-support seam now that `_signal_is_single_bit()` is local,
+  - then re-evaluate `_choose_operator_symbol()` once operand-width analysis is fully localized.
 ## 2026-03-09: FlattenedDT backend convergence (EnableGraph binary operator-mapping helper ownership)
 - Continued backend convergence by moving `_map_binary_operator()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:
