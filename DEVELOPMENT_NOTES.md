@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-09: FlattenedDT backend convergence (EnableGraph enable-structure callsite convergence)
+- Continued backend convergence by localizing the phase-1 `generate_complete_enable_structure()` callsite in `perl/FSM/Synthesis/EnableGraph.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` self ownership.
+- Rationale:
+  - helper ownership for `generate_complete_enable_structure()` already lives in `EnableGraph`,
+  - after the adjacent RHS-grouping callsite cleanup, this became the next smallest live facade round-trip inside `build_unified_assignment_analysis()`.
+- Safety/compatibility:
+  - no helper logic changed; only the active runtime call path changed,
+  - the `FlattenedDT` compatibility delegate remains available for any non-local callers,
+  - no intended semantic change to enable-structure assembly, unified analysis contents, or emitted HDL behavior.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue with the adjacent phase-1 analysis round-trip, most likely `build_multiplexer_config()` in `build_unified_assignment_analysis()`,
+  - keep preferring live helper-family self-localization over broad facade cleanup.
 ## 2026-03-09: FlattenedDT backend convergence (EnableGraph RHS-grouping callsite convergence)
 - Continued backend convergence by localizing the phase-1 `group_assignments_by_rhs()` callsite in `perl/FSM/Synthesis/EnableGraph.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` self ownership.
 - Rationale:

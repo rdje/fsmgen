@@ -169,7 +169,7 @@ sub build_unified_assignment_analysis($self, $fsm_module) {
         $self->group_assignments_by_rhs($lhs_name_key);
         
         # Generate all enable signal names and expressions
-        $ctx->generate_complete_enable_structure($lhs_name_key);
+        $self->generate_complete_enable_structure($lhs_name_key);
         
         # Build multiplexer configuration using direct AST queries
         $ctx->build_multiplexer_config($lhs_name_key);

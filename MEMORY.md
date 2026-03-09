@@ -14,6 +14,18 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-09: Backend convergence micro-slice (EnableGraph enable-structure callsite convergence)
+- Current worktree localizes the phase-1 `generate_complete_enable_structure()` callsite in `perl/FSM/Synthesis/EnableGraph.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` self ownership.
+- Scope remains a single active phase-1 analysis callsite convergence step:
+  - `build_unified_assignment_analysis()` now generates enable structures through `$self->generate_complete_enable_structure(...)`,
+  - the `FlattenedDT` compatibility delegate remains in place for any non-local callers.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue with the adjacent phase-1 analysis round-trip, most likely the `build_multiplexer_config()` callsite in `build_unified_assignment_analysis()`,
+  - keep prioritizing live helper-family self-localization over dormant compatibility cleanup.
 ## 2026-03-09: Backend convergence micro-slice (EnableGraph RHS-grouping callsite convergence)
 - Current worktree localizes the phase-1 `group_assignments_by_rhs()` callsite in `perl/FSM/Synthesis/EnableGraph.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` self ownership.
 - Scope remains a single active phase-1 analysis callsite convergence step:
