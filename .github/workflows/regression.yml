@@ -15,6 +15,5 @@ jobs:
       uses: shogo82148/actions-setup-perl@v1
       with:
         perl-version: '5.32'
-
-    - name: Run Parse Regression
-      run: prove -v t/01-regression.t
+    - name: Run shared regression CI script
+      run: ./bin/ci-regression

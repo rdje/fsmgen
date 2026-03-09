@@ -14,6 +14,23 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-08: Local CI entrypoint + workflow unification
+- Current worktree routes `.github/workflows/regression.yml` through a shared repo script, `bin/ci-regression`, so the same CI logic can be run locally before push without depending on GitHub-hosted execution.
+- Scope of this slice:
+  - added `bin/ci-regression`, which resolves the repository root itself and runs `prove -I perl t`,
+  - removed the discarded Rust-specific `check-rust-include-paths` guard after confirming this repository’s active CI path is Perl-only,
+  - updated `.github/workflows/regression.yml` to call the shared script instead of inlining a narrower one-test command,
+  - documented the local pre-push entrypoint in `README.md`.
+- Validation is green for this slice:
+  - `bash -lc 'cd /tmp && /Users/richarddje/Documents/github/fsmgen/bin/ci-regression'`
+  - result: full regression passed (`Files=6`, `Tests=125`, `PASS`)
+  - audited tracked `.github`, `bin`, `perl`, `t`, `README.md`, and `docs` content for active references to untracked `fx/`, `plugin/`, `specs/`, or machine-specific `/Users/...` paths and found none.
+- Important current-state note:
+  - `bin/ci-regression` is the only new active CI file that needed to be brought under git control,
+  - the remaining untracked `fx/` tree is not referenced by the active workflow/runtime/test path and is therefore not a current GitHub CI dependency.
+- Immediate next direction after commit:
+  - if more CI automation is added later, keep routing it through repo-owned scripts so local and GitHub execution stay aligned,
+  - keep re-checking active tracked workflow/runtime/test references whenever new untracked trees or helper scripts are introduced.
 ## 2026-03-08: Backend convergence micro-slice (Orchestrator signal-assignment callsite convergence)
 - Current worktree localizes the stage-8 `generate_signal_assignments()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` ownership.
 - Scope remains a single active stage-level callsite convergence step:

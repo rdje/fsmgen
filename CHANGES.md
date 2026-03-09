@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-08
+### CI workflow unification for local pre-push execution
+- Added a shared repo-owned CI entrypoint, `bin/ci-regression`, and updated `.github/workflows/regression.yml` to call it instead of inlining `prove -v t/01-regression.t`.
+- The shared CI script now:
+  - resolves the repository root automatically,
+  - runs the full Perl regression suite with `prove -I perl t`.
+- Removed the discarded Rust-specific `bin/check-rust-include-paths` guard after confirming the active CI path is Perl-only.
+- Added `README.md` documentation for the local pre-push CI command.
+- Validation:
+  - `bash -lc 'cd /tmp && /Users/richarddje/Documents/github/fsmgen/bin/ci-regression'` (pass)
+  - full regression passed (`Files=6`, `Tests=125`)
+  - audited tracked `.github`, `bin`, `perl`, `t`, `README.md`, and `docs` content and found no active references to untracked `fx/`, `plugin/`, `specs/`, or machine-specific `/Users/...` paths
 ### FlattenedDT backend convergence (Orchestrator signal-assignment callsite convergence)
 - Localized the stage-8 `generate_signal_assignments()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` ownership.
 - Updated `generate_systemverilog()` so final signal-assignment emission now goes through `$ctx->{enable_graph}->generate_signal_assignments(...)`.

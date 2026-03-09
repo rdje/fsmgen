@@ -51,6 +51,14 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ./bin/fsmgen --debug=3 fsm/trial_1.fsm
 ```
 
+## Local CI / pre-push regression
+```bash
+./bin/ci-regression
+```
+- `bin/ci-regression` is the local entrypoint for the same checks used by `.github/workflows/regression.yml`.
+- The script resolves the repository root itself, so you can invoke it without depending on your current working directory.
+- It runs the full Perl regression suite with `prove -I perl t`.
+
 ## CLI quick reference
 ```bash
 ./bin/fsmgen [options] <fsm_file>

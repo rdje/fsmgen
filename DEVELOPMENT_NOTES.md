@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-08: CI workflow unification for local pre-push execution
+- Added a shared CI entrypoint, `bin/ci-regression`, and pointed `.github/workflows/regression.yml` at that script so local and GitHub execution use the same repo-owned command path.
+- Rationale:
+  - the existing workflow only inlined `prove -v t/01-regression.t`, which worked from the repo root but did not provide a dedicated local pre-push entrypoint,
+  - moving workflow behavior into a repo script makes the CI logic runnable locally even when invoked from outside the repository root,
+  - the shared script also makes it straightforward to grow CI coverage without duplicating shell logic in YAML.
+- Scope correction:
+  - the repository’s active CI path is Perl-only, so the earlier Rust-specific include-path guard was unnecessary and has been removed,
+  - the shared CI entrypoint now stays focused on the actual project contract: repo-root-aware execution of the Perl regression suite.
+- Verification:
+  - validated the shared local entrypoint from outside the repo root with `bash -lc 'cd /tmp && /Users/richarddje/Documents/github/fsmgen/bin/ci-regression'`,
+  - the full regression remained green (`prove -I perl t` -> `Files=6`, `Tests=125`),
+  - audited tracked `.github`, `bin`, `perl`, `t`, `README.md`, and `docs` content and found no active references to untracked `fx/`, `plugin/`, `specs/`, or machine-specific `/Users/...` paths.
+- Working guidance:
+  - keep future CI checks in repo-owned scripts first and let workflow YAML delegate to them,
+  - when checking whether GitHub CI depends on untracked content, audit the active tracked workflow/runtime/test path rather than broad legacy trees that are not in use.
 ## 2026-03-08: FlattenedDT backend convergence (Orchestrator signal-assignment callsite convergence)
 - Continued backend convergence by localizing the stage-8 `generate_signal_assignments()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` ownership.
 - Rationale:
