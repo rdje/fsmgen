@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-09: FlattenedDT backend convergence (EnableGraph unary operator mapping helper ownership)
+- Continued backend convergence by moving `_map_unary_operator()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - after `_render_unary_op()` moved, `_map_unary_operator()` became the smallest fully isolated unary-support seam,
+  - it has no remaining runtime dependencies beyond its own tiny mapping table,
+  - taking it before `_operand_needs_parens_for_negation()` keeps the convergence cadence maximally small and low-risk.
+- Safety/compatibility:
+  - no unary rendering semantics changed; only helper ownership and compatibility delegation changed,
+  - `FlattenedDT` now forwards `_map_unary_operator()` to `EnableGraph`,
+  - `_operand_needs_parens_for_negation()` remains delegated from `EnableGraph` back to `FlattenedDT` until its own slice.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - move `_operand_needs_parens_for_negation()` as the last unary-support helper seam,
+  - then re-scan the larger `_render_binary_op()` / operator-selection cluster for the next truthful micro-slice.
 ## 2026-03-09: FlattenedDT backend convergence (EnableGraph unary AST-to-SV render helper ownership)
 - Continued backend convergence by moving `_render_unary_op()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:

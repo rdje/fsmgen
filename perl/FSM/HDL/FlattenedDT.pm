@@ -2184,8 +2184,7 @@ sub _map_binary_operator ($self, $operator) {
 }
 
 sub _map_unary_operator ($self, $operator) {
-    my %op_map = ( 'not' => '!', 'neg' => '-', 'pos' => '+' );
-    return $op_map{$operator} || $operator;
+    return $self->{enable_graph}->_map_unary_operator($operator);
 }
 
 sub _operand_needs_parens_for_negation ($self, $operand) {

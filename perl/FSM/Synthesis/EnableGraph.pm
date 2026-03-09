@@ -1391,8 +1391,8 @@ sub _render_unary_op($self, $ast) {
     }
 }
 sub _map_unary_operator($self, $operator) {
-    my $ctx = $self->{flattened_dt};
-    return $ctx->_map_unary_operator($operator);
+    my %op_map = ( 'not' => '!', 'neg' => '-', 'pos' => '+' );
+    return $op_map{$operator} || $operator;
 }
 sub _operand_needs_parens_for_negation($self, $operand) {
     my $ctx = $self->{flattened_dt};

@@ -13,6 +13,14 @@ This is the persistent technical change history for FSMGen.
   - full regression passed (`Files=6`, `Tests=125`)
   - audited tracked `.github`, `bin`, `perl`, `t`, `README.md`, and `docs` content and found no active references to untracked `fx/`, `plugin/`, `specs/`, or machine-specific `/Users/...` paths
 ## 2026-03-09
+### FlattenedDT backend convergence (EnableGraph unary operator mapping helper ownership)
+- Moved `_map_unary_operator()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `enable_graph->_map_unary_operator(...)`.
+- Scope remains behavior-preserving helper convergence only; unary rendering stays unchanged and `_operand_needs_parens_for_negation()` remains as the last isolated unary-support delegate.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (EnableGraph unary AST-to-SV render helper ownership)
 - Moved `_render_unary_op()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `enable_graph->_render_unary_op(...)`.
