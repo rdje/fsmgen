@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-09: FlattenedDT backend convergence (EnableGraph LHS-enable intermediate tracking callsite convergence)
+- Continued backend convergence by localizing the `track_ast_intermediate_signals()` callsite in `perl/FSM/Synthesis/EnableGraph.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` self ownership.
+- Rationale:
+  - helper ownership for `track_ast_intermediate_signals()` already lives in `EnableGraph`,
+  - after the phase-1 `build_unified_assignment_analysis()` helper-family cleanup, this was the last same-pattern direct self-owned round-trip still active inside `EnableGraph.pm`.
+- Safety/compatibility:
+  - no helper logic changed; only the active runtime call path changed,
+  - the `FlattenedDT` compatibility delegate remains available for any non-local callers,
+  - no intended semantic change to referenced-intermediate tracking, generated enable declarations, or emitted HDL behavior.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - the same-pattern direct self-owned round-trips in `EnableGraph.pm` now appear exhausted,
+  - if this lane continues immediately, the next remaining direct method dependency to inspect is `ast_to_systemverilog()` calling `FlattenedDT`'s `_ast_to_systemverilog_internal(...)`, which is a deeper render-boundary seam rather than another self-owned helper round-trip.
 ## 2026-03-09: FlattenedDT backend convergence (EnableGraph mux-config callsite convergence)
 - Continued backend convergence by localizing the phase-1 `build_multiplexer_config()` callsite in `perl/FSM/Synthesis/EnableGraph.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` self ownership.
 - Rationale:

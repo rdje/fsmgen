@@ -300,7 +300,7 @@ sub generate_lhs_enables_from_analysis($self) {
                 my $enable_ast = $lhs_enable->{ast};
                 
                 # Track intermediate signals in this AST
-                $ctx->track_ast_intermediate_signals($enable_ast);
+                $self->track_ast_intermediate_signals($enable_ast);
                 
                 # Convert AST to SystemVerilog for output (without outer parentheses)
                 my $enable_expr = $self->ast_to_systemverilog($enable_ast);

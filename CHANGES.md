@@ -13,6 +13,14 @@ This is the persistent technical change history for FSMGen.
   - full regression passed (`Files=6`, `Tests=125`)
   - audited tracked `.github`, `bin`, `perl`, `t`, `README.md`, and `docs` content and found no active references to untracked `fx/`, `plugin/`, `specs/`, or machine-specific `/Users/...` paths
 ## 2026-03-09
+### FlattenedDT backend convergence (EnableGraph LHS-enable intermediate tracking callsite convergence)
+- Localized the `track_ast_intermediate_signals()` callsite in `perl/FSM/Synthesis/EnableGraph.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` self ownership.
+- Updated `generate_lhs_enables_from_analysis()` so LHS-enable intermediate-signal tracking now goes through `$self->track_ast_intermediate_signals(...)`.
+- Scope remains behavior-preserving callsite convergence only; helper ownership already lived in `perl/FSM/Synthesis/EnableGraph.pm`, and the `FlattenedDT` compatibility delegate remains unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (EnableGraph mux-config callsite convergence)
 - Localized the phase-1 `build_multiplexer_config()` callsite in `perl/FSM/Synthesis/EnableGraph.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` self ownership.
 - Updated `build_unified_assignment_analysis()` so multiplexer-config assembly now goes through `$self->build_multiplexer_config(...)`.

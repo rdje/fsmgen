@@ -14,6 +14,18 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-09: Backend convergence micro-slice (EnableGraph LHS-enable intermediate tracking callsite convergence)
+- Current worktree localizes the `track_ast_intermediate_signals()` callsite in `perl/FSM/Synthesis/EnableGraph.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` self ownership.
+- Scope remains a single active runtime callsite convergence step:
+  - `generate_lhs_enables_from_analysis()` now tracks intermediate signals through `$self->track_ast_intermediate_signals(...)`,
+  - the `FlattenedDT` compatibility delegate remains in place for any non-local callers.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - the same-pattern direct self-owned round-trips inside `EnableGraph.pm` now appear exhausted,
+  - re-scan for the next smallest behavior-preserving seam, with the remaining direct `EnableGraph` -> `FlattenedDT` method dependency currently narrowed to `ast_to_systemverilog()` calling `_ast_to_systemverilog_internal(...)`.
 ## 2026-03-09: Backend convergence micro-slice (EnableGraph mux-config callsite convergence)
 - Current worktree localizes the phase-1 `build_multiplexer_config()` callsite in `perl/FSM/Synthesis/EnableGraph.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` self ownership.
 - Scope remains a single active phase-1 analysis callsite convergence step:
