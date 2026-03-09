@@ -14,6 +14,19 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-09: Backend convergence micro-slice (EnableGraph binary operator-selection helper ownership)
+- Current worktree moves `_choose_operator_symbol()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Scope remains a single binary-support helper convergence step:
+  - `FlattenedDT::_choose_operator_symbol()` is now a compatibility delegate to `enable_graph`,
+  - `EnableGraph` now owns the full binary operator-selection lane on top of already-local precedence, operand-width, and operator-mapping helpers,
+  - the binary-support helper ownership lane under the render cluster is now exhausted, while `FlattenedDT` remains the compatibility facade.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - re-scan the remaining render-cluster / facade-boundary seams now that binary-support helper ownership is fully localized in `EnableGraph`,
+  - keep `FlattenedDT` as the compatibility shell while choosing the next smallest truthful non-binary-support slice.
 ## 2026-03-09: Backend convergence micro-slice (EnableGraph binary operand-width helper ownership)
 - Current worktree moves `_operand_is_single_bit()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Scope remains a single binary-support helper convergence step:

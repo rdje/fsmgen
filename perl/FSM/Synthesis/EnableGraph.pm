@@ -7,6 +7,7 @@ use Carp qw(confess);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use Scalar::Util qw(blessed);
+use List::Util qw(min);
 use Data::Dumper;
 
 use FSM::Debug;
@@ -1416,8 +1417,92 @@ sub _get_operator_precedence($self, $operator) {
     return $precedence{$operator} || 5;
 }
 sub _choose_operator_symbol($self, $operator, $left, $right) {
+    # Choose between logical and bitwise operators based on operand analysis
+    
+    fsm_debug("_choose_operator_symbol: Entering with operator '$operator'", 3);
+    
     my $ctx = $self->{flattened_dt};
-    return $ctx->_choose_operator_symbol($operator, $left, $right);
+    my $left_name = undef;
+    my $right_name = undef;
+    my $left_width = undef;
+    my $right_width = undef;
+    
+    # Extract signal names using robust helper function
+    if ($left && blessed($left)) {
+        $left_name = $self->extract_signal_name_from_ast($left);
+        if ($left_name) {
+            fsm_debug("_choose_operator_symbol: Extracted left signal name: '$left_name'", 3);
+            if ($ctx->{fsm_module} && $ctx->{fsm_module}->signals) {
+                fsm_debug("_choose_operator_symbol: FSM module has " . scalar(keys %{$ctx->{fsm_module}->signals}) . " signals", 3);
+                if ($ctx->{fsm_module}->signals->{$left_name}) {
+                    my $sig = $ctx->{fsm_module}->signals->{$left_name};
+                    fsm_debug("_choose_operator_symbol: Found left signal '$left_name' in FSM signals", 3);
+                    fsm_debug("_choose_operator_symbol: Left signal object type: " . ref($sig), 3);
+                    if ($sig->can('width')) {
+                        $left_width = $sig->width;
+                        fsm_debug("_choose_operator_symbol: Left signal width from method: " . (defined $left_width ? $left_width : 'undef'), 3);
+                    } else {
+                        fsm_debug("_choose_operator_symbol: Left signal has no width() method", 3);
+                    }
+                } else {
+                    fsm_debug("_choose_operator_symbol: Left signal '$left_name' NOT found in FSM signals", 3);
+                    # Debug: show first 10 available signals
+                    my @available = keys %{$ctx->{fsm_module}->signals};
+                    my @first_10 = sort @available[0..min(9, $#available)];
+                    fsm_debug("_choose_operator_symbol: Available signals: " . join(", ", @first_10), 3);
+                }
+            } else {
+                fsm_debug("_choose_operator_symbol: No FSM module or signals available", 3);
+            }
+        }
+    }
+    if ($right && blessed($right)) {
+        $right_name = $self->extract_signal_name_from_ast($right);
+        if ($right_name) {
+            fsm_debug("_choose_operator_symbol: Extracted right signal name: '$right_name'", 3);
+            if ($ctx->{fsm_module} && $ctx->{fsm_module}->signals) {
+                if ($ctx->{fsm_module}->signals->{$right_name}) {
+                    my $sig = $ctx->{fsm_module}->signals->{$right_name};
+                    fsm_debug("_choose_operator_symbol: Found right signal '$right_name' in FSM signals", 3);
+                    fsm_debug("_choose_operator_symbol: Right signal object type: " . ref($sig), 3);
+                    if ($sig->can('width')) {
+                        $right_width = $sig->width;
+                        fsm_debug("_choose_operator_symbol: Right signal width from method: " . (defined $right_width ? $right_width : 'undef'), 3);
+                    } else {
+                        fsm_debug("_choose_operator_symbol: Right signal has no width() method", 3);
+                    }
+                } else {
+                    fsm_debug("_choose_operator_symbol: Right signal '$right_name' NOT found in FSM signals", 3);
+                }
+            } else {
+                fsm_debug("_choose_operator_symbol: No FSM module or signals available", 3);
+            }
+        }
+    }
+    
+    fsm_debug("_choose_operator_symbol: Left operand name: " . ($left_name // 'undef') . ", width: " . (defined $left_width ? $left_width : 'undef'), 3);
+    fsm_debug("_choose_operator_symbol: Right operand name: " . ($right_name // 'undef') . ", width: " . (defined $right_width ? $right_width : 'undef'), 3);
+
+    if ($operator eq '&&') {
+        if ($self->_operand_is_single_bit($left) && $self->_operand_is_single_bit($right)) {
+            fsm_debug("_choose_operator_symbol: Both operands single-bit, using '&'", 3);
+            return '&';
+        } else {
+            fsm_debug("_choose_operator_symbol: Operands not both single-bit, using '&&'", 3);
+            return '&&';
+        }
+    } elsif ($operator eq '||') {
+        if ($self->_operand_is_single_bit($left) && $self->_operand_is_single_bit($right)) {
+            fsm_debug("_choose_operator_symbol: Both operands single-bit, using '|'", 3);
+            return '|';
+        } else {
+            fsm_debug("_choose_operator_symbol: Operands not both single-bit, using '||'", 3);
+            return '||';
+        }
+    } else {
+        fsm_debug("_choose_operator_symbol: Using standard operator mapping for '$operator'", 3);
+        return $self->_map_binary_operator($operator);
+    }
 }
 sub _needs_parentheses($self, $my_precedence, $parent_precedence) {
     # Need parentheses if my precedence is lower than parent's

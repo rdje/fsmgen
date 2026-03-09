@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-09: FlattenedDT backend convergence (EnableGraph binary operator-selection helper ownership)
+- Continued backend convergence by moving `_choose_operator_symbol()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - after `_operand_is_single_bit()` moved, `_choose_operator_symbol()` became the last remaining helper in the binary-support cluster beneath `_render_binary_op()`,
+  - its remaining dependencies (`_operand_is_single_bit()`, `_map_binary_operator()`, `extract_signal_name_from_ast()`, and FSM-module metadata through `flattened_dt`) are now all locally reachable from `EnableGraph`,
+  - taking it now completes the helper-ownership localization of the binary render-support lane without changing the external `FlattenedDT` compatibility boundary.
+- Safety/compatibility:
+  - no binary render semantics changed; only helper ownership and compatibility delegation changed,
+  - `FlattenedDT` now forwards `_choose_operator_symbol()` to `EnableGraph`,
+  - `EnableGraph` imports `List::Util::min` so the copied debug-path signal listing remains behavior-preserving.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - the binary-support helper lane is now exhausted, so re-scan the remaining render-cluster / facade-boundary seams for the next smallest truthful slice,
+  - keep `FlattenedDT` as the compatibility facade while continuing behavior-preserving ownership reduction.
 ## 2026-03-09: FlattenedDT backend convergence (EnableGraph binary operand-width helper ownership)
 - Continued backend convergence by moving `_operand_is_single_bit()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:
