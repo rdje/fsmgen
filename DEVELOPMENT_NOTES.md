@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-09: FlattenedDT backend convergence (EnableGraph RHS-grouping callsite convergence)
+- Continued backend convergence by localizing the phase-1 `group_assignments_by_rhs()` callsite in `perl/FSM/Synthesis/EnableGraph.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` self ownership.
+- Rationale:
+  - helper ownership for `group_assignments_by_rhs()` already lives in `EnableGraph`,
+  - with the active `generate_systemverilog()` stage chain fully localized, the next smallest live facade round-trip moved to the phase-1 analysis helper family inside `build_unified_assignment_analysis()`.
+- Safety/compatibility:
+  - no helper logic changed; only the active runtime call path changed,
+  - the `FlattenedDT` compatibility delegate remains available for any non-local callers,
+  - no intended semantic change to RHS grouping, unified analysis contents, or emitted HDL behavior.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue with the adjacent phase-1 analysis round-trip, most likely `generate_complete_enable_structure()` in `build_unified_assignment_analysis()`,
+  - keep preferring live helper-family self-localization over broad facade cleanup.
 ## 2026-03-08: CI workflow unification for local pre-push execution
 - Added a shared CI entrypoint, `bin/ci-regression`, and pointed `.github/workflows/regression.yml` at that script so local and GitHub execution use the same repo-owned command path.
 - Rationale:

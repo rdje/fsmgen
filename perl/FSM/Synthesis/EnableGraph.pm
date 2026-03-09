@@ -166,7 +166,7 @@ sub build_unified_assignment_analysis($self, $fsm_module) {
         };
         
         # Group assignments by RHS value and build enable structures
-        $ctx->group_assignments_by_rhs($lhs_name_key);
+        $self->group_assignments_by_rhs($lhs_name_key);
         
         # Generate all enable signal names and expressions
         $ctx->generate_complete_enable_structure($lhs_name_key);

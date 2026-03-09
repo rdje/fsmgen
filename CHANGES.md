@@ -12,6 +12,15 @@ This is the persistent technical change history for FSMGen.
   - `bash -lc 'cd /tmp && /Users/richarddje/Documents/github/fsmgen/bin/ci-regression'` (pass)
   - full regression passed (`Files=6`, `Tests=125`)
   - audited tracked `.github`, `bin`, `perl`, `t`, `README.md`, and `docs` content and found no active references to untracked `fx/`, `plugin/`, `specs/`, or machine-specific `/Users/...` paths
+## 2026-03-09
+### FlattenedDT backend convergence (EnableGraph RHS-grouping callsite convergence)
+- Localized the phase-1 `group_assignments_by_rhs()` callsite in `perl/FSM/Synthesis/EnableGraph.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` self ownership.
+- Updated `build_unified_assignment_analysis()` so RHS grouping now goes through `$self->group_assignments_by_rhs(...)`.
+- Scope remains behavior-preserving callsite convergence only; helper ownership already lived in `perl/FSM/Synthesis/EnableGraph.pm`, and the `FlattenedDT` compatibility delegate remains unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (Orchestrator signal-assignment callsite convergence)
 - Localized the stage-8 `generate_signal_assignments()` callsite in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` from the `FlattenedDT` facade delegate to direct `EnableGraph` ownership.
 - Updated `generate_systemverilog()` so final signal-assignment emission now goes through `$ctx->{enable_graph}->generate_signal_assignments(...)`.
