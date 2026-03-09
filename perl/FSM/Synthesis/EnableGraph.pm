@@ -1403,8 +1403,17 @@ sub _render_binary_op($self, $ast, $parent_precedence) {
     }
 }
 sub _get_operator_precedence($self, $operator) {
-    my $ctx = $self->{flattened_dt};
-    return $ctx->_get_operator_precedence($operator);
+    # SystemVerilog operator precedence (higher number = higher precedence)
+    my %precedence = (
+        '||' => 1, '|'  => 2,
+        '&&' => 3, '&'  => 4,
+        '==' => 5, '!=' => 5, '<' => 5, '>' => 5, '<=' => 5, '>=' => 5,
+        '+'  => 6, '-'  => 6,
+        '*'  => 7, '/'  => 7, '%' => 7,
+        '<<' => 8, '>>' => 8,
+        '^'  => 9,
+    );
+    return $precedence{$operator} || 5;
 }
 sub _choose_operator_symbol($self, $operator, $left, $right) {
     my $ctx = $self->{flattened_dt};

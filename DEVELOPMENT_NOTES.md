@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-09: FlattenedDT backend convergence (EnableGraph binary precedence helper ownership)
+- Continued backend convergence by moving `_get_operator_precedence()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - after `_needs_parentheses()` moved, `_get_operator_precedence()` was the smallest fully isolated binary-support seam,
+  - its logic is a self-contained lookup table with no external dependencies, making it zero-risk,
+  - taking it now further shrinks the compatibility boundary without disturbing the heavier operator-selection or bit-width analysis helpers.
+- Safety/compatibility:
+  - no binary render semantics changed; only helper ownership and compatibility delegation changed,
+  - `FlattenedDT` now forwards `_get_operator_precedence()` to `EnableGraph`,
+  - `_choose_operator_symbol()` and `_operand_is_single_bit()` remain as the next binary-support delegates on the heavier path.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - re-evaluate `_choose_operator_symbol()` as the next binary-support seam (depends on `_operand_is_single_bit()` and `_map_binary_operator()`),
+  - alternatively, move `_operand_is_single_bit()` first if it proves more isolated.
 ## 2026-03-09: FlattenedDT backend convergence (EnableGraph binary parenthesis-decision helper ownership)
 - Continued backend convergence by moving `_needs_parentheses()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:

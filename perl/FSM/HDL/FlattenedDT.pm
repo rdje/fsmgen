@@ -2119,17 +2119,7 @@ sub _signal_is_single_bit ($self, $name) {
 }
 
 sub _get_operator_precedence ($self, $operator) {
-    # SystemVerilog operator precedence (higher number = higher precedence)
-    my %precedence = (
-        '||' => 1, '|'  => 2,
-        '&&' => 3, '&'  => 4,
-        '==' => 5, '!=' => 5, '<' => 5, '>' => 5, '<=' => 5, '>=' => 5,
-        '+'  => 6, '-'  => 6,
-        '*'  => 7, '/'  => 7, '%' => 7,
-        '<<' => 8, '>>' => 8,
-        '^'  => 9,
-    );
-    return $precedence{$operator} || 5;
+    return $self->{enable_graph}->_get_operator_precedence($operator);
 }
 
 sub _needs_parentheses ($self, $my_precedence, $parent_precedence) {
