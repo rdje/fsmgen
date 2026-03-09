@@ -13,6 +13,14 @@ This is the persistent technical change history for FSMGen.
   - full regression passed (`Files=6`, `Tests=125`)
   - audited tracked `.github`, `bin`, `perl`, `t`, `README.md`, and `docs` content and found no active references to untracked `fx/`, `plugin/`, `specs/`, or machine-specific `/Users/...` paths
 ## 2026-03-09
+### FlattenedDT backend convergence (EnableGraph binary operand-width helper ownership)
+- Moved `_operand_is_single_bit()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `enable_graph->_operand_is_single_bit(...)`.
+- Scope remains behavior-preserving helper convergence only; binary rendering stays unchanged and `_choose_operator_symbol()` is now the remaining binary-support helper on the operator-selection path.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (EnableGraph binary signal-width helper ownership)
 - Moved `_signal_is_single_bit()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `enable_graph->_signal_is_single_bit(...)`.
