@@ -14,6 +14,19 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-09: Backend convergence micro-slice (EnableGraph unary negation parenthesization helper ownership)
+- Current worktree moves `_operand_needs_parens_for_negation()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Scope remains a single unary-support helper convergence step:
+  - `FlattenedDT::_operand_needs_parens_for_negation()` is now a compatibility delegate to `enable_graph`,
+  - `EnableGraph` now owns the full unary-render support lane,
+  - no binary-render helper ownership changed in this slice.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - unary-support delegates are now exhausted,
+  - re-scan the larger binary-render cluster starting at `_render_binary_op()` and its adjacent precedence/operator helpers for the next truthful micro-slice.
 ## 2026-03-09: Backend convergence micro-slice (EnableGraph unary operator mapping helper ownership)
 - Current worktree moves `_map_unary_operator()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Scope remains a single unary-support helper convergence step:

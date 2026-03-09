@@ -2188,16 +2188,7 @@ sub _map_unary_operator ($self, $operator) {
 }
 
 sub _operand_needs_parens_for_negation ($self, $operand) {
-    # Only complex expressions need parentheses after negation
-    return 0 unless $operand && blessed($operand);
-    
-    # Simple signals and literals don't need parens
-    return 0 if $operand->isa('FSM::AST::SignalRef') || $operand->isa('FSM::CoreAST::SignalRef');
-    return 0 if $operand->isa('FSM::AST::Literal') || $operand->isa('FSM::CoreAST::Literal');
-    return 0 if $operand->isa('FSM::AST::IndexedRef') || $operand->isa('FSM::CoreAST::IndexedRef');
-    
-    # Complex expressions need parens
-    return 1;
+    return $self->{enable_graph}->_operand_needs_parens_for_negation($operand);
 }
 
 sub parentheses_are_redundant ($self, $inner_expr) {

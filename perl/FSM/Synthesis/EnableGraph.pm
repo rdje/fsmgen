@@ -1395,8 +1395,16 @@ sub _map_unary_operator($self, $operator) {
     return $op_map{$operator} || $operator;
 }
 sub _operand_needs_parens_for_negation($self, $operand) {
-    my $ctx = $self->{flattened_dt};
-    return $ctx->_operand_needs_parens_for_negation($operand);
+    # Only complex expressions need parentheses after negation
+    return 0 unless $operand && blessed($operand);
+    
+    # Simple signals and literals don't need parens
+    return 0 if $operand->isa('FSM::AST::SignalRef') || $operand->isa('FSM::CoreAST::SignalRef');
+    return 0 if $operand->isa('FSM::AST::Literal') || $operand->isa('FSM::CoreAST::Literal');
+    return 0 if $operand->isa('FSM::AST::IndexedRef') || $operand->isa('FSM::CoreAST::IndexedRef');
+    
+    # Complex expressions need parens
+    return 1;
 }
 sub _ast_contains_factorizable_operators($self, $ast) {
     # Check if an AST contains operators that would qualify it as an intermediate signal

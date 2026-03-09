@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-09: FlattenedDT backend convergence (EnableGraph unary negation parenthesization helper ownership)
+- Continued backend convergence by moving `_operand_needs_parens_for_negation()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - after `_map_unary_operator()` moved, this became the last isolated unary-support seam,
+  - its logic is self-contained and only governs unary negation formatting policy,
+  - taking it now cleanly completes the unary-render support lane before re-entering the larger binary-render cluster.
+- Safety/compatibility:
+  - no unary rendering semantics changed; only helper ownership and compatibility delegation changed,
+  - `FlattenedDT` now forwards `_operand_needs_parens_for_negation()` to `EnableGraph`,
+  - the binary-render path remains untouched in this slice.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - unary-support delegates are now exhausted,
+  - re-scan `_render_binary_op()` together with its adjacent precedence/operator helpers for the next truthful micro-slice in the render cluster.
 ## 2026-03-09: FlattenedDT backend convergence (EnableGraph unary operator mapping helper ownership)
 - Continued backend convergence by moving `_map_unary_operator()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:
