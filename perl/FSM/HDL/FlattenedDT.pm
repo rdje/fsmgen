@@ -2127,14 +2127,7 @@ sub _needs_parentheses ($self, $my_precedence, $parent_precedence) {
 }
 
 sub _map_binary_operator ($self, $operator) {
-    # Standard operator symbol mapping
-    my %op_map = (
-        'eq' => '==', 'ne' => '!=', 'lt' => '<', 'gt' => '>', 'le' => '<=', 'ge' => '>=',
-        'add' => '+', 'sub' => '-', 'mul' => '*', 'div' => '/', 'mod' => '%',
-        'and' => '&', 'or' => '|', 'xor' => '^',
-        'shl' => '<<', 'shr' => '>>', 'sal' => '<<<', 'sar' => '>>>'
-    );
-    return $op_map{$operator} || $operator;
+    return $self->{enable_graph}->_map_binary_operator($operator);
 }
 
 sub _map_unary_operator ($self, $operator) {
