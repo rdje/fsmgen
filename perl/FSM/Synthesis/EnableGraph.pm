@@ -1370,8 +1370,33 @@ sub _render_binary_op($self, $ast, $parent_precedence) {
     return $ctx->_render_binary_op($ast, $parent_precedence);
 }
 sub _render_unary_op($self, $ast) {
+    my $operator = eval { $ast->operator } || 'not';
+    my $operand = $ast->operand;
+    
+    # Convert operand recursively - unary ops have high precedence
+    my $operand_sv = $self->_ast_to_systemverilog_internal($operand, 10);
+    
+    # Map operator to symbol
+    my $op_symbol = $self->_map_unary_operator($operator);
+    
+    # For negation, use parentheses around operand only if it's complex
+    if ($operator eq 'not' || $operator eq '!') {
+        if ($self->_operand_needs_parens_for_negation($operand)) {
+            return "!($operand_sv)";
+        } else {
+            return "!$operand_sv";
+        }
+    } else {
+        return "$op_symbol($operand_sv)";
+    }
+}
+sub _map_unary_operator($self, $operator) {
     my $ctx = $self->{flattened_dt};
-    return $ctx->_render_unary_op($ast);
+    return $ctx->_map_unary_operator($operator);
+}
+sub _operand_needs_parens_for_negation($self, $operand) {
+    my $ctx = $self->{flattened_dt};
+    return $ctx->_operand_needs_parens_for_negation($operand);
 }
 sub _ast_contains_factorizable_operators($self, $ast) {
     # Check if an AST contains operators that would qualify it as an intermediate signal

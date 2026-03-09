@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-09: FlattenedDT backend convergence (EnableGraph unary AST-to-SV render helper ownership)
+- Continued backend convergence by moving `_render_unary_op()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - after `_ast_to_systemverilog_internal()` moved, unary rendering became the smallest adjacent live helper seam,
+  - `_render_unary_op()` has a compact dependency surface and only needed two narrow bridges (`_map_unary_operator()` and `_operand_needs_parens_for_negation()`),
+  - this keeps the micro-slice discipline intact instead of jumping directly into the much larger `_render_binary_op()` / operator-selection cluster.
+- Safety/compatibility:
+  - no unary render semantics changed; only helper ownership and compatibility delegation changed,
+  - `FlattenedDT` now forwards `_render_unary_op()` to `EnableGraph`,
+  - `EnableGraph` temporarily forwards `_map_unary_operator()` and `_operand_needs_parens_for_negation()` back to `FlattenedDT`, preserving existing formatting behavior while shrinking the facade boundary.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue with the now-isolated unary-support helpers, most likely `_map_unary_operator()` before `_operand_needs_parens_for_negation()`,
+  - keep deferring the broader binary/operator-precedence render cluster until these smaller seams are exhausted.
 ## 2026-03-09: FlattenedDT backend convergence (EnableGraph AST-to-SV internal helper ownership)
 - Continued backend convergence by moving `_ast_to_systemverilog_internal()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:
