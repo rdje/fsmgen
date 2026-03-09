@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-09: FlattenedDT backend convergence (EnableGraph AST-to-SV internal helper ownership)
+- Continued backend convergence by moving `_ast_to_systemverilog_internal()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - the prior slice localized the active `ast_to_systemverilog()` entrypoint without yet moving the recursive dispatcher itself,
+  - `_ast_to_systemverilog_internal()` was the next smallest truthful ownership seam because it depends directly on already-local `EnableGraph` rendering entrypoints and only needs temporary bridges for the two adjacent render helpers,
+  - moving `_render_binary_op()` or the broader operator/precedence family first would have been a larger slice.
+- Safety/compatibility:
+  - no render semantics changed; only helper ownership and compatibility delegation changed,
+  - `FlattenedDT` now forwards `_ast_to_systemverilog_internal()` to `EnableGraph`,
+  - `EnableGraph` temporarily forwards `_render_binary_op()` and `_render_unary_op()` back to `FlattenedDT`, preserving the existing recursive render behavior while shrinking the facade boundary one step at a time.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue with the smallest adjacent render helper still round-tripping through `FlattenedDT`, most likely `_render_unary_op()` before the larger `_render_binary_op()` flow,
+  - keep deferring the broader operator/precedence helper family until there is a smaller truthful entry seam for it.
 ## 2026-03-09: FlattenedDT backend convergence (EnableGraph AST-to-SV internal delegate callsite convergence)
 - Continued backend convergence by localizing the `ast_to_systemverilog()` render-internal callsite in `perl/FSM/Synthesis/EnableGraph.pm` away from a direct `FlattenedDT` object method call.
 - Rationale:

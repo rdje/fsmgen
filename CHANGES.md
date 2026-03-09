@@ -13,6 +13,14 @@ This is the persistent technical change history for FSMGen.
   - full regression passed (`Files=6`, `Tests=125`)
   - audited tracked `.github`, `bin`, `perl`, `t`, `README.md`, and `docs` content and found no active references to untracked `fx/`, `plugin/`, `specs/`, or machine-specific `/Users/...` paths
 ## 2026-03-09
+### FlattenedDT backend convergence (EnableGraph AST-to-SV internal helper ownership)
+- Moved `_ast_to_systemverilog_internal()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to `enable_graph->_ast_to_systemverilog_internal(...)`.
+- Added temporary `EnableGraph` compatibility delegates for `_render_binary_op()` and `_render_unary_op()` so the recursive render path stays behavior-preserving while the deeper render-helper cluster remains in `FlattenedDT`.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (EnableGraph AST-to-SV internal delegate callsite convergence)
 - Localized the `ast_to_systemverilog()` render-internal callsite in `perl/FSM/Synthesis/EnableGraph.pm` so it no longer reaches directly into the `FlattenedDT` object for `_ast_to_systemverilog_internal(...)`.
 - Updated `ast_to_systemverilog()` to route through a new `EnableGraph` compatibility delegate, `$self->_ast_to_systemverilog_internal(...)`, which preserves the existing `FlattenedDT` implementation boundary for now.

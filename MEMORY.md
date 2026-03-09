@@ -14,6 +14,19 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-09: Backend convergence micro-slice (EnableGraph AST-to-SV internal helper ownership)
+- Current worktree moves `_ast_to_systemverilog_internal()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Scope remains a single render-boundary helper convergence step:
+  - `FlattenedDT::_ast_to_systemverilog_internal()` is now a compatibility delegate to `enable_graph`,
+  - `EnableGraph` now owns the recursive AST-to-SystemVerilog dispatcher,
+  - temporary compatibility delegates for `_render_binary_op()` and `_render_unary_op()` keep the deeper render cluster behavior-preserving for now.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue with the smallest adjacent render helper still round-tripping through `FlattenedDT`, most likely `_render_unary_op()` before the larger `_render_binary_op()` path,
+  - keep the compatibility facade in `FlattenedDT` intact until the render cluster converges further.
 ## 2026-03-09: Backend convergence micro-slice (EnableGraph AST-to-SV internal delegate callsite convergence)
 - Current worktree localizes the `ast_to_systemverilog()` render-internal callsite in `perl/FSM/Synthesis/EnableGraph.pm` away from a direct `FlattenedDT` object method reach-in.
 - Scope remains a single active runtime callsite convergence step:

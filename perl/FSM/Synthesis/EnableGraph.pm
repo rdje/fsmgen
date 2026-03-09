@@ -1303,8 +1303,75 @@ sub ast_to_systemverilog($self, $ast) {
     return $sv;
 }
 sub _ast_to_systemverilog_internal($self, $ast, $parent_precedence) {
+    # AST-based SystemVerilog generation with:
+    # - Logical -> bitwise operator conversion for 1-bit operands
+    # - Correct precedence-based parentheses insertion
+    return "0" unless $ast && blessed($ast);
+    
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+        my $name = $self->extract_signal_name_from_ast($ast);
+        return $name || "unknown_signal";
+        
+    } elsif ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal')) {
+        return $ast->value || "0";
+        
+    } elsif ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp') || $ast->isa('FSM::HDL::SubstitutedBinaryOp')) {
+        return $self->_render_binary_op($ast, $parent_precedence);
+        
+    } elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp') || $ast->isa('FSM::HDL::SubstitutedUnaryOp')) {
+        return $self->_render_unary_op($ast);
+        
+    } elsif ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
+        # Handle intermediate signal references from AST factorization
+        return $ast->signal_name || "unknown_intermediate_signal";
+        
+    } else {
+        # Handle unknown node types - TRY calling their to_systemverilog method first
+        # If they have one, use it; otherwise fall back to safe alternative
+        my $node_type = ref($ast) || 'UNKNOWN';
+        
+        # First try: check if the node has a to_systemverilog method
+        if ($ast->can('to_systemverilog')) {
+            my $sv_result = eval { $ast->to_systemverilog() };
+            if ($sv_result && $sv_result !~ /^unknown_expr_/) {
+                fsm_debug("AST_TO_CLEAN_SV: Using to_systemverilog() method for '$node_type': $sv_result", 3);
+                return $sv_result;
+            } else {
+                fsm_debug("AST_TO_CLEAN_SV: to_systemverilog() failed for '$node_type', using fallback", 3);
+            }
+        } else {
+            fsm_debug("AST_TO_CLEAN_SV: No to_systemverilog() method for '$node_type'", 3);
+        }
+        
+        # Second try: check if it's a known node type with specific handling
+        if ($node_type =~ /BinaryOp$/) {
+            # Try to handle as a binary operation even if it's an unknown subclass
+            return $self->_render_binary_op($ast, $parent_precedence);
+        } elsif ($node_type =~ /UnaryOp$/) {
+            # Try to handle as a unary operation even if it's an unknown subclass  
+            return $self->_render_unary_op($ast);
+        } elsif ($node_type =~ /SignalRef$/) {
+            # Try to extract signal name even if it's an unknown subclass
+            my $name = $self->extract_signal_name_from_ast($ast);
+            return $name || "unknown_signal";
+        } elsif ($node_type =~ /Literal$/) {
+            # Try to get value even if it's an unknown subclass
+            my $value = eval { $ast->value } || "0";
+            return $value;
+        }
+        
+        # Final fallback - return safe placeholder  
+        fsm_debug("AST_TO_CLEAN_SV: Unknown AST node type '$node_type' - using safe fallback", 3);
+        return "unknown_expr_" . lc($node_type =~ s/.*:://r);
+    }
+}
+sub _render_binary_op($self, $ast, $parent_precedence) {
     my $ctx = $self->{flattened_dt};
-    return $ctx->_ast_to_systemverilog_internal($ast, $parent_precedence);
+    return $ctx->_render_binary_op($ast, $parent_precedence);
+}
+sub _render_unary_op($self, $ast) {
+    my $ctx = $self->{flattened_dt};
+    return $ctx->_render_unary_op($ast);
 }
 sub _ast_contains_factorizable_operators($self, $ast) {
     # Check if an AST contains operators that would qualify it as an intermediate signal
