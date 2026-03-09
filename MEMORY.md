@@ -14,6 +14,19 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Warp <agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-09: Backend convergence micro-slice (EnableGraph binary parenthesis-decision helper ownership)
+- Current worktree moves `_needs_parentheses()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Scope remains a single binary-support helper convergence step:
+  - `FlattenedDT::_needs_parentheses()` is now a compatibility delegate to `enable_graph`,
+  - `EnableGraph` now owns parenthesis-decision policy for binary rendering,
+  - `_get_operator_precedence()` is now the smallest remaining isolated binary-support delegate before the larger operator-selection path.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - move `_get_operator_precedence()` as the next smallest binary-support seam,
+  - then re-evaluate the heavier `_choose_operator_symbol()` / `_operand_is_single_bit()` path.
 ## 2026-03-09: Backend convergence micro-slice (EnableGraph binary AST-to-SV render helper ownership)
 - Current worktree moves `_render_binary_op()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Scope remains a single binary-render helper convergence step:

@@ -1411,8 +1411,9 @@ sub _choose_operator_symbol($self, $operator, $left, $right) {
     return $ctx->_choose_operator_symbol($operator, $left, $right);
 }
 sub _needs_parentheses($self, $my_precedence, $parent_precedence) {
-    my $ctx = $self->{flattened_dt};
-    return $ctx->_needs_parentheses($my_precedence, $parent_precedence);
+    # Need parentheses if my precedence is lower than parent's
+    return 0 unless defined $parent_precedence;
+    return $my_precedence < $parent_precedence;
 }
 sub _operand_is_single_bit($self, $ast) {
     my $ctx = $self->{flattened_dt};

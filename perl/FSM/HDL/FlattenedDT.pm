@@ -2133,9 +2133,7 @@ sub _get_operator_precedence ($self, $operator) {
 }
 
 sub _needs_parentheses ($self, $my_precedence, $parent_precedence) {
-    # Need parentheses if my precedence is lower than parent's
-    return 0 unless defined $parent_precedence;
-    return $my_precedence < $parent_precedence;
+    return $self->{enable_graph}->_needs_parentheses($my_precedence, $parent_precedence);
 }
 
 sub _map_binary_operator ($self, $operator) {
