@@ -14,6 +14,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-10: Backend convergence micro-slice (Fixpoint second-pass update callsite convergence)
+- Current worktree localizes the live `update_original_asts_with_second_pass_substitutions()` call in `perl/FSM/HDL/Factorization/Fixpoint.pm` away from the `FlattenedDT` facade to direct `backend_sv` ownership.
+- Scope remains a single second-pass factorization callsite convergence step:
+  - `run_post_substitution_factorization()` now applies second-pass AST updates through `$ctx->{backend_sv}->update_original_asts_with_second_pass_substitutions(...)`,
+  - the `FlattenedDT::update_original_asts_with_second_pass_substitutions()` compatibility delegate remains unchanged for any non-local callers,
+  - the direct `Fixpoint` second-pass callsite lane now appears exhausted.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/Factorization/Fixpoint.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - re-scan the broader factorization/backend facade boundaries now that the direct `Fixpoint` second-pass lane is exhausted,
+  - keep preferring live round-trip convergence over dormant compatibility delegate cleanup in `FlattenedDT.pm`.
 ## 2026-03-10: Backend convergence micro-slice (Fixpoint second-pass feed callsite convergence)
 - Current worktree localizes the live `feed_current_asts_to_second_pass()` call in `perl/FSM/HDL/Factorization/Fixpoint.pm` away from the `FlattenedDT` facade to direct `backend_sv` ownership.
 - Scope remains a single second-pass factorization callsite convergence step:

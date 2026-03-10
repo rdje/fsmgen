@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-10: FlattenedDT backend convergence (Fixpoint second-pass update callsite convergence)
+- Continued backend convergence by localizing the live `update_original_asts_with_second_pass_substitutions()` call in `perl/FSM/HDL/Factorization/Fixpoint.pm` away from the `FlattenedDT` facade and onto `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- Rationale:
+  - after the prior feed-call slice, the adjacent update call became the next smallest live round-trip in the same `Fixpoint` pass loop,
+  - helper ownership for `update_original_asts_with_second_pass_substitutions()` already lives in the SystemVerilog backend, so this is another narrow call-path correction rather than a behavioral change,
+  - taking it now exhausts the direct `Fixpoint` second-pass round-trip lane without broadening scope into dormant delegates.
+- Safety/compatibility:
+  - no fixpoint, factorization, or AST-update semantics changed; only the active call path changed,
+  - `FlattenedDT` remains the compatibility shell and its `update_original_asts_with_second_pass_substitutions()` delegate stays available,
+  - the next slice should come from a fresh re-scan rather than assuming more live work remains in this lane.
+- Verification:
+  - syntax checks for `Fixpoint.pm`, `SystemVerilog.pm`, and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - re-scan the broader factorization/backend facade boundaries for the next live round-trip now that the direct `Fixpoint` second-pass lane is exhausted,
+  - keep preferring live convergence over dormant delegate cleanup in `FlattenedDT.pm`.
 ## 2026-03-10: FlattenedDT backend convergence (Fixpoint second-pass feed callsite convergence)
 - Continued backend convergence by localizing the live `feed_current_asts_to_second_pass()` call in `perl/FSM/HDL/Factorization/Fixpoint.pm` away from the `FlattenedDT` facade and onto `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - Rationale:

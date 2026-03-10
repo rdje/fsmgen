@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-10
+### FlattenedDT backend convergence (Fixpoint second-pass update callsite convergence)
+- Localized the live `update_original_asts_with_second_pass_substitutions()` call in `perl/FSM/HDL/Factorization/Fixpoint.pm` from the `FlattenedDT` facade to direct `backend_sv` ownership.
+- Updated `run_post_substitution_factorization()` so second-pass AST updates now go through `$ctx->{backend_sv}->update_original_asts_with_second_pass_substitutions(...)`.
+- Scope remains behavior-preserving callsite convergence only; no helper ownership or delegate structure changed in `perl/FSM/HDL/FlattenedDT.pm`.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/Factorization/Fixpoint.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (Fixpoint second-pass feed callsite convergence)
 - Localized the live `feed_current_asts_to_second_pass()` call in `perl/FSM/HDL/Factorization/Fixpoint.pm` from the `FlattenedDT` facade to direct `backend_sv` ownership.
 - Updated `run_post_substitution_factorization()` so second-pass AST feeding now goes through `$ctx->{backend_sv}->feed_current_asts_to_second_pass(...)`.
