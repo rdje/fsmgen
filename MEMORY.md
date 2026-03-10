@@ -14,6 +14,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-10: Backend convergence micro-slice (Verilog backend SystemVerilog-entry callsite convergence)
+- Current worktree localizes the live `generate_systemverilog()` call in `perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm` away from the `FlattenedDT` facade to direct `orchestrator` ownership.
+- Scope remains a single orchestrator-boundary callsite convergence step:
+  - `Backend::Verilog::generate_verilog()` now obtains SystemVerilog through `$ctx->{orchestrator}->generate_systemverilog(...)`,
+  - the `FlattenedDT::generate_systemverilog()` compatibility delegate remains unchanged for non-local callers,
+  - no Verilog conversion semantics or orchestrator ownership changed in this slice.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - re-scan the broader orchestrator/facade boundary now that the obvious `Backend::Verilog` round-trip is localized,
+  - keep preferring live round-trip convergence over dormant compatibility delegate cleanup in `FlattenedDT.pm`.
 ## 2026-03-10: Backend convergence micro-slice (Fixpoint second-pass update callsite convergence)
 - Current worktree localizes the live `update_original_asts_with_second_pass_substitutions()` call in `perl/FSM/HDL/Factorization/Fixpoint.pm` away from the `FlattenedDT` facade to direct `backend_sv` ownership.
 - Scope remains a single second-pass factorization callsite convergence step:

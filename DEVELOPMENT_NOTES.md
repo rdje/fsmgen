@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-10: FlattenedDT backend convergence (Verilog backend SystemVerilog-entry callsite convergence)
+- Continued backend convergence by localizing the live `generate_systemverilog()` call in `perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm` away from the `FlattenedDT` facade and onto `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`.
+- Rationale:
+  - after the `Fixpoint` second-pass lane was exhausted, the next smallest live facade round-trip surfaced at the Verilog backend entrypoint,
+  - `generate_systemverilog()` ownership already lives in `Orchestrator.pm`, so this is a narrow call-path correction with no semantic broadening,
+  - taking this slice keeps the convergence stream focused on active runtime flow instead of dormant delegate cleanup.
+- Safety/compatibility:
+  - no SystemVerilog generation or Verilog conversion semantics changed; only the active call path changed,
+  - `FlattenedDT` remains the compatibility shell and its `generate_systemverilog()` delegate stays available,
+  - the next step should come from a fresh orchestrator/facade re-scan rather than assuming another adjacent live caller.
+- Verification:
+  - syntax checks for `Backend/Verilog.pm`, `Orchestrator.pm`, and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - re-scan the broader orchestrator/facade boundary for the next live round-trip now that the Verilog backend entry has been localized,
+  - keep preferring live convergence over dormant delegate cleanup in `FlattenedDT.pm`.
 ## 2026-03-10: FlattenedDT backend convergence (Fixpoint second-pass update callsite convergence)
 - Continued backend convergence by localizing the live `update_original_asts_with_second_pass_substitutions()` call in `perl/FSM/HDL/Factorization/Fixpoint.pm` away from the `FlattenedDT` facade and onto `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - Rationale:

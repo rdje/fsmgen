@@ -20,7 +20,7 @@ sub new ($class, %args) {
 sub generate_verilog ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     fsm_debug("[Verilog.pm][generate_verilog()] Starting flattened DT Verilog generation for " . $fsm_module->name, 3);
-    my $sv_hdl = $ctx->generate_systemverilog($fsm_module);
+    my $sv_hdl = $ctx->{orchestrator}->generate_systemverilog($fsm_module);
     return $self->convert_systemverilog_to_verilog($sv_hdl);
 }
 
