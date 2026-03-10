@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-10
+### FlattenedDT backend convergence (Fixpoint second-pass feed callsite convergence)
+- Localized the live `feed_current_asts_to_second_pass()` call in `perl/FSM/HDL/Factorization/Fixpoint.pm` from the `FlattenedDT` facade to direct `backend_sv` ownership.
+- Updated `run_post_substitution_factorization()` so second-pass AST feeding now goes through `$ctx->{backend_sv}->feed_current_asts_to_second_pass(...)`.
+- Scope remains behavior-preserving callsite convergence only; no helper ownership or delegate structure changed in `perl/FSM/HDL/FlattenedDT.pm`.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/Factorization/Fixpoint.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (SystemVerilog prescan intermediate-tracking callsite convergence)
 - Localized the two live `track_ast_intermediate_signals()` callsites in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` from the `FlattenedDT` facade to direct `EnableGraph` ownership.
 - Updated DT-specific and LHS-level pre-scan tracking inside `prescan_wen_en_for_intermediate_signals()` to use `$ctx->{enable_graph}->track_ast_intermediate_signals(...)`.

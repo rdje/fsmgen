@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-10: FlattenedDT backend convergence (Fixpoint second-pass feed callsite convergence)
+- Continued backend convergence by localizing the live `feed_current_asts_to_second_pass()` call in `perl/FSM/HDL/Factorization/Fixpoint.pm` away from the `FlattenedDT` facade and onto `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- Rationale:
+  - after the prescan tracking slice, the smallest remaining live second-pass round-trip was the AST-feeding call at the top of the fixpoint pass loop,
+  - helper ownership for `feed_current_asts_to_second_pass()` already lives in the SystemVerilog backend, so this is a narrow call-path correction rather than a behavior change,
+  - taking it before the adjacent update call keeps the micro-slice discipline intact and preserves the ability to validate each second-pass boundary independently.
+- Safety/compatibility:
+  - no fixpoint, factorization, or render semantics changed; only the active call path changed,
+  - `FlattenedDT` remains the compatibility shell and its `feed_current_asts_to_second_pass()` delegate stays available,
+  - the adjacent `update_original_asts_with_second_pass_substitutions()` round-trip is intentionally left for the next slice.
+- Verification:
+  - syntax checks for `Fixpoint.pm`, `SystemVerilog.pm`, and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - localize the matching `update_original_asts_with_second_pass_substitutions()` call in `Fixpoint.pm`,
+  - then re-scan for any remaining live second-pass round-trips before considering dormant delegate cleanup.
 ## 2026-03-10: FlattenedDT backend convergence (SystemVerilog prescan intermediate-tracking callsite convergence)
 - Continued backend convergence by localizing the two live `track_ast_intermediate_signals()` callsites in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` away from the `FlattenedDT` facade and onto `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:
