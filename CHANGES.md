@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-10
+### FlattenedDT backend convergence (EnableGraph AST signal-naming helper ownership)
+- Moved `create_condition_expression_signal_name()`, `get_or_create_ast_signal_name()`, `generate_ast_based_signal_name()`, and `map_operator_to_name()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to the new `enable_graph` helper implementations.
+- Root cause / rationale:
+  - this AST signal-naming cluster still mutated `global_expressions`, `expression_usage`, and `intermediate_signals` from the `FlattenedDT` facade,
+  - those registries already sit on the shared synthesis context used by `EnableGraph`, so ownership there is more coherent than leaving the helper pocket in the facade.
+- Scope remains behavior-preserving helper convergence only; no public backend entrypoint or live HDL emission call path changed in this slice.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (Verilog backend SystemVerilog-entry callsite convergence)
 - Localized the live `generate_systemverilog()` call in `perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm` from the `FlattenedDT` facade to direct `orchestrator` ownership.
 - Updated `Backend::Verilog::generate_verilog()` so SystemVerilog generation now goes through `$ctx->{orchestrator}->generate_systemverilog(...)`.

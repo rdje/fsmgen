@@ -14,6 +14,19 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-10: Backend convergence micro-slice (EnableGraph AST signal-naming helper ownership)
+- Current worktree moves the AST signal-naming helper cluster from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Scope remains a small helper-ownership reduction step:
+  - `create_condition_expression_signal_name()`, `get_or_create_ast_signal_name()`, `generate_ast_based_signal_name()`, and `map_operator_to_name()` now live in `EnableGraph`,
+  - `FlattenedDT` keeps compatibility delegates for the same helper names,
+  - no public backend entrypoint or active HDL emission call path changed in this slice.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - re-scan the remaining non-delegate utility pockets in `FlattenedDT.pm` for the next small coherent owner, with nearby AST-support / legacy factorization helpers as the most plausible lane,
+  - keep preferring truthful ownership reduction over speculative dormant cleanup that does not improve the active boundary.
 ## 2026-03-10: Backend convergence micro-slice (Verilog backend SystemVerilog-entry callsite convergence)
 - Current worktree localizes the live `generate_systemverilog()` call in `perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm` away from the `FlattenedDT` facade to direct `orchestrator` ownership.
 - Scope remains a single orchestrator-boundary callsite convergence step:

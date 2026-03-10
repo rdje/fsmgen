@@ -226,98 +226,15 @@ sub create_condition_expression ($self, $condition_stack) {
 }
 
 sub create_condition_expression_signal_name ($self, $condition_stack) {
-    # Create a signal name for the condition expression
-    return "1'b1" if !@$condition_stack;
-
-    # Get or create the condition AST
-    my $condition_ast = $self->create_condition_expression($condition_stack);
-    
-    # Generate systematic signal name from AST
-    return $self->get_or_create_ast_signal_name($condition_ast);
+    return $self->{enable_graph}->create_condition_expression_signal_name($condition_stack);
 }
 
 sub get_or_create_ast_signal_name ($self, $ast) {
-    # Get or create a signal name from an AST node
-    # This replaces string-based naming with pure AST-based naming
-    
-    return "1'b1" unless $ast && blessed($ast);
-    
-    # Convert AST to canonical SystemVerilog for comparison
-    my $canonical_expr = $ast->to_systemverilog();
-    
-    # Check if we already have a signal for this AST expression
-    if (exists $self->{global_expressions}->{$canonical_expr}) {
-        my $existing_signal = $self->{global_expressions}->{$canonical_expr};
-        $self->{expression_usage}->{$existing_signal}++;
-        fsm_debug("AST_SIGNAL: Reusing existing signal '$existing_signal' for AST", 3);
-        return $existing_signal;
-    }
-    
-    # Generate new systematic signal name from AST structure
-    my $signal_name = $self->generate_ast_based_signal_name($ast);
-    
-    # Register the new signal
-    $self->{global_expressions}->{$canonical_expr} = $signal_name;
-    $self->{expression_usage}->{$signal_name} = 1;
-    $self->{intermediate_signals}->{$signal_name} = $canonical_expr;
-    
-    fsm_debug("AST_SIGNAL: Created new signal '$signal_name' for AST", 3);
-    return $signal_name;
+    return $self->{enable_graph}->get_or_create_ast_signal_name($ast);
 }
 
 sub generate_ast_based_signal_name ($self, $ast) {
-    # Generate a systematic signal name based on AST structure with PROPER INTERMEDIATE SIGNAL NAMING
-    # This follows the specified naming rules:
-    # - Unary operations: <op>_<A>
-    # - Binary operations: <A>_<op>_<B>
-    
-    return "unknown_signal" unless $ast && blessed($ast);
-    
-    fsm_debug("AST_SIGNAL_NAME: Generating name for " . ref($ast), 3);
-    
-    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
-        # For signal references, extract the signal name
-        my $signal_name = $self->extract_signal_name_from_ast($ast);
-        return $signal_name || "unknown_signal";
-        
-    } elsif ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal')) {
-        # For literals, create a name based on the value
-        my $value = $ast->value;
-        if ($value eq "1'b1") {
-            return "const_1";
-        } elsif ($value eq "1'b0") {
-            return "const_0";
-        } else {
-            my $clean_value = $value;
-            $clean_value =~ s/[^a-zA-Z0-9_]/_/g;
-            return "const_$clean_value";
-        }
-        
-    } elsif ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
-        # For binary operations, create compound names
-        my $left_name = $self->generate_ast_based_signal_name($ast->left);
-        my $right_name = $self->generate_ast_based_signal_name($ast->right);
-        my $op = $ast->operator;
-        
-        # Map operators to signal name components
-        my $op_name = $self->map_operator_to_name($op);
-        
-        return "${left_name}_${op_name}_${right_name}";
-        
-    } elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
-        # For unary operations, create prefixed names
-        my $operand_name = $self->generate_ast_based_signal_name($ast->operand);
-        my $op = $ast->operator || "not";
-        my $op_name = $self->map_operator_to_name($op);
-        
-        return "${op_name}_${operand_name}";
-        
-    } else {
-        # For unknown AST types, use a generic name
-        my $type_name = ref($ast);
-        $type_name =~ s/^.*:://;  # Remove package prefix
-        return lc($type_name) . "_expr";
-    }
+    return $self->{enable_graph}->generate_ast_based_signal_name($ast);
 }
 
 sub extract_signal_name_from_ast ($self, $signal_ast) {
@@ -325,27 +242,7 @@ sub extract_signal_name_from_ast ($self, $signal_ast) {
 }
 
 sub map_operator_to_name ($self, $operator) {
-    # Map SystemVerilog operators to signal name components
-    
-    my %op_map = (
-        '&&' => 'and',
-        '&'  => 'and',
-        '||' => 'or',
-        '|'  => 'or', 
-        '==' => 'eq',
-        '!=' => 'ne',
-        '!'  => 'not',
-        '+'  => 'plus',
-        '-'  => 'minus',
-        '*'  => 'mult',
-        '/'  => 'div',
-        '<'  => 'lt',
-        '>'  => 'gt',
-        '<=' => 'le',
-        '>=' => 'ge'
-    );
-    
-    return $op_map{$operator} || "op";
+    return $self->{enable_graph}->map_operator_to_name($operator);
 }
 
 sub format_condition ($self, $condition) {

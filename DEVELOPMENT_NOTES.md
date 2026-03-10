@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-10: FlattenedDT backend convergence (EnableGraph AST signal-naming helper ownership)
+- Continued backend convergence by moving the AST signal-naming helper cluster from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - the earlier `EnableGraph.pm` line-1105 lead turned out to be comment-only rather than a live callsite, so the next truthful seam was not another runtime round-trip,
+  - the smallest coherent ownership pocket nearby was the AST signal-naming cluster: `create_condition_expression_signal_name()`, `get_or_create_ast_signal_name()`, `generate_ast_based_signal_name()`, and `map_operator_to_name()`,
+  - those helpers operate on the same global-expression / intermediate-signal registries already shared through `EnableGraph`, so moving them there reduces facade ownership without changing runtime semantics.
+- Safety/compatibility:
+  - no HDL emission, factorization, or public entrypoint behavior changed; the helper logic and registry mutations stay the same,
+  - `FlattenedDT` remains the compatibility shell and now forwards this helper cluster to `EnableGraph`,
+  - this slice is ownership reduction rather than active callsite convergence, which is appropriate now that the obvious live round-trips in the previous lane were exhausted.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - re-scan the remaining non-delegate utility pockets in `FlattenedDT.pm` for the next small coherent owner, especially nearby AST-support / legacy factorization helpers,
+  - avoid broad dormant cleanup unless it clearly reduces a real compatibility boundary.
 ## 2026-03-10: FlattenedDT backend convergence (Verilog backend SystemVerilog-entry callsite convergence)
 - Continued backend convergence by localizing the live `generate_systemverilog()` call in `perl/FSM/HDL/FlattenedDT/Backend/Verilog.pm` away from the `FlattenedDT` facade and onto `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`.
 - Rationale:
