@@ -14,6 +14,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-10: Backend convergence micro-slice (SystemVerilog prescan intermediate-tracking callsite convergence)
+- Current worktree localizes the two live `track_ast_intermediate_signals()` callsites in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` away from the `FlattenedDT` facade to direct `EnableGraph` ownership.
+- Scope remains a single backend-prescan callsite convergence step:
+  - DT-specific enable pre-scan tracking now goes through `$ctx->{enable_graph}->track_ast_intermediate_signals(...)`,
+  - LHS-level enable pre-scan tracking now goes through the same direct `EnableGraph` entry,
+  - `FlattenedDT` helper/delegate ownership is unchanged in this slice.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - re-scan `perl/FSM/HDL/Factorization/Fixpoint.pm` for the remaining live second-pass helper round-trips through `FlattenedDT`, especially `feed_current_asts_to_second_pass(...)` and `update_original_asts_with_second_pass_substitutions(...)`,
+  - keep `FlattenedDT` as the compatibility shell while continuing behavior-preserving live callsite convergence before dormant cleanup.
 ## 2026-03-10: Backend convergence micro-slice (Factorization Fixpoint AST-to-SV callsite convergence)
 - Current worktree localizes the remaining non-local `ast_to_systemverilog()` callsites in `perl/FSM/HDL/Factorization/Fixpoint.pm` away from the `FlattenedDT` facade to direct `EnableGraph` entry ownership.
 - Scope remains a single render/factorization callsite convergence step:

@@ -610,7 +610,7 @@ sub prescan_wen_en_for_intermediate_signals ($self) {
                 
                 if ($enable_ast && blessed($enable_ast)) {
                     fsm_debug("  PRE-SCAN: Scanning DT-specific enable: $dt_enable_info->{enable_name}", 3);
-                    $ctx->track_ast_intermediate_signals($enable_ast);
+                    $ctx->{enable_graph}->track_ast_intermediate_signals($enable_ast);
                 }
             }
             
@@ -621,7 +621,7 @@ sub prescan_wen_en_for_intermediate_signals ($self) {
                 
                 if ($enable_ast && blessed($enable_ast)) {
                     fsm_debug("  PRE-SCAN: Scanning LHS-level enable: $lhs_enable->{name}", 3);
-                    $ctx->track_ast_intermediate_signals($enable_ast);
+                    $ctx->{enable_graph}->track_ast_intermediate_signals($enable_ast);
                 }
             }
         }

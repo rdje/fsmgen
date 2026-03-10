@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-10: FlattenedDT backend convergence (SystemVerilog prescan intermediate-tracking callsite convergence)
+- Continued backend convergence by localizing the two live `track_ast_intermediate_signals()` callsites in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` away from the `FlattenedDT` facade and onto `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - after the `Fixpoint` AST-rendering slice, the smallest remaining live facade round-trip was no longer AST rendering but intermediate-tracking during the WEN/EN pre-scan stage,
+  - `prescan_wen_en_for_intermediate_signals()` had exactly two such calls, both already compatible with the established `EnableGraph` ownership of `track_ast_intermediate_signals()`,
+  - taking this slice keeps the convergence stream focused on active backend flow rather than dormant compatibility cleanup.
+- Safety/compatibility:
+  - no pre-scan or intermediate-signal semantics changed; only the active call path changed,
+  - `FlattenedDT` remains the compatibility shell and no delegates were removed,
+  - the backend continues to rely on `flattened_dt` for orchestration state while calling `EnableGraph` directly for this helper.
+- Verification:
+  - syntax checks for `SystemVerilog.pm`, `EnableGraph.pm`, and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - inspect `perl/FSM/HDL/Factorization/Fixpoint.pm` for the remaining live second-pass helper round-trips through `FlattenedDT`, especially `feed_current_asts_to_second_pass(...)` and `update_original_asts_with_second_pass_substitutions(...)`,
+  - keep preferring narrow callsite convergence over dormant delegate removal.
 ## 2026-03-10: FlattenedDT backend convergence (Factorization Fixpoint AST-to-SV callsite convergence)
 - Continued backend convergence by localizing the remaining non-local `ast_to_systemverilog()` callsites in `perl/FSM/HDL/Factorization/Fixpoint.pm` away from the `FlattenedDT` facade and onto `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:
