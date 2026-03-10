@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-10: FlattenedDT backend convergence (Factorization Fixpoint AST-to-SV callsite convergence)
+- Continued backend convergence by localizing the remaining non-local `ast_to_systemverilog()` callsites in `perl/FSM/HDL/Factorization/Fixpoint.pm` away from the `FlattenedDT` facade and onto `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - after the binary-support helper lane closed, the next truthful seam was no longer helper ownership but a live render/factorization callsite still routing through `FlattenedDT`,
+  - `Fixpoint.pm` had exactly two such users, both debug/signature oriented and both already compatible with the established `EnableGraph` entrypoint,
+  - taking this slice reduces a real facade dependency without widening scope into the remaining internal `FlattenedDT` render helpers.
+- Safety/compatibility:
+  - no factorization or render semantics changed; only the active call path for AST-to-SystemVerilog conversion changed,
+  - `FlattenedDT` remains the compatibility shell and no delegates were removed,
+  - `Fixpoint` continues to depend on `flattened_dt` for orchestration-only methods while using `EnableGraph` directly for render entry.
+- Verification:
+  - syntax checks for `Fixpoint.pm`, `EnableGraph.pm`, and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - inspect remaining canonical-expression / AST-render round-trips inside `FlattenedDT.pm`, especially `find_substituted_ast()` and nearby expression-matching utilities,
+  - keep preferring narrow callsite convergence over dormant delegate removal.
 ## 2026-03-09: FlattenedDT backend convergence (EnableGraph binary operator-selection helper ownership)
 - Continued backend convergence by moving `_choose_operator_symbol()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:

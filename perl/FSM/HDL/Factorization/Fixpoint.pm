@@ -104,7 +104,7 @@ sub run_post_substitution_factorization ($self, %args) {
         
         for my $signal_name (sort keys %new_unique_signals) {
             my $signal_info = $new_unique_signals{$signal_name};
-            my $expression_sv = eval { $ctx->ast_to_systemverilog($signal_info->{ast}) } || '[NO SV REPRESENTATION]';
+            my $expression_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($signal_info->{ast}) } || '[NO SV REPRESENTATION]';
             fsm_debug("[Fixpoint.pm][run_post_substitution_factorization()] Pass $pass_number new signal $signal_name = $expression_sv (usage=$signal_info->{usage_count})", 3);
         }
         
@@ -153,7 +153,7 @@ sub _build_expression_signature ($self, $pass_factorizer) {
     
     for my $expr_info (@{$pass_factorizer->{ast_expressions} || []}) {
         my $context = $expr_info->{context} // 'unknown_context';
-        my $sv = eval { $ctx->ast_to_systemverilog($expr_info->{ast}) } || '[NO SV REPRESENTATION]';
+        my $sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($expr_info->{ast}) } || '[NO SV REPRESENTATION]';
         push @parts, "$context=$sv";
     }
     

@@ -14,6 +14,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-10: Backend convergence micro-slice (Factorization Fixpoint AST-to-SV callsite convergence)
+- Current worktree localizes the remaining non-local `ast_to_systemverilog()` callsites in `perl/FSM/HDL/Factorization/Fixpoint.pm` away from the `FlattenedDT` facade to direct `EnableGraph` entry ownership.
+- Scope remains a single render/factorization callsite convergence step:
+  - pass-level debug rendering of new second-pass intermediate signals now goes through `$ctx->{enable_graph}->ast_to_systemverilog(...)`,
+  - `_build_expression_signature()` now uses the same `EnableGraph` render entry for pass-signature construction,
+  - `FlattenedDT` helper/delegate ownership is unchanged in this slice.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/Factorization/Fixpoint.pm`
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - re-scan the remaining render/factorization callsites that still round-trip through `FlattenedDT`, with `find_substituted_ast()` and adjacent canonical-expression matching inside `FlattenedDT.pm` as the most obvious surviving AST-to-SV seam,
+  - keep `FlattenedDT` as the compatibility shell while continuing behavior-preserving callsite convergence before broader delegate cleanup.
 ## 2026-03-09: Backend convergence micro-slice (EnableGraph binary operator-selection helper ownership)
 - Current worktree moves `_choose_operator_symbol()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Scope remains a single binary-support helper convergence step:

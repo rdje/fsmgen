@@ -1,5 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-10
+### FlattenedDT backend convergence (Factorization Fixpoint AST-to-SV callsite convergence)
+- Localized the remaining non-local `ast_to_systemverilog()` callsites in `perl/FSM/HDL/Factorization/Fixpoint.pm` from the `FlattenedDT` facade to direct `EnableGraph` entry ownership.
+- Updated pass-level debug rendering of new second-pass intermediate signals and `_build_expression_signature()` to use `$ctx->{enable_graph}->ast_to_systemverilog(...)`.
+- Scope remains behavior-preserving callsite convergence only; no helper ownership or delegate structure changed in `perl/FSM/HDL/FlattenedDT.pm`.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/Factorization/Fixpoint.pm` (pass)
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ## 2026-03-08
 ### CI workflow unification for local pre-push execution
 - Added a shared repo-owned CI entrypoint, `bin/ci-regression`, and updated `.github/workflows/regression.yml` to call it instead of inlining `prove -v t/01-regression.t`.
