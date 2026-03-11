@@ -14,6 +14,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-10: Backend convergence micro-slice (EnableGraph global-expression registry helper ownership)
+- Current worktree moves the adjacent global-expression registry helper pair from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Scope remains a small helper-ownership reduction step:
+  - `get_or_create_global_expression()` now lives in `EnableGraph`,
+  - `canonicalize_expression()` now lives in `EnableGraph`,
+  - `FlattenedDT` keeps compatibility delegates for both helper names,
+  - no public backend entrypoint or active HDL emission call path changed in this slice.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - keep re-scanning the remaining non-delegate utility pockets in `FlattenedDT.pm`, with adjacent legacy expression/factorization helpers still the most plausible next ownership lane,
+  - keep preferring small coherent ownership reductions over speculative dormant cleanup.
 ## 2026-03-10: Backend convergence micro-slice (EnableGraph AST signal-naming helper ownership)
 - Current worktree moves the AST signal-naming helper cluster from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Scope remains a small helper-ownership reduction step:

@@ -146,6 +146,79 @@ sub map_operator_to_name($self, $operator) {
 
     return $op_map{$operator} || "op";
 }
+sub get_or_create_global_expression($self, $expression) {
+    my $ctx = $self->{flattened_dt};
+
+    # Global expression factoring - reuse existing signals for identical expressions
+    # This enables cross-DT sharing and avoids duplicating logic
+
+    fsm_debug("GLOBAL_EXPR: Processing expression: '$expression'", 3);
+
+    # Create a canonical representation for expression comparison
+    my $canonical_expr = $self->canonicalize_expression($expression);
+    fsm_debug("GLOBAL_EXPR: Canonical form: '$canonical_expr'", 3);
+
+    # Check if we already have a signal for this expression
+    if (exists $ctx->{global_expressions}->{$canonical_expr}) {
+        my $existing_signal = $ctx->{global_expressions}->{$canonical_expr};
+
+        # Increment usage count for optimization analysis
+        $ctx->{expression_usage}->{$existing_signal}++;
+
+        fsm_debug("GLOBAL_EXPR: *** REUSING EXISTING SIGNAL *** - $existing_signal for '$expression'", 3);
+        fsm_debug("GLOBAL_EXPR: Usage count now: " . $ctx->{expression_usage}->{$existing_signal});
+        return $existing_signal;
+    }
+
+    # Create a new signal name for this expression using NATIVE AST NAMING
+    fsm_debug("GLOBAL_EXPR: Creating NEW signal for expression: '$expression'", 3);
+
+    # Use native AST naming to avoid string parsing issues
+    my $signal_name;
+
+    # Try to parse the expression back into an AST for native naming
+    my $ast = eval { $ctx->{expr_namer}->parse_expression($canonical_expr) };
+
+    if ($ast) {
+        # Use the new native AST complexity analysis
+        my $complexity = $ctx->{expr_namer}->analyze_ast_complexity_native($ast);
+        fsm_debug("GLOBAL_EXPR: AST complexity: logical_ops=" . $complexity->{has_logical_ops} . ", depth=" . $complexity->{depth});
+
+        # Generate a systematic signal name from the AST structure
+        $signal_name = $ctx->{expr_namer}->ast_to_systematic_name($ast);
+        fsm_debug("GLOBAL_EXPR: Generated signal name from AST: '$signal_name'", 3);
+    } else {
+        # Fallback to string-based naming for expressions that can't be parsed
+        fsm_debug("GLOBAL_EXPR: Could not parse expression, using string fallback", 3);
+        $signal_name = $ctx->{expr_namer}->parse_and_name_expression($canonical_expr);
+        fsm_debug("GLOBAL_EXPR: Generated signal name from string: '$signal_name'", 3);
+    }
+
+    # Register the mapping
+    $ctx->{global_expressions}->{$canonical_expr} = $signal_name;
+    $ctx->{expression_usage}->{$signal_name} = 1;
+    $ctx->{intermediate_signals}->{$signal_name} = $canonical_expr;
+
+    fsm_debug("GLOBAL_EXPR: *** CREATED NEW GLOBAL SIGNAL *** - $signal_name for '$expression'", 3);
+    fsm_debug("GLOBAL_EXPR: Total global expressions now: " . scalar(keys %{$ctx->{global_expressions}}));
+    return $signal_name;
+}
+sub canonicalize_expression($self, $expression) {
+    # Create a canonical form of the expression for comparison
+    # This helps identify semantically identical expressions that can be factored
+
+    # Remove extra whitespace
+    $expression =~ s/\s+/ /g;
+    $expression =~ s/^\s+|\s+$//g;
+
+    # For now, use the cleaned expression as canonical form
+    # In the future, this could be enhanced to:
+    # - Normalize operator precedence: (a & b) | c vs a & b | c
+    # - Handle commutativity: a + b vs b + a
+    # - Recognize equivalent forms: !(!a & !b) vs (a | b)
+
+    return $expression;
+}
 sub convert_condition_to_ast($self, $condition_node) {
     # Convert FSMGen condition nodes to pure AST nodes
     

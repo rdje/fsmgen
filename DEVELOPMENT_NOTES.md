@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-10: FlattenedDT backend convergence (EnableGraph global-expression registry helper ownership)
+- Continued backend convergence by moving the adjacent global-expression registry helper pair from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - after the AST signal-naming helper move, the next smallest coherent pocket was the neighboring global-expression registry pair: `get_or_create_global_expression()` and `canonicalize_expression()`,
+  - these helpers mutate the same shared registries already used by `EnableGraph`, so leaving them in the facade would keep unnecessary ownership in `FlattenedDT`,
+  - taking this slice continues the local ownership reduction in the same registry/naming area without widening into broader legacy factorization cleanup.
+- Safety/compatibility:
+  - no HDL emission, factorization, or public entrypoint behavior changed; the helper logic and registry mutations stay the same,
+  - `FlattenedDT` remains the compatibility shell and now forwards this helper pair to `EnableGraph`,
+  - this slice continues ownership reduction rather than reviving dormant helper families that are not yet worth broader restructuring.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - re-scan the remaining nearby legacy expression/factorization helpers in `FlattenedDT.pm` for the next smallest coherent owner,
+  - keep avoiding broad dormant cleanup unless it clearly reduces a real compatibility boundary.
 ## 2026-03-10: FlattenedDT backend convergence (EnableGraph AST signal-naming helper ownership)
 - Continued backend convergence by moving the AST signal-naming helper cluster from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:
