@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-11: EnableGraph AST-first logical-operation factor detection
+- Continued backend convergence by replacing the live logical-operation reuse heuristic in `perl/FSM/Synthesis/EnableGraph.pm` with AST-first traversal.
+- Rationale:
+  - after the roadmap update, the next truthful slice was no longer another nearby helper move from `FlattenedDT`, but the still-live factorization-decision path that rendered ASTs to strings and searched those strings for repeated logical-operation signatures,
+  - the new implementation checks the AST tree directly, resolves intermediate-signal definitions back to ASTs where available, and only parses stored expressions as a narrow compatibility fallback,
+  - this makes a real algorithmic path more AST/CoreAST-native without widening into the larger remaining string-helper pockets yet.
+- Safety/compatibility:
+  - no public backend entrypoint or output-stage API changed; the slice only changes how logical-operation reuse is detected internally,
+  - `binary_logical_op_counts` still uses the existing signature map, so the behavior remains compatible with the current counting pipeline while the traversal itself is now AST-first,
+  - compatibility parsing remains in place only when a defining AST is not yet stored in the relevant registries.
+- Verification:
+  - syntax check for `EnableGraph.pm` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue replacing live compatibility fallbacks around intermediate-signal expression lookup with stored AST ownership,
+  - re-evaluate the older `FlattenedDT.pm` condition/value helper lane only when the slice removes or bypasses string-based algorithmic handling rather than simply relocating it.
 ## 2026-03-11: FlattenedDT backend convergence (EnableGraph redundant-parentheses helper ownership)
 - Continued backend convergence by finishing the in-flight parenthesis/sanitation helper lane and moving `parentheses_are_redundant()` from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:

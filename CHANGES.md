@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-11
+### EnableGraph AST-first logical-operation factor detection
+- Reworked `contains_frequently_used_operations()` in `perl/FSM/Synthesis/EnableGraph.pm` so the live logical-operation factoring decision now recursively inspects AST nodes and resolved intermediate-signal ASTs instead of scanning rendered expressions and generated signal strings.
+- Added `get_intermediate_signal_ast()` and `_parse_intermediate_expression_to_ast()` so existing registries can provide native ASTs first and only use expression parsing as a narrow compatibility fallback when no defining AST is stored yet.
+- Updated `get_intermediate_signal_expression()` to render from the defining AST when one is available.
+- Root cause / rationale:
+  - the factorization decision path was still using a live string-based algorithm inside `EnableGraph`, even though the surrounding flow already had ASTs,
+  - this made the next truthful AST/CoreAST-first slice a decision-path rewrite rather than more helper relocation from `FlattenedDT`,
+  - the new implementation makes the reuse check AST-first while preserving behavior through narrow compatibility fallback where the registries still expose expression strings.
+- Scope remains behavior-preserving decision-path convergence; no public backend entrypoint or output-stage API changed in this slice.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (EnableGraph redundant-parentheses helper ownership)
 - Moved `parentheses_are_redundant()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to the new `enable_graph` helper implementation.

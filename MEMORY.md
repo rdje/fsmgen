@@ -14,6 +14,18 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-11: Backend convergence micro-slice (EnableGraph AST-first logical-operation factor detection)
+- Current worktree replaces a live string-based factorization-decision path in `perl/FSM/Synthesis/EnableGraph.pm` with AST-first traversal.
+- Scope remains a small behavior-preserving AST-first slice:
+  - `contains_frequently_used_operations()` now walks AST nodes and resolved intermediate-signal ASTs instead of scanning rendered expressions for operator substrings,
+  - `get_intermediate_signal_ast()` now resolves defining ASTs from the AST factorizer and FSM-module signal metadata before falling back to compatibility parsing of string registries,
+  - `get_intermediate_signal_expression()` now prefers rendering from a defining AST when one exists.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - keep targeting live algorithmic string dependencies rather than dormant helper residue,
+  - likely next seams are the remaining compatibility fallbacks around intermediate-signal expression reconstruction and the older `FlattenedDT.pm` condition/value helpers only when they can be replaced by AST/CoreAST-native behavior instead of merely moved.
 ## 2026-03-11: Backend convergence micro-slice (EnableGraph redundant-parentheses helper ownership)
 - Current worktree finishes the in-flight legacy string-expression parenthesis cleanup by moving `parentheses_are_redundant()` from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Scope remains a small helper-ownership reduction step:

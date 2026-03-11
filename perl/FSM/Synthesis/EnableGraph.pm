@@ -2275,50 +2275,155 @@ sub should_factor_logical_operation($self, $ast) {
     # instead of looking for the exact compound expression
     return $self->contains_frequently_used_operations($ast);
 }
-sub contains_frequently_used_operations($self, $ast) {
-    # Check if this AST contains any frequently used operations
+sub contains_frequently_used_operations($self, $ast, $visited_signal_names = undef) {
+    # AST-first check for whether this AST contains any frequently used operations.
+    # This now prefers direct AST traversal and only falls back to expression parsing
+    # when no AST source exists yet for a referenced intermediate signal.
     my $ctx = $self->{flattened_dt};
     return 0 unless $ast && blessed($ast);
     return 0 unless exists $ctx->{binary_logical_op_counts};
     
-    # Convert the AST to SystemVerilog and check if it contains any high-count operations
-    my $ast_str = eval { $ast->to_systemverilog() } || '';
-    
-    # Check if this expression contains any of our high-count operations
-    for my $op_signature (keys %{$ctx->{binary_logical_op_counts}}) {
-        my $count = $ctx->{binary_logical_op_counts}{$op_signature};
-        if ($count > 1 && $ast_str =~ /\Q$op_signature\E/) {
-            fsm_debug("FACTOR_LOGICAL_CHECK: Expression '$ast_str' contains high-count operation '$op_signature' ($count times) - FACTOR", 3);
+    $visited_signal_names //= {};
+
+    my $result = $self->_ast_contains_frequently_used_logical_operation($ast, $visited_signal_names);
+    my $ast_str = eval { $self->ast_to_systemverilog($ast) } || eval { $ast->to_systemverilog() } || ref($ast) || 'unknown_ast';
+
+    if ($result) {
+        fsm_debug("[EnableGraph.pm][contains_frequently_used_operations()] Expression '$ast_str' contains high-count logical operations - FACTOR", 3);
+    } else {
+        fsm_debug("[EnableGraph.pm][contains_frequently_used_operations()] Expression '$ast_str' contains no high-count logical operations - DON'T FACTOR", 3);
+    }
+
+    return $result;
+}
+sub _ast_contains_frequently_used_logical_operation($self, $ast, $visited_signal_names) {
+    my $ctx = $self->{flattened_dt};
+    return 0 unless $ast && blessed($ast);
+    return 0 unless exists $ctx->{binary_logical_op_counts};
+
+    if ($self->is_logical_operation($ast)) {
+        my $signature = eval { $ast->to_systemverilog() } || eval { $self->ast_to_systemverilog($ast) } || '';
+        my $count = $ctx->{binary_logical_op_counts}{$signature} || 0;
+        if ($count > 1) {
+            fsm_debug("[EnableGraph.pm][_ast_contains_frequently_used_logical_operation()] Found high-count logical op '$signature' ($count uses)", 3);
             return 1;
         }
     }
-    
-    # NEW: also check inside intermediate signals
-    my @potential_signals = ($ast_str =~ /([a-zA-Z_][a-zA-Z0-9_]+)/g);
-    my %visited;
-    for my $sig (@potential_signals) {
-        next if $visited{$sig}++;
-        if ($self->is_intermediate_signal($sig)) {
-            my $expr = $self->get_intermediate_signal_expression($sig);
-            if ($expr) {
-                # To avoid infinite recursion, let's not call contains_frequently_used_operations recursively
-                for my $op_signature (keys %{$ctx->{binary_logical_op_counts}}) {
-                    my $count = $ctx->{binary_logical_op_counts}{$op_signature};
-                    if ($count > 1 && $expr =~ /\Q$op_signature\E/) {
-                        fsm_debug("FACTOR_LOGICAL_CHECK: Expression '$ast_str' contains intermediate signal '$sig' which contains high-count operation '$op_signature' ($count times) - FACTOR", 3);
-                        return 1;
-                    }
+
+    my $signal_name;
+    if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
+        $signal_name = eval { $ast->signal_name } || $ast->{signal_name};
+    } elsif ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+        $signal_name = $self->extract_signal_name_from_ast($ast);
+    }
+
+    if (defined $signal_name && $signal_name ne '' && $self->is_intermediate_signal($signal_name)) {
+        if ($visited_signal_names->{$signal_name}) {
+            fsm_debug("[EnableGraph.pm][_ast_contains_frequently_used_logical_operation()] Skipping already-visited intermediate '$signal_name' to avoid recursion", 3);
+        } else {
+            $visited_signal_names->{$signal_name} = 1;
+            my $intermediate_ast = $self->get_intermediate_signal_ast($signal_name);
+            if ($intermediate_ast && blessed($intermediate_ast)) {
+                fsm_debug("[EnableGraph.pm][_ast_contains_frequently_used_logical_operation()] Descending into intermediate '$signal_name' AST", 3);
+                if ($self->_ast_contains_frequently_used_logical_operation($intermediate_ast, $visited_signal_names)) {
+                    delete $visited_signal_names->{$signal_name};
+                    return 1;
                 }
+            }
+            delete $visited_signal_names->{$signal_name};
+        }
+    }
+
+    for my $accessor (qw(left right operand)) {
+        next unless $ast->can($accessor);
+        my $child = eval { $ast->$accessor() };
+        next unless $child && blessed($child);
+        return 1 if $self->_ast_contains_frequently_used_logical_operation($child, $visited_signal_names);
+    }
+
+    for my $accessor (qw(operands children)) {
+        next unless $ast->can($accessor);
+        my $children = eval { $ast->$accessor() };
+        next unless ref($children) eq 'ARRAY';
+        for my $child (@$children) {
+            next unless $child && blessed($child);
+            return 1 if $self->_ast_contains_frequently_used_logical_operation($child, $visited_signal_names);
+        }
+    }
+
+    return 0;
+}
+sub get_intermediate_signal_ast($self, $signal_name) {
+    # Resolve an intermediate signal back to its defining AST, preferring native AST sources.
+    my $ctx = $self->{flattened_dt};
+    return undef unless defined($signal_name) && $signal_name ne '';
+
+    if ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{intermediate_signals}) {
+        my $signal_info = $ctx->{ast_factorizer}->{intermediate_signals}->{$signal_name};
+        if ($signal_info && $signal_info->{ast} && blessed($signal_info->{ast})) {
+            fsm_debug("[EnableGraph.pm][get_intermediate_signal_ast()] Resolved '$signal_name' from AST factorizer", 3);
+            return $signal_info->{ast};
+        }
+    }
+
+    if ($ctx->{fsm_module} && $ctx->{fsm_module}->can('signals') && $ctx->{fsm_module}->signals) {
+        my $signal = $ctx->{fsm_module}->signals->{$signal_name};
+        if ($signal && blessed($signal) && $signal->can('driving_ast')) {
+            my $driving_ast = $signal->driving_ast;
+            if ($driving_ast && blessed($driving_ast)) {
+                fsm_debug("[EnableGraph.pm][get_intermediate_signal_ast()] Resolved '$signal_name' from FSM module driving_ast", 3);
+                return $driving_ast;
             }
         }
     }
-    
-    fsm_debug("FACTOR_LOGICAL_CHECK: Expression '$ast_str' contains no high-count operations - DON'T FACTOR", 3);
-    return 0;
+
+    if (exists $ctx->{intermediate_signals}->{$signal_name}) {
+        my $ast = $self->_parse_intermediate_expression_to_ast($ctx->{intermediate_signals}->{$signal_name}, $signal_name, 'intermediate_signals');
+        return $ast if $ast;
+    }
+
+    if ($ctx->{global_expressions}) {
+        for my $expr (keys %{$ctx->{global_expressions}}) {
+            next unless $ctx->{global_expressions}->{$expr} eq $signal_name;
+            my $ast = $self->_parse_intermediate_expression_to_ast($expr, $signal_name, 'global_expressions');
+            return $ast if $ast;
+            last;
+        }
+    }
+
+    fsm_debug("[EnableGraph.pm][get_intermediate_signal_ast()] No defining AST found for '$signal_name'", 3);
+    return undef;
+}
+sub _parse_intermediate_expression_to_ast($self, $expression, $signal_name, $source_name) {
+    my $ctx = $self->{flattened_dt};
+    return undef unless defined($expression) && $expression ne '';
+
+    unless ($ctx->{expr_namer} && $ctx->{expr_namer}->can('parse_expression')) {
+        fsm_debug("[EnableGraph.pm][_parse_intermediate_expression_to_ast()] No expr_namer parser available for '$signal_name' from $source_name", 3);
+        return undef;
+    }
+
+    my $ast = eval { $ctx->{expr_namer}->parse_expression($expression) };
+    if ($ast && blessed($ast)) {
+        fsm_debug("[EnableGraph.pm][_parse_intermediate_expression_to_ast()] Parsed compatibility expression for '$signal_name' from $source_name", 3);
+        return $ast;
+    }
+
+    my $error = $@;
+    chomp $error if defined $error;
+    fsm_debug("[EnableGraph.pm][_parse_intermediate_expression_to_ast()] Failed to parse compatibility expression for '$signal_name' from $source_name: " . ($error || 'unknown parse failure'), 3);
+    return undef;
 }
 sub get_intermediate_signal_expression($self, $signal_name) {
     # Get the expression for an intermediate signal from various sources
     my $ctx = $self->{flattened_dt};
+
+    my $ast = $self->get_intermediate_signal_ast($signal_name);
+    if ($ast && blessed($ast)) {
+        my $expression = $self->ast_to_systemverilog($ast);
+        fsm_debug("[EnableGraph.pm][get_intermediate_signal_expression()] Rendering '$signal_name' from defining AST", 3);
+        return $expression;
+    }
     
     # Check the intermediate_signals registry
     if (exists $ctx->{intermediate_signals}->{$signal_name}) {
