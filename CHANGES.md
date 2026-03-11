@@ -1277,6 +1277,18 @@ This is the persistent technical change history for FSMGen.
   - updated second-pass DT-specific substitution debug rendering (`update_original_asts_with_second_pass_substitutions`) to call `enable_graph->ast_to_systemverilog(...)` directly for `original_sv`,
   - removed one backend round-trip through `FlattenedDT` for AST rendering in this second-pass DT-specific substitution path.
 - Avoided loading conflicting legacy `FSM::AST::Utils` implementation in the new module to preserve existing AST utility behavior path.
+### Latest AST/CoreAST convergence slice
+- Audited `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and confirmed the live runtime declaration path emits intermediate wires through `generate_consolidated_intermediate_signals(...)`; the older standalone `generate_intermediate_signal_declarations(...)` helper is not on the active path.
+- Hardened live consolidated intermediate width handling in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
+  - added backend-local width normalization that prefers native FSM signal metadata from `EnableGraph::get_signal_info(...)`,
+  - falls back to defining AST analysis before any parsed-expression compatibility path,
+  - normalizes widths across AST-factorization, prescan-reference, and FSMGen-native intermediate-signal sources before filtering/declaration emission.
+- Removed the live-path prescan merge placeholder `width => 1` and made consolidated wire declarations resolve width again at emission time so declarations no longer trust stale placeholder metadata.
+- Added live backend handling for factorizer-substituted AST node classes during width inference (`FSM::HDL::IntermediateSignalRef`, `FSM::HDL::SubstitutedUnaryOp`, `FSM::HDL::SubstitutedBinaryOp`) without widening dormant compatibility-only declaration helpers.
+
+### Validation (latest slice)
+- `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+- `prove -I perl t` (pass: 6 files, 125 tests)
 
 ### Validation (post-hardening + extraction)
 - `prove -I perl t/04-assignment-edge-cases.t t/05-assignment-hdl-snapshots.t` (pass)

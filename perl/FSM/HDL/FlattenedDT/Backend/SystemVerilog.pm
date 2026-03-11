@@ -211,6 +211,116 @@ sub resolve_intermediate_signal_defining_ast ($self, $signal_name, $signal_info)
     fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_defining_ast()] No defining AST available for '$signal_name'", 3);
     return undef;
 }
+sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signal_registry, $seen_signals = undef) {
+    my $ctx = $self->{flattened_dt};
+    return 1 unless defined($signal_name) && $signal_name ne '';
+
+    $signal_registry //= {};
+    $seen_signals //= {};
+    if ($seen_signals->{$signal_name}++) {
+        my $cached_width = ($signal_info && defined($signal_info->{width}) && $signal_info->{width} > 0)
+            ? $signal_info->{width}
+            : 1;
+        fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_width()] Detected recursive width lookup for '$signal_name'; using cached width $cached_width", 3);
+        return $cached_width;
+    }
+
+    my $resolved_width;
+    my $width_source = 'default_1bit';
+
+    my $native_signal_info = $ctx->{enable_graph}->get_signal_info($signal_name);
+    if ($native_signal_info && $native_signal_info->{width} && $native_signal_info->{width} > 0) {
+        $resolved_width = $native_signal_info->{width};
+        $width_source = 'native_signal_metadata';
+    }
+
+    if ((!defined($resolved_width) || $resolved_width < 1) && $signal_info && defined($signal_info->{width}) && $signal_info->{width} > 1) {
+        $resolved_width = $signal_info->{width};
+        $width_source = 'cached_width';
+    }
+
+    if (!defined($resolved_width) || $resolved_width < 1) {
+        my $defining_ast = $self->resolve_intermediate_signal_defining_ast($signal_name, $signal_info);
+        if ($defining_ast && blessed($defining_ast)) {
+            my $ast_width = $self->infer_width_from_intermediate_ast($defining_ast, $signal_registry, $seen_signals);
+            if (defined($ast_width) && $ast_width > 0) {
+                $resolved_width = $ast_width;
+                $width_source = 'defining_ast';
+            }
+        }
+    }
+
+    if ((!defined($resolved_width) || $resolved_width < 1) && $signal_info && defined($signal_info->{width}) && $signal_info->{width} > 0) {
+        $resolved_width = $signal_info->{width};
+        $width_source = 'cached_width';
+    }
+
+    if ((!defined($resolved_width) || $resolved_width < 1) && $signal_info && defined($signal_info->{expression}) && $signal_info->{expression} ne '' && $ctx->{expr_namer}) {
+        my $parsed_ast = eval { $ctx->{expr_namer}->parse_expression($signal_info->{expression}) };
+        if ($parsed_ast && blessed($parsed_ast)) {
+            my $parsed_width = $self->infer_width_from_intermediate_ast($parsed_ast, $signal_registry, $seen_signals);
+            if (defined($parsed_width) && $parsed_width > 0) {
+                $resolved_width = $parsed_width;
+                $width_source = 'parsed_expression_ast';
+            }
+        }
+    }
+
+    $resolved_width = 1 unless defined($resolved_width) && $resolved_width > 0;
+    if ($signal_info && ref($signal_info) eq 'HASH') {
+        $signal_info->{width} = $resolved_width;
+        $signal_info->{width_source} = $width_source;
+    }
+
+    fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_width()] Resolved width $resolved_width for '$signal_name' via $width_source", 3);
+    return $resolved_width;
+}
+sub infer_width_from_intermediate_ast ($self, $ast, $signal_registry = undef, $seen_signals = undef) {
+    my $ctx = $self->{flattened_dt};
+    return undef unless $ast && blessed($ast);
+
+    $signal_registry //= {};
+    $seen_signals //= {};
+
+    if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
+        my $referenced_signal_name = eval { $ast->signal_name } || $ast->{signal_name};
+        if (defined($referenced_signal_name) && $referenced_signal_name ne '') {
+            my $referenced_signal_info = $signal_registry->{$referenced_signal_name}
+                || ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{intermediate_signals}
+                    ? $ctx->{ast_factorizer}->{intermediate_signals}->{$referenced_signal_name}
+                    : undef);
+            return $self->resolve_intermediate_signal_width($referenced_signal_name, $referenced_signal_info, $signal_registry, $seen_signals);
+        }
+        return 1;
+    }
+
+    if ($ast->isa('FSM::HDL::SubstitutedUnaryOp')) {
+        my $operator = eval { $ast->operator } || $ast->{operator} || '';
+        return 1 if $operator eq '!';
+        my $operand = eval { $ast->operand } || $ast->{operand};
+        my $operand_width = $self->infer_width_from_intermediate_ast($operand, $signal_registry, $seen_signals);
+        return (defined($operand_width) && $operand_width > 0) ? $operand_width : 1;
+    }
+
+    if ($ast->isa('FSM::HDL::SubstitutedBinaryOp')) {
+        my $operator = eval { $ast->operator } || $ast->{operator} || '';
+        return 1 if $operator =~ /^(==|!=|<|>|<=|>=|&&|\|\|)$/;
+
+        my $left = eval { $ast->left } || $ast->{left};
+        my $right = eval { $ast->right } || $ast->{right};
+        my $left_width = $self->infer_width_from_intermediate_ast($left, $signal_registry, $seen_signals);
+        my $right_width = $self->infer_width_from_intermediate_ast($right, $signal_registry, $seen_signals);
+
+        $left_width = 1 unless defined($left_width) && $left_width > 0;
+        $right_width = 1 unless defined($right_width) && $right_width > 0;
+        return $left_width > $right_width ? $left_width : $right_width;
+    }
+
+    my $width = eval { $ctx->{expr_namer}->infer_ast_width($ast) };
+    return $width if defined($width) && $width > 0;
+
+    return undef;
+}
 sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
     my $ctx = $self->{flattened_dt};
     # Pure AST-based filtering using semantic analysis
@@ -836,7 +946,6 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
                         %$referenced_signal_info,
                         ($ast && blessed($ast) ? (ast => $ast) : ()),
                         expression => $expression,
-                        width => 1,
                         usage_count => 1
                     };
                 }
@@ -976,6 +1085,14 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
     } else {
         fsm_debug("CONSOL_INTER_SIG: [FSMGEN_SIGNALS] No FSM module signals available for scanning", 3);
     }
+
+    # Step 2.6: Normalize intermediate signal widths from native signal metadata or defining ASTs.
+    for my $signal_name (keys %all_intermediate_signals) {
+        my $signal_info = $all_intermediate_signals{$signal_name};
+        my $resolved_width = $self->resolve_intermediate_signal_width($signal_name, $signal_info, \%all_intermediate_signals);
+        $signal_info->{width} = $resolved_width;
+        fsm_debug("CONSOL_INTER_SIG: [WIDTH] '$signal_name' width normalized to $resolved_width", 3);
+    }
     
     # Step 3: Apply dependency-aware filtering to prevent referenced signals from being filtered out
     fsm_debug("\n*** DEPENDENCY-AWARE FILTERING PHASE ***", 3);
@@ -1104,7 +1221,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         # First pass: Generate all wire declarations
         for my $signal_name (@sorted_signals) {
             my $signal_info = $filtered_signals{$signal_name};
-            my $width = $signal_info->{width} || 1;
+            my $width = $self->resolve_intermediate_signal_width($signal_name, $signal_info, \%filtered_signals);
             
             # Generate wire declaration
             if ($width > 1) {

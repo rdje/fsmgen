@@ -1118,3 +1118,22 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - `DEVELOPMENT_NOTES.md`: rationale, architecture, and policy-level technical knowledge.
 - `docs/USER_GUIDE.md`: user-facing usage guidance.
 - `README.md`: project overview and quickstart.
+## AST/CoreAST convergence status (March 11, 2026)
+- Live declaration path confirmation:
+  - `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` calls `generate_consolidated_intermediate_signals(...)` on the active SystemVerilog runtime path,
+  - `generate_intermediate_signal_declarations(...)` is currently compatibility-only and was intentionally left out of this slice.
+- Latest completed slice in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
+  - consolidated intermediate-signal widths are now normalized across AST-factorization, prescan-reference, and FSMGen-native sources,
+  - width resolution now prefers `EnableGraph::get_signal_info(...)` and defining ASTs,
+  - parsed expression re-entry remains only as a narrow compatibility fallback,
+  - substituted factorizer AST nodes (`FSM::HDL::IntermediateSignalRef`, `FSM::HDL::SubstitutedUnaryOp`, `FSM::HDL::SubstitutedBinaryOp`) are handled in the live backend width resolver so emitted wire widths are no longer driven by placeholder `1` values.
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` => `Files=6`, `Tests=125`, `PASS`
+- Recent AST/CoreAST convergence commits immediately before this slice:
+  - `e853005` `SystemVerilog: cache defining ASTs for filtering`
+  - `82809ac` `SystemVerilog: use AST traversal for intermediate deps`
+  - `ec61da7` `EnableGraph: store AST-backed intermediate registry metadata`
+- Highest-value next seam after this slice:
+  - continue removing expression-only compatibility fallbacks from consolidated intermediate handling,
+  - only spend cleanup effort on dormant declaration helpers when they are either reactivated on the runtime path or can be retired outright.

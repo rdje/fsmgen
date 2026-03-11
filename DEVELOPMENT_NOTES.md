@@ -2051,3 +2051,10 @@ It is an exact-delay pulse request:
   - one second-pass DT-specific original-render callsite was converged to `EnableGraph` ownership in `Backend::SystemVerilog`,
   - second-pass DT-specific substitution debug rendering (`update_original_asts_with_second_pass_substitutions`) now invokes `enable_graph->ast_to_systemverilog(...)` directly for `original_sv`,
   - this removes one backend delegation round-trip through `FlattenedDT` for AST rendering in the second-pass DT-specific substitution path while preserving output/test behavior.
+- Latest AST/CoreAST-first convergence increment:
+  - runtime audit in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` confirmed that consolidated intermediate emission (`generate_consolidated_intermediate_signals(...)`) is the live declaration seam and the standalone declaration helper remains compatibility-only,
+  - the live backend now resolves intermediate widths through a dedicated width-normalization helper that prefers typed/native metadata (`EnableGraph::get_signal_info(...)`) and defining ASTs before any expression-string compatibility fallback,
+  - this keeps the active declaration/filtering path AST/native-metadata-first instead of trusting placeholder `width => 1` values inherited from prescan/factorization staging.
+- Design note from this slice:
+  - factorizer-substituted AST node classes (`FSM::HDL::IntermediateSignalRef`, `FSM::HDL::SubstitutedUnaryOp`, `FSM::HDL::SubstitutedBinaryOp`) are now handled in the live backend width-resolution path so downstream declarations can stay on AST-derived semantics even after substitution,
+  - keeping the width fix inside the consolidated backend path avoids widening dormant compatibility helpers solely for cleanup, which matches the current micro-slice strategy: fix the live AST/CoreAST seam first, then retire or rewrite dormant string-era helpers when they either become live again or are removed entirely.
