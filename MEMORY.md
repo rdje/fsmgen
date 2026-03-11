@@ -1197,3 +1197,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - narrow the compatibility behavior that still hangs off explicit runtime-AST misses, especially `extract_intermediate_signals_from_expression(...)` and the legacy-named filter fallback,
   - keep deferring dormant standalone declaration-helper cleanup unless it becomes live or is being removed outright.
+## AST/CoreAST convergence update (March 11, 2026, recovery slice)
+- Latest completed slice in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
+  - late expression hydration can now recover runtime ASTs for signals whose earlier miss was only `no_ast_source`,
+  - dependency extraction now renders first and then re-checks runtime AST availability, so recovered ASTs are used in the same consolidated pass,
+  - this reduces the population of true compatibility-only misses without touching dormant helper paths.
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` => `Files=6`, `Tests=125`, `PASS`
+- Recent AST/CoreAST convergence commits immediately before the next commit:
+  - `e4af447` `SystemVerilog: cache runtime AST miss state`
+  - `548ca11` `SystemVerilog: cache consolidated rendered expressions`
+  - `2480832` `SystemVerilog: cache consolidated intermediate dependencies`
+- Highest-value next seam after this slice:
+  - narrow the remaining hard compatibility misses where runtime-AST recovery still cannot succeed, especially expression-parse failures and the fallback helper path that still carries the old string-era name,
+  - keep deferring dormant standalone declaration-helper cleanup unless it becomes live or is being removed outright.

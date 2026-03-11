@@ -325,6 +325,21 @@ sub render_intermediate_signal_expression ($self, $signal_name, $signal_info) {
         $signal_info->{expression} //= $expression;
         $signal_info->{rendered_expression} = $expression;
         $signal_info->{rendered_expression_source} = 'enable_graph_expression';
+
+        if (($signal_info->{runtime_ast_resolution_state} || '') eq 'missing'
+            && ($signal_info->{runtime_ast_miss_reason} || '') eq 'no_ast_source')
+        {
+            delete $signal_info->{runtime_ast_resolution_state};
+            delete $signal_info->{runtime_ast_miss_reason};
+            my $recovered_runtime_ast = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
+            if ($recovered_runtime_ast && blessed($recovered_runtime_ast)) {
+                my $recovered_expression = $ctx->{enable_graph}->ast_to_systemverilog($recovered_runtime_ast);
+                $signal_info->{rendered_expression} = $recovered_expression;
+                $signal_info->{rendered_expression_source} = $signal_info->{runtime_ast_source} || 'runtime_ast_recovery';
+                fsm_debug("[SystemVerilog.pm][render_intermediate_signal_expression()] Recovered runtime AST for '$signal_name' after late expression hydration", 3);
+                return $recovered_expression;
+            }
+        }
     }
     return $expression;
 }
@@ -342,12 +357,12 @@ sub resolve_intermediate_signal_dependencies ($self, $signal_name, $signal_info)
     my @dependencies;
     my $dependency_source = 'none';
 
+    my $expression = $self->render_intermediate_signal_expression($signal_name, $signal_info);
     my $runtime_ast = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
     if ($runtime_ast && blessed($runtime_ast)) {
         @dependencies = $self->{flattened_dt}->{enable_graph}->extract_intermediate_signals_from_ast($runtime_ast);
         $dependency_source = $signal_info->{runtime_ast_source} || 'runtime_ast';
     } else {
-        my $expression = $self->render_intermediate_signal_expression($signal_name, $signal_info);
         if (defined($expression) && $expression ne '') {
             @dependencies = $self->extract_intermediate_signals_from_expression($expression);
             $dependency_source = 'expression_fallback';

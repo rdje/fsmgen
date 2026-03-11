@@ -2086,3 +2086,10 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - caching miss state is a useful AST-first refinement because it turns “AST recovery failed somewhere earlier” into stable typed runtime metadata that downstream phases can reason about,
   - the next seam is now the compatibility behavior attached to those explicit misses, not miss detection itself.
+- Latest AST/CoreAST-first convergence increment:
+  - late expression hydration can now trigger a runtime-AST recovery attempt for signals whose earlier miss reason was only `no_ast_source`,
+  - this lets the live consolidated path upgrade some former compatibility-only misses back into AST-backed runtime behavior within the same pass,
+  - dependency normalization now benefits directly because it renders first, then sees the recovered runtime AST before choosing fallback extraction.
+- Design note from this slice:
+  - this is a good AST-first micro-slice because it shrinks the true miss set rather than just reorganizing fallback behavior around a fixed miss population,
+  - the remaining compatibility-only seam is now closer to the “hard misses” where expression parsing itself still fails or no semantic AST source exists at all.

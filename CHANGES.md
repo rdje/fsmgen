@@ -1334,6 +1334,16 @@ This is the persistent technical change history for FSMGen.
 ### Validation (latest slice)
 - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
 - `prove -I perl t` (pass: 6 files, 125 tests)
+### Newest AST/CoreAST convergence slice
+- Reduced the remaining compatibility-only miss path in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` by recovering runtime ASTs after late expression hydration.
+- The live consolidated path now:
+  - retries runtime-AST resolution when `EnableGraph` provides an expression for a signal that had previously missed only because no expression source was available yet,
+  - upgrades those former `no_ast_source` misses into real runtime ASTs when parsing succeeds,
+  - lets dependency extraction consume that recovered AST in the same pass instead of immediately falling back to expression-based dependency extraction.
+
+### Validation (newest slice)
+- `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+- `prove -I perl t` (pass: 6 files, 125 tests)
 
 ### Validation (post-hardening + extraction)
 - `prove -I perl t/04-assignment-edge-cases.t t/05-assignment-hdl-snapshots.t` (pass)
