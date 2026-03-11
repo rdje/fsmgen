@@ -1227,11 +1227,11 @@ sub count_binary_logical_operation_occurrences ($self) {
     
     # Also count from any intermediate signal expressions
     for my $signal_name (keys %{$ctx->{intermediate_signals} || {}}) {
-        my $expression = $ctx->{intermediate_signals}->{$signal_name};
-        # Try to parse the string expression back to AST for counting
-        my $ast = eval { $ctx->{expr_namer}->parse_expression($expression) } if $expression;
-        if ($ast) {
+        my $ast = $ctx->{enable_graph}->_get_native_intermediate_signal_ast($signal_name);
+        if ($ast && blessed($ast)) {
             $self->_count_logical_ops_in_ast($ast, \%logical_op_counts);
+        } else {
+            fsm_debug("COUNT_LOGICAL_OPS: Skipping '$signal_name' because no native intermediate AST is available", 3);
         }
     }
     

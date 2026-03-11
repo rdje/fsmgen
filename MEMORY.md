@@ -14,6 +14,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-11: Backend convergence micro-slice (EnableGraph AST-backed intermediate-signal registry metadata)
+- Current worktree converts the live intermediate-signal registry/count/render path from string-backed ownership toward AST-backed metadata in `perl/FSM/Synthesis/EnableGraph.pm` and `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- Scope remains a small behavior-preserving AST-first slice:
+  - `get_or_create_ast_signal_name()` and `get_or_create_global_expression()` now record structured intermediate-signal registry entries with `ast`, `expression`, `name`, and `source` when an AST is available,
+  - `is_signal_ast_based_intermediate()` and `get_intermediate_signal_ast()` now prefer native AST sources on the live path instead of reparsing `global_expressions` or raw registry strings first,
+  - `get_intermediate_signal_expression()` no longer falls back to reconstructing logic from signal-name patterns,
+  - `count_binary_logical_operation_occurrences()` now resolves native intermediate-signal ASTs through `EnableGraph` instead of reparsing stored registry strings.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - keep targeting live semantic compatibility fallbacks around intermediate-signal registration and lookup, especially places where `get_or_create_global_expression()` still seeds names from string parsing when no AST seed is present,
+  - continue treating the older `FlattenedDT.pm` condition/value helpers as secondary until a slice can eliminate a live string dependency instead of only relocating it.
 ## 2026-03-11: Backend convergence micro-slice (EnableGraph AST-first logical-operation factor detection)
 - Current worktree replaces a live string-based factorization-decision path in `perl/FSM/Synthesis/EnableGraph.pm` with AST-first traversal.
 - Scope remains a small behavior-preserving AST-first slice:

@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-11
+### EnableGraph AST-backed intermediate-signal registry metadata
+- Reworked `perl/FSM/Synthesis/EnableGraph.pm` so the live intermediate-signal registry can store structured entries with `ast`, `expression`, `name`, and `source` metadata instead of only bare expression strings when native ASTs are available.
+- Updated `get_or_create_ast_signal_name()` and `get_or_create_global_expression()` to register that structured metadata on intermediate-signal creation/reuse, preserving the canonical expression string only as compatibility data rather than the primary semantic owner.
+- Updated `is_signal_ast_based_intermediate()` and `get_intermediate_signal_ast()` so the live detection/lookup path now prefers AST factorizer data, AST-backed intermediate-registry entries, and FSM-module `driving_ast` metadata before any narrow compatibility parsing fallback.
+- Updated `get_intermediate_signal_expression()` so intermediate-signal rendering now uses the defining AST when available and otherwise returns stored registry/global-expression text; the previous signal-name reconstruction fallback is no longer part of the live render path.
+- Updated `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` so `count_binary_logical_operation_occurrences()` resolves native intermediate-signal ASTs through `EnableGraph` instead of reparsing `ctx->{intermediate_signals}` string payloads.
+- Removed the leftover duplicate compatibility-parse line in `get_intermediate_signal_ast()` that was still triggering a Perl redeclaration warning after the registry conversion.
+- Root cause / rationale:
+  - the live intermediate-signal path still treated registry meaning as strings even when the surrounding pipeline already had defining ASTs,
+  - that kept counting, lookup, and render decisions dependent on reparsing or reconstructing expressions instead of carrying AST/CoreAST-native ownership forward,
+  - this slice converts the primary ownership path to AST-backed metadata while preserving narrow compatibility parsing only for legacy entries that still lack a stored defining AST.
+- Scope remains behavior-preserving AST-first convergence on the live registry/count/render path; no public backend entrypoint or emitter API changed in this slice.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### EnableGraph AST-first logical-operation factor detection
 - Reworked `contains_frequently_used_operations()` in `perl/FSM/Synthesis/EnableGraph.pm` so the live logical-operation factoring decision now recursively inspects AST nodes and resolved intermediate-signal ASTs instead of scanning rendered expressions and generated signal strings.
 - Added `get_intermediate_signal_ast()` and `_parse_intermediate_expression_to_ast()` so existing registries can provide native ASTs first and only use expression parsing as a narrow compatibility fallback when no defining AST is stored yet.

@@ -39,6 +39,65 @@ sub create_condition_expression_signal_name($self, $condition_stack) {
     # Generate systematic signal name from AST
     return $self->get_or_create_ast_signal_name($condition_ast);
 }
+sub _get_intermediate_signal_registry_entry($self, $signal_name) {
+    my $ctx = $self->{flattened_dt};
+    return undef unless defined($signal_name) && $signal_name ne '';
+    return undef unless exists $ctx->{intermediate_signals}->{$signal_name};
+
+    my $entry = $ctx->{intermediate_signals}->{$signal_name};
+    if (ref($entry) eq 'HASH') {
+        $entry->{name} //= $signal_name;
+        return $entry;
+    }
+
+    return {
+        name => $signal_name,
+        expression => $entry,
+        source => 'legacy_string_registry',
+    };
+}
+sub _register_intermediate_signal_registry_entry($self, $signal_name, %updates) {
+    my $ctx = $self->{flattened_dt};
+    my $existing = $self->_get_intermediate_signal_registry_entry($signal_name) || {};
+    my %merged = (
+        %$existing,
+        %updates,
+        name => $signal_name,
+    );
+    $ctx->{intermediate_signals}->{$signal_name} = \%merged;
+    return $ctx->{intermediate_signals}->{$signal_name};
+}
+sub _get_native_intermediate_signal_ast($self, $signal_name) {
+    my $ctx = $self->{flattened_dt};
+    return undef unless defined($signal_name) && $signal_name ne '';
+
+    if ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{intermediate_signals}) {
+        my $signal_info = $ctx->{ast_factorizer}->{intermediate_signals}->{$signal_name};
+        if ($signal_info && $signal_info->{ast} && blessed($signal_info->{ast})) {
+            fsm_debug("[EnableGraph.pm][_get_native_intermediate_signal_ast()] Resolved '$signal_name' from AST factorizer", 3);
+            return $signal_info->{ast};
+        }
+    }
+
+    my $registry_entry = $self->_get_intermediate_signal_registry_entry($signal_name);
+    if ($registry_entry && $registry_entry->{ast} && blessed($registry_entry->{ast})) {
+        fsm_debug("[EnableGraph.pm][_get_native_intermediate_signal_ast()] Resolved '$signal_name' from intermediate registry", 3);
+        return $registry_entry->{ast};
+    }
+
+    if ($ctx->{fsm_module} && $ctx->{fsm_module}->can('signals') && $ctx->{fsm_module}->signals) {
+        my $signal = $ctx->{fsm_module}->signals->{$signal_name};
+        if ($signal && blessed($signal) && $signal->can('driving_ast')) {
+            my $driving_ast = $signal->driving_ast;
+            if ($driving_ast && blessed($driving_ast)) {
+                fsm_debug("[EnableGraph.pm][_get_native_intermediate_signal_ast()] Resolved '$signal_name' from FSM module driving_ast", 3);
+                return $driving_ast;
+            }
+        }
+    }
+
+    return undef;
+}
 sub get_or_create_ast_signal_name($self, $ast) {
     my $ctx = $self->{flattened_dt};
 
@@ -54,6 +113,12 @@ sub get_or_create_ast_signal_name($self, $ast) {
     if (exists $ctx->{global_expressions}->{$canonical_expr}) {
         my $existing_signal = $ctx->{global_expressions}->{$canonical_expr};
         $ctx->{expression_usage}->{$existing_signal}++;
+        $self->_register_intermediate_signal_registry_entry(
+            $existing_signal,
+            ast => $ast,
+            expression => $canonical_expr,
+            source => 'ast_signal_name',
+        );
         fsm_debug("AST_SIGNAL: Reusing existing signal '$existing_signal' for AST", 3);
         return $existing_signal;
     }
@@ -64,7 +129,12 @@ sub get_or_create_ast_signal_name($self, $ast) {
     # Register the new signal
     $ctx->{global_expressions}->{$canonical_expr} = $signal_name;
     $ctx->{expression_usage}->{$signal_name} = 1;
-    $ctx->{intermediate_signals}->{$signal_name} = $canonical_expr;
+    $self->_register_intermediate_signal_registry_entry(
+        $signal_name,
+        ast => $ast,
+        expression => $canonical_expr,
+        source => 'ast_signal_name',
+    );
 
     fsm_debug("AST_SIGNAL: Created new signal '$signal_name' for AST", 3);
     return $signal_name;
@@ -158,12 +228,22 @@ sub get_or_create_global_expression($self, $expression) {
     my $canonical_expr = $self->canonicalize_expression($expression);
     fsm_debug("GLOBAL_EXPR: Canonical form: '$canonical_expr'", 3);
 
+    my $ast = eval { $ctx->{expr_namer}->parse_expression($canonical_expr) } if $ctx->{expr_namer};
+
     # Check if we already have a signal for this expression
     if (exists $ctx->{global_expressions}->{$canonical_expr}) {
         my $existing_signal = $ctx->{global_expressions}->{$canonical_expr};
 
         # Increment usage count for optimization analysis
         $ctx->{expression_usage}->{$existing_signal}++;
+        if ($ast && blessed($ast)) {
+            $self->_register_intermediate_signal_registry_entry(
+                $existing_signal,
+                ast => $ast,
+                expression => $canonical_expr,
+                source => 'global_expression',
+            );
+        }
 
         fsm_debug("GLOBAL_EXPR: *** REUSING EXISTING SIGNAL *** - $existing_signal for '$expression'", 3);
         fsm_debug("GLOBAL_EXPR: Usage count now: " . $ctx->{expression_usage}->{$existing_signal});
@@ -177,7 +257,6 @@ sub get_or_create_global_expression($self, $expression) {
     my $signal_name;
 
     # Try to parse the expression back into an AST for native naming
-    my $ast = eval { $ctx->{expr_namer}->parse_expression($canonical_expr) };
 
     if ($ast) {
         # Use the new native AST complexity analysis
@@ -197,7 +276,12 @@ sub get_or_create_global_expression($self, $expression) {
     # Register the mapping
     $ctx->{global_expressions}->{$canonical_expr} = $signal_name;
     $ctx->{expression_usage}->{$signal_name} = 1;
-    $ctx->{intermediate_signals}->{$signal_name} = $canonical_expr;
+    $self->_register_intermediate_signal_registry_entry(
+        $signal_name,
+        expression => $canonical_expr,
+        ($ast && blessed($ast) ? (ast => $ast) : ()),
+        source => 'global_expression',
+    );
 
     fsm_debug("GLOBAL_EXPR: *** CREATED NEW GLOBAL SIGNAL *** - $signal_name for '$expression'", 3);
     fsm_debug("GLOBAL_EXPR: Total global expressions now: " . scalar(keys %{$ctx->{global_expressions}}));
@@ -1543,12 +1627,6 @@ sub is_signal_ast_based_intermediate($self, $signal_name) {
     
     fsm_debug("AST_INTERMEDIATE_CHECK: Checking if '$signal_name' is an AST-based intermediate signal", 3);
     
-    # Check if this signal has AST metadata indicating it's an intermediate signal
-    # This could come from:
-    # 1. AST factorization results that store operator type metadata
-    # 2. Signal generation during AST-to-SystemVerilog conversion
-    # 3. Expression naming that embeds AST operator type information
-    
     # METHOD 1: Check if this signal was generated by AST factorization
     if ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{intermediate_signals}) {
         if (exists $ctx->{ast_factorizer}->{intermediate_signals}->{$signal_name}) {
@@ -1565,35 +1643,17 @@ sub is_signal_ast_based_intermediate($self, $signal_name) {
         }
     }
     
-    # METHOD 2: Check global expression registry for AST-generated signals
-    if ($ctx->{global_expressions}) {
-        # Find the expression that maps to this signal name
-        for my $expr (keys %{$ctx->{global_expressions}}) {
-            if ($ctx->{global_expressions}->{$expr} eq $signal_name) {
-                # Try to parse this expression back to AST to analyze its operator content
-                my $ast = eval { $ctx->{expr_namer}->parse_expression($expr) } if $ctx->{expr_namer};
-                if ($ast && blessed($ast)) {
-                    my $contains_operators = $self->_ast_contains_factorizable_operators($ast);
-                    if ($contains_operators) {
-                        fsm_debug("  AST_INTERMEDIATE: Signal '$signal_name' derived from AST with operators - INTERMEDIATE", 3);
-                        return 1;
-                    }
-                }
-                # If AST parsing fails, no determination can be made
-                last;
-            }
+    # METHOD 2: Check native AST-backed registry/module sources
+    my $native_ast = $self->_get_native_intermediate_signal_ast($signal_name);
+    if ($native_ast && blessed($native_ast)) {
+        my $contains_operators = $self->_ast_contains_factorizable_operators($native_ast);
+        if ($contains_operators) {
+            fsm_debug("  AST_INTERMEDIATE: Signal '$signal_name' resolved to native AST with operators - INTERMEDIATE", 3);
+            return 1;
         }
     }
     
-    # METHOD 3: Check if the signal name follows systematic AST-based naming patterns
-    # These patterns are generated by generate_ast_based_signal_name() and indicate
-    # that the signal was created from an AST with embedded operator type information
-    if ($self->_signal_name_indicates_ast_operators($signal_name)) {
-        fsm_debug("  AST_INTERMEDIATE: Signal '$signal_name' follows AST-based naming - INTERMEDIATE", 3);
-        return 1;
-    }
-    
-    # METHOD 4: Check if this signal appears in any of our AST-based registries
+    # METHOD 3: Check if this signal appears in any of our AST-based registries
     # that track intermediate signals with operator metadata
     if ($ctx->{expression_usage} && exists $ctx->{expression_usage}->{$signal_name}) {
         # Signal is tracked in expression usage - could be intermediate
@@ -2357,28 +2417,18 @@ sub get_intermediate_signal_ast($self, $signal_name) {
     # Resolve an intermediate signal back to its defining AST, preferring native AST sources.
     my $ctx = $self->{flattened_dt};
     return undef unless defined($signal_name) && $signal_name ne '';
-
-    if ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{intermediate_signals}) {
-        my $signal_info = $ctx->{ast_factorizer}->{intermediate_signals}->{$signal_name};
-        if ($signal_info && $signal_info->{ast} && blessed($signal_info->{ast})) {
-            fsm_debug("[EnableGraph.pm][get_intermediate_signal_ast()] Resolved '$signal_name' from AST factorizer", 3);
-            return $signal_info->{ast};
-        }
+    my $native_ast = $self->_get_native_intermediate_signal_ast($signal_name);
+    if ($native_ast && blessed($native_ast)) {
+        return $native_ast;
     }
 
-    if ($ctx->{fsm_module} && $ctx->{fsm_module}->can('signals') && $ctx->{fsm_module}->signals) {
-        my $signal = $ctx->{fsm_module}->signals->{$signal_name};
-        if ($signal && blessed($signal) && $signal->can('driving_ast')) {
-            my $driving_ast = $signal->driving_ast;
-            if ($driving_ast && blessed($driving_ast)) {
-                fsm_debug("[EnableGraph.pm][get_intermediate_signal_ast()] Resolved '$signal_name' from FSM module driving_ast", 3);
-                return $driving_ast;
-            }
-        }
-    }
-
-    if (exists $ctx->{intermediate_signals}->{$signal_name}) {
-        my $ast = $self->_parse_intermediate_expression_to_ast($ctx->{intermediate_signals}->{$signal_name}, $signal_name, 'intermediate_signals');
+    my $registry_entry = $self->_get_intermediate_signal_registry_entry($signal_name);
+    if ($registry_entry && defined($registry_entry->{expression}) && $registry_entry->{expression} ne '') {
+        my $ast = $self->_parse_intermediate_expression_to_ast(
+            $registry_entry->{expression},
+            $signal_name,
+            $registry_entry->{source} || 'intermediate_signals',
+        );
         return $ast if $ast;
     }
 
@@ -2405,6 +2455,12 @@ sub _parse_intermediate_expression_to_ast($self, $expression, $signal_name, $sou
 
     my $ast = eval { $ctx->{expr_namer}->parse_expression($expression) };
     if ($ast && blessed($ast)) {
+        $self->_register_intermediate_signal_registry_entry(
+            $signal_name,
+            ast => $ast,
+            expression => $expression,
+            source => $source_name,
+        );
         fsm_debug("[EnableGraph.pm][_parse_intermediate_expression_to_ast()] Parsed compatibility expression for '$signal_name' from $source_name", 3);
         return $ast;
     }
@@ -2426,8 +2482,9 @@ sub get_intermediate_signal_expression($self, $signal_name) {
     }
     
     # Check the intermediate_signals registry
-    if (exists $ctx->{intermediate_signals}->{$signal_name}) {
-        return $ctx->{intermediate_signals}->{$signal_name};
+    my $registry_entry = $self->_get_intermediate_signal_registry_entry($signal_name);
+    if ($registry_entry && defined($registry_entry->{expression}) && $registry_entry->{expression} ne '') {
+        return $registry_entry->{expression};
     }
     
     # Check global expressions registry
@@ -2437,8 +2494,8 @@ sub get_intermediate_signal_expression($self, $signal_name) {
         }
     }
     
-    # Try to generate the expression based on naming patterns
-    return $self->generate_expression_from_signal_name($signal_name);
+    fsm_debug("[EnableGraph.pm][get_intermediate_signal_expression()] No AST-backed or registered expression found for '$signal_name'", 3);
+    return undef;
 }
 sub generate_expression_from_signal_name($self, $signal_name) {
     # Generate SystemVerilog expression from intermediate signal name patterns

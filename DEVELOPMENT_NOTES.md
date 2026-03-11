@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-11: EnableGraph AST-backed intermediate-signal registry metadata
+- Continued backend convergence by converting the live intermediate-signal registry/lookup path in `perl/FSM/Synthesis/EnableGraph.pm` from string-backed ownership toward AST-backed metadata.
+- Rationale:
+  - after the logical-operation factor-detection slice, the next active string dependency was not another dormant helper in `FlattenedDT`, but the registry path that still stored intermediate-signal meaning primarily as strings and reparsed those strings later,
+  - the new registry helpers let `intermediate_signals` carry `ast`, `expression`, `name`, and `source` together, so counting and lookup can prefer native AST ownership instead of reconstructing semantics from text,
+  - this keeps the AST/CoreAST-first roadmap honest by converting a live semantic path rather than merely relocating more compatibility helpers.
+- Safety/compatibility:
+  - no public backend entrypoint or output-stage API changed; the slice only changes how intermediate-signal meaning is stored and recovered internally,
+  - compatibility parsing still exists as a narrow fallback when legacy entries expose only an expression string and no defining AST yet,
+  - `get_intermediate_signal_expression()` no longer reconstructs logic from signal-name patterns on the live path, which reduces one fragile string heuristic without widening scope into final-emitter rendering.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `Backend/SystemVerilog.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`),
+  - the duplicate redeclaration warning introduced during the in-progress edit was removed before final validation.
+- Next likely slices:
+  - continue shrinking compatibility fallbacks around `get_or_create_global_expression()` and related registry seeding so new intermediate signals originate from ASTs more consistently,
+  - then re-scan the remaining `FlattenedDT.pm` condition/value helper lane only when a slice removes a live string dependency rather than just moving string logic elsewhere.
 ## 2026-03-11: EnableGraph AST-first logical-operation factor detection
 - Continued backend convergence by replacing the live logical-operation reuse heuristic in `perl/FSM/Synthesis/EnableGraph.pm` with AST-first traversal.
 - Rationale:
