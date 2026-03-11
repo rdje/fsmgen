@@ -2072,3 +2072,10 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - caching normalized dependency metadata is a good AST-first step because it makes the active path consume one analyzed representation instead of recomputing source selection at each use site,
   - the remaining compatibility seam on this lane is now even narrower: runtime-AST resolution misses that still require fallback dependency extraction or fallback filtering.
+- Latest AST/CoreAST-first convergence increment:
+  - consolidated rendered-expression metadata is now normalized and cached before the live dependency/filter/emit phases consume it,
+  - prescan-backed entries no longer eagerly carry expression text when runtime AST resolution already succeeded,
+  - this pushes another piece of live-path state from ad hoc string handling toward explicit cached metadata derived from AST-first normalization.
+- Design note from this slice:
+  - render-metadata normalization pairs naturally with runtime-AST and dependency normalization because it gives the live consolidated path one stable per-signal view for “what gets emitted” instead of recomputing that answer at each callsite,
+  - the remaining compatibility-only seams are now the misses themselves, not the regular live-path consumers.

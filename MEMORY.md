@@ -1167,3 +1167,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - narrow or eliminate the remaining compatibility-only runtime-AST misses that still fall through to `extract_intermediate_signals_from_expression(...)` or `should_filter_string_based(...)`,
   - keep deferring dormant standalone declaration-helper cleanup unless it becomes live or can be removed outright.
+## AST/CoreAST convergence update (March 11, 2026, render slice)
+- Latest completed slice in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
+  - consolidated rendered-expression metadata is now normalized and cached per signal before the live dependency/filter/emit phases run,
+  - prescan merge no longer eagerly stores `expression` text for entries that already have runtime AST coverage,
+  - expression text remains merge-time/live-time compatibility metadata only for runtime-AST misses.
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` => `Files=6`, `Tests=125`, `PASS`
+- Recent AST/CoreAST convergence commits immediately before the next commit:
+  - `2480832` `SystemVerilog: cache consolidated intermediate dependencies`
+  - `5ea13ab` `SystemVerilog: normalize consolidated intermediate runtime ASTs`
+  - `0d91234` `SystemVerilog: derive consolidated intermediate widths from AST`
+- Highest-value next seam after this slice:
+  - narrow the remaining compatibility-only runtime-AST miss path itself, especially the cases that still fall through to `extract_intermediate_signals_from_expression(...)` or `should_filter_string_based(...)`,
+  - keep deferring dormant standalone declaration-helper cleanup unless it becomes live or is being removed outright.

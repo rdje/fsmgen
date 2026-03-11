@@ -1314,6 +1314,16 @@ This is the persistent technical change history for FSMGen.
 ### Validation (latest slice)
 - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
 - `prove -I perl t` (pass: 6 files, 125 tests)
+### Newest AST/CoreAST convergence slice
+- Normalized consolidated rendered-expression metadata in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` so the live path now caches and reuses one rendered-expression value per intermediate signal instead of recomputing or re-falling-back at each use site.
+- Reduced eager expression-text handling on prescan-backed consolidated entries:
+  - when a runtime AST is already available, prescan merge now keeps AST/runtime metadata without also eagerly hydrating `expression` text,
+  - expression text is only carried forward at merge time when runtime AST resolution still misses.
+- Added an explicit rendered-expression normalization pass before dependency-aware filtering so the active consolidated path consumes cached render metadata.
+
+### Validation (newest slice)
+- `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+- `prove -I perl t` (pass: 6 files, 125 tests)
 
 ### Validation (post-hardening + extraction)
 - `prove -I perl t/04-assignment-edge-cases.t t/05-assignment-hdl-snapshots.t` (pass)

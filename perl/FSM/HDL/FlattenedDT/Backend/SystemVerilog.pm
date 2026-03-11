@@ -272,6 +272,14 @@ sub resolve_intermediate_signal_runtime_ast ($self, $signal_name, $signal_info) 
 sub render_intermediate_signal_expression ($self, $signal_name, $signal_info) {
     my $ctx = $self->{flattened_dt};
     return undef unless defined($signal_name) && $signal_name ne '';
+    if ($signal_info
+        && ref($signal_info) eq 'HASH'
+        && defined($signal_info->{rendered_expression})
+        && $signal_info->{rendered_expression} ne '')
+    {
+        fsm_debug("[SystemVerilog.pm][render_intermediate_signal_expression()] Using cached rendered expression for '$signal_name' via " . ($signal_info->{rendered_expression_source} || 'cache'), 3);
+        return $signal_info->{rendered_expression};
+    }
 
     my $runtime_ast = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
     if ($runtime_ast && blessed($runtime_ast)) {
@@ -285,6 +293,10 @@ sub render_intermediate_signal_expression ($self, $signal_name, $signal_info) {
     }
 
     if ($signal_info && defined($signal_info->{expression}) && $signal_info->{expression} ne '') {
+        if (ref($signal_info) eq 'HASH') {
+            $signal_info->{rendered_expression} = $signal_info->{expression};
+            $signal_info->{rendered_expression_source} = 'stored_expression';
+        }
         fsm_debug("[SystemVerilog.pm][render_intermediate_signal_expression()] Falling back to stored expression for '$signal_name'", 3);
         return $signal_info->{expression};
     }
@@ -292,6 +304,8 @@ sub render_intermediate_signal_expression ($self, $signal_name, $signal_info) {
     my $expression = $ctx->{enable_graph}->get_intermediate_signal_expression($signal_name);
     if (defined($expression) && $expression ne '' && $signal_info && ref($signal_info) eq 'HASH') {
         $signal_info->{expression} //= $expression;
+        $signal_info->{rendered_expression} = $expression;
+        $signal_info->{rendered_expression_source} = 'enable_graph_expression';
     }
     return $expression;
 }
@@ -1049,14 +1063,16 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
             # Only add if not already in AST factorization results
             unless (exists $all_intermediate_signals{$signal_name}) {
                 my $referenced_signal_info = $ctx->{referenced_intermediate_signals}->{$signal_name} || {};
-                my $ast = $self->resolve_intermediate_signal_defining_ast($signal_name, $referenced_signal_info);
-                my $expression = $ctx->{enable_graph}->get_intermediate_signal_expression($signal_name);
-                if (($ast && blessed($ast)) || $expression) {
+                my $runtime_ast = $self->resolve_intermediate_signal_runtime_ast($signal_name, $referenced_signal_info);
+                my $expression = (!$runtime_ast || !blessed($runtime_ast))
+                    ? $ctx->{enable_graph}->get_intermediate_signal_expression($signal_name)
+                    : undef;
+                if (($runtime_ast && blessed($runtime_ast)) || $expression) {
                     $all_intermediate_signals{$signal_name} = {
                         source => 'prescan_reference',
                         %$referenced_signal_info,
-                        ($ast && blessed($ast) ? (ast => $ast) : ()),
-                        expression => $expression,
+                        ($runtime_ast && blessed($runtime_ast) ? (ast => $runtime_ast, runtime_ast => $runtime_ast) : ()),
+                        (defined($expression) && $expression ne '' ? (expression => $expression) : ()),
                         usage_count => 1
                     };
                 }
@@ -1222,6 +1238,18 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         my @dependencies = $self->resolve_intermediate_signal_dependencies($signal_name, $signal_info);
         my $dependency_summary = @dependencies ? join(', ', @dependencies) : 'none';
         fsm_debug("CONSOL_INTER_SIG: [DEPENDENCIES] '$signal_name' => $dependency_summary via " . ($signal_info->{dependency_source} || 'none'), 3);
+    }
+
+    # Step 2.9: Normalize rendered expressions so downstream phases reuse one cached rendering path.
+    for my $signal_name (keys %all_intermediate_signals) {
+        my $signal_info = $all_intermediate_signals{$signal_name};
+        my $rendered_expression = $self->render_intermediate_signal_expression($signal_name, $signal_info);
+        my $render_source = $signal_info->{rendered_expression_source} || 'none';
+        if (defined($rendered_expression) && $rendered_expression ne '') {
+            fsm_debug("CONSOL_INTER_SIG: [RENDER] '$signal_name' cached via $render_source", 3);
+        } else {
+            fsm_debug("CONSOL_INTER_SIG: [RENDER] '$signal_name' has no cached renderable expression", 3);
+        }
     }
     
     # Step 3: Apply dependency-aware filtering to prevent referenced signals from being filtered out
