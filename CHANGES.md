@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-11
+### EnableGraph/SystemVerilog AST-first intermediate dependency extraction
+- Added `extract_intermediate_signals_from_ast()` and `_collect_intermediate_signals_from_ast()` to `perl/FSM/Synthesis/EnableGraph.pm` so the live code can recover referenced intermediate signals by traversing AST nodes instead of scanning rendered SystemVerilog text.
+- Updated `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` so:
+  - consolidated intermediate-signal dependency-map construction now uses AST traversal whenever a defining AST is available,
+  - factorization substitution tracing now extracts referenced intermediate signals directly from substituted ASTs,
+  - pre-scan referenced signals are seeded with their defining AST from `get_intermediate_signal_ast()` when available.
+- Updated `extract_intermediate_signals_from_expression()` to attempt expression parsing and delegate to AST traversal before falling back to legacy string scanning only when parsing fails.
+- Root cause / rationale:
+  - a fresh re-scan showed that `get_or_create_global_expression()` was not the strongest live runtime seam after the previous slice,
+  - the real active string dependency was in consolidated intermediate-signal dependency extraction, which still identified referenced intermediates by regex over rendered expressions even when ASTs were already present,
+  - this slice converts that live dependency-discovery path to AST-first behavior and narrows string scanning to compatibility fallback only.
+- Scope remains behavior-preserving AST/CoreAST-first convergence on the live dependency/filtering path; no public backend entrypoint or emitter API changed in this slice.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### EnableGraph AST-backed intermediate-signal registry metadata
 - Reworked `perl/FSM/Synthesis/EnableGraph.pm` so the live intermediate-signal registry can store structured entries with `ast`, `expression`, `name`, and `source` metadata instead of only bare expression strings when native ASTs are available.
 - Updated `get_or_create_ast_signal_name()` and `get_or_create_global_expression()` to register that structured metadata on intermediate-signal creation/reuse, preserving the canonical expression string only as compatibility data rather than the primary semantic owner.

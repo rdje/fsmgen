@@ -801,10 +801,12 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         for my $signal_name (keys %{$ctx->{referenced_intermediate_signals}}) {
             # Only add if not already in AST factorization results
             unless (exists $all_intermediate_signals{$signal_name}) {
+                my $ast = $ctx->{enable_graph}->get_intermediate_signal_ast($signal_name);
                 my $expression = $ctx->{enable_graph}->get_intermediate_signal_expression($signal_name);
-                if ($expression) {
+                if (($ast && blessed($ast)) || $expression) {
                     $all_intermediate_signals{$signal_name} = {
                         source => 'prescan_reference',
+                        ($ast && blessed($ast) ? (ast => $ast) : ()),
                         expression => $expression,
                         width => 1,
                         usage_count => 1
@@ -958,17 +960,19 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         
         # Get the expression to analyze for dependencies
         my $expression;
+        my @referenced_signals;
         if ($signal_info->{ast}) {
             $expression = $ctx->{enable_graph}->ast_to_systemverilog($signal_info->{ast});
+            @referenced_signals = $ctx->{enable_graph}->extract_intermediate_signals_from_ast($signal_info->{ast});
         } elsif ($signal_info->{expression}) {
             $expression = $signal_info->{expression};
+            @referenced_signals = $self->extract_intermediate_signals_from_expression($expression);
         } else {
             fsm_debug("  WARNING: No expression found for signal $signal_name, skipping", 3);
             next;
         }
         
         # Find all intermediate signals referenced in this expression
-        my @referenced_signals = $self->extract_intermediate_signals_from_expression($expression);
         if (@referenced_signals) {
             $signal_dependencies{$signal_name} = [@referenced_signals];
             fsm_debug("  DEPENDENCY: '$signal_name' depends on: " . join(", ", @referenced_signals), 3);
@@ -1631,7 +1635,7 @@ sub run_global_ast_factorization ($self) {
                 fsm_debug("  SUBSTITUTED_BY: FSM::HDL::ASTFactorization->substitute_expressions_with_intermediate_signals()", 3);
                 
                 # Try to identify which intermediate signals are referenced
-                my @referenced_intermediates = $self->extract_intermediate_signals_from_expression($sv);
+                my @referenced_intermediates = $ctx->{enable_graph}->extract_intermediate_signals_from_ast($expr_info->{ast});
                 if (@referenced_intermediates) {
                     fsm_debug("  REFERENCES_INTERMEDIATES: " . join(", ", @referenced_intermediates), 3);
                 }
@@ -2318,6 +2322,21 @@ sub extract_intermediate_signals_from_expression ($self, $expression) {
     my @intermediate_signals;
 
     fsm_debug("EXTRACT_INTERMEDIATES: Analyzing expression '$expression'", 3);
+
+    if ($ctx->{expr_namer}) {
+        my $ast = eval { $ctx->{expr_namer}->parse_expression($expression) };
+        if ($ast && blessed($ast)) {
+            fsm_debug("EXTRACT_INTERMEDIATES: Parsed compatibility expression to AST: " . ref($ast), 3);
+            return $ctx->{enable_graph}->extract_intermediate_signals_from_ast($ast);
+        }
+        if ($@) {
+            my $error = $@;
+            chomp $error;
+            fsm_debug("EXTRACT_INTERMEDIATES: AST parse failed, falling back to string scan: $error", 3);
+        } else {
+            fsm_debug("EXTRACT_INTERMEDIATES: AST parse returned no node, falling back to string scan", 3);
+        }
+    }
 
     # Extract all signal-like identifiers from the expression
     my @potential_signals = ($expression =~ /\b([a-zA-Z_][a-zA-Z0-9_]+)\b/g);

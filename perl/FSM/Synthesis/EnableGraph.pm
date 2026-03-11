@@ -1508,6 +1508,61 @@ sub extract_signal_name_from_ast($self, $signal_ast) {
     
     return undef;
 }
+sub extract_intermediate_signals_from_ast($self, $ast) {
+    my @signal_names;
+    my %seen_node_ids;
+    my %seen_signal_names;
+    $self->_collect_intermediate_signals_from_ast($ast, \@signal_names, \%seen_node_ids, \%seen_signal_names);
+
+    my $summary = @signal_names ? join(', ', @signal_names) : 'none';
+    fsm_debug("[EnableGraph.pm][extract_intermediate_signals_from_ast()] Extracted " . scalar(@signal_names) . " intermediate signal(s): $summary", 3);
+    return @signal_names;
+}
+sub _collect_intermediate_signals_from_ast($self, $ast, $signal_names, $seen_node_ids, $seen_signal_names) {
+    return unless $ast && blessed($ast);
+
+    my $node_id = sprintf('%p', $ast);
+    return if $seen_node_ids->{$node_id}++;
+
+    if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
+        my $signal_name = eval { $ast->signal_name } || $ast->{signal_name};
+        if (defined($signal_name) && $signal_name ne '' && !$seen_signal_names->{$signal_name}++) {
+            push @$signal_names, $signal_name;
+            fsm_debug("[EnableGraph.pm][_collect_intermediate_signals_from_ast()] Found direct intermediate ref '$signal_name'", 3);
+        }
+        return;
+    }
+
+    if ($ast->isa('FSM::AST::SignalRef') ||
+        $ast->isa('FSM::CoreAST::SignalRef') ||
+        $ast->isa('FSM::AST::IndexedRef') ||
+        $ast->isa('FSM::CoreAST::IndexedRef')) {
+        my $signal_name = $self->extract_signal_name_from_ast($ast);
+        if (defined($signal_name) && $signal_name ne '' && $self->is_intermediate_signal($signal_name)) {
+            if (!$seen_signal_names->{$signal_name}++) {
+                push @$signal_names, $signal_name;
+                fsm_debug("[EnableGraph.pm][_collect_intermediate_signals_from_ast()] Found intermediate signal ref '$signal_name'", 3);
+            }
+        }
+    }
+
+    for my $accessor (qw(left right operand condition true_expr false_expr index expression)) {
+        next unless $ast->can($accessor);
+        my $child = eval { $ast->$accessor() };
+        next unless $child && blessed($child);
+        $self->_collect_intermediate_signals_from_ast($child, $signal_names, $seen_node_ids, $seen_signal_names);
+    }
+
+    for my $accessor (qw(operands children arguments expressions parts)) {
+        next unless $ast->can($accessor);
+        my $children = eval { $ast->$accessor() };
+        next unless ref($children) eq 'ARRAY';
+        for my $child (@$children) {
+            next unless $child && blessed($child);
+            $self->_collect_intermediate_signals_from_ast($child, $signal_names, $seen_node_ids, $seen_signal_names);
+        }
+    }
+}
 sub get_reset_value_from_ast($self, $lhs_ast) {
     # AST WEB: Get reset value using direct AST queries
     my $ctx = $self->{flattened_dt};

@@ -14,6 +14,21 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-11: Backend convergence micro-slice (EnableGraph/SystemVerilog AST-first intermediate dependency extraction)
+- Current worktree converts the live consolidated intermediate-signal dependency-discovery path from rendered-string scanning toward AST traversal.
+- Scope remains a small behavior-preserving AST-first slice:
+  - `EnableGraph` now exposes `extract_intermediate_signals_from_ast()` for recursive intermediate-reference recovery from ASTs,
+  - consolidated dependency-map construction in `Backend/SystemVerilog` now uses defining ASTs when available instead of scanning rendered expressions first,
+  - substituted-AST debug tracing now extracts referenced intermediates directly from the substituted AST,
+  - pre-scan referenced signals are now seeded with defining ASTs through `get_intermediate_signal_ast()` when that AST is available,
+  - string-based intermediate extraction remains only as a compatibility fallback after parse failure.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue targeting the remaining expression-only compatibility entries on the consolidated filtering path so runtime dependency/filtering logic sees native ASTs more consistently,
+  - keep re-evaluating `get_or_create_global_expression()` against live call paths rather than assuming it is the next best seam from locality alone.
 ## 2026-03-11: Backend convergence micro-slice (EnableGraph AST-backed intermediate-signal registry metadata)
 - Current worktree converts the live intermediate-signal registry/count/render path from string-backed ownership toward AST-backed metadata in `perl/FSM/Synthesis/EnableGraph.pm` and `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - Scope remains a small behavior-preserving AST-first slice:

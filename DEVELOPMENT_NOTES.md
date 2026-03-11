@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-11: EnableGraph/SystemVerilog AST-first intermediate dependency extraction
+- Continued backend convergence by replacing a live string-based intermediate-dependency discovery path with AST traversal on the consolidated intermediate-signal flow.
+- Rationale:
+  - after re-scanning the runtime path instead of assuming the next seam from proximity alone, `get_or_create_global_expression()` turned out to be less live than expected for the current design,
+  - the real active string dependency was in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`, where dependency-aware filtering and debug tracing still identified referenced intermediate signals by scanning rendered expression text,
+  - adding `EnableGraph::extract_intermediate_signals_from_ast()` made it possible to walk substituted and defining ASTs directly and keep dependency discovery on the AST/CoreAST side of the boundary.
+- Safety/compatibility:
+  - no public backend entrypoint or output-stage API changed; the slice only changes how referenced intermediate signals are discovered internally,
+  - pre-scan referenced signals now carry defining ASTs into the consolidated intermediate-signal path when available, reducing later reparsing pressure,
+  - `extract_intermediate_signals_from_expression()` still retains a narrow compatibility fallback for legacy cases that only expose string expressions and cannot be parsed back to ASTs.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `Backend/SystemVerilog.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue shrinking the remaining compatibility fallback cases where consolidated filtering still reparses or string-scans expression-only entries,
+  - re-evaluate `get_or_create_global_expression()` only when a live runtime path actually depends on its current string-first behavior.
 ## 2026-03-11: EnableGraph AST-backed intermediate-signal registry metadata
 - Continued backend convergence by converting the live intermediate-signal registry/lookup path in `perl/FSM/Synthesis/EnableGraph.pm` from string-backed ownership toward AST-backed metadata.
 - Rationale:
