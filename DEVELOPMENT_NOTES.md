@@ -2065,3 +2065,10 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - keeping runtime-AST normalization backend-local is the right micro-slice because it changes live execution semantics without forcing premature cleanup of dormant helpers,
   - the next remaining compatibility seam on this lane is no longer “general expression fallback everywhere” but the much narrower cases where runtime-AST resolution misses and the backend still has to fall back to `extract_intermediate_signals_from_expression(...)` or `should_filter_string_based(...)`.
+- Latest AST/CoreAST-first convergence increment:
+  - consolidated intermediate dependency extraction is now normalized into backend-local cached metadata before the dependency-aware filtering phase,
+  - dependency resolution prefers runtime AST traversal and only falls back to expression-based extraction inside one compatibility helper,
+  - this removes another inline expression-era branch from the active consolidated path and continues the shift toward typed per-signal metadata.
+- Design note from this slice:
+  - caching normalized dependency metadata is a good AST-first step because it makes the active path consume one analyzed representation instead of recomputing source selection at each use site,
+  - the remaining compatibility seam on this lane is now even narrower: runtime-AST resolution misses that still require fallback dependency extraction or fallback filtering.

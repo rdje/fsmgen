@@ -295,6 +295,44 @@ sub render_intermediate_signal_expression ($self, $signal_name, $signal_info) {
     }
     return $expression;
 }
+sub resolve_intermediate_signal_dependencies ($self, $signal_name, $signal_info) {
+    return () unless defined($signal_name) && $signal_name ne '';
+
+    if ($signal_info
+        && ref($signal_info) eq 'HASH'
+        && $signal_info->{dependency_signal_names}
+        && ref($signal_info->{dependency_signal_names}) eq 'ARRAY')
+    {
+        return @{$signal_info->{dependency_signal_names}};
+    }
+
+    my @dependencies;
+    my $dependency_source = 'none';
+
+    my $runtime_ast = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
+    if ($runtime_ast && blessed($runtime_ast)) {
+        @dependencies = $self->{flattened_dt}->{enable_graph}->extract_intermediate_signals_from_ast($runtime_ast);
+        $dependency_source = $signal_info->{runtime_ast_source} || 'runtime_ast';
+    } else {
+        my $expression = $self->render_intermediate_signal_expression($signal_name, $signal_info);
+        if (defined($expression) && $expression ne '') {
+            @dependencies = $self->extract_intermediate_signals_from_expression($expression);
+            $dependency_source = 'expression_fallback';
+        }
+    }
+
+    my %seen_dependencies;
+    @dependencies = grep { defined($_) && $_ ne '' && !$seen_dependencies{$_}++ } @dependencies;
+
+    if ($signal_info && ref($signal_info) eq 'HASH') {
+        $signal_info->{dependency_signal_names} = [@dependencies];
+        $signal_info->{dependency_source} = $dependency_source;
+    }
+
+    my $dependency_summary = @dependencies ? join(', ', @dependencies) : 'none';
+    fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_dependencies()] '$signal_name' dependencies => $dependency_summary via $dependency_source", 3);
+    return @dependencies;
+}
 sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signal_registry, $seen_signals = undef) {
     my $ctx = $self->{flattened_dt};
     return 1 unless defined($signal_name) && $signal_name ne '';
@@ -1177,6 +1215,14 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         $signal_info->{width} = $resolved_width;
         fsm_debug("CONSOL_INTER_SIG: [WIDTH] '$signal_name' width normalized to $resolved_width", 3);
     }
+
+    # Step 2.8: Normalize dependency metadata so the live path consumes AST-first cached dependencies.
+    for my $signal_name (keys %all_intermediate_signals) {
+        my $signal_info = $all_intermediate_signals{$signal_name};
+        my @dependencies = $self->resolve_intermediate_signal_dependencies($signal_name, $signal_info);
+        my $dependency_summary = @dependencies ? join(', ', @dependencies) : 'none';
+        fsm_debug("CONSOL_INTER_SIG: [DEPENDENCIES] '$signal_name' => $dependency_summary via " . ($signal_info->{dependency_source} || 'none'), 3);
+    }
     
     # Step 3: Apply dependency-aware filtering to prevent referenced signals from being filtered out
     fsm_debug("\n*** DEPENDENCY-AWARE FILTERING PHASE ***", 3);
@@ -1186,19 +1232,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
     
     for my $signal_name (keys %all_intermediate_signals) {
         my $signal_info = $all_intermediate_signals{$signal_name};
-        
-        # Get the expression to analyze for dependencies
-        my $expression = $self->render_intermediate_signal_expression($signal_name, $signal_info);
-        my @referenced_signals;
-        my $runtime_ast = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
-        if ($runtime_ast && blessed($runtime_ast)) {
-            @referenced_signals = $ctx->{enable_graph}->extract_intermediate_signals_from_ast($runtime_ast);
-        } elsif ($signal_info->{expression}) {
-            @referenced_signals = $self->extract_intermediate_signals_from_expression($expression);
-        } else {
-            fsm_debug("  WARNING: No expression found for signal $signal_name, skipping", 3);
-            next;
-        }
+        my @referenced_signals = $self->resolve_intermediate_signal_dependencies($signal_name, $signal_info);
         
         # Find all intermediate signals referenced in this expression
         if (@referenced_signals) {
