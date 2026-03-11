@@ -2058,3 +2058,10 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - factorizer-substituted AST node classes (`FSM::HDL::IntermediateSignalRef`, `FSM::HDL::SubstitutedUnaryOp`, `FSM::HDL::SubstitutedBinaryOp`) are now handled in the live backend width-resolution path so downstream declarations can stay on AST-derived semantics even after substitution,
   - keeping the width fix inside the consolidated backend path avoids widening dormant compatibility helpers solely for cleanup, which matches the current micro-slice strategy: fix the live AST/CoreAST seam first, then retire or rewrite dormant string-era helpers when they either become live again or are removed entirely.
+- Latest AST/CoreAST-first convergence increment:
+  - the live consolidated backend now normalizes a runtime AST for each intermediate signal before the dependency, filtering, and assign-emission phases,
+  - runtime-AST resolution prefers substituted factorizer ASTs, then defining ASTs, and only parses stored expressions when no AST-backed source exists,
+  - this collapses several previously separate expression-string branches into one compatibility helper path and keeps the active runtime algorithm AST-first.
+- Design note from this slice:
+  - keeping runtime-AST normalization backend-local is the right micro-slice because it changes live execution semantics without forcing premature cleanup of dormant helpers,
+  - the next remaining compatibility seam on this lane is no longer “general expression fallback everywhere” but the much narrower cases where runtime-AST resolution misses and the backend still has to fall back to `extract_intermediate_signals_from_expression(...)` or `should_filter_string_based(...)`.

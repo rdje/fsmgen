@@ -153,27 +153,22 @@ sub generate_module_declaration ($self, $fsm_module) {
     return $hdl;
 }
 sub should_filter_consolidated_signal ($self, $expression, $signal_name, $signal_info) {
-    my $ctx = $self->{flattened_dt};
     # AST-BASED FILTERING - Use semantic analysis instead of string patterns
     # This replaces the old string-based regex filtering with proper AST analysis
     
+    $expression = $self->render_intermediate_signal_expression($signal_name, $signal_info)
+        unless defined($expression) && $expression ne '';
     fsm_debug("\n*** AST_FILTER_CHECK: Analyzing signal '$signal_name' ***", 3);
     fsm_debug("  Expression: '$expression'", 3);
     fsm_debug("  Source: $signal_info->{source}", 3);
     fsm_debug("  Usage count: " . ($signal_info->{usage_count} || 'unknown'));
     
     # Try to get the AST for this signal if available
-    my $ast = $self->resolve_intermediate_signal_defining_ast($signal_name, $signal_info);
+    my $ast = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
     if ($ast && blessed($ast)) {
-        fsm_debug("  Using defining AST for filtering: " . ref($ast), 3);
+        fsm_debug("  Using runtime AST for filtering: " . ref($ast), 3);
     } else {
-        # Try to parse the expression back to AST for analysis
-        $ast = eval { $ctx->{expr_namer}->parse_expression($expression) };
-        if ($ast) {
-            fsm_debug("  Parsed expression to AST after AST-resolution miss: " . ref($ast), 3);
-        } else {
-            fsm_debug("  Could not parse expression to AST - falling back to string analysis", 3);
-        }
+        fsm_debug("  No runtime AST available - falling back to compatibility-only usage filtering", 3);
     }
     
     # AST-based filtering when AST is available
@@ -211,6 +206,95 @@ sub resolve_intermediate_signal_defining_ast ($self, $signal_name, $signal_info)
     fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_defining_ast()] No defining AST available for '$signal_name'", 3);
     return undef;
 }
+sub resolve_intermediate_signal_runtime_ast ($self, $signal_name, $signal_info) {
+    my $ctx = $self->{flattened_dt};
+    return undef unless defined($signal_name) && $signal_name ne '';
+
+    if ($signal_info && $signal_info->{runtime_ast} && blessed($signal_info->{runtime_ast})) {
+        fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_runtime_ast()] Using cached runtime_ast for '$signal_name'", 3);
+        return $signal_info->{runtime_ast};
+    }
+
+    my $runtime_ast;
+    my $runtime_ast_source;
+
+    if ($ctx->{ast_factorizer}
+        && $ctx->{ast_factorizer}->{intermediate_signals}
+        && exists $ctx->{ast_factorizer}->{intermediate_signals}->{$signal_name})
+    {
+        my $substituted_ast = $self->get_substituted_ast_for_signal($signal_name, $signal_info);
+        if ($substituted_ast && blessed($substituted_ast)) {
+            $runtime_ast = $substituted_ast;
+            $runtime_ast_source = 'substituted_ast';
+        }
+    }
+
+    if ((!$runtime_ast || !blessed($runtime_ast))) {
+        my $defining_ast = $self->resolve_intermediate_signal_defining_ast($signal_name, $signal_info);
+        if ($defining_ast && blessed($defining_ast)) {
+            $runtime_ast = $defining_ast;
+            $runtime_ast_source = 'defining_ast';
+        }
+    }
+
+    if ((!$runtime_ast || !blessed($runtime_ast))
+        && $signal_info
+        && defined($signal_info->{expression})
+        && $signal_info->{expression} ne ''
+        && $ctx->{expr_namer})
+    {
+        my $parsed_ast = eval { $ctx->{expr_namer}->parse_expression($signal_info->{expression}) };
+        if ($parsed_ast && blessed($parsed_ast)) {
+            $runtime_ast = $parsed_ast;
+            $runtime_ast_source = 'parsed_expression_ast';
+            if (ref($signal_info) eq 'HASH') {
+                $signal_info->{defining_ast} //= $parsed_ast;
+            }
+        } else {
+            my $error = $@;
+            chomp $error if defined $error;
+            fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_runtime_ast()] Failed compatibility parse for '$signal_name': " . ($error || 'unknown parse failure'), 3);
+        }
+    }
+
+    if ($runtime_ast && blessed($runtime_ast)) {
+        if ($signal_info && ref($signal_info) eq 'HASH') {
+            $signal_info->{runtime_ast} = $runtime_ast;
+            $signal_info->{runtime_ast_source} = $runtime_ast_source;
+        }
+        fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_runtime_ast()] Resolved runtime AST for '$signal_name' via $runtime_ast_source", 3);
+        return $runtime_ast;
+    }
+
+    fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_runtime_ast()] No runtime AST available for '$signal_name'", 3);
+    return undef;
+}
+sub render_intermediate_signal_expression ($self, $signal_name, $signal_info) {
+    my $ctx = $self->{flattened_dt};
+    return undef unless defined($signal_name) && $signal_name ne '';
+
+    my $runtime_ast = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
+    if ($runtime_ast && blessed($runtime_ast)) {
+        my $expression = $ctx->{enable_graph}->ast_to_systemverilog($runtime_ast);
+        if ($signal_info && ref($signal_info) eq 'HASH') {
+            $signal_info->{rendered_expression} = $expression;
+            $signal_info->{rendered_expression_source} = $signal_info->{runtime_ast_source} || 'runtime_ast';
+        }
+        fsm_debug("[SystemVerilog.pm][render_intermediate_signal_expression()] Rendered '$signal_name' from AST", 3);
+        return $expression;
+    }
+
+    if ($signal_info && defined($signal_info->{expression}) && $signal_info->{expression} ne '') {
+        fsm_debug("[SystemVerilog.pm][render_intermediate_signal_expression()] Falling back to stored expression for '$signal_name'", 3);
+        return $signal_info->{expression};
+    }
+
+    my $expression = $ctx->{enable_graph}->get_intermediate_signal_expression($signal_name);
+    if (defined($expression) && $expression ne '' && $signal_info && ref($signal_info) eq 'HASH') {
+        $signal_info->{expression} //= $expression;
+    }
+    return $expression;
+}
 sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signal_registry, $seen_signals = undef) {
     my $ctx = $self->{flattened_dt};
     return 1 unless defined($signal_name) && $signal_name ne '';
@@ -240,12 +324,12 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
     }
 
     if (!defined($resolved_width) || $resolved_width < 1) {
-        my $defining_ast = $self->resolve_intermediate_signal_defining_ast($signal_name, $signal_info);
-        if ($defining_ast && blessed($defining_ast)) {
-            my $ast_width = $self->infer_width_from_intermediate_ast($defining_ast, $signal_registry, $seen_signals);
+        my $runtime_ast = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
+        if ($runtime_ast && blessed($runtime_ast)) {
+            my $ast_width = $self->infer_width_from_intermediate_ast($runtime_ast, $signal_registry, $seen_signals);
             if (defined($ast_width) && $ast_width > 0) {
                 $resolved_width = $ast_width;
-                $width_source = 'defining_ast';
+                $width_source = $signal_info->{runtime_ast_source} || 'runtime_ast';
             }
         }
     }
@@ -253,17 +337,6 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
     if ((!defined($resolved_width) || $resolved_width < 1) && $signal_info && defined($signal_info->{width}) && $signal_info->{width} > 0) {
         $resolved_width = $signal_info->{width};
         $width_source = 'cached_width';
-    }
-
-    if ((!defined($resolved_width) || $resolved_width < 1) && $signal_info && defined($signal_info->{expression}) && $signal_info->{expression} ne '' && $ctx->{expr_namer}) {
-        my $parsed_ast = eval { $ctx->{expr_namer}->parse_expression($signal_info->{expression}) };
-        if ($parsed_ast && blessed($parsed_ast)) {
-            my $parsed_width = $self->infer_width_from_intermediate_ast($parsed_ast, $signal_registry, $seen_signals);
-            if (defined($parsed_width) && $parsed_width > 0) {
-                $resolved_width = $parsed_width;
-                $width_source = 'parsed_expression_ast';
-            }
-        }
     }
 
     $resolved_width = 1 unless defined($resolved_width) && $resolved_width > 0;
@@ -1086,7 +1159,18 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         fsm_debug("CONSOL_INTER_SIG: [FSMGEN_SIGNALS] No FSM module signals available for scanning", 3);
     }
 
-    # Step 2.6: Normalize intermediate signal widths from native signal metadata or defining ASTs.
+    # Step 2.6: Normalize runtime ASTs so the live consolidated path can stay AST-first.
+    for my $signal_name (keys %all_intermediate_signals) {
+        my $signal_info = $all_intermediate_signals{$signal_name};
+        my $runtime_ast = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
+        if ($runtime_ast && blessed($runtime_ast)) {
+            fsm_debug("CONSOL_INTER_SIG: [RUNTIME_AST] '$signal_name' normalized via " . ($signal_info->{runtime_ast_source} || 'runtime_ast'), 3);
+        } else {
+            fsm_debug("CONSOL_INTER_SIG: [RUNTIME_AST] '$signal_name' still lacks AST; compatibility fallback remains", 3);
+        }
+    }
+
+    # Step 2.7: Normalize intermediate signal widths from native signal metadata or defining ASTs.
     for my $signal_name (keys %all_intermediate_signals) {
         my $signal_info = $all_intermediate_signals{$signal_name};
         my $resolved_width = $self->resolve_intermediate_signal_width($signal_name, $signal_info, \%all_intermediate_signals);
@@ -1104,14 +1188,12 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         my $signal_info = $all_intermediate_signals{$signal_name};
         
         # Get the expression to analyze for dependencies
-        my $expression;
+        my $expression = $self->render_intermediate_signal_expression($signal_name, $signal_info);
         my @referenced_signals;
-        my $defining_ast = $self->resolve_intermediate_signal_defining_ast($signal_name, $signal_info);
-        if ($defining_ast && blessed($defining_ast)) {
-            $expression = $ctx->{enable_graph}->ast_to_systemverilog($defining_ast);
-            @referenced_signals = $ctx->{enable_graph}->extract_intermediate_signals_from_ast($defining_ast);
+        my $runtime_ast = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
+        if ($runtime_ast && blessed($runtime_ast)) {
+            @referenced_signals = $ctx->{enable_graph}->extract_intermediate_signals_from_ast($runtime_ast);
         } elsif ($signal_info->{expression}) {
-            $expression = $signal_info->{expression};
             @referenced_signals = $self->extract_intermediate_signals_from_expression($expression);
         } else {
             fsm_debug("  WARNING: No expression found for signal $signal_name, skipping", 3);
@@ -1133,12 +1215,8 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         my $signal_info = $all_intermediate_signals{$signal_name};
         
         # Get expression for filtering analysis
-        my $expression;
-        if ($signal_info->{ast}) {
-            $expression = $ctx->{enable_graph}->ast_to_systemverilog($signal_info->{ast});
-        } elsif ($signal_info->{expression}) {
-            $expression = $signal_info->{expression};
-        } else {
+        my $expression = $self->render_intermediate_signal_expression($signal_name, $signal_info);
+        unless (defined($expression) && $expression ne '') {
             next;
         }
         
@@ -1188,7 +1266,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
     if (%rescued_signals) {
         for my $rescued_signal (sort keys %rescued_signals) {
             my $signal_info = $rescued_signals{$rescued_signal};
-            my $expression = $signal_info->{ast} ? $ctx->{enable_graph}->ast_to_systemverilog($signal_info->{ast}) : $signal_info->{expression};
+            my $expression = $self->render_intermediate_signal_expression($rescued_signal, $signal_info);
             fsm_debug("    RESCUED: $rescued_signal = $expression", 3);
         }
     }
@@ -1201,7 +1279,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
     if (%finally_filtered) {
         for my $filtered_signal (sort keys %finally_filtered) {
             my $signal_info = $finally_filtered{$filtered_signal};
-            my $expression = $signal_info->{ast} ? $ctx->{enable_graph}->ast_to_systemverilog($signal_info->{ast}) : $signal_info->{expression};
+            my $expression = $self->render_intermediate_signal_expression($filtered_signal, $signal_info);
             fsm_debug("    FILTERED OUT: $filtered_signal = $expression", 3);
         }
     }
@@ -1238,20 +1316,10 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
             my $signal_info = $filtered_signals{$signal_name};
             my $source = $signal_info->{source};
             
-            # Generate assign statement using substituted AST if available
-            my $expression;
-            if ($signal_info->{ast}) {
-                # CRITICAL FIX: Use substituted AST from factorizer, not original AST
-                my $substituted_ast = $self->get_substituted_ast_for_signal($signal_name, $signal_info);
-                if ($substituted_ast) {
-                    $expression = $ctx->{enable_graph}->ast_to_systemverilog($substituted_ast);
-                    fsm_debug("CONSOL_INTER_SIG: Using substituted AST for $signal_name: $expression", 3);
-                } else {
-                    $expression = $ctx->{enable_graph}->ast_to_systemverilog($signal_info->{ast});
-                    fsm_debug("CONSOL_INTER_SIG: Using original AST for $signal_name: $expression", 3);
-                }
-            } else {
-                $expression = $signal_info->{expression};
+            my $expression = $self->render_intermediate_signal_expression($signal_name, $signal_info);
+            unless (defined($expression) && $expression ne '') {
+                fsm_debug("CONSOL_INTER_SIG: WARNING - No renderable expression for $signal_name, skipping assign emission", 3);
+                next;
             }
             
             $hdl .= "  assign $signal_name = $expression; // Source: $source\n";
