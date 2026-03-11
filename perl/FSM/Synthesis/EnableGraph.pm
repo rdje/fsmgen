@@ -351,6 +351,45 @@ sub should_factor_ast($self, $ast) {
     fsm_debug("FACTOR_AST_CHECK: Simple AST - NOT factoring", 3);
     return 0;
 }
+sub needs_parentheses($self, $expression) {
+    # Determine if an expression needs parentheses when used in a binary operation
+    # Only add parentheses for complex expressions that contain operators
+
+    return 0 unless $expression;
+
+    # Simple signal names don't need parentheses
+    if ($expression =~ /^[a-zA-Z_][a-zA-Z0-9_]*$/) {
+        return 0;
+    }
+
+    # Simple literals don't need parentheses
+    if ($expression =~ /^\d+'[bhd]\w+$/ || $expression =~ /^\d+$/ || $expression =~ /^1'b[01]$/) {
+        return 0;
+    }
+
+    # Intermediate signal names don't need parentheses
+    if ($expression =~ /^[a-zA-Z_][a-zA-Z0-9_]*_expr\d*$/) {
+        return 0;
+    }
+
+    # Generated intermediate signal names (including those from expression namer) don't need parentheses
+    if ($expression =~ /^[a-zA-Z_][a-zA-Z0-9_]*(_active|_expr|_and_|_or_|_not_)/) {
+        return 0;
+    }
+
+    # Already parenthesized expressions don't need additional parentheses
+    if ($expression =~ /^\(.+\)$/) {
+        return 0;
+    }
+
+    # Expressions with operators need parentheses
+    if ($expression =~ /\s+(&&|\|\||[&|+*\/-]|==|!=|[<>]=?)\s+/) {
+        return 1;
+    }
+
+    # Everything else doesn't need parentheses
+    return 0;
+}
 sub analyze_ast_complexity($self, $ast) {
     # Analyze AST complexity for factorization decisions
     # Returns: { has_logical_ops => bool, depth => int, node_count => int }

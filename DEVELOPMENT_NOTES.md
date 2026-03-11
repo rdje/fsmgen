@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-11: FlattenedDT backend convergence (EnableGraph string parenthesis helper ownership)
+- Continued backend convergence by moving the legacy string-expression parenthesis helper from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - after the AST factorization-analysis move, the remaining nearby helper pocket was no longer uniformly coherent,
+  - `needs_parentheses()` stood out as the smallest still-live formatting helper because it is directly used in `generate_dt_specific_wens()` when building DT-specific enable expressions,
+  - moving only this helper preserved the micro-slice discipline and avoided widening into the older string-formatting cluster before confirming that cluster still reflects a meaningful compatibility boundary.
+- Safety/compatibility:
+  - no HDL emission, factorization, or public entrypoint behavior changed; the helper logic stays the same,
+  - `FlattenedDT` remains the compatibility shell and now forwards `needs_parentheses()` to `EnableGraph`,
+  - this slice keeps the broader string-formatting helpers in place until a later re-scan shows a coherent reason to move them.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - re-scan the remaining nearby string-formatting helpers in `FlattenedDT.pm`,
+  - consider `clean_intermediate_expression()` or the `format_condition()` / `format_signal_expression()` pair only if they still present a small, truthful ownership seam instead of a dormant cleanup target.
 ## 2026-03-11: FlattenedDT backend convergence (EnableGraph AST factorization-analysis helper ownership)
 - Continued backend convergence by moving the AST-native factorization-analysis pair from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:

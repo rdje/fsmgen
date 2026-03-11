@@ -1236,43 +1236,7 @@ sub _traverse_ast_for_complexity ($self, $node, $result, $current_depth) {
 }
 
 sub needs_parentheses ($self, $expression) {
-    # Determine if an expression needs parentheses when used in a binary operation
-    # Only add parentheses for complex expressions that contain operators
-    
-    return 0 unless $expression;
-    
-    # Simple signal names don't need parentheses
-    if ($expression =~ /^[a-zA-Z_][a-zA-Z0-9_]*$/) {
-        return 0;
-    }
-    
-    # Simple literals don't need parentheses
-    if ($expression =~ /^\d+'[bhd]\w+$/ || $expression =~ /^\d+$/ || $expression =~ /^1'b[01]$/) {
-        return 0;
-    }
-    
-    # Intermediate signal names don't need parentheses
-    if ($expression =~ /^[a-zA-Z_][a-zA-Z0-9_]*_expr\d*$/) {
-        return 0;
-    }
-    
-    # Generated intermediate signal names (including those from expression namer) don't need parentheses
-    if ($expression =~ /^[a-zA-Z_][a-zA-Z0-9_]*(_active|_expr|_and_|_or_|_not_)/) {
-        return 0;
-    }
-    
-    # Already parenthesized expressions don't need additional parentheses
-    if ($expression =~ /^\(.+\)$/) {
-        return 0;
-    }
-    
-    # Expressions with operators need parentheses
-    if ($expression =~ /\s+(&&|\|\||[&|+*\/-]|==|!=|[<>]=?)\s+/) {
-        return 1;
-    }
-    
-    # Everything else doesn't need parentheses
-    return 0;
+    return $self->{enable_graph}->needs_parentheses($expression);
 }
 
 sub clean_intermediate_expression ($self, $expression) {
