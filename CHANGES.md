@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-11
+### EnableGraph/SystemVerilog defining-AST metadata for consolidated filtering
+- Updated `perl/FSM/Synthesis/EnableGraph.pm` so `track_ast_intermediate_signals()` now records `reference_ast` separately and attaches a native `defining_ast` for referenced intermediate signals when one is already available from AST-backed sources.
+- Added `resolve_intermediate_signal_defining_ast()` to `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and updated the consolidated filtering/runtime path to use it before reparsing expressions.
+- Updated the live backend flow so:
+  - `should_filter_consolidated_signal()` prefers a resolved defining AST on the primary path,
+  - prescan-referenced intermediate entries are merged into consolidated generation with cached defining-AST metadata,
+  - consolidated dependency-map construction resolves defining ASTs before falling back to expression-only compatibility handling.
+- Root cause / rationale:
+  - after the AST-first dependency-extraction slice, the remaining live weakness on the same path was that expression-only entries could still force reparsing even when native defining ASTs were already derivable,
+  - the next truthful cut was therefore to carry defining-AST metadata forward and centralize AST resolution on the consolidated filtering path rather than introducing another localized parse fallback.
+- Scope remains behavior-preserving AST/CoreAST-first convergence on the live consolidated intermediate filtering path; no public backend entrypoint or emitter API changed in this slice.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### EnableGraph/SystemVerilog AST-first intermediate dependency extraction
 - Added `extract_intermediate_signals_from_ast()` and `_collect_intermediate_signals_from_ast()` to `perl/FSM/Synthesis/EnableGraph.pm` so the live code can recover referenced intermediate signals by traversing AST nodes instead of scanning rendered SystemVerilog text.
 - Updated `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` so:

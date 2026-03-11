@@ -163,15 +163,14 @@ sub should_filter_consolidated_signal ($self, $expression, $signal_name, $signal
     fsm_debug("  Usage count: " . ($signal_info->{usage_count} || 'unknown'));
     
     # Try to get the AST for this signal if available
-    my $ast = undef;
-    if ($signal_info->{ast}) {
-        $ast = $signal_info->{ast};
-        fsm_debug("  Using AST from signal_info: " . ref($ast));
+    my $ast = $self->resolve_intermediate_signal_defining_ast($signal_name, $signal_info);
+    if ($ast && blessed($ast)) {
+        fsm_debug("  Using defining AST for filtering: " . ref($ast), 3);
     } else {
         # Try to parse the expression back to AST for analysis
         $ast = eval { $ctx->{expr_namer}->parse_expression($expression) };
         if ($ast) {
-            fsm_debug("  Parsed expression to AST: " . ref($ast));
+            fsm_debug("  Parsed expression to AST after AST-resolution miss: " . ref($ast), 3);
         } else {
             fsm_debug("  Could not parse expression to AST - falling back to string analysis", 3);
         }
@@ -184,6 +183,33 @@ sub should_filter_consolidated_signal ($self, $expression, $signal_name, $signal
     
     # Fallback to string-based filtering (legacy compatibility)
     return $self->should_filter_string_based($expression, $signal_name, $signal_info);
+}
+sub resolve_intermediate_signal_defining_ast ($self, $signal_name, $signal_info) {
+    my $ctx = $self->{flattened_dt};
+    return undef unless defined($signal_name) && $signal_name ne '';
+
+    if ($signal_info && $signal_info->{defining_ast} && blessed($signal_info->{defining_ast})) {
+        fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_defining_ast()] Using cached defining_ast for '$signal_name'", 3);
+        return $signal_info->{defining_ast};
+    }
+
+    if ($signal_info && $signal_info->{ast} && blessed($signal_info->{ast})) {
+        fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_defining_ast()] Using inline AST for '$signal_name'", 3);
+        return $signal_info->{ast};
+    }
+
+    my $resolved_ast = $ctx->{enable_graph}->get_intermediate_signal_ast($signal_name);
+    if ($resolved_ast && blessed($resolved_ast)) {
+        if ($signal_info && ref($signal_info) eq 'HASH') {
+            $signal_info->{defining_ast} //= $resolved_ast;
+            $signal_info->{ast} //= $resolved_ast unless exists $signal_info->{ast};
+        }
+        fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_defining_ast()] Resolved defining AST for '$signal_name' via EnableGraph", 3);
+        return $resolved_ast;
+    }
+
+    fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_defining_ast()] No defining AST available for '$signal_name'", 3);
+    return undef;
 }
 sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
     my $ctx = $self->{flattened_dt};
@@ -801,11 +827,13 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         for my $signal_name (keys %{$ctx->{referenced_intermediate_signals}}) {
             # Only add if not already in AST factorization results
             unless (exists $all_intermediate_signals{$signal_name}) {
-                my $ast = $ctx->{enable_graph}->get_intermediate_signal_ast($signal_name);
+                my $referenced_signal_info = $ctx->{referenced_intermediate_signals}->{$signal_name} || {};
+                my $ast = $self->resolve_intermediate_signal_defining_ast($signal_name, $referenced_signal_info);
                 my $expression = $ctx->{enable_graph}->get_intermediate_signal_expression($signal_name);
                 if (($ast && blessed($ast)) || $expression) {
                     $all_intermediate_signals{$signal_name} = {
                         source => 'prescan_reference',
+                        %$referenced_signal_info,
                         ($ast && blessed($ast) ? (ast => $ast) : ()),
                         expression => $expression,
                         width => 1,
@@ -961,9 +989,10 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         # Get the expression to analyze for dependencies
         my $expression;
         my @referenced_signals;
-        if ($signal_info->{ast}) {
-            $expression = $ctx->{enable_graph}->ast_to_systemverilog($signal_info->{ast});
-            @referenced_signals = $ctx->{enable_graph}->extract_intermediate_signals_from_ast($signal_info->{ast});
+        my $defining_ast = $self->resolve_intermediate_signal_defining_ast($signal_name, $signal_info);
+        if ($defining_ast && blessed($defining_ast)) {
+            $expression = $ctx->{enable_graph}->ast_to_systemverilog($defining_ast);
+            @referenced_signals = $ctx->{enable_graph}->extract_intermediate_signals_from_ast($defining_ast);
         } elsif ($signal_info->{expression}) {
             $expression = $signal_info->{expression};
             @referenced_signals = $self->extract_intermediate_signals_from_expression($expression);

@@ -2620,12 +2620,24 @@ sub track_ast_intermediate_signals($self, $ast) {
         
         # Check if this is an intermediate signal that needs to be declared
         if ($self->is_intermediate_signal($signal_name)) {
+            my $existing = $ctx->{referenced_intermediate_signals}->{$signal_name} || {};
+            my $defining_ast = $existing->{defining_ast};
+            if ((!$defining_ast || !blessed($defining_ast))) {
+                $defining_ast = $self->_get_native_intermediate_signal_ast($signal_name);
+            }
+
             $ctx->{referenced_intermediate_signals}->{$signal_name} = {
+                %$existing,
                 name => $signal_name,
-                ast => $ast,
+                reference_ast => $ast,
+                ($defining_ast && blessed($defining_ast) ? (defining_ast => $defining_ast) : ()),
                 needs_declaration => 1
             };
-            fsm_debug("TRACK_INTERMEDIATE: Found intermediate signal: $signal_name", 3);
+            if ($defining_ast && blessed($defining_ast)) {
+                fsm_debug("TRACK_INTERMEDIATE: Found intermediate signal with native defining AST: $signal_name", 3);
+            } else {
+                fsm_debug("TRACK_INTERMEDIATE: Found intermediate signal without native defining AST yet: $signal_name", 3);
+            }
         }
     }
     # Recursively traverse operands

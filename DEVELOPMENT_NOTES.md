@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-11: EnableGraph/SystemVerilog defining-AST metadata for consolidated filtering
+- Continued backend convergence by carrying native defining-AST metadata forward on the consolidated intermediate-signal filtering path.
+- Rationale:
+  - after the previous slice moved dependency extraction from rendered strings to AST traversal, the next live friction point was not dependency discovery itself but the fact that some runtime paths could still reparse expression text even when a defining AST was already recoverable,
+  - storing `defining_ast` alongside prescan-tracked intermediate references and centralizing backend AST resolution removes that unnecessary reparsing from the primary path.
+- Safety/compatibility:
+  - no public backend entrypoint or output-stage API changed; the slice only changes how the consolidated backend recovers a signal's defining AST internally,
+  - `reference_ast` is now kept distinct from `defining_ast`, which makes the metadata model clearer and avoids confusing a use-site reference with the defining expression,
+  - expression parsing remains only as a narrow fallback when no defining AST can be recovered from live AST-backed sources.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `Backend/SystemVerilog.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - continue shrinking the remaining expression-only compatibility cases on the consolidated path, especially where width/expression metadata is still synthesized without a stored defining AST,
+  - keep revisiting larger registry/naming seams only when a live runtime dependency actually points there.
 ## 2026-03-11: EnableGraph/SystemVerilog AST-first intermediate dependency extraction
 - Continued backend convergence by replacing a live string-based intermediate-dependency discovery path with AST traversal on the consolidated intermediate-signal flow.
 - Rationale:

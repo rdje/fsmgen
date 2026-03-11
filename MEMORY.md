@@ -14,6 +14,19 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-11: Backend convergence micro-slice (EnableGraph/SystemVerilog defining-AST metadata for consolidated filtering)
+- Current worktree carries native defining-AST metadata forward on the live consolidated intermediate filtering path.
+- Scope remains a small behavior-preserving AST-first slice:
+  - `track_ast_intermediate_signals()` now stores `reference_ast` separately and records a native `defining_ast` when one already exists,
+  - the backend now resolves defining ASTs through `resolve_intermediate_signal_defining_ast()` before reparsing expressions,
+  - prescan-referenced intermediate entries are merged into consolidated generation with cached defining-AST metadata.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - continue targeting the remaining expression-only compatibility cases on the consolidated path where AST-derived metadata is still absent,
+  - keep prioritizing slices that remove live reparsing pressure over nearby but less active helper or registry cleanup.
 ## 2026-03-11: Backend convergence micro-slice (EnableGraph/SystemVerilog AST-first intermediate dependency extraction)
 - Current worktree converts the live consolidated intermediate-signal dependency-discovery path from rendered-string scanning toward AST traversal.
 - Scope remains a small behavior-preserving AST-first slice:
