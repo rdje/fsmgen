@@ -211,12 +211,23 @@ sub resolve_intermediate_signal_runtime_ast ($self, $signal_name, $signal_info) 
     return undef unless defined($signal_name) && $signal_name ne '';
 
     if ($signal_info && $signal_info->{runtime_ast} && blessed($signal_info->{runtime_ast})) {
+        $signal_info->{runtime_ast_resolution_state} = 'resolved' if ref($signal_info) eq 'HASH';
         fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_runtime_ast()] Using cached runtime_ast for '$signal_name'", 3);
         return $signal_info->{runtime_ast};
     }
 
+    if ($signal_info
+        && ref($signal_info) eq 'HASH'
+        && ($signal_info->{runtime_ast_resolution_state} || '') eq 'missing')
+    {
+        my $miss_reason = $signal_info->{runtime_ast_miss_reason} || 'unknown_miss_reason';
+        fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_runtime_ast()] Reusing cached runtime-AST miss for '$signal_name' ($miss_reason)", 3);
+        return undef;
+    }
+
     my $runtime_ast;
     my $runtime_ast_source;
+    my $runtime_ast_miss_reason = 'no_ast_source';
 
     if ($ctx->{ast_factorizer}
         && $ctx->{ast_factorizer}->{intermediate_signals}
@@ -243,6 +254,7 @@ sub resolve_intermediate_signal_runtime_ast ($self, $signal_name, $signal_info) 
         && $signal_info->{expression} ne ''
         && $ctx->{expr_namer})
     {
+        $runtime_ast_miss_reason = 'expression_parse_failed';
         my $parsed_ast = eval { $ctx->{expr_namer}->parse_expression($signal_info->{expression}) };
         if ($parsed_ast && blessed($parsed_ast)) {
             $runtime_ast = $parsed_ast;
@@ -254,6 +266,7 @@ sub resolve_intermediate_signal_runtime_ast ($self, $signal_name, $signal_info) 
             my $error = $@;
             chomp $error if defined $error;
             fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_runtime_ast()] Failed compatibility parse for '$signal_name': " . ($error || 'unknown parse failure'), 3);
+            $runtime_ast_miss_reason = 'expression_parse_failed';
         }
     }
 
@@ -261,9 +274,15 @@ sub resolve_intermediate_signal_runtime_ast ($self, $signal_name, $signal_info) 
         if ($signal_info && ref($signal_info) eq 'HASH') {
             $signal_info->{runtime_ast} = $runtime_ast;
             $signal_info->{runtime_ast_source} = $runtime_ast_source;
+            $signal_info->{runtime_ast_resolution_state} = 'resolved';
+            delete $signal_info->{runtime_ast_miss_reason};
         }
         fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_runtime_ast()] Resolved runtime AST for '$signal_name' via $runtime_ast_source", 3);
         return $runtime_ast;
+    }
+    if ($signal_info && ref($signal_info) eq 'HASH') {
+        $signal_info->{runtime_ast_resolution_state} = 'missing';
+        $signal_info->{runtime_ast_miss_reason} = $runtime_ast_miss_reason;
     }
 
     fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_runtime_ast()] No runtime AST available for '$signal_name'", 3);

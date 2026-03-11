@@ -2079,3 +2079,10 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - render-metadata normalization pairs naturally with runtime-AST and dependency normalization because it gives the live consolidated path one stable per-signal view for “what gets emitted” instead of recomputing that answer at each callsite,
   - the remaining compatibility-only seams are now the misses themselves, not the regular live-path consumers.
+- Latest AST/CoreAST-first convergence increment:
+  - consolidated runtime-AST miss state is now normalized and cached per signal,
+  - later live-path helpers reuse that cached `resolved`/`missing` state instead of repeating the same AST recovery attempt,
+  - this makes the remaining compatibility-only path explicit metadata rather than repeated implicit fallback behavior.
+- Design note from this slice:
+  - caching miss state is a useful AST-first refinement because it turns “AST recovery failed somewhere earlier” into stable typed runtime metadata that downstream phases can reason about,
+  - the next seam is now the compatibility behavior attached to those explicit misses, not miss detection itself.

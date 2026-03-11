@@ -1324,6 +1324,16 @@ This is the persistent technical change history for FSMGen.
 ### Validation (newest slice)
 - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
 - `prove -I perl t` (pass: 6 files, 125 tests)
+### Latest AST/CoreAST convergence slice
+- Normalized and cached consolidated runtime-AST miss state in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` so AST-resolution failures are recorded once per signal instead of being re-discovered at each live-path callsite.
+- The active consolidated path now:
+  - records whether runtime-AST resolution is `resolved` or `missing`,
+  - stores a miss reason for compatibility-only fallback cases,
+  - reuses cached miss state on later dependency/filter/render passes instead of retrying the same AST recovery path repeatedly.
+
+### Validation (latest slice)
+- `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+- `prove -I perl t` (pass: 6 files, 125 tests)
 
 ### Validation (post-hardening + extraction)
 - `prove -I perl t/04-assignment-edge-cases.t t/05-assignment-hdl-snapshots.t` (pass)
