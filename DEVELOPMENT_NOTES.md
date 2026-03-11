@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-11: FlattenedDT backend convergence (EnableGraph AST factorization-analysis helper ownership)
+- Continued backend convergence by moving the AST-native factorization-analysis pair from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - after the condition-factorization helper trio moved, `EnableGraph::should_factor_condition()` still documented `should_factor_ast()` as the preferred AST path even though `should_factor_ast()` and `is_complex_ast()` remained in the facade,
+  - that made the AST-native factorization lane the next smallest coherent ownership pocket in the same area,
+  - moving the pair keeps both condition-string and AST-native factorization decisions under the same synthesis-helper owner without widening into broader dormant formatting cleanup.
+- Safety/compatibility:
+  - no HDL emission, factorization, or public entrypoint behavior changed; the helper logic stays the same,
+  - `FlattenedDT` remains the compatibility shell and now forwards this AST factorization-analysis pair to `EnableGraph`,
+  - the move also makes the existing `EnableGraph` comment about preferring `should_factor_ast()` true at the ownership boundary instead of only at the compatibility boundary.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - re-scan the remaining nearby legacy expression-formatting helpers in `FlattenedDT.pm`, with `needs_parentheses()` now the most plausible next small seam,
+  - only pull in adjacent formatting helpers such as `clean_intermediate_expression()` if they form an equally coherent ownership block.
 ## 2026-03-11: FlattenedDT backend convergence (EnableGraph legacy condition-factorization helper ownership)
 - Continued backend convergence by moving the legacy condition-factorization helper trio from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:

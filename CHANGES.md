@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-11
+### FlattenedDT backend convergence (EnableGraph AST factorization-analysis helper ownership)
+- Moved `is_complex_ast()` and `should_factor_ast()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to the new `enable_graph` helper implementations.
+- Root cause / rationale:
+  - `EnableGraph::should_factor_condition()` already pointed at `should_factor_ast()` as the preferred AST-native path, but the actual AST factorization-analysis pair still lived in the `FlattenedDT` facade,
+  - moving the pair into `EnableGraph` keeps the AST-native factorization decision logic with the adjacent condition-factorization helpers already localized there.
+- Scope remains behavior-preserving helper convergence only; no public backend entrypoint or live HDL emission call path changed in this slice.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (EnableGraph legacy condition-factorization helper ownership)
 - Moved `should_factor_condition()`, `analyze_ast_complexity()`, and `_traverse_ast_for_complexity()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to the new `enable_graph` helper implementations.

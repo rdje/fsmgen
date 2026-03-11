@@ -259,6 +259,98 @@ sub should_factor_condition($self, $condition_expr) {
     fsm_debug("FACTOR_CHECK: Expression not complex enough - NOT factoring: $condition_expr", 3);
     return 0;
 }
+sub is_complex_ast($self, $ast) {
+    # AST-based complexity analysis - preferred method
+    # Determines if an AST node represents a complex expression needing intermediate signal
+
+    return 0 unless $ast && blessed($ast);
+
+    fsm_debug("COMPLEX_AST_CHECK: Analyzing AST: " . ref($ast));
+
+    # Literals are never complex
+    if ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal')) {
+        fsm_debug("COMPLEX_AST_CHECK: Literal - NOT complex", 3);
+        return 0;
+    }
+
+    # Simple signal references are not complex
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+        fsm_debug("COMPLEX_AST_CHECK: Signal reference - NOT complex", 3);
+        return 0;
+    }
+
+    # Binary operations with simple operands might still be simple enough
+    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
+        # Check operator complexity
+        my $op = $ast->operator;
+
+        # Simple logical operations between signals are often worth inlining
+        if ($op =~ /^(&&|\|\||&|\|)$/) {
+            my $left_complex = $self->is_complex_ast($ast->left) if $ast->can('left');
+            my $right_complex = $self->is_complex_ast($ast->right) if $ast->can('right');
+
+            # If both operands are simple, the whole expression might be simple enough
+            if (!$left_complex && !$right_complex) {
+                fsm_debug("COMPLEX_AST_CHECK: Simple binary logical - NOT complex", 3);
+                return 0;
+            }
+        }
+
+        fsm_debug("COMPLEX_AST_CHECK: Complex binary operation - COMPLEX", 3);
+        return 1;
+    }
+
+    # Unary operations are generally complex enough to factor
+    if ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
+        # Simple negation of a signal reference might not need factoring
+        if ($ast->can('operator') && $ast->can('operand')) {
+            my $op = $ast->operator || 'unknown';
+            if ($op =~ /^(!|not)$/) {
+                my $operand = $ast->operand;
+                if ($operand && blessed($operand) &&
+                    ($operand->isa('FSM::AST::SignalRef') || $operand->isa('FSM::CoreAST::SignalRef'))) {
+                    fsm_debug("COMPLEX_AST_CHECK: Simple negation - NOT complex", 3);
+                    return 0;
+                }
+            }
+        }
+
+        fsm_debug("COMPLEX_AST_CHECK: Unary operation - COMPLEX", 3);
+        return 1;
+    }
+
+    # Other node types are considered complex
+    fsm_debug("COMPLEX_AST_CHECK: Unknown AST type - COMPLEX", 3);
+    return 1;
+}
+sub should_factor_ast($self, $ast) {
+    # AST-based factorization analysis - preferred method
+    # Determines if an AST should be factored into an intermediate signal
+
+    return 0 unless $ast && blessed($ast);
+
+    fsm_debug("FACTOR_AST_CHECK: Analyzing AST: " . ref($ast));
+
+    # Simple nodes should not be factored
+    if ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal')) {
+        fsm_debug("FACTOR_AST_CHECK: Literal - NOT factoring", 3);
+        return 0;
+    }
+
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+        fsm_debug("FACTOR_AST_CHECK: Signal reference - NOT factoring", 3);
+        return 0;
+    }
+
+    # Complex expressions should be factored
+    if ($self->is_complex_ast($ast)) {
+        fsm_debug("FACTOR_AST_CHECK: Complex AST - FACTORING", 3);
+        return 1;
+    }
+
+    fsm_debug("FACTOR_AST_CHECK: Simple AST - NOT factoring", 3);
+    return 0;
+}
 sub analyze_ast_complexity($self, $ast) {
     # Analyze AST complexity for factorization decisions
     # Returns: { has_logical_ops => bool, depth => int, node_count => int }

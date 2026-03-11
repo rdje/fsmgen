@@ -14,6 +14,21 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-11: Backend convergence micro-slice (EnableGraph AST factorization-analysis helper ownership)
+- Current worktree moves the AST factorization-analysis helper pair from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Scope remains a small helper-ownership reduction step:
+  - `is_complex_ast()` now lives in `EnableGraph`,
+  - `should_factor_ast()` now lives in `EnableGraph`,
+  - `FlattenedDT` keeps compatibility delegates for both helper names,
+  - no public backend entrypoint or active HDL emission call path changed in this slice.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - keep re-scanning the remaining nearby legacy expression-formatting helpers in `FlattenedDT.pm`, with `needs_parentheses()` now the most plausible next lane,
+  - consider adjacent formatting cleanup such as `clean_intermediate_expression()` only if it forms a similarly small coherent ownership move,
+  - keep preferring small coherent ownership reductions over broad dormant cleanup.
 ## 2026-03-11: Backend convergence micro-slice (EnableGraph legacy condition-factorization helper ownership)
 - Current worktree moves the legacy condition-factorization helper trio from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Scope remains a small helper-ownership reduction step:
