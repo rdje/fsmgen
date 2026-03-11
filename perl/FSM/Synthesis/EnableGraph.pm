@@ -390,6 +390,56 @@ sub needs_parentheses($self, $expression) {
     # Everything else doesn't need parentheses
     return 0;
 }
+sub clean_intermediate_expression($self, $expression) {
+    # Clean up intermediate expressions to ensure valid SystemVerilog syntax
+
+    fsm_debug("CLEAN_EXPR: Input expression: '$expression'", 3);
+
+    # Remove outer parentheses if present
+    $expression =~ s/^\((.+)\)$/$1/;
+
+    # Fix common syntax issues
+    # 1. Fix "& &" -> "&&"
+    $expression =~ s/\s*&\s*&\s*/&&/g;
+
+    # 2. Fix "| |" -> "||"
+    $expression =~ s/\s*\|\s*\|\s*/||/g;
+
+    # 3. Remove trailing or leading & or | operators
+    $expression =~ s/\s*[&|]\s*$//;
+    $expression =~ s/^\s*[&|]\s*//;
+
+    # 4. Fix unbalanced parentheses by counting and balancing
+    my $open_count = ($expression =~ tr/\(//);
+    my $close_count = ($expression =~ tr/\)//);
+
+    if ($open_count > $close_count) {
+        # Add missing closing parentheses
+        $expression .= ')' x ($open_count - $close_count);
+    } elsif ($close_count > $open_count) {
+        # Add missing opening parentheses
+        $expression = '(' x ($close_count - $open_count) . $expression;
+    }
+
+    # 5. Fix sequences like "expr &" or "& expr"
+    $expression =~ s/\s*&\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*&/ && $1/g;
+    $expression =~ s/([a-zA-Z_][a-zA-Z0-9_]*)\s*&\s*&/$1 &&/g;
+
+    # 6. Clean up multiple consecutive spaces
+    $expression =~ s/\s+/ /g;
+    $expression =~ s/^\s+|\s+$//g;
+
+    # 7. Fix issues where operators are misplaced
+    # Replace patterns like "signal &)" with "signal)"
+    $expression =~ s/([a-zA-Z_][a-zA-Z0-9_]*)\s*[&|]\s*\)/$1)/g;
+
+    # Replace patterns like "(& signal" with "(signal"
+    $expression =~ s/\(\s*[&|]\s*([a-zA-Z_][a-zA-Z0-9_]*)/(signal/g;
+
+    fsm_debug("CLEAN_EXPR: Output expression: '$expression'", 3);
+
+    return $expression;
+}
 sub analyze_ast_complexity($self, $ast) {
     # Analyze AST complexity for factorization decisions
     # Returns: { has_logical_ops => bool, depth => int, node_count => int }

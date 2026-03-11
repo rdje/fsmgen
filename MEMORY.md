@@ -14,6 +14,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-11: Backend convergence micro-slice (EnableGraph expression sanitation helper ownership)
+- Current worktree moves the legacy string-expression sanitation helper from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Scope remains a small helper-ownership reduction step:
+  - `clean_intermediate_expression()` now lives in `EnableGraph`,
+  - `FlattenedDT` keeps a compatibility delegate for the helper,
+  - no public backend entrypoint or active HDL emission call path changed in this slice.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Immediate next direction after commit:
+  - re-scan the remaining residual helper pockets in `FlattenedDT.pm` now that the nearby string-formatting lane has been reduced again,
+  - treat `parentheses_are_redundant()` and the older condition-formatting helpers as possible next candidates only if they still form a similarly coherent ownership move,
+  - keep preferring truthful ownership reduction over broad dormant cleanup.
 ## 2026-03-11: Backend convergence micro-slice (EnableGraph string parenthesis helper ownership)
 - Current worktree moves the legacy string-expression parenthesis helper from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Scope remains a small helper-ownership reduction step:

@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-11: FlattenedDT backend convergence (EnableGraph expression sanitation helper ownership)
+- Continued backend convergence by moving the legacy string-expression sanitation helper from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - after the `needs_parentheses()` slice, a fresh re-scan showed that the remaining nearby formatting and substitution pockets still did not expose a clearly stronger live boundary,
+  - `clean_intermediate_expression()` was the next smallest self-contained helper in the same local string-sanitization lane,
+  - moving it keeps the work incremental and honest: this slice reduces facade ownership a bit further without pretending that the remaining residue is more active than it currently appears.
+- Safety/compatibility:
+  - no HDL emission, factorization, or public entrypoint behavior changed; the helper logic stays the same,
+  - `FlattenedDT` remains the compatibility shell and now forwards `clean_intermediate_expression()` to `EnableGraph`,
+  - the remaining local helper pockets should still be re-scanned before assuming the next ownership move.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - re-scan the remaining residual helper pockets in `FlattenedDT.pm`,
+  - consider `parentheses_are_redundant()` or the older condition-formatting helpers only if they still present a similarly coherent ownership seam.
 ## 2026-03-11: FlattenedDT backend convergence (EnableGraph string parenthesis helper ownership)
 - Continued backend convergence by moving the legacy string-expression parenthesis helper from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:
