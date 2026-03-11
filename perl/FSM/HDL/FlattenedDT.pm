@@ -1281,42 +1281,7 @@ sub canonicalize_expression ($self, $expression) {
 }
 
 sub should_factor_condition ($self, $condition_expr) {
-    # Legacy string-based factorization - kept for compatibility
-    # New code should use should_factor_ast() for AST-based analysis
-    
-    fsm_debug("FACTOR_CHECK: Analyzing condition expression: '$condition_expr'", 3);
-    
-    # Don't factor simple expressions
-    if ($condition_expr eq "1'b1" || $condition_expr eq "1'b0") {
-        fsm_debug("FACTOR_CHECK: Simple boolean literal - NOT factoring: $condition_expr", 3);
-        return 0;
-    }
-    
-    # Don't factor single signal references or simple negations
-    if ($condition_expr =~ /^[a-zA-Z_][a-zA-Z0-9_]*$/ || 
-        $condition_expr =~ /^not_[a-zA-Z_][a-zA-Z0-9_]*_expr\d+$/) {
-        fsm_debug("FACTOR_CHECK: Simple signal or negation - NOT factoring: $condition_expr", 3);
-        return 0;
-    }
-    
-    # Parse the expression into an AST to analyze complexity
-    my $ast = eval { $self->{expr_namer}->parse_expression($condition_expr) };
-    if (!$ast) {
-        # If parsing fails, fall back to string-based heuristic
-        fsm_debug("FACTOR_CHECK: Could not parse expression, using string heuristic", 3);
-        return ($condition_expr =~ /\s+(&&|\|\||&|\|)\s+/);
-    }
-    
-    # Factor if the AST represents a compound logical expression
-    my $complexity = $self->analyze_ast_complexity($ast);
-    if ($complexity->{has_logical_ops} && $complexity->{depth} > 1) {
-        fsm_debug("FACTOR_CHECK: *** COMPLEX LOGICAL EXPRESSION *** - factoring: $condition_expr", 3);
-        return 1;
-    }
-    
-    # Don't factor by default
-    fsm_debug("FACTOR_CHECK: Expression not complex enough - NOT factoring: $condition_expr", 3);
-    return 0;
+    return $self->{enable_graph}->should_factor_condition($condition_expr);
 }
 
 sub should_factor_ast ($self, $ast) {
@@ -1349,64 +1314,11 @@ sub should_factor_ast ($self, $ast) {
 }
 
 sub analyze_ast_complexity ($self, $ast) {
-    # Analyze AST complexity for factorization decisions
-    # Returns: { has_logical_ops => bool, depth => int, node_count => int }
-    
-    my $result = {
-        has_logical_ops => 0,
-        depth => 0,
-        node_count => 0
-    };
-    
-    return $result unless $ast && ref($ast);
-    
-    $self->_traverse_ast_for_complexity($ast, $result, 1);
-    
-    return $result;
+    return $self->{enable_graph}->analyze_ast_complexity($ast);
 }
 
 sub _traverse_ast_for_complexity ($self, $node, $result, $current_depth) {
-    # Recursive traversal of AST to analyze complexity
-    
-    return unless $node && ref($node);
-    
-    $result->{node_count}++;
-    $result->{depth} = $current_depth if $current_depth > $result->{depth};
-    
-    # Check if this is a logical operator node
-    if (ref($node) eq 'HASH') {
-        my $type = $node->{type} || '';
-        my $op = $node->{operator} || $node->{op} || '';
-        
-        if ($type eq 'binary_op' && $op =~ /^(&&|\|\||&|\|)$/) {
-            $result->{has_logical_ops} = 1;
-        }
-        
-        # Traverse children
-        for my $key (qw(left right operand children)) {
-            if ($node->{$key}) {
-                if (ref($node->{$key}) eq 'ARRAY') {
-                    for my $child (@{$node->{$key}}) {
-                        $self->_traverse_ast_for_complexity($child, $result, $current_depth + 1);
-                    }
-                } else {
-                    $self->_traverse_ast_for_complexity($node->{$key}, $result, $current_depth + 1);
-                }
-            }
-        }
-    } elsif ($node->can('operator') && $node->can('left') && $node->can('right')) {
-        # Handle object-based AST nodes
-        my $op = eval { $node->operator } || '';
-        if ($op =~ /^(&&|\|\||&|\|)$/) {
-            $result->{has_logical_ops} = 1;
-        }
-        
-        $self->_traverse_ast_for_complexity($node->left, $result, $current_depth + 1) if $node->can('left');
-        $self->_traverse_ast_for_complexity($node->right, $result, $current_depth + 1) if $node->can('right');
-    } elsif ($node->can('operand')) {
-# Ensure intermediate signals are generated
-        $self->_traverse_ast_for_complexity($node->operand, $result, $current_depth + 1);
-    }
+    return $self->{enable_graph}->_traverse_ast_for_complexity($node, $result, $current_depth);
 }
 
 sub needs_parentheses ($self, $expression) {

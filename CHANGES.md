@@ -1,5 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-11
+### FlattenedDT backend convergence (EnableGraph legacy condition-factorization helper ownership)
+- Moved `should_factor_condition()`, `analyze_ast_complexity()`, and `_traverse_ast_for_complexity()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to the new `enable_graph` helper implementations.
+- Root cause / rationale:
+  - these legacy condition-factorization helpers remained in the `FlattenedDT` facade immediately next to the registry/naming helpers already moved,
+  - they analyze the same enable-expression space and fit `EnableGraph` more naturally than the compatibility shell.
+- Scope remains behavior-preserving helper convergence only; no public backend entrypoint or live HDL emission call path changed in this slice.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ## 2026-03-10
 ### FlattenedDT backend convergence (EnableGraph global-expression registry helper ownership)
 - Moved `get_or_create_global_expression()` and `canonicalize_expression()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.

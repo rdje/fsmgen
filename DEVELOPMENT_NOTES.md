@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-11: FlattenedDT backend convergence (EnableGraph legacy condition-factorization helper ownership)
+- Continued backend convergence by moving the legacy condition-factorization helper trio from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - after the global-expression registry helper move, the next smallest coherent pocket in the same local lane was the condition-factorization trio: `should_factor_condition()`, `analyze_ast_complexity()`, and `_traverse_ast_for_complexity()`,
+  - these helpers are about deciding when enable-condition expressions should be factored, so they fit the `EnableGraph` synthesis-helper role better than the `FlattenedDT` compatibility shell,
+  - taking this slice continues the local ownership reduction without broadening into larger dormant helper families.
+- Safety/compatibility:
+  - no HDL emission, factorization, or public entrypoint behavior changed; the helper logic stays the same,
+  - `FlattenedDT` remains the compatibility shell and now forwards this helper trio to `EnableGraph`,
+  - this slice keeps the same registry/context access pattern through `flattened_dt`, so behavior remains unchanged.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - re-scan the remaining nearby legacy expression/factorization helpers in `FlattenedDT.pm`, especially `needs_parentheses()` and adjacent formatting helpers,
+  - keep avoiding broad dormant cleanup unless it clearly reduces a real compatibility boundary.
 ## 2026-03-10: FlattenedDT backend convergence (EnableGraph global-expression registry helper ownership)
 - Continued backend convergence by moving the adjacent global-expression registry helper pair from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:
