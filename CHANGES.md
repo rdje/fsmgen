@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-11
+### FlattenedDT backend convergence (EnableGraph redundant-parentheses helper ownership)
+- Moved `parentheses_are_redundant()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to the new `enable_graph` helper implementation.
+- Root cause / rationale:
+  - after the prior `clean_intermediate_expression()` slice, no stronger still-live seam emerged in the same local parenthesis/sanitation pocket,
+  - `parentheses_are_redundant()` was the smallest remaining helper in that in-flight lane, so moving it finished the slice cleanly without widening scope,
+  - the user has now explicitly directed future convergence toward AST/CoreAST-native algorithms, so this closes the current string-helper cleanup lane rather than setting the default pattern for subsequent work.
+- Scope remains behavior-preserving helper convergence only; no public backend entrypoint or live HDL emission call path changed in this slice.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=6`, `Tests=125`)
 ### FlattenedDT backend convergence (EnableGraph expression sanitation helper ownership)
 - Moved `clean_intermediate_expression()` ownership from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Updated `perl/FSM/HDL/FlattenedDT.pm` to keep compatibility behavior via delegation to the new `enable_graph` helper implementation.

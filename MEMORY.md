@@ -14,6 +14,22 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-11: Backend convergence micro-slice (EnableGraph redundant-parentheses helper ownership)
+- Current worktree finishes the in-flight legacy string-expression parenthesis cleanup by moving `parentheses_are_redundant()` from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Scope remains a small helper-ownership reduction step:
+  - `parentheses_are_redundant()` now lives in `EnableGraph`,
+  - `FlattenedDT` keeps a compatibility delegate for the helper,
+  - no public backend entrypoint or active HDL emission call path changed in this slice.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` (`Files=6`, `Tests=125`, `PASS`)
+- Important architectural direction from the user:
+  - this slice completes an already-started string-compatibility helper lane, but future convergence work should preferentially eliminate string-based algorithmic handling instead of continuing string-helper relocation by default,
+  - target state is full AST/CoreAST-first algorithms with an AST/CoreAST representation that is complete, flexible, general, extensible, elegant, and robust.
+- Immediate next direction after commit:
+  - update the roadmap plan so AST/CoreAST-first convergence is explicit,
+  - re-scan `FlattenedDT.pm` for the next truthful AST/CoreAST-native slice, especially remaining string-based algorithmic helpers such as `extract_condition_string()` and adjacent formatting/condition paths only when they can be replaced by AST/CoreAST-native behavior rather than merely moved.
 ## 2026-03-11: Backend convergence micro-slice (EnableGraph expression sanitation helper ownership)
 - Current worktree moves the legacy string-expression sanitation helper from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Scope remains a small helper-ownership reduction step:

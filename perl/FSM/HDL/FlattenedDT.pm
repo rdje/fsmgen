@@ -1488,19 +1488,7 @@ sub _operand_needs_parens_for_negation ($self, $operand) {
 }
 
 sub parentheses_are_redundant ($self, $inner_expr) {
-    # Check if outer parentheses are redundant for the given expression
-    # Only remove if the inner expression doesn't have precedence issues
-    
-    # Simple expressions don't need parentheses
-    return 1 if $inner_expr =~ /^[a-zA-Z_][a-zA-Z0-9_]*$/; # signal names
-    return 1 if $inner_expr =~ /^\d+'[bhd]\w*$/; # literals
-    return 1 if $inner_expr =~ /^1'b[01]$/; # boolean literals
-    
-    # Expressions that are already intermediate signals don't need extra parentheses
-    return 1 if $self->is_intermediate_signal($inner_expr);
-    
-    # For complex expressions, keep the parentheses to be safe
-    return 0;
+    return $self->{enable_graph}->parentheses_are_redundant($inner_expr);
 }
 
 sub schedule_intermediate_signal_for_declaration ($self, $signal_name, $expression) {

@@ -440,6 +440,21 @@ sub clean_intermediate_expression($self, $expression) {
 
     return $expression;
 }
+sub parentheses_are_redundant($self, $inner_expr) {
+    # Check if outer parentheses are redundant for the given expression
+    # Only remove if the inner expression doesn't have precedence issues
+
+    # Simple expressions don't need parentheses
+    return 1 if $inner_expr =~ /^[a-zA-Z_][a-zA-Z0-9_]*$/; # signal names
+    return 1 if $inner_expr =~ /^\d+'[bhd]\w*$/; # literals
+    return 1 if $inner_expr =~ /^1'b[01]$/; # boolean literals
+
+    # Expressions that are already intermediate signals don't need extra parentheses
+    return 1 if $self->is_intermediate_signal($inner_expr);
+
+    # For complex expressions, keep the parentheses to be safe
+    return 0;
+}
 sub analyze_ast_complexity($self, $ast) {
     # Analyze AST complexity for factorization decisions
     # Returns: { has_logical_ops => bool, depth => int, node_count => int }

@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-11: FlattenedDT backend convergence (EnableGraph redundant-parentheses helper ownership)
+- Continued backend convergence by finishing the in-flight parenthesis/sanitation helper lane and moving `parentheses_are_redundant()` from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
+- Rationale:
+  - after the `clean_intermediate_expression()` move, the remaining nearby helper pocket still did not expose a stronger live boundary than the already-open string-compatibility lane,
+  - `parentheses_are_redundant()` was the smallest remaining helper in that lane, so moving it was the cleanest way to finish the in-flight slice,
+  - this helper is still legacy string-oriented logic, and the user has now made clear that future work should pivot away from string-based algorithms and toward AST/CoreAST-native behavior.
+- Safety/compatibility:
+  - no HDL emission, factorization, or public entrypoint behavior changed; the helper logic stays the same,
+  - `FlattenedDT` remains the compatibility shell and now forwards `parentheses_are_redundant()` to `EnableGraph`,
+  - this slice should be treated as closure of an existing lane, not as justification for continuing string-helper relocation by default.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=6`, `Tests=125`).
+- Next likely slices:
+  - update the convergence roadmap so AST/CoreAST-first work selection is explicit,
+  - re-scan remaining `FlattenedDT.pm` helpers for the next truthful slice that replaces string-based algorithmic handling with AST/CoreAST-native behavior, especially around `extract_condition_string()` and adjacent condition-formatting paths.
 ## 2026-03-11: FlattenedDT backend convergence (EnableGraph expression sanitation helper ownership)
 - Continued backend convergence by moving the legacy string-expression sanitation helper from `perl/FSM/HDL/FlattenedDT.pm` into `perl/FSM/Synthesis/EnableGraph.pm`.
 - Rationale:
