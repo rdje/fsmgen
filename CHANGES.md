@@ -1358,6 +1358,19 @@ This is the persistent technical change history for FSMGen.
 ### Validation (latest slice)
 - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
 - `prove -I perl t` (pass: 6 files, 125 tests)
+### Newest AST/CoreAST convergence slice
+- Narrowed the remaining explicit runtime-AST-miss filtering residue in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- The live consolidated path now:
+  - normalizes per-signal AST-derived live-usage metadata (`referenced_in_substitutions`, `used_in_final_expressions`) before filtering,
+  - makes both AST-backed filtering and runtime-AST-miss filtering consume that cached usage metadata instead of re-running the same live-usage scans at each branch,
+  - routes explicit runtime-AST misses through a dedicated `should_filter_runtime_ast_miss(...)` helper.
+- Reduced the legacy-shaped fallback surface:
+  - `should_filter_consolidated_signal(...)` no longer uses `should_filter_string_based(...)` as the live explicit-miss decision point,
+  - `should_filter_string_based(...)` is now only a compatibility wrapper that delegates to the runtime-AST-miss helper.
+
+### Validation (newest slice)
+- `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+- `prove -I perl t` (pass: 6 files, 125 tests)
 
 ### Validation (post-hardening + extraction)
 - `prove -I perl t/04-assignment-edge-cases.t t/05-assignment-hdl-snapshots.t` (pass)

@@ -1228,3 +1228,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - narrow the remaining explicit-miss filtering residue, especially the legacy-named `should_filter_string_based(...)` path,
   - after that, reduce or retire the final identifier-scan compatibility fallback if no additional AST-backed recovery source remains.
+## AST/CoreAST convergence update (March 12, 2026, live-usage filtering slice)
+- Latest completed slice in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
+  - the live consolidated path now caches AST-derived live-usage metadata per intermediate signal,
+  - AST-backed filtering and explicit runtime-AST-miss filtering both consume that normalized metadata,
+  - explicit misses now flow through `should_filter_runtime_ast_miss(...)` while `should_filter_string_based(...)` remains only as a compatibility wrapper.
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` => `Files=6`, `Tests=125`, `PASS`
+- Recent AST/CoreAST convergence commits immediately before the next commit:
+  - `8342857` `SystemVerilog: recover runtime ASTs in dependency fallback`
+  - `85aa70d` `SystemVerilog: recover runtime ASTs after late expressions`
+  - `e4af447` `SystemVerilog: cache runtime AST miss state`
+- Highest-value next seam after this slice:
+  - retire or bypass the remaining legacy-named filtering wrapper entirely once no live path needs it,
+  - then tighten the last identifier-scan compatibility fallback in dependency extraction if another AST-backed recovery source can replace it.

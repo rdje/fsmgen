@@ -2100,3 +2100,10 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this is a stronger AST-first refinement than a pure helper rename because it shrinks the hard-miss population again: some former dependency-fallback cases become runtime-AST-backed signals before filtering runs,
   - the remaining compatibility-only residue on this lane is now more clearly isolated to the final identifier scan and the legacy-named filtering fallback (`should_filter_string_based(...)`).
+- Latest AST/CoreAST-first convergence increment:
+  - the live consolidated path now normalizes AST-derived live-usage metadata per intermediate signal before filtering,
+  - both `should_filter_ast_based(...)` and the explicit runtime-AST-miss path now consume that cached usage metadata instead of each independently re-running the same usage checks,
+  - `should_filter_consolidated_signal(...)` now routes explicit misses to `should_filter_runtime_ast_miss(...)`, leaving the old `should_filter_string_based(...)` name as compatibility-only surface area.
+- Design note from this slice:
+  - this is a good narrowing slice because it preserves current filtering behavior while making the live algorithm consume typed per-signal metadata rather than a legacy helper shape,
+  - the next real compatibility residue on this lane is no longer the filter decision itself but the remaining wrapper name plus the final identifier-scan fallback in dependency extraction.

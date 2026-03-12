@@ -168,7 +168,10 @@ sub should_filter_consolidated_signal ($self, $expression, $signal_name, $signal
     if ($ast && blessed($ast)) {
         fsm_debug("  Using runtime AST for filtering: " . ref($ast), 3);
     } else {
-        fsm_debug("  No runtime AST available - falling back to compatibility-only usage filtering", 3);
+        my $miss_reason = ($signal_info && ref($signal_info) eq 'HASH')
+            ? ($signal_info->{runtime_ast_miss_reason} || 'unknown_runtime_ast_miss')
+            : 'unknown_runtime_ast_miss';
+        fsm_debug("  No runtime AST available - falling back to explicit runtime-AST-miss filtering ($miss_reason)", 3);
     }
     
     # AST-based filtering when AST is available
@@ -176,8 +179,8 @@ sub should_filter_consolidated_signal ($self, $expression, $signal_name, $signal
         return $self->should_filter_ast_based($ast, $signal_name, $signal_info);
     }
     
-    # Fallback to string-based filtering (legacy compatibility)
-    return $self->should_filter_string_based($expression, $signal_name, $signal_info);
+    # Fallback to explicit runtime-AST-miss filtering (legacy-named helper delegates here).
+    return $self->should_filter_runtime_ast_miss($signal_name, $signal_info);
 }
 sub resolve_intermediate_signal_defining_ast ($self, $signal_name, $signal_info) {
     my $ctx = $self->{flattened_dt};
@@ -566,6 +569,49 @@ sub infer_width_from_intermediate_ast ($self, $ast, $signal_registry = undef, $s
 
     return undef;
 }
+sub resolve_intermediate_signal_live_usage ($self, $signal_name, $signal_info) {
+    return {
+        referenced_in_substitutions => 0,
+        used_in_final_expressions => 0,
+        evidence_state => 'none',
+        source => 'ast_live_usage_metadata',
+    } unless defined($signal_name) && $signal_name ne '';
+
+    if ($signal_info
+        && ref($signal_info) eq 'HASH'
+        && exists $signal_info->{referenced_in_substitutions}
+        && exists $signal_info->{used_in_final_expressions})
+    {
+        my $evidence_state = $signal_info->{live_usage_evidence_state} || 'none';
+        return {
+            referenced_in_substitutions => $signal_info->{referenced_in_substitutions} ? 1 : 0,
+            used_in_final_expressions => $signal_info->{used_in_final_expressions} ? 1 : 0,
+            evidence_state => $evidence_state,
+            source => $signal_info->{live_usage_source} || 'ast_live_usage_metadata',
+        };
+    }
+
+    my $referenced_in_substitutions = $self->is_signal_referenced_in_substitutions($signal_name) ? 1 : 0;
+    my $used_in_final_expressions = $self->is_signal_actually_used_in_final_expressions($signal_name) ? 1 : 0;
+    my $evidence_state = $referenced_in_substitutions
+        ? ($used_in_final_expressions ? 'substitutions_and_final_expressions' : 'substitutions')
+        : ($used_in_final_expressions ? 'final_expressions' : 'none');
+
+    if ($signal_info && ref($signal_info) eq 'HASH') {
+        $signal_info->{referenced_in_substitutions} = $referenced_in_substitutions;
+        $signal_info->{used_in_final_expressions} = $used_in_final_expressions;
+        $signal_info->{live_usage_evidence_state} = $evidence_state;
+        $signal_info->{live_usage_source} = 'ast_live_usage_metadata';
+    }
+
+    fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_live_usage()] '$signal_name' live usage => substitutions=$referenced_in_substitutions final_expressions=$used_in_final_expressions ($evidence_state)", 3);
+    return {
+        referenced_in_substitutions => $referenced_in_substitutions,
+        used_in_final_expressions => $used_in_final_expressions,
+        evidence_state => $evidence_state,
+        source => 'ast_live_usage_metadata',
+    };
+}
 sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
     my $ctx = $self->{flattened_dt};
     # Pure AST-based filtering using semantic analysis
@@ -573,11 +619,12 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
     fsm_debug("  AST_FILTER: Using AST-based filtering for " . ref($ast));
     
     my $usage_count = $signal_info->{usage_count} || 0;
-    my $actually_used = $self->is_signal_actually_used_in_final_expressions($signal_name);
+    my $live_usage = $self->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
+    my $actually_used = $live_usage->{used_in_final_expressions} ? 1 : 0;
     
     # REFERENCE-AWARE FILTERING: Check if signal is referenced in substituted expressions
     # This is the fix for the bug where intermediate signals are referenced but not declared
-    my $referenced_in_substitutions = $self->is_signal_referenced_in_substitutions($signal_name);
+    my $referenced_in_substitutions = $live_usage->{referenced_in_substitutions} ? 1 : 0;
 
     if ($referenced_in_substitutions) {
         fsm_debug("  AST_FILTER: Signal '$signal_name' is referenced in AST substitutions - KEEPING", 3);
@@ -669,31 +716,40 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
         return 1;
     }
 }
-sub should_filter_string_based ($self, $expression, $signal_name, $signal_info) {
-    my $ctx = $self->{flattened_dt};
-    # NO STRING-BASED FILTERING ALLOWED!
-    # This method is now purely AST-based and will NOT use any string patterns or heuristics.
-    
-    fsm_debug("  NO_STRING_FILTER: Refusing to use string-based filtering - using AST-only approach", 3);
-    fsm_debug("  This signals a design issue - all filtering should be AST-based by now!", 3);
-    
-    # Check if signal is referenced in substitutions (AST-based check)
-    my $referenced_in_substitutions = $self->is_signal_referenced_in_substitutions($signal_name);
+sub should_filter_runtime_ast_miss ($self, $signal_name, $signal_info) {
+    my $miss_reason = ($signal_info && ref($signal_info) eq 'HASH')
+        ? ($signal_info->{runtime_ast_miss_reason} || 'unknown_runtime_ast_miss')
+        : 'unknown_runtime_ast_miss';
+    my $live_usage = $self->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
+    my $referenced_in_substitutions = $live_usage->{referenced_in_substitutions} ? 1 : 0;
+    my $used_in_final_expressions = $live_usage->{used_in_final_expressions} ? 1 : 0;
+    my $evidence_state = $live_usage->{evidence_state} || 'none';
+
+    if ($signal_info && ref($signal_info) eq 'HASH') {
+        $signal_info->{filter_fallback_source} = 'runtime_ast_miss_live_usage';
+        $signal_info->{filter_fallback_reason} = $miss_reason;
+    }
+
+    fsm_debug("  RUNTIME_AST_MISS_FILTER: Evaluating '$signal_name' via live usage metadata ($evidence_state, miss_reason=$miss_reason)", 3);
+
     if ($referenced_in_substitutions) {
-        fsm_debug("  NO_STRING_FILTER: Signal '$signal_name' is referenced in AST substitutions - KEEPING", 3);
+        fsm_debug("  RUNTIME_AST_MISS_FILTER: Signal '$signal_name' is referenced in AST substitutions - KEEPING", 3);
         return 0;
     }
-    
-    # Check if signal is actually used in final expressions (AST-based check)
-    my $actually_used = $self->is_signal_actually_used_in_final_expressions($signal_name);
-    if ($actually_used) {
-        fsm_debug("  NO_STRING_FILTER: Signal '$signal_name' is used in final AST expressions - KEEPING", 3);
+
+    if ($used_in_final_expressions) {
+        fsm_debug("  RUNTIME_AST_MISS_FILTER: Signal '$signal_name' is used in final AST expressions - KEEPING", 3);
         return 0;
     }
-    
-    # If no AST-based evidence of usage, filter it out
-    fsm_debug("  NO_STRING_FILTER: No AST-based evidence of usage for '$signal_name' - FILTERING", 3);
+
+    fsm_debug("  RUNTIME_AST_MISS_FILTER: No AST-backed live-usage evidence for '$signal_name' - FILTERING", 3);
     return 1;
+}
+sub should_filter_string_based ($self, $expression, $signal_name, $signal_info) {
+    # Legacy compatibility entrypoint only. The live consolidated path should use
+    # should_filter_runtime_ast_miss(...) directly once runtime-AST resolution misses.
+    fsm_debug("  NO_STRING_FILTER: Delegating legacy-named helper to runtime-AST-miss filtering", 3);
+    return $self->should_filter_runtime_ast_miss($signal_name, $signal_info);
 }
 sub is_signal_referenced_in_substitutions ($self, $signal_name) {
     my $ctx = $self->{flattened_dt};
@@ -1370,6 +1426,14 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         } else {
             fsm_debug("CONSOL_INTER_SIG: [RENDER] '$signal_name' has no cached renderable expression", 3);
         }
+    }
+
+    # Step 2.10: Normalize live usage metadata so filtering consumes cached AST-derived usage facts.
+    for my $signal_name (keys %all_intermediate_signals) {
+        my $signal_info = $all_intermediate_signals{$signal_name};
+        my $live_usage = $self->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
+        my $usage_summary = $live_usage->{evidence_state} || 'none';
+        fsm_debug("CONSOL_INTER_SIG: [LIVE_USAGE] '$signal_name' => $usage_summary via " . ($live_usage->{source} || 'ast_live_usage_metadata'), 3);
     }
     
     # Step 3: Apply dependency-aware filtering to prevent referenced signals from being filtered out
