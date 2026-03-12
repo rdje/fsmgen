@@ -1410,6 +1410,21 @@ This is the persistent technical change history for FSMGen.
 ### Validation (latest slice)
 - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
 - `prove -I perl t` (pass: 6 files, 125 tests)
+### Newest AST/CoreAST convergence slice
+- Narrowed the last explicit runtime-AST-miss dependency fallback by inserting an AST-first signal-name recovery step before the final identifier scan.
+- `perl/FSM/Synthesis/EnableGraph.pm` now:
+  - recognizes AST-generated intermediate signal names backed by factorizer/global-expression metadata,
+  - builds a small dependency-recovery AST that preserves direct intermediate-signal operands instead of flattening them transitively,
+  - returns that AST only when it recovers at least one direct intermediate dependency.
+- `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` now uses that recovered AST before dropping to `scan_intermediate_signal_names_in_expression(...)`, so the remaining raw identifier scan is limited to legacy/non-AST-named hard misses.
+- Added focused regression coverage in `t/07-runtime-ast-miss-dependency-recovery.t` for:
+  - direct-dependency preservation through the new signal-name AST path,
+  - legacy-source signals staying on the final identifier-scan fallback.
+
+### Validation (newest slice)
+- `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+- `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+- `prove -I perl t` (pass: 7 files, 130 tests)
 
 ### Validation (post-hardening + extraction)
 - `prove -I perl t/04-assignment-edge-cases.t t/05-assignment-hdl-snapshots.t` (pass)

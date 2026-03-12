@@ -2127,3 +2127,9 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this is a stronger AST-first step than a dependency-only retry because it shrinks the remaining miss population for all later live-path consumers, not just dependency extraction,
   - the next residue on this lane is therefore the identifier scan itself, not the absence of earlier cleaned-expression AST recovery.
+- Latest AST/CoreAST-first convergence increment:
+  - explicit runtime-AST misses in dependency extraction now get one more structured recovery source before the raw identifier scan: `EnableGraph` can build a dependency-recovery AST directly from AST-generated intermediate signal names,
+  - that recovery is intentionally narrow and preserves direct intermediate operands as leaf refs, so a signal like `not_mid_and_aux` can recover a dependency on `mid_and_aux` without incorrectly flattening to transitive children.
+- Design note from this slice:
+  - this is a better fit than adding another string cleanup pass because it uses existing AST-naming metadata as the recovery contract and keeps the fallback logic in typed AST traversal once the name has been recognized,
+  - the remaining identifier scan is now reserved for legacy/non-AST-named signals or other hard misses where no AST source, cleaned expression, alternate expression, or AST-name metadata can recover dependencies.

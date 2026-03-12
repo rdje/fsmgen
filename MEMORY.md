@@ -1273,6 +1273,22 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - reduce or replace the remaining identifier-scan fallback itself inside `extract_intermediate_signals_from_runtime_ast_miss(...)`,
   - keep ignoring dormant standalone declaration helpers unless they become live or can be retired outright.
+## AST/CoreAST convergence update (March 12, 2026, signal-name-dependency-AST slice)
+- Latest completed slice in `perl/FSM/Synthesis/EnableGraph.pm` and `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
+  - `EnableGraph` can now recover a dependency-oriented AST from AST-generated intermediate signal names when factorizer/global-expression metadata says the name came from AST naming,
+  - that recovery keeps direct intermediate operands as leaf refs instead of expanding them transitively,
+  - explicit runtime-AST misses now use this signal-name AST path before the final regex identifier scan.
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` => `Files=7`, `Tests=130`, `PASS`
+- Recent AST/CoreAST convergence commits immediately before the next commit:
+  - `8c445bf` `SystemVerilog: recover runtime ASTs before dep scan`
+  - `d9a12dd` `SystemVerilog: recover deps from cleaned expressions`
+  - `12df12b` `SystemVerilog: retire dead string-era wrapper helpers`
+- Highest-value next seam after this slice:
+  - shrink or replace the last regex identifier scan for legacy/non-AST-named hard misses,
+  - keep ignoring dormant standalone declaration helpers unless they become live or can be retired outright.
 ## AST/CoreAST convergence update (March 12, 2026, earlier-cleaned-runtime-AST slice)
 - Latest completed slice in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
   - `resolve_intermediate_signal_runtime_ast(...)` now attempts cleaned-expression parsing after a stored-expression parse miss,

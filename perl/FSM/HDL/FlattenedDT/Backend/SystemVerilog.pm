@@ -499,6 +499,17 @@ sub extract_intermediate_signals_from_runtime_ast_miss ($self, $signal_name, $si
         }
     }
 
+    if (defined($signal_name) && $signal_name ne '') {
+        my $signal_name_ast = $ctx->{enable_graph}->build_dependency_recovery_ast_from_signal_name($signal_name);
+        if ($signal_name_ast && blessed($signal_name_ast)) {
+            my @dependencies = $ctx->{enable_graph}->extract_intermediate_signals_from_ast($signal_name_ast);
+            if ($signal_info && ref($signal_info) eq 'HASH') {
+                $signal_info->{dependency_fallback_source} = 'runtime_ast_miss_signal_name_ast';
+            }
+            return @dependencies;
+        }
+    }
+
     my @dependencies = $self->scan_intermediate_signal_names_in_expression($expression);
     if ($signal_info && ref($signal_info) eq 'HASH') {
         $signal_info->{dependency_fallback_source} = 'runtime_ast_miss_identifier_scan';
