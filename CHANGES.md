@@ -1439,6 +1439,20 @@ This is the persistent technical change history for FSMGen.
 - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm` (pass)
 - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm` (pass)
 - `prove -I perl t` (pass: 8 files, 140 tests)
+### Newest AST/CoreAST convergence slice
+- Narrowed the remaining regex identifier scan again by extending the existing signal-name AST dependency recovery path to conservative `legacy_string_registry` names.
+- `perl/FSM/Synthesis/EnableGraph.pm` now allows legacy registry entries onto the same structured signal-name AST recovery path already used for AST-generated names, instead of forcing all such names directly to regex scanning.
+- This keeps the behavior narrow:
+  - systematic legacy names like `not_mid_and_aux_legacy` can now recover dependencies through AST construction/traversal,
+  - opaque legacy names still fall through to `scan_intermediate_signal_names_in_expression(...)`.
+- Updated focused regression coverage in `t/07-runtime-ast-miss-dependency-recovery.t` for:
+  - AST-generated signal-name recovery,
+  - conservative legacy signal-name recovery,
+  - opaque legacy names staying on the final identifier-scan fallback.
+
+### Validation (newest slice)
+- `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+- `prove -I perl t` (pass: 8 files, 143 tests)
 
 ### Validation (post-hardening + extraction)
 - `prove -I perl t/04-assignment-edge-cases.t t/05-assignment-hdl-snapshots.t` (pass)

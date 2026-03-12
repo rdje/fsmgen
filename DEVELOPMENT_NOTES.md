@@ -2139,3 +2139,9 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this is a stronger AST/CoreAST-first fix than another fallback tweak because it improves the semantic model itself: backend normalization can now recover more intermediates through the native defining-AST path before any compatibility logic is considered,
   - the next residue should therefore be re-audited after this upstream correction, since some cases that previously looked like “hard misses” may now resolve natively.
+- Latest AST/CoreAST-first convergence increment:
+  - the post-canonicalization re-audit showed that some remaining hard misses were not truly opaque; they were conservative legacy registry names that still followed the same systematic operator naming shape as AST-generated intermediates,
+  - those names now flow through the existing signal-name AST recovery path instead of going directly to regex scanning.
+- Design note from this slice:
+  - this is preferable to reviving another string-expression helper because the fallback still resolves dependencies through AST construction and AST traversal once a systematic legacy name is recognized,
+  - the remaining regex scan is now narrowed further to genuinely opaque legacy names rather than all `legacy_string_registry` entries.

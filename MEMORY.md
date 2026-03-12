@@ -1306,6 +1306,21 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - re-audit the remaining regex identifier scan after this upstream native-AST fix and remove any now-dead compatibility residue,
   - keep ignoring dormant standalone declaration helpers unless they become live or can be retired outright.
+## AST/CoreAST convergence update (March 12, 2026, conservative-legacy-signal-name slice)
+- Latest completed slice in `perl/FSM/Synthesis/EnableGraph.pm` and `t/07-runtime-ast-miss-dependency-recovery.t`:
+  - conservative `legacy_string_registry` names can now use the same signal-name AST dependency recovery path as AST-generated names,
+  - systematic legacy names now recover dependencies through AST construction/traversal,
+  - only opaque legacy names still fall through to the final regex identifier scan.
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `prove -I perl t` => `Files=8`, `Tests=143`, `PASS`
+- Recent AST/CoreAST convergence commits immediately before the next commit:
+  - `621da16` `CoreAST: canonicalize driving AST storage`
+  - `3243d00` `SystemVerilog: recover deps from signal-name ASTs`
+  - `8c445bf` `SystemVerilog: recover runtime ASTs before dep scan`
+- Highest-value next seam after this slice:
+  - inspect whether any live callers still need the final regex identifier scan at all once opaque legacy names are characterized,
+  - keep ignoring dormant standalone declaration helpers unless they become live or can be retired outright.
 ## AST/CoreAST convergence update (March 12, 2026, earlier-cleaned-runtime-AST slice)
 - Latest completed slice in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
   - `resolve_intermediate_signal_runtime_ast(...)` now attempts cleaned-expression parsing after a stored-expression parse miss,

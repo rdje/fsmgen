@@ -2572,6 +2572,10 @@ sub _signal_name_supports_dependency_ast_recovery($self, $signal_name) {
             fsm_debug("[EnableGraph.pm][_signal_name_supports_dependency_ast_recovery()] '$signal_name' is AST-named via $source", 3);
             return 1;
         }
+        if ($source eq 'legacy_string_registry') {
+            fsm_debug("[EnableGraph.pm][_signal_name_supports_dependency_ast_recovery()] '$signal_name' is a legacy registry signal eligible for conservative signal-name AST recovery", 3);
+            return 1;
+        }
     }
 
     fsm_debug("[EnableGraph.pm][_signal_name_supports_dependency_ast_recovery()] '$signal_name' has no AST-name metadata for dependency recovery", 3);
