@@ -96,7 +96,7 @@ $hdl->{intermediate_signals}{opaque_legacy_expr} = {
 };
 
 my %opaque_legacy_signal_info = (
-    expression => '@@@',
+    expression => 'mid @@ aux',
     runtime_ast_miss_reason => 'expression_parse_failed',
 );
 
@@ -109,11 +109,11 @@ my @opaque_legacy_dependencies = $backend->extract_intermediate_signals_from_run
 is_deeply(
     \@opaque_legacy_dependencies,
     [],
-    'opaque legacy signal names still fall through to the final identifier scan when no signal-name AST can be built',
+    'opaque legacy signal names now stay unresolved when no AST-backed dependency recovery can be built',
 );
 is(
     $opaque_legacy_signal_info{dependency_fallback_source},
-    'runtime_ast_miss_identifier_scan',
-    'opaque legacy signal names continue to report identifier-scan fallback',
+    'runtime_ast_miss_unresolved',
+    'opaque legacy signal names now record unresolved dependency recovery instead of identifier-scan fallback',
 );
 done_testing();

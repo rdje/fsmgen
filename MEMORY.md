@@ -1243,6 +1243,24 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - retire or bypass the remaining legacy-named filtering wrapper entirely once no live path needs it,
   - then tighten the last identifier-scan compatibility fallback in dependency extraction if another AST-backed recovery source can replace it.
+## AST/CoreAST convergence update (March 12, 2026, unresolved-miss cleanup slice)
+- Latest completed slice in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and `t/07-runtime-ast-miss-dependency-recovery.t`:
+  - removed the final `scan_intermediate_signal_names_in_expression(...)` regex fallback from runtime-AST-miss dependency recovery,
+  - explicit hard misses now stop at AST-backed recovery sources and record `runtime_ast_miss_unresolved` instead of inferring dependencies from opaque invalid strings,
+  - the focused regression now proves opaque invalid expressions like `mid @@ aux` no longer recover `mid`/`aux` through identifier mining.
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/07-runtime-ast-miss-dependency-recovery.t` => `Files=1`, `Tests=8`, `PASS`
+  - `prove -I perl t` => `Files=8`, `Tests=143`, `PASS`
+- Additional audit completed for this slice:
+  - read-only instrumentation on known-good fixtures (`fsm/trial_0.fsm`, `fsm/trial_1.fsm`, `fsm/trial_2.fsm`, `fsm/mipicsi2_tester_ctrl.fsm`) reported zero live hits on the identifier-scan fallback before removal.
+- Recent AST/CoreAST convergence commits immediately before the next commit:
+  - `9a3e386` `EnableGraph: recover legacy signal-name deps via AST`
+  - `621da16` `CoreAST: canonicalize driving AST storage`
+  - `3243d00` `SystemVerilog: recover deps from signal-name ASTs`
+- Highest-value next seam after this slice:
+  - characterize which remaining opaque `legacy_string_registry` producers still fail to provide native defining AST or typed dependency metadata,
+  - keep shrinking or retiring other dormant string-era compatibility helpers once they are proven dead in the live path.
 ## AST/CoreAST convergence update (March 12, 2026, wrapper-retirement slice)
 - Latest completed slice in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and `perl/FSM/HDL/FlattenedDT.pm`:
   - removed the unused legacy-named wrapper entrypoints `should_filter_string_based(...)` and `extract_intermediate_signals_from_expression(...)`,

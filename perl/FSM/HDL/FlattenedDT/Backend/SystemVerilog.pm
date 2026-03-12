@@ -414,8 +414,8 @@ sub resolve_intermediate_signal_dependencies ($self, $signal_name, $signal_info)
                 delete $signal_info->{dependency_fallback_source};
             } else {
                 $dependency_source = ($signal_info && ref($signal_info) eq 'HASH')
-                    ? ($signal_info->{dependency_fallback_source} || 'runtime_ast_miss_identifier_scan')
-                    : 'runtime_ast_miss_identifier_scan';
+                    ? ($signal_info->{dependency_fallback_source} || 'runtime_ast_miss_unresolved')
+                    : 'runtime_ast_miss_unresolved';
             }
         }
     }
@@ -510,11 +510,14 @@ sub extract_intermediate_signals_from_runtime_ast_miss ($self, $signal_name, $si
         }
     }
 
-    my @dependencies = $self->scan_intermediate_signal_names_in_expression($expression);
     if ($signal_info && ref($signal_info) eq 'HASH') {
-        $signal_info->{dependency_fallback_source} = 'runtime_ast_miss_identifier_scan';
+        $signal_info->{dependency_fallback_source} = 'runtime_ast_miss_unresolved';
     }
-    return @dependencies;
+    fsm_debug(
+        "[SystemVerilog.pm][extract_intermediate_signals_from_runtime_ast_miss()] No AST-backed dependency recovery remained for '$debug_signal_name'; leaving dependencies unresolved after runtime AST miss",
+        3,
+    );
+    return ();
 }
 sub recover_runtime_ast_from_dependency_expression ($self, $signal_name, $signal_info, $candidate_expression, $candidate_source, $preserve_rendered_expression = 0) {
     my $ctx = $self->{flattened_dt};
@@ -2849,31 +2852,6 @@ sub get_substituted_ast_for_signal ($self, $signal_name, $signal_info) {
     
     # If no substituted version found, return nil to indicate original should be used
     return undef;
-}
-sub scan_intermediate_signal_names_in_expression ($self, $expression) {
-    my $ctx = $self->{flattened_dt};
-    return () unless defined($expression) && $expression ne '';
-
-    my @intermediate_signals;
-    my @potential_signals = ($expression =~ /\b([a-zA-Z_][a-zA-Z0-9_]+)\b/g);
-    my %seen;
-
-    fsm_debug("[SystemVerilog.pm][scan_intermediate_signal_names_in_expression()] Scanning compatibility expression '$expression'", 3);
-
-    for my $signal_name (@potential_signals) {
-        next if $seen{$signal_name}++;
-        next if $signal_name =~ /^(wire|reg|logic|always|assign|if|else|case|begin|end|posedge|negedge|clk|rst|reset)$/;
-
-        if ($ctx->{enable_graph}->is_intermediate_signal($signal_name)) {
-            push @intermediate_signals, $signal_name;
-            fsm_debug("[SystemVerilog.pm][scan_intermediate_signal_names_in_expression()] Found intermediate signal '$signal_name'", 3);
-        } else {
-            fsm_debug("[SystemVerilog.pm][scan_intermediate_signal_names_in_expression()] Identifier '$signal_name' is not an intermediate signal", 3);
-        }
-    }
-
-    fsm_debug("[SystemVerilog.pm][scan_intermediate_signal_names_in_expression()] Found " . scalar(@intermediate_signals) . " intermediate signal(s)", 3);
-    return @intermediate_signals;
 }
 sub generate_wen_en_signals ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};

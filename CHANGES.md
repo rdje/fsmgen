@@ -1359,6 +1359,21 @@ This is the persistent technical change history for FSMGen.
 - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
 - `prove -I perl t` (pass: 6 files, 125 tests)
 ### Newest AST/CoreAST convergence slice
+- Retired the last regex identifier-scan dependency fallback from `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- The explicit runtime-AST-miss dependency path now:
+  - attempts AST-backed recovery from rendered/registered expressions,
+  - attempts cleaned-expression recovery,
+  - attempts structured signal-name AST recovery,
+  - and otherwise records the miss as `runtime_ast_miss_unresolved` instead of mining identifiers from opaque strings.
+- Removed the dead compatibility helper `scan_intermediate_signal_names_in_expression(...)` from the live backend.
+- Strengthened `t/07-runtime-ast-miss-dependency-recovery.t` so opaque invalid legacy expressions like `mid @@ aux` no longer infer `mid`/`aux` dependencies via regex identifier scanning.
+- Backed this cleanup with a live audit on known-good fixtures (`fsm/trial_0.fsm`, `fsm/trial_1.fsm`, `fsm/trial_2.fsm`, `fsm/mipicsi2_tester_ctrl.fsm`), which produced zero identifier-scan hits before removal.
+
+### Validation (newest slice)
+- `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+- `prove -I perl t/07-runtime-ast-miss-dependency-recovery.t` (pass: 1 file, 8 tests)
+- `prove -I perl t` (pass: 8 files, 143 tests)
+### Newest AST/CoreAST convergence slice
 - Narrowed the remaining explicit runtime-AST-miss filtering residue in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - The live consolidated path now:
   - normalizes per-signal AST-derived live-usage metadata (`referenced_in_substitutions`, `used_in_final_expressions`) before filtering,

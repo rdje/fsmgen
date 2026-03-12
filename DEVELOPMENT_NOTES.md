@@ -2052,6 +2052,13 @@ It is an exact-delay pulse request:
   - second-pass DT-specific substitution debug rendering (`update_original_asts_with_second_pass_substitutions`) now invokes `enable_graph->ast_to_systemverilog(...)` directly for `original_sv`,
   - this removes one backend delegation round-trip through `FlattenedDT` for AST rendering in the second-pass DT-specific substitution path while preserving output/test behavior.
 - Latest AST/CoreAST-first convergence increment:
+  - fixture-backed auditing on the known-good development corpus (`trial_0`, `trial_1`, `trial_2`, `mipicsi2_tester_ctrl`) showed that the final `scan_intermediate_signal_names_in_expression(...)` fallback was no longer hit in live generation,
+  - `extract_intermediate_signals_from_runtime_ast_miss(...)` now stops after AST-backed recovery sources and records remaining hard misses as `runtime_ast_miss_unresolved`,
+  - the backend no longer fabricates dependency edges by mining identifiers from opaque invalid compatibility strings.
+- Design note from this slice:
+  - this is a better AST/CoreAST-first outcome than leaving the regex fallback in place, because “no recoverable AST/typed dependency source exists” is semantically honest while identifier mining from malformed strings can create false dependency edges,
+  - the next seam is upstream: characterize which remaining opaque legacy registry names still lack native defining metadata and either enrich that metadata or retire the compatibility producers entirely.
+- Latest AST/CoreAST-first convergence increment:
   - runtime audit in `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` confirmed that consolidated intermediate emission (`generate_consolidated_intermediate_signals(...)`) is the live declaration seam and the standalone declaration helper remains compatibility-only,
   - the live backend now resolves intermediate widths through a dedicated width-normalization helper that prefers typed/native metadata (`EnableGraph::get_signal_info(...)`) and defining ASTs before any expression-string compatibility fallback,
   - this keeps the active declaration/filtering path AST/native-metadata-first instead of trusting placeholder `width => 1` values inherited from prescan/factorization staging.
