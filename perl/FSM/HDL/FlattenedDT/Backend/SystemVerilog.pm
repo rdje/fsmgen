@@ -745,12 +745,6 @@ sub should_filter_runtime_ast_miss ($self, $signal_name, $signal_info) {
     fsm_debug("  RUNTIME_AST_MISS_FILTER: No AST-backed live-usage evidence for '$signal_name' - FILTERING", 3);
     return 1;
 }
-sub should_filter_string_based ($self, $expression, $signal_name, $signal_info) {
-    # Legacy compatibility entrypoint only. The live consolidated path should use
-    # should_filter_runtime_ast_miss(...) directly once runtime-AST resolution misses.
-    fsm_debug("  NO_STRING_FILTER: Delegating legacy-named helper to runtime-AST-miss filtering", 3);
-    return $self->should_filter_runtime_ast_miss($signal_name, $signal_info);
-}
 sub is_signal_referenced_in_substitutions ($self, $signal_name) {
     my $ctx = $self->{flattened_dt};
     # REFERENCE-AWARE FILTERING: Check if a signal is actually referenced in substituted expressions
@@ -2798,10 +2792,6 @@ sub scan_intermediate_signal_names_in_expression ($self, $expression) {
 
     fsm_debug("[SystemVerilog.pm][scan_intermediate_signal_names_in_expression()] Found " . scalar(@intermediate_signals) . " intermediate signal(s)", 3);
     return @intermediate_signals;
-}
-sub extract_intermediate_signals_from_expression ($self, $expression) {
-    fsm_debug("[SystemVerilog.pm][extract_intermediate_signals_from_expression()] Delegating legacy compatibility extraction helper", 3);
-    return $self->extract_intermediate_signals_from_runtime_ast_miss(undef, undef, $expression);
 }
 sub generate_wen_en_signals ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};

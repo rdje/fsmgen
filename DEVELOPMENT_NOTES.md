@@ -2107,3 +2107,9 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this is a good narrowing slice because it preserves current filtering behavior while making the live algorithm consume typed per-signal metadata rather than a legacy helper shape,
   - the next real compatibility residue on this lane is no longer the filter decision itself but the remaining wrapper name plus the final identifier-scan fallback in dependency extraction.
+- Latest AST/CoreAST-first convergence increment:
+  - the unused legacy-named wrapper entrypoints `should_filter_string_based(...)` and `extract_intermediate_signals_from_expression(...)` have now been removed from both `Backend::SystemVerilog` and the `FlattenedDT` facade,
+  - the repo surface now matches the live runtime path more closely: explicit miss filtering goes through `should_filter_runtime_ast_miss(...)` and dependency fallback goes through `extract_intermediate_signals_from_runtime_ast_miss(...)`.
+- Design note from this slice:
+  - this is a small but worthwhile cleanup slice because it removes dead string-era API surface rather than leaving it available for accidental reintroduction,
+  - the next compatibility residue on this lane is now the final identifier-scan fallback itself, not stale wrapper naming.

@@ -1243,3 +1243,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - retire or bypass the remaining legacy-named filtering wrapper entirely once no live path needs it,
   - then tighten the last identifier-scan compatibility fallback in dependency extraction if another AST-backed recovery source can replace it.
+## AST/CoreAST convergence update (March 12, 2026, wrapper-retirement slice)
+- Latest completed slice in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and `perl/FSM/HDL/FlattenedDT.pm`:
+  - removed the unused legacy-named wrapper entrypoints `should_filter_string_based(...)` and `extract_intermediate_signals_from_expression(...)`,
+  - the repo surface now exposes only the runtime-shape helpers that are still semantically meaningful on this lane (`should_filter_runtime_ast_miss(...)`, `extract_intermediate_signals_from_runtime_ast_miss(...)`).
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` => `Files=6`, `Tests=125`, `PASS`
+- Recent AST/CoreAST convergence commits immediately before the next commit:
+  - `8467c9f` `SystemVerilog: cache live usage for miss filtering`
+  - `8342857` `SystemVerilog: recover runtime ASTs in dependency fallback`
+  - `85aa70d` `SystemVerilog: recover runtime ASTs after late expressions`
+- Highest-value next seam after this slice:
+  - tighten or replace the final identifier-scan compatibility fallback in `extract_intermediate_signals_from_runtime_ast_miss(...)`,
+  - keep ignoring dormant standalone declaration helpers unless they become live or can be retired outright.

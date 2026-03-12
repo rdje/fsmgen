@@ -1371,6 +1371,19 @@ This is the persistent technical change history for FSMGen.
 ### Validation (newest slice)
 - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
 - `prove -I perl t` (pass: 6 files, 125 tests)
+### Latest AST/CoreAST convergence slice
+- Retired unused legacy-named wrapper entrypoints from the repo:
+  - removed `should_filter_string_based(...)` from `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and from the `perl/FSM/HDL/FlattenedDT.pm` facade,
+  - removed `extract_intermediate_signals_from_expression(...)` from `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and from the `perl/FSM/HDL/FlattenedDT.pm` facade.
+- This keeps the live consolidated path aligned with the current AST/CoreAST-first runtime shape:
+  - explicit runtime-AST misses are handled through `should_filter_runtime_ast_miss(...)`,
+  - dependency fallback is handled through `extract_intermediate_signals_from_runtime_ast_miss(...)`,
+  - the remaining compatibility-only residue on this lane is now concentrated in the final identifier scan rather than in legacy wrapper API surface.
+
+### Validation (latest slice)
+- `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+- `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+- `prove -I perl t` (pass: 6 files, 125 tests)
 
 ### Validation (post-hardening + extraction)
 - `prove -I perl t/04-assignment-edge-cases.t t/05-assignment-hdl-snapshots.t` (pass)

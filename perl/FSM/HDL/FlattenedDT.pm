@@ -1552,10 +1552,6 @@ sub is_simple_comparison ($self, $ast) {
     return $self->{backend_sv}->is_simple_comparison($ast);
 }
 
-sub should_filter_string_based ($self, $expression, $signal_name, $signal_info) {
-    return $self->{backend_sv}->should_filter_string_based($expression, $signal_name, $signal_info);
-}
-
 sub is_signal_actually_used_in_final_expressions ($self, $signal_name) {
     return $self->{backend_sv}->is_signal_actually_used_in_final_expressions($signal_name);
 }
@@ -1731,10 +1727,6 @@ sub extract_expression_structure ($self, $expression) {
     $expression =~ s/\b\d+\b/LIT/g;
     
     return $expression;
-}
-
-sub extract_intermediate_signals_from_expression ($self, $expression) {
-    return $self->{backend_sv}->extract_intermediate_signals_from_expression($expression);
 }
 
 sub is_signal_referenced_in_substitutions ($self, $signal_name) {
