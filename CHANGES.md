@@ -1397,6 +1397,19 @@ This is the persistent technical change history for FSMGen.
 ### Validation (newest slice)
 - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
 - `prove -I perl t` (pass: 6 files, 125 tests)
+### Latest AST/CoreAST convergence slice
+- Moved cleaned-expression compatibility recovery earlier in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` so normal runtime-AST resolution can recover more signals before the dependency helper reaches its final identifier scan.
+- The live consolidated path now:
+  - attempts cleaned-expression parsing during `resolve_intermediate_signal_runtime_ast(...)` after a stored-expression parse miss,
+  - records cleaned-expression recovery as runtime-AST metadata,
+  - preserves the original stored expression text during rendering when the recovered AST came from a cleaned compatibility expression.
+- This narrows the remaining final dependency fallback population:
+  - more signals now arrive at dependency extraction with a real runtime AST already resolved,
+  - the identifier scan remains only for the subset of signals that still fail both raw and cleaned runtime-AST recovery.
+
+### Validation (latest slice)
+- `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+- `prove -I perl t` (pass: 6 files, 125 tests)
 
 ### Validation (post-hardening + extraction)
 - `prove -I perl t/04-assignment-edge-cases.t t/05-assignment-hdl-snapshots.t` (pass)

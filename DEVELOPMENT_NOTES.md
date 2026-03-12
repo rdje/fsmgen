@@ -2120,3 +2120,10 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this is a good compatibility-narrowing micro-slice because it reduces the remaining identifier-scan population without widening the live path or forcing broad emitter churn,
   - the next residue on this lane is now the identifier scan itself, not the lack of one more AST recovery attempt before it.
+- Latest AST/CoreAST-first convergence increment:
+  - cleaned-expression compatibility recovery now happens during normal runtime-AST resolution, not only inside the dependency helper,
+  - this lets the live consolidated path recover more runtime ASTs before filtering/dependency logic has to choose any fallback behavior,
+  - rendering now preserves the original stored expression text whenever the recovered runtime AST came from a cleaned compatibility expression.
+- Design note from this slice:
+  - this is a stronger AST-first step than a dependency-only retry because it shrinks the remaining miss population for all later live-path consumers, not just dependency extraction,
+  - the next residue on this lane is therefore the identifier scan itself, not the absence of earlier cleaned-expression AST recovery.
