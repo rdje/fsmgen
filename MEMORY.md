@@ -1258,3 +1258,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - tighten or replace the final identifier-scan compatibility fallback in `extract_intermediate_signals_from_runtime_ast_miss(...)`,
   - keep ignoring dormant standalone declaration helpers unless they become live or can be retired outright.
+## AST/CoreAST convergence update (March 12, 2026, cleaned-dependency-recovery slice)
+- Latest completed slice in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
+  - `extract_intermediate_signals_from_runtime_ast_miss(...)` now tries cleaned-expression AST recovery before dropping to identifier scanning,
+  - cleaned compatibility parse success is cached back onto runtime-AST metadata,
+  - the slice preserves already-rendered expression text when the recovered AST came from the cleaned variant.
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` => `Files=6`, `Tests=125`, `PASS`
+- Recent AST/CoreAST convergence commits immediately before the next commit:
+  - `12df12b` `SystemVerilog: retire dead string-era wrapper helpers`
+  - `8467c9f` `SystemVerilog: cache live usage for miss filtering`
+  - `8342857` `SystemVerilog: recover runtime ASTs in dependency fallback`
+- Highest-value next seam after this slice:
+  - reduce or replace the remaining identifier-scan fallback itself inside `extract_intermediate_signals_from_runtime_ast_miss(...)`,
+  - keep ignoring dormant standalone declaration helpers unless they become live or can be retired outright.

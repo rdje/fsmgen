@@ -2113,3 +2113,10 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this is a small but worthwhile cleanup slice because it removes dead string-era API surface rather than leaving it available for accidental reintroduction,
   - the next compatibility residue on this lane is now the final identifier-scan fallback itself, not stale wrapper naming.
+- Latest AST/CoreAST-first convergence increment:
+  - the runtime-AST-miss dependency helper now performs a cleaned-expression AST recovery attempt before the final identifier scan,
+  - cleaned-expression parse success is cached onto runtime-AST metadata so later filtering can benefit from the recovered AST in the same pass,
+  - when this cleaned compatibility path is used, the backend preserves the previously rendered expression text instead of forcing an immediate output-text change.
+- Design note from this slice:
+  - this is a good compatibility-narrowing micro-slice because it reduces the remaining identifier-scan population without widening the live path or forcing broad emitter churn,
+  - the next residue on this lane is now the identifier scan itself, not the lack of one more AST recovery attempt before it.

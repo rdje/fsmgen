@@ -432,36 +432,35 @@ sub extract_intermediate_signals_from_runtime_ast_miss ($self, $signal_name, $si
 
         if ($is_known_failed_expression) {
             fsm_debug("[SystemVerilog.pm][extract_intermediate_signals_from_runtime_ast_miss()] Skipping redundant parse retry for '$debug_signal_name' via $candidate_source after known parse failure", 3);
-            next;
+        } else {
+            my $parsed_ast = $self->recover_runtime_ast_from_dependency_expression(
+                $signal_name,
+                $signal_info,
+                $candidate_expression,
+                $candidate_source,
+                0,
+            );
+            return $ctx->{enable_graph}->extract_intermediate_signals_from_ast($parsed_ast)
+                if $parsed_ast && blessed($parsed_ast);
         }
 
-        next unless $ctx->{expr_namer};
-        my $parsed_ast = eval { $ctx->{expr_namer}->parse_expression($candidate_expression) };
-        if ($parsed_ast && blessed($parsed_ast)) {
-            my $runtime_ast_source = $candidate_source eq 'enable_graph_expression'
-                ? 'dependency_enable_graph_expression_ast'
-                : 'dependency_rendered_expression_ast';
-            if ($signal_info && ref($signal_info) eq 'HASH') {
-                $signal_info->{runtime_ast} = $parsed_ast;
-                $signal_info->{runtime_ast_source} = $runtime_ast_source;
-                $signal_info->{runtime_ast_resolution_state} = 'resolved';
-                delete $signal_info->{runtime_ast_miss_reason};
-                $signal_info->{rendered_expression} = $candidate_expression;
-                $signal_info->{rendered_expression_source} = $candidate_source;
-                $signal_info->{expression} //= $candidate_expression;
-                delete $signal_info->{dependency_fallback_source};
-                if (defined($signal_name) && $signal_name ne '') {
-                    my $resolved_width = $self->resolve_intermediate_signal_width($signal_name, $signal_info);
-                    $signal_info->{width} = $resolved_width if defined($resolved_width) && $resolved_width > 0;
-                }
-            }
-            fsm_debug("[SystemVerilog.pm][extract_intermediate_signals_from_runtime_ast_miss()] Recovered runtime AST for '$debug_signal_name' via $candidate_source", 3);
-            return $ctx->{enable_graph}->extract_intermediate_signals_from_ast($parsed_ast);
+        my $cleaned_expression = $ctx->{enable_graph}->clean_intermediate_expression($candidate_expression);
+        if (defined($cleaned_expression)
+            && $cleaned_expression ne ''
+            && $cleaned_expression ne $candidate_expression
+            && !$seen_candidate_expressions{$cleaned_expression}++)
+        {
+            my $cleaned_source = 'cleaned_' . $candidate_source;
+            my $parsed_ast = $self->recover_runtime_ast_from_dependency_expression(
+                $signal_name,
+                $signal_info,
+                $cleaned_expression,
+                $cleaned_source,
+                1,
+            );
+            return $ctx->{enable_graph}->extract_intermediate_signals_from_ast($parsed_ast)
+                if $parsed_ast && blessed($parsed_ast);
         }
-
-        my $error = $@;
-        chomp $error if defined $error;
-        fsm_debug("[SystemVerilog.pm][extract_intermediate_signals_from_runtime_ast_miss()] Failed compatibility parse for '$debug_signal_name' via $candidate_source: " . ($error || 'unknown parse failure'), 3);
     }
 
     my @dependencies = $self->scan_intermediate_signal_names_in_expression($expression);
@@ -469,6 +468,42 @@ sub extract_intermediate_signals_from_runtime_ast_miss ($self, $signal_name, $si
         $signal_info->{dependency_fallback_source} = 'runtime_ast_miss_identifier_scan';
     }
     return @dependencies;
+}
+sub recover_runtime_ast_from_dependency_expression ($self, $signal_name, $signal_info, $candidate_expression, $candidate_source, $preserve_rendered_expression = 0) {
+    my $ctx = $self->{flattened_dt};
+    return undef unless defined($candidate_expression) && $candidate_expression ne '';
+    return undef unless $ctx->{expr_namer};
+
+    my $debug_signal_name = defined($signal_name) && $signal_name ne ''
+        ? $signal_name
+        : '<compatibility_expression>';
+    my $parsed_ast = eval { $ctx->{expr_namer}->parse_expression($candidate_expression) };
+    if ($parsed_ast && blessed($parsed_ast)) {
+        my $runtime_ast_source = 'dependency_' . $candidate_source . '_ast';
+        if ($signal_info && ref($signal_info) eq 'HASH') {
+            $signal_info->{runtime_ast} = $parsed_ast;
+            $signal_info->{runtime_ast_source} = $runtime_ast_source;
+            $signal_info->{runtime_ast_resolution_state} = 'resolved';
+            delete $signal_info->{runtime_ast_miss_reason};
+            unless ($preserve_rendered_expression) {
+                $signal_info->{rendered_expression} = $candidate_expression;
+                $signal_info->{rendered_expression_source} = $candidate_source;
+            }
+            $signal_info->{expression} //= $candidate_expression;
+            delete $signal_info->{dependency_fallback_source};
+            if (defined($signal_name) && $signal_name ne '') {
+                my $resolved_width = $self->resolve_intermediate_signal_width($signal_name, $signal_info);
+                $signal_info->{width} = $resolved_width if defined($resolved_width) && $resolved_width > 0;
+            }
+        }
+        fsm_debug("[SystemVerilog.pm][recover_runtime_ast_from_dependency_expression()] Recovered runtime AST for '$debug_signal_name' via $candidate_source", 3);
+        return $parsed_ast;
+    }
+
+    my $error = $@;
+    chomp $error if defined $error;
+    fsm_debug("[SystemVerilog.pm][recover_runtime_ast_from_dependency_expression()] Failed compatibility parse for '$debug_signal_name' via $candidate_source: " . ($error || 'unknown parse failure'), 3);
+    return undef;
 }
 sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signal_registry, $seen_signals = undef) {
     my $ctx = $self->{flattened_dt};
