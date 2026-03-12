@@ -129,7 +129,7 @@ sub parse_recursive_expression($self, $expr) {
         
         # 3. Important step: store the AST that drives this new signal
         # This will be used by the HDL generator to create 'assign intermediate_name = ...'
-        $signal->set_attribute('driving_ast', $ast_tree);
+        $signal->set_driving_ast($ast_tree);
         fsm_debug("            Attached driving AST to intermediate signal $intermediate_name", 3);
         
         # 4. Return a reference to the intermediate signal instead of the complex tree

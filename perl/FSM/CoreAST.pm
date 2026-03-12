@@ -51,8 +51,21 @@ package FSM::CoreAST::Signal;
     sub is_clock($self) { $self->{type} eq 'clock' }
     sub is_reset($self) { $self->{type} eq 'reset' }
     
-    sub set_attribute($self, $key, $value) { $self->{attributes}{$key} = $value }
-    sub get_attribute($self, $key) { $self->{attributes}{$key} }
+    sub set_attribute($self, $key, $value) {
+        if (defined($key) && $key eq 'driving_ast') {
+            $self->{attributes}{$key} = $value;
+            $self->set_driving_ast($value);
+            return $value;
+        }
+        $self->{attributes}{$key} = $value;
+        return $value;
+    }
+    sub get_attribute($self, $key) {
+        if (defined($key) && $key eq 'driving_ast') {
+            return $self->{driving_ast} if defined $self->{driving_ast};
+        }
+        return $self->{attributes}{$key};
+    }
     
     sub add_constraint($self, $constraint) { push $self->{constraints}->@*, $constraint }
     

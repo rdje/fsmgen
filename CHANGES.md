@@ -1425,6 +1425,20 @@ This is the persistent technical change history for FSMGen.
 - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
 - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
 - `prove -I perl t` (pass: 7 files, 130 tests)
+### Latest AST/CoreAST convergence slice
+- Closed a CoreAST-native signal-definition gap that was still forcing some parser-created intermediates onto compatibility recovery paths.
+- `perl/FSM/CoreAST.pm` now canonicalizes `driving_ast` through the real signal field even when older code writes it via `set_attribute('driving_ast', ...)`, so backend/native AST lookup sees the same defining AST the signal was created with.
+- `perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm` and `perl/FSM/Adapter/FSMGenFull/Parser.pm` now write intermediate-signal defining ASTs through `set_driving_ast(...)` directly instead of storing them only in the attribute bag.
+- Added focused regression coverage in `t/08-driving-ast-canonicalization.t` for:
+  - canonical `driving_ast` storage through the CoreAST signal API,
+  - factored parser/frontend intermediates keeping their defining AST natively,
+  - backend runtime-AST recovery resolving those intermediates through the native defining-AST path.
+
+### Validation (latest slice)
+- `perl -I perl -c perl/FSM/CoreAST.pm` (pass)
+- `perl -I perl -c perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm` (pass)
+- `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm` (pass)
+- `prove -I perl t` (pass: 8 files, 140 tests)
 
 ### Validation (post-hardening + extraction)
 - `prove -I perl t/04-assignment-edge-cases.t t/05-assignment-hdl-snapshots.t` (pass)

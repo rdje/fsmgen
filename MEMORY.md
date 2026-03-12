@@ -1289,6 +1289,23 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - shrink or replace the last regex identifier scan for legacy/non-AST-named hard misses,
   - keep ignoring dormant standalone declaration helpers unless they become live or can be retired outright.
+## AST/CoreAST convergence update (March 12, 2026, canonical-driving-ast slice)
+- Latest completed slice in `perl/FSM/CoreAST.pm`, `perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm`, and `perl/FSM/Adapter/FSMGenFull/Parser.pm`:
+  - `FSM::CoreAST::Signal` now canonicalizes `set_attribute('driving_ast', ...)` onto the real `driving_ast` field and returns that canonical value through `get_attribute('driving_ast')`,
+  - active frontend intermediate-signal creation now uses `set_driving_ast(...)` directly,
+  - backend runtime-AST normalization can therefore recover those parser-created intermediates through the native defining-AST path instead of depending on downstream compatibility recovery.
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/CoreAST.pm`
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm`
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`
+  - `prove -I perl t` => `Files=8`, `Tests=140`, `PASS`
+- Recent AST/CoreAST convergence commits immediately before the next commit:
+  - `3243d00` `SystemVerilog: recover deps from signal-name ASTs`
+  - `8c445bf` `SystemVerilog: recover runtime ASTs before dep scan`
+  - `d9a12dd` `SystemVerilog: recover deps from cleaned expressions`
+- Highest-value next seam after this slice:
+  - re-audit the remaining regex identifier scan after this upstream native-AST fix and remove any now-dead compatibility residue,
+  - keep ignoring dormant standalone declaration helpers unless they become live or can be retired outright.
 ## AST/CoreAST convergence update (March 12, 2026, earlier-cleaned-runtime-AST slice)
 - Latest completed slice in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
   - `resolve_intermediate_signal_runtime_ast(...)` now attempts cleaned-expression parsing after a stored-expression parse miss,

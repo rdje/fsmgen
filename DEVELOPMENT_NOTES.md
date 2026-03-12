@@ -2133,3 +2133,9 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this is a better fit than adding another string cleanup pass because it uses existing AST-naming metadata as the recovery contract and keeps the fallback logic in typed AST traversal once the name has been recognized,
   - the remaining identifier scan is now reserved for legacy/non-AST-named signals or other hard misses where no AST source, cleaned expression, alternate expression, or AST-name metadata can recover dependencies.
+- Latest AST/CoreAST-first convergence increment:
+  - the remaining hard-miss audit exposed a deeper semantic issue upstream of the backend fallback logic: some parser/frontend intermediates were storing their defining AST in `attributes->{driving_ast}` instead of the canonical `Signal->{driving_ast}` field,
+  - `FSM::CoreAST::Signal` now canonicalizes that legacy write pattern onto the real driving-AST field, and the two active frontend callsites now use `set_driving_ast(...)` directly.
+- Design note from this slice:
+  - this is a stronger AST/CoreAST-first fix than another fallback tweak because it improves the semantic model itself: backend normalization can now recover more intermediates through the native defining-AST path before any compatibility logic is considered,
+  - the next residue should therefore be re-audited after this upstream correction, since some cases that previously looked like “hard misses” may now resolve natively.

@@ -503,7 +503,7 @@ sub parse_test_node_new_format($self, $action) {
                 type => 'wire',
                 is_intermediate => 1
             );
-            $signal->set_attribute('driving_ast', $condition_expr) if $condition_expr;
+            $signal->set_driving_ast($condition_expr) if $condition_expr;
         }
     } else {
         # Format: (?is_last (=0 x))
