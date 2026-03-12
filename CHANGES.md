@@ -1359,6 +1359,24 @@ This is the persistent technical change history for FSMGen.
 - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
 - `prove -I perl t` (pass: 6 files, 125 tests)
 ### Newest AST/CoreAST convergence slice
+- Retired a dead string-era intermediate-signal producer cluster from `perl/FSM/HDL/FlattenedDT.pm`.
+- Removed the unused legacy factorization helpers that still created plain-string `intermediate_signals` entries:
+  - `perform_global_expression_factorization(...)`
+  - `is_simple_expression_for_factorization(...)`
+  - `extract_sub_expressions_from_ast(...)`
+  - `is_leaf_node(...)`
+  - `is_redundant_intermediate_signal(...)`
+  - `identify_factorization_candidates(...)`
+  - `generate_factorized_signals(...)`
+- Tightened the remaining registry contract in `FlattenedDT.pm` so `intermediate_signals` is documented as metadata-hash storage rather than raw string-expression storage.
+- Added focused regression coverage in `t/09-ast-first-intermediate-registry.t` to assert that live generation leaves no plain-string or `legacy_string_registry` intermediate entries behind.
+- Backed this cleanup with a live audit on known-good fixtures (`fsm/trial_0.fsm`, `fsm/trial_1.fsm`, `fsm/trial_2.fsm`, `fsm/mipicsi2_tester_ctrl.fsm`), which showed the runtime generator already finishing with an empty `intermediate_signals` registry; the removed helpers were dead compatibility residue rather than live behavior.
+
+### Validation (newest slice)
+- `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+- `prove -I perl t/09-ast-first-intermediate-registry.t` (pass: 1 file, 3 tests)
+- `prove -I perl t` (pass: 9 files, 146 tests)
+### Newest AST/CoreAST convergence slice
 - Retired the last regex identifier-scan dependency fallback from `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - The explicit runtime-AST-miss dependency path now:
   - attempts AST-backed recovery from rendered/registered expressions,

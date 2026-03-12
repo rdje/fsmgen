@@ -2052,6 +2052,13 @@ It is an exact-delay pulse request:
   - second-pass DT-specific substitution debug rendering (`update_original_asts_with_second_pass_substitutions`) now invokes `enable_graph->ast_to_systemverilog(...)` directly for `original_sv`,
   - this removes one backend delegation round-trip through `FlattenedDT` for AST rendering in the second-pass DT-specific substitution path while preserving output/test behavior.
 - Latest AST/CoreAST-first convergence increment:
+  - a live audit on the known-good development fixtures showed that `FlattenedDT` now completes generation with an empty `intermediate_signals` registry, so the remaining plain-string registry writers were dead compatibility code rather than active backend behavior,
+  - the dead string-era global-factorization helper cluster in `perl/FSM/HDL/FlattenedDT.pm` was removed instead of being modernized, because the live path already runs through `Backend::SystemVerilog::run_global_ast_factorization(...)` and `FSM::HDL::ASTFactorization`,
+  - `t/09-ast-first-intermediate-registry.t` now locks the invariant that live generation leaves no plain-string or `legacy_string_registry` intermediate entries behind.
+- Design note from this slice:
+  - this is preferable to converting those dormant helpers to AST metadata because it shrinks the string-era surface area outright and reduces the risk of accidental reintroduction of plain-string registry state,
+  - the next promising cleanup seam is the other dead string-era `FlattenedDT.pm` condition / DT-specific WEN helpers that are superseded by the orchestrator + `EnableGraph` AST path.
+- Latest AST/CoreAST-first convergence increment:
   - fixture-backed auditing on the known-good development corpus (`trial_0`, `trial_1`, `trial_2`, `mipicsi2_tester_ctrl`) showed that the final `scan_intermediate_signal_names_in_expression(...)` fallback was no longer hit in live generation,
   - `extract_intermediate_signals_from_runtime_ast_miss(...)` now stops after AST-backed recovery sources and records remaining hard misses as `runtime_ast_miss_unresolved`,
   - the backend no longer fabricates dependency edges by mining identifiers from opaque invalid compatibility strings.

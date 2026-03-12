@@ -1261,6 +1261,24 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - characterize which remaining opaque `legacy_string_registry` producers still fail to provide native defining AST or typed dependency metadata,
   - keep shrinking or retiring other dormant string-era compatibility helpers once they are proven dead in the live path.
+## AST/CoreAST convergence update (March 12, 2026, dead-factorization-cluster cleanup slice)
+- Latest completed slice in `perl/FSM/HDL/FlattenedDT.pm` and `t/09-ast-first-intermediate-registry.t`:
+  - removed the dormant string-era factorization/helper cluster that still wrote plain-string `intermediate_signals` entries in the old `FlattenedDT` facade,
+  - updated the remaining `intermediate_signals` comment/contract to reflect metadata-hash storage rather than raw expression-string storage,
+  - added a focused regression proving that live generation leaves no plain-string or `legacy_string_registry` intermediate entries behind.
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t/09-ast-first-intermediate-registry.t` => `Files=1`, `Tests=3`, `PASS`
+  - `prove -I perl t` => `Files=9`, `Tests=146`, `PASS`
+- Additional audit completed for this slice:
+  - read-only runs on known-good fixtures (`fsm/trial_0.fsm`, `fsm/trial_1.fsm`, `fsm/trial_2.fsm`, `fsm/mipicsi2_tester_ctrl.fsm`) showed the live generator already finishing with an empty `intermediate_signals` registry, confirming the removed helpers were dead compatibility residue.
+- Recent AST/CoreAST convergence commits immediately before the next commit:
+  - `45d3320` `SystemVerilog: retire identifier-scan dependency fallback`
+  - `9a3e386` `EnableGraph: recover legacy signal-name deps via AST`
+  - `621da16` `CoreAST: canonicalize driving AST storage`
+- Highest-value next seam after this slice:
+  - audit and retire the remaining dead string-era `FlattenedDT.pm` condition / DT-specific WEN helper cluster if it is still unreferenced,
+  - otherwise keep moving source-side compatibility producers onto native AST/CoreAST metadata instead of rebuilding fallback logic downstream.
 ## AST/CoreAST convergence update (March 12, 2026, wrapper-retirement slice)
 - Latest completed slice in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and `perl/FSM/HDL/FlattenedDT.pm`:
   - removed the unused legacy-named wrapper entrypoints `should_filter_string_based(...)` and `extract_intermediate_signals_from_expression(...)`,
