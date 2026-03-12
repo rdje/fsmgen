@@ -1212,3 +1212,19 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - narrow the remaining hard compatibility misses where runtime-AST recovery still cannot succeed, especially expression-parse failures and the fallback helper path that still carries the old string-era name,
   - keep deferring dormant standalone declaration-helper cleanup unless it becomes live or is being removed outright.
+## AST/CoreAST convergence update (March 12, 2026, dependency-miss recovery slice)
+- Latest completed slice in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
+  - explicit runtime-AST misses during dependency extraction now flow through `extract_intermediate_signals_from_runtime_ast_miss(...)`,
+  - the live path skips re-parsing the same stored expression after a known `expression_parse_failed` miss,
+  - dependency extraction now probes alternate known expressions from `EnableGraph` before dropping to identifier scanning,
+  - when one of those alternate expressions parses, the backend caches the recovered runtime AST and refreshes width metadata so later live-path phases can reuse the AST-backed signal.
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t` => `Files=6`, `Tests=125`, `PASS`
+- Recent AST/CoreAST convergence commits immediately before the next commit:
+  - `85aa70d` `SystemVerilog: recover runtime ASTs after late expressions`
+  - `e4af447` `SystemVerilog: cache runtime AST miss state`
+  - `548ca11` `SystemVerilog: cache consolidated rendered expressions`
+- Highest-value next seam after this slice:
+  - narrow the remaining explicit-miss filtering residue, especially the legacy-named `should_filter_string_based(...)` path,
+  - after that, reduce or retire the final identifier-scan compatibility fallback if no additional AST-backed recovery source remains.

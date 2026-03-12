@@ -1344,6 +1344,20 @@ This is the persistent technical change history for FSMGen.
 ### Validation (newest slice)
 - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
 - `prove -I perl t` (pass: 6 files, 125 tests)
+### Latest AST/CoreAST convergence slice
+- Further narrowed the explicit runtime-AST miss path in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` during dependency extraction.
+- The live consolidated path now:
+  - routes runtime-AST misses through a dedicated dependency-recovery helper instead of going straight to the legacy compatibility extractor,
+  - skips redundant parse retries for the same stored expression when that expression already produced an `expression_parse_failed` runtime-AST miss,
+  - tries alternate known expressions from `EnableGraph` before the final identifier-scan fallback,
+  - caches any dependency-time AST recovery back onto the signal metadata so later live-path phases can reuse the recovered runtime AST and refreshed width.
+- Reduced the true string-era remainder in this lane:
+  - the legacy `extract_intermediate_signals_from_expression(...)` entrypoint now delegates to the explicit runtime-AST-miss helper,
+  - the final compatibility-only behavior is narrower and centralized in the last-resort identifier scan, which now defers intermediate-signal identity checks to `EnableGraph::is_intermediate_signal(...)`.
+
+### Validation (latest slice)
+- `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+- `prove -I perl t` (pass: 6 files, 125 tests)
 
 ### Validation (post-hardening + extraction)
 - `prove -I perl t/04-assignment-edge-cases.t t/05-assignment-hdl-snapshots.t` (pass)

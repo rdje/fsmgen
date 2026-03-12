@@ -2093,3 +2093,10 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this is a good AST-first micro-slice because it shrinks the true miss set rather than just reorganizing fallback behavior around a fixed miss population,
   - the remaining compatibility-only seam is now closer to the “hard misses” where expression parsing itself still fails or no semantic AST source exists at all.
+- Latest AST/CoreAST-first convergence increment:
+  - dependency extraction now treats an explicit runtime-AST miss as its own recovery phase instead of jumping immediately to the old compatibility helper,
+  - when the original stored expression is already known to have failed parsing, the live path skips that redundant retry and probes alternate known expressions from `EnableGraph` first,
+  - if one of those alternate expressions parses, the recovered AST is cached back onto the signal entry so later filtering/emission can reuse it in the same pass.
+- Design note from this slice:
+  - this is a stronger AST-first refinement than a pure helper rename because it shrinks the hard-miss population again: some former dependency-fallback cases become runtime-AST-backed signals before filtering runs,
+  - the remaining compatibility-only residue on this lane is now more clearly isolated to the final identifier scan and the legacy-named filtering fallback (`should_filter_string_based(...)`).

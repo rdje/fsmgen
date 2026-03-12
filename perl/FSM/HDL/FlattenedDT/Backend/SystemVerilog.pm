@@ -362,10 +362,22 @@ sub resolve_intermediate_signal_dependencies ($self, $signal_name, $signal_info)
     if ($runtime_ast && blessed($runtime_ast)) {
         @dependencies = $self->{flattened_dt}->{enable_graph}->extract_intermediate_signals_from_ast($runtime_ast);
         $dependency_source = $signal_info->{runtime_ast_source} || 'runtime_ast';
+        delete $signal_info->{dependency_fallback_source} if $signal_info && ref($signal_info) eq 'HASH';
     } else {
         if (defined($expression) && $expression ne '') {
-            @dependencies = $self->extract_intermediate_signals_from_expression($expression);
-            $dependency_source = 'expression_fallback';
+            @dependencies = $self->extract_intermediate_signals_from_runtime_ast_miss($signal_name, $signal_info, $expression);
+            if ($signal_info
+                && ref($signal_info) eq 'HASH'
+                && $signal_info->{runtime_ast}
+                && blessed($signal_info->{runtime_ast}))
+            {
+                $dependency_source = $signal_info->{runtime_ast_source} || 'runtime_ast_recovery';
+                delete $signal_info->{dependency_fallback_source};
+            } else {
+                $dependency_source = ($signal_info && ref($signal_info) eq 'HASH')
+                    ? ($signal_info->{dependency_fallback_source} || 'runtime_ast_miss_identifier_scan')
+                    : 'runtime_ast_miss_identifier_scan';
+            }
         }
     }
 
@@ -379,6 +391,80 @@ sub resolve_intermediate_signal_dependencies ($self, $signal_name, $signal_info)
 
     my $dependency_summary = @dependencies ? join(', ', @dependencies) : 'none';
     fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_dependencies()] '$signal_name' dependencies => $dependency_summary via $dependency_source", 3);
+    return @dependencies;
+}
+sub extract_intermediate_signals_from_runtime_ast_miss ($self, $signal_name, $signal_info, $expression) {
+    my $ctx = $self->{flattened_dt};
+    return () unless defined($expression) && $expression ne '';
+
+    my $debug_signal_name = defined($signal_name) && $signal_name ne ''
+        ? $signal_name
+        : '<compatibility_expression>';
+    my $stored_expression = ($signal_info && ref($signal_info) eq 'HASH' && defined($signal_info->{expression}))
+        ? $signal_info->{expression}
+        : undef;
+    my $miss_reason = ($signal_info && ref($signal_info) eq 'HASH')
+        ? ($signal_info->{runtime_ast_miss_reason} || 'unknown_runtime_ast_miss')
+        : 'unknown_runtime_ast_miss';
+    my %seen_candidate_expressions;
+    my @candidate_expressions = ([ $expression, 'rendered_expression' ]);
+
+    if (defined($signal_name) && $signal_name ne '') {
+        my $enable_graph_expression = $ctx->{enable_graph}->get_intermediate_signal_expression($signal_name);
+        if (defined($enable_graph_expression) && $enable_graph_expression ne '') {
+            push @candidate_expressions, [ $enable_graph_expression, 'enable_graph_expression' ];
+        }
+    }
+
+    for my $candidate_info (@candidate_expressions) {
+        my ($candidate_expression, $candidate_source) = @$candidate_info;
+        next unless defined($candidate_expression) && $candidate_expression ne '';
+        next if $seen_candidate_expressions{$candidate_expression}++;
+
+        my $is_known_failed_expression =
+            $miss_reason eq 'expression_parse_failed'
+            && defined($stored_expression)
+            && $stored_expression ne ''
+            && $candidate_expression eq $stored_expression;
+
+        if ($is_known_failed_expression) {
+            fsm_debug("[SystemVerilog.pm][extract_intermediate_signals_from_runtime_ast_miss()] Skipping redundant parse retry for '$debug_signal_name' via $candidate_source after known parse failure", 3);
+            next;
+        }
+
+        next unless $ctx->{expr_namer};
+        my $parsed_ast = eval { $ctx->{expr_namer}->parse_expression($candidate_expression) };
+        if ($parsed_ast && blessed($parsed_ast)) {
+            my $runtime_ast_source = $candidate_source eq 'enable_graph_expression'
+                ? 'dependency_enable_graph_expression_ast'
+                : 'dependency_rendered_expression_ast';
+            if ($signal_info && ref($signal_info) eq 'HASH') {
+                $signal_info->{runtime_ast} = $parsed_ast;
+                $signal_info->{runtime_ast_source} = $runtime_ast_source;
+                $signal_info->{runtime_ast_resolution_state} = 'resolved';
+                delete $signal_info->{runtime_ast_miss_reason};
+                $signal_info->{rendered_expression} = $candidate_expression;
+                $signal_info->{rendered_expression_source} = $candidate_source;
+                $signal_info->{expression} //= $candidate_expression;
+                delete $signal_info->{dependency_fallback_source};
+                if (defined($signal_name) && $signal_name ne '') {
+                    my $resolved_width = $self->resolve_intermediate_signal_width($signal_name, $signal_info);
+                    $signal_info->{width} = $resolved_width if defined($resolved_width) && $resolved_width > 0;
+                }
+            }
+            fsm_debug("[SystemVerilog.pm][extract_intermediate_signals_from_runtime_ast_miss()] Recovered runtime AST for '$debug_signal_name' via $candidate_source", 3);
+            return $ctx->{enable_graph}->extract_intermediate_signals_from_ast($parsed_ast);
+        }
+
+        my $error = $@;
+        chomp $error if defined $error;
+        fsm_debug("[SystemVerilog.pm][extract_intermediate_signals_from_runtime_ast_miss()] Failed compatibility parse for '$debug_signal_name' via $candidate_source: " . ($error || 'unknown parse failure'), 3);
+    }
+
+    my @dependencies = $self->scan_intermediate_signal_names_in_expression($expression);
+    if ($signal_info && ref($signal_info) eq 'HASH') {
+        $signal_info->{dependency_fallback_source} = 'runtime_ast_miss_identifier_scan';
+    }
     return @dependencies;
 }
 sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signal_registry, $seen_signals = undef) {
@@ -2624,113 +2710,34 @@ sub get_substituted_ast_for_signal ($self, $signal_name, $signal_info) {
     # If no substituted version found, return nil to indicate original should be used
     return undef;
 }
-sub extract_intermediate_signals_from_expression ($self, $expression) {
+sub scan_intermediate_signal_names_in_expression ($self, $expression) {
     my $ctx = $self->{flattened_dt};
-    # Extract all intermediate signal names referenced in a SystemVerilog expression
-    # This is used to track which intermediate signals are actually referenced
+    return () unless defined($expression) && $expression ne '';
 
     my @intermediate_signals;
-
-    fsm_debug("EXTRACT_INTERMEDIATES: Analyzing expression '$expression'", 3);
-
-    if ($ctx->{expr_namer}) {
-        my $ast = eval { $ctx->{expr_namer}->parse_expression($expression) };
-        if ($ast && blessed($ast)) {
-            fsm_debug("EXTRACT_INTERMEDIATES: Parsed compatibility expression to AST: " . ref($ast), 3);
-            return $ctx->{enable_graph}->extract_intermediate_signals_from_ast($ast);
-        }
-        if ($@) {
-            my $error = $@;
-            chomp $error;
-            fsm_debug("EXTRACT_INTERMEDIATES: AST parse failed, falling back to string scan: $error", 3);
-        } else {
-            fsm_debug("EXTRACT_INTERMEDIATES: AST parse returned no node, falling back to string scan", 3);
-        }
-    }
-
-    # Extract all signal-like identifiers from the expression
     my @potential_signals = ($expression =~ /\b([a-zA-Z_][a-zA-Z0-9_]+)\b/g);
-
-    # Check each potential signal to see if it's an intermediate signal
     my %seen;
-    for my $signal_name (@potential_signals) {
-        next if $seen{$signal_name}++;  # Skip duplicates
 
-        # Skip SystemVerilog keywords and built-in functions
+    fsm_debug("[SystemVerilog.pm][scan_intermediate_signal_names_in_expression()] Scanning compatibility expression '$expression'", 3);
+
+    for my $signal_name (@potential_signals) {
+        next if $seen{$signal_name}++;
         next if $signal_name =~ /^(wire|reg|logic|always|assign|if|else|case|begin|end|posedge|negedge|clk|rst|reset)$/;
 
-        # CRITICAL FIX: Check ALL available intermediate signal registries
-        # This ensures we find intermediate signals from all sources:
-        # 1. AST factorization results
-        # 2. Global expressions registry
-        # 3. FSMGenFull parsing intermediate signals
-        # 4. Pre-scan referenced signals
-
-        my $is_intermediate = 0;
-
-        # Check method 1: AST factorizer intermediate signals
-        if ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{intermediate_signals}) {
-            if (exists $ctx->{ast_factorizer}->{intermediate_signals}->{$signal_name}) {
-                $is_intermediate = 1;
-                fsm_debug("  FOUND intermediate signal (AST factorizer): $signal_name", 3);
-            }
-        }
-
-        # Check method 2: Global expressions registry
-        if (!$is_intermediate) {
-            for my $expr (keys %{$ctx->{global_expressions} || {}}) {
-                if ($ctx->{global_expressions}->{$expr} eq $signal_name) {
-                    $is_intermediate = 1;
-                    fsm_debug("  FOUND intermediate signal (global expressions): $signal_name", 3);
-                    last;
-                }
-            }
-        }
-
-        # Check method 3: FSMGenFull parsing intermediate signals
-        if (!$is_intermediate && $ctx->{fsm_module} && $ctx->{fsm_module}->can('signals') && $ctx->{fsm_module}->signals) {
-            my $fsm_signals = $ctx->{fsm_module}->signals;
-            if (exists $fsm_signals->{$signal_name}) {
-                my $signal = $fsm_signals->{$signal_name};
-                if ($signal) {
-                    # Check for is_intermediate attribute
-                    my $has_intermediate_attr = 0;
-                    if (blessed($signal) && $signal->can('attributes') && $signal->attributes) {
-                        $has_intermediate_attr = $signal->attributes->{is_intermediate} || 0;
-                    } elsif (blessed($signal) && $signal->can('get_attribute')) {
-                        $has_intermediate_attr = $signal->get_attribute('is_intermediate') || 0;
-                    } elsif (ref($signal) eq 'HASH' && exists $signal->{is_intermediate}) {
-                        $has_intermediate_attr = $signal->{is_intermediate} || 0;
-                    }
-
-                    if ($has_intermediate_attr) {
-                        $is_intermediate = 1;
-                        fsm_debug("  FOUND intermediate signal (FSMGenFull): $signal_name", 3);
-                    }
-                }
-            }
-        }
-
-        # Check method 4: Pre-scan referenced signals
-        if (!$is_intermediate && $ctx->{referenced_intermediate_signals}) {
-            if (exists $ctx->{referenced_intermediate_signals}->{$signal_name}) {
-                $is_intermediate = 1;
-                fsm_debug("  FOUND intermediate signal (pre-scan): $signal_name", 3);
-            }
-        }
-
-        # Add to result if found to be intermediate
-        if ($is_intermediate) {
+        if ($ctx->{enable_graph}->is_intermediate_signal($signal_name)) {
             push @intermediate_signals, $signal_name;
+            fsm_debug("[SystemVerilog.pm][scan_intermediate_signal_names_in_expression()] Found intermediate signal '$signal_name'", 3);
         } else {
-            fsm_debug("  NOT intermediate: $signal_name", 3);
+            fsm_debug("[SystemVerilog.pm][scan_intermediate_signal_names_in_expression()] Identifier '$signal_name' is not an intermediate signal", 3);
         }
     }
 
-    my $count = scalar(@intermediate_signals);
-    fsm_debug("EXTRACT_INTERMEDIATES: Found $count intermediate signals in expression", 3);
-
+    fsm_debug("[SystemVerilog.pm][scan_intermediate_signal_names_in_expression()] Found " . scalar(@intermediate_signals) . " intermediate signal(s)", 3);
     return @intermediate_signals;
+}
+sub extract_intermediate_signals_from_expression ($self, $expression) {
+    fsm_debug("[SystemVerilog.pm][extract_intermediate_signals_from_expression()] Delegating legacy compatibility extraction helper", 3);
+    return $self->extract_intermediate_signals_from_runtime_ast_miss(undef, undef, $expression);
 }
 sub generate_wen_en_signals ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
