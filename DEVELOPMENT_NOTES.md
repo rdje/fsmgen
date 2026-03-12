@@ -2052,6 +2052,13 @@ It is an exact-delay pulse request:
   - second-pass DT-specific substitution debug rendering (`update_original_asts_with_second_pass_substitutions`) now invokes `enable_graph->ast_to_systemverilog(...)` directly for `original_sv`,
   - this removes one backend delegation round-trip through `FlattenedDT` for AST rendering in the second-pass DT-specific substitution path while preserving output/test behavior.
 - Latest AST/CoreAST-first convergence increment:
+  - repo-wide reference auditing showed that the remaining `FlattenedDT` condition-formatting and DT-specific/LHS-level WEN helpers were fully unreferenced while the live path already flows through `FlattenedDT::Orchestrator::{record_assignment_from_ast,record_transition_from_ast}` and `EnableGraph::generate_complete_enable_structure(...)`,
+  - the dormant string-era condition/WEN helper island in `perl/FSM/HDL/FlattenedDT.pm` was removed instead of being ported, including the old parallel assignment recorder, string condition formatter, raw condition-string extractor, and top-level `dt_specific_enables` / `lhs_to_enable_value_pairs` state builders,
+  - `t/10-ast-first-enable-structure.t` now locks the invariant that live enable synthesis stores AST-backed DT/LHS enable metadata inside `assignment_analysis->{rhs_groups}` and does not resurrect the old top-level WEN state.
+- Design note from this slice:
+  - deleting the dormant parallel string implementation is preferable to “modernizing” it because the AST/CoreAST-first path already exists and is covered by live tests; keeping both implementations only increases the chance of divergence and accidental fallback,
+  - the next promising seam is another repo-wide audit of residual `FlattenedDT` compatibility helpers to distinguish genuinely live backend/orchestrator delegates from dormant string-era surface area that can be retired outright.
+- Latest AST/CoreAST-first convergence increment:
   - a live audit on the known-good development fixtures showed that `FlattenedDT` now completes generation with an empty `intermediate_signals` registry, so the remaining plain-string registry writers were dead compatibility code rather than active backend behavior,
   - the dead string-era global-factorization helper cluster in `perl/FSM/HDL/FlattenedDT.pm` was removed instead of being modernized, because the live path already runs through `Backend::SystemVerilog::run_global_ast_factorization(...)` and `FSM::HDL::ASTFactorization`,
   - `t/09-ast-first-intermediate-registry.t` now locks the invariant that live generation leaves no plain-string or `legacy_string_registry` intermediate entries behind.

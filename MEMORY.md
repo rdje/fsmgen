@@ -1261,6 +1261,25 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - characterize which remaining opaque `legacy_string_registry` producers still fail to provide native defining AST or typed dependency metadata,
   - keep shrinking or retiring other dormant string-era compatibility helpers once they are proven dead in the live path.
+## AST/CoreAST convergence update (March 12, 2026, dead-condition-and-wen-helper cleanup slice)
+- Latest completed slice in `perl/FSM/HDL/FlattenedDT.pm` and `t/10-ast-first-enable-structure.t`:
+  - removed the dormant string-era condition/WEN helper island that still exposed a parallel string-based path for assignment recording, condition formatting, raw condition-string extraction, and DT-specific/LHS-level WEN generation,
+  - removed the delegator helpers that only existed to support that dead path (`clean_signal_name`, `generate_rhs_based_enable_name`, `is_complex_expression`, `get_or_create_global_expression`, `should_factor_condition`, `needs_parentheses`),
+  - added a focused regression proving that live enable synthesis stores AST-backed DT/LHS enable metadata inside `assignment_analysis->{rhs_groups}` and does not repopulate the old top-level `dt_specific_enables` / `lhs_to_enable_value_pairs` state.
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t/09-ast-first-intermediate-registry.t t/10-ast-first-enable-structure.t` => `Files=2`, `Tests=9`, `PASS`
+  - `prove -I perl t` => `Files=10`, `Tests=152`, `PASS`
+- Additional audit completed for this slice:
+  - repo-wide reference checks showed the retired helper names remained only in `DEVELOPMENT_NOTES.md` and `MEMORY.md`,
+  - the live path already records assignments/transitions through `FlattenedDT::Orchestrator` and synthesizes DT/LHS enable metadata inside `EnableGraph`-owned `assignment_analysis->{rhs_groups}`.
+- Recent AST/CoreAST convergence commits immediately before the next commit:
+  - `918a2ca` `FlattenedDT: retire dead string-era factorization helpers`
+  - `45d3320` `SystemVerilog: retire identifier-scan dependency fallback`
+  - `9a3e386` `EnableGraph: recover legacy signal-name deps via AST`
+- Highest-value next seam after this slice:
+  - re-audit the remaining `FlattenedDT` compatibility/helper surface to find the next dead string-era island or delegation round-trip that can be removed without touching the live AST/CoreAST path,
+  - keep validating against the AST-backed `assignment_analysis->{rhs_groups}` enable structure instead of reintroducing top-level compatibility state.
 ## AST/CoreAST convergence update (March 12, 2026, dead-factorization-cluster cleanup slice)
 - Latest completed slice in `perl/FSM/HDL/FlattenedDT.pm` and `t/09-ast-first-intermediate-registry.t`:
   - removed the dormant string-era factorization/helper cluster that still wrote plain-string `intermediate_signals` entries in the old `FlattenedDT` facade,

@@ -1359,6 +1359,36 @@ This is the persistent technical change history for FSMGen.
 - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
 - `prove -I perl t` (pass: 6 files, 125 tests)
 ### Newest AST/CoreAST convergence slice
+- Retired the remaining dead string-era condition / WEN helper island from `perl/FSM/HDL/FlattenedDT.pm`.
+- Removed the unused legacy helpers that implemented a parallel string-based path for condition formatting, assignment recording, and DT-specific/LHS-level WEN generation:
+  - `record_assignment(...)`
+  - `record_transition(...)`
+  - `create_condition_expression(...)`
+  - `format_condition(...)`
+  - `format_signal_expression(...)`
+  - `invert_condition(...)`
+  - `format_test_value(...)`
+  - `resolve_rhs_value(...)`
+  - `generate_dt_specific_wens(...)`
+  - `generate_lhs_level_wens(...)`
+  - `extract_condition_string(...)`
+- Removed the now-unused delegators that only existed to support that dead string-era path:
+  - `clean_signal_name(...)`
+  - `generate_rhs_based_enable_name(...)`
+  - `is_complex_expression(...)`
+  - `get_or_create_global_expression(...)`
+  - `should_factor_condition(...)`
+  - `needs_parentheses(...)`
+- Added focused regression coverage in `t/10-ast-first-enable-structure.t` to assert that live generation:
+  - stores DT-specific and LHS-level enable metadata inside `assignment_analysis->{rhs_groups}`,
+  - leaves no legacy top-level `dt_specific_enables` or `lhs_to_enable_value_pairs` state behind.
+- Backed this cleanup with a repo-wide reference audit showing that the live path already runs through `FlattenedDT::Orchestrator` AST recorders and `EnableGraph` AST-backed enable synthesis, while the retired helper names remained only in docs.
+
+### Validation (newest slice)
+- `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+- `prove -I perl t/09-ast-first-intermediate-registry.t t/10-ast-first-enable-structure.t` (pass: 2 files, 9 tests)
+- `prove -I perl t` (pass: 10 files, 152 tests)
+### Newest AST/CoreAST convergence slice
 - Retired a dead string-era intermediate-signal producer cluster from `perl/FSM/HDL/FlattenedDT.pm`.
 - Removed the unused legacy factorization helpers that still created plain-string `intermediate_signals` entries:
   - `perform_global_expression_factorization(...)`
