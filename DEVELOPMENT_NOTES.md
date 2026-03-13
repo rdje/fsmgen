@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: FlattenedDT dead EnableGraph facade delegate removal
+- Continued AST/CoreAST-first cleanup by deleting a dead `EnableGraph`-owned helper pocket from the `FlattenedDT` facade.
+- Rationale:
+  - a fresh repo-wide call-graph audit showed `normalize_rhs_logic_level(...)`, `get_reset_value(...)`, `get_fsm_reset_state(...)`, `get_explicit_reset_value(...)`, `set_fsm_module_reference(...)`, `get_default_value_from_ast(...)`, `get_reset_value_from_ast(...)`, `get_default_value(...)`, `convert_condition_to_ast(...)`, and `convert_test_value_to_ast(...)` had no remaining callers on the `FlattenedDT` facade,
+  - the matching methods remain live inside `EnableGraph` and are now reached directly from `EnableGraph` itself or from `Orchestrator`,
+  - keeping the facade delegates therefore advertised another fake ownership boundary and an uncalled compatibility surface rather than a real entrypoint.
+- Safety/compatibility:
+  - no active generation flow changed; the same `EnableGraph` methods continue to run in the same places as before,
+  - the focused architecture regression now locks the absence of those helper names on live `FlattenedDT` objects,
+  - this slice therefore shrinks dead facade surface without changing reset/default behavior, AST conversion behavior, or HDL output.
+- Verification:
+  - syntax check for `FlattenedDT.pm` passes,
+  - focused regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=223`).
+- Next likely slices:
+  - rerun the final facade audit to confirm whether any meaningful dead delegates still remain,
+  - if not, stop the cleanup lane and pivot back to the next live AST/CoreAST-first ownership seam.
 ## 2026-03-13: FlattenedDT dead logical-op facade delegate removal
 - Continued AST/CoreAST-first cleanup by deleting a dead logical-operation helper delegate pocket from the `FlattenedDT` facade.
 - Rationale:

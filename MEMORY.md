@@ -14,6 +14,19 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead EnableGraph facade delegates)
+- Current worktree removes a dead `EnableGraph`-owned helper pocket from the `FlattenedDT` facade.
+- Scope remains a small behavior-preserving cleanup slice:
+  - repo-wide call-graph auditing showed `normalize_rhs_logic_level(...)`, `get_reset_value(...)`, `get_fsm_reset_state(...)`, `get_explicit_reset_value(...)`, `set_fsm_module_reference(...)`, `get_default_value_from_ast(...)`, `get_reset_value_from_ast(...)`, `get_default_value(...)`, `convert_condition_to_ast(...)`, and `convert_test_value_to_ast(...)` had no remaining callers on the `FlattenedDT` facade,
+  - the matching `EnableGraph` methods are still live and are now reached directly from `EnableGraph` itself or from `Orchestrator`, so the facade delegates were dead compatibility surface rather than a real ownership seam,
+  - `t/10-ast-first-enable-structure.t` now asserts that live `FlattenedDT` objects no longer expose those `EnableGraph`-owned helper names.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=77`, `PASS`)
+  - `prove -I perl t` (`Files=10`, `Tests=223`, `PASS`)
+- Immediate next direction after commit:
+  - rerun the remaining facade audit one last time; if it is finally empty, stop the cleanup lane,
+  - pivot back to the next live AST/CoreAST-first ownership seam rather than continuing wrapper pruning.
 ## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead logical-op facade delegates)
 - Current worktree removes a dead logical-operation helper pocket from the `FlattenedDT` facade.
 - Scope remains a small behavior-preserving cleanup slice:

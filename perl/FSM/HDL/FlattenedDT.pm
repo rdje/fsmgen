@@ -198,10 +198,6 @@ sub get_pulse_active_level_for_lhs ($self, $lhs, $lhs_analysis) {
     return $self->{enable_graph}->get_pulse_active_level_for_lhs($lhs, $lhs_analysis);
 }
 
-sub normalize_rhs_logic_level ($self, $rhs) {
-    return $self->{enable_graph}->normalize_rhs_logic_level($rhs);
-}
-
 sub get_signal_assignment_type ($self, $lhs, $lhs_analysis) {
     return $self->{enable_graph}->get_signal_assignment_type($lhs, $lhs_analysis);
 }
@@ -210,36 +206,8 @@ sub get_driven_signals ($self) {
     return $self->{enable_graph}->get_driven_signals();
 }
 
-sub get_reset_value ($self, $lhs) {
-    return $self->{enable_graph}->get_reset_value($lhs);
-}
-
-sub get_fsm_reset_state ($self) {
-    return $self->{enable_graph}->get_fsm_reset_state();
-}
-
-sub get_explicit_reset_value ($self, $lhs) {
-    return $self->{enable_graph}->get_explicit_reset_value($lhs);
-}
-
 sub get_signal_info ($self, $lhs) {
     return $self->{enable_graph}->get_signal_info($lhs);
-}
-
-sub set_fsm_module_reference ($self, $fsm_module) {
-    return $self->{enable_graph}->set_fsm_module_reference($fsm_module);
-}
-
-sub get_default_value_from_ast ($self, $lhs_ast) {
-    return $self->{enable_graph}->get_default_value_from_ast($lhs_ast);
-}
-
-sub get_reset_value_from_ast ($self, $lhs_ast) {
-    return $self->{enable_graph}->get_reset_value_from_ast($lhs_ast);
-}
-
-sub get_default_value ($self, $lhs) {
-    return $self->{enable_graph}->get_default_value($lhs);
 }
 
 sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_stack) {
@@ -257,18 +225,6 @@ sub extract_rhs_from_expression ($self, $expr) {
 sub clean_intermediate_expression ($self, $expression) {
     return $self->{enable_graph}->clean_intermediate_expression($expression);
 }
-
-# New AST-based methods for pure AST processing
-
-sub convert_condition_to_ast ($self, $condition_node) {
-    return $self->{enable_graph}->convert_condition_to_ast($condition_node);
-}
-
-sub convert_test_value_to_ast ($self, $test_value) {
-    return $self->{enable_graph}->convert_test_value_to_ast($test_value);
-}
-
-# Methods for tracking intermediate signals and dependencies
 
 sub track_ast_intermediate_signals ($self, $ast) {
     return $self->{enable_graph}->track_ast_intermediate_signals($ast);

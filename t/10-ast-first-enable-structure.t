@@ -124,17 +124,27 @@ for my $dead_facade_helper (
         canonicalize_expression
         collect_all_wen_en_ast_expressions
         count_binary_logical_operation_occurrences
+        convert_condition_to_ast
+        convert_test_value_to_ast
         create_condition_expression_signal_name
         find_all_ast_sub_expressions
         generate_comb_mux
+        get_default_value
+        get_default_value_from_ast
+        get_explicit_reset_value
+        get_fsm_reset_state
         generate_flop_mux
         get_or_create_ast_signal_name
+        get_reset_value
+        get_reset_value_from_ast
         is_complex_ast
         is_signal_actually_used_in_final_expressions
         is_simple_ast_expression
         is_simple_comparison
         is_simple_negation
+        normalize_rhs_logic_level
         run_global_ast_factorization
+        set_fsm_module_reference
         should_filter_ast_based
         should_filter_consolidated_signal
         should_factor_ast

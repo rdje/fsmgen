@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT cleanup (retire dead EnableGraph facade delegates)
+- Removed the dead `EnableGraph`-owned helper delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
+  - deleted `normalize_rhs_logic_level(...)`,
+  - deleted `get_reset_value(...)`,
+  - deleted `get_fsm_reset_state(...)`,
+  - deleted `get_explicit_reset_value(...)`,
+  - deleted `set_fsm_module_reference(...)`,
+  - deleted `get_default_value_from_ast(...)`,
+  - deleted `get_reset_value_from_ast(...)`,
+  - deleted `get_default_value(...)`,
+  - deleted `convert_condition_to_ast(...)`,
+  - deleted `convert_test_value_to_ast(...)`.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation no longer exposes those `EnableGraph`-owned helper names on the `FlattenedDT` facade.
+- Root cause / rationale:
+  - repo-wide call-graph auditing showed these names had no remaining facade callers anywhere in the active code or tests,
+  - the matching `EnableGraph` methods remain live and are now reached directly from `EnableGraph` itself or from `Orchestrator`,
+  - removing the dead delegates is safer than preserving an uncalled setup/reset/default/AST-conversion compatibility surface on the facade.
+- Scope remains behavior-preserving cleanup of dead compatibility surface; live `EnableGraph` behavior is unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=77`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=223`)
 ### FlattenedDT cleanup (retire dead logical-op facade delegates)
 - Removed the dead logical-operation helper delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
   - deleted `run_global_ast_factorization(...)`,
