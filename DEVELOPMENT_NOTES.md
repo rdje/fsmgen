@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: EnableGraph unified WEN/EN emission ownership
+- Continued the enable-synthesis ownership convergence by removing the remaining stage-7 backend routing wrapper around unified WEN/EN emission.
+- Rationale:
+  - the actual unified WEN/EN synthesis logic already lived in `EnableGraph::generate_unified_wen_en_signals(...)`,
+  - `Backend::SystemVerilog::generate_wen_en_signals(...)` had become a thin active-path wrapper that only delegated to that owner,
+  - the next small truthful move was therefore to route step 7 directly through `EnableGraph` and delete the wrapper.
+- Structural outcome:
+  - `Orchestrator` now sends stage-7 unified WEN/EN emission directly to `EnableGraph`,
+  - `Backend::SystemVerilog` no longer carries the wrapper entrypoint,
+  - the live boundary now matches the actual synthesis ownership more closely.
+- Safety/compatibility:
+  - no intended HDL behavior change; only the call path was shortened,
+  - the architecture regression now locks the new boundary by asserting backend absence and `EnableGraph` ownership of the live entrypoint,
+  - the full regression suite stayed green, so this convergence slice preserved active behavior.
+- Verification:
+  - syntax checks for `Orchestrator.pm` and `Backend/SystemVerilog.pm` pass,
+  - focused architecture regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=12`, `Tests=337`).
+- Next likely slices:
+  - re-audit whether any other active generation stage is still only routing to `EnableGraph` ownership through another module,
+  - if not, pivot to the next truthful live runtime seam rather than continuing wrapper-only convergence.
 ## 2026-03-14: EnableGraph top-level enable emission ownership
 - Continued the live enable-synthesis convergence by moving top-level state/DT enable emission under `EnableGraph`.
 - Rationale:

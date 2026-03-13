@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
-## 2026-03-13
+## 2026-03-14
+### FlattenedDT live ownership (EnableGraph unified WEN/EN emission)
+- Moved stage-7 unified WEN/EN emission off the backend wrapper path and directly onto `perl/FSM/Synthesis/EnableGraph.pm`.
+- Updated `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` so step 7 now calls `enable_graph->generate_unified_wen_en_signals(...)` directly.
+- Removed the now-wrapper-only `generate_wen_en_signals(...)` method from `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- Extended `t/10-ast-first-enable-structure.t` so:
+  - the backend is asserted to stay free of the former wrapper entrypoint,
+  - and `EnableGraph` is asserted to own unified WEN/EN emission on the live path.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=145`)
+  - `prove -I perl t` (pass: `Files=12`, `Tests=337`)
 ### FlattenedDT live ownership (EnableGraph top-level enable emission)
 - Moved top-level state/DT enable emission off `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and under `perl/FSM/Synthesis/EnableGraph.pm`.
 - Added `generate_enable_conditions(...)` to `EnableGraph`, so the same owner that initializes and now AST-backs `state_enables` / `dt_enables` also emits their `*_en` assign statements.
@@ -32,6 +44,7 @@ This is the persistent technical change history for FSMGen.
   - `prove -I perl t/10-ast-first-enable-structure.t t/11-flatteneddt-generation-reset.t` (pass: `Files=2`, `Tests=158`)
   - `prove -I perl t/12-enablegraph-capture-registry.t` (pass: `Files=1`, `Tests=21`)
   - `prove -I perl t` (pass: `Files=12`, `Tests=333`)
+## 2026-03-13
 ### FlattenedDT live ownership (EnableGraph test-condition AST ownership)
 - Moved the remaining live test-node condition AST construction off `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and under `perl/FSM/Synthesis/EnableGraph.pm`.
 - Added `build_test_condition_ast(...)` to `EnableGraph`, which now owns:

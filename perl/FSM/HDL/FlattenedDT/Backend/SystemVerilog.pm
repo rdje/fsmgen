@@ -2709,15 +2709,6 @@ sub get_substituted_ast_for_signal ($self, $signal_name, $signal_info) {
     # If no substituted version found, return nil to indicate original should be used
     return undef;
 }
-sub generate_wen_en_signals ($self, $fsm_module) {
-    my $ctx = $self->{flattened_dt};
-    my $hdl = "";
-    
-    # UNIFIED APPROACH: Generate WEN/EN signals from Phase 1 unified data
-    $hdl .= $ctx->{enable_graph}->generate_unified_wen_en_signals($fsm_module);
-    
-    return $hdl;
-}
 sub generate_internal_signal_declarations ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     my %declared_ports = %{$ctx->{declared_port_signals} || {}};

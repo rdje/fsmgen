@@ -14,6 +14,23 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph unified WEN/EN emission)
+- Current worktree continues the same enable-synthesis ownership lane and removes the remaining stage-7 backend wrapper around unified WEN/EN emission.
+- Scope of this slice:
+  - `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` now calls `enable_graph->generate_unified_wen_en_signals(...)` directly in step 7,
+  - `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` no longer exposes the wrapper-only `generate_wen_en_signals(...)` entrypoint,
+  - the live emission owner is now consistent with the existing implementation owner in `perl/FSM/Synthesis/EnableGraph.pm`.
+- Architecture guard update in `t/10-ast-first-enable-structure.t`:
+  - the backend is now asserted to stay free of `generate_wen_en_signals(...)`,
+  - the live `EnableGraph` object is asserted to own `generate_unified_wen_en_signals(...)`.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=145`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=337`, `PASS`)
+- Immediate next direction after commit:
+  - re-audit whether any other active generation stage is still only a routing wrapper around `EnableGraph` ownership,
+  - if that lane is now exhausted, pivot to the next truthful live runtime seam instead of continuing wrapper-only convergence.
 ## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph top-level enable emission)
 - Current worktree continues the same enable-synthesis lane and moves top-level state/DT enable emission under `EnableGraph`.
 - Scope of this slice:
