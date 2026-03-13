@@ -130,6 +130,8 @@ for my $dead_facade_helper (
         extract_signal_name_from_ast
         extract_lhs_name_from_ast
         extract_rhs_from_expression
+        feed_asts_to_factorizer
+        feed_current_asts_to_second_pass
         find_all_ast_sub_expressions
         flatten_all_decision_trees
         flatten_decision_tree
@@ -147,6 +149,7 @@ for my $dead_facade_helper (
         get_driven_signals
         get_explicit_reset_value
         get_fsm_reset_state
+        get_substituted_ast_for_signal
         generate_flop_mux
         get_or_create_ast_signal_name
         get_reset_value
@@ -155,6 +158,7 @@ for my $dead_facade_helper (
         is_arithmetic_operation
         is_intermediate_signal
         is_logical_operation
+        is_signal_referenced_in_substitutions
         is_signal_actually_used_in_final_expressions
         is_signal_ast_based_intermediate
         is_simple_ast_expression
@@ -173,7 +177,16 @@ for my $dead_facade_helper (
         set_explicit_reset_values
         parentheses_are_redundant
         contains_frequently_used_operations
+        count_unary_negations_in_original_expressions
+        ast_contains_intermediate_signals
+        ast_contains_signal
+        ast_has_intermediate_signals_recursive
+        prescan_wen_en_for_intermediate_signals
+        run_second_pass_factorization
         track_ast_intermediate_signals
+        topologically_sort_signals
+        update_original_asts_with_second_pass_substitutions
+        update_original_asts_with_substituted_versions
         _count_logical_ops_in_ast
         _is_factorizable_sub_expression
         _ast_contains_factorizable_operators

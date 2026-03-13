@@ -14,6 +14,19 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead backend factorization/substitution facade delegates)
+- Current worktree removes a dead backend factorization/substitution helper pocket from the `FlattenedDT` facade.
+- Scope remains a small behavior-preserving cleanup slice:
+  - repo-wide call-graph auditing showed `prescan_wen_en_for_intermediate_signals(...)`, `feed_asts_to_factorizer(...)`, `count_unary_negations_in_original_expressions(...)`, `ast_contains_signal(...)`, `update_original_asts_with_substituted_versions(...)`, `run_second_pass_factorization(...)`, `feed_current_asts_to_second_pass(...)`, `ast_contains_intermediate_signals(...)`, `ast_has_intermediate_signals_recursive(...)`, `update_original_asts_with_second_pass_substitutions(...)`, `get_substituted_ast_for_signal(...)`, `is_signal_referenced_in_substitutions(...)`, and `topologically_sort_signals(...)` had no remaining callers on the `FlattenedDT` facade,
+  - the matching methods remain live in `Backend::SystemVerilog`, and the active path already reaches them directly from `Orchestrator`, `FSM::HDL::Factorization::Fixpoint`, or backend-local calls,
+  - `t/10-ast-first-enable-structure.t` now asserts that live `FlattenedDT` objects no longer expose those backend-owned factorization/substitution helper names.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=129`, `PASS`)
+  - `prove -I perl t` (`Files=10`, `Tests=275`, `PASS`)
+- Immediate next direction after commit:
+  - rerun the remaining facade audit and confirm whether any `FlattenedDT` wrappers still form a coherent dead pocket,
+  - if not, stop the cleanup lane and pivot back to the next live AST/CoreAST-first ownership seam.
 ## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead utility/rendering facade delegates)
 - Current worktree removes a dead `EnableGraph` utility/rendering helper pocket from the `FlattenedDT` facade.
 - Scope remains a small behavior-preserving cleanup slice:

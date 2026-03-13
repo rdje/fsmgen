@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT cleanup (retire dead backend factorization/substitution facade delegates)
+- Removed the dead backend factorization/substitution delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
+  - deleted `prescan_wen_en_for_intermediate_signals(...)`,
+  - deleted `feed_asts_to_factorizer(...)`,
+  - deleted `count_unary_negations_in_original_expressions(...)`,
+  - deleted `ast_contains_signal(...)`,
+  - deleted `update_original_asts_with_substituted_versions(...)`,
+  - deleted `run_second_pass_factorization(...)`,
+  - deleted `feed_current_asts_to_second_pass(...)`,
+  - deleted `ast_contains_intermediate_signals(...)`,
+  - deleted `ast_has_intermediate_signals_recursive(...)`,
+  - deleted `update_original_asts_with_second_pass_substitutions(...)`,
+  - deleted `get_substituted_ast_for_signal(...)`,
+  - deleted `is_signal_referenced_in_substitutions(...)`,
+  - deleted `topologically_sort_signals(...)`.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation no longer exposes those backend-owned factorization/substitution helper names on the `FlattenedDT` facade.
+- Root cause / rationale:
+  - repo-wide call-graph auditing showed these names had no remaining callers on the `FlattenedDT` facade anywhere in the active code or tests,
+  - the matching methods remain live inside `Backend::SystemVerilog`, and the active flow already reaches them there directly from `Orchestrator`, `FSM::HDL::Factorization::Fixpoint`, or backend-local calls,
+  - removing the dead facade delegates is safer than preserving an uncalled compatibility surface for factorization/substitution internals.
+- Scope remains behavior-preserving cleanup of dead compatibility surface; live backend factorization/substitution behavior is unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=129`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=275`)
 ### FlattenedDT cleanup (retire dead utility/rendering facade delegates)
 - Removed a dead `EnableGraph` utility/rendering helper delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
   - deleted `generate_ast_based_signal_name(...)`,

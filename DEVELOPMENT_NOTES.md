@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: FlattenedDT dead backend factorization/substitution facade delegate removal
+- Continued AST/CoreAST-first cleanup by deleting the remaining backend factorization/substitution helper pocket from the `FlattenedDT` facade.
+- Rationale:
+  - a fresh repo-wide call-graph audit showed `prescan_wen_en_for_intermediate_signals(...)`, `feed_asts_to_factorizer(...)`, `count_unary_negations_in_original_expressions(...)`, `ast_contains_signal(...)`, `update_original_asts_with_substituted_versions(...)`, `run_second_pass_factorization(...)`, `feed_current_asts_to_second_pass(...)`, `ast_contains_intermediate_signals(...)`, `ast_has_intermediate_signals_recursive(...)`, `update_original_asts_with_second_pass_substitutions(...)`, `get_substituted_ast_for_signal(...)`, `is_signal_referenced_in_substitutions(...)`, and `topologically_sort_signals(...)` had no remaining callers on the `FlattenedDT` facade,
+  - the matching methods remain live inside `Backend::SystemVerilog`, and the active flow already reaches them there directly from `Orchestrator`, `FSM::HDL::Factorization::Fixpoint`, or backend-local calls,
+  - keeping the `FlattenedDT` delegates therefore advertised another fake ownership boundary and an uncalled compatibility surface rather than a real supported entrypoint.
+- Safety/compatibility:
+  - no active generation flow changed; the same backend factorization/substitution methods continue to run in the same places as before,
+  - the focused architecture regression now locks the absence of those helper names on live `FlattenedDT` objects,
+  - this slice therefore shrinks dead facade surface without changing factorization passes, substitution behavior, or HDL output.
+- Verification:
+  - syntax check for `FlattenedDT.pm` passes,
+  - focused regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=275`).
+- Next likely slices:
+  - rerun the remaining facade audit and confirm whether any coherent dead wrapper pocket still remains,
+  - if not, stop the cleanup lane and pivot back to the next live AST/CoreAST-first ownership seam.
 ## 2026-03-13: FlattenedDT dead utility/rendering facade delegate removal
 - Continued AST/CoreAST-first cleanup by deleting a dead `EnableGraph` utility/rendering helper pocket from the `FlattenedDT` facade.
 - Rationale:
