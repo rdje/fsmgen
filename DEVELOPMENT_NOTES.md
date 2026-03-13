@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: FlattenedDT dead filtering facade delegate removal
+- Continued AST/CoreAST-first cleanup by deleting a dead filtering-helper delegate pocket from the `FlattenedDT` facade.
+- Rationale:
+  - a fresh repo-wide call-graph audit showed `should_filter_consolidated_signal(...)`, `should_filter_ast_based(...)`, `is_simple_negation(...)`, `is_simple_comparison(...)`, and `is_signal_actually_used_in_final_expressions(...)` had no remaining callers on the `FlattenedDT` facade,
+  - the matching methods are still live inside `Backend::SystemVerilog`, but only as backend-local helpers used by the consolidated filtering path itself,
+  - keeping the facade delegates therefore advertised a fake ownership boundary and an uncalled compatibility surface rather than a real supported entrypoint.
+- Safety/compatibility:
+  - no active generation flow changed; the backend continues to use those helpers internally in the same way as before,
+  - the focused architecture regression now locks the absence of those helper names on live `FlattenedDT` objects,
+  - this slice therefore shrinks dead facade surface without changing backend filtering behavior or HDL output.
+- Verification:
+  - syntax check for `FlattenedDT.pm` passes,
+  - focused regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=208`).
+- Next likely slices:
+  - run one more final facade/backend audit for any last dead delegates,
+  - if nothing else is truly dead, pivot back to the next live AST/CoreAST-first ownership seam.
 ## 2026-03-13: FlattenedDT/backend dead mux/simple helper pocket removal
 - Continued AST/CoreAST-first cleanup by deleting a dead mux/simple helper pocket from both the `FlattenedDT` facade and the backend owner side.
 - Rationale:

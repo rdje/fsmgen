@@ -128,7 +128,12 @@ for my $dead_facade_helper (
         generate_flop_mux
         get_or_create_ast_signal_name
         is_complex_ast
+        is_signal_actually_used_in_final_expressions
         is_simple_ast_expression
+        is_simple_comparison
+        is_simple_negation
+        should_filter_ast_based
+        should_filter_consolidated_signal
         should_factor_ast
         set_explicit_reset_values
         parentheses_are_redundant

@@ -382,26 +382,6 @@ sub count_unary_negations_in_original_expressions {
     return $self->{backend_sv}->count_unary_negations_in_original_expressions();
 }
 
-sub should_filter_consolidated_signal ($self, $expression, $signal_name, $signal_info) {
-    return $self->{backend_sv}->should_filter_consolidated_signal($expression, $signal_name, $signal_info);
-}
-
-sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
-    return $self->{backend_sv}->should_filter_ast_based($ast, $signal_name, $signal_info);
-}
-
-sub is_simple_negation ($self, $ast) {
-    return $self->{backend_sv}->is_simple_negation($ast);
-}
-
-sub is_simple_comparison ($self, $ast) {
-    return $self->{backend_sv}->is_simple_comparison($ast);
-}
-
-sub is_signal_actually_used_in_final_expressions ($self, $signal_name) {
-    return $self->{backend_sv}->is_signal_actually_used_in_final_expressions($signal_name);
-}
-
 sub ast_contains_signal ($self, $ast, $signal_name) {
     return $self->{backend_sv}->ast_contains_signal($ast, $signal_name);
 }

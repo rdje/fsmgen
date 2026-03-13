@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT cleanup (retire dead filtering facade delegates)
+- Removed the dead filtering helper delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
+  - deleted `should_filter_consolidated_signal(...)`,
+  - deleted `should_filter_ast_based(...)`,
+  - deleted `is_simple_negation(...)`,
+  - deleted `is_simple_comparison(...)`,
+  - deleted `is_signal_actually_used_in_final_expressions(...)`.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation no longer exposes those backend-internal filtering helper names on the `FlattenedDT` facade.
+- Root cause / rationale:
+  - repo-wide call-graph auditing showed these names had no remaining facade callers anywhere in the active code or tests,
+  - the matching backend methods are still live but now serve only as backend-internal helpers, so the `FlattenedDT` delegates no longer represented a real ownership boundary,
+  - removing the dead delegates is safer than preserving an uncalled compatibility surface on the facade.
+- Scope remains behavior-preserving cleanup of dead compatibility surface; live backend filtering behavior is unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=62`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=208`)
 ### FlattenedDT/backend cleanup (retire dead mux/simple helper pocket)
 - Removed the dead mux/simple helper pocket from `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
   - deleted the `FlattenedDT` facade delegates `is_simple_ast_expression(...)`, `generate_comb_mux(...)`, and `generate_flop_mux(...)`,
