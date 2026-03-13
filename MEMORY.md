@@ -14,6 +14,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT/backend cleanup micro-slice (retire dead sub-expression analysis helpers)
+- Current worktree removes a small dead sub-expression analysis pocket from `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- Scope remains a small behavior-preserving cleanup slice:
+  - repo-wide call-graph auditing showed `analyze_ast_sub_expressions(...)` had no remaining callers anywhere in the active tree,
+  - that method was the only caller of `find_all_ast_sub_expressions(...)`, so the pair formed a self-contained dead helper island rather than a live backend seam,
+  - `t/10-ast-first-enable-structure.t` now asserts that live `FlattenedDT` and backend `SystemVerilog` objects no longer expose those dead helper names.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=185`, `PASS`)
+  - `prove -I perl t` (`Files=10`, `Tests=185`, `PASS`)
+- Immediate next direction after commit:
+  - run one more narrow audit on the remaining `FlattenedDT` facade / backend delegate edge for any final provably dead residue,
+  - if that audit comes up empty, switch back to the next live AST/CoreAST-first ownership seam instead of forcing more cleanup-only pruning.
 ## 2026-03-13: EnableGraph cleanup micro-slice (retire dead owner-only helper pocket)
 - Current worktree removes a small owner-only dead helper pocket from `perl/FSM/Synthesis/EnableGraph.pm`.
 - Scope remains a small behavior-preserving cleanup slice:

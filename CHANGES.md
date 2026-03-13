@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT/backend cleanup (retire dead sub-expression analysis helpers)
+- Removed the dead sub-expression analysis pocket from `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
+  - deleted the `FlattenedDT` facade delegates `analyze_ast_sub_expressions(...)` and `find_all_ast_sub_expressions(...)`,
+  - deleted the matching backend implementations `analyze_ast_sub_expressions(...)` and `find_all_ast_sub_expressions(...)`.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation no longer exposes those dead helper names on either the `FlattenedDT` facade or the backend `SystemVerilog` helper object.
+- Root cause / rationale:
+  - repo-wide call-graph auditing showed `analyze_ast_sub_expressions(...)` had no remaining callers anywhere in the active code or tests,
+  - `find_all_ast_sub_expressions(...)` only existed to support that already-dead analysis entrypoint, so the pair formed a self-contained dead helper island,
+  - removing both sides together is safer than preserving an uncalled alternate analysis surface in either the facade or backend.
+- Scope remains behavior-preserving cleanup of dead compatibility surface; live AST/CoreAST generation, logical-operation counting, and backend emission behavior are unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=185`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=185`)
 ### EnableGraph cleanup (retire dead owner-only helper pocket)
 - Removed the dead owner-only helper pocket from `perl/FSM/Synthesis/EnableGraph.pm`:
   - deleted `get_or_create_global_expression(...)`,

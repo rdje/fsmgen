@@ -182,14 +182,6 @@ sub collect_all_wen_en_ast_expressions ($self) {
     return $self->{backend_sv}->collect_all_wen_en_ast_expressions();
 }
 
-sub analyze_ast_sub_expressions ($self, $ast_expressions) {
-    return $self->{backend_sv}->analyze_ast_sub_expressions($ast_expressions);
-}
-
-sub find_all_ast_sub_expressions ($self, $ast) {
-    return $self->{backend_sv}->find_all_ast_sub_expressions($ast);
-}
-
 sub count_binary_logical_operation_occurrences ($self) {
     return $self->{backend_sv}->count_binary_logical_operation_occurrences();
 }

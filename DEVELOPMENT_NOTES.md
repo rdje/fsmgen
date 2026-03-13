@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: FlattenedDT/backend dead sub-expression analysis helper removal
+- Continued AST/CoreAST-first cleanup by deleting a small sub-expression-analysis pocket that had become dead on both the `FlattenedDT` facade and the backend owner side.
+- Rationale:
+  - a follow-up repo-wide call-graph audit showed `analyze_ast_sub_expressions(...)` had no remaining callers anywhere in the active tree,
+  - `find_all_ast_sub_expressions(...)` only existed to serve that already-dead analysis entrypoint, so together they no longer described a real live boundary or backend service,
+  - removing the facade delegates and backend implementations together is more honest than preserving an uncalled analysis API that the active logical-operation counting path does not use.
+- Safety/compatibility:
+  - no active generation flow changed; live logical-operation counting still runs through `collect_all_wen_en_ast_expressions(...)`, `_count_logical_ops_in_ast(...)`, `_is_factorizable_sub_expression(...)`, and `is_simple_ast_expression(...)`,
+  - the focused architecture regression now locks the absence of the dead helper names on both live `FlattenedDT` and live backend `SystemVerilog` objects,
+  - this slice therefore shrinks dead facade/backend surface without widening any ownership seam or altering HDL output.
+- Verification:
+  - syntax checks for `FlattenedDT.pm` and `Backend/SystemVerilog.pm` pass,
+  - focused regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=185`).
+- Next likely slices:
+  - run one more narrow audit of the remaining `FlattenedDT` facade / backend delegate edge for any final provably dead residue,
+  - if that audit is empty, pivot back to the next live AST/CoreAST-first ownership seam instead of forcing more cleanup-only helper deletions.
 ## 2026-03-13: EnableGraph dead owner-only helper removal
 - Continued AST/CoreAST-first cleanup by deleting a small helper pocket that had become dead even on the `EnableGraph` owner side.
 - Rationale:

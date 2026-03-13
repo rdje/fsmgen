@@ -119,7 +119,9 @@ for my $dead_helper (
 
 for my $dead_facade_helper (
     qw(
+        analyze_ast_sub_expressions
         create_condition_expression_signal_name
+        find_all_ast_sub_expressions
         set_explicit_reset_values
         parentheses_are_redundant
         generate_expression_from_signal_name
@@ -128,6 +130,18 @@ for my $dead_facade_helper (
     ok(
         !$hdl->can($dead_facade_helper),
         "live FlattenedDT facade no longer exposes dead helper '$dead_facade_helper'",
+    );
+}
+
+for my $dead_backend_helper (
+    qw(
+        analyze_ast_sub_expressions
+        find_all_ast_sub_expressions
+    )
+) {
+    ok(
+        !$hdl->{backend_sv}->can($dead_backend_helper),
+        "live SystemVerilog backend no longer exposes dead helper '$dead_backend_helper'",
     );
 }
 
