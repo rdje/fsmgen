@@ -37,6 +37,7 @@ FSM
 );
 
 my $hdl_one = $hdl_gen->generate_systemverilog($fsm_one);
+my $state_plan_one = $hdl_gen->{enable_graph}->build_state_register_plan($fsm_one);
 
 like(
     $hdl_one,
@@ -55,6 +56,15 @@ is(
     $hdl_gen->{dt_enables}->{'-alpha_dt'}->to_systemverilog,
     "1'b1",
     'first generation keeps the standalone DT enable condition semantically true',
+);
+ok(
+    !$state_plan_one->{has_state_registers},
+    'standalone-DT-only generation keeps state register planning disabled',
+);
+is(
+    scalar(@{$state_plan_one->{encodings} || []}),
+    0,
+    'standalone-DT-only generation exposes no state encodings in the state plan',
 );
 ok(
     exists $hdl_gen->{lhs_assignments}->{OUTA},
@@ -86,6 +96,7 @@ FSM
 );
 
 my $hdl_two = $hdl_gen->generate_systemverilog($fsm_two);
+my $state_plan_two = $hdl_gen->{enable_graph}->build_state_register_plan($fsm_two);
 
 ok(
     !exists $hdl_gen->{dt_enables}->{'-alpha_dt'},
@@ -103,6 +114,10 @@ is(
     $hdl_gen->{dt_enables}->{'-beta_dt'}->to_systemverilog,
     "1'b1",
     'second generation keeps the standalone DT enable condition semantically true',
+);
+ok(
+    !$state_plan_two->{has_state_registers},
+    'reused generation keeps state register planning disabled for the second standalone-DT-only FSM',
 );
 ok(
     !exists $hdl_gen->{lhs_assignments}->{OUTA},

@@ -49,6 +49,7 @@ my $fsm_module = $adapter->parse_fsm($raw_ast);
 my $phase1_gen = FSM::HDL::FlattenedDT->new(debug => 0);
 $phase1_gen->{enable_graph}->set_fsm_module_reference($fsm_module);
 $phase1_gen->{orchestrator}->flatten_all_decision_trees($fsm_module);
+my $state_plan = $phase1_gen->{enable_graph}->build_state_register_plan($fsm_module);
 
 ok(
     exists $phase1_gen->{lhs_assignments}->{OUT},
@@ -141,6 +142,25 @@ is(
     $phase1_gen->{lhs_ast_map}->{next_state}->to_systemverilog,
     'next_state',
     'synthetic next_state AST renders as next_state',
+);
+ok(
+    $state_plan->{has_state_registers},
+    'state register plan stays enabled for regular-state FSMs',
+);
+is(
+    $state_plan->{reset_state_name},
+    'S0',
+    'state register plan keeps the first regular state as reset state',
+);
+is(
+    $state_plan->{state_bits},
+    2,
+    'state register plan preserves the current two-state encoding width contract',
+);
+is(
+    join(',', map { $_->{localparam_name} } @{$state_plan->{encodings} || []}),
+    'S0,S1',
+    'state register plan preserves regular-state encoding order',
 );
 
 my $hdl_gen = FSM::HDL::FlattenedDT->new(debug => 0);

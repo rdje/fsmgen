@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: EnableGraph state register planning ownership
+- Continued the live synthesis ownership convergence by moving state-structure planning under `EnableGraph`.
+- Rationale:
+  - `Backend::SystemVerilog::generate_state_encoding(...)` and `generate_state_register(...)` were still recomputing regular-state membership, encoding order, state-bit width, and reset-state selection inline,
+  - those same decisions were also implicitly duplicated in other live synthesis paths such as `build_internal_signal_declaration_plan(...)` and `get_fsm_reset_state(...)`,
+  - the next truthful move was therefore to let `EnableGraph` build one shared state plan while the backend stays responsible only for rendering that plan.
+- Structural outcome:
+  - `EnableGraph::build_state_register_plan(...)` now owns the live state-structure plan,
+  - `Backend::SystemVerilog` now renders state encodings and the dedicated state-register block from that plan,
+  - `EnableGraph` now reuses the same plan for reset-state lookup and for deciding when `current_state` / `next_state` should be treated as already-declared dedicated state signals.
+- Safety/compatibility:
+  - no intended HDL behavior change; only the planning/rendering boundary moved,
+  - the focused regressions now lock both sides of the contract: regular-state FSMs keep the current encoding/reset-state behavior, and standalone-DT-only FSMs keep state-register planning disabled,
+  - the full regression suite stayed green, so the owner move preserved active behavior.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `Backend/SystemVerilog.pm` pass,
+  - focused regressions `t/10-ast-first-enable-structure.t`, `t/11-flatteneddt-generation-reset.t`, and `t/12-enablegraph-capture-registry.t` pass,
+  - full regression remains green (`prove -I perl t` -> `PASS`).
+- Next likely slices:
+  - re-audit whether any remaining backend stage still computes synthesis-domain structure instead of rendering owner-provided plans,
+  - if the planning/rendering lane is nearly exhausted, pivot to the next truthful live runtime seam instead of forcing another structural extraction.
 ## 2026-03-14: EnableGraph module declaration planning ownership
 - Continued the live synthesis ownership convergence by moving module/interface declaration planning under `EnableGraph`.
 - Rationale:

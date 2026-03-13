@@ -728,6 +728,33 @@ sub generate_signal_assignments($self, $fsm_module) {
     
     return $hdl;
 }
+sub build_state_register_plan($self, $fsm_module = undef) {
+    my $ctx = $self->{flattened_dt};
+    $fsm_module //= $ctx->{fsm_module};
+
+    my @regular_states = $fsm_module
+        ? grep { $_->name !~ /^-/ } @{$fsm_module->states}
+        : ();
+    my $state_count = scalar(@regular_states);
+    my $state_bits = $state_count > 1 ? int(log($state_count) / log(2)) + 1 : 1;
+    my @encodings;
+
+    for my $i (0 .. $#regular_states) {
+        push @encodings, {
+            state_name => $regular_states[$i]->name,
+            localparam_name => uc($regular_states[$i]->name),
+            encoded_value => $i,
+        };
+    }
+
+    return {
+        has_state_registers => $state_count > 0 ? 1 : 0,
+        state_count => $state_count,
+        state_bits => $state_bits,
+        reset_state_name => @encodings ? $encodings[0]{localparam_name} : 'IDLE',
+        encodings => \@encodings,
+    };
+}
 sub build_internal_signal_declaration_plan($self, $fsm_module, $declared_ports = undef) {
     my $ctx = $self->{flattened_dt};
     my %declared_ports = ();
@@ -740,9 +767,8 @@ sub build_internal_signal_declaration_plan($self, $fsm_module, $declared_ports =
     my %signal_decls;
     my %aux_decls;
 
-    my @regular_states = grep { $_->name !~ /^-/ } @{$fsm_module->states};
-    my $has_state_registers = scalar(@regular_states) > 0;
-    if ($has_state_registers) {
+    my $state_plan = $self->build_state_register_plan($fsm_module);
+    if ($state_plan->{has_state_registers}) {
         $declared_ports{current_state} = 1;
         $declared_ports{next_state} = 1;
     }
@@ -1291,9 +1317,9 @@ sub get_fsm_reset_state($self) {
     
     # If we have access to the FSM module, get the first regular state
     if ($ctx->{fsm_module}) {
-        my @regular_states = grep { $_->name !~ /^-/ } @{$ctx->{fsm_module}->states};
-        if (@regular_states) {
-            my $reset_state = uc($regular_states[0]->name);
+        my $state_plan = $self->build_state_register_plan($ctx->{fsm_module});
+        if ($state_plan->{has_state_registers}) {
+            my $reset_state = $state_plan->{reset_state_name};
             fsm_debug("FSM_RESET_STATE: Using first state as reset: '$reset_state'", 3);
             return $reset_state;
         }

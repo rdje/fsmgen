@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### FlattenedDT live ownership (EnableGraph state register planning)
+- Moved state-structure planning off backend-local regular-state scans and under `perl/FSM/Synthesis/EnableGraph.pm`.
+- Added `build_state_register_plan(...)` to `EnableGraph`, so it now owns:
+  - whether the FSM has regular states and therefore dedicated state registers,
+  - regular-state encoding order and localparam names,
+  - the current state-bit width contract,
+  - and the reset-state localparam name used by the dedicated state register.
+- Updated `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` so `generate_state_encoding(...)` and `generate_state_register(...)` now render the owner-provided state plan instead of recomputing regular-state structure locally.
+- Updated `build_internal_signal_declaration_plan(...)` and `get_fsm_reset_state(...)` in `EnableGraph` to reuse the same state plan, removing duplicate regular-state scans from the live path.
+- Extended focused regression coverage:
+  - `t/11-flatteneddt-generation-reset.t` now inspects the state plan directly for standalone-DT-only FSMs,
+  - `t/12-enablegraph-capture-registry.t` now inspects the state plan directly for regular-state FSMs,
+  - `t/10-ast-first-enable-structure.t` now asserts `EnableGraph` owns state register planning on the live path.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t t/11-flatteneddt-generation-reset.t t/12-enablegraph-capture-registry.t` (pass)
+  - `prove -I perl t` (pass)
 ### FlattenedDT live ownership (EnableGraph module declaration planning)
 - Moved module/interface declaration planning off backend-local synthesis decisions and under `perl/FSM/Synthesis/EnableGraph.pm`.
 - Added `build_module_declaration_plan(...)` to `EnableGraph`, so it now owns the live interface plan derived from signal and driven-signal classification, including:

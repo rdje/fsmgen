@@ -14,6 +14,25 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph state register planning)
+- Current worktree continues the same live synthesis ownership lane and moves state-structure planning under `EnableGraph`.
+- Scope of this slice:
+  - `perl/FSM/Synthesis/EnableGraph.pm` now owns `build_state_register_plan(...)`,
+  - that plan now decides whether state registers exist at all, the regular-state encoding order, state-bit width, and the reset-state localparam name,
+  - `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` now renders state encoding and state-register HDL from that owner-provided plan instead of recomputing regular-state structure locally,
+  - `build_internal_signal_declaration_plan(...)` and `get_fsm_reset_state(...)` now also reuse the same state plan instead of maintaining separate regular-state scans.
+- Regression coverage update:
+  - `t/11-flatteneddt-generation-reset.t` now inspects the state plan for standalone-DT-only FSMs and locks that reused generators keep state-register planning disabled there,
+  - `t/12-enablegraph-capture-registry.t` now inspects the state plan for a regular-state FSM and locks reset-state selection plus encoding order,
+  - `t/10-ast-first-enable-structure.t` now asserts that `EnableGraph` owns state register planning on the live path.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t t/11-flatteneddt-generation-reset.t t/12-enablegraph-capture-registry.t` (`PASS`)
+  - `prove -I perl t` (`PASS`)
+- Immediate next direction after commit:
+  - re-audit whether any remaining backend stage still computes synthesis-domain structure instead of rendering an owner-provided plan,
+  - if the planning/rendering lane is now thin, pivot to the next truthful live runtime seam instead of stretching it artificially.
 ## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph module declaration planning)
 - Current worktree continues the same live synthesis ownership lane and moves module/interface declaration planning under `EnableGraph`.
 - Scope of this slice:

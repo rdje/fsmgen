@@ -271,6 +271,10 @@ ok(
     $hdl->{enable_graph}->can('build_module_declaration_plan'),
     'live EnableGraph owns module declaration planning',
 );
+ok(
+    $hdl->{enable_graph}->can('build_state_register_plan'),
+    'live EnableGraph owns state register planning',
+);
 
 for my $dead_enable_graph_helper (
     qw(
