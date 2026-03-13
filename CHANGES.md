@@ -1,6 +1,45 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT cleanup (retire dead utility/rendering facade delegates)
+- Removed a dead `EnableGraph` utility/rendering helper delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
+  - deleted `generate_ast_based_signal_name(...)`,
+  - deleted `extract_signal_name_from_ast(...)`,
+  - deleted `map_operator_to_name(...)`,
+  - deleted `is_arithmetic_operation(...)`,
+  - deleted `is_logical_operation(...)`,
+  - deleted `should_factor_logical_operation(...)`,
+  - deleted `contains_frequently_used_operations(...)`,
+  - deleted `get_driven_signals(...)`,
+  - deleted `track_ast_intermediate_signals(...)`,
+  - deleted `is_intermediate_signal(...)`,
+  - deleted `is_signal_ast_based_intermediate(...)`,
+  - deleted `_ast_contains_factorizable_operators(...)`,
+  - deleted `_signal_name_indicates_ast_operators(...)`,
+  - deleted `ast_to_systemverilog(...)`,
+  - deleted `_ast_to_systemverilog_internal(...)`,
+  - deleted `_render_binary_op(...)`,
+  - deleted `_render_unary_op(...)`,
+  - deleted `_choose_operator_symbol(...)`,
+  - deleted `_operand_is_single_bit(...)`,
+  - deleted `_signal_is_single_bit(...)`,
+  - deleted `_get_operator_precedence(...)`,
+  - deleted `_needs_parentheses(...)`,
+  - deleted `_map_binary_operator(...)`,
+  - deleted `_map_unary_operator(...)`,
+  - deleted `_operand_needs_parens_for_negation(...)`,
+  - deleted `get_intermediate_signal_expression(...)`.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation no longer exposes those utility/rendering helper names on the `FlattenedDT` facade.
+- Root cause / rationale:
+  - repo-wide call-graph auditing showed these names had no remaining facade callers anywhere in the active code or tests,
+  - the matching methods remain live in `EnableGraph`, so the `FlattenedDT` delegates had become dead compatibility surface rather than a real ownership seam,
+  - `get_signal_assignment_type(...)` was intentionally kept because `t/03-assignment-intent-metadata.t` still exercises it as part of the tested `FlattenedDT` surface.
+- Scope remains behavior-preserving cleanup of dead compatibility surface; live `EnableGraph` utility/rendering behavior is unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t/03-assignment-intent-metadata.t` (pass: `Files=1`, `Tests=62`)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=116`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=262`)
 ### FlattenedDT cleanup (retire dead orchestrator/backend facade pocket)
 - Removed the dead orchestrator/backend helper delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
   - deleted `flatten_all_decision_trees(...)`,

@@ -14,6 +14,21 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead utility/rendering facade delegates)
+- Current worktree removes a dead `EnableGraph` utility/rendering helper pocket from the `FlattenedDT` facade.
+- Scope remains a small behavior-preserving cleanup slice:
+  - repo-wide call-graph auditing showed `generate_ast_based_signal_name(...)`, `extract_signal_name_from_ast(...)`, `map_operator_to_name(...)`, `is_arithmetic_operation(...)`, `is_logical_operation(...)`, `should_factor_logical_operation(...)`, `contains_frequently_used_operations(...)`, `get_driven_signals(...)`, `track_ast_intermediate_signals(...)`, `is_intermediate_signal(...)`, `is_signal_ast_based_intermediate(...)`, `_ast_contains_factorizable_operators(...)`, `_signal_name_indicates_ast_operators(...)`, `ast_to_systemverilog(...)`, `_ast_to_systemverilog_internal(...)`, `_render_binary_op(...)`, `_render_unary_op(...)`, `_choose_operator_symbol(...)`, `_operand_is_single_bit(...)`, `_signal_is_single_bit(...)`, `_get_operator_precedence(...)`, `_needs_parentheses(...)`, `_map_binary_operator(...)`, `_map_unary_operator(...)`, `_operand_needs_parens_for_negation(...)`, and `get_intermediate_signal_expression(...)` had no remaining callers on the `FlattenedDT` facade,
+  - the matching methods remain live in `EnableGraph`, so the facade delegates were dead compatibility surface rather than a real ownership seam,
+  - `get_signal_assignment_type(...)` stays on the facade because `t/03-assignment-intent-metadata.t` still exercises it as part of the tested public surface,
+  - `t/10-ast-first-enable-structure.t` now asserts that live `FlattenedDT` objects no longer expose those utility/rendering helper names.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t/03-assignment-intent-metadata.t` (`Files=1`, `Tests=62`, `PASS`)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=116`, `PASS`)
+  - `prove -I perl t` (`Files=10`, `Tests=262`, `PASS`)
+- Immediate next direction after commit:
+  - re-run the remaining facade audit and confirm whether any wrappers are still truly dead rather than just thin compatibility veneers,
+  - if the cleanup lane is no longer yielding coherent dead pockets, pivot back to the next live AST/CoreAST-first ownership seam.
 ## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead orchestrator/backend facade pocket)
 - Current worktree removes a dead orchestrator/backend helper pocket from the `FlattenedDT` facade.
 - Scope remains a small behavior-preserving cleanup slice:

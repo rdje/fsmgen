@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: FlattenedDT dead utility/rendering facade delegate removal
+- Continued AST/CoreAST-first cleanup by deleting a dead `EnableGraph` utility/rendering helper pocket from the `FlattenedDT` facade.
+- Rationale:
+  - a fresh repo-wide call-graph audit showed `generate_ast_based_signal_name(...)`, `extract_signal_name_from_ast(...)`, `map_operator_to_name(...)`, `is_arithmetic_operation(...)`, `is_logical_operation(...)`, `should_factor_logical_operation(...)`, `contains_frequently_used_operations(...)`, `get_driven_signals(...)`, `track_ast_intermediate_signals(...)`, `is_intermediate_signal(...)`, `is_signal_ast_based_intermediate(...)`, `_ast_contains_factorizable_operators(...)`, `_signal_name_indicates_ast_operators(...)`, `ast_to_systemverilog(...)`, `_ast_to_systemverilog_internal(...)`, `_render_binary_op(...)`, `_render_unary_op(...)`, `_choose_operator_symbol(...)`, `_operand_is_single_bit(...)`, `_signal_is_single_bit(...)`, `_get_operator_precedence(...)`, `_needs_parentheses(...)`, `_map_binary_operator(...)`, `_map_unary_operator(...)`, `_operand_needs_parens_for_negation(...)`, and `get_intermediate_signal_expression(...)` had no remaining callers on the `FlattenedDT` facade,
+  - the matching methods remain live inside `EnableGraph`, so keeping the delegates on `FlattenedDT` advertised another fake ownership boundary and an uncalled compatibility surface rather than a real entrypoint,
+  - `get_signal_assignment_type(...)` was intentionally left in place because the assignment-intent regression still treats it as part of the tested `FlattenedDT` surface.
+- Safety/compatibility:
+  - no active generation flow changed; the same `EnableGraph` utility/rendering methods continue to run in the same places as before,
+  - the focused architecture regression now locks the absence of those helper names on live `FlattenedDT` objects,
+  - the assignment-intent regression guards the remaining supported `get_signal_assignment_type(...)` seam,
+  - this slice therefore shrinks dead facade surface without changing AST rendering, intermediate-signal tracking, or HDL output.
+- Verification:
+  - syntax check for `FlattenedDT.pm` passes,
+  - focused regressions `t/03-assignment-intent-metadata.t` and `t/10-ast-first-enable-structure.t` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=262`).
+- Next likely slices:
+  - rerun the remaining facade audit and confirm whether any coherent dead wrapper pocket still remains,
+  - if not, stop the cleanup lane and pivot back to the next live AST/CoreAST-first ownership seam.
 ## 2026-03-13: FlattenedDT dead orchestrator/backend facade pocket removal
 - Continued AST/CoreAST-first cleanup by deleting a dead orchestrator/backend helper pocket from the `FlattenedDT` facade.
 - Rationale:

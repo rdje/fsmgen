@@ -127,20 +127,24 @@ for my $dead_facade_helper (
         convert_condition_to_ast
         convert_test_value_to_ast
         create_condition_expression_signal_name
+        extract_signal_name_from_ast
         extract_lhs_name_from_ast
         extract_rhs_from_expression
         find_all_ast_sub_expressions
         flatten_all_decision_trees
         flatten_decision_tree
+        generate_ast_based_signal_name
         generate_consolidated_intermediate_signals
         generate_comb_mux
         generate_enable_conditions
         generate_header
+        generate_intermediate_signal_expression
         generate_module_declaration
         generate_state_encoding
         generate_state_register
         get_default_value
         get_default_value_from_ast
+        get_driven_signals
         get_explicit_reset_value
         get_fsm_reset_state
         generate_flop_mux
@@ -148,10 +152,15 @@ for my $dead_facade_helper (
         get_reset_value
         get_reset_value_from_ast
         is_complex_ast
+        is_arithmetic_operation
+        is_intermediate_signal
+        is_logical_operation
         is_signal_actually_used_in_final_expressions
+        is_signal_ast_based_intermediate
         is_simple_ast_expression
         is_simple_comparison
         is_simple_negation
+        map_operator_to_name
         normalize_rhs_logic_level
         record_assignment_from_ast
         record_transition_from_ast
@@ -159,12 +168,29 @@ for my $dead_facade_helper (
         set_fsm_module_reference
         should_filter_ast_based
         should_filter_consolidated_signal
+        should_factor_logical_operation
         should_factor_ast
         set_explicit_reset_values
         parentheses_are_redundant
+        contains_frequently_used_operations
+        track_ast_intermediate_signals
         _count_logical_ops_in_ast
         _is_factorizable_sub_expression
+        _ast_contains_factorizable_operators
+        _ast_to_systemverilog_internal
+        _choose_operator_symbol
+        _get_operator_precedence
         _traverse_ast_for_complexity
+        _map_binary_operator
+        _map_unary_operator
+        _needs_parentheses
+        _operand_is_single_bit
+        _operand_needs_parens_for_negation
+        _render_binary_op
+        _render_unary_op
+        _signal_is_single_bit
+        _signal_name_indicates_ast_operators
+        ast_to_systemverilog
         generate_wen_en_signals
         generate_expression_from_signal_name
     )

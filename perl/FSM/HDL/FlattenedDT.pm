@@ -117,36 +117,8 @@ sub fallback_register_analysis_from_assignments ($self, $lhs_name) {
     return $self->{enable_graph}->fallback_register_analysis_from_assignments($lhs_name);
 }
 
-sub generate_ast_based_signal_name ($self, $ast) {
-    return $self->{enable_graph}->generate_ast_based_signal_name($ast);
-}
-
-sub extract_signal_name_from_ast ($self, $signal_ast) {
-    return $self->{enable_graph}->extract_signal_name_from_ast($signal_ast);
-}
-
-sub map_operator_to_name ($self, $operator) {
-    return $self->{enable_graph}->map_operator_to_name($operator);
-}
-
 sub generate_intermediate_signals ($self, $fsm_module) {
     return $self->{backend_sv}->generate_intermediate_signals($fsm_module);
-}
-
-sub is_arithmetic_operation ($self, $ast) {
-    return $self->{enable_graph}->is_arithmetic_operation($ast);
-}
-
-sub is_logical_operation ($self, $ast) {
-    return $self->{enable_graph}->is_logical_operation($ast);
-}
-
-sub should_factor_logical_operation ($self, $ast) {
-    return $self->{enable_graph}->should_factor_logical_operation($ast);
-}
-
-sub contains_frequently_used_operations ($self, $ast) {
-    return $self->{enable_graph}->contains_frequently_used_operations($ast);
 }
 
 sub get_pulse_delay_cycles_for_lhs ($self, $lhs, $lhs_analysis) {
@@ -161,88 +133,8 @@ sub get_signal_assignment_type ($self, $lhs, $lhs_analysis) {
     return $self->{enable_graph}->get_signal_assignment_type($lhs, $lhs_analysis);
 }
 
-sub get_driven_signals ($self) {
-    return $self->{enable_graph}->get_driven_signals();
-}
-
 sub get_signal_info ($self, $lhs) {
     return $self->{enable_graph}->get_signal_info($lhs);
-}
-
-sub clean_intermediate_expression ($self, $expression) {
-    return $self->{enable_graph}->clean_intermediate_expression($expression);
-}
-
-sub track_ast_intermediate_signals ($self, $ast) {
-    return $self->{enable_graph}->track_ast_intermediate_signals($ast);
-}
-
-sub is_intermediate_signal ($self, $signal_name) {
-    return $self->{enable_graph}->is_intermediate_signal($signal_name);
-}
-
-sub is_signal_ast_based_intermediate ($self, $signal_name) {
-    return $self->{enable_graph}->is_signal_ast_based_intermediate($signal_name);
-}
-
-sub _ast_contains_factorizable_operators ($self, $ast) {
-    return $self->{enable_graph}->_ast_contains_factorizable_operators($ast);
-}
-
-sub _signal_name_indicates_ast_operators ($self, $signal_name) {
-    return $self->{enable_graph}->_signal_name_indicates_ast_operators($signal_name);
-}
-
-sub ast_to_systemverilog ($self, $ast) {
-    return $self->{enable_graph}->ast_to_systemverilog($ast);
-}
-
-sub _ast_to_systemverilog_internal ($self, $ast, $parent_precedence) {
-    return $self->{enable_graph}->_ast_to_systemverilog_internal($ast, $parent_precedence);
-}
-
-sub _render_binary_op ($self, $ast, $parent_precedence) {
-    return $self->{enable_graph}->_render_binary_op($ast, $parent_precedence);
-}
-
-sub _render_unary_op ($self, $ast) {
-    return $self->{enable_graph}->_render_unary_op($ast);
-}
-
-sub _choose_operator_symbol ($self, $operator, $left, $right) {
-    return $self->{enable_graph}->_choose_operator_symbol($operator, $left, $right);
-}
-
-sub _operand_is_single_bit ($self, $ast) {
-    return $self->{enable_graph}->_operand_is_single_bit($ast);
-}
-
-sub _signal_is_single_bit ($self, $name) {
-    return $self->{enable_graph}->_signal_is_single_bit($name);
-}
-
-sub _get_operator_precedence ($self, $operator) {
-    return $self->{enable_graph}->_get_operator_precedence($operator);
-}
-
-sub _needs_parentheses ($self, $my_precedence, $parent_precedence) {
-    return $self->{enable_graph}->_needs_parentheses($my_precedence, $parent_precedence);
-}
-
-sub _map_binary_operator ($self, $operator) {
-    return $self->{enable_graph}->_map_binary_operator($operator);
-}
-
-sub _map_unary_operator ($self, $operator) {
-    return $self->{enable_graph}->_map_unary_operator($operator);
-}
-
-sub _operand_needs_parens_for_negation ($self, $operand) {
-    return $self->{enable_graph}->_operand_needs_parens_for_negation($operand);
-}
-
-sub get_intermediate_signal_expression ($self, $signal_name) {
-    return $self->{enable_graph}->get_intermediate_signal_expression($signal_name);
 }
 
 =head2 feed_asts_to_factorizer($factorizer)
