@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT/EnableGraph cleanup (retire dead AST helper pocket)
+- Removed the dead AST helper pocket from `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/Synthesis/EnableGraph.pm`:
+  - deleted the `FlattenedDT` facade delegates `get_or_create_ast_signal_name(...)`, `canonicalize_expression(...)`, `is_complex_ast(...)`, `should_factor_ast(...)`, `analyze_ast_complexity(...)`, and `_traverse_ast_for_complexity(...)`,
+  - deleted the matching `EnableGraph` owner methods `get_or_create_ast_signal_name(...)`, `canonicalize_expression(...)`, `is_complex_ast(...)`, `should_factor_ast(...)`, `analyze_ast_complexity(...)`, and `_traverse_ast_for_complexity(...)`.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation no longer exposes those dead helper names on either the `FlattenedDT` facade or the `EnableGraph` helper object.
+- Root cause / rationale:
+  - repo-wide call-graph auditing showed this entire AST helper pocket had no remaining callers anywhere in the active code or tests,
+  - `is_complex_ast(...)` and `_traverse_ast_for_complexity(...)` were only still used by the other already-dead methods in that same pocket, so the slice removes the owner-local chain instead of leaving half of it behind,
+  - removing both the owner methods and their matching facade delegates together is safer than preserving an uncalled alternate AST analysis/naming surface.
+- Scope remains behavior-preserving cleanup of dead compatibility surface; live AST/CoreAST generation, intermediate naming, factorization, and backend emission behavior are unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=51`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=197`)
 ### FlattenedDT/backend cleanup (retire dead sub-expression analysis helpers)
 - Removed the dead sub-expression analysis pocket from `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
   - deleted the `FlattenedDT` facade delegates `analyze_ast_sub_expressions(...)` and `find_all_ast_sub_expressions(...)`,

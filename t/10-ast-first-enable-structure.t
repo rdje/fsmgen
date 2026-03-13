@@ -120,10 +120,16 @@ for my $dead_helper (
 for my $dead_facade_helper (
     qw(
         analyze_ast_sub_expressions
+        analyze_ast_complexity
+        canonicalize_expression
         create_condition_expression_signal_name
         find_all_ast_sub_expressions
+        get_or_create_ast_signal_name
+        is_complex_ast
+        should_factor_ast
         set_explicit_reset_values
         parentheses_are_redundant
+        _traverse_ast_for_complexity
         generate_expression_from_signal_name
     )
 ) {
@@ -147,13 +153,19 @@ for my $dead_backend_helper (
 
 for my $dead_enable_graph_helper (
     qw(
+        analyze_ast_complexity
+        canonicalize_expression
         create_condition_expression_signal_name
+        get_or_create_ast_signal_name
         get_or_create_global_expression
+        is_complex_ast
         needs_parentheses
+        should_factor_ast
         should_factor_condition
         signal_uses_register_assignment
         set_explicit_reset_values
         parentheses_are_redundant
+        _traverse_ast_for_complexity
         generate_expression_from_signal_name
     )
 ) {

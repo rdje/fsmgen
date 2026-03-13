@@ -128,10 +128,6 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
     return $self->{orchestrator}->flatten_decision_tree($dt_name, $dt_node, $condition_stack);
 }
 
-sub get_or_create_ast_signal_name ($self, $ast) {
-    return $self->{enable_graph}->get_or_create_ast_signal_name($ast);
-}
-
 sub generate_ast_based_signal_name ($self, $ast) {
     return $self->{enable_graph}->generate_ast_based_signal_name($ast);
 }
@@ -289,26 +285,6 @@ sub record_transition_from_ast ($self, $dt_name, $transition_node, $condition_st
 
 sub extract_rhs_from_expression ($self, $expr) {
     return $self->{orchestrator}->extract_rhs_from_expression($expr);
-}
-
-sub is_complex_ast ($self, $ast) {
-    return $self->{enable_graph}->is_complex_ast($ast);
-}
-
-sub canonicalize_expression ($self, $expression) {
-    return $self->{enable_graph}->canonicalize_expression($expression);
-}
-
-sub should_factor_ast ($self, $ast) {
-    return $self->{enable_graph}->should_factor_ast($ast);
-}
-
-sub analyze_ast_complexity ($self, $ast) {
-    return $self->{enable_graph}->analyze_ast_complexity($ast);
-}
-
-sub _traverse_ast_for_complexity ($self, $node, $result, $current_depth) {
-    return $self->{enable_graph}->_traverse_ast_for_complexity($node, $result, $current_depth);
 }
 
 sub clean_intermediate_expression ($self, $expression) {

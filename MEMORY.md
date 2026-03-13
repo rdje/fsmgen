@@ -14,6 +14,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT/EnableGraph cleanup micro-slice (retire dead AST helper pocket)
+- Current worktree removes a dead AST helper pocket from `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/Synthesis/EnableGraph.pm`.
+- Scope remains a small behavior-preserving cleanup slice:
+  - repo-wide call-graph auditing showed `get_or_create_ast_signal_name(...)`, `canonicalize_expression(...)`, `is_complex_ast(...)`, `should_factor_ast(...)`, `analyze_ast_complexity(...)`, and `_traverse_ast_for_complexity(...)` had no remaining callers anywhere in the active tree,
+  - `is_complex_ast(...)` and `_traverse_ast_for_complexity(...)` were only still alive through dead owner-local callers inside that same pocket, so removing the whole pocket together is safer than leaving a partially stranded cluster,
+  - `t/10-ast-first-enable-structure.t` now asserts that live `FlattenedDT` and `EnableGraph` objects no longer expose those dead helper names.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=51`, `PASS`)
+  - `prove -I perl t` (`Files=10`, `Tests=197`, `PASS`)
+- Immediate next direction after commit:
+  - continue the narrow dead-surface audit on the remaining `FlattenedDT` facade / backend delegate edge, especially small backend-owned wrappers like dead mux/factorization helpers,
+  - if that audit comes up empty, switch back to the next live AST/CoreAST-first ownership seam instead of forcing more cleanup-only slices.
 ## 2026-03-13: FlattenedDT/backend cleanup micro-slice (retire dead sub-expression analysis helpers)
 - Current worktree removes a small dead sub-expression analysis pocket from `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - Scope remains a small behavior-preserving cleanup slice:

@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: FlattenedDT/EnableGraph dead AST helper pocket removal
+- Continued AST/CoreAST-first cleanup by deleting a dead AST helper pocket from both the `FlattenedDT` facade and the `EnableGraph` owner side.
+- Rationale:
+  - a fresh repo-wide call-graph audit showed `get_or_create_ast_signal_name(...)`, `canonicalize_expression(...)`, `is_complex_ast(...)`, `should_factor_ast(...)`, `analyze_ast_complexity(...)`, and `_traverse_ast_for_complexity(...)` had no remaining callers anywhere in the active tree,
+  - the pocket was self-contained: `is_complex_ast(...)` and `_traverse_ast_for_complexity(...)` were only still reachable through the other already-dead helper names in that same cluster,
+  - removing the entire pocket is more honest than preserving an uncalled AST naming/analysis API that no longer describes a live ownership boundary.
+- Safety/compatibility:
+  - no active generation flow changed; the live path no longer depends on this older AST helper cluster for intermediate naming, factorization policy, or complexity measurement,
+  - the focused architecture regression now locks the absence of those helper names on both live `FlattenedDT` and live `EnableGraph` objects,
+  - this slice therefore shrinks dead facade/owner surface without widening any ownership seam or altering HDL output.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - focused regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=197`).
+- Next likely slices:
+  - continue the narrow audit on the remaining `FlattenedDT` facade / backend edge for any last dead backend-owned wrapper pocket,
+  - if that audit is empty, pivot back to the next live AST/CoreAST-first ownership seam instead of stretching the cleanup lane.
 ## 2026-03-13: FlattenedDT/backend dead sub-expression analysis helper removal
 - Continued AST/CoreAST-first cleanup by deleting a small sub-expression-analysis pocket that had become dead on both the `FlattenedDT` facade and the backend owner side.
 - Rationale:
