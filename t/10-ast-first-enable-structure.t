@@ -242,6 +242,7 @@ for my $dead_backend_helper (
     qw(
         analyze_ast_sub_expressions
         find_all_ast_sub_expressions
+        generate_enable_conditions
         generate_comb_mux
         generate_flop_mux
         is_simple_ast_expression
@@ -252,6 +253,11 @@ for my $dead_backend_helper (
         "live SystemVerilog backend no longer exposes dead helper '$dead_backend_helper'",
     );
 }
+
+ok(
+    $hdl->{enable_graph}->can('generate_enable_conditions'),
+    'live EnableGraph owns top-level state/DT enable emission',
+);
 
 for my $dead_enable_graph_helper (
     qw(

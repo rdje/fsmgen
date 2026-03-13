@@ -1068,33 +1068,6 @@ sub generate_state_register ($self, $fsm_module) {
     
     return $hdl;
 }
-sub generate_enable_conditions ($self, $fsm_module) {
-    my $ctx = $self->{flattened_dt};
-    my $hdl = "  // State and DT Enable Conditions\n";
-    
-    # Generate state enables
-    for my $state_name (sort keys %{$ctx->{state_enables}}) {
-        my $enable_expr = $ctx->{state_enables}->{$state_name};
-        $enable_expr = blessed($enable_expr) && $enable_expr->can('to_systemverilog')
-            ? $enable_expr->to_systemverilog
-            : $enable_expr;
-        $hdl .= "  assign ${state_name}_en = $enable_expr;\n";
-    }
-    
-    # Generate standalone DT enables
-    for my $dt_name (sort keys %{$ctx->{dt_enables}}) {
-        my $enable_expr = $ctx->{dt_enables}->{$dt_name};
-        $enable_expr = blessed($enable_expr) && $enable_expr->can('to_systemverilog')
-            ? $enable_expr->to_systemverilog
-            : $enable_expr;
-        my $clean_name = $dt_name;
-        $clean_name =~ s/^-//;  # Remove leading dash
-        $hdl .= "  assign ${clean_name}_en = $enable_expr;\n";
-    }
-    
-    $hdl .= "\n";
-    return $hdl;
-}
 sub prescan_wen_en_for_intermediate_signals ($self) {
     my $ctx = $self->{flattened_dt};
     # PRE-SCAN all WEN/EN expressions to identify intermediate signals that need to be declared

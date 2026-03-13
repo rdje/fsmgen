@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT live ownership (EnableGraph top-level enable emission)
+- Moved top-level state/DT enable emission off `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and under `perl/FSM/Synthesis/EnableGraph.pm`.
+- Added `generate_enable_conditions(...)` to `EnableGraph`, so the same owner that initializes and now AST-backs `state_enables` / `dt_enables` also emits their `*_en` assign statements.
+- Updated `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` so step 3 of live generation now calls `enable_graph->generate_enable_conditions(...)` instead of the backend entrypoint.
+- Removed the now-ownerless `generate_enable_conditions(...)` method from `Backend::SystemVerilog`.
+- Extended `t/10-ast-first-enable-structure.t` so:
+  - the backend is now asserted to stay free of the former top-level enable-emission helper,
+  - and `EnableGraph` is asserted to own that live entrypoint.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t t/12-enablegraph-capture-registry.t` (pass: `Files=2`, `Tests=164`)
+  - `prove -I perl t` (pass: `Files=12`, `Tests=335`)
 ### FlattenedDT AST-first live convergence (AST-backed top-level enable registries)
 - Converted the live top-level `state_enables` / `dt_enables` registries from plain strings to AST-backed conditions.
 - Added `build_state_enable_condition_ast(...)` and `build_dt_enable_condition_ast(...)` to `perl/FSM/Synthesis/EnableGraph.pm`, so top-level enable-condition construction for regular states and standalone DTs is now owned and produced there as AST.

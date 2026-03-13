@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: EnableGraph top-level enable emission ownership
+- Continued the live enable-synthesis convergence by moving top-level state/DT enable emission under `EnableGraph`.
+- Rationale:
+  - after the previous slice, `state_enables` / `dt_enables` were already AST-backed and initialized by `EnableGraph`,
+  - the backend still emitted those same registries through `generate_enable_conditions(...)`, which left a small but real split between semantic ownership and emission ownership on the active path,
+  - the next truthful move was to let the same synthesis owner emit the top-level enable assigns as well.
+- Structural outcome:
+  - `EnableGraph::generate_enable_conditions(...)` now owns emission of `state_enables` / `dt_enables`,
+  - `Orchestrator` now routes step 3 directly through `EnableGraph`,
+  - `Backend::SystemVerilog` no longer carries that top-level enable-emission entrypoint.
+- Safety/compatibility:
+  - no intended change to emitted HDL text for the top-level `*_en` assigns,
+  - the architecture regression now locks the new boundary explicitly: backend no longer owns the helper and `EnableGraph` does,
+  - the full regression stayed green, so this ownership move preserved active generation behavior.
+- Verification:
+  - syntax checks for `EnableGraph.pm`, `Orchestrator.pm`, and `Backend/SystemVerilog.pm` pass,
+  - focused regressions `t/10-ast-first-enable-structure.t` and `t/12-enablegraph-capture-registry.t` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=12`, `Tests=335`).
+- Next likely slices:
+  - re-audit whether any remaining top-level enable/declaration emission is still split away from the owner of the underlying synthesis data,
+  - if not, pivot to the next truthful live seam elsewhere in the generation flow instead of forcing more enable-emission churn.
 ## 2026-03-13: AST-backed top-level enable registries on the live path
 - Pivoted from the nearly exhausted `Orchestrator` ownership seam to the next real AST/CoreAST-first live boundary: the top-level `state_enables` / `dt_enables` registries.
 - Rationale:

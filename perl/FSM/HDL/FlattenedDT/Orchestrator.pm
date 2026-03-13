@@ -239,7 +239,7 @@ sub generate_systemverilog ($self, $fsm_module) {
     fsm_debug("Step 2 - Basic HDL structure generated", 3);
     
     # Step 3: Generate enable conditions FIRST (this will track intermediate signal requirements)
-    $hdl .= $ctx->{backend_sv}->generate_enable_conditions($fsm_module);
+    $hdl .= $ctx->{enable_graph}->generate_enable_conditions($fsm_module);
     fsm_debug("Step 3 - Enable conditions generated", 3);
     
     # TIMING FIX: Count logical operations BEFORE any intermediate signal creation!

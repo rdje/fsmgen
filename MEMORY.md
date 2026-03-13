@@ -14,6 +14,25 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph top-level enable emission)
+- Current worktree continues the same enable-synthesis lane and moves top-level state/DT enable emission under `EnableGraph`.
+- Scope of this slice:
+  - `perl/FSM/Synthesis/EnableGraph.pm` now owns `generate_enable_conditions(...)`,
+  - that method emits the top-level `state_enables` / `dt_enables` registries that `EnableGraph` already initializes and now stores as AST-backed conditions,
+  - `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` now calls `enable_graph->generate_enable_conditions(...)`,
+  - `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` no longer exposes the old top-level enable-emission entrypoint.
+- Architecture guard update in `t/10-ast-first-enable-structure.t`:
+  - the live backend is now asserted to stay free of `generate_enable_conditions(...)`,
+  - the live `EnableGraph` object is asserted to own that emission entrypoint.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t t/12-enablegraph-capture-registry.t` (`Files=2`, `Tests=164`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=335`, `PASS`)
+- Immediate next direction after commit:
+  - re-audit whether any other live top-level enable/declaration emission still sits on the backend side while the owning synthesis semantics already live in `EnableGraph`,
+  - if that lane is now exhausted, pivot to the next truthful live runtime seam instead of stretching enable-emission ownership further.
 ## 2026-03-13: FlattenedDT AST-first live micro-slice (AST-backed top-level enable registries)
 - Current worktree pivots slightly away from the shrinking `Orchestrator` seam and hardens the next real live AST/CoreAST-first boundary: top-level `state_enables` / `dt_enables`.
 - Scope of this slice:
