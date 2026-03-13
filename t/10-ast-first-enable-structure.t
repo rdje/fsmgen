@@ -261,4 +261,16 @@ for my $dead_enable_graph_helper (
     );
 }
 
+for my $dead_orchestrator_helper (
+    qw(
+        record_assignment_from_ast
+        record_transition_from_ast
+    )
+) {
+    ok(
+        !$hdl->{orchestrator}->can($dead_orchestrator_helper),
+        "live Orchestrator no longer exposes dead helper '$dead_orchestrator_helper'",
+    );
+}
+
 done_testing();

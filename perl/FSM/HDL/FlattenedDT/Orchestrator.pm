@@ -183,13 +183,13 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
         fsm_debug("  Assignment: " . $assignment_target_name . " <- " . ref($dt_node->source), 3);
         
         # Record this assignment with current condition stack (now AST nodes)
-        $self->record_assignment_from_ast($dt_name, $dt_node, $condition_stack);
+        $ctx->{enable_graph}->capture_assignment_from_ast($dt_name, $dt_node, $condition_stack);
         
     } elsif ($dt_node->isa('FSM::CoreAST::StateTransition')) {
         fsm_debug("  Transition: -> " . $dt_node->target_state, 3);
         
         # Treat state transition as special assignment to next_state
-        $self->record_transition_from_ast($dt_name, $dt_node, $condition_stack);
+        $ctx->{enable_graph}->capture_transition_from_ast($dt_name, $dt_node, $condition_stack);
         
     } elsif (ref($dt_node) eq 'ARRAY') {
         # Handle arrays of nodes
@@ -212,84 +212,6 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
     } else {
         fsm_debug("  Unknown node type: " . ref($dt_node), 3);
     }
-}
-sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_stack) {
-    my $ctx = $self->{flattened_dt};
-
-    # AST WEB IMPLEMENTATION: Store AST nodes directly, not strings!
-    my $lhs_signal_ast = $assignment_node->target;  # Keep the AST node
-    my $rhs_expr = $assignment_node->source;
-    my $lhs_name = $ctx->{enable_graph}->extract_signal_name_from_ast($lhs_signal_ast) // 'unknown_lhs';
-    
-    # PURE AST/OOP: Ask the AST node directly for debugging information
-    fsm_debug("\n*** PHASE1 ASSIGNMENT NODE REACHED (AST WEB) ***", 3);
-    fsm_debug("  DT: $dt_name", 3);
-    fsm_debug("  LHS AST Node: " . ref($lhs_signal_ast), 3);
-    fsm_debug("  LHS Name: " . $lhs_name, 3);
-    
-    # CRITICAL: Debug the condition stack contents at assignment time
-    fsm_debug("  CONDITION STACK ANALYSIS:", 3);
-    fsm_debug("    Stack size: " . scalar(@$condition_stack), 3);
-    if (@$condition_stack) {
-        for my $i (0 .. $#$condition_stack) {
-            my $cond = $condition_stack->[$i];
-            if (blessed($cond) && $cond->can('to_systemverilog')) {
-                fsm_debug("    Stack[$i]: '" . $cond->to_systemverilog() . "' (" . ref($cond) . ")", 3);
-            } else {
-                fsm_debug("    Stack[$i]: INVALID - " . (ref($cond) || 'SCALAR') . " - " . ($cond || 'UNDEF'), 3);
-            }
-        }
-    } else {
-        fsm_debug("    Stack: EMPTY", 3);
-    }
-    
-    # Create condition expression as pure AST
-    my $condition_ast = $ctx->{enable_graph}->create_condition_expression($condition_stack);
-    
-    # Extract RHS value from expression
-    my $actual_rhs = $ctx->{enable_graph}->extract_rhs_capture_value($rhs_expr);
-    my $capture_metadata = $ctx->{enable_graph}->extract_assignment_capture_metadata($assignment_node);
-    my $operator = $capture_metadata->{operator};
-    my $assignment_intent = $capture_metadata->{assignment_intent};
-    
-    fsm_debug("  SEMANTIC ASSIGNMENT RESULT:", 3);
-    fsm_debug("    LHS AST Node: " . ref($lhs_signal_ast), 3);
-    fsm_debug("    LHS Name: " . $lhs_name, 3);
-    fsm_debug("    RHS: $actual_rhs", 3);
-    fsm_debug("    Operator: $operator", 3);
-    fsm_debug("    Condition AST: " . (blessed($condition_ast) ? ref($condition_ast) : 'NOT_BLESSED'), 3);
-    my $condition_signal_name = defined($condition_ast) ? $condition_ast->to_systemverilog() : 'UNDEFINED';
-    fsm_debug("    Condition Signal Name: '$condition_signal_name'", 3);
-    
-    $ctx->{enable_graph}->register_assignment_capture(
-        dt => $dt_name,
-        lhs_name_key => $lhs_name,
-        lhs_ast => $lhs_signal_ast,
-        conditions_ast => $condition_ast,
-        rhs => $actual_rhs,
-        operator => $operator,
-        assignment_intent => $assignment_intent,
-        source_provenance => $capture_metadata->{source_provenance},
-        output_exposure => $capture_metadata->{output_exposure},
-    );
-    
-    fsm_debug("*** PHASE1 ASSIGNMENT NODE COMPLETE (AST WEB) ***\n", 3);
-}
-sub record_transition_from_ast ($self, $dt_name, $transition_node, $condition_stack) {
-    my $ctx = $self->{flattened_dt};
-    my $target_state = $transition_node->target_state;
-    
-    # Create condition expression as pure AST
-    my $condition_ast = $ctx->{enable_graph}->create_condition_expression($condition_stack);
-    
-    my $state_value = $ctx->{enable_graph}->register_transition_capture(
-        dt => $dt_name,
-        target_state => $target_state,
-        conditions_ast => $condition_ast,
-    );
-    
-    my $condition_signal_name = defined($condition_ast) ? $condition_ast->to_systemverilog() : 'UNDEFINED';
-    fsm_debug("    Recorded AST transition: next_state <= $state_value when (signal: '$condition_signal_name')", 3);
 }
 
 sub generate_systemverilog ($self, $fsm_module) {

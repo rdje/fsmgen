@@ -120,6 +120,75 @@ sub extract_assignment_capture_metadata($self, $assignment_node) {
         output_exposure => ($assignment_node->can('output_exposure') ? $assignment_node->output_exposure : 'auto'),
     };
 }
+sub capture_assignment_from_ast($self, $dt_name, $assignment_node, $condition_stack) {
+    my $lhs_signal_ast = $assignment_node->target;
+    my $rhs_expr = $assignment_node->source;
+    my $lhs_name = $self->extract_signal_name_from_ast($lhs_signal_ast) // 'unknown_lhs';
+
+    fsm_debug("\n*** PHASE1 ASSIGNMENT NODE REACHED (AST WEB) ***", 3);
+    fsm_debug("  DT: $dt_name", 3);
+    fsm_debug("  LHS AST Node: " . ref($lhs_signal_ast), 3);
+    fsm_debug("  LHS Name: " . $lhs_name, 3);
+
+    fsm_debug("  CONDITION STACK ANALYSIS:", 3);
+    fsm_debug("    Stack size: " . scalar(@$condition_stack), 3);
+    if (@$condition_stack) {
+        for my $i (0 .. $#$condition_stack) {
+            my $cond = $condition_stack->[$i];
+            if (blessed($cond) && $cond->can('to_systemverilog')) {
+                fsm_debug("    Stack[$i]: '" . $cond->to_systemverilog() . "' (" . ref($cond) . ")", 3);
+            } else {
+                fsm_debug("    Stack[$i]: INVALID - " . (ref($cond) || 'SCALAR') . " - " . ($cond || 'UNDEF'), 3);
+            }
+        }
+    } else {
+        fsm_debug("    Stack: EMPTY", 3);
+    }
+
+    my $condition_ast = $self->create_condition_expression($condition_stack);
+    my $actual_rhs = $self->extract_rhs_capture_value($rhs_expr);
+    my $capture_metadata = $self->extract_assignment_capture_metadata($assignment_node);
+    my $operator = $capture_metadata->{operator};
+    my $assignment_intent = $capture_metadata->{assignment_intent};
+
+    fsm_debug("  SEMANTIC ASSIGNMENT RESULT:", 3);
+    fsm_debug("    LHS AST Node: " . ref($lhs_signal_ast), 3);
+    fsm_debug("    LHS Name: " . $lhs_name, 3);
+    fsm_debug("    RHS: $actual_rhs", 3);
+    fsm_debug("    Operator: $operator", 3);
+    fsm_debug("    Condition AST: " . (blessed($condition_ast) ? ref($condition_ast) : 'NOT_BLESSED'), 3);
+    my $condition_signal_name = defined($condition_ast) ? $condition_ast->to_systemverilog() : 'UNDEFINED';
+    fsm_debug("    Condition Signal Name: '$condition_signal_name'", 3);
+
+    $self->register_assignment_capture(
+        dt => $dt_name,
+        lhs_name_key => $lhs_name,
+        lhs_ast => $lhs_signal_ast,
+        conditions_ast => $condition_ast,
+        rhs => $actual_rhs,
+        operator => $operator,
+        assignment_intent => $assignment_intent,
+        source_provenance => $capture_metadata->{source_provenance},
+        output_exposure => $capture_metadata->{output_exposure},
+    );
+
+    fsm_debug("*** PHASE1 ASSIGNMENT NODE COMPLETE (AST WEB) ***\n", 3);
+}
+sub capture_transition_from_ast($self, $dt_name, $transition_node, $condition_stack) {
+    my $target_state = $transition_node->target_state;
+    my $condition_ast = $self->create_condition_expression($condition_stack);
+
+    my $state_value = $self->register_transition_capture(
+        dt => $dt_name,
+        target_state => $target_state,
+        conditions_ast => $condition_ast,
+    );
+
+    my $condition_signal_name = defined($condition_ast) ? $condition_ast->to_systemverilog() : 'UNDEFINED';
+    fsm_debug("    Recorded AST transition: next_state <= $state_value when (signal: '$condition_signal_name')", 3);
+
+    return $state_value;
+}
 sub _get_intermediate_signal_registry_entry($self, $signal_name) {
     my $ctx = $self->{flattened_dt};
     return undef unless defined($signal_name) && $signal_name ne '';

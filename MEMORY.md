@@ -14,6 +14,22 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT live ownership micro-slice (EnableGraph capture-entrypoint ownership)
+- Current worktree continues the same live assignment-capture seam and now moves the capture entrypoints themselves under `EnableGraph`.
+- Scope of this slice:
+  - `perl/FSM/Synthesis/EnableGraph.pm` now owns `capture_assignment_from_ast(...)` and `capture_transition_from_ast(...)`,
+  - these methods now assemble capture condition ASTs, perform capture-time debug logging, and delegate into the already-owner-local capture registration helpers,
+  - `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` no longer exposes local `record_assignment_from_ast(...)` / `record_transition_from_ast(...)` methods and now delegates directly from `flatten_decision_tree(...)`.
+- Architecture guard update:
+  - `t/10-ast-first-enable-structure.t` now asserts that the live `Orchestrator` object no longer exposes `record_assignment_from_ast` or `record_transition_from_ast`.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t t/12-enablegraph-capture-registry.t` (`Files=2`, `Tests=157`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=324`, `PASS`)
+- Immediate next direction after commit:
+  - continue on the live `Orchestrator` / `EnableGraph` seam only if there is still a coherent runtime ownership move left,
+  - otherwise re-audit the broader active flow and choose the next truthful slice outside capture-entrypoint convergence.
 ## 2026-03-13: FlattenedDT live ownership micro-slice (EnableGraph assignment-metadata normalization)
 - Current worktree continues on the same live assignment-capture seam.
 - Scope of this slice:

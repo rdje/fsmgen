@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT live ownership (EnableGraph capture-entrypoint ownership)
+- Moved the live assignment/transition capture entrypoints themselves under `perl/FSM/Synthesis/EnableGraph.pm`.
+- Added `capture_assignment_from_ast(...)` and `capture_transition_from_ast(...)` to `EnableGraph`, so it now owns:
+  - condition-stack-to-condition-AST assembly for capture,
+  - assignment debug/capture preparation,
+  - transition debug/capture preparation,
+  - and the final registry writes already localized there in the previous slices.
+- Updated `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` so `flatten_decision_tree(...)` now delegates assignment and transition capture directly to `enable_graph`.
+- Removed the now-ownerless local `record_assignment_from_ast(...)` and `record_transition_from_ast(...)` methods from `Orchestrator`.
+- Extended `t/10-ast-first-enable-structure.t` so the live internal architecture now also asserts the `Orchestrator` object no longer exposes those dead helper names.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t t/12-enablegraph-capture-registry.t` (pass: `Files=2`, `Tests=157`)
+  - `prove -I perl t` (pass: `Files=12`, `Tests=324`)
 ### FlattenedDT live ownership (EnableGraph assignment-metadata normalization)
 - Moved live assignment operator/intent/provenance normalization under `perl/FSM/Synthesis/EnableGraph.pm`.
 - Added `extract_assignment_capture_metadata(...)` to `EnableGraph`, which now owns:

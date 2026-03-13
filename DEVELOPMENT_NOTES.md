@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: EnableGraph capture-entrypoint ownership for live assignment capture
+- Continued the live phase-1 ownership convergence by moving the assignment/transition capture entrypoints themselves under `EnableGraph`.
+- Rationale:
+  - after the previous slices, `EnableGraph` already owned capture-registry mutation, capture-shape normalization, and assignment-metadata normalization,
+  - `Orchestrator` still retained the two top-level capture methods, but those had become thin shells over `EnableGraph`-owned semantics and registry writes,
+  - the next small truthful step was therefore to move those entrypoints too and let `flatten_decision_tree(...)` delegate directly to the owner.
+- Structural outcome:
+  - `EnableGraph::capture_assignment_from_ast(...)` now owns assignment capture-time condition assembly, debug logging, metadata extraction, and registration,
+  - `EnableGraph::capture_transition_from_ast(...)` now owns transition capture-time condition assembly, debug logging, and registration,
+  - `Orchestrator` no longer carries local `record_assignment_from_ast(...)` / `record_transition_from_ast(...)` methods.
+- Safety/compatibility:
+  - no intended behavioral change to capture contents or emitted HDL,
+  - the focused architecture test now locks the absence of those former helper names on the live `Orchestrator` object,
+  - the live capture regression still passes, so the moved entrypoints preserve the active capture contract.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `Orchestrator.pm` pass,
+  - focused regressions `t/10-ast-first-enable-structure.t` and `t/12-enablegraph-capture-registry.t` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=12`, `Tests=324`).
+- Next likely slices:
+  - re-audit the remaining `Orchestrator` / `EnableGraph` boundary to confirm whether any coherent capture-related ownership move is still left,
+  - if not, shift to the next truthful live seam elsewhere in the active generation flow.
 ## 2026-03-13: EnableGraph assignment-metadata normalization for live assignment capture
 - Continued the live phase-1 ownership convergence by moving assignment operator/intent/provenance normalization under `EnableGraph`.
 - Rationale:
