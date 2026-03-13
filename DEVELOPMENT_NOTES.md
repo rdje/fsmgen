@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: EnableGraph assignment-metadata normalization for live assignment capture
+- Continued the live phase-1 ownership convergence by moving assignment operator/intent/provenance normalization under `EnableGraph`.
+- Rationale:
+  - after the previous slices, `EnableGraph` already owned capture-registry mutation and capture-shape normalization, but `Orchestrator` still resolved operator metadata and assignment intent locally,
+  - that metadata is part of the same capture contract later consumed by `EnableGraph` when building phase-1 analysis and signal-assignment behavior,
+  - the next small truthful step was therefore to centralize assignment-metadata normalization in the same owner.
+- Structural outcome:
+  - `EnableGraph::extract_assignment_capture_metadata(...)` now owns operator resolution, pulse-operator derivation, strict validation, and normalization of `assignment_intent`, `source_provenance`, and `output_exposure`,
+  - `Orchestrator::record_assignment_from_ast(...)` now delegates that normalization before registration,
+  - the live capture contract is now more coherently owned by one module: `EnableGraph` owns capture registration, capture-shape normalization, and assignment-metadata normalization.
+- Safety/compatibility:
+  - no intended behavioral change to emitted HDL or assignment-family semantics,
+  - the assignment-intent regression now also inspects the live capture registry after generation, which locks the key metadata preservation contract on representative assignment families,
+  - full regression remains green, so the owner move stayed behavior-preserving on the active path.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `Orchestrator.pm` pass,
+  - focused regressions `t/03-assignment-intent-metadata.t` and `t/12-enablegraph-capture-registry.t` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=12`, `Tests=322`).
+- Next likely slices:
+  - continue on the same live phase-1 seam,
+  - if another coherent move remains, it is likely in the last direct `Orchestrator` knowledge of assignment-node traversal/capture preparation rather than in metadata ownership.
 ## 2026-03-13: EnableGraph capture-shape normalization for live assignment capture
 - Continued the live phase-1 ownership convergence by moving the remaining LHS/RHS capture-shape normalization under `EnableGraph`.
 - Rationale:

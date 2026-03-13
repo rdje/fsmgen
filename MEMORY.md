@@ -14,6 +14,22 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT live ownership micro-slice (EnableGraph assignment-metadata normalization)
+- Current worktree continues on the same live assignment-capture seam.
+- Scope of this slice:
+  - `perl/FSM/Synthesis/EnableGraph.pm` now owns assignment operator/intent/provenance normalization through `extract_assignment_capture_metadata(...)`,
+  - that helper now centralizes `assignment_intent` copy, operator resolution, pulse-operator derivation from `pulse_cycles`, strict operator validation, and `source_provenance` / `output_exposure` capture,
+  - `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` still performs traversal, condition assembly, and RHS extraction, but no longer keeps local operator/intent extraction logic inside `record_assignment_from_ast(...)`.
+- Regression coverage added in `t/03-assignment-intent-metadata.t`:
+  - after live generation, captured assignment registry entries are now checked for preserved operator/intent/provenance data on representative assignment families (`A`, `G`, `I`, `P1`).
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `prove -I perl t/03-assignment-intent-metadata.t t/12-enablegraph-capture-registry.t` (`Files=2`, `Tests=88`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=322`, `PASS`)
+- Immediate next direction after commit:
+  - continue on the live phase-1 seam rather than reopening cleanup-only work,
+  - the next likely move is to narrow `Orchestrator`’s remaining direct dependence on assignment-node traversal semantics, if any final capture preparation can move under `EnableGraph` without making the flow less clear.
 ## 2026-03-13: FlattenedDT live ownership micro-slice (EnableGraph capture-shape normalization)
 - Current worktree continues the same live phase-1 ownership seam after capture-registry mutation moved under `EnableGraph`.
 - Scope of this slice:

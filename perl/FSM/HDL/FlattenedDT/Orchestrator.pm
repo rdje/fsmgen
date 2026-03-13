@@ -248,32 +248,9 @@ sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_st
     
     # Extract RHS value from expression
     my $actual_rhs = $ctx->{enable_graph}->extract_rhs_capture_value($rhs_expr);
-    
-    # Determine operator directly from assignment intent metadata (strict mode)
-    my $assignment_intent = {};
-    if ($assignment_node->can('assignment_intent')) {
-        my $intent = $assignment_node->assignment_intent;
-        $assignment_intent = { %$intent } if ref($intent) eq 'HASH';
-    }
-    
-    my $operator = $assignment_node->can('operator_symbol')
-        ? $assignment_node->operator_symbol
-        : undef;
-    if ((!defined($operator) || $operator eq '') && ref($assignment_intent) eq 'HASH') {
-        $operator = $assignment_intent->{operator_symbol};
-    }
-    if (($assignment_node->isa('FSM::CoreAST::PulseAssignment') || $assignment_node->can('pulse_cycles'))
-            && (!defined($operator) || $operator eq '' || $operator eq '=')
-            && $assignment_node->can('pulse_cycles')) {
-        my $cycles = eval { $assignment_node->pulse_cycles };
-        $operator = '<' . $cycles if defined $cycles && $cycles =~ /^\d+$/;
-    }
-    if (!defined($operator) || $operator !~ /^(?:<-|<=|=|<-=|<=\+|<[0-9]+)$/) {
-        my $node_type = ref($assignment_node) || 'UNKNOWN';
-        my $intent_operator = (ref($assignment_intent) eq 'HASH') ? ($assignment_intent->{operator_symbol} // 'UNDEF') : 'NO_INTENT';
-        my $pulse_cycles = $assignment_node->can('pulse_cycles') ? (eval { $assignment_node->pulse_cycles } // 'UNDEF') : 'N/A';
-        die "[FlattenedDT::Orchestrator.pm][record_assignment_from_ast()] Missing or invalid operator_symbol for assignment node '$node_type' (resolved='$operator', intent='$intent_operator', pulse_cycles='$pulse_cycles')";
-    }
+    my $capture_metadata = $ctx->{enable_graph}->extract_assignment_capture_metadata($assignment_node);
+    my $operator = $capture_metadata->{operator};
+    my $assignment_intent = $capture_metadata->{assignment_intent};
     
     fsm_debug("  SEMANTIC ASSIGNMENT RESULT:", 3);
     fsm_debug("    LHS AST Node: " . ref($lhs_signal_ast), 3);
@@ -292,8 +269,8 @@ sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_st
         rhs => $actual_rhs,
         operator => $operator,
         assignment_intent => $assignment_intent,
-        source_provenance => ($assignment_node->can('source_provenance') ? $assignment_node->source_provenance : {}),
-        output_exposure => ($assignment_node->can('output_exposure') ? $assignment_node->output_exposure : 'auto'),
+        source_provenance => $capture_metadata->{source_provenance},
+        output_exposure => $capture_metadata->{output_exposure},
     );
     
     fsm_debug("*** PHASE1 ASSIGNMENT NODE COMPLETE (AST WEB) ***\n", 3);

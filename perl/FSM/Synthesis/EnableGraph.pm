@@ -85,6 +85,41 @@ sub register_transition_capture($self, %args) {
 
     return $state_value;
 }
+sub extract_assignment_capture_metadata($self, $assignment_node) {
+    my $assignment_intent = {};
+    if ($assignment_node && $assignment_node->can('assignment_intent')) {
+        my $intent = $assignment_node->assignment_intent;
+        $assignment_intent = { %$intent } if ref($intent) eq 'HASH';
+    }
+
+    my $operator = ($assignment_node && $assignment_node->can('operator_symbol'))
+        ? $assignment_node->operator_symbol
+        : undef;
+    if ((!defined($operator) || $operator eq '') && ref($assignment_intent) eq 'HASH') {
+        $operator = $assignment_intent->{operator_symbol};
+    }
+
+    if (($assignment_node->isa('FSM::CoreAST::PulseAssignment') || $assignment_node->can('pulse_cycles'))
+            && (!defined($operator) || $operator eq '' || $operator eq '=')
+            && $assignment_node->can('pulse_cycles')) {
+        my $cycles = eval { $assignment_node->pulse_cycles };
+        $operator = '<' . $cycles if defined $cycles && $cycles =~ /^\d+$/;
+    }
+
+    if (!defined($operator) || $operator !~ /^(?:<-|<=|=|<-=|<=\+|<[0-9]+)$/) {
+        my $node_type = ref($assignment_node) || 'UNKNOWN';
+        my $intent_operator = (ref($assignment_intent) eq 'HASH') ? ($assignment_intent->{operator_symbol} // 'UNDEF') : 'NO_INTENT';
+        my $pulse_cycles = $assignment_node->can('pulse_cycles') ? (eval { $assignment_node->pulse_cycles } // 'UNDEF') : 'N/A';
+        die "[EnableGraph.pm][extract_assignment_capture_metadata()] Missing or invalid operator_symbol for assignment node '$node_type' (resolved='$operator', intent='$intent_operator', pulse_cycles='$pulse_cycles')";
+    }
+
+    return {
+        operator => $operator,
+        assignment_intent => $assignment_intent,
+        source_provenance => ($assignment_node->can('source_provenance') ? $assignment_node->source_provenance : {}),
+        output_exposure => ($assignment_node->can('output_exposure') ? $assignment_node->output_exposure : 'auto'),
+    };
+}
 sub _get_intermediate_signal_registry_entry($self, $signal_name) {
     my $ctx = $self->{flattened_dt};
     return undef unless defined($signal_name) && $signal_name ne '';

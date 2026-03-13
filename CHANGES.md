@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT live ownership (EnableGraph assignment-metadata normalization)
+- Moved live assignment operator/intent/provenance normalization under `perl/FSM/Synthesis/EnableGraph.pm`.
+- Added `extract_assignment_capture_metadata(...)` to `EnableGraph`, which now owns:
+  - `assignment_intent` extraction/copy,
+  - operator resolution from `operator_symbol` / intent fallback,
+  - pulse-operator derivation from `pulse_cycles`,
+  - strict validation of the supported operator set,
+  - and capture of `source_provenance` / `output_exposure`.
+- Updated `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` so `record_assignment_from_ast(...)` now delegates that normalization to `EnableGraph` before registering the capture.
+- Extended `t/03-assignment-intent-metadata.t` so live generation now also asserts the captured assignment registry preserves:
+  - ordinary register-style metadata (`A`),
+  - explicit output exposure (`G`),
+  - dual-output intent metadata (`I`),
+  - and pulse operator / delay metadata (`P1`).
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `prove -I perl t/03-assignment-intent-metadata.t t/12-enablegraph-capture-registry.t` (pass: `Files=2`, `Tests=88`)
+  - `prove -I perl t` (pass: `Files=12`, `Tests=322`)
 ### FlattenedDT live ownership (EnableGraph capture-shape normalization)
 - Moved the remaining live LHS/RHS capture-shape normalization off `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and under `perl/FSM/Synthesis/EnableGraph.pm`.
 - Added `extract_rhs_capture_value(...)` to `EnableGraph` and broadened `extract_signal_name_from_ast(...)` so the owner-local signal-name helper now also handles indexed/reference-style AST renderings by leading identifier.

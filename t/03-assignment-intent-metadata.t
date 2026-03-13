@@ -170,6 +170,22 @@ is(
 );
 
 my $hdl = $hdl_gen->generate_systemverilog($fsm_module);
+
+my $captured_a = $hdl_gen->{lhs_assignments}{A}[0];
+my $captured_g = $hdl_gen->{lhs_assignments}{G}[0];
+my $captured_i = $hdl_gen->{lhs_assignments}{I}[0];
+my $captured_p1 = $hdl_gen->{lhs_assignments}{P1}[0];
+
+is($captured_a->{operator}, '<-', "captured A assignment keeps '<-' operator metadata");
+is($captured_a->{assignment_intent}{register_style}, 'output_named', "captured A assignment keeps register-style intent");
+is($captured_a->{source_provenance}{raw_operator}, '<-', "captured A assignment keeps source provenance");
+
+is($captured_g->{output_exposure}, 'explicit', "captured G assignment keeps explicit output exposure");
+is($captured_i->{operator}, '<-=', "captured I assignment keeps '<-=' operator metadata");
+is($captured_i->{assignment_intent}{auxiliary_output_name}, 'next_I', "captured I assignment keeps dual-output intent metadata");
+is($captured_p1->{operator}, '<3', "captured P1 assignment keeps pulse operator metadata");
+is($captured_p1->{assignment_intent}{pulse_delay_cycles}, 3, "captured P1 assignment keeps pulse delay intent metadata");
+
 like($hdl, qr/\boutput\s+reg\s+\[7:0\]\s+next_I\b/s, "generated HDL exposes next_I output for '<-='");
 like($hdl, qr/\boutput\s+reg\s+\[7:0\]\s+K_r\b/s, "generated HDL exposes K_r output for '<=+'");
 like($hdl, qr/\breg\s+\[2:0\]\s+P1_pulse_delay_pipe\b/s, "generated HDL declares delay pipeline for P1 <3");
