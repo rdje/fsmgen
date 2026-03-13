@@ -101,40 +101,8 @@ sub generate_vhdl ($self, $fsm_module) {
     die "[FlattenedDT.pm][generate_vhdl()] VHDL backend is not implemented yet. Use --language systemverilog or --language verilog.\n";
 }
 
-sub generate_internal_signal_declarations ($self, $fsm_module) {
-    return $self->{backend_sv}->generate_internal_signal_declarations($fsm_module);
-}
-
-sub get_lhs_width_from_analysis ($self, $lhs_analysis) {
-    return $self->{enable_graph}->get_lhs_width_from_analysis($lhs_analysis);
-}
-
-sub is_register ($self, $lhs_signal_ast, $lhs_name_for_debug) {
-    return $self->{enable_graph}->is_register($lhs_signal_ast, $lhs_name_for_debug);
-}
-
-sub fallback_register_analysis_from_assignments ($self, $lhs_name) {
-    return $self->{enable_graph}->fallback_register_analysis_from_assignments($lhs_name);
-}
-
-sub generate_intermediate_signals ($self, $fsm_module) {
-    return $self->{backend_sv}->generate_intermediate_signals($fsm_module);
-}
-
-sub get_pulse_delay_cycles_for_lhs ($self, $lhs, $lhs_analysis) {
-    return $self->{enable_graph}->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
-}
-
-sub get_pulse_active_level_for_lhs ($self, $lhs, $lhs_analysis) {
-    return $self->{enable_graph}->get_pulse_active_level_for_lhs($lhs, $lhs_analysis);
-}
-
 sub get_signal_assignment_type ($self, $lhs, $lhs_analysis) {
     return $self->{enable_graph}->get_signal_assignment_type($lhs, $lhs_analysis);
-}
-
-sub get_signal_info ($self, $lhs) {
-    return $self->{enable_graph}->get_signal_info($lhs);
 }
 
 1;

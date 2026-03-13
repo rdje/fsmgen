@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: FlattenedDT residual analysis/declaration facade delegate removal
+- Continued AST/CoreAST-first cleanup by deleting the last residual analysis/declaration helper pocket from the `FlattenedDT` facade.
+- Rationale:
+  - a fresh repo-wide call-graph audit showed `generate_internal_signal_declarations(...)`, `get_lhs_width_from_analysis(...)`, `is_register(...)`, `fallback_register_analysis_from_assignments(...)`, `generate_intermediate_signals(...)`, `get_pulse_delay_cycles_for_lhs(...)`, `get_pulse_active_level_for_lhs(...)`, and `get_signal_info(...)` had no remaining callers on the `FlattenedDT` facade,
+  - the matching methods remain live on `EnableGraph` or `Backend::SystemVerilog`, and the active flow already reaches them directly there,
+  - `get_signal_assignment_type(...)` was intentionally left in place because the assignment-intent regression still treats it as part of the tested `FlattenedDT` surface.
+- Safety/compatibility:
+  - no active generation flow changed; the same analysis and declaration methods continue to run in the same owner modules as before,
+  - the focused architecture regression now locks the absence of those helper names on live `FlattenedDT` objects,
+  - this slice therefore shrinks dead facade surface without changing declaration emission, register analysis, pulse metadata handling, or HDL output.
+- Verification:
+  - syntax check for `FlattenedDT.pm` passes,
+  - focused regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=283`).
+- Next likely slices:
+  - treat the wrapper-pruning lane as exhausted unless a later audit finds new dead supported surface,
+  - pivot back to the next live AST/CoreAST-first ownership seam.
 ## 2026-03-13: FlattenedDT dead backend factorization/substitution facade delegate removal
 - Continued AST/CoreAST-first cleanup by deleting the remaining backend factorization/substitution helper pocket from the `FlattenedDT` facade.
 - Rationale:

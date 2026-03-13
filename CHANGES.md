@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT cleanup (retire residual analysis/declaration facade delegates)
+- Removed the residual analysis/declaration delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
+  - deleted `generate_internal_signal_declarations(...)`,
+  - deleted `get_lhs_width_from_analysis(...)`,
+  - deleted `is_register(...)`,
+  - deleted `fallback_register_analysis_from_assignments(...)`,
+  - deleted `generate_intermediate_signals(...)`,
+  - deleted `get_pulse_delay_cycles_for_lhs(...)`,
+  - deleted `get_pulse_active_level_for_lhs(...)`,
+  - deleted `get_signal_info(...)`.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation no longer exposes those analysis/declaration helper names on the `FlattenedDT` facade.
+- Root cause / rationale:
+  - repo-wide call-graph auditing showed these names had no remaining callers on the `FlattenedDT` facade anywhere in the active code or tests,
+  - the matching methods remain live on `EnableGraph` or `Backend::SystemVerilog`, and the active flow already reaches them there directly,
+  - `get_signal_assignment_type(...)` was intentionally kept because `t/03-assignment-intent-metadata.t` still exercises it as part of the tested `FlattenedDT` surface.
+- Scope remains behavior-preserving cleanup of dead compatibility surface; live analysis/declaration behavior is unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=137`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=283`)
 ### FlattenedDT cleanup (retire dead backend factorization/substitution facade delegates)
 - Removed the dead backend factorization/substitution delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
   - deleted `prescan_wen_en_for_intermediate_signals(...)`,

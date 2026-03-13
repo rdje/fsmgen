@@ -140,10 +140,13 @@ for my $dead_facade_helper (
         generate_comb_mux
         generate_enable_conditions
         generate_header
+        generate_internal_signal_declarations
+        generate_intermediate_signals
         generate_intermediate_signal_expression
         generate_module_declaration
         generate_state_encoding
         generate_state_register
+        get_lhs_width_from_analysis
         get_default_value
         get_default_value_from_ast
         get_driven_signals
@@ -152,8 +155,11 @@ for my $dead_facade_helper (
         get_substituted_ast_for_signal
         generate_flop_mux
         get_or_create_ast_signal_name
+        get_pulse_active_level_for_lhs
+        get_pulse_delay_cycles_for_lhs
         get_reset_value
         get_reset_value_from_ast
+        get_signal_info
         is_complex_ast
         is_arithmetic_operation
         is_intermediate_signal
@@ -161,6 +167,7 @@ for my $dead_facade_helper (
         is_signal_referenced_in_substitutions
         is_signal_actually_used_in_final_expressions
         is_signal_ast_based_intermediate
+        is_register
         is_simple_ast_expression
         is_simple_comparison
         is_simple_negation
@@ -176,6 +183,7 @@ for my $dead_facade_helper (
         should_factor_ast
         set_explicit_reset_values
         parentheses_are_redundant
+        fallback_register_analysis_from_assignments
         contains_frequently_used_operations
         count_unary_negations_in_original_expressions
         ast_contains_intermediate_signals

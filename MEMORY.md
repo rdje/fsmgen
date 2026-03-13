@@ -14,6 +14,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT cleanup micro-slice (retire residual analysis/declaration facade delegates)
+- Current worktree removes the last residual analysis/declaration helper pocket from the `FlattenedDT` facade.
+- Scope remains a small behavior-preserving cleanup slice:
+  - repo-wide call-graph auditing showed `generate_internal_signal_declarations(...)`, `get_lhs_width_from_analysis(...)`, `is_register(...)`, `fallback_register_analysis_from_assignments(...)`, `generate_intermediate_signals(...)`, `get_pulse_delay_cycles_for_lhs(...)`, `get_pulse_active_level_for_lhs(...)`, and `get_signal_info(...)` had no remaining callers on the `FlattenedDT` facade,
+  - the matching methods remain live on `EnableGraph` or `Backend::SystemVerilog`, and the active flow already reaches them directly there,
+  - `get_signal_assignment_type(...)` stays on the facade because `t/03-assignment-intent-metadata.t` still exercises it as part of the tested public surface,
+  - `t/10-ast-first-enable-structure.t` now asserts that live `FlattenedDT` objects no longer expose those analysis/declaration helper names.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=137`, `PASS`)
+  - `prove -I perl t` (`Files=10`, `Tests=283`, `PASS`)
+- Immediate next direction after commit:
+  - treat the wrapper-pruning lane as effectively exhausted unless a future audit finds a new genuinely dead supported surface,
+  - pivot back to the next live AST/CoreAST-first ownership seam from the remaining active `Orchestrator` / `EnableGraph` / backend interactions.
 ## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead backend factorization/substitution facade delegates)
 - Current worktree removes a dead backend factorization/substitution helper pocket from the `FlattenedDT` facade.
 - Scope remains a small behavior-preserving cleanup slice:
