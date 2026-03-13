@@ -18,9 +18,6 @@ use FSM::Synthesis::EnableGraph;
 use FSM::HDL::FlattenedDT::Orchestrator;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog;
 use FSM::HDL::FlattenedDT::Backend::Verilog;
-use Data::Dumper;
-use Scalar::Util qw(blessed);
-use List::Util qw(min max);
 
 =head1 NAME
 
@@ -534,76 +531,8 @@ sub ast_contains_signal ($self, $ast, $signal_name) {
     return $self->{backend_sv}->ast_contains_signal($ast, $signal_name);
 }
 
-sub signal_name_matches_operation ($self, $signal_name, $op_signature) {
-    # Heuristic to check if a signal name matches a logical operation signature
-    # This is used to correlate intermediate signal patterns with actual repeated operations
-    
-    fsm_debug("SIGNAL_OP_MATCH: Checking if '$signal_name' matches operation '$op_signature'", 3);
-    
-    # Extract signal names from the operation signature
-    my @signal_parts = ();
-    while ($op_signature =~ /([a-zA-Z_][a-zA-Z0-9_]*)/g) {
-        push @signal_parts, $1;
-    }
-    
-    # Check if the signal name contains references to the signals in the operation
-    my $matches = 0;
-    for my $part (@signal_parts) {
-        if ($signal_name =~ /\b$part\b/) {
-            $matches++;
-            fsm_debug("  Found signal part '$part' in signal name", 3);
-        }
-    }
-    
-    # Also check for operator patterns in the signal name
-    if ($op_signature =~ /&&/) {
-        $matches++ if $signal_name =~ /_and_/;
-    }
-    if ($op_signature =~ /\|\|/) {
-        $matches++ if $signal_name =~ /_or_/;
-    }
-    
-    my $result = $matches >= 2;  # Need at least 2 matches to be confident
-    fsm_debug("SIGNAL_OP_MATCH: '$signal_name' vs '$op_signature' -> $matches matches -> $result", 3);
-    
-    return $result;
-}
-
 sub update_original_asts_with_substituted_versions ($self, $factorizer) {
     return $self->{backend_sv}->update_original_asts_with_substituted_versions($factorizer);
-}
-
-sub find_substituted_ast ($self, $original_ast, $ast_expressions) {
-    # Find the substituted version of an AST in the factorizer's expression list
-    # This matches ASTs by their canonical SystemVerilog representation
-    
-    return $original_ast unless $original_ast && blessed($original_ast);
-    return $original_ast unless $ast_expressions && @$ast_expressions;
-    
-    # Get canonical representation of the original AST
-    my $original_canonical = eval { $self->ast_to_systemverilog($original_ast) };
-    return $original_ast unless $original_canonical;
-    
-    # Search for matching AST in the factorizer's expression list
-    for my $expr_info (@$ast_expressions) {
-        my $factorizer_ast = $expr_info->{ast};
-        next unless $factorizer_ast && blessed($factorizer_ast);
-        
-        my $factorizer_canonical = eval { $self->ast_to_systemverilog($factorizer_ast) };
-        next unless $factorizer_canonical;
-        
-        # If the canonical representations match, this might be our substituted version
-        if ($factorizer_canonical eq $original_canonical) {
-            # Additional check: if the factorizer AST is different object (substituted)
-            if ($factorizer_ast != $original_ast) {
-                fsm_debug("  FOUND_SUBSTITUTED: Matched AST for expression '$original_canonical'", 3);
-                return $factorizer_ast;
-            }
-        }
-    }
-    
-    # If no substituted version found, return the original
-    return $original_ast;
 }
 
 sub run_second_pass_factorization ($self, $factorizer) {
@@ -630,154 +559,8 @@ sub get_substituted_ast_for_signal ($self, $signal_name, $signal_info) {
     return $self->{backend_sv}->get_substituted_ast_for_signal($signal_name, $signal_info);
 }
 
-sub ast_contains_intermediate_signal_references ($self, $ast) {
-    # Check if an AST contains references to intermediate signals
-    # This indicates that AST substitution has occurred
-    
-    return 0 unless $ast && blessed($ast);
-    
-    # Check if this node is itself an intermediate signal reference
-    if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
-        return 1;
-    }
-    
-    # Check if this is a substituted node type
-    if ($ast->isa('FSM::HDL::SubstitutedBinaryOp') || $ast->isa('FSM::HDL::SubstitutedUnaryOp')) {
-        return 1;
-    }
-    
-    # Check if this is a regular signal reference to an intermediate signal
-    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
-        my $signal_name = $self->extract_signal_name_from_ast($ast);
-        if ($signal_name && $self->is_intermediate_signal($signal_name)) {
-            return 1;
-        }
-    }
-    
-    # Recursively check children
-    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
-        return 1 if $ast->can('left') && $self->ast_contains_intermediate_signal_references($ast->left);
-        return 1 if $ast->can('right') && $self->ast_contains_intermediate_signal_references($ast->right);
-    }
-    elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
-        return 1 if $ast->can('operand') && $self->ast_contains_intermediate_signal_references($ast->operand);
-    }
-    
-    return 0;
-}
-
-sub expressions_are_equivalent ($self, $expr1, $expr2) {
-    # Check if two expressions are semantically equivalent
-    # This is a heuristic to match original expressions with their substituted versions
-    
-    return 0 unless defined($expr1) && defined($expr2);
-    
-    # Normalize whitespace
-    $expr1 =~ s/\s+/ /g;
-    $expr1 =~ s/^\s+|\s+$//g;
-    $expr2 =~ s/\s+/ /g;
-    $expr2 =~ s/^\s+|\s+$//g;
-    
-    # Direct match
-    return 1 if $expr1 eq $expr2;
-    
-    # Check if one expression contains intermediate signals while the other doesn't
-    # but they have the same "shape" (same operators and structure)
-    my $expr1_structure = $self->extract_expression_structure($expr1);
-    my $expr2_structure = $self->extract_expression_structure($expr2);
-    
-    return $expr1_structure eq $expr2_structure;
-}
-
-sub extract_expression_structure ($self, $expression) {
-    # Extract the structural pattern of an expression (operators and parentheses)
-    # This helps match expressions that are equivalent but have different signal names
-    
-    # Replace all signal names with placeholder
-    $expression =~ s/\b[a-zA-Z_][a-zA-Z0-9_]*\b/SIG/g;
-    
-    # Replace all literals with placeholder
-    $expression =~ s/\d+'?[bdhBDH]?[0-9a-fA-F_]*/LIT/g;
-    $expression =~ s/\b\d+\b/LIT/g;
-    
-    return $expression;
-}
-
 sub is_signal_referenced_in_substitutions ($self, $signal_name) {
     return $self->{backend_sv}->is_signal_referenced_in_substitutions($signal_name);
-}
-
-sub ast_structures_match ($self, $original_ast, $substituted_ast) {
-    # Check if two AST nodes have the same structural pattern
-    # This is used to match original ASTs with their substituted versions
-    # even when the substituted version contains intermediate signal references
-    
-    return 0 unless $original_ast && blessed($original_ast);
-    return 0 unless $substituted_ast && blessed($substituted_ast);
-    
-    # Compare AST node types
-    my $original_type = ref($original_ast);
-    my $substituted_type = ref($substituted_ast);
-    
-    # Allow for some flexibility in AST types (original vs substituted classes)
-    my $types_compatible = 0;
-    
-    # Direct type match
-    if ($original_type eq $substituted_type) {
-        $types_compatible = 1;
-    }
-    # Handle substituted node types that correspond to original types
-    elsif (($original_type =~ /BinaryOp$/ && $substituted_type =~ /BinaryOp$/) ||
-           ($original_type =~ /UnaryOp$/ && $substituted_type =~ /UnaryOp$/) ||
-           ($original_type =~ /SignalRef$/ && $substituted_type =~ /SignalRef$/)) {
-        $types_compatible = 1;
-    }
-    
-    return 0 unless $types_compatible;
-    
-    # For binary operations, check operator and recursively check operands
-    if ($original_ast->isa('FSM::AST::BinaryOp') || $original_ast->isa('FSM::CoreAST::BinaryOp')) {
-        # Check operators match
-        if ($original_ast->can('operator') && $substituted_ast->can('operator')) {
-            my $orig_op = $original_ast->operator || '';
-            my $subst_op = $substituted_ast->operator || '';
-            return 0 unless $orig_op eq $subst_op;
-        }
-        
-        # Check operand structures match (recursively)
-        if ($original_ast->can('left') && $substituted_ast->can('left') &&
-            $original_ast->can('right') && $substituted_ast->can('right')) {
-            
-            # The operands may not match exactly (due to substitution), but their
-            # structures should be similar. For now, we'll be more permissive.
-            return 1;
-        }
-    }
-    # For unary operations, check operator and recursively check operand
-    elsif ($original_ast->isa('FSM::AST::UnaryOp') || $original_ast->isa('FSM::CoreAST::UnaryOp')) {
-        # Check operators match
-        if ($original_ast->can('operator') && $substituted_ast->can('operator')) {
-            my $orig_op = $original_ast->operator || '';
-            my $subst_op = $substituted_ast->operator || '';
-            return 0 unless $orig_op eq $subst_op;
-        }
-        
-        # Check operand structures match (recursively)
-        if ($original_ast->can('operand') && $substituted_ast->can('operand')) {
-            # The operands may not match exactly (due to substitution), but their
-            # structures should be similar. For now, we'll be more permissive.
-            return 1;
-        }
-    }
-    # For signal references and literals, they can be considered matching
-    # even if the actual signal names differ (due to substitution)
-    elsif ($original_ast->isa('FSM::AST::SignalRef') || $original_ast->isa('FSM::CoreAST::SignalRef') ||
-           $original_ast->isa('FSM::AST::Literal') || $original_ast->isa('FSM::CoreAST::Literal')) {
-        return 1;
-    }
-    
-    # Default: structures match if we reach here
-    return 1;
 }
 
 sub topologically_sort_signals {

@@ -34,6 +34,22 @@ This document captures engineering rationale, design constraints, and working de
 - Next likely slices:
   - re-audit the remaining substituted-AST matching helper pocket in `FlattenedDT` to confirm whether it is now fully dead,
   - keep preferring deletions of provably dead compatibility helpers before taking broader live-path ownership moves.
+## 2026-03-13: FlattenedDT dead substituted-AST matching helper removal
+- Continued AST/CoreAST-first cleanup by deleting the dormant substituted-AST matching helper pocket from `perl/FSM/HDL/FlattenedDT.pm`.
+- Rationale:
+  - after the declaration-helper cleanup, a repo-wide audit showed the remaining canonical-expression/substituted-AST matching helpers were also fully unreferenced on the active path,
+  - the real substitution/factorization flow now lives in backend-owned helpers, so keeping parallel matching heuristics in the `FlattenedDT` facade no longer added safety or functionality,
+  - once those helpers were removed, the old `Data::Dumper`, `blessed`, `min`, and `max` imports became dead too, which confirmed the lane was self-contained residue rather than a hidden live dependency.
+- Safety/compatibility:
+  - no active substitution, factorization, or backend-emission logic changed; the removed helpers had no callers,
+  - the still-live substitution surface remains backend-owned (`update_original_asts_with_substituted_versions(...)`, `get_substituted_ast_for_signal(...)`, `is_signal_referenced_in_substitutions(...)`),
+  - this slice therefore shrinks the `FlattenedDT` facade without widening or relocating any live ownership boundary.
+- Verification:
+  - syntax check for `FlattenedDT.pm` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=156`).
+- Next likely slices:
+  - re-audit the remaining substitution-era helper surface to distinguish any final dead residue from the still-live backend-owned helpers,
+  - if no more dead pockets remain nearby, return to the next smallest live AST/CoreAST-first ownership seam instead of forcing more facade-only cleanup.
 ## 2026-03-11: EnableGraph/SystemVerilog defining-AST metadata for consolidated filtering
 - Continued backend convergence by carrying native defining-AST metadata forward on the consolidated intermediate-signal filtering path.
 - Rationale:

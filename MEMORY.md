@@ -1301,6 +1301,23 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - re-audit the remaining substituted-AST matching helper pocket in `FlattenedDT` (`find_substituted_ast`, `ast_contains_intermediate_signal_references`, `expressions_are_equivalent`, `extract_expression_structure`, `ast_structures_match`) to confirm whether it is now fully dead,
   - keep deleting provably dead compatibility helpers before considering larger live-path ownership moves.
+## AST/CoreAST convergence update (March 13, 2026, dead-substituted-AST-matching-helper cleanup slice)
+- Latest completed slice in `perl/FSM/HDL/FlattenedDT.pm`:
+  - removed the dead substituted-AST matching helper pocket, including `signal_name_matches_operation(...)`, `find_substituted_ast(...)`, `ast_contains_intermediate_signal_references(...)`, `expressions_are_equivalent(...)`, `extract_expression_structure(...)`, and `ast_structures_match(...)`,
+  - removed the now-unused `Data::Dumper`, `Scalar::Util qw(blessed)`, and `List::Util qw(min max)` imports that only supported that dead helper lane.
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t` => `Files=10`, `Tests=156`, `PASS`
+- Additional audit completed for this slice:
+  - repo-wide reference checks showed the retired helper names had no remaining code callers and only historical docs still mention the old pocket,
+  - the active substitution/factorization flow already routes through backend-owned helpers such as `update_original_asts_with_substituted_versions(...)`, `get_substituted_ast_for_signal(...)`, and `is_signal_referenced_in_substitutions(...)`.
+- Recent AST/CoreAST convergence commits immediately before the next commit:
+  - `ce1d9b9` `FlattenedDT: retire dead declaration helpers`
+  - `413d6cb` `FlattenedDT: retire dead LHS/RHS tracking`
+  - `0aa9a84` `FlattenedDT: retire dead string-era condition and WEN helpers`
+- Highest-value next seam after this slice:
+  - re-audit the remaining substitution-era helper surface in `FlattenedDT` and `Backend/SystemVerilog` to identify the next truly dead residue versus the still-live backend-owned helpers,
+  - if no more dead pockets remain nearby, shift back to the next smallest live AST/CoreAST-first ownership seam rather than forcing more facade cleanup.
 ## AST/CoreAST convergence update (March 12, 2026, dead-condition-and-wen-helper cleanup slice)
 - Latest completed slice in `perl/FSM/HDL/FlattenedDT.pm` and `t/10-ast-first-enable-structure.t`:
   - removed the dormant string-era condition/WEN helper island that still exposed a parallel string-based path for assignment recording, condition formatting, raw condition-string extraction, and DT-specific/LHS-level WEN generation,

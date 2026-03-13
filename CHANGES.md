@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT cleanup (retire dead substituted-AST matching helpers)
+- Removed the dead substituted-AST matching helper pocket from `perl/FSM/HDL/FlattenedDT.pm`:
+  - deleted `signal_name_matches_operation(...)`,
+  - deleted `find_substituted_ast(...)`,
+  - deleted `ast_contains_intermediate_signal_references(...)`,
+  - deleted `expressions_are_equivalent(...)`,
+  - deleted `extract_expression_structure(...)`,
+  - deleted `ast_structures_match(...)`.
+- Removed the now-unused `Data::Dumper`, `Scalar::Util qw(blessed)`, and `List::Util qw(min max)` imports from `perl/FSM/HDL/FlattenedDT.pm`.
+- Root cause / rationale:
+  - repo-wide auditing showed that this entire substituted-AST matching pocket had become dead compatibility surface with no remaining code callers,
+  - the live substitution/factorization flow already uses backend-owned helpers such as `update_original_asts_with_substituted_versions(...)`, `get_substituted_ast_for_signal(...)`, and `is_signal_referenced_in_substitutions(...)`,
+  - removing the dead pocket is safer than preserving dormant AST/string matching heuristics in the `FlattenedDT` facade.
+- Scope remains behavior-preserving cleanup of dead compatibility helpers; no live backend emission or factorization path changed.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=156`)
 ### FlattenedDT cleanup (retire dead standalone declaration helpers)
 - Removed the dead standalone intermediate-declaration helper lane from `perl/FSM/HDL/FlattenedDT.pm`:
   - deleted `schedule_intermediate_signal_for_declaration(...)`,
