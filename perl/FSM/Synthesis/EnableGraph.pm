@@ -779,6 +779,107 @@ sub build_internal_signal_declaration_plan($self, $fsm_module, $declared_ports =
         aux_decls => \%aux_decls,
     };
 }
+sub build_module_declaration_plan($self, $fsm_module) {
+    my @base_ports = (
+        {
+            direction => 'input',
+            storage => 'wire',
+            name => 'clk',
+            width => 1,
+        },
+        {
+            direction => 'input',
+            storage => 'wire',
+            name => 'rstn',
+            width => 1,
+        },
+    );
+
+    my $signals = $fsm_module->signals;
+    my @inputs;
+    my @outputs;
+
+    fsm_debug("HDL Generation: Processing " . scalar(keys %$signals) . " signals for module declaration", 3);
+
+    my %seen_signals = ('clk' => 1, 'rstn' => 1);
+    my %port_directions = ('clk' => 'input', 'rstn' => 'input');
+    my %driven_signals = $self->get_driven_signals();
+
+    for my $sig_name (sort keys %$signals) {
+        if ($seen_signals{$sig_name}) {
+            fsm_debug("HDL Signal Processing: SKIPPING duplicate signal '$sig_name'", 3);
+            next;
+        }
+        $seen_signals{$sig_name} = 1;
+
+        my $signal = $signals->{$sig_name};
+
+        my $is_intermediate = 0;
+        if ($signal->can('get_attribute')) {
+            my $signal_role = $signal->get_attribute('signal_role');
+            $is_intermediate = ($signal_role && $signal_role eq 'INTERNAL_INTERMEDIATE');
+        } elsif ($signal->can('attributes') && $signal->attributes) {
+            $is_intermediate = $signal->attributes->{is_intermediate} || 0;
+        }
+
+        if ($is_intermediate) {
+            fsm_debug("HDL Signal Processing: SKIPPING intermediate signal '$sig_name' from interface", 3);
+            next;
+        }
+
+        fsm_debug("HDL Signal Processing: $sig_name", 3);
+        fsm_debug("  Signal object type: " . ref($signal), 3);
+        fsm_debug("  Signal dump: " . Dumper($signal), 3);
+
+        my $signal_width = 1;
+        if ($signal->can('width')) {
+            $signal_width = $signal->width;
+            $signal_width = 1 unless ($signal_width && $signal_width > 0);
+            fsm_debug("  Signal width from ->width(): $signal_width", 3);
+        } else {
+            fsm_debug("  Signal does not have width() method", 3);
+        }
+
+        my $is_output = 0;
+        if ($driven_signals{$sig_name}) {
+            $is_output = 1;
+            fsm_debug("  Signal '$sig_name' is DRIVEN by FSM -> OUTPUT", 3);
+        } else {
+            if ($signal->can('is_output')) {
+                $is_output = $signal->is_output;
+            } elsif ($signal->can('attributes') && $signal->attributes && $signal->attributes->{is_output}) {
+                $is_output = $signal->attributes->{is_output};
+            } elsif ($sig_name =~ />$/) {
+                $is_output = 1;
+            }
+
+            fsm_debug("  Signal '$sig_name' direction: " . ($is_output ? "OUTPUT" : "INPUT"), 3);
+        }
+
+        my $port_plan = {
+            direction => $is_output ? 'output' : 'input',
+            storage => $is_output ? 'reg' : 'wire',
+            name => $sig_name,
+            width => $signal_width,
+        };
+
+        if ($is_output) {
+            push @outputs, $port_plan;
+            $port_directions{$sig_name} = 'output';
+        } else {
+            push @inputs, $port_plan;
+            $port_directions{$sig_name} = 'input';
+        }
+    }
+
+    return {
+        base_ports => \@base_ports,
+        inputs => \@inputs,
+        outputs => \@outputs,
+        declared_port_signals => \%seen_signals,
+        port_directions => \%port_directions,
+    };
+}
 sub generate_unified_pulse_delay_logic($self, $lhs, $lhs_analysis) {
     my $ctx = $self->{flattened_dt};
     my $lhs_ast = $lhs_analysis->{lhs_ast};

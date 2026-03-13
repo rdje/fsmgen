@@ -267,6 +267,10 @@ ok(
     $hdl->{enable_graph}->can('build_internal_signal_declaration_plan'),
     'live EnableGraph owns internal declaration planning',
 );
+ok(
+    $hdl->{enable_graph}->can('build_module_declaration_plan'),
+    'live EnableGraph owns module declaration planning',
+);
 
 for my $dead_enable_graph_helper (
     qw(

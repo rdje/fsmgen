@@ -14,6 +14,25 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph module declaration planning)
+- Current worktree continues the same live synthesis ownership lane and moves module/interface declaration planning under `EnableGraph`.
+- Scope of this slice:
+  - `perl/FSM/Synthesis/EnableGraph.pm` now owns `build_module_declaration_plan(...)`,
+  - that plan now decides live interface-port shape from synthesis-owned signal classification, including base ports, input vs output direction, `reg` vs `wire` storage, signal widths, and the derived `declared_port_signals` / `port_directions` registries,
+  - `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` now only renders the returned plan instead of re-deriving interface decisions from synthesis metadata locally.
+- Regression coverage update:
+  - `t/03-assignment-intent-metadata.t` now inspects the live module declaration plan directly and locks representative input/output ownership for `B`, `D`, `G`, `J`, `L`, `next_I`, and `K_r`,
+  - `t/05-assignment-hdl-snapshots.t` stayed green after restoring the exact legacy `output reg  ...` port-spacing contract in the backend renderer,
+  - `t/10-ast-first-enable-structure.t` now asserts that `EnableGraph` owns module declaration planning on the live path.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/05-assignment-hdl-snapshots.t` (`Files=1`, `Tests=12`, `PASS`)
+  - `prove -I perl t/03-assignment-intent-metadata.t t/10-ast-first-enable-structure.t` (`Files=2`, `Tests=242`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=364`, `PASS`)
+- Immediate next direction after commit:
+  - re-audit whether any remaining backend emission stage still mixes synthesis-domain planning with rendering,
+  - if this declaration-planning seam is now exhausted, pivot to the next truthful live runtime seam instead of forcing another interface-only move.
 ## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph internal declaration planning)
 - Current worktree pivots from wrapper-only convergence to the next real live synthesis seam: internal declaration planning.
 - Scope of this slice:

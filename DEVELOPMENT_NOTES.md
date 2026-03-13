@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: EnableGraph module declaration planning ownership
+- Continued the live synthesis ownership convergence by moving module/interface declaration planning under `EnableGraph`.
+- Rationale:
+  - `Backend::SystemVerilog::generate_module_declaration(...)` was still making synthesis-domain decisions about which signals become interface ports, whether each port is an input or output, whether it is emitted as `wire` or `reg`, and what width it carries,
+  - those decisions depend on synthesis-owned signal classification, especially `EnableGraph::get_driven_signals(...)` plus the existing explicit-output conventions,
+  - the next truthful move was therefore to let `EnableGraph` build a typed declaration plan while keeping the backend responsible only for rendering text.
+- Structural outcome:
+  - `EnableGraph::build_module_declaration_plan(...)` now owns live module-port planning and the derived `declared_port_signals` / `port_directions` registries,
+  - `Backend::SystemVerilog::generate_module_declaration(...)` now consumes that plan and renders it,
+  - backend-local interface classification logic is gone from the active path.
+- Safety/compatibility:
+  - no intended HDL behavior change; only the planning/rendering boundary moved,
+  - the first focused run caught a real snapshot-sensitive formatting regression in the generic renderer, which was fixed by preserving the exact legacy `output reg  ...` spacing contract for output ports,
+  - focused and full regression stayed green after that fix, so the owner move preserved active interface behavior.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `Backend/SystemVerilog.pm` pass,
+  - focused regressions `t/05-assignment-hdl-snapshots.t`, `t/03-assignment-intent-metadata.t`, and `t/10-ast-first-enable-structure.t` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=12`, `Tests=364`).
+- Next likely slices:
+  - re-audit whether any remaining backend emission step is still making synthesis-domain planning decisions that now belong with `EnableGraph`,
+  - if that lane is exhausted, pivot to the next truthful live runtime seam instead of forcing more interface-only ownership moves.
 ## 2026-03-14: EnableGraph internal declaration planning ownership
 - Pivoted from pure wrapper convergence to the next live synthesis seam by moving internal declaration planning under `EnableGraph`.
 - Rationale:

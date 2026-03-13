@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### FlattenedDT live ownership (EnableGraph module declaration planning)
+- Moved module/interface declaration planning off backend-local synthesis decisions and under `perl/FSM/Synthesis/EnableGraph.pm`.
+- Added `build_module_declaration_plan(...)` to `EnableGraph`, so it now owns the live interface plan derived from signal and driven-signal classification, including:
+  - base ports (`clk`, `rstn`),
+  - input vs output direction,
+  - `wire` vs `reg` storage,
+  - signal width metadata,
+  - and the derived `declared_port_signals` / `port_directions` registries consumed later in generation.
+- Updated `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` so `generate_module_declaration(...)` now renders the owner-provided plan instead of recomputing those interface decisions locally.
+- Preserved the legacy output-port formatting contract by teaching the backend renderer to keep `output reg  ...` spacing exactly stable.
+- Extended focused regression coverage:
+  - `t/03-assignment-intent-metadata.t` now inspects the live module declaration plan directly for representative input/output ownership and port-registry metadata,
+  - `t/10-ast-first-enable-structure.t` now asserts `EnableGraph` owns module declaration planning on the live path,
+  - `t/05-assignment-hdl-snapshots.t` locks that emitted module-port text remains unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t/05-assignment-hdl-snapshots.t` (pass: `Files=1`, `Tests=12`)
+  - `prove -I perl t/03-assignment-intent-metadata.t t/10-ast-first-enable-structure.t` (pass: `Files=2`, `Tests=242`)
+  - `prove -I perl t` (pass: `Files=12`, `Tests=364`)
 ### FlattenedDT live ownership (EnableGraph internal declaration planning)
 - Moved internal declaration planning off backend-local synthesis decisions and under `perl/FSM/Synthesis/EnableGraph.pm`.
 - Added `build_internal_signal_declaration_plan(...)` to `EnableGraph`, so it now owns the live declaration plan derived from `assignment_analysis`, including:

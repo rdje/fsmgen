@@ -175,10 +175,13 @@ my $captured_a = $hdl_gen->{lhs_assignments}{A}[0];
 my $captured_g = $hdl_gen->{lhs_assignments}{G}[0];
 my $captured_i = $hdl_gen->{lhs_assignments}{I}[0];
 my $captured_p1 = $hdl_gen->{lhs_assignments}{P1}[0];
+my $module_plan = $hdl_gen->{enable_graph}->build_module_declaration_plan($fsm_module);
 my $decl_plan = $hdl_gen->{enable_graph}->build_internal_signal_declaration_plan(
     $fsm_module,
     $hdl_gen->{declared_port_signals},
 );
+my %module_output_by_name = map { $_->{name} => $_ } @{$module_plan->{outputs} || []};
+my %module_input_by_name = map { $_->{name} => $_ } @{$module_plan->{inputs} || []};
 
 is($captured_a->{operator}, '<-', "captured A assignment keeps '<-' operator metadata");
 is($captured_a->{assignment_intent}{register_style}, 'output_named', "captured A assignment keeps register-style intent");
@@ -198,6 +201,24 @@ ok(!exists $decl_plan->{aux_decls}{next_I}, "internal declaration plan does not 
 ok(!exists $decl_plan->{aux_decls}{K_r}, "internal declaration plan does not redeclare K_r output port");
 is($decl_plan->{signal_decls}{A}, 8, "internal declaration plan keeps internal reg declaration for A");
 ok(!exists $decl_plan->{signal_decls}{G}, "internal declaration plan does not redeclare explicit output port G");
+
+is($module_output_by_name{next_I}{width}, 8, "module declaration plan exposes next_I output width for '<-='");
+is($module_output_by_name{next_I}{storage}, 'reg', "module declaration plan exposes next_I as reg output");
+is($module_output_by_name{K_r}{width}, 8, "module declaration plan exposes K_r output width for '<=+'");
+is($module_output_by_name{K_r}{storage}, 'reg', "module declaration plan exposes K_r as reg output");
+is($module_output_by_name{G}{width}, 1, "module declaration plan keeps explicit output G as single-bit output");
+is($module_output_by_name{G}{storage}, 'reg', "module declaration plan keeps explicit output G as reg output");
+is($module_input_by_name{B}{direction}, 'input', "module declaration plan keeps B as input");
+is($module_input_by_name{D}{direction}, 'input', "module declaration plan keeps D as input");
+is($module_input_by_name{J}{direction}, 'input', "module declaration plan keeps J as input");
+is($module_input_by_name{L}{direction}, 'input', "module declaration plan keeps L as input");
+ok($module_plan->{declared_port_signals}{clk}, "module declaration plan marks clk as declared");
+ok($module_plan->{declared_port_signals}{rstn}, "module declaration plan marks rstn as declared");
+ok($module_plan->{declared_port_signals}{next_I}, "module declaration plan marks next_I as declared");
+ok($module_plan->{declared_port_signals}{K_r}, "module declaration plan marks K_r as declared");
+is($module_plan->{port_directions}{B}, 'input', "module declaration plan records B as input");
+is($module_plan->{port_directions}{G}, 'output', "module declaration plan records G as output");
+is($module_plan->{port_directions}{next_I}, 'output', "module declaration plan records next_I as output");
 
 like($hdl, qr/\boutput\s+reg\s+\[7:0\]\s+next_I\b/s, "generated HDL exposes next_I output for '<-='");
 like($hdl, qr/\boutput\s+reg\s+\[7:0\]\s+K_r\b/s, "generated HDL exposes K_r output for '<=+'");
