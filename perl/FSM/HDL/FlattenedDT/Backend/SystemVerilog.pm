@@ -1935,56 +1935,6 @@ sub _is_factorizable_sub_expression ($self, $ast) {
     # DO factor other complex expressions
     return 1;
 }
-sub is_simple_ast_expression ($self, $ast) {
-    my $ctx = $self->{flattened_dt};
-    # Refined factorization logic:
-    # - Always factor unary operations
-    # - Only factor binary logical ops that appear multiple times
-    # - Always factor binary arithmetic operations
-    # - Literals and bare signal references remain simple
-    
-    return 1 unless $ast && blessed($ast);
-    
-    # Literals are always simple
-    return 1 if $ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal');
-    
-    # Signal references are simple
-    return 1 if $ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef');
-    
-    # UNARY OPERATIONS: Always factor (never simple)
-    if ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
-        fsm_debug("SIMPLE_CHECK: Unary operation - ALWAYS FACTOR (not simple)", 3);
-        return 0;
-    }
-    
-    # BINARY OPERATIONS: Check type and occurrence count
-    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
-        # Always factor arithmetic operations
-        if ($ctx->{enable_graph}->is_arithmetic_operation($ast)) {
-            fsm_debug("SIMPLE_CHECK: Arithmetic operation - ALWAYS FACTOR (not simple)", 3);
-            return 0;
-        }
-        
-        # For logical operations, only factor if they appear multiple times
-        if ($ctx->{enable_graph}->is_logical_operation($ast)) {
-            my $should_factor = $ctx->{enable_graph}->should_factor_logical_operation($ast);
-            if ($should_factor) {
-                fsm_debug("SIMPLE_CHECK: Multi-use logical operation - FACTOR (not simple)", 3);
-                return 0;
-            } else {
-                fsm_debug("SIMPLE_CHECK: Single-use logical operation - DON'T FACTOR (simple)", 3);
-                return 1;
-            }
-        }
-        
-        # Other binary operations (comparisons, etc.) - factor if complex
-        fsm_debug("SIMPLE_CHECK: Other binary operation - FACTOR (not simple)", 3);
-        return 0;
-    }
-    
-    # Everything else is complex
-    return 0;
-}
 sub run_global_ast_factorization ($self) {
     my $ctx = $self->{flattened_dt};
     # GENERIC AST-BASED GLOBAL FACTORIZATION
@@ -2849,56 +2799,6 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
         }
     }
     $hdl .= "\n";
-    
-    return $hdl;
-}
-sub generate_comb_mux ($self, $lhs, $clean_lhs) {
-    my $ctx = $self->{flattened_dt};
-    my $hdl = "  // Combinational mux for: $lhs\n";
-    
-    $hdl .= "  always_comb begin\n";
-    $hdl .= "    $lhs = " . $ctx->{enable_graph}->get_default_value($lhs) . ";  // Default value\n";
-    
-    # Use the enable/value pairs passed down from LHS-Level WEN generation
-    for my $pair (@{$ctx->{lhs_to_enable_value_pairs}{$lhs}}) {
-        my $enable_signal_name = $pair->{enable_signal};
-        my $rhs_value = $pair->{rhs_value};
-        $hdl .= "    if ($enable_signal_name) begin\n";
-        $hdl .= "      $lhs = $rhs_value;\n";
-        $hdl .= "    end\n";
-    }
-    
-    $hdl .= "  end\n";
-    
-    return $hdl;
-}
-sub generate_flop_mux ($self, $lhs, $clean_lhs) {
-    my $ctx = $self->{flattened_dt};
-    my $hdl = "  // Flop with mux for: $lhs\n";
-    
-    # Generate the multiplexer logic
-    $hdl .= "  always_comb begin\n";
-    $hdl .= "    ${lhs}_next = " . $ctx->{enable_graph}->get_default_value($lhs) . ";  // Default value\n";
-    
-    # Use the enable/value pairs passed down from LHS-Level WEN generation
-    for my $pair (@{$ctx->{lhs_to_enable_value_pairs}{$lhs}}) {
-        my $enable_signal_name = $pair->{enable_signal};
-        my $rhs_value = $pair->{rhs_value};
-        $hdl .= "    if ($enable_signal_name) begin\n";
-        $hdl .= "      ${lhs}_next = $rhs_value;\n";
-        $hdl .= "    end\n";
-    }
-    
-    $hdl .= "  end\n";
-    
-    # Generate the flop
-    $hdl .= "  always_ff @(posedge clk or negedge rstn) begin\n";
-    $hdl .= "    if (!rstn) begin\n";
-    $hdl .= "      $lhs <= " . $ctx->{enable_graph}->get_reset_value($lhs) . ";\n";
-    $hdl .= "    end else begin\n";
-    $hdl .= "      $lhs <= ${lhs}_next;\n";
-    $hdl .= "    end\n";
-    $hdl .= "  end\n";
     
     return $hdl;
 }

@@ -206,11 +206,6 @@ sub contains_frequently_used_operations ($self, $ast) {
     return $self->{enable_graph}->contains_frequently_used_operations($ast);
 }
 
-sub is_simple_ast_expression ($self, $ast) {
-    return $self->{backend_sv}->is_simple_ast_expression($ast);
-}
-
-
 sub generate_wen_en_signals ($self, $fsm_module) {
     return $self->{backend_sv}->generate_wen_en_signals($fsm_module);
 }
@@ -229,14 +224,6 @@ sub normalize_rhs_logic_level ($self, $rhs) {
 
 sub get_signal_assignment_type ($self, $lhs, $lhs_analysis) {
     return $self->{enable_graph}->get_signal_assignment_type($lhs, $lhs_analysis);
-}
-
-sub generate_flop_mux ($self, $lhs, $clean_lhs) {
-    return $self->{backend_sv}->generate_flop_mux($lhs, $clean_lhs);
-}
-
-sub generate_comb_mux ($self, $lhs, $clean_lhs) {
-    return $self->{backend_sv}->generate_comb_mux($lhs, $clean_lhs);
 }
 
 sub get_driven_signals ($self) {

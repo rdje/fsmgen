@@ -124,8 +124,11 @@ for my $dead_facade_helper (
         canonicalize_expression
         create_condition_expression_signal_name
         find_all_ast_sub_expressions
+        generate_comb_mux
+        generate_flop_mux
         get_or_create_ast_signal_name
         is_complex_ast
+        is_simple_ast_expression
         should_factor_ast
         set_explicit_reset_values
         parentheses_are_redundant
@@ -143,6 +146,9 @@ for my $dead_backend_helper (
     qw(
         analyze_ast_sub_expressions
         find_all_ast_sub_expressions
+        generate_comb_mux
+        generate_flop_mux
+        is_simple_ast_expression
     )
 ) {
     ok(

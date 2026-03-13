@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT/backend cleanup (retire dead mux/simple helper pocket)
+- Removed the dead mux/simple helper pocket from `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`:
+  - deleted the `FlattenedDT` facade delegates `is_simple_ast_expression(...)`, `generate_comb_mux(...)`, and `generate_flop_mux(...)`,
+  - deleted the matching backend implementations `is_simple_ast_expression(...)`, `generate_comb_mux(...)`, and `generate_flop_mux(...)`.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation no longer exposes those dead helper names on either the `FlattenedDT` facade or the backend `SystemVerilog` helper object.
+- Root cause / rationale:
+  - repo-wide call-graph auditing showed those three helpers had no remaining callers anywhere in the active code or tests,
+  - the mux helpers still depended on the long-retired `lhs_to_enable_value_pairs` state, which confirmed they were dead compatibility residue rather than inactive live code,
+  - removing both sides together is safer than preserving an uncalled alternate mux/simple-expression surface in the facade or backend.
+- Scope remains behavior-preserving cleanup of dead compatibility surface; live AST/CoreAST generation, mux emission, and backend lowering behavior are unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=57`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=203`)
 ### FlattenedDT/EnableGraph cleanup (retire dead AST helper pocket)
 - Removed the dead AST helper pocket from `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/Synthesis/EnableGraph.pm`:
   - deleted the `FlattenedDT` facade delegates `get_or_create_ast_signal_name(...)`, `canonicalize_expression(...)`, `is_complex_ast(...)`, `should_factor_ast(...)`, `analyze_ast_complexity(...)`, and `_traverse_ast_for_complexity(...)`,

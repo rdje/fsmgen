@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: FlattenedDT/backend dead mux/simple helper pocket removal
+- Continued AST/CoreAST-first cleanup by deleting a dead mux/simple helper pocket from both the `FlattenedDT` facade and the backend owner side.
+- Rationale:
+  - a fresh repo-wide call-graph audit showed `is_simple_ast_expression(...)`, `generate_comb_mux(...)`, and `generate_flop_mux(...)` had no remaining callers anywhere in the active tree,
+  - the two mux emitters still depended on the already-retired `lhs_to_enable_value_pairs` state, which made them clearly stranded compatibility code rather than a latent alternate backend path,
+  - removing the facade delegates and backend implementations together is more honest than preserving an uncalled helper API for mux emission or AST simplicity classification.
+- Safety/compatibility:
+  - no active generation flow changed; live mux emission already runs through the unified/backend-owned paths used by `generate_wen_en_signals(...)` and related assignment-analysis structures,
+  - the focused architecture regression now locks the absence of those helper names on both live `FlattenedDT` and live backend `SystemVerilog` objects,
+  - this slice therefore shrinks dead facade/backend surface without widening any ownership seam or altering HDL output.
+- Verification:
+  - syntax checks for `FlattenedDT.pm` and `Backend/SystemVerilog.pm` pass,
+  - focused regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=203`).
+- Next likely slices:
+  - run one more narrow audit on the remaining `FlattenedDT` facade / backend delegate edge for any final dead wrapper residue,
+  - if that audit is empty, pivot back to the next live AST/CoreAST-first ownership seam instead of stretching the cleanup lane.
 ## 2026-03-13: FlattenedDT/EnableGraph dead AST helper pocket removal
 - Continued AST/CoreAST-first cleanup by deleting a dead AST helper pocket from both the `FlattenedDT` facade and the `EnableGraph` owner side.
 - Rationale:

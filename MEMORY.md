@@ -14,6 +14,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT/backend cleanup micro-slice (retire dead mux/simple helper pocket)
+- Current worktree removes a dead backend-wrapper pocket from `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- Scope remains a small behavior-preserving cleanup slice:
+  - repo-wide call-graph auditing showed `is_simple_ast_expression(...)`, `generate_comb_mux(...)`, and `generate_flop_mux(...)` had no remaining callers anywhere in the active tree,
+  - the two mux helpers still referenced long-retired `lhs_to_enable_value_pairs` state, which confirmed they were stranded compatibility residue rather than dormant live behavior,
+  - `t/10-ast-first-enable-structure.t` now asserts that live `FlattenedDT` and backend `SystemVerilog` objects no longer expose those dead helper names.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=57`, `PASS`)
+  - `prove -I perl t` (`Files=10`, `Tests=203`, `PASS`)
+- Immediate next direction after commit:
+  - run one more narrow audit on the remaining `FlattenedDT` facade / backend delegate edge for any final dead wrapper residue,
+  - if that audit comes up empty, pivot back to the next live AST/CoreAST-first ownership seam instead of stretching the cleanup lane further.
 ## 2026-03-13: FlattenedDT/EnableGraph cleanup micro-slice (retire dead AST helper pocket)
 - Current worktree removes a dead AST helper pocket from `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/Synthesis/EnableGraph.pm`.
 - Scope remains a small behavior-preserving cleanup slice:
