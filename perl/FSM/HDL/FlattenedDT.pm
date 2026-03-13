@@ -11,9 +11,6 @@ use FindBin;
 use lib "$FindBin::Bin";
 use FSM::Debug;  # Global debug system
 use FSM::ExpressionNamer;
-use FSM::GlobalASTManager;
-use FSM::AST::Node;
-use FSM::CoreAST;  # Core AST classes with SignalRef->name() method
 use FSM::Synthesis::EnableGraph;
 use FSM::HDL::FlattenedDT::Orchestrator;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog;
@@ -118,19 +115,6 @@ sub flatten_all_decision_trees ($self, $fsm_module) {
 
 sub build_unified_assignment_analysis ($self, $fsm_module) {
     return $self->{enable_graph}->build_unified_assignment_analysis($fsm_module);
-}
-
-sub get_signal_ast_node ($self, $lhs_name) {
-    # Get the signal AST node - single source of truth for all signal properties
-    # Uses the stored FSM module reference from the AST web
-    # Returns the signal AST node or undef if not found
-    
-    if ($self->{fsm_module} && $self->{fsm_module}->signals && $self->{fsm_module}->signals->{$lhs_name}) {
-        return $self->{fsm_module}->signals->{$lhs_name};
-    }
-    
-    fsm_debug("  WARNING: No signal AST node found for '$lhs_name'", 3);
-    return undef;
 }
 
 sub is_register ($self, $lhs_signal_ast, $lhs_name_for_debug) {

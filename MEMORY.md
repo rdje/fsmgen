@@ -14,6 +14,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead signal-AST facade helper)
+- Current worktree removes the dead `get_signal_ast_node(...)` helper from `perl/FSM/HDL/FlattenedDT.pm` and drops the now-unused `FSM::GlobalASTManager`, `FSM::AST::Node`, and `FSM::CoreAST` imports from the same facade.
+- Scope remains a small behavior-preserving cleanup slice:
+  - repo-wide call-graph auditing showed `get_signal_ast_node(...)` had no callers anywhere in the active tree,
+  - the helper depended on a stale `fsm_module` slot that is not part of the live AST/CoreAST generation path,
+  - `t/10-ast-first-enable-structure.t` now asserts that live generation no longer exposes that dead helper on the `FlattenedDT` facade.
+- Validation is green so far for this slice:
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=11`, `PASS`)
+  - `prove -I perl t` (`Files=10`, `Tests=157`, `PASS`)
+- Immediate next direction after commit:
+  - continue re-auditing the remaining `FlattenedDT` facade for truly dead delegates or stale state assumptions before taking more cleanup-only slices,
+  - if that dead-surface audit runs dry, return to the next smallest live AST/CoreAST-first ownership seam instead of forcing more facade-only pruning.
 ## 2026-03-11: Backend convergence micro-slice (EnableGraph/SystemVerilog defining-AST metadata for consolidated filtering)
 - Current worktree carries native defining-AST metadata forward on the live consolidated intermediate filtering path.
 - Scope remains a small behavior-preserving AST-first slice:

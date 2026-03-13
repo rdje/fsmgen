@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT cleanup (retire dead signal-AST facade helper)
+- Removed the dead `get_signal_ast_node(...)` helper from `perl/FSM/HDL/FlattenedDT.pm`.
+- Removed the now-unused `FSM::GlobalASTManager`, `FSM::AST::Node`, and `FSM::CoreAST` imports from `perl/FSM/HDL/FlattenedDT.pm`.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation no longer exposes the dead `get_signal_ast_node(...)` facade helper.
+- Root cause / rationale:
+  - repo-wide call-graph auditing showed `get_signal_ast_node(...)` had no remaining callers anywhere in the active code or tests,
+  - the helper depended on a stale `fsm_module` slot that is not populated on the live AST/CoreAST-first path,
+  - removing the helper and its last facade-only imports is safer than preserving an untested alternate signal-lookup surface on `FlattenedDT`.
+- Scope remains behavior-preserving cleanup of dead compatibility surface; live signal lookup, enable synthesis, and backend emission behavior are unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=11`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=157`)
 ### FlattenedDT cleanup (retire dead substituted-AST matching helpers)
 - Removed the dead substituted-AST matching helper pocket from `perl/FSM/HDL/FlattenedDT.pm`:
   - deleted `signal_name_matches_operation(...)`,

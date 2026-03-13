@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: FlattenedDT dead signal-AST facade helper removal
+- Continued AST/CoreAST-first cleanup by deleting the dormant `get_signal_ast_node(...)` helper from `perl/FSM/HDL/FlattenedDT.pm` and removing the facade-only imports it left behind.
+- Rationale:
+  - a fresh facade audit after the substituted-AST cleanup showed `get_signal_ast_node(...)` had no remaining callers anywhere in the active code or tests,
+  - the helper was also anchored to a stale `fsm_module` slot on `FlattenedDT`, which is not part of the live orchestrator + `EnableGraph` path and therefore no longer represented a real source-of-truth boundary,
+  - once the helper was removed, `FSM::GlobalASTManager`, `FSM::AST::Node`, and `FSM::CoreAST` became provably unused in the facade too, confirming this was isolated dead residue rather than a hidden live dependency.
+- Safety/compatibility:
+  - no active generation, factorization, or backend-emission path changed; all live signal/AST lookup continues to flow through `Orchestrator`, `EnableGraph`, and backend-owned helpers,
+  - the focused architecture regression now locks the absence of the dead `get_signal_ast_node(...)` entrypoint on live `FlattenedDT` objects,
+  - this slice therefore shrinks facade surface without widening any ownership boundary or altering HDL output.
+- Verification:
+  - syntax check for `FlattenedDT.pm` passes,
+  - focused regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=157`).
+- Next likely slices:
+  - continue re-auditing the remaining `FlattenedDT` delegates for any final dead surface, especially helpers whose backing state is already gone from the live path,
+  - if no more truly dead residue remains, return to the next smallest live AST/CoreAST-first ownership seam instead of continuing cleanup-only facade pruning.
 ## 2026-03-13: FlattenedDT dead LHS/RHS completeness tracking removal
 - Continued AST/CoreAST-first cleanup by deleting the dormant LHS/RHS completeness-tracking family from `perl/FSM/HDL/FlattenedDT.pm` and removing the last writes into that lane from `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`.
 - Rationale:

@@ -90,4 +90,9 @@ ok(
     'live generation leaves no legacy intermediate_signals_to_declare scratch state behind',
 );
 
+ok(
+    !$hdl->can('get_signal_ast_node'),
+    'live FlattenedDT facade no longer exposes the dead get_signal_ast_node helper',
+);
+
 done_testing();
