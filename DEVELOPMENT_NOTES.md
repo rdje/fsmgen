@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: EnableGraph capture-shape normalization for live assignment capture
+- Continued the live phase-1 ownership convergence by moving the remaining LHS/RHS capture-shape normalization under `EnableGraph`.
+- Rationale:
+  - after the previous slice, `EnableGraph` already owned capture-registry mutation, but `Orchestrator` still derived the LHS key and RHS text locally before handing data off,
+  - those normalization steps are part of the same capture-shape contract consumed later by `EnableGraph`, so leaving them in `Orchestrator` kept that seam wider than necessary,
+  - the next small truthful move was therefore to migrate those owner-local normalizers too, while leaving traversal and operator validation in `Orchestrator`.
+- Structural outcome:
+  - `EnableGraph::extract_signal_name_from_ast(...)` now covers the leading-identifier fallback needed for capture-key normalization,
+  - `EnableGraph::extract_rhs_capture_value(...)` now owns recursive RHS capture rendering,
+  - `Orchestrator` no longer keeps separate local helpers for LHS-name and RHS-text extraction.
+- Safety/compatibility:
+  - no intended behavioral change to captured assignment metadata or emitted HDL,
+  - the focused live-state regressions still pass, which confirms ordinary assignment capture, transition capture, and per-run reuse behavior remain intact after the owner move,
+  - full regression remains green, so this normalization move stayed behavior-preserving on the active path.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `Orchestrator.pm` pass,
+  - focused regressions `t/12-enablegraph-capture-registry.t` and `t/11-flatteneddt-generation-reset.t` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=12`, `Tests=314`).
+- Next likely slices:
+  - continue on the same live phase-1 seam,
+  - the next small move is likely to narrow `Orchestrator`’s remaining direct knowledge of assignment-node intent/operator extraction if that can be localized without increasing behavior risk.
 ## 2026-03-13: EnableGraph capture-registry ownership for live assignment capture
 - Continued the post-cleanup live refactor lane by moving captured assignment/transition registry mutation under `EnableGraph`.
 - Rationale:

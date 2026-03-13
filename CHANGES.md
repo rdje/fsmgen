@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT live ownership (EnableGraph capture-shape normalization)
+- Moved the remaining live LHS/RHS capture-shape normalization off `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and under `perl/FSM/Synthesis/EnableGraph.pm`.
+- Added `extract_rhs_capture_value(...)` to `EnableGraph` and broadened `extract_signal_name_from_ast(...)` so the owner-local signal-name helper now also handles indexed/reference-style AST renderings by leading identifier.
+- Updated `Orchestrator` so:
+  - assignment-node debug naming now uses `enable_graph->extract_signal_name_from_ast(...)`,
+  - `record_assignment_from_ast(...)` now derives the captured LHS key through `EnableGraph`,
+  - and captured RHS text now goes through `enable_graph->extract_rhs_capture_value(...)` instead of the local `extract_rhs_from_expression(...)` helper.
+- Removed the now-ownerless local `extract_lhs_name_from_ast(...)` and `extract_rhs_from_expression(...)` helpers from `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `prove -I perl t/12-enablegraph-capture-registry.t t/11-flatteneddt-generation-reset.t` (pass: `Files=2`, `Tests=31`)
+  - `prove -I perl t` (pass: `Files=12`, `Tests=314`)
 ### FlattenedDT live ownership (EnableGraph capture-registry ownership)
 - Moved live capture-registry mutation for assignments and state transitions under `perl/FSM/Synthesis/EnableGraph.pm`.
 - Added `register_assignment_capture(...)` and `register_transition_capture(...)` to `EnableGraph`, so the owner that later analyzes `lhs_assignments`, `all_lhs`, and `lhs_ast_map` now also owns registration of that data.

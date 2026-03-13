@@ -14,6 +14,21 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT live ownership micro-slice (EnableGraph capture-shape normalization)
+- Current worktree continues the same live phase-1 ownership seam after capture-registry mutation moved under `EnableGraph`.
+- Scope of this slice:
+  - `perl/FSM/Synthesis/EnableGraph.pm` now also owns the remaining capture-shape normalization used by assignment capture,
+  - `extract_signal_name_from_ast(...)` is broadened to recover the leading identifier from AST renderings like indexed references,
+  - new `extract_rhs_capture_value(...)` owns the recursive RHS-to-captured-text normalization for literals, signal refs, binary ops, and concatenations,
+  - `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` now calls those owner-local helpers and no longer keeps local `extract_lhs_name_from_ast(...)` / `extract_rhs_from_expression(...)` helpers.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `prove -I perl t/12-enablegraph-capture-registry.t t/11-flatteneddt-generation-reset.t` (`Files=2`, `Tests=31`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=314`, `PASS`)
+- Immediate next direction after commit:
+  - continue on the live phase-1 seam rather than reopening wrapper cleanup,
+  - the next likely move is to narrow `Orchestrator`’s remaining direct knowledge of assignment-node capture semantics, especially operator/intent extraction if that can be moved without widening risk.
 ## 2026-03-13: FlattenedDT live ownership micro-slice (EnableGraph capture-registry ownership)
 - Current worktree continues on the live `Orchestrator` / `EnableGraph` seam instead of returning to cleanup-only work.
 - Scope of this slice:

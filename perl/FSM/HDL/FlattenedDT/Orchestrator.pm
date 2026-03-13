@@ -179,7 +179,7 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
         }
         
     } elsif ($dt_node->isa('FSM::CoreAST::Assignment') || $dt_node->isa('FSM::CoreAST::RegisterAssignment')) {
-        my $assignment_target_name = $self->extract_lhs_name_from_ast($dt_node->target);
+        my $assignment_target_name = $ctx->{enable_graph}->extract_signal_name_from_ast($dt_node->target) // 'unknown_lhs';
         fsm_debug("  Assignment: " . $assignment_target_name . " <- " . ref($dt_node->source), 3);
         
         # Record this assignment with current condition stack (now AST nodes)
@@ -213,38 +213,13 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
         fsm_debug("  Unknown node type: " . ref($dt_node), 3);
     }
 }
-sub extract_lhs_name_from_ast ($self, $lhs_ast) {
-    return 'unknown_lhs' unless $lhs_ast;
-    
-    if ($lhs_ast->can('name')) {
-        my $name = eval { $lhs_ast->name() };
-        return $name if defined($name) && $name ne '';
-    }
-    
-    if ($lhs_ast->isa('FSM::CoreAST::SignalRef') && $lhs_ast->signal && $lhs_ast->signal->can('name')) {
-        return $lhs_ast->signal->name;
-    }
-    
-    if ($lhs_ast->isa('FSM::CoreAST::IndexedRef') && $lhs_ast->signal && ref($lhs_ast->signal) && $lhs_ast->signal->can('name')) {
-        return $lhs_ast->signal->name;
-    }
-    
-    if ($lhs_ast->can('to_systemverilog')) {
-        my $sv = eval { $lhs_ast->to_systemverilog() };
-        if (defined($sv) && $sv =~ /^([a-zA-Z_]\w*)/) {
-            return $1;
-        }
-    }
-    
-    return 'unknown_lhs';
-}
 sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_stack) {
     my $ctx = $self->{flattened_dt};
 
     # AST WEB IMPLEMENTATION: Store AST nodes directly, not strings!
     my $lhs_signal_ast = $assignment_node->target;  # Keep the AST node
     my $rhs_expr = $assignment_node->source;
-    my $lhs_name = $self->extract_lhs_name_from_ast($lhs_signal_ast);
+    my $lhs_name = $ctx->{enable_graph}->extract_signal_name_from_ast($lhs_signal_ast) // 'unknown_lhs';
     
     # PURE AST/OOP: Ask the AST node directly for debugging information
     fsm_debug("\n*** PHASE1 ASSIGNMENT NODE REACHED (AST WEB) ***", 3);
@@ -272,7 +247,7 @@ sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_st
     my $condition_ast = $ctx->{enable_graph}->create_condition_expression($condition_stack);
     
     # Extract RHS value from expression
-    my $actual_rhs = $self->extract_rhs_from_expression($rhs_expr);
+    my $actual_rhs = $ctx->{enable_graph}->extract_rhs_capture_value($rhs_expr);
     
     # Determine operator directly from assignment intent metadata (strict mode)
     my $assignment_intent = {};
@@ -322,30 +297,6 @@ sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_st
     );
     
     fsm_debug("*** PHASE1 ASSIGNMENT NODE COMPLETE (AST WEB) ***\n", 3);
-}
-sub extract_rhs_from_expression ($self, $expr) {
-    # Extract RHS value from expression nodes
-    if ($expr->isa('FSM::CoreAST::Literal')) {
-        return $expr->value;
-    } elsif ($expr->isa('FSM::CoreAST::SignalRef')) {
-        return $expr->signal->name;
-    } elsif ($expr->isa('FSM::CoreAST::BinaryOp')) {
-        my $left = $self->extract_rhs_from_expression($expr->left);
-        my $right = $self->extract_rhs_from_expression($expr->right);
-        return "$left " . $expr->operator . " $right";
-    } elsif ($expr->isa('FSM::CoreAST::Concatenation')) {
-        # Handle concatenation expressions: {a, b, c}
-        my @operand_strings;
-        for my $operand (@{$expr->operands}) {
-            push @operand_strings, $self->extract_rhs_from_expression($operand);
-        }
-        return '{' . join(', ', @operand_strings) . '}';
-    } else {
-        # Try to get a meaningful name from the expression object
-        my $expr_type = ref($expr);
-        $expr_type =~ s/^.*:://;  # Remove package prefix
-        return lc($expr_type) . '_expr';
-    }
 }
 sub record_transition_from_ast ($self, $dt_name, $transition_node, $condition_stack) {
     my $ctx = $self->{flattened_dt};

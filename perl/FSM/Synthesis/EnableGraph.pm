@@ -1156,6 +1156,29 @@ sub initialize_state_and_dt_enable_conditions($self, $fsm_module) {
         }
     }
 }
+sub extract_rhs_capture_value($self, $expr) {
+    return 'unknown_expr' unless $expr && blessed($expr);
+
+    if ($expr->isa('FSM::CoreAST::Literal')) {
+        return $expr->value;
+    } elsif ($expr->isa('FSM::CoreAST::SignalRef')) {
+        return $expr->signal->name;
+    } elsif ($expr->isa('FSM::CoreAST::BinaryOp')) {
+        my $left = $self->extract_rhs_capture_value($expr->left);
+        my $right = $self->extract_rhs_capture_value($expr->right);
+        return "$left " . $expr->operator . " $right";
+    } elsif ($expr->isa('FSM::CoreAST::Concatenation')) {
+        my @operand_strings;
+        for my $operand (@{$expr->operands}) {
+            push @operand_strings, $self->extract_rhs_capture_value($operand);
+        }
+        return '{' . join(', ', @operand_strings) . '}';
+    }
+
+    my $expr_type = ref($expr);
+    $expr_type =~ s/^.*:://;
+    return lc($expr_type) . '_expr';
+}
 sub extract_signal_name_from_ast($self, $signal_ast) {
     # Extract signal name from a signal reference AST node
     
@@ -1171,7 +1194,7 @@ sub extract_signal_name_from_ast($self, $signal_ast) {
     } else {
         # Try to extract from SystemVerilog representation
         my $sv_repr = eval { $signal_ast->to_systemverilog() };
-        if ($sv_repr && $sv_repr =~ /^([a-zA-Z_][a-zA-Z0-9_]*)$/) {
+        if ($sv_repr && $sv_repr =~ /^([a-zA-Z_][a-zA-Z0-9_]*)/) {
             return $1;
         }
     }
