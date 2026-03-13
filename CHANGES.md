@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT cleanup (retire dead unified helper delegates)
+- Removed the dead unified-analysis / unified-emission helper delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
+  - deleted `build_unified_assignment_analysis(...)`,
+  - deleted `group_assignments_by_rhs(...)`,
+  - deleted `generate_complete_enable_structure(...)`,
+  - deleted `build_multiplexer_config(...)`,
+  - deleted `generate_unified_wen_en_signals(...)`,
+  - deleted `generate_dt_enables_from_analysis(...)`,
+  - deleted `generate_lhs_enables_from_analysis(...)`,
+  - deleted `generate_signal_assignments(...)`,
+  - deleted `generate_unified_flop_mux(...)`,
+  - deleted `generate_unified_pulse_delay_logic(...)`,
+  - deleted `signal_uses_register_assignment(...)`,
+  - deleted `generate_unified_comb_mux(...)`.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation no longer exposes that dead unified helper surface on the `FlattenedDT` facade.
+- Root cause / rationale:
+  - repo-wide call-graph auditing showed the live phase-1/2/3 flow now runs directly through `Orchestrator -> EnableGraph` and no longer routes through the matching facade delegates,
+  - the removed methods were pure compatibility wrappers around helper ownership that had already localized in `EnableGraph`,
+  - removing the whole delegate cluster is safer than preserving an untested alternate entry surface for unified analysis and mux/WEN generation.
+- Scope remains behavior-preserving cleanup of dead compatibility surface; live assignment analysis, enable generation, and mux emission behavior are unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=23`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=169`)
 ### FlattenedDT cleanup (retire dead signal-AST facade helper)
 - Removed the dead `get_signal_ast_node(...)` helper from `perl/FSM/HDL/FlattenedDT.pm`.
 - Removed the now-unused `FSM::GlobalASTManager`, `FSM::AST::Node`, and `FSM::CoreAST` imports from `perl/FSM/HDL/FlattenedDT.pm`.

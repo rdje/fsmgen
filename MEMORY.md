@@ -14,6 +14,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead unified helper delegates)
+- Current worktree removes a dead unified-analysis / unified-emission helper delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`.
+- Scope remains a small behavior-preserving cleanup slice:
+  - repo-wide call-graph auditing showed the live phase-1/2/3 path now runs directly through `Orchestrator -> EnableGraph` and no longer uses the matching `FlattenedDT` facade delegates,
+  - removed dead facade wrappers for `build_unified_assignment_analysis(...)`, `group_assignments_by_rhs(...)`, `generate_complete_enable_structure(...)`, `build_multiplexer_config(...)`, `generate_unified_wen_en_signals(...)`, `generate_dt_enables_from_analysis(...)`, `generate_lhs_enables_from_analysis(...)`, `generate_signal_assignments(...)`, `generate_unified_flop_mux(...)`, `generate_unified_pulse_delay_logic(...)`, `signal_uses_register_assignment(...)`, and `generate_unified_comb_mux(...)`,
+  - `t/10-ast-first-enable-structure.t` now asserts that live `FlattenedDT` objects no longer expose that dead unified helper surface.
+- Validation is green so far for this slice:
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=23`, `PASS`)
+  - `prove -I perl t` (`Files=10`, `Tests=169`, `PASS`)
+- Immediate next direction after commit:
+  - continue re-auditing the remaining `FlattenedDT` facade delegates for any final dead surface that only mirrors direct `EnableGraph` / backend ownership,
+  - if the dead-surface audit is exhausted, pivot back to the next smallest live AST/CoreAST-first ownership seam.
 ## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead signal-AST facade helper)
 - Current worktree removes the dead `get_signal_ast_node(...)` helper from `perl/FSM/HDL/FlattenedDT.pm` and drops the now-unused `FSM::GlobalASTManager`, `FSM::AST::Node`, and `FSM::CoreAST` imports from the same facade.
 - Scope remains a small behavior-preserving cleanup slice:

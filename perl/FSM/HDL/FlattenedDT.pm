@@ -113,28 +113,12 @@ sub flatten_all_decision_trees ($self, $fsm_module) {
     return $self->{orchestrator}->flatten_all_decision_trees($fsm_module);
 }
 
-sub build_unified_assignment_analysis ($self, $fsm_module) {
-    return $self->{enable_graph}->build_unified_assignment_analysis($fsm_module);
-}
-
 sub is_register ($self, $lhs_signal_ast, $lhs_name_for_debug) {
     return $self->{enable_graph}->is_register($lhs_signal_ast, $lhs_name_for_debug);
 }
 
 sub fallback_register_analysis_from_assignments ($self, $lhs_name) {
     return $self->{enable_graph}->fallback_register_analysis_from_assignments($lhs_name);
-}
-
-sub group_assignments_by_rhs ($self, $lhs) {
-    return $self->{enable_graph}->group_assignments_by_rhs($lhs);
-}
-
-sub generate_complete_enable_structure ($self, $lhs) {
-    return $self->{enable_graph}->generate_complete_enable_structure($lhs);
-}
-
-sub build_multiplexer_config ($self, $lhs) {
-    return $self->{enable_graph}->build_multiplexer_config($lhs);
 }
 sub extract_lhs_name_from_ast ($self, $lhs_ast) {
     return $self->{orchestrator}->extract_lhs_name_from_ast($lhs_ast);
@@ -247,30 +231,6 @@ sub generate_wen_en_signals ($self, $fsm_module) {
     return $self->{backend_sv}->generate_wen_en_signals($fsm_module);
 }
 
-sub generate_unified_wen_en_signals ($self, $fsm_module) {
-    return $self->{enable_graph}->generate_unified_wen_en_signals($fsm_module);
-}
-
-sub generate_dt_enables_from_analysis ($self) {
-    return $self->{enable_graph}->generate_dt_enables_from_analysis();
-}
-
-sub generate_lhs_enables_from_analysis ($self) {
-    return $self->{enable_graph}->generate_lhs_enables_from_analysis();
-}
-
-sub generate_signal_assignments ($self, $fsm_module) {
-    return $self->{enable_graph}->generate_signal_assignments($fsm_module);
-}
-
-sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
-    return $self->{enable_graph}->generate_unified_flop_mux($lhs, $lhs_analysis);
-}
-
-sub generate_unified_pulse_delay_logic ($self, $lhs, $lhs_analysis) {
-    return $self->{enable_graph}->generate_unified_pulse_delay_logic($lhs, $lhs_analysis);
-}
-
 sub get_pulse_delay_cycles_for_lhs ($self, $lhs, $lhs_analysis) {
     return $self->{enable_graph}->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
 }
@@ -283,16 +243,8 @@ sub normalize_rhs_logic_level ($self, $rhs) {
     return $self->{enable_graph}->normalize_rhs_logic_level($rhs);
 }
 
-sub signal_uses_register_assignment ($self, $lhs, $lhs_analysis) {
-    return $self->{enable_graph}->signal_uses_register_assignment($lhs, $lhs_analysis);
-}
-
 sub get_signal_assignment_type ($self, $lhs, $lhs_analysis) {
     return $self->{enable_graph}->get_signal_assignment_type($lhs, $lhs_analysis);
-}
-
-sub generate_unified_comb_mux ($self, $lhs, $lhs_analysis) {
-    return $self->{enable_graph}->generate_unified_comb_mux($lhs, $lhs_analysis);
 }
 
 sub generate_flop_mux ($self, $lhs, $clean_lhs) {

@@ -95,4 +95,26 @@ ok(
     'live FlattenedDT facade no longer exposes the dead get_signal_ast_node helper',
 );
 
+for my $dead_helper (
+    qw(
+        build_unified_assignment_analysis
+        group_assignments_by_rhs
+        generate_complete_enable_structure
+        build_multiplexer_config
+        generate_unified_wen_en_signals
+        generate_dt_enables_from_analysis
+        generate_lhs_enables_from_analysis
+        generate_signal_assignments
+        generate_unified_flop_mux
+        generate_unified_pulse_delay_logic
+        signal_uses_register_assignment
+        generate_unified_comb_mux
+    )
+) {
+    ok(
+        !$hdl->can($dead_helper),
+        "live FlattenedDT facade no longer exposes dead unified helper '$dead_helper'",
+    );
+}
+
 done_testing();

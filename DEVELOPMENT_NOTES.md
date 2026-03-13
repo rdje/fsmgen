@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: FlattenedDT dead unified helper delegate removal
+- Continued AST/CoreAST-first cleanup by deleting the dormant unified-analysis / unified-emission delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`.
+- Rationale:
+  - after the earlier orchestrator and backend convergence slices, a fresh call-graph audit showed the live phase-1/2/3 path now goes directly through `Orchestrator` and `EnableGraph`, leaving the matching facade wrappers with no remaining callers,
+  - the dead pocket included old unified analysis, enable-structure, WEN-generation, and mux-emission wrappers that no longer reflected a real ownership boundary,
+  - removing the cluster as one slice is more honest than preserving an alternate helper-entry surface that the active runtime does not use.
+- Safety/compatibility:
+  - no active generation flow changed; `Orchestrator` still calls `enable_graph->build_unified_assignment_analysis(...)` and `enable_graph->generate_signal_assignments(...)` directly, and the backend still calls `enable_graph->generate_unified_wen_en_signals(...)` directly,
+  - this slice only removes dead facade wrappers around already-localized `EnableGraph` ownership,
+  - the focused architecture regression now locks the absence of the removed unified helper names on live `FlattenedDT` objects.
+- Verification:
+  - syntax check for `FlattenedDT.pm` passes,
+  - focused regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=169`).
+- Next likely slices:
+  - continue re-auditing the remaining `FlattenedDT` facade delegates for final dead surface that only mirrors direct owner calls,
+  - if the facade cleanup lane runs out, return to the next smallest live AST/CoreAST-first ownership seam instead of forcing more dead-surface pruning.
 ## 2026-03-13: FlattenedDT dead signal-AST facade helper removal
 - Continued AST/CoreAST-first cleanup by deleting the dormant `get_signal_ast_node(...)` helper from `perl/FSM/HDL/FlattenedDT.pm` and removing the facade-only imports it left behind.
 - Rationale:
