@@ -14,6 +14,26 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT live ownership micro-slice (EnableGraph capture-registry ownership)
+- Current worktree continues on the live `Orchestrator` / `EnableGraph` seam instead of returning to cleanup-only work.
+- Scope of this slice:
+  - `perl/FSM/Synthesis/EnableGraph.pm` now owns mutation of the captured assignment/transition registries through `register_assignment_capture(...)` and `register_transition_capture(...)`,
+  - `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` still performs traversal, AST condition assembly, RHS extraction, and operator validation,
+  - but the actual writes into `lhs_assignments`, `all_lhs`, and `lhs_ast_map` now go through `EnableGraph`, which is the module that later consumes those registries to build `assignment_analysis`.
+- New regression coverage:
+  - `t/12-enablegraph-capture-registry.t` generates a small two-state FSM and asserts that:
+    - ordinary captured assignments remain AST-backed,
+    - `next_state` transition capture is still registered with `state_transition` metadata,
+    - synthetic `next_state` AST registration still occurs,
+    - and generated HDL still emits the expected state-enable and assignment-enable logic.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `prove -I perl t/12-enablegraph-capture-registry.t` (`Files=1`, `Tests=18`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=314`, `PASS`)
+- Immediate next direction after commit:
+  - continue along the live phase-1 ownership seam instead of revisiting facade cleanup,
+  - the next likely move is to narrow the remaining direct `Orchestrator` dependency on capture-shape details such as local LHS/RHS extraction or condition-stack-to-capture assembly.
 ## 2026-03-13: FlattenedDT live-state reset micro-slice (per-run generation reset + enable-registry ownership)
 - Current worktree moves back onto a live ownership seam instead of more facade cleanup.
 - Scope of this slice:

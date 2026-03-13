@@ -30,6 +30,61 @@ sub create_condition_expression($self, $condition_stack) {
         return FSM::AST::Utils::and_tree(@$condition_stack);
     }
 }
+sub register_assignment_capture($self, %args) {
+    my $ctx = $self->{flattened_dt};
+    my $lhs_ast = $args{lhs_ast};
+    my $lhs_name_key = $args{lhs_name_key};
+
+    if (!defined($lhs_name_key) || $lhs_name_key eq '') {
+        $lhs_name_key = $self->extract_signal_name_from_ast($lhs_ast) // 'unknown_lhs';
+    }
+
+    push @{$ctx->{lhs_assignments}->{$lhs_name_key}}, {
+        dt => $args{dt},
+        lhs_ast => $lhs_ast,
+        conditions_ast => $args{conditions_ast},
+        rhs => $args{rhs},
+        operator => $args{operator},
+        assignment_intent => $args{assignment_intent} || {},
+        source_provenance => $args{source_provenance} || {},
+        output_exposure => $args{output_exposure} // 'auto',
+        is_state_trans => 0,
+    };
+
+    $ctx->{all_lhs}->{$lhs_name_key} = 1;
+    $ctx->{lhs_ast_map}->{$lhs_name_key} = $lhs_ast if blessed($lhs_ast);
+
+    return $lhs_name_key;
+}
+sub register_transition_capture($self, %args) {
+    my $ctx = $self->{flattened_dt};
+    my $target_state = $args{target_state};
+    my $state_value = uc($target_state);
+
+    push @{$ctx->{lhs_assignments}->{next_state}}, {
+        dt => $args{dt},
+        conditions_ast => $args{conditions_ast},
+        rhs => $state_value,
+        operator => '<-',
+        assignment_intent => {
+            operator_symbol => '<-',
+            sequencing => 'clocked',
+            register_style => 'output_named',
+            assignment_family => 'state_transition',
+        },
+        source_provenance => {
+            origin => 'state_transition',
+            raw_target_state => $target_state,
+        },
+        output_exposure => 'auto',
+        is_state_trans => 1,
+    };
+
+    $ctx->{all_lhs}->{next_state} = 1;
+    $ctx->{lhs_ast_map}->{next_state} //= FSM::AST::Utils::signal_ref('next_state');
+
+    return $state_value;
+}
 sub _get_intermediate_signal_registry_entry($self, $signal_name) {
     my $ctx = $self->{flattened_dt};
     return undef unless defined($signal_name) && $signal_name ne '';

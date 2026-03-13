@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT live ownership (EnableGraph capture-registry ownership)
+- Moved live capture-registry mutation for assignments and state transitions under `perl/FSM/Synthesis/EnableGraph.pm`.
+- Added `register_assignment_capture(...)` and `register_transition_capture(...)` to `EnableGraph`, so the owner that later analyzes `lhs_assignments`, `all_lhs`, and `lhs_ast_map` now also owns registration of that data.
+- Updated `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` so:
+  - `record_assignment_from_ast(...)` still performs AST/intent extraction and validation locally,
+  - but the actual registry write for captured assignment state now goes through `enable_graph->register_assignment_capture(...)`,
+  - and state-transition capture now goes through `enable_graph->register_transition_capture(...)`.
+- Added `t/12-enablegraph-capture-registry.t`, which exercises live generation on a small stateful FSM and asserts:
+  - normal captured assignments remain AST-backed,
+  - `next_state` transition capture is still registered with state-transition metadata,
+  - the synthetic `next_state` AST remains available in `lhs_ast_map`,
+  - and generated HDL still emits the expected state-enable and assignment-enable logic.
+- Root cause / rationale:
+  - `Orchestrator` was still directly mutating capture registries that are semantically phase-1 analysis input owned and consumed later by `EnableGraph`,
+  - the next truthful structural step after the per-run reset slice was to move those live registry writes under the same owner that builds `assignment_analysis`,
+  - this narrows another real ownership seam without changing traversal order or emitted HDL behavior.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `prove -I perl t/12-enablegraph-capture-registry.t` (pass: `Files=1`, `Tests=18`)
+  - `prove -I perl t` (pass: `Files=12`, `Tests=314`)
 ### FlattenedDT live-state reset (per-run generation reset + enable-registry ownership)
 - Added `reset_generation_state()` to `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and now call it at the start of `generate_systemverilog(...)`.
 - The reset clears per-run generation registries before each live generation pass, including:

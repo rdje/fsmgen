@@ -309,25 +309,17 @@ sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_st
     my $condition_signal_name = defined($condition_ast) ? $condition_ast->to_systemverilog() : 'UNDEFINED';
     fsm_debug("    Condition Signal Name: '$condition_signal_name'", 3);
     
-    # AST WEB: Use signal name as key but maintain AST mapping
-    my $lhs_name_key = $lhs_name;
-    
-    # Record the assignment with the signal name as key
-    push @{$ctx->{lhs_assignments}->{$lhs_name_key}}, {
+    $ctx->{enable_graph}->register_assignment_capture(
         dt => $dt_name,
-        lhs_ast => $lhs_signal_ast,           # Store the AST node
-        conditions_ast => $condition_ast,      # Store condition AST
+        lhs_name_key => $lhs_name,
+        lhs_ast => $lhs_signal_ast,
+        conditions_ast => $condition_ast,
         rhs => $actual_rhs,
         operator => $operator,
         assignment_intent => $assignment_intent,
         source_provenance => ($assignment_node->can('source_provenance') ? $assignment_node->source_provenance : {}),
         output_exposure => ($assignment_node->can('output_exposure') ? $assignment_node->output_exposure : 'auto'),
-        is_state_trans => 0
-    };
-    
-    # Track this LHS with name key and maintain AST mapping
-    $ctx->{all_lhs}->{$lhs_name_key} = 1;
-    $ctx->{lhs_ast_map}->{$lhs_name_key} = $lhs_signal_ast;  # Map name to AST
+    );
     
     fsm_debug("*** PHASE1 ASSIGNMENT NODE COMPLETE (AST WEB) ***\n", 3);
 }
@@ -362,38 +354,11 @@ sub record_transition_from_ast ($self, $dt_name, $transition_node, $condition_st
     # Create condition expression as pure AST
     my $condition_ast = $ctx->{enable_graph}->create_condition_expression($condition_stack);
     
-    # Convert target state to state encoding value
-    my $state_value = uc($target_state);
-    
-    # Record as assignment to next_state with both signal name and AST
-    push @{$ctx->{lhs_assignments}->{next_state}}, {
+    my $state_value = $ctx->{enable_graph}->register_transition_capture(
         dt => $dt_name,
-        conditions_ast => $condition_ast,      # Store the original AST
-        rhs => $state_value,
-        operator => '<-',
-        assignment_intent => {
-            operator_symbol => '<-',
-            sequencing => 'clocked',
-            register_style => 'output_named',
-            assignment_family => 'state_transition',
-        },
-        source_provenance => {
-            origin => 'state_transition',
-            raw_target_state => $target_state,
-        },
-        output_exposure => 'auto',
-        is_state_trans => 1
-    };
-    
-    # Track next_state as LHS and create synthetic AST mapping
-    $ctx->{all_lhs}->{next_state} = 1;
-    
-    # Create synthetic AST node for next_state if not already exists
-    unless ($ctx->{lhs_ast_map}->{next_state}) {
-        # Create a synthetic signal reference for next_state
-        $ctx->{lhs_ast_map}->{next_state} = FSM::AST::Utils::signal_ref('next_state');
-        fsm_debug("    Created synthetic AST node for next_state", 3);
-    }
+        target_state => $target_state,
+        conditions_ast => $condition_ast,
+    );
     
     my $condition_signal_name = defined($condition_ast) ? $condition_ast->to_systemverilog() : 'UNDEFINED';
     fsm_debug("    Recorded AST transition: next_state <= $state_value when (signal: '$condition_signal_name')", 3);

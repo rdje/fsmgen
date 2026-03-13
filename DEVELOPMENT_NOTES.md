@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: EnableGraph capture-registry ownership for live assignment capture
+- Continued the post-cleanup live refactor lane by moving captured assignment/transition registry mutation under `EnableGraph`.
+- Rationale:
+  - `Orchestrator` still performed direct writes into `lhs_assignments`, `all_lhs`, and `lhs_ast_map`, but those registries are semantically phase-1 analysis input later consumed by `EnableGraph`,
+  - after the previous per-run reset slice, the next truthful structural step was to make `EnableGraph` own capture registration as well as later analysis,
+  - this keeps traversal and semantic extraction in `Orchestrator`, but removes another piece of shared mutable state ownership from that layer.
+- Structural outcome:
+  - `EnableGraph::register_assignment_capture(...)` now owns registration of ordinary assignment capture metadata,
+  - `EnableGraph::register_transition_capture(...)` now owns registration of synthetic `next_state` transition capture metadata and synthetic AST seeding,
+  - `Orchestrator::record_assignment_from_ast(...)` and `record_transition_from_ast(...)` now delegate those writes after finishing their local AST/operator extraction work.
+- Safety/compatibility:
+  - no intended semantic change to capture contents or generated HDL behavior,
+  - the new focused regression locks the live contract that both ordinary assignments and `next_state` transitions remain AST-backed in the capture registries,
+  - full regression remains green, so the ownership move stayed behavior-preserving on the active path.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `Orchestrator.pm` pass,
+  - focused regression `t/12-enablegraph-capture-registry.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=12`, `Tests=314`).
+- Next likely slices:
+  - continue through the remaining live phase-1 ownership seam instead of returning to wrapper cleanup,
+  - the next small move is likely to reduce `Orchestrator`’s direct dependency on capture-shape details such as local RHS extraction or LHS-name derivation if those can be truthfully owned elsewhere.
 ## 2026-03-13: FlattenedDT per-run generation reset and enable-registry ownership
 - Pivoted off the exhausted facade-pruning lane and back onto a live ownership seam in the generation path.
 - Rationale:
