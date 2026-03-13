@@ -2862,43 +2862,6 @@ sub generate_wen_en_signals ($self, $fsm_module) {
     
     return $hdl;
 }
-sub generate_intermediate_signal_declarations ($self) {
-    my $ctx = $self->{flattened_dt};
-    # Generate declarations for all intermediate signals that were referenced
-    my $hdl = "";
-    
-    # Check if we have any intermediate signals to declare
-    return $hdl unless $ctx->{referenced_intermediate_signals} && %{$ctx->{referenced_intermediate_signals}};
-    
-    $hdl .= "\n  // Intermediate signals referenced in enable expressions\n";
-    
-    for my $signal_name (sort keys %{$ctx->{referenced_intermediate_signals}}) {
-        my $signal_info = $ctx->{referenced_intermediate_signals}->{$signal_name};
-        
-        # Skip if already declared
-        next if $signal_info->{declared};
-        
-        # Get the expression for this intermediate signal
-        my $expression = $ctx->{enable_graph}->get_intermediate_signal_expression($signal_name);
-        if ($expression) {
-            # Generate wire declaration and assign statement
-            $hdl .= "  wire $signal_name;\n";
-            $hdl .= "  assign $signal_name = $expression;\n";
-            
-            # Mark as declared
-            $signal_info->{declared} = 1;
-            
-            fsm_debug("DECLARED_INTERMEDIATE: wire $signal_name = $expression", 3);
-        } else {
-            fsm_debug("WARNING: No expression found for intermediate signal: $signal_name", 3);
-        }
-    }
-    
-    # Add empty line after intermediate signals
-    $hdl .= "\n" if $hdl;
-    
-    return $hdl;
-}
 sub generate_internal_signal_declarations ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     my %declared_ports = %{$ctx->{declared_port_signals} || {}};

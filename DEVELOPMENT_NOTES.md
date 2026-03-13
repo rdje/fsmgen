@@ -17,6 +17,23 @@ This document captures engineering rationale, design constraints, and working de
 - Next likely slices:
   - re-audit the remaining unreferenced `FlattenedDT` helper pockets, especially declaration-scheduling and substituted-AST matching helpers, to find the next truly dead surface,
   - keep preferring deletions of provably dead compatibility state over widening live backend/orchestrator behavior.
+## 2026-03-13: FlattenedDT dead standalone declaration helper removal
+- Continued AST/CoreAST-first cleanup by deleting the dormant standalone declaration helper lane from `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- Rationale:
+  - a follow-up repo-wide audit after the dead LHS/RHS-tracking slice showed the old standalone declaration entrypoint had no remaining callers anywhere on the active path,
+  - the live declaration flow already emits intermediate wires through consolidated intermediate generation and the backend-owned `generate_internal_signal_declarations(...)` path,
+  - leaving the old `schedule_intermediate_signal_for_declaration(...)` / `generate_intermediate_signal_declarations(...)` lane in place only preserved an untested alternate declaration shape and an unused scratch-state contract.
+- Safety/compatibility:
+  - no active emission ordering or declaration semantics changed; the removed lane was already bypassed by the live runtime path,
+  - the adjacent `get_combinational_lhs_signals(...)` helper was removed in the same slice because it was part of the same dead declaration island and had no callers,
+  - the focused regression now locks the absence of the old `intermediate_signals_to_declare` scratch state after live generation.
+- Verification:
+  - syntax checks for `FlattenedDT.pm` and `Backend/SystemVerilog.pm` pass,
+  - focused regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=156`).
+- Next likely slices:
+  - re-audit the remaining substituted-AST matching helper pocket in `FlattenedDT` to confirm whether it is now fully dead,
+  - keep preferring deletions of provably dead compatibility helpers before taking broader live-path ownership moves.
 ## 2026-03-11: EnableGraph/SystemVerilog defining-AST metadata for consolidated filtering
 - Continued backend convergence by carrying native defining-AST metadata forward on the consolidated intermediate-signal filtering path.
 - Rationale:

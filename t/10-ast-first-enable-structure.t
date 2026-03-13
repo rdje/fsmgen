@@ -85,4 +85,9 @@ ok(
     'live generation leaves no legacy missing_lhs_rhs tracking state behind',
 );
 
+ok(
+    !exists $hdl->{intermediate_signals_to_declare},
+    'live generation leaves no legacy intermediate_signals_to_declare scratch state behind',
+);
+
 done_testing();

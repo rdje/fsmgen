@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT cleanup (retire dead standalone declaration helpers)
+- Removed the dead standalone intermediate-declaration helper lane from `perl/FSM/HDL/FlattenedDT.pm`:
+  - deleted `schedule_intermediate_signal_for_declaration(...)`,
+  - deleted the compatibility-only `generate_intermediate_signal_declarations(...)` delegate,
+  - deleted the adjacent unreferenced combinational-wire helper `get_combinational_lhs_signals(...)`.
+- Removed the backend-side `generate_intermediate_signal_declarations(...)` implementation from `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`; the live declaration path already goes through consolidated intermediate emission plus `generate_internal_signal_declarations(...)`.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation leaves no legacy `intermediate_signals_to_declare` scratch state behind.
+- Root cause / rationale:
+  - repo-wide auditing showed the standalone declaration lane had become pure dead compatibility surface after consolidated intermediate emission became the authoritative runtime declaration path,
+  - neither the `FlattenedDT` wrappers nor the backend helper had any remaining callsites, and the only scratch state they used was similarly unreferenced,
+  - removing the whole lane is safer than leaving an alternate declaration path available for accidental reuse.
+- Scope remains behavior-preserving cleanup of dead compatibility state; live intermediate declaration and emission behavior is unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=10`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=156`)
 ### FlattenedDT cleanup (retire dead LHS/RHS completeness tracking)
 - Removed the dormant LHS/RHS completeness-tracking family from `perl/FSM/HDL/FlattenedDT.pm`:
   - deleted the legacy `expected_lhs_rhs`, `actual_lhs_rhs`, and `missing_lhs_rhs` state hashes from object construction,

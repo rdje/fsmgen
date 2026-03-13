@@ -1281,6 +1281,26 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - re-audit the remaining unreferenced `FlattenedDT` helper pockets, especially declaration-scheduling and substituted-AST matching helpers, to find the next dead surface that can be retired without perturbing the live AST/CoreAST path,
   - keep preferring slices that delete provably dead compatibility state over widening live backend/orchestrator behavior.
+## AST/CoreAST convergence update (March 13, 2026, dead-standalone-declaration-helper cleanup slice)
+- Latest completed slice in `perl/FSM/HDL/FlattenedDT.pm`, `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`, and `t/10-ast-first-enable-structure.t`:
+  - removed the dead standalone intermediate-declaration helper lane from `FlattenedDT`, including `schedule_intermediate_signal_for_declaration(...)`, the compatibility-only `generate_intermediate_signal_declarations(...)` delegate, and the adjacent unreferenced `get_combinational_lhs_signals(...)` helper,
+  - removed the backend-side `generate_intermediate_signal_declarations(...)` implementation that no live call path used once consolidated intermediate emission became authoritative,
+  - extended the AST-first enable-structure regression to assert that live generation leaves no legacy `intermediate_signals_to_declare` scratch state behind.
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` => `Files=1`, `Tests=10`, `PASS`
+  - `prove -I perl t` => `Files=10`, `Tests=156`, `PASS`
+- Additional audit completed for this slice:
+  - repo-wide reference checks showed the retired declaration helper names had no remaining code callers and only the new regression assertion mentions the retired scratch-state name,
+  - the live declaration path already emits intermediate wires through consolidated emission/internal declarations rather than the old standalone helper lane.
+- Recent AST/CoreAST convergence commits immediately before the next commit:
+  - `413d6cb` `FlattenedDT: retire dead LHS/RHS tracking`
+  - `0aa9a84` `FlattenedDT: retire dead string-era condition and WEN helpers`
+  - `918a2ca` `FlattenedDT: retire dead string-era factorization helpers`
+- Highest-value next seam after this slice:
+  - re-audit the remaining substituted-AST matching helper pocket in `FlattenedDT` (`find_substituted_ast`, `ast_contains_intermediate_signal_references`, `expressions_are_equivalent`, `extract_expression_structure`, `ast_structures_match`) to confirm whether it is now fully dead,
+  - keep deleting provably dead compatibility helpers before considering larger live-path ownership moves.
 ## AST/CoreAST convergence update (March 12, 2026, dead-condition-and-wen-helper cleanup slice)
 - Latest completed slice in `perl/FSM/HDL/FlattenedDT.pm` and `t/10-ast-first-enable-structure.t`:
   - removed the dormant string-era condition/WEN helper island that still exposed a parallel string-based path for assignment recording, condition formatting, raw condition-string extraction, and DT-specific/LHS-level WEN generation,

@@ -482,23 +482,6 @@ sub parentheses_are_redundant ($self, $inner_expr) {
     return $self->{enable_graph}->parentheses_are_redundant($inner_expr);
 }
 
-sub schedule_intermediate_signal_for_declaration ($self, $signal_name, $expression) {
-    # Schedule an intermediate signal for declaration in the generated HDL
-    $self->{intermediate_signals_to_declare} //= {};
-    $self->{intermediate_signals_to_declare}->{$signal_name} = {
-        name => $signal_name,
-        expression => $expression,
-        width => 1,  # Default to 1-bit for now
-        declared => 0
-    };
-    
-    fsm_debug("SCHEDULED_INTERMEDIATE: $signal_name = $expression", 3);
-}
-
-sub generate_intermediate_signal_declarations ($self) {
-    return $self->{backend_sv}->generate_intermediate_signal_declarations();
-}
-
 sub get_intermediate_signal_expression ($self, $signal_name) {
     return $self->{enable_graph}->get_intermediate_signal_expression($signal_name);
 }
@@ -795,47 +778,6 @@ sub ast_structures_match ($self, $original_ast, $substituted_ast) {
     
     # Default: structures match if we reach here
     return 1;
-}
-
-sub get_combinational_lhs_signals {
-    my ($self) = @_;
-    
-    fsm_debug("GET_COMB_LHS: Identifying combinational LHS signals needing wire declarations", 3);
-    
-    my %combinational_lhs_signals;
-    
-    # Check each LHS signal from the unified analysis
-    if ($self->{assignment_analysis}) {
-        for my $lhs_name_key (keys %{$self->{assignment_analysis}}) {
-            my $lhs_analysis = $self->{assignment_analysis}{$lhs_name_key};
-            my $multiplexer = $lhs_analysis->{multiplexer};
-            my $lhs_ast = $lhs_analysis->{lhs_ast};
-            
-            # Skip if this is a register (flop) - those don't need wire declarations
-            if ($multiplexer && $multiplexer->{type} && $multiplexer->{type} eq 'comb') {
-                # This is a combinational signal that needs a wire declaration
-                my $width = 1; # Default width
-                
-                # Try to get width from the AST node if available
-                if ($lhs_ast && blessed($lhs_ast) && $lhs_ast->can('width')) {
-                    my $ast_width = $lhs_ast->width();
-                    $width = $ast_width if ($ast_width && $ast_width > 0);
-                }
-                
-                $combinational_lhs_signals{$lhs_name_key} = {
-                    width => $width,
-                    ast => $lhs_ast
-                };
-                
-                fsm_debug("  Found combinational LHS signal: $lhs_name_key (width: $width)", 3);
-            }
-        }
-    }
-    
-    my $count = scalar(keys %combinational_lhs_signals);
-    fsm_debug("GET_COMB_LHS: Found $count combinational LHS signals needing wire declarations", 3);
-    
-    return %combinational_lhs_signals;
 }
 
 sub topologically_sort_signals {
