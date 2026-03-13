@@ -24,10 +24,18 @@ write_file($fsm_path, <<'FSM');
   (+size
     (OUT 1)
     (IN 1)
+    (MODE 1)
   )
   (s0
-    (OUT = IN)
-    (-> s1)
+    (?MODE
+      (=0
+        (OUT = 0)
+      )
+      (=1
+        (OUT = IN)
+        (-> s1)
+      )
+    )
   )
   (s1
     (OUT = 0)
@@ -38,20 +46,27 @@ FSM
 my $raw_ast = Lispish::multi($fsm_path);
 my $adapter = FSM::Adapter::FSMGenFull->new(debug => 0);
 my $fsm_module = $adapter->parse_fsm($raw_ast);
-my $hdl_gen = FSM::HDL::FlattenedDT->new(debug => 0);
-
-my $hdl = $hdl_gen->generate_systemverilog($fsm_module);
+my $phase1_gen = FSM::HDL::FlattenedDT->new(debug => 0);
+$phase1_gen->{enable_graph}->set_fsm_module_reference($fsm_module);
+$phase1_gen->{orchestrator}->flatten_all_decision_trees($fsm_module);
 
 ok(
-    exists $hdl_gen->{lhs_assignments}->{OUT},
+    exists $phase1_gen->{lhs_assignments}->{OUT},
     'live generation records captured assignments for OUT',
 );
 ok(
-    ref($hdl_gen->{lhs_assignments}->{OUT}) eq 'ARRAY' && @{$hdl_gen->{lhs_assignments}->{OUT}} >= 1,
+    ref($phase1_gen->{lhs_assignments}->{OUT}) eq 'ARRAY' && @{$phase1_gen->{lhs_assignments}->{OUT}} >= 1,
     'captured assignments for OUT are stored as an array',
 );
 
-my $out_assignment = $hdl_gen->{lhs_assignments}->{OUT}[0];
+my ($out_assignment) = grep {
+    $_->{dt} eq 's0' && $_->{rhs} eq 'IN'
+} @{$phase1_gen->{lhs_assignments}->{OUT}};
+
+ok(
+    $out_assignment,
+    'captured assignments for OUT include the MODE==1 branch assignment',
+);
 ok(
     $out_assignment->{lhs_ast} && ref($out_assignment->{lhs_ast}),
     'captured assignment stores lhs_ast metadata',
@@ -66,21 +81,26 @@ is(
     'captured assignment preserves RHS text for OUT',
 );
 is(
+    $out_assignment->{conditions_ast}->to_systemverilog,
+    "MODE == 1'b1",
+    'captured assignment stores the test-node condition AST through EnableGraph ownership',
+);
+is(
     $out_assignment->{operator},
     '=',
     'captured assignment preserves operator metadata for OUT',
 );
 
 ok(
-    exists $hdl_gen->{lhs_assignments}->{next_state},
+    exists $phase1_gen->{lhs_assignments}->{next_state},
     'live generation records captured next_state transitions',
 );
 ok(
-    ref($hdl_gen->{lhs_assignments}->{next_state}) eq 'ARRAY' && @{$hdl_gen->{lhs_assignments}->{next_state}} >= 1,
+    ref($phase1_gen->{lhs_assignments}->{next_state}) eq 'ARRAY' && @{$phase1_gen->{lhs_assignments}->{next_state}} >= 1,
     'captured next_state transitions are stored as an array',
 );
 
-my $next_state_assignment = $hdl_gen->{lhs_assignments}->{next_state}[0];
+my $next_state_assignment = $phase1_gen->{lhs_assignments}->{next_state}[0];
 is(
     $next_state_assignment->{rhs},
     'S1',
@@ -91,32 +111,40 @@ ok(
     'captured transition stores conditions_ast metadata',
 );
 is(
+    $next_state_assignment->{conditions_ast}->to_systemverilog,
+    "MODE == 1'b1",
+    'captured transition stores the test-node condition AST through EnableGraph ownership',
+);
+is(
     $next_state_assignment->{assignment_intent}{assignment_family},
     'state_transition',
     'captured transition stores state-transition assignment metadata',
 );
 
 ok(
-    exists $hdl_gen->{all_lhs}->{OUT},
+    exists $phase1_gen->{all_lhs}->{OUT},
     'captured assignment registration tracks OUT in all_lhs',
 );
 ok(
-    exists $hdl_gen->{all_lhs}->{next_state},
+    exists $phase1_gen->{all_lhs}->{next_state},
     'captured transition registration tracks next_state in all_lhs',
 );
 ok(
-    $hdl_gen->{lhs_ast_map}->{OUT} && ref($hdl_gen->{lhs_ast_map}->{OUT}),
+    $phase1_gen->{lhs_ast_map}->{OUT} && ref($phase1_gen->{lhs_ast_map}->{OUT}),
     'captured assignment registration stores OUT in lhs_ast_map',
 );
 ok(
-    $hdl_gen->{lhs_ast_map}->{next_state} && ref($hdl_gen->{lhs_ast_map}->{next_state}),
+    $phase1_gen->{lhs_ast_map}->{next_state} && ref($phase1_gen->{lhs_ast_map}->{next_state}),
     'captured transition registration stores synthetic next_state AST in lhs_ast_map',
 );
 is(
-    $hdl_gen->{lhs_ast_map}->{next_state}->to_systemverilog,
+    $phase1_gen->{lhs_ast_map}->{next_state}->to_systemverilog,
     'next_state',
     'synthetic next_state AST renders as next_state',
 );
+
+my $hdl_gen = FSM::HDL::FlattenedDT->new(debug => 0);
+my $hdl = $hdl_gen->generate_systemverilog($fsm_module);
 
 like(
     $hdl,
@@ -125,8 +153,8 @@ like(
 );
 like(
     $hdl,
-    qr/\bassign\s+s0_out_in_en\s*=/,
-    'generated HDL still emits enable logic for the captured OUT assignment',
+    qr/\bMODE\s*==\s*1'b1\b/,
+    'generated HDL still emits the test-node comparison in enable logic',
 );
 
 done_testing();

@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT live ownership (EnableGraph test-condition AST ownership)
+- Moved the remaining live test-node condition AST construction off `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and under `perl/FSM/Synthesis/EnableGraph.pm`.
+- Added `build_test_condition_ast(...)` to `EnableGraph`, which now owns:
+  - extraction/normalization of the test signal name,
+  - test-branch literal conversion through the existing `convert_test_value_to_ast(...)` path,
+  - and assembly of the `signal == value` AST used for `FSM::CoreAST::TestNode` branches.
+- Updated `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` so `flatten_decision_tree(...)` now delegates test-branch equality AST construction to `enable_graph` instead of building it inline.
+- Extended `t/12-enablegraph-capture-registry.t` so the focused capture fixture now includes a real `?MODE` test node and asserts:
+  - pre-factorization assignment capture preserves `MODE == 1'b1` as the branch condition AST,
+  - pre-factorization transition capture preserves the same test-node condition AST,
+  - and full generation still emits enable logic containing the test comparison.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `prove -I perl t/12-enablegraph-capture-registry.t` (pass: `Files=1`, `Tests=21`)
+  - `prove -I perl t/10-ast-first-enable-structure.t t/12-enablegraph-capture-registry.t` (pass: `Files=2`, `Tests=160`)
+  - `prove -I perl t` (pass: `Files=12`, `Tests=327`)
 ### FlattenedDT live ownership (EnableGraph capture-entrypoint ownership)
 - Moved the live assignment/transition capture entrypoints themselves under `perl/FSM/Synthesis/EnableGraph.pm`.
 - Added `capture_assignment_from_ast(...)` and `capture_transition_from_ast(...)` to `EnableGraph`, so it now owns:

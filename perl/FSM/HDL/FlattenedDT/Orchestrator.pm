@@ -151,10 +151,10 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
         # Process each test branch - test_branches() returns an array reference
         my $test_branches = $dt_node->test_branches;
         for my $branch (@$test_branches) {
-            # Create AST node for test condition: signal == value
-            my $signal_ast = FSM::AST::Utils::signal_ref($dt_node->test_signal->name);
-            my $value_ast = $ctx->{enable_graph}->convert_test_value_to_ast($branch->{value});
-            my $test_condition_ast = FSM::AST::Utils::equals_op($signal_ast, $value_ast);
+            my $test_condition_ast = $ctx->{enable_graph}->build_test_condition_ast(
+                $dt_node->test_signal,
+                $branch->{value},
+            );
             
             my @test_stack = (@$condition_stack);  # Create isolated copy
             push @test_stack, $test_condition_ast;  # Add condition to isolated copy

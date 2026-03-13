@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: EnableGraph test-condition AST ownership for live test-node traversal
+- Continued the live `Orchestrator` / `EnableGraph` ownership convergence by moving the last inline test-node condition AST construction under `EnableGraph`.
+- Rationale:
+  - after the previous capture-focused slices, `EnableGraph` already owned condition conversion, test-value conversion, capture registration, and capture entrypoints,
+  - `Orchestrator` still retained one narrow semantic responsibility inside `flatten_decision_tree(...)`: manually building the `signal == value` AST for `FSM::CoreAST::TestNode` branches,
+  - the next small truthful move was to let the same owner that already interprets test values and later consumes the capture condition own that equality-AST construction too.
+- Structural outcome:
+  - `EnableGraph::build_test_condition_ast(...)` now owns test-signal-name normalization, value conversion, and `equals_op(...)` assembly for test branches,
+  - `Orchestrator` now handles only traversal, isolated condition-stack copying, and recursion for test nodes,
+  - this leaves test-branch semantic AST construction on one side of the boundary instead of split across modules.
+- Safety/compatibility:
+  - no intended change to generated HDL or capture semantics,
+  - the focused capture regression now inspects the pre-factorization phase explicitly, which is the right place to lock this contract because later factorization intentionally rewrites condition ASTs into intermediate signal refs,
+  - full regression remains green, so the owner move stayed behavior-preserving on the active path.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `Orchestrator.pm` pass,
+  - focused regressions `t/12-enablegraph-capture-registry.t` and `t/10-ast-first-enable-structure.t` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=12`, `Tests=327`).
+- Next likely slices:
+  - re-audit whether any similarly coherent condition-stack-preparation seam still remains between `Orchestrator` and `EnableGraph`,
+  - if not, pivot to the next truthful live runtime seam elsewhere in the generation flow instead of stretching this boundary further.
 ## 2026-03-13: EnableGraph capture-entrypoint ownership for live assignment capture
 - Continued the live phase-1 ownership convergence by moving the assignment/transition capture entrypoints themselves under `EnableGraph`.
 - Rationale:

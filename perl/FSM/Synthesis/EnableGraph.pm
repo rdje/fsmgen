@@ -486,6 +486,19 @@ sub convert_test_value_to_ast($self, $test_value) {
         return FSM::AST::Utils::literal($test_value);
     }
 }
+sub build_test_condition_ast($self, $test_signal, $test_value) {
+    my $test_signal_name = blessed($test_signal) && $test_signal->can('name')
+        ? $test_signal->name
+        : $test_signal;
+
+    unless (defined($test_signal_name) && $test_signal_name ne '') {
+        die "[EnableGraph.pm][build_test_condition_ast()] Missing test signal name";
+    }
+
+    my $signal_ast = FSM::AST::Utils::signal_ref($test_signal_name);
+    my $value_ast = $self->convert_test_value_to_ast($test_value);
+    return FSM::AST::Utils::equals_op($signal_ast, $value_ast);
+}
 sub build_unified_assignment_analysis($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     fsm_debug("\n\n*** UNIFIED PHASE 1: BUILDING COMPLETE ASSIGNMENT ANALYSIS (AST WEB) ***", 3);

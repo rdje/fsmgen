@@ -14,6 +14,25 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT live ownership micro-slice (EnableGraph test-condition AST ownership)
+- Current worktree continues the same live `Orchestrator` / `EnableGraph` seam and moves the remaining test-node condition AST construction under `EnableGraph`.
+- Scope of this slice:
+  - `perl/FSM/Synthesis/EnableGraph.pm` now owns `build_test_condition_ast(...)`,
+  - that helper now centralizes `signal == value` AST construction for `FSM::CoreAST::TestNode` branches by combining the test signal ref with the already-owner-local `convert_test_value_to_ast(...)` path,
+  - `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` no longer constructs test-branch equality ASTs inline inside `flatten_decision_tree(...)`.
+- Regression coverage update in `t/12-enablegraph-capture-registry.t`:
+  - the fixture now exercises a real `?MODE` test node,
+  - capture-registry assertions inspect the pre-factorization phase immediately after `flatten_all_decision_trees(...)`,
+  - the test now locks that both assignment and transition capture preserve the expected `MODE == 1'b1` condition AST before later factorization rewrites it into an intermediate signal ref during full generation.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `prove -I perl t/12-enablegraph-capture-registry.t` (`Files=1`, `Tests=21`, `PASS`)
+  - `prove -I perl t/10-ast-first-enable-structure.t t/12-enablegraph-capture-registry.t` (`Files=2`, `Tests=160`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=327`, `PASS`)
+- Immediate next direction after commit:
+  - re-audit the remaining `Orchestrator` / `EnableGraph` seam one more time for any similarly small live ownership move around condition-stack preparation,
+  - if that seam is now exhausted, pivot to the next truthful live runtime seam elsewhere in the active generation flow instead of inventing more wrapper work.
 ## 2026-03-13: FlattenedDT live ownership micro-slice (EnableGraph capture-entrypoint ownership)
 - Current worktree continues the same live assignment-capture seam and now moves the capture entrypoints themselves under `EnableGraph`.
 - Scope of this slice:
