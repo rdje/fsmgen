@@ -170,26 +170,6 @@ sub generate_intermediate_signals ($self, $fsm_module) {
     return $self->{backend_sv}->generate_intermediate_signals($fsm_module);
 }
 
-sub run_global_ast_factorization ($self) {
-    return $self->{backend_sv}->run_global_ast_factorization();
-}
-
-sub collect_all_wen_en_ast_expressions ($self) {
-    return $self->{backend_sv}->collect_all_wen_en_ast_expressions();
-}
-
-sub count_binary_logical_operation_occurrences ($self) {
-    return $self->{backend_sv}->count_binary_logical_operation_occurrences();
-}
-
-sub _count_logical_ops_in_ast ($self, $ast, $counts_ref) {
-    return $self->{backend_sv}->_count_logical_ops_in_ast($ast, $counts_ref);
-}
-
-sub _is_factorizable_sub_expression ($self, $ast) {
-    return $self->{backend_sv}->_is_factorizable_sub_expression($ast);
-}
-
 sub is_arithmetic_operation ($self, $ast) {
     return $self->{enable_graph}->is_arithmetic_operation($ast);
 }

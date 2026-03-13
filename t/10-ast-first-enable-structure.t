@@ -122,6 +122,8 @@ for my $dead_facade_helper (
         analyze_ast_sub_expressions
         analyze_ast_complexity
         canonicalize_expression
+        collect_all_wen_en_ast_expressions
+        count_binary_logical_operation_occurrences
         create_condition_expression_signal_name
         find_all_ast_sub_expressions
         generate_comb_mux
@@ -132,11 +134,14 @@ for my $dead_facade_helper (
         is_simple_ast_expression
         is_simple_comparison
         is_simple_negation
+        run_global_ast_factorization
         should_filter_ast_based
         should_filter_consolidated_signal
         should_factor_ast
         set_explicit_reset_values
         parentheses_are_redundant
+        _count_logical_ops_in_ast
+        _is_factorizable_sub_expression
         _traverse_ast_for_complexity
         generate_expression_from_signal_name
     )

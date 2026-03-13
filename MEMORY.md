@@ -14,6 +14,19 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead logical-op facade delegates)
+- Current worktree removes a dead logical-operation helper pocket from the `FlattenedDT` facade.
+- Scope remains a small behavior-preserving cleanup slice:
+  - repo-wide call-graph auditing showed `run_global_ast_factorization(...)`, `collect_all_wen_en_ast_expressions(...)`, `count_binary_logical_operation_occurrences(...)`, `_count_logical_ops_in_ast(...)`, and `_is_factorizable_sub_expression(...)` had no remaining callers on the `FlattenedDT` facade,
+  - the matching backend methods are still live and still used internally by `Backend::SystemVerilog` and `Orchestrator`, so the facade delegates were dead compatibility surface rather than a real ownership seam,
+  - `t/10-ast-first-enable-structure.t` now asserts that live `FlattenedDT` objects no longer expose those backend-internal logical-op helper names.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=67`, `PASS`)
+  - `prove -I perl t` (`Files=10`, `Tests=213`, `PASS`)
+- Immediate next direction after commit:
+  - re-run the remaining facade audit one last time to confirm whether any meaningful dead delegates still remain,
+  - if not, stop the cleanup lane and pivot back to the next live AST/CoreAST-first ownership seam.
 ## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead filtering facade delegates)
 - Current worktree removes a dead facade-only filtering helper pocket from `perl/FSM/HDL/FlattenedDT.pm`.
 - Scope remains a small behavior-preserving cleanup slice:

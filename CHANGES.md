@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT cleanup (retire dead logical-op facade delegates)
+- Removed the dead logical-operation helper delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
+  - deleted `run_global_ast_factorization(...)`,
+  - deleted `collect_all_wen_en_ast_expressions(...)`,
+  - deleted `count_binary_logical_operation_occurrences(...)`,
+  - deleted `_count_logical_ops_in_ast(...)`,
+  - deleted `_is_factorizable_sub_expression(...)`.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation no longer exposes those backend-internal logical-op helper names on the `FlattenedDT` facade.
+- Root cause / rationale:
+  - repo-wide call-graph auditing showed these names had no remaining facade callers anywhere in the active code or tests,
+  - the matching backend methods remain live and still serve the backend/orchestrator path, so the `FlattenedDT` delegates no longer described a real ownership boundary,
+  - removing the dead delegates is safer than preserving an uncalled logical-op compatibility surface on the facade.
+- Scope remains behavior-preserving cleanup of dead compatibility surface; live backend logical-op counting/factorization behavior is unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=67`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=213`)
 ### FlattenedDT cleanup (retire dead filtering facade delegates)
 - Removed the dead filtering helper delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
   - deleted `should_filter_consolidated_signal(...)`,

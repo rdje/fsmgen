@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: FlattenedDT dead logical-op facade delegate removal
+- Continued AST/CoreAST-first cleanup by deleting a dead logical-operation helper delegate pocket from the `FlattenedDT` facade.
+- Rationale:
+  - a fresh repo-wide call-graph audit showed `run_global_ast_factorization(...)`, `collect_all_wen_en_ast_expressions(...)`, `count_binary_logical_operation_occurrences(...)`, `_count_logical_ops_in_ast(...)`, and `_is_factorizable_sub_expression(...)` had no remaining callers on the `FlattenedDT` facade,
+  - the matching methods remain live inside `Backend::SystemVerilog` and still serve the orchestrated logical-operation counting/factorization path,
+  - keeping the facade delegates therefore advertised another fake ownership boundary and an uncalled compatibility surface rather than a real entrypoint.
+- Safety/compatibility:
+  - no active generation flow changed; the backend and orchestrator continue to use those helpers internally in the same way as before,
+  - the focused architecture regression now locks the absence of those helper names on live `FlattenedDT` objects,
+  - this slice therefore shrinks dead facade surface without changing logical-op counting, factorization, or HDL output.
+- Verification:
+  - syntax check for `FlattenedDT.pm` passes,
+  - focused regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=213`).
+- Next likely slices:
+  - re-run the final facade audit to confirm whether any meaningful dead delegates still remain,
+  - if not, pivot back to the next live AST/CoreAST-first ownership seam instead of continuing cleanup-only work.
 ## 2026-03-13: FlattenedDT dead filtering facade delegate removal
 - Continued AST/CoreAST-first cleanup by deleting a dead filtering-helper delegate pocket from the `FlattenedDT` facade.
 - Rationale:
