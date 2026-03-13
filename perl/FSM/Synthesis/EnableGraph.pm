@@ -613,6 +613,165 @@ sub prescan_wen_en_for_intermediate_signals($self) {
 
     fsm_debug("*** PRE-SCAN COMPLETE ***\n", 3);
 }
+sub count_binary_logical_operation_occurrences($self) {
+    my $ctx = $self->{flattened_dt};
+    my %logical_op_counts;
+
+    fsm_debug("\n*** COUNT_LOGICAL_OPS: STARTING LOGICAL OPERATION COUNTING ***", 3);
+    fsm_debug("COUNT_LOGICAL_OPS: This should happen BEFORE any intermediate signal creation!", 3);
+
+    if (exists $ctx->{referenced_intermediate_signals} && %{$ctx->{referenced_intermediate_signals}}) {
+        my $prescan_count = scalar(keys %{$ctx->{referenced_intermediate_signals}});
+        fsm_debug("*** COUNT_LOGICAL_OPS: WARNING - Pre-scan has already identified $prescan_count intermediate signals! ***", 3);
+        fsm_debug("*** This means the logical operation counting is happening TOO LATE! ***", 3);
+        fsm_debug("Pre-scan signals: " . join(", ", sort keys %{$ctx->{referenced_intermediate_signals}}));
+    } else {
+        fsm_debug("COUNT_LOGICAL_OPS: Good - No pre-scan signals created yet", 3);
+    }
+
+    fsm_debug("COUNT_LOGICAL_OPS: Counting binary logical operation occurrences", 3);
+
+    my @ast_expressions = $self->collect_all_wen_en_ast_expressions();
+    for my $ast_info (@ast_expressions) {
+        my $ast = $ast_info->{ast};
+        $self->_count_logical_ops_in_ast($ast, \%logical_op_counts);
+    }
+
+    for my $signal_name (keys %{$ctx->{intermediate_signals} || {}}) {
+        my $ast = $self->_get_native_intermediate_signal_ast($signal_name);
+        if ($ast && blessed($ast)) {
+            $self->_count_logical_ops_in_ast($ast, \%logical_op_counts);
+        } else {
+            fsm_debug("COUNT_LOGICAL_OPS: Skipping '$signal_name' because no native intermediate AST is available", 3);
+        }
+    }
+
+    $ctx->{binary_logical_op_counts} = \%logical_op_counts;
+
+    my $total_ops = 0;
+    my @high_count_ops;
+    for my $op_signature (keys %logical_op_counts) {
+        my $count = $logical_op_counts{$op_signature};
+        $total_ops += $count;
+        fsm_debug("  Logical operation '$op_signature' appears $count times", 3);
+        if ($count > 1) {
+            push @high_count_ops, "$op_signature ($count times)";
+        }
+    }
+
+    fsm_debug("COUNT_LOGICAL_OPS: Found $total_ops total logical operations", 3);
+    fsm_debug("COUNT_LOGICAL_OPS: Operations appearing multiple times: " . (@high_count_ops ? join(", ", @high_count_ops) : "None"));
+    fsm_debug("COUNT_LOGICAL_OPS: Complete counts structure:", 3);
+    fsm_debug(Data::Dumper::Dumper(\%logical_op_counts));
+    fsm_debug("*** COUNT_LOGICAL_OPS: LOGICAL OPERATION COUNTING COMPLETE ***\n", 3);
+    return \%logical_op_counts;
+}
+sub collect_all_wen_en_ast_expressions($self) {
+    my $ctx = $self->{flattened_dt};
+    my @ast_expressions;
+
+    fsm_debug("COLLECT_AST: Collecting all WEN/EN AST expressions", 3);
+
+    if ($ctx->{assignment_analysis}) {
+        for my $lhs (keys %{$ctx->{assignment_analysis}}) {
+            my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
+
+            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
+                my $rhs_group = $lhs_analysis->{rhs_groups}->{$rhs};
+
+                for my $dt_enable (@{$rhs_group->{dt_specific_enables} || []}) {
+                    if ($dt_enable->{enable_ast}) {
+                        push @ast_expressions, {
+                            ast => $dt_enable->{enable_ast},
+                            context => "dt_enable:$dt_enable->{enable_name}",
+                            usage_type => 'dt_enable',
+                        };
+                    }
+                }
+
+                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}->{ast}) {
+                    push @ast_expressions, {
+                        ast => $rhs_group->{lhs_level_enable}->{ast},
+                        context => "lhs_enable:$rhs_group->{lhs_level_enable}->{name}",
+                        usage_type => 'lhs_enable',
+                    };
+                }
+            }
+        }
+    }
+
+    for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
+        for my $assignment (@{$ctx->{lhs_assignments}->{$lhs}}) {
+            if ($assignment->{conditions_ast}) {
+                push @ast_expressions, {
+                    ast => $assignment->{conditions_ast},
+                    context => "assignment_condition:$lhs:$assignment->{dt}",
+                    usage_type => 'assignment_condition',
+                };
+            }
+        }
+    }
+
+    fsm_debug("COLLECT_AST: Collected " . scalar(@ast_expressions) . " AST expressions", 3);
+    return @ast_expressions;
+}
+sub _count_logical_ops_in_ast($self, $ast, $counts_ref) {
+    return unless $ast && blessed($ast);
+
+    if ($self->_is_factorizable_sub_expression($ast)) {
+        my $signature = eval { $ast->to_systemverilog() } || 'unknown';
+        $counts_ref->{$signature}++;
+        fsm_debug("    Found factorizable sub-expression: '$signature' (count: $counts_ref->{$signature})", 3);
+    }
+
+    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
+        $self->_count_logical_ops_in_ast($ast->left, $counts_ref) if $ast->can('left');
+        $self->_count_logical_ops_in_ast($ast->right, $counts_ref) if $ast->can('right');
+    }
+    elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
+        $self->_count_logical_ops_in_ast($ast->operand, $counts_ref) if $ast->can('operand');
+    }
+}
+sub _is_factorizable_sub_expression($self, $ast) {
+    my $ctx = $self->{flattened_dt};
+    return 0 unless $ast && blessed($ast);
+
+    if ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal')) {
+        return 0;
+    }
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+        return 0;
+    }
+
+    if ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
+        fsm_debug("FACTORIZABLE: Unary operation - ALWAYS FACTOR", 3);
+        return 1;
+    }
+
+    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
+        if ($self->is_arithmetic_operation($ast)) {
+            fsm_debug("FACTORIZABLE: Arithmetic operation - ALWAYS FACTOR", 3);
+            return 1;
+        }
+
+        if ($self->is_logical_operation($ast)) {
+            my $signature = eval { $ast->to_systemverilog() } || 'unknown';
+            my $count = ($ctx->{binary_logical_op_counts} || {})->{$signature} || 0;
+            if ($count > 1) {
+                fsm_debug("FACTORIZABLE: Logical operation '$signature' used $count times - FACTOR", 3);
+                return 1;
+            } else {
+                fsm_debug("FACTORIZABLE: Logical operation '$signature' used only $count time - DON'T FACTOR", 3);
+                return 0;
+            }
+        }
+
+        fsm_debug("FACTORIZABLE: Other binary operation - ALWAYS FACTOR", 3);
+        return 1;
+    }
+
+    return 1;
+}
 sub generate_enable_conditions($self, $fsm_module = undef) {
     my $ctx = $self->{flattened_dt};
     my $hdl = "  // State and DT Enable Conditions\n";

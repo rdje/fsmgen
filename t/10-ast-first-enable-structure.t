@@ -241,12 +241,16 @@ for my $dead_facade_helper (
 for my $dead_backend_helper (
     qw(
         analyze_ast_sub_expressions
+        collect_all_wen_en_ast_expressions
+        count_binary_logical_operation_occurrences
         find_all_ast_sub_expressions
         generate_enable_conditions
         generate_wen_en_signals
         generate_comb_mux
         generate_flop_mux
         prescan_wen_en_for_intermediate_signals
+        _count_logical_ops_in_ast
+        _is_factorizable_sub_expression
         is_simple_ast_expression
     )
 ) {
@@ -267,6 +271,10 @@ ok(
 ok(
     $hdl->{enable_graph}->can('prescan_wen_en_for_intermediate_signals'),
     'live EnableGraph owns WEN/EN intermediate-signal prescan',
+);
+ok(
+    $hdl->{enable_graph}->can('count_binary_logical_operation_occurrences'),
+    'live EnableGraph owns binary logical-operation counting for factorization policy',
 );
 ok(
     $hdl->{enable_graph}->can('build_internal_signal_declaration_plan'),

@@ -14,6 +14,25 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph logical-op counting ownership)
+- Current worktree continues the live ownership lane and moves binary logical-operation counting under `EnableGraph`.
+- Scope of this slice:
+  - `perl/FSM/Synthesis/EnableGraph.pm` now owns `count_binary_logical_operation_occurrences(...)`,
+  - the same owner now also holds the supporting AST collection and traversal helpers used by that pass (`collect_all_wen_en_ast_expressions(...)`, `_count_logical_ops_in_ast(...)`, `_is_factorizable_sub_expression(...)`),
+  - `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` now routes step 4 directly through `enable_graph`,
+  - `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` now relies on `enable_graph` for the fallback recount inside global AST factorization and no longer exposes the former counting entrypoints.
+- Regression coverage update:
+  - `t/10-ast-first-enable-structure.t` now asserts that the backend stays free of the logical-op counting helper pocket,
+  - the same test now asserts that `EnableGraph` owns binary logical-operation counting on the live path.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=155`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=379`, `PASS`)
+- Immediate next direction after commit:
+  - re-audit whether any remaining backend stage still analyzes `assignment_analysis` or other `EnableGraph`-owned enable structures instead of doing backend-local factorization/rendering,
+  - if that lane is now exhausted, pivot to the next truthful runtime seam rather than continuing owner-churn on the same edge.
 ## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph WEN/EN prescan ownership)
 - Current worktree continues the live ownership lane and moves WEN/EN intermediate-signal prescan under `EnableGraph`.
 - Scope of this slice:

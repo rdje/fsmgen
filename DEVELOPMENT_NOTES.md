@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: EnableGraph logical-op counting ownership
+- Continued the live ownership convergence by moving binary logical-operation counting under `EnableGraph`.
+- Rationale:
+  - the counting pass that produces `binary_logical_op_counts` is consumed by `EnableGraph`’s logical factorization policy (`should_factor_logical_operation(...)` / `contains_frequently_used_operations(...)`),
+  - the old backend-side counting pass walked `EnableGraph`-owned `assignment_analysis`, the DT/LHS enable ASTs, and captured condition ASTs, but did not perform backend-specific rendering,
+  - the next truthful move was therefore to keep the counting pass and its helper pocket with the same owner that applies the resulting policy.
+- Structural outcome:
+  - `EnableGraph::count_binary_logical_operation_occurrences(...)` now owns live logical-op counting,
+  - `EnableGraph` also now owns the supporting AST collection/traversal helper pocket used only by that pass,
+  - `Orchestrator` now routes step 4 directly through `EnableGraph`,
+  - `Backend::SystemVerilog` no longer carries those counting helpers and now defers to `EnableGraph` for the defensive recount path inside global factorization.
+- Safety/compatibility:
+  - no intended HDL behavior change; only the ownership boundary moved,
+  - the architecture regression now locks the backend free of the former counting helper pocket while asserting `EnableGraph` ownership of the live entrypoint,
+  - focused and full regression stayed green, so the move preserved the active factorization-counting contract.
+- Verification:
+  - syntax checks for `EnableGraph.pm`, `Orchestrator.pm`, and `Backend/SystemVerilog.pm` pass,
+  - focused architecture regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=12`, `Tests=379`, `PASS`).
+- Next likely slices:
+  - re-audit whether any remaining backend stage still analyzes `assignment_analysis` or other `EnableGraph`-owned enable structures without adding backend-specific value,
+  - if that lane is exhausted, pivot to the next truthful runtime seam rather than continuing owner-churn on the same edge.
 ## 2026-03-14: EnableGraph WEN/EN prescan ownership
 - Continued the live ownership convergence by moving WEN/EN intermediate-signal prescan under `EnableGraph`.
 - Rationale:
