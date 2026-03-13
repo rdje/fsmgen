@@ -14,6 +14,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: EnableGraph cleanup micro-slice (retire dead owner-only helper pocket)
+- Current worktree removes a small owner-only dead helper pocket from `perl/FSM/Synthesis/EnableGraph.pm`.
+- Scope remains a small behavior-preserving cleanup slice:
+  - repo-wide call-graph auditing showed `get_or_create_global_expression(...)`, `should_factor_condition(...)`, `needs_parentheses(...)`, and `signal_uses_register_assignment(...)` had no remaining callers anywhere in the active tree,
+  - these names were no longer mirrored by live `FlattenedDT` delegates and no longer described an active ownership boundary, so leaving them in `EnableGraph` only preserved uncalled compatibility residue,
+  - `t/10-ast-first-enable-structure.t` now asserts that live `EnableGraph` objects no longer expose that dead owner-only helper surface.
+- Validation is green so far for this slice:
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=35`, `PASS`)
+  - `prove -I perl t` (`Files=10`, `Tests=181`, `PASS`)
+- Immediate next direction after commit:
+  - re-audit the remaining `FlattenedDT` / `EnableGraph` edge one more time to decide whether the dead-surface cleanup lane is actually exhausted,
+  - if no more dead residue remains, switch back to the next live AST/CoreAST-first ownership seam.
 ## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead orphan helper pocket)
 - Current worktree removes a small dead helper pocket from both `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/Synthesis/EnableGraph.pm`.
 - Scope remains a small behavior-preserving cleanup slice:

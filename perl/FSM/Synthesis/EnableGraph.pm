@@ -207,77 +207,6 @@ sub map_operator_to_name($self, $operator) {
 
     return $op_map{$operator} || "op";
 }
-sub get_or_create_global_expression($self, $expression) {
-    my $ctx = $self->{flattened_dt};
-
-    # Global expression factoring - reuse existing signals for identical expressions
-    # This enables cross-DT sharing and avoids duplicating logic
-
-    fsm_debug("GLOBAL_EXPR: Processing expression: '$expression'", 3);
-
-    # Create a canonical representation for expression comparison
-    my $canonical_expr = $self->canonicalize_expression($expression);
-    fsm_debug("GLOBAL_EXPR: Canonical form: '$canonical_expr'", 3);
-
-    my $ast = eval { $ctx->{expr_namer}->parse_expression($canonical_expr) } if $ctx->{expr_namer};
-
-    # Check if we already have a signal for this expression
-    if (exists $ctx->{global_expressions}->{$canonical_expr}) {
-        my $existing_signal = $ctx->{global_expressions}->{$canonical_expr};
-
-        # Increment usage count for optimization analysis
-        $ctx->{expression_usage}->{$existing_signal}++;
-        if ($ast && blessed($ast)) {
-            $self->_register_intermediate_signal_registry_entry(
-                $existing_signal,
-                ast => $ast,
-                expression => $canonical_expr,
-                source => 'global_expression',
-            );
-        }
-
-        fsm_debug("GLOBAL_EXPR: *** REUSING EXISTING SIGNAL *** - $existing_signal for '$expression'", 3);
-        fsm_debug("GLOBAL_EXPR: Usage count now: " . $ctx->{expression_usage}->{$existing_signal});
-        return $existing_signal;
-    }
-
-    # Create a new signal name for this expression using NATIVE AST NAMING
-    fsm_debug("GLOBAL_EXPR: Creating NEW signal for expression: '$expression'", 3);
-
-    # Use native AST naming to avoid string parsing issues
-    my $signal_name;
-
-    # Try to parse the expression back into an AST for native naming
-
-    if ($ast) {
-        # Use the new native AST complexity analysis
-        my $complexity = $ctx->{expr_namer}->analyze_ast_complexity_native($ast);
-        fsm_debug("GLOBAL_EXPR: AST complexity: logical_ops=" . $complexity->{has_logical_ops} . ", depth=" . $complexity->{depth});
-
-        # Generate a systematic signal name from the AST structure
-        $signal_name = $ctx->{expr_namer}->ast_to_systematic_name($ast);
-        fsm_debug("GLOBAL_EXPR: Generated signal name from AST: '$signal_name'", 3);
-    } else {
-        # Fallback to string-based naming for expressions that can't be parsed
-        fsm_debug("GLOBAL_EXPR: Could not parse expression, using string fallback", 3);
-        $signal_name = $ctx->{expr_namer}->parse_and_name_expression($canonical_expr);
-        fsm_debug("GLOBAL_EXPR: Generated signal name from string: '$signal_name'", 3);
-    }
-
-    # Register the mapping
-    $ctx->{global_expressions}->{$canonical_expr} = $signal_name;
-    $ctx->{expression_usage}->{$signal_name} = 1;
-    $self->_register_intermediate_signal_registry_entry(
-        $signal_name,
-        expression => $canonical_expr,
-        ($ast && blessed($ast) ? (ast => $ast) : ()),
-        source => 'global_expression',
-    );
-
-    fsm_debug("GLOBAL_EXPR: *** CREATED NEW GLOBAL SIGNAL *** - $signal_name for '$expression'", 3);
-    fsm_debug("GLOBAL_EXPR: Total global expressions now: " . scalar(keys %{$ctx->{global_expressions}}));
-    return $signal_name;
-}
 sub canonicalize_expression($self, $expression) {
     # Create a canonical form of the expression for comparison
     # This helps identify semantically identical expressions that can be factored
@@ -293,46 +222,6 @@ sub canonicalize_expression($self, $expression) {
     # - Recognize equivalent forms: !(!a & !b) vs (a | b)
 
     return $expression;
-}
-sub should_factor_condition($self, $condition_expr) {
-    my $ctx = $self->{flattened_dt};
-
-    # Legacy string-based factorization - kept for compatibility
-    # New code should use should_factor_ast() for AST-based analysis
-
-    fsm_debug("FACTOR_CHECK: Analyzing condition expression: '$condition_expr'", 3);
-
-    # Don't factor simple expressions
-    if ($condition_expr eq "1'b1" || $condition_expr eq "1'b0") {
-        fsm_debug("FACTOR_CHECK: Simple boolean literal - NOT factoring: $condition_expr", 3);
-        return 0;
-    }
-
-    # Don't factor single signal references or simple negations
-    if ($condition_expr =~ /^[a-zA-Z_][a-zA-Z0-9_]*$/ ||
-        $condition_expr =~ /^not_[a-zA-Z_][a-zA-Z0-9_]*_expr\d+$/) {
-        fsm_debug("FACTOR_CHECK: Simple signal or negation - NOT factoring: $condition_expr", 3);
-        return 0;
-    }
-
-    # Parse the expression into an AST to analyze complexity
-    my $ast = eval { $ctx->{expr_namer}->parse_expression($condition_expr) };
-    if (!$ast) {
-        # If parsing fails, fall back to string-based heuristic
-        fsm_debug("FACTOR_CHECK: Could not parse expression, using string heuristic", 3);
-        return ($condition_expr =~ /\s+(&&|\|\||&|\|)\s+/);
-    }
-
-    # Factor if the AST represents a compound logical expression
-    my $complexity = $self->analyze_ast_complexity($ast);
-    if ($complexity->{has_logical_ops} && $complexity->{depth} > 1) {
-        fsm_debug("FACTOR_CHECK: *** COMPLEX LOGICAL EXPRESSION *** - factoring: $condition_expr", 3);
-        return 1;
-    }
-
-    # Don't factor by default
-    fsm_debug("FACTOR_CHECK: Expression not complex enough - NOT factoring: $condition_expr", 3);
-    return 0;
 }
 sub is_complex_ast($self, $ast) {
     # AST-based complexity analysis - preferred method
@@ -424,45 +313,6 @@ sub should_factor_ast($self, $ast) {
     }
 
     fsm_debug("FACTOR_AST_CHECK: Simple AST - NOT factoring", 3);
-    return 0;
-}
-sub needs_parentheses($self, $expression) {
-    # Determine if an expression needs parentheses when used in a binary operation
-    # Only add parentheses for complex expressions that contain operators
-
-    return 0 unless $expression;
-
-    # Simple signal names don't need parentheses
-    if ($expression =~ /^[a-zA-Z_][a-zA-Z0-9_]*$/) {
-        return 0;
-    }
-
-    # Simple literals don't need parentheses
-    if ($expression =~ /^\d+'[bhd]\w+$/ || $expression =~ /^\d+$/ || $expression =~ /^1'b[01]$/) {
-        return 0;
-    }
-
-    # Intermediate signal names don't need parentheses
-    if ($expression =~ /^[a-zA-Z_][a-zA-Z0-9_]*_expr\d*$/) {
-        return 0;
-    }
-
-    # Generated intermediate signal names (including those from expression namer) don't need parentheses
-    if ($expression =~ /^[a-zA-Z_][a-zA-Z0-9_]*(_active|_expr|_and_|_or_|_not_)/) {
-        return 0;
-    }
-
-    # Already parenthesized expressions don't need additional parentheses
-    if ($expression =~ /^\(.+\)$/) {
-        return 0;
-    }
-
-    # Expressions with operators need parentheses
-    if ($expression =~ /\s+(&&|\|\||[&|+*\/-]|==|!=|[<>]=?)\s+/) {
-        return 1;
-    }
-
-    # Everything else doesn't need parentheses
     return 0;
 }
 sub clean_intermediate_expression($self, $expression) {
@@ -1116,21 +966,6 @@ sub generate_unified_comb_mux($self, $lhs, $lhs_analysis) {
     $hdl .= "  end\n";
     
     return $hdl;
-}
-sub signal_uses_register_assignment($self, $lhs, $lhs_analysis) {
-    # Determine if a signal uses <- assignments (register assignments)
-    # Returns: boolean (1 if uses <-, 0 otherwise)
-    my $assignments = $lhs_analysis->{assignments};
-    
-    for my $assignment (@$assignments) {
-        my $operator = $assignment->{operator} || '=';
-        
-        if ($operator eq '<-' || $operator eq '<=' || $operator eq '<-=' || $operator eq '<=+' || $operator =~ /^<\d+$/) {
-            return 1;  # Uses register assignment
-        }
-    }
-    
-    return 0;  # Does not use register assignment
 }
 sub get_signal_assignment_type($self, $lhs, $lhs_analysis) {
     # Determine the assignment type for a signal by examining the operators used

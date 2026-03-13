@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### EnableGraph cleanup (retire dead owner-only helper pocket)
+- Removed the dead owner-only helper pocket from `perl/FSM/Synthesis/EnableGraph.pm`:
+  - deleted `get_or_create_global_expression(...)`,
+  - deleted `should_factor_condition(...)`,
+  - deleted `needs_parentheses(...)`,
+  - deleted `signal_uses_register_assignment(...)`.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation no longer exposes those dead helper names on the `EnableGraph` helper object.
+- Root cause / rationale:
+  - repo-wide call-graph auditing showed these four helpers had no remaining callers anywhere in the active code or tests,
+  - they no longer participated in a live compatibility boundary because the matching facade delegates were already gone or the behavior had already localized elsewhere,
+  - removing the owner-only pocket is safer than preserving unused helper implementations that could be mistaken for active supported entrypoints.
+- Scope remains behavior-preserving cleanup of dead compatibility residue; live AST/CoreAST generation, enable synthesis, and backend emission behavior are unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=35`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=181`)
 ### FlattenedDT cleanup (retire dead orphan helper pocket)
 - Removed the dead helper pocket shared between `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/Synthesis/EnableGraph.pm`:
   - deleted `create_condition_expression_signal_name(...)`,

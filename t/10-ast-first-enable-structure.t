@@ -134,6 +134,10 @@ for my $dead_facade_helper (
 for my $dead_enable_graph_helper (
     qw(
         create_condition_expression_signal_name
+        get_or_create_global_expression
+        needs_parentheses
+        should_factor_condition
+        signal_uses_register_assignment
         set_explicit_reset_values
         parentheses_are_redundant
         generate_expression_from_signal_name

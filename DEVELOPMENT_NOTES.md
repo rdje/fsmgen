@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: EnableGraph dead owner-only helper removal
+- Continued AST/CoreAST-first cleanup by deleting a small helper pocket that had become dead even on the `EnableGraph` owner side.
+- Rationale:
+  - after the previous facade/orphan cleanup slices, a follow-up call-graph audit showed `get_or_create_global_expression(...)`, `should_factor_condition(...)`, `needs_parentheses(...)`, and `signal_uses_register_assignment(...)` had no remaining callers anywhere in the active tree,
+  - these helpers no longer described a real boundary: the live flow already uses other paths for AST naming, factorization policy, parenthesis handling, and assignment-type classification,
+  - removing the owner-only pocket is more honest than keeping uncalled helper implementations around just because they once anchored a compatibility lane.
+- Safety/compatibility:
+  - no active generation flow changed; all live registry, factorization, and mux classification logic already runs through other `EnableGraph` routines,
+  - the focused architecture regression now locks the absence of those helper names on live `EnableGraph` objects,
+  - this slice therefore shrinks dead owner surface without widening or relocating any live ownership seam.
+- Verification:
+  - syntax check for `EnableGraph.pm` passes,
+  - focused regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=181`).
+- Next likely slices:
+  - re-audit the remaining `FlattenedDT` / `EnableGraph` compatibility edge one more time for any final dead residue,
+  - if that audit is empty, return to the next live AST/CoreAST-first ownership seam rather than continuing cleanup-only work.
 ## 2026-03-13: FlattenedDT/EnableGraph dead orphan helper removal
 - Continued AST/CoreAST-first cleanup by deleting a small helper pocket that had become dead on both the `FlattenedDT` facade and the `EnableGraph` owner side.
 - Rationale:
