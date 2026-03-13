@@ -294,9 +294,6 @@ sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_st
     my $condition_signal_name = defined($condition_ast) ? $condition_ast->to_systemverilog() : 'UNDEFINED';
     fsm_debug("    Condition Signal Name: '$condition_signal_name'", 3);
     
-    # Track this actual LHS/RHS pair for validation (still need strings for validation)
-    $self->track_actual_lhs_rhs($lhs_name, $actual_rhs, "ast_assignment:$dt_name");
-    
     # AST WEB: Use signal name as key but maintain AST mapping
     my $lhs_name_key = $lhs_name;
     
@@ -343,20 +340,6 @@ sub extract_rhs_from_expression ($self, $expr) {
         return lc($expr_type) . '_expr';
     }
 }
-sub track_actual_lhs_rhs ($self, $lhs, $rhs, $context) {
-    my $ctx = $self->{flattened_dt};
-
-    # Track an actual LHS/RHS pair that made it to HDL generation
-    my $key = "$lhs:$rhs";
-    $ctx->{actual_lhs_rhs}->{$key} = {
-        lhs => $lhs,
-        rhs => $rhs,
-        context => $context,
-        seen_count => ($ctx->{actual_lhs_rhs}->{$key}->{seen_count} || 0) + 1
-    };
-    
-    fsm_debug("ACTUAL_LHS_RHS: Tracking $key (count: $ctx->{actual_lhs_rhs}->{$key}->{seen_count}) from $context", 3);
-}
 sub record_transition_from_ast ($self, $dt_name, $transition_node, $condition_stack) {
     my $ctx = $self->{flattened_dt};
     my $target_state = $transition_node->target_state;
@@ -366,9 +349,6 @@ sub record_transition_from_ast ($self, $dt_name, $transition_node, $condition_st
     
     # Convert target state to state encoding value
     my $state_value = uc($target_state);
-    
-    # Track this actual LHS/RHS pair for validation
-    $self->track_actual_lhs_rhs('next_state', $state_value, "ast_transition:$dt_name");
     
     # Record as assignment to next_state with both signal name and AST
     push @{$ctx->{lhs_assignments}->{next_state}}, {

@@ -70,4 +70,19 @@ ok(
     'live generation leaves no legacy top-level lhs_to_enable_value_pairs state behind',
 );
 
+ok(
+    !exists $hdl->{expected_lhs_rhs},
+    'live generation leaves no legacy expected_lhs_rhs tracking state behind',
+);
+
+ok(
+    !exists $hdl->{actual_lhs_rhs},
+    'live generation leaves no legacy actual_lhs_rhs tracking state behind',
+);
+
+ok(
+    !exists $hdl->{missing_lhs_rhs},
+    'live generation leaves no legacy missing_lhs_rhs tracking state behind',
+);
+
 done_testing();

@@ -1,5 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-13
+### FlattenedDT cleanup (retire dead LHS/RHS completeness tracking)
+- Removed the dormant LHS/RHS completeness-tracking family from `perl/FSM/HDL/FlattenedDT.pm`:
+  - deleted the legacy `expected_lhs_rhs`, `actual_lhs_rhs`, and `missing_lhs_rhs` state hashes from object construction,
+  - deleted the raw-AST validation helpers `track_expected_lhs_rhs(...)`, `validate_lhs_rhs_completeness(...)`, `extract_lhs_rhs_from_raw_ast(...)`, `_traverse_raw_ast_for_lhs_rhs(...)`, and `_format_raw_rhs(...)`,
+  - removed the no-longer-needed `track_actual_lhs_rhs(...)` compatibility delegate from `FlattenedDT`.
+- Removed the remaining writes into that dead lane from `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` so live assignment/transition capture no longer records unused `actual_lhs_rhs` entries.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation leaves no legacy LHS/RHS tracking state behind (`expected_lhs_rhs`, `actual_lhs_rhs`, `missing_lhs_rhs`).
+- Root cause / rationale:
+  - repo-wide auditing showed the LHS/RHS completeness family had become pure dead compatibility/debug surface after the AST-first assignment/transition capture move,
+  - the only live writes into the family came from `Orchestrator`, and no active runtime/backend path read that state or invoked the validation helpers,
+  - deleting the dead lane is safer than preserving unused instrumentation because it shrinks the `FlattenedDT` facade and reduces the chance of reviving parallel non-semantic bookkeeping.
+- Scope remains behavior-preserving cleanup of dead compatibility state; the live AST/CoreAST assignment capture and enable-synthesis path is unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=9`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=155`)
 ## 2026-03-11
 ### EnableGraph/SystemVerilog defining-AST metadata for consolidated filtering
 - Updated `perl/FSM/Synthesis/EnableGraph.pm` so `track_ast_intermediate_signals()` now records `reference_ast` separately and attaches a native `defining_ast` for referenced intermediate signals when one is already available from AST-backed sources.

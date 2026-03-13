@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: FlattenedDT dead LHS/RHS completeness tracking removal
+- Continued AST/CoreAST-first cleanup by deleting the dormant LHS/RHS completeness-tracking family from `perl/FSM/HDL/FlattenedDT.pm` and removing the last writes into that lane from `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`.
+- Rationale:
+  - after the earlier `track_actual_lhs_rhs()` ownership move, a fresh repo-wide audit showed the whole expected/actual/raw-AST completeness family had no live consumers left,
+  - the only active path touching it was `Orchestrator` assignment/transition capture, which still wrote `actual_lhs_rhs` entries solely for a validation/reporting path that was never invoked,
+  - keeping that bookkeeping around no longer improved safety; it only preserved dead surface area in the `FlattenedDT` facade.
+- Safety/compatibility:
+  - no active generation, enable synthesis, or backend lowering logic changed; this slice only removes dead validation/debug bookkeeping,
+  - the live AST/CoreAST path remains the same: assignments and transitions still flow through `Orchestrator` into `lhs_assignments` / `assignment_analysis`,
+  - the focused regression now locks the absence of the legacy `expected_lhs_rhs`, `actual_lhs_rhs`, and `missing_lhs_rhs` hashes after live generation.
+- Verification:
+  - syntax checks for `FlattenedDT.pm` and `Orchestrator.pm` pass,
+  - focused regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=155`).
+- Next likely slices:
+  - re-audit the remaining unreferenced `FlattenedDT` helper pockets, especially declaration-scheduling and substituted-AST matching helpers, to find the next truly dead surface,
+  - keep preferring deletions of provably dead compatibility state over widening live backend/orchestrator behavior.
 ## 2026-03-11: EnableGraph/SystemVerilog defining-AST metadata for consolidated filtering
 - Continued backend convergence by carrying native defining-AST metadata forward on the consolidated intermediate-signal filtering path.
 - Rationale:

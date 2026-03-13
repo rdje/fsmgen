@@ -1261,6 +1261,26 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - characterize which remaining opaque `legacy_string_registry` producers still fail to provide native defining AST or typed dependency metadata,
   - keep shrinking or retiring other dormant string-era compatibility helpers once they are proven dead in the live path.
+## AST/CoreAST convergence update (March 13, 2026, dead-LHS/RHS-tracking cleanup slice)
+- Latest completed slice in `perl/FSM/HDL/FlattenedDT.pm`, `perl/FSM/HDL/FlattenedDT/Orchestrator.pm`, and `t/10-ast-first-enable-structure.t`:
+  - removed the dormant LHS/RHS completeness-tracking family from `FlattenedDT`, including the legacy `expected_lhs_rhs` / `actual_lhs_rhs` / `missing_lhs_rhs` state and the raw-AST walker/formatter helpers that only existed to feed that validation lane,
+  - removed the assignment/transition capture instrumentation in `Orchestrator` that still wrote `actual_lhs_rhs` entries even though no live path consumed them,
+  - extended the AST-first enable-structure regression to assert that live generation leaves no legacy LHS/RHS tracking state behind.
+- Validation completed for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` => `Files=1`, `Tests=9`, `PASS`
+  - `prove -I perl t` => `Files=10`, `Tests=155`, `PASS`
+- Additional audit completed for this slice:
+  - repo-wide reference checks showed the retired LHS/RHS tracking helpers and state names remained only in docs and the new regression assertions,
+  - the only live writes into that lane had been the `Orchestrator` assignment/transition capture hooks, and no runtime/backend path read the resulting hashes.
+- Recent AST/CoreAST convergence commits immediately before the next commit:
+  - `0aa9a84` `FlattenedDT: retire dead string-era condition and WEN helpers`
+  - `918a2ca` `FlattenedDT: retire dead string-era factorization helpers`
+  - `45d3320` `SystemVerilog: retire identifier-scan dependency fallback`
+- Highest-value next seam after this slice:
+  - re-audit the remaining unreferenced `FlattenedDT` helper pockets, especially declaration-scheduling and substituted-AST matching helpers, to find the next dead surface that can be retired without perturbing the live AST/CoreAST path,
+  - keep preferring slices that delete provably dead compatibility state over widening live backend/orchestrator behavior.
 ## AST/CoreAST convergence update (March 12, 2026, dead-condition-and-wen-helper cleanup slice)
 - Latest completed slice in `perl/FSM/HDL/FlattenedDT.pm` and `t/10-ast-first-enable-structure.t`:
   - removed the dormant string-era condition/WEN helper island that still exposed a parallel string-based path for assignment recording, condition formatting, raw condition-string extraction, and DT-specific/LHS-level WEN generation,
