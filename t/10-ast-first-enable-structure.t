@@ -127,8 +127,18 @@ for my $dead_facade_helper (
         convert_condition_to_ast
         convert_test_value_to_ast
         create_condition_expression_signal_name
+        extract_lhs_name_from_ast
+        extract_rhs_from_expression
         find_all_ast_sub_expressions
+        flatten_all_decision_trees
+        flatten_decision_tree
+        generate_consolidated_intermediate_signals
         generate_comb_mux
+        generate_enable_conditions
+        generate_header
+        generate_module_declaration
+        generate_state_encoding
+        generate_state_register
         get_default_value
         get_default_value_from_ast
         get_explicit_reset_value
@@ -143,6 +153,8 @@ for my $dead_facade_helper (
         is_simple_comparison
         is_simple_negation
         normalize_rhs_logic_level
+        record_assignment_from_ast
+        record_transition_from_ast
         run_global_ast_factorization
         set_fsm_module_reference
         should_filter_ast_based
@@ -153,6 +165,7 @@ for my $dead_facade_helper (
         _count_logical_ops_in_ast
         _is_factorizable_sub_expression
         _traverse_ast_for_complexity
+        generate_wen_en_signals
         generate_expression_from_signal_name
     )
 ) {

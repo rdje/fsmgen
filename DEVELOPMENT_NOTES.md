@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: FlattenedDT dead orchestrator/backend facade pocket removal
+- Continued AST/CoreAST-first cleanup by deleting a dead orchestrator/backend helper pocket from the `FlattenedDT` facade.
+- Rationale:
+  - a fresh repo-wide call-graph audit showed `flatten_all_decision_trees(...)`, `extract_lhs_name_from_ast(...)`, `flatten_decision_tree(...)`, `generate_header(...)`, `generate_module_declaration(...)`, `generate_state_encoding(...)`, `generate_state_register(...)`, `generate_enable_conditions(...)`, `generate_consolidated_intermediate_signals(...)`, `generate_wen_en_signals(...)`, `record_assignment_from_ast(...)`, `record_transition_from_ast(...)`, and `extract_rhs_from_expression(...)` had no remaining callers on the `FlattenedDT` facade,
+  - the matching methods remain live and are now reached directly from `Orchestrator` or `backend_sv`,
+  - keeping the facade delegates therefore advertised another fake ownership boundary and an uncalled compatibility surface rather than a real entrypoint.
+- Safety/compatibility:
+  - no active generation flow changed; the same orchestrator/backend methods continue to run in the same places as before,
+  - the focused architecture regression now locks the absence of those helper names on live `FlattenedDT` objects,
+  - this slice therefore shrinks dead facade surface without changing flattening, emission, or HDL output.
+- Verification:
+  - syntax check for `FlattenedDT.pm` passes,
+  - focused regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=236`).
+- Next likely slices:
+  - rerun the facade audit; if the remaining wrappers are only thin utility veneers with no compelling dead pocket left, stop the cleanup lane,
+  - pivot back to the next live AST/CoreAST-first ownership seam.
 ## 2026-03-13: FlattenedDT dead EnableGraph facade delegate removal
 - Continued AST/CoreAST-first cleanup by deleting a dead `EnableGraph`-owned helper pocket from the `FlattenedDT` facade.
 - Rationale:

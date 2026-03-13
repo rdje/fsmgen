@@ -14,6 +14,19 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead orchestrator/backend facade pocket)
+- Current worktree removes a dead orchestrator/backend helper pocket from the `FlattenedDT` facade.
+- Scope remains a small behavior-preserving cleanup slice:
+  - repo-wide call-graph auditing showed `flatten_all_decision_trees(...)`, `extract_lhs_name_from_ast(...)`, `flatten_decision_tree(...)`, `generate_header(...)`, `generate_module_declaration(...)`, `generate_state_encoding(...)`, `generate_state_register(...)`, `generate_enable_conditions(...)`, `generate_consolidated_intermediate_signals(...)`, `generate_wen_en_signals(...)`, `record_assignment_from_ast(...)`, `record_transition_from_ast(...)`, and `extract_rhs_from_expression(...)` had no remaining callers on the `FlattenedDT` facade,
+  - the matching orchestrator/backend methods are still live and are now reached directly from `Orchestrator` or `backend_sv`, so the facade delegates were dead compatibility surface rather than a real ownership seam,
+  - `t/10-ast-first-enable-structure.t` now asserts that live `FlattenedDT` objects no longer expose those orchestrator/backend-owned helper names.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=90`, `PASS`)
+  - `prove -I perl t` (`Files=10`, `Tests=236`, `PASS`)
+- Immediate next direction after commit:
+  - rerun the facade audit; if the remaining wrappers are only legacy utility veneers and no longer form a compelling dead pocket, stop the cleanup lane,
+  - pivot back to the next live AST/CoreAST-first ownership seam.
 ## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead EnableGraph facade delegates)
 - Current worktree removes a dead `EnableGraph`-owned helper pocket from the `FlattenedDT` facade.
 - Scope remains a small behavior-preserving cleanup slice:

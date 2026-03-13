@@ -109,23 +109,12 @@ sub get_lhs_width_from_analysis ($self, $lhs_analysis) {
     return $self->{enable_graph}->get_lhs_width_from_analysis($lhs_analysis);
 }
 
-sub flatten_all_decision_trees ($self, $fsm_module) {
-    return $self->{orchestrator}->flatten_all_decision_trees($fsm_module);
-}
-
 sub is_register ($self, $lhs_signal_ast, $lhs_name_for_debug) {
     return $self->{enable_graph}->is_register($lhs_signal_ast, $lhs_name_for_debug);
 }
 
 sub fallback_register_analysis_from_assignments ($self, $lhs_name) {
     return $self->{enable_graph}->fallback_register_analysis_from_assignments($lhs_name);
-}
-sub extract_lhs_name_from_ast ($self, $lhs_ast) {
-    return $self->{orchestrator}->extract_lhs_name_from_ast($lhs_ast);
-}
-
-sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
-    return $self->{orchestrator}->flatten_decision_tree($dt_name, $dt_node, $condition_stack);
 }
 
 sub generate_ast_based_signal_name ($self, $ast) {
@@ -139,32 +128,6 @@ sub extract_signal_name_from_ast ($self, $signal_ast) {
 sub map_operator_to_name ($self, $operator) {
     return $self->{enable_graph}->map_operator_to_name($operator);
 }
-
-sub generate_header ($self, $fsm_module) {
-    return $self->{backend_sv}->generate_header($fsm_module);
-}
-
-sub generate_module_declaration ($self, $fsm_module) {
-    return $self->{backend_sv}->generate_module_declaration($fsm_module);
-}
-
-
-sub generate_state_encoding ($self, $fsm_module) {
-    return $self->{backend_sv}->generate_state_encoding($fsm_module);
-}
-
-sub generate_state_register ($self, $fsm_module) {
-    return $self->{backend_sv}->generate_state_register($fsm_module);
-}
-
-sub generate_enable_conditions ($self, $fsm_module) {
-    return $self->{backend_sv}->generate_enable_conditions($fsm_module);
-}
-
-sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
-    return $self->{backend_sv}->generate_consolidated_intermediate_signals($fsm_module);
-}
-
 
 sub generate_intermediate_signals ($self, $fsm_module) {
     return $self->{backend_sv}->generate_intermediate_signals($fsm_module);
@@ -186,10 +149,6 @@ sub contains_frequently_used_operations ($self, $ast) {
     return $self->{enable_graph}->contains_frequently_used_operations($ast);
 }
 
-sub generate_wen_en_signals ($self, $fsm_module) {
-    return $self->{backend_sv}->generate_wen_en_signals($fsm_module);
-}
-
 sub get_pulse_delay_cycles_for_lhs ($self, $lhs, $lhs_analysis) {
     return $self->{enable_graph}->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
 }
@@ -208,18 +167,6 @@ sub get_driven_signals ($self) {
 
 sub get_signal_info ($self, $lhs) {
     return $self->{enable_graph}->get_signal_info($lhs);
-}
-
-sub record_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_stack) {
-    return $self->{orchestrator}->record_assignment_from_ast($dt_name, $assignment_node, $condition_stack);
-}
-
-sub record_transition_from_ast ($self, $dt_name, $transition_node, $condition_stack) {
-    return $self->{orchestrator}->record_transition_from_ast($dt_name, $transition_node, $condition_stack);
-}
-
-sub extract_rhs_from_expression ($self, $expr) {
-    return $self->{orchestrator}->extract_rhs_from_expression($expr);
 }
 
 sub clean_intermediate_expression ($self, $expression) {

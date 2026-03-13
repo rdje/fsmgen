@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT cleanup (retire dead orchestrator/backend facade pocket)
+- Removed the dead orchestrator/backend helper delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
+  - deleted `flatten_all_decision_trees(...)`,
+  - deleted `extract_lhs_name_from_ast(...)`,
+  - deleted `flatten_decision_tree(...)`,
+  - deleted `generate_header(...)`,
+  - deleted `generate_module_declaration(...)`,
+  - deleted `generate_state_encoding(...)`,
+  - deleted `generate_state_register(...)`,
+  - deleted `generate_enable_conditions(...)`,
+  - deleted `generate_consolidated_intermediate_signals(...)`,
+  - deleted `generate_wen_en_signals(...)`,
+  - deleted `record_assignment_from_ast(...)`,
+  - deleted `record_transition_from_ast(...)`,
+  - deleted `extract_rhs_from_expression(...)`.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation no longer exposes those orchestrator/backend-owned helper names on the `FlattenedDT` facade.
+- Root cause / rationale:
+  - repo-wide call-graph auditing showed these names had no remaining facade callers anywhere in the active code or tests,
+  - the matching methods remain live and are now reached directly from `Orchestrator` or `backend_sv`,
+  - removing the dead delegates is safer than preserving an uncalled flattening/emission compatibility surface on the facade.
+- Scope remains behavior-preserving cleanup of dead compatibility surface; live orchestrator/backend behavior is unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=90`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=236`)
 ### FlattenedDT cleanup (retire dead EnableGraph facade delegates)
 - Removed the dead `EnableGraph`-owned helper delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
   - deleted `normalize_rhs_logic_level(...)`,
