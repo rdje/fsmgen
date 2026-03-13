@@ -14,6 +14,21 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead orphan helper pocket)
+- Current worktree removes a small dead helper pocket from both `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/Synthesis/EnableGraph.pm`.
+- Scope remains a small behavior-preserving cleanup slice:
+  - repo-wide call-graph auditing showed `create_condition_expression_signal_name(...)`, `set_explicit_reset_values(...)`, `parentheses_are_redundant(...)`, and `generate_expression_from_signal_name(...)` had no remaining callers anywhere in the active tree,
+  - the matching `FlattenedDT` compatibility delegates and `EnableGraph` owner methods are gone together, rather than leaving dead definitions stranded on one side,
+  - `t/10-ast-first-enable-structure.t` now asserts that live `FlattenedDT` and `EnableGraph` objects no longer expose that dead helper surface.
+- Validation is green so far for this slice:
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=31`, `PASS`)
+  - `prove -I perl t` (`Files=10`, `Tests=177`, `PASS`)
+- Immediate next direction after commit:
+  - continue re-auditing the remaining `FlattenedDT` / `EnableGraph` compatibility edge for any last dead helper residue,
+  - if the dead-surface lane is now exhausted, switch back to the next live AST/CoreAST-first ownership seam.
 ## 2026-03-13: FlattenedDT cleanup micro-slice (retire dead unified helper delegates)
 - Current worktree removes a dead unified-analysis / unified-emission helper delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`.
 - Scope remains a small behavior-preserving cleanup slice:

@@ -128,10 +128,6 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
     return $self->{orchestrator}->flatten_decision_tree($dt_name, $dt_node, $condition_stack);
 }
 
-sub create_condition_expression_signal_name ($self, $condition_stack) {
-    return $self->{enable_graph}->create_condition_expression_signal_name($condition_stack);
-}
-
 sub get_or_create_ast_signal_name ($self, $ast) {
     return $self->{enable_graph}->get_or_create_ast_signal_name($ast);
 }
@@ -279,10 +275,6 @@ sub set_fsm_module_reference ($self, $fsm_module) {
     return $self->{enable_graph}->set_fsm_module_reference($fsm_module);
 }
 
-sub set_explicit_reset_values ($self, $reset_values) {
-    return $self->{enable_graph}->set_explicit_reset_values($reset_values);
-}
-
 sub get_default_value_from_ast ($self, $lhs_ast) {
     return $self->{enable_graph}->get_default_value_from_ast($lhs_ast);
 }
@@ -411,16 +403,8 @@ sub _operand_needs_parens_for_negation ($self, $operand) {
     return $self->{enable_graph}->_operand_needs_parens_for_negation($operand);
 }
 
-sub parentheses_are_redundant ($self, $inner_expr) {
-    return $self->{enable_graph}->parentheses_are_redundant($inner_expr);
-}
-
 sub get_intermediate_signal_expression ($self, $signal_name) {
     return $self->{enable_graph}->get_intermediate_signal_expression($signal_name);
-}
-
-sub generate_expression_from_signal_name ($self, $signal_name) {
-    return $self->{enable_graph}->generate_expression_from_signal_name($signal_name);
 }
 
 =head2 feed_asts_to_factorizer($factorizer)

@@ -30,16 +30,6 @@ sub create_condition_expression($self, $condition_stack) {
         return FSM::AST::Utils::and_tree(@$condition_stack);
     }
 }
-sub create_condition_expression_signal_name($self, $condition_stack) {
-    # Create a signal name for the condition expression
-    return "1'b1" if !@$condition_stack;
-
-    # Get or create the condition AST
-    my $condition_ast = $self->create_condition_expression($condition_stack);
-
-    # Generate systematic signal name from AST
-    return $self->get_or_create_ast_signal_name($condition_ast);
-}
 sub _get_intermediate_signal_registry_entry($self, $signal_name) {
     my $ctx = $self->{flattened_dt};
     return undef unless defined($signal_name) && $signal_name ne '';
@@ -524,21 +514,6 @@ sub clean_intermediate_expression($self, $expression) {
     fsm_debug("CLEAN_EXPR: Output expression: '$expression'", 3);
 
     return $expression;
-}
-sub parentheses_are_redundant($self, $inner_expr) {
-    # Check if outer parentheses are redundant for the given expression
-    # Only remove if the inner expression doesn't have precedence issues
-
-    # Simple expressions don't need parentheses
-    return 1 if $inner_expr =~ /^[a-zA-Z_][a-zA-Z0-9_]*$/; # signal names
-    return 1 if $inner_expr =~ /^\d+'[bhd]\w*$/; # literals
-    return 1 if $inner_expr =~ /^1'b[01]$/; # boolean literals
-
-    # Expressions that are already intermediate signals don't need extra parentheses
-    return 1 if $self->is_intermediate_signal($inner_expr);
-
-    # For complex expressions, keep the parentheses to be safe
-    return 0;
 }
 sub analyze_ast_complexity($self, $ast) {
     # Analyze AST complexity for factorization decisions
@@ -1475,17 +1450,6 @@ sub set_fsm_module_reference($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     $ctx->{fsm_module} = $fsm_module;
     fsm_debug("FSM_MODULE_REF: Stored reference to FSM module: " . ($fsm_module ? $fsm_module->name : 'undef'), 3);
-}
-sub set_explicit_reset_values($self, $reset_values) {
-    # Allow explicit configuration of reset values
-    # $reset_values is a hash: { signal_name => reset_value }
-    my $ctx = $self->{flattened_dt};
-    $ctx->{explicit_reset_values} = $reset_values;
-    fsm_debug("EXPLICIT_RESET_CONFIG: Configured explicit reset values for " . scalar(keys %$reset_values) . " signals", 3);
-    
-    for my $signal (keys %$reset_values) {
-        fsm_debug("  $signal -> $reset_values->{$signal}", 3);
-    }
 }
 sub extract_signal_name_from_ast($self, $signal_ast) {
     # Extract signal name from a signal reference AST node
@@ -2724,41 +2688,6 @@ sub build_dependency_recovery_ast_from_signal_name($self, $signal_name, $seen_si
     my $summary = join(', ', @dependencies);
     fsm_debug("[EnableGraph.pm][build_dependency_recovery_ast_from_signal_name()] '$signal_name' recovered direct dependencies via signal-name AST: $summary", 3);
     return $candidate_ast;
-}
-sub generate_expression_from_signal_name($self, $signal_name) {
-    # Generate SystemVerilog expression from intermediate signal name patterns
-    
-    # s_rst_n_and_* patterns
-    if ($signal_name =~ /^s_rst_n_and_(.+)$/) {
-        my $rest = $1;
-        $rest =~ s/_and_/ & /g;
-        return "s_rst_n & $rest";
-    }
-    
-    # not_* patterns
-    if ($signal_name =~ /^not_(.+)$/) {
-        return "!$1";
-    }
-    
-    # *_and_* patterns
-    if ($signal_name =~ /^(.+)_and_(.+)$/) {
-        my ($left, $right) = ($1, $2);
-        $left =~ s/_and_/ & /g;
-        $right =~ s/_and_/ & /g;
-        return "$left & $right";
-    }
-    
-    # *_or_* patterns
-    if ($signal_name =~ /^(.+)_or_(.+)$/) {
-        my ($left, $right) = ($1, $2);
-        $left =~ s/_or_/ | /g;
-        $right =~ s/_or_/ | /g;
-        return "$left | $right";
-    }
-    
-    # Default: return the signal name itself (might be an error)
-    fsm_debug("WARNING: Could not generate expression for intermediate signal: $signal_name", 3);
-    return "1'b0"; # Safe default
 }
 sub track_ast_intermediate_signals($self, $ast) {
     # Recursively traverse an AST and track all intermediate signals that need to be declared

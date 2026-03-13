@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: FlattenedDT/EnableGraph dead orphan helper removal
+- Continued AST/CoreAST-first cleanup by deleting a small helper pocket that had become dead on both the `FlattenedDT` facade and the `EnableGraph` owner side.
+- Rationale:
+  - after the unified-helper delegate removal, a follow-up call-graph audit showed `create_condition_expression_signal_name(...)`, `set_explicit_reset_values(...)`, `parentheses_are_redundant(...)`, and `generate_expression_from_signal_name(...)` had no remaining callers anywhere in the active code or tests,
+  - these names no longer described a live boundary: some were stale compatibility entrypoints on `FlattenedDT`, and the matching `EnableGraph` implementations were equally uncalled,
+  - removing the whole orphan pocket is more honest than preserving dead owner methods after their facade delegates are gone.
+- Safety/compatibility:
+  - no active generation flow changed; all live condition construction, reset lookup, parenthesis handling, and intermediate-expression recovery already use other paths,
+  - the focused architecture regression now locks the absence of those helper names on both live `FlattenedDT` and live `EnableGraph` objects,
+  - this slice therefore shrinks the compatibility edge without widening any live ownership seam.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `FlattenedDT.pm` pass,
+  - focused regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=10`, `Tests=177`).
+- Next likely slices:
+  - continue re-auditing the remaining `FlattenedDT` / `EnableGraph` helper edge for any last dead residue,
+  - if no more truly dead helper names remain, pivot back to the next live AST/CoreAST-first ownership seam instead of forcing more cleanup-only slices.
 ## 2026-03-13: FlattenedDT dead unified helper delegate removal
 - Continued AST/CoreAST-first cleanup by deleting the dormant unified-analysis / unified-emission delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`.
 - Rationale:

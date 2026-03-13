@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT cleanup (retire dead orphan helper pocket)
+- Removed the dead helper pocket shared between `perl/FSM/HDL/FlattenedDT.pm` and `perl/FSM/Synthesis/EnableGraph.pm`:
+  - deleted `create_condition_expression_signal_name(...)`,
+  - deleted `set_explicit_reset_values(...)`,
+  - deleted `parentheses_are_redundant(...)`,
+  - deleted `generate_expression_from_signal_name(...)`.
+- Extended `t/10-ast-first-enable-structure.t` to assert that live generation no longer exposes those dead helper names on either the `FlattenedDT` facade or the `EnableGraph` helper object.
+- Root cause / rationale:
+  - repo-wide call-graph auditing showed these four helpers had no remaining callers anywhere in the active code or tests,
+  - each helper already represented dead compatibility or dead legacy fallback surface rather than a live ownership boundary,
+  - removing the owner methods and their matching facade delegates together is safer than leaving uncalled helper definitions lingering on one side of the boundary.
+- Scope remains behavior-preserving cleanup of dead compatibility surface; live AST/CoreAST generation, enable synthesis, and backend emission behavior are unchanged.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=31`)
+  - `prove -I perl t` (pass: `Files=10`, `Tests=177`)
 ### FlattenedDT cleanup (retire dead unified helper delegates)
 - Removed the dead unified-analysis / unified-emission helper delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
   - deleted `build_unified_assignment_analysis(...)`,
