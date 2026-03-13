@@ -14,6 +14,24 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT AST-first live micro-slice (AST-backed top-level enable registries)
+- Current worktree pivots slightly away from the shrinking `Orchestrator` seam and hardens the next real live AST/CoreAST-first boundary: top-level `state_enables` / `dt_enables`.
+- Scope of this slice:
+  - `perl/FSM/Synthesis/EnableGraph.pm` now owns `build_state_enable_condition_ast(...)` and `build_dt_enable_condition_ast(...)`,
+  - `initialize_state_and_dt_enable_conditions(...)` now stores AST-backed enable conditions in the live top-level registries instead of plain strings,
+  - `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` now renders those top-level enable conditions from AST objects when emitting the `*_en` assigns.
+- Regression coverage update:
+  - `t/10-ast-first-enable-structure.t` now asserts the top-level `state_enables` / `dt_enables` registries are populated with AST-backed conditions,
+  - `t/11-flatteneddt-generation-reset.t` now asserts reused generators keep standalone DT enable entries AST-backed across runs and still render as `1'b1`.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t t/11-flatteneddt-generation-reset.t` (`Files=2`, `Tests=158`, `PASS`)
+  - `prove -I perl t/12-enablegraph-capture-registry.t` (`Files=1`, `Tests=21`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=333`, `PASS`)
+- Immediate next direction after commit:
+  - re-audit whether any other live top-level enable/declaration registries are still string-backed without a real semantic reason,
+  - if not, pivot away from registry-shape work and choose the next truthful live runtime seam elsewhere in the active generation flow.
 ## 2026-03-13: FlattenedDT live ownership micro-slice (EnableGraph test-condition AST ownership)
 - Current worktree continues the same live `Orchestrator` / `EnableGraph` seam and moves the remaining test-node condition AST construction under `EnableGraph`.
 - Scope of this slice:

@@ -1245,6 +1245,15 @@ sub get_lhs_width_from_analysis($self, $lhs_analysis) {
     $width = 1 unless (defined($width) && $width > 0);
     return $width;
 }
+sub build_state_enable_condition_ast($self, $state_name) {
+    return FSM::AST::Utils::equals_op(
+        FSM::AST::Utils::signal_ref('current_state'),
+        FSM::AST::Utils::literal(uc($state_name)),
+    );
+}
+sub build_dt_enable_condition_ast($self, $dt_name) {
+    return FSM::AST::Utils::literal("1'b1");
+}
 sub set_fsm_module_reference($self, $fsm_module) {
     # Store a reference to the FSM module for accessing signal information
     my $ctx = $self->{flattened_dt};
@@ -1265,11 +1274,19 @@ sub initialize_state_and_dt_enable_conditions($self, $fsm_module) {
         next unless defined($state_name) && $state_name ne '';
 
         if ($state_name =~ /^-/) {
-            $ctx->{dt_enables}->{$state_name} = "1'b1";
-            fsm_debug("ENABLE_INIT: Registered standalone DT enable for $state_name", 3);
+            my $enable_ast = $self->build_dt_enable_condition_ast($state_name);
+            $ctx->{dt_enables}->{$state_name} = $enable_ast;
+            my $enable_sv = blessed($enable_ast) && $enable_ast->can('to_systemverilog')
+                ? $enable_ast->to_systemverilog
+                : 'UNBLESSED';
+            fsm_debug("ENABLE_INIT: Registered standalone DT enable for $state_name -> $enable_sv", 3);
         } else {
-            $ctx->{state_enables}->{$state_name} = "current_state == " . uc($state_name);
-            fsm_debug("ENABLE_INIT: Registered state enable for $state_name", 3);
+            my $enable_ast = $self->build_state_enable_condition_ast($state_name);
+            $ctx->{state_enables}->{$state_name} = $enable_ast;
+            my $enable_sv = blessed($enable_ast) && $enable_ast->can('to_systemverilog')
+                ? $enable_ast->to_systemverilog
+                : 'UNBLESSED';
+            fsm_debug("ENABLE_INIT: Registered state enable for $state_name -> $enable_sv", 3);
         }
     }
 }

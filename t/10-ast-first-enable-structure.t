@@ -60,6 +60,22 @@ ok(
     'LHS-level enables are stored as AST-backed metadata inside rhs_groups',
 );
 
+my @top_level_enable_conditions = (
+    values(%{$hdl->{state_enables} || {}}),
+    values(%{$hdl->{dt_enables} || {}}),
+);
+ok(
+    scalar(@top_level_enable_conditions) > 0,
+    'live generation populates top-level state/DT enable registries',
+);
+my @non_ast_top_level_enable_conditions = grep {
+    !(ref($_) && $_->can('to_systemverilog'))
+} @top_level_enable_conditions;
+ok(
+    scalar(@non_ast_top_level_enable_conditions) == 0,
+    'top-level state/DT enable registries store AST-backed conditions',
+);
+
 ok(
     !exists $hdl->{dt_specific_enables},
     'live generation leaves no legacy top-level dt_specific_enables state behind',

@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT AST-first live convergence (AST-backed top-level enable registries)
+- Converted the live top-level `state_enables` / `dt_enables` registries from plain strings to AST-backed conditions.
+- Added `build_state_enable_condition_ast(...)` and `build_dt_enable_condition_ast(...)` to `perl/FSM/Synthesis/EnableGraph.pm`, so top-level enable-condition construction for regular states and standalone DTs is now owned and produced there as AST.
+- Updated `initialize_state_and_dt_enable_conditions(...)` so:
+  - regular states now store an AST for `current_state == STATE`,
+  - standalone DTs now store an AST for `1'b1`,
+  - and downstream logic continues to use the same registry keys while consuming typed values.
+- Updated `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` so `generate_enable_conditions(...)` renders those top-level enable conditions from AST objects instead of assuming raw strings.
+- Extended regression coverage:
+  - `t/10-ast-first-enable-structure.t` now asserts top-level `state_enables` / `dt_enables` are AST-backed,
+  - `t/11-flatteneddt-generation-reset.t` now asserts standalone DT enable entries remain AST-backed and semantically `1'b1` across generator reuse.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t t/11-flatteneddt-generation-reset.t` (pass: `Files=2`, `Tests=158`)
+  - `prove -I perl t/12-enablegraph-capture-registry.t` (pass: `Files=1`, `Tests=21`)
+  - `prove -I perl t` (pass: `Files=12`, `Tests=333`)
 ### FlattenedDT live ownership (EnableGraph test-condition AST ownership)
 - Moved the remaining live test-node condition AST construction off `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and under `perl/FSM/Synthesis/EnableGraph.pm`.
 - Added `build_test_condition_ast(...)` to `EnableGraph`, which now owns:

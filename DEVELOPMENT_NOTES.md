@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: AST-backed top-level enable registries on the live path
+- Pivoted from the nearly exhausted `Orchestrator` ownership seam to the next real AST/CoreAST-first live boundary: the top-level `state_enables` / `dt_enables` registries.
+- Rationale:
+  - downstream enable synthesis was already AST-backed inside `assignment_analysis->{rhs_groups}`, but the top-level enable registries that seed `*_en` emission were still plain strings,
+  - those registries are live state consumed during HDL generation, so leaving them string-backed kept an avoidable typed/untyped split in the active path,
+  - the next truthful step was therefore to make top-level enable-condition construction AST-backed too, without changing registry keys or emitted HDL behavior.
+- Structural outcome:
+  - `EnableGraph::build_state_enable_condition_ast(...)` now constructs the regular-state `current_state == STATE` condition as AST,
+  - `EnableGraph::build_dt_enable_condition_ast(...)` now constructs the standalone-DT always-enabled condition as AST,
+  - `initialize_state_and_dt_enable_conditions(...)` now stores those AST values directly in `state_enables` / `dt_enables`,
+  - `Backend::SystemVerilog::generate_enable_conditions(...)` now renders those registry entries from AST rather than assuming raw strings.
+- Safety/compatibility:
+  - emitted HDL stays behavior-identical for state and standalone-DT enable assigns,
+  - the reset/reuse regression now locks that reused generators keep standalone DT enable entries AST-backed instead of drifting back to string state,
+  - the architecture regression now locks that live top-level enable registries are typed AST state, not legacy string state.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `Backend/SystemVerilog.pm` pass,
+  - focused regressions `t/10-ast-first-enable-structure.t`, `t/11-flatteneddt-generation-reset.t`, and `t/12-enablegraph-capture-registry.t` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=12`, `Tests=333`).
+- Next likely slices:
+  - re-audit whether any other live top-level enable/declaration registries are still string-backed without a semantic reason,
+  - if that registry lane is exhausted, pivot again to the next truthful live runtime seam rather than forcing another representation-only change.
 ## 2026-03-13: EnableGraph test-condition AST ownership for live test-node traversal
 - Continued the live `Orchestrator` / `EnableGraph` ownership convergence by moving the last inline test-node condition AST construction under `EnableGraph`.
 - Rationale:

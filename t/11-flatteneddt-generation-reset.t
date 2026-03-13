@@ -48,6 +48,15 @@ ok(
     'first generation records the first standalone DT enable in live state',
 );
 ok(
+    ref($hdl_gen->{dt_enables}->{'-alpha_dt'}) && $hdl_gen->{dt_enables}->{'-alpha_dt'}->can('to_systemverilog'),
+    'first generation stores the first standalone DT enable as an AST-backed condition',
+);
+is(
+    $hdl_gen->{dt_enables}->{'-alpha_dt'}->to_systemverilog,
+    "1'b1",
+    'first generation keeps the standalone DT enable condition semantically true',
+);
+ok(
     exists $hdl_gen->{lhs_assignments}->{OUTA},
     'first generation records first-run lhs_assignments data',
 );
@@ -85,6 +94,15 @@ ok(
 ok(
     exists $hdl_gen->{dt_enables}->{'-beta_dt'},
     'second generation records the second standalone DT enable in live state',
+);
+ok(
+    ref($hdl_gen->{dt_enables}->{'-beta_dt'}) && $hdl_gen->{dt_enables}->{'-beta_dt'}->can('to_systemverilog'),
+    'second generation stores the second standalone DT enable as an AST-backed condition',
+);
+is(
+    $hdl_gen->{dt_enables}->{'-beta_dt'}->to_systemverilog,
+    "1'b1",
+    'second generation keeps the standalone DT enable condition semantically true',
 );
 ok(
     !exists $hdl_gen->{lhs_assignments}->{OUTA},
