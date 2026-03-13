@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: EnableGraph WEN/EN prescan ownership
+- Continued the live ownership convergence by moving WEN/EN intermediate-signal prescan under `EnableGraph`.
+- Rationale:
+  - the old backend-side `prescan_wen_en_for_intermediate_signals(...)` did not render HDL or perform backend-specific factorization work,
+  - it walked `EnableGraph`-owned `assignment_analysis`, traversed the same DT/LHS enable AST structures already built by `EnableGraph`, and delegated the actual AST traversal to `EnableGraph::track_ast_intermediate_signals(...)`,
+  - the next truthful move was therefore to keep that prescan with the same owner that already owns the enable structures and their intermediate-signal tracking semantics.
+- Structural outcome:
+  - `EnableGraph::prescan_wen_en_for_intermediate_signals(...)` now owns live WEN/EN prescan,
+  - `Orchestrator` now routes step 5 directly through `EnableGraph`,
+  - `Backend::SystemVerilog` no longer carries that prescan entrypoint.
+- Safety/compatibility:
+  - no intended HDL behavior change; only the ownership boundary moved,
+  - the architecture regression now locks the new boundary explicitly by asserting backend absence and `EnableGraph` ownership,
+  - focused and full regression remained green, so the move preserved the active intermediate-signal discovery contract.
+- Verification:
+  - syntax checks for `EnableGraph.pm`, `Orchestrator.pm`, and `Backend/SystemVerilog.pm` pass,
+  - focused architecture regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=12`, `Tests=374`, `PASS`).
+- Next likely slices:
+  - re-audit whether any other remaining backend stage is still analyzing `assignment_analysis` or other `EnableGraph`-owned enable structures without adding backend-specific value,
+  - if that lane is empty, pivot to the next truthful runtime seam rather than forcing more ownership churn in the same area.
 ## 2026-03-14: EnableGraph state register planning ownership
 - Continued the live synthesis ownership convergence by moving state-structure planning under `EnableGraph`.
 - Rationale:

@@ -14,6 +14,25 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph WEN/EN prescan ownership)
+- Current worktree continues the live ownership lane and moves WEN/EN intermediate-signal prescan under `EnableGraph`.
+- Scope of this slice:
+  - `perl/FSM/Synthesis/EnableGraph.pm` now owns `prescan_wen_en_for_intermediate_signals(...)`,
+  - the prescan now walks `EnableGraph`-owned `assignment_analysis` and the AST-backed DT/LHS enable structures from the same owner that already owns `track_ast_intermediate_signals(...)`,
+  - `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` now routes step 5 directly through `enable_graph`,
+  - `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` no longer exposes the former backend-side prescan entrypoint.
+- Regression coverage update:
+  - `t/10-ast-first-enable-structure.t` now asserts that the backend stays free of `prescan_wen_en_for_intermediate_signals(...)`,
+  - the same test now asserts that `EnableGraph` owns WEN/EN intermediate-signal prescan on the live path.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=150`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=374`, `PASS`)
+- Immediate next direction after commit:
+  - re-audit whether any remaining backend stage still performs live analysis over `assignment_analysis` or other synthesis-owned enable structures instead of rendering or backend-local factorization work,
+  - if that lane is exhausted, pivot to the next truthful runtime seam instead of continuing owner-churn.
 ## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph state register planning)
 - Current worktree continues the same live synthesis ownership lane and moves state-structure planning under `EnableGraph`.
 - Scope of this slice:

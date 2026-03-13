@@ -248,7 +248,7 @@ sub generate_systemverilog ($self, $fsm_module) {
     fsm_debug("Step 4 - Logical operation counting completed (BEFORE pre-scan!)", 3);
     
     # Step 5: PRE-SCAN all WEN/EN expressions to identify needed intermediate signals (now with counts available)
-    $ctx->{backend_sv}->prescan_wen_en_for_intermediate_signals();
+    $ctx->{enable_graph}->prescan_wen_en_for_intermediate_signals();
     fsm_debug("Step 5 - PRE-SCAN completed (AFTER logical operation counting!)", 3);
     
     # Step 6: Generate consolidated intermediate signals (combining AST factorization + pre-scan)

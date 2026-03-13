@@ -246,6 +246,7 @@ for my $dead_backend_helper (
         generate_wen_en_signals
         generate_comb_mux
         generate_flop_mux
+        prescan_wen_en_for_intermediate_signals
         is_simple_ast_expression
     )
 ) {
@@ -262,6 +263,10 @@ ok(
 ok(
     $hdl->{enable_graph}->can('generate_unified_wen_en_signals'),
     'live EnableGraph owns unified WEN/EN emission',
+);
+ok(
+    $hdl->{enable_graph}->can('prescan_wen_en_for_intermediate_signals'),
+    'live EnableGraph owns WEN/EN intermediate-signal prescan',
 );
 ok(
     $hdl->{enable_graph}->can('build_internal_signal_declaration_plan'),

@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### FlattenedDT live ownership (EnableGraph WEN/EN prescan ownership)
+- Moved WEN/EN intermediate-signal prescan off `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and under `perl/FSM/Synthesis/EnableGraph.pm`.
+- Added `prescan_wen_en_for_intermediate_signals(...)` to `EnableGraph`, so the same owner that already owns `assignment_analysis`, DT/LHS enable ASTs, and `track_ast_intermediate_signals(...)` now also owns the live prescan that populates `referenced_intermediate_signals`.
+- Updated `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` so step 5 now calls `enable_graph->prescan_wen_en_for_intermediate_signals(...)` directly.
+- Removed the former backend-side `prescan_wen_en_for_intermediate_signals(...)` entrypoint from `Backend::SystemVerilog`.
+- Extended `t/10-ast-first-enable-structure.t` so:
+  - the backend is asserted to stay free of the former prescan entrypoint,
+  - and `EnableGraph` is asserted to own WEN/EN intermediate-signal prescan on the live path.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=150`)
+  - `prove -I perl t` (pass: `Files=12`, `Tests=374`)
 ### FlattenedDT live ownership (EnableGraph state register planning)
 - Moved state-structure planning off backend-local regular-state scans and under `perl/FSM/Synthesis/EnableGraph.pm`.
 - Added `build_state_register_plan(...)` to `EnableGraph`, so it now owns:
