@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### FlattenedDT live ownership (EnableGraph internal declaration planning)
+- Moved internal declaration planning off backend-local synthesis decisions and under `perl/FSM/Synthesis/EnableGraph.pm`.
+- Added `build_internal_signal_declaration_plan(...)` to `EnableGraph`, so it now owns the live declaration plan derived from `assignment_analysis`, including:
+  - plain internal reg declarations for non-port driven LHS signals,
+  - dual-family helper regs such as `I_next` and `K_q`,
+  - and pulse-delay helper declarations such as `P1_pulse_delay_pipe` / `P0_pulse_delay_pipe`.
+- Updated `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` so `generate_internal_signal_declarations(...)` now renders the owner-provided declaration plan instead of recomputing those synthesis decisions locally.
+- Extended focused regression coverage:
+  - `t/03-assignment-intent-metadata.t` now inspects the live declaration plan directly for dual-output and pulse-delay helper declarations and verifies exposed ports like `next_I` / `K_r` are not redeclared internally,
+  - `t/10-ast-first-enable-structure.t` now asserts `EnableGraph` owns internal declaration planning on the live path.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t/03-assignment-intent-metadata.t t/10-ast-first-enable-structure.t` (pass: `Files=2`, `Tests=224`)
+  - `prove -I perl t` (pass: `Files=12`, `Tests=346`)
 ### FlattenedDT live ownership (EnableGraph unified WEN/EN emission)
 - Moved stage-7 unified WEN/EN emission off the backend wrapper path and directly onto `perl/FSM/Synthesis/EnableGraph.pm`.
 - Updated `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` so step 7 now calls `enable_graph->generate_unified_wen_en_signals(...)` directly.

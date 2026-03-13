@@ -2711,45 +2711,12 @@ sub get_substituted_ast_for_signal ($self, $signal_name, $signal_info) {
 }
 sub generate_internal_signal_declarations ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
-    my %declared_ports = %{$ctx->{declared_port_signals} || {}};
-    my %signal_decls;
-    my %aux_decls;
-    
-    my @regular_states = grep { $_->name !~ /^-/ } @{$fsm_module->states};
-    my $has_state_registers = scalar(@regular_states) > 0;
-    if ($has_state_registers) {
-        $declared_ports{current_state} = 1;
-        $declared_ports{next_state} = 1;
-    }
-    
-    for my $lhs (sort keys %{$ctx->{assignment_analysis} || {}}) {
-        my $lhs_analysis = $ctx->{assignment_analysis}{$lhs};
-        next unless $lhs_analysis;
-        
-        my $width = $ctx->{enable_graph}->get_lhs_width_from_analysis($lhs_analysis);
-        my $assignment_type = $ctx->{enable_graph}->get_signal_assignment_type($lhs, $lhs_analysis);
-        my $multiplexer_type = $lhs_analysis->{multiplexer}->{type} || 'comb';
-        
-        # Declare the main LHS only when it's not already a module port/state register.
-        unless ($declared_ports{$lhs}) {
-            $signal_decls{$lhs} = $width;
-        }
-        
-        # Declare mux helper registers only for flop-style multiplexers that consume them.
-        if ($multiplexer_type eq 'flop' && ($assignment_type eq 'register_out' || $assignment_type eq 'register_out_dual')) {
-            my $next_name = "${lhs}_next";
-            $aux_decls{$next_name} = $width unless $declared_ports{$next_name};
-        } elsif ($multiplexer_type eq 'flop' && ($assignment_type eq 'register_in' || $assignment_type eq 'register_in_dual')) {
-            my $q_name = "${lhs}_q";
-            $aux_decls{$q_name} = $width unless $declared_ports{$q_name};
-        } elsif ($assignment_type eq 'pulse_delayed') {
-            my $delay_cycles = $ctx->{enable_graph}->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
-            if ($delay_cycles > 0) {
-                my $pipe_name = "${lhs}_pulse_delay_pipe";
-                $aux_decls{$pipe_name} = $delay_cycles unless $declared_ports{$pipe_name};
-            }
-        }
-    }
+    my $declaration_plan = $ctx->{enable_graph}->build_internal_signal_declaration_plan(
+        $fsm_module,
+        $ctx->{declared_port_signals},
+    );
+    my %signal_decls = %{$declaration_plan->{signal_decls} || {}};
+    my %aux_decls = %{$declaration_plan->{aux_decls} || {}};
     
     return "" unless (%signal_decls || %aux_decls);
     

@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: EnableGraph internal declaration planning ownership
+- Pivoted from pure wrapper convergence to the next live synthesis seam by moving internal declaration planning under `EnableGraph`.
+- Rationale:
+  - `Backend::SystemVerilog::generate_internal_signal_declarations(...)` was still deciding synthesis-domain questions from `assignment_analysis` such as which non-port LHS signals need internal regs and which helper regs are required for dual-output and pulse-delay families,
+  - those decisions depend on `EnableGraph`-owned analysis helpers like `get_lhs_width_from_analysis(...)`, `get_signal_assignment_type(...)`, and `get_pulse_delay_cycles_for_lhs(...)`,
+  - the next truthful move was therefore to let `EnableGraph` build the declaration plan while the backend remains responsible only for RTL rendering.
+- Structural outcome:
+  - `EnableGraph::build_internal_signal_declaration_plan(...)` now owns live declaration planning from `assignment_analysis`,
+  - `Backend::SystemVerilog::generate_internal_signal_declarations(...)` now consumes that plan and renders it,
+  - the backend no longer re-derives helper-reg needs or width-driven declaration choices from synthesis metadata on its own.
+- Safety/compatibility:
+  - no intended HDL behavior change; only the planning/rendering boundary moved,
+  - the focused declaration regression now locks the live plan directly for representative dual-output and pulse-delay families,
+  - the full regression suite stayed green, so the owner move preserved active declaration behavior.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `Backend/SystemVerilog.pm` pass,
+  - focused regressions `t/03-assignment-intent-metadata.t` and `t/10-ast-first-enable-structure.t` pass,
+  - full regression remains green (`prove -I perl t` -> `Files=12`, `Tests=346`).
+- Next likely slices:
+  - re-audit whether any other backend emission steps still make synthesis-domain planning decisions that already belong with `EnableGraph`,
+  - if not, pivot to the next truthful live runtime seam rather than continue declaration-specific convergence.
 ## 2026-03-14: EnableGraph unified WEN/EN emission ownership
 - Continued the enable-synthesis ownership convergence by removing the remaining stage-7 backend routing wrapper around unified WEN/EN emission.
 - Rationale:

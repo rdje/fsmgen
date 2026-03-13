@@ -263,6 +263,10 @@ ok(
     $hdl->{enable_graph}->can('generate_unified_wen_en_signals'),
     'live EnableGraph owns unified WEN/EN emission',
 );
+ok(
+    $hdl->{enable_graph}->can('build_internal_signal_declaration_plan'),
+    'live EnableGraph owns internal declaration planning',
+);
 
 for my $dead_enable_graph_helper (
     qw(

@@ -14,6 +14,23 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph internal declaration planning)
+- Current worktree pivots from wrapper-only convergence to the next real live synthesis seam: internal declaration planning.
+- Scope of this slice:
+  - `perl/FSM/Synthesis/EnableGraph.pm` now owns `build_internal_signal_declaration_plan(...)`,
+  - that plan now decides, from live `assignment_analysis`, which internal regs and aux helper regs must exist (`I_next`, `K_q`, pulse-delay pipes, etc.),
+  - `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` now only renders the returned plan instead of re-deriving declaration decisions itself from synthesis metadata.
+- Regression coverage update:
+  - `t/03-assignment-intent-metadata.t` now inspects the live declaration plan directly and locks the expected helper declarations for dual-output and pulse-delay families,
+  - `t/10-ast-first-enable-structure.t` now asserts that `EnableGraph` owns internal declaration planning on the live path.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/03-assignment-intent-metadata.t t/10-ast-first-enable-structure.t` (`Files=2`, `Tests=224`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=346`, `PASS`)
+- Immediate next direction after commit:
+  - re-audit whether any other backend emission steps still make synthesis-domain planning decisions that now belong in `EnableGraph`,
+  - if not, pivot to the next truthful live runtime seam instead of continuing declaration-planning convergence.
 ## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph unified WEN/EN emission)
 - Current worktree continues the same enable-synthesis ownership lane and removes the remaining stage-7 backend wrapper around unified WEN/EN emission.
 - Scope of this slice:

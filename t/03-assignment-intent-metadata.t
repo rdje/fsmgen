@@ -175,6 +175,10 @@ my $captured_a = $hdl_gen->{lhs_assignments}{A}[0];
 my $captured_g = $hdl_gen->{lhs_assignments}{G}[0];
 my $captured_i = $hdl_gen->{lhs_assignments}{I}[0];
 my $captured_p1 = $hdl_gen->{lhs_assignments}{P1}[0];
+my $decl_plan = $hdl_gen->{enable_graph}->build_internal_signal_declaration_plan(
+    $fsm_module,
+    $hdl_gen->{declared_port_signals},
+);
 
 is($captured_a->{operator}, '<-', "captured A assignment keeps '<-' operator metadata");
 is($captured_a->{assignment_intent}{register_style}, 'output_named', "captured A assignment keeps register-style intent");
@@ -185,6 +189,15 @@ is($captured_i->{operator}, '<-=', "captured I assignment keeps '<-=' operator m
 is($captured_i->{assignment_intent}{auxiliary_output_name}, 'next_I', "captured I assignment keeps dual-output intent metadata");
 is($captured_p1->{operator}, '<3', "captured P1 assignment keeps pulse operator metadata");
 is($captured_p1->{assignment_intent}{pulse_delay_cycles}, 3, "captured P1 assignment keeps pulse delay intent metadata");
+
+is($decl_plan->{aux_decls}{I_next}, 8, "internal declaration plan exposes I_next helper width for '<-='");
+is($decl_plan->{aux_decls}{K_q}, 8, "internal declaration plan exposes K_q helper width for '<=+'");
+is($decl_plan->{aux_decls}{P1_pulse_delay_pipe}, 3, "internal declaration plan exposes P1 pulse pipeline width");
+is($decl_plan->{aux_decls}{P0_pulse_delay_pipe}, 2, "internal declaration plan exposes P0 pulse pipeline width");
+ok(!exists $decl_plan->{aux_decls}{next_I}, "internal declaration plan does not redeclare next_I output port");
+ok(!exists $decl_plan->{aux_decls}{K_r}, "internal declaration plan does not redeclare K_r output port");
+is($decl_plan->{signal_decls}{A}, 8, "internal declaration plan keeps internal reg declaration for A");
+ok(!exists $decl_plan->{signal_decls}{G}, "internal declaration plan does not redeclare explicit output port G");
 
 like($hdl, qr/\boutput\s+reg\s+\[7:0\]\s+next_I\b/s, "generated HDL exposes next_I output for '<-='");
 like($hdl, qr/\boutput\s+reg\s+\[7:0\]\s+K_r\b/s, "generated HDL exposes K_r output for '<=+'");
