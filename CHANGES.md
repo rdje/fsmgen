@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-13
+### FlattenedDT live-state reset (per-run generation reset + enable-registry ownership)
+- Added `reset_generation_state()` to `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` and now call it at the start of `generate_systemverilog(...)`.
+- The reset clears per-run generation registries before each live generation pass, including:
+  - `state_enables`, `dt_enables`,
+  - `lhs_assignments`, `all_lhs`, `lhs_ast_map`, `assignment_analysis`,
+  - `intermediate_signals`, `referenced_intermediate_signals`,
+  - `global_expressions`, `expression_usage`,
+  - `declared_port_signals`, `port_directions`,
+  - and transient scratch like `binary_logical_op_counts`, `ast_factorizer`, and the cached `fsm_module`.
+- Moved state/DT enable-registry seeding into `perl/FSM/Synthesis/EnableGraph.pm` via `initialize_state_and_dt_enable_conditions(...)`, so `Orchestrator::flatten_all_decision_trees(...)` now traverses while `EnableGraph` owns the enable-condition registries it later synthesizes.
+- Added `t/11-flatteneddt-generation-reset.t`, which reuses one `FSM::HDL::FlattenedDT` object across two distinct FSM generations and asserts the second run does not leak first-run DT enables, assignment captures, assignment analysis, or signal names.
+- Root cause / rationale:
+  - the live generation path initialized most mutable registries only once in `new(...)`, which left same-object reuse vulnerable to stale per-run state,
+  - the state/DT enable maps were also still seeded in `Orchestrator` even though they are consumed as enable-synthesis data by `EnableGraph` and the backend,
+  - this slice makes generation re-entrant for the tested live path and narrows one more real ownership seam instead of continuing cleanup-only wrapper pruning.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm` (pass)
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `prove -I perl t/11-flatteneddt-generation-reset.t` (pass: `Files=1`, `Tests=13`)
+  - `prove -I perl t` (pass: `Files=11`, `Tests=296`)
 ### FlattenedDT cleanup (retire residual analysis/declaration facade delegates)
 - Removed the residual analysis/declaration delegate pocket from `perl/FSM/HDL/FlattenedDT.pm`:
   - deleted `generate_internal_signal_declarations(...)`,

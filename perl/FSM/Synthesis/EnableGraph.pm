@@ -1079,6 +1079,28 @@ sub set_fsm_module_reference($self, $fsm_module) {
     $ctx->{fsm_module} = $fsm_module;
     fsm_debug("FSM_MODULE_REF: Stored reference to FSM module: " . ($fsm_module ? $fsm_module->name : 'undef'), 3);
 }
+sub initialize_state_and_dt_enable_conditions($self, $fsm_module) {
+    my $ctx = $self->{flattened_dt};
+    $ctx->{state_enables} = {};
+    $ctx->{dt_enables} = {};
+
+    return unless $fsm_module && $fsm_module->can('states') && $fsm_module->states;
+
+    for my $state (@{$fsm_module->states}) {
+        next unless $state && $state->can('name');
+
+        my $state_name = $state->name;
+        next unless defined($state_name) && $state_name ne '';
+
+        if ($state_name =~ /^-/) {
+            $ctx->{dt_enables}->{$state_name} = "1'b1";
+            fsm_debug("ENABLE_INIT: Registered standalone DT enable for $state_name", 3);
+        } else {
+            $ctx->{state_enables}->{$state_name} = "current_state == " . uc($state_name);
+            fsm_debug("ENABLE_INIT: Registered state enable for $state_name", 3);
+        }
+    }
+}
 sub extract_signal_name_from_ast($self, $signal_ast) {
     # Extract signal name from a signal reference AST node
     

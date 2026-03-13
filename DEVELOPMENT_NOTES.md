@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-13: FlattenedDT per-run generation reset and enable-registry ownership
+- Pivoted off the exhausted facade-pruning lane and back onto a live ownership seam in the generation path.
+- Rationale:
+  - the live `FlattenedDT` generation flow had several mutable registries that were initialized in `new(...)` but not reset before subsequent `generate_systemverilog(...)` calls, which left same-object reuse vulnerable to stale state,
+  - the `state_enables` / `dt_enables` registries were also still populated in `Orchestrator` even though they function as enable-synthesis data consumed later by `EnableGraph` and the backend,
+  - the smallest truthful slice was therefore to add an orchestrator-owned per-run reset and move enable-registry seeding under `EnableGraph`.
+- Structural outcome:
+  - `Orchestrator::reset_generation_state()` now clears the run-local generation registries before each live generation pass,
+  - `EnableGraph::initialize_state_and_dt_enable_conditions(...)` now owns seeding of the state/DT enable registries,
+  - `flatten_all_decision_trees(...)` remains responsible for traversal and AST assignment capture, not for initializing shared enable metadata.
+- Safety/compatibility:
+  - the generated HDL path is unchanged for single-run usage,
+  - same-object reuse is now covered explicitly by a live regression that generates two different FSMs through one `FlattenedDT` instance and asserts no cross-run leakage survives,
+  - this slice is therefore both a structural ownership improvement and a real correctness hardening for the active runtime.
+- Verification:
+  - syntax checks for `Orchestrator.pm` and `EnableGraph.pm` pass,
+  - focused reuse regression `t/11-flatteneddt-generation-reset.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=11`, `Tests=296`).
+- Next likely slices:
+  - keep the wrapper-pruning lane closed unless a future audit finds genuinely dead supported surface,
+  - continue with the next live `Orchestrator` / `EnableGraph` / backend ownership seam, likely wherever assignment-capture data or enable-structure state is still spread across modules more than necessary.
 ## 2026-03-13: FlattenedDT residual analysis/declaration facade delegate removal
 - Continued AST/CoreAST-first cleanup by deleting the last residual analysis/declaration helper pocket from the `FlattenedDT` facade.
 - Rationale:

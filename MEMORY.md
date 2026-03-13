@@ -14,6 +14,23 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-13: FlattenedDT live-state reset micro-slice (per-run generation reset + enable-registry ownership)
+- Current worktree moves back onto a live ownership seam instead of more facade cleanup.
+- Scope of this slice:
+  - `perl/FSM/HDL/FlattenedDT/Orchestrator.pm` now resets per-run generation state at the start of `generate_systemverilog(...)`,
+  - the reset clears stale run-local registries (`state_enables`, `dt_enables`, `lhs_assignments`, `all_lhs`, `lhs_ast_map`, `assignment_analysis`, `intermediate_signals`, `referenced_intermediate_signals`, `global_expressions`, `expression_usage`, `declared_port_signals`, `port_directions`) and drops transient scratch (`binary_logical_op_counts`, `ast_factorizer`, cached `fsm_module`),
+  - `perl/FSM/Synthesis/EnableGraph.pm` now owns state/DT enable-registry initialization via `initialize_state_and_dt_enable_conditions(...)`,
+  - `Orchestrator::flatten_all_decision_trees(...)` now relies on `EnableGraph` for enable-registry seeding and only performs traversal/recording.
+- New regression coverage:
+  - `t/11-flatteneddt-generation-reset.t` reuses one `FSM::HDL::FlattenedDT` object across two distinct FSMs and asserts the second run does not leak first-run DT enables, assignment captures, assignment analysis, or HDL signal names.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Orchestrator.pm`
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `prove -I perl t/11-flatteneddt-generation-reset.t` (`Files=1`, `Tests=13`, `PASS`)
+  - `prove -I perl t` (`Files=11`, `Tests=296`, `PASS`)
+- Immediate next direction after commit:
+  - keep the cleanup lane closed unless a future audit finds new genuinely dead supported surface,
+  - continue on the next live AST/CoreAST-first seam inside the remaining `Orchestrator` / `EnableGraph` / backend data flow, most likely around assignment-capture or enable-structure state ownership.
 ## 2026-03-13: FlattenedDT cleanup micro-slice (retire residual analysis/declaration facade delegates)
 - Current worktree removes the last residual analysis/declaration helper pocket from the `FlattenedDT` facade.
 - Scope remains a small behavior-preserving cleanup slice:

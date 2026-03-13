@@ -17,21 +17,40 @@ sub new ($class, %args) {
         flattened_dt => $flattened_dt,
     }, $class;
 }
+sub reset_generation_state ($self) {
+    my $ctx = $self->{flattened_dt};
+
+    # Clear per-run generation state so one generator instance can be reused safely.
+    $ctx->{state_enables} = {};
+    $ctx->{dt_enables} = {};
+    $ctx->{lhs_assignments} = {};
+    $ctx->{intermediate_signals} = {};
+    $ctx->{all_lhs} = {};
+    $ctx->{lhs_ast_map} = {};
+    $ctx->{reset_assignments} = {};
+    $ctx->{global_expressions} = {};
+    $ctx->{expression_usage} = {};
+    $ctx->{assignment_analysis} = {};
+    $ctx->{referenced_intermediate_signals} = {};
+    $ctx->{declared_port_signals} = {};
+    $ctx->{port_directions} = {};
+
+    delete $ctx->{binary_logical_op_counts};
+    delete $ctx->{ast_factorizer};
+    delete $ctx->{fsm_module};
+}
 sub flatten_all_decision_trees ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
 
     fsm_debug("Flattening all decision trees", 3);
+    $ctx->{enable_graph}->initialize_state_and_dt_enable_conditions($fsm_module);
     
     # Process regular states
     for my $state (@{$fsm_module->states}) {
         next if $state->name =~ /^-/; # Skip standalone DTs for now
         
         fsm_debug("Flattening state: " . $state->name, 3);
-        
-        # State enable condition
-        my $state_enable = "current_state == " . uc($state->name);
-        $ctx->{state_enables}->{$state->name} = $state_enable;
-        
+
         # Flatten the state's decision trees
         if ($state->decision_trees && @{$state->decision_trees}) {
             for my $dt (@{$state->decision_trees}) {
@@ -49,11 +68,7 @@ sub flatten_all_decision_trees ($self, $fsm_module) {
         next unless $state->name =~ /^-/; # Only standalone DTs
         
         fsm_debug("Flattening standalone DT: " . $state->name, 3);
-        
-        # Standalone DT enable condition (always active, but may have internal conditions)
-        my $dt_enable = "1'b1"; # Default to always enabled, refined by internal conditions
-        $ctx->{dt_enables}->{$state->name} = $dt_enable;
-        
+
         # Flatten the standalone decision trees
         if ($state->decision_trees && @{$state->decision_trees}) {
             for my $dt (@{$state->decision_trees}) {
@@ -389,6 +404,8 @@ sub generate_systemverilog ($self, $fsm_module) {
 
     fsm_debug("Starting flattened DT SystemVerilog generation for " . $fsm_module->name, 3);
     fsm_debug("\n*** PIPELINE TIMING DEBUG: HDL Generation Pipeline Start ***", 3);
+
+    $self->reset_generation_state();
     
     # Step 0: Store FSM module reference for proper signal and reset value analysis
     $ctx->{enable_graph}->set_fsm_module_reference($fsm_module);
