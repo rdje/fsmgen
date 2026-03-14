@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: long-term horizon goals are now captured explicitly
+- The detailed roadmap now records two explicit long-term horizon goals:
+  - a Rust implementation of FSMGen,
+  - and a public project website that is beautiful, dynamic, and strong enough to present the project professionally.
+- Boundary decision:
+  - these are intentionally not active workstreams yet,
+  - they are gated behind the current “make FSMGen state-of-the-art, rock solid, and really stable first” rule,
+  - which means the current `R8`..`R13` contract/product-hardening work remains the real priority.
+- Rationale:
+  - both goals are strategically good,
+  - but both become much healthier projects once the language contract, diagnostics, support accounting, and embedding surface are mature enough that the project can either be reimplemented or publicly amplified without ambiguity.
 ## 2026-03-14: roadmap v2 is now opened with `R8` as the active lane
 - The first roadmap (`R0`..`R7`) remains closed and historically complete.
 - The project now has an explicit second roadmap generation:

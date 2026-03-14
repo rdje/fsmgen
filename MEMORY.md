@@ -20,6 +20,22 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: long-term horizon goals added to roadmap v2
+- Current worktree is a doc-only roadmap-continuity slice adding explicit long-term horizon goals without changing the active priority order.
+- Scope of this slice:
+  - extended [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) with:
+    - `H1` Rust FSMGen,
+    - `H2` a beautiful, dynamic public project website,
+  - recorded the gating rule that these are long-term goals only after FSMGen is first made state-of-the-art, rock solid, and really stable,
+  - updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) to mention that horizon goals exist but are intentionally outside the active `R8`..`R14` lanes.
+- Roadmap board update:
+  - no roadmap status/deliverable/active-lane change for this slice,
+  - the live roadmap snapshot remains unchanged.
+- Validation is green for this slice:
+  - `git diff --check`
+- Immediate next direction after commit:
+  - keep `R8` as the active lane,
+  - treat the Rust implementation and public website as horizon goals, not near-term execution lanes.
 ## 2026-03-14: roadmap v2 is now active
 - Current worktree is the roadmap-opening slice that turns the previously saved post-roadmap ideas into an actual second roadmap generation.
 - Scope of this slice:

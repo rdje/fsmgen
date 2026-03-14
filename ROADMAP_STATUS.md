@@ -7,6 +7,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `R0` through `R7` remain the closed foundation workstreams from the completed first roadmap.
 - `R8` through `R14` are the active/planned workstreams for the post-modernization roadmap.
 - [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) is the detailed companion roadmap; this file remains the canonical live status board.
+- Long-term horizon goals beyond the active `R8`..`R14` lanes are also tracked in [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), but they are intentionally gated behind the “make the tool state-of-the-art and very stable first” rule.
 
 ## Update rule
 - Update this file before every commit if the completed task changes:

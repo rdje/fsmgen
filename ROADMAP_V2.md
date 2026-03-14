@@ -156,6 +156,44 @@ Dependency logic:
 - `R12` should start as soon as `R8` classifications harden, because the corpus is how those claims stay honest.
 - `R14` should come last, because a second backend multiplies ambiguity if the language contract is still gray.
 
+## Long-term horizon (not active workstreams yet)
+These are intentional long-term goals, but they are not near-term roadmap lanes.
+
+Gating rule:
+- first make FSMGen state-of-the-art,
+- rock solid,
+- and really stable
+through the `R8`..`R13` contract-hardening and product-hardening work.
+
+Only then should the project seriously widen its long-term ambition into these horizon goals.
+
+### H1. Rust FSMGen
+Long-term goal:
+- create a Rust implementation of FSMGen.
+
+Intent:
+- carry the mature language/tool contract into a stronger long-term systems implementation,
+- not to re-open the language-design phase in a second implementation prematurely.
+
+Prerequisite:
+- the language contract, diagnostics contract, support accounting, and embedding surface must already be stable enough that a Rust implementation is an execution project, not a moving-target rewrite.
+
+### H2. Public project website
+Long-term goal:
+- create a very nice, beautiful, and dynamic public website for FSMGen so other people can discover and use the project.
+
+Intent:
+- publish the project professionally once the tool is strong enough to represent publicly with confidence,
+- with a site that highlights:
+  - the language,
+  - the generated HDL model,
+  - examples,
+  - documentation,
+  - and why the tool is worth adopting.
+
+Prerequisite:
+- the tool itself should first be strong enough that the website is amplifying a genuinely trustworthy product rather than compensating for an unstable one.
+
 ## Current intent
 The active immediate lane is `R8`.
 

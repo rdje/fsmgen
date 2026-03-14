@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### long-term horizon goals are now captured in roadmap v2
+- Extended [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) with an explicit long-term horizon section.
+- The roadmap now records two long-term goals:
+  - `H1` Rust FSMGen,
+  - `H2` a beautiful, dynamic public project website.
+- The saved gating rule is explicit:
+  - first make FSMGen state-of-the-art, rock solid, and really stable through the active `R8`..`R13` work,
+  - only then treat the Rust implementation or public website as serious execution lanes.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so this horizon is visible in both live roadmap context and continuity docs.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task.
+- Validation:
+  - `git diff --check` (pass)
 ### roadmap v2 is now opened and `R8` is the active lane
 - Added [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) as the detailed companion roadmap for the post-`R0`..`R7` workstreams.
 - Refreshed [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so roadmap generation `v2` is now active, while `R0` through `R7` remain the closed foundation workstreams from the completed first roadmap.
