@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### typed-extension docs now explain the shipped boundary with concrete examples
+- Expanded [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) with a new user-facing section explaining what a typed extension is in the current `R7` architecture.
+- The guide now makes the current boundary concrete:
+  - a typed extension is a normal blessed Perl object,
+  - the shipped hook is an explicit method (`after_generate_result($context)`),
+  - and the hook receives a typed context object rather than legacy string-dispatch data.
+- Added realistic examples in the user guide for:
+  - annotating the returned generation result,
+  - and collecting post-generation telemetry across multiple runs.
+- Tightened [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) so it now explains what "typed" means explicitly in this project: object + method + context, not `.plg` scanning plus `AUTOLOAD` / eval lookup.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task.
+- Validation:
+  - `git diff --check` (pass)
 ### `R7` started with a typed extension registry and first live hook
 - Added [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) to define the first modern replacement seam for legacy `.plg` / `PPlugin`, including the deliberately narrow current boundary and explicit non-goals.
 - Added [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm) and [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm) as the first typed extension primitives for the active architecture.

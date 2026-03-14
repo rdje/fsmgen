@@ -291,14 +291,106 @@ Tracing behavior:
 - Trace output uses indentation-aware formatting and topic separation
 - When trace logging is enabled, trace lines are written to `trace.log` (or chosen file) instead of stdout
 
-## 7) External compatibility flow (legacy environment)
+## 7) Typed extensions (current `R7` boundary)
+This is the current replacement direction for legacy `.plg` / `PPlugin` behavior.
+
+What "typed extension" means here:
+- an extension is a normal blessed Perl object, not a string hook name,
+- the hook entrypoint is an explicit Perl method such as `after_generate_result(...)`,
+- the hook receives a typed context object with named accessors such as `source_info`, `target_language`, and `result`,
+- the active pipeline validates that extension entries are objects before using them.
+
+What it is not:
+- not `.plg` file scanning,
+- not `AUTOLOAD` lookup,
+- not implicit hook discovery by string name,
+- not a CLI plugin loader in the current shipped slice.
+
+The current boundary is developer-facing and programmatic.
+You use it when embedding [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) from Perl, not from the `./bin/fsmgen` CLI directly.
+
+Current shipped hook:
+- `after_generate_result($context)`
+
+This hook runs after generation has produced the normal result hash and before that result is returned to the caller.
+
+Minimal example: add metadata to the returned result
+```perl
+use FSM::Pipeline::HDLGenerator;
+
+{
+    package My::ResultMarker;
+
+    sub new { bless {}, shift }
+
+    sub after_generate_result {
+        my ($self, $context) = @_;
+        $context->result->{extension_marker} = {
+            source_kind => $context->source_info->{kind},
+            target_language => $context->target_language,
+        };
+    }
+}
+
+my $pipeline = FSM::Pipeline::HDLGenerator->new(
+    target_language => 'systemverilog',
+    extensions => [ My::ResultMarker->new ],
+);
+
+my $result = $pipeline->generate_hdl_from_file('fsm/trial_0.fsm');
+```
+
+This is useful when:
+- you want to attach extra metadata for downstream tooling,
+- but you do not want to change the core generator contract yet.
+
+Second realistic example: collect generation telemetry across multiple runs
+```perl
+use FSM::Pipeline::HDLGenerator;
+
+{
+    package My::TelemetryCollector;
+
+    sub new { bless { modules => [] }, shift }
+
+    sub after_generate_result {
+        my ($self, $context) = @_;
+        push @{$self->{modules}}, {
+            module_name => $context->result->{module_info}{module_name},
+            source_kind => $context->source_info->{kind},
+        };
+    }
+
+    sub modules { return shift->{modules} }
+}
+
+my $collector = My::TelemetryCollector->new;
+my $pipeline = FSM::Pipeline::HDLGenerator->new(
+    extensions => [ $collector ],
+);
+
+$pipeline->generate_hdl_from_file('fsm/trial_0.fsm');
+$pipeline->generate_hdl_from_file('fsm/lte_dif_pmaster.fsm');
+```
+
+This is useful when:
+- you embed FSMGen inside a larger build/reporting flow,
+- and you want explicit post-generation data without reviving the old plugin model.
+
+Practical rule:
+- if you need explicit programmatic behavior after generation, a typed extension is the current supported seam,
+- if you need `.plg` discovery, CLI plugin loading, or mid-pipeline mutation hooks, that is not part of the shipped boundary yet.
+
+See [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) for the architecture note and exact current contract.
+
+## 8) External compatibility flow (legacy environment)
 If working in the external flow that uses `generate_fsm_hdl.pl`, the equivalent command pattern is:
 ```bash
 perl generate_fsm_hdl.pl --debug /path/to/input.fsm -o output.sv
 ```
 Use this only in environments where that script is part of the active toolchain.
 
-## 8) Troubleshooting
+## 9) Troubleshooting
 ### Parser rejects combinational self-dependency
 If you see `Illegal combinational self-dependency`, rewrite the logic so combinational `=` assignments do not create feedback loops.
 
@@ -312,7 +404,7 @@ Before committing parser/generator changes:
 prove -v t/01-regression.t
 ```
 
-## 9) Practical authoring guidelines
+## 10) Practical authoring guidelines
 - Use `=` only for true combinational outputs.
 - Use `<-`/`<=` for flopped behavior and register loopback.
 - Prefer simple, explicit conditions; when conditions grow, expect intermediate signals in output RTL.

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: typed-extension documentation now teaches the concept directly
+- Followed up on the first shipped `R7` seam with a documentation-only clarification pass.
+- Rationale:
+  - "typed extension" is accurate architecture language, but it is not automatically self-explanatory to users reading the new boundary for the first time,
+  - the user guide is the right place to show what the current extension seam actually feels like in practice,
+  - the architecture note should also say explicitly that "typed" here means structured object/method/context dispatch, not a static type system claim.
+- Documentation outcome:
+  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now has a dedicated typed-extension section with concrete examples for result annotation and telemetry collection,
+  - [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) now defines "typed" more plainly and gives a second realistic extension example.
+- Roadmap consequence:
+  - no roadmap status changed,
+  - this is clarity work around the already-shipped first `R7` boundary, not a new `R7` capability slice.
 ## 2026-03-14: `R7` started with a typed post-generation extension seam
 - Started `R7` by landing one real extension boundary in the active pipeline instead of trying to design the full replacement plugin architecture all at once.
 - Rationale:

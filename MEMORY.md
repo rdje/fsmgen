@@ -20,6 +20,21 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: typed-extension docs clarified with concrete examples
+- Current worktree is a doc-only follow-up to the first shipped `R7` typed extension seam.
+- Scope of this slice:
+  - expanded [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) with a user-facing explanation of what a typed extension is,
+  - added concrete examples for result annotation and telemetry collection through the shipped `after_generate_result($context)` hook,
+  - clarified in [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) what "typed" means in this project: explicit object + method + context, not `.plg` scanning plus string-dispatch.
+- Roadmap board update:
+  - no roadmap status/deliverable/active-lane change for this slice,
+  - the live roadmap snapshot remains unchanged.
+- Validation is green for this slice:
+  - `git diff --check`
+- Immediate next direction after commit:
+  - continue `R7`,
+  - decide whether extension loading stays programmatic-only for now or gains an explicit config/CLI path,
+  - then land the next small typed hook boundary.
 ## 2026-03-14: `R7` started with the first typed extension seam
 - Current worktree starts the active `R7` lane with one real typed hook in the live pipeline instead of a broad speculative plugin rewrite.
 - Scope of this slice:
