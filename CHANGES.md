@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### Live status visibility hardening
+- Tightened the roadmap workflow so live-status changes are now both persistent and visible in the task close-out.
+- Updated `ROADMAP_STATUS.md` so any workstream-status change or active-lane change now requires:
+  - refreshing the live board,
+  - logging the change in `CHANGES.md`,
+  - and displaying the current live status snapshot in the user-facing close-out.
+- Updated `MEMORY.md`, `COMMIT.md`, and `.agents/workflows/commit.md` so the same rule is part of the standard post-task workflow and not just an informal convention.
+- Validation:
+  - `git diff --check` (pass)
+  - `rg -n "live status|status snapshot|ROADMAP_STATUS\\.md|CHANGES\\.md" ROADMAP_STATUS.md MEMORY.md COMMIT.md .agents/workflows/commit.md CHANGES.md DEVELOPMENT_NOTES.md` (pass)
 ### FlattenedDT live ownership (EnableGraph substitution synchronization ownership)
 - Moved substitution-era AST rewrite/debug passes off `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and under `perl/FSM/Synthesis/EnableGraph.pm`.
 - Added `count_unary_negations_in_original_expressions(...)` to `EnableGraph`, so the same owner that already owns `assignment_analysis` and captured condition ASTs now also owns the unary-negation debug scan around substitution.

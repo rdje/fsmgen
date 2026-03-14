@@ -8,6 +8,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - the `Done` summary,
   - the `Left` summary,
   - or the current active lane.
+- Whenever any workstream status or the current active lane changes:
+  - refresh this board first,
+  - log the change in `CHANGES.md`,
+  - and display the current live status snapshot in the user-facing close-out for that task.
 - Allowed status values are exactly:
   - `done`
   - `mostly done`

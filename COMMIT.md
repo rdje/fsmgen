@@ -19,6 +19,7 @@ Its purpose is to let any new AI resume work safely and follow the same commit h
 - `CHANGES.md`
   - Persistent technical change history.
   - Must be updated after `MEMORY.md` and any needed `ROADMAP_STATUS.md` refresh.
+  - When live status changes, this is the required historical log of that status transition.
 - `DEVELOPMENT_NOTES.md`
   - Design rationale and engineering context.
   - Must be updated after `CHANGES.md`.
@@ -34,7 +35,7 @@ Its purpose is to let any new AI resume work safely and follow the same commit h
 2. Update docs in this exact order:
    1. `MEMORY.md`
    2. `ROADMAP_STATUS.md` if the task changed roadmap status, remaining work, or the current active lane
-   3. `CHANGES.md`
+   3. `CHANGES.md` and explicitly log any live-status change there
    4. `DEVELOPMENT_NOTES.md`
 3. Run validation appropriate to the scope:
    - For code changes: syntax + tests/regression.
@@ -51,6 +52,7 @@ Its purpose is to let any new AI resume work safely and follow the same commit h
    - `truncate -s 0 git_message_brief.txt`
 8. Verify final state:
    - `git --no-pager status --short`
+9. If live status changed, the user-facing close-out must include the current live status snapshot from `ROADMAP_STATUS.md`.
 
 ## Safety and consistency rules
 - Keep commits task-scoped (only files relevant to the completed task).

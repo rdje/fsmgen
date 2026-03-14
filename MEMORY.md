@@ -9,13 +9,27 @@ This is the live continuity document for fast session recovery after crashes, re
 After each completed task, always do this in order:
 1. Update `MEMORY.md` with new state and next actionable direction.
 2. Update `ROADMAP_STATUS.md` if the completed task changes roadmap status, remaining work, or the current active lane.
-3. Update other live docs as needed (`CHANGES.md`, `DEVELOPMENT_NOTES.md`, and any user-facing docs impacted by the change).
-4. Run validation for the task scope (syntax checks + regression tests when applicable).
-5. Run commit workflow:
+3. If live status changed, log that status change in `CHANGES.md`.
+4. Update other live docs as needed (`DEVELOPMENT_NOTES.md`, and any user-facing docs impacted by the change).
+5. When live status changed, display the current live status snapshot in the user-facing close-out.
+6. Run validation for the task scope (syntax checks + regression tests when applicable).
+7. Run commit workflow:
    - write `git_message_brief.txt`
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: Live status visibility hardening
+- Current worktree tightens the roadmap-status workflow so status changes are both persistent and visible at close-out time.
+- Scope of this slice:
+  - `ROADMAP_STATUS.md` now explicitly requires three actions whenever any workstream status or the active lane changes: refresh the board, log the change in `CHANGES.md`, and display the current live status snapshot in the user-facing close-out,
+  - `COMMIT.md` and `.agents/workflows/commit.md` now treat status-transition logging plus close-out display as part of the standard post-task workflow,
+  - `MEMORY.md` now records this as a non-negotiable workflow rule for future sessions.
+- Validation is green for this slice:
+  - `git diff --check`
+  - `rg -n "live status|status snapshot|ROADMAP_STATUS\\.md|CHANGES\\.md" ROADMAP_STATUS.md MEMORY.md COMMIT.md .agents/workflows/commit.md CHANGES.md DEVELOPMENT_NOTES.md`
+- Immediate next direction after commit:
+  - whenever a workstream status or active lane changes, refresh `ROADMAP_STATUS.md`, record the transition in `CHANGES.md`, and show the current live snapshot in the close-out,
+  - continue using `ROADMAP_STATUS.md` as the canonical current-state board and `CHANGES.md` as the historical log of status transitions.
 ## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph substitution synchronization ownership)
 - Current worktree continues the `R2` live ownership lane and moves substitution-era AST rewrite/debug passes under `EnableGraph`.
 - Scope of this slice:

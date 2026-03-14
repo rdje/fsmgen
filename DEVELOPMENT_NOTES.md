@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: Live status visibility hardening
+- Tightened the roadmap-status process so status changes are not only recorded but also surfaced immediately in the task close-out.
+- Rationale:
+  - `ROADMAP_STATUS.md` is now the canonical current-state board, but current-state alone is not enough if status transitions are easy to miss in day-to-day work,
+  - the user explicitly asked for status changes to be both displayed and logged, so status movement must now be treated as a first-class workflow event,
+  - `CHANGES.md` is the most appropriate historical log for those transitions because it already tracks completed slices and their practical consequences.
+- Structural outcome:
+  - `ROADMAP_STATUS.md` now requires a close-out status snapshot whenever a workstream status or the active lane changes,
+  - `CHANGES.md` is now the required historical log for those live-status transitions,
+  - `MEMORY.md`, `COMMIT.md`, and `.agents/workflows/commit.md` now all encode the same behavior so future sessions apply it consistently.
+- Safety/compatibility:
+  - this is a workflow/documentation hardening slice only; no runtime code path changed,
+  - status display is triggered by actual status movement, not every commit, so the close-out stays focused instead of becoming repetitive noise.
+- Verification:
+  - `git diff --check` passes,
+  - `rg -n "live status|status snapshot|ROADMAP_STATUS\\.md|CHANGES\\.md" ROADMAP_STATUS.md MEMORY.md COMMIT.md .agents/workflows/commit.md CHANGES.md DEVELOPMENT_NOTES.md` confirms the workflow wiring.
+- Next likely slices:
+  - apply this automatically on the next real status transition in `ROADMAP_STATUS.md`,
+  - keep the close-out snapshot compact and sourced directly from the live board.
 ## 2026-03-14: EnableGraph substitution synchronization ownership
 - Continued the live `R2` ownership convergence by moving substitution-era AST rewrite/debug passes under `EnableGraph`.
 - Rationale:
