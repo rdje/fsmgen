@@ -124,6 +124,64 @@ means:
 - Equivalence note:
   - `(-=1 remaining)` is semantically the same update as `(-- remaining)`.
 - These agreements should be carried forward when the language contract for shorthand updates is made normative.
+
+### `(6)` RHS operator-form expression contract (working design direction)
+- The agreed direction is that the RHS of a combinational or sequential assignment should accept one expression of the form:
+  - `(op expr1 expr2 ... exprN)`
+- The RHS expression grammar should be the same across assignment families; the assignment operator decides timing/storage semantics, not the RHS grammar.
+- Operator aliases should lower to one canonical operator family.
+- The exact interpretation must be stated clearly and illustrated with examples whenever this is made normative.
+
+#### Current working interpretation by operator family
+- Natural N-ary fold operators:
+  - `(+ a b c ... z)` means `(a + b + c + ... + z)`
+  - `(* a b c ... z)` means `(a * b * c * ... * z)`
+  - logical/bitwise combine operators are also naturally unlimited-ary:
+  - `(& a b c ... z)` means `(a & b & c & ... & z)`
+  - `(| a b c ... z)` means `(a | b | c | ... | z)`
+  - `(^ a b c ... z)` means `(((a ^ b) ^ c) ^ ... ^ z)`
+- Unary operator:
+  - `(! a)` means logical inversion of `a`
+- Left-fold binary-style arithmetic operators if extended beyond arity 2:
+  - `(- a b c)` means `((a - b) - c)`
+  - `(/ a b c)` means `((a / b) / c)`
+  - `(% a b c)` means `((a % b) % c)`
+- Chained relational operators:
+  - `(< a b c)` means `((a < b) && (b < c))`
+  - `(<= a b c d)` means `((a <= b) && (b <= c) && (c <= d))`
+  - `(> a b c)` means `((a > b) && (b > c))`
+  - `(>= a b c)` means `((a >= b) && (b >= c))`
+  - `(== a b c)` means `((a == b) && (b == c))`
+  - `(!= a b c)` means `((a != b) && (b != c))`
+
+#### Examples
+```lisp
+(-state0
+  (sum  = (+ a b c d))
+  (prod = (* a b c d))
+  (mask = (& ready valid enable))
+  (par  = (^ a b c))
+)
+```
+
+```lisp
+(-state0
+  (inside_range = (< 0 x 8))
+  (ordered_pair = (<= low value high))
+)
+```
+
+```lisp
+(-state0
+  (sum  = (add a b))
+  (flag = (xor a b c))
+)
+```
+
+#### Boundary note
+- This is saved as a working design direction for future language-contract hardening.
+- The key principle agreed in discussion is:
+  - if an operator form is allowed, its exact interpretation must be provided unambiguously and explained with examples.
 ## 2026-03-14: `R7` closed with a second deliberate typed hook
 - Finished the bounded `R7` lane by adding one more real hook boundary instead of continuing to widen loading or parameter plumbing.
 - Rationale:

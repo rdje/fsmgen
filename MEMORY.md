@@ -20,6 +20,24 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: operator-form RHS design direction preserved
+- Current worktree is a doc-only design-continuity slice saving the working direction for `(6)` operator-form RHS expressions.
+- Scope of this slice:
+  - saved in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) that combinational and sequential assignments should share one RHS expression grammar,
+  - saved that operator aliases should lower to canonical operators,
+  - saved natural unlimited-ary fold semantics for `+`, `*`, `&`, `|`, and `^`,
+  - saved unary semantics for `!`,
+  - saved left-fold semantics for `-`, `/`, and `%` if allowed beyond arity 2,
+  - saved chained relational semantics as adjacent-pair conjunction, for example `(< a b c)` => `((a < b) && (b < c))`,
+  - and saved the meta-rule that any allowed operator form must have an explicit unambiguous interpretation with examples.
+- Roadmap board update:
+  - no roadmap status/deliverable/active-lane change for this slice,
+  - the live roadmap snapshot remains unchanged.
+- Validation is green for this slice:
+  - `git diff --check`
+- Immediate next direction after commit:
+  - no roadmap lane is active,
+  - the next natural discussion is whether the operator-family contract above should be fully adopted as-is or narrowed before becoming normative.
 ## 2026-03-14: guarded-block and suffix-guard design agreements preserved
 - Current worktree is a doc-only design-continuity slice saving the agreed semantics for future language-contract hardening.
 - Scope of this slice:

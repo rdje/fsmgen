@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### future operator-form RHS design direction is now preserved
+- Extended [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) with the current working direction for `(6)` operator-form RHS expressions.
+- The saved direction now states:
+  - combinational and sequential assignments should share the same RHS expression grammar,
+  - operator aliases should lower to canonical operators,
+  - N-ary `+`, `*`, `&`, `|`, and `^` use explicit fold semantics,
+  - extended `-`, `/`, and `%` use left-fold semantics if allowed beyond arity 2,
+  - chained relational operators use adjacent-pair conjunction, for example `(< a b c)` means `((a < b) && (b < c))`,
+  - and any allowed operator form must have an explicit unambiguous interpretation with examples.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task.
+- Validation:
+  - `git diff --check` (pass)
 ### future language-design agreements for `(3)`, `(4)`, and `(5)` are now preserved
 - Saved the current design agreements in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) for:
   - guarded blocks `(3)`,
