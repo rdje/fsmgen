@@ -43,6 +43,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Composition/Parser.pm` — first typed composition parser/IR boundary.
 - `perl/FSM/Composition/Plan.pm` — typed realized top-planning object for active composition work.
 - `perl/FSM/Composition/RTLInterfaceLoader.pm` — sidecar external-RTL interface loader for the shipped `C3` composition lane.
+- `perl/FSM/Extension/Loader.pm` — explicit typed extension-module loader for the active `R7` replacement seam.
 - `perl/FSM/Extension/Registry.pm` — typed extension registry for the active `R7` replacement seam.
 - `perl/FSM/Extension/Context.pm` — typed hook context object passed to active extensions.
 - `perl/FSM/SourceClassifier.pm` — top-level source-kind classification for FSM vs composition inputs.
@@ -84,6 +85,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `--trace-verbosity <none|low|medium|high|debug>`: named trace verbosity.
 - `--trace-log[=FILE]`: trace output file (default `trace.log`).
 - `--trace-emojis` / `--notrace-emojis`: emoji marker toggle.
+- `--extension-module <Module::Name>`: load an explicit typed extension module from `@INC` (may be repeated).
 - `-q, --quiet`: suppress informational output.
 
 ## Assignment semantics (quick reference)

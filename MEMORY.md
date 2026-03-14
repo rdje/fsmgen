@@ -20,6 +20,29 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: `R7` shipped explicit typed extension loading
+- Current worktree continues `R7` by widening the first typed extension seam from programmatic object injection into an explicit module-loading path that still stays well clear of `.plg` discovery.
+- Scope of this slice:
+  - added [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) to validate explicit module names, require them, instantiate them through `new()`, and reject non-object returns,
+  - updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so callers may pass `extension_modules => [ ... ]` in addition to direct extension objects,
+  - updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so repeated `--extension-module Module::Name` flags now load typed extensions explicitly from `@INC`,
+  - added [t/lib/FSM/TestExtension/Marker.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/TestExtension/Marker.pm) and [t/27-extension-loading.t](/Users/richarddje/Documents/github/fsmgen/t/27-extension-loading.t) to lock loader, pipeline, and CLI behavior plus targeted missing-module diagnostics.
+- Roadmap board update:
+  - no phase status changed,
+  - [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) still keeps `R7` at `in progress`,
+  - `R7` `Done` / `Left` moved forward because explicit loading is no longer programmatic-only,
+  - the next decision point is now whether to stay at programmatic-plus-CLI loading or add a config-file layer, and which typed hook boundary comes next.
+- Validation is green for this slice:
+  - `perl -I perl -I t/lib -c perl/FSM/Extension/Loader.pm`
+  - `perl -I perl -I t/lib -c perl/FSM/Pipeline/HDLGenerator.pm`
+  - `perl -I perl -I t/lib -c bin/fsmgen`
+  - `perl -I perl -I t/lib -c t/27-extension-loading.t`
+  - `prove -I perl -I t/lib t/26-extension-mechanism.t t/27-extension-loading.t`
+  - `git diff --check`
+- Immediate next direction after commit:
+  - continue `R7`,
+  - decide whether explicit loading needs a config-file layer beyond direct CLI/programmatic module names,
+  - then add the next small typed hook boundary.
 ## 2026-03-14: typed-extension docs clarified with concrete examples
 - Current worktree is a doc-only follow-up to the first shipped `R7` typed extension seam.
 - Scope of this slice:

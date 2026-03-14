@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R7` explicit loading path is now programmatic plus CLI
+- Continued `R7` by solving the next practical gap in the first typed extension seam: loading.
+- Rationale:
+  - the first shipped hook was useful but still incomplete as an architectural replacement while it required callers to construct extension objects manually,
+  - the right next step was an explicit loading path, not auto-discovery; users need a way to ask for one specific extension module without reopening `.plg` scans or string-hook registries,
+  - loading by explicit module name keeps the architecture typed and testable because the boundary is still: validate name, load module, instantiate object, dispatch explicit method.
+- Structural outcome:
+  - the codebase now has [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) as the narrow explicit module loader for `R7`,
+  - `HDLGenerator` now accepts `extension_modules => [ ... ]`,
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now accepts repeated `--extension-module Module::Name` flags,
+  - the tests now lock both the pipeline-side and CLI-side explicit loading path.
+- Boundary decision:
+  - this is still not `.plg` compatibility,
+  - there is still no directory scan, auto-discovery, or config-file layer,
+  - module loading stays explicit and constructor-based (`new()`), which keeps the active replacement seam small and reviewable.
+- Roadmap consequence:
+  - `R7` stays `in progress`,
+  - the next decision is whether explicit loading should remain at programmatic-plus-CLI scope or gain a config-file layer,
+  - and then which additional typed hook boundary is worth standardizing next.
 ## 2026-03-14: typed-extension documentation now teaches the concept directly
 - Followed up on the first shipped `R7` seam with a documentation-only clarification pass.
 - Rationale:

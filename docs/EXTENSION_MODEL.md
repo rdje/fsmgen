@@ -31,10 +31,14 @@ not:
 The current active toolchain now supports programmatic typed extensions through:
 - [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
 - [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+- [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
 - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+- [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
 
 Current contract:
 - callers may pass `extensions => [ $extension_object, ... ]` to `FSM::Pipeline::HDLGenerator->new(...)`,
+- callers may also pass `extension_modules => [ 'My::Extension', ... ]` to `FSM::Pipeline::HDLGenerator->new(...)`,
+- the CLI may load repeated `--extension-module Module::Name` entries explicitly from `@INC`,
 - each extension must be a normal blessed Perl object,
 - the only shipped hook today is `after_generate_result($context)`.
 
@@ -128,11 +132,24 @@ This kind of extension is a good fit for:
 
 without reopening the legacy plugin-discovery model.
 
+### Example 3: explicit CLI loading
+```bash
+PERL5LIB=./my_extensions ./bin/fsmgen \
+  --extension-module My::Telemetry \
+  --output /tmp/example.sv \
+  fsm/trial_0.fsm
+```
+
+This is still explicit and typed:
+- there is no directory scan,
+- the module name is provided directly,
+- and the loader instantiates a normal Perl object through `new()`.
+
 ## Deliberate non-goals of the current slice
 The current shipped mechanism does not yet provide:
 - `.plg` compatibility,
 - auto-discovery of extension files,
-- CLI flags for loading extensions,
+- config-file based extension loading,
 - pre-parse or mid-pipeline mutation hooks,
 - backend text-rewrite hooks,
 - or composition/plugin-era architecture phases such as `declarch`, `beginarch`, or `endarch`.
@@ -141,5 +158,5 @@ Those are future `R7` design decisions, not part of the first shipped boundary.
 
 ## Next likely R7 slices
 - Define the next typed hook set deliberately instead of reopening string-based hook names.
-- Decide whether extension loading should remain programmatic or gain an explicit config/CLI path.
+- Decide whether explicit module loading should stay at programmatic-plus-CLI scope or gain a config-file layer.
 - Migrate active architecture users away from `.plg` / `PPlugin` as the extension story.

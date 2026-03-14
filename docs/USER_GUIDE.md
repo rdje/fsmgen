@@ -264,6 +264,7 @@ This currently works because:
 - `--trace-verbosity <none|low|medium|high|debug>` : named trace verbosity selector
 - `--trace-log[=FILE]` : route trace output to FILE (default: `trace.log`)
 - `--trace-emojis` / `--notrace-emojis` : enable/disable emoji markers in trace formatting
+- `--extension-module <Module::Name>` : load an explicit typed extension module from `@INC` (may be repeated)
 - `-q, --quiet` : suppress informational messages
 - `-h, --help` : full CLI help
 
@@ -304,10 +305,14 @@ What it is not:
 - not `.plg` file scanning,
 - not `AUTOLOAD` lookup,
 - not implicit hook discovery by string name,
-- not a CLI plugin loader in the current shipped slice.
+- not implicit CLI plugin discovery in the current shipped slice.
 
-The current boundary is developer-facing and programmatic.
-You use it when embedding [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) from Perl, not from the `./bin/fsmgen` CLI directly.
+The current boundary is explicit.
+You can use it either:
+- programmatically when embedding [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) from Perl,
+- or from the CLI with repeated `--extension-module Module::Name` flags.
+
+For CLI loading, the module must already be available in Perl's `@INC`, for example through `PERL5LIB`.
 
 Current shipped hook:
 - `after_generate_result($context)`
@@ -344,6 +349,14 @@ This is useful when:
 - you want to attach extra metadata for downstream tooling,
 - but you do not want to change the core generator contract yet.
 
+CLI version of the same idea:
+```bash
+PERL5LIB=./my_extensions ./bin/fsmgen \
+  --extension-module My::ResultMarker \
+  --output /tmp/trial_0.sv \
+  fsm/trial_0.fsm
+```
+
 Second realistic example: collect generation telemetry across multiple runs
 ```perl
 use FSM::Pipeline::HDLGenerator;
@@ -378,8 +391,9 @@ This is useful when:
 - and you want explicit post-generation data without reviving the old plugin model.
 
 Practical rule:
-- if you need explicit programmatic behavior after generation, a typed extension is the current supported seam,
-- if you need `.plg` discovery, CLI plugin loading, or mid-pipeline mutation hooks, that is not part of the shipped boundary yet.
+- if you need explicit post-generation behavior, a typed extension is the current supported seam,
+- if you need explicit CLI loading, use repeated `--extension-module Module::Name` with modules already on `@INC`,
+- if you need `.plg` discovery, auto-discovery, config-file loading, or mid-pipeline mutation hooks, that is not part of the shipped boundary yet.
 
 See [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) for the architecture note and exact current contract.
 

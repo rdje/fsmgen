@@ -117,6 +117,7 @@ my $trace_verbosity = "";               # Named mode: none|low|medium|high|debug
 my $trace_log_path = "trace.log";       # Default trace output file path
 my $trace_log_enabled = 0;
 my $trace_emojis = 1;
+my @extension_modules = ();
 
 # Store original ARGV to check for bare flags before GetOptions processes them
 my $has_bare_debug_flag = grep { /^--?d(ebug)?$/ } @ARGV;
@@ -131,6 +132,7 @@ GetOptions(
     'trace-verbosity|verbosity=s' => \$trace_verbosity,
     'trace-log:s' => \$trace_log_path,
     'trace-emojis!' => \$trace_emojis,
+    'extension-module=s@' => \@extension_modules,
 ) or die "Error in command line arguments\n";
 
 # Handle legacy --debug flag behavior: if no value specified, default to level 4
@@ -195,6 +197,9 @@ Options:
                   instead of stdout
   --trace-emojis / --notrace-emojis
                   Enable/disable emoji markers in trace formatting
+  --extension-module <Module::Name>
+                  Load an explicit typed extension module from @INC
+                  May be repeated
   -q, --quiet     Suppress informational messages
   -l, --language  Target HDL language: systemverilog|sv|verilog|v|vhdl (default: systemverilog)
   -o, --output    Specify output file (default: <fsm_name>.<ext> in script directory)
@@ -276,6 +281,11 @@ Other Examples:
   # Debug SystemVerilog with custom output using FSMLIB lookup
   perl generate_fsm_hdl.pl -l sv -d3 -o debug_output.sv my_fsm
 
+  # Load an explicit typed extension module from @INC
+  PERL5LIB=./my_extensions perl generate_fsm_hdl.pl \
+    --extension-module My::Extension \
+    my_fsm
+
 EOF
     exit 0;
 }
@@ -329,7 +339,8 @@ print "Processing FSM file: $fsm_file\n" unless $quiet;
 my $pipeline = FSM::Pipeline::HDLGenerator->new(
     debug_level => get_fsm_debug_level(),
     target_language => $target_language,
-    quiet => $quiet
+    quiet => $quiet,
+    extension_modules => \@extension_modules,
 );
 
 my $result = $pipeline->generate_hdl_from_file($fsm_file);

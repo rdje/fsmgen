@@ -52,8 +52,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R7` Extension/plugin redesign replacing legacy `.plg` / `PPlugin`
 - Current next decision point:
-  - Decide the next deliberate `R7` boundary after the first shipped typed hook:
-    - keep extension loading programmatic-only for now or add an explicit config/CLI loading path,
+  - Decide the next deliberate `R7` boundary after the first shipped explicit loading path:
+    - keep loading at programmatic-plus-CLI scope or add a config-file layer,
     - and choose the next typed hook set without reopening string-dispatch `.plg` behavior.
 
 ## Workstreams
@@ -224,12 +224,17 @@ Done:
 - Roadmap direction is explicit: legacy `.plg` / `PPlugin.pm` support is to be retired, not preserved as the future architecture.
 - [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) now defines the first modern replacement seam and states its deliberate non-goals.
 - The live toolchain now has typed extension packages:
+  - [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
   - [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
   - [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
 - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now supports programmatic `extensions => [ ... ]` registration and dispatches the first live hook, `after_generate_result($context)`, for both FSM and composition generation results.
+- The active architecture now also supports explicit extension-module loading:
+  - programmatically through `extension_modules => [ ... ]` on `FSM::Pipeline::HDLGenerator->new(...)`,
+  - and from the CLI through repeated `--extension-module Module::Name` flags on [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
 - [t/26-extension-mechanism.t](/Users/richarddje/Documents/github/fsmgen/t/26-extension-mechanism.t) now locks the first active extension seam, including registry type validation and hook dispatch across both supported source kinds.
+- [t/27-extension-loading.t](/Users/richarddje/Documents/github/fsmgen/t/27-extension-loading.t) now locks explicit module-name loading through the loader, pipeline, and CLI, including targeted missing-module diagnostics.
 Left:
-- Decide whether the replacement loading story remains programmatic-only or gains an explicit config/CLI path.
+- Decide whether explicit module loading should stay at programmatic-plus-CLI scope or gain a config-file layer.
 - Add the next deliberate typed hook set only where the active architecture has a real stable boundary.
 - Continue migrating project guidance and future extension use away from `.plg` / `PPlugin.pm` as the architectural story.
 Exit criteria:

@@ -20,6 +20,7 @@ use FSM::Composition::Plan;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::RTLInterfaceLoader;
 use FSM::Extension::Context;
+use FSM::Extension::Loader;
 use FSM::Extension::Registry;
 use FSM::SourceClassifier;
 use Lispish;
@@ -53,6 +54,15 @@ that separates the processing logic from the command line interface.
 
 sub new ($class, %args) {
     fsm_trace_enter('Initialize HDLGenerator pipeline', 2);
+    my $extension_loader = $args{extension_loader}
+        // FSM::Extension::Loader->new();
+    my $loaded_extensions = $extension_loader->load_modules(
+        $args{extension_modules} || [],
+    );
+    my @extensions = (
+        @{ $args{extensions} || [] },
+        @$loaded_extensions,
+    );
     my $self = bless {
         debug_level => $args{debug_level} // 0,
         target_language => $args{target_language} // 'systemverilog',
@@ -61,9 +71,10 @@ sub new ($class, %args) {
             // FSM::Composition::RTLInterfaceLoader->new(
                 debug => ($args{debug_level} // 0) > 0,
             ),
+        extension_loader => $extension_loader,
         extension_registry => $args{extension_registry}
             // FSM::Extension::Registry->new(
-                extensions => $args{extensions} || [],
+                extensions => \@extensions,
             ),
     }, $class;
     

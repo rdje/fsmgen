@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### `R7` shipped explicit typed extension loading for pipeline and CLI
+- Added [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) as the explicit typed module loader for the new extension architecture. It:
+  - validates module-name syntax before `require`,
+  - instantiates extensions through `new()`,
+  - and rejects non-object returns with targeted diagnostics.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so callers may now pass `extension_modules => [ 'Module::Name', ... ]` in addition to direct `extensions => [ $object, ... ]`.
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so repeated `--extension-module Module::Name` flags can load explicit typed extensions from `@INC` without reviving `.plg` scanning or implicit discovery.
+- Added [t/lib/FSM/TestExtension/Marker.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/TestExtension/Marker.pm) and [t/27-extension-loading.t](/Users/richarddje/Documents/github/fsmgen/t/27-extension-loading.t) to lock:
+  - explicit module loading through the loader,
+  - programmatic pipeline loading through `extension_modules`,
+  - CLI loading through `--extension-module`,
+  - and targeted failure for missing extension modules.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md), [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the new explicit loading path is described truthfully.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - but `R7` `Done` / `Left` advanced because loading is now explicit programmatic-plus-CLI rather than programmatic-only.
+- Validation:
+  - `perl -I perl -I t/lib -c perl/FSM/Extension/Loader.pm` (pass)
+  - `perl -I perl -I t/lib -c perl/FSM/Pipeline/HDLGenerator.pm` (pass)
+  - `perl -I perl -I t/lib -c bin/fsmgen` (pass)
+  - `perl -I perl -I t/lib -c t/27-extension-loading.t` (pass)
+  - `prove -I perl -I t/lib t/26-extension-mechanism.t t/27-extension-loading.t` (pass)
+  - `git diff --check` (pass)
 ### typed-extension docs now explain the shipped boundary with concrete examples
 - Expanded [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) with a new user-facing section explaining what a typed extension is in the current `R7` architecture.
 - The guide now makes the current boundary concrete:
