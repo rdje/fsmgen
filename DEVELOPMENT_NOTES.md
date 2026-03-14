@@ -24,6 +24,30 @@ This document captures engineering rationale, design constraints, and working de
   - `R7` can now move from `mostly done` to `done`,
   - there is no active roadmap lane left in the current `R0`..`R7` plan,
   - future work should be introduced as a new explicit workstream rather than stretching the closed current roadmap.
+## 2026-03-14: the user guide now states the live `.fsm` support boundary directly
+- Followed up after roadmap closure with a documentation-only clarification of the language boundary.
+- Rationale:
+  - "supported" had become too easy to answer informally from memory, which is risky now that the active architecture is narrower and more deliberate than the legacy surface,
+  - the guide needed a live boundary that distinguishes:
+    - what is truly regression-backed,
+    - what is implemented but still lighter on coverage,
+    - and what is intentionally outside the active model,
+  - the user also called out standalone DT blocks explicitly, and that point mattered: the guide should reflect the active runtime truth rather than defaulting to a state-centric explanation.
+- Documentation outcome:
+  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now contains a dedicated live support section for current `.fsm` constructs,
+  - that section now names standalone hyphen-prefixed blocks such as `(-alpha_dt ...)`, `(-misc ...)`, and `(-mycombit ...)` as supported standalone DT constructs,
+  - it also states the current runtime distinction clearly:
+    - regular named states participate in state encoding and transition planning,
+    - DT-only inputs use the same decision-tree machinery but do not synthesize a state-register plan.
+- Boundary decision:
+  - the guide intentionally does not label every parser-accepted legacy form as "fully supported",
+  - the stronger bar remains:
+    - active parser support,
+    - active generation path,
+    - plus real regression coverage.
+- Roadmap consequence:
+  - no roadmap status changed,
+  - this is a truth-clarification slice around the now-closed roadmap, not a new roadmap capability.
 ## 2026-03-14: `R7` explicit loading stack now includes config files
 - Continued `R7` by closing the remaining loading-surface gap after object injection and explicit module-name loading.
 - Rationale:

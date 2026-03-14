@@ -11,8 +11,8 @@ Also supported:
 
 Current limitation:
 - VHDL target is recognized by CLI but backend is not yet implemented.
-- Composition/top-level multi-block generation is only partially implemented in the active toolchain.
-- The currently shipped composition lane is narrow:
+- Composition/top-level generation is implemented in a deliberately narrow active model.
+- The currently shipped composition boundary is:
   - one `?top:name`,
   - one explicit `?ports` block,
   - one or more embedded `?fsmc` children in the same file,
@@ -63,6 +63,73 @@ Examples rejected by parser:
 
 Synchronous loopback remains valid:
 - `A <- A`
+
+## 2.1) Currently supported `.fsm` constructs (live reference)
+This section is the current live support boundary.
+
+Standard used here:
+- "fully supported" means the construct is in the active parser, goes through the active SystemVerilog/Verilog generation path, and is locked by current regressions.
+- "implemented but not fully regression-backed" means the parser/runtime has support for it, but the current test depth is not strong enough to present it as equally solid.
+
+### Fully supported single-FSM constructs
+- Root form `(?fsm:name ...)`
+- Flattened legacy root form `(+fsm name)` with sibling `(+system ...)`, state blocks, and `(+size ...)`
+- Regular state blocks like `(s0 ...)`, `(idle ...)`
+- Special reset states `(-syncrst ...)` and `(-asyncrst ...)`
+- Standalone decision-tree blocks like `(-alpha_dt ...)`, `(-misc ...)`, or `(-mycombit ...)`
+
+Standalone DT note:
+- User-facingly, hyphen-prefixed top-level blocks are supported as standalone DT blocks.
+- When an FSM contains only those blocks, the active runtime treats it as DT-only generation and does not synthesize a `current_state` / `next_state` state-register plan.
+- Regular named states still use the same underlying decision-tree machinery, but they additionally participate in state encoding and transition planning.
+
+- `(+size ...)` signal-width declarations
+- Unconditional state transitions `(-> next_state)`
+- Test-node branching `(?SIG (=0 ...) (=1 ...))`
+- Register assignment `(A <- B)`
+- D-input style sequential assignment `(A <= B)`
+- Combinational assignment `(A = B)`
+- Explicit output exposure on the LHS, for example `(G> = H)` and `(output_data> <= 8'1)`
+- Dual-output register form `(I <-= J)` producing `next_I`
+- Dual-output D-input form `(K <=+ L)` producing `K_r`
+- Delayed pulse form `(P <N 0)` and `(P <N 1)`, including `N=0`
+- Literal forms `1`, `8'3`, `8'b1010`, `8'hFF`, and `const_8b0`
+- Signal-reference forms `SIG`, `SIG[3]`, `SIG[7:0]`, `SIG'8`, `SIG.member`, and `SIG>`
+- Condition forms that are in the active supported path: `<sig`, `<!sig`, `<sig=value`, and test-node equality branches like `=0` / `=1`
+- Expression operators that are currently solid and regression-backed in the active path: `!`, `==`, `&`, and `|`
+- Enforced diagnostics for illegal combinational self-dependency with `=`
+- Enforced diagnostics for mixing `=` with sequential operators on the same LHS
+- Enforced diagnostics for mixing pulse-delayed and non-pulse sequential operators on the same LHS
+- Enforced diagnostics for multiple different `<N` delays on the same LHS
+- Enforced diagnostics for `<N` with RHS other than literal `0` or `1`
+
+### Fully supported composition `.fsm` constructs
+- Root form `(?top:name ...)`
+- Explicit `(?ports:block ...)` blocks with flat port tokens
+- Port tokens like `clk`, `rstn`, `data_in<8`, `txd>`, and `=final_data>8`
+- `(?fsmc:instance child_source)` with exactly one embedded FSM source name
+- `(?rtl:module)` for external RTL children
+- External RTL interface loading via sidecar `<module>.rtlif`
+- Explicit `(?toplink:name ...)` blocks with flat `/source/target/` tokens
+- Dotted child endpoints in links, for example `/producer.output_data/consumer.input_data/`
+- `C1` lane: one `?top`, one `?fsmc`, explicit `?ports`, deterministic same-name top wiring
+- `C2` lane: multiple `?fsmc` children plus explicit `?toplink` wiring and deterministic internal nets
+- `C3` lane: mixed `?fsmc` plus `?rtl`, with `.rtlif`-based interface validation
+- `C4` lane: declared connect-by-name through `=name` in `?ports`
+- `C5` diagnostics: duplicate-driver rejection, explicit-link width mismatch rejection, connect-by-name ambiguity rejection, connect-by-name unknown-endpoint rejection, and width mismatch rejection
+- `C6` scoped rejection of legacy out-of-scope composition constructs
+
+### Implemented, but not strong enough yet to call fully supported
+- Arbitrary `(+system ...)` semantics beyond the conventional `clk` / `rstn` path
+- `(+constants ...)`, `(+enums ...)`, `(+define ...)`, and `(+params ...)`
+- Nested conditional blocks using standalone `< ...` / `<! ...` action forms
+- Condition suffixes attached directly to assignments or transitions
+- Compound-update shorthands `++`, `--`, `+=N`, `-=N`
+- Broader arithmetic/operator surface that is implemented in the expression builder but not as strongly regression-locked yet, especially `^`, `*`, `/`, `%`, and the word aliases
+
+### Explicitly out of active support
+- VHDL generation
+- Legacy composition forms such as `?&...`, nested `?top`, `?ports` mapping directives, nested `?toplink`, and multi-source `?fsmc`
 
 ## 3) Basic usage
 From repository root:

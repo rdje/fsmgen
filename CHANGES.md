@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### user guide now contains a live supported-constructs boundary for `.fsm`
+- Expanded [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) with a new live section, `Currently supported .fsm constructs (live reference)`.
+- The new section distinguishes three things explicitly:
+  - what is fully supported right now,
+  - what is implemented but not yet strong enough to present as fully regression-backed,
+  - and what is explicitly out of active support.
+- The guide now calls out standalone decision-tree blocks such as `(-alpha_dt ...)`, `(-misc ...)`, and `(-mycombit ...)` as part of the active supported surface, with the current runtime behavior stated plainly:
+  - DT-only inputs are supported,
+  - and they generate without a state-register plan.
+- Tightened the top-level composition wording in the guide so it now says composition is implemented in a deliberately narrow shipped model rather than "partially implemented", which better matches the closed scoped `R6` boundary.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task.
+- Validation:
+  - `git diff --check` (pass)
 ### `R7` closed with the shipped source-frontier hook
 - Extended [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm) so hook contexts now carry:
   - `stage`,

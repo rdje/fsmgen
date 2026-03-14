@@ -20,6 +20,25 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: user-guide support boundary clarified for current `.fsm` language
+- Current worktree is a doc-only clarification pass driven by the need to state the real active `.fsm` support boundary precisely.
+- Scope of this slice:
+  - expanded [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) with a live supported-constructs section,
+  - separated:
+    - fully supported constructs,
+    - implemented-but-not-fully-regression-backed constructs,
+    - and explicitly unsupported constructs,
+  - clarified that standalone decision-tree blocks like `(-alpha_dt ...)`, `(-misc ...)`, and `(-mycombit ...)` are part of the active supported surface,
+  - clarified the current runtime consequence of DT-only inputs: no state-register plan is synthesized when only standalone DT blocks are present,
+  - tightened the guide wording so composition is described as a deliberately narrow shipped model instead of as merely "partially implemented".
+- Roadmap board update:
+  - no roadmap status/deliverable/active-lane change for this slice,
+  - the live roadmap snapshot remains unchanged.
+- Validation is green for this slice:
+  - `git diff --check`
+- Immediate next direction after commit:
+  - no roadmap lane is active,
+  - if follow-up work is wanted from this clarification, the most natural next slice is turning the same support boundary into a more formal language-reference table or opening a new explicit roadmap workstream.
 ## 2026-03-14: `R7` closed with the shipped source-frontier hook
 - Current worktree finishes the bounded `R7` lane by adding the next small typed hook boundary instead of growing the loading surface further.
 - Scope of this slice:
