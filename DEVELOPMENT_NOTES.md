@@ -1,5 +1,31 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R6` first typed composition parser/IR slice plus legacy mapping note
+- Continued `R6` by moving from “explicit composition source boundary” to “explicit composition parser boundary.”
+- Rationale:
+  - after adding source classification, the next useful move was not to jump straight to top emission but to create a typed parser seam that future realization/planning code can build on,
+  - the legacy `fx/bin/fsmgen` pass confirmed that the language concepts are real and historically grounded,
+  - the same legacy pass also confirmed that the old implementation mechanism is not reusable because too much of it depended on `AUTOLOAD`, `PPlugin`, and plugin/eval late mutation.
+- Structural outcome:
+  - `docs/COMPOSITION_LEGACY_MAPPING.md` now captures the historical composition call tree and explicitly separates language concepts from obsolete plugin machinery,
+  - the active codebase now has a first typed composition parser/IR layer under `perl/FSM/Composition/`,
+  - `HDLGenerator` now parses `?top:name` sources into typed composition objects before stopping at the still-unimplemented realization/emission boundary,
+  - the active parser now accepts `?top`, `?fsmc`, `?rtl`, `?ports`, and `?toplink` as typed child-block concepts,
+  - several legacy-only shapes are now rejected deliberately:
+    - inline top-port shorthand,
+    - multi-source `?fsmc`,
+    - nested `?top`,
+    - unknown child kinds.
+- Safety/compatibility:
+  - this still does not claim active composition generation support,
+  - the supported single-FSM path is unchanged,
+  - the behavior change is that composition-shaped inputs now go through a truthful typed parse boundary before the not-yet-implemented runtime boundary is reported.
+- Verification:
+  - syntax checks for the new composition packages and updated pipeline pass,
+  - focused regressions `t/13-composition-source-classification.t` and `t/14-composition-parser.t` pass.
+- Next likely slices:
+  - replace raw `?ports` / `?toplink` payload storage with typed port/link planning objects,
+  - then start `C1` realization: one `?top:name`, one `?fsmc` child, explicit top-port exposure, deterministic top planning, and initial top emission.
 ## 2026-03-14: `R6` explicit composition source boundary before FSM-only parsing
 - Landed the first executable composition-aware behavior in the active toolchain by inserting an explicit source-kind classifier before the existing FSM-only parser boundary.
 - Rationale:

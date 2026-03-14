@@ -12,7 +12,7 @@ Also supported:
 Current limitation:
 - VHDL target is recognized by CLI but backend is not yet implemented.
 - Composition/top-level multi-block generation is not implemented yet in the active toolchain.
-- `?top:name` inputs are now recognized explicitly and fail at the composition boundary with a targeted diagnostic instead of falling through the FSM-only parser; see [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) for the scoped `R6` plan.
+- `?top:name` inputs are now recognized explicitly and parsed through the first typed composition-parser boundary before failing at the still-unimplemented composition pipeline; see [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) for the scoped `R6` plan and [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) for historical context.
 
 ## 2) Core concepts
 ### FSM input file

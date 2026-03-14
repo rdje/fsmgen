@@ -1,6 +1,49 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### `R6` legacy mapping note and first typed composition parser/IR slice
+- Added [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) as the historical-context note for composition work.
+- The note records:
+  - the obsolete composition call tree in `fx/bin/fsmgen` / `fx/perl/FSMGen.pm`,
+  - the role of legacy `top_exec(...)`,
+  - the surviving language concepts (`?top`, `?fsmc`, `?rtl`, `?ports`, `?toplink`),
+  - and the mechanisms the active architecture must not revive (`AUTOLOAD`, `PPlugin`, `.plg`, late architecture plugins).
+- Added the first typed composition parser/IR packages:
+  - [perl/FSM/Composition/Spec.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Spec.pm)
+  - [perl/FSM/Composition/Top.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Top.pm)
+  - [perl/FSM/Composition/Instance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Instance.pm)
+  - [perl/FSM/Composition/PortsBlock.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PortsBlock.pm)
+  - [perl/FSM/Composition/TopLink.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopLink.pm)
+  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm)
+- Behavior change in [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm):
+  - `?top:name` inputs are now not only classified, but also parsed through the first typed composition parser/IR boundary before failing at the still-unimplemented child-realization/top-emission stage.
+- The typed parser currently supports:
+  - `?top:name`
+  - `?fsmc`
+  - `?rtl`
+  - `?ports`
+  - `?toplink`
+- The typed parser now rejects several legacy-only shapes explicitly instead of silently inheriting them:
+  - inline top-port shorthand under `?top:name`
+  - multi-source `?fsmc`
+  - nested `?top`
+  - unknown child kinds
+- Updated [t/13-composition-source-classification.t](/Users/richarddje/Documents/github/fsmgen/t/13-composition-source-classification.t) so the pipeline/CLI boundary is now locked after typed composition parsing.
+- Added [t/14-composition-parser.t](/Users/richarddje/Documents/github/fsmgen/t/14-composition-parser.t) to cover:
+  - typed parsing of a real legacy composition fixture (`fsm/trial_1.fsm`)
+  - typed parsing of explicit `?ports` / `?fsmc` / `?rtl` / `?toplink` blocks
+  - explicit parser errors for unsupported legacy shorthand
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the active `R6` state now reflects parser/IR progress rather than only scope-plus-boundary classification.
+- Validation:
+  - `perl -I perl -c perl/FSM/Composition/Spec.pm` (pass)
+  - `perl -I perl -c perl/FSM/Composition/Top.pm` (pass)
+  - `perl -I perl -c perl/FSM/Composition/Instance.pm` (pass)
+  - `perl -I perl -c perl/FSM/Composition/PortsBlock.pm` (pass)
+  - `perl -I perl -c perl/FSM/Composition/TopLink.pm` (pass)
+  - `perl -I perl -c perl/FSM/Composition/Parser.pm` (pass)
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm` (pass)
+  - `perl -I perl -c t/14-composition-parser.t` (pass)
+  - `prove -I perl t/13-composition-source-classification.t t/14-composition-parser.t` (pass: `Files=2`, `Tests=38`)
 ### Composition source classification at the active pipeline boundary
 - Added [perl/FSM/SourceClassifier.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/SourceClassifier.pm) as the shared top-level source-kind classifier for raw Lispish ASTs.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the active pipeline now classifies source kind before invoking the FSM-only adapter path.

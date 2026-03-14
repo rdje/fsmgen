@@ -20,6 +20,39 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: `R6` legacy mapping note plus first typed `?top` parser/IR slice
+- Current worktree continues `R6` by turning the composition boundary into a real typed parser seam instead of only a classifier/error seam.
+- Scope of this slice:
+  - added `docs/COMPOSITION_LEGACY_MAPPING.md` to capture the obsolete `fx/bin/fsmgen` composition call tree (`start_from_file` -> `fsm_initialize` -> `top_exec`) and map legacy concepts onto the active architecture,
+  - documented the main historical lesson: keep `?top`, `?fsmc`, `?rtl`, `?ports`, and `?toplink` as language ideas, but do not revive the old `AUTOLOAD` / `PPlugin` / `.plg` mechanism,
+  - added typed composition packages under `perl/FSM/Composition/` for the first active parser boundary: `Spec`, `Top`, `Instance`, `PortsBlock`, `TopLink`, and `Parser`,
+  - `FSM::Pipeline::HDLGenerator` now parses `?top:name` through `FSM::Composition::Parser` before failing at the still-unimplemented realization/emission stage,
+  - the parser now recognizes typed child-block structure for `?fsmc`, `?rtl`, `?ports`, and `?toplink`,
+  - explicit unsupported legacy residue is now called out truthfully:
+    - inline top-port shorthand under `?top:name`,
+    - multi-source `?fsmc`,
+    - nested `?top`,
+    - and unknown child kinds.
+- Regression coverage update:
+  - `t/13-composition-source-classification.t` now proves the pipeline boundary happens after typed composition parsing and points at both composition docs,
+  - added `t/14-composition-parser.t` to lock typed parsing of real and synthetic `?top` inputs plus explicit rejection of unsupported legacy residue.
+- Roadmap board update:
+  - `ROADMAP_STATUS.md` still keeps `R6` at `in progress`,
+  - `R6` `Done` now includes the first typed composition parser/IR slice and the legacy-to-modern mapping note,
+  - the current next decision point is now the first child-realization/top-planning lane for `C1`, not another parser-only slice.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Composition/Spec.pm`
+  - `perl -I perl -c perl/FSM/Composition/Top.pm`
+  - `perl -I perl -c perl/FSM/Composition/Instance.pm`
+  - `perl -I perl -c perl/FSM/Composition/PortsBlock.pm`
+  - `perl -I perl -c perl/FSM/Composition/TopLink.pm`
+  - `perl -I perl -c perl/FSM/Composition/Parser.pm`
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm`
+  - `perl -I perl -c t/14-composition-parser.t`
+  - `prove -I perl t/13-composition-source-classification.t t/14-composition-parser.t` (`Files=2`, `Tests=38`, `PASS`)
+- Immediate next direction after commit:
+  - define typed parsing/planning for explicit `?ports` / `?toplink` payloads instead of storing them as raw items,
+  - then implement the first `C1` realization path: one `?top:name`, one `?fsmc` child, explicit top-port exposure, and deterministic top planning.
 ## 2026-03-14: `R6` composition source-classification boundary slice
 - Current worktree lands the first executable composition-aware code path in the active architecture without claiming full composition support yet.
 - Scope of this slice:

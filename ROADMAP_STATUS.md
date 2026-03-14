@@ -52,7 +52,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R6` Composition-oriented language / architecture work
 - Current next decision point:
-  - Implement the first typed composition parser/IR slice for `?top:name` contents (`?ports`, `?fsmc`, `?rtl`, `?toplink`) now that source-kind classification is explicit.
+  - Implement the first child-realization and top-planning slice for `C1`: one `?top:name` with one `?fsmc` child and explicit `?ports` exposure, replacing raw block payloads with typed port/link planning data.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -179,8 +179,13 @@ Done:
 - The same scope document now defines the first executable acceptance matrix (`C1`..`C6`) and the initial planned test-file split for composition work.
 - The active pipeline now classifies top-level source kind explicitly, so `?top:name` is recognized before the FSM-only parser runs.
 - Unsupported composition input now fails with a composition-specific boundary diagnostic in both `HDLGenerator` and direct FSM-only parser calls, with focused regression coverage.
+- The active pipeline now parses `?top:name` through a first typed composition parser/IR boundary before failing at the still-unimplemented realization/emission stage.
+- The first typed parser/IR slice now creates `CompositionSpec`, `CompositionTop`, typed `fsmc`/`rtl` child instances, `PortsBlock`, and `TopLink` objects.
+- `docs/COMPOSITION_LEGACY_MAPPING.md` now records how the obsolete `fx/bin/fsmgen` composition lane maps onto the active `R6` plan without reviving `.plg` / `PPlugin` behavior.
 Left:
-- Implement the actual typed composition parser and IR for `?top:name` contents in the active architecture.
+- Replace raw `?ports` / `?toplink` payload storage with typed port/link planning data.
+- Implement child realization for the first supported `?fsmc` lane and feed it through the active FSM pipeline.
+- Implement top planning and top emission for the first accepted composition scenario (`C1`), then widen toward the remaining acceptance matrix.
 - Add the executable acceptance tests for the scoped composition matrix.
 - Extend user/developer docs from scope-plus-boundary detection to shipped composition behavior.
 Exit criteria:

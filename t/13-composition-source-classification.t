@@ -70,13 +70,18 @@ my $pipeline_exception = $@;
 ok(!$pipeline_error, 'pipeline does not return a result for composition input yet');
 like(
     $pipeline_exception,
-    qr/Composition source '\?top:composition_smoke'.*active composition pipeline is not implemented yet/s,
-    'pipeline rejects composition input at the explicit composition boundary',
+    qr/Composition source '\?top:composition_smoke'.*recognized and parsed into typed composition IR.*active composition pipeline is not implemented yet/s,
+    'pipeline rejects composition input at the explicit composition boundary after typed parsing',
 );
 like(
     $pipeline_exception,
     qr/docs\/COMPOSITION_SCOPE\.md/s,
     'pipeline composition boundary points to the scoped composition doc',
+);
+like(
+    $pipeline_exception,
+    qr/docs\/COMPOSITION_LEGACY_MAPPING\.md/s,
+    'pipeline composition boundary points to the legacy-to-modern composition note',
 );
 unlike(
     $pipeline_exception,
@@ -118,7 +123,7 @@ my $combined_output = join(
 
 like(
     $combined_output,
-    qr/Composition source '\?top:composition_smoke'.*active composition pipeline is not implemented yet/s,
+    qr/Composition source '\?top:composition_smoke'.*recognized and parsed into typed composition IR.*active composition pipeline is not implemented yet/s,
     'CLI surfaces the explicit composition-boundary diagnostic',
 );
 unlike(

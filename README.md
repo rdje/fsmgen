@@ -12,18 +12,20 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 2. `ROADMAP_STATUS.md`: canonical live roadmap/workstream status.
 3. `docs/USER_GUIDE.md`: usage and CLI behavior.
 4. `docs/COMPOSITION_SCOPE.md`: concrete `R6` composition scope and acceptance boundary.
-5. `CHANGES.md`: chronological technical changes.
-6. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-7. `MEMORY.md`: continuity/handoff state.
-8. `COMMIT.md`: commit workflow requirements.
-9. `WARP.md`: repository-specific agent/development guidance.
-10. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+5. `docs/COMPOSITION_LEGACY_MAPPING.md`: historical `fx/bin/fsmgen` composition behavior mapped onto the active `R6` plan.
+6. `CHANGES.md`: chronological technical changes.
+7. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+8. `MEMORY.md`: continuity/handoff state.
+9. `COMMIT.md`: commit workflow requirements.
+10. `WARP.md`: repository-specific agent/development guidance.
+11. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
 - `ROADMAP_STATUS.md` — canonical live roadmap/workstream status board.
 - `docs/USER_GUIDE.md` — end-user guide and command usage.
 - `docs/COMPOSITION_SCOPE.md` — concrete composition scope and acceptance boundary for the active architecture.
+- `docs/COMPOSITION_LEGACY_MAPPING.md` — historical legacy-composition behavior mapped onto the active architecture.
 - `CHANGES.md` — persistent technical change history.
 - `DEVELOPMENT_NOTES.md` — architecture notes and engineering rationale.
 - `MEMORY.md` — live continuity context and recovery notes.
@@ -35,6 +37,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ### Core entrypoints and pipeline
 - `bin/fsmgen` — main CLI entrypoint.
 - `perl/FSM/Pipeline/HDLGenerator.pm` — generation orchestration.
+- `perl/FSM/Composition/Parser.pm` — first typed composition parser/IR boundary.
 - `perl/FSM/SourceClassifier.pm` — top-level source-kind classification for FSM vs composition inputs.
 - `perl/FSM/Adapter/FSMGenFull.pm` — FSM adapter/parsing entry.
 - `perl/FSM/HDL/FlattenedDT.pm` — Flattened decision-tree facade.

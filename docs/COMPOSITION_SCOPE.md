@@ -5,13 +5,14 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 ## Status
 - Composition is not implemented yet in the active toolchain.
 - `?top:name` inputs are now classified explicitly at the active pipeline boundary and fail with a deliberate composition-boundary diagnostic.
+- The first typed composition parser/IR slice now exists for `?top:name` plus child-block recognition of `?fsmc`, `?rtl`, `?ports`, and `?toplink`, but child realization and top emission are still not implemented.
 - This document is the normative scope and acceptance boundary for the first composition lane.
 
 ## Current active boundary
 - `bin/fsmgen` currently compiles a single FSM source into HDL.
-- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) parses a source file with `Lispish::multi(...)`, classifies the top-level source kind, and currently routes only FSM inputs into semantic-module generation.
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) parses a source file with `Lispish::multi(...)`, classifies the top-level source kind, and now parses `?top:name` inputs through a typed composition parser before stopping at the still-unimplemented realization/emission boundary.
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) currently accepts only active FSM roots shaped like `?fsm:name` or `+fsm`.
-- There is no active typed composition IR, no top-level composition parser, and no top-module emitter in the modern pipeline yet.
+- There is still no child realization path and no top-module emitter in the modern pipeline yet.
 
 ## Goal of `R6`
 Add a composition layer to the active architecture so `fsmgen` can build a top module from multiple child blocks without reviving the legacy eval/plugin model.
@@ -111,7 +112,10 @@ The first composition lane should be added above the current FSM-only parser bou
    - emit the generated top module in the selected HDL target.
 
 ### Planned typed IR concepts
-The first lane should introduce typed composition objects instead of free-form hashes:
+The first lane should introduce typed composition objects instead of free-form hashes.
+The initial parser/IR slice now covers the root/container side, while typed per-port/per-link objects still remain to be implemented.
+
+Planned typed objects:
 - `CompositionSpec`
 - `CompositionTop`
 - `CompositionInstance`
@@ -120,6 +124,9 @@ The first lane should introduce typed composition objects instead of free-form h
 - `CompositionLink`
 
 Exact package names may change, but the architecture must stay typed at this boundary.
+
+Historical note:
+- [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) captures how the obsolete `fx/bin/fsmgen` composition lane maps onto this modern scope without reviving its plugin/eval machinery.
 
 ## Acceptance matrix for the first composition lane
 These are the executable scenarios that must exist before `R6` can be closed.

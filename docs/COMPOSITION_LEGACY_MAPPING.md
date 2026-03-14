@@ -1,0 +1,172 @@
+# Composition Legacy Mapping
+
+This note records how the obsolete `fx/bin/fsmgen` composition flow worked and how that historical behavior maps into the active `R6` plan.
+
+It is context only.
+
+The active source of truth remains:
+- [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
+- [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md)
+
+## Why this note exists
+- The legacy tool already had a real composition path.
+- That historical path helps explain the intended language concepts.
+- The implementation technique used there is not acceptable as the active architecture.
+
+So the useful question is not “how do we copy the old code?”, but:
+- which language ideas survive,
+- which behaviors should be narrowed,
+- and which mechanisms must be retired.
+
+## Legacy call tree
+The legacy composition entrypath was:
+
+- [fx/bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/fx/bin/fsmgen)
+  - CLI argument parsing only
+- [fx/perl/FSMGen.pm](/Users/richarddje/Documents/github/fsmgen/fx/perl/FSMGen.pm) `start_from_file(...)`
+  - loads Lispish ASTs
+  - classifies `?define:*`, `?fsm:*`, and `?top:*`
+  - calls `top_exec(...)` for each top-level `?top:*`
+
+The key historical point is that the old tool did already have a separate composition lane.
+
+## What `top_exec(...)` actually did
+In [fx/perl/FSMGen.pm](/Users/richarddje/Documents/github/fsmgen/fx/perl/FSMGen.pm), `top_exec(...)` recursively handled:
+
+- `?fsmc`
+  - compile child FSM content through the old FSM path
+- `?rtl`
+  - bind an external RTL module and load its interface
+- `?ports`
+  - describe interface/port objects
+- `?toplink`
+  - reuse/remap another top-level interface
+- nested `?top`
+  - recursively build more hierarchy
+
+It then inferred:
+- top-level ports,
+- internal signals,
+- some signal assignments,
+- instance declarations,
+- and architecture/plugin emission steps.
+
+## Legacy mechanisms we should not reproduce
+The old composition system depended heavily on dynamic dispatch through:
+
+- [fx/perl/FSMGen.pm](/Users/richarddje/Documents/github/fsmgen/fx/perl/FSMGen.pm) `AUTOLOAD`
+- [fx/perl/PPlugin.pm](/Users/richarddje/Documents/github/fsmgen/fx/perl/PPlugin.pm)
+- [fx/plugin/fsmgen.plg](/Users/richarddje/Documents/github/fsmgen/fx/plugin/fsmgen.plg)
+
+That means many composition helpers were not normal typed code paths at all. They were plugin/eval-resolved helpers such as:
+
+- `interface_objects`
+- `map_objects`
+- `generic_objects`
+- `portlist_2hash`
+- `portlist_2force`
+- `getop_plugin_list`
+
+The old top-emission flow also exposed dynamic architecture phases:
+
+- `cclausearch`
+- `declarch`
+- `beginarch`
+- `endarch`
+- `endtop`
+
+These are historical evidence of extension points, not the model for the active implementation.
+
+## Legacy concepts that do survive into `R6`
+These historical concepts are still useful and are already reflected in the scoped modern plan:
+
+- `?top:name`
+  - composition root
+- `?fsmc`
+  - child FSM instance that should reuse the active FSM pipeline
+- `?rtl`
+  - external RTL instance with a declared interface
+- `?ports`
+  - explicit interface declaration surface
+- `?toplink`
+  - connectivity/wiring concept between composition-level endpoints
+
+So the language ideas survive, but the implementation must be typed and deterministic.
+
+## Historical behaviors the active architecture narrows on purpose
+### 1. Legacy inline top-port shorthand
+Legacy `?top:name` forms often carried direct scalar interface items after the top header.
+
+Example shape:
+```lisp
+(?top:foo clk rstn data>8 ...)
+```
+
+Active `R6` direction:
+- reject this shorthand in the first lane,
+- require explicit `?ports` blocks instead.
+
+Reason:
+- explicit blocks are easier to type, validate, and test.
+
+### 2. Multi-source `?fsmc`
+Legacy `?fsmc` could carry more than one FSM source name and route them through old hierarchy-specific behavior.
+
+Active `R6` direction:
+- the first lane supports exactly one FSM source per child instance.
+
+Reason:
+- this keeps child realization deterministic and aligned with the current single-FSM pipeline.
+
+### 3. Nested `?top`
+Legacy `top_exec(...)` recursively processed nested `?top` blocks.
+
+Active `R6` direction:
+- the first lane does not support nested `?top` blocks.
+
+Reason:
+- the first active composition lane is intentionally flat and bounded.
+
+### 4. Broad connect-by-name inference
+Legacy top building inferred many top ports/signals from child directionality and shared names.
+
+Active `R6` direction:
+- explicit wiring first,
+- connect-by-name only when declared and unambiguous.
+
+Reason:
+- hidden inference is hard to validate and hard to make deterministic.
+
+### 5. Plugin-driven architecture mutation
+Legacy composition emission used plugin callbacks to mutate architecture output late in the process.
+
+Active `R6` direction:
+- do not revive `.plg` / `PPlugin` behavior for composition,
+- keep extension redesign in `R7`.
+
+Reason:
+- `R6` is about a typed composition model, not about reintroducing eval/plugin architecture.
+
+## Practical mapping from legacy terms to active typed work
+- Legacy `?top:name`
+  - modern `CompositionTop`
+- Legacy `?fsmc`
+  - modern typed child instance referencing one FSM source
+- Legacy `?rtl`
+  - modern typed external RTL instance
+- Legacy `?ports`
+  - modern typed interface declaration block
+- Legacy `?toplink`
+  - modern typed connectivity/link block
+
+The exact package names may evolve, but the active design direction is:
+- typed IR first,
+- child realization second,
+- top planning/emission after that.
+
+## Current active conclusion
+The legacy pass confirms that `R6` is the right roadmap lane and that the scoped source model is historically grounded.
+
+It also confirms the main discipline we need to keep:
+- inherit the concepts,
+- not the plugin/eval machinery.
