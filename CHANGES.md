@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### AST/CoreAST convergence (`R3`: remove render-time late hydration)
+- Removed the render-time “late hydration” retry from `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm::render_intermediate_signal_expression(...)`.
+- Behavior change:
+  - an intermediate signal that first misses runtime-AST resolution with `runtime_ast_miss_reason = no_ast_source` no longer silently promotes `runtime_ast` during plain expression rendering,
+  - the remaining promotion path in this area is the explicit runtime-AST-miss dependency-recovery flow.
+- Fixed `resolve_intermediate_signal_width(...)` so the backend’s explicit dependency-recovery path can call it with the shorter live argument list it already uses.
+- Extended `t/07-runtime-ast-miss-dependency-recovery.t` so it now proves:
+  - render-time expression fallback preserves the original `no_ast_source` miss state,
+  - render-time fallback does not silently hydrate `runtime_ast`,
+  - explicit dependency recovery can still promote `runtime_ast` from a cleaned compatibility expression and records that source explicitly.
+- Updated `ROADMAP_STATUS.md` to narrow the remaining `R3` residue:
+  - `R3` status stays `mostly done`,
+  - `R3` `Left` now points specifically at the remaining direct raw/cleaned expression parsing inside backend runtime-AST resolution and dependency recovery.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t/07-runtime-ast-miss-dependency-recovery.t` (pass: `Files=1`, `Tests=17`)
 ### Roadmap phase transition (`R2` done, active lane -> `R3`)
 - Audited the remaining `FlattenedDT` backend/orchestrator ownership boundary against the explicit `R2` deliverables in `ROADMAP_STATUS.md`.
 - Audit result:

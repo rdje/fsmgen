@@ -35,6 +35,24 @@ After each completed task, always do this in order:
 - Immediate next direction after commit:
   - follow `R3` and re-audit the remaining compatibility/runtime-AST-miss fallback paths,
   - remove them where they are no longer justified, or keep them explicitly as deliberate residue if they still serve a necessary boundary.
+## 2026-03-14: AST/CoreAST convergence micro-slice (remove render-time late hydration)
+- Current worktree continues the `R3` runtime convergence lane and narrows one compatibility behavior inside `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
+- Scope of this slice:
+  - removed the render-time “late hydration” retry from `render_intermediate_signal_expression(...)`, so an initial `no_ast_source` miss no longer silently promotes `runtime_ast` during plain expression rendering,
+  - kept the explicit runtime-AST-miss dependency-recovery path intact, so cleaned compatibility expressions can still recover dependencies when that fallback is intentionally invoked,
+  - fixed `resolve_intermediate_signal_width(...)` so the explicit recovery path can call it with the shorter live form used by the backend.
+- Regression coverage update:
+  - `t/07-runtime-ast-miss-dependency-recovery.t` now proves that render-time expression fallback preserves the original `no_ast_source` miss state and does not silently hydrate `runtime_ast`,
+  - the same test now proves that explicit dependency recovery can still promote `runtime_ast` from a cleaned compatibility expression and records that source as `dependency_cleaned_rendered_expression_ast`.
+- Roadmap board update:
+  - `ROADMAP_STATUS.md` still keeps `R3` at `mostly done`,
+  - `R3` `Done` / `Left` now reflect that late hydration is gone and the remaining residue is the direct raw/cleaned expression parsing inside runtime-AST resolution and dependency recovery.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/07-runtime-ast-miss-dependency-recovery.t` (`Files=1`, `Tests=17`, `PASS`)
+- Immediate next direction after commit:
+  - re-audit the remaining direct compatibility parsing inside `resolve_intermediate_signal_runtime_ast(...)` and `recover_runtime_ast_from_dependency_expression(...)`,
+  - decide whether that residue can be removed, replaced with native AST/CoreAST data, or kept explicitly as the final compatibility boundary.
 ## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph live-usage evidence ownership)
 - Current worktree continues the `R2` live ownership lane and moves intermediate-signal live-usage evidence derivation under `EnableGraph`.
 - Scope of this slice:

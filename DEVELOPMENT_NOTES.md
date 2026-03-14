@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R3` runtime convergence slice removing render-time late hydration
+- Narrowed one remaining compatibility behavior in `Backend::SystemVerilog` by removing the render-time “late hydration” retry from `render_intermediate_signal_expression(...)`.
+- Rationale:
+  - rendering an intermediate expression should not quietly mutate runtime-AST state after an earlier `no_ast_source` miss,
+  - that behavior blurred the remaining compatibility boundary because a plain render call could turn into implicit recovery and mutate `runtime_ast_source`,
+  - the explicit runtime-AST-miss dependency-recovery path is the better place for that behavior because it is intentional, inspectable, and already records recovery provenance.
+- Structural outcome:
+  - plain expression rendering now stops at `enable_graph_expression` / stored-expression fallback when no runtime AST exists,
+  - the cleaned compatibility-expression recovery path still exists, but only when dependency recovery explicitly asks for it,
+  - the explicit recovery path also exposed that `resolve_intermediate_signal_width(...)` needed a defaulted registry argument to support the shorter live call form already used by the backend.
+- Safety/compatibility:
+  - this narrows hidden compatibility behavior rather than widening it,
+  - the focused regression now locks both sides of the boundary: no silent render-time hydration, but explicit cleaned-expression dependency recovery still works and records its source,
+  - `R3` therefore remains `mostly done`, with the remaining residue now reduced to the direct raw/cleaned parsing still present in backend runtime-AST resolution and dependency recovery.
+- Verification:
+  - syntax check for `Backend/SystemVerilog.pm` passes,
+  - focused regression `t/07-runtime-ast-miss-dependency-recovery.t` passes.
+- Next likely slices:
+  - re-audit the remaining direct compatibility parsing in `resolve_intermediate_signal_runtime_ast(...)` and `recover_runtime_ast_from_dependency_expression(...)`,
+  - either remove that residue, replace it with native AST/CoreAST data, or keep it explicitly as the final justified compatibility boundary.
 ## 2026-03-14: `R2` completion audit and active-lane pivot to `R3`
 - Closed the live ownership-migration phase after auditing the remaining backend surface against the explicit `R2` deliverables.
 - Rationale:

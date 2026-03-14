@@ -283,21 +283,6 @@ sub render_intermediate_signal_expression ($self, $signal_name, $signal_info) {
         $signal_info->{expression} //= $expression;
         $signal_info->{rendered_expression} = $expression;
         $signal_info->{rendered_expression_source} = 'enable_graph_expression';
-
-        if (($signal_info->{runtime_ast_resolution_state} || '') eq 'missing'
-            && ($signal_info->{runtime_ast_miss_reason} || '') eq 'no_ast_source')
-        {
-            delete $signal_info->{runtime_ast_resolution_state};
-            delete $signal_info->{runtime_ast_miss_reason};
-            my $recovered_runtime_ast = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
-            if ($recovered_runtime_ast && blessed($recovered_runtime_ast)) {
-                my $recovered_expression = $ctx->{enable_graph}->ast_to_systemverilog($recovered_runtime_ast);
-                $signal_info->{rendered_expression} = $recovered_expression;
-                $signal_info->{rendered_expression_source} = $signal_info->{runtime_ast_source} || 'runtime_ast_recovery';
-                fsm_debug("[SystemVerilog.pm][render_intermediate_signal_expression()] Recovered runtime AST for '$signal_name' after late expression hydration", 3);
-                return $recovered_expression;
-            }
-        }
     }
     return $expression;
 }
@@ -474,7 +459,7 @@ sub recover_runtime_ast_from_dependency_expression ($self, $signal_name, $signal
     fsm_debug("[SystemVerilog.pm][recover_runtime_ast_from_dependency_expression()] Failed compatibility parse for '$debug_signal_name' via $candidate_source: " . ($error || 'unknown parse failure'), 3);
     return undef;
 }
-sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signal_registry, $seen_signals = undef) {
+sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signal_registry = undef, $seen_signals = undef) {
     my $ctx = $self->{flattened_dt};
     return 1 unless defined($signal_name) && $signal_name ne '';
 

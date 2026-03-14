@@ -43,7 +43,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R3` AST/CoreAST-first runtime convergence
 - Current next decision point:
-  - Re-audit the remaining runtime-AST-miss and compatibility parse fallbacks in `Backend::SystemVerilog` to decide which residue can be removed versus which remains a deliberate compatibility boundary.
+  - Re-audit the remaining direct compatibility parsing inside `resolve_intermediate_signal_runtime_ast(...)` and `recover_runtime_ast_from_dependency_expression(...)` to decide whether that residue can be reduced further or should remain as the final explicit backend boundary.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -107,9 +107,10 @@ Done:
 - Top-level enable registries are AST-backed.
 - Intermediate-signal registry, dependency recovery, runtime-AST normalization, and driving-AST storage were pushed toward AST/CoreAST-first behavior.
 - Compatibility fallback breadth was reduced substantially; unresolved cases are narrower and explicit.
+- Render-time late hydration no longer silently promotes `runtime_ast` after an initial `no_ast_source` miss; explicit dependency recovery is now the remaining promotion path in that area.
 Left:
-- Re-audit the remaining compatibility fallbacks and unresolved runtime-AST miss paths.
-- Either remove them, replace them with native AST/CoreAST data, or explicitly keep them with a justified boundary.
+- Re-audit the remaining direct raw/cleaned expression parsing inside backend runtime-AST resolution and dependency recovery.
+- Either remove that residue, replace it with native AST/CoreAST data, or explicitly keep it as a justified compatibility boundary.
 Exit criteria:
 - Live intermediate-signal/runtime behavior is fully native AST/CoreAST-first, with only deliberate and well-justified compatibility residue if any.
 

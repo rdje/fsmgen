@@ -7,7 +7,30 @@ use File::Spec;
 use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::AST::Node;
 use FSM::HDL::FlattenedDT;
+
+{
+    package Local::CleanableRuntimeExprParser;
+
+    use strict;
+    use warnings;
+
+    sub new {
+        return bless {}, shift;
+    }
+
+    sub parse_expression {
+        my ($self, $expression) = @_;
+
+        die "intentional test parse failure for raw compatibility expression\n"
+            if !defined($expression) || $expression eq '' || $expression eq ' mid ';
+
+        return FSM::AST::SignalRef->new('mid') if $expression eq 'mid';
+
+        die "unexpected test expression '$expression'\n";
+    }
+}
 
 my $hdl = FSM::HDL::FlattenedDT->new(debug => 0);
 my $backend = $hdl->{backend_sv};
@@ -115,5 +138,65 @@ is(
     $opaque_legacy_signal_info{dependency_fallback_source},
     'runtime_ast_miss_unresolved',
     'opaque legacy signal names now record unresolved dependency recovery instead of identifier-scan fallback',
+);
+
+$hdl->{expr_namer} = Local::CleanableRuntimeExprParser->new;
+$hdl->{intermediate_signals}{cleanable_runtime_expr} = ' mid ';
+
+my %cleanable_runtime_signal_info;
+my $rendered_cleanable_expression = $backend->render_intermediate_signal_expression(
+    'cleanable_runtime_expr',
+    \%cleanable_runtime_signal_info,
+);
+
+is(
+    $rendered_cleanable_expression,
+    ' mid ',
+    'render-time expression fallback preserves the stored compatibility expression instead of late-promoting runtime_ast',
+);
+is(
+    $cleanable_runtime_signal_info{rendered_expression_source},
+    'enable_graph_expression',
+    'render-time expression fallback records EnableGraph as the expression source',
+);
+is(
+    $cleanable_runtime_signal_info{runtime_ast_resolution_state},
+    'missing',
+    'render-time expression fallback keeps the original runtime-AST miss state',
+);
+is(
+    $cleanable_runtime_signal_info{runtime_ast_miss_reason},
+    'no_ast_source',
+    'render-time expression fallback keeps the original runtime-AST miss reason',
+);
+ok(
+    !exists $cleanable_runtime_signal_info{runtime_ast},
+    'render-time expression fallback does not silently hydrate runtime_ast',
+);
+
+my @cleanable_runtime_dependencies = $backend->resolve_intermediate_signal_dependencies(
+    'cleanable_runtime_expr',
+    \%cleanable_runtime_signal_info,
+);
+
+is_deeply(
+    \@cleanable_runtime_dependencies,
+    ['mid'],
+    'explicit runtime-AST-miss dependency recovery still recovers dependencies from the cleaned compatibility expression',
+);
+is(
+    $cleanable_runtime_signal_info{dependency_source},
+    'dependency_cleaned_rendered_expression_ast',
+    'dependency recovery records the cleaned rendered-expression AST source explicitly',
+);
+is(
+    $cleanable_runtime_signal_info{runtime_ast_source},
+    'dependency_cleaned_rendered_expression_ast',
+    'dependency recovery only promotes runtime_ast through the explicit dependency-recovery path',
+);
+is(
+    $cleanable_runtime_signal_info{rendered_expression_source},
+    'enable_graph_expression',
+    'dependency recovery preserves the original rendered expression source after cleaned AST recovery',
 );
 done_testing();
