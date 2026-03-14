@@ -152,6 +152,77 @@ This currently works because:
 - compatibility means same name, same direction, and same width,
 - ambiguous or missing matches fail explicitly.
 
+Realistic `=name` patterns:
+
+1. Expose one child FSM output directly at the top level without a second `?toplink`
+```lisp
+(?top:packet_formatter_top
+  (?ports:public_io
+    clk
+    rstn
+    =frame_valid>
+    =frame_data>32
+  )
+  (?fsmc:formatter formatter_src)
+)
+```
+
+This is useful when:
+- the child already exposes stable public outputs such as `frame_valid` and `frame_data`,
+- and the top is mainly packaging that child rather than renaming or remapping those outputs.
+
+2. Pass a top-level control input through to one child by the same name
+```lisp
+(?top:stream_gate_top
+  (?ports:public_io
+    clk
+    rstn
+    =enable_stream
+    gated_valid>
+  )
+  (?fsmc:gate gate_src)
+  (?toplink:wiring
+    /gate.gated_valid/gated_valid/
+  )
+)
+```
+
+This is useful when:
+- the composition should expose a user/control input such as `enable_stream`,
+- and exactly one child input of the same name should receive it.
+
+3. Expose an external RTL output directly at the top level by the same name
+```lisp
+(?top:uart_bridge_top
+  (?ports:public_io
+    clk
+    rstn
+    =txd>
+  )
+  (?rtl:uart_tx)
+)
+```
+
+With sidecar interface metadata:
+```lisp
+(?rtlif:uart_tx
+  clk
+  rstn
+  data_in<8
+  txd>
+)
+```
+
+This is useful when:
+- the external RTL module already uses the public top-level signal name you want,
+- so the composition can expose `txd` without an extra explicit `/uart_tx.txd/txd/` link.
+
+Practical rules for `=name`:
+- use it only when the top-level name should intentionally stay the same as the child endpoint name,
+- use normal explicit `?toplink` when you need renaming, remapping, or multiple non-system connections,
+- do not use `=clk` or `=rstn`; those already use the dedicated shared system-input contract,
+- a match is valid only when exactly one child endpoint has the same name, same direction, and same width.
+
 Current narrow mixed FSM + external RTL example:
 ```lisp
 (?top:fsm_plus_rtl_top

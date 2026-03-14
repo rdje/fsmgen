@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: user-guide clarification for realistic `=name` usage
+- Followed up on the first shipped `C4` slice by making the user-facing contract less abstract.
+- Rationale:
+  - the minimal `=final_data>8` example was technically correct but still too small to teach when `=name` is actually the right tool,
+  - realistic examples belong in the user guide because this is primarily an authoring/usage question, not a design-boundary question.
+- Documentation outcome:
+  - the guide now shows realistic `=name` usage for:
+    - exposing child FSM outputs directly at the top level,
+    - passing a top-level control input into one child,
+    - and exposing an external RTL output with `.rtlif` metadata.
+  - it also now states the practical rule of thumb:
+    - use `=name` only for intentional same-name passthrough,
+    - keep explicit `?toplink` for renaming, remapping, and broader wiring.
 ## 2026-03-14: `R6` first shipped `C4` declared connect-by-name slice
 - Continued `R6` by adding the first narrow modern connect-by-name contract on top of the shipped explicit-link lanes.
 - Rationale:

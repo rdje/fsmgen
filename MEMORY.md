@@ -20,6 +20,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: user-guide clarification for realistic `=name` usage
+- Current worktree is a doc-only follow-up to the shipped `C4` lane.
+- Scope of this slice:
+  - expanded `docs/USER_GUIDE.md` with realistic `=name` patterns rather than only a synthetic minimal example,
+  - added one child-FSM output passthrough example, one child-input passthrough example, and one external-RTL output passthrough example,
+  - added practical guidance about when to prefer `=name` versus explicit `?toplink`.
+- Roadmap board update:
+  - no roadmap status/deliverable/active-lane change for this slice,
+  - the live roadmap snapshot remains unchanged.
+- Validation is green for this slice:
+  - `git diff --check`
+- Immediate next direction after commit:
+  - continue the active `R6` lane at `C5`,
+  - tighten width-mismatch diagnostics across explicit and declared-by-name endpoints.
 ## 2026-03-14: `R6` first shipped `C4` declared connect-by-name lane
 - Current worktree widens the shipped composition runtime from explicit-link-only lanes into the first declared connect-by-name slice.
 - Scope of this slice:

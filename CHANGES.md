@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### `R6` user-guide clarification for realistic `=name` usage
+- Expanded [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) with realistic `C4` `=name` examples instead of only the minimal synthetic one.
+- The guide now shows:
+  - direct top-level exposure of child FSM outputs by the same name,
+  - pass-through of a top-level control input into one child by the same name,
+  - and direct same-name exposure of an external RTL output backed by `.rtlif` metadata.
+- Added practical guidance in the user guide for when `=name` is appropriate versus when explicit `?toplink` is still the right tool.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task.
+- Validation:
+  - `git diff --check` (pass)
 ### `R6` first shipped `C4` declared connect-by-name lane
 - Landed the first active declared connect-by-name runtime slice in [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm).
 - The shipped `C4` boundary is intentionally narrow:
