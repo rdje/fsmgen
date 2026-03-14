@@ -20,6 +20,28 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: `R7` shipped explicit extension-config loading
+- Current worktree continues `R7` by adding the explicit config-file layer that was still left open after the object/module loading slices.
+- Scope of this slice:
+  - extended [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) so it can parse explicit extension-config files and report malformed lines with file/line context,
+  - updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so callers may pass `extension_config_files => [ ... ]`,
+  - updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so repeated `--extension-config <file>` flags can load typed extensions from explicit config files,
+  - added [t/28-extension-config-loading.t](/Users/richarddje/Documents/github/fsmgen/t/28-extension-config-loading.t) to lock loader, pipeline, and CLI config-file loading plus malformed-config diagnostics.
+- Roadmap board update:
+  - [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) now moves `R7` from `in progress` to `mostly done`,
+  - the active lane remains `R7`,
+  - the next decision point is now the next typed hook boundary, with constructor/config-parameter richness left as a later follow-up rather than a blocker on the current loading stack.
+- Validation is green for this slice:
+  - `perl -I perl -I t/lib -c perl/FSM/Extension/Loader.pm`
+  - `perl -I perl -I t/lib -c perl/FSM/Pipeline/HDLGenerator.pm`
+  - `perl -I perl -I t/lib -c bin/fsmgen`
+  - `perl -I perl -I t/lib -c t/28-extension-config-loading.t`
+  - `prove -I perl -I t/lib t/27-extension-loading.t t/28-extension-config-loading.t`
+  - `git diff --check`
+- Immediate next direction after commit:
+  - continue `R7`,
+  - choose the next small typed hook boundary in the active architecture,
+  - keep any future loading/config growth explicit rather than drifting toward `.plg`-style discovery.
 ## 2026-03-14: `R7` shipped explicit typed extension loading
 - Current worktree continues `R7` by widening the first typed extension seam from programmatic object injection into an explicit module-loading path that still stays well clear of `.plg` discovery.
 - Scope of this slice:

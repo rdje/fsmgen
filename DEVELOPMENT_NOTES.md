@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R7` explicit loading stack now includes config files
+- Continued `R7` by closing the remaining loading-surface gap after object injection and explicit module-name loading.
+- Rationale:
+  - once explicit module-name loading existed, the remaining practical gap was not discovery but repeatability,
+  - a small explicit config-file layer lets users keep stable extension lists out of the shell command line without reopening directory scans or `.plg`-style hook discovery,
+  - the right config contract is intentionally tiny: one explicit `module Module::Name` declaration per active line plus optional blank/comment lines.
+- Structural outcome:
+  - [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) now parses extension-config files and reports malformed lines with file/line diagnostics,
+  - `HDLGenerator` now accepts `extension_config_files => [ ... ]`,
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now accepts repeated `--extension-config <file>` flags,
+  - the new behavior is locked by [t/28-extension-config-loading.t](/Users/richarddje/Documents/github/fsmgen/t/28-extension-config-loading.t).
+- Boundary decision:
+  - the extension-loading story is now explicit at three levels:
+    - direct objects,
+    - explicit module names,
+    - explicit config files of module names,
+  - there is still no auto-discovery, environment scan, or `.plg` compatibility path,
+  - this keeps `R7` aligned with typed explicit boundaries rather than drifting back toward implicit plugin architecture.
+- Roadmap consequence:
+  - this is enough to move `R7` from `in progress` to `mostly done`,
+  - the next meaningful work is no longer loading-related; it is the next typed hook boundary and any later decision about richer extension parameters.
 ## 2026-03-14: `R7` explicit loading path is now programmatic plus CLI
 - Continued `R7` by solving the next practical gap in the first typed extension seam: loading.
 - Rationale:

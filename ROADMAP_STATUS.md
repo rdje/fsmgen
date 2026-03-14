@@ -52,9 +52,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R7` Extension/plugin redesign replacing legacy `.plg` / `PPlugin`
 - Current next decision point:
-  - Decide the next deliberate `R7` boundary after the first shipped explicit loading path:
-    - keep loading at programmatic-plus-CLI scope or add a config-file layer,
-    - and choose the next typed hook set without reopening string-dispatch `.plg` behavior.
+  - Decide the next deliberate `R7` boundary after the shipped explicit loading stack:
+    - choose the next typed hook set without reopening string-dispatch `.plg` behavior,
+    - and decide later whether extensions need richer constructor/config parameter support.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -219,7 +219,7 @@ Deliverables:
 - Define the replacement typed hook/extension mechanism for the active architecture.
 - Implement that mechanism in the live toolchain.
 - Migrate the project off legacy `.plg` / `PPlugin.pm` as the architectural extension path, with tests/docs for the replacement.
-Status: `in progress`
+Status: `mostly done`
 Done:
 - Roadmap direction is explicit: legacy `.plg` / `PPlugin.pm` support is to be retired, not preserved as the future architecture.
 - [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) now defines the first modern replacement seam and states its deliberate non-goals.
@@ -231,11 +231,16 @@ Done:
 - The active architecture now also supports explicit extension-module loading:
   - programmatically through `extension_modules => [ ... ]` on `FSM::Pipeline::HDLGenerator->new(...)`,
   - and from the CLI through repeated `--extension-module Module::Name` flags on [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
+- The active architecture now also supports explicit config-file loading:
+  - programmatically through `extension_config_files => [ ... ]`,
+  - and from the CLI through repeated `--extension-config <file>` flags,
+  - with the current config contract being one explicit `module Module::Name` declaration per active line plus optional blank/comment lines.
 - [t/26-extension-mechanism.t](/Users/richarddje/Documents/github/fsmgen/t/26-extension-mechanism.t) now locks the first active extension seam, including registry type validation and hook dispatch across both supported source kinds.
 - [t/27-extension-loading.t](/Users/richarddje/Documents/github/fsmgen/t/27-extension-loading.t) now locks explicit module-name loading through the loader, pipeline, and CLI, including targeted missing-module diagnostics.
+- [t/28-extension-config-loading.t](/Users/richarddje/Documents/github/fsmgen/t/28-extension-config-loading.t) now locks explicit config-file loading through the loader, pipeline, and CLI, including malformed-config diagnostics with file/line reporting.
 Left:
-- Decide whether explicit module loading should stay at programmatic-plus-CLI scope or gain a config-file layer.
 - Add the next deliberate typed hook set only where the active architecture has a real stable boundary.
+- Decide later whether the explicit loading story needs richer constructor/config parameter support beyond object/module/config selection.
 - Continue migrating project guidance and future extension use away from `.plg` / `PPlugin.pm` as the architectural story.
 Exit criteria:
 - Legacy plugin support is no longer the architectural extension path and the replacement mechanism is active.

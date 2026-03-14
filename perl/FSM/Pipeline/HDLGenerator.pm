@@ -56,13 +56,26 @@ sub new ($class, %args) {
     fsm_trace_enter('Initialize HDLGenerator pipeline', 2);
     my $extension_loader = $args{extension_loader}
         // FSM::Extension::Loader->new();
-    my $loaded_extensions = $extension_loader->load_modules(
-        $args{extension_modules} || [],
-    );
-    my @extensions = (
-        @{ $args{extensions} || [] },
-        @$loaded_extensions,
-    );
+    my $extension_registry = $args{extension_registry};
+    unless ($extension_registry) {
+        my $config_module_names = $extension_loader->module_names_from_config_files(
+            $args{extension_config_files} || [],
+        );
+        my @extension_module_names = (
+            @{ $args{extension_modules} || [] },
+            @$config_module_names,
+        );
+        my $loaded_extensions = $extension_loader->load_modules(
+            \@extension_module_names,
+        );
+        my @extensions = (
+            @{ $args{extensions} || [] },
+            @$loaded_extensions,
+        );
+        $extension_registry = FSM::Extension::Registry->new(
+            extensions => \@extensions,
+        );
+    }
     my $self = bless {
         debug_level => $args{debug_level} // 0,
         target_language => $args{target_language} // 'systemverilog',
@@ -72,10 +85,7 @@ sub new ($class, %args) {
                 debug => ($args{debug_level} // 0) > 0,
             ),
         extension_loader => $extension_loader,
-        extension_registry => $args{extension_registry}
-            // FSM::Extension::Registry->new(
-                extensions => \@extensions,
-            ),
+        extension_registry => $extension_registry,
     }, $class;
     
     # Initialize debug system

@@ -38,7 +38,9 @@ The current active toolchain now supports programmatic typed extensions through:
 Current contract:
 - callers may pass `extensions => [ $extension_object, ... ]` to `FSM::Pipeline::HDLGenerator->new(...)`,
 - callers may also pass `extension_modules => [ 'My::Extension', ... ]` to `FSM::Pipeline::HDLGenerator->new(...)`,
+- callers may also pass `extension_config_files => [ 'extensions.fsmext', ... ]` to `FSM::Pipeline::HDLGenerator->new(...)`,
 - the CLI may load repeated `--extension-module Module::Name` entries explicitly from `@INC`,
+- the CLI may also load repeated `--extension-config <file>` entries explicitly,
 - each extension must be a normal blessed Perl object,
 - the only shipped hook today is `after_generate_result($context)`.
 
@@ -145,11 +147,31 @@ This is still explicit and typed:
 - the module name is provided directly,
 - and the loader instantiates a normal Perl object through `new()`.
 
+### Example 4: explicit config-file loading
+Extension config file:
+```text
+# one explicit module declaration per line
+module My::Telemetry
+module My::ResultMarker
+```
+
+CLI usage:
+```bash
+PERL5LIB=./my_extensions ./bin/fsmgen \
+  --extension-config extensions.fsmext \
+  --output /tmp/example.sv \
+  fsm/trial_0.fsm
+```
+
+Current config-file rules:
+- blank lines are allowed,
+- `# ...` comment lines are allowed,
+- each active line must be exactly `module Module::Name`.
+
 ## Deliberate non-goals of the current slice
 The current shipped mechanism does not yet provide:
 - `.plg` compatibility,
 - auto-discovery of extension files,
-- config-file based extension loading,
 - pre-parse or mid-pipeline mutation hooks,
 - backend text-rewrite hooks,
 - or composition/plugin-era architecture phases such as `declarch`, `beginarch`, or `endarch`.
@@ -158,5 +180,5 @@ Those are future `R7` design decisions, not part of the first shipped boundary.
 
 ## Next likely R7 slices
 - Define the next typed hook set deliberately instead of reopening string-based hook names.
-- Decide whether explicit module loading should stay at programmatic-plus-CLI scope or gain a config-file layer.
+- Decide whether explicit loading should remain at object/module/config scope or gain richer constructor/config parameter support later.
 - Migrate active architecture users away from `.plg` / `PPlugin` as the extension story.

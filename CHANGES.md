@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### `R7` shipped explicit extension-config loading and moved to mostly-done
+- Extended [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) so it can parse explicit extension-config files, with the current narrow config contract being:
+  - blank lines allowed,
+  - `# ...` comment lines allowed,
+  - and one active `module Module::Name` declaration per extension line.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so callers may now pass `extension_config_files => [ ... ]` in addition to direct objects and explicit module names.
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so repeated `--extension-config <file>` flags can load typed extensions from explicit config files.
+- Added [t/28-extension-config-loading.t](/Users/richarddje/Documents/github/fsmgen/t/28-extension-config-loading.t) to lock:
+  - config-file parsing through the loader,
+  - programmatic pipeline loading through `extension_config_files`,
+  - CLI loading through `--extension-config`,
+  - and malformed-config diagnostics with file/line reporting.
+- Updated [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the explicit config-file layer is described truthfully.
+- Live roadmap status change:
+  - `R7` moved from `in progress` to `mostly done`,
+  - the active lane stays `R7`,
+  - the next honest `R7` step is now choosing the next typed hook boundary, not finishing extension loading.
+- Validation:
+  - `perl -I perl -I t/lib -c perl/FSM/Extension/Loader.pm` (pass)
+  - `perl -I perl -I t/lib -c perl/FSM/Pipeline/HDLGenerator.pm` (pass)
+  - `perl -I perl -I t/lib -c bin/fsmgen` (pass)
+  - `perl -I perl -I t/lib -c t/28-extension-config-loading.t` (pass)
+  - `prove -I perl -I t/lib t/27-extension-loading.t t/28-extension-config-loading.t` (pass)
+  - `git diff --check` (pass)
 ### `R7` shipped explicit typed extension loading for pipeline and CLI
 - Added [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) as the explicit typed module loader for the new extension architecture. It:
   - validates module-name syntax before `require`,

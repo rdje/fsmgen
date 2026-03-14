@@ -265,6 +265,7 @@ This currently works because:
 - `--trace-log[=FILE]` : route trace output to FILE (default: `trace.log`)
 - `--trace-emojis` / `--notrace-emojis` : enable/disable emoji markers in trace formatting
 - `--extension-module <Module::Name>` : load an explicit typed extension module from `@INC` (may be repeated)
+- `--extension-config <file>` : load typed extension modules from an explicit config file (may be repeated)
 - `-q, --quiet` : suppress informational messages
 - `-h, --help` : full CLI help
 
@@ -313,6 +314,7 @@ You can use it either:
 - or from the CLI with repeated `--extension-module Module::Name` flags.
 
 For CLI loading, the module must already be available in Perl's `@INC`, for example through `PERL5LIB`.
+Config-file loading is also explicit: the config file lists module names, and those modules must also already be available in `@INC`.
 
 Current shipped hook:
 - `after_generate_result($context)`
@@ -357,6 +359,19 @@ PERL5LIB=./my_extensions ./bin/fsmgen \
   fsm/trial_0.fsm
 ```
 
+Config-file version:
+```text
+# extensions.fsmext
+module My::ResultMarker
+```
+
+```bash
+PERL5LIB=./my_extensions ./bin/fsmgen \
+  --extension-config extensions.fsmext \
+  --output /tmp/trial_0.sv \
+  fsm/trial_0.fsm
+```
+
 Second realistic example: collect generation telemetry across multiple runs
 ```perl
 use FSM::Pipeline::HDLGenerator;
@@ -393,7 +408,8 @@ This is useful when:
 Practical rule:
 - if you need explicit post-generation behavior, a typed extension is the current supported seam,
 - if you need explicit CLI loading, use repeated `--extension-module Module::Name` with modules already on `@INC`,
-- if you need `.plg` discovery, auto-discovery, config-file loading, or mid-pipeline mutation hooks, that is not part of the shipped boundary yet.
+- if you want to keep module lists out of the command line, use repeated `--extension-config <file>` with lines of the form `module Module::Name`,
+- if you need `.plg` discovery, auto-discovery, richer extension parameters, or mid-pipeline mutation hooks, that is not part of the shipped boundary yet.
 
 See [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) for the architecture note and exact current contract.
 

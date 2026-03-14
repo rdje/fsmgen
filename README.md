@@ -86,6 +86,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `--trace-log[=FILE]`: trace output file (default `trace.log`).
 - `--trace-emojis` / `--notrace-emojis`: emoji marker toggle.
 - `--extension-module <Module::Name>`: load an explicit typed extension module from `@INC` (may be repeated).
+- `--extension-config <file>`: load typed extension modules from an explicit config file (may be repeated).
 - `-q, --quiet`: suppress informational output.
 
 ## Assignment semantics (quick reference)

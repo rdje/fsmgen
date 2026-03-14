@@ -118,6 +118,7 @@ my $trace_log_path = "trace.log";       # Default trace output file path
 my $trace_log_enabled = 0;
 my $trace_emojis = 1;
 my @extension_modules = ();
+my @extension_config_files = ();
 
 # Store original ARGV to check for bare flags before GetOptions processes them
 my $has_bare_debug_flag = grep { /^--?d(ebug)?$/ } @ARGV;
@@ -133,6 +134,7 @@ GetOptions(
     'trace-log:s' => \$trace_log_path,
     'trace-emojis!' => \$trace_emojis,
     'extension-module=s@' => \@extension_modules,
+    'extension-config=s@' => \@extension_config_files,
 ) or die "Error in command line arguments\n";
 
 # Handle legacy --debug flag behavior: if no value specified, default to level 4
@@ -199,6 +201,9 @@ Options:
                   Enable/disable emoji markers in trace formatting
   --extension-module <Module::Name>
                   Load an explicit typed extension module from @INC
+                  May be repeated
+  --extension-config <file>
+                  Load extension modules from an explicit config file
                   May be repeated
   -q, --quiet     Suppress informational messages
   -l, --language  Target HDL language: systemverilog|sv|verilog|v|vhdl (default: systemverilog)
@@ -286,6 +291,11 @@ Other Examples:
     --extension-module My::Extension \
     my_fsm
 
+  # Load extension modules from an explicit config file
+  PERL5LIB=./my_extensions perl generate_fsm_hdl.pl \
+    --extension-config extensions.fsmext \
+    my_fsm
+
 EOF
     exit 0;
 }
@@ -341,6 +351,7 @@ my $pipeline = FSM::Pipeline::HDLGenerator->new(
     target_language => $target_language,
     quiet => $quiet,
     extension_modules => \@extension_modules,
+    extension_config_files => \@extension_config_files,
 );
 
 my $result = $pipeline->generate_hdl_from_file($fsm_file);
