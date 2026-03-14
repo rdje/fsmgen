@@ -20,6 +20,24 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: roadmap v2 is now active
+- Current worktree is the roadmap-opening slice that turns the previously saved post-roadmap ideas into an actual second roadmap generation.
+- Scope of this slice:
+  - added [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) as the detailed companion roadmap for the post-`R0`..`R7` workstreams,
+  - refreshed [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so `v2` is now the active roadmap generation,
+  - opened `R8` as the current active lane,
+  - defined `R9` through `R14` as explicit follow-on workstreams,
+  - updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) so onboarding points to the new roadmap companion directly.
+- Roadmap board update:
+  - the active lane moved from `none` to `R8`,
+  - `R8` is now `in progress`,
+  - `R9` through `R14` now exist explicitly on the board and are `not started`.
+- Validation is green for this slice:
+  - `git diff --check`
+- Immediate next direction after commit:
+  - continue on `R8`,
+  - first turn the saved guarded-block / suffix-guard / update-shorthand / operator-arity agreements into a draft normative language-reference section,
+  - then classify the remaining unresolved `(+system ...)` and symbol-definition families.
 ## 2026-03-14: operator-form RHS design direction preserved
 - Current worktree is a doc-only design-continuity slice saving the working direction for `(6)` operator-form RHS expressions.
 - Scope of this slice:

@@ -10,20 +10,22 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ## Fast ramp-up order
 1. `README.md` (this file): project objective + navigation.
 2. `ROADMAP_STATUS.md`: canonical live roadmap/workstream status.
-3. `docs/USER_GUIDE.md`: usage and CLI behavior.
-4. `docs/COMPOSITION_SCOPE.md`: concrete `R6` composition scope and acceptance boundary.
-5. `docs/COMPOSITION_LEGACY_MAPPING.md`: historical `fx/bin/fsmgen` composition behavior mapped onto the active `R6` plan.
-6. `docs/EXTENSION_MODEL.md`: active `R7` typed extension boundary replacing legacy `.plg` / `PPlugin` as architecture direction.
-7. `CHANGES.md`: chronological technical changes.
-8. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-9. `MEMORY.md`: continuity/handoff state.
-10. `COMMIT.md`: commit workflow requirements.
-11. `WARP.md`: repository-specific agent/development guidance.
-12. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+3. `ROADMAP_V2.md`: detailed post-`R0`..`R7` roadmap intent and sequencing.
+4. `docs/USER_GUIDE.md`: usage and CLI behavior.
+5. `docs/COMPOSITION_SCOPE.md`: concrete `R6` composition scope and acceptance boundary.
+6. `docs/COMPOSITION_LEGACY_MAPPING.md`: historical `fx/bin/fsmgen` composition behavior mapped onto the active `R6` plan.
+7. `docs/EXTENSION_MODEL.md`: active `R7` typed extension boundary replacing legacy `.plg` / `PPlugin` as architecture direction.
+8. `CHANGES.md`: chronological technical changes.
+9. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+10. `MEMORY.md`: continuity/handoff state.
+11. `COMMIT.md`: commit workflow requirements.
+12. `WARP.md`: repository-specific agent/development guidance.
+13. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
 - `ROADMAP_STATUS.md` — canonical live roadmap/workstream status board.
+- `ROADMAP_V2.md` — detailed post-`R0`..`R7` roadmap intent and sequencing.
 - `docs/USER_GUIDE.md` — end-user guide and command usage.
 - `docs/COMPOSITION_SCOPE.md` — concrete composition scope and acceptance boundary for the active architecture.
 - `docs/COMPOSITION_LEGACY_MAPPING.md` — historical legacy-composition behavior mapped onto the active architecture.

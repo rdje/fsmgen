@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### roadmap v2 is now opened and `R8` is the active lane
+- Added [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) as the detailed companion roadmap for the post-`R0`..`R7` workstreams.
+- Refreshed [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so roadmap generation `v2` is now active, while `R0` through `R7` remain the closed foundation workstreams from the completed first roadmap.
+- The live board now defines and tracks:
+  - `R8` language-contract hardening,
+  - `R9` strict mode and support-tier enforcement,
+  - `R10` source provenance and diagnostics,
+  - `R11` composition contract strengthening,
+  - `R12` regression corpus and support accounting,
+  - `R13` public embedding/API stabilization,
+  - `R14` VHDL backend, if still wanted.
+- Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so onboarding and continuity now point at the new roadmap structure directly.
+- Live roadmap status change:
+  - the current active lane moved from `none` to `R8`,
+  - `R8` is now `in progress`,
+  - `R9` through `R14` are now explicit roadmap workstreams and currently `not started`.
+- Validation:
+  - `git diff --check` (pass)
 ### future operator-form RHS design direction is now preserved
 - Extended [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) with the current working direction for `(6)` operator-form RHS expressions.
 - The saved direction now states:

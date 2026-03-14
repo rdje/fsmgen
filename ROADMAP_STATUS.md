@@ -2,6 +2,12 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 
+## Current roadmap generation
+- `v2` is now the active roadmap generation.
+- `R0` through `R7` remain the closed foundation workstreams from the completed first roadmap.
+- `R8` through `R14` are the active/planned workstreams for the post-modernization roadmap.
+- [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) is the detailed companion roadmap; this file remains the canonical live status board.
+
 ## Update rule
 - Update this file before every commit if the completed task changes:
   - any workstream status,
@@ -50,12 +56,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- `none` All currently defined roadmap workstreams are complete.
+- `R8` Language-contract hardening.
 - Current next decision point:
-  - No blocking roadmap lane remains.
-  - If future work is intentionally added, open a new explicit workstream instead of stretching the closed `R0`..`R7` plan.
+  - Turn the saved design agreements for guarded blocks, condition suffixes, update shorthand, and operator-arity semantics into a draft normative language reference.
+  - Decide how the remaining unresolved `(+system ...)` and symbol-definition families fit into the support-tier model.
+  - Add focused regressions that lock the adopted language boundary.
 
 ## Workstreams
+### Closed v1 foundation workstreams
 ### R0. Live roadmap tracking infrastructure
 Description:
 - Keep one canonical, explicit live board for roadmap state and make status tracking part of the normal workflow.
@@ -246,3 +254,128 @@ Left:
 - Richer constructor/config parameters or additional hooks are future enhancements, not blockers on the closed roadmap lane.
 Exit criteria:
 - Legacy plugin support is no longer the architectural extension path and the replacement mechanism is active.
+
+### Active/planned v2 workstreams
+### R8. Language-contract hardening
+Description:
+- Turn the current supported-language boundary into a normative `.fsm` contract so the active tool has a crisp, reviewable language surface instead of a gray zone between “parser accepts it” and “the project claims support”.
+Deliverables:
+- One normative `.fsm` language reference for the active tool.
+- One explicit support-tier classification for every parser-visible construct:
+  - fully supported,
+  - intentionally experimental/deferred,
+  - or explicitly rejected.
+- Focused regression coverage that locks the adopted construct families and their intended semantics.
+Status: `in progress`
+Done:
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) already contains a live “currently supported `.fsm` constructs” section, which is the right foundation for a normative contract.
+- [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) now preserves concrete semantic agreements for:
+  - guarded blocks,
+  - condition suffixes,
+  - update shorthand,
+  - and operator-arity semantics.
+- [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) now captures the detailed post-`R0`..`R7` roadmap sequencing and intent.
+Left:
+- Promote the saved design agreements from engineering notes into a normative language-reference section.
+- Resolve the remaining gray-zone families, especially:
+  - `(+system ...)` beyond conventional `clk` / `rstn`,
+  - `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`,
+  - and any remaining parser-accepted legacy constructs not yet cleanly bucketed.
+- Add focused regression coverage per adopted construct family so support claims are continuously provable.
+Exit criteria:
+- Every parser-visible active-language construct is bucketed clearly and documented normatively, with matching regression coverage for the supported tier.
+
+### R9. Strict mode and support-tier enforcement
+Description:
+- Add an explicit “supported-language only” mode so users can choose predictability over compatibility residue.
+Deliverables:
+- A strict mode in the CLI/pipeline.
+- Targeted diagnostics for constructs outside the fully supported tier.
+- User/developer docs that explain how strict mode interacts with support tiers.
+Status: `not started`
+Done:
+- No live implementation yet.
+Left:
+- Define strict-mode surface and failure contract after `R8` clarifies the language boundary.
+- Implement CLI/pipeline enforcement and tests.
+Exit criteria:
+- Users can run the tool in a mode that accepts only the fully supported language contract.
+
+### R10. Source provenance and diagnostics
+Description:
+- Make parser/generator failures precise, source-local, and actionable enough for large real-world `.fsm` inputs.
+Deliverables:
+- File/line/construct provenance through parsing and generation.
+- More targeted diagnostics instead of generic parser/runtime fallout.
+- Clear remediation guidance for common construct-family failures.
+Status: `not started`
+Done:
+- No dedicated v2 slice has started yet.
+Left:
+- Define provenance-carrying boundaries and upgrade key diagnostics.
+- Add regression coverage for error shape and location reporting.
+Exit criteria:
+- Major parser/generator failures identify the offending source construct precisely and explain the intended fix path clearly.
+
+### R11. Composition contract strengthening
+Description:
+- Deepen the shipped composition model without widening it carelessly, especially around external RTL interface contracts.
+Deliverables:
+- Formalize the `.rtlif` contract clearly.
+- Decide whether later work should keep `.rtlif` as-is or place a stronger interface-source contract above it.
+- Harden mixed `?fsmc` / `?rtl` flows before broader composition syntax is considered.
+Status: `not started`
+Done:
+- The scoped `R6` composition lane is complete and the `.rtlif` follow-up is already recorded as a future refinement note.
+Left:
+- Turn the `.rtlif` follow-up into a deliberate contract-improvement lane.
+- Add any needed diagnostics/tests before considering broader composition growth.
+Exit criteria:
+- External-RTL composition uses a clearly specified interface contract that is stronger and easier to reason about than the current “implemented convention” state.
+
+### R12. Regression corpus and support accounting
+Description:
+- Make support claims measurable and continuously auditable instead of conversational.
+Deliverables:
+- A representative `.fsm` corpus for supported / expected-failure / legacy-out-of-scope cases.
+- Per-case classification rules that match the language contract.
+- Golden outputs or semantic checks where appropriate.
+Status: `not started`
+Done:
+- Current regression tests already cover many focused behaviors, which is the starting point for a broader support-accounting corpus.
+Left:
+- Curate and classify the corpus.
+- Wire corpus expectations into repeatable regression checks.
+Exit criteria:
+- Support claims can be backed by a maintained corpus and explicit classification, not only by ad hoc focused tests.
+
+### R13. Public embedding/API stabilization
+Description:
+- Make FSMGen intentionally embeddable as a library/tooling component with a documented and stable integration surface.
+Deliverables:
+- Stabilize/document the `HDLGenerator` result contract.
+- Document the embedding-facing typed extension/context contract.
+- Consider a more explicit serializable plan/report boundary where useful.
+Status: `not started`
+Done:
+- The active pipeline and typed extension system already provide the raw ingredients for a real embedding contract.
+Left:
+- Decide which parts of the current pipeline result/plan surface become stable API.
+- Document and regression-lock those surfaces.
+Exit criteria:
+- Downstream tooling can embed FSMGen against a documented, intentionally stable contract.
+
+### R14. VHDL backend, if still wanted
+Description:
+- Implement a real VHDL backend only after the language contract is tight enough to support a second backend honestly.
+Deliverables:
+- Define the VHDL backend scope.
+- Implement the single-FSM VHDL emission lane first.
+- Decide later whether composition-top VHDL generation should also exist.
+Status: `not started`
+Done:
+- Current code recognizes the target and fails explicitly with a not-implemented message instead of crashing.
+Left:
+- Open the real backend scope, then implement and test it deliberately.
+Exit criteria:
+- VHDL is a real, tested backend for the agreed scope rather than a recognized-but-unimplemented target.

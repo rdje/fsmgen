@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: roadmap v2 is now opened with `R8` as the active lane
+- The first roadmap (`R0`..`R7`) remains closed and historically complete.
+- The project now has an explicit second roadmap generation:
+  - [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) remains the canonical live board,
+  - [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) is the detailed companion roadmap for the post-modernization workstream set.
+- Rationale:
+  - the project no longer needs another broad modernization/refactor roadmap,
+  - it now needs a contract-hardening roadmap focused on language clarity, diagnostics, support accounting, and deliberate backend growth,
+  - the already-saved design agreements for guarded blocks, condition suffixes, update shorthand, and operator semantics are strong enough to support a real `R8` opening instead of remaining as loose notes only.
+- Structural outcome:
+  - roadmap v2 opens with `R8` (`language-contract hardening`) as the active lane,
+  - `R9` through `R14` are now defined as explicit follow-on workstreams rather than informal future ideas,
+  - the README onboarding order now points directly to both the live board and the new detailed roadmap companion.
+- Boundary decision:
+  - `R8` is marked `in progress` because the groundwork already exists:
+    - a live support boundary in the user guide,
+    - and saved semantic agreements for the main gray-zone control/expression constructs,
+  - but the workstream remains genuinely open because those agreements have not yet been promoted into a normative language contract with matching regression coverage.
 ## 2026-03-14: candidate post-roadmap workstreams after `R0`..`R7`
 - With the current roadmap closed, the next sensible improvements should be framed as a new explicit roadmap rather than as residual work from `R0`..`R7`.
 - Suggested priority order for that future roadmap:
