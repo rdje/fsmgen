@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R6` scope defined against the active architecture
+- Started `R6` by defining composition scope concretely against the modern active pipeline instead of continuing to refer to legacy composition capabilities abstractly.
+- Rationale:
+  - composition was the next active lane, but the current codebase still had no active composition parser, typed IR, or emitter,
+  - the honest next move was therefore not implementation-by-guessing but a scoped contract grounded in the current `bin/fsmgen` architecture,
+  - the legacy `top_exec` notes remain useful context, but they are too broad and too entangled with obsolete eval/plugin behavior to serve as the implementation contract directly.
+- Structural outcome:
+  - `docs/COMPOSITION_SCOPE.md` now defines the first active composition lane,
+  - the scoped source model is `?top:name` plus `?fsmc`, `?rtl`, `?ports`, and `?toplink`,
+  - the planned architecture boundary is a typed composition parser/classifier above the existing FSM-only parser,
+  - the first acceptance matrix is now explicit (`C1`..`C6`) instead of implied.
+- Safety/compatibility:
+  - no runtime behavior changed in this slice,
+  - the scope is intentionally narrow and excludes legacy macro/plugin behavior from the first implementation lane,
+  - the current single-FSM compile path remains the reference baseline that composition must preserve unchanged.
+- Verification:
+  - `git diff --check` passes,
+  - targeted `rg` over the scope/roadmap docs confirms the new composition scope and `R6` transition wiring.
+- Next likely slices:
+  - implement the first source-classification layer that distinguishes `?fsm:name` from `?top:name`,
+  - then add the first focused composition acceptance tests from the new scope document.
 ## 2026-03-14: Live roadmap snapshots now include what each `Rj` does
 - Tightened the roadmap display contract so live-status snapshots show not only each phase’s status but also a short explanation of what that phase actually covers.
 - Rationale:

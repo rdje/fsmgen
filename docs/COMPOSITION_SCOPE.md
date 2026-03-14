@@ -1,0 +1,190 @@
+# Composition Scope
+
+This document defines the concrete `R6` scope for composition-oriented work in the active `bin/fsmgen` architecture.
+
+## Status
+- Composition is not implemented yet in the active toolchain.
+- This document is the normative scope and acceptance boundary for the first composition lane.
+
+## Current active boundary
+- `bin/fsmgen` currently compiles a single FSM source into HDL.
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) parses a source file with `Lispish::multi(...)`, builds one semantic FSM module, analyzes it, and generates HDL.
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) currently accepts only active FSM roots shaped like `?fsm:name` or `+fsm`.
+- There is no active typed composition IR, no top-level composition parser, and no top-module emitter in the modern pipeline yet.
+
+## Goal of `R6`
+Add a composition layer to the active architecture so `fsmgen` can build a top module from multiple child blocks without reviving the legacy eval/plugin model.
+
+The first composition lane is intentionally narrow:
+- preserve the current single-FSM compile path unchanged,
+- add one explicit composition source path,
+- keep composition typed and deterministic,
+- reuse the existing child-FSM compile pipeline where possible.
+
+## In-scope model for the first composition lane
+### 1. Source kind
+The active tool will support two top-level source kinds:
+- FSM source: existing `?fsm:name` / `+fsm` path, unchanged.
+- Composition source: one top-level `?top:name` form routed to a dedicated composition parser.
+
+### 2. Child block kinds
+The first composition lane supports exactly two child block kinds:
+- `?fsmc`
+  - Child instance compiled from an FSM source through the active FSM pipeline.
+- `?rtl`
+  - Child instance bound to an external RTL module with an explicitly declared interface.
+
+### 3. Interface model
+Composition will use explicit typed interface data, not implicit global hashes.
+
+The first lane must represent:
+- top ports,
+- child instances,
+- child port directions,
+- interconnect nets,
+- top-to-child bindings,
+- child-to-child bindings.
+
+### 4. Wiring model
+The first lane supports:
+- explicit top-port exposure,
+- explicit child-port wiring,
+- deterministic connect-by-name only when the names are unambiguous and declared,
+- explicit failure on:
+  - unknown ports,
+  - duplicate drivers,
+  - ambiguous connect-by-name,
+  - width mismatch where no legal adaptation exists.
+
+### 5. Output model
+The first lane produces:
+- one generated top module in the selected HDL target,
+- generated child FSM modules for `?fsmc` children,
+- references to external RTL children without attempting to regenerate their internals.
+
+### 6. CLI behavior
+`bin/fsmgen` remains the single entrypoint.
+
+The composition path must:
+- detect a `?top:name` root before the FSM-only parser runs,
+- route to a composition pipeline,
+- keep current single-FSM CLI behavior unchanged for existing inputs.
+
+## Explicit non-goals for the first composition lane
+The following are out of scope for the first implementation slice:
+- legacy eval/plugin phases (`.plg`, `cclausearch`, `declarch`, `beginarch`, `endarch`, etc.),
+- macro systems and dynamic code injection,
+- implicit architecture rewriting across child boundaries,
+- automatic datapath/control repartitioning at composition level,
+- mixed-language top generation,
+- hierarchical timing semantics beyond explicit port/net wiring,
+- broad “do what I mean” auto-wiring beyond deterministic declared connect-by-name.
+
+## Working interpretation of legacy terms
+- `?fsmc`
+  - Composition-layer child FSM declaration and interface exposure/wiring support.
+  - It is not itself an enable-synthesis feature.
+- `?rtl`
+  - External RTL module binding with declared ports.
+- `?ports`
+  - Explicit top-level interface declaration for the generated composition.
+- `?toplink`
+  - Explicit connectivity specification between top ports, interconnect nets, and child ports.
+
+These names come from the historical composition flow, but the implementation must be typed and modernized rather than copied structurally from the legacy engine.
+
+## Active architecture mapping
+The first composition lane should be added above the current FSM-only parser boundary.
+
+### Planned pipeline split
+1. Source classification
+   - inspect the Lispish root and choose FSM path or composition path.
+2. Composition parsing
+   - build a typed composition IR from `?top:*`, `?fsmc`, `?rtl`, `?ports`, and `?toplink`.
+3. Child realization
+   - compile `?fsmc` children through the existing FSM pipeline,
+   - load/validate declared interfaces for `?rtl` children.
+4. Top planning
+   - resolve ports, nets, instance wiring, and deterministic ordering.
+5. Top emission
+   - emit the generated top module in the selected HDL target.
+
+### Planned typed IR concepts
+The first lane should introduce typed composition objects instead of free-form hashes:
+- `CompositionSpec`
+- `CompositionTop`
+- `CompositionInstance`
+- `CompositionPort`
+- `CompositionNet`
+- `CompositionLink`
+
+Exact package names may change, but the architecture must stay typed at this boundary.
+
+## Acceptance matrix for the first composition lane
+These are the executable scenarios that must exist before `R6` can be closed.
+
+### C1. Single child FSM passthrough top
+- Input:
+  - one `?top:name` with one `?fsmc` child and explicit top-port exposure.
+- Must prove:
+  - top generation succeeds,
+  - child FSM HDL is generated through the active pipeline,
+  - top ports are emitted deterministically,
+  - child ports are wired exactly as declared.
+
+### C2. Two child FSMs with explicit child-to-child wiring
+- Input:
+  - one `?top:name` with two `?fsmc` children and explicit links between them.
+- Must prove:
+  - deterministic net creation,
+  - deterministic instance ordering,
+  - explicit link wiring is emitted correctly,
+  - duplicate-driver errors are rejected.
+
+### C3. Mixed FSM + external RTL composition
+- Input:
+  - one `?fsmc` child and one `?rtl` child with declared interface metadata.
+- Must prove:
+  - FSM child is compiled,
+  - RTL child is instantiated but not regenerated,
+  - interface validation catches unknown ports and direction mismatches.
+
+### C4. Connect-by-name only when unambiguous
+- Input:
+  - composition relying on declared connect-by-name.
+- Must prove:
+  - exact declared matches connect automatically,
+  - ambiguous matches are rejected,
+  - undeclared/unknown names are rejected.
+
+### C5. Width mismatch diagnostics
+- Input:
+  - composition with incompatible linked widths.
+- Must prove:
+  - generation fails before emission,
+  - the diagnostic identifies the two endpoints and the conflicting widths.
+
+### C6. Legacy-composition features not in scope fail explicitly
+- Input:
+  - legacy macro/plugin-oriented composition constructs outside this scope.
+- Must prove:
+  - the active tool fails explicitly and points to unsupported composition scope,
+  - it does not silently fall back to eval/plugin behavior.
+
+## Test plan mapping
+The first executable acceptance tests should be added as focused composition tests, separate from the FSM-only regression files.
+
+Suggested initial names:
+- `t/20-composition-single-fsm-top.t`
+- `t/21-composition-two-fsm-linking.t`
+- `t/22-composition-fsm-plus-rtl.t`
+- `t/23-composition-errors.t`
+
+## Exit boundary for `R6`
+`R6` is not done when the scope is written down.
+
+`R6` closes only when:
+- the active composition source path exists in `bin/fsmgen`,
+- the typed composition IR and top emitter exist,
+- the acceptance matrix above is covered by executable tests,
+- user/developer documentation reflects the shipped composition behavior.

@@ -1,6 +1,32 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### Roadmap phase transition (`R6` not started -> in progress)
+- Started the first concrete `R6` slice by turning composition work into a scoped active-architecture plan instead of leaving it as roadmap terminology.
+- Updated `ROADMAP_STATUS.md` to record the live status change:
+  - `R6` moved from `not started` to `in progress`,
+  - the active lane remains `R6`,
+  - the next decision point is now implementation of the first typed `?top:name` composition classifier/parser slice above the current FSM-only parser boundary.
+- Validation:
+  - `git diff --check` (pass)
+  - `rg -n "COMPOSITION_SCOPE\\.md|\\?top:name|\\?fsmc|\\?rtl|\\?ports|\\?toplink|R6.*in progress|Composition-oriented language" README.md docs/USER_GUIDE.md docs/COMPOSITION_SCOPE.md ROADMAP_STATUS.md MEMORY.md CHANGES.md DEVELOPMENT_NOTES.md` (pass)
+### Composition scope definition for active architecture
+- Added [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) as the normative scope and acceptance-boundary document for the first `R6` composition lane.
+- Grounded the scope in the active architecture instead of the obsolete legacy flow:
+  - current boundary is `bin/fsmgen` -> `FSM::Pipeline::HDLGenerator` -> `FSM::Adapter::FSMGenFull::Parser`,
+  - current parser accepts only `?fsm:name` / `+fsm`,
+  - first composition lane is defined around a separate `?top:name` path plus typed composition IR and deterministic top emission.
+- Defined the first in-scope composition model:
+  - `?fsmc` child FSM instances,
+  - `?rtl` external RTL instances,
+  - `?ports` top interface declarations,
+  - `?toplink` explicit wiring,
+  - deterministic connect-by-name only when declared and unambiguous.
+- Defined the executable acceptance matrix for composition (`C1`..`C6`) and the planned focused test-file split (`t/20`..`t/23`).
+- Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) so the scope doc is discoverable and the user guide explicitly states that composition is not yet implemented in the active toolchain.
+- Validation:
+  - `git diff --check` (pass)
+  - `rg -n "COMPOSITION_SCOPE\\.md|\\?top:name|\\?fsmc|\\?rtl|\\?ports|\\?toplink|R6.*in progress|Composition-oriented language" README.md docs/USER_GUIDE.md docs/COMPOSITION_SCOPE.md ROADMAP_STATUS.md MEMORY.md CHANGES.md DEVELOPMENT_NOTES.md` (pass)
 ### Roadmap snapshot hardening (show `Rj` descriptions)
 - Tightened the roadmap board and commit workflow so every live-status snapshot now shows each `Rj` with at least `status + brief description`.
 - Added explicit `Description` fields to every workstream in `ROADMAP_STATUS.md`, so the board now answers not only “where are we?” but also “what does this phase do?” without requiring the user to infer it from deliverables.

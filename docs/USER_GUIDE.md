@@ -11,6 +11,7 @@ Also supported:
 
 Current limitation:
 - VHDL target is recognized by CLI but backend is not yet implemented.
+- Composition/top-level multi-block generation is not implemented yet in the active toolchain; see [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) for the scoped `R6` plan.
 
 ## 2) Core concepts
 ### FSM input file

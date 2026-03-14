@@ -54,6 +54,23 @@ After each completed task, always do this in order:
 - Immediate next direction after commit:
   - start `R6` with a scope-definition slice grounded in the active `bin/fsmgen` architecture,
   - write acceptance tests and developer-facing scope notes before implementing composition behavior.
+## 2026-03-14: Composition scope-definition slice (`R6` enters `in progress`)
+- Current worktree starts the first concrete `R6` slice by defining composition scope for the active architecture instead of leaving it as roadmap shorthand.
+- Scope of this slice:
+  - added `docs/COMPOSITION_SCOPE.md` as the normative scope and acceptance-boundary document for the first composition lane,
+  - grounded the scope in the active pipeline boundary: `bin/fsmgen` -> `FSM::Pipeline::HDLGenerator` -> `FSM::Adapter::FSMGenFull::Parser`, which currently only supports `?fsm:name` / `+fsm`,
+  - defined the first supported composition source model around `?top:name`, `?fsmc`, `?rtl`, `?ports`, and `?toplink`,
+  - defined the first executable acceptance matrix (`C1`..`C6`) plus the planned focused composition test-file split.
+- Roadmap board update:
+  - `ROADMAP_STATUS.md` now marks `R6` as `in progress`,
+  - `R6` deliverables now explicitly include acceptance-matrix definition as a tracked sub-deliverable,
+  - the active-lane next step is now implementation of the first typed composition classifier/parser slice rather than more scope discovery.
+- Validation is green for this slice:
+  - `git diff --check`
+  - `rg -n "COMPOSITION_SCOPE\\.md|\\?top:name|\\?fsmc|\\?rtl|\\?ports|\\?toplink|R6.*in progress|Composition-oriented language" README.md docs/USER_GUIDE.md docs/COMPOSITION_SCOPE.md ROADMAP_STATUS.md MEMORY.md CHANGES.md DEVELOPMENT_NOTES.md`
+- Immediate next direction after commit:
+  - implement the first typed composition source classifier above the existing FSM-only parser,
+  - then add the first executable composition acceptance tests from `docs/COMPOSITION_SCOPE.md`.
 ## 2026-03-14: AST/CoreAST convergence micro-slice (remove render-time late hydration)
 - Current worktree continues the `R3` runtime convergence lane and narrows one compatibility behavior inside `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - Scope of this slice:

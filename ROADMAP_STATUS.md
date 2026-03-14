@@ -52,7 +52,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R6` Composition-oriented language / architecture work
 - Current next decision point:
-  - Define the concrete composition-oriented scope for the active `bin/fsmgen` architecture, then write acceptance tests before implementation starts.
+  - Implement the first typed composition classifier/parser slice for `?top:name` after the scope and acceptance boundary defined in `docs/COMPOSITION_SCOPE.md`.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -169,14 +169,18 @@ Description:
 - Define and implement the composition model for the active tool so larger FSM systems can be expressed in the refactored architecture, not just in notes.
 Deliverables:
 - Define concrete composition-oriented language/architecture scope for the active tool, not just terminology.
+- Define the executable acceptance matrix for the first active composition lane.
 - Implement composition capabilities in the active `bin/fsmgen` architecture.
 - Add acceptance tests and user/developer documentation for the composition model.
-Status: `not started`
+Status: `in progress`
 Done:
 - Terminology and sequencing were clarified in the docs.
+- `docs/COMPOSITION_SCOPE.md` now defines the first concrete active composition scope grounded in the current `bin/fsmgen` / `HDLGenerator` / `FSMGenFull::Parser` architecture.
+- The same scope document now defines the first executable acceptance matrix (`C1`..`C6`) and the initial planned test-file split for composition work.
 Left:
-- Design and implement the actual composition-oriented language and architecture work.
-- Define concrete scope and acceptance tests before starting.
+- Implement the actual typed composition source path in the active architecture.
+- Add the executable acceptance tests for the scoped composition matrix.
+- Extend user/developer docs from scoped plan to shipped composition behavior.
 Exit criteria:
 - Composition capabilities exist in the active architecture, not just in notes/terminology.
 
