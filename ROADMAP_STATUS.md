@@ -60,7 +60,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `R8` Language-contract hardening.
 - Current next decision point:
   - Extend the new draft normative language reference beyond guards/suffixes/updates/operator expressions into the remaining unresolved parser-visible families.
-  - Decide how the remaining unresolved `(+system ...)` and symbol-definition families fit into the support-tier model.
+  - Resolve the remaining unresolved `(+system ...)` semantics beyond the conventional `clk` / `rstn` path.
+  - Classify any remaining parser-accepted legacy constructs that still sit outside the supported or explicitly rejected buckets.
   - Keep adding focused regressions that lock the adopted language boundary construct family by construct family.
 
 ## Workstreams
@@ -282,10 +283,17 @@ Done:
   - update shorthand,
   - and the currently regression-backed operator-expression families.
 - [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t) now locks the active parser/generator behavior for that same slice through focused regression coverage.
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now also promotes the symbol-definition families into the fully supported bucket and documents their current normative contract:
+  - `(+constants ...)`,
+  - `(+enums ...)`,
+  - `(+define ...)`,
+  - `(+params ...)`.
+- [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t) now locks symbol-definition resolution through the active parser and generator for:
+  - assignment RHS expressions,
+  - and guard equality conditions.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - `(+system ...)` beyond conventional `clk` / `rstn`,
-  - `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`,
   - and any remaining parser-accepted legacy constructs not yet cleanly bucketed.
 - Continue adding focused regression coverage per adopted construct family so support claims are continuously provable.
 Exit criteria:

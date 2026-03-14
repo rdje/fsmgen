@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: symbol-definition sections are now part of the active `R8` contract
+- The next `R8` slice is now regression-backed and promoted into the live support boundary:
+  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now treats the symbol-definition families as fully supported:
+    - `(+constants ...)`,
+    - `(+enums ...)`,
+    - `(+define ...)`,
+    - `(+params ...)`.
+- The parser bug uncovered while tightening this contract is now fixed in [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm):
+  - packed one-element Lispish array wrappers are now unwrapped consistently before scalar parsing for constants, defines, params, and enum members,
+  - which restores correct literal resolution for `+constants` and `+define` in particular.
+- Focused regression coverage now exists in [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t) for:
+  - symbol-summary counts,
+  - RHS literal resolution for constants, defines, params, and enum members,
+  - and guard equality resolution against symbol-defined values.
+- Boundary decision:
+  - this slice makes symbol resolution normative only for the currently proven contract:
+    - assignment RHS expressions,
+    - and guard equality conditions.
+  - `(+system ...)` beyond the conventional `clk` / `rstn` path remains unresolved and stays outside the supported tier for now.
 ## 2026-03-14: first `R8` language-contract slice is now promoted and regression-backed
 - The first real `R8` slice is now live in the user-facing contract:
   - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now contains a draft normative language-contract section for:

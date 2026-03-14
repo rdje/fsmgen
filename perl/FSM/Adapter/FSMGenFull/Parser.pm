@@ -163,9 +163,19 @@ sub parse_constants_section($self, $constants_ast) {
     my (undef, $constants_list) = @$constants_ast;
     for my $constant_def (@$constants_list) {
         my ($name, $value) = @$constant_def;
-        my $literal_expr = $self->{expression_builder}->parse_scalar_expression($value);
+        my $literal_expr = $self->{expression_builder}->parse_scalar_expression(
+            $self->unwrap_scalar_token($value)
+        );
         $self->{signal_manager}->store_constant($name, $literal_expr);
     }
+}
+
+sub unwrap_scalar_token($self, $value) {
+    my $unwrapped = $value;
+    while (ref($unwrapped) eq 'ARRAY' && @$unwrapped == 1) {
+        $unwrapped = $unwrapped->[0];
+    }
+    return $unwrapped;
 }
 sub is_compound_update_shorthand($self, $action_target, $action_spec) {
     return 0 unless defined $action_target;
@@ -359,7 +369,7 @@ sub parse_enums_section($self, $enums_ast) {
         my %enum_values;
         for my $member_def (@$members_list) {
             my ($member_name, $member_value_array) = @$member_def;
-            $enum_values{$member_name} = $member_value_array->[0];
+            $enum_values{$member_name} = $self->unwrap_scalar_token($member_value_array);
         }
         $self->{signal_manager}->store_enum($enum_name, \%enum_values);
     }
@@ -367,8 +377,13 @@ sub parse_enums_section($self, $enums_ast) {
 
 sub parse_define_directive($self, $define_ast) {
     my (undef, $define_spec) = @$define_ast;
+    $define_spec = $define_spec->[0]
+        if ref($define_spec) eq 'ARRAY' && @$define_spec == 1 && ref($define_spec->[0]) eq 'ARRAY';
+
     my ($name, $value) = @$define_spec;
-    my $value_expr = $self->{expression_builder}->parse_scalar_expression($value);
+    my $value_expr = $self->{expression_builder}->parse_scalar_expression(
+        $self->unwrap_scalar_token($value)
+    );
     $self->{signal_manager}->store_define($name, $value_expr);
 }
 
@@ -376,7 +391,7 @@ sub parse_params_section($self, $params_ast) {
     my (undef, $params_list) = @$params_ast;
     for my $param_def (@$params_list) {
         my ($name, $value_array) = @$param_def;
-        $self->{signal_manager}->store_param($name, $value_array->[0]);
+        $self->{signal_manager}->store_param($name, $self->unwrap_scalar_token($value_array));
     }
 }
 

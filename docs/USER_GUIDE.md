@@ -77,6 +77,11 @@ Standard used here:
 - Regular state blocks like `(s0 ...)`, `(idle ...)`
 - Special reset states `(-syncrst ...)` and `(-asyncrst ...)`
 - Standalone decision-tree blocks like `(-alpha_dt ...)`, `(-misc ...)`, or `(-mycombit ...)`
+- Symbol-definition sections:
+  - `(+constants ...)`
+  - `(+enums ...)`
+  - `(+define ...)`
+  - `(+params ...)`
 
 Standalone DT note:
 - User-facingly, hyphen-prefixed top-level blocks are supported as standalone DT blocks.
@@ -129,7 +134,6 @@ Standalone DT note:
 
 ### Implemented, but not strong enough yet to call fully supported
 - Arbitrary `(+system ...)` semantics beyond the conventional `clk` / `rstn` path
-- `(+constants ...)`, `(+enums ...)`, `(+define ...)`, and `(+params ...)`
 
 ### Explicitly out of active support
 - VHDL generation
@@ -186,6 +190,65 @@ Operator expressions:
 Boundary note:
 - Some future normalization ideas discussed in engineering notes are not part of the active contract yet.
 - In particular, the more systematic sugar direction such as `<foo==3` as canonical shorthand over a fully explicit guard expression remains saved in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), but it is not yet the active supported language contract.
+
+### Draft normative contract for symbol-definition sections
+This is the current `R8` draft normative contract for the symbol-definition families that are now regression-backed explicitly.
+
+`(+constants ...)`:
+- Defines named literal constants.
+- Current active use:
+  - `(+constants (C0 8'3) (ZERO const_8b0))`
+- References to those names resolve as literals in assignment RHS expressions and guard equality conditions.
+
+`(+define ...)`:
+- Defines one named literal-like value per directive block.
+- Current active use:
+  - `(+define (D0 8'4))`
+- References to that name resolve as literals in assignment RHS expressions and guard equality conditions.
+
+`(+params ...)`:
+- Defines named scalar parameter values.
+- Current active use:
+  - `(+params (P0 8))`
+- References to those names resolve as literals in assignment RHS expressions and guard equality conditions.
+
+`(+enums ...)`:
+- Defines named enumerations with member/value pairs.
+- Current active use:
+  - `(+enums (mode (IDLE 0) (BUSY 1)))`
+- Enum members are referenced as `enum_name.member_name`, for example `mode.BUSY`.
+- Those references resolve as literals in assignment RHS expressions and guard equality conditions.
+
+Regression-backed examples:
+```lisp
+(+constants
+  (C0 8'3)
+  (ZERO const_8b0)
+)
+(+define (D0 8'4))
+(+params
+  (P0 8)
+)
+(+enums
+  (mode
+    (IDLE 0)
+    (BUSY 1)
+  )
+)
+
+(-dt
+  (A = C0)
+  (B = D0)
+  (C = P0)
+  (D = mode.BUSY)
+  (FLAG = 1 <SEL=C0)
+  (BUSY_SEEN = 1 <SEL=mode.BUSY)
+)
+```
+
+Boundary note:
+- This slice locks symbol resolution in assignment RHS expressions and guard equality conditions.
+- Broader semantics for these families should be documented explicitly if and when the contract is widened beyond that current active use.
 
 ## 3) Basic usage
 From repository root:

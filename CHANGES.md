@@ -1,5 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-15
+### `R8` symbol-definition contract slice is now live and regression-backed
+- Promoted the symbol-definition families into the active supported-language boundary in [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md):
+  - `(+constants ...)`,
+  - `(+enums ...)`,
+  - `(+define ...)`,
+  - `(+params ...)`.
+- Added focused regression coverage in [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t) for:
+  - symbol-summary counts,
+  - RHS literal resolution,
+  - and guard equality resolution through the active parser/generator path.
+- Fixed the parser-side scalar-unwrapping bug in [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so the current Lispish AST packing for `+constants`, `+define`, `+params`, and enum member values is handled consistently instead of leaking `undef` into scalar-expression parsing.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so `R8` done/left tracking reflects the landed symbol-definition slice.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
+- Validation:
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm` (pass)
+  - `perl -I perl -c t/30-language-contract-symbol-definitions.t` (pass)
+  - `prove -I perl t/30-language-contract-symbol-definitions.t` (pass)
 ## 2026-03-14
 ### first `R8` language-contract slice is now live and regression-backed
 - Promoted the first `R8` draft normative language-contract slice into [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md).

@@ -20,6 +20,28 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: symbol-definition contract slice is landed under `R8`
+- Current worktree is the second real `R8` implementation slice:
+  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now treats the symbol-definition families as fully supported and documents their current normative contract,
+  - [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t) now locks the active behavior,
+  - and [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now unwraps packed scalar tokens correctly for symbol-definition parsing.
+- Scope of the landed contract slice:
+  - `(+constants ...)`
+  - `(+enums ...)`
+  - `(+define ...)`
+  - `(+params ...)`
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` and `ROADMAP_V2.md` now record that symbol-definition sections moved into the supported, regression-backed contract.
+- Validation for this slice:
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`
+  - `perl -I perl -c t/30-language-contract-symbol-definitions.t`
+  - `prove -I perl t/30-language-contract-symbol-definitions.t`
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - resolve the remaining `(+system ...)` semantics beyond the conventional `clk` / `rstn` path,
+  - then continue bucketing any remaining parser-visible legacy constructs with focused regressions.
 ## 2026-03-14: first `R8` contract-hardening slice is landed
 - Current worktree is the first real `R8` implementation slice:
   - the first draft normative language-contract section is now live in [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
