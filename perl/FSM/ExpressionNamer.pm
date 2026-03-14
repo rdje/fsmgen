@@ -606,6 +606,13 @@ sub parse_and_name_expression($self, $expr_str) {
 # Kept for backward compatibility
 sub parse_expression($self, $expr_str) {
     # Handle different types of expressions
+    return {
+        type => 'literal',
+        format => 'decimal',
+        value => 0,
+        bit_value => 0,
+        width => 1,
+    } unless defined $expr_str && $expr_str ne '';
     
     # Negation (most common)
     if ($expr_str =~ /^!(.+)$/) {
@@ -674,6 +681,14 @@ sub parse_expression($self, $expr_str) {
 # LEGACY METHOD: Parse signal references with slices, widths, etc.
 # Kept for backward compatibility
 sub parse_signal_reference($self, $signal_str) {
+    return {
+        type => 'literal',
+        format => 'decimal',
+        value => 0,
+        bit_value => 0,
+        width => 1,
+    } unless defined $signal_str && $signal_str ne '';
+
     $signal_str =~ s/^\s+|\s+$//g;
     
     # FSMGen constants: const_8b0, const_4h3, etc.

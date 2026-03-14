@@ -198,6 +198,6 @@ Prerequisite:
 The active immediate lane is `R8`.
 
 The first honest `R8` slices are:
-1. turn the saved `(3)` / `(4)` / `(5)` / `(6)` agreements into a draft normative language-reference section,
+1. extend the new draft normative language-reference slice beyond guards/suffixes/updates/operator expressions,
 2. classify the unresolved `(+system ...)` and symbol-definition families,
-3. add focused regressions that lock the adopted language contract.
+3. keep adding focused regressions that lock the adopted language contract family by family.

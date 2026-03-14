@@ -994,11 +994,15 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
                         $fsmgen_intermediate_count++;
                         
                         fsm_debug("  FSMGEN_INTERMEDIATE: UPDATED signal '$signal_name' with driving AST: " . ref($driving_ast), 3);
-                        fsm_debug("    AST SystemVerilog: " . eval { $driving_ast->to_systemverilog() } || '[AST ERROR]', 3);
+                        my $updated_ast_sv = eval { $driving_ast->to_systemverilog() };
+                        $updated_ast_sv = '[AST ERROR]' if !defined($updated_ast_sv) || $updated_ast_sv eq '' || $@;
+                        fsm_debug("    AST SystemVerilog: $updated_ast_sv", 3);
                     } else {
                         # This is a new FSMGenFull intermediate signal with proper driving AST
                         fsm_debug("  FSMGEN_INTERMEDIATE: Found NEW signal '$signal_name' with driving AST: " . ref($driving_ast), 3);
-                        fsm_debug("    AST SystemVerilog: " . eval { $driving_ast->to_systemverilog() } || '[AST ERROR]', 3);
+                        my $new_ast_sv = eval { $driving_ast->to_systemverilog() };
+                        $new_ast_sv = '[AST ERROR]' if !defined($new_ast_sv) || $new_ast_sv eq '' || $@;
+                        fsm_debug("    AST SystemVerilog: $new_ast_sv", 3);
                         
                         $all_intermediate_signals{$signal_name} = {
                             source => 'fsmgen_parsing',

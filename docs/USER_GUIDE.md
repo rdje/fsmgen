@@ -96,7 +96,15 @@ Standalone DT note:
 - Literal forms `1`, `8'3`, `8'b1010`, `8'hFF`, and `const_8b0`
 - Signal-reference forms `SIG`, `SIG[3]`, `SIG[7:0]`, `SIG'8`, `SIG.member`, and `SIG>`
 - Condition forms that are in the active supported path: `<sig`, `<!sig`, `<sig=value`, and test-node equality branches like `=0` / `=1`
-- Expression operators that are currently solid and regression-backed in the active path: `!`, `==`, `&`, and `|`
+- Nested guarded blocks using standalone `< ...` / `<! ...` action forms
+- Condition suffixes attached directly to assignments or transitions, for example `(A <= B <start)` and `(-> busy <!full)`
+- Compound-update shorthand forms `(++ sig)`, `(-- sig)`, `(+=N sig)`, and `(-=N sig)`
+- Inline compound modifiers on assignments, for example `(A <- B (+= 2))` and `(C = D (-= 1))`
+- RHS operator expressions for the currently regression-backed active families:
+  - unary `!`
+  - binary equality `==`
+  - n-ary `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`
+  - word aliases `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
 - Enforced diagnostics for illegal combinational self-dependency with `=`
 - Enforced diagnostics for mixing `=` with sequential operators on the same LHS
 - Enforced diagnostics for mixing pulse-delayed and non-pulse sequential operators on the same LHS
@@ -122,14 +130,62 @@ Standalone DT note:
 ### Implemented, but not strong enough yet to call fully supported
 - Arbitrary `(+system ...)` semantics beyond the conventional `clk` / `rstn` path
 - `(+constants ...)`, `(+enums ...)`, `(+define ...)`, and `(+params ...)`
-- Nested conditional blocks using standalone `< ...` / `<! ...` action forms
-- Condition suffixes attached directly to assignments or transitions
-- Compound-update shorthands `++`, `--`, `+=N`, `-=N`
-- Broader arithmetic/operator surface that is implemented in the expression builder but not as strongly regression-locked yet, especially `^`, `*`, `/`, `%`, and the word aliases
 
 ### Explicitly out of active support
 - VHDL generation
 - Legacy composition forms such as `?&...`, nested `?top`, `?ports` mapping directives, nested `?toplink`, and multi-source `?fsmc`
+
+### Draft normative contract for guards, suffixes, updates, and operator expressions
+This is the current `R8` draft normative contract for the active language slice that is now regression-backed explicitly.
+
+Guarded blocks:
+- `(<cond ...actions...)` executes its actions when `cond` is true in the active condition model.
+- `(<!cond ...actions...)` executes its actions when `cond` is false in the active condition model.
+- Nested guarded blocks are allowed, and nested guards compose by logical `AND`.
+- Current active examples include:
+  - `(<req (A <= B))`
+  - `(<!full (-> busy))`
+  - `(<(& req start !full) (D = C))`
+  - `(<count=8'3 (FLAG = 1))`
+
+Condition suffixes:
+- A suffix guard is the single-action form of a guarded block.
+- Examples:
+  - `(A <= B <start)` is the single-action guarded form of `(<start (A <= B))`
+  - `(-> busy <!full)` is the single-action guarded form of `(<!full (-> busy))`
+
+Update shorthand:
+- `(++ counter)` means increment `counter` by `1`
+- `(-- retry_count)` means decrement `retry_count` by `1`
+- `(+=4 byte_count)` means increment `byte_count` by `4`
+- `(-=1 remaining)` means decrement `remaining` by `1`
+- Inline forms keep the surrounding assignment family:
+  - `(ACC <- SRC (+= 2))`
+  - `(COMB = SRC (-= 1))`
+
+Operator expressions:
+- The RHS expression grammar is shared across combinational and sequential assignments.
+- The assignment operator decides timing/storage semantics; the RHS decides only the expression tree.
+- Current regression-backed operator surface:
+  - unary: `!`
+  - binary equality: `==`
+  - n-ary arithmetic/logic: `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`
+  - aliases: `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
+- Current lowering model:
+  - `+`, `*`, `&`, `|`, `^` are treated as n-ary expression families
+  - `-`, `/`, `%` are treated as left-associative n-ary expression families
+- Examples:
+  - `(sum = (+ a b c d))`
+  - `(diff = (- a b c d))`
+  - `(prod = (* a b c d))`
+  - `(quo = (/ a b c d))`
+  - `(mask = (^ x y z))`
+  - `(alias_sum = (add a b c d))`
+  - `(alias_xor = (xor x y z))`
+
+Boundary note:
+- Some future normalization ideas discussed in engineering notes are not part of the active contract yet.
+- In particular, the more systematic sugar direction such as `<foo==3` as canonical shorthand over a fully explicit guard expression remains saved in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), but it is not yet the active supported language contract.
 
 ## 3) Basic usage
 From repository root:

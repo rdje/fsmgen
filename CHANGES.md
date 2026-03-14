@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### first `R8` language-contract slice is now live and regression-backed
+- Promoted the first `R8` draft normative language-contract slice into [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md).
+- The live supported-language boundary now explicitly includes:
+  - nested guarded blocks,
+  - condition suffixes,
+  - compound update shorthand,
+  - inline compound modifiers,
+  - and the currently regression-backed broader operator-expression families.
+- Added focused regression coverage in [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t) for:
+  - guarded blocks and suffix guards,
+  - shorthand and inline updates,
+  - and broader operator lowering.
+- Hardened two small warning paths exposed by the new regression:
+  - [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm) now guards undefined legacy expression/signal strings,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) now debug-renders driving ASTs without avoidable warning noise.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so `R8` done/left tracking reflects the landed first contract slice.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
+- Validation:
+  - `perl -I perl -c perl/FSM/ExpressionNamer.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t/29-language-contract-core-forms.t` (pass)
 ### long-term horizon goals are now captured in roadmap v2
 - Extended [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) with an explicit long-term horizon section.
 - The roadmap now records two long-term goals:

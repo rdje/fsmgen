@@ -20,6 +20,28 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: first `R8` contract-hardening slice is landed
+- Current worktree is the first real `R8` implementation slice:
+  - the first draft normative language-contract section is now live in [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md),
+  - focused regression coverage exists in [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t),
+  - and two small warning-noise fixes landed in [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm).
+- Scope of the landed contract slice:
+  - nested guarded blocks,
+  - condition suffixes,
+  - compound update shorthand and inline compound modifiers,
+  - and the currently regression-backed broader operator-expression families.
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` and `ROADMAP_V2.md` now record that the first normative-contract/regression slice is complete.
+- Validation for this slice:
+  - `perl -I perl -c perl/FSM/ExpressionNamer.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/29-language-contract-core-forms.t`
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - resolve the remaining gray-zone families around `(+system ...)` and symbol-definition sections,
+  - then continue contract-hardening regressions family by family.
 ## 2026-03-14: long-term horizon goals added to roadmap v2
 - Current worktree is a doc-only roadmap-continuity slice adding explicit long-term horizon goals without changing the active priority order.
 - Scope of this slice:

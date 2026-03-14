@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: first `R8` language-contract slice is now promoted and regression-backed
+- The first real `R8` slice is now live in the user-facing contract:
+  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now contains a draft normative language-contract section for:
+    - guarded blocks,
+    - condition suffixes,
+    - update shorthand,
+    - and the currently regression-backed operator-expression families.
+- The support boundary was tightened accordingly:
+  - nested guarded blocks,
+  - suffix guards on assignments/transitions,
+  - compound update shorthand,
+  - inline compound modifiers,
+  - and the current regression-backed broader operator surface
+  are no longer left in the vague “implemented but not strong enough” bucket.
+- Focused regression coverage now exists in [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t) for:
+  - simple and nested guarded blocks,
+  - logical guarded expressions,
+  - suffix guards,
+  - shorthand and inline compound updates,
+  - and broader operator lowering (`+`, `-`, `*`, `/`, `%`, `^`, `add`, `xor`).
+- Boundary decision:
+  - the more systematic future sugar direction discussed earlier, especially canonical shorthand such as `<foo==3` over a fully explicit guard expression, remains a saved future design note rather than part of the active contract today.
+- Small support fix landed with this slice:
+  - [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm) now defensively handles undefined legacy expression strings,
+  - and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) no longer emits avoidable warning noise when debug-rendering some driving ASTs.
 ## 2026-03-14: long-term horizon goals are now captured explicitly
 - The detailed roadmap now records two explicit long-term horizon goals:
   - a Rust implementation of FSMGen,

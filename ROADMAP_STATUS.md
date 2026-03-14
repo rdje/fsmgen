@@ -59,9 +59,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R8` Language-contract hardening.
 - Current next decision point:
-  - Turn the saved design agreements for guarded blocks, condition suffixes, update shorthand, and operator-arity semantics into a draft normative language reference.
+  - Extend the new draft normative language reference beyond guards/suffixes/updates/operator expressions into the remaining unresolved parser-visible families.
   - Decide how the remaining unresolved `(+system ...)` and symbol-definition families fit into the support-tier model.
-  - Add focused regressions that lock the adopted language boundary.
+  - Keep adding focused regressions that lock the adopted language boundary construct family by construct family.
 
 ## Workstreams
 ### Closed v1 foundation workstreams
@@ -276,13 +276,18 @@ Done:
   - update shorthand,
   - and operator-arity semantics.
 - [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) now captures the detailed post-`R0`..`R7` roadmap sequencing and intent.
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now promotes the first `R8` draft normative language-reference slice for:
+  - guarded blocks,
+  - condition suffixes,
+  - update shorthand,
+  - and the currently regression-backed operator-expression families.
+- [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t) now locks the active parser/generator behavior for that same slice through focused regression coverage.
 Left:
-- Promote the saved design agreements from engineering notes into a normative language-reference section.
 - Resolve the remaining gray-zone families, especially:
   - `(+system ...)` beyond conventional `clk` / `rstn`,
   - `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`,
   - and any remaining parser-accepted legacy constructs not yet cleanly bucketed.
-- Add focused regression coverage per adopted construct family so support claims are continuously provable.
+- Continue adding focused regression coverage per adopted construct family so support claims are continuously provable.
 Exit criteria:
 - Every parser-visible active-language construct is bucketed clearly and documented normatively, with matching regression coverage for the supported tier.
 
