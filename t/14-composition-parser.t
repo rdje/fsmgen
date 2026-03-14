@@ -45,7 +45,7 @@ write_file(
   (?ports:public_io
     clk
     rstn
-    output_data>8
+    =output_data>8
   )
   (?fsmc:child_ctrl child_ctrl_src)
   (?rtl:uart_tx
@@ -85,6 +85,7 @@ is($explicit_spec->top->ports_blocks->[0]->ports->[0]->name, 'clk', 'typed port 
 is($explicit_spec->top->ports_blocks->[0]->ports->[0]->direction, 'input', 'typed port defaults to input direction');
 is($explicit_spec->top->ports_blocks->[0]->ports->[2]->direction, 'output', 'typed port preserves explicit output direction');
 is($explicit_spec->top->ports_blocks->[0]->ports->[2]->width, 8, 'typed port preserves explicit width');
+is($explicit_spec->top->ports_blocks->[0]->ports->[2]->binding_mode, 'connect_by_name', 'typed port preserves explicit connect-by-name declaration');
 is(scalar(@{$explicit_spec->top->instances}), 2, 'parser records both fsmc and rtl child instances');
 is($explicit_spec->top->instances->[0]->kind, 'fsmc', 'first typed child preserves fsmc kind');
 is($explicit_spec->top->instances->[0]->name, 'child_ctrl', 'fsmc child preserves declared child name');

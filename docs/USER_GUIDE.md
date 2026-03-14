@@ -19,6 +19,7 @@ Current limitation:
   - `C1` single-child passthrough via deterministic same-name wiring,
   - `C2` multi-child FSM composition via explicit `?toplink` wiring with `instance.port` child endpoints.
   - `C3` mixed FSM plus external RTL composition via explicit `?toplink` wiring and sidecar `<module>.rtlif` interface metadata.
+  - `C4` declared top-port connect-by-name via `=name` declarations inside `?ports`.
 - See [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) for the scoped `R6` plan and [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) for historical context.
 
 ## 2) Core concepts
@@ -128,6 +129,28 @@ This currently works because:
 - `clk` and `rstn` use the shared system-input contract,
 - non-system connections are expressed explicitly through `?toplink`,
 - explicit link widths and endpoint roles must match exactly.
+
+Current narrow declared connect-by-name example:
+```lisp
+(?top:connect_by_name_top
+  (?ports:public_io
+    clk
+    rstn
+    =final_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data/consumer.input_data/
+  )
+)
+```
+
+This currently works because:
+- `=final_data>8` declares that the top output `final_data` must be resolved by same-name matching rather than by an explicit top-output `?toplink`,
+- exactly one compatible child endpoint named `final_data` exists,
+- compatibility means same name, same direction, and same width,
+- ambiguous or missing matches fail explicitly.
 
 Current narrow mixed FSM + external RTL example:
 ```lisp

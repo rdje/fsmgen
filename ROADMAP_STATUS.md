@@ -52,7 +52,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R6` Composition-oriented language / architecture work
 - Current next decision point:
-  - Move from the shipped `C3` mixed external-RTL lane to `C4`: define the first narrow declared connect-by-name path beyond explicit `?toplink` wiring.
+  - Move from the shipped first `C4` declared top-port connect-by-name slice to `C5`: tighten width-mismatch diagnostics across explicit and declared-by-name endpoints, while keeping the `.rtlif` contract follow-up visible.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -190,12 +190,16 @@ Done:
 - The first shipped `C3` runtime slice now exists for mixed composition: exactly one embedded `?fsmc` child plus one external `?rtl` child, typed explicit `?toplink` endpoint resolution across mixed children, deterministic internal-net creation, and explicit RTL instantiation without regenerating external RTL internals.
 - External RTL interface metadata is now loaded through a typed sidecar contract (`<module>.rtlif`) searched relative to the composition source and existing source-library roots, which keeps `?rtl` as a composition-time interface-binding concern instead of reviving legacy plugin/eval loaders.
 - `t/22-composition-fsm-plus-rtl.t` now locks the first mixed `?fsmc` + `?rtl` success path, and `t/23-composition-errors.t` now also locks duplicate-driver, unknown external-port, and direction-mismatch diagnostics.
+- The first shipped `C4` runtime slice now exists for declared top-port connect-by-name: `?ports` can mark a top port as `=name`, and the planner now auto-binds it only when exactly one same-named child endpoint matches by direction and width.
+- `t/24-composition-connect-by-name.t` now locks the first `C4` success path plus ambiguous-match and unknown-name failures, and `t/14-composition-parser.t` now locks the `=port` parser shape.
 Left:
-- Widen from the shipped explicit-link lanes (`C1`/`C2`/`C3`) to the remaining acceptance matrix:
-  - `C4` declared connect-by-name beyond the current explicit-link cases,
+- Widen from the shipped lanes (`C1`/`C2`/`C3`/first `C4`) to the remaining acceptance matrix:
   - `C5` width-mismatch diagnostics across typed endpoints,
   - `C6` explicit failure for legacy composition constructs outside the scoped model.
-- Add the remaining focused composition acceptance tests beyond `t/20-composition-single-fsm-top.t`, `t/21-composition-two-fsm-linking.t`, `t/22-composition-fsm-plus-rtl.t`, and `t/23-composition-errors.t`.
+- Add the remaining focused composition acceptance tests beyond `t/20-composition-single-fsm-top.t`, `t/21-composition-two-fsm-linking.t`, `t/22-composition-fsm-plus-rtl.t`, `t/23-composition-errors.t`, and `t/24-composition-connect-by-name.t`.
+- Keep the `.rtlif` follow-up explicit so it does not get lost:
+  - document the exact grammar / allowed token forms clearly,
+  - and decide whether later lanes should evolve from sidecar metadata toward a stronger interface-source contract.
 - Continue tightening user/developer docs as more of the acceptance matrix ships.
 Exit criteria:
 - Composition capabilities exist in the active architecture, not just in notes/terminology.

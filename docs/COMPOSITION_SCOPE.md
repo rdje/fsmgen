@@ -20,6 +20,10 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
   - external RTL interface metadata loaded from a sidecar `<module>.rtlif` artifact,
   - deterministic internal-net creation and mixed-child instantiation without regenerating external RTL internals.
+- The active toolchain now also ships the first `C4` composition lane:
+  - top ports can be declared as `=name` inside `?ports` to request explicit same-name connect-by-name,
+  - the planner auto-binds only when exactly one child endpoint matches by name, direction, and width,
+  - ambiguous or missing matches fail explicitly instead of falling back to hidden inference.
 - `?top:name` inputs are now classified explicitly at the active pipeline boundary, parsed into typed composition IR, and then routed either into the shipped `C1`/`C2`/`C3` runtime lanes or a deliberate scope-boundary diagnostic.
 - This document remains the normative scope and acceptance boundary for the broader `R6` composition plan.
 
@@ -37,10 +41,12 @@ The currently shipped composition behavior is intentionally bounded:
 - `C1` single-child passthrough works without `?toplink`,
 - `C2` multi-child FSM composition uses explicit `?toplink`,
 - `C3` mixed composition currently supports exactly one embedded `?fsmc` child plus one external `?rtl` child,
+- `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports`,
+- each `=name` top port must resolve to exactly one same-named child endpoint with the same direction and width,
 - each `?rtl` child currently loads its interface from a sidecar `<module>.rtlif` metadata file searched first beside the composition source and then through the existing `FSMLIB` roots,
 - the current `C3` slice uses the RTL module name as the instance name,
 - top ports must match the realized child interface exactly by name, width, and direction in `C1`,
-- explicit `?toplink` endpoints must match by role and exact width in `C2` and `C3`,
+- explicit `?toplink` endpoints must match by role and exact width in `C2`, `C3`, and `C4`,
 - realized child interface currently means:
   - implicit `clk` / `rstn` system inputs from the active FSM generator contract,
   - plus explicit user-facing child ports as exposed by the active FSM pipeline for `?fsmc`,
@@ -92,6 +98,7 @@ The first lane must represent:
 The first lane supports:
 - explicit top-port exposure,
 - explicit child-port wiring,
+- declared top-port connect-by-name through `=name` declarations in `?ports`,
 - deterministic connect-by-name only when the names are unambiguous and declared,
 - explicit failure on:
   - unknown ports,
@@ -208,6 +215,9 @@ Status:
   - interface validation catches unknown ports and direction mismatches.
 
 ### C4. Connect-by-name only when unambiguous
+Status:
+- Implemented in the current active toolchain for top ports declared as `=name` inside `?ports`, with exact same-name matching against exactly one compatible child endpoint.
+
 - Input:
   - composition relying on declared connect-by-name.
 - Must prove:

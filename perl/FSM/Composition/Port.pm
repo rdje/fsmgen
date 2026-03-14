@@ -12,6 +12,7 @@ sub new ($class, %args) {
         direction => $args{direction},
         width => $args{width} // 1,
         type => $args{type},
+        binding_mode => $args{binding_mode} // 'explicit',
         raw_token => $args{raw_token},
     }, $class;
 }
@@ -20,6 +21,7 @@ sub name ($self) { return $self->{name} }
 sub direction ($self) { return $self->{direction} }
 sub width ($self) { return $self->{width} }
 sub type ($self) { return $self->{type} }
+sub binding_mode ($self) { return $self->{binding_mode} }
 sub raw_token ($self) { return $self->{raw_token} }
 
 1;

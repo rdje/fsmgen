@@ -258,6 +258,22 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
 
     my $rtl_instance_count = scalar(grep { $_->kind eq 'rtl' } @realized_instances);
     my $fsmc_instance_count = scalar(grep { $_->kind eq 'fsmc' } @realized_instances);
+    my $declared_by_name_port_count = scalar(grep { ($_->binding_mode || 'explicit') eq 'connect_by_name' } @ports);
+
+    if ($declared_by_name_port_count > 0) {
+        return $self->build_c4_composition_plan(
+            $composition_spec,
+            $top,
+            $ports_block,
+            \@ports,
+            \@toplinks,
+            \@realized_instances,
+            $fsmc_instance_count,
+            $rtl_instance_count,
+            $fsm_file,
+            $header,
+        );
+    }
 
     if ($rtl_instance_count == 0 && @realized_instances == 1 && !@toplinks) {
         return $self->build_c1_composition_plan(
@@ -528,6 +544,43 @@ sub build_c3_composition_plan ($self, $composition_spec, $top, $ports_block, $po
     );
 }
 
+sub build_c4_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $fsmc_instance_count, $rtl_instance_count, $fsm_file, $header) {
+    my $declared_by_name_port_count = scalar(grep { ($_->binding_mode || 'explicit') eq 'connect_by_name' } @{$ports || []});
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' requests declared connect-by-name, ".
+        "but the current active C4 lane requires at least one '=port' declaration inside '?ports'. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless $declared_by_name_port_count;
+
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' requests declared connect-by-name, ".
+        "but the current active C4 lane starts beyond the single-child passthrough case and therefore requires multiple realized child instances. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless @{$realized_instances || []} >= 2;
+
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' requests declared connect-by-name, ".
+        "but the current active C4 lane only extends the already shipped child-realization sets: ".
+        "either multiple '?fsmc' children or exactly one '?fsmc' child plus one '?rtl' child. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless ($rtl_instance_count == 0) || (@{$realized_instances || []} == 2 && $fsmc_instance_count == 1 && $rtl_instance_count == 1);
+
+    my @links = map { @{$_->links || []} } @{$toplinks || []};
+    push @links, @{$self->build_declared_by_name_links($ports, $realized_instances, $fsm_file, $header)};
+
+    return $self->build_linked_composition_plan(
+        'C4',
+        $composition_spec,
+        $top,
+        $ports_block,
+        $ports,
+        \@links,
+        $realized_instances,
+        $fsm_file,
+        $header,
+    );
+}
+
 sub build_explicit_link_composition_plan ($self, $lane, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $fsm_file, $header) {
     my @links = map { @{$_->links || []} } @{$toplinks || []};
     Carp::confess
@@ -536,6 +589,96 @@ sub build_explicit_link_composition_plan ($self, $lane, $composition_spec, $top,
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @links;
 
+    return $self->build_linked_composition_plan(
+        $lane,
+        $composition_spec,
+        $top,
+        $ports_block,
+        $ports,
+        \@links,
+        $realized_instances,
+        $fsm_file,
+        $header,
+    );
+}
+
+sub build_declared_by_name_links ($self, $ports, $realized_instances, $fsm_file, $header) {
+    my @links;
+    my @candidate_endpoints;
+    for my $instance (@{$realized_instances || []}) {
+        for my $port (@{$instance->interface_ports || []}) {
+            push @candidate_endpoints, {
+                instance_name => $instance->instance_name,
+                port => $port,
+            };
+        }
+    }
+
+    for my $top_port (@{$ports || []}) {
+        next unless ($top_port->binding_mode || 'explicit') eq 'connect_by_name';
+
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
+            "but the shared system ports 'clk' and 'rstn' already use the dedicated system-input contract and must not be declared with '=port' connect-by-name syntax. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            if $top_port->name eq 'clk' || $top_port->name eq 'rstn';
+
+        my @same_name_candidates = grep { $_->{port}->name eq $top_port->name } @candidate_endpoints;
+        my @compatible_candidates = grep {
+            $_->{port}->direction eq $top_port->direction
+                && $_->{port}->width == $top_port->width
+        } @same_name_candidates;
+
+        if (@compatible_candidates == 1) {
+            my $match = $compatible_candidates[0];
+            push @links, (
+                $top_port->direction eq 'input'
+                    ? FSM::Composition::Link->new(
+                        source => $top_port->name,
+                        target => $match->{instance_name}.'.'.$match->{port}->name,
+                        raw_token => '=byname:'.$top_port->name,
+                    )
+                    : FSM::Composition::Link->new(
+                        source => $match->{instance_name}.'.'.$match->{port}->name,
+                        target => $top_port->name,
+                        raw_token => '=byname:'.$top_port->name,
+                    )
+            );
+            next;
+        }
+
+        if (@compatible_candidates > 1) {
+            my $candidates = join(', ', map { $_->{instance_name}.'.'.$_->{port}->name } @compatible_candidates);
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
+                "but that name resolves ambiguously to multiple compatible child endpoints: $candidates. ".
+                "The current active C4 lane requires exactly one compatible child endpoint for each '=port' declaration. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        if (@same_name_candidates) {
+            my $candidates = join(', ', map {
+                $_->{instance_name}.'.'.$_->{port}->name.
+                '['.$_->{port}->direction.', width='.$_->{port}->width.']'
+            } @same_name_candidates);
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
+                "but no compatible child endpoint matches its declared direction/width (".$top_port->direction.", width=".$top_port->width."). ".
+                "Seen same-name child endpoints: $candidates. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
+            "but no realized child endpoint with that name exists. ".
+            "The current active C4 lane requires each '=port' declaration to match exactly one child endpoint by name. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    return \@links;
+}
+
+sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports_block, $ports, $links, $realized_instances, $fsm_file, $header) {
     my $top_ports_by_name = $self->assert_unique_top_ports($ports_block, $fsm_file, $header);
     my %instances_by_name;
     my %child_ports_by_instance;
@@ -581,7 +724,7 @@ sub build_explicit_link_composition_plan ($self, $lane, $composition_spec, $top,
     my %links_by_source;
     my %source_endpoint_by_key;
 
-    for my $link (@links) {
+    for my $link (@{$links || []}) {
         my $source = $self->resolve_composition_endpoint(
             $link->source,
             $top_ports_by_name,
@@ -652,7 +795,7 @@ sub build_explicit_link_composition_plan ($self, $lane, $composition_spec, $top,
         my @top_output_targets = grep { $_->{target}{kind} eq 'top_port' } @group;
         Carp::confess
             "Composition source '$header' in '$fsm_file' drives multiple top outputs from '".$source->{raw}."', ".
-            "but the current active C2 lane supports at most one top-output target per explicit source. ".
+            "but the current active $lane lane supports at most one top-output target per resolved source. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             if @top_output_targets > 1;
 
@@ -718,7 +861,7 @@ sub build_explicit_link_composition_plan ($self, $lane, $composition_spec, $top,
 
             Carp::confess
                 "Composition source '$header' in '$fsm_file' leaves child port '".$instance->instance_name.".".$port->name."' unconnected, ".
-                "but the current active C2 lane requires every realized child port to be wired explicitly or through the shared system-input contract. ".
+                "but the current active $lane lane requires every realized child port to be wired explicitly, through declared connect-by-name, or through the shared system-input contract. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                 unless defined $signal_name;
 
@@ -735,7 +878,7 @@ sub build_explicit_link_composition_plan ($self, $lane, $composition_spec, $top,
         lane => $lane,
         top_name => $top->name,
         ports => $ports,
-        links => \@links,
+        links => $links,
         nets => \@nets,
         instances => \@planned_instances,
         raw_spec => $composition_spec,

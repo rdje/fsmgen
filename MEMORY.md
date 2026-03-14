@@ -20,6 +20,31 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: `R6` first shipped `C4` declared connect-by-name lane
+- Current worktree widens the shipped composition runtime from explicit-link-only lanes into the first declared connect-by-name slice.
+- Scope of this slice:
+  - typed composition ports now preserve explicit connect-by-name intent via `=name` declarations inside `?ports`,
+  - `FSM::Pipeline::HDLGenerator` now recognizes a dedicated `C4` lane and synthesizes by-name links from those declarations,
+  - the first shipped `C4` behavior is top-port only and requires exactly one same-named child endpoint with the same direction and width.
+- Regression coverage update:
+  - tightened `t/14-composition-parser.t` so `=port` parser shape and `binding_mode` preservation are now locked,
+  - added `t/24-composition-connect-by-name.t` for the shipped `C4` success path plus ambiguous-match and no-match failures.
+- Roadmap board update:
+  - `ROADMAP_STATUS.md` still keeps `R6` at `in progress`,
+  - `R6` `Done` now includes the first shipped `C4` declared connect-by-name slice,
+  - the current next decision point is now `C5` width-mismatch diagnostics,
+  - and the `.rtlif` follow-up is now recorded explicitly in the board so we do not forget to document exact grammar and revisit the stronger interface-source contract question later.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Composition/Port.pm`
+  - `perl -I perl -c perl/FSM/Composition/Parser.pm`
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm`
+  - `perl -I perl -c t/14-composition-parser.t`
+  - `perl -I perl -c t/24-composition-connect-by-name.t`
+  - `prove -I perl t/14-composition-parser.t t/20-composition-single-fsm-top.t t/21-composition-two-fsm-linking.t t/22-composition-fsm-plus-rtl.t t/23-composition-errors.t t/24-composition-connect-by-name.t`
+  - `prove -I perl t`
+- Immediate next direction after commit:
+  - move to `C5`,
+  - tighten width-mismatch diagnostics across explicit and declared-by-name endpoints.
 ## 2026-03-14: `R6` first shipped `C3` mixed FSM-plus-RTL lane
 - Current worktree widens the shipped composition runtime from FSM-only linking into the first mixed external-RTL lane.
 - Scope of this slice:

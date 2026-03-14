@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R6` first shipped `C4` declared connect-by-name slice
+- Continued `R6` by adding the first narrow modern connect-by-name contract on top of the shipped explicit-link lanes.
+- Rationale:
+  - the right modern meaning of “connect-by-name” is not broad inference; it is an explicit declaration that authorizes a deterministic same-name match,
+  - putting that declaration on typed top ports (`=name` in `?ports`) keeps the feature small, testable, and visibly opted-in,
+  - reusing the existing typed link planner is safer than inventing a second hidden auto-wiring engine.
+- Structural outcome:
+  - typed composition ports now carry `binding_mode`,
+  - the parser preserves `=name` declarations as explicit connect-by-name intent,
+  - `HDLGenerator` synthesizes by-name links from those declarations and then runs them through the same endpoint-resolution/validation pipeline as explicit links.
+- Contract decision:
+  - the first shipped `C4` slice is top-port only,
+  - a declared connect-by-name match is valid only when exactly one child endpoint has the same name, same direction, and same width,
+  - ambiguity and no-match cases fail explicitly instead of widening hidden inference.
+- Safety/compatibility:
+  - existing `C1`/`C2`/`C3` behavior stays intact because `C4` reuses the same planned-binding and emission paths,
+  - explicit `?toplink` remains the mechanism for all other non-system connections,
+  - the `.rtlif` follow-up is now recorded on the roadmap so we do not lose the next design question: document exact grammar now and later decide whether a stronger interface-source contract should replace or sit above the sidecar form.
+- Verification:
+  - syntax checks for the touched composition types, planner, and new parser/test files pass,
+  - focused composition regressions `t/14`, `t/20`, `t/21`, `t/22`, `t/23`, and `t/24` pass,
+  - the full Perl regression suite passes again after landing the `C4` slice.
+- Next likely slices:
+  - move to `C5` by tightening width-mismatch diagnostics across explicit and declared-by-name endpoints,
+  - then close the scoped `R6` plan with the remaining explicit out-of-scope legacy-failure work in `C6`.
 ## 2026-03-14: `R6` first shipped `C3` mixed FSM-plus-RTL slice
 - Continued `R6` by widening the shipped composition runtime from FSM-only linking into the first mixed external-RTL lane.
 - Rationale:

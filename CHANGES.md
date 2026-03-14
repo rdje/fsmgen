@@ -1,6 +1,36 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### `R6` first shipped `C4` declared connect-by-name lane
+- Landed the first active declared connect-by-name runtime slice in [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm).
+- The shipped `C4` boundary is intentionally narrow:
+  - top ports may be declared as `=name` inside `?ports`,
+  - connect-by-name applies only to those explicitly declared top ports,
+  - and planning succeeds only when exactly one same-named child endpoint matches by direction and width.
+- Updated [perl/FSM/Composition/Port.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Port.pm) and [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so `?ports` tokens can now carry explicit connect-by-name intent through a `binding_mode` on typed ports.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the composition path now:
+  - recognizes a dedicated `C4` lane when `?ports` contains `=name` declarations,
+  - synthesizes typed by-name links for those declarations,
+  - and rejects ambiguous or missing matches explicitly instead of widening implicit inference.
+- Tightened [t/14-composition-parser.t](/Users/richarddje/Documents/github/fsmgen/t/14-composition-parser.t) so the parser now locks `=port` shape and connect-by-name preservation on typed ports.
+- Added [t/24-composition-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/24-composition-connect-by-name.t) to lock:
+  - the first `C4` success path,
+  - ambiguous same-name match rejection,
+  - and missing-child-endpoint rejection.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the docs now describe the shipped `C4` subset truthfully.
+- Live roadmap status change:
+  - no phase status changed,
+  - `R6` remains `in progress`,
+  - but `R6` `Done` / `Left` moved forward because the first `C4` slice is now shipped, the next honest slice is `C5`, and the `.rtlif` grammar/stronger-interface-contract follow-up is now recorded explicitly in the roadmap board.
+- Validation:
+  - `perl -I perl -c perl/FSM/Composition/Port.pm` (pass)
+  - `perl -I perl -c perl/FSM/Composition/Parser.pm` (pass)
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm` (pass)
+  - `perl -I perl -c t/14-composition-parser.t` (pass)
+  - `perl -I perl -c t/24-composition-connect-by-name.t` (pass)
+  - `prove -I perl t/14-composition-parser.t t/20-composition-single-fsm-top.t t/21-composition-two-fsm-linking.t t/22-composition-fsm-plus-rtl.t t/23-composition-errors.t t/24-composition-connect-by-name.t` (pass)
+  - `prove -I perl t` (pass)
+  - `git diff --check` (pass)
 ### `R6` first shipped `C3` mixed FSM-plus-RTL lane
 - Landed the first active mixed composition runtime slice in [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm).
 - The shipped `C3` boundary is intentionally narrow:

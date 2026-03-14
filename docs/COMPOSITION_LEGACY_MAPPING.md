@@ -133,6 +133,7 @@ Legacy top building inferred many top ports/signals from child directionality an
 Active `R6` direction:
 - explicit wiring first,
 - connect-by-name only when declared and unambiguous.
+- the first shipped modern `C4` slice narrows that further to top ports declared as `=name` inside `?ports`.
 
 Reason:
 - hidden inference is hard to validate and hard to make deterministic.

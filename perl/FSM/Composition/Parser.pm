@@ -191,8 +191,8 @@ sub parse_ports_block ($self, $top_name, $child_ast, $block_name, $items) {
 }
 
 sub parse_port_token ($self, $top_name, $token) {
-    $token =~ /^(?<port>\w+)(?:(?<direction>[<>])(?<size>\d+)?(?:[:](?<type>\w+))?)?$/o;
-    my ($port, $direction, $size, $type) = @+{qw/port direction size type/};
+    $token =~ /^(?<binding>=)?(?<port>\w+)(?:(?<direction>[<>])(?<size>\d+)?(?:[:](?<type>\w+))?)?$/o;
+    my ($binding, $port, $direction, $size, $type) = @+{qw/binding port direction size type/};
 
     confess "Composition top '$top_name' contains invalid '?ports' token '$token'" unless $port;
     confess "Composition top '$top_name' contains non-positive port width in token '$token'" if defined($size) && $size < 1;
@@ -202,6 +202,7 @@ sub parse_port_token ($self, $top_name, $token) {
         direction => defined($direction) ? ($direction eq '<' ? 'input' : 'output') : 'input',
         width => $size // 1,
         type => $type,
+        binding_mode => defined($binding) ? 'connect_by_name' : 'explicit',
         raw_token => $token,
     );
 }
