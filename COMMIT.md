@@ -16,7 +16,7 @@ Its purpose is to let any new AI resume work safely and follow the same commit h
 - `ROADMAP_STATUS.md`
   - Canonical live roadmap/workstream board.
   - Must be updated before commit whenever a task changes status, deliverables, remaining work, or the current active lane.
-  - Every workstream in this board must keep explicit `Deliverables`, `Status`, `Done`, `Left`, and `Exit criteria`.
+  - Every workstream in this board must keep explicit `Description`, `Deliverables`, `Status`, `Done`, `Left`, and `Exit criteria`.
 - `CHANGES.md`
   - Persistent technical change history.
   - Must be updated after `MEMORY.md` and any needed `ROADMAP_STATUS.md` refresh.
@@ -56,6 +56,8 @@ Its purpose is to let any new AI resume work safely and follow the same commit h
 9. The user-facing close-out must always include the current live status snapshot from `ROADMAP_STATUS.md`.
    - If live status changed, explicitly state how the completed task affected that snapshot.
    - If live status did not change, explicitly state that the snapshot is unchanged for this task.
+   - For every `Rj`, show at least `Status` + brief `Description`.
+   - When useful, also show brief sub-bullets for the active lane, the changed lane, or any phase whose next step matters for understanding current progress.
 
 ## Safety and consistency rules
 - Keep commits task-scoped (only files relevant to the completed task).

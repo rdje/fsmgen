@@ -7,7 +7,7 @@ This workflow enforces rigorous documentation before performing a Git commit.
 
 1. Refresh `MEMORY.md` first with the completed task state and immediate next direction.
 2. Refresh `ROADMAP_STATUS.md` before the commit if the task changed roadmap status, deliverables, remaining work, or the current active lane.
-   Keep explicit `Deliverables`, `Status`, `Done`, `Left`, and `Exit criteria` for every workstream.
+   Keep explicit `Description`, `Deliverables`, `Status`, `Done`, `Left`, and `Exit criteria` for every workstream.
 3. Append detailed technical change history to `CHANGES.md`, and explicitly log any live-status change there when one occurred.
 4. Append design constraints, context, decisions, and architectural choices to `DEVELOPMENT_NOTES.md`.
 // turbo
@@ -18,3 +18,5 @@ This workflow enforces rigorous documentation before performing a Git commit.
 8. Clear the brief message file in preparation for the next cycle: `> git_message_brief.txt`
 9. Include the current live status snapshot from `ROADMAP_STATUS.md` in the user-facing close-out every time the commit workflow runs.
 10. If live status changed, explicitly say how the completed task changed the snapshot; if it did not change, explicitly say the snapshot is unchanged for this task.
+11. In that snapshot, show every `Rj` with at least `Status` + brief `Description`.
+12. When helpful, include brief sub-bullets for the active lane, changed lane, or phases whose next step matters right now.

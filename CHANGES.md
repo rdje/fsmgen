@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### Roadmap snapshot hardening (show `Rj` descriptions)
+- Tightened the roadmap board and commit workflow so every live-status snapshot now shows each `Rj` with at least `status + brief description`.
+- Added explicit `Description` fields to every workstream in `ROADMAP_STATUS.md`, so the board now answers not only “where are we?” but also “what does this phase do?” without requiring the user to infer it from deliverables.
+- Updated `COMMIT.md`, `.agents/workflows/commit.md`, and `MEMORY.md` so commit close-outs must:
+  - show `status + description` for every `Rj`,
+  - and optionally add brief sub-bullets for the active lane, changed lane, or any phase whose next step matters right now.
+- Validation:
+  - `git diff --check` (pass)
+  - `rg -n '^Description:|status \\+ description|show every' ROADMAP_STATUS.md COMMIT.md .agents/workflows/commit.md MEMORY.md CHANGES.md DEVELOPMENT_NOTES.md` (pass)
 ### Roadmap phase transition (`R3` done, active lane -> `R6`)
 - Audited the remaining runtime-convergence residue after removing direct stored-expression parsing from normal backend runtime-AST resolution.
 - Audit result:

@@ -13,8 +13,9 @@ After each completed task, always do this in order:
 4. Update other live docs as needed (`DEVELOPMENT_NOTES.md`, and any user-facing docs impacted by the change).
 5. Display the current live status snapshot in the user-facing close-out every time the commit workflow runs.
 6. If live status changed, explicitly state how the completed task changed the snapshot; if it did not change, explicitly state that the snapshot is unchanged for this task.
-7. Run validation for the task scope (syntax checks + regression tests when applicable).
-8. Run commit workflow:
+7. In that snapshot, show every `Rj` with at least `Status` + brief `Description`; add brief sub-bullets for the active lane or changed lane when helpful.
+8. Run validation for the task scope (syntax checks + regression tests when applicable).
+9. Run commit workflow:
    - write `git_message_brief.txt`
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`

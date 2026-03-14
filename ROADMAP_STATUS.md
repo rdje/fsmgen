@@ -20,11 +20,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - `in progress`
   - `not started`
 - Every workstream must state:
+  - `Description`: a brief statement of what the phase does and why it exists,
   - `Deliverables`: the concrete outputs required for the phase to count as complete,
   - `Status`: current achievement level against those deliverables,
   - `Done`: what is already landed,
   - `Left`: what still remains,
   - `Exit criteria`: the completion boundary.
+- Every user-facing live-status snapshot derived from this board must show, for each `Rj`:
+  - `Status`
+  - `Description`
+- When a phase has meaningful open sub-steps, the snapshot should also show brief sub-bullets for:
+  - the current active lane,
+  - any phase whose status changed in the completed task,
+  - and any other phase where the next step is important to understand current progress.
 
 ## Status scale
 - `done`
@@ -48,6 +56,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
+Description:
+- Keep one canonical, explicit live board for roadmap state and make status tracking part of the normal workflow.
 Deliverables:
 - One canonical tracked board that states live workstream status and the current active lane.
 - A fixed four-level status taxonomy used consistently across the project.
@@ -62,6 +72,8 @@ Exit criteria:
 - Already met; this is now an ongoing maintenance obligation.
 
 ### R1. FlattenedDT dead-surface retirement
+Description:
+- Remove dead helper/facade surface from the old `FlattenedDT` monolith so the active architecture reflects only supported behavior.
 Deliverables:
 - Remove dead facade/helper surface from `perl/FSM/HDL/FlattenedDT.pm` and adjacent dead owner-side helper pockets.
 - Add regression protection so retired dead surface does not silently reappear.
@@ -77,6 +89,8 @@ Exit criteria:
 - Already met; the dedicated cleanup-only lane is considered exhausted.
 
 ### R2. Live ownership migration from `Orchestrator` / backend to `EnableGraph`
+Description:
+- Move live synthesis-domain ownership out of routing/rendering modules and into `EnableGraph`, so analysis and mutation live with their real owner.
 Deliverables:
 - `EnableGraph` owns live synthesis-domain capture, enable analysis, declaration planning, and other owner-side mutation of `assignment_analysis` / captured AST structures.
 - `Backend::SystemVerilog` and `Orchestrator` retain only traversal, backend-local factorization, runtime AST recovery/filtering, and HDL rendering/orchestration responsibilities.
@@ -99,6 +113,8 @@ Exit criteria:
 - Met: the active path no longer has ownership confusion around synthesis analysis versus backend rendering/factorization.
 
 ### R3. AST/CoreAST-first runtime convergence
+Description:
+- Make the active runtime use native AST/CoreAST data by default, and confine legacy string reconstruction to explicit compatibility boundaries only.
 Deliverables:
 - Live top-level enable/intermediate registries are AST/CoreAST-backed by default.
 - Runtime dependency recovery, width recovery, and driving-AST storage prefer native AST/CoreAST sources over string reconstruction.
@@ -117,6 +133,8 @@ Exit criteria:
 - Met: live intermediate-signal/runtime behavior is now AST/CoreAST-first by default, with only deliberate and well-justified explicit compatibility residue remaining.
 
 ### R4. Assignment semantics and capture contract modernization
+Description:
+- Normalize assignment intent/provenance semantics in the parsed/CoreAST model and preserve that meaning all the way through runtime capture and HDL generation.
 Deliverables:
 - Parsed/CoreAST assignment nodes expose normalized assignment intent, provenance, output-exposure, and pulse metadata.
 - Live capture preserves that metadata into runtime capture/analysis structures without lossy translation.
@@ -131,6 +149,8 @@ Exit criteria:
 - Already met for the current roadmap intent.
 
 ### R5. Generator reuse / per-run state safety
+Description:
+- Guarantee that one generator instance can be reused safely across runs without leaking prior-run state into the next generation.
 Deliverables:
 - One generator instance can be reused across multiple generations without leaking prior-run registries or scratch state.
 - Per-run state is reset deterministically before generation begins.
@@ -145,6 +165,8 @@ Exit criteria:
 - Already met for the current roadmap intent.
 
 ### R6. Composition-oriented language / architecture work
+Description:
+- Define and implement the composition model for the active tool so larger FSM systems can be expressed in the refactored architecture, not just in notes.
 Deliverables:
 - Define concrete composition-oriented language/architecture scope for the active tool, not just terminology.
 - Implement composition capabilities in the active `bin/fsmgen` architecture.
@@ -159,6 +181,8 @@ Exit criteria:
 - Composition capabilities exist in the active architecture, not just in notes/terminology.
 
 ### R7. Extension/plugin redesign replacing legacy `.plg` / `PPlugin`
+Description:
+- Replace the legacy plugin path with a typed extension mechanism that fits the active architecture and can be tested and documented cleanly.
 Deliverables:
 - Define the replacement typed hook/extension mechanism for the active architecture.
 - Implement that mechanism in the live toolchain.

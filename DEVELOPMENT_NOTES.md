@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: Live roadmap snapshots now include what each `Rj` does
+- Tightened the roadmap display contract so live-status snapshots show not only each phase’s status but also a short explanation of what that phase actually covers.
+- Rationale:
+  - status alone is not enough when the roadmap phases are abstract labels like `R3` or `R6`,
+  - the user needs to see, at a glance, what each phase means without reopening the whole board or mentally decoding old history,
+  - the canonical board is therefore now responsible for carrying both progress state and a concise semantic label for each phase.
+- Structural outcome:
+  - every workstream in `ROADMAP_STATUS.md` now has a `Description` field,
+  - commit-workflow close-outs must now show every `Rj` as `status + description`,
+  - when a phase has meaningful open sub-steps, the close-out may add brief sub-bullets for the active lane, changed lane, or another phase whose next step matters.
+- Safety/compatibility:
+  - this is a workflow/communication hardening slice only; no runtime behavior changed,
+  - the live-status snapshot stays compact, but it now carries enough semantics to be useful without cross-referencing multiple docs.
+- Verification:
+  - `git diff --check` passes,
+  - targeted `rg` over the workflow/docs confirms the new description requirement is wired consistently.
 ## 2026-03-14: `R3` completion audit and active-lane pivot to `R6`
 - Closed the `R3` runtime-convergence phase after removing the last implicit stored-expression parse from normal backend runtime-AST resolution.
 - Rationale:
