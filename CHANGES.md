@@ -6,8 +6,9 @@ This is the persistent technical change history for FSMGen.
 - The saved direction now states:
   - combinational and sequential assignments should share the same RHS expression grammar,
   - operator aliases should lower to canonical operators,
-  - N-ary `+`, `*`, `&`, `|`, and `^` use explicit fold semantics,
-  - extended `-`, `/`, and `%` use left-fold semantics if allowed beyond arity 2,
+  - infix-style operator families should be treated as unlimited-ary wherever their semantics can be explained deterministically,
+  - unlimited-ary `+`, `*`, `&`, `|`, and `^` use explicit fold semantics,
+  - unlimited-ary `-`, `/`, and `%` use left-associative left-fold semantics,
   - chained relational operators use adjacent-pair conjunction, for example `(< a b c)` means `((a < b) && (b < c))`,
   - and any allowed operator form must have an explicit unambiguous interpretation with examples.
 - Live roadmap status change:

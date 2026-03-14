@@ -133,20 +133,24 @@ means:
 - The exact interpretation must be stated clearly and illustrated with examples whenever this is made normative.
 
 #### Current working interpretation by operator family
-- Natural N-ary fold operators:
+- Working direction:
+  - treat infix-style operator families as unlimited-ary where their semantics can be explained deterministically,
+  - use the operator's associativity or chain rule to define the lowering,
+  - and always document that lowering with unambiguous examples.
+- Natural unlimited-ary fold operators:
   - `(+ a b c ... z)` means `(a + b + c + ... + z)`
   - `(* a b c ... z)` means `(a * b * c * ... * z)`
   - logical/bitwise combine operators are also naturally unlimited-ary:
   - `(& a b c ... z)` means `(a & b & c & ... & z)`
   - `(| a b c ... z)` means `(a | b | c | ... | z)`
   - `(^ a b c ... z)` means `(((a ^ b) ^ c) ^ ... ^ z)`
+- Left-associative unlimited-ary operators:
+  - `(- a b c d)` means `(((a - b) - c) - d)`
+  - `(/ a b c d)` means `(((a / b) / c) / d)`
+  - `(% a b c d)` means `(((a % b) % c) % d)`
 - Unary operator:
   - `(! a)` means logical inversion of `a`
-- Left-fold binary-style arithmetic operators if extended beyond arity 2:
-  - `(- a b c)` means `((a - b) - c)`
-  - `(/ a b c)` means `((a / b) / c)`
-  - `(% a b c)` means `((a % b) % c)`
-- Chained relational operators:
+- Chained unlimited-ary relational operators:
   - `(< a b c)` means `((a < b) && (b < c))`
   - `(<= a b c d)` means `((a <= b) && (b <= c) && (c <= d))`
   - `(> a b c)` means `((a > b) && (b > c))`
@@ -161,6 +165,8 @@ means:
   (prod = (* a b c d))
   (mask = (& ready valid enable))
   (par  = (^ a b c))
+  (diff = (- a b c d))
+  (quo  = (/ a b c d))
 )
 ```
 

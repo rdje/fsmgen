@@ -25,9 +25,10 @@ After each completed task, always do this in order:
 - Scope of this slice:
   - saved in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) that combinational and sequential assignments should share one RHS expression grammar,
   - saved that operator aliases should lower to canonical operators,
+  - saved the broader agreement that infix-style operator families should be treated as unlimited-ary whenever their semantics can be defined deterministically,
   - saved natural unlimited-ary fold semantics for `+`, `*`, `&`, `|`, and `^`,
   - saved unary semantics for `!`,
-  - saved left-fold semantics for `-`, `/`, and `%` if allowed beyond arity 2,
+  - saved left-associative unlimited-ary semantics for `-`, `/`, and `%`,
   - saved chained relational semantics as adjacent-pair conjunction, for example `(< a b c)` => `((a < b) && (b < c))`,
   - and saved the meta-rule that any allowed operator form must have an explicit unambiguous interpretation with examples.
 - Roadmap board update:
