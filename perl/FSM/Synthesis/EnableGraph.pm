@@ -715,6 +715,138 @@ sub collect_all_wen_en_ast_expressions($self) {
     fsm_debug("COLLECT_AST: Collected " . scalar(@ast_expressions) . " AST expressions", 3);
     return @ast_expressions;
 }
+sub feed_asts_to_factorizer($self, $factorizer) {
+    my $ctx = $self->{flattened_dt};
+
+    fsm_debug("FEED_ASTS: Feeding AST expressions to generic factorizer", 3);
+
+    my $total_fed = 0;
+    my $dt_enables_fed = 0;
+    my $lhs_enables_fed = 0;
+    my $assignment_conditions_fed = 0;
+
+    if ($ctx->{assignment_analysis}) {
+        my $total_lhs = scalar(keys %{$ctx->{assignment_analysis}});
+        fsm_debug("FEED_ASTS: Processing $total_lhs LHS signals from assignment analysis", 3);
+
+        for my $lhs (keys %{$ctx->{assignment_analysis}}) {
+            my $lhs_analysis = $ctx->{assignment_analysis}{$lhs};
+            my $rhs_count = scalar(keys %{$lhs_analysis->{rhs_groups}});
+            fsm_debug("  LHS '$lhs' has $rhs_count RHS groups", 3);
+
+            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
+                my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
+
+                my $dt_enable_count = scalar(@{$rhs_group->{dt_specific_enables} || []});
+                fsm_debug("    RHS '$rhs' has $dt_enable_count DT-specific enables", 3);
+
+                for my $dt_enable (@{$rhs_group->{dt_specific_enables} || []}) {
+                    if ($dt_enable->{enable_ast} && blessed($dt_enable->{enable_ast})) {
+                        my $sv = eval { $dt_enable->{enable_ast}->to_systemverilog() } || "[NO SV REPRESENTATION]";
+
+                        $factorizer->add_ast_expression(
+                            $dt_enable->{enable_ast},
+                            "dt_enable:$dt_enable->{enable_name}"
+                        );
+                        $total_fed++;
+                        $dt_enables_fed++;
+                        fsm_debug("  Fed DT-specific AST: $dt_enable->{enable_name}", 3);
+                        fsm_debug("    Expression: $sv", 3);
+                    } else {
+                        fsm_debug("  SKIPPED DT-specific enable (no AST): $dt_enable->{enable_name}", 3);
+                    }
+                }
+
+                if ($rhs_group->{lhs_level_enable}) {
+                    my $lhs_enable = $rhs_group->{lhs_level_enable};
+                    if ($lhs_enable->{ast} && blessed($lhs_enable->{ast})) {
+                        my $sv = eval { $lhs_enable->{ast}->to_systemverilog() } || "[NO SV REPRESENTATION]";
+
+                        $factorizer->add_ast_expression(
+                            $lhs_enable->{ast},
+                            "lhs_enable:$lhs_enable->{name}"
+                        );
+                        $total_fed++;
+                        $lhs_enables_fed++;
+                        fsm_debug("  Fed LHS-level AST: $lhs_enable->{name}", 3);
+                        fsm_debug("    Expression: $sv", 3);
+                    } else {
+                        fsm_debug("  SKIPPED LHS-level enable (no AST): $lhs_enable->{name}", 3);
+                    }
+                }
+            }
+        }
+    } else {
+        fsm_debug("*** WARNING: No assignment_analysis available for AST feeding! ***", 3);
+    }
+
+    my $total_assignments = 0;
+    for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
+        $total_assignments += scalar(@{$ctx->{lhs_assignments}{$lhs}});
+    }
+
+    fsm_debug("FEED_ASTS: Processing $total_assignments assignment conditions", 3);
+
+    for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
+        for my $assignment (@{$ctx->{lhs_assignments}{$lhs}}) {
+            if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
+                my $sv = eval { $assignment->{conditions_ast}->to_systemverilog() } || "[NO SV REPRESENTATION]";
+
+                $factorizer->add_ast_expression(
+                    $assignment->{conditions_ast},
+                    "assignment_condition:$lhs:$assignment->{dt}"
+                );
+                $total_fed++;
+                $assignment_conditions_fed++;
+                fsm_debug("  Fed assignment condition AST: $lhs from $assignment->{dt}", 3);
+                fsm_debug("    Expression: $sv", 3);
+            }
+        }
+    }
+
+    my $fsmgen_intermediate_fed = 0;
+    if ($ctx->{fsm_module} && $ctx->{fsm_module}->can('signals') && $ctx->{fsm_module}->signals) {
+        fsm_debug("FEED_ASTS: Processing FSMGenFull intermediate signals", 3);
+        my $fsm_signals = $ctx->{fsm_module}->signals;
+
+        for my $signal_name (keys %$fsm_signals) {
+            my $signal = $fsm_signals->{$signal_name};
+
+            if ($signal && $signal->can('driving_ast') && $signal->driving_ast) {
+                my $is_intermediate = 0;
+                if ($signal->can('get_attribute')) {
+                    $is_intermediate = $signal->get_attribute('is_intermediate');
+                } elsif ($signal->can('attributes') && $signal->attributes) {
+                    $is_intermediate = $signal->attributes->{is_intermediate};
+                }
+
+                if ($is_intermediate) {
+                    my $driving_ast = $signal->driving_ast;
+                    if (blessed($driving_ast)) {
+                        my $sv = eval { $driving_ast->to_systemverilog() } || "[NO SV REPRESENTATION]";
+
+                        $factorizer->add_ast_expression(
+                            $driving_ast,
+                            "fsmgen_intermediate:$signal_name"
+                        );
+                        $total_fed++;
+                        $fsmgen_intermediate_fed++;
+                        fsm_debug("  Fed FSMGenFull intermediate AST: $signal_name", 3);
+                        fsm_debug("    Expression: $sv", 3);
+                    }
+                }
+            }
+        }
+    }
+
+    fsm_debug("FEED_ASTS: Fed $total_fed total AST expressions to factorizer", 3);
+    fsm_debug("  - DT-specific enables: $dt_enables_fed", 3);
+    fsm_debug("  - LHS-level enables: $lhs_enables_fed", 3);
+    fsm_debug("  - Assignment conditions: $assignment_conditions_fed", 3);
+    fsm_debug("  - FSMGenFull intermediates: $fsmgen_intermediate_fed", 3);
+
+    return $total_fed;
+}
 sub _count_logical_ops_in_ast($self, $ast, $counts_ref) {
     return unless $ast && blessed($ast);
 
@@ -771,6 +903,144 @@ sub _is_factorizable_sub_expression($self, $ast) {
     }
 
     return 1;
+}
+sub feed_current_asts_to_second_pass($self, $second_pass_factorizer) {
+    my $ctx = $self->{flattened_dt};
+
+    fsm_debug("SECOND_PASS_FEED: Collecting current AST expressions", 3);
+
+    my $total_fed = 0;
+
+    if ($ctx->{assignment_analysis}) {
+        for my $lhs (keys %{$ctx->{assignment_analysis}}) {
+            my $lhs_analysis = $ctx->{assignment_analysis}{$lhs};
+
+            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
+                my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
+
+                for my $dt_enable (@{$rhs_group->{dt_specific_enables} || []}) {
+                    if ($dt_enable->{enable_ast} && blessed($dt_enable->{enable_ast})) {
+                        my $sv = eval { $self->ast_to_systemverilog($dt_enable->{enable_ast}) } || "[NO SV REPRESENTATION]";
+
+                        if ($self->ast_contains_intermediate_signals($dt_enable->{enable_ast})) {
+                            $second_pass_factorizer->add_ast_expression(
+                                $dt_enable->{enable_ast},
+                                "second_pass_dt_enable:$dt_enable->{enable_name}"
+                            );
+                            $total_fed++;
+                            fsm_debug("  Fed second-pass DT enable: $dt_enable->{enable_name}", 3);
+                            fsm_debug("    Expression: $sv", 3);
+                        }
+                    }
+                }
+
+                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}{ast}) {
+                    my $lhs_enable = $rhs_group->{lhs_level_enable};
+                    if (blessed($lhs_enable->{ast})) {
+                        my $sv = eval { $self->ast_to_systemverilog($lhs_enable->{ast}) } || "[NO SV REPRESENTATION]";
+
+                        if ($self->ast_contains_intermediate_signals($lhs_enable->{ast})) {
+                            $second_pass_factorizer->add_ast_expression(
+                                $lhs_enable->{ast},
+                                "second_pass_lhs_enable:$lhs_enable->{name}"
+                            );
+                            $total_fed++;
+                            fsm_debug("  Fed second-pass LHS enable: $lhs_enable->{name}", 3);
+                            fsm_debug("    Expression: $sv", 3);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
+        for my $assignment (@{$ctx->{lhs_assignments}{$lhs}}) {
+            if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
+                my $sv = eval { $self->ast_to_systemverilog($assignment->{conditions_ast}) } || "[NO SV REPRESENTATION]";
+
+                if ($self->ast_contains_intermediate_signals($assignment->{conditions_ast})) {
+                    $second_pass_factorizer->add_ast_expression(
+                        $assignment->{conditions_ast},
+                        "second_pass_assignment:$lhs:$assignment->{dt}"
+                    );
+                    $total_fed++;
+                    fsm_debug("  Fed second-pass assignment condition: $lhs from $assignment->{dt}", 3);
+                    fsm_debug("    Expression: $sv", 3);
+                }
+            }
+        }
+    }
+
+    fsm_debug("SECOND_PASS_FEED: Fed $total_fed expressions to second-pass factorizer", 3);
+    return $total_fed;
+}
+sub ast_contains_intermediate_signals($self, $ast) {
+    return 0 unless $ast && blessed($ast);
+
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+        my $signal_name = $self->extract_signal_name_from_ast($ast) || 'unknown';
+        my $ast_sv = eval { $self->ast_to_systemverilog($ast) } || 'unknown';
+        fsm_debug("  SECOND_PASS_FILTER: Bare signal reference '$signal_name' (AST: $ast_sv) - NOT factorizable", 3);
+        return 0;
+    }
+
+    if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
+        my $signal_name = $ast->{signal_name} || 'unknown';
+        my $ast_sv = eval { $self->ast_to_systemverilog($ast) } || 'unknown';
+        fsm_debug("  SECOND_PASS_FILTER: Bare intermediate signal reference '$signal_name' (AST: $ast_sv) - NOT factorizable", 3);
+        return 0;
+    }
+
+    my $is_compound_with_intermediates = 0;
+
+    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
+        my $left_has_intermediate = $ast->can('left') && $self->ast_has_intermediate_signals_recursive($ast->left);
+        my $right_has_intermediate = $ast->can('right') && $self->ast_has_intermediate_signals_recursive($ast->right);
+
+        if ($left_has_intermediate || $right_has_intermediate) {
+            fsm_debug("  SECOND_PASS_FILTER: Compound binary expression contains intermediate signals - factorizable", 3);
+            $is_compound_with_intermediates = 1;
+        } else {
+            fsm_debug("  SECOND_PASS_FILTER: Compound binary expression has no intermediate signals - not factorizable", 3);
+        }
+    } elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
+        my $operand_has_intermediate = $ast->can('operand') && $self->ast_has_intermediate_signals_recursive($ast->operand);
+
+        if ($operand_has_intermediate) {
+            fsm_debug("  SECOND_PASS_FILTER: Compound unary expression contains intermediate signals - factorizable", 3);
+            $is_compound_with_intermediates = 1;
+        } else {
+            fsm_debug("  SECOND_PASS_FILTER: Compound unary expression has no intermediate signals - not factorizable", 3);
+        }
+    } else {
+        fsm_debug("  SECOND_PASS_FILTER: Not a compound expression - NOT factorizable", 3);
+    }
+
+    return $is_compound_with_intermediates;
+}
+sub ast_has_intermediate_signals_recursive($self, $ast) {
+    return 0 unless $ast && blessed($ast);
+
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+        my $signal_name = $self->extract_signal_name_from_ast($ast);
+        if ($signal_name && $self->is_intermediate_signal($signal_name)) {
+            return 1;
+        }
+    }
+
+    if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
+        return 1;
+    }
+
+    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
+        return 1 if $ast->can('left') && $self->ast_has_intermediate_signals_recursive($ast->left);
+        return 1 if $ast->can('right') && $self->ast_has_intermediate_signals_recursive($ast->right);
+    } elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
+        return 1 if $ast->can('operand') && $self->ast_has_intermediate_signals_recursive($ast->operand);
+    }
+
+    return 0;
 }
 sub generate_enable_conditions($self, $fsm_module = undef) {
     my $ctx = $self->{flattened_dt};

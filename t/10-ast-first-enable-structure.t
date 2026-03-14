@@ -249,6 +249,10 @@ for my $dead_backend_helper (
         generate_comb_mux
         generate_flop_mux
         prescan_wen_en_for_intermediate_signals
+        feed_asts_to_factorizer
+        feed_current_asts_to_second_pass
+        ast_contains_intermediate_signals
+        ast_has_intermediate_signals_recursive
         _count_logical_ops_in_ast
         _is_factorizable_sub_expression
         is_simple_ast_expression
@@ -275,6 +279,18 @@ ok(
 ok(
     $hdl->{enable_graph}->can('count_binary_logical_operation_occurrences'),
     'live EnableGraph owns binary logical-operation counting for factorization policy',
+);
+ok(
+    $hdl->{enable_graph}->can('feed_asts_to_factorizer'),
+    'live EnableGraph owns first-pass factorization AST feeding',
+);
+ok(
+    $hdl->{enable_graph}->can('feed_current_asts_to_second_pass'),
+    'live EnableGraph owns second-pass factorization AST feeding',
+);
+ok(
+    $hdl->{enable_graph}->can('ast_contains_intermediate_signals'),
+    'live EnableGraph owns second-pass intermediate-signal eligibility checks',
 );
 ok(
     $hdl->{enable_graph}->can('build_internal_signal_declaration_plan'),

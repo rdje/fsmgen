@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: EnableGraph factorization AST-feed ownership
+- Continued the live `R2` ownership convergence by moving factorization AST feeding under `EnableGraph`.
+- Rationale:
+  - both the primary AST feed and the second-pass AST feed were still walking `assignment_analysis`, captured condition ASTs, and intermediate-signal ownership data from the backend,
+  - those feeders do not render HDL and do not perform the factorization algorithm itself; they prepare owner-side synthesis data for factorization,
+  - the next truthful move was therefore to keep those collection and eligibility decisions with `EnableGraph`, while the backend and fixpoint engine stay focused on factorization orchestration and rendering.
+- Structural outcome:
+  - `EnableGraph::feed_asts_to_factorizer(...)` now owns primary factorization AST collection,
+  - `EnableGraph::feed_current_asts_to_second_pass(...)` now owns post-substitution AST collection for the fixpoint loop,
+  - `EnableGraph` also now owns the second-pass intermediate-signal eligibility checks (`ast_contains_intermediate_signals(...)` / `ast_has_intermediate_signals_recursive(...)`),
+  - `Backend::SystemVerilog` and `FSM::HDL::Factorization::Fixpoint` now both defer to `EnableGraph` for those feeds instead of walking owner-side synthesis data themselves.
+- Safety/compatibility:
+  - no intended HDL behavior change; only the ownership boundary moved,
+  - the architecture regression now locks the backend free of the former factorization-feed helper pocket while asserting `EnableGraph` ownership of the live entrypoints,
+  - focused and full regression stayed green, so the move preserved the active factorization contract.
+- Verification:
+  - syntax checks for `EnableGraph.pm`, `Backend/SystemVerilog.pm`, and `Factorization/Fixpoint.pm` pass,
+  - focused architecture regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=12`, `Tests=386`, `PASS`).
+- Next likely slices:
+  - re-audit whether the remaining substitution-update/debug passes over `assignment_analysis` and captured condition ASTs still belong in the backend,
+  - move only the pieces that are truly synthesis/analysis ownership, not backend-local factorization or rendering.
 ## 2026-03-14: Roadmap tracking infrastructure hardening
 - Added a canonical live roadmap board in `ROADMAP_STATUS.md`.
 - Rationale:

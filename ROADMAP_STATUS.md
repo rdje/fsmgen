@@ -31,7 +31,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R2` Live ownership migration from `FlattenedDT` backend/orchestrator into `EnableGraph`
 - Current next decision point:
-  - Re-audit whether any remaining backend stage still analyzes `assignment_analysis` or other `EnableGraph`-owned enable structures instead of doing backend-local factorization or rendering.
+  - Re-audit whether the remaining substitution-update passes over `assignment_analysis` and captured condition ASTs still belong in the backend, or should move under `EnableGraph` as the owner of those structures.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -63,8 +63,9 @@ Done:
 - Top-level enable emission and unified WEN/EN emission.
 - Internal declaration planning, module declaration planning, and state register planning.
 - WEN/EN prescan and logical-op counting.
+- First-pass and second-pass factorization AST feeding, plus second-pass intermediate-signal eligibility checks.
 Left:
-- Audit the remaining backend passes that still read `assignment_analysis` or other `EnableGraph`-owned enable structures.
+- Audit the remaining substitution-update/debug passes that still read and rewrite `assignment_analysis` or captured condition ASTs from the backend.
 - Move only the pieces that are truly synthesis/analysis ownership, not backend-local factorization or rendering.
 - Declare this lane complete once the remaining backend code is clearly backend-local by responsibility.
 Exit criteria:

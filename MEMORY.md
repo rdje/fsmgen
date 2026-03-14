@@ -16,6 +16,25 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph factorization AST-feed ownership)
+- Current worktree continues the `R2` live ownership lane and moves factorization input feeding under `EnableGraph`.
+- Scope of this slice:
+  - `perl/FSM/Synthesis/EnableGraph.pm` now owns `feed_asts_to_factorizer(...)`,
+  - `EnableGraph` now also owns `feed_current_asts_to_second_pass(...)` plus the second-pass intermediate-signal eligibility helpers `ast_contains_intermediate_signals(...)` and `ast_has_intermediate_signals_recursive(...)`,
+  - `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` now calls `enable_graph->feed_asts_to_factorizer(...)` during primary factorization and no longer exposes those feeders/helpers itself,
+  - `perl/FSM/HDL/Factorization/Fixpoint.pm` now routes second-pass AST collection through `enable_graph` instead of the backend.
+- Regression coverage update:
+  - `t/10-ast-first-enable-structure.t` now asserts that the backend stays free of the former factorization-feed helper pocket,
+  - the same test now asserts that `EnableGraph` owns first-pass AST feeding, second-pass AST feeding, and second-pass intermediate-signal eligibility checks on the live path.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `perl -I perl -c perl/FSM/HDL/Factorization/Fixpoint.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=162`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=386`, `PASS`)
+- Immediate next direction after commit:
+  - re-audit whether the remaining substitution-update/debug passes over `assignment_analysis` and captured condition ASTs still belong in the backend,
+  - move only the pieces that are truly synthesis/analysis ownership, not backend-local factorization or rendering.
 ## 2026-03-14: Roadmap tracking infrastructure hardening
 - Current worktree establishes a canonical live roadmap board so status can be checked precisely at any time without reconstructing it from narrative history.
 - Scope of this slice:
