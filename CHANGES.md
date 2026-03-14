@@ -1,6 +1,34 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### Roadmap phase transition (`R3` done, active lane -> `R6`)
+- Audited the remaining runtime-convergence residue after removing direct stored-expression parsing from normal backend runtime-AST resolution.
+- Audit result:
+  - `resolve_intermediate_signal_runtime_ast(...)` no longer parses stored expressions directly,
+  - the remaining compatibility residue is now explicit and narrow: miss-recovery parsing in `recover_runtime_ast_from_dependency_expression(...)` plus the owner-side compatibility parser in `EnableGraph` for legacy registry/global-expression entries,
+  - that satisfies the `R3` exit criteria because compatibility parsing is no longer part of the default runtime path.
+- Updated `ROADMAP_STATUS.md` to record the live status change:
+  - `R3` moved from `mostly done` to `done`,
+  - current active lane changed from `R3` to `R6`,
+  - `R6` next decision point is now concrete scope definition plus acceptance tests for composition work in the active architecture.
+- Validation:
+  - `git diff --check` (pass)
+  - focused regression `prove -I perl t/07-runtime-ast-miss-dependency-recovery.t` (pass: `Files=1`, `Tests=21`)
+  - full regression `prove -I perl t` (pass: `Files=12`, `Tests=413`)
+### AST/CoreAST convergence (`R3`: remove direct stored-expression runtime parse)
+- Removed the direct stored-expression compatibility parse from `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm::resolve_intermediate_signal_runtime_ast(...)`.
+- Behavior change:
+  - stored-expression-only runtime-AST resolution now records `runtime_ast_miss_reason = no_ast_source` instead of synthesizing `parsed_expression_ast` / `cleaned_expression_ast`,
+  - explicit runtime-AST-miss dependency recovery remains the only backend path that can promote `runtime_ast` from a compatibility expression.
+- Extended `t/07-runtime-ast-miss-dependency-recovery.t` so it now proves:
+  - direct stored-expression runtime-AST resolution no longer parses compatibility expressions on the normal path,
+  - stored-expression-only runtime-AST resolution records a missing state,
+  - explicit cleaned-expression miss recovery still works.
+- Updated `ROADMAP_STATUS.md` to reflect that `R3` is now complete and `R6` is the next active lane.
+- Validation:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `perl -I perl -c t/07-runtime-ast-miss-dependency-recovery.t` (pass)
+  - `prove -I perl t/07-runtime-ast-miss-dependency-recovery.t` (pass: `Files=1`, `Tests=21`)
 ### Commit workflow hardening (always display live-status tracker)
 - Tightened the commit workflow so the user-facing close-out must now always display the current live-status snapshot from `ROADMAP_STATUS.md` whenever the commit workflow runs.
 - Clarified the expected close-out language:

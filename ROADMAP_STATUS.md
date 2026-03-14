@@ -42,9 +42,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- `R3` AST/CoreAST-first runtime convergence
+- `R6` Composition-oriented language / architecture work
 - Current next decision point:
-  - Re-audit the remaining direct compatibility parsing inside `resolve_intermediate_signal_runtime_ast(...)` and `recover_runtime_ast_from_dependency_expression(...)` to decide whether that residue can be reduced further or should remain as the final explicit backend boundary.
+  - Define the concrete composition-oriented scope for the active `bin/fsmgen` architecture, then write acceptance tests before implementation starts.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -103,17 +103,18 @@ Deliverables:
 - Live top-level enable/intermediate registries are AST/CoreAST-backed by default.
 - Runtime dependency recovery, width recovery, and driving-AST storage prefer native AST/CoreAST sources over string reconstruction.
 - Any remaining compatibility fallbacks are narrow, explicit, and justified instead of being the default path.
-Status: `mostly done`
+Status: `done`
 Done:
 - Top-level enable registries are AST-backed.
 - Intermediate-signal registry, dependency recovery, runtime-AST normalization, and driving-AST storage were pushed toward AST/CoreAST-first behavior.
 - Compatibility fallback breadth was reduced substantially; unresolved cases are narrower and explicit.
 - Render-time late hydration no longer silently promotes `runtime_ast` after an initial `no_ast_source` miss; explicit dependency recovery is now the remaining promotion path in that area.
+ - Direct stored-expression parsing was removed from normal runtime-AST resolution, leaving only explicit miss-recovery parsing and the owner-side legacy registry/global-expression compatibility parser as the deliberate final boundary.
 Left:
-- Re-audit the remaining direct raw/cleaned expression parsing inside backend runtime-AST resolution and dependency recovery.
-- Either remove that residue, replace it with native AST/CoreAST data, or explicitly keep it as a justified compatibility boundary.
+- No dedicated `R3` convergence slices remain.
+- Reopen only if a future audit finds runtime behavior drifting back toward implicit string reconstruction instead of explicit compatibility boundaries.
 Exit criteria:
-- Live intermediate-signal/runtime behavior is fully native AST/CoreAST-first, with only deliberate and well-justified compatibility residue if any.
+- Met: live intermediate-signal/runtime behavior is now AST/CoreAST-first by default, with only deliberate and well-justified explicit compatibility residue remaining.
 
 ### R4. Assignment semantics and capture contract modernization
 Deliverables:

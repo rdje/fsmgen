@@ -170,49 +170,6 @@ sub resolve_intermediate_signal_runtime_ast ($self, $signal_name, $signal_info) 
         }
     }
 
-    if ((!$runtime_ast || !blessed($runtime_ast))
-        && $signal_info
-        && defined($signal_info->{expression})
-        && $signal_info->{expression} ne ''
-        && $ctx->{expr_namer})
-    {
-        $runtime_ast_miss_reason = 'expression_parse_failed';
-        my $parsed_ast = eval { $ctx->{expr_namer}->parse_expression($signal_info->{expression}) };
-        if ($parsed_ast && blessed($parsed_ast)) {
-            $runtime_ast = $parsed_ast;
-            $runtime_ast_source = 'parsed_expression_ast';
-            if (ref($signal_info) eq 'HASH') {
-                $signal_info->{defining_ast} //= $parsed_ast;
-            }
-        } else {
-            my $error = $@;
-            chomp $error if defined $error;
-            fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_runtime_ast()] Failed compatibility parse for '$signal_name': " . ($error || 'unknown parse failure'), 3);
-            my $cleaned_expression = $ctx->{enable_graph}->clean_intermediate_expression($signal_info->{expression});
-            if (defined($cleaned_expression)
-                && $cleaned_expression ne ''
-                && $cleaned_expression ne $signal_info->{expression})
-            {
-                my $cleaned_ast = eval { $ctx->{expr_namer}->parse_expression($cleaned_expression) };
-                if ($cleaned_ast && blessed($cleaned_ast)) {
-                    $runtime_ast = $cleaned_ast;
-                    $runtime_ast_source = 'cleaned_expression_ast';
-                    if (ref($signal_info) eq 'HASH') {
-                        $signal_info->{defining_ast} //= $cleaned_ast;
-                        $signal_info->{cleaned_expression} = $cleaned_expression;
-                    }
-                } else {
-                    my $cleaned_error = $@;
-                    chomp $cleaned_error if defined $cleaned_error;
-                    fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_runtime_ast()] Failed cleaned compatibility parse for '$signal_name': " . ($cleaned_error || 'unknown parse failure'), 3);
-                    $runtime_ast_miss_reason = 'expression_parse_failed';
-                }
-            } else {
-                $runtime_ast_miss_reason = 'expression_parse_failed';
-            }
-        }
-    }
-
     if ($runtime_ast && blessed($runtime_ast)) {
         if ($signal_info && ref($signal_info) eq 'HASH') {
             $signal_info->{runtime_ast} = $runtime_ast;

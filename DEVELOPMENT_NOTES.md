@@ -1,5 +1,43 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R3` completion audit and active-lane pivot to `R6`
+- Closed the `R3` runtime-convergence phase after removing the last implicit stored-expression parse from normal backend runtime-AST resolution.
+- Rationale:
+  - `R3` was no longer about removing every compatibility hook; its exit criteria allowed deliberate, well-justified explicit residue,
+  - once stored-expression parsing was removed from the default runtime path, the remaining compatibility behavior became narrow and intentional instead of ambient,
+  - that means the remaining miss-recovery parser and owner-side legacy-registry/global-expression parser are acceptable final boundaries, not evidence that the phase is still open.
+- Structural outcome:
+  - `ROADMAP_STATUS.md` now marks `R3` as `done`,
+  - the active lane now pivots to `R6` (`Composition-oriented language / architecture work`),
+  - the next roadmap task is no longer another runtime-convergence cleanup; it is definition of concrete composition scope and acceptance tests for the active architecture.
+- Safety/compatibility:
+  - runtime behavior is now more explicit: stored expressions no longer become runtime ASTs unless the miss-recovery path intentionally asks for that recovery,
+  - the compatibility residue that remains is documented, explicit, and covered by focused regression.
+- Verification:
+  - focused regression `t/07-runtime-ast-miss-dependency-recovery.t` passes,
+  - full regression `prove -I perl t` passes.
+- Next likely slices:
+  - define composition scope for active `bin/fsmgen`,
+  - write acceptance tests and developer-facing scope notes before implementation.
+## 2026-03-14: `R3` runtime convergence slice removing direct stored-expression runtime parsing
+- Narrowed the remaining runtime compatibility behavior again by removing direct stored-expression parsing from `resolve_intermediate_signal_runtime_ast(...)`.
+- Rationale:
+  - after the render-time late-hydration removal, the normal runtime-AST resolution path still had one implicit string-reconstruction step left,
+  - that step blurred the contract because a plain runtime-AST lookup could still synthesize AST state from an arbitrary stored expression,
+  - the explicit miss-recovery path is the correct place for that behavior because it is intentional, source-tagged, and only used after a real runtime-AST miss.
+- Structural outcome:
+  - normal runtime-AST resolution now stops at substituted ASTs and native/owner-resolved defining ASTs,
+  - stored-expression-only lookups now record `no_ast_source` and leave recovery to `extract_intermediate_signals_from_runtime_ast_miss(...)`,
+  - the old `parsed_expression_ast` / `cleaned_expression_ast` runtime-AST source labels disappear with this change.
+- Safety/compatibility:
+  - this narrows implicit compatibility behavior without removing the explicit compatibility-recovery path,
+  - focused regression now locks that direct runtime-AST resolution no longer parses stored expressions while explicit cleaned-expression recovery still succeeds.
+- Verification:
+  - syntax checks for the backend and the focused test pass,
+  - focused regression `t/07-runtime-ast-miss-dependency-recovery.t` passes.
+- Next likely slices:
+  - if `R3` is considered complete after this boundary audit, pivot to `R6`,
+  - otherwise the only remaining runtime-convergence question is whether the explicit miss-recovery parser should remain as the final justified boundary.
 ## 2026-03-14: Commit workflow always displays the live-status tracker
 - Tightened the close-out contract for the commit workflow so the current live roadmap snapshot is always shown after a commit, not only on status transitions.
 - Rationale:

@@ -36,6 +36,23 @@ After each completed task, always do this in order:
 - Immediate next direction after commit:
   - follow `R3` and re-audit the remaining compatibility/runtime-AST-miss fallback paths,
   - remove them where they are no longer justified, or keep them explicitly as deliberate residue if they still serve a necessary boundary.
+## 2026-03-14: Roadmap phase transition (`R3` done, active lane -> `R6`)
+- Current worktree closes the `R3` runtime-convergence lane after removing the last implicit stored-expression runtime-AST promotion path from normal backend resolution.
+- Audit result:
+  - `resolve_intermediate_signal_runtime_ast(...)` no longer parses stored expressions directly,
+  - the only remaining string reconstruction in this area is explicit miss-recovery parsing in `recover_runtime_ast_from_dependency_expression(...)` plus the owner-side compatibility parser in `EnableGraph` for legacy registry/global-expression entries,
+  - that matches the `R3` exit criteria because compatibility residue is now narrow, explicit, and justified rather than being part of the default runtime path.
+- Roadmap transition recorded in `ROADMAP_STATUS.md`:
+  - `R3` moved from `mostly done` to `done`,
+  - the current active lane switched to `R6` (`Composition-oriented language / architecture work`),
+  - `R6` next decision point is now to define concrete active-architecture scope and acceptance tests before implementation.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/07-runtime-ast-miss-dependency-recovery.t` (`Files=1`, `Tests=21`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=413`, `PASS`)
+- Immediate next direction after commit:
+  - start `R6` with a scope-definition slice grounded in the active `bin/fsmgen` architecture,
+  - write acceptance tests and developer-facing scope notes before implementing composition behavior.
 ## 2026-03-14: AST/CoreAST convergence micro-slice (remove render-time late hydration)
 - Current worktree continues the `R3` runtime convergence lane and narrows one compatibility behavior inside `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`.
 - Scope of this slice:
@@ -54,6 +71,20 @@ After each completed task, always do this in order:
 - Immediate next direction after commit:
   - re-audit the remaining direct compatibility parsing inside `resolve_intermediate_signal_runtime_ast(...)` and `recover_runtime_ast_from_dependency_expression(...)`,
   - decide whether that residue can be removed, replaced with native AST/CoreAST data, or kept explicitly as the final compatibility boundary.
+## 2026-03-14: AST/CoreAST convergence micro-slice (remove direct stored-expression runtime parse)
+- Current worktree continues the `R3` runtime convergence lane and removes the direct stored-expression compatibility parse from normal backend runtime-AST resolution.
+- Scope of this slice:
+  - `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm::resolve_intermediate_signal_runtime_ast(...)` no longer parses `signal_info->{expression}` directly,
+  - stored-expression-only runtime-AST resolution now records `no_ast_source` and leaves recovery to the explicit runtime-AST-miss path instead of synthesizing `parsed_expression_ast` / `cleaned_expression_ast`,
+  - `t/07-runtime-ast-miss-dependency-recovery.t` now proves the removed implicit path and keeps explicit cleaned-expression recovery covered.
+- Roadmap board update:
+  - this slice closes the remaining `R3` ambiguity around implicit runtime string parsing,
+  - `ROADMAP_STATUS.md` now marks `R3` as `done` and pivots the active lane to `R6`.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/07-runtime-ast-miss-dependency-recovery.t` (`Files=1`, `Tests=21`, `PASS`)
+- Immediate next direction after commit:
+  - move to `R6` and define the composition-oriented scope and acceptance boundary before implementation.
 ## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph live-usage evidence ownership)
 - Current worktree continues the `R2` live ownership lane and moves intermediate-signal live-usage evidence derivation under `EnableGraph`.
 - Scope of this slice:

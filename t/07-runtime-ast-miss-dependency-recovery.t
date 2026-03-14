@@ -141,6 +141,35 @@ is(
 );
 
 $hdl->{expr_namer} = Local::CleanableRuntimeExprParser->new;
+
+my %direct_runtime_parse_signal_info = (
+    expression => 'mid',
+);
+
+my $direct_runtime_parse_ast = $backend->resolve_intermediate_signal_runtime_ast(
+    'direct_runtime_parse_expr',
+    \%direct_runtime_parse_signal_info,
+);
+
+ok(
+    !defined $direct_runtime_parse_ast,
+    'runtime-AST resolution no longer parses stored expressions directly without an AST-backed source',
+);
+is(
+    $direct_runtime_parse_signal_info{runtime_ast_resolution_state},
+    'missing',
+    'stored-expression-only runtime-AST resolution records a missing state',
+);
+is(
+    $direct_runtime_parse_signal_info{runtime_ast_miss_reason},
+    'no_ast_source',
+    'stored-expression-only runtime-AST resolution now records no_ast_source rather than compatibility parse failure',
+);
+ok(
+    !exists $direct_runtime_parse_signal_info{runtime_ast},
+    'stored-expression-only runtime-AST resolution does not synthesize runtime_ast metadata',
+);
+
 $hdl->{intermediate_signals}{cleanable_runtime_expr} = ' mid ';
 
 my %cleanable_runtime_signal_info;
