@@ -20,6 +20,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: post-roadmap improvement priorities preserved for later roadmap work
+- Current worktree is a doc-only continuity slice to save the suggested post-`R0`..`R7` improvement order before any new roadmap is opened.
+- Scope of this slice:
+  - saved the recommended next-workstream order in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md),
+  - preserved the specific gray-zone cluster that should be resolved first in any future language-contract hardening work,
+  - kept those notes as future recommendations rather than reopening the closed current roadmap.
+- Roadmap board update:
+  - no roadmap status/deliverable/active-lane change for this slice,
+  - the live roadmap snapshot remains unchanged.
+- Validation is green for this slice:
+  - `git diff --check`
+- Immediate next direction after commit:
+  - no roadmap lane is active,
+  - the natural follow-up is discussion/brainstorming on the gray-zone constructs before deciding whether to open a new explicit roadmap.
 ## 2026-03-14: user-guide support boundary clarified for current `.fsm` language
 - Current worktree is a doc-only clarification pass driven by the need to state the real active `.fsm` support boundary precisely.
 - Scope of this slice:

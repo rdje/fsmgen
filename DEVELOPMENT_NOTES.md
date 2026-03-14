@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: candidate post-roadmap workstreams after `R0`..`R7`
+- With the current roadmap closed, the next sensible improvements should be framed as a new explicit roadmap rather than as residual work from `R0`..`R7`.
+- Suggested priority order for that future roadmap:
+  - `R8` language-contract hardening,
+  - `R9` strict mode and support-tier enforcement,
+  - `R10` source provenance and diagnostics,
+  - `R11` composition contract strengthening,
+  - `R12` regression corpus and support-claim hardening,
+  - `R13` public embedding/API stabilization,
+  - `R14` VHDL backend only if it is still truly wanted after the contract work above.
+- Rationale for this ordering:
+  - the highest-value next step is not feature count; it is a crisp, trustworthy language boundary,
+  - the current gray zone between "parser accepts it" and "the project should claim it is supported" is the biggest remaining gap between a capable tool and a serious tool,
+  - backend diversification such as VHDL should come after the language and diagnostics contracts are tightened, not before.
+- The specific gray-zone cluster that should be resolved first in any future roadmap is:
+  - `(+system ...)` beyond conventional `clk` / `rstn`,
+  - `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`,
+  - nested `<...` / `<!...` blocks,
+  - condition suffixes,
+  - `++`, `--`, `+=`, `-=`,
+  - broader arithmetic/operator forms.
+- Boundary decision:
+  - these are stored as future-work recommendations only,
+  - they do not reopen the closed current roadmap,
+  - and they should become live only if/when the project chooses to open a new explicit workstream set.
 ## 2026-03-14: `R7` closed with a second deliberate typed hook
 - Finished the bounded `R7` lane by adding one more real hook boundary instead of continuing to widen loading or parameter plumbing.
 - Rationale:

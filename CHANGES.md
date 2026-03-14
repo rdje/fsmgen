@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### post-roadmap improvement priorities are now preserved in engineering notes
+- Saved the suggested post-`R0`..`R7` improvement order in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) as candidate future workstreams rather than as live roadmap items.
+- The saved recommendation order is:
+  - language-contract hardening,
+  - strict mode/support-tier enforcement,
+  - diagnostics/provenance,
+  - composition-contract strengthening,
+  - regression corpus/support accounting,
+  - public embedding/API stabilization,
+  - and VHDL only after the contract work above.
+- The notes also preserve the specific gray-zone cluster that should be resolved first in any future roadmap.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task.
+- Validation:
+  - `git diff --check` (pass)
 ### user guide now contains a live supported-constructs boundary for `.fsm`
 - Expanded [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) with a new live section, `Currently supported .fsm constructs (live reference)`.
 - The new section distinguishes three things explicitly:
