@@ -14,6 +14,8 @@ use FSM::Composition::Parser;
 use FSM::Composition::Spec;
 use FSM::Composition::Top;
 use FSM::Composition::Instance;
+use FSM::Composition::Port;
+use FSM::Composition::Link;
 use FSM::Composition::PortsBlock;
 use FSM::Composition::TopLink;
 
@@ -77,6 +79,12 @@ is($explicit_spec->top->name, 'typed_top', 'parser preserves explicit typed-top 
 is(scalar(@{$explicit_spec->top->ports_blocks}), 1, 'parser records one typed ports block');
 isa_ok($explicit_spec->top->ports_blocks->[0], 'FSM::Composition::PortsBlock');
 is($explicit_spec->top->ports_blocks->[0]->name, 'public_io', 'ports block preserves its declared name');
+is(scalar(@{$explicit_spec->top->ports_blocks->[0]->ports}), 3, 'ports block materializes explicit port tokens as typed ports');
+isa_ok($explicit_spec->top->ports_blocks->[0]->ports->[0], 'FSM::Composition::Port');
+is($explicit_spec->top->ports_blocks->[0]->ports->[0]->name, 'clk', 'typed port preserves port name');
+is($explicit_spec->top->ports_blocks->[0]->ports->[0]->direction, 'input', 'typed port defaults to input direction');
+is($explicit_spec->top->ports_blocks->[0]->ports->[2]->direction, 'output', 'typed port preserves explicit output direction');
+is($explicit_spec->top->ports_blocks->[0]->ports->[2]->width, 8, 'typed port preserves explicit width');
 is(scalar(@{$explicit_spec->top->instances}), 2, 'parser records both fsmc and rtl child instances');
 is($explicit_spec->top->instances->[0]->kind, 'fsmc', 'first typed child preserves fsmc kind');
 is($explicit_spec->top->instances->[0]->name, 'child_ctrl', 'fsmc child preserves declared child name');
@@ -86,6 +94,10 @@ is($explicit_spec->top->instances->[1]->module_name, 'uart_tx', 'rtl child prese
 is(scalar(@{$explicit_spec->top->toplinks}), 1, 'parser records one toplink block');
 isa_ok($explicit_spec->top->toplinks->[0], 'FSM::Composition::TopLink');
 is($explicit_spec->top->toplinks->[0]->name, 'loopback_bus', 'toplink block preserves its declared name');
+is(scalar(@{$explicit_spec->top->toplinks->[0]->links}), 1, 'toplink block materializes simple link tokens as typed links');
+isa_ok($explicit_spec->top->toplinks->[0]->links->[0], 'FSM::Composition::Link');
+is($explicit_spec->top->toplinks->[0]->links->[0]->source, 'output_data', 'typed link preserves source endpoint');
+is($explicit_spec->top->toplinks->[0]->links->[0]->target, 'txd', 'typed link preserves target endpoint');
 
 my $inline_port_error = eval {
     $parser->parse_source(

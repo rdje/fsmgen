@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R6` first shipped `C1` composition generation slice
+- Continued `R6` by landing the first real composition runtime path instead of staying at parser-only groundwork.
+- Rationale:
+  - after the typed parser/IR slice, the next honest move was to prove one narrow accepted scenario end to end rather than keep expanding non-executable composition scaffolding,
+  - the active child FSM pipeline does not yet carry typed `+system` metadata through `module_info`, so the first composition lane has to align with the real shipped child contract instead of pretending that richer interface metadata already exists,
+  - that real contract today is: implicit `clk` / `rstn` system inputs plus only the user-facing child ports the FSM pipeline explicitly exposes.
+- Structural outcome:
+  - the composition layer now has typed per-port/per-link/runtime-plan objects under `perl/FSM/Composition/`,
+  - `HDLGenerator` now supports a real `C1` runtime lane for one embedded `?fsmc` child with one explicit `?ports` block,
+  - realized child interface data is stored as typed composition ports on the `RealizedInstance`,
+  - top planning validates exact name/width/direction agreement before emission,
+  - top emission now generates the parent module plus same-name child wiring through the normal CLI path.
+- Safety/compatibility:
+  - the single-FSM path stays unchanged,
+  - the shipped composition lane is deliberately narrow and explicit,
+  - one fixture assumption was corrected during the slice: a child signal is not a composition-visible port unless the child FSM itself marks it as an output, which is the right active-tool contract to preserve.
+- Verification:
+  - syntax checks for the touched composition/pipeline files pass,
+  - focused composition regressions `t/13`, `t/14`, and `t/20` pass,
+  - the full Perl regression suite passes again after landing the `C1` slice.
+- Next likely slices:
+  - widen from `C1` to `C2` with multi-child planning and typed explicit `?toplink`/net resolution,
+  - then add the corresponding duplicate-driver and width/endpoint diagnostics.
 ## 2026-03-14: `R6` first typed composition parser/IR slice plus legacy mapping note
 - Continued `R6` by moving from “explicit composition source boundary” to “explicit composition parser boundary.”
 - Rationale:

@@ -9,13 +9,13 @@ no warnings 'experimental::signatures';
 sub new ($class, %args) {
     return bless {
         name => $args{name},
-        raw_items => $args{raw_items} || [],
+        links => $args{links} || [],
         raw_ast => $args{raw_ast},
     }, $class;
 }
 
 sub name ($self) { return $self->{name} }
-sub raw_items ($self) { return $self->{raw_items} }
+sub links ($self) { return $self->{links} }
 sub raw_ast ($self) { return $self->{raw_ast} }
 
 1;

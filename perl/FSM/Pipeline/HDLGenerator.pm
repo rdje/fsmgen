@@ -14,6 +14,9 @@ use FSM::Debug;
 use FSM::HDL::FlattenedDT;
 use FSM::Adapter::FSMGenFull;
 use FSM::Composition::Parser;
+use FSM::Composition::Port;
+use FSM::Composition::Plan;
+use FSM::Composition::RealizedInstance;
 use FSM::SourceClassifier;
 use Lispish;
 use Data::Dumper;
@@ -70,7 +73,10 @@ sub generate_hdl_from_file ($self, $fsm_file) {
     # Step 1: Parse the FSM file
     my $raw_ast = $self->parse_fsm_file($fsm_file);
     my $source_info = $self->classify_source_ast($raw_ast);
-    $self->prepare_source_for_generation($source_info, $raw_ast, $fsm_file);
+    if ($source_info && $source_info->{kind} eq 'composition') {
+        $source_info->{composition_spec} = $self->parse_composition_source($raw_ast);
+        return $self->generate_composition_from_source($source_info, $raw_ast, $fsm_file);
+    }
     
     # Step 2: Convert raw AST to semantic FSM module
     my $fsm_module = $self->create_fsm_module($raw_ast);
@@ -137,19 +143,6 @@ sub parse_composition_source ($self, $raw_ast) {
     return $parser->parse_source($raw_ast);
 }
 
-sub prepare_source_for_generation ($self, $source_info, $raw_ast, $fsm_file) {
-    return unless $source_info && $source_info->{kind} eq 'composition';
-
-    my $header = $source_info->{header} // '?top:name';
-    $source_info->{composition_spec} = $self->parse_composition_source($raw_ast);
-    fsm_trace_decision(0, "Detected composition source '$header' before FSM-only adapter boundary", 1);
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the active composition pipeline is not implemented yet. ".
-        "Route '?top:name' inputs through the upcoming R6 child-realization and top-emission path described in ".
-        "docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-}
-
 sub create_fsm_module ($self, $raw_ast) {
     fsm_trace_enter('Build semantic FSM module from raw AST', 2);
     fsm_debug("Creating semantic FSM module from raw AST", 1);
@@ -188,6 +181,304 @@ sub create_fsm_module ($self, $raw_ast) {
     fsm_debug("FSM module created successfully", 1);
     fsm_trace_exit('Semantic FSM module created', 2);
     return $fsm_module;
+}
+
+sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) {
+    my $header = $source_info->{header} // '?top:name';
+    my $composition_spec = $source_info->{composition_spec}
+        || $self->parse_composition_source($raw_ast);
+
+    my $composition_plan = $self->build_composition_plan($composition_spec, $fsm_file, $header);
+    my $hdl_code = $self->generate_composition_hdl_code($composition_plan);
+    my $module_info = $self->build_composition_module_info($composition_plan);
+    my $statistics = $self->build_composition_statistics($composition_plan);
+
+    return {
+        fsm_module => undef,
+        composition_spec => $composition_spec,
+        composition_plan => $composition_plan,
+        module_info => $module_info,
+        hdl_code => $hdl_code,
+        statistics => $statistics,
+        raw_ast => $raw_ast,
+        source_info => $source_info,
+    };
+}
+
+sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
+    $self->assert_supported_composition_target($fsm_file, $header);
+
+    my $top = $composition_spec->top;
+    my @instances = @{$top->instances || []};
+    my @ports_blocks = @{$top->ports_blocks || []};
+    my @toplinks = @{$top->toplinks || []};
+
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
+        "but the current active C1 lane requires exactly one '?fsmc' child instance. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless @instances == 1;
+
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
+        "but the current active C1 lane requires exactly one explicit '?ports' block. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless @ports_blocks == 1;
+
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
+        "but '?toplink' wiring is not implemented in the current active C1 lane yet. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        if @toplinks;
+
+    my $instance = $instances[0];
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
+        "but the current active C1 lane only supports '?fsmc' children. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless $instance->kind eq 'fsmc';
+
+    my $ports_block = $ports_blocks[0];
+    my @ports = @{$ports_block->ports || []};
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
+        "but the current active C1 lane requires '?ports' to declare at least one explicit top port. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless @ports;
+
+    my $realized_instance = $self->realize_fsmc_child_instance($instance, $composition_spec, $fsm_file, $header);
+    my $child_port_info = $self->index_ports_by_name($realized_instance->interface_ports);
+    $self->assert_c1_port_exposure_matches_child($ports_block, $realized_instance, $child_port_info, $fsm_file, $header);
+
+    return FSM::Composition::Plan->new(
+        lane => 'C1',
+        top_name => $top->name,
+        ports => \@ports,
+        links => [],
+        instances => [$realized_instance],
+        raw_spec => $composition_spec,
+    );
+}
+
+sub assert_supported_composition_target ($self, $fsm_file, $header) {
+    return if $self->{target_language} =~ /^(?:systemverilog|sv|verilog|v)$/;
+
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
+        "but the current active composition lane only emits SystemVerilog/Verilog tops. ".
+        "Target language '$self->{target_language}' is not implemented for composition yet. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+}
+
+sub realize_fsmc_child_instance ($self, $instance, $composition_spec, $fsm_file, $header) {
+    my $source_name = $instance->source_name;
+    my $child_ast = $composition_spec->embedded_fsm_sources->{$source_name};
+
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
+        "but the current active C1 lane only supports embedded '?fsm:$source_name' child sources in the same file. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless $child_ast;
+
+    my $child_module = $self->create_fsm_module($child_ast);
+    my $child_module_info = $self->analyze_fsm_module($child_module);
+    my $child_hdl_code = $self->generate_hdl_code($child_module);
+    my $child_interface_ports = $self->build_realized_child_interface_ports($child_module_info);
+
+    return FSM::Composition::RealizedInstance->new(
+        kind => 'fsmc',
+        instance_name => ($instance->name // $child_module->name),
+        module_name => $child_module->name,
+        source_name => $source_name,
+        interface_ports => $child_interface_ports,
+        module_info => $child_module_info,
+        hdl_code => $child_hdl_code,
+    );
+}
+
+sub build_realized_child_interface_ports ($self, $module_info) {
+    my %ports;
+
+    for my $direction (qw(input output)) {
+        my $list = $direction eq 'input'
+            ? ($module_info->{signal_analysis}{inputs} || [])
+            : ($module_info->{signal_analysis}{outputs} || []);
+
+        for my $entry (@$list) {
+            $ports{$entry->{name}} = FSM::Composition::Port->new(
+                name => $entry->{name},
+                direction => $direction,
+                width => $entry->{width} || 1,
+                raw_token => undef,
+            );
+        }
+    }
+
+    # The active FSM generator still exposes the standard clock/reset pair
+    # implicitly rather than carrying typed +system metadata through module_info.
+    $ports{clk} //= FSM::Composition::Port->new(
+        name => 'clk',
+        direction => 'input',
+        width => 1,
+        type => 'clock',
+        raw_token => undef,
+    );
+    $ports{rstn} //= FSM::Composition::Port->new(
+        name => 'rstn',
+        direction => 'input',
+        width => 1,
+        type => 'reset',
+        raw_token => undef,
+    );
+
+    my @ordered_names = sort {
+        (($a eq 'clk') ? 0 : ($a eq 'rstn') ? 1 : 2) <=>
+        (($b eq 'clk') ? 0 : ($b eq 'rstn') ? 1 : 2)
+        ||
+        $a cmp $b
+    } keys %ports;
+
+    return [map { $ports{$_} } @ordered_names];
+}
+
+sub index_ports_by_name ($self, $ports) {
+    my %ports;
+
+    for my $port (@{$ports || []}) {
+        $ports{$port->name} = $port;
+    }
+
+    return \%ports;
+}
+
+sub assert_c1_port_exposure_matches_child ($self, $ports_block, $realized_instance, $child_port_info, $fsm_file, $header) {
+    my %top_ports_by_name;
+    for my $port (@{$ports_block->ports}) {
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' declares duplicate top port '".$port->name."' in '?ports'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            if $top_ports_by_name{$port->name};
+
+        $top_ports_by_name{$port->name} = $port;
+    }
+
+    for my $child_port_name (sort keys %$child_port_info) {
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
+            "but the current active C1 lane requires every child port to be explicitly exposed in '?ports'. ".
+            "Missing top exposure for child port '$child_port_name' on instance '".$realized_instance->instance_name."'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $top_ports_by_name{$child_port_name};
+    }
+
+    for my $port (@{$ports_block->ports}) {
+        my $child_port = $child_port_info->{$port->name};
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' declares top port '".$port->name."', ".
+            "but the realized child interface has no port with that name. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $child_port;
+
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' declares top port '".$port->name."' with width ".$port->width.", ".
+            "but child port '".$port->name."' has width ".$child_port->width.".".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $port->width == $child_port->width;
+
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' declares top port '".$port->name."' as ".$port->direction.", ".
+            "but child port '".$port->name."' is ".$child_port->direction.".".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $port->direction eq $child_port->direction;
+    }
+}
+
+sub generate_composition_hdl_code ($self, $composition_plan) {
+    my @segments = map { $_->hdl_code } @{$composition_plan->instances};
+    push @segments, $self->emit_c1_top_module($composition_plan);
+    return join("\n\n", grep { defined && length } @segments) . "\n";
+}
+
+sub emit_c1_top_module ($self, $composition_plan) {
+    my $top_name = $composition_plan->top_name;
+    my @ports = @{$composition_plan->ports};
+    my $instance = $composition_plan->instances->[0];
+
+    my @port_lines = map {
+        my $width = $_->width > 1 ? sprintf("[%d:0] ", $_->width - 1) : '';
+        sprintf("    %s %s%s", $_->direction, $width, $_->name);
+    } @ports;
+
+    my @connection_lines = map {
+        sprintf("        .%s(%s)", $_->name, $_->name)
+    } @ports;
+
+    return join("\n",
+        "module $top_name (",
+        join(",\n", @port_lines),
+        ");",
+        "",
+        "    ".$instance->module_name." ".$instance->instance_name." (",
+        join(",\n", @connection_lines),
+        "    );",
+        "",
+        "endmodule",
+    );
+}
+
+sub build_composition_module_info ($self, $composition_plan) {
+    my (@inputs, @outputs, @multi_bit, @single_bit);
+    my %signals;
+
+    for my $port (@{$composition_plan->ports}) {
+        my $entry = {
+            name => $port->name,
+            width => $port->width,
+            direction => $port->direction,
+        };
+
+        if ($port->direction eq 'output') {
+            push @outputs, $entry;
+        } else {
+            push @inputs, $entry;
+        }
+
+        if ($port->width > 1) {
+            push @multi_bit, $entry;
+        } else {
+            push @single_bit, $entry;
+        }
+
+        $signals{$port->name} = {
+            width => $port->width,
+            direction => $port->direction,
+        };
+    }
+
+    return {
+        module_name => $composition_plan->top_name,
+        regular_states => [],
+        standalone_dts => [],
+        signals => \%signals,
+        signal_analysis => {
+            inputs => \@inputs,
+            outputs => \@outputs,
+            multi_bit => \@multi_bit,
+            single_bit => \@single_bit,
+        },
+        state_count => 0,
+        signal_count => scalar(@{$composition_plan->ports}),
+        composition_child_count => scalar(@{$composition_plan->instances}),
+        composition_lane => $composition_plan->lane,
+    };
+}
+
+sub build_composition_statistics ($self, $composition_plan) {
+    my $stats = $self->gather_statistics(undef);
+    $stats->{composition_child_count} = scalar(@{$composition_plan->instances});
+    $stats->{composition_top_port_count} = scalar(@{$composition_plan->ports});
+    $stats->{composition_lane} = $composition_plan->lane;
+    return $stats;
 }
 
 sub analyze_fsm_module ($self, $fsm_module) {

@@ -70,8 +70,8 @@ my $pipeline_exception = $@;
 ok(!$pipeline_error, 'pipeline does not return a result for composition input yet');
 like(
     $pipeline_exception,
-    qr/Composition source '\?top:composition_smoke'.*recognized and parsed into typed composition IR.*active composition pipeline is not implemented yet/s,
-    'pipeline rejects composition input at the explicit composition boundary after typed parsing',
+    qr/Composition source '\?top:composition_smoke'.*recognized and parsed into typed composition IR.*current active C1 lane requires exactly one '\?fsmc' child instance/s,
+    'pipeline rejects unsupported composition shapes after typed parsing with an active-lane diagnostic',
 );
 like(
     $pipeline_exception,
@@ -123,8 +123,8 @@ my $combined_output = join(
 
 like(
     $combined_output,
-    qr/Composition source '\?top:composition_smoke'.*recognized and parsed into typed composition IR.*active composition pipeline is not implemented yet/s,
-    'CLI surfaces the explicit composition-boundary diagnostic',
+    qr/Composition source '\?top:composition_smoke'.*recognized and parsed into typed composition IR.*current active C1 lane requires exactly one '\?fsmc' child instance/s,
+    'CLI surfaces the active-lane composition diagnostic',
 );
 unlike(
     $combined_output,

@@ -1,6 +1,46 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### `R6` first shipped `C1` composition generation lane
+- Landed the first active composition runtime slice in [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm).
+- The shipped `C1` boundary is intentionally narrow:
+  - one `?top:name`,
+  - one embedded `?fsmc` child source in the same file,
+  - one explicit `?ports` block,
+  - deterministic same-name top wiring,
+  - generated child HDL plus generated top HDL through `bin/fsmgen`.
+- Added typed composition planning objects for this runtime slice:
+  - [perl/FSM/Composition/Port.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Port.pm)
+  - [perl/FSM/Composition/Link.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Link.pm)
+  - [perl/FSM/Composition/Plan.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Plan.pm)
+  - [perl/FSM/Composition/RealizedInstance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RealizedInstance.pm)
+- Updated [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so:
+  - `?ports` are parsed into typed `Port` objects,
+  - `?toplink` entries are parsed into typed `Link` objects.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the composition path now:
+  - realizes one embedded `?fsmc` child through the active FSM pipeline,
+  - captures the realized child interface as typed ports,
+  - treats `clk` / `rstn` as the current implicit system-input part of that child interface,
+  - validates explicit top-port exposure against the realized child interface,
+  - emits the generated top module and returns composition-aware `module_info` / statistics.
+- Added [t/20-composition-single-fsm-top.t](/Users/richarddje/Documents/github/fsmgen/t/20-composition-single-fsm-top.t) as the first end-to-end composition acceptance test. It locks:
+  - typed composition planning for `C1`,
+  - child realization,
+  - generated top HDL,
+  - deterministic same-name instance wiring,
+  - and CLI output generation through `bin/fsmgen`.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the docs now describe the shipped `C1` boundary truthfully instead of still calling composition entirely unimplemented.
+- Live roadmap status change:
+  - no phase status changed,
+  - `R6` remains `in progress`,
+  - but `R6` `Done` / `Left` moved forward to reflect that `C1` is now shipped and the next honest slice is `C2`-oriented multi-child/link planning.
+- Validation:
+  - `perl -I perl -c perl/FSM/Composition/RealizedInstance.pm` (pass)
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm` (pass)
+  - `perl -I perl -c t/20-composition-single-fsm-top.t` (pass)
+  - `prove -I perl t/13-composition-source-classification.t t/14-composition-parser.t t/20-composition-single-fsm-top.t` (pass: `Files=3`, `Tests=79`)
+  - `prove -I perl t` (pass)
+  - `git diff --check` (pass)
 ### `R6` legacy mapping note and first typed composition parser/IR slice
 - Added [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) as the historical-context note for composition work.
 - The note records:

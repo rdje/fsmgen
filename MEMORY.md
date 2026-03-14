@@ -20,6 +20,30 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: `R6` first shipped `C1` composition lane
+- Current worktree moves `R6` from parser/planning groundwork into the first real shipped composition runtime slice.
+- Scope of this slice:
+  - added typed composition planning/runtime packages: `Port`, `Link`, `Plan`, and `RealizedInstance`,
+  - updated `FSM::Composition::Parser` so `?ports` and `?toplink` payloads are now stored as typed port/link objects instead of raw payloads,
+  - updated `FSM::Pipeline::HDLGenerator` so `?top:name` can now realize one embedded `?fsmc` child, build a typed `C1` plan, validate explicit top-port exposure, and emit a generated top module,
+  - captured the realized child interface as typed ports,
+  - matched the active child-generator contract truthfully by treating `clk` / `rstn` as implicit system inputs and requiring user-facing child ports to be explicitly exposed by the child FSM itself.
+- Regression coverage update:
+  - added `t/20-composition-single-fsm-top.t` to lock the first end-to-end composition acceptance slice through pipeline, plan, HDL text, and CLI output,
+  - the fixture was tightened so the child FSM explicitly exposes `output_data` as an output, which matches the current active FSM pipeline contract instead of inventing a looser composition rule.
+- Roadmap board update:
+  - `ROADMAP_STATUS.md` still keeps `R6` at `in progress`,
+  - `R6` `Done` now includes the first shipped `C1` realization/top-emission lane,
+  - the current next decision point is now `C2`-style multi-child planning plus typed `?toplink`/net resolution, not more single-child boundary work.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Composition/RealizedInstance.pm`
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm`
+  - `perl -I perl -c t/20-composition-single-fsm-top.t`
+  - `prove -I perl t/13-composition-source-classification.t t/14-composition-parser.t t/20-composition-single-fsm-top.t` (`Files=3`, `Tests=79`, `PASS`)
+  - `prove -I perl t`
+- Immediate next direction after commit:
+  - widen from shipped `C1` to `C2`,
+  - add multi-child top planning, typed explicit `?toplink`/net resolution, deterministic instance ordering, and duplicate-driver diagnostics.
 ## 2026-03-14: `R6` legacy mapping note plus first typed `?top` parser/IR slice
 - Current worktree continues `R6` by turning the composition boundary into a real typed parser seam instead of only a classifier/error seam.
 - Scope of this slice:

@@ -10,6 +10,8 @@ no warnings 'experimental::signatures';
 use FSM::Composition::Spec;
 use FSM::Composition::Top;
 use FSM::Composition::Instance;
+use FSM::Composition::Port;
+use FSM::Composition::Link;
 use FSM::Composition::PortsBlock;
 use FSM::Composition::TopLink;
 
@@ -121,18 +123,10 @@ sub parse_top_child ($self, $top_name, $child_ast) {
     }
     if ($header =~ /^\?ports(?::(\w*))?$/) {
         my $block_name = defined($1) && length($1) ? $1 : undef;
-        return ('ports', FSM::Composition::PortsBlock->new(
-            name => $block_name,
-            raw_items => $items,
-            raw_ast => $child_ast,
-        ));
+        return ('ports', $self->parse_ports_block($top_name, $child_ast, $block_name, $items));
     }
     if ($header =~ /^\?toplink:(\w+)$/) {
-        return ('toplink', FSM::Composition::TopLink->new(
-            name => $1,
-            raw_items => $items,
-            raw_ast => $child_ast,
-        ));
+        return ('toplink', $self->parse_toplink_block($top_name, $child_ast, $1, $items));
     }
     if ($header =~ /^\?top:/) {
         confess
@@ -169,6 +163,73 @@ sub parse_fsmc_child ($self, $top_name, $child_ast, $child_name, $items) {
         name => $child_name,
         source_name => $scalar_items[0],
         raw_items => $items,
+        raw_ast => $child_ast,
+    );
+}
+
+sub parse_ports_block ($self, $top_name, $child_ast, $block_name, $items) {
+    my @ports;
+
+    for my $item (@$items) {
+        confess "Composition top '$top_name' contains a nested '?ports' item, but the first active R6 lane only supports flat explicit port tokens"
+            if ref($item);
+
+        if ($item =~ m{^/} || $item =~ /^\{/) {
+            confess
+                "Composition top '$top_name' contains '?ports' mapping directive '$item', ".
+                "but the first active R6 realization lane only supports explicit top-port declarations inside '?ports'";
+        }
+
+        push @ports, $self->parse_port_token($top_name, $item);
+    }
+
+    return FSM::Composition::PortsBlock->new(
+        name => $block_name,
+        ports => \@ports,
+        raw_ast => $child_ast,
+    );
+}
+
+sub parse_port_token ($self, $top_name, $token) {
+    $token =~ /^(?<port>\w+)(?:(?<direction>[<>])(?<size>\d+)?(?:[:](?<type>\w+))?)?$/o;
+    my ($port, $direction, $size, $type) = @+{qw/port direction size type/};
+
+    confess "Composition top '$top_name' contains invalid '?ports' token '$token'" unless $port;
+    confess "Composition top '$top_name' contains non-positive port width in token '$token'" if defined($size) && $size < 1;
+
+    return FSM::Composition::Port->new(
+        name => $port,
+        direction => defined($direction) ? ($direction eq '<' ? 'input' : 'output') : 'input',
+        width => $size // 1,
+        type => $type,
+        raw_token => $token,
+    );
+}
+
+sub parse_toplink_block ($self, $top_name, $child_ast, $block_name, $items) {
+    my @links;
+
+    for my $item (@$items) {
+        confess "Composition top '$top_name' contains a nested '?toplink' item, but the first active R6 lane only supports flat '/source/target/' link tokens"
+            if ref($item);
+
+        if ($item =~ m{^/([^/]+)/([^/]+)/$}) {
+            push @links, FSM::Composition::Link->new(
+                source => $1,
+                target => $2,
+                raw_token => $item,
+            );
+            next;
+        }
+
+        confess
+            "Composition top '$top_name' contains unsupported '?toplink' token '$item'. ".
+            "The current parser only accepts simple '/source/target/' link forms";
+    }
+
+    return FSM::Composition::TopLink->new(
+        name => $block_name,
+        links => \@links,
         raw_ast => $child_ast,
     );
 }

@@ -52,7 +52,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R6` Composition-oriented language / architecture work
 - Current next decision point:
-  - Implement the first child-realization and top-planning slice for `C1`: one `?top:name` with one `?fsmc` child and explicit `?ports` exposure, replacing raw block payloads with typed port/link planning data.
+  - Widen the shipped `C1` lane toward `C2`: add multi-child top planning plus typed explicit `?toplink`/net resolution, deterministic instance ordering, and duplicate-driver diagnostics.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -179,15 +179,21 @@ Done:
 - The same scope document now defines the first executable acceptance matrix (`C1`..`C6`) and the initial planned test-file split for composition work.
 - The active pipeline now classifies top-level source kind explicitly, so `?top:name` is recognized before the FSM-only parser runs.
 - Unsupported composition input now fails with a composition-specific boundary diagnostic in both `HDLGenerator` and direct FSM-only parser calls, with focused regression coverage.
-- The active pipeline now parses `?top:name` through a first typed composition parser/IR boundary before failing at the still-unimplemented realization/emission stage.
-- The first typed parser/IR slice now creates `CompositionSpec`, `CompositionTop`, typed `fsmc`/`rtl` child instances, `PortsBlock`, and `TopLink` objects.
+- The active pipeline now parses `?top:name` through a typed composition parser/IR boundary.
+- The typed parser/IR slice now creates `CompositionSpec`, `CompositionTop`, typed `fsmc`/`rtl` child instances, `PortsBlock`, `TopLink`, and typed per-port/per-link planning objects.
 - `docs/COMPOSITION_LEGACY_MAPPING.md` now records how the obsolete `fx/bin/fsmgen` composition lane maps onto the active `R6` plan without reviving `.plg` / `PPlugin` behavior.
+- The first shipped composition runtime lane now exists for `C1`: one `?top:name`, one embedded `?fsmc` child source in the same file, one explicit `?ports` block, deterministic same-name top wiring, and generated top emission through `bin/fsmgen`.
+- Realized child interface data is now carried as typed composition ports, with the current active child contract treating `clk`/`rstn` as implicit system inputs plus explicit user-facing child ports from the FSM pipeline.
+- `t/20-composition-single-fsm-top.t` now locks the first end-to-end composition acceptance slice across pipeline, plan, HDL text, and CLI output.
 Left:
-- Replace raw `?ports` / `?toplink` payload storage with typed port/link planning data.
-- Implement child realization for the first supported `?fsmc` lane and feed it through the active FSM pipeline.
-- Implement top planning and top emission for the first accepted composition scenario (`C1`), then widen toward the remaining acceptance matrix.
-- Add the executable acceptance tests for the scoped composition matrix.
-- Extend user/developer docs from scope-plus-boundary detection to shipped composition behavior.
+- Widen from the shipped single-child `C1` lane to the remaining acceptance matrix:
+  - `C2` multi-child FSM composition with explicit linking and duplicate-driver diagnostics,
+  - `C3` mixed `?fsmc` + `?rtl` realization,
+  - `C4` declared connect-by-name beyond the single-child passthrough case,
+  - `C5` width-mismatch diagnostics across typed endpoints,
+  - `C6` explicit failure for legacy composition constructs outside the scoped model.
+- Add the remaining focused composition acceptance tests beyond `t/20-composition-single-fsm-top.t`.
+- Continue tightening user/developer docs as more of the acceptance matrix ships.
 Exit criteria:
 - Composition capabilities exist in the active architecture, not just in notes/terminology.
 

@@ -3,16 +3,34 @@
 This document defines the concrete `R6` scope for composition-oriented work in the active `bin/fsmgen` architecture.
 
 ## Status
-- Composition is not implemented yet in the active toolchain.
-- `?top:name` inputs are now classified explicitly at the active pipeline boundary and fail with a deliberate composition-boundary diagnostic.
-- The first typed composition parser/IR slice now exists for `?top:name` plus child-block recognition of `?fsmc`, `?rtl`, `?ports`, and `?toplink`, but child realization and top emission are still not implemented.
-- This document is the normative scope and acceptance boundary for the first composition lane.
+- The active toolchain now ships the first `C1` composition lane:
+  - one `?top:name`,
+  - one embedded `?fsmc` child source in the same file,
+  - one explicit `?ports` block,
+  - deterministic same-name top wiring,
+  - generated child HDL plus generated top HDL through `bin/fsmgen`.
+- `?top:name` inputs are now classified explicitly at the active pipeline boundary, parsed into typed composition IR, and then routed either into the shipped `C1` runtime lane or a deliberate scope-boundary diagnostic.
+- `?rtl`, explicit `?toplink`, and multi-child top planning are not implemented yet in the active runtime lane.
+- This document remains the normative scope and acceptance boundary for the broader `R6` composition plan.
 
 ## Current active boundary
 - `bin/fsmgen` currently compiles a single FSM source into HDL.
-- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) parses a source file with `Lispish::multi(...)`, classifies the top-level source kind, and now parses `?top:name` inputs through a typed composition parser before stopping at the still-unimplemented realization/emission boundary.
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) parses a source file with `Lispish::multi(...)`, classifies the top-level source kind, and routes `?top:name` inputs through a typed composition parser and the shipped `C1` realization/top-emission lane.
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) currently accepts only active FSM roots shaped like `?fsm:name` or `+fsm`.
-- There is still no child realization path and no top-module emitter in the modern pipeline yet.
+
+## Current shipped `C1` slice
+The currently shipped composition behavior is intentionally narrow:
+- exactly one top-level `?top:name`,
+- exactly one explicit `?ports` block,
+- exactly one `?fsmc` child,
+- the `?fsmc` child must reference one embedded `?fsm:name` source in the same file,
+- no `?toplink`,
+- no `?rtl` realization yet,
+- top ports must match the realized child interface exactly by name, width, and direction,
+- realized child interface currently means:
+  - implicit `clk` / `rstn` system inputs from the active FSM generator contract,
+  - plus explicit user-facing child ports as exposed by the active FSM pipeline,
+- composition output is currently limited to SystemVerilog / Verilog targets.
 
 ## Goal of `R6`
 Add a composition layer to the active architecture so `fsmgen` can build a top module from multiple child blocks without reviving the legacy eval/plugin model.
@@ -30,11 +48,15 @@ The active tool will support two top-level source kinds:
 - Composition source: one top-level `?top:name` form routed to a dedicated composition parser.
 
 ### 2. Child block kinds
-The first composition lane supports exactly two child block kinds:
+The language surface for the first composition lane recognizes exactly two child block kinds:
 - `?fsmc`
   - Child instance compiled from an FSM source through the active FSM pipeline.
 - `?rtl`
   - Child instance bound to an external RTL module with an explicitly declared interface.
+
+Current shipped runtime subset:
+- only `?fsmc` is realized today,
+- `?rtl` remains part of the scoped plan but is not implemented yet.
 
 ### 3. Interface model
 Composition will use explicit typed interface data, not implicit global hashes.
@@ -113,7 +135,7 @@ The first composition lane should be added above the current FSM-only parser bou
 
 ### Planned typed IR concepts
 The first lane should introduce typed composition objects instead of free-form hashes.
-The initial parser/IR slice now covers the root/container side, while typed per-port/per-link objects still remain to be implemented.
+The initial parser/IR slice now covers the root/container side and also includes typed per-port/per-link objects used by the shipped `C1` planning path.
 
 Planned typed objects:
 - `CompositionSpec`
@@ -132,6 +154,9 @@ Historical note:
 These are the executable scenarios that must exist before `R6` can be closed.
 
 ### C1. Single child FSM passthrough top
+Status:
+- Implemented in the current active toolchain.
+
 - Input:
   - one `?top:name` with one `?fsmc` child and explicit top-port exposure.
 - Must prove:
