@@ -67,11 +67,11 @@ my $pipeline_error = eval {
 };
 my $pipeline_exception = $@;
 
-ok(!$pipeline_error, 'pipeline does not return a result for composition input yet');
+ok(!$pipeline_error, 'pipeline does not return a result for composition shapes outside the shipped lanes');
 like(
     $pipeline_exception,
-    qr/Composition source '\?top:composition_smoke'.*recognized and parsed into typed composition IR.*current active C1 lane requires exactly one '\?fsmc' child instance/s,
-    'pipeline rejects unsupported composition shapes after typed parsing with an active-lane diagnostic',
+    qr/Composition source '\?top:composition_smoke'.*recognized and parsed into typed composition IR.*current active composition lanes require at least one '\?fsmc' child instance/s,
+    'pipeline rejects unsupported composition shapes after typed parsing with a live-lane diagnostic',
 );
 like(
     $pipeline_exception,
@@ -111,7 +111,7 @@ my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
     command => ['./bin/fsmgen', '-o', $top_out_path, '--quiet', $top_path],
 );
 
-ok(!$success, 'CLI rejects composition input while the composition pipeline is not implemented');
+ok(!$success, 'CLI rejects composition input when the requested shape is outside the shipped composition lanes');
 ok(!-e $top_out_path, 'CLI does not emit output for unsupported composition input');
 
 my $combined_output = join(
@@ -123,7 +123,7 @@ my $combined_output = join(
 
 like(
     $combined_output,
-    qr/Composition source '\?top:composition_smoke'.*recognized and parsed into typed composition IR.*current active C1 lane requires exactly one '\?fsmc' child instance/s,
+    qr/Composition source '\?top:composition_smoke'.*recognized and parsed into typed composition IR.*current active composition lanes require at least one '\?fsmc' child instance/s,
     'CLI surfaces the active-lane composition diagnostic',
 );
 unlike(

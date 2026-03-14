@@ -52,7 +52,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R6` Composition-oriented language / architecture work
 - Current next decision point:
-  - Widen the shipped `C1` lane toward `C2`: add multi-child top planning plus typed explicit `?toplink`/net resolution, deterministic instance ordering, and duplicate-driver diagnostics.
+  - Move from the shipped `C2` FSM-only linking lane to `C3`: add `?rtl` child realization with declared interface metadata and mixed `?fsmc` + `?rtl` validation/emission.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -185,14 +185,15 @@ Done:
 - The first shipped composition runtime lane now exists for `C1`: one `?top:name`, one embedded `?fsmc` child source in the same file, one explicit `?ports` block, deterministic same-name top wiring, and generated top emission through `bin/fsmgen`.
 - Realized child interface data is now carried as typed composition ports, with the current active child contract treating `clk`/`rstn` as implicit system inputs plus explicit user-facing child ports from the FSM pipeline.
 - `t/20-composition-single-fsm-top.t` now locks the first end-to-end composition acceptance slice across pipeline, plan, HDL text, and CLI output.
+- The first shipped `C2` runtime slice now exists for multi-child FSM composition: two or more embedded `?fsmc` children, typed explicit `?toplink` endpoint resolution, deterministic instance ordering, deterministic internal-net creation for child-to-child wiring, and duplicate-driver rejection.
+- `t/21-composition-two-fsm-linking.t` now locks the multi-child `?fsmc` success path, and `t/23-composition-errors.t` locks duplicate-driver diagnostics.
 Left:
-- Widen from the shipped single-child `C1` lane to the remaining acceptance matrix:
-  - `C2` multi-child FSM composition with explicit linking and duplicate-driver diagnostics,
+- Widen from the shipped FSM-only `C1`/`C2` lanes to the remaining acceptance matrix:
   - `C3` mixed `?fsmc` + `?rtl` realization,
   - `C4` declared connect-by-name beyond the single-child passthrough case,
   - `C5` width-mismatch diagnostics across typed endpoints,
   - `C6` explicit failure for legacy composition constructs outside the scoped model.
-- Add the remaining focused composition acceptance tests beyond `t/20-composition-single-fsm-top.t`.
+- Add the remaining focused composition acceptance tests beyond `t/20-composition-single-fsm-top.t`, `t/21-composition-two-fsm-linking.t`, and `t/23-composition-errors.t`.
 - Continue tightening user/developer docs as more of the acceptance matrix ships.
 Exit criteria:
 - Composition capabilities exist in the active architecture, not just in notes/terminology.

@@ -54,7 +54,7 @@ write_file(
     txd>
   )
   (?toplink:loopback_bus
-    /output_data/txd/
+    /child_ctrl.output_data/txd/
   )
 )
 
@@ -96,7 +96,7 @@ isa_ok($explicit_spec->top->toplinks->[0], 'FSM::Composition::TopLink');
 is($explicit_spec->top->toplinks->[0]->name, 'loopback_bus', 'toplink block preserves its declared name');
 is(scalar(@{$explicit_spec->top->toplinks->[0]->links}), 1, 'toplink block materializes simple link tokens as typed links');
 isa_ok($explicit_spec->top->toplinks->[0]->links->[0], 'FSM::Composition::Link');
-is($explicit_spec->top->toplinks->[0]->links->[0]->source, 'output_data', 'typed link preserves source endpoint');
+is($explicit_spec->top->toplinks->[0]->links->[0]->source, 'child_ctrl.output_data', 'typed link preserves dotted child source endpoints');
 is($explicit_spec->top->toplinks->[0]->links->[0]->target, 'txd', 'typed link preserves target endpoint');
 
 my $inline_port_error = eval {

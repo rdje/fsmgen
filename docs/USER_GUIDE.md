@@ -14,10 +14,11 @@ Current limitation:
 - Composition/top-level multi-block generation is only partially implemented in the active toolchain.
 - The currently shipped composition lane is narrow:
   - one `?top:name`,
-  - one embedded `?fsmc` child in the same file,
   - one explicit `?ports` block,
-  - deterministic same-name wiring from top ports to child ports.
-- `?rtl`, explicit `?toplink`, and multi-child composition are not implemented yet.
+  - one or more embedded `?fsmc` children in the same file,
+  - `C1` single-child passthrough via deterministic same-name wiring,
+  - `C2` multi-child FSM composition via explicit `?toplink` wiring with `instance.port` child endpoints.
+- `?rtl` is not implemented yet.
 - See [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) for the scoped `R6` plan and [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) for historical context.
 
 ## 2) Core concepts
@@ -104,6 +105,29 @@ This currently works because:
 - the child FSM is embedded in the same file,
 - the child exposes `output_data` explicitly as an output,
 - the top `?ports` block matches the realized child interface exactly.
+
+Current narrow multi-child example:
+```lisp
+(?top:two_child_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data/consumer.input_data/
+    /consumer.final_data/result_data/
+  )
+)
+```
+
+This currently works because:
+- every child is an embedded `?fsmc`,
+- `clk` and `rstn` use the shared system-input contract,
+- non-system connections are expressed explicitly through `?toplink`,
+- explicit link widths and endpoint roles must match exactly.
 
 ## 4) Useful options
 - `-o, --output <file>` : output file path

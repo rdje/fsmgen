@@ -1,5 +1,29 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R6` first shipped `C2` FSM-linking slice
+- Continued `R6` by widening the active composition runtime from one-child passthrough to the first explicit multi-child FSM-linking lane.
+- Rationale:
+  - once `C1` was shipped, the next honest move was not to jump straight to `?rtl`, but to prove that the active architecture can plan and emit deterministic wiring across more than one realized child,
+  - explicit `?toplink` resolution is the right next step because it exercises the typed composition objects and forces us to define endpoint roles, internal-net ownership, and duplicate-driver behavior,
+  - keeping this slice FSM-only avoids mixing two unsettled concerns at once: multi-child wiring and external-RTL interface loading.
+- Structural outcome:
+  - the composition layer now has a typed `Net` plan object for internal child-to-child wiring,
+  - `Plan` now carries typed internal nets and `RealizedInstance` now carries port bindings,
+  - `HDLGenerator` now has a real `C2` planning path for multiple embedded `?fsmc` children with explicit `?toplink` wiring,
+  - explicit link endpoints are now resolved as either top-port names or `instance.port` child endpoints,
+  - the planner now validates endpoint roles, width equality, deterministic source-carrier selection, and duplicate targets before emission,
+  - top emission is now driven from planned bindings instead of recomputing wiring ad hoc.
+- Safety/compatibility:
+  - the single-FSM path remains unchanged,
+  - `C1` behavior remains intact because it now just uses the same generic top emitter with a simpler binding plan,
+  - the shipped multi-child lane is still intentionally bounded: embedded `?fsmc` children only, shared `clk` / `rstn` auto-wiring only, and explicit `?toplink` for non-system ports.
+- Verification:
+  - syntax checks for the new net type, updated planner, and new composition tests pass,
+  - focused regressions `t/13`, `t/14`, `t/20`, `t/21`, and `t/23` pass,
+  - the full Perl regression suite passes again after landing the `C2` slice.
+- Next likely slices:
+  - move to `C3` by adding `?rtl` child realization with declared interface metadata,
+  - then add the remaining `C4`/`C5`/`C6` coverage around declared connect-by-name, width-mismatch diagnostics, and explicit rejection of out-of-scope legacy constructs.
 ## 2026-03-14: `R6` first shipped `C1` composition generation slice
 - Continued `R6` by landing the first real composition runtime path instead of staying at parser-only groundwork.
 - Rationale:

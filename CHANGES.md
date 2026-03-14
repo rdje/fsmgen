@@ -1,6 +1,46 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### `R6` first shipped `C2` FSM-linking lane
+- Landed the first active multi-child composition runtime slice in [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm).
+- The shipped `C2` boundary is still intentionally bounded:
+  - two or more embedded `?fsmc` children,
+  - one explicit `?ports` block,
+  - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
+  - deterministic instance ordering,
+  - deterministic internal-net creation for child-to-child links,
+  - duplicate-driver rejection before emission.
+- Added [perl/FSM/Composition/Net.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Net.pm) and extended the typed runtime plan:
+  - [perl/FSM/Composition/Plan.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Plan.pm) now carries typed internal nets,
+  - [perl/FSM/Composition/RealizedInstance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RealizedInstance.pm) now carries per-instance port bindings used during top emission.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the composition path now:
+  - supports a `C2` planning lane when multiple embedded `?fsmc` children and explicit `?toplink` blocks are present,
+  - resolves explicit link endpoints as either top-port names or `instance.port` child endpoints,
+  - validates source/target roles and exact width agreement,
+  - auto-wires shared `clk` / `rstn` system inputs across realized children,
+  - creates deterministic internal nets for child-to-child links,
+  - emits multi-child top modules using planned port bindings rather than recomputing wiring during emission.
+- Tightened the parser regression in [t/14-composition-parser.t](/Users/richarddje/Documents/github/fsmgen/t/14-composition-parser.t) so dotted `instance.port` link endpoints are now locked explicitly.
+- Added [t/21-composition-two-fsm-linking.t](/Users/richarddje/Documents/github/fsmgen/t/21-composition-two-fsm-linking.t) to lock:
+  - the shipped `C2` success path,
+  - deterministic internal-net naming,
+  - deterministic instance ordering,
+  - per-instance binding plans,
+  - and CLI output generation for the two-child explicit-link lane.
+- Added [t/23-composition-errors.t](/Users/richarddje/Documents/github/fsmgen/t/23-composition-errors.t) to lock duplicate-driver rejection for explicit composition links.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the docs now describe the shipped `C2` subset truthfully.
+- Live roadmap status change:
+  - no phase status changed,
+  - `R6` remains `in progress`,
+  - but `R6` `Done` / `Left` moved forward again because the next honest slice is now `C3` mixed `?fsmc` + `?rtl` realization rather than more FSM-only linking groundwork.
+- Validation:
+  - `perl -I perl -c perl/FSM/Composition/Net.pm` (pass)
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm` (pass)
+  - `perl -I perl -c t/21-composition-two-fsm-linking.t` (pass)
+  - `perl -I perl -c t/23-composition-errors.t` (pass)
+  - `prove -I perl t/13-composition-source-classification.t t/14-composition-parser.t t/20-composition-single-fsm-top.t t/21-composition-two-fsm-linking.t t/23-composition-errors.t` (pass: `Files=5`, `Tests=120`)
+  - `prove -I perl t` (pass)
+  - `git diff --check` (pass)
 ### `R6` first shipped `C1` composition generation lane
 - Landed the first active composition runtime slice in [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm).
 - The shipped `C1` boundary is intentionally narrow:

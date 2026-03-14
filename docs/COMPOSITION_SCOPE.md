@@ -9,8 +9,14 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - one explicit `?ports` block,
   - deterministic same-name top wiring,
   - generated child HDL plus generated top HDL through `bin/fsmgen`.
+- The active toolchain now also ships the first `C2` composition lane:
+  - two or more embedded `?fsmc` children,
+  - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
+  - deterministic instance ordering,
+  - deterministic internal-net creation for child-to-child wiring,
+  - duplicate-driver rejection before emission.
 - `?top:name` inputs are now classified explicitly at the active pipeline boundary, parsed into typed composition IR, and then routed either into the shipped `C1` runtime lane or a deliberate scope-boundary diagnostic.
-- `?rtl`, explicit `?toplink`, and multi-child top planning are not implemented yet in the active runtime lane.
+- `?rtl` realization is not implemented yet in the active runtime lane.
 - This document remains the normative scope and acceptance boundary for the broader `R6` composition plan.
 
 ## Current active boundary
@@ -18,18 +24,23 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) parses a source file with `Lispish::multi(...)`, classifies the top-level source kind, and routes `?top:name` inputs through a typed composition parser and the shipped `C1` realization/top-emission lane.
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) currently accepts only active FSM roots shaped like `?fsm:name` or `+fsm`.
 
-## Current shipped `C1` slice
-The currently shipped composition behavior is intentionally narrow:
+## Current shipped runtime subset
+The currently shipped composition behavior is intentionally bounded:
 - exactly one top-level `?top:name`,
 - exactly one explicit `?ports` block,
-- exactly one `?fsmc` child,
-- the `?fsmc` child must reference one embedded `?fsm:name` source in the same file,
-- no `?toplink`,
+- one or more `?fsmc` children,
+- every `?fsmc` child must reference one embedded `?fsm:name` source in the same file,
+- `C1` single-child passthrough works without `?toplink`,
+- `C2` multi-child FSM composition uses explicit `?toplink`,
 - no `?rtl` realization yet,
-- top ports must match the realized child interface exactly by name, width, and direction,
+- top ports must match the realized child interface exactly by name, width, and direction in `C1`,
+- explicit `?toplink` endpoints must match by role and exact width in `C2`,
 - realized child interface currently means:
   - implicit `clk` / `rstn` system inputs from the active FSM generator contract,
   - plus explicit user-facing child ports as exposed by the active FSM pipeline,
+- `C2` endpoint syntax is currently:
+  - top-port name, for example `result_data`,
+  - or child endpoint `instance.port`, for example `producer.output_data`,
 - composition output is currently limited to SystemVerilog / Verilog targets.
 
 ## Goal of `R6`
@@ -166,6 +177,9 @@ Status:
   - child ports are wired exactly as declared.
 
 ### C2. Two child FSMs with explicit child-to-child wiring
+Status:
+- Implemented in the current active toolchain for embedded `?fsmc` children with explicit `?toplink`.
+
 - Input:
   - one `?top:name` with two `?fsmc` children and explicit links between them.
 - Must prove:

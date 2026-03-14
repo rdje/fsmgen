@@ -14,6 +14,7 @@ use FSM::Debug;
 use FSM::HDL::FlattenedDT;
 use FSM::Adapter::FSMGenFull;
 use FSM::Composition::Parser;
+use FSM::Composition::Net;
 use FSM::Composition::Port;
 use FSM::Composition::Plan;
 use FSM::Composition::RealizedInstance;
@@ -215,48 +216,55 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
 
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active C1 lane requires exactly one '?fsmc' child instance. ".
+        "but the current active composition lanes require at least one '?fsmc' child instance. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless @instances == 1;
+        unless @instances;
 
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active C1 lane requires exactly one explicit '?ports' block. ".
+        "but the current active composition lanes require exactly one explicit '?ports' block. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @ports_blocks == 1;
-
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but '?toplink' wiring is not implemented in the current active C1 lane yet. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        if @toplinks;
-
-    my $instance = $instances[0];
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active C1 lane only supports '?fsmc' children. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless $instance->kind eq 'fsmc';
 
     my $ports_block = $ports_blocks[0];
     my @ports = @{$ports_block->ports || []};
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active C1 lane requires '?ports' to declare at least one explicit top port. ".
+        "but the current active composition lanes require '?ports' to declare at least one explicit top port. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @ports;
 
-    my $realized_instance = $self->realize_fsmc_child_instance($instance, $composition_spec, $fsm_file, $header);
-    my $child_port_info = $self->index_ports_by_name($realized_instance->interface_ports);
-    $self->assert_c1_port_exposure_matches_child($ports_block, $realized_instance, $child_port_info, $fsm_file, $header);
+    my @realized_instances;
+    for my $instance (@instances) {
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
+            "but the current active composition lanes only support '?fsmc' children. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $instance->kind eq 'fsmc';
 
-    return FSM::Composition::Plan->new(
-        lane => 'C1',
-        top_name => $top->name,
-        ports => \@ports,
-        links => [],
-        instances => [$realized_instance],
-        raw_spec => $composition_spec,
+        push @realized_instances, $self->realize_fsmc_child_instance($instance, $composition_spec, $fsm_file, $header);
+    }
+
+    if (@realized_instances == 1 && !@toplinks) {
+        return $self->build_c1_composition_plan(
+            $composition_spec,
+            $ports_block,
+            \@ports,
+            $realized_instances[0],
+            $fsm_file,
+            $header,
+        );
+    }
+
+    return $self->build_c2_composition_plan(
+        $composition_spec,
+        $top,
+        $ports_block,
+        \@ports,
+        \@toplinks,
+        \@realized_instances,
+        $fsm_file,
+        $header,
     );
 }
 
@@ -351,7 +359,7 @@ sub index_ports_by_name ($self, $ports) {
     return \%ports;
 }
 
-sub assert_c1_port_exposure_matches_child ($self, $ports_block, $realized_instance, $child_port_info, $fsm_file, $header) {
+sub assert_unique_top_ports ($self, $ports_block, $fsm_file, $header) {
     my %top_ports_by_name;
     for my $port (@{$ports_block->ports}) {
         Carp::confess
@@ -362,13 +370,43 @@ sub assert_c1_port_exposure_matches_child ($self, $ports_block, $realized_instan
         $top_ports_by_name{$port->name} = $port;
     }
 
+    return \%top_ports_by_name;
+}
+
+sub build_c1_composition_plan ($self, $composition_spec, $ports_block, $ports, $realized_instance, $fsm_file, $header) {
+    my $child_port_info = $self->index_ports_by_name($realized_instance->interface_ports);
+    $self->assert_c1_port_exposure_matches_child($ports_block, $realized_instance, $child_port_info, $fsm_file, $header);
+
+    my @port_bindings = map {
+        {
+            port_name => $_->name,
+            signal_name => $_->name,
+        }
+    } @{$ports || []};
+
+    my $planned_instance = $self->clone_realized_instance_with_bindings($realized_instance, \@port_bindings);
+
+    return FSM::Composition::Plan->new(
+        lane => 'C1',
+        top_name => $composition_spec->top->name,
+        ports => $ports,
+        links => [],
+        nets => [],
+        instances => [$planned_instance],
+        raw_spec => $composition_spec,
+    );
+}
+
+sub assert_c1_port_exposure_matches_child ($self, $ports_block, $realized_instance, $child_port_info, $fsm_file, $header) {
+    my $top_ports_by_name = $self->assert_unique_top_ports($ports_block, $fsm_file, $header);
+
     for my $child_port_name (sort keys %$child_port_info) {
         Carp::confess
             "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
             "but the current active C1 lane requires every child port to be explicitly exposed in '?ports'. ".
             "Missing top exposure for child port '$child_port_name' on instance '".$realized_instance->instance_name."'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $top_ports_by_name{$child_port_name};
+            unless $top_ports_by_name->{$child_port_name};
     }
 
     for my $port (@{$ports_block->ports}) {
@@ -393,37 +431,383 @@ sub assert_c1_port_exposure_matches_child ($self, $ports_block, $realized_instan
     }
 }
 
+sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $fsm_file, $header) {
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
+        "but the current active C2 lane requires at least two '?fsmc' child instances. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless @{$realized_instances || []} >= 2;
+
+    my @links = map { @{$_->links || []} } @{$toplinks || []};
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
+        "but the current active C2 lane requires explicit '?toplink' wiring. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless @links;
+
+    my $top_ports_by_name = $self->assert_unique_top_ports($ports_block, $fsm_file, $header);
+    my %instances_by_name;
+    my %child_ports_by_instance;
+    my %bindings_by_instance;
+    my %reserved_targets;
+
+    for my $instance (@{$realized_instances || []}) {
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' declares duplicate child instance name '".$instance->instance_name."'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            if $instances_by_name{$instance->instance_name};
+
+        $instances_by_name{$instance->instance_name} = $instance;
+        $child_ports_by_instance{$instance->instance_name} = $self->index_ports_by_name($instance->interface_ports);
+        $bindings_by_instance{$instance->instance_name} = {
+            map { $_->name => undef } @{$instance->interface_ports}
+        };
+    }
+
+    for my $instance (@{$realized_instances || []}) {
+        for my $system_port_name (qw(clk rstn)) {
+            my $top_port = $top_ports_by_name->{$system_port_name} or next;
+            my $child_port = $child_ports_by_instance{$instance->instance_name}{$system_port_name} or next;
+
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' declares top port '$system_port_name' as ".$top_port->direction.", ".
+                "but the current active C2 lane requires '$system_port_name' to be an input when auto-wiring child system ports. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                unless $top_port->direction eq 'input';
+
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' realizes child port '".$instance->instance_name.".$system_port_name' as ".$child_port->direction.", ".
+                "but the current active C2 lane expects child system ports to be inputs. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                unless $child_port->direction eq 'input';
+
+            $bindings_by_instance{$instance->instance_name}{$system_port_name} = $system_port_name;
+            $reserved_targets{"child:".$instance->instance_name.".$system_port_name"} = "auto top input '$system_port_name'";
+        }
+    }
+
+    my @resolved_links;
+    my %links_by_source;
+    my %source_endpoint_by_key;
+
+    for my $link (@links) {
+        my $source = $self->resolve_composition_endpoint(
+            $link->source,
+            $top_ports_by_name,
+            \%instances_by_name,
+            \%child_ports_by_instance,
+            $fsm_file,
+            $header,
+        );
+        my $target = $self->resolve_composition_endpoint(
+            $link->target,
+            $top_ports_by_name,
+            \%instances_by_name,
+            \%child_ports_by_instance,
+            $fsm_file,
+            $header,
+        );
+
+        $self->assert_explicit_link_roles($source, $target, $fsm_file, $header);
+
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' links '".$source->{raw}."' (width ".$source->{port}->width.") to '".$target->{raw}."' (width ".$target->{port}->width."), ".
+            "but the current active composition lanes require exact width agreement. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $source->{port}->width == $target->{port}->width;
+
+        my $target_key = $target->{key};
+        if ($reserved_targets{$target_key}) {
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' assigns explicit link driver '".$source->{raw}."' to target '".$target->{raw}."', ".
+                "but that target is already driven by ".$reserved_targets{$target_key}.". ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+        $reserved_targets{$target_key} = "explicit link '".$source->{raw}."'";
+
+        my $source_key = $source->{key};
+        $source_endpoint_by_key{$source_key} = $source;
+        push @{$links_by_source{$source_key}}, {
+            link => $link,
+            source => $source,
+            target => $target,
+        };
+        push @resolved_links, {
+            link => $link,
+            source => $source,
+            target => $target,
+        };
+    }
+
+    my @nets;
+    my %carrier_signal_by_source;
+
+    for my $source_key (sort keys %links_by_source) {
+        my $source = $source_endpoint_by_key{$source_key};
+        my @group = @{$links_by_source{$source_key}};
+
+        if ($source->{kind} eq 'top_port') {
+            for my $resolved_link (@group) {
+                Carp::confess
+                    "Composition source '$header' in '$fsm_file' links top input '".$source->{raw}."' directly to top output '".$resolved_link->{target}{raw}."', ".
+                    "but the current active C2 lane only supports top inputs driving child inputs. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                    if $resolved_link->{target}{kind} eq 'top_port';
+            }
+            $carrier_signal_by_source{$source_key} = $source->{port}->name;
+            next;
+        }
+
+        my @top_output_targets = grep { $_->{target}{kind} eq 'top_port' } @group;
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' drives multiple top outputs from '".$source->{raw}."', ".
+            "but the current active C2 lane supports at most one top-output target per explicit source. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            if @top_output_targets > 1;
+
+        my $carrier_signal_name;
+        if (@top_output_targets == 1) {
+            $carrier_signal_name = $top_output_targets[0]{target}{port}->name;
+        } else {
+            my $net_name = $self->allocate_composition_net_name($source, $top_ports_by_name, \@nets);
+            push @nets, FSM::Composition::Net->new(
+                name => $net_name,
+                width => $source->{port}->width,
+                source => $source->{raw},
+                targets => [map { $_->{target}{raw} } @group],
+            );
+            $carrier_signal_name = $net_name;
+        }
+        $carrier_signal_by_source{$source_key} = $carrier_signal_name;
+        $bindings_by_instance{$source->{instance_name}}{$source->{port}->name} = $carrier_signal_name;
+    }
+
+    my %top_port_usage;
+    for my $resolved_link (@resolved_links) {
+        my $source = $resolved_link->{source};
+        my $target = $resolved_link->{target};
+        my $carrier_signal_name = $carrier_signal_by_source{$source->{key}};
+
+        if ($source->{kind} eq 'top_port') {
+            $top_port_usage{$source->{port}->name}{source} = 1;
+        }
+
+        if ($target->{kind} eq 'top_port') {
+            $top_port_usage{$target->{port}->name}{target} = 1;
+            next;
+        }
+
+        $bindings_by_instance{$target->{instance_name}}{$target->{port}->name} = $carrier_signal_name;
+    }
+
+    for my $top_port_name (sort keys %{$top_ports_by_name || {}}) {
+        my $top_port = $top_ports_by_name->{$top_port_name};
+        next if $top_port_name eq 'clk' || $top_port_name eq 'rstn';
+
+        if ($top_port->direction eq 'input') {
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' declares top input '$top_port_name', ".
+                "but the current active C2 lane requires explicit '?toplink' usage for every non-system top input. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                unless $top_port_usage{$top_port_name}{source};
+        } else {
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' declares top output '$top_port_name', ".
+                "but the current active C2 lane requires explicit '?toplink' usage for every top output. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                unless $top_port_usage{$top_port_name}{target};
+        }
+    }
+
+    my @planned_instances;
+    for my $instance (@{$realized_instances || []}) {
+        my @port_bindings;
+        for my $port (@{$instance->interface_ports}) {
+            my $signal_name = $bindings_by_instance{$instance->instance_name}{$port->name};
+
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' leaves child port '".$instance->instance_name.".".$port->name."' unconnected, ".
+                "but the current active C2 lane requires every realized child port to be wired explicitly or through the shared system-input contract. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                unless defined $signal_name;
+
+            push @port_bindings, {
+                port_name => $port->name,
+                signal_name => $signal_name,
+            };
+        }
+
+        push @planned_instances, $self->clone_realized_instance_with_bindings($instance, \@port_bindings);
+    }
+
+    return FSM::Composition::Plan->new(
+        lane => 'C2',
+        top_name => $top->name,
+        ports => $ports,
+        links => \@links,
+        nets => \@nets,
+        instances => \@planned_instances,
+        raw_spec => $composition_spec,
+    );
+}
+
+sub clone_realized_instance_with_bindings ($self, $instance, $port_bindings) {
+    return FSM::Composition::RealizedInstance->new(
+        kind => $instance->kind,
+        instance_name => $instance->instance_name,
+        module_name => $instance->module_name,
+        source_name => $instance->source_name,
+        interface_ports => $instance->interface_ports,
+        port_bindings => $port_bindings || [],
+        module_info => $instance->module_info,
+        hdl_code => $instance->hdl_code,
+    );
+}
+
+sub resolve_composition_endpoint ($self, $endpoint, $top_ports_by_name, $instances_by_name, $child_ports_by_instance, $fsm_file, $header) {
+    if ($endpoint =~ /^(\w+)\.(\w+)$/) {
+        my ($instance_name, $port_name) = ($1, $2);
+        my $instance = $instances_by_name->{$instance_name};
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' references child endpoint '$endpoint', ".
+            "but no realized child instance named '$instance_name' exists. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $instance;
+
+        my $port = $child_ports_by_instance->{$instance_name}{$port_name};
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' references child endpoint '$endpoint', ".
+            "but instance '$instance_name' has no port named '$port_name'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $port;
+
+        return {
+            raw => $endpoint,
+            key => "child:$instance_name.$port_name",
+            kind => 'child_port',
+            instance_name => $instance_name,
+            instance => $instance,
+            port_name => $port_name,
+            port => $port,
+        };
+    }
+
+    if ($endpoint =~ /^(\w+)$/) {
+        my $port_name = $1;
+        my $port = $top_ports_by_name->{$port_name};
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' references top-level endpoint '$endpoint', ".
+            "but '?ports' declares no top port with that name. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $port;
+
+        return {
+            raw => $endpoint,
+            key => "top:$port_name",
+            kind => 'top_port',
+            port_name => $port_name,
+            port => $port,
+        };
+    }
+
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' uses unsupported explicit endpoint syntax '$endpoint'. ".
+        "The current active C2 lane accepts only top-port names or 'instance.port' child endpoints. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+}
+
+sub assert_explicit_link_roles ($self, $source, $target, $fsm_file, $header) {
+    if ($source->{kind} eq 'top_port') {
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' uses top port '".$source->{raw}."' as an explicit link source, ".
+            "but that top port is declared as ".$source->{port}->direction." instead of input. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $source->{port}->direction eq 'input';
+    } else {
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' uses child endpoint '".$source->{raw}."' as an explicit link source, ".
+            "but that child port is ".$source->{port}->direction." instead of output. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $source->{port}->direction eq 'output';
+    }
+
+    if ($target->{kind} eq 'top_port') {
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' uses top port '".$target->{raw}."' as an explicit link target, ".
+            "but that top port is declared as ".$target->{port}->direction." instead of output. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $target->{port}->direction eq 'output';
+    } else {
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' uses child endpoint '".$target->{raw}."' as an explicit link target, ".
+            "but that child port is ".$target->{port}->direction." instead of input. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $target->{port}->direction eq 'input';
+    }
+}
+
+sub allocate_composition_net_name ($self, $source, $top_ports_by_name, $existing_nets) {
+    my $base_name = "comp_link_" . $source->{instance_name} . "_" . $source->{port_name};
+    $base_name =~ s/\W+/_/g;
+    my %reserved = map { $_ => 1 } keys %{$top_ports_by_name || {}};
+    $reserved{$_->name} = 1 for @{$existing_nets || []};
+
+    my $candidate = $base_name;
+    my $suffix = 0;
+    while ($reserved{$candidate}) {
+        $suffix++;
+        $candidate = $base_name . "_" . $suffix;
+    }
+
+    return $candidate;
+}
+
 sub generate_composition_hdl_code ($self, $composition_plan) {
     my @segments = map { $_->hdl_code } @{$composition_plan->instances};
-    push @segments, $self->emit_c1_top_module($composition_plan);
+    push @segments, $self->emit_composition_top_module($composition_plan);
     return join("\n\n", grep { defined && length } @segments) . "\n";
 }
 
-sub emit_c1_top_module ($self, $composition_plan) {
+sub emit_composition_top_module ($self, $composition_plan) {
     my $top_name = $composition_plan->top_name;
     my @ports = @{$composition_plan->ports};
-    my $instance = $composition_plan->instances->[0];
+    my @nets = @{$composition_plan->nets || []};
+    my @instances = @{$composition_plan->instances || []};
 
     my @port_lines = map {
         my $width = $_->width > 1 ? sprintf("[%d:0] ", $_->width - 1) : '';
         sprintf("    %s %s%s", $_->direction, $width, $_->name);
     } @ports;
 
-    my @connection_lines = map {
-        sprintf("        .%s(%s)", $_->name, $_->name)
-    } @ports;
+    my @net_lines = map {
+        my $width = $_->width > 1 ? sprintf("[%d:0] ", $_->width - 1) : '';
+        sprintf("    wire %s%s;", $width, $_->name)
+    } @nets;
 
-    return join("\n",
+    my @instance_blocks = map {
+        my $instance = $_;
+        my @connection_lines = map {
+            sprintf("        .%s(%s)", $_->{port_name}, $_->{signal_name})
+        } @{$instance->port_bindings || []};
+
+        join("\n",
+            "    ".$instance->module_name." ".$instance->instance_name." (",
+            join(",\n", @connection_lines),
+            "    );",
+        );
+    } @instances;
+
+    my @body_lines = (
         "module $top_name (",
         join(",\n", @port_lines),
         ");",
-        "",
-        "    ".$instance->module_name." ".$instance->instance_name." (",
-        join(",\n", @connection_lines),
-        "    );",
-        "",
         "endmodule",
     );
+
+    splice @body_lines, 4, 0, ("", @net_lines) if @net_lines;
+    splice @body_lines, $#body_lines, 0, ("", join("\n\n", @instance_blocks), "") if @instance_blocks;
+
+    return join("\n", @body_lines);
 }
 
 sub build_composition_module_info ($self, $composition_plan) {
@@ -469,6 +853,7 @@ sub build_composition_module_info ($self, $composition_plan) {
         state_count => 0,
         signal_count => scalar(@{$composition_plan->ports}),
         composition_child_count => scalar(@{$composition_plan->instances}),
+        composition_net_count => scalar(@{$composition_plan->nets || []}),
         composition_lane => $composition_plan->lane,
     };
 }
@@ -477,6 +862,7 @@ sub build_composition_statistics ($self, $composition_plan) {
     my $stats = $self->gather_statistics(undef);
     $stats->{composition_child_count} = scalar(@{$composition_plan->instances});
     $stats->{composition_top_port_count} = scalar(@{$composition_plan->ports});
+    $stats->{composition_net_count} = scalar(@{$composition_plan->nets || []});
     $stats->{composition_lane} = $composition_plan->lane;
     return $stats;
 }

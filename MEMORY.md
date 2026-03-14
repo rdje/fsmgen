@@ -20,6 +20,32 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: `R6` first shipped `C2` FSM-linking lane
+- Current worktree widens the shipped composition runtime from single-child passthrough into the first explicit multi-child FSM-linking lane.
+- Scope of this slice:
+  - added `FSM::Composition::Net` and extended the typed runtime plan so multi-child tops can carry deterministic internal-net and binding data,
+  - updated `FSM::Pipeline::HDLGenerator` to choose between `C1` and `C2` planning lanes,
+  - shipped `C2` support for multiple embedded `?fsmc` children with explicit `?toplink` endpoint resolution using top-port names and `instance.port` child endpoints,
+  - added exact source/target role checks, exact width checks, deterministic internal-net naming, deterministic instance order preservation, and duplicate-driver rejection,
+  - kept the active child-interface contract truthful by continuing to auto-wire only the shared `clk` / `rstn` system inputs and requiring explicit wiring for other child ports.
+- Regression coverage update:
+  - tightened `t/14-composition-parser.t` so dotted `instance.port` endpoints in `?toplink` are now locked explicitly,
+  - added `t/21-composition-two-fsm-linking.t` for the shipped `C2` success path and CLI generation,
+  - added `t/23-composition-errors.t` for duplicate-driver diagnostics.
+- Roadmap board update:
+  - `ROADMAP_STATUS.md` still keeps `R6` at `in progress`,
+  - `R6` `Done` now includes the first shipped `C2` FSM-only linking lane,
+  - the current next decision point is now `C3` mixed `?fsmc` + `?rtl` realization, not more FSM-only multi-child groundwork.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Composition/Net.pm`
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm`
+  - `perl -I perl -c t/21-composition-two-fsm-linking.t`
+  - `perl -I perl -c t/23-composition-errors.t`
+  - `prove -I perl t/13-composition-source-classification.t t/14-composition-parser.t t/20-composition-single-fsm-top.t t/21-composition-two-fsm-linking.t t/23-composition-errors.t` (`Files=5`, `Tests=120`, `PASS`)
+  - `prove -I perl t`
+- Immediate next direction after commit:
+  - move to `C3`,
+  - add `?rtl` child realization with declared interface metadata and mixed `?fsmc` + `?rtl` planning/emission.
 ## 2026-03-14: `R6` first shipped `C1` composition lane
 - Current worktree moves `R6` from parser/planning groundwork into the first real shipped composition runtime slice.
 - Scope of this slice:

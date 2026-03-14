@@ -37,6 +37,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ### Core entrypoints and pipeline
 - `bin/fsmgen` — main CLI entrypoint.
 - `perl/FSM/Pipeline/HDLGenerator.pm` — generation orchestration.
+- `perl/FSM/Composition/Net.pm` — typed internal net plan for multi-child composition wiring.
 - `perl/FSM/Composition/Parser.pm` — first typed composition parser/IR boundary.
 - `perl/FSM/Composition/Plan.pm` — typed realized top-planning object for active composition work.
 - `perl/FSM/SourceClassifier.pm` — top-level source-kind classification for FSM vs composition inputs.
