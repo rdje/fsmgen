@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### future language-design agreements for `(3)`, `(4)`, and `(5)` are now preserved
+- Saved the current design agreements in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) for:
+  - guarded blocks `(3)`,
+  - condition suffixes `(4)`,
+  - and update shorthand `(5)`.
+- The saved agreement set now states:
+  - guarded blocks are first-class,
+  - nesting is unlimited,
+  - nested guards compose by logical `AND`,
+  - `<foo` and `<!foo` are shorthand for non-zero and zero tests,
+  - relational shorthand such as `<foo==3` lowers to the same guarded-block semantics,
+  - condition suffixes have exactly the same semantics as guarded blocks and desugar to a single guarded action,
+  - and update shorthand captures increment/decrement semantics for multi-bit register/flop targets.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task.
+- Validation:
+  - `git diff --check` (pass)
 ### post-roadmap improvement priorities are now preserved in engineering notes
 - Saved the suggested post-`R0`..`R7` improvement order in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) as candidate future workstreams rather than as live roadmap items.
 - The saved recommendation order is:

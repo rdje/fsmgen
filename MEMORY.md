@@ -20,6 +20,25 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: guarded-block and suffix-guard design agreements preserved
+- Current worktree is a doc-only design-continuity slice saving the agreed semantics for future language-contract hardening.
+- Scope of this slice:
+  - saved in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) that guarded blocks `(3)` are first-class,
+  - saved that guarded-block nesting is unlimited and composes by logical `AND`,
+  - saved the sugar and shorthand rules:
+    - `(<foo ...)` => `foo != 0`
+    - `(<!foo ...)` => `foo == 0`
+    - `(<foo==3 ...)` => guarded relational shorthand
+  - saved that condition suffixes `(4)` have exactly the same semantics as guarded blocks and desugar to a guarded block around a single action,
+  - saved the agreed increment/decrement semantics for update shorthand `(5)`.
+- Roadmap board update:
+  - no roadmap status/deliverable/active-lane change for this slice,
+  - the live roadmap snapshot remains unchanged.
+- Validation is green for this slice:
+  - `git diff --check`
+- Immediate next direction after commit:
+  - no roadmap lane is active,
+  - the next natural discussion is whether `(6)` broader arithmetic/operator forms should get an equally explicit semantic contract or be intentionally narrowed first.
 ## 2026-03-14: post-roadmap improvement priorities preserved for later roadmap work
 - Current worktree is a doc-only continuity slice to save the suggested post-`R0`..`R7` improvement order before any new roadmap is opened.
 - Scope of this slice:

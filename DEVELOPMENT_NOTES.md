@@ -25,6 +25,105 @@ This document captures engineering rationale, design constraints, and working de
   - these are stored as future-work recommendations only,
   - they do not reopen the closed current roadmap,
   - and they should become live only if/when the project chooses to open a new explicit workstream set.
+## 2026-03-14: agreed future semantics for guarded blocks, suffix guards, and update shorthand
+- These are saved design agreements for later language-contract hardening work.
+- They are not yet being promoted to the live "fully supported" boundary in the user guide.
+
+### `(3)` Guarded blocks are a first-class language construct
+- Guarded blocks are a first-class surface construct, not incidental legacy sugar.
+- Nesting is intentionally unlimited.
+- Semantic model:
+  - each nested guarded block adds one guard,
+  - nested guards compose by logical `AND`,
+  - enclosed actions run under the conjunction of all active guards.
+- Signal sugar:
+  - `(<foo ...)` means `(<foo!=0 ...)`
+  - `(<!foo ...)` means `(<foo==0 ...)`
+- Relational shorthand:
+  - `(<foo==3 ...)` means `(<(== foo 3) ...)`
+  - `(<foo!=0 ...)` means `(<(!= foo 0) ...)`
+- General form:
+  - `(<(op (op1 ...) (op2 ...) ... (opN ...)) ...actions...)`
+  - `(<!(op (op1 ...) (op2 ...) ... (opN ...)) ...actions...)`
+  - where the `opk` family is relational/logical and may be unary or N-ary.
+- Examples:
+```lisp
+(<req
+  (A <= B)
+)
+
+(<!full
+  (ERR <= 1)
+)
+
+(<foo==3
+  (OUT = IN)
+)
+
+(<(& req ready !full)
+  (WR_EN <= 1)
+  (-> busy)
+)
+
+(<req
+  (<mode==3
+    (<!full
+      (GO <= 1)
+    )
+  )
+)
+```
+
+### `(4)` Condition suffixes have exactly the same semantics as guarded blocks
+- Condition suffixes are first-class surface syntax.
+- Their semantics are exactly the same as `(3)`; only the position of the guard differs.
+- Canonical lowering rule:
+  - a suffix guard desugars to a guarded block containing exactly one action.
+- Examples:
+```lisp
+(A <= B <req)
+```
+means:
+```lisp
+(<req
+  (A <= B)
+)
+```
+
+```lisp
+(OUT = IN <mode==1)
+```
+means:
+```lisp
+(<mode==1
+  (OUT = IN)
+)
+```
+
+```lisp
+(-> send <!full)
+```
+means:
+```lisp
+(<!full
+  (-> send)
+)
+```
+- Composition rule:
+  - suffix guards combine naturally with outer guarded blocks by logical `AND`.
+- Readability rule of thumb captured in discussion:
+  - suffix form is best for one short guarded action,
+  - block form is best when one condition guards several actions or when nesting should remain visually explicit.
+
+### `(5)` update shorthand semantics
+- The following are agreed as update shorthand over multi-bit register/flop targets:
+  - `(++ counter)` means increment multi-bit register/flop `counter` by `1`
+  - `(-- retry_count)` means decrement multi-bit register/flop `retry_count` by `1`
+  - `(+=4 byte_count)` means increment multi-bit register/flop `byte_count` by `4`
+  - `(-=1 remaining)` means decrement multi-bit register/flop `remaining` by `1`
+- Equivalence note:
+  - `(-=1 remaining)` is semantically the same update as `(-- remaining)`.
+- These agreements should be carried forward when the language contract for shorthand updates is made normative.
 ## 2026-03-14: `R7` closed with a second deliberate typed hook
 - Finished the bounded `R7` lane by adding one more real hook boundary instead of continuing to widen loading or parameter plumbing.
 - Rationale:
