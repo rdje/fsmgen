@@ -16,4 +16,5 @@ This workflow enforces rigorous documentation before performing a Git commit.
 7. Perform the commit referencing the message file: `git commit -F git_message_brief.txt` (This will block and ask the user for approval before running)
 // turbo
 8. Clear the brief message file in preparation for the next cycle: `> git_message_brief.txt`
-9. If live status changed, include the current live status snapshot from `ROADMAP_STATUS.md` in the user-facing close-out.
+9. Include the current live status snapshot from `ROADMAP_STATUS.md` in the user-facing close-out every time the commit workflow runs.
+10. If live status changed, explicitly say how the completed task changed the snapshot; if it did not change, explicitly say the snapshot is unchanged for this task.

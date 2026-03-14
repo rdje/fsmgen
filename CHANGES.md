@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### Commit workflow hardening (always display live-status tracker)
+- Tightened the commit workflow so the user-facing close-out must now always display the current live-status snapshot from `ROADMAP_STATUS.md` whenever the commit workflow runs.
+- Clarified the expected close-out language:
+  - if the task changed live status, the close-out must state how the snapshot changed,
+  - if the task did not change live status, the close-out must explicitly say the snapshot is unchanged for that task.
+- Updated the authoritative workflow docs in `COMMIT.md`, `.agents/workflows/commit.md`, `ROADMAP_STATUS.md`, and `MEMORY.md` to encode that rule consistently.
+- Validation:
+  - `git diff --check` (pass)
+  - `rg -n "current live status snapshot|snapshot is unchanged|commit workflow runs" COMMIT.md .agents/workflows/commit.md ROADMAP_STATUS.md MEMORY.md CHANGES.md DEVELOPMENT_NOTES.md` (pass)
 ### AST/CoreAST convergence (`R3`: remove render-time late hydration)
 - Removed the render-time “late hydration” retry from `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm::render_intermediate_signal_expression(...)`.
 - Behavior change:

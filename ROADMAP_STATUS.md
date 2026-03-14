@@ -13,6 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - refresh this board first,
   - log the change in `CHANGES.md`,
   - and display the current live status snapshot in the user-facing close-out for that task.
+- Whenever the commit workflow runs, display the current live status snapshot from this board in the user-facing close-out, even if no status changed.
 - Allowed status values are exactly:
   - `done`
   - `mostly done`

@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: Commit workflow always displays the live-status tracker
+- Tightened the close-out contract for the commit workflow so the current live roadmap snapshot is always shown after a commit, not only on status transitions.
+- Rationale:
+  - the user wants to see, at every commit boundary, how the just-finished task relates to the current roadmap state,
+  - showing the snapshot only on status changes leaves too much ambiguity about whether the board was checked and whether the task moved anything,
+  - the close-out therefore needs to distinguish two cases explicitly: “the snapshot changed like this” versus “the snapshot is unchanged for this task.”
+- Structural outcome:
+  - `COMMIT.md`, `.agents/workflows/commit.md`, `ROADMAP_STATUS.md`, and `MEMORY.md` now all require the current live-status snapshot in every commit-workflow close-out,
+  - the workflow now also requires explicit wording about whether the snapshot changed or stayed the same.
+- Safety/compatibility:
+  - this is a workflow/communication hardening slice only; no runtime code changed,
+  - the roadmap board remains the canonical source of truth, but the commit workflow now guarantees that the current snapshot is surfaced every time work is closed out.
+- Verification:
+  - `git diff --check` passes,
+  - targeted `rg` over the workflow/docs confirms the new “always display snapshot” rule is wired consistently.
 ## 2026-03-14: `R3` runtime convergence slice removing render-time late hydration
 - Narrowed one remaining compatibility behavior in `Backend::SystemVerilog` by removing the render-time “late hydration” retry from `render_intermediate_signal_expression(...)`.
 - Rationale:

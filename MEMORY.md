@@ -11,9 +11,10 @@ After each completed task, always do this in order:
 2. Update `ROADMAP_STATUS.md` if the completed task changes roadmap status, roadmap deliverables, remaining work, or the current active lane.
 3. If live status changed, log that status change in `CHANGES.md`.
 4. Update other live docs as needed (`DEVELOPMENT_NOTES.md`, and any user-facing docs impacted by the change).
-5. When live status changed, display the current live status snapshot in the user-facing close-out.
-6. Run validation for the task scope (syntax checks + regression tests when applicable).
-7. Run commit workflow:
+5. Display the current live status snapshot in the user-facing close-out every time the commit workflow runs.
+6. If live status changed, explicitly state how the completed task changed the snapshot; if it did not change, explicitly state that the snapshot is unchanged for this task.
+7. Run validation for the task scope (syntax checks + regression tests when applicable).
+8. Run commit workflow:
    - write `git_message_brief.txt`
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`

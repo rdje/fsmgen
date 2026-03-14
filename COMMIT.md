@@ -53,7 +53,9 @@ Its purpose is to let any new AI resume work safely and follow the same commit h
    - `truncate -s 0 git_message_brief.txt`
 8. Verify final state:
    - `git --no-pager status --short`
-9. If live status changed, the user-facing close-out must include the current live status snapshot from `ROADMAP_STATUS.md`.
+9. The user-facing close-out must always include the current live status snapshot from `ROADMAP_STATUS.md`.
+   - If live status changed, explicitly state how the completed task affected that snapshot.
+   - If live status did not change, explicitly state that the snapshot is unchanged for this task.
 
 ## Safety and consistency rules
 - Keep commits task-scoped (only files relevant to the completed task).
