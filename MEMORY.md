@@ -4,16 +4,30 @@ This is the live continuity document for fast session recovery after crashes, re
 - Preserve the minimum complete context needed to resume work immediately.
 - Capture key technical decisions and current implementation status.
 - Reference canonical docs for deeper details instead of duplicating everything.
+- Use `ROADMAP_STATUS.md` as the canonical live board for what is done versus what is left.
 ## Non-negotiable workflow (user requirement)
 After each completed task, always do this in order:
 1. Update `MEMORY.md` with new state and next actionable direction.
-2. Update other live docs as needed (`CHANGES.md`, `DEVELOPMENT_NOTES.md`, and any user-facing docs impacted by the change).
-3. Run validation for the task scope (syntax checks + regression tests when applicable).
-4. Run commit workflow:
+2. Update `ROADMAP_STATUS.md` if the completed task changes roadmap status, remaining work, or the current active lane.
+3. Update other live docs as needed (`CHANGES.md`, `DEVELOPMENT_NOTES.md`, and any user-facing docs impacted by the change).
+4. Run validation for the task scope (syntax checks + regression tests when applicable).
+5. Run commit workflow:
    - write `git_message_brief.txt`
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: Roadmap tracking infrastructure hardening
+- Current worktree establishes a canonical live roadmap board so status can be checked precisely at any time without reconstructing it from narrative history.
+- Scope of this slice:
+  - added `ROADMAP_STATUS.md` as the canonical four-state board (`done`, `mostly done`, `in progress`, `not started`),
+  - recorded the current baseline workstreams, current active lane, and exact “done vs left” summaries there,
+  - updated `README.md`, `MEMORY.md`, `COMMIT.md`, and `.agents/workflows/commit.md` so this board is part of the normal repo workflow rather than optional documentation.
+- Validation is green for this slice:
+  - `git diff --check`
+  - `rg -n "ROADMAP_STATUS\.md" README.md MEMORY.md COMMIT.md .agents/workflows/commit.md CHANGES.md DEVELOPMENT_NOTES.md`
+- Immediate next direction after commit:
+  - keep `ROADMAP_STATUS.md` updated before every commit whenever a task changes status, remaining work, or the active lane,
+  - continue using it as the primary answer source for “how much is done?” instead of reconstructing status ad hoc from `CHANGES.md` / `DEVELOPMENT_NOTES.md`.
 ## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph logical-op counting ownership)
 - Current worktree continues the live ownership lane and moves binary logical-operation counting under `EnableGraph`.
 - Scope of this slice:

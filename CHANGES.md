@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### Roadmap tracking infrastructure hardening
+- Added new tracked file `ROADMAP_STATUS.md` as the canonical live roadmap/workstream status board.
+- Defined the allowed status values explicitly:
+  - `done`
+  - `mostly done`
+  - `in progress`
+  - `not started`
+- Recorded the current baseline workstreams there with stable IDs, exact `Done` / `Left` summaries, and the current active lane.
+- Updated the repo workflow/docs so this board is part of normal operating practice instead of optional narrative reconstruction:
+  - `README.md` now points to `ROADMAP_STATUS.md` near the top of the ramp-up order,
+  - `MEMORY.md` now treats `ROADMAP_STATUS.md` as the canonical live board for “done vs left” tracking,
+  - `COMMIT.md` and `.agents/workflows/commit.md` now require refreshing `ROADMAP_STATUS.md` before commit when a task changes roadmap status, remaining work, or the active lane.
+- Validation:
+  - `git diff --check` (pass)
+  - `rg -n "ROADMAP_STATUS\.md" README.md MEMORY.md COMMIT.md .agents/workflows/commit.md CHANGES.md DEVELOPMENT_NOTES.md` (pass)
 ### FlattenedDT live ownership (EnableGraph logical-op counting ownership)
 - Moved binary logical-operation counting off `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and under `perl/FSM/Synthesis/EnableGraph.pm`.
 - Added `count_binary_logical_operation_occurrences(...)` to `EnableGraph`, so the same owner that already applies logical factorization policy now also owns the live counting pass that produces `binary_logical_op_counts`.

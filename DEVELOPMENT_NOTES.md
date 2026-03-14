@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: Roadmap tracking infrastructure hardening
+- Added a canonical live roadmap board in `ROADMAP_STATUS.md`.
+- Rationale:
+  - narrative history in `CHANGES.md`, `DEVELOPMENT_NOTES.md`, and `MEMORY.md` is valuable for context, but it is not an efficient source for answering “what is done, what is left, and what is the current active lane?” with precision,
+  - the project is now large enough that status must be queryable directly rather than reconstructed from long-form history,
+  - the user explicitly requested four exact achievement levels, so the board now normalizes status onto `done`, `mostly done`, `in progress`, and `not started`.
+- Structural outcome:
+  - `ROADMAP_STATUS.md` now serves as the canonical live board,
+  - it records stable workstream IDs, a status for each workstream, explicit `Done` / `Left` summaries, and the current active lane,
+  - the commit/process docs now require refreshing that board before commit whenever a task changes roadmap status, remaining work, or the active lane.
+- Safety/compatibility:
+  - this is a process/documentation slice only; no code path changed,
+  - future status answers should now come from `ROADMAP_STATUS.md` first, with `CHANGES.md` / `DEVELOPMENT_NOTES.md` / `MEMORY.md` acting as supporting evidence rather than the primary status source.
+- Verification:
+  - `git diff --check` passes,
+  - `rg -n "ROADMAP_STATUS\.md" README.md MEMORY.md COMMIT.md .agents/workflows/commit.md CHANGES.md DEVELOPMENT_NOTES.md` confirms the board is wired into the documented workflow.
+- Next likely slices:
+  - keep `ROADMAP_STATUS.md` current before every commit when the board changes,
+  - if the workstream set itself becomes stale, revise the board structure in the same commit that changes the roadmap interpretation.
 ## 2026-03-14: EnableGraph logical-op counting ownership
 - Continued the live ownership convergence by moving binary logical-operation counting under `EnableGraph`.
 - Rationale:

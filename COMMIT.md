@@ -13,9 +13,12 @@ Its purpose is to let any new AI resume work safely and follow the same commit h
 - `MEMORY.md`
   - Live continuity state for crash recovery/handoff.
   - Must be updated first when recording completed work.
+- `ROADMAP_STATUS.md`
+  - Canonical live roadmap/workstream board.
+  - Must be updated before commit whenever a task changes status, remaining work, or the current active lane.
 - `CHANGES.md`
   - Persistent technical change history.
-  - Must be updated after `MEMORY.md`.
+  - Must be updated after `MEMORY.md` and any needed `ROADMAP_STATUS.md` refresh.
 - `DEVELOPMENT_NOTES.md`
   - Design rationale and engineering context.
   - Must be updated after `CHANGES.md`.
@@ -30,8 +33,9 @@ Its purpose is to let any new AI resume work safely and follow the same commit h
 1. Complete the task implementation.
 2. Update docs in this exact order:
    1. `MEMORY.md`
-   2. `CHANGES.md`
-   3. `DEVELOPMENT_NOTES.md`
+   2. `ROADMAP_STATUS.md` if the task changed roadmap status, remaining work, or the current active lane
+   3. `CHANGES.md`
+   4. `DEVELOPMENT_NOTES.md`
 3. Run validation appropriate to the scope:
    - For code changes: syntax + tests/regression.
    - For doc-only changes: basic repo state checks are sufficient.
