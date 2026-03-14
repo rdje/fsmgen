@@ -43,7 +43,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R2` Live ownership migration from `FlattenedDT` backend/orchestrator into `EnableGraph`
 - Current next decision point:
-  - Re-audit the remaining backend-side filtering and live-usage checks around consolidated intermediate-signal emission to confirm they are truly backend-local and not owner-side analysis residue.
+  - Re-audit the remaining backend filtering decision logic around consolidated intermediate-signal emission (`should_filter_ast_based`, runtime-AST-miss filtering, dependency rescue/topo-sort flow) to confirm it is truly backend-local.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -89,8 +89,9 @@ Done:
 - WEN/EN prescan and logical-op counting.
 - First-pass and second-pass factorization AST feeding, plus second-pass intermediate-signal eligibility checks.
 - First-pass and second-pass substitution synchronization, plus the unary-negation debug scan over owner-side AST structures.
+- Live-usage evidence and signal-reference inspection for intermediate-signal retention.
 Left:
-- Audit the remaining backend-side filtering and live-usage checks that still inspect `assignment_analysis` or captured condition ASTs during consolidated intermediate-signal emission.
+- Audit the remaining backend filtering decision logic that still consumes live-usage metadata during consolidated intermediate-signal emission.
 - Move only the pieces that are truly synthesis/analysis ownership, not backend-local factorization or rendering.
 - Declare this lane complete once the remaining backend code is clearly backend-local by responsibility.
 Exit criteria:

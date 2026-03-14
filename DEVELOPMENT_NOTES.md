@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: EnableGraph live-usage evidence ownership
+- Continued the live `R2` ownership convergence by moving intermediate-signal live-usage evidence derivation under `EnableGraph`.
+- Rationale:
+  - the backend was still walking `assignment_analysis`, captured condition ASTs, and factorized expressions to answer “is this intermediate signal still needed?”,
+  - those helpers did not render HDL; they derived owner-side usage evidence consumed later by backend filtering,
+  - the next truthful move was therefore to keep the evidence derivation with `EnableGraph`, while the backend retains the actual filtering decision logic for emitted consolidated signals.
+- Structural outcome:
+  - `EnableGraph::ast_contains_signal(...)` now owns owner-side AST signal-reference inspection,
+  - `EnableGraph::is_signal_referenced_in_substitutions(...)`, `is_signal_actually_used_in_final_expressions(...)`, and `resolve_intermediate_signal_live_usage(...)` now own the live-usage evidence derivation,
+  - `Backend::SystemVerilog` now consumes that cached owner-provided evidence during consolidated intermediate-signal filtering instead of exposing the helpers itself.
+- Safety/compatibility:
+  - no intended HDL behavior change; only the ownership boundary moved,
+  - the architecture regression now locks the backend free of the former live-usage evidence helper pocket while asserting `EnableGraph` ownership of the live entrypoints,
+  - focused and full regression stayed green, so the move preserved the active intermediate-signal retention contract.
+- Verification:
+  - syntax checks for `EnableGraph.pm` and `Backend/SystemVerilog.pm` pass,
+  - focused architecture regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=12`, `Tests=400`, `PASS`).
+- Next likely slices:
+  - re-audit the remaining backend filtering decision logic around consolidated intermediate-signal emission,
+  - move only the pieces that are truly synthesis/analysis ownership, not backend-local factorization or rendering.
 ## 2026-03-14: Roadmap deliverables hardening
 - Tightened the live roadmap board so each `Rx` phase now has explicit deliverables.
 - Rationale:

@@ -573,49 +573,6 @@ sub infer_width_from_intermediate_ast ($self, $ast, $signal_registry = undef, $s
 
     return undef;
 }
-sub resolve_intermediate_signal_live_usage ($self, $signal_name, $signal_info) {
-    return {
-        referenced_in_substitutions => 0,
-        used_in_final_expressions => 0,
-        evidence_state => 'none',
-        source => 'ast_live_usage_metadata',
-    } unless defined($signal_name) && $signal_name ne '';
-
-    if ($signal_info
-        && ref($signal_info) eq 'HASH'
-        && exists $signal_info->{referenced_in_substitutions}
-        && exists $signal_info->{used_in_final_expressions})
-    {
-        my $evidence_state = $signal_info->{live_usage_evidence_state} || 'none';
-        return {
-            referenced_in_substitutions => $signal_info->{referenced_in_substitutions} ? 1 : 0,
-            used_in_final_expressions => $signal_info->{used_in_final_expressions} ? 1 : 0,
-            evidence_state => $evidence_state,
-            source => $signal_info->{live_usage_source} || 'ast_live_usage_metadata',
-        };
-    }
-
-    my $referenced_in_substitutions = $self->is_signal_referenced_in_substitutions($signal_name) ? 1 : 0;
-    my $used_in_final_expressions = $self->is_signal_actually_used_in_final_expressions($signal_name) ? 1 : 0;
-    my $evidence_state = $referenced_in_substitutions
-        ? ($used_in_final_expressions ? 'substitutions_and_final_expressions' : 'substitutions')
-        : ($used_in_final_expressions ? 'final_expressions' : 'none');
-
-    if ($signal_info && ref($signal_info) eq 'HASH') {
-        $signal_info->{referenced_in_substitutions} = $referenced_in_substitutions;
-        $signal_info->{used_in_final_expressions} = $used_in_final_expressions;
-        $signal_info->{live_usage_evidence_state} = $evidence_state;
-        $signal_info->{live_usage_source} = 'ast_live_usage_metadata';
-    }
-
-    fsm_debug("[SystemVerilog.pm][resolve_intermediate_signal_live_usage()] '$signal_name' live usage => substitutions=$referenced_in_substitutions final_expressions=$used_in_final_expressions ($evidence_state)", 3);
-    return {
-        referenced_in_substitutions => $referenced_in_substitutions,
-        used_in_final_expressions => $used_in_final_expressions,
-        evidence_state => $evidence_state,
-        source => 'ast_live_usage_metadata',
-    };
-}
 sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
     my $ctx = $self->{flattened_dt};
     # Pure AST-based filtering using semantic analysis
@@ -623,7 +580,7 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
     fsm_debug("  AST_FILTER: Using AST-based filtering for " . ref($ast));
     
     my $usage_count = $signal_info->{usage_count} || 0;
-    my $live_usage = $self->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
+    my $live_usage = $ctx->{enable_graph}->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
     my $actually_used = $live_usage->{used_in_final_expressions} ? 1 : 0;
     
     # REFERENCE-AWARE FILTERING: Check if signal is referenced in substituted expressions
@@ -724,7 +681,7 @@ sub should_filter_runtime_ast_miss ($self, $signal_name, $signal_info) {
     my $miss_reason = ($signal_info && ref($signal_info) eq 'HASH')
         ? ($signal_info->{runtime_ast_miss_reason} || 'unknown_runtime_ast_miss')
         : 'unknown_runtime_ast_miss';
-    my $live_usage = $self->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
+    my $live_usage = $self->{flattened_dt}->{enable_graph}->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
     my $referenced_in_substitutions = $live_usage->{referenced_in_substitutions} ? 1 : 0;
     my $used_in_final_expressions = $live_usage->{used_in_final_expressions} ? 1 : 0;
     my $evidence_state = $live_usage->{evidence_state} || 'none';
@@ -748,168 +705,6 @@ sub should_filter_runtime_ast_miss ($self, $signal_name, $signal_info) {
 
     fsm_debug("  RUNTIME_AST_MISS_FILTER: No AST-backed live-usage evidence for '$signal_name' - FILTERING", 3);
     return 1;
-}
-sub is_signal_referenced_in_substitutions ($self, $signal_name) {
-    my $ctx = $self->{flattened_dt};
-    # REFERENCE-AWARE FILTERING: Check if a signal is actually referenced in substituted expressions
-    # This is the critical fix for the intermediate signal bug where signals are referenced but not declared
-    
-    fsm_debug("REFERENCE_CHECK: Checking if '$signal_name' is referenced in substitutions", 3);
-    
-    # Check if we have AST factorizer results available
-    if ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{ast_expressions}) {
-        my $ast_expressions = $ctx->{ast_factorizer}->{ast_expressions};
-        fsm_debug("  Checking " . scalar(@$ast_expressions) . " factorized expressions");
-        
-        # Check each factorized (substituted) expression for references to this signal
-        for my $expr_info (@$ast_expressions) {
-            my $ast = $expr_info->{ast};
-            my $context = $expr_info->{context};
-            
-            # Check if this AST contains a reference to our signal
-            if ($ast && blessed($ast) && $self->ast_contains_signal($ast, $signal_name)) {
-                fsm_debug("  REFERENCE FOUND: Signal '$signal_name' is referenced in context '$context'", 3);
-                return 1;
-            }
-        }
-    } else {
-        fsm_debug("  WARNING: No AST factorizer results available for reference checking", 3);
-    }
-    
-    # Also check in current assignment_analysis structures (post-substitution)
-    if ($ctx->{assignment_analysis}) {
-        for my $lhs (keys %{$ctx->{assignment_analysis}}) {
-            my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
-            
-            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
-                my $rhs_group = $lhs_analysis->{rhs_groups}->{$rhs};
-                
-                # Check DT-specific enable expressions
-                for my $dt_enable_info (@{$rhs_group->{dt_specific_enables}}) {
-                    my $enable_ast = $dt_enable_info->{enable_ast};
-                    if ($enable_ast && blessed($enable_ast) && $self->ast_contains_signal($enable_ast, $signal_name)) {
-                        fsm_debug("  REFERENCE FOUND: Signal '$signal_name' in DT enable '$dt_enable_info->{enable_name}'", 3);
-                        return 1;
-                    }
-                }
-                
-                # Check LHS-level enable expressions
-                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}->{ast}) {
-                    my $lhs_enable_ast = $rhs_group->{lhs_level_enable}->{ast};
-                    if ($lhs_enable_ast && blessed($lhs_enable_ast) && $self->ast_contains_signal($lhs_enable_ast, $signal_name)) {
-                        fsm_debug("  REFERENCE FOUND: Signal '$signal_name' in LHS enable '$rhs_group->{lhs_level_enable}->{name}'", 3);
-                        return 1;
-                    }
-                }
-            }
-        }
-    }
-    
-    # Check in lhs_assignments condition ASTs (post-substitution)
-    for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
-        for my $assignment (@{$ctx->{lhs_assignments}->{$lhs}}) {
-            if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
-                if ($self->ast_contains_signal($assignment->{conditions_ast}, $signal_name)) {
-                    fsm_debug("  REFERENCE FOUND: Signal '$signal_name' in assignment condition for LHS '$lhs'", 3);
-                    return 1;
-                }
-            }
-        }
-    }
-    
-    fsm_debug("  REFERENCE NOT FOUND: Signal '$signal_name' is not referenced in any substituted expressions", 3);
-    return 0;
-}
-sub is_signal_actually_used_in_final_expressions ($self, $signal_name) {
-    my $ctx = $self->{flattened_dt};
-    # Check if a signal is actually referenced in the final WEN/EN expressions
-    # This is a more accurate usage check than just counting AST factorization usage
-    
-    fsm_debug("USAGE_CHECK: Checking if '$signal_name' is actually used in final expressions", 3);
-    
-    # Check if the signal appears in any of the final enable expressions
-    if ($ctx->{assignment_analysis}) {
-        for my $lhs (keys %{$ctx->{assignment_analysis}}) {
-            my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
-            
-            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
-                my $rhs_group = $lhs_analysis->{rhs_groups}->{$rhs};
-                
-                # Check DT-specific enable expressions
-                for my $dt_enable_info (@{$rhs_group->{dt_specific_enables}}) {
-                    my $enable_ast = $dt_enable_info->{enable_ast};
-                    if ($enable_ast && blessed($enable_ast) && $self->ast_contains_signal($enable_ast, $signal_name)) {
-                        fsm_debug("    FOUND: Signal used in DT-specific enable $dt_enable_info->{enable_name}", 3);
-                        return 1;
-                    }
-                }
-                
-                # Check LHS-level enable expressions
-                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}->{ast}) {
-                    my $lhs_enable_ast = $rhs_group->{lhs_level_enable}->{ast};
-                    if ($lhs_enable_ast && blessed($lhs_enable_ast) && $self->ast_contains_signal($lhs_enable_ast, $signal_name)) {
-                        fsm_debug("    FOUND: Signal used in LHS-level enable $rhs_group->{lhs_level_enable}->{name}", 3);
-                        return 1;
-                    }
-                }
-            }
-        }
-    }
-    
-    # Also check if it appears in any assignment conditions
-    for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
-        for my $assignment (@{$ctx->{lhs_assignments}->{$lhs}}) {
-            if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
-                if ($self->ast_contains_signal($assignment->{conditions_ast}, $signal_name)) {
-                    fsm_debug("    FOUND: Signal used in assignment condition for $lhs", 3);
-                    return 1;
-                }
-            }
-        }
-    }
-    
-    fsm_debug("    NOT FOUND: Signal '$signal_name' is not used in any final expressions", 3);
-    return 0;
-}
-sub ast_contains_signal ($self, $ast, $signal_name) {
-    my $ctx = $self->{flattened_dt};
-    # Recursively check if an AST contains a reference to a specific signal
-    return 0 unless $ast && blessed($ast);
-    
-    # If this is a signal reference, check if it matches
-    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
-        my $ast_signal_name = $ctx->{enable_graph}->extract_signal_name_from_ast($ast);
-        return 1 if $ast_signal_name && $ast_signal_name eq $signal_name;
-    }
-    
-    # CRITICAL FIX: Also check for intermediate signal references from AST substitution
-    if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
-        my $ast_signal_name = $ast->{signal_name};
-        if ($ast_signal_name && $ast_signal_name eq $signal_name) {
-            fsm_debug("    FOUND INTERMEDIATE: Signal '$signal_name' found as IntermediateSignalRef", 3);
-            return 1;
-        }
-    }
-    
-    # Also check substituted binary and unary ops (which may contain intermediate signal refs)
-    if ($ast->isa('FSM::HDL::SubstitutedBinaryOp')) {
-        return 1 if $ast->{left} && $self->ast_contains_signal($ast->{left}, $signal_name);
-        return 1 if $ast->{right} && $self->ast_contains_signal($ast->{right}, $signal_name);
-    }
-    elsif ($ast->isa('FSM::HDL::SubstitutedUnaryOp')) {
-        return 1 if $ast->{operand} && $self->ast_contains_signal($ast->{operand}, $signal_name);
-    }
-    
-    # Recursively check operands in standard AST nodes
-    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
-        return 1 if $ast->can('left') && $self->ast_contains_signal($ast->left, $signal_name);
-        return 1 if $ast->can('right') && $self->ast_contains_signal($ast->right, $signal_name);
-    }
-    elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
-        return 1 if $ast->can('operand') && $self->ast_contains_signal($ast->operand, $signal_name);
-    }
-    
-    return 0;
 }
 sub is_simple_negation ($self, $ast) {
     # Check if this is a simple negation of a signal (like !signal_name)
@@ -1334,7 +1129,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
     # Step 2.10: Normalize live usage metadata so filtering consumes cached AST-derived usage facts.
     for my $signal_name (keys %all_intermediate_signals) {
         my $signal_info = $all_intermediate_signals{$signal_name};
-        my $live_usage = $self->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
+        my $live_usage = $ctx->{enable_graph}->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
         my $usage_summary = $live_usage->{evidence_state} || 'none';
         fsm_debug("CONSOL_INTER_SIG: [LIVE_USAGE] '$signal_name' => $usage_summary via " . ($live_usage->{source} || 'ast_live_usage_metadata'), 3);
     }

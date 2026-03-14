@@ -1308,6 +1308,188 @@ sub _build_context_to_ast_map($self, $ast_expressions, %opts) {
 
     return \%context_to_ast;
 }
+sub ast_contains_signal($self, $ast, $signal_name) {
+    return 0 unless $ast && blessed($ast);
+
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+        my $ast_signal_name = $self->extract_signal_name_from_ast($ast);
+        return 1 if $ast_signal_name && $ast_signal_name eq $signal_name;
+    }
+
+    if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
+        my $ast_signal_name = $ast->{signal_name};
+        if ($ast_signal_name && $ast_signal_name eq $signal_name) {
+            fsm_debug("    FOUND INTERMEDIATE: Signal '$signal_name' found as IntermediateSignalRef", 3);
+            return 1;
+        }
+    }
+
+    if ($ast->isa('FSM::HDL::SubstitutedBinaryOp')) {
+        return 1 if $ast->{left} && $self->ast_contains_signal($ast->{left}, $signal_name);
+        return 1 if $ast->{right} && $self->ast_contains_signal($ast->{right}, $signal_name);
+    } elsif ($ast->isa('FSM::HDL::SubstitutedUnaryOp')) {
+        return 1 if $ast->{operand} && $self->ast_contains_signal($ast->{operand}, $signal_name);
+    }
+
+    if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
+        return 1 if $ast->can('left') && $self->ast_contains_signal($ast->left, $signal_name);
+        return 1 if $ast->can('right') && $self->ast_contains_signal($ast->right, $signal_name);
+    } elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
+        return 1 if $ast->can('operand') && $self->ast_contains_signal($ast->operand, $signal_name);
+    }
+
+    return 0;
+}
+sub is_signal_referenced_in_substitutions($self, $signal_name) {
+    my $ctx = $self->{flattened_dt};
+
+    fsm_debug("REFERENCE_CHECK: Checking if '$signal_name' is referenced in substitutions", 3);
+
+    if ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{ast_expressions}) {
+        my $ast_expressions = $ctx->{ast_factorizer}->{ast_expressions};
+        fsm_debug("  Checking " . scalar(@$ast_expressions) . " factorized expressions");
+
+        for my $expr_info (@$ast_expressions) {
+            my $ast = $expr_info->{ast};
+            my $context = $expr_info->{context};
+
+            if ($ast && blessed($ast) && $self->ast_contains_signal($ast, $signal_name)) {
+                fsm_debug("  REFERENCE FOUND: Signal '$signal_name' is referenced in context '$context'", 3);
+                return 1;
+            }
+        }
+    } else {
+        fsm_debug("  WARNING: No AST factorizer results available for reference checking", 3);
+    }
+
+    if ($ctx->{assignment_analysis}) {
+        for my $lhs (keys %{$ctx->{assignment_analysis}}) {
+            my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
+
+            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
+                my $rhs_group = $lhs_analysis->{rhs_groups}->{$rhs};
+
+                for my $dt_enable_info (@{$rhs_group->{dt_specific_enables}}) {
+                    my $enable_ast = $dt_enable_info->{enable_ast};
+                    if ($enable_ast && blessed($enable_ast) && $self->ast_contains_signal($enable_ast, $signal_name)) {
+                        fsm_debug("  REFERENCE FOUND: Signal '$signal_name' in DT enable '$dt_enable_info->{enable_name}'", 3);
+                        return 1;
+                    }
+                }
+
+                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}->{ast}) {
+                    my $lhs_enable_ast = $rhs_group->{lhs_level_enable}->{ast};
+                    if ($lhs_enable_ast && blessed($lhs_enable_ast) && $self->ast_contains_signal($lhs_enable_ast, $signal_name)) {
+                        fsm_debug("  REFERENCE FOUND: Signal '$signal_name' in LHS enable '$rhs_group->{lhs_level_enable}->{name}'", 3);
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+
+    for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
+        for my $assignment (@{$ctx->{lhs_assignments}->{$lhs}}) {
+            if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
+                if ($self->ast_contains_signal($assignment->{conditions_ast}, $signal_name)) {
+                    fsm_debug("  REFERENCE FOUND: Signal '$signal_name' in assignment condition for LHS '$lhs'", 3);
+                    return 1;
+                }
+            }
+        }
+    }
+
+    fsm_debug("  REFERENCE NOT FOUND: Signal '$signal_name' is not referenced in any substituted expressions", 3);
+    return 0;
+}
+sub is_signal_actually_used_in_final_expressions($self, $signal_name) {
+    my $ctx = $self->{flattened_dt};
+
+    fsm_debug("USAGE_CHECK: Checking if '$signal_name' is actually used in final expressions", 3);
+
+    if ($ctx->{assignment_analysis}) {
+        for my $lhs (keys %{$ctx->{assignment_analysis}}) {
+            my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
+
+            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
+                my $rhs_group = $lhs_analysis->{rhs_groups}->{$rhs};
+
+                for my $dt_enable_info (@{$rhs_group->{dt_specific_enables}}) {
+                    my $enable_ast = $dt_enable_info->{enable_ast};
+                    if ($enable_ast && blessed($enable_ast) && $self->ast_contains_signal($enable_ast, $signal_name)) {
+                        fsm_debug("    FOUND: Signal used in DT-specific enable $dt_enable_info->{enable_name}", 3);
+                        return 1;
+                    }
+                }
+
+                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}->{ast}) {
+                    my $lhs_enable_ast = $rhs_group->{lhs_level_enable}->{ast};
+                    if ($lhs_enable_ast && blessed($lhs_enable_ast) && $self->ast_contains_signal($lhs_enable_ast, $signal_name)) {
+                        fsm_debug("    FOUND: Signal used in LHS-level enable $rhs_group->{lhs_level_enable}->{name}", 3);
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+
+    for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
+        for my $assignment (@{$ctx->{lhs_assignments}->{$lhs}}) {
+            if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
+                if ($self->ast_contains_signal($assignment->{conditions_ast}, $signal_name)) {
+                    fsm_debug("    FOUND: Signal used in assignment condition for $lhs", 3);
+                    return 1;
+                }
+            }
+        }
+    }
+
+    fsm_debug("    NOT FOUND: Signal '$signal_name' is not used in any final expressions", 3);
+    return 0;
+}
+sub resolve_intermediate_signal_live_usage($self, $signal_name, $signal_info) {
+    return {
+        referenced_in_substitutions => 0,
+        used_in_final_expressions => 0,
+        evidence_state => 'none',
+        source => 'ast_live_usage_metadata',
+    } unless defined($signal_name) && $signal_name ne '';
+
+    if ($signal_info
+        && ref($signal_info) eq 'HASH'
+        && exists $signal_info->{referenced_in_substitutions}
+        && exists $signal_info->{used_in_final_expressions})
+    {
+        my $evidence_state = $signal_info->{live_usage_evidence_state} || 'none';
+        return {
+            referenced_in_substitutions => $signal_info->{referenced_in_substitutions} ? 1 : 0,
+            used_in_final_expressions => $signal_info->{used_in_final_expressions} ? 1 : 0,
+            evidence_state => $evidence_state,
+            source => $signal_info->{live_usage_source} || 'ast_live_usage_metadata',
+        };
+    }
+
+    my $referenced_in_substitutions = $self->is_signal_referenced_in_substitutions($signal_name) ? 1 : 0;
+    my $used_in_final_expressions = $self->is_signal_actually_used_in_final_expressions($signal_name) ? 1 : 0;
+    my $evidence_state = $referenced_in_substitutions
+        ? ($used_in_final_expressions ? 'substitutions_and_final_expressions' : 'substitutions')
+        : ($used_in_final_expressions ? 'final_expressions' : 'none');
+
+    if ($signal_info && ref($signal_info) eq 'HASH') {
+        $signal_info->{referenced_in_substitutions} = $referenced_in_substitutions;
+        $signal_info->{used_in_final_expressions} = $used_in_final_expressions;
+        $signal_info->{live_usage_evidence_state} = $evidence_state;
+        $signal_info->{live_usage_source} = 'ast_live_usage_metadata';
+    }
+
+    fsm_debug("[EnableGraph.pm][resolve_intermediate_signal_live_usage()] '$signal_name' live usage => substitutions=$referenced_in_substitutions final_expressions=$used_in_final_expressions ($evidence_state)", 3);
+    return {
+        referenced_in_substitutions => $referenced_in_substitutions,
+        used_in_final_expressions => $used_in_final_expressions,
+        evidence_state => $evidence_state,
+        source => 'ast_live_usage_metadata',
+    };
+}
 sub generate_enable_conditions($self, $fsm_module = undef) {
     my $ctx = $self->{flattened_dt};
     my $hdl = "  // State and DT Enable Conditions\n";

@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### FlattenedDT live ownership (EnableGraph live-usage evidence ownership)
+- Moved intermediate-signal live-usage evidence helpers off `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and under `perl/FSM/Synthesis/EnableGraph.pm`.
+- Added `ast_contains_signal(...)` to `EnableGraph`, so owner-side AST signal-reference inspection now lives with the owner of the enable/capture structures being inspected.
+- Added `is_signal_referenced_in_substitutions(...)`, `is_signal_actually_used_in_final_expressions(...)`, and `resolve_intermediate_signal_live_usage(...)` to `EnableGraph`.
+- Updated `Backend::SystemVerilog` so consolidated intermediate-signal filtering now consumes owner-provided live-usage metadata instead of exposing those evidence helpers on the backend.
+- Extended `t/10-ast-first-enable-structure.t` so:
+  - the backend is asserted to stay free of the former live-usage evidence helper pocket,
+  - and `EnableGraph` is asserted to own AST signal-reference inspection, substituted-expression/final-expression usage evidence, and cached live-usage metadata derivation on the live path.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=176`)
+  - `prove -I perl t` (pass: `Files=12`, `Tests=400`)
 ### Roadmap deliverables hardening
 - Tightened `ROADMAP_STATUS.md` so every `R0`..`R7` workstream now carries explicit deliverables, not just status labels and narrative summaries.
 - Updated the board structure so each workstream must state:

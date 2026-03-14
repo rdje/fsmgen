@@ -253,7 +253,11 @@ for my $dead_backend_helper (
         feed_current_asts_to_second_pass
         ast_contains_intermediate_signals
         ast_has_intermediate_signals_recursive
+        ast_contains_signal
         count_unary_negations_in_original_expressions
+        is_signal_referenced_in_substitutions
+        is_signal_actually_used_in_final_expressions
+        resolve_intermediate_signal_live_usage
         update_original_asts_with_substituted_versions
         update_original_asts_with_second_pass_substitutions
         _count_logical_ops_in_ast
@@ -296,8 +300,24 @@ ok(
     'live EnableGraph owns second-pass intermediate-signal eligibility checks',
 );
 ok(
+    $hdl->{enable_graph}->can('ast_contains_signal'),
+    'live EnableGraph owns owner-side AST signal-reference inspection',
+);
+ok(
     $hdl->{enable_graph}->can('count_unary_negations_in_original_expressions'),
     'live EnableGraph owns substitution-era debug scans over owner-side AST structures',
+);
+ok(
+    $hdl->{enable_graph}->can('is_signal_referenced_in_substitutions'),
+    'live EnableGraph owns substituted-expression live-usage evidence',
+);
+ok(
+    $hdl->{enable_graph}->can('is_signal_actually_used_in_final_expressions'),
+    'live EnableGraph owns final-expression live-usage evidence',
+);
+ok(
+    $hdl->{enable_graph}->can('resolve_intermediate_signal_live_usage'),
+    'live EnableGraph owns cached live-usage metadata derivation',
 );
 ok(
     $hdl->{enable_graph}->can('update_original_asts_with_substituted_versions'),

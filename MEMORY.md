@@ -18,6 +18,23 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph live-usage evidence ownership)
+- Current worktree continues the `R2` live ownership lane and moves intermediate-signal live-usage evidence derivation under `EnableGraph`.
+- Scope of this slice:
+  - `perl/FSM/Synthesis/EnableGraph.pm` now owns `ast_contains_signal(...)`,
+  - `EnableGraph` now also owns `is_signal_referenced_in_substitutions(...)`, `is_signal_actually_used_in_final_expressions(...)`, and `resolve_intermediate_signal_live_usage(...)`,
+  - `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` now consumes that owner-provided live-usage metadata directly during consolidated intermediate-signal filtering and no longer exposes the owner-side evidence helpers itself.
+- Regression coverage update:
+  - `t/10-ast-first-enable-structure.t` now asserts that the backend stays free of the former live-usage evidence helper pocket,
+  - the same test now asserts that `EnableGraph` owns AST signal-reference inspection, substituted-expression/final-expression usage evidence, and cached live-usage metadata derivation on the live path.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=176`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=400`, `PASS`)
+- Immediate next direction after commit:
+  - re-audit the remaining backend filtering decision logic around consolidated intermediate-signal emission,
+  - move only the pieces that are truly synthesis/analysis ownership, not backend-local factorization or rendering.
 ## 2026-03-14: Live status visibility hardening
 - Current worktree tightens the roadmap-status workflow so status changes are both persistent and visible at close-out time.
 - Scope of this slice:
