@@ -102,7 +102,8 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
         if ($element_name eq '+fsm') {
             next;
         } elsif ($element_name eq '+system') {
-            next;
+            fsm_debug("Parsing +system block", 3);
+            $self->parse_system_section($element);
         } elsif ($element_name eq '+size') {
             fsm_debug("Parsing +size block", 3);
             if (ref($element->[1]) eq 'ARRAY') {
@@ -168,6 +169,100 @@ sub parse_constants_section($self, $constants_ast) {
         );
         $self->{signal_manager}->store_constant($name, $literal_expr);
     }
+}
+
+sub parse_system_section($self, $system_ast) {
+    my (undef, $system_entries) = @$system_ast;
+
+    Carp::confess
+        "The active '+system' contract currently supports only the conventional shared system declaration ".
+        "'(+system (clock clk) (sreset rstn))' or '(+system (clock clk) (asreset rstn))'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless ref($system_entries) eq 'ARRAY' && @$system_entries;
+
+    my %seen;
+    my %parsed;
+
+    for my $entry (@$system_entries) {
+        Carp::confess
+            "Unsupported '+system' entry structure. ".
+            "The active contract currently supports only '(clock clk)' plus one reset declaration naming 'rstn' via '(sreset rstn)' or '(asreset rstn)' inside '+system'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless ref($entry) eq 'ARRAY' && @$entry == 2;
+
+        my ($directive, $name) = @$entry;
+        my $resolved_name = $self->unwrap_scalar_token($name);
+
+        Carp::confess
+            "Unsupported '+system' entry '$directive'. ".
+            "The active contract currently supports only '(clock clk)' plus '(sreset rstn)' or '(asreset rstn)'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless defined $directive && !ref($directive);
+
+        Carp::confess
+            "Duplicate '+system' entry '$directive'. ".
+            "The active contract currently expects exactly one '(clock clk)' and one reset declaration naming 'rstn'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            if $seen{$directive}++;
+
+        if ($directive eq 'clock') {
+            Carp::confess
+                "Unsupported '+system' clock name '$resolved_name'. ".
+                "The active contract currently supports only '(clock clk)'. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                unless defined $resolved_name && !ref($resolved_name) && $resolved_name eq 'clk';
+
+            $parsed{clock} = $resolved_name;
+        } elsif ($directive eq 'sreset' || $directive eq 'asreset') {
+            Carp::confess
+                "Duplicate '+system' reset declaration '$directive'. ".
+                "The active contract currently expects exactly one reset declaration naming 'rstn'. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                if $parsed{reset};
+
+            Carp::confess
+                "Unsupported '+system' reset name '$resolved_name'. ".
+                "The active contract currently supports only '(sreset rstn)' or '(asreset rstn)'. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                unless defined $resolved_name && !ref($resolved_name) && $resolved_name eq 'rstn';
+
+            $parsed{reset} = $resolved_name;
+            $parsed{reset_keyword} = $directive;
+        } else {
+            Carp::confess
+                "Unsupported '+system' entry '$directive'. ".
+                "The active contract currently supports only '(clock clk)' plus '(sreset rstn)' or '(asreset rstn)'. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        }
+    }
+
+    Carp::confess
+        "Incomplete '+system' section. ".
+        "The active contract currently expects exactly '(clock clk)' and one reset declaration naming 'rstn'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless $parsed{clock} && $parsed{reset};
+
+    my $fsm_module = $self->{fsm_module};
+    $fsm_module->{attributes}{system_contract} = {
+        clock => $parsed{clock},
+        reset => $parsed{reset},
+        reset_keyword => $parsed{reset_keyword},
+    };
+    $fsm_module->{clock_domains}{default} = $parsed{clock};
+    $fsm_module->{reset_domains}{default} = $parsed{reset};
+
+    $self->{signal_manager}->register_signal(
+        $parsed{clock},
+        type => 'clock',
+        width => 1,
+        attributes => { is_system_signal => 1 },
+    );
+    $self->{signal_manager}->register_signal(
+        $parsed{reset},
+        type => 'reset',
+        width => 1,
+        attributes => { is_system_signal => 1 },
+    );
 }
 
 sub unwrap_scalar_token($self, $value) {

@@ -74,6 +74,9 @@ Standard used here:
 ### Fully supported single-FSM constructs
 - Root form `(?fsm:name ...)`
 - Flattened legacy root form `(+fsm name)` with sibling `(+system ...)`, state blocks, and `(+size ...)`
+- Conventional `(+system ...)` section declaring the shared system pair:
+  - `(+system (clock clk) (sreset rstn))`
+  - `(+system (clock clk) (asreset rstn))`
 - Regular state blocks like `(s0 ...)`, `(idle ...)`
 - Special reset states `(-syncrst ...)` and `(-asyncrst ...)`
 - Standalone decision-tree blocks like `(-alpha_dt ...)`, `(-misc ...)`, or `(-mycombit ...)`
@@ -133,10 +136,15 @@ Standalone DT note:
 - `C6` scoped rejection of legacy out-of-scope composition constructs
 
 ### Implemented, but not strong enough yet to call fully supported
-- Arbitrary `(+system ...)` semantics beyond the conventional `clk` / `rstn` path
+- No additional construct family is currently parked in this middle bucket.
 
 ### Explicitly out of active support
 - VHDL generation
+- Non-conventional `(+system ...)` forms, including:
+  - alternative clock names,
+  - alternative reset names,
+  - additional system directives,
+  - and partial `+system` declarations that do not match the conventional shared pair
 - Legacy composition forms such as `?&...`, nested `?top`, `?ports` mapping directives, nested `?toplink`, and multi-source `?fsmc`
 
 ### Draft normative contract for guards, suffixes, updates, and operator expressions
@@ -249,6 +257,64 @@ Regression-backed examples:
 Boundary note:
 - This slice locks symbol resolution in assignment RHS expressions and guard equality conditions.
 - Broader semantics for these families should be documented explicitly if and when the contract is widened beyond that current active use.
+
+### Draft normative contract for the conventional `+system` section
+This is the current `R8` draft normative contract for the active `+system` boundary.
+
+Accepted form:
+```lisp
+(+system
+  (clock clk)
+  (sreset rstn)
+)
+```
+
+Also accepted:
+```lisp
+(+system
+  (clock clk)
+  (asreset rstn)
+)
+```
+
+Current meaning:
+- If `+system` is present, the active contract currently treats it as a declarative confirmation of the conventional shared system-input pair:
+  - `clk`
+  - `rstn`
+- The parser now validates that exact boundary explicitly instead of silently ignoring richer legacy `+system` content.
+- The parser records:
+  - default clock domain `clk`,
+  - default reset domain `rstn`,
+  - and typed system signals for `clk` and `rstn`.
+
+Current boundary:
+- Supported:
+  - exactly `(clock clk)`
+  - exactly one reset declaration naming `rstn` via:
+    - `(sreset rstn)`
+    - or `(asreset rstn)`
+- Rejected explicitly:
+  - alternative clock names such as `(clock core_clk)`
+  - alternative reset names such as `(sreset reset_n)`
+  - unsupported directives such as `(areset rstn)` or other legacy `+system` entries
+  - incomplete `+system` sections
+
+Regression-backed example:
+```lisp
+(?fsm:system_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-dt
+    (A = B)
+  )
+)
+```
+
+Boundary note:
+- This slice makes the conventional shared-system declaration explicit and regression-backed.
+- It accepts the two legacy reset spellings already present in the active tree, but it does not yet widen the contract into arbitrary system metadata, custom clock/reset names, or richer reset-mode differentiation.
 
 ## 3) Basic usage
 From repository root:

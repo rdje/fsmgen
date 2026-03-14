@@ -20,6 +20,31 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: conventional `+system` contract slice is landed under `R8`
+- Current worktree is the next `R8` implementation slice:
+  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now treats the conventional `+system` declaration as fully supported and documents its normative contract,
+  - [t/31-language-contract-system-section.t](/Users/richarddje/Documents/github/fsmgen/t/31-language-contract-system-section.t) now locks the active accepted/rejected boundary,
+  - and [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates `+system` explicitly instead of silently ignoring it.
+- Scope of the landed contract slice:
+  - accepted conventional shared-system declaration:
+    - `(+system (clock clk) (sreset rstn))`
+    - `(+system (clock clk) (asreset rstn))`
+  - explicit rejection of:
+    - alternative clock names,
+    - unsupported system directives,
+    - and incomplete `+system` sections
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` and `ROADMAP_V2.md` now record that the conventional `+system` boundary moved into the supported, regression-backed contract.
+- Validation for this slice:
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`
+  - `perl -I perl -c t/31-language-contract-system-section.t`
+  - `prove -I perl t/31-language-contract-system-section.t`
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - audit the remaining parser-visible legacy constructs that still lack a clean support-tier bucket,
+  - then continue tightening the normative reference and regressions family by family.
 ## 2026-03-15: symbol-definition contract slice is landed under `R8`
 - Current worktree is the second real `R8` implementation slice:
   - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now treats the symbol-definition families as fully supported and documents their current normative contract,

@@ -198,6 +198,6 @@ Prerequisite:
 The active immediate lane is `R8`.
 
 The first honest `R8` slices are:
-1. extend the new draft normative language-reference slice beyond guards/suffixes/updates/operator expressions,
-2. resolve the remaining unresolved `(+system ...)` semantics and any other parser-visible legacy constructs that still lack a clean support-tier bucket,
+1. extend the new draft normative language-reference slice beyond the now-locked guard/update/operator/symbol/system families,
+2. audit any remaining parser-visible legacy constructs that still lack a clean support-tier bucket,
 3. keep adding focused regressions that lock the adopted language contract family by family.

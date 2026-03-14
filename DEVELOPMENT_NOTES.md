@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: the conventional `+system` section is now part of the active `R8` contract
+- The next `R8` slice is now regression-backed and promoted into the live support boundary:
+  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now treats the conventional shared-system declaration as fully supported:
+    - `(+system (clock clk) (sreset rstn))`
+    - `(+system (clock clk) (asreset rstn))`
+- The parser no longer silently ignores `+system`:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates the active `+system` contract explicitly,
+  - records default clock/reset domains,
+  - and registers typed system signals for `clk` and `rstn`.
+- Focused regression coverage now exists in [t/31-language-contract-system-section.t](/Users/richarddje/Documents/github/fsmgen/t/31-language-contract-system-section.t) for:
+  - the accepted conventional `+system` declaration,
+  - non-conventional clock-name rejection,
+  - unsupported directive rejection,
+  - and incomplete-section rejection.
+- Boundary decision:
+  - this slice makes the conventional shared-system declaration explicit and supported,
+  - accepts the two legacy reset spellings already present in the active tree,
+  - but it still does not widen the contract into arbitrary system metadata, custom clock/reset names, or richer reset-mode differentiation.
 ## 2026-03-15: symbol-definition sections are now part of the active `R8` contract
 - The next `R8` slice is now regression-backed and promoted into the live support boundary:
   - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now treats the symbol-definition families as fully supported:

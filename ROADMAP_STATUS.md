@@ -59,9 +59,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R8` Language-contract hardening.
 - Current next decision point:
-  - Extend the new draft normative language reference beyond guards/suffixes/updates/operator expressions into the remaining unresolved parser-visible families.
-  - Resolve the remaining unresolved `(+system ...)` semantics beyond the conventional `clk` / `rstn` path.
-  - Classify any remaining parser-accepted legacy constructs that still sit outside the supported or explicitly rejected buckets.
+  - Continue the draft normative language reference beyond the now-locked guard/update/operator/symbol/system families.
+  - Audit the remaining parser-visible legacy constructs and classify each one into the supported or explicitly rejected buckets.
   - Keep adding focused regressions that lock the adopted language boundary construct family by construct family.
 
 ## Workstreams
@@ -291,10 +290,17 @@ Done:
 - [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t) now locks symbol-definition resolution through the active parser and generator for:
   - assignment RHS expressions,
   - and guard equality conditions.
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now also promotes the conventional `+system` section into the fully supported bucket and documents its current normative contract:
+  - `(+system (clock clk) (sreset rstn))`,
+  - `(+system (clock clk) (asreset rstn))`.
+- [t/31-language-contract-system-section.t](/Users/richarddje/Documents/github/fsmgen/t/31-language-contract-system-section.t) now locks the active parser/generator behavior for that same slice:
+  - accepted conventional shared-system declaration,
+  - targeted rejection of non-conventional clock names,
+  - targeted rejection of unsupported system directives,
+  - and targeted rejection of incomplete `+system` sections.
 Left:
 - Resolve the remaining gray-zone families, especially:
-  - `(+system ...)` beyond conventional `clk` / `rstn`,
-  - and any remaining parser-accepted legacy constructs not yet cleanly bucketed.
+  - any remaining parser-accepted legacy constructs not yet cleanly bucketed.
 - Continue adding focused regression coverage per adopted construct family so support claims are continuously provable.
 Exit criteria:
 - Every parser-visible active-language construct is bucketed clearly and documented normatively, with matching regression coverage for the supported tier.
