@@ -624,13 +624,15 @@ sub build_declared_by_name_links ($self, $ports, $realized_instances, $fsm_file,
             if $top_port->name eq 'clk' || $top_port->name eq 'rstn';
 
         my @same_name_candidates = grep { $_->{port}->name eq $top_port->name } @candidate_endpoints;
-        my @compatible_candidates = grep {
+        my @direction_compatible_candidates = grep {
             $_->{port}->direction eq $top_port->direction
-                && $_->{port}->width == $top_port->width
         } @same_name_candidates;
+        my @width_compatible_candidates = grep {
+            $_->{port}->width == $top_port->width
+        } @direction_compatible_candidates;
 
-        if (@compatible_candidates == 1) {
-            my $match = $compatible_candidates[0];
+        if (@width_compatible_candidates == 1) {
+            my $match = $width_compatible_candidates[0];
             push @links, (
                 $top_port->direction eq 'input'
                     ? FSM::Composition::Link->new(
@@ -647,12 +649,23 @@ sub build_declared_by_name_links ($self, $ports, $realized_instances, $fsm_file,
             next;
         }
 
-        if (@compatible_candidates > 1) {
-            my $candidates = join(', ', map { $_->{instance_name}.'.'.$_->{port}->name } @compatible_candidates);
+        if (@width_compatible_candidates > 1) {
+            my $candidates = join(', ', map { $_->{instance_name}.'.'.$_->{port}->name } @width_compatible_candidates);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
                 "but that name resolves ambiguously to multiple compatible child endpoints: $candidates. ".
                 "The current active C4 lane requires exactly one compatible child endpoint for each '=port' declaration. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        if (@direction_compatible_candidates == 1) {
+            my $candidate = $direction_compatible_candidates[0];
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
+                "but top port '".$top_port->name."' has width ".$top_port->width." while child endpoint '".
+                $candidate->{instance_name}.'.'.$candidate->{port}->name.
+                "' has width ".$candidate->{port}->width.". ".
+                "The current active composition lanes require exact width agreement. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 

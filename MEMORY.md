@@ -20,6 +20,25 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: `R6` shipped `C5` width-mismatch diagnostics
+- Current worktree tightens the composition diagnostic boundary rather than widening the language surface again.
+- Scope of this slice:
+  - explicit `?toplink` width mismatches are now locked by focused regression,
+  - declared connect-by-name width mismatches now name both endpoints and both widths directly.
+- Roadmap board update:
+  - `ROADMAP_STATUS.md` now moves `R6` from `in progress` to `mostly done`,
+  - the active lane remains `R6`,
+  - the current next decision point is now `C6` explicit failure for out-of-scope legacy composition constructs,
+  - the `.rtlif` follow-up remains recorded explicitly on the roadmap board.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm`
+  - `perl -I perl -c t/23-composition-errors.t`
+  - `perl -I perl -c t/24-composition-connect-by-name.t`
+  - `prove -I perl t/23-composition-errors.t t/24-composition-connect-by-name.t`
+  - `prove -I perl t`
+- Immediate next direction after commit:
+  - continue `R6` with `C6`,
+  - make remaining out-of-scope legacy composition constructs fail explicitly and consistently.
 ## 2026-03-14: user-guide clarification for realistic `=name` usage
 - Current worktree is a doc-only follow-up to the shipped `C4` lane.
 - Scope of this slice:

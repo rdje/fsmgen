@@ -16,6 +16,7 @@ my $tempdir = tempdir(CLEANUP => 1);
 my $success_path = File::Spec->catfile($tempdir, 'connect_by_name_top.fsm');
 my $ambiguous_path = File::Spec->catfile($tempdir, 'connect_by_name_ambiguous_top.fsm');
 my $unknown_path = File::Spec->catfile($tempdir, 'connect_by_name_unknown_top.fsm');
+my $width_mismatch_path = File::Spec->catfile($tempdir, 'connect_by_name_width_mismatch_top.fsm');
 
 write_file(
     $success_path,
@@ -148,6 +149,51 @@ write_file(
 FSM
 );
 
+write_file(
+    $width_mismatch_path,
+    <<'FSM'
+(?top:connect_by_name_width_mismatch_top
+  (?ports:public_io
+    clk
+    rstn
+    =final_data>4
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data/consumer.input_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (final_data> <= input_data)
+  )
+  (+size
+    (input_data 8)
+    (final_data 8)
+  )
+)
+FSM
+);
+
 my $pipeline = FSM::Pipeline::HDLGenerator->new(
     debug_level => 0,
     target_language => 'systemverilog',
@@ -189,6 +235,23 @@ like(
     $unknown_exception,
     qr/declared connect-by-name, .*no realized child endpoint with that name exists/s,
     'declared connect-by-name rejects top ports with no same-name child endpoint',
+);
+
+my $width_mismatch_exception = eval {
+    $pipeline->generate_hdl_from_file($width_mismatch_path);
+    undef;
+};
+$width_mismatch_exception = $@;
+
+like(
+    $width_mismatch_exception,
+    qr/top port 'final_data' has width 4 while child endpoint 'consumer\.final_data' has width 8/s,
+    'declared connect-by-name rejects width mismatches with both endpoints and conflicting widths',
+);
+like(
+    $width_mismatch_exception,
+    qr/exact width agreement/s,
+    'declared connect-by-name width-mismatch diagnostics keep the shared exact-width rule visible',
 );
 
 done_testing();

@@ -222,6 +222,7 @@ Practical rules for `=name`:
 - use normal explicit `?toplink` when you need renaming, remapping, or multiple non-system connections,
 - do not use `=clk` or `=rstn`; those already use the dedicated shared system-input contract,
 - a match is valid only when exactly one child endpoint has the same name, same direction, and same width.
+- if widths do not match, generation fails before emission and the diagnostic names both endpoints and their widths.
 
 Current narrow mixed FSM + external RTL example:
 ```lisp

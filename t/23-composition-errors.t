@@ -13,6 +13,7 @@ use FSM::Pipeline::HDLGenerator;
 
 my $tempdir = tempdir(CLEANUP => 1);
 my $composition_path = File::Spec->catfile($tempdir, 'duplicate_driver_top.fsm');
+my $width_mismatch_path = File::Spec->catfile($tempdir, 'explicit_width_mismatch_top.fsm');
 my $unknown_rtl_port_path = File::Spec->catfile($tempdir, 'unknown_rtl_port_top.fsm');
 my $rtl_direction_mismatch_path = File::Spec->catfile($tempdir, 'rtl_direction_mismatch_top.fsm');
 my $rtl_metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
@@ -57,6 +58,52 @@ write_file(
   )
   (+size
     (output_data 8)
+  )
+)
+FSM
+);
+
+write_file(
+    $width_mismatch_path,
+    <<'FSM'
+(?top:explicit_width_mismatch_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>4
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data/consumer.input_data/
+    /consumer.final_data/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (final_data> <= input_data)
+  )
+  (+size
+    (input_data 8)
+    (final_data 8)
   )
 )
 FSM
@@ -163,6 +210,23 @@ like(
     $exception,
     qr/docs\/COMPOSITION_LEGACY_MAPPING\.md/s,
     'duplicate-driver diagnostics point to the legacy mapping note',
+);
+
+my $width_mismatch_exception = eval {
+    $pipeline->generate_hdl_from_file($width_mismatch_path);
+    undef;
+};
+$width_mismatch_exception = $@;
+
+like(
+    $width_mismatch_exception,
+    qr/links 'consumer\.final_data' \(width 8\) to 'result_data' \(width 4\), .*exact width agreement/s,
+    'explicit composition links reject width mismatches with both endpoints and conflicting widths',
+);
+like(
+    $width_mismatch_exception,
+    qr/docs\/COMPOSITION_SCOPE\.md/s,
+    'explicit width-mismatch diagnostics point to the scoped composition doc',
 );
 
 my $unknown_rtl_port_exception = eval {

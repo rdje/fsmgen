@@ -52,7 +52,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R6` Composition-oriented language / architecture work
 - Current next decision point:
-  - Move from the shipped first `C4` declared top-port connect-by-name slice to `C5`: tighten width-mismatch diagnostics across explicit and declared-by-name endpoints, while keeping the `.rtlif` contract follow-up visible.
+  - Move from the shipped `C5` diagnostic boundary to `C6`: make out-of-scope legacy composition constructs fail explicitly and consistently, while keeping the `.rtlif` contract follow-up visible.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -172,7 +172,7 @@ Deliverables:
 - Define the executable acceptance matrix for the first active composition lane.
 - Implement composition capabilities in the active `bin/fsmgen` architecture.
 - Add acceptance tests and user/developer documentation for the composition model.
-Status: `in progress`
+Status: `mostly done`
 Done:
 - Terminology and sequencing were clarified in the docs.
 - `docs/COMPOSITION_SCOPE.md` now defines the first concrete active composition scope grounded in the current `bin/fsmgen` / `HDLGenerator` / `FSMGenFull::Parser` architecture.
@@ -192,9 +192,11 @@ Done:
 - `t/22-composition-fsm-plus-rtl.t` now locks the first mixed `?fsmc` + `?rtl` success path, and `t/23-composition-errors.t` now also locks duplicate-driver, unknown external-port, and direction-mismatch diagnostics.
 - The first shipped `C4` runtime slice now exists for declared top-port connect-by-name: `?ports` can mark a top port as `=name`, and the planner now auto-binds it only when exactly one same-named child endpoint matches by direction and width.
 - `t/24-composition-connect-by-name.t` now locks the first `C4` success path plus ambiguous-match and unknown-name failures, and `t/14-composition-parser.t` now locks the `=port` parser shape.
+- The first shipped `C5` diagnostic boundary now exists across both explicit links and declared connect-by-name:
+  - explicit `?toplink` width mismatches are locked by regression,
+  - declared connect-by-name width mismatches now name the top port, the child endpoint, and the conflicting widths directly.
 Left:
-- Widen from the shipped lanes (`C1`/`C2`/`C3`/first `C4`) to the remaining acceptance matrix:
-  - `C5` width-mismatch diagnostics across typed endpoints,
+- Widen from the shipped lanes (`C1`/`C2`/`C3`/`C4`/`C5`) to the remaining acceptance matrix:
   - `C6` explicit failure for legacy composition constructs outside the scoped model.
 - Add the remaining focused composition acceptance tests beyond `t/20-composition-single-fsm-top.t`, `t/21-composition-two-fsm-linking.t`, `t/22-composition-fsm-plus-rtl.t`, `t/23-composition-errors.t`, and `t/24-composition-connect-by-name.t`.
 - Keep the `.rtlif` follow-up explicit so it does not get lost:

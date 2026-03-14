@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R6` shipped `C5` width-mismatch diagnostics
+- Continued `R6` by turning the existing width-equality rule into a fully locked diagnostic boundary.
+- Rationale:
+  - explicit `?toplink` width mismatches were already rejected, but `C5` was not truly done until that behavior was covered by tests and the declared connect-by-name path produced an equally direct diagnostic,
+  - the right finish for `C5` is not another representation change; it is a clear user-facing failure mode that names the two conflicting endpoints and their widths.
+- Structural outcome:
+  - explicit-link width mismatches are now regression-locked,
+  - declared connect-by-name width mismatches now directly report the top port, the child endpoint, and both widths.
+- Roadmap consequence:
+  - this is enough to move `R6` from `in progress` to `mostly done`,
+  - the remaining roadmap work is now bounded to `C6` plus the already-recorded `.rtlif` contract follow-up.
 ## 2026-03-14: user-guide clarification for realistic `=name` usage
 - Followed up on the first shipped `C4` slice by making the user-facing contract less abstract.
 - Rationale:

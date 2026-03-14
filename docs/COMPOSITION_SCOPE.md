@@ -47,6 +47,7 @@ The currently shipped composition behavior is intentionally bounded:
 - the current `C3` slice uses the RTL module name as the instance name,
 - top ports must match the realized child interface exactly by name, width, and direction in `C1`,
 - explicit `?toplink` endpoints must match by role and exact width in `C2`, `C3`, and `C4`,
+- explicit and declared connect-by-name mismatches now fail before emission and identify the conflicting endpoints and widths,
 - realized child interface currently means:
   - implicit `clk` / `rstn` system inputs from the active FSM generator contract,
   - plus explicit user-facing child ports as exposed by the active FSM pipeline for `?fsmc`,
@@ -226,6 +227,9 @@ Status:
   - undeclared/unknown names are rejected.
 
 ### C5. Width mismatch diagnostics
+Status:
+- Implemented in the current active toolchain for both explicit `?toplink` links and declared `=name` connect-by-name ports.
+
 - Input:
   - composition with incompatible linked widths.
 - Must prove:

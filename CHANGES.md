@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### `R6` shipped `C5` width-mismatch diagnostics and moved to mostly-done
+- Tightened [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so declared connect-by-name width mismatches now name both endpoints and their conflicting widths directly instead of only reporting an indirect “no compatible endpoint” miss.
+- Locked explicit-link width-mismatch behavior in [t/23-composition-errors.t](/Users/richarddje/Documents/github/fsmgen/t/23-composition-errors.t).
+- Extended [t/24-composition-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/24-composition-connect-by-name.t) so declared connect-by-name now also locks the width-mismatch case with both endpoints and widths called out directly.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the shipped `C5` boundary and the narrowed remaining `R6` work are stated truthfully.
+- Live roadmap status change:
+  - `R6` moved from `in progress` to `mostly done`,
+  - the active lane stays `R6`,
+  - the next honest slice is now `C6` explicit failure for out-of-scope legacy composition constructs,
+  - and the `.rtlif` grammar / stronger-interface-contract follow-up remains recorded explicitly on the roadmap board.
+- Validation:
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm` (pass)
+  - `perl -I perl -c t/23-composition-errors.t` (pass)
+  - `perl -I perl -c t/24-composition-connect-by-name.t` (pass)
+  - `prove -I perl t/23-composition-errors.t t/24-composition-connect-by-name.t` (pass)
+  - `prove -I perl t` (pass)
+  - `git diff --check` (pass)
 ### `R6` user-guide clarification for realistic `=name` usage
 - Expanded [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) with realistic `C4` `=name` examples instead of only the minimal synthetic one.
 - The guide now shows:
