@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R7` started with a typed post-generation extension seam
+- Started `R7` by landing one real extension boundary in the active pipeline instead of trying to design the full replacement plugin architecture all at once.
+- Rationale:
+  - the old `.plg` / `PPlugin` path bundled together discovery, dispatch, and late mutation in a way that is too implicit for the refactored architecture,
+  - the first honest replacement slice is therefore a typed, explicit, programmatic boundary that proves live extensibility without reopening file scanning, `AUTOLOAD`, or string-dispatch hooks,
+  - a post-generation hook is the safest first seam because it does not need to mutate parse-time or mid-synthesis state while the broader extension contract is still being defined.
+- Structural outcome:
+  - the active pipeline now has a typed extension registry and typed hook context,
+  - `HDLGenerator->new(...)` can now accept `extensions => [ ... ]`,
+  - the pipeline dispatches `after_generate_result($context)` for both supported source kinds before handing the result back to the caller,
+  - the first replacement contract is documented explicitly in `docs/EXTENSION_MODEL.md` and locked by `t/26-extension-mechanism.t`.
+- Boundary decision:
+  - `R7` does not start by recreating `.plg` compatibility,
+  - there is no auto-discovery, CLI loading, or mid-pipeline hook set in this first slice,
+  - the modern extension story is intentionally explicit and typed first; broader loading/config questions come only after this base seam is proven.
+- Roadmap consequence:
+  - this is enough to move `R7` from `not started` to `in progress`,
+  - the next decision is whether to keep loading programmatic-only for now or add an explicit config/CLI path,
+  - and then to choose the next typed hook boundary without reviving legacy string-named plugin phases.
 ## 2026-03-14: `R6` shipped `C6` and closed the scoped composition lane
 - Continued `R6` by finishing the last bounded acceptance-matrix slice instead of leaving the remaining unsupported legacy shapes as “probably okay.”
 - Rationale:

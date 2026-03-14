@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### `R7` started with a typed extension registry and first live hook
+- Added [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) to define the first modern replacement seam for legacy `.plg` / `PPlugin`, including the deliberately narrow current boundary and explicit non-goals.
+- Added [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm) and [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm) as the first typed extension primitives for the active architecture.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so callers can pass programmatic `extensions => [ ... ]` objects and the live pipeline now dispatches `after_generate_result($context)` for both FSM and composition results before returning them.
+- Added [t/26-extension-mechanism.t](/Users/richarddje/Documents/github/fsmgen/t/26-extension-mechanism.t) to lock:
+  - registry rejection of non-object extension entries,
+  - hook dispatch for a normal FSM generation result,
+  - and hook dispatch for a composition generation result.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the first shipped `R7` boundary is stated truthfully in the live board and onboarding docs.
+- Live roadmap status change:
+  - `R7` moved from `not started` to `in progress`,
+  - the active lane stays `R7`,
+  - the next honest `R7` decision is now whether loading remains programmatic-only or grows an explicit config/CLI path, and which typed hook boundary comes next.
+- Validation:
+  - `perl -I perl -c perl/FSM/Extension/Context.pm` (pass)
+  - `perl -I perl -c perl/FSM/Extension/Registry.pm` (pass)
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm` (pass)
+  - `perl -I perl -c t/26-extension-mechanism.t` (pass)
+  - `prove -I perl t/26-extension-mechanism.t` (pass)
+  - `git diff --check` (pass)
 ### `R6` shipped `C6` legacy-scope failures and closed the composition lane
 - Tightened [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so the remaining reachable legacy composition shapes now fail explicitly and consistently with scope-doc pointers instead of relying on generic parser fallout.
 - The tightened explicit-scope failures now cover:

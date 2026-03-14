@@ -52,7 +52,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R7` Extension/plugin redesign replacing legacy `.plg` / `PPlugin`
 - Current next decision point:
-  - Define the replacement typed hook/extension mechanism for the active architecture without reviving `.plg` / `PPlugin`.
+  - Decide the next deliberate `R7` boundary after the first shipped typed hook:
+    - keep extension loading programmatic-only for now or add an explicit config/CLI loading path,
+    - and choose the next typed hook set without reopening string-dispatch `.plg` behavior.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -217,11 +219,18 @@ Deliverables:
 - Define the replacement typed hook/extension mechanism for the active architecture.
 - Implement that mechanism in the live toolchain.
 - Migrate the project off legacy `.plg` / `PPlugin.pm` as the architectural extension path, with tests/docs for the replacement.
-Status: `not started`
+Status: `in progress`
 Done:
 - Roadmap direction is explicit: legacy `.plg` / `PPlugin.pm` support is to be retired, not preserved as the future architecture.
+- [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) now defines the first modern replacement seam and states its deliberate non-goals.
+- The live toolchain now has typed extension packages:
+  - [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm)
+  - [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm)
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now supports programmatic `extensions => [ ... ]` registration and dispatches the first live hook, `after_generate_result($context)`, for both FSM and composition generation results.
+- [t/26-extension-mechanism.t](/Users/richarddje/Documents/github/fsmgen/t/26-extension-mechanism.t) now locks the first active extension seam, including registry type validation and hook dispatch across both supported source kinds.
 Left:
-- Define the replacement typed hook/extension mechanism.
-- Implement it and migrate off the legacy plugin model.
+- Decide whether the replacement loading story remains programmatic-only or gains an explicit config/CLI path.
+- Add the next deliberate typed hook set only where the active architecture has a real stable boundary.
+- Continue migrating project guidance and future extension use away from `.plg` / `PPlugin.pm` as the architectural story.
 Exit criteria:
 - Legacy plugin support is no longer the architectural extension path and the replacement mechanism is active.

@@ -19,6 +19,8 @@ use FSM::Composition::Port;
 use FSM::Composition::Plan;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::RTLInterfaceLoader;
+use FSM::Extension::Context;
+use FSM::Extension::Registry;
 use FSM::SourceClassifier;
 use Lispish;
 use Data::Dumper;
@@ -59,6 +61,10 @@ sub new ($class, %args) {
             // FSM::Composition::RTLInterfaceLoader->new(
                 debug => ($args{debug_level} // 0) > 0,
             ),
+        extension_registry => $args{extension_registry}
+            // FSM::Extension::Registry->new(
+                extensions => $args{extensions} || [],
+            ),
     }, $class;
     
     # Initialize debug system
@@ -81,7 +87,8 @@ sub generate_hdl_from_file ($self, $fsm_file) {
     my $source_info = $self->classify_source_ast($raw_ast);
     if ($source_info && $source_info->{kind} eq 'composition') {
         $source_info->{composition_spec} = $self->parse_composition_source($raw_ast);
-        return $self->generate_composition_from_source($source_info, $raw_ast, $fsm_file);
+        my $result = $self->generate_composition_from_source($source_info, $raw_ast, $fsm_file);
+        return $self->finalize_generation_result($fsm_file, $source_info, $result);
     }
     
     # Step 2: Convert raw AST to semantic FSM module
@@ -106,8 +113,7 @@ sub generate_hdl_from_file ($self, $fsm_file) {
         raw_ast => $raw_ast,
         source_info => $source_info,
     };
-    fsm_trace_exit("HDL generation complete for '$fsm_file'", 1);
-    return $result;
+    return $self->finalize_generation_result($fsm_file, $source_info, $result);
 }
 
 sub parse_fsm_file ($self, $fsm_file) {
@@ -209,6 +215,21 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
         raw_ast => $raw_ast,
         source_info => $source_info,
     };
+}
+
+sub finalize_generation_result ($self, $fsm_file, $source_info, $result) {
+    my $context = FSM::Extension::Context->new(
+        pipeline => $self,
+        source_path => $fsm_file,
+        target_language => $self->{target_language},
+        source_info => $source_info,
+        result => $result,
+    );
+
+    $self->{extension_registry}->after_generate_result($context);
+
+    fsm_trace_exit("HDL generation complete for '$fsm_file'", 1);
+    return $result;
 }
 
 sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {

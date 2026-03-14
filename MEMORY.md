@@ -20,6 +20,28 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: `R7` started with the first typed extension seam
+- Current worktree starts the active `R7` lane with one real typed hook in the live pipeline instead of a broad speculative plugin rewrite.
+- Scope of this slice:
+  - added [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm) and [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm) as the first typed extension primitives,
+  - updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so callers can pass `extensions => [ ... ]` and receive a live `after_generate_result($context)` callback for both FSM and composition generation paths,
+  - added [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) to define the first modern replacement boundary and its deliberate non-goals,
+  - added [t/26-extension-mechanism.t](/Users/richarddje/Documents/github/fsmgen/t/26-extension-mechanism.t) to lock registry validation plus live hook dispatch across both supported source kinds.
+- Roadmap board update:
+  - [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) now moves `R7` from `not started` to `in progress`,
+  - the active lane remains `R7`,
+  - the next decision point is now whether the next extension step stays programmatic-only or adds an explicit config/CLI loading path, and which typed hook boundary should come next.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Extension/Context.pm`
+  - `perl -I perl -c perl/FSM/Extension/Registry.pm`
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm`
+  - `perl -I perl -c t/26-extension-mechanism.t`
+  - `prove -I perl t/26-extension-mechanism.t`
+  - `git diff --check`
+- Immediate next direction after commit:
+  - continue `R7`,
+  - decide whether to keep extension loading programmatic-only for now or add an explicit config/CLI path,
+  - then land the next small typed hook boundary without reopening `.plg` / `PPlugin` semantics.
 ## 2026-03-14: `R6` shipped `C6` and closed the scoped composition lane
 - Current worktree finishes the last bounded `R6` acceptance slice by making the remaining out-of-scope legacy composition shapes fail explicitly and consistently.
 - Scope of this slice:
