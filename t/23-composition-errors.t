@@ -13,6 +13,9 @@ use FSM::Pipeline::HDLGenerator;
 
 my $tempdir = tempdir(CLEANUP => 1);
 my $composition_path = File::Spec->catfile($tempdir, 'duplicate_driver_top.fsm');
+my $unknown_rtl_port_path = File::Spec->catfile($tempdir, 'unknown_rtl_port_top.fsm');
+my $rtl_direction_mismatch_path = File::Spec->catfile($tempdir, 'rtl_direction_mismatch_top.fsm');
+my $rtl_metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
 
 write_file(
     $composition_path,
@@ -59,6 +62,81 @@ write_file(
 FSM
 );
 
+write_file(
+    $unknown_rtl_port_path,
+    <<'FSM'
+(?top:unknown_rtl_port_top
+  (?ports:public_io
+    clk
+    rstn
+    serial_out>
+  )
+  (?fsmc:producer producer_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /producer.output_data/uart_tx.missing_port/
+    /uart_tx.txd/serial_out/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+);
+
+write_file(
+    $rtl_direction_mismatch_path,
+    <<'FSM'
+(?top:rtl_direction_mismatch_top
+  (?ports:public_io
+    clk
+    rstn
+    serial_out>
+  )
+  (?fsmc:producer producer_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /producer.output_data/uart_tx.txd/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+);
+
+write_file(
+    $rtl_metadata_path,
+    <<'RTLIF'
+(?rtlif:uart_tx
+  clk
+  rstn
+  data_in<8
+  txd>
+)
+RTLIF
+);
+
 my $pipeline = FSM::Pipeline::HDLGenerator->new(
     debug_level => 0,
     target_language => 'systemverilog',
@@ -85,6 +163,40 @@ like(
     $exception,
     qr/docs\/COMPOSITION_LEGACY_MAPPING\.md/s,
     'duplicate-driver diagnostics point to the legacy mapping note',
+);
+
+my $unknown_rtl_port_exception = eval {
+    $pipeline->generate_hdl_from_file($unknown_rtl_port_path);
+    undef;
+};
+$unknown_rtl_port_exception = $@;
+
+like(
+    $unknown_rtl_port_exception,
+    qr/instance 'uart_tx' has no port named 'missing_port'/s,
+    'mixed composition rejects explicit links to unknown external RTL ports',
+);
+like(
+    $unknown_rtl_port_exception,
+    qr/docs\/COMPOSITION_SCOPE\.md/s,
+    'unknown external RTL port diagnostics point to the scoped composition doc',
+);
+
+my $rtl_direction_mismatch_exception = eval {
+    $pipeline->generate_hdl_from_file($rtl_direction_mismatch_path);
+    undef;
+};
+$rtl_direction_mismatch_exception = $@;
+
+like(
+    $rtl_direction_mismatch_exception,
+    qr/uses child endpoint 'uart_tx\.txd' as an explicit link target, .*output instead of input/s,
+    'mixed composition rejects direction-mismatched external RTL targets',
+);
+like(
+    $rtl_direction_mismatch_exception,
+    qr/docs\/COMPOSITION_LEGACY_MAPPING\.md/s,
+    'direction-mismatch diagnostics still point to the legacy mapping note',
 );
 
 done_testing();

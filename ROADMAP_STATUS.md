@@ -52,7 +52,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R6` Composition-oriented language / architecture work
 - Current next decision point:
-  - Move from the shipped `C2` FSM-only linking lane to `C3`: add `?rtl` child realization with declared interface metadata and mixed `?fsmc` + `?rtl` validation/emission.
+  - Move from the shipped `C3` mixed external-RTL lane to `C4`: define the first narrow declared connect-by-name path beyond explicit `?toplink` wiring.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -186,14 +186,16 @@ Done:
 - Realized child interface data is now carried as typed composition ports, with the current active child contract treating `clk`/`rstn` as implicit system inputs plus explicit user-facing child ports from the FSM pipeline.
 - `t/20-composition-single-fsm-top.t` now locks the first end-to-end composition acceptance slice across pipeline, plan, HDL text, and CLI output.
 - The first shipped `C2` runtime slice now exists for multi-child FSM composition: two or more embedded `?fsmc` children, typed explicit `?toplink` endpoint resolution, deterministic instance ordering, deterministic internal-net creation for child-to-child wiring, and duplicate-driver rejection.
-- `t/21-composition-two-fsm-linking.t` now locks the multi-child `?fsmc` success path, and `t/23-composition-errors.t` locks duplicate-driver diagnostics.
+- `t/21-composition-two-fsm-linking.t` now locks the multi-child `?fsmc` success path.
+- The first shipped `C3` runtime slice now exists for mixed composition: exactly one embedded `?fsmc` child plus one external `?rtl` child, typed explicit `?toplink` endpoint resolution across mixed children, deterministic internal-net creation, and explicit RTL instantiation without regenerating external RTL internals.
+- External RTL interface metadata is now loaded through a typed sidecar contract (`<module>.rtlif`) searched relative to the composition source and existing source-library roots, which keeps `?rtl` as a composition-time interface-binding concern instead of reviving legacy plugin/eval loaders.
+- `t/22-composition-fsm-plus-rtl.t` now locks the first mixed `?fsmc` + `?rtl` success path, and `t/23-composition-errors.t` now also locks duplicate-driver, unknown external-port, and direction-mismatch diagnostics.
 Left:
-- Widen from the shipped FSM-only `C1`/`C2` lanes to the remaining acceptance matrix:
-  - `C3` mixed `?fsmc` + `?rtl` realization,
-  - `C4` declared connect-by-name beyond the single-child passthrough case,
+- Widen from the shipped explicit-link lanes (`C1`/`C2`/`C3`) to the remaining acceptance matrix:
+  - `C4` declared connect-by-name beyond the current explicit-link cases,
   - `C5` width-mismatch diagnostics across typed endpoints,
   - `C6` explicit failure for legacy composition constructs outside the scoped model.
-- Add the remaining focused composition acceptance tests beyond `t/20-composition-single-fsm-top.t`, `t/21-composition-two-fsm-linking.t`, and `t/23-composition-errors.t`.
+- Add the remaining focused composition acceptance tests beyond `t/20-composition-single-fsm-top.t`, `t/21-composition-two-fsm-linking.t`, `t/22-composition-fsm-plus-rtl.t`, and `t/23-composition-errors.t`.
 - Continue tightening user/developer docs as more of the acceptance matrix ships.
 Exit criteria:
 - Composition capabilities exist in the active architecture, not just in notes/terminology.

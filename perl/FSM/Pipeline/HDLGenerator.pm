@@ -18,6 +18,7 @@ use FSM::Composition::Net;
 use FSM::Composition::Port;
 use FSM::Composition::Plan;
 use FSM::Composition::RealizedInstance;
+use FSM::Composition::RTLInterfaceLoader;
 use FSM::SourceClassifier;
 use Lispish;
 use Data::Dumper;
@@ -54,6 +55,10 @@ sub new ($class, %args) {
         debug_level => $args{debug_level} // 0,
         target_language => $args{target_language} // 'systemverilog',
         quiet => $args{quiet} // 0,
+        rtl_interface_loader => $args{rtl_interface_loader}
+            // FSM::Composition::RTLInterfaceLoader->new(
+                debug => ($args{debug_level} // 0) > 0,
+            ),
     }, $class;
     
     # Initialize debug system
@@ -236,21 +241,45 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
 
     my @realized_instances;
     for my $instance (@instances) {
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-            "but the current active composition lanes only support '?fsmc' children. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $instance->kind eq 'fsmc';
+        if ($instance->kind eq 'fsmc') {
+            push @realized_instances, $self->realize_fsmc_child_instance($instance, $composition_spec, $fsm_file, $header);
+            next;
+        }
 
-        push @realized_instances, $self->realize_fsmc_child_instance($instance, $composition_spec, $fsm_file, $header);
+        if ($instance->kind eq 'rtl') {
+            push @realized_instances, $self->realize_rtl_child_instance($instance, $fsm_file, $header);
+            next;
+        }
+
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' uses unsupported child kind '".$instance->kind."'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
 
-    if (@realized_instances == 1 && !@toplinks) {
+    my $rtl_instance_count = scalar(grep { $_->kind eq 'rtl' } @realized_instances);
+    my $fsmc_instance_count = scalar(grep { $_->kind eq 'fsmc' } @realized_instances);
+
+    if ($rtl_instance_count == 0 && @realized_instances == 1 && !@toplinks) {
         return $self->build_c1_composition_plan(
             $composition_spec,
             $ports_block,
             \@ports,
             $realized_instances[0],
+            $fsm_file,
+            $header,
+        );
+    }
+
+    if ($rtl_instance_count > 0) {
+        return $self->build_c3_composition_plan(
+            $composition_spec,
+            $top,
+            $ports_block,
+            \@ports,
+            \@toplinks,
+            \@realized_instances,
+            $fsmc_instance_count,
+            $rtl_instance_count,
             $fsm_file,
             $header,
         );
@@ -301,6 +330,28 @@ sub realize_fsmc_child_instance ($self, $instance, $composition_spec, $fsm_file,
         interface_ports => $child_interface_ports,
         module_info => $child_module_info,
         hdl_code => $child_hdl_code,
+    );
+}
+
+sub realize_rtl_child_instance ($self, $instance, $fsm_file, $header) {
+    my $module_name = $instance->module_name;
+    my $loaded = $self->{rtl_interface_loader}->load_interface(
+        module_name => $module_name,
+        source_file => $fsm_file,
+    );
+
+    return FSM::Composition::RealizedInstance->new(
+        kind => 'rtl',
+        instance_name => ($instance->name // $module_name),
+        module_name => $module_name,
+        source_name => undef,
+        interface_ports => $loaded->{interface_ports},
+        module_info => {
+            module_name => $module_name,
+            metadata_path => $loaded->{metadata_path},
+            interface_kind => 'rtl_external',
+        },
+        hdl_code => undef,
     );
 }
 
@@ -438,10 +489,50 @@ sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $po
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @{$realized_instances || []} >= 2;
 
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' mixes '?rtl' children into the FSM-only C2 lane. ".
+        "The active mixed external-RTL lane is C3 instead. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        if grep { $_->kind ne 'fsmc' } @{$realized_instances || []};
+
+    return $self->build_explicit_link_composition_plan(
+        'C2',
+        $composition_spec,
+        $top,
+        $ports_block,
+        $ports,
+        $toplinks,
+        $realized_instances,
+        $fsm_file,
+        $header,
+    );
+}
+
+sub build_c3_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $fsmc_instance_count, $rtl_instance_count, $fsm_file, $header) {
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
+        "but the current active C3 lane supports exactly one '?fsmc' child and one '?rtl' child. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless @{$realized_instances || []} == 2 && $fsmc_instance_count == 1 && $rtl_instance_count == 1;
+
+    return $self->build_explicit_link_composition_plan(
+        'C3',
+        $composition_spec,
+        $top,
+        $ports_block,
+        $ports,
+        $toplinks,
+        $realized_instances,
+        $fsm_file,
+        $header,
+    );
+}
+
+sub build_explicit_link_composition_plan ($self, $lane, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $fsm_file, $header) {
     my @links = map { @{$_->links || []} } @{$toplinks || []};
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active C2 lane requires explicit '?toplink' wiring. ".
+        "but the current active $lane lane requires explicit '?toplink' wiring. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @links;
 
@@ -471,13 +562,13 @@ sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $po
 
             Carp::confess
                 "Composition source '$header' in '$fsm_file' declares top port '$system_port_name' as ".$top_port->direction.", ".
-                "but the current active C2 lane requires '$system_port_name' to be an input when auto-wiring child system ports. ".
+                "but the current active $lane lane requires '$system_port_name' to be an input when auto-wiring child system ports. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                 unless $top_port->direction eq 'input';
 
             Carp::confess
                 "Composition source '$header' in '$fsm_file' realizes child port '".$instance->instance_name.".$system_port_name' as ".$child_port->direction.", ".
-                "but the current active C2 lane expects child system ports to be inputs. ".
+                "but the current active $lane lane expects child system ports to be inputs. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                 unless $child_port->direction eq 'input';
 
@@ -550,7 +641,7 @@ sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $po
             for my $resolved_link (@group) {
                 Carp::confess
                     "Composition source '$header' in '$fsm_file' links top input '".$source->{raw}."' directly to top output '".$resolved_link->{target}{raw}."', ".
-                    "but the current active C2 lane only supports top inputs driving child inputs. ".
+                    "but the current active $lane lane only supports top inputs driving child inputs. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                     if $resolved_link->{target}{kind} eq 'top_port';
             }
@@ -607,13 +698,13 @@ sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $po
         if ($top_port->direction eq 'input') {
             Carp::confess
                 "Composition source '$header' in '$fsm_file' declares top input '$top_port_name', ".
-                "but the current active C2 lane requires explicit '?toplink' usage for every non-system top input. ".
+                "but the current active $lane lane requires explicit '?toplink' usage for every non-system top input. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                 unless $top_port_usage{$top_port_name}{source};
         } else {
             Carp::confess
                 "Composition source '$header' in '$fsm_file' declares top output '$top_port_name', ".
-                "but the current active C2 lane requires explicit '?toplink' usage for every top output. ".
+                "but the current active $lane lane requires explicit '?toplink' usage for every top output. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                 unless $top_port_usage{$top_port_name}{target};
         }
@@ -641,7 +732,7 @@ sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $po
     }
 
     return FSM::Composition::Plan->new(
-        lane => 'C2',
+        lane => $lane,
         top_name => $top->name,
         ports => $ports,
         links => \@links,

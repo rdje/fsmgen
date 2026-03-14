@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R6` first shipped `C3` mixed FSM-plus-RTL slice
+- Continued `R6` by widening the shipped composition runtime from FSM-only linking into the first mixed external-RTL lane.
+- Rationale:
+  - the user’s clarification was the right architectural boundary: `?rtl` is a composition-time interface-binding concern, not a request to regenerate or semantically parse the external RTL internals at this layer,
+  - the narrow honest next step after `C2` was therefore to consume pre-parsed interface metadata in a typed way, not to revive the legacy `entity_loader(...)` / plugin DB path,
+  - using a sidecar metadata artifact keeps the scope tight while still proving the architecture can plan and validate mixed `?fsmc` + `?rtl` tops end to end.
+- Structural outcome:
+  - the composition layer now has a dedicated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm),
+  - `HDLGenerator` now realizes `?rtl` children through typed `<module>.rtlif` metadata instead of rejecting them,
+  - the explicit-link planner is now reused for a dedicated `C3` lane rather than for FSM-only `C2` alone,
+  - mixed tops instantiate the external RTL child but never emit its internals.
+- Contract decision:
+  - the first modern external-RTL contract is a flat `?rtlif:<module>` sidecar file containing typed port tokens,
+  - lookup is intentionally simple and deterministic: beside the composition source first, then through existing `FSMLIB` roots,
+  - this is a better modern fit than copying the old environment-specific entity DB hooks because it preserves explicit interface validation without reintroducing `AUTOLOAD`, `.plg`, or hidden loader state.
+- Safety/compatibility:
+  - `C1` and `C2` behavior stay intact because the mixed lane reuses the same explicit-link planning rules around endpoint roles, exact width matching, and deterministic net naming,
+  - the shipped `C3` lane is still intentionally bounded: exactly one `?fsmc`, exactly one `?rtl`, explicit `?toplink`, and default RTL instance naming from the module name.
+- Verification:
+  - syntax checks for the new loader, updated planner, and new tests pass,
+  - focused composition regressions `t/20`, `t/21`, `t/22`, and `t/23` pass,
+  - the full Perl regression suite passes again after landing the `C3` slice.
+- Next likely slices:
+  - move to `C4` by defining the first narrow connect-by-name rule beyond explicit-link-only composition,
+  - then tighten `C5`/`C6` around width-mismatch diagnostics and explicit failure for out-of-scope legacy composition constructs.
 ## 2026-03-14: `R6` first shipped `C2` FSM-linking slice
 - Continued `R6` by widening the active composition runtime from one-child passthrough to the first explicit multi-child FSM-linking lane.
 - Rationale:

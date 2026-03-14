@@ -18,7 +18,7 @@ Current limitation:
   - one or more embedded `?fsmc` children in the same file,
   - `C1` single-child passthrough via deterministic same-name wiring,
   - `C2` multi-child FSM composition via explicit `?toplink` wiring with `instance.port` child endpoints.
-- `?rtl` is not implemented yet.
+  - `C3` mixed FSM plus external RTL composition via explicit `?toplink` wiring and sidecar `<module>.rtlif` interface metadata.
 - See [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) for the scoped `R6` plan and [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) for historical context.
 
 ## 2) Core concepts
@@ -128,6 +128,39 @@ This currently works because:
 - `clk` and `rstn` use the shared system-input contract,
 - non-system connections are expressed explicitly through `?toplink`,
 - explicit link widths and endpoint roles must match exactly.
+
+Current narrow mixed FSM + external RTL example:
+```lisp
+(?top:fsm_plus_rtl_top
+  (?ports:public_io
+    clk
+    rstn
+    serial_out>
+  )
+  (?fsmc:producer producer_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /producer.output_data/uart_tx.data_in/
+    /uart_tx.txd/serial_out/
+  )
+)
+```
+
+With sidecar interface metadata in `uart_tx.rtlif`:
+```lisp
+(?rtlif:uart_tx
+  clk
+  rstn
+  data_in<8
+  txd>
+)
+```
+
+This currently works because:
+- the FSM child is still compiled through the active FSM pipeline,
+- the external RTL child is instantiated but not regenerated,
+- composition loads the RTL interface from `uart_tx.rtlif` beside the source file or through the existing `FSMLIB` search roots,
+- non-system mixed-child connections remain explicit through `?toplink`.
 
 ## 4) Useful options
 - `-o, --output <file>` : output file path

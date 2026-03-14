@@ -20,6 +20,30 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: `R6` first shipped `C3` mixed FSM-plus-RTL lane
+- Current worktree widens the shipped composition runtime from FSM-only linking into the first mixed external-RTL lane.
+- Scope of this slice:
+  - added `FSM::Composition::RTLInterfaceLoader` as the first modern external-RTL interface loader,
+  - external RTL interface metadata now comes from a sidecar `<module>.rtlif` artifact searched beside the composition source and through existing `FSMLIB` roots,
+  - updated `FSM::Pipeline::HDLGenerator` so `?rtl` children are realized instead of rejected and mixed `?fsmc` + `?rtl` tops plan through a dedicated `C3` lane,
+  - kept the composition boundary truthful by instantiating the external RTL child without regenerating its internals.
+- Regression coverage update:
+  - added `t/22-composition-fsm-plus-rtl.t` for the shipped `C3` success path and CLI generation,
+  - extended `t/23-composition-errors.t` so mixed composition now locks unknown external-port and direction-mismatch diagnostics as well as duplicate-driver rejection.
+- Roadmap board update:
+  - `ROADMAP_STATUS.md` still keeps `R6` at `in progress`,
+  - `R6` `Done` now includes the first shipped `C3` mixed external-RTL lane,
+  - the current next decision point is now `C4` declared connect-by-name, not more external-interface loading groundwork.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Composition/RTLInterfaceLoader.pm`
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm`
+  - `perl -I perl -c t/22-composition-fsm-plus-rtl.t`
+  - `perl -I perl -c t/23-composition-errors.t`
+  - `prove -I perl t/20-composition-single-fsm-top.t t/21-composition-two-fsm-linking.t t/22-composition-fsm-plus-rtl.t t/23-composition-errors.t`
+  - `prove -I perl t`
+- Immediate next direction after commit:
+  - move to `C4`,
+  - define the first narrow declared connect-by-name rule beyond the current explicit-link-only composition lanes.
 ## 2026-03-14: `R6` first shipped `C2` FSM-linking lane
 - Current worktree widens the shipped composition runtime from single-child passthrough into the first explicit multi-child FSM-linking lane.
 - Scope of this slice:

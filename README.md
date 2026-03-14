@@ -40,6 +40,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `perl/FSM/Composition/Net.pm` — typed internal net plan for multi-child composition wiring.
 - `perl/FSM/Composition/Parser.pm` — first typed composition parser/IR boundary.
 - `perl/FSM/Composition/Plan.pm` — typed realized top-planning object for active composition work.
+- `perl/FSM/Composition/RTLInterfaceLoader.pm` — sidecar external-RTL interface loader for the shipped `C3` composition lane.
 - `perl/FSM/SourceClassifier.pm` — top-level source-kind classification for FSM vs composition inputs.
 - `perl/FSM/Adapter/FSMGenFull.pm` — FSM adapter/parsing entry.
 - `perl/FSM/HDL/FlattenedDT.pm` — Flattened decision-tree facade.

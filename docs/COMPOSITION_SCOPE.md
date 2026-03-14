@@ -15,13 +15,17 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - deterministic instance ordering,
   - deterministic internal-net creation for child-to-child wiring,
   - duplicate-driver rejection before emission.
-- `?top:name` inputs are now classified explicitly at the active pipeline boundary, parsed into typed composition IR, and then routed either into the shipped `C1` runtime lane or a deliberate scope-boundary diagnostic.
-- `?rtl` realization is not implemented yet in the active runtime lane.
+- The active toolchain now also ships the first `C3` composition lane:
+  - exactly one embedded `?fsmc` child plus one external `?rtl` child,
+  - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
+  - external RTL interface metadata loaded from a sidecar `<module>.rtlif` artifact,
+  - deterministic internal-net creation and mixed-child instantiation without regenerating external RTL internals.
+- `?top:name` inputs are now classified explicitly at the active pipeline boundary, parsed into typed composition IR, and then routed either into the shipped `C1`/`C2`/`C3` runtime lanes or a deliberate scope-boundary diagnostic.
 - This document remains the normative scope and acceptance boundary for the broader `R6` composition plan.
 
 ## Current active boundary
 - `bin/fsmgen` currently compiles a single FSM source into HDL.
-- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) parses a source file with `Lispish::multi(...)`, classifies the top-level source kind, and routes `?top:name` inputs through a typed composition parser and the shipped `C1` realization/top-emission lane.
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) parses a source file with `Lispish::multi(...)`, classifies the top-level source kind, and routes `?top:name` inputs through a typed composition parser plus the shipped `C1`/`C2`/`C3` realization lanes or an explicit scope-boundary diagnostic.
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) currently accepts only active FSM roots shaped like `?fsm:name` or `+fsm`.
 
 ## Current shipped runtime subset
@@ -32,13 +36,16 @@ The currently shipped composition behavior is intentionally bounded:
 - every `?fsmc` child must reference one embedded `?fsm:name` source in the same file,
 - `C1` single-child passthrough works without `?toplink`,
 - `C2` multi-child FSM composition uses explicit `?toplink`,
-- no `?rtl` realization yet,
+- `C3` mixed composition currently supports exactly one embedded `?fsmc` child plus one external `?rtl` child,
+- each `?rtl` child currently loads its interface from a sidecar `<module>.rtlif` metadata file searched first beside the composition source and then through the existing `FSMLIB` roots,
+- the current `C3` slice uses the RTL module name as the instance name,
 - top ports must match the realized child interface exactly by name, width, and direction in `C1`,
-- explicit `?toplink` endpoints must match by role and exact width in `C2`,
+- explicit `?toplink` endpoints must match by role and exact width in `C2` and `C3`,
 - realized child interface currently means:
   - implicit `clk` / `rstn` system inputs from the active FSM generator contract,
-  - plus explicit user-facing child ports as exposed by the active FSM pipeline,
-- `C2` endpoint syntax is currently:
+  - plus explicit user-facing child ports as exposed by the active FSM pipeline for `?fsmc`,
+  - plus explicit ports declared in the loaded `<module>.rtlif` metadata for `?rtl`,
+- explicit-link endpoint syntax is currently:
   - top-port name, for example `result_data`,
   - or child endpoint `instance.port`, for example `producer.output_data`,
 - composition output is currently limited to SystemVerilog / Verilog targets.
@@ -66,8 +73,9 @@ The language surface for the first composition lane recognizes exactly two child
   - Child instance bound to an external RTL module with an explicitly declared interface.
 
 Current shipped runtime subset:
-- only `?fsmc` is realized today,
-- `?rtl` remains part of the scoped plan but is not implemented yet.
+- `?fsmc` is realized in the shipped `C1`, `C2`, and `C3` slices,
+- `?rtl` is now realized only in the first narrow `C3` slice,
+- the current `C3` slice expects one `<module>.rtlif` sidecar metadata file per external RTL module and does not parse/regenerate SV/VHDL module internals at composition time.
 
 ### 3. Interface model
 Composition will use explicit typed interface data, not implicit global hashes.
@@ -120,7 +128,7 @@ The following are out of scope for the first implementation slice:
   - Composition-layer child FSM declaration and interface exposure/wiring support.
   - It is not itself an enable-synthesis feature.
 - `?rtl`
-  - External RTL module binding with declared ports.
+  - External RTL module binding with declared interface metadata loaded separately for composition-time validation and wiring.
 - `?ports`
   - Explicit top-level interface declaration for the generated composition.
 - `?toplink`
@@ -138,7 +146,7 @@ The first composition lane should be added above the current FSM-only parser bou
    - build a typed composition IR from `?top:*`, `?fsmc`, `?rtl`, `?ports`, and `?toplink`.
 3. Child realization
    - compile `?fsmc` children through the existing FSM pipeline,
-   - load/validate declared interfaces for `?rtl` children.
+   - load/validate declared interfaces for `?rtl` children from sidecar metadata.
 4. Top planning
    - resolve ports, nets, instance wiring, and deterministic ordering.
 5. Top emission
@@ -189,6 +197,9 @@ Status:
   - duplicate-driver errors are rejected.
 
 ### C3. Mixed FSM + external RTL composition
+Status:
+- Implemented in the current active toolchain for exactly one embedded `?fsmc` child plus one external `?rtl` child using sidecar `<module>.rtlif` interface metadata.
+
 - Input:
   - one `?fsmc` child and one `?rtl` child with declared interface metadata.
 - Must prove:

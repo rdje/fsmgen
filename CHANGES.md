@@ -1,6 +1,45 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### `R6` first shipped `C3` mixed FSM-plus-RTL lane
+- Landed the first active mixed composition runtime slice in [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm).
+- The shipped `C3` boundary is intentionally narrow:
+  - exactly one embedded `?fsmc` child,
+  - exactly one external `?rtl` child,
+  - one explicit `?ports` block,
+  - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
+  - and sidecar external-interface metadata loaded from `<module>.rtlif`.
+- Added [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) as the first modern external-RTL interface loader. It:
+  - searches for `<module>.rtlif` first beside the composition source and then through existing `FSMLIB` roots,
+  - parses a typed `?rtlif:<module>` root,
+  - and materializes typed composition ports for external RTL validation/wiring.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the composition path now:
+  - realizes `?rtl` children through the typed sidecar metadata loader instead of hard-rejecting them,
+  - chooses a dedicated `C3` plan when the source contains one `?fsmc` child plus one `?rtl` child,
+  - reuses the explicit-link planner across mixed-child wiring,
+  - instantiates the external RTL child without regenerating its internals.
+- Added [t/22-composition-fsm-plus-rtl.t](/Users/richarddje/Documents/github/fsmgen/t/22-composition-fsm-plus-rtl.t) to lock:
+  - the shipped `C3` success path,
+  - typed external-interface loading,
+  - mixed `?fsmc` + `?rtl` binding plans,
+  - generated top HDL,
+  - and CLI output generation for the mixed lane.
+- Extended [t/23-composition-errors.t](/Users/richarddje/Documents/github/fsmgen/t/23-composition-errors.t) so mixed composition now also locks:
+  - unknown external-RTL port rejection,
+  - and direction-mismatch rejection for external-RTL endpoints.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the docs now describe the shipped `C3` subset truthfully.
+- Live roadmap status change:
+  - no phase status changed,
+  - `R6` remains `in progress`,
+  - but `R6` `Done` / `Left` moved forward because `C3` is now shipped and the next honest slice is `C4` declared connect-by-name.
+- Validation:
+  - `perl -I perl -c perl/FSM/Composition/RTLInterfaceLoader.pm` (pass)
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm` (pass)
+  - `perl -I perl -c t/22-composition-fsm-plus-rtl.t` (pass)
+  - `perl -I perl -c t/23-composition-errors.t` (pass)
+  - `prove -I perl t/20-composition-single-fsm-top.t t/21-composition-two-fsm-linking.t t/22-composition-fsm-plus-rtl.t t/23-composition-errors.t` (pass)
+  - `prove -I perl t` (pass)
+  - `git diff --check` (pass)
 ### `R6` first shipped `C2` FSM-linking lane
 - Landed the first active multi-child composition runtime slice in [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm).
 - The shipped `C2` boundary is still intentionally bounded:

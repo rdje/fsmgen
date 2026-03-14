@@ -137,6 +137,18 @@ Active `R6` direction:
 Reason:
 - hidden inference is hard to validate and hard to make deterministic.
 
+### 6. How `?rtl` interface loading is narrowed
+Legacy `?rtl` loaded interface information through the old environment-specific entity/database path (`entity_loader(...)`) and then pushed that data through plugin-style port-mapping helpers.
+
+Active `R6` direction:
+- keep `?rtl` as an external-interface binding concept,
+- but load it from a typed sidecar metadata artifact (`<module>.rtlif`) during composition planning,
+- and do not parse or regenerate the external RTL child at this composition layer.
+
+Reason:
+- this preserves the real composition need, interface-aware wiring and validation,
+- without reviving environment-specific DB loaders, `AUTOLOAD`, or plugin/eval dispatch.
+
 ### 5. Plugin-driven architecture mutation
 Legacy composition emission used plugin callbacks to mutate architecture output late in the process.
 
