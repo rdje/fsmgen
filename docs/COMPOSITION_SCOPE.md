@@ -24,6 +24,8 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - top ports can be declared as `=name` inside `?ports` to request explicit same-name connect-by-name,
   - the planner auto-binds only when exactly one child endpoint matches by name, direction, and width,
   - ambiguous or missing matches fail explicitly instead of falling back to hidden inference.
+- The active toolchain now also ships the first `C6` boundary:
+  - out-of-scope legacy composition constructs fail explicitly and point to the scoped composition docs instead of falling through to generic parser behavior.
 - `?top:name` inputs are now classified explicitly at the active pipeline boundary, parsed into typed composition IR, and then routed either into the shipped `C1`/`C2`/`C3` runtime lanes or a deliberate scope-boundary diagnostic.
 - This document remains the normative scope and acceptance boundary for the broader `R6` composition plan.
 
@@ -237,6 +239,9 @@ Status:
   - the diagnostic identifies the two endpoints and the conflicting widths.
 
 ### C6. Legacy-composition features not in scope fail explicitly
+Status:
+- Implemented in the current active toolchain for legacy macro/plugin children and the currently out-of-scope legacy parser shapes that were still reachable from modern `?top:name` inputs.
+
 - Input:
   - legacy macro/plugin-oriented composition constructs outside this scope.
 - Must prove:

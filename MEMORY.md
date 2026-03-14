@@ -20,6 +20,24 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: `R6` shipped `C6` and closed the scoped composition lane
+- Current worktree finishes the last bounded `R6` acceptance slice by making the remaining out-of-scope legacy composition shapes fail explicitly and consistently.
+- Scope of this slice:
+  - tightened `FSM::Composition::Parser` boundary messages for legacy macro/plugin children and the remaining reachable out-of-scope legacy parser shapes,
+  - added `t/25-composition-legacy-scope-errors.t` to lock parser/pipeline/CLI behavior for those scope-boundary failures.
+- Roadmap board update:
+  - `ROADMAP_STATUS.md` now moves `R6` from `mostly done` to `done`,
+  - the active lane moves from `R6` to `R7`,
+  - the `.rtlif` follow-up remains recorded as a future refinement note, not an `R6` blocker.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Composition/Parser.pm`
+  - `perl -I perl -c t/25-composition-legacy-scope-errors.t`
+  - `prove -I perl t/25-composition-legacy-scope-errors.t`
+  - `prove -I perl t/14-composition-parser.t t/13-composition-source-classification.t`
+  - `prove -I perl t`
+- Immediate next direction after commit:
+  - continue on `R7`,
+  - define the replacement typed hook/extension mechanism without reviving `.plg` / `PPlugin`.
 ## 2026-03-14: `R6` shipped `C5` width-mismatch diagnostics
 - Current worktree tightens the composition diagnostic boundary rather than widening the language surface again.
 - Scope of this slice:

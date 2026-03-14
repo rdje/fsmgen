@@ -50,9 +50,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- `R6` Composition-oriented language / architecture work
+- `R7` Extension/plugin redesign replacing legacy `.plg` / `PPlugin`
 - Current next decision point:
-  - Move from the shipped `C5` diagnostic boundary to `C6`: make out-of-scope legacy composition constructs fail explicitly and consistently, while keeping the `.rtlif` contract follow-up visible.
+  - Define the replacement typed hook/extension mechanism for the active architecture without reviving `.plg` / `PPlugin`.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -172,7 +172,7 @@ Deliverables:
 - Define the executable acceptance matrix for the first active composition lane.
 - Implement composition capabilities in the active `bin/fsmgen` architecture.
 - Add acceptance tests and user/developer documentation for the composition model.
-Status: `mostly done`
+Status: `done`
 Done:
 - Terminology and sequencing were clarified in the docs.
 - `docs/COMPOSITION_SCOPE.md` now defines the first concrete active composition scope grounded in the current `bin/fsmgen` / `HDLGenerator` / `FSMGenFull::Parser` architecture.
@@ -195,14 +195,18 @@ Done:
 - The first shipped `C5` diagnostic boundary now exists across both explicit links and declared connect-by-name:
   - explicit `?toplink` width mismatches are locked by regression,
   - declared connect-by-name width mismatches now name the top port, the child endpoint, and the conflicting widths directly.
+- The first shipped `C6` boundary now exists for out-of-scope legacy composition constructs:
+  - legacy macro/plugin children,
+  - nested `?top` blocks,
+  - legacy `?ports` mapping directives,
+  - and nested `?toplink` structures
+  now fail explicitly and point to the scoped composition docs instead of falling through to generic parser behavior.
+- `t/25-composition-legacy-scope-errors.t` now locks the parser, pipeline, and CLI failure boundary for legacy macro/plugin constructs plus focused parser coverage for the other out-of-scope legacy shapes.
 Left:
-- Widen from the shipped lanes (`C1`/`C2`/`C3`/`C4`/`C5`) to the remaining acceptance matrix:
-  - `C6` explicit failure for legacy composition constructs outside the scoped model.
-- Add the remaining focused composition acceptance tests beyond `t/20-composition-single-fsm-top.t`, `t/21-composition-two-fsm-linking.t`, `t/22-composition-fsm-plus-rtl.t`, `t/23-composition-errors.t`, and `t/24-composition-connect-by-name.t`.
-- Keep the `.rtlif` follow-up explicit so it does not get lost:
+- No remaining acceptance-matrix slices are blocking `R6`.
+- The `.rtlif` follow-up remains recorded as a future refinement note, not an `R6` closure blocker:
   - document the exact grammar / allowed token forms clearly,
-  - and decide whether later lanes should evolve from sidecar metadata toward a stronger interface-source contract.
-- Continue tightening user/developer docs as more of the acceptance matrix ships.
+  - and decide whether later work should evolve from sidecar metadata toward a stronger interface-source contract.
 Exit criteria:
 - Composition capabilities exist in the active architecture, not just in notes/terminology.
 

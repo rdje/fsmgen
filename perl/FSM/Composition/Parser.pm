@@ -21,6 +21,10 @@ sub new ($class, %args) {
     }, $class;
 }
 
+sub scope_docs_suffix ($self) {
+    return " See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md";
+}
+
 sub parse_source ($self, $raw_ast) {
     my $top_ast = $self->find_top_root($raw_ast);
     confess "Expected composition source containing '?top:name'" unless $top_ast;
@@ -89,7 +93,8 @@ sub parse_top ($self, $top_ast) {
         my $rendered = join ', ', @inline_top_items;
         confess
             "Composition top '$top_name' uses legacy inline top-port shorthand ($rendered), ".
-            "but the active R6 composition parser only supports explicit '?ports' blocks";
+            "but the active R6 composition parser only supports explicit '?ports' blocks.".
+            $self->scope_docs_suffix;
     }
 
     return FSM::Composition::Top->new(
@@ -128,15 +133,23 @@ sub parse_top_child ($self, $top_name, $child_ast) {
     if ($header =~ /^\?toplink:(\w+)$/) {
         return ('toplink', $self->parse_toplink_block($top_name, $child_ast, $1, $items));
     }
+    if ($header =~ /^\?&/) {
+        confess
+            "Composition top '$top_name' contains legacy macro/plugin child '$header', ".
+            "but macro/plugin-oriented composition constructs are outside the active R6 composition scope.".
+            $self->scope_docs_suffix;
+    }
     if ($header =~ /^\?top:/) {
         confess
             "Composition top '$top_name' contains nested top '$header', ".
-            "but nested '?top:name' blocks are outside the first active R6 composition lane";
+            "but nested '?top:name' blocks are outside the first active R6 composition lane.".
+            $self->scope_docs_suffix;
     }
 
     confess
         "Composition top '$top_name' contains unsupported child '$header'. ".
-        "The active R6 parser currently accepts only '?fsmc', '?rtl', '?ports', and '?toplink'";
+        "The active R6 parser currently accepts only '?fsmc', '?rtl', '?ports', and '?toplink'.".
+        $self->scope_docs_suffix;
 }
 
 sub parse_fsmc_child ($self, $top_name, $child_ast, $child_name, $items) {
@@ -147,7 +160,8 @@ sub parse_fsmc_child ($self, $top_name, $child_ast, $child_name, $items) {
         confess
             "Composition top '$top_name' contains '?fsmc' child ".
             ($child_name ? "'$child_name'" : 'without a name').
-            " using nested option structures, but the first active R6 lane only supports a single FSM source name";
+            " using nested option structures, but the first active R6 lane only supports a single FSM source name.".
+            $self->scope_docs_suffix;
     }
 
     if (@scalar_items != 1) {
@@ -155,7 +169,8 @@ sub parse_fsmc_child ($self, $top_name, $child_ast, $child_name, $items) {
         confess
             "Composition top '$top_name' contains '?fsmc' child ".
             ($child_name ? "'$child_name'" : 'without a name').
-            " with $count FSM source names, but the first active R6 lane requires exactly one source name per '?fsmc'";
+            " with $count FSM source names, but the first active R6 lane requires exactly one source name per '?fsmc'.".
+            $self->scope_docs_suffix;
     }
 
     return FSM::Composition::Instance->new(
@@ -171,13 +186,15 @@ sub parse_ports_block ($self, $top_name, $child_ast, $block_name, $items) {
     my @ports;
 
     for my $item (@$items) {
-        confess "Composition top '$top_name' contains a nested '?ports' item, but the first active R6 lane only supports flat explicit port tokens"
+        confess "Composition top '$top_name' contains a nested '?ports' item, but the first active R6 lane only supports flat explicit port tokens.".
+            $self->scope_docs_suffix
             if ref($item);
 
         if ($item =~ m{^/} || $item =~ /^\{/) {
             confess
                 "Composition top '$top_name' contains '?ports' mapping directive '$item', ".
-                "but the first active R6 realization lane only supports explicit top-port declarations inside '?ports'";
+                "but the first active R6 realization lane only supports explicit top-port declarations inside '?ports'.".
+                $self->scope_docs_suffix;
         }
 
         push @ports, $self->parse_port_token($top_name, $item);
@@ -194,8 +211,8 @@ sub parse_port_token ($self, $top_name, $token) {
     $token =~ /^(?<binding>=)?(?<port>\w+)(?:(?<direction>[<>])(?<size>\d+)?(?:[:](?<type>\w+))?)?$/o;
     my ($binding, $port, $direction, $size, $type) = @+{qw/binding port direction size type/};
 
-    confess "Composition top '$top_name' contains invalid '?ports' token '$token'" unless $port;
-    confess "Composition top '$top_name' contains non-positive port width in token '$token'" if defined($size) && $size < 1;
+    confess "Composition top '$top_name' contains invalid '?ports' token '$token'.".$self->scope_docs_suffix unless $port;
+    confess "Composition top '$top_name' contains non-positive port width in token '$token'.".$self->scope_docs_suffix if defined($size) && $size < 1;
 
     return FSM::Composition::Port->new(
         name => $port,
@@ -211,7 +228,8 @@ sub parse_toplink_block ($self, $top_name, $child_ast, $block_name, $items) {
     my @links;
 
     for my $item (@$items) {
-        confess "Composition top '$top_name' contains a nested '?toplink' item, but the first active R6 lane only supports flat '/source/target/' link tokens"
+        confess "Composition top '$top_name' contains a nested '?toplink' item, but the first active R6 lane only supports flat '/source/target/' link tokens.".
+            $self->scope_docs_suffix
             if ref($item);
 
         if ($item =~ m{^/([^/]+)/([^/]+)/$}) {
@@ -225,7 +243,8 @@ sub parse_toplink_block ($self, $top_name, $child_ast, $block_name, $items) {
 
         confess
             "Composition top '$top_name' contains unsupported '?toplink' token '$item'. ".
-            "The current parser only accepts simple '/source/target/' link forms";
+            "The current parser only accepts simple '/source/target/' link forms.".
+            $self->scope_docs_suffix;
     }
 
     return FSM::Composition::TopLink->new(

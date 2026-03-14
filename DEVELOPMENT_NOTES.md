@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R6` shipped `C6` and closed the scoped composition lane
+- Continued `R6` by finishing the last bounded acceptance-matrix slice instead of leaving the remaining unsupported legacy shapes as “probably okay.”
+- Rationale:
+  - the composition lane was not honestly done while some legacy constructs still failed only incidentally or without a clear scope-boundary framing,
+  - `C6` is about boundary quality, not feature width: the active tool should reject the obsolete plugin/eval-era constructs deliberately and say why.
+- Structural outcome:
+  - `FSM::Composition::Parser` now routes the remaining reachable legacy shapes through explicit scope-boundary messages that point back to the scoped composition docs,
+  - legacy macro/plugin child forms are now called out directly rather than being lumped into the generic “unsupported child” message.
+- Roadmap consequence:
+  - with `C1` through `C6` all shipped, `R6` can now close truthfully as `done`,
+  - the active roadmap lane moves to `R7`,
+  - the `.rtlif` grammar/stronger-interface-contract note remains as a future refinement, not a blocker on the closed `R6` lane.
 ## 2026-03-14: `R6` shipped `C5` width-mismatch diagnostics
 - Continued `R6` by turning the existing width-equality rule into a fully locked diagnostic boundary.
 - Rationale:

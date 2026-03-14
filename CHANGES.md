@@ -1,6 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### `R6` shipped `C6` legacy-scope failures and closed the composition lane
+- Tightened [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so the remaining reachable legacy composition shapes now fail explicitly and consistently with scope-doc pointers instead of relying on generic parser fallout.
+- The tightened explicit-scope failures now cover:
+  - legacy macro/plugin children such as `?&name`,
+  - nested `?top` blocks,
+  - legacy `?ports` mapping directives,
+  - and nested `?toplink` structures.
+- Added [t/25-composition-legacy-scope-errors.t](/Users/richarddje/Documents/github/fsmgen/t/25-composition-legacy-scope-errors.t) to lock:
+  - parser failure for the remaining out-of-scope legacy shapes,
+  - and parser/pipeline/CLI failure for legacy macro/plugin composition input.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the shipped `C6` boundary and the resulting roadmap transition are stated truthfully.
+- Live roadmap status change:
+  - `R6` moved from `mostly done` to `done`,
+  - the active lane moved from `R6` to `R7`,
+  - `R7` is now the next honest roadmap lane,
+  - the `.rtlif` grammar / stronger-interface-contract note remains recorded as a future refinement and is not an `R6` blocker.
+- Validation:
+  - `perl -I perl -c perl/FSM/Composition/Parser.pm` (pass)
+  - `perl -I perl -c t/25-composition-legacy-scope-errors.t` (pass)
+  - `prove -I perl t/25-composition-legacy-scope-errors.t` (pass)
+  - `prove -I perl t/14-composition-parser.t t/13-composition-source-classification.t` (pass)
+  - `prove -I perl t` (pass)
+  - `git diff --check` (pass)
 ### `R6` shipped `C5` width-mismatch diagnostics and moved to mostly-done
 - Tightened [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so declared connect-by-name width mismatches now name both endpoints and their conflicting widths directly instead of only reporting an indirect “no compatible endpoint” miss.
 - Locked explicit-link width-mismatch behavior in [t/23-composition-errors.t](/Users/richarddje/Documents/github/fsmgen/t/23-composition-errors.t).
