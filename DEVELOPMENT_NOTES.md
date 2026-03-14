@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R6` explicit composition source boundary before FSM-only parsing
+- Landed the first executable composition-aware behavior in the active toolchain by inserting an explicit source-kind classifier before the existing FSM-only parser boundary.
+- Rationale:
+  - the scope document said `?top:name` had to be detected above the FSM-only parser, but the active runtime still let composition-shaped inputs fall through to a misleading generic FSM-shape error,
+  - the next honest `R6` step was therefore not full composition parsing yet, but a typed boundary that distinguishes “unsupported composition source” from “malformed FSM source,”
+  - that boundary is also reusable for the real composition parser/IR work that follows, so a shared classifier is better than scattering ad hoc `?top:` checks.
+- Structural outcome:
+  - `perl/FSM/SourceClassifier.pm` now owns top-level raw-AST source-kind classification,
+  - `HDLGenerator` now classifies source kind before adapter parsing and rejects `?top:name` with a composition-specific diagnostic,
+  - `FSMGenFull::Parser` now also rejects `?top:name` explicitly for direct callers instead of reporting the generic `?fsm:name` / `+fsm` shape error,
+  - `t/13-composition-source-classification.t` locks classifier behavior plus the pipeline/adapter/CLI failure boundary,
+  - `t/01-regression.t` now uses the same classifier to keep the broad compile sweep aligned with the active supported boundary instead of accidentally treating composition fixtures as normal FSM inputs,
+  - `t/09-ast-first-intermediate-registry.t` and `t/10-ast-first-enable-structure.t` now target a real FSM-root sample instead of the legacy composition sample `trial_1.fsm`.
+- Safety/compatibility:
+  - existing single-FSM inputs still use the same adapter/generation path,
+  - the behavior change is limited to composition-shaped roots, which now fail earlier and more truthfully,
+  - this does not claim composition support; it only makes the unsupported boundary explicit and testable.
+- Verification:
+  - syntax checks for the new classifier, pipeline, and parser pass,
+  - focused regression `t/13-composition-source-classification.t` passes,
+  - the broad compile regression `t/01-regression.t` passes again once it is limited to active FSM-root samples,
+  - the AST-first architecture tests pass again once they are retargeted to an actual FSM-root fixture.
+- Next likely slices:
+  - implement the first typed parser/IR objects for `?top:name` contents (`?ports`, `?fsmc`, `?rtl`, `?toplink`),
+  - start the first acceptance-scenario test from `docs/COMPOSITION_SCOPE.md`, most likely the single-child `C1` lane.
 ## 2026-03-14: `R6` scope defined against the active architecture
 - Started `R6` by defining composition scope concretely against the modern active pipeline instead of continuing to refer to legacy composition capabilities abstractly.
 - Rationale:

@@ -1,6 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### Composition source classification at the active pipeline boundary
+- Added [perl/FSM/SourceClassifier.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/SourceClassifier.pm) as the shared top-level source-kind classifier for raw Lispish ASTs.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the active pipeline now classifies source kind before invoking the FSM-only adapter path.
+- Behavior change:
+  - `?fsm:name` / `+fsm` inputs continue through the existing single-FSM pipeline unchanged,
+  - `?top:name` inputs are now recognized explicitly and fail at the composition boundary with a deliberate diagnostic pointing to [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md),
+  - unsupported composition input no longer falls through to the generic `Expected FSM structure containing '?fsm:name' or '+fsm'` parser error.
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so direct FSM-only parser callers also get a composition-specific boundary error for `?top:name`.
+- Added [t/13-composition-source-classification.t](/Users/richarddje/Documents/github/fsmgen/t/13-composition-source-classification.t) to lock:
+  - `?fsm:name` vs `?top:name` classification,
+  - pipeline rejection of unsupported composition input,
+  - direct adapter rejection of composition input at the FSM-only parser boundary,
+  - CLI surfacing of the composition-boundary diagnostic.
+- Tightened [t/01-regression.t](/Users/richarddje/Documents/github/fsmgen/t/01-regression.t) so the broad sample compile sweep now includes only active FSM-root fixtures according to the new shared classifier, instead of treating top-level composition samples as supported single-FSM inputs.
+- Retargeted [t/09-ast-first-intermediate-registry.t](/Users/richarddje/Documents/github/fsmgen/t/09-ast-first-intermediate-registry.t) and [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) from `fsm/trial_1.fsm` to `fsm/lte_dif_pmaster.fsm`, because those architecture tests are supposed to exercise the active single-FSM pipeline rather than a legacy composition fixture.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), and [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) so the active boundary now reflects explicit composition source detection even though full composition support is still not implemented.
+- Validation:
+  - `perl -I perl -c perl/FSM/SourceClassifier.pm` (pass)
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm` (pass)
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm` (pass)
+  - `perl -I perl -c t/01-regression.t` (pass)
+  - `prove -I perl t/01-regression.t` (pass)
+  - `prove -I perl t/13-composition-source-classification.t` (pass: `Files=1`, `Tests=14`)
 ### Roadmap phase transition (`R6` not started -> in progress)
 - Started the first concrete `R6` slice by turning composition work into a scoped active-architecture plan instead of leaving it as roadmap terminology.
 - Updated `ROADMAP_STATUS.md` to record the live status change:

@@ -7,9 +7,15 @@ use File::Basename;
 use File::Spec;
 use File::Temp qw/ tempdir /;
 use IPC::Cmd qw(run);
+use FindBin;
+
+use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+
+use Lispish;
+use FSM::SourceClassifier;
 
 my $fsm_dir = 'fsm';
-my @fsm_files = grep { !/generic_fifo\.fsm$/ } glob("$fsm_dir/*.fsm");
+my @fsm_files = grep { is_active_fsm_source($_) } glob("$fsm_dir/*.fsm");
 
 if (!@fsm_files) {
     plan skip_all => "No .fsm files found in $fsm_dir";
@@ -29,4 +35,13 @@ for my $fsm_file (sort @fsm_files) {
         
     ok($success, "fsmgen compiled $fsm_file")
         or diag("Error: " . ($error_message || "unknown") . "\nStderr:\n" . join("", @{$stderr_buf || []}) . "\nStdout:\n" . join("", @{$stdout_buf || []}));
+}
+
+sub is_active_fsm_source {
+    my ($fsm_file) = @_;
+    my $raw_ast = Lispish::multi($fsm_file);
+    return 0 unless $raw_ast;
+
+    my $source_info = FSM::SourceClassifier::classify_source_ast($raw_ast);
+    return ($source_info->{kind} || '') eq 'fsm';
 }

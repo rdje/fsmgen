@@ -20,6 +20,29 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: `R6` composition source-classification boundary slice
+- Current worktree lands the first executable composition-aware code path in the active architecture without claiming full composition support yet.
+- Scope of this slice:
+  - added `perl/FSM/SourceClassifier.pm` as the shared top-level source-kind classifier for raw Lispish ASTs,
+  - `perl/FSM/Pipeline/HDLGenerator.pm` now classifies source kind before adapter parsing and rejects `?top:name` with an explicit composition-boundary diagnostic,
+  - `perl/FSM/Adapter/FSMGenFull/Parser.pm` now also rejects `?top:name` with a composition-specific FSM-only-parser error for direct callers,
+  - added `t/13-composition-source-classification.t` to lock classification of `?fsm:name` vs `?top:name` and the user-facing failure mode through pipeline, adapter, and CLI,
+  - tightened `t/01-regression.t` so the broad sample compile sweep now covers only active FSM-root sources and no longer treats composition-shaped fixtures as supported single-FSM inputs,
+  - retargeted `t/09-ast-first-intermediate-registry.t` and `t/10-ast-first-enable-structure.t` from the legacy composition sample `fsm/trial_1.fsm` to the real FSM-root sample `fsm/lte_dif_pmaster.fsm`.
+- Roadmap board update:
+  - `ROADMAP_STATUS.md` still keeps `R6` at `in progress`,
+  - `R6` `Done` now includes explicit top-level source classification plus deliberate composition-boundary failure,
+  - the current `R6` next decision point is now the first typed composition parser/IR slice for `?top:name` contents (`?ports`, `?fsmc`, `?rtl`, `?toplink`).
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/SourceClassifier.pm`
+  - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm`
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`
+  - `perl -I perl -c t/01-regression.t`
+  - `prove -I perl t/01-regression.t`
+  - `prove -I perl t/13-composition-source-classification.t` (`Files=1`, `Tests=14`, `PASS`)
+- Immediate next direction after commit:
+  - build the first typed composition parser/IR objects for `?top:name` contents rather than only classifying the root,
+  - start the first executable acceptance slice from `docs/COMPOSITION_SCOPE.md`, likely `C1` around a single `?fsmc` child and explicit top-port exposure.
 ## 2026-03-14: Roadmap phase transition (`R2` done, active lane -> `R3`)
 - Current worktree is a roadmap-state update driven by an ownership-boundary audit, not by another code move.
 - Audit result:

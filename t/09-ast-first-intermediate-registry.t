@@ -9,7 +9,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Pipeline::HDLGenerator;
 
-my $fsm_file = File::Spec->catfile($FindBin::Bin, '..', 'fsm', 'trial_1.fsm');
+my $fsm_file = File::Spec->catfile($FindBin::Bin, '..', 'fsm', 'lte_dif_pmaster.fsm');
 my $pipeline = FSM::Pipeline::HDLGenerator->new(
     debug_level => 0,
     target_language => 'systemverilog',

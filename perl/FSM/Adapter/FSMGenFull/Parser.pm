@@ -9,6 +9,7 @@ no warnings 'experimental::signatures';
 use Data::Dumper;
 use FSM::CoreAST;
 use FSM::Debug;
+use FSM::SourceClassifier;
 
 sub new($class, %args) {
     Carp::confess "Parser requires signal_manager" unless $args{signal_manager};
@@ -31,6 +32,15 @@ sub parse_fsm($self, $raw_ast) {
     fsm_trace_enter('Parser parse_fsm() entry', 2);
     fsm_debug("Starting full FSMGen parsing", 3);
     $self->reset_combinational_dependency_tracking();
+
+    my $source_info = FSM::SourceClassifier::classify_source_ast($raw_ast);
+    if ($source_info->{kind} eq 'composition') {
+        my $header = $source_info->{header} // '?top:name';
+        fsm_trace_decision(0, "Detected composition source '$header' at FSM-only parser boundary", 1);
+        Carp::confess
+            "Composition source '$header' is not supported by the FSM-only parser. ".
+            "Route '?top:name' inputs through the composition pipeline described in docs/COMPOSITION_SCOPE.md";
+    }
     
     if (ref($raw_ast) eq 'ARRAY') {
         if (@$raw_ast > 0 && !ref($raw_ast->[0]) && $raw_ast->[0] =~ /^\?fsm:/) {

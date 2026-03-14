@@ -52,7 +52,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R6` Composition-oriented language / architecture work
 - Current next decision point:
-  - Implement the first typed composition classifier/parser slice for `?top:name` after the scope and acceptance boundary defined in `docs/COMPOSITION_SCOPE.md`.
+  - Implement the first typed composition parser/IR slice for `?top:name` contents (`?ports`, `?fsmc`, `?rtl`, `?toplink`) now that source-kind classification is explicit.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -177,10 +177,12 @@ Done:
 - Terminology and sequencing were clarified in the docs.
 - `docs/COMPOSITION_SCOPE.md` now defines the first concrete active composition scope grounded in the current `bin/fsmgen` / `HDLGenerator` / `FSMGenFull::Parser` architecture.
 - The same scope document now defines the first executable acceptance matrix (`C1`..`C6`) and the initial planned test-file split for composition work.
+- The active pipeline now classifies top-level source kind explicitly, so `?top:name` is recognized before the FSM-only parser runs.
+- Unsupported composition input now fails with a composition-specific boundary diagnostic in both `HDLGenerator` and direct FSM-only parser calls, with focused regression coverage.
 Left:
-- Implement the actual typed composition source path in the active architecture.
+- Implement the actual typed composition parser and IR for `?top:name` contents in the active architecture.
 - Add the executable acceptance tests for the scoped composition matrix.
-- Extend user/developer docs from scoped plan to shipped composition behavior.
+- Extend user/developer docs from scope-plus-boundary detection to shipped composition behavior.
 Exit criteria:
 - Composition capabilities exist in the active architecture, not just in notes/terminology.
 

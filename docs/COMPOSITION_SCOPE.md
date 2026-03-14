@@ -4,11 +4,12 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 
 ## Status
 - Composition is not implemented yet in the active toolchain.
+- `?top:name` inputs are now classified explicitly at the active pipeline boundary and fail with a deliberate composition-boundary diagnostic.
 - This document is the normative scope and acceptance boundary for the first composition lane.
 
 ## Current active boundary
 - `bin/fsmgen` currently compiles a single FSM source into HDL.
-- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) parses a source file with `Lispish::multi(...)`, builds one semantic FSM module, analyzes it, and generates HDL.
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) parses a source file with `Lispish::multi(...)`, classifies the top-level source kind, and currently routes only FSM inputs into semantic-module generation.
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) currently accepts only active FSM roots shaped like `?fsm:name` or `+fsm`.
 - There is no active typed composition IR, no top-level composition parser, and no top-module emitter in the modern pipeline yet.
 

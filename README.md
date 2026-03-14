@@ -35,6 +35,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ### Core entrypoints and pipeline
 - `bin/fsmgen` — main CLI entrypoint.
 - `perl/FSM/Pipeline/HDLGenerator.pm` — generation orchestration.
+- `perl/FSM/SourceClassifier.pm` — top-level source-kind classification for FSM vs composition inputs.
 - `perl/FSM/Adapter/FSMGenFull.pm` — FSM adapter/parsing entry.
 - `perl/FSM/HDL/FlattenedDT.pm` — Flattened decision-tree facade.
 - `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` — SystemVerilog backend implementation.

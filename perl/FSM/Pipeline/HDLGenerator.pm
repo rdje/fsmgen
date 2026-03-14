@@ -13,6 +13,7 @@ use lib "$FindBin::Bin";
 use FSM::Debug;
 use FSM::HDL::FlattenedDT;
 use FSM::Adapter::FSMGenFull;
+use FSM::SourceClassifier;
 use Lispish;
 use Data::Dumper;
 
@@ -67,6 +68,8 @@ sub generate_hdl_from_file ($self, $fsm_file) {
     
     # Step 1: Parse the FSM file
     my $raw_ast = $self->parse_fsm_file($fsm_file);
+    my $source_info = $self->classify_source_ast($raw_ast);
+    $self->assert_supported_source_kind($source_info, $fsm_file);
     
     # Step 2: Convert raw AST to semantic FSM module
     my $fsm_module = $self->create_fsm_module($raw_ast);
@@ -87,7 +90,8 @@ sub generate_hdl_from_file ($self, $fsm_file) {
         module_info => $module_info,
         hdl_code => $hdl_code,
         statistics => $statistics,
-        raw_ast => $raw_ast
+        raw_ast => $raw_ast,
+        source_info => $source_info,
     };
     fsm_trace_exit("HDL generation complete for '$fsm_file'", 1);
     return $result;
@@ -119,6 +123,20 @@ sub parse_fsm_file ($self, $fsm_file) {
     fsm_debug("FSM file parsed successfully", 1);
     fsm_trace_exit('FSM file parsed', 2);
     return $raw_ast;
+}
+
+sub classify_source_ast ($self, $raw_ast) {
+    return FSM::SourceClassifier::classify_source_ast($raw_ast);
+}
+
+sub assert_supported_source_kind ($self, $source_info, $fsm_file) {
+    return unless $source_info && $source_info->{kind} eq 'composition';
+
+    my $header = $source_info->{header} // '?top:name';
+    fsm_trace_decision(0, "Detected composition source '$header' before FSM-only adapter boundary", 1);
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' is recognized, but the active composition pipeline is not implemented yet. ".
+        "Route '?top:name' inputs through the upcoming R6 composition path described in docs/COMPOSITION_SCOPE.md.\n";
 }
 
 sub create_fsm_module ($self, $raw_ast) {
