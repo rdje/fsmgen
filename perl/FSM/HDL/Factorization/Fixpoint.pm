@@ -114,7 +114,7 @@ sub run_post_substitution_factorization ($self, %args) {
         $total_substitution_count += $substitution_count;
         fsm_debug("[Fixpoint.pm][run_post_substitution_factorization()] Pass $pass_number substitutions: $substitution_count", 3);
         
-        my $update_count = $ctx->{backend_sv}->update_original_asts_with_second_pass_substitutions($pass_factorizer);
+        my $update_count = $ctx->{enable_graph}->update_original_asts_with_second_pass_substitutions($pass_factorizer);
         $total_update_count += $update_count;
         fsm_debug("[Fixpoint.pm][run_post_substitution_factorization()] Pass $pass_number original AST updates: $update_count", 3);
         

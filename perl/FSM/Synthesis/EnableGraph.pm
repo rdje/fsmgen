@@ -1042,6 +1042,272 @@ sub ast_has_intermediate_signals_recursive($self, $ast) {
 
     return 0;
 }
+sub count_unary_negations_in_original_expressions($self) {
+    my $ctx = $self->{flattened_dt};
+
+    my $neg_count = 0;
+    my %neg_patterns;
+
+    if ($ctx->{assignment_analysis}) {
+        for my $lhs (keys %{$ctx->{assignment_analysis}}) {
+            my $lhs_analysis = $ctx->{assignment_analysis}{$lhs};
+            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
+                my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
+
+                for my $dt_enable (@{$rhs_group->{dt_specific_enables} || []}) {
+                    if ($dt_enable->{enable_ast} && blessed($dt_enable->{enable_ast})) {
+                        my $sv = eval { $dt_enable->{enable_ast}->to_systemverilog() } || "[NO SV]";
+                        if ($sv =~ /!\w+/) {
+                            $neg_count++;
+                            $neg_patterns{$sv}++;
+                            fsm_debug("    UNARY_NEG: $sv in DT enable $dt_enable->{enable_name}", 3);
+                        }
+                    }
+                }
+
+                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}{ast}) {
+                    my $sv = eval { $rhs_group->{lhs_level_enable}{ast}->to_systemverilog() } || "[NO SV]";
+                    if ($sv =~ /!\w+/) {
+                        $neg_count++;
+                        $neg_patterns{$sv}++;
+                        fsm_debug("    UNARY_NEG: $sv in LHS enable $rhs_group->{lhs_level_enable}{name}", 3);
+                    }
+                }
+            }
+        }
+    }
+
+    fsm_debug("  Found $neg_count unary negations in expressions:", 3);
+    for my $pattern (sort keys %neg_patterns) {
+        fsm_debug("    '$pattern' appears $neg_patterns{$pattern} times", 3);
+    }
+}
+sub update_original_asts_with_substituted_versions($self, $factorizer) {
+    my $ctx = $self->{flattened_dt};
+
+    fsm_debug("UPDATE_ORIGINAL_ASTS: Synchronizing original ASTs with substituted versions", 3);
+
+    my $context_to_substituted_ast = $self->_build_context_to_ast_map(
+        $factorizer->{ast_expressions},
+        debug_prefix => 'UPDATE_ORIGINAL_ASTS',
+        log_context_map => 1,
+    );
+    my $updated_count = 0;
+    my $dt_ast_updates = 0;
+    my $lhs_ast_updates = 0;
+    my $assignment_ast_updates = 0;
+
+    if ($ctx->{assignment_analysis}) {
+        fsm_debug("UPDATE_ORIGINAL_ASTS: Updating assignment_analysis structure", 3);
+
+        for my $lhs (keys %{$ctx->{assignment_analysis}}) {
+            my $lhs_analysis = $ctx->{assignment_analysis}{$lhs};
+
+            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
+                my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
+
+                for my $dt_enable_info (@{$rhs_group->{dt_specific_enables}}) {
+                    my $enable_name = $dt_enable_info->{enable_name};
+                    my $context_key = "dt_enable:$enable_name";
+
+                    if (exists $context_to_substituted_ast->{$context_key}) {
+                        my $original_ast = $dt_enable_info->{enable_ast};
+                        my $substituted_ast = $context_to_substituted_ast->{$context_key};
+
+                        my $original_sv = eval { $self->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                        my $substituted_sv = eval { $self->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+
+                        $dt_enable_info->{enable_ast} = $substituted_ast;
+                        $updated_count++;
+                        $dt_ast_updates++;
+
+                        fsm_debug("  *** UPDATED DT-specific enable AST: $enable_name ***", 3);
+                        fsm_debug("    Original:  $original_sv", 3);
+                        fsm_debug("    Updated:   $substituted_sv", 3);
+                    } else {
+                        fsm_debug("  No substitution found for DT enable: $dt_enable_info->{enable_name}", 3);
+                    }
+                }
+
+                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}{ast}) {
+                    my $lhs_enable = $rhs_group->{lhs_level_enable};
+                    my $enable_name = $lhs_enable->{name};
+                    my $context_key = "lhs_enable:$enable_name";
+
+                    if (exists $context_to_substituted_ast->{$context_key}) {
+                        my $original_ast = $lhs_enable->{ast};
+                        my $substituted_ast = $context_to_substituted_ast->{$context_key};
+
+                        my $original_sv = eval { $self->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                        my $substituted_sv = eval { $self->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+
+                        $lhs_enable->{ast} = $substituted_ast;
+                        $updated_count++;
+                        $lhs_ast_updates++;
+
+                        fsm_debug("  *** UPDATED LHS-level enable AST: $enable_name ***", 3);
+                        fsm_debug("    Original:  $original_sv", 3);
+                        fsm_debug("    Updated:   $substituted_sv", 3);
+                    } else {
+                        fsm_debug("  No substitution found for LHS enable: $enable_name", 3);
+                    }
+                }
+            }
+        }
+    } else {
+        fsm_debug("*** WARNING: No assignment_analysis structure to update! ***", 3);
+    }
+
+    fsm_debug("UPDATE_ORIGINAL_ASTS: Updating lhs_assignments structure", 3);
+
+    for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
+        for my $assignment (@{$ctx->{lhs_assignments}{$lhs}}) {
+            next unless $assignment->{conditions_ast} && blessed($assignment->{conditions_ast});
+
+            my $dt_name = $assignment->{dt};
+            my $context_key = "assignment_condition:$lhs:$dt_name";
+
+            if (exists $context_to_substituted_ast->{$context_key}) {
+                my $original_ast = $assignment->{conditions_ast};
+                my $substituted_ast = $context_to_substituted_ast->{$context_key};
+
+                my $original_sv = eval { $self->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                my $substituted_sv = eval { $self->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+
+                $assignment->{conditions_ast} = $substituted_ast;
+                $updated_count++;
+                $assignment_ast_updates++;
+
+                fsm_debug("  *** UPDATED assignment condition AST: $lhs from $dt_name ***", 3);
+                fsm_debug("    Original:  $original_sv", 3);
+                fsm_debug("    Updated:   $substituted_sv", 3);
+            } else {
+                fsm_debug("  No substitution found for assignment condition: $lhs from $assignment->{dt}", 3);
+            }
+        }
+    }
+
+    fsm_debug("UPDATE_ORIGINAL_ASTS: Updated $updated_count AST expressions with substituted versions", 3);
+    fsm_debug("  - DT-specific enable updates: $dt_ast_updates", 3);
+    fsm_debug("  - LHS-level enable updates: $lhs_ast_updates", 3);
+    fsm_debug("  - Assignment condition updates: $assignment_ast_updates", 3);
+
+    if ($updated_count == 0) {
+        fsm_debug("*** WARNING: NO AST UPDATES WERE PERFORMED! This suggests the substitution/update mechanism isn't working! ***", 3);
+    }
+
+    return $updated_count;
+}
+sub update_original_asts_with_second_pass_substitutions($self, $second_pass_factorizer) {
+    my $ctx = $self->{flattened_dt};
+
+    fsm_debug("UPDATE_SECOND_PASS: Updating original ASTs with second-pass substitutions", 3);
+
+    my $second_pass_context_to_ast = $self->_build_context_to_ast_map(
+        $second_pass_factorizer->{ast_expressions},
+        debug_prefix => 'UPDATE_SECOND_PASS',
+    );
+    my $updated_count = 0;
+
+    if ($ctx->{assignment_analysis}) {
+        for my $lhs (keys %{$ctx->{assignment_analysis}}) {
+            my $lhs_analysis = $ctx->{assignment_analysis}{$lhs};
+
+            for my $rhs (keys %{$lhs_analysis->{rhs_groups}}) {
+                my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
+
+                for my $dt_enable_info (@{$rhs_group->{dt_specific_enables}}) {
+                    my $enable_name = $dt_enable_info->{enable_name};
+                    my $context_key = "second_pass_dt_enable:$enable_name";
+
+                    if (exists $second_pass_context_to_ast->{$context_key}) {
+                        my $original_ast = $dt_enable_info->{enable_ast};
+                        my $substituted_ast = $second_pass_context_to_ast->{$context_key};
+
+                        my $original_sv = eval { $self->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                        my $substituted_sv = eval { $self->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+
+                        $dt_enable_info->{enable_ast} = $substituted_ast;
+                        $updated_count++;
+
+                        fsm_debug("  *** SECOND-PASS UPDATED DT-specific enable AST: $enable_name ***", 3);
+                        fsm_debug("    Original:  $original_sv", 3);
+                        fsm_debug("    Updated:   $substituted_sv", 3);
+                    }
+                }
+
+                if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}{ast}) {
+                    my $lhs_enable = $rhs_group->{lhs_level_enable};
+                    my $enable_name = $lhs_enable->{name};
+                    my $context_key = "second_pass_lhs_enable:$enable_name";
+
+                    if (exists $second_pass_context_to_ast->{$context_key}) {
+                        my $original_ast = $lhs_enable->{ast};
+                        my $substituted_ast = $second_pass_context_to_ast->{$context_key};
+
+                        my $original_sv = eval { $self->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                        my $substituted_sv = eval { $self->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+
+                        $lhs_enable->{ast} = $substituted_ast;
+                        $updated_count++;
+
+                        fsm_debug("  *** SECOND-PASS UPDATED LHS-level enable AST: $enable_name ***", 3);
+                        fsm_debug("    Original:  $original_sv", 3);
+                        fsm_debug("    Updated:   $substituted_sv", 3);
+                    }
+                }
+            }
+        }
+    }
+
+    for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
+        for my $assignment (@{$ctx->{lhs_assignments}{$lhs}}) {
+            next unless $assignment->{conditions_ast} && blessed($assignment->{conditions_ast});
+
+            my $dt_name = $assignment->{dt};
+            my $context_key = "second_pass_assignment:$lhs:$dt_name";
+
+            if (exists $second_pass_context_to_ast->{$context_key}) {
+                my $original_ast = $assignment->{conditions_ast};
+                my $substituted_ast = $second_pass_context_to_ast->{$context_key};
+
+                my $original_sv = eval { $self->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                my $substituted_sv = eval { $self->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+
+                $assignment->{conditions_ast} = $substituted_ast;
+                $updated_count++;
+
+                fsm_debug("  *** SECOND-PASS UPDATED assignment condition AST: $lhs from $dt_name ***", 3);
+                fsm_debug("    Original:  $original_sv", 3);
+                fsm_debug("    Updated:   $substituted_sv", 3);
+            }
+        }
+    }
+
+    fsm_debug("UPDATE_SECOND_PASS: Updated $updated_count AST expressions with second-pass substitutions", 3);
+    return $updated_count;
+}
+sub _build_context_to_ast_map($self, $ast_expressions, %opts) {
+    my %context_to_ast;
+    my $debug_prefix = $opts{debug_prefix} // 'CONTEXT_MAP';
+    my $log_context_map = $opts{log_context_map} // 0;
+
+    $ast_expressions ||= [];
+    fsm_debug("$debug_prefix: Factorizer has " . scalar(@$ast_expressions) . " AST expressions to check against", 3);
+
+    for my $expr_info (@$ast_expressions) {
+        my $context = $expr_info->{context};
+        my $substituted_ast = $expr_info->{ast};
+        $context_to_ast{$context} = $substituted_ast;
+
+        if ($log_context_map) {
+            my $sv = eval { $substituted_ast->to_systemverilog() } || "[NO SV REPRESENTATION]";
+            fsm_debug("  Context '$context' -> AST: $sv", 3);
+        }
+    }
+
+    return \%context_to_ast;
+}
 sub generate_enable_conditions($self, $fsm_module = undef) {
     my $ctx = $self->{flattened_dt};
     my $hdl = "  // State and DT Enable Conditions\n";

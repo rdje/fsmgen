@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### FlattenedDT live ownership (EnableGraph substitution synchronization ownership)
+- Moved substitution-era AST rewrite/debug passes off `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and under `perl/FSM/Synthesis/EnableGraph.pm`.
+- Added `count_unary_negations_in_original_expressions(...)` to `EnableGraph`, so the same owner that already owns `assignment_analysis` and captured condition ASTs now also owns the unary-negation debug scan around substitution.
+- Added `update_original_asts_with_substituted_versions(...)` and `update_original_asts_with_second_pass_substitutions(...)` to `EnableGraph`, plus a shared context-to-AST map helper used by both update passes.
+- Updated `Backend::SystemVerilog::run_global_ast_factorization(...)` so first-pass substitution synchronization and the surrounding unary-negation debug scans now go through `EnableGraph`.
+- Updated `perl/FSM/HDL/Factorization/Fixpoint.pm` so second-pass substitution synchronization now also goes through `EnableGraph`.
+- Extended `t/10-ast-first-enable-structure.t` so:
+  - the backend is asserted to stay free of the former substitution-update/debug helper pocket,
+  - and `EnableGraph` is asserted to own the unary-negation debug scan plus first-pass and second-pass substitution synchronization on the live path.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - `perl -I perl -c perl/FSM/HDL/Factorization/Fixpoint.pm` (pass)
+  - `prove -I perl t/10-ast-first-enable-structure.t` (pass: `Files=1`, `Tests=168`)
+  - `prove -I perl t` (pass: `Files=12`, `Tests=392`)
 ### FlattenedDT live ownership (EnableGraph factorization AST-feed ownership)
 - Moved factorization input feeding off `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and under `perl/FSM/Synthesis/EnableGraph.pm`.
 - Added `feed_asts_to_factorizer(...)` to `EnableGraph`, so the same owner that already owns `assignment_analysis`, captured condition ASTs, and intermediate-signal semantics now also owns the primary factorization AST feed.

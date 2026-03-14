@@ -16,6 +16,25 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph substitution synchronization ownership)
+- Current worktree continues the `R2` live ownership lane and moves substitution-era AST rewrite/debug passes under `EnableGraph`.
+- Scope of this slice:
+  - `perl/FSM/Synthesis/EnableGraph.pm` now owns `count_unary_negations_in_original_expressions(...)`,
+  - `EnableGraph` now also owns `update_original_asts_with_substituted_versions(...)` and `update_original_asts_with_second_pass_substitutions(...)`, plus a shared context-to-AST map helper for the two update passes,
+  - `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` now routes first-pass substitution synchronization and the surrounding unary-negation debug scans through `enable_graph`,
+  - `perl/FSM/HDL/Factorization/Fixpoint.pm` now routes second-pass substitution synchronization through `enable_graph` instead of the backend.
+- Regression coverage update:
+  - `t/10-ast-first-enable-structure.t` now asserts that the backend stays free of the former substitution-update/debug helper pocket,
+  - the same test now asserts that `EnableGraph` owns the unary-negation debug scan plus first-pass and second-pass substitution synchronization on the live path.
+- Validation is green for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - `perl -I perl -c perl/FSM/HDL/Factorization/Fixpoint.pm`
+  - `prove -I perl t/10-ast-first-enable-structure.t` (`Files=1`, `Tests=168`, `PASS`)
+  - `prove -I perl t` (`Files=12`, `Tests=392`, `PASS`)
+- Immediate next direction after commit:
+  - re-audit the remaining backend-side filtering and live-usage checks around consolidated intermediate-signal emission,
+  - move only the pieces that are truly synthesis/analysis ownership, not backend-local factorization or rendering.
 ## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph factorization AST-feed ownership)
 - Current worktree continues the `R2` live ownership lane and moves factorization input feeding under `EnableGraph`.
 - Scope of this slice:

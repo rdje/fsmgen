@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: EnableGraph substitution synchronization ownership
+- Continued the live `R2` ownership convergence by moving substitution-era AST rewrite/debug passes under `EnableGraph`.
+- Rationale:
+  - the first-pass and second-pass substitution synchronization code was still rewriting `assignment_analysis` and captured condition ASTs from the backend,
+  - those passes do not render HDL and do not implement the factorization algorithm itself; they synchronize owner-side synthesis structures after factorization,
+  - the next truthful move was therefore to keep those rewrites, plus the surrounding unary-negation debug scan, with `EnableGraph`, while the backend and fixpoint loop stay focused on factorization orchestration and rendering.
+- Structural outcome:
+  - `EnableGraph::count_unary_negations_in_original_expressions(...)` now owns the substitution-era unary-negation debug scan,
+  - `EnableGraph::update_original_asts_with_substituted_versions(...)` now owns first-pass synchronization back into `assignment_analysis` and `lhs_assignments`,
+  - `EnableGraph::update_original_asts_with_second_pass_substitutions(...)` now owns the second-pass synchronization used by the fixpoint loop,
+  - `Backend::SystemVerilog` and `FSM::HDL::Factorization::Fixpoint` now both defer to `EnableGraph` for those rewrites instead of mutating owner-side synthesis data directly.
+- Safety/compatibility:
+  - no intended HDL behavior change; only the ownership boundary moved,
+  - the architecture regression now locks the backend free of the former substitution-update/debug helper pocket while asserting `EnableGraph` ownership of the live entrypoints,
+  - focused and full regression stayed green, so the move preserved the active substitution/factorization contract.
+- Verification:
+  - syntax checks for `EnableGraph.pm`, `Backend/SystemVerilog.pm`, and `Factorization/Fixpoint.pm` pass,
+  - focused architecture regression `t/10-ast-first-enable-structure.t` passes,
+  - full regression remains green (`prove -I perl t` -> `Files=12`, `Tests=392`, `PASS`).
+- Next likely slices:
+  - re-audit the remaining backend-side filtering and live-usage checks around consolidated intermediate-signal emission,
+  - move only the pieces that are truly synthesis/analysis ownership, not backend-local factorization or rendering.
 ## 2026-03-14: EnableGraph factorization AST-feed ownership
 - Continued the live `R2` ownership convergence by moving factorization AST feeding under `EnableGraph`.
 - Rationale:
