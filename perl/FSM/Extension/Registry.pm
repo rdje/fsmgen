@@ -25,11 +25,19 @@ sub new ($class, %args) {
 
 sub extensions ($self) { return $self->{extensions} }
 
-sub after_generate_result ($self, $context) {
+sub dispatch_hook ($self, $hook_name, $context) {
     for my $extension (@{$self->extensions}) {
-        next unless $extension->can('after_generate_result');
-        $extension->after_generate_result($context);
+        next unless $extension->can($hook_name);
+        $extension->$hook_name($context);
     }
+}
+
+sub after_parse_source ($self, $context) {
+    return $self->dispatch_hook('after_parse_source', $context);
+}
+
+sub after_generate_result ($self, $context) {
+    return $self->dispatch_hook('after_generate_result', $context);
 }
 
 1;

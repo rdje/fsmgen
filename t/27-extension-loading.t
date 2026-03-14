@@ -70,10 +70,20 @@ is(
     'FSM::TestExtension::Marker',
     'pipeline can instantiate extension modules through the typed loader',
 );
+is(
+    $result->{extension_marker}{parsed_kind},
+    'fsm',
+    'module-loaded extension also sees the typed parse-source hook before result generation',
+);
 like(
     $result->{hdl_code},
     qr{// extension marker: FSM::TestExtension::Marker}s,
     'loaded extension module can mutate the returned HDL result',
+);
+like(
+    $result->{hdl_code},
+    qr{// parsed source kind: fsm}s,
+    'module-loaded extension can reflect parse-hook state into the generated HDL result',
 );
 
 my ($cli_success, $cli_error_message, $cli_full_buf, $cli_stdout_buf, $cli_stderr_buf) = run(
@@ -96,6 +106,11 @@ like(
     $cli_hdl,
     qr{// extension marker: FSM::TestExtension::Marker}s,
     'CLI-loaded extension module can affect generated HDL output',
+);
+like(
+    $cli_hdl,
+    qr{// parsed source kind: fsm}s,
+    'CLI-loaded extension module can also reflect parse-hook state into output',
 );
 
 my ($missing_success, $missing_error_message, $missing_full_buf, $missing_stdout_buf, $missing_stderr_buf) = run(

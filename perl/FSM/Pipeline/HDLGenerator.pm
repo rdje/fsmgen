@@ -108,9 +108,11 @@ sub generate_hdl_from_file ($self, $fsm_file) {
     my $source_info = $self->classify_source_ast($raw_ast);
     if ($source_info && $source_info->{kind} eq 'composition') {
         $source_info->{composition_spec} = $self->parse_composition_source($raw_ast);
+        $self->dispatch_after_parse_source($fsm_file, $raw_ast, $source_info);
         my $result = $self->generate_composition_from_source($source_info, $raw_ast, $fsm_file);
         return $self->finalize_generation_result($fsm_file, $source_info, $result);
     }
+    $self->dispatch_after_parse_source($fsm_file, $raw_ast, $source_info);
     
     # Step 2: Convert raw AST to semantic FSM module
     my $fsm_module = $self->create_fsm_module($raw_ast);
@@ -238,8 +240,23 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
     };
 }
 
+sub dispatch_after_parse_source ($self, $fsm_file, $raw_ast, $source_info) {
+    my $context = FSM::Extension::Context->new(
+        stage => 'after_parse_source',
+        pipeline => $self,
+        source_path => $fsm_file,
+        target_language => $self->{target_language},
+        source_info => $source_info,
+        raw_ast => $raw_ast,
+    );
+
+    $self->{extension_registry}->after_parse_source($context);
+    return $context;
+}
+
 sub finalize_generation_result ($self, $fsm_file, $source_info, $result) {
     my $context = FSM::Extension::Context->new(
+        stage => 'after_generate_result',
         pipeline => $self,
         source_path => $fsm_file,
         target_language => $self->{target_language},

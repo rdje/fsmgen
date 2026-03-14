@@ -1,5 +1,29 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R7` closed with a second deliberate typed hook
+- Finished the bounded `R7` lane by adding one more real hook boundary instead of continuing to widen loading or parameter plumbing.
+- Rationale:
+  - the loading story was already explicit and strong enough,
+  - the remaining honest gap in `R7` was the hook set itself: one post-generation hook alone still made the replacement mechanism feel too narrow and too end-loaded,
+  - the right second hook is at the parsed-source frontier because it is early, stable, and still avoids broad mid-pipeline mutation.
+- Structural outcome:
+  - `FSM::Extension::Context` now carries hook-stage metadata plus parsed AST data where appropriate,
+  - the shipped hook set is now:
+    - `after_parse_source($context)`,
+    - `after_generate_result($context)`,
+  - `HDLGenerator` now dispatches the source-frontier hook after source classification and after composition IR parsing when the source is a `?top:name` input,
+  - the extension tests now lock both hook stages across the existing loading paths.
+- Boundary decision:
+  - this closes `R7` because the active architecture now has:
+    - a typed registry,
+    - typed hook contexts,
+    - an explicit loading stack,
+    - and a small deliberate hook set at two real lifecycle boundaries,
+  - richer parameters, more hooks, or future convenience features can happen later, but they are no longer blockers on replacing `.plg` / `PPlugin` as the architectural extension story.
+- Roadmap consequence:
+  - `R7` can now move from `mostly done` to `done`,
+  - there is no active roadmap lane left in the current `R0`..`R7` plan,
+  - future work should be introduced as a new explicit workstream rather than stretching the closed current roadmap.
 ## 2026-03-14: `R7` explicit loading stack now includes config files
 - Continued `R7` by closing the remaining loading-surface gap after object injection and explicit module-name loading.
 - Rationale:

@@ -50,11 +50,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- `R7` Extension/plugin redesign replacing legacy `.plg` / `PPlugin`
+- `none` All currently defined roadmap workstreams are complete.
 - Current next decision point:
-  - Decide the next deliberate `R7` boundary after the shipped explicit loading stack:
-    - choose the next typed hook set without reopening string-dispatch `.plg` behavior,
-    - and decide later whether extensions need richer constructor/config parameter support.
+  - No blocking roadmap lane remains.
+  - If future work is intentionally added, open a new explicit workstream instead of stretching the closed `R0`..`R7` plan.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -219,7 +218,7 @@ Deliverables:
 - Define the replacement typed hook/extension mechanism for the active architecture.
 - Implement that mechanism in the live toolchain.
 - Migrate the project off legacy `.plg` / `PPlugin.pm` as the architectural extension path, with tests/docs for the replacement.
-Status: `mostly done`
+Status: `done`
 Done:
 - Roadmap direction is explicit: legacy `.plg` / `PPlugin.pm` support is to be retired, not preserved as the future architecture.
 - [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) now defines the first modern replacement seam and states its deliberate non-goals.
@@ -235,12 +234,15 @@ Done:
   - programmatically through `extension_config_files => [ ... ]`,
   - and from the CLI through repeated `--extension-config <file>` flags,
   - with the current config contract being one explicit `module Module::Name` declaration per active line plus optional blank/comment lines.
-- [t/26-extension-mechanism.t](/Users/richarddje/Documents/github/fsmgen/t/26-extension-mechanism.t) now locks the first active extension seam, including registry type validation and hook dispatch across both supported source kinds.
+- The shipped typed hook set now includes:
+  - `after_parse_source($context)` at the parsed-source frontier,
+  - and `after_generate_result($context)` at the returned-result frontier.
+- [t/26-extension-mechanism.t](/Users/richarddje/Documents/github/fsmgen/t/26-extension-mechanism.t) now locks both shipped hook stages across FSM and composition generation.
 - [t/27-extension-loading.t](/Users/richarddje/Documents/github/fsmgen/t/27-extension-loading.t) now locks explicit module-name loading through the loader, pipeline, and CLI, including targeted missing-module diagnostics.
 - [t/28-extension-config-loading.t](/Users/richarddje/Documents/github/fsmgen/t/28-extension-config-loading.t) now locks explicit config-file loading through the loader, pipeline, and CLI, including malformed-config diagnostics with file/line reporting.
 Left:
-- Add the next deliberate typed hook set only where the active architecture has a real stable boundary.
-- Decide later whether the explicit loading story needs richer constructor/config parameter support beyond object/module/config selection.
-- Continue migrating project guidance and future extension use away from `.plg` / `PPlugin.pm` as the architectural story.
+- No dedicated `R7` roadmap slices remain.
+- Future extension growth should reuse this typed boundary deliberately rather than reopening `.plg` / `PPlugin.pm`.
+- Richer constructor/config parameters or additional hooks are future enhancements, not blockers on the closed roadmap lane.
 Exit criteria:
 - Legacy plugin support is no longer the architectural extension path and the replacement mechanism is active.

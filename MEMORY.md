@@ -20,6 +20,27 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: `R7` closed with the shipped source-frontier hook
+- Current worktree finishes the bounded `R7` lane by adding the next small typed hook boundary instead of growing the loading surface further.
+- Scope of this slice:
+  - extended [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm) so hook contexts now carry `stage` and `raw_ast` where appropriate,
+  - extended [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm) so the shipped typed hook set now includes `after_parse_source($context)` in addition to `after_generate_result($context)`,
+  - updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the new hook runs after parsing/classification and after composition IR parsing for top-level composition sources,
+  - updated [t/26-extension-mechanism.t](/Users/richarddje/Documents/github/fsmgen/t/26-extension-mechanism.t), [t/lib/FSM/TestExtension/Marker.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/TestExtension/Marker.pm), and [t/27-extension-loading.t](/Users/richarddje/Documents/github/fsmgen/t/27-extension-loading.t) to lock the new hook boundary across direct, module-loaded, and CLI-loaded extension paths.
+- Roadmap board update:
+  - [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) now moves `R7` from `mostly done` to `done`,
+  - the current active lane is now `none` because all currently defined roadmap workstreams `R0` through `R7` are complete,
+  - any future continuation should open a new explicit workstream instead of stretching the closed current roadmap.
+- Validation is green for this slice:
+  - `perl -I perl -I t/lib -c perl/FSM/Extension/Context.pm`
+  - `perl -I perl -I t/lib -c perl/FSM/Extension/Registry.pm`
+  - `perl -I perl -I t/lib -c perl/FSM/Pipeline/HDLGenerator.pm`
+  - `perl -I perl -I t/lib -c t/26-extension-mechanism.t`
+  - `prove -I perl -I t/lib t/26-extension-mechanism.t t/27-extension-loading.t t/28-extension-config-loading.t`
+  - `git diff --check`
+- Immediate next direction after commit:
+  - no blocking roadmap lane remains,
+  - future work should start from a newly defined workstream if the project adds another objective beyond the closed `R0`..`R7` plan.
 ## 2026-03-14: `R7` shipped explicit extension-config loading
 - Current worktree continues `R7` by adding the explicit config-file layer that was still left open after the object/module loading slices.
 - Scope of this slice:

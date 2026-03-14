@@ -23,12 +23,23 @@ use FSM::Extension::Registry;
 
     sub new ($class) {
         return bless {
-            calls => [],
+            parse_calls => [],
+            result_calls => [],
         }, $class;
     }
 
+    sub after_parse_source ($self, $context) {
+        push @{$self->{parse_calls}}, {
+            stage => $context->stage,
+            source_path => $context->source_path,
+            source_kind => $context->source_info->{kind},
+            has_raw_ast => ($context->raw_ast ? 1 : 0),
+        };
+    }
+
     sub after_generate_result ($self, $context) {
-        push @{$self->{calls}}, {
+        push @{$self->{result_calls}}, {
+            stage => $context->stage,
             source_path => $context->source_path,
             source_kind => $context->source_info->{kind},
             target_language => $context->target_language,
@@ -38,10 +49,12 @@ use FSM::Extension::Registry;
         $context->result->{extension_marker} = {
             source_kind => $context->source_info->{kind},
             target_language => $context->target_language,
+            saw_parse_hook => scalar(@{$self->{parse_calls}}),
         };
     }
 
-    sub calls ($self) { return $self->{calls} }
+    sub parse_calls ($self) { return $self->{parse_calls} }
+    sub result_calls ($self) { return $self->{result_calls} }
 }
 
 my $tempdir = tempdir(CLEANUP => 1);
@@ -102,16 +115,25 @@ my $pipeline = FSM::Pipeline::HDLGenerator->new(
 );
 
 my $fsm_result = $pipeline->generate_hdl_from_file($fsm_path);
+is($fsm_result->{extension_marker}{saw_parse_hook}, 1, 'parse-source hook runs before FSM result hook');
 is($fsm_result->{extension_marker}{source_kind}, 'fsm', 'typed extension hook runs for the FSM pipeline path');
 is($fsm_result->{extension_marker}{target_language}, 'systemverilog', 'typed extension hook sees target-language context');
 
 my $composition_result = $pipeline->generate_hdl_from_file($composition_path);
+is($composition_result->{extension_marker}{saw_parse_hook}, 2, 'parse-source hook also runs for the composition path');
 is($composition_result->{extension_marker}{source_kind}, 'composition', 'typed extension hook runs for the composition pipeline path');
 is($composition_result->{module_info}{module_name}, 'extension_comp_top', 'composition result still preserves generated top module information');
 
-is(scalar(@{$extension->calls}), 2, 'extension hook ran once per generation call');
-is($extension->calls->[0]{module_name}, 'extension_smoke', 'extension hook records FSM module information');
-is($extension->calls->[1]{module_name}, 'extension_comp_top', 'extension hook records composition module information');
+is(scalar(@{$extension->parse_calls}), 2, 'parse-source hook ran once per generation call');
+is($extension->parse_calls->[0]{stage}, 'after_parse_source', 'parse hook context carries its typed stage name');
+is($extension->parse_calls->[0]{source_kind}, 'fsm', 'parse hook sees FSM source classification');
+ok($extension->parse_calls->[0]{has_raw_ast}, 'parse hook receives raw parsed AST data');
+is($extension->parse_calls->[1]{source_kind}, 'composition', 'parse hook sees composition source classification');
+
+is(scalar(@{$extension->result_calls}), 2, 'result hook ran once per generation call');
+is($extension->result_calls->[0]{stage}, 'after_generate_result', 'result hook context carries its typed stage name');
+is($extension->result_calls->[0]{module_name}, 'extension_smoke', 'result hook records FSM module information');
+is($extension->result_calls->[1]{module_name}, 'extension_comp_top', 'result hook records composition module information');
 
 my $registry_error = eval {
     FSM::Extension::Registry->new(extensions => ['not_an_object']);

@@ -42,7 +42,9 @@ Current contract:
 - the CLI may load repeated `--extension-module Module::Name` entries explicitly from `@INC`,
 - the CLI may also load repeated `--extension-config <file>` entries explicitly,
 - each extension must be a normal blessed Perl object,
-- the only shipped hook today is `after_generate_result($context)`.
+- the shipped hook set today is:
+  - `after_parse_source($context)`
+  - `after_generate_result($context)`.
 
 ## Why this is the first slice
 The legacy plugin path was broad, implicit, and hard to reason about:
@@ -58,7 +60,16 @@ Instead it proves three narrower things:
 - extensions are explicit programmatic objects,
 - and one real hook runs in the active toolchain.
 
-## Shipped hook
+## Shipped hooks
+### `after_parse_source($context)`
+This hook runs after the source file has been parsed and classified, and after composition inputs have been parsed into typed composition IR.
+
+Current intent:
+- source inspection,
+- parse-frontier validation,
+- early telemetry,
+- or other explicit source-frontier behavior that does not require the old plugin model.
+
 ### `after_generate_result($context)`
 This hook runs after the pipeline has built the generation result and before the caller receives it.
 
@@ -70,6 +81,8 @@ Current intent:
 
 ## Hook context
 `$context` is a [FSM::Extension::Context](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm) object with:
+- `stage`
+  - current hook stage name such as `after_parse_source` or `after_generate_result`
 - `pipeline`
   - the active `FSM::Pipeline::HDLGenerator` instance
 - `source_path`
@@ -78,13 +91,15 @@ Current intent:
   - current target language for generation
 - `source_info`
   - classified source metadata (`fsm` or `composition`, etc.)
+- `raw_ast`
+  - parsed source AST when the hook runs at the parse frontier
 - `result`
   - the generation result hash returned by the pipeline
 
-The current hook is intentionally post-generation only.
-
 The shipped boundary is regression-locked in
-[t/26-extension-mechanism.t](/Users/richarddje/Documents/github/fsmgen/t/26-extension-mechanism.t).
+[t/26-extension-mechanism.t](/Users/richarddje/Documents/github/fsmgen/t/26-extension-mechanism.t),
+[t/27-extension-loading.t](/Users/richarddje/Documents/github/fsmgen/t/27-extension-loading.t),
+and [t/28-extension-config-loading.t](/Users/richarddje/Documents/github/fsmgen/t/28-extension-config-loading.t).
 
 ## Examples
 ### Example 1: annotate the returned result
@@ -134,7 +149,27 @@ This kind of extension is a good fit for:
 
 without reopening the legacy plugin-discovery model.
 
-### Example 3: explicit CLI loading
+### Example 3: inspect the parsed source frontier
+```perl
+package My::SourceInspector;
+
+sub new { bless { seen => [] }, shift }
+
+sub after_parse_source {
+    my ($self, $context) = @_;
+    push @{$self->{seen}}, {
+        stage => $context->stage,
+        source_kind => $context->source_info->{kind},
+    };
+}
+```
+
+This kind of extension is a good fit for:
+- early validation,
+- source-kind telemetry,
+- or inspection of raw parsed input before semantic lowering.
+
+### Example 4: explicit CLI loading
 ```bash
 PERL5LIB=./my_extensions ./bin/fsmgen \
   --extension-module My::Telemetry \
@@ -147,7 +182,7 @@ This is still explicit and typed:
 - the module name is provided directly,
 - and the loader instantiates a normal Perl object through `new()`.
 
-### Example 4: explicit config-file loading
+### Example 5: explicit config-file loading
 Extension config file:
 ```text
 # one explicit module declaration per line
@@ -172,13 +207,13 @@ Current config-file rules:
 The current shipped mechanism does not yet provide:
 - `.plg` compatibility,
 - auto-discovery of extension files,
-- pre-parse or mid-pipeline mutation hooks,
+- broad mid-pipeline mutation hooks,
 - backend text-rewrite hooks,
 - or composition/plugin-era architecture phases such as `declarch`, `beginarch`, or `endarch`.
 
 Those are future `R7` design decisions, not part of the first shipped boundary.
 
-## Next likely R7 slices
-- Define the next typed hook set deliberately instead of reopening string-based hook names.
-- Decide whether explicit loading should remain at object/module/config scope or gain richer constructor/config parameter support later.
-- Migrate active architecture users away from `.plg` / `PPlugin` as the extension story.
+## Future extension growth
+- Extend the typed hook set only if a future active-architecture seam is stable enough to deserve standardization.
+- Decide later whether explicit loading should remain at object/module/config scope or gain richer constructor/config parameter support.
+- Continue reusing this typed boundary instead of reopening `.plg` / `PPlugin` as the architectural extension story.

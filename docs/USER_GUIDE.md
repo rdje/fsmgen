@@ -317,9 +317,12 @@ For CLI loading, the module must already be available in Perl's `@INC`, for exam
 Config-file loading is also explicit: the config file lists module names, and those modules must also already be available in `@INC`.
 
 Current shipped hook:
+- `after_parse_source($context)`
 - `after_generate_result($context)`
 
-This hook runs after generation has produced the normal result hash and before that result is returned to the caller.
+What they do:
+- `after_parse_source($context)` runs after parsing/classification and lets an extension inspect the source frontier before semantic lowering.
+- `after_generate_result($context)` runs after generation has produced the normal result hash and before that result is returned to the caller.
 
 Minimal example: add metadata to the returned result
 ```perl
@@ -350,6 +353,27 @@ my $result = $pipeline->generate_hdl_from_file('fsm/trial_0.fsm');
 This is useful when:
 - you want to attach extra metadata for downstream tooling,
 - but you do not want to change the core generator contract yet.
+
+Early-source example:
+```perl
+{
+    package My::SourceInspector;
+
+    sub new { bless { seen => [] }, shift }
+
+    sub after_parse_source {
+        my ($self, $context) = @_;
+        push @{$self->{seen}}, {
+            source_kind => $context->source_info->{kind},
+            stage => $context->stage,
+        };
+    }
+}
+```
+
+This is useful when:
+- you want early validation or telemetry at the parsed-source boundary,
+- without adding broad mid-pipeline hooks.
 
 CLI version of the same idea:
 ```bash
@@ -407,9 +431,10 @@ This is useful when:
 
 Practical rule:
 - if you need explicit post-generation behavior, a typed extension is the current supported seam,
+- if you need explicit parsed-source inspection, use `after_parse_source($context)`,
 - if you need explicit CLI loading, use repeated `--extension-module Module::Name` with modules already on `@INC`,
 - if you want to keep module lists out of the command line, use repeated `--extension-config <file>` with lines of the form `module Module::Name`,
-- if you need `.plg` discovery, auto-discovery, richer extension parameters, or mid-pipeline mutation hooks, that is not part of the shipped boundary yet.
+- if you need `.plg` discovery, auto-discovery, richer extension parameters, or broad mid-pipeline mutation hooks, that is not part of the shipped boundary.
 
 See [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) for the architecture note and exact current contract.
 

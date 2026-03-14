@@ -1,6 +1,32 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### `R7` closed with the shipped source-frontier hook
+- Extended [perl/FSM/Extension/Context.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Context.pm) so hook contexts now carry:
+  - `stage`,
+  - and `raw_ast` when the hook runs at the parsed-source frontier.
+- Extended [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm) so the shipped typed hook set now includes:
+  - `after_parse_source($context)`,
+  - and `after_generate_result($context)`.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `after_parse_source($context)` runs:
+  - after source parsing and classification for normal FSM inputs,
+  - and after source parsing/classification plus typed composition-IR parsing for top-level composition inputs.
+- Updated [t/26-extension-mechanism.t](/Users/richarddje/Documents/github/fsmgen/t/26-extension-mechanism.t), [t/lib/FSM/TestExtension/Marker.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/TestExtension/Marker.pm), and [t/27-extension-loading.t](/Users/richarddje/Documents/github/fsmgen/t/27-extension-loading.t) so the new hook boundary is now locked across:
+  - direct object injection,
+  - explicit module-name loading,
+  - and CLI loading.
+- Updated [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the now-complete `R7` boundary is described truthfully.
+- Live roadmap status change:
+  - `R7` moved from `mostly done` to `done`,
+  - the current active lane moved from `R7` to `none`,
+  - all currently defined roadmap workstreams `R0` through `R7` are now complete.
+- Validation:
+  - `perl -I perl -I t/lib -c perl/FSM/Extension/Context.pm` (pass)
+  - `perl -I perl -I t/lib -c perl/FSM/Extension/Registry.pm` (pass)
+  - `perl -I perl -I t/lib -c perl/FSM/Pipeline/HDLGenerator.pm` (pass)
+  - `perl -I perl -I t/lib -c t/26-extension-mechanism.t` (pass)
+  - `prove -I perl -I t/lib t/26-extension-mechanism.t t/27-extension-loading.t t/28-extension-config-loading.t` (pass)
+  - `git diff --check` (pass)
 ### `R7` shipped explicit extension-config loading and moved to mostly-done
 - Extended [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) so it can parse explicit extension-config files, with the current narrow config contract being:
   - blank lines allowed,
