@@ -18,6 +18,23 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-14: Roadmap phase transition (`R2` done, active lane -> `R3`)
+- Current worktree is a roadmap-state update driven by an ownership-boundary audit, not by another code move.
+- Audit result:
+  - `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` no longer directly owns `assignment_analysis` / `lhs_assignments` mutation or analysis,
+  - the remaining backend pocket is runtime AST recovery/filtering, dependency rescue/topological ordering, and emitted-signal rendering flow,
+  - that matches the `R2` deliverables currently stated in `ROADMAP_STATUS.md`.
+- Roadmap transition recorded in `ROADMAP_STATUS.md`:
+  - `R2` moved from `in progress` to `done`,
+  - the current active lane switched to `R3` (`AST/CoreAST-first runtime convergence`),
+  - `R3` next decision point is now the remaining runtime-AST-miss / compatibility-parse fallback residue in `Backend::SystemVerilog`.
+- Validation is green for this slice:
+  - `git diff --check`
+  - `rg -n "resolve_intermediate_signal_runtime_ast|should_filter_ast_based|should_filter_runtime_ast_miss|topologically_sort_signals|generate_consolidated_intermediate_signals" perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+  - backend audit confirms no remaining `assignment_analysis` / `lhs_assignments` matches in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
+- Immediate next direction after commit:
+  - follow `R3` and re-audit the remaining compatibility/runtime-AST-miss fallback paths,
+  - remove them where they are no longer justified, or keep them explicitly as deliberate residue if they still serve a necessary boundary.
 ## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph live-usage evidence ownership)
 - Current worktree continues the `R2` live ownership lane and moves intermediate-signal live-usage evidence derivation under `EnableGraph`.
 - Scope of this slice:

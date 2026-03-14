@@ -41,9 +41,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- `R2` Live ownership migration from `FlattenedDT` backend/orchestrator into `EnableGraph`
+- `R3` AST/CoreAST-first runtime convergence
 - Current next decision point:
-  - Re-audit the remaining backend filtering decision logic around consolidated intermediate-signal emission (`should_filter_ast_based`, runtime-AST-miss filtering, dependency rescue/topo-sort flow) to confirm it is truly backend-local.
+  - Re-audit the remaining runtime-AST-miss and compatibility parse fallbacks in `Backend::SystemVerilog` to decide which residue can be removed versus which remains a deliberate compatibility boundary.
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
@@ -80,7 +80,7 @@ Deliverables:
 - `EnableGraph` owns live synthesis-domain capture, enable analysis, declaration planning, and other owner-side mutation of `assignment_analysis` / captured AST structures.
 - `Backend::SystemVerilog` and `Orchestrator` retain only traversal, backend-local factorization, runtime AST recovery/filtering, and HDL rendering/orchestration responsibilities.
 - Architecture tests lock the live owner boundary for moved entrypoints so ownership regressions are visible.
-Status: `in progress`
+Status: `done`
 Done:
 - Per-run generation reset and state/DT enable-registry seeding cleanup.
 - Capture registry, capture shape, capture metadata, capture entrypoints, and test-condition AST ownership.
@@ -90,12 +90,12 @@ Done:
 - First-pass and second-pass factorization AST feeding, plus second-pass intermediate-signal eligibility checks.
 - First-pass and second-pass substitution synchronization, plus the unary-negation debug scan over owner-side AST structures.
 - Live-usage evidence and signal-reference inspection for intermediate-signal retention.
+- Backend audit now shows no remaining direct `assignment_analysis` / `lhs_assignments` ownership residue in `Backend::SystemVerilog`; the remaining backend pocket is runtime AST recovery/filtering plus emitted-signal ordering.
 Left:
-- Audit the remaining backend filtering decision logic that still consumes live-usage metadata during consolidated intermediate-signal emission.
-- Move only the pieces that are truly synthesis/analysis ownership, not backend-local factorization or rendering.
-- Declare this lane complete once the remaining backend code is clearly backend-local by responsibility.
+- No dedicated `R2` ownership slices remain.
+- Reopen only if a future audit finds synthesis/analysis ownership drifting back into `Backend::SystemVerilog` or `Orchestrator`.
 Exit criteria:
-- The active path no longer has ownership confusion around synthesis analysis versus backend rendering/factorization.
+- Met: the active path no longer has ownership confusion around synthesis analysis versus backend rendering/factorization.
 
 ### R3. AST/CoreAST-first runtime convergence
 Deliverables:

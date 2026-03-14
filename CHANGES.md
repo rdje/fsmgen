@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### Roadmap phase transition (`R2` done, active lane -> `R3`)
+- Audited the remaining `FlattenedDT` backend/orchestrator ownership boundary against the explicit `R2` deliverables in `ROADMAP_STATUS.md`.
+- Audit result:
+  - `Backend::SystemVerilog` no longer directly owns `assignment_analysis` / `lhs_assignments` mutation or owner-side analysis,
+  - the remaining backend pocket is runtime AST recovery/filtering, dependency rescue/topological ordering, and emitted-signal rendering flow,
+  - that matches the intended post-migration `R2` boundary.
+- Updated `ROADMAP_STATUS.md` to record the live status change:
+  - `R2` moved from `in progress` to `done`,
+  - current active lane changed from `R2` to `R3`,
+  - `R3` next decision point is now the remaining runtime-AST-miss / compatibility-parse fallback residue in `Backend::SystemVerilog`.
+- Validation:
+  - `git diff --check` (pass)
+  - `rg -n "resolve_intermediate_signal_runtime_ast|should_filter_ast_based|should_filter_runtime_ast_miss|topologically_sort_signals|generate_consolidated_intermediate_signals" perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` (pass)
+  - backend audit confirms no remaining `assignment_analysis` / `lhs_assignments` matches in `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm`
 ### FlattenedDT live ownership (EnableGraph live-usage evidence ownership)
 - Moved intermediate-signal live-usage evidence helpers off `perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm` and under `perl/FSM/Synthesis/EnableGraph.pm`.
 - Added `ast_contains_signal(...)` to `EnableGraph`, so owner-side AST signal-reference inspection now lives with the owner of the enable/capture structures being inspected.

@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: `R2` completion audit and active-lane pivot to `R3`
+- Closed the live ownership-migration phase after auditing the remaining backend surface against the explicit `R2` deliverables.
+- Rationale:
+  - once the roadmap board gained explicit deliverables, `R2` could no longer stay `in progress` merely because the backend still had code in the same area,
+  - the correct question became whether any remaining backend code still represented synthesis/analysis ownership residue,
+  - the audit answer was no: the remaining backend pocket is runtime AST recovery/filtering and emitted-signal ordering/rendering, which is exactly the retained backend responsibility described by the `R2` deliverables.
+- Structural outcome:
+  - `ROADMAP_STATUS.md` now marks `R2` as `done`,
+  - the current active lane now switches to `R3` (`AST/CoreAST-first runtime convergence`),
+  - the next roadmap focus is the remaining compatibility/runtime-AST-miss fallback residue inside `Backend::SystemVerilog`, which belongs under `R3`, not `R2`.
+- Safety/compatibility:
+  - this is a roadmap-state update only; no runtime code changed in this slice,
+  - the change is evidence-based: it follows an audit of what the backend still does, not optimism about progress.
+- Verification:
+  - `git diff --check` passes,
+  - backend audit confirms no remaining direct `assignment_analysis` / `lhs_assignments` ownership residue in `Backend::SystemVerilog`,
+  - targeted `rg` over the backend confirms the remaining surface is the runtime-AST recovery/filtering and emission-ordering pocket.
+- Next likely slices:
+  - follow `R3` and re-audit the remaining compatibility parse / runtime-AST-miss fallback paths,
+  - remove them where they are no longer justified, or keep them explicitly as deliberate compatibility residue.
 ## 2026-03-14: EnableGraph live-usage evidence ownership
 - Continued the live `R2` ownership convergence by moving intermediate-signal live-usage evidence derivation under `EnableGraph`.
 - Rationale:
