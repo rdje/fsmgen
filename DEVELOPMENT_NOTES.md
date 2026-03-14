@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-14: Roadmap deliverables hardening
+- Tightened the live roadmap board so each `Rx` phase now has explicit deliverables.
+- Rationale:
+  - a status label without explicit deliverables is still too interpretive for a project of this size,
+  - the user explicitly asked what `done` means, which means the board needed to define completion in terms of concrete outputs rather than narrative intent,
+  - the roadmap board is the correct place to encode that because it is the canonical current-state source.
+- Structural outcome:
+  - every workstream in `ROADMAP_STATUS.md` must now state `Deliverables`, `Status`, `Done`, `Left`, and `Exit criteria`,
+  - the live status scale is now deliverable-based: `done` means all listed deliverables are complete and the exit criteria are met,
+  - the workflow docs now treat deliverable changes as board-refresh events, just like status/remaining-work/active-lane changes.
+- Safety/compatibility:
+  - this is a documentation/process clarification slice only; no runtime behavior changed,
+  - status answers can now be justified directly from explicit deliverables instead of reconstructed from narrative history.
+- Verification:
+  - `git diff --check` passes,
+  - `rg -n "^Deliverables:|roadmap deliverables|All listed `Deliverables`" ROADMAP_STATUS.md MEMORY.md COMMIT.md .agents/workflows/commit.md CHANGES.md DEVELOPMENT_NOTES.md` confirms the board/workflow wiring.
+- Next likely slices:
+  - keep deliverables current when roadmap interpretation changes,
+  - when a phase status changes, explain that change against the listed deliverables rather than only repeating the status label.
 ## 2026-03-14: Live status visibility hardening
 - Tightened the roadmap-status process so status changes are not only recorded but also surfaced immediately in the task close-out.
 - Rationale:

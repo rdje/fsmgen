@@ -5,6 +5,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Update rule
 - Update this file before every commit if the completed task changes:
   - any workstream status,
+  - any workstream deliverables,
   - the `Done` summary,
   - the `Left` summary,
   - or the current active lane.
@@ -17,19 +18,26 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - `mostly done`
   - `in progress`
   - `not started`
+- Every workstream must state:
+  - `Deliverables`: the concrete outputs required for the phase to count as complete,
+  - `Status`: current achievement level against those deliverables,
+  - `Done`: what is already landed,
+  - `Left`: what still remains,
+  - `Exit criteria`: the completion boundary.
 
 ## Status scale
 - `done`
-  - Roadmap intent for this workstream is satisfied.
+  - All listed `Deliverables` are complete.
+  - `Exit criteria` are met.
   - Only incidental bugfixes or unrelated future reuse may remain.
 - `mostly done`
-  - Core architecture is landed.
+  - Most listed `Deliverables` are complete.
   - Only a bounded finish-up lane remains.
 - `in progress`
-  - Active implementation is underway.
+  - Some listed `Deliverables` are complete.
   - Multiple meaningful slices still remain.
 - `not started`
-  - The target architecture/work has not been implemented yet.
+  - The listed `Deliverables` are not yet implemented.
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
@@ -39,6 +47,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Workstreams
 ### R0. Live roadmap tracking infrastructure
+Deliverables:
+- One canonical tracked board that states live workstream status and the current active lane.
+- A fixed four-level status taxonomy used consistently across the project.
+- Workflow docs that require refreshing the board during normal task completion and status transitions.
 Status: `done`
 Done:
 - `ROADMAP_STATUS.md` is the canonical live status board.
@@ -49,6 +61,10 @@ Exit criteria:
 - Already met; this is now an ongoing maintenance obligation.
 
 ### R1. FlattenedDT dead-surface retirement
+Deliverables:
+- Remove dead facade/helper surface from `perl/FSM/HDL/FlattenedDT.pm` and adjacent dead owner-side helper pockets.
+- Add regression protection so retired dead surface does not silently reappear.
+- Explicitly close the cleanup-only lane unless a future audit finds genuinely dead supported surface.
 Status: `done`
 Done:
 - The cleanup-only lane retired the large dead facade/helper pockets from `perl/FSM/HDL/FlattenedDT.pm` and adjacent dead owner-side pockets.
@@ -60,6 +76,10 @@ Exit criteria:
 - Already met; the dedicated cleanup-only lane is considered exhausted.
 
 ### R2. Live ownership migration from `Orchestrator` / backend to `EnableGraph`
+Deliverables:
+- `EnableGraph` owns live synthesis-domain capture, enable analysis, declaration planning, and other owner-side mutation of `assignment_analysis` / captured AST structures.
+- `Backend::SystemVerilog` and `Orchestrator` retain only traversal, backend-local factorization, runtime AST recovery/filtering, and HDL rendering/orchestration responsibilities.
+- Architecture tests lock the live owner boundary for moved entrypoints so ownership regressions are visible.
 Status: `in progress`
 Done:
 - Per-run generation reset and state/DT enable-registry seeding cleanup.
@@ -77,6 +97,10 @@ Exit criteria:
 - The active path no longer has ownership confusion around synthesis analysis versus backend rendering/factorization.
 
 ### R3. AST/CoreAST-first runtime convergence
+Deliverables:
+- Live top-level enable/intermediate registries are AST/CoreAST-backed by default.
+- Runtime dependency recovery, width recovery, and driving-AST storage prefer native AST/CoreAST sources over string reconstruction.
+- Any remaining compatibility fallbacks are narrow, explicit, and justified instead of being the default path.
 Status: `mostly done`
 Done:
 - Top-level enable registries are AST-backed.
@@ -89,6 +113,10 @@ Exit criteria:
 - Live intermediate-signal/runtime behavior is fully native AST/CoreAST-first, with only deliberate and well-justified compatibility residue if any.
 
 ### R4. Assignment semantics and capture contract modernization
+Deliverables:
+- Parsed/CoreAST assignment nodes expose normalized assignment intent, provenance, output-exposure, and pulse metadata.
+- Live capture preserves that metadata into runtime capture/analysis structures without lossy translation.
+- Regression tests cover representative assignment families and their emitted HDL consequences.
 Status: `done`
 Done:
 - Assignment intent metadata, provenance, and output exposure are explicit in the parsed/CoreAST model.
@@ -99,6 +127,10 @@ Exit criteria:
 - Already met for the current roadmap intent.
 
 ### R5. Generator reuse / per-run state safety
+Deliverables:
+- One generator instance can be reused across multiple generations without leaking prior-run registries or scratch state.
+- Per-run state is reset deterministically before generation begins.
+- Regression coverage proves reuse safety on live generation paths.
 Status: `done`
 Done:
 - Per-run generation state is reset explicitly before each generation.
@@ -109,6 +141,10 @@ Exit criteria:
 - Already met for the current roadmap intent.
 
 ### R6. Composition-oriented language / architecture work
+Deliverables:
+- Define concrete composition-oriented language/architecture scope for the active tool, not just terminology.
+- Implement composition capabilities in the active `bin/fsmgen` architecture.
+- Add acceptance tests and user/developer documentation for the composition model.
 Status: `not started`
 Done:
 - Terminology and sequencing were clarified in the docs.
@@ -119,6 +155,10 @@ Exit criteria:
 - Composition capabilities exist in the active architecture, not just in notes/terminology.
 
 ### R7. Extension/plugin redesign replacing legacy `.plg` / `PPlugin`
+Deliverables:
+- Define the replacement typed hook/extension mechanism for the active architecture.
+- Implement that mechanism in the live toolchain.
+- Migrate the project off legacy `.plg` / `PPlugin.pm` as the architectural extension path, with tests/docs for the replacement.
 Status: `not started`
 Done:
 - Roadmap direction is explicit: legacy `.plg` / `PPlugin.pm` support is to be retired, not preserved as the future architecture.

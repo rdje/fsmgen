@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-14
+### Roadmap deliverables hardening
+- Tightened `ROADMAP_STATUS.md` so every `R0`..`R7` workstream now carries explicit deliverables, not just status labels and narrative summaries.
+- Updated the board structure so each workstream must state:
+  - `Deliverables`
+  - `Status`
+  - `Done`
+  - `Left`
+  - `Exit criteria`
+- Re-defined the status scale on the live board so `done` now means all listed deliverables are complete and the exit criteria are met.
+- Updated `MEMORY.md`, `COMMIT.md`, and `.agents/workflows/commit.md` so roadmap-board refreshes now also cover deliverable changes, not just status/remaining-work/active-lane changes.
+- Validation:
+  - `git diff --check` (pass)
+  - `rg -n "^Deliverables:|roadmap deliverables|All listed `Deliverables`" ROADMAP_STATUS.md MEMORY.md COMMIT.md .agents/workflows/commit.md CHANGES.md DEVELOPMENT_NOTES.md` (pass)
 ### Live status visibility hardening
 - Tightened the roadmap workflow so live-status changes are now both persistent and visible in the task close-out.
 - Updated `ROADMAP_STATUS.md` so any workstream-status change or active-lane change now requires:

@@ -8,7 +8,7 @@ This is the live continuity document for fast session recovery after crashes, re
 ## Non-negotiable workflow (user requirement)
 After each completed task, always do this in order:
 1. Update `MEMORY.md` with new state and next actionable direction.
-2. Update `ROADMAP_STATUS.md` if the completed task changes roadmap status, remaining work, or the current active lane.
+2. Update `ROADMAP_STATUS.md` if the completed task changes roadmap status, roadmap deliverables, remaining work, or the current active lane.
 3. If live status changed, log that status change in `CHANGES.md`.
 4. Update other live docs as needed (`DEVELOPMENT_NOTES.md`, and any user-facing docs impacted by the change).
 5. When live status changed, display the current live status snapshot in the user-facing close-out.
@@ -30,6 +30,18 @@ After each completed task, always do this in order:
 - Immediate next direction after commit:
   - whenever a workstream status or active lane changes, refresh `ROADMAP_STATUS.md`, record the transition in `CHANGES.md`, and show the current live snapshot in the close-out,
   - continue using `ROADMAP_STATUS.md` as the canonical current-state board and `CHANGES.md` as the historical log of status transitions.
+## 2026-03-14: Roadmap deliverables hardening
+- Current worktree tightens the roadmap board so each `Rx` phase has explicit deliverables, not just status labels.
+- Scope of this slice:
+  - `ROADMAP_STATUS.md` now requires each workstream to state `Deliverables`, `Status`, `Done`, `Left`, and `Exit criteria`,
+  - the status-scale definitions are now tied directly to deliverable completion, so `done` means all listed deliverables are complete and the exit criteria are met,
+  - each current `R0`..`R7` workstream now has concrete deliverables written out in the board itself.
+- Validation is green for this slice:
+  - `git diff --check`
+  - `rg -n "^Deliverables:|roadmap deliverables|All listed `Deliverables`" ROADMAP_STATUS.md MEMORY.md COMMIT.md .agents/workflows/commit.md CHANGES.md DEVELOPMENT_NOTES.md`
+- Immediate next direction after commit:
+  - keep workstream deliverables explicit and current whenever the roadmap interpretation changes,
+  - use those deliverables, not narrative intuition, when deciding whether a phase is `done`, `mostly done`, `in progress`, or `not started`.
 ## 2026-03-14: FlattenedDT live ownership micro-slice (EnableGraph substitution synchronization ownership)
 - Current worktree continues the `R2` live ownership lane and moves substitution-era AST rewrite/debug passes under `EnableGraph`.
 - Scope of this slice:

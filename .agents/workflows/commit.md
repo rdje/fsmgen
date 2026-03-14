@@ -6,7 +6,8 @@ description: Commits code using the user-defined commit workflow, generating det
 This workflow enforces rigorous documentation before performing a Git commit.
 
 1. Refresh `MEMORY.md` first with the completed task state and immediate next direction.
-2. Refresh `ROADMAP_STATUS.md` before the commit if the task changed roadmap status, remaining work, or the current active lane.
+2. Refresh `ROADMAP_STATUS.md` before the commit if the task changed roadmap status, deliverables, remaining work, or the current active lane.
+   Keep explicit `Deliverables`, `Status`, `Done`, `Left`, and `Exit criteria` for every workstream.
 3. Append detailed technical change history to `CHANGES.md`, and explicitly log any live-status change there when one occurred.
 4. Append design constraints, context, decisions, and architectural choices to `DEVELOPMENT_NOTES.md`.
 // turbo
