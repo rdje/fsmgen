@@ -7,6 +7,8 @@ This is the live continuity document for fast session recovery after crashes, re
   - some child outputs remain directly child-owned,
   - only outputs assigned in at least two child FSMs are candidates to be lifted into one shared datapath block instantiated by the generated top,
   - outputs assigned in only one child FSM are not shared and stay directly child-owned,
+  - outputs from child FSMs or the shared datapath block are top-level outputs by default,
+  - peer-read registered outputs become top-internal by default unless the user explicitly asks to re-export them,
   - per-child drive-intent enables should be surfaced deterministically (for example `A_P_Q_en`) and aggregated in the shared block/top,
   - lifted registered outputs may loop back into child FSM inputs,
   - and combinational outputs must not become peer-FSM read sources.

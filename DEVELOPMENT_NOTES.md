@@ -4,7 +4,7 @@ This document captures engineering rationale, design constraints, and working de
 - Captured a concrete future `R11` composition direction instead of leaving it as informal brainstorming only.
 - Intended scope:
   - one generated top may instantiate several FSM children from one `.fsm` source or from several `.fsm` sources,
-  - some outputs stay directly owned by FSM A / B / C and may become top-level outputs normally,
+  - some outputs stay directly owned by FSM A / B / C,
   - only outputs assigned in at least two child FSMs are candidates to be lifted out of the child FSMs and moved into one shared datapath block instantiated by the generated top,
   - outputs assigned in only one child FSM are not shared and should remain owned by that child FSM.
 - Shared-datapath direction:
@@ -12,7 +12,9 @@ This document captures engineering rationale, design constraints, and working de
   - child FSMs should emit deterministic per-source drive-intent enables such as `A_P_Q_en`, `B_P_Q_en`, and `C_P_Q_en`,
   - and the top/shared block should aggregate them through shared enables such as `P_Q_en`.
 - Ownership/readback rules saved for later contract work:
-  - some child-emitted signals may stay top-local instead of becoming top-level outputs,
+  - outputs produced by child FSMs or by the shared datapath block are top-level outputs by default,
+  - if a registered output is read on the RHS by another FSM child, that signal should become top-internal by default,
+  - if the user still wants that now-internal registered signal exposed at the top level too, that export should be requested explicitly,
   - lifted registered/shared outputs may loop back into FSM inputs,
   - but combinational outputs, whether shared or not, must not be read by peer FSMs instantiated in the same generated top,
   - so combinational outputs should remain top-level outputs only.

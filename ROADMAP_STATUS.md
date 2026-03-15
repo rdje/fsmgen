@@ -476,8 +476,10 @@ Deliverables:
   - some child outputs remain directly child-owned,
   - outputs assigned in at least two child FSMs are the shared-datapath candidates and may be lifted into one shared datapath block with deterministic per-child drive-intent enables and shared aggregate enables,
   - outputs assigned in only one child FSM are not shared and stay directly child-owned,
+  - outputs coming from child FSMs or the shared datapath block are top-level outputs by default,
+  - peer-read registered outputs become top-internal by default unless the user explicitly asks to re-export them,
   - only lifted registered outputs may loop back into child FSM inputs,
-  - and combinational outputs must never become cross-FSM read sources.
+  - and combinational outputs must never become cross-FSM read sources, so they remain top-level outputs only.
 - Harden mixed `?fsmc` / `?rtl` flows before broader composition syntax is considered.
 Status: `not started`
 Done:
@@ -489,12 +491,14 @@ Left:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets,
   - per-child drive-intent aggregation,
   - conflict legality/default rejection,
+  - default top-export vs peer-read internalization for registered outputs,
+  - explicit user-directed re-export of now-internal registered outputs,
   - registered-output loopback rules,
   - and the rule that combinational outputs may be top-level outputs but not peer-FSM inputs.
 - Add any needed diagnostics/tests before considering broader composition growth.
 Exit criteria:
 - External-RTL composition uses a clearly specified interface contract that is stronger and easier to reason about than the current “implemented convention” state.
-- The first multi-FSM shared-datapath composition lane is also bounded by an explicit ownership/readback contract instead of informal architecture notes.
+- The first multi-FSM shared-datapath composition lane is also bounded by an explicit ownership/readback/export contract instead of informal architecture notes.
 
 ### R12. Regression corpus and support accounting
 Description:

@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### shared-datapath `R11` note now captures default top-export versus peer-read internalization
+- Refined [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the future shared-datapath lane now says:
+  - outputs from child FSMs or the shared datapath block are top-level outputs by default,
+  - peer-read registered outputs become top-internal by default,
+  - explicit user direction is needed to re-export those now-internal registered signals,
+  - and combinational outputs remain illegal as peer-FSM read sources, which keeps that rule consistent with the new internalization rule.
+- Updated [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the same refined export/internalization rule is preserved in the continuity notes.
 ### shared-datapath `R11` note now uses the “written by at least two FSMs” rule
 - Refined [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the future shared-datapath lane is now explicit about the ownership split:
   - outputs assigned in at least two child FSMs are the shared-datapath candidates,

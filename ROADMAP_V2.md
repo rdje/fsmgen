@@ -100,9 +100,12 @@ Deliverable themes:
 - decide whether a stronger interface-source contract should later replace or sit above `.rtlif`,
 - define one bounded multi-FSM shared-datapath composition lane instead of reopening broad implicit composition:
   - one `fsmgen` run may build one top from one `.fsm` source or from several `.fsm` sources,
-  - some child outputs remain directly owned by their source FSMs and may become top-level outputs normally,
+  - some child outputs remain directly owned by their source FSMs,
   - outputs assigned in at least two child FSMs are the shared-datapath candidates and may be lifted into one shared datapath block instantiated by the generated top,
   - outputs assigned in only one child FSM are not shared and should remain directly child-owned,
+  - outputs produced by the child FSMs or by the shared datapath block are top-level outputs by default,
+  - if a registered output is read on the RHS by another child FSM, that signal should become top-internal by default instead of auto-exported,
+  - if such a now-internal registered signal must also appear as a top-level output, the user should request that export explicitly,
   - that shared block owns the mux/register logic for those lifted targets and receives deterministic per-child drive-intent enables such as `A_P_Q_en`, `B_P_Q_en`, and aggregate enables such as `P_Q_en`,
   - lifted registered/shared outputs may be looped back into child FSM inputs and may be either top-local or top-exposed,
   - combinational outputs, whether shared or not, must not become cross-FSM read sources and should only exist as top-level outputs,
@@ -123,6 +126,8 @@ Planned bounded sub-lane inside `R11`:
   - which RHS/value sources must also be surfaced to the shared datapath block,
   - how per-child drive intents are named and reported,
   - how same-target/same-value aggregation differs from same-target/different-value conflicts,
+  - which registered outputs should internalize automatically when peer-read,
+  - how users explicitly re-export those now-internal registered signals when wanted,
   - and which lifted registered outputs may legally loop back into child FSM inputs.
 
 ### R12. Regression corpus and support accounting
