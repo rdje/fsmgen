@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: malformed update-shorthand tails now fail through a dedicated boundary
+- After tightening update-shorthand targets, one more misleading edge remained:
+  - stray extra positional payloads like `3` in `(+= counter 4 3)` were being interpreted only after expansion,
+  - which meant the user saw a suffix-guard diagnostic instead of an update-shorthand-specific one.
+- The active contract is now explicit on that malformed side too:
+  - update shorthand still supports an optional explicit guard suffix after the optional delta,
+  - valid guarded forms like `(+= counter 4 <start)` remain supported,
+  - malformed extra positional tails like `(+= counter 4 3)` and `(+= counter 4 3 2)` now fail through a dedicated update-shorthand-tail boundary.
 ## 2026-03-15: malformed update-shorthand targets now fail through an explicit boundary
 - After promoting the alternate update-shorthand spellings, one remaining parser gap became obvious:
   - recognized update-shorthand forms with malformed non-scalar targets were returning `undef`,

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-15: malformed update-shorthand tails now fail early through an explicit boundary
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now turns stray extra positional update-shorthand tails into a dedicated user-facing diagnostic instead of letting them fall through the generic suffix-guard boundary.
+- [t/62-language-contract-update-shorthand-tail-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/62-language-contract-update-shorthand-tail-boundary.t) now locks:
+  - continued support for guarded forms like `(+= counter 4 <start)`,
+  - explicit rejection of malformed tails like `(+= counter 4 3)` and `(+= counter 4 3 2)`,
+  - and pipeline/CLI no-output behavior for those malformed forms.
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now states that update shorthand accepts only an optional delta plus an explicit guard suffix after that.
 ## 2026-03-15: malformed update-shorthand targets now fail early instead of disappearing silently
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now turns malformed update-shorthand targets into a dedicated user-facing diagnostic instead of returning `undef` for recognized update-shorthand forms.
 - [t/61-language-contract-update-shorthand-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/61-language-contract-update-shorthand-boundary.t) now locks:

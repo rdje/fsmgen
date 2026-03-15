@@ -528,6 +528,7 @@ sub parse_compound_update_shorthand($self, $action) {
         $delta_spec = shift @remaining;
     }
     $delta_spec = '1' unless defined $delta_spec;
+    $self->validate_compound_update_trailing_parts($action, @remaining);
     
     fsm_debug("[Parser.pm][parse_compound_update_shorthand()] Expanding '$compound_token' for '$signal_name' with delta '$delta_spec'", 3);
     
@@ -539,6 +540,48 @@ sub parse_compound_update_shorthand($self, $action) {
     my $expanded_action = [$signal_name, \@operation_spec];
     
     return $self->parse_signal_action($expanded_action);
+}
+
+sub describe_compound_update_action($self, $action) {
+    return $self->describe_action_for_error($action) unless ref($action) eq 'ARRAY' && @$action >= 2;
+
+    my ($compound_token, $args) = @$action;
+    my @parts = (
+        defined($compound_token) ? (ref($compound_token) ? ref($compound_token) : $compound_token) : 'undef'
+    );
+
+    if (ref($args) eq 'ARRAY') {
+        push @parts, map {
+            !defined($_) ? 'undef'
+            : ref($_) eq 'ARRAY' ? 'ARRAY'
+            : ref($_) ? ref($_)
+            : $_
+        } @$args;
+    } elsif (defined $args) {
+        push @parts, ref($args) ? ref($args) : $args;
+    } else {
+        push @parts, 'undef';
+    }
+
+    return '(' . join(' ', @parts) . ')';
+}
+
+sub validate_compound_update_trailing_parts($self, $action, @condition_parts) {
+    return 1 unless @condition_parts;
+
+    if (@condition_parts == 1 && !ref($condition_parts[0]) && $condition_parts[0] =~ /^[<>]/) {
+        return 1;
+    }
+
+    if (@condition_parts == 2 && !ref($condition_parts[0]) && ($condition_parts[0] eq '<' || $condition_parts[0] eq '<!')) {
+        return 1 if defined $condition_parts[1];
+    }
+
+    my $tail_desc = join(', ', map { ref($_) ? ref($_) : $_ } @condition_parts);
+    Carp::confess
+        "Malformed update shorthand tail '$tail_desc' in '".$self->describe_compound_update_action($action)."'. ".
+        "Update shorthand supports only an optional delta plus an optional explicit guard suffix like '<start', '<!full', or '< (& req ready)'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 
 sub build_full_condition_from_parts($self, @condition_parts) {

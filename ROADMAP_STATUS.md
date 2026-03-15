@@ -290,6 +290,10 @@ Done:
   - malformed targets such as `(++ (counter))` and `(+= (byte_count) 4)` no longer disappear silently,
   - they now fail through a dedicated update-shorthand boundary,
   - and parser, pipeline, and CLI entry points now reject those malformed update-shorthand forms without emitting HDL.
+- [t/62-language-contract-update-shorthand-tail-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/62-language-contract-update-shorthand-tail-boundary.t) now locks the malformed-tail side of the update-shorthand family explicitly:
+  - valid guarded forms such as `(+= counter 4 <start)` remain supported,
+  - malformed extra positional tails such as `(+= counter 4 3)` and `(+= counter 4 3 2)` now fail through a dedicated update-shorthand-tail boundary,
+  - and parser, pipeline, and CLI entry points now reject those malformed forms without emitting HDL.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now also promotes the shorthand guard family into the active contract instead of leaving it as future-only:
   - `(<foo ...)` means `foo != 0`,
   - `(<!foo ...)` means `foo == 0`,

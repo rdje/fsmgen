@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### malformed update-shorthand tails now fail through an explicit boundary
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so update shorthand now rejects stray extra positional tail payloads through a dedicated update-shorthand-tail diagnostic instead of leaking them through the generic suffix-guard boundary.
+- Added [t/62-language-contract-update-shorthand-tail-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/62-language-contract-update-shorthand-tail-boundary.t) to lock:
+  - continued support for valid guarded forms like `(+= counter 4 <start)`,
+  - explicit rejection of malformed tails like `(+= counter 4 3)` and `(+= counter 4 3 2)`,
+  - and pipeline/CLI no-output behavior for those malformed forms.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the update-shorthand family now documents its trailing-tail boundary explicitly.
 ### malformed update-shorthand targets now fail explicitly instead of disappearing silently
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so recognized update-shorthand forms now reject malformed non-scalar targets through a dedicated update-shorthand diagnostic instead of returning `undef` and disappearing from the DT body.
 - Added [t/61-language-contract-update-shorthand-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/61-language-contract-update-shorthand-boundary.t) to lock:

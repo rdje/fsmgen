@@ -135,6 +135,7 @@ Combinational DT note:
 - Condition suffixes attached directly to assignments or transitions, for example `(A <= B <start)` and `(-> busy <!full)`
 - Compound-update shorthand forms `(++ sig)`, `(-- sig)`, `(+= sig)`, `(-= sig)`, `(+=N sig)`, `(-=N sig)`, `(+= sig N)`, and `(-= sig N)`
   - malformed update-shorthand targets such as `(++ (counter))` or `(+= (byte_count) 4)` are rejected explicitly
+  - malformed extra positional tails such as `(+= counter 4 3)` are rejected explicitly
 - Inline compound modifiers on assignments, for example `(A <- B (+= 2))` and `(C = D (-= 1))`
 - RHS operator expressions for the currently regression-backed active families:
   - unary `!`
@@ -251,6 +252,7 @@ Update shorthand:
 - `(+= byte_count 4)` means increment `byte_count` by `4`
 - `(-= remaining 3)` means decrement `remaining` by `3`
 - Update shorthand must target a scalar signal name.
+- After the optional delta, update shorthand accepts only an explicit guard suffix such as `<start`, `<!full`, or `< (& req ready)`.
 - Inline forms keep the surrounding assignment family:
   - `(ACC <- SRC (+= 2))`
   - `(COMB = SRC (-= 1))`
