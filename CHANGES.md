@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### unsupported top-level `+...` directives now fail explicitly
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so unsupported top-level `+...` directive sections no longer drift into fake state parsing and now fail with a targeted diagnostic that lists the supported top-level directive family.
+- Added focused regression coverage in [t/32-language-contract-top-level-directive-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/32-language-contract-top-level-directive-boundary.t) for:
+  - unknown directive sections such as `(+bogus ...)`,
+  - and future-looking but currently unsupported directive spellings such as `(+clock clk)`.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) so unsupported top-level directive sections are now explicitly called out in the out-of-support bucket instead of being left implicit.
+- Updated [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) to preserve the syntax-namespace rationale from the latest language discussion:
+  - why `(?foo:...)` exists,
+  - why the `+...` family exists,
+  - and why any future redesign should be treated as a family-level syntax decision rather than as a one-off `+system` rename.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so `R8` done/left tracking reflects the landed explicit-rejection slice.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
+- Validation:
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm` (pass)
+  - `perl -I perl -c t/32-language-contract-top-level-directive-boundary.t` (pass)
+  - `prove -I perl t/32-language-contract-top-level-directive-boundary.t` (pass)
 ### conventional `+system` contract slice is now live and regression-backed
 - Promoted the conventional `+system` declaration into the active supported-language boundary in [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md):
   - `(+system (clock clk) (sreset rstn))`

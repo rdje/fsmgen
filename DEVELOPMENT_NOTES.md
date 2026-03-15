@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: syntax-namespace rationale is now preserved for later language work
+- Historical syntax rationale from the current language discussion is now saved explicitly:
+  - the `(?foo:...)` family was chosen because it visually resembles Perl 5 regex grouping syntax,
+  - and because it uses a shape users are unlikely to type accidentally in ordinary names or payloads.
+- The `+...` family had a separate role:
+  - it provided a directive-section namespace for forms like `+system`, `+size`, and the symbol-definition sections,
+  - specifically to distinguish those constructs from ordinary state names.
+- Boundary decision:
+  - the project is not committing to a syntax-family redesign right now,
+  - but if this area is revisited later, it should be treated as a family-level namespace decision rather than a `+system`-only rename.
+- Saved future-direction note:
+  - alternatives such as `(+clock clk)` / `(+asreset rstn)` or a broader directive-namespace redesign remain future language ideas only,
+  - not part of the current supported contract.
+## 2026-03-15: unsupported top-level `+...` directives now fail explicitly
+- The next `R8` slice now closes one more parser-visible legacy ambiguity:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) no longer lets unknown top-level `+...` directive sections drift into fake state parsing,
+  - and now emits a targeted error that lists the currently supported top-level directive family inside `?fsm:name`.
+- Focused regression coverage now exists in [t/32-language-contract-top-level-directive-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/32-language-contract-top-level-directive-boundary.t) for:
+  - unknown directive sections such as `(+bogus ...)`,
+  - and future-looking but currently unsupported section spellings such as `(+clock clk)`.
+- Boundary decision:
+  - this slice does not define a new directive syntax family,
+  - it only makes the current supported boundary explicit and rejects unsupported `+...` top-level directives truthfully.
 ## 2026-03-15: the conventional `+system` section is now part of the active `R8` contract
 - The next `R8` slice is now regression-backed and promoted into the live support boundary:
   - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now treats the conventional shared-system declaration as fully supported:

@@ -60,7 +60,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `R8` Language-contract hardening.
 - Current next decision point:
   - Continue the draft normative language reference beyond the now-locked guard/update/operator/symbol/system families.
-  - Audit the remaining parser-visible legacy constructs and classify each one into the supported or explicitly rejected buckets.
+  - Audit the remaining non-directive parser-visible legacy constructs and classify each one into the supported or explicitly rejected buckets.
   - Keep adding focused regressions that lock the adopted language boundary construct family by construct family.
 
 ## Workstreams
@@ -298,6 +298,7 @@ Done:
   - targeted rejection of non-conventional clock names,
   - targeted rejection of unsupported system directives,
   - and targeted rejection of incomplete `+system` sections.
+- [t/32-language-contract-top-level-directive-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/32-language-contract-top-level-directive-boundary.t) now locks explicit rejection of unsupported top-level `+...` directive sections so they no longer drift into fake state parsing.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.

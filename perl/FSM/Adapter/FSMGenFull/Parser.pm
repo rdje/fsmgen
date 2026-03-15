@@ -146,6 +146,11 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
         } elsif ($element_name eq '+params') {
             fsm_debug("Parsing params section", 3);
             $self->parse_params_section($element);
+        } elsif ($element_name =~ /^\+/) {
+            Carp::confess
+                "Unsupported top-level directive '$element_name'. ".
+                "The active contract currently supports only '+system', '+size', '+constants', '+enums', '+define', and '+params' inside '?fsm:name'. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n";
         } elsif ($element_name =~ /^[a-zA-Z_]/ && $element_name !~ /^(idle|-syncrst|-asyncrst)$/ && !ref($element->[1])) {
             next;
         } else {

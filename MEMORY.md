@@ -20,6 +20,26 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: unsupported top-level `+...` directives now fail explicitly
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects unsupported top-level `+...` directive sections explicitly instead of parsing them as fake states,
+  - [t/32-language-contract-top-level-directive-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/32-language-contract-top-level-directive-boundary.t) now locks that boundary,
+  - and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) now preserves the syntax-namespace rationale from the latest language-design discussion.
+- Scope of the landed contract slice:
+  - explicit rejection of unknown top-level directive sections such as `(+bogus ...)`
+  - explicit rejection of future-looking but currently unsupported directive spellings such as `(+clock clk)`
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` and `ROADMAP_V2.md` now record that unsupported top-level `+...` directives are no longer in an ambiguous parser-accepted bucket.
+- Validation for this slice:
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`
+  - `perl -I perl -c t/32-language-contract-top-level-directive-boundary.t`
+  - `prove -I perl t/32-language-contract-top-level-directive-boundary.t`
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - audit the remaining non-directive parser-visible legacy constructs that still lack a clean support-tier bucket,
+  - then continue tightening the normative reference and regressions family by family.
 ## 2026-03-15: conventional `+system` contract slice is landed under `R8`
 - Current worktree is the next `R8` implementation slice:
   - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now treats the conventional `+system` declaration as fully supported and documents its normative contract,

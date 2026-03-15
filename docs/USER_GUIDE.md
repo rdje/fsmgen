@@ -145,6 +145,10 @@ Standalone DT note:
   - alternative reset names,
   - additional system directives,
   - and partial `+system` declarations that do not match the conventional shared pair
+- Unsupported top-level directive sections outside the current supported family, for example:
+  - `(+clock clk)`
+  - `(+asreset rstn)`
+  - `(+bogus ...)`
 - Legacy composition forms such as `?&...`, nested `?top`, `?ports` mapping directives, nested `?toplink`, and multi-source `?fsmc`
 
 ### Draft normative contract for guards, suffixes, updates, and operator expressions
