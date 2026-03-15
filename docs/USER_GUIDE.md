@@ -297,28 +297,41 @@ This is the current `R8` draft normative contract for the symbol-definition fami
 
 `(+constants ...)`:
 - Defines named literal constants.
+- Shape:
+  - non-empty list of `(NAME scalar_value)` entries
 - Current active use:
   - `(+constants (C0 8'3) (ZERO const_8b0))`
 - References to those names resolve as literals in assignment RHS expressions and guard equality conditions.
+- Malformed shapes like `(+constants)`, `(+constants BROKEN)`, and malformed entries like `(+constants (C0))` are rejected explicitly.
 
 `(+define ...)`:
 - Defines one named literal-like value per directive block.
+- Shape:
+  - exactly one `(NAME scalar_value)` pair
 - Current active use:
   - `(+define (D0 8'4))`
 - References to that name resolve as literals in assignment RHS expressions and guard equality conditions.
+- Malformed shapes like `(+define)`, `(+define BROKEN)`, and malformed entries like `(+define (D0))` are rejected explicitly.
 
 `(+params ...)`:
 - Defines named scalar parameter values.
+- Shape:
+  - non-empty list of `(NAME scalar_value)` entries
 - Current active use:
   - `(+params (P0 8))`
 - References to those names resolve as literals in assignment RHS expressions and guard equality conditions.
+- Malformed shapes like `(+params)`, `(+params BROKEN)`, and malformed entries like `(+params (P0))` are rejected explicitly.
 
 `(+enums ...)`:
 - Defines named enumerations with member/value pairs.
+- Shape:
+  - non-empty list of `(enum_name (MEMBER value) ...)` definitions
+  - each enum definition must contain at least one member pair
 - Current active use:
   - `(+enums (mode (IDLE 0) (BUSY 1)))`
 - Enum members are referenced as `enum_name.member_name`, for example `mode.BUSY`.
 - Those references resolve as literals in assignment RHS expressions and guard equality conditions.
+- Malformed shapes like `(+enums)`, `(+enums BROKEN)`, `(+enums (mode))`, and malformed members like `(+enums (mode BROKEN))` are rejected explicitly.
 
 Regression-backed examples:
 ```lisp
@@ -349,6 +362,7 @@ Regression-backed examples:
 
 Boundary note:
 - This slice locks symbol resolution in assignment RHS expressions and guard equality conditions.
+- It also locks the malformed section/entry boundary for `+constants`, `+define`, `+params`, and `+enums`, so these families no longer rely on incidental Perl list-unpacking errors.
 - Broader semantics for these families should be documented explicitly if and when the contract is widened beyond that current active use.
 
 ### Draft normative contract for top-level source kinds

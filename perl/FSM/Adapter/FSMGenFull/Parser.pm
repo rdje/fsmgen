@@ -224,12 +224,36 @@ sub decode_structured_fsm_module_name($self, $fsm_header) {
 
 sub parse_constants_section($self, $constants_ast) {
     my (undef, $constants_list) = @$constants_ast;
+
+    Carp::confess
+        "Malformed '+constants' section. ".
+        "The active contract supports '+constants' only as a non-empty list of '(NAME scalar_value)' entries. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless ref($constants_list) eq 'ARRAY' && @$constants_list;
+
     for my $constant_def (@$constants_list) {
+        Carp::confess
+            "Malformed '+constants' entry. ".
+            "Each '+constants' entry must be a pair '(NAME scalar_value)'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless ref($constant_def) eq 'ARRAY' && @$constant_def == 2;
+
         my ($name, $value) = @$constant_def;
+        my $resolved_name = $self->unwrap_scalar_token($name);
+        my $resolved_value = $self->unwrap_scalar_token($value);
+
+        Carp::confess
+            "Malformed '+constants' entry for constant '".$self->describe_contract_name($resolved_name)."'. ".
+            "Each '+constants' entry must use an HDL-identifier-compatible name and a scalar value token. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless $self->is_contract_identifier($resolved_name)
+                && defined($resolved_value)
+                && !ref($resolved_value);
+
         my $literal_expr = $self->{expression_builder}->parse_scalar_expression(
-            $self->unwrap_scalar_token($value)
+            $resolved_value
         );
-        $self->{signal_manager}->store_constant($name, $literal_expr);
+        $self->{signal_manager}->store_constant($resolved_name, $literal_expr);
     }
 }
 
@@ -394,6 +418,24 @@ sub unwrap_scalar_token($self, $value) {
         $unwrapped = $unwrapped->[0];
     }
     return $unwrapped;
+}
+
+sub unwrap_single_nested_list($self, $value) {
+    my $unwrapped = $value;
+    while (ref($unwrapped) eq 'ARRAY' && @$unwrapped == 1 && ref($unwrapped->[0]) eq 'ARRAY') {
+        $unwrapped = $unwrapped->[0];
+    }
+    return $unwrapped;
+}
+
+sub is_contract_identifier($self, $value) {
+    return defined($value)
+        && !ref($value)
+        && $value =~ /\A[A-Za-z_]\w*\z/;
+}
+
+sub describe_contract_name($self, $value) {
+    return defined($value) && !ref($value) ? $value : 'unknown';
 }
 sub is_compound_update_shorthand($self, $action_target, $action_spec) {
     return 0 unless defined $action_target;
@@ -601,34 +643,115 @@ sub get_target_base_signal_name($self, $raw_signal_name, $target_expr) {
 
 sub parse_enums_section($self, $enums_ast) {
     my (undef, $enums_list) = @$enums_ast;
+
+    Carp::confess
+        "Malformed '+enums' section. ".
+        "The active contract supports '+enums' only as a non-empty list of '(enum_name (MEMBER value) ...)' definitions. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless ref($enums_list) eq 'ARRAY' && @$enums_list;
+
     for my $enum_def (@$enums_list) {
+        Carp::confess
+            "Malformed '+enums' definition. ".
+            "Each '+enums' definition must use the shape '(enum_name (MEMBER value) ...)'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless ref($enum_def) eq 'ARRAY' && @$enum_def == 2;
+
         my ($enum_name, $members_list) = @$enum_def;
+        my $resolved_enum_name = $self->unwrap_scalar_token($enum_name);
+
+        Carp::confess
+            "Malformed '+enums' definition for enum '".$self->describe_contract_name($resolved_enum_name)."'. ".
+            "Each '+enums' definition must use an HDL-identifier-compatible enum name and at least one '(MEMBER value)' entry. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless $self->is_contract_identifier($resolved_enum_name)
+                && ref($members_list) eq 'ARRAY'
+                && @$members_list;
+
         my %enum_values;
         for my $member_def (@$members_list) {
+            Carp::confess
+                "Malformed '+enums' member for enum '$resolved_enum_name'. ".
+                "Each enum member must be a pair '(MEMBER value)'. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                unless ref($member_def) eq 'ARRAY' && @$member_def == 2;
+
             my ($member_name, $member_value_array) = @$member_def;
-            $enum_values{$member_name} = $self->unwrap_scalar_token($member_value_array);
+            my $resolved_member_name = $self->unwrap_scalar_token($member_name);
+            my $resolved_member_value = $self->unwrap_scalar_token($member_value_array);
+
+            Carp::confess
+                "Malformed '+enums' member '".$self->describe_contract_name($resolved_member_name)."' for enum '$resolved_enum_name'. ".
+                "Each enum member must use an HDL-identifier-compatible member name and a scalar value token. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                unless $self->is_contract_identifier($resolved_member_name)
+                    && defined($resolved_member_value)
+                    && !ref($resolved_member_value);
+
+            $enum_values{$resolved_member_name} = $resolved_member_value;
         }
-        $self->{signal_manager}->store_enum($enum_name, \%enum_values);
+        $self->{signal_manager}->store_enum($resolved_enum_name, \%enum_values);
     }
 }
 
 sub parse_define_directive($self, $define_ast) {
     my (undef, $define_spec) = @$define_ast;
-    $define_spec = $define_spec->[0]
-        if ref($define_spec) eq 'ARRAY' && @$define_spec == 1 && ref($define_spec->[0]) eq 'ARRAY';
+
+    $define_spec = $self->unwrap_single_nested_list($define_spec);
+
+    Carp::confess
+        "Malformed '+define' directive. ".
+        "The active contract supports '+define' only as exactly one '(NAME scalar_value)' pair. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless ref($define_spec) eq 'ARRAY' && @$define_spec == 2;
 
     my ($name, $value) = @$define_spec;
+    my $resolved_name = $self->unwrap_scalar_token($name);
+    my $resolved_value = $self->unwrap_scalar_token($value);
+
+    Carp::confess
+        "Malformed '+define' entry for name '".$self->describe_contract_name($resolved_name)."'. ".
+        "The active contract expects an HDL-identifier-compatible name and a scalar value token. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless $self->is_contract_identifier($resolved_name)
+            && defined($resolved_value)
+            && !ref($resolved_value);
+
     my $value_expr = $self->{expression_builder}->parse_scalar_expression(
-        $self->unwrap_scalar_token($value)
+        $resolved_value
     );
-    $self->{signal_manager}->store_define($name, $value_expr);
+    $self->{signal_manager}->store_define($resolved_name, $value_expr);
 }
 
 sub parse_params_section($self, $params_ast) {
     my (undef, $params_list) = @$params_ast;
+
+    Carp::confess
+        "Malformed '+params' section. ".
+        "The active contract supports '+params' only as a non-empty list of '(NAME scalar_value)' entries. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless ref($params_list) eq 'ARRAY' && @$params_list;
+
     for my $param_def (@$params_list) {
+        Carp::confess
+            "Malformed '+params' entry. ".
+            "Each '+params' entry must be a pair '(NAME scalar_value)'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless ref($param_def) eq 'ARRAY' && @$param_def == 2;
+
         my ($name, $value_array) = @$param_def;
-        $self->{signal_manager}->store_param($name, $self->unwrap_scalar_token($value_array));
+        my $resolved_name = $self->unwrap_scalar_token($name);
+        my $resolved_value = $self->unwrap_scalar_token($value_array);
+
+        Carp::confess
+            "Malformed '+params' entry for parameter '".$self->describe_contract_name($resolved_name)."'. ".
+            "Each '+params' entry must use an HDL-identifier-compatible name and a scalar value token. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless $self->is_contract_identifier($resolved_name)
+                && defined($resolved_value)
+                && !ref($resolved_value);
+
+        $self->{signal_manager}->store_param($resolved_name, $resolved_value);
     }
 }
 

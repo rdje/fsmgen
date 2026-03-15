@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: symbol-definition sections now have an explicit malformed boundary
+- The next `R8` slice closes another real parser-visible gray zone:
+  - `+constants`, `+define`, `+params`, and `+enums` already had a documented happy path,
+  - but malformed shapes were still relying on Perl list unpacking and incidental `undef` fallout instead of a real language-contract boundary.
+- Implementation:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates the shape of each symbol-definition family explicitly before storing symbols.
+  - `+constants` and `+params` now require non-empty lists of `(NAME scalar_value)` entries.
+  - `+define` now requires exactly one `(NAME scalar_value)` pair.
+  - `+enums` now requires a non-empty list of `(enum_name (MEMBER value) ...)` definitions, with at least one member per enum.
+- Focused regression coverage now exists in [t/51-language-contract-symbol-definition-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/51-language-contract-symbol-definition-boundary.t) for:
+  - empty sections,
+  - malformed payloads,
+  - malformed entry/member shapes,
+  - and pipeline/CLI confirmation that malformed symbol-definition sections do not emit HDL.
+- Boundary decision:
+  - the symbol-definition family remains actively supported,
+  - but only within the explicitly documented section/entry shapes,
+  - and malformed symbol-definition sections are now out of contract instead of being tolerated accidentally.
 ## 2026-03-15: `+size` is now explicit instead of partially silent
 - The next `R8` slice closes a small but real directive-boundary gap:
   - the shipped corpus still contains a legacy empty `(+size)` block,

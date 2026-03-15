@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### malformed symbol-definition sections now fail explicitly
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so the symbol-definition family no longer relies on loose Perl list unpacking for malformed input:
+  - `+constants` now requires a non-empty list of `(NAME scalar_value)` entries,
+  - `+define` now requires exactly one `(NAME scalar_value)` pair,
+  - `+params` now requires a non-empty list of `(NAME scalar_value)` entries,
+  - and `+enums` now requires a non-empty list of `(enum_name (MEMBER value) ...)` definitions with at least one member per enum.
+- Added focused regression coverage in [t/51-language-contract-symbol-definition-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/51-language-contract-symbol-definition-boundary.t) for:
+  - empty symbol-definition sections,
+  - malformed section payloads and malformed entry/member shapes,
+  - and pipeline/CLI confirmation that malformed symbol-definition sections do not emit HDL.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the live contract now states the malformed-boundary rules explicitly.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
 ### `+size` now has an explicit active contract
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so `+size` is now parsed through an explicit contract helper instead of being partially ignored:
   - the legacy empty form `(+size)` remains supported as a no-op,

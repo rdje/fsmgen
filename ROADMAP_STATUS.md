@@ -330,6 +330,10 @@ Done:
 - [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t) now locks symbol-definition resolution through the active parser and generator for:
   - assignment RHS expressions,
   - and guard equality conditions.
+- [t/51-language-contract-symbol-definition-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/51-language-contract-symbol-definition-boundary.t) now locks the malformed section/entry boundary for the same symbol-definition family:
+  - empty `+constants`, `+define`, `+params`, and `+enums` sections are rejected explicitly,
+  - malformed entry shapes such as `(+constants BROKEN)`, `(+define (D0))`, `(+params (P0))`, and `(+enums (mode BROKEN))` are rejected explicitly,
+  - and malformed symbol-definition sections now fail through parser, pipeline, and CLI entry points without emitting HDL.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now also promotes the conventional `+system` section into the fully supported bucket and documents its current normative contract:
   - `(+system (clock clk) (sreset rstn))`,
   - `(+system (clock clk) (asreset rstn))`.
