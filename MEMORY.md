@@ -20,6 +20,32 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: `:=` init/reset directives are now explicit, and malformed DT actions fail explicitly
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now treats top-level `:=` as an explicit init/reset directive,
+  - records reset/default metadata for the target signal,
+  - and rejects malformed DT actions and empty guarded blocks instead of silently dropping them,
+  - [t/34-language-contract-malformed-actions.t](/Users/richarddje/Documents/github/fsmgen/t/34-language-contract-malformed-actions.t) now locks that boundary,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents both the active `:=` contract and the malformed-form rejection boundary explicitly.
+- Scope of the landed contract slice:
+  - explicit support for top-level compact init/reset directives such as `(:= tester_reset=1)`
+  - explicit rejection of malformed single-token DT actions such as `(BROKEN)`
+  - explicit rejection of empty guarded blocks such as `(<req)`
+  - saved future-syntax note in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md):
+    - possible canonical future form `(:= (lhs value))`
+    - and possible sugar form `(lhs := value)`
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records that the active contract includes top-level `:=` and one less silent parser-drop behavior in the DT action family.
+- Validation for this slice:
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`
+  - `perl -I perl -c t/34-language-contract-malformed-actions.t`
+  - `prove -I perl t/34-language-contract-malformed-actions.t`
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser-visible implicit fallthroughs,
+  - and keep turning them into either supported or explicitly rejected behavior.
 ## 2026-03-15: bare condition suffixes now fail explicitly
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects bare suffix tails in assignment/transition suffix positions,

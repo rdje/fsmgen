@@ -85,6 +85,7 @@ Standard used here:
   - `(+enums ...)`
   - `(+define ...)`
   - `(+params ...)`
+- Compact top-level init/reset directives like `(:= tester_reset=1)`
 
 Standalone DT note:
 - User-facingly, hyphen-prefixed top-level blocks are supported as standalone DT blocks.
@@ -152,6 +153,9 @@ Standalone DT note:
 - Bare condition suffixes without an explicit guard marker, for example:
   - `(A <= B start)`
   - `(-> busy full)`
+- Malformed action forms or empty guarded blocks that do not carry a real action body, for example:
+  - `(BROKEN)`
+  - `(<req)`
 - Legacy composition forms such as `?&...`, nested `?top`, `?ports` mapping directives, nested `?toplink`, and multi-source `?fsmc`
 
 ### Draft normative contract for guards, suffixes, updates, and operator expressions
@@ -160,6 +164,7 @@ This is the current `R8` draft normative contract for the active language slice 
 Guarded blocks:
 - `(<cond ...actions...)` executes its actions when `cond` is true in the active condition model.
 - `(<!cond ...actions...)` executes its actions when `cond` is false in the active condition model.
+- Guarded blocks must contain at least one nested action.
 - Nested guarded blocks are allowed, and nested guards compose by logical `AND`.
 - Current active examples include:
   - `(<req (A <= B))`
@@ -323,6 +328,37 @@ Regression-backed example:
 Boundary note:
 - This slice makes the conventional shared-system declaration explicit and regression-backed.
 - It accepts the two legacy reset spellings already present in the active tree, but it does not yet widen the contract into arbitrary system metadata, custom clock/reset names, or richer reset-mode differentiation.
+
+### Draft normative contract for the `:=` init/reset directive
+This is the current `R8` draft normative contract for the active top-level init/reset boundary.
+
+Accepted legacy-compatible form:
+```lisp
+(:= tester_reset=1)
+(:= hs_sync_sequence=8'x1d)
+```
+
+Current meaning:
+- `:=` is a top-level directive, not a state and not a DT action.
+- The current supported payload is the compact single-token form `signal=value`.
+- The directive records explicit reset/default metadata for `signal`.
+- The active shipped examples use scalar RHS values such as:
+  - `1`
+  - `6'0`
+  - `8'x1d`
+  - `64'x0123456789abcdef`
+
+Current boundary:
+- Supported:
+  - `(:= signal=literal_or_scalar_expr)` at top level inside `(?fsm:name ...)`
+- Rejected explicitly:
+  - malformed payloads such as `(:= BROKEN)`
+  - malformed DT actions such as `(BROKEN)`
+  - empty guarded blocks such as `(<req)`
+
+Boundary note:
+- This slice makes the legacy compact `:=` form explicit and regression-backed instead of leaving it as accidental parser behavior.
+- Future canonical alternatives such as `(:= (lhs value))` or `(lhs := value)` are design ideas only and are preserved in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), not part of the active contract yet.
 
 ## 3) Basic usage
 From repository root:

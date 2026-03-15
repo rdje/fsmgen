@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### top-level `:=` is now explicit, and malformed DT actions now fail explicitly
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so top-level `:=` is now an explicit init/reset directive that records reset/default metadata for the target signal, while malformed decision-tree actions and empty guarded blocks no longer disappear silently during parsing.
+- Added focused regression coverage in [t/34-language-contract-malformed-actions.t](/Users/richarddje/Documents/github/fsmgen/t/34-language-contract-malformed-actions.t) for:
+  - supported top-level `:=` directive parsing,
+  - malformed single-token DT action rejection,
+  - malformed `:=` directive rejection,
+  - and empty guarded-block rejection.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) so the active `:=` boundary is documented explicitly, malformed action forms and empty guarded blocks are now explicitly called out in the out-of-support bucket, and the guarded-block contract now says plainly that a guarded block must contain at least one action.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so `R8` done/left tracking reflects both the explicit `:=` support slice and the removal of this silent parser-drop path. [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) also now preserves the future-syntax discussion for `(:= (lhs value))` and `(lhs := value)`.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
+- Validation:
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm` (pass)
+  - `perl -I perl -c t/34-language-contract-malformed-actions.t` (pass)
+  - `prove -I perl t/34-language-contract-malformed-actions.t` (pass)
 ### bare condition suffixes now fail explicitly
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so bare suffix tails no longer slip through as implicit positive conditions in assignment or transition suffix positions.
 - Added focused regression coverage in [t/33-language-contract-condition-suffix-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/33-language-contract-condition-suffix-boundary.t) for:

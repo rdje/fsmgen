@@ -146,6 +146,9 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
         } elsif ($element_name eq '+params') {
             fsm_debug("Parsing params section", 3);
             $self->parse_params_section($element);
+        } elsif ($element_name eq ':=') {
+            fsm_debug("Parsing init/reset directive", 3);
+            $self->parse_init_assignment_directive($element);
         } elsif ($element_name =~ /^\+/) {
             Carp::confess
                 "Unsupported top-level directive '$element_name'. ".
@@ -514,6 +517,46 @@ sub parse_params_section($self, $params_ast) {
     }
 }
 
+sub parse_init_assignment_directive($self, $init_ast) {
+    my (undef, $init_payload) = @$init_ast;
+    my $init_spec = $self->unwrap_scalar_token($init_payload);
+
+    Carp::confess
+        "Malformed ':=' directive payload. ".
+        "The active contract currently supports only compact top-level init/reset directives like '(:= signal=literal)'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless defined $init_spec && !ref($init_spec);
+
+    my ($signal_name, $reset_value) = $init_spec =~ /^([a-zA-Z_]\w*)=(.+)$/;
+    Carp::confess
+        "Unsupported ':=' directive '$init_spec'. ".
+        "The active contract currently supports only compact top-level init/reset directives like '(:= signal=literal)'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless defined $signal_name && defined $reset_value;
+
+    my $reset_expr = $self->{expression_builder}->parse_expression($reset_value);
+    Carp::confess
+        "Unsupported ':=' reset value '$reset_value' for signal '$signal_name'. ".
+        "The active contract currently expects a valid scalar reset/default expression on the right-hand side. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless $reset_expr;
+
+    my %register_args = (
+        attributes => {
+            reset_value => $reset_value,
+            is_explicit_reset => 1,
+        },
+    );
+    if ($reset_expr->can('width') && defined($reset_expr->width) && $reset_expr->width > 1) {
+        $register_args{width} = $reset_expr->width;
+    }
+
+    my $signal = $self->{signal_manager}->register_signal($signal_name, %register_args);
+    $signal->{initial_value} = $reset_value;
+    $signal->set_attribute('reset_value', $reset_value);
+    $signal->set_attribute('is_explicit_reset', 1);
+}
+
 
 sub parse_state($self, $state_ast) {
     my ($state_name, $decision_trees) = @$state_ast;
@@ -572,8 +615,28 @@ sub parse_decision_tree($self, $tree_ast) {
     return $dt;
 }
 
+sub describe_action_for_error($self, $action) {
+    return 'undef' unless defined $action;
+    return ref($action) unless ref($action) eq 'ARRAY';
+
+    my @elements = @$action;
+    pop @elements while @elements > 1 && !defined($elements[-1]);
+
+    my @parts = map {
+        !defined($_) ? 'undef'
+        : ref($_) eq 'ARRAY' ? 'ARRAY'
+        : ref($_) ? ref($_)
+        : $_
+    } @elements;
+    return '(' . join(' ', @parts) . ')';
+}
+
 sub parse_action($self, $action) {
-    return undef unless ref($action) eq 'ARRAY' && @$action >= 2;
+    Carp::confess
+        "Malformed action form '".$self->describe_action_for_error($action)."'. ".
+        "Actions inside decision trees must use a supported transition, assignment, guarded block, test node, or update form. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless ref($action) eq 'ARRAY' && @$action >= 2;
     
     my ($action_target, $action_spec) = @$action;
     fsm_debug("      Parsing action: $action_target", 3);
@@ -589,8 +652,10 @@ sub parse_action($self, $action) {
     } elsif (ref($action_spec) eq 'ARRAY' && @$action_spec >= 2) {
         return $self->parse_signal_action($action);
     } else {
-        fsm_debug("        Unknown action format: $action_target -> " . ref($action_spec), 3);
-        return undef;
+        Carp::confess
+            "Unsupported action form '".$self->describe_action_for_error($action)."'. ".
+            "Actions inside decision trees must use a supported transition, assignment, guarded block, test node, or update form. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }
 }
 
@@ -737,8 +802,14 @@ sub parse_nested_condition_new_format($self, $action) {
             }]
         );
     }
-    
-    return undef;
+
+    my $condition_desc = defined($condition)
+        ? (ref($condition) ? ref($condition) : $condition)
+        : 'undef';
+    Carp::confess
+        "Malformed guarded block '$condition_desc'. ".
+        "Guarded blocks must have a valid condition and at least one nested action. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 
 sub parse_signal_action($self, $action) {

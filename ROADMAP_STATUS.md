@@ -300,6 +300,10 @@ Done:
   - and targeted rejection of incomplete `+system` sections.
 - [t/32-language-contract-top-level-directive-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/32-language-contract-top-level-directive-boundary.t) now locks explicit rejection of unsupported top-level `+...` directive sections so they no longer drift into fake state parsing.
 - [t/33-language-contract-condition-suffix-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/33-language-contract-condition-suffix-boundary.t) now locks explicit rejection of bare condition suffixes so suffix guards must use the active `<...` / `<!...` forms instead of implicit bare-word tails.
+- [t/34-language-contract-malformed-actions.t](/Users/richarddje/Documents/github/fsmgen/t/34-language-contract-malformed-actions.t) now locks:
+  - explicit support for top-level compact `:=` init/reset directives,
+  - explicit rejection of malformed DT action forms,
+  - and explicit rejection of empty guarded blocks so broken DT actions no longer disappear silently.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.

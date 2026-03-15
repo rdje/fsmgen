@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: `:=` is now an explicit top-level init/reset directive, and future canonical forms are saved
+- The active tree already uses compact top-level directives such as `(:= tester_reset=1)` in shipped corpus files like [fsm/mipicsi2_configreg.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_configreg.fsm).
+- This `R8` slice makes that boundary explicit instead of leaving it accidental:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now treats `:=` as a real top-level init/reset directive,
+  - records explicit reset/default metadata on the target signal,
+  - and no longer lets malformed DT actions or empty guarded blocks disappear silently.
+- Focused regression coverage now exists in [t/34-language-contract-malformed-actions.t](/Users/richarddje/Documents/github/fsmgen/t/34-language-contract-malformed-actions.t) for:
+  - supported top-level compact `:=` directives,
+  - malformed single-token DT action forms such as `(BROKEN)`,
+  - malformed `:=` directives such as `(:= BROKEN)`,
+  - and empty guarded blocks such as `(<req)`.
+- Future language-design note saved from the current discussion:
+  - `(:= (lhs value))` would be a cleaner canonical structural form than the current compact `(:= lhs=value)` compatibility syntax,
+  - `(lhs := value)` could also be accepted as user-facing sugar over that same canonical form,
+  - but both are future normalization ideas only and are not part of the active contract yet.
+- Boundary decision:
+  - active support now includes legacy-compatible top-level `:=` init/reset directives,
+  - while malformed DT action tokens still fail explicitly instead of being silently dropped.
 ## 2026-03-15: bare condition suffixes now fail explicitly
 - The next `R8` slice now closes one more parser-visible legacy ambiguity around guarded-action syntax:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects bare suffix tails like `start` or `full` in assignment/transition suffix positions,
