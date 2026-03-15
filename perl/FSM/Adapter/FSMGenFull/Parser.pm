@@ -89,9 +89,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
     if ($is_flat_ast) {
         fsm_trace_decision(1, 'Using flat AST module header decoding path', 2);
         my $ast_array = $fsm_ast->[1];
-        my $fsm_header = $ast_array->[0];
-        $module_name = $fsm_header->[1][0];
-        $fsm_contents = $ast_array;
+        ($module_name, $fsm_contents) = $self->decode_flat_fsm_structure($ast_array);
     } else {
         fsm_trace_decision(1, 'Using standard AST module header decoding path', 2);
         my ($fsm_header, $contents) = @$fsm_ast;
@@ -211,6 +209,34 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
     $self->validate_no_combinational_self_dependency();
     fsm_trace_exit("Parser parse_fsm_module() completed for '$module_name'", 2);
     return $module;
+}
+
+sub decode_flat_fsm_structure($self, $ast_array) {
+    my $fsm_header = ref($ast_array) eq 'ARRAY' ? $ast_array->[0] : undef;
+    my $name_payload = ref($fsm_header) eq 'ARRAY' ? $fsm_header->[1] : undef;
+    my $module_name = ref($name_payload) eq 'ARRAY' ? $name_payload->[0] : undef;
+
+    if (ref($name_payload) eq 'ARRAY'
+        && defined($module_name)
+        && !ref($module_name)
+        && $module_name ne '')
+    {
+        if (@$ast_array == 1) {
+            my @nested_contents = @$name_payload[1 .. $#$name_payload];
+            return ($module_name, \@nested_contents);
+        }
+
+        if (@$name_payload == 1) {
+            return ($module_name, $ast_array);
+        }
+    }
+
+    Carp::confess
+        "Malformed '+fsm' root. ".
+        "The active contract supports the legacy '+fsm' source family only as either ".
+        "'(+fsm module_name)' followed by sibling sections/state/DT blocks, or ".
+        "the nested legacy root form '(+fsm module_name ... )'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 
 sub parse_constants_section($self, $constants_ast) {

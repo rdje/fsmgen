@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: legacy `+fsm` roots are now a real contract instead of an under-validated compatibility path
+- The next `R8` slice closes a real support gap around the documented flattened legacy FSM root:
+  - `+fsm` was already claimed as a supported source kind,
+  - but the codebase actually carried two shipped legacy layouts:
+    - the flattened sibling form with `(+fsm module_name)` followed by sibling forms,
+    - and the nested legacy root form `(+fsm module_name ...)`,
+  - while malformed `+fsm` roots without a scalar module name still drifted through header decoding instead of getting a targeted contract failure.
+- Implementation:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates the legacy `+fsm` source family explicitly before decoding the module name.
+  - well-formed `+fsm` roots in either shipped legacy layout still parse through the active FSM path,
+  - malformed `+fsm` roots now fail with a targeted `Malformed '+fsm' root` diagnostic instead of relying on incidental AST fallout.
+- Focused regression coverage now exists in [t/46-language-contract-flat-plus-fsm-root.t](/Users/richarddje/Documents/github/fsmgen/t/46-language-contract-flat-plus-fsm-root.t) for:
+  - source classification of `+fsm` as an active FSM source kind,
+  - direct adapter parsing and pipeline/CLI generation for both shipped legacy `+fsm` layouts,
+  - and explicit parser/pipeline/CLI rejection of malformed `+fsm` roots missing a scalar module name.
+- Boundary decision:
+  - the legacy `+fsm` root family remains part of active support,
+  - in the two shipped legacy layouts already present in the tree,
+  - and malformed `+fsm` roots are now explicitly out of contract instead of relying on incidental AST fallout.
 ## 2026-03-15: terminology clarification for FSM-state DTs versus general DTs
 - User wording matters here, and the docs should reflect the language model more precisely:
   - both `(aState ...)` and `(-foobar ...)` are decision trees,

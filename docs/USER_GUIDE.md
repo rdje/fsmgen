@@ -73,7 +73,9 @@ Standard used here:
 
 ### Fully supported single-FSM constructs
 - Root form `(?fsm:name ...)`
-- Flattened legacy root form `(+fsm name)` with sibling `(+system ...)`, state blocks, and `(+size ...)`
+- Legacy `+fsm` root family:
+  - flattened sibling form with a first top-level entry `(+fsm module_name)` and sibling `(+system ...)`, state blocks, and `(+size ...)`
+  - nested legacy root form `(+fsm module_name ...)`
 - Conventional `(+system ...)` section declaring the shared system pair:
   - `(+system (clock clk) (sreset rstn))`
   - `(+system (clock clk) (asreset rstn))`
@@ -346,17 +348,27 @@ Accepted source roots:
 Current boundary:
 - Supported:
   - `?fsm:name` as the active FSM source root
-  - `+fsm` as the legacy flattened FSM root
+  - `+fsm` as the legacy FSM root family:
+    - either the flattened sibling form with a first top-level `(+fsm module_name)` entry,
+    - or the nested legacy root form `(+fsm module_name ...)`
   - `?top:name` as the active composition source root
 - Rejected explicitly:
   - unsupported tagged wrapper/template roots such as `(?define:legacy_template ...)`
   - other tagged source kinds that are neither active FSM sources nor active composition sources
+  - malformed `+fsm` roots that do not provide a scalar module name in one of the two supported legacy layouts
 - Important rule:
   - an unsupported tagged top-level wrapper does not become supported just because it contains a nested `?fsm:name` somewhere inside it
 
 Boundary note:
 - This slice makes the top-level source-kind boundary explicit instead of letting legacy tagged wrappers drift through the nested-`?fsm` fallback path.
 - The active toolchain now treats unsupported tagged roots as out of support at the top-level boundary, not as accidental containers for live FSM parsing.
+- The legacy `+fsm` root family is supported as a real source kind, but it must still follow the active scalar-name contract:
+  - accepted:
+    - `(+fsm my_module)` followed by sibling `(+system ...)`, state/DT blocks, and other supported top-level forms
+    - `(+fsm my_module ...)`
+  - rejected:
+    - `(+fsm)` without a scalar module name
+    - malformed `+fsm` roots whose payload does not match either supported legacy layout
 
 ### Draft normative contract for the conventional `+system` section
 This is the current `R8` draft normative contract for the active `+system` boundary.

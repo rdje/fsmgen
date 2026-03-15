@@ -20,6 +20,22 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: legacy `+fsm` root contract is now explicit
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates the legacy `+fsm` source family before decoding the module name,
+  - [t/46-language-contract-flat-plus-fsm-root.t](/Users/richarddje/Documents/github/fsmgen/t/46-language-contract-flat-plus-fsm-root.t) now locks both shipped legacy `+fsm` layouts plus explicit rejection of malformed `+fsm` roots,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now states the two active legacy layouts truthfully.
+- Scope of the landed contract slice:
+  - explicit support now includes the real shipped legacy `+fsm` family as a regression-backed active source kind,
+  - explicit rejection now covers malformed `+fsm` roots that omit the scalar module name.
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more documented legacy source form as an explicit supported-or-rejected contract boundary.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser/runtime-visible language edges,
+  - and keep replacing under-validated legacy compatibility paths with explicit contract checks.
 ## 2026-03-15: DT-versus-state wording is now clarified
 - Current worktree is a terminology-only follow-up:
   - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now says both syntaxes are decision trees,

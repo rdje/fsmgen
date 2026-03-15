@@ -298,6 +298,11 @@ Done:
   - the unary word alias `(not flag)`,
   - and generated HDL that keeps the source inputs from parser-created relational intermediates live in the module interface.
 - [t/41-language-contract-top-level-source-kind-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/41-language-contract-top-level-source-kind-boundary.t) now locks explicit rejection of unsupported tagged top-level source kinds such as `?define:legacy_template`, so legacy wrapper/template roots no longer drift through the nested-`?fsm` fallback path.
+- [t/46-language-contract-flat-plus-fsm-root.t](/Users/richarddje/Documents/github/fsmgen/t/46-language-contract-flat-plus-fsm-root.t) now locks the flattened legacy `+fsm` root directly:
+  - both supported legacy `+fsm` layouts now generate HDL end to end:
+    - the flattened sibling form with a first top-level `(+fsm module_name)` entry,
+    - and the nested legacy root form `(+fsm module_name ...)`,
+  - malformed `+fsm` roots without a scalar module name now fail with a targeted contract diagnostic instead of drifting through generic flat-header fallout.
 - [t/42-language-contract-test-selector-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/42-language-contract-test-selector-boundary.t) now locks the explicit-selector boundary for test-node branches:
   - operator-prefixed selectors such as `=0`, `=OTHER`, and `!=8'0` remain supported,
   - while malformed bare selectors such as `BUSY` or `0` are now rejected explicitly.

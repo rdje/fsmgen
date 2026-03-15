@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### legacy `+fsm` roots now have an explicit contract boundary
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so the legacy `+fsm` source family is now validated explicitly before module-name decoding:
+  - accepted:
+    - the flattened sibling layout with a first top-level `(+fsm module_name)` entry followed by sibling sections and state/DT blocks
+    - the nested legacy root layout `(+fsm module_name ...)`
+  - rejected: malformed `+fsm` roots without a scalar module name
+- Added focused regression coverage in [t/46-language-contract-flat-plus-fsm-root.t](/Users/richarddje/Documents/github/fsmgen/t/46-language-contract-flat-plus-fsm-root.t) for:
+  - source classification of `+fsm`,
+  - direct adapter parsing of both shipped legacy layouts,
+  - pipeline and CLI generation for both valid paths,
+  - and explicit parser/pipeline/CLI rejection of malformed `+fsm` roots.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the live language contract now describes the real legacy `+fsm` family truthfully.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
 ### user-facing DT-versus-state terminology is now sharper
 - Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) so the supported-language section now uses the more precise user-facing distinction:
   - both `(aState ...)` and `(-foobar ...)` are decision trees,
