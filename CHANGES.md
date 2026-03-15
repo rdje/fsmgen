@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### unsupported assignment operators now fail through an explicit contract boundary
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so unsupported assignment operators now surface through a dedicated user-facing assignment-operator diagnostic instead of a raw internal parser `confess`.
+- Added [t/59-language-contract-assignment-operator-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/59-language-contract-assignment-operator-boundary.t) to lock:
+  - explicit rejection of unsupported operators such as `?=` and `=>`,
+  - and pipeline/CLI no-output behavior for malformed assignment forms.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the active assignment-operator family and its malformed boundary are now documented explicitly.
 ### malformed guard shorthand and inline comparison tokens now fail through explicit boundaries
 - Updated [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) so malformed guard shorthand payloads and malformed inline comparison tokens now surface through their dedicated contract diagnostics instead of falling through to generic unsupported-expression-token errors.
 - Added [t/58-language-contract-condition-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/58-language-contract-condition-expression-boundary.t) to lock:

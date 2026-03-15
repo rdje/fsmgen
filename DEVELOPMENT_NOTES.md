@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: unsupported assignment operators now fail through an explicit boundary
+- The active assignment family was already stable on the happy path, but unsupported operators like `?=` and `=>` were still leaking a raw internal parser `confess`.
+- The active contract is now explicit on that malformed side too:
+  - decision-tree assignments support `=`, `<-`, `<-=`, `<=`, `<=+`, and delayed-pulse forms like `<1`,
+  - unsupported operators such as `?=` and `=>` now fail through a dedicated assignment-operator boundary,
+  - and that same boundary is now locked through parser, pipeline, and CLI entry points.
 ## 2026-03-15: malformed guard shorthand and inline comparison tokens now fail through explicit boundaries
 - The active shorthand/inline comparison surface was already supported, but malformed forms like `<mode=` and `cnt[2:1]!=` were still leaking generic unsupported-expression-token diagnostics.
 - The active contract is now explicit on that malformed side too:

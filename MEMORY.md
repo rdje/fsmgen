@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-15: unsupported assignment operators now fail early through an explicit boundary
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now turns unsupported assignment operators into a dedicated user-facing assignment-operator diagnostic instead of a raw internal parser `confess`.
+- [t/59-language-contract-assignment-operator-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/59-language-contract-assignment-operator-boundary.t) now locks:
+  - unsupported operators such as `?=` and `=>`,
+  - and pipeline/CLI no-output behavior for malformed assignment forms.
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now states the active assignment-operator family explicitly and documents rejection of unsupported operators.
 ## 2026-03-15: malformed guard shorthand and inline comparison tokens now fail early through explicit boundaries
 - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now turns malformed guard shorthand payloads and malformed inline comparison tokens into their dedicated contract diagnostics instead of generic unsupported-expression-token errors.
 - [t/58-language-contract-condition-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/58-language-contract-condition-expression-boundary.t) now locks:

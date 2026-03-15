@@ -127,6 +127,7 @@ Combinational DT note:
 - Dual-output D-input form `(K <=+ L)` producing `K_r`
 - Delayed pulse form `(P <N 0)` and `(P <N 1)`, including `N=0`
   - malformed delayed-pulse RHS values such as `(P <1 B)` or `(P <1 2'0)` are rejected explicitly
+  - unsupported assignment operators such as `(A ?= B)` or `(A => B)` are rejected explicitly
 - Literal forms `1`, `8'3`, `8'b1010`, `8'hFF`, and `const_8b0`
 - Signal-reference forms `SIG`, `SIG[3]`, `SIG[7:0]`, `SIG'8`, `SIG.member`, and `SIG>`
 - Condition forms that are in the active supported path: `<sig`, `<!sig`, `<sig=value`, `<sig==value`, `<sig!=value`, `<sig<value`, `<sig<=value`, `<sig>value`, `<sig>=value`, and test-node selector branches like `=0`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, and `>=8'1`
@@ -251,6 +252,14 @@ Update shorthand:
 Operator expressions:
 - The RHS expression grammar is shared across combinational and sequential assignments.
 - The assignment operator decides timing/storage semantics; the RHS decides only the expression tree.
+- The active assignment-operator family is:
+  - `=`
+  - `<-`
+  - `<-=`
+  - `<=`
+  - `<=+`
+  - delayed-pulse forms like `<1`, `<2`, and `<N`
+- Unsupported assignment operators such as `?=` or `=>` are rejected explicitly instead of falling through to internal parser errors.
 - Current regression-backed operator surface:
   - unary: `!`
   - n-ary comparison: `==`, `!=`, `<`, `<=`, `>`, `>=`

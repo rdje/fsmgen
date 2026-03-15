@@ -1463,7 +1463,10 @@ sub parse_signal_action($self, $action) {
             },
         );
     } else {
-        Carp::confess "[Parser.pm][parse_signal_action()] Unsupported assignment operator '$operator' for signal '$signal_name'";
+        Carp::confess
+            "Unsupported assignment operator '$operator' for signal '$signal_name'. ".
+            "Decision-tree assignments must use one of '=', '<-', '<-=', '<=', '<=+', or a delayed-pulse form like '<1'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }
     
     if (defined $full_condition) {

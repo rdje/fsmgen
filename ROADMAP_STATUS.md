@@ -366,6 +366,10 @@ Done:
   - malformed guard shorthand payloads such as `mode=` or `==3` now fail through the dedicated guard-condition boundary,
   - malformed inline comparison tokens such as `cnt[2:1]!=` or `=3` now fail through the dedicated inline-comparison boundary,
   - and both malformed families now fail clearly through parser, pipeline, and CLI entry points without emitting HDL.
+- [t/59-language-contract-assignment-operator-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/59-language-contract-assignment-operator-boundary.t) now locks the assignment-operator boundary explicitly:
+  - the active assignment family is `=`, `<-`, `<-=`, `<=`, `<=+`, and delayed-pulse forms like `<1`,
+  - unsupported operators such as `?=` or `=>` now fail through a dedicated assignment-operator boundary,
+  - and those malformed assignment forms now fail clearly through parser, pipeline, and CLI entry points without emitting HDL.
 - [t/35-language-contract-test-branch-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/35-language-contract-test-branch-boundary.t) now locks explicit rejection of malformed empty test-node branches so `?sig` / case-style dispatch no longer fails through a generic internal `undef` action path.
 - [t/36-language-contract-test-branch-selectors.t](/Users/richarddje/Documents/github/fsmgen/t/36-language-contract-test-branch-selectors.t) now locks active relational test-node selector lowering for `!=`, `>`, and `<=`, so the shipped `?sig` selector family is no longer documented more narrowly than the live lowering behavior.
 - [t/37-language-contract-computed-test-selector.t](/Users/richarddje/Documents/github/fsmgen/t/37-language-contract-computed-test-selector.t) now locks the active `?(expr)` computed-selector form end to end:
