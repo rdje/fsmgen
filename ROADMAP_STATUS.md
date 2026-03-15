@@ -305,6 +305,7 @@ Done:
   - explicit rejection of malformed DT action forms,
   - and explicit rejection of empty guarded blocks so broken DT actions no longer disappear silently.
 - [t/35-language-contract-test-branch-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/35-language-contract-test-branch-boundary.t) now locks explicit rejection of malformed empty test-node branches so `?sig` / case-style dispatch no longer fails through a generic internal `undef` action path.
+- [t/36-language-contract-test-branch-selectors.t](/Users/richarddje/Documents/github/fsmgen/t/36-language-contract-test-branch-selectors.t) now locks active relational test-node selector lowering for `!=`, `>`, and `<=`, so the shipped `?sig` selector family is no longer documented more narrowly than the live lowering behavior.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.

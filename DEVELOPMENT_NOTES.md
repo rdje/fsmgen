@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: relational `?sig` selectors are now part of the active contract
+- The shipped corpus and active lowering path already relied on a broader `?sig` selector family than the docs admitted:
+  - selectors like `!=8'0`, `>8'3`, and `<=8'3` are real active language forms, not just `=0` / `=1`.
+- This `R8` slice now makes that truthful:
+  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) now lowers relational test-node selectors with the matching comparison operator instead of collapsing everything to equality,
+  - and [t/36-language-contract-test-branch-selectors.t](/Users/richarddje/Documents/github/fsmgen/t/36-language-contract-test-branch-selectors.t) now locks that behavior through captured condition ASTs and emitted HDL.
+- Boundary decision:
+  - active `?sig` selectors now include exact-value and relational operators,
+  - and the docs now state that broader selector family explicitly instead of underspecifying the live language.
 ## 2026-03-15: malformed empty test-node branches now fail explicitly
 - The next `R8` slice now tightens the `?sig` / case-style dispatch boundary:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now emits a targeted malformed-test-branch diagnostic instead of leaking malformed empty branches through a generic internal `undef` action failure.

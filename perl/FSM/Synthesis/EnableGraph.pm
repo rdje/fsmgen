@@ -486,6 +486,20 @@ sub convert_test_value_to_ast($self, $test_value) {
         return FSM::AST::Utils::literal($test_value);
     }
 }
+
+sub parse_test_value_selector($self, $test_value) {
+    Carp::confess "[EnableGraph.pm][parse_test_value_selector()] Missing test value selector"
+        unless defined $test_value && $test_value ne '';
+
+    if ($test_value =~ /^(==|!=|<=|>=|<|>|=)(.+)$/) {
+        my ($operator, $raw_value) = ($1, $2);
+        $operator = '==' if $operator eq '=';
+        return ($operator, $raw_value);
+    }
+
+    return ('==', $test_value);
+}
+
 sub build_test_condition_ast($self, $test_signal, $test_value) {
     my $test_signal_name = blessed($test_signal) && $test_signal->can('name')
         ? $test_signal->name
@@ -495,9 +509,14 @@ sub build_test_condition_ast($self, $test_signal, $test_value) {
         die "[EnableGraph.pm][build_test_condition_ast()] Missing test signal name";
     }
 
+    my ($operator, $raw_test_value) = $self->parse_test_value_selector($test_value);
     my $signal_ast = FSM::AST::Utils::signal_ref($test_signal_name);
-    my $value_ast = $self->convert_test_value_to_ast($test_value);
-    return FSM::AST::Utils::equals_op($signal_ast, $value_ast);
+    my $value_ast = $self->convert_test_value_to_ast($raw_test_value);
+
+    return FSM::AST::Utils::equals_op($signal_ast, $value_ast)
+        if $operator eq '==';
+
+    return FSM::AST::BinaryOp->new($operator, $signal_ast, $value_ast);
 }
 sub build_unified_assignment_analysis($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};

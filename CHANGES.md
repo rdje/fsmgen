@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### relational test-node selectors are now explicit and regression-backed
+- Updated [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) so `?sig` selector branches now lower relational selectors with their actual comparison operators instead of collapsing the active selector family to equality-only behavior.
+- Added focused regression coverage in [t/36-language-contract-test-branch-selectors.t](/Users/richarddje/Documents/github/fsmgen/t/36-language-contract-test-branch-selectors.t) for:
+  - `!=` selector lowering,
+  - `>` selector lowering,
+  - `<=` selector lowering,
+  - both captured condition ASTs and emitted HDL text.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) so the active test-node contract now documents the broader shipped selector family explicitly instead of describing only equality selectors.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so `R8` done/left tracking reflects that the selector family is now both truthfully documented and regression-backed.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
+- Validation:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c t/36-language-contract-test-branch-selectors.t` (pass)
+  - `prove -I perl t/36-language-contract-test-branch-selectors.t` (pass)
 ### malformed empty test-node branches now fail explicitly
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so malformed empty `?sig` / case-style test branches now fail with a targeted diagnostic instead of leaking through a generic internal `undef` action path.
 - Added focused regression coverage in [t/35-language-contract-test-branch-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/35-language-contract-test-branch-boundary.t) for:

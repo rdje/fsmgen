@@ -94,7 +94,7 @@ Standalone DT note:
 
 - `(+size ...)` signal-width declarations
 - Unconditional state transitions `(-> next_state)`
-- Test-node branching `(?SIG (=0 ...) (=1 ...))`
+- Test-node branching `(?SIG (=0 ...) (!=8'0 ...) (>8'3 ...) (<=8'3 ...))`
 - Register assignment `(A <- B)`
 - D-input style sequential assignment `(A <= B)`
 - Combinational assignment `(A = B)`
@@ -104,7 +104,7 @@ Standalone DT note:
 - Delayed pulse form `(P <N 0)` and `(P <N 1)`, including `N=0`
 - Literal forms `1`, `8'3`, `8'b1010`, `8'hFF`, and `const_8b0`
 - Signal-reference forms `SIG`, `SIG[3]`, `SIG[7:0]`, `SIG'8`, `SIG.member`, and `SIG>`
-- Condition forms that are in the active supported path: `<sig`, `<!sig`, `<sig=value`, and test-node equality branches like `=0` / `=1`
+- Condition forms that are in the active supported path: `<sig`, `<!sig`, `<sig=value`, and test-node selector branches like `=0`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, and `>=8'1`
 - Nested guarded blocks using standalone `< ...` / `<! ...` action forms
 - Condition suffixes attached directly to assignments or transitions, for example `(A <= B <start)` and `(-> busy <!full)`
 - Compound-update shorthand forms `(++ sig)`, `(-- sig)`, `(+=N sig)`, and `(-=N sig)`
@@ -215,11 +215,15 @@ Boundary note:
 - In particular, the more systematic sugar direction such as `<foo==3` as canonical shorthand over a fully explicit guard expression remains saved in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), but it is not yet the active supported language contract.
 
 Test nodes:
-- `(?SIG (=0 ...actions...) (=1 ...actions...))` is the active multi-way exact-value dispatch form.
+- `(?SIG (=0 ...actions...) (!=8'0 ...actions...) (>8'3 ...actions...) ...)` is the active multi-way selector form.
 - Each test branch must include:
-  - a selector like `=0`, `=1`, or `=3`
+  - a selector like `=0`, `=1`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, or `>=8'1`
   - and at least one nested action
 - Malformed empty branches such as `(?MODE (=0))` are rejected explicitly.
+- Selector meaning:
+  - `=value` means equality
+  - `!=value` means inequality
+  - `<value`, `<=value`, `>value`, `>=value` mean the corresponding relational comparison against the test signal
 
 ### Draft normative contract for symbol-definition sections
 This is the current `R8` draft normative contract for the symbol-definition families that are now regression-backed explicitly.

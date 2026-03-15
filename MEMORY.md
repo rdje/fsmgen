@@ -66,6 +66,26 @@ After each completed task, always do this in order:
   - keep `R8` active,
   - continue auditing remaining parser-visible legacy constructs,
   - and keep replacing generic parser artifacts with supported or explicitly rejected behavior.
+## 2026-03-15: relational test-node selectors are now explicit and regression-backed
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) now lowers relational `?sig` selectors using their actual operators instead of collapsing them to equality,
+  - [t/36-language-contract-test-branch-selectors.t](/Users/richarddje/Documents/github/fsmgen/t/36-language-contract-test-branch-selectors.t) now locks captured AST and emitted-HDL behavior for `!=`, `>`, and `<=`,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the broader active selector family explicitly.
+- Scope of the landed contract slice:
+  - explicit support for exact and relational `?sig` selectors such as `=0`, `!=8'0`, `>8'3`, and `<=8'3`
+  - removal of the incorrect equality-only lowering in the active generation path
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more parser/runtime-visible language family as regression-backed and truthfully documented.
+- Validation for this slice:
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c t/36-language-contract-test-branch-selectors.t`
+  - `prove -I perl t/36-language-contract-test-branch-selectors.t`
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser-visible legacy constructs and underspecified live behavior,
+  - and keep promoting or rejecting each family explicitly.
 ## 2026-03-15: bare condition suffixes now fail explicitly
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects bare suffix tails in assignment/transition suffix positions,
