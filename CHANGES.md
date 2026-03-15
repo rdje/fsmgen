@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### delayed-pulse `<N` RHS values now fail through an explicit contract boundary
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so malformed delayed-pulse RHS values now surface through a clean user-facing contract diagnostic instead of raw internal parser messages.
+- Added [t/57-language-contract-pulse-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/57-language-contract-pulse-boundary.t) to lock:
+  - explicit rejection of malformed delayed-pulse RHS values such as `B` and `2'0`,
+  - and pipeline/CLI no-output behavior for malformed delayed-pulse assignments.
+- Updated [t/04-assignment-edge-cases.t](/Users/richarddje/Documents/github/fsmgen/t/04-assignment-edge-cases.t), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the active pulse boundary is described and checked consistently.
 ### `:=` reset/default RHS values now fail through the dedicated init contract
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so malformed `:=` RHS values now surface through the dedicated init/reset boundary instead of leaking raw expression-parser failures.
 - Added [t/56-language-contract-init-directive-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/56-language-contract-init-directive-boundary.t) to lock:

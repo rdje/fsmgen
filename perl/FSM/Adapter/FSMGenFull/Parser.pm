@@ -1483,13 +1483,19 @@ sub parse_signal_action($self, $action) {
 }
 
 sub resolve_single_bit_logic_level($self, $source_expr, $raw_value_expr) {
+    my $rhs_desc = defined($raw_value_expr)
+        ? (ref($raw_value_expr) ? ref($raw_value_expr) : $raw_value_expr)
+        : 'undef';
     my $logic_level;
     if ($source_expr && $source_expr->isa('FSM::CoreAST::Literal')) {
         my $value = $source_expr->value;
         my $width = $source_expr->width;
         my $radix = $source_expr->radix // 'decimal';
         if (defined($width) && $width != 1) {
-            Carp::confess "[Parser.pm][resolve_single_bit_logic_level()] Delayed pulse RHS must be 1-bit literal 0/1, got width '$width'";
+            Carp::confess
+                "Malformed delayed pulse RHS '$rhs_desc'. ".
+                "Delayed pulse assignments must use '(P <N 0)' or '(P <N 1)' with a 1-bit literal RHS. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n";
         }
         if (defined($value) && $value =~ /^[01]$/) {
             $logic_level = int($value);
@@ -1505,8 +1511,10 @@ sub resolve_single_bit_logic_level($self, $source_expr, $raw_value_expr) {
         $logic_level = int($raw_value_expr);
     }
     if (!defined($logic_level)) {
-        my $rhs_desc = defined($raw_value_expr) ? (ref($raw_value_expr) ? ref($raw_value_expr) : $raw_value_expr) : 'undef';
-        Carp::confess "[Parser.pm][resolve_single_bit_logic_level()] Delayed pulse '<N' requires RHS literal 0 or 1, got '$rhs_desc'";
+        Carp::confess
+            "Malformed delayed pulse RHS '$rhs_desc'. ".
+            "Delayed pulse assignments must use '(P <N 0)' or '(P <N 1)' with a 1-bit literal RHS. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }
     return $logic_level;
 }

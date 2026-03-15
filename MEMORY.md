@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-15: malformed delayed-pulse RHS values now fail early through a contract boundary
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now turns malformed delayed-pulse `<N` RHS values into a clean user-facing contract diagnostic instead of raw internal parser messages.
+- [t/57-language-contract-pulse-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/57-language-contract-pulse-boundary.t) now locks:
+  - malformed delayed-pulse RHS values such as `B` and `2'0`,
+  - and pipeline/CLI no-output behavior for malformed delayed-pulse assignments.
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now states that malformed delayed-pulse RHS values are rejected explicitly.
 ## Purpose
 - Preserve the minimum complete context needed to resume work immediately.
 - Capture key technical decisions and current implementation status.

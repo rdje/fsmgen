@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: malformed delayed-pulse RHS values now fail through an explicit boundary
+- The active delayed-pulse `<N` form was already supported and covered on its happy path, but malformed RHS values still used raw internal parser messages.
+- The active contract is now explicit on that malformed side too:
+  - `(P <1 B)`
+  - `(P <1 2'0)`
+  now fail as malformed delayed-pulse RHS values with the same user-facing contract style used elsewhere in `R8`.
 ## 2026-03-15: plain `?SIG` test-node names are now part of the explicit contract
 - The next `R8` slice closes a small but real test-node boundary gap:
   - selector tokens and computed selectors were already explicit,

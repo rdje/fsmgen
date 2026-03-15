@@ -89,7 +89,7 @@ FSM
 ok(!$invalid_rhs->{success}, "rejects <N pulse when RHS is not literal 0/1");
 like(
     $invalid_rhs->{combined_output},
-    qr/Delayed pulse '<N' requires RHS literal 0 or 1/s,
+    qr/Malformed delayed pulse RHS 'B'.*1-bit literal RHS/s,
     "reports precise parser error for invalid <N RHS literal requirement"
 );
 

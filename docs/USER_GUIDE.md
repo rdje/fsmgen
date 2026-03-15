@@ -126,6 +126,7 @@ Combinational DT note:
 - Dual-output register form `(I <-= J)` producing `next_I`
 - Dual-output D-input form `(K <=+ L)` producing `K_r`
 - Delayed pulse form `(P <N 0)` and `(P <N 1)`, including `N=0`
+  - malformed delayed-pulse RHS values such as `(P <1 B)` or `(P <1 2'0)` are rejected explicitly
 - Literal forms `1`, `8'3`, `8'b1010`, `8'hFF`, and `const_8b0`
 - Signal-reference forms `SIG`, `SIG[3]`, `SIG[7:0]`, `SIG'8`, `SIG.member`, and `SIG>`
 - Condition forms that are in the active supported path: `<sig`, `<!sig`, `<sig=value`, `<sig==value`, `<sig!=value`, `<sig<value`, `<sig<=value`, `<sig>value`, `<sig>=value`, and test-node selector branches like `=0`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, and `>=8'1`
