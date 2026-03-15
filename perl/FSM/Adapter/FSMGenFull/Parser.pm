@@ -656,6 +656,13 @@ sub parse_state($self, $state_ast) {
     } elsif (ref($decision_trees) eq 'ARRAY') {
         @trees = ($decision_trees);
     }
+
+    Carp::confess
+        "Malformed state/DT block '$state_name'. ".
+        "FSM-state DT blocks like '(aState ...)' and general/combinational DT blocks like '(-mycombDT ...)' ".
+        "must contain at least one nested decision-tree body or action form. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless @trees;
     
     for my $tree (@trees) {
         if (ref($tree) eq 'ARRAY') {
@@ -663,6 +670,13 @@ sub parse_state($self, $state_ast) {
             $state->add_decision_tree($dt) if $dt;
         }
     }
+
+    Carp::confess
+        "Malformed state/DT block '$state_name'. ".
+        "FSM-state DT blocks like '(aState ...)' and general/combinational DT blocks like '(-mycombDT ...)' ".
+        "must contain at least one real nested decision-tree action. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless $state->decision_trees && @{$state->decision_trees};
     
     return $state;
 }

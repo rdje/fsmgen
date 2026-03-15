@@ -20,6 +20,23 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: state/DT blocks now need a real body
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects empty state/DT blocks instead of building empty pseudo-states,
+  - [t/49-language-contract-state-body-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/49-language-contract-state-body-boundary.t) now locks parser, pipeline, and CLI behavior for empty FSM-state DT blocks and empty general DT blocks,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now states that state/DT blocks must contain a real body.
+- Scope of the landed contract slice:
+  - explicit support still includes FSM-state DT blocks and general/combinational DT blocks,
+  - explicit rejection now covers empty blocks like `(idle)` and `(-misc)`,
+  - and malformed empty pseudo-states no longer drift through to later runtime stages.
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more parser-visible block-shape boundary as explicitly documented and regression-backed.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser/runtime-visible language edges,
+  - and keep replacing silent fallthrough behavior with explicit contract diagnostics.
 ## 2026-03-15: general/combinational DT blocks now carry explicit standalone classification
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) now exposes `is_standalone_dt` on `FSM::CoreAST::State` and treats general/combinational DTs as an explicit state-role family,

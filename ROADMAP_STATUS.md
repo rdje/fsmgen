@@ -310,6 +310,10 @@ Done:
   - hyphen-prefixed general DT blocks now carry explicit `standalone_dt` classification in the AST,
   - they stay out of the encoded-state plan,
   - and they emit DT-style enables instead of regular `current_state` comparisons.
+- [t/49-language-contract-state-body-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/49-language-contract-state-body-boundary.t) now locks the state/DT body boundary explicitly:
+  - empty FSM-state DT blocks like `(idle)` are rejected,
+  - empty general DT blocks like `(-misc)` are rejected,
+  - and malformed empty pseudo-states no longer drift through to later runtime stages.
 - [t/42-language-contract-test-selector-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/42-language-contract-test-selector-boundary.t) now locks the explicit-selector boundary for test-node branches:
   - operator-prefixed selectors such as `=0`, `=OTHER`, and `!=8'0` remain supported,
   - while malformed bare selectors such as `BUSY` or `0` are now rejected explicitly.

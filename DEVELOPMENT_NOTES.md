@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: state/DT blocks now need a real body
+- The next `R8` slice closes a small but real parser-visible gray zone:
+  - empty blocks like `(idle)` or `(-misc)` were not part of the intended language,
+  - but the parser could still build an empty pseudo-state by falling through with no decision trees.
+- Implementation:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects state/DT blocks that do not contain at least one nested decision-tree body or action form.
+- Focused regression coverage now exists in [t/49-language-contract-state-body-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/49-language-contract-state-body-boundary.t) for:
+  - empty FSM-state DT blocks,
+  - empty general/combinational DT blocks,
+  - and pipeline/CLI confirmation that those malformed blocks do not emit HDL.
+- Boundary decision:
+  - FSM-state DT blocks like `(aState ...)` and general/combinational DT blocks like `(-mycombDT ...)` must carry a real body,
+  - empty block payloads are explicitly outside the active contract.
 ## 2026-03-15: general/combinational DT blocks are now explicit standalone DTs
 - The next `R8` slice closes a terminology-versus-runtime gap around hyphen-prefixed DT blocks:
   - user-facing wording already distinguishes `(aState ...)` as an FSM-state DT from `(-mycombDT ...)` as a general/combinational DT block,

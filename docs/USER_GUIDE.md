@@ -176,6 +176,10 @@ Combinational DT note:
 - Malformed action forms or empty guarded blocks that do not carry a real action body, for example:
   - `(BROKEN)`
   - `(<req)`
+- Malformed empty or scalar-only state/DT blocks that do not carry a real decision-tree body, for example:
+- Malformed empty state/DT blocks that do not carry a real decision-tree body, for example:
+  - `(idle)`
+  - `(-misc)`
 - Malformed test-node branches that do not carry a real branch body, for example:
   - `(?MODE (=0))`
 - Malformed test-node selectors that omit the explicit selector operator, for example:
