@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### malformed legacy `+fsm` root bodies are now regression-backed explicitly
+- Added [t/65-language-contract-plus-fsm-body-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/65-language-contract-plus-fsm-body-boundary.t) to lock the malformed-body side of the already-shipped legacy `+fsm` root family:
+  - explicit rejection of empty `(+fsm plus_empty)` roots,
+  - explicit rejection of scalar body items like `(+fsm plus_scalar BROKEN)`,
+  - and pipeline/CLI no-output behavior for those malformed legacy roots.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the live top-level source contract now calls out the legacy `+fsm` body boundary explicitly too.
 ### malformed structured `?fsm` root bodies now fail through an explicit boundary
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so structured `?fsm:name` roots now require a non-empty top-level item list and reject scalar top-level body items explicitly instead of relying on incidental later-stage fallout.
 - Added [t/64-language-contract-fsm-root-body-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/64-language-contract-fsm-root-body-boundary.t) to lock:

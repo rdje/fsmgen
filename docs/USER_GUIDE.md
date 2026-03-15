@@ -455,6 +455,14 @@ Boundary note:
     - `(?fsm:empty_root)`
     - `(?fsm:scalar_root BROKEN)`
     - any structured `?fsm:name` root whose top-level body items are not list forms
+- Legacy `+fsm` roots must carry a real body too:
+  - accepted:
+    - `(+fsm my_module)` followed by sibling FSM content
+    - `(+fsm my_module (+system ...) (idle ...))`
+  - rejected:
+    - `(+fsm my_module)` with no sibling or nested body content at all
+    - `(+fsm my_module BROKEN)`
+    - any legacy `+fsm` root whose body items are not list forms
 
 ### Draft normative contract for the conventional `+system` section
 This is the current `R8` draft normative contract for the active `+system` boundary.

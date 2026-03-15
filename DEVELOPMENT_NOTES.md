@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: malformed legacy `+fsm` root bodies are now regression-backed explicitly
+- The previous root-body slice tightened both `?fsm:name` and `+fsm` in the parser, but only the structured `?fsm:name` side was locked directly in a focused regression.
+- The active contract is now explicit on the legacy side too:
+  - empty `+fsm` roots like `(+fsm plus_empty)` are rejected,
+  - scalar `+fsm` body items like `(+fsm plus_scalar BROKEN)` are rejected,
+  - and the already-shipped body validator is now locked through parser, pipeline, and CLI entry points for the legacy root family as well.
 ## 2026-03-15: malformed structured `?fsm` root bodies now fail through an explicit boundary
 - After tightening bare source roots, one more source-level gap remained inside the structured `?fsm:name` family:
   - `(?fsm:empty_root)` could still decode to an `undef` body,

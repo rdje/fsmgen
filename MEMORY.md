@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-15: malformed legacy `+fsm` root bodies are now locked explicitly
+- [t/65-language-contract-plus-fsm-body-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/65-language-contract-plus-fsm-body-boundary.t) now locks the malformed-body side of the legacy `+fsm` root family directly:
+  - empty `(+fsm plus_empty)` roots are rejected,
+  - scalar body items like `(+fsm plus_scalar BROKEN)` are rejected,
+  - and pipeline/CLI do not emit HDL for those malformed legacy roots.
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now states that legacy `+fsm` roots must carry real sibling or nested body content instead of an empty or scalar payload.
 ## 2026-03-15: malformed structured `?fsm` root bodies now fail early through an explicit boundary
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now requires structured `?fsm:name` roots to carry a non-empty top-level item list and rejects scalar top-level body items explicitly.
 - [t/64-language-contract-fsm-root-body-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/64-language-contract-fsm-root-body-boundary.t) now locks:

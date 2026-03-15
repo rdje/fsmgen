@@ -326,6 +326,10 @@ Done:
   - empty structured roots like `(?fsm:empty_root)` are rejected explicitly,
   - scalar top-level body items like `(?fsm:scalar_root BROKEN)` are rejected explicitly,
   - and parser, pipeline, and CLI entry points now reject those malformed structured roots without emitting HDL.
+- [t/65-language-contract-plus-fsm-body-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/65-language-contract-plus-fsm-body-boundary.t) now locks the legacy `+fsm` body boundary explicitly:
+  - empty `+fsm` roots like `(+fsm plus_empty)` are rejected explicitly,
+  - scalar `+fsm` body items like `(+fsm plus_scalar BROKEN)` are rejected explicitly,
+  - and parser, pipeline, and CLI entry points now reject those malformed legacy roots without emitting HDL.
 - [t/48-language-contract-standalone-dt-classification.t](/Users/richarddje/Documents/github/fsmgen/t/48-language-contract-standalone-dt-classification.t) now locks the general/combinational DT boundary explicitly:
   - hyphen-prefixed general DT blocks now carry explicit `standalone_dt` classification in the AST,
   - they stay out of the encoded-state plan,
