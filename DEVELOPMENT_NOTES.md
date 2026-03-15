@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: transition targets are now part of the explicit contract
+- The next `R8` slice closes a real control-flow boundary gap:
+  - state/DT block names are now validated explicitly,
+  - but transition targets were still mostly taken on trust and could drift into invalid `STATE_*` references or undeclared-state targets later in HDL generation.
+- Implementation:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates transition target spelling immediately while parsing `->`.
+  - Transition targets must be HDL-identifier-compatible regular-state names.
+  - After the FSM is fully parsed, the parser now validates that each recorded transition target resolves to a declared regular FSM-state DT block inside the same FSM source.
+- Focused regression coverage now exists in [t/53-language-contract-transition-target-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/53-language-contract-transition-target-boundary.t) for:
+  - declared forward transition targets,
+  - malformed target names like `bad-name`,
+  - non-state targets like `-comb`,
+  - unknown targets like `missing_state`,
+  - and pipeline/CLI confirmation that bad targets do not emit HDL.
+- Boundary decision:
+  - transition targets are now a first-class source-level contract boundary,
+  - not only an eventual HDL-side naming assumption,
+  - and they must point at declared regular FSM-state DT blocks rather than standalone DTs or undeclared names.
 ## 2026-03-15: state and DT block names are now part of the explicit contract
 - The next `R8` slice closes a real naming-boundary gap:
   - source-root names were already validated explicitly,

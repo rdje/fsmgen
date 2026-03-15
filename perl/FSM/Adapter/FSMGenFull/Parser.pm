@@ -21,6 +21,7 @@ sub new($class, %args) {
         expression_builder => $args{expression_builder},
         fsm_module => undef,
         combinational_dependency_graph => {},
+        parsed_transition_targets => [],
     }, $class;
 }
 
@@ -32,6 +33,7 @@ sub parse_fsm($self, $raw_ast) {
     fsm_trace_enter('Parser parse_fsm() entry', 2);
     fsm_debug("Starting full FSMGen parsing", 3);
     $self->reset_combinational_dependency_tracking();
+    $self->reset_transition_target_tracking();
 
     my $source_info = FSM::SourceClassifier::classify_source_ast($raw_ast);
     if ($source_info->{kind} eq 'composition') {
@@ -83,6 +85,7 @@ sub parse_fsm($self, $raw_ast) {
 sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
     fsm_trace_enter('Parser parse_fsm_module() entry', 2);
     $self->reset_combinational_dependency_tracking();
+    $self->reset_transition_target_tracking();
     my $module_name;
     my $fsm_contents;
     
@@ -179,6 +182,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
         }
     }
 
+    $self->validate_transition_targets($module);
     $self->validate_no_combinational_self_dependency();
     fsm_trace_exit("Parser parse_fsm_module() completed for '$module_name'", 2);
     return $module;
@@ -437,6 +441,42 @@ sub is_contract_identifier($self, $value) {
 sub describe_contract_name($self, $value) {
     return defined($value) && !ref($value) ? $value : 'unknown';
 }
+
+sub reset_transition_target_tracking($self) {
+    $self->{parsed_transition_targets} = [];
+}
+
+sub record_transition_target($self, $target_state) {
+    push @{$self->{parsed_transition_targets}}, {
+        target_state => $target_state,
+        source_state => ($self->{current_state} && $self->{current_state}->can('name'))
+            ? $self->{current_state}->name
+            : undef,
+    };
+}
+
+sub validate_transition_targets($self, $fsm_module) {
+    return unless $fsm_module && $fsm_module->can('states') && $fsm_module->states;
+
+    my %regular_states = map { $_->name => 1 }
+        grep { $_ && $_->can('is_regular_state') ? $_->is_regular_state : 0 }
+        @{$fsm_module->states};
+
+    for my $transition (@{$self->{parsed_transition_targets} || []}) {
+        my $target_state = $transition->{target_state};
+        next if exists $regular_states{$target_state};
+
+        my $source_desc = defined($transition->{source_state}) && $transition->{source_state} ne ''
+            ? " from state/DT '$transition->{source_state}'"
+            : '';
+
+        Carp::confess
+            "Unknown transition target '$target_state'$source_desc. ".
+            "State transitions must target a declared regular FSM-state DT block inside the same FSM source. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+    }
+}
+
 sub is_compound_update_shorthand($self, $action_target, $action_spec) {
     return 0 unless defined $action_target;
     return 0 unless ref($action_spec) eq 'ARRAY' && @$action_spec >= 1;
@@ -947,11 +987,31 @@ sub parse_transition_new_format($self, $action) {
     my $condition_suffix;
     
     if (ref($target_spec) eq 'ARRAY') {
+        Carp::confess
+            "Malformed transition target '".($self->describe_action_for_error($action))."'. ".
+            "State transitions must use '(-> target_state)' or '(-> target_state <condition_suffix)'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless @$target_spec >= 1 && @$target_spec <= 2;
+
         $target_state = $target_spec->[0];
         $condition_suffix = $target_spec->[1] if @$target_spec > 1;
     } else {
         $target_state = $target_spec;
     }
+
+    my $target_display = defined($target_state)
+        ? (ref($target_state) ? ref($target_state) : $target_state)
+        : 'undef';
+
+    Carp::confess
+        "Malformed transition target '$target_display'. ".
+        "State transitions must target an HDL-identifier-compatible regular FSM-state DT name like 'busy'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless defined($target_state)
+            && !ref($target_state)
+            && $target_state =~ /\A[A-Za-z_]\w*\z/;
+
+    $self->record_transition_target($target_state);
     
     my $transition = FSM::CoreAST::StateTransition->new(
         target_state => $target_state,

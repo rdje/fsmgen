@@ -110,6 +110,9 @@ Combinational DT note:
 - `(+size ...)` signal-width declarations
   - including the legacy empty no-op form `(+size)`
 - Unconditional state transitions `(-> next_state)`
+  - transition targets must name a declared regular FSM-state DT block inside the same FSM source
+  - target names must be HDL-identifier-compatible (`[A-Za-z_]\\w*`)
+  - malformed or unknown targets such as `(-> bad-name)`, `(-> -comb)`, or `(-> missing_state)` are rejected explicitly
 - Test-node branching on a signal or computed selector, for example:
   - `(?SIG (=0 ...) (!=8'0 ...) (>8'3 ...) (<=8'3 ...))`
   - `(?(| A B) (=0 ...) (=1 ...))`

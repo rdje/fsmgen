@@ -318,6 +318,10 @@ Done:
   - regular FSM-state DT names must be HDL-identifier-compatible,
   - general/combinational DT names must use exactly one leading `-` plus an HDL-identifier-compatible base name,
   - and malformed names such as `bad-name`, `-bad-name`, or `--bad` now fail clearly through parser, pipeline, and CLI entry points.
+- [t/53-language-contract-transition-target-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/53-language-contract-transition-target-boundary.t) now locks the transition-target boundary explicitly:
+  - transition targets must use HDL-identifier-compatible names,
+  - transition targets must resolve to a declared regular FSM-state DT block inside the same FSM source,
+  - and malformed or unknown targets such as `bad-name`, `-comb`, or `missing_state` now fail clearly through parser, pipeline, and CLI entry points.
 - [t/50-language-contract-size-section-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/50-language-contract-size-section-boundary.t) now locks the active `+size` boundary explicitly:
   - the legacy empty form `(+size)` is accepted as a no-op because it exists in the shipped corpus,
   - malformed `+size` payloads like `(+size BROKEN)` are rejected,

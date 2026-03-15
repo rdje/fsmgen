@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### transition targets now have an explicit active boundary
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so state transitions are now validated explicitly:
+  - target names must be HDL-identifier-compatible,
+  - target names must refer to a declared regular FSM-state DT block inside the same FSM source,
+  - and malformed/unknown transition targets now fail before they can leak into `STATE_*` HDL generation.
+- Added focused regression coverage in [t/53-language-contract-transition-target-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/53-language-contract-transition-target-boundary.t) for:
+  - successful parsing/generation with declared forward transition targets,
+  - explicit rejection of malformed target names like `bad-name`,
+  - explicit rejection of non-state targets like `-comb`,
+  - explicit rejection of unknown targets like `missing_state`,
+  - and pipeline/CLI confirmation that unknown targets do not emit HDL.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the live contract now states the transition-target rule explicitly.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
 ### state and DT block names now have an explicit active boundary
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so state/DT names are now validated explicitly:
   - regular FSM-state DT names must be HDL-identifier-compatible,
