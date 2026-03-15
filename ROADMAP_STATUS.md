@@ -282,6 +282,11 @@ Done:
   - update shorthand,
   - and the currently regression-backed operator-expression families.
 - [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t) now locks the active parser/generator behavior for that same slice through focused regression coverage.
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now also promotes the shorthand guard family into the active contract instead of leaving it as future-only:
+  - `(<foo ...)` means `foo != 0`,
+  - `(<!foo ...)` means `foo == 0`,
+  - and inline comparison shorthand such as `(<foo==3 ...)` and `(<foo<=3 ...)` is now supported in both guarded-block and suffix-guard positions.
+- [t/39-language-contract-guard-shorthand.t](/Users/richarddje/Documents/github/fsmgen/t/39-language-contract-guard-shorthand.t) now locks that shorthand family directly, and [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t) now expects explicit comparison ASTs for the simple sugar forms too.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now also promotes the symbol-definition families into the fully supported bucket and documents their current normative contract:
   - `(+constants ...)`,
   - `(+enums ...)`,

@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: shorthand guard comparisons are now part of the active contract
+- The saved guard-language agreement from 2026-03-14 is now partially promoted into the active `R8` contract instead of remaining a future-only note.
+- [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now lowers the shorthand guard family explicitly:
+  - `(<foo ...)` -> `foo != 0`
+  - `(<!foo ...)` -> `foo == 0`
+  - `(<foo=value ...)` / `(<foo==value ...)` -> equality
+  - `(<foo!=value ...)`, `(<foo<value ...)`, `(<foo<=value ...)`, `(<foo>value ...)`, `(<foo>=value ...)` -> the corresponding comparison operators
+- This applies to both guarded blocks and suffix guards, because suffix guards already lower through the same condition parser boundary.
+- Focused regression coverage now exists in:
+  - [t/39-language-contract-guard-shorthand.t](/Users/richarddje/Documents/github/fsmgen/t/39-language-contract-guard-shorthand.t) for the shorthand family directly,
+  - and [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t), which now expects explicit comparison ASTs for the simple `<foo` / `<!foo` forms.
+- Boundary decision:
+  - the shorthand guard family is no longer just a saved future direction,
+  - it is now an active supported language feature,
+  - while more ambitious future normalization around canonical spelling remains a design concern rather than a support-boundary blocker.
 ## 2026-03-15: legacy generic/template placeholders are now rejected explicitly
 - The old corpus still contains template-expansion syntax that belongs to the legacy generic system, not to the active `.fsm` contract:
   - placeholder selectors such as `?[READ]`,

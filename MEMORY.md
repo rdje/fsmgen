@@ -20,6 +20,25 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: shorthand guard comparisons are now part of the active contract
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now lowers the shorthand guard family explicitly for both guarded blocks and suffix guards,
+  - [t/39-language-contract-guard-shorthand.t](/Users/richarddje/Documents/github/fsmgen/t/39-language-contract-guard-shorthand.t) now locks that family directly,
+  - [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t) now expects explicit comparison ASTs for the simple `<foo` / `<!foo` cases,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the shorthand family as part of the active contract instead of keeping it future-only.
+- Scope of the landed contract slice:
+  - explicit support for `(<foo ...)` as `foo != 0`
+  - explicit support for `(<!foo ...)` as `foo == 0`
+  - explicit support for inline comparison shorthand such as `(<foo==3 ...)`, `(<foo!=0 ...)`, and `(<foo<=3 ...)`
+  - explicit support for the same shorthand family in suffix-guard position
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more saved design agreement as actively supported and regression-backed.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser/runtime-visible legacy forms,
+  - and keep promoting or rejecting each construct family explicitly with focused regressions.
 ## 2026-03-15: future placeholder syntax direction is now preserved
 - Current task was design-history only, not a support-boundary change:
   - [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) now records the preferred future placeholder direction for any later generic/template lane.

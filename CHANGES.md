@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### shorthand guard comparisons are now active and regression-backed
+- Updated [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) so guarded blocks and suffix guards now lower the shorthand family explicitly instead of treating only the old equality form as special:
+  - `(<foo ...)` now means `foo != 0`
+  - `(<!foo ...)` now means `foo == 0`
+  - `(<foo=value ...)` and `(<foo==value ...)` mean equality
+  - `(<foo!=value ...)`, `(<foo<value ...)`, `(<foo<=value ...)`, `(<foo>value ...)`, and `(<foo>=value ...)` now lower to their matching comparison ASTs
+- Added focused regression coverage in [t/39-language-contract-guard-shorthand.t](/Users/richarddje/Documents/github/fsmgen/t/39-language-contract-guard-shorthand.t) for shorthand guarded blocks, shorthand suffix guards, and emitted HDL comparisons.
+- Updated [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t) so the existing core guard/suffix regression now expects explicit comparison ASTs for `<foo` and `<!foo`.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the active contract now treats the shorthand guard family as supported instead of future-only.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
 ### future placeholder syntax direction was saved
 - Updated [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) to preserve the current design conclusion for any future generic/template lane:
   - prefer `$(VAR)` as the canonical placeholder syntax,

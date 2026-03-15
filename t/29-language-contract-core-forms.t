@@ -56,8 +56,10 @@ FSM
 
     my $outer_guard = $idle_elements->[0];
     ok($outer_guard->isa('FSM::CoreAST::ConditionalBranch'), 'simple guarded block parses as ConditionalBranch');
-    ok($outer_guard->condition->isa('FSM::CoreAST::SignalRef'), 'simple <req guard lowers to direct signal condition');
-    is($outer_guard->condition->signal->name, 'req', 'simple guarded block keeps req as the condition signal');
+    ok($outer_guard->condition->isa('FSM::CoreAST::BinaryOp'), 'simple <req guard lowers to explicit comparison AST');
+    is($outer_guard->condition->operator, '!=', 'simple <req guard uses != comparison');
+    is($outer_guard->condition->left->signal->name, 'req', 'simple <req guard compares req on the left');
+    is($outer_guard->condition->right->to_systemverilog, '0', 'simple <req guard compares against zero');
 
     my $outer_actions = $outer_guard->branches->[0]{actions};
     is(scalar(@$outer_actions), 2, 'outer guarded block keeps both nested actions');
@@ -65,9 +67,10 @@ FSM
 
     my $inner_guard = $outer_actions->[1];
     ok($inner_guard->isa('FSM::CoreAST::ConditionalBranch'), 'nested <!full block stays nested as ConditionalBranch');
-    ok($inner_guard->condition->isa('FSM::CoreAST::UnaryOp'), 'nested <!full guard lowers to unary negation');
-    is($inner_guard->condition->operator, '!', 'nested <!full guard uses unary negation');
-    is($inner_guard->condition->operand->signal->name, 'full', 'nested <!full guard negates full');
+    ok($inner_guard->condition->isa('FSM::CoreAST::BinaryOp'), 'nested <!full guard lowers to explicit comparison AST');
+    is($inner_guard->condition->operator, '==', 'nested <!full guard uses == comparison');
+    is($inner_guard->condition->left->signal->name, 'full', 'nested <!full guard compares full on the left');
+    is($inner_guard->condition->right->to_systemverilog, '0', 'nested <!full guard compares against zero');
     my $inner_actions = $inner_guard->branches->[0]{actions};
     is(scalar(@$inner_actions), 2, 'nested guarded block keeps both nested actions');
     ok($inner_actions->[0]->isa('FSM::CoreAST::Assignment'), 'nested guarded block keeps combinational assignment');
@@ -89,13 +92,16 @@ FSM
     my $assignment_suffix = $idle_elements->[2];
     ok($assignment_suffix->isa('FSM::CoreAST::ConditionalBranch'), 'assignment suffix guard lowers to ConditionalBranch');
     ok($assignment_suffix->branches->[0]{actions}[0]->isa('FSM::CoreAST::RegisterAssignment'), 'assignment suffix guard keeps assignment action');
-    is($assignment_suffix->condition->signal->name, 'start', 'assignment suffix guard keeps start as condition');
+    is($assignment_suffix->condition->operator, '!=', 'assignment suffix guard uses != comparison');
+    is($assignment_suffix->condition->left->signal->name, 'start', 'assignment suffix guard compares start on the left');
+    is($assignment_suffix->condition->right->to_systemverilog, '0', 'assignment suffix guard compares against zero');
 
     my $transition_suffix = $idle_elements->[3];
     ok($transition_suffix->isa('FSM::CoreAST::ConditionalBranch'), 'transition suffix guard lowers to ConditionalBranch');
     ok($transition_suffix->branches->[0]{actions}[0]->isa('FSM::CoreAST::StateTransition'), 'transition suffix guard keeps transition action');
-    is($transition_suffix->condition->operator, '!', 'transition suffix guard uses unary negation');
-    is($transition_suffix->condition->operand->signal->name, 'full', 'transition suffix guard negates full');
+    is($transition_suffix->condition->operator, '==', 'transition suffix guard uses == comparison');
+    is($transition_suffix->condition->left->signal->name, 'full', 'transition suffix guard compares full on the left');
+    is($transition_suffix->condition->right->to_systemverilog, '0', 'transition suffix guard compares against zero');
 
     my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
     like($hdl, qr/module\s+guard_contract\b/s, 'guard-contract FSM still generates HDL through the active backend');

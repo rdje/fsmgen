@@ -106,7 +106,7 @@ Standalone DT note:
 - Delayed pulse form `(P <N 0)` and `(P <N 1)`, including `N=0`
 - Literal forms `1`, `8'3`, `8'b1010`, `8'hFF`, and `const_8b0`
 - Signal-reference forms `SIG`, `SIG[3]`, `SIG[7:0]`, `SIG'8`, `SIG.member`, and `SIG>`
-- Condition forms that are in the active supported path: `<sig`, `<!sig`, `<sig=value`, and test-node selector branches like `=0`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, and `>=8'1`
+- Condition forms that are in the active supported path: `<sig`, `<!sig`, `<sig=value`, `<sig==value`, `<sig!=value`, `<sig<value`, `<sig<=value`, `<sig>value`, `<sig>=value`, and test-node selector branches like `=0`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, and `>=8'1`
 - Nested guarded blocks using standalone `< ...` / `<! ...` action forms
 - Condition suffixes attached directly to assignments or transitions, for example `(A <= B <start)` and `(-> busy <!full)`
 - Compound-update shorthand forms `(++ sig)`, `(-- sig)`, `(+=N sig)`, and `(-=N sig)`
@@ -174,9 +174,16 @@ Guarded blocks:
 - `(<!cond ...actions...)` executes its actions when `cond` is false in the active condition model.
 - Guarded blocks must contain at least one nested action.
 - Nested guarded blocks are allowed, and nested guards compose by logical `AND`.
+- Active shorthand semantics:
+  - `(<foo ...)` means `foo != 0`
+  - `(<!foo ...)` means `foo == 0`
+  - `(<foo=value ...)` and `(<foo==value ...)` mean equality
+  - `(<foo!=value ...)`, `(<foo<value ...)`, `(<foo<=value ...)`, `(<foo>value ...)`, and `(<foo>=value ...)` mean the corresponding comparison against `foo`
 - Current active examples include:
   - `(<req (A <= B))`
   - `(<!full (-> busy))`
+  - `(<mode==3 (OUT = IN))`
+  - `(<count<=8'3 (FLAG = 1))`
   - `(<(& req start !full) (D = C))`
   - `(<count=8'3 (FLAG = 1))`
 
@@ -186,6 +193,8 @@ Condition suffixes:
 - Examples:
   - `(A <= B <start)` is the single-action guarded form of `(<start (A <= B))`
   - `(-> busy <!full)` is the single-action guarded form of `(<!full (-> busy))`
+  - `(OUT = IN <mode==1)` is the single-action guarded form of `(<mode==1 (OUT = IN))`
+  - `(-> special <count<=3)` is the single-action guarded form of `(<count<=3 (-> special))`
 
 Update shorthand:
 - `(++ counter)` means increment `counter` by `1`
@@ -217,8 +226,8 @@ Operator expressions:
   - `(alias_xor = (xor x y z))`
 
 Boundary note:
-- Some future normalization ideas discussed in engineering notes are not part of the active contract yet.
-- In particular, the more systematic sugar direction such as `<foo==3` as canonical shorthand over a fully explicit guard expression remains saved in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), but it is not yet the active supported language contract.
+- The active contract now includes the systematic shorthand guard family for simple truthiness and inline comparisons.
+- Broader future language ideas may still refine the canonical spelling later, but the shorthand forms above are now real supported syntax in the active tool.
 
 Test nodes:
 - `(?SIG (=0 ...actions...) (!=8'0 ...actions...) (>8'3 ...actions...) ...)` is the active multi-way selector form.

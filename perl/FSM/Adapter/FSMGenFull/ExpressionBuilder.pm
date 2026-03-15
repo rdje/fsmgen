@@ -39,6 +39,13 @@ sub parse_condition($self, $condition) {
         # Negative condition: <!signal or <!signal=value
         my $condition_spec = $1;
         fsm_debug("          Parsing negative condition: !$condition_spec", 3);
+        if (!$self->condition_spec_has_explicit_operator($condition_spec)) {
+            return $self->parse_legacy_condition_spec(
+                $condition_spec,
+                bare_signal_operator => '=='
+            );
+        }
+
         my $condition_expr = $self->parse_legacy_condition_spec($condition_spec);
         return FSM::CoreAST::UnaryOp->new(
             operator => '!',
@@ -48,7 +55,10 @@ sub parse_condition($self, $condition) {
         # Positive condition: <signal or <signal=value
         my $condition_spec = $1;
         fsm_debug("          Parsing positive condition: $condition_spec", 3);
-        return $self->parse_legacy_condition_spec($condition_spec);
+        return $self->parse_legacy_condition_spec(
+            $condition_spec,
+            bare_signal_operator => '!='
+        );
     } else {
         # Unexpected format like 'signal_name'
         fsm_debug("          WARNING: Unexpected condition string string='$condition'. Treating as positive condition.", 3);
@@ -56,26 +66,59 @@ sub parse_condition($self, $condition) {
     }
 }
 
-sub parse_legacy_condition_spec($self, $condition_spec) {
+sub condition_spec_has_explicit_operator($self, $condition_spec) {
+    return 0 unless defined $condition_spec;
+    return $condition_spec =~ /^.+?(?:==|!=|<=|>=|=|<|>).+$/ ? 1 : 0;
+}
+
+sub parse_legacy_condition_spec($self, $condition_spec, %options) {
     # Parse legacy condition payload found after < or <! prefixes.
     # Supports:
-    #   signal          -> SignalRef(signal)
+    #   signal          -> BinaryOp('!=', SignalRef(signal), 0) when a bare-signal
+    #                      operator is provided by the caller
     #   signal=value    -> BinaryOp('==', SignalRef(signal), parse_expression(value))
+    #   signal==value   -> BinaryOp('==', SignalRef(signal), parse_expression(value))
+    #   signal!=value   -> BinaryOp('!=', SignalRef(signal), parse_expression(value))
+    #   signal<value    -> BinaryOp('<',  SignalRef(signal), parse_expression(value))
     $condition_spec =~ s/^\s+|\s+$//g;
-    
-    # Equality form used heavily in .fsm files: <s=8'0
-    if ($condition_spec =~ /^([a-zA-Z_]\w*)=(.+)$/) {
-        my ($lhs_signal, $rhs_expr) = ($1, $2);
+
+    if ($condition_spec =~ /^(.+?)(==|!=|<=|>=|=|<|>)(.+)$/) {
+        my ($lhs_spec, $operator, $rhs_expr) = ($1, $2, $3);
+        $lhs_spec =~ s/^\s+|\s+$//g;
         $rhs_expr =~ s/^\s+|\s+$//g;
-        
-        my $lhs = $self->parse_signal_reference($lhs_signal);
+        $operator = '==' if $operator eq '=';
+
+        my $lhs = $self->parse_signal_reference($lhs_spec);
         my $rhs = $self->parse_expression($rhs_expr);
-        
-        fsm_debug("          Legacy condition parsed as equality: $lhs_signal == $rhs_expr", 3);
-        return FSM::CoreAST::BinaryOp->new('==', $lhs, $rhs);
+
+        Carp::confess
+            "Malformed guard condition payload '$condition_spec'. ".
+            "Guard shorthand must use a valid signal/expression comparison such as '<foo', '<!foo', '<foo=3', or '<foo<=3'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless $lhs && $rhs;
+
+        fsm_debug("          Legacy condition parsed as comparison: $lhs_spec $operator $rhs_expr", 3);
+        return FSM::CoreAST::BinaryOp->new($operator, $lhs, $rhs);
     }
-    
-    # Simple signal presence condition
+
+    if (defined $options{bare_signal_operator}) {
+        my $lhs = $self->parse_signal_reference($condition_spec);
+        my $rhs = FSM::CoreAST::Literal->new('0');
+
+        Carp::confess
+            "Malformed guard condition payload '$condition_spec'. ".
+            "Guard shorthand must use a valid signal/expression comparison such as '<foo', '<!foo', '<foo=3', or '<foo<=3'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless $lhs;
+
+        fsm_debug(
+            "          Legacy condition parsed as bare-signal truthiness: $condition_spec $options{bare_signal_operator} 0",
+            3
+        );
+        return FSM::CoreAST::BinaryOp->new($options{bare_signal_operator}, $lhs, $rhs);
+    }
+
+    # Fallback bare condition for non-prefixed internal callers.
     return $self->parse_signal_reference($condition_spec);
 }
 
