@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-15: malformed `+system` boundaries are now locked across entry points
+- [t/72-language-contract-system-section-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/72-language-contract-system-section-entrypoints.t) now locks pipeline and CLI no-output behavior for:
+  - non-conventional `+system` clock names like `(clock core_clk)`,
+  - unsupported `+system` entries like `(areset rstn)`,
+  - and incomplete `+system` sections.
+- This is a regression-only hardening slice: parser behavior was already correct, but the malformed side of the conventional `+system` family is now covered end to end instead of only at direct parser level.
 ## 2026-03-15: legacy generic/template placeholder boundaries are now locked across entry points
 - [t/71-language-contract-generic-placeholder-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/71-language-contract-generic-placeholder-entrypoints.t) now locks pipeline and CLI no-output behavior for:
   - legacy placeholder selectors such as `?[READ]`,

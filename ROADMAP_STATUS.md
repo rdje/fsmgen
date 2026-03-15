@@ -379,6 +379,7 @@ Done:
   - targeted rejection of non-conventional clock names,
   - targeted rejection of unsupported system directives,
   - and targeted rejection of incomplete `+system` sections.
+- [t/72-language-contract-system-section-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/72-language-contract-system-section-entrypoints.t) now locks pipeline and CLI no-output behavior for the malformed side of that same `+system` family, so bad clock names, unsupported entries, and incomplete sections now have end-to-end entrypoint coverage instead of parser-only coverage.
 - [t/32-language-contract-top-level-directive-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/32-language-contract-top-level-directive-boundary.t) now locks explicit rejection of unsupported top-level `+...` directive sections so they no longer drift into fake state parsing.
 - [t/70-language-contract-top-level-directive-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/70-language-contract-top-level-directive-entrypoints.t) now locks pipeline and CLI no-output behavior for the same unsupported top-level `+...` directive family, so unknown and future-style `+` sections now have end-to-end entrypoint coverage instead of parser-only coverage.
 - [t/33-language-contract-condition-suffix-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/33-language-contract-condition-suffix-boundary.t) now locks explicit rejection of bare condition suffixes so suffix guards must use the active `<...` / `<!...` forms instead of implicit bare-word tails.

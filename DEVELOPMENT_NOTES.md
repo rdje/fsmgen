@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: malformed `+system` boundaries are now locked through pipeline and CLI too
+- The conventional `+system` family already had parser-level coverage in the active contract for its malformed side:
+  - non-conventional clock names like `core_clk`,
+  - unsupported entries like `areset`,
+  - and incomplete `+system` sections.
+- This slice does not change parser behavior. It makes the contract more honest across entry points:
+  - those malformed forms are now locked through pipeline and CLI no-output behavior too,
+  - so the malformed side of the conventional `+system` family is no longer parser-only in the regression set.
 ## 2026-03-15: legacy generic/template placeholder boundaries are now locked through pipeline and CLI too
 - The legacy generic/template placeholder family already had parser-level coverage in the active contract:
   - placeholder selectors such as `?[READ]`,

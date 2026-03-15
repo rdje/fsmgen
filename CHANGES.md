@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### malformed `+system` boundaries now have pipeline and CLI coverage too
+- Added [t/72-language-contract-system-section-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/72-language-contract-system-section-entrypoints.t) to lock pipeline and CLI no-output behavior for:
+  - non-conventional `+system` clock names like `(clock core_clk)`,
+  - unsupported `+system` entries like `(areset rstn)`,
+  - and incomplete `+system` sections.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the malformed side of the conventional `+system` family is now tracked as an end-to-end entrypoint boundary instead of parser-only coverage.
 ### legacy generic/template placeholder boundaries now have pipeline and CLI coverage too
 - Added [t/71-language-contract-generic-placeholder-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/71-language-contract-generic-placeholder-entrypoints.t) to lock pipeline and CLI no-output behavior for:
   - legacy placeholder selectors such as `?[READ]`,
