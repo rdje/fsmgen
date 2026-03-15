@@ -421,12 +421,14 @@ Current boundary:
   - other tagged source kinds that are neither active FSM sources nor active composition sources
   - malformed `+fsm` roots that do not provide a scalar module name in one of the two supported legacy layouts
   - malformed tagged source roots such as `?fsm:bad-name` or `?top:bad-name` whose source name is not HDL-identifier-compatible
+  - bare top-level FSM content without a wrapping supported source root, such as files that start directly with `(+system ...)` or `(idle ...)`
 - Important rule:
   - an unsupported tagged top-level wrapper does not become supported just because it contains a nested `?fsm:name` somewhere inside it
 
 Boundary note:
 - This slice makes the top-level source-kind boundary explicit instead of letting legacy tagged wrappers drift through the nested-`?fsm` fallback path.
 - The active toolchain now treats unsupported tagged roots as out of support at the top-level boundary, not as accidental containers for live FSM parsing.
+- Bare top-level FSM content is now also rejected through an explicit source-root boundary instead of the older generic “expected `?fsm:name` or `+fsm`” parser error.
 - The legacy `+fsm` root family is supported as a real source kind, but it must still follow the active scalar-name contract:
   - accepted:
     - `(+fsm my_module)` followed by sibling `(+system ...)`, state/DT blocks, and other supported top-level forms
@@ -434,6 +436,13 @@ Boundary note:
   - rejected:
     - `(+fsm)` without a scalar module name
     - malformed `+fsm` roots whose payload does not match either supported legacy layout
+- Files that start directly with FSM content like `(+system ...)` or `(idle ...)` must still be wrapped in a supported source root:
+  - accepted:
+    - `(?fsm:my_module ...)`
+    - `(+fsm my_module)` followed by sibling FSM content
+  - rejected:
+    - a file whose first top-level form is `(+system ...)`
+    - a file whose first top-level form is `(idle ...)`
 - Tagged source-root names are now accepted or rejected as a whole:
   - accepted: `?fsm:ctrl_unit`, `?top:packet_bridge`
   - rejected: `?fsm:bad-name`, `?top:bad-name`

@@ -79,7 +79,12 @@ sub parse_fsm($self, $raw_ast) {
     }
     
     fsm_trace_decision(0, "AST root did not match expected FSM shape", 1);
-    Carp::confess "Expected FSM structure containing '?fsm:name' or '+fsm'";
+    my $root_display = $self->describe_top_level_source_root($raw_ast);
+    Carp::confess
+        "Malformed top-level source root '$root_display'. ".
+        "The active FSM parser expects '?fsm:module_name' or the legacy '+fsm' root family at the source root. ".
+        "Bare top-level forms like '(+system ...)' or '(idle ...)' must be wrapped inside a supported FSM source root. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 
 sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
@@ -224,6 +229,28 @@ sub decode_structured_fsm_module_name($self, $fsm_header) {
         "Malformed top-level FSM source '$display'. ".
         "The active contract expects '?fsm:module_name' with an HDL-identifier-compatible module name ([A-Za-z_]\\w*). ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n";
+}
+
+sub describe_top_level_source_root($self, $raw_ast) {
+    return 'undef' unless defined $raw_ast;
+    return ref($raw_ast) unless ref($raw_ast) eq 'ARRAY';
+    return 'empty' unless @$raw_ast;
+
+    if (!ref($raw_ast->[0])) {
+        return $raw_ast->[0];
+    }
+
+    if (ref($raw_ast->[0]) eq 'ARRAY' && @{$raw_ast->[0]} > 0 && !ref($raw_ast->[0][0])) {
+        return $raw_ast->[0][0];
+    }
+
+    for my $ast_node (@$raw_ast) {
+        next unless ref($ast_node) eq 'ARRAY' && @$ast_node > 0;
+        next if ref($ast_node->[0]);
+        return $ast_node->[0];
+    }
+
+    return 'unknown';
 }
 
 sub parse_constants_section($self, $constants_ast) {

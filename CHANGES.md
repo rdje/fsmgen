@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### bare top-level FSM content now fails through an explicit source-root boundary
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so unwrapped top-level FSM content now fails through a dedicated source-root diagnostic instead of the old generic “expected `?fsm:name` or `+fsm`” parser error.
+- Added [t/63-language-contract-source-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/63-language-contract-source-root-boundary.t) to lock:
+  - explicit rejection of bare top-level forms like `(+system ...)` and `(idle ...)`,
+  - classifier truth for files that stay outside the active source-root family,
+  - and pipeline/CLI no-output behavior for those malformed roots.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the top-level source contract now documents the unwrapped-root boundary explicitly.
 ### malformed update-shorthand tails now fail through an explicit boundary
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so update shorthand now rejects stray extra positional tail payloads through a dedicated update-shorthand-tail diagnostic instead of leaking them through the generic suffix-guard boundary.
 - Added [t/62-language-contract-update-shorthand-tail-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/62-language-contract-update-shorthand-tail-boundary.t) to lock:

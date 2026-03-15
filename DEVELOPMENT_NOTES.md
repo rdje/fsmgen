@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: bare top-level FSM content now fails through an explicit source-root boundary
+- One generic parser message was still left at the very top of the FSM-only entry point:
+  - files that started directly with `(+system ...)` or `(idle ...)` were outside the active source-root contract,
+  - but they were still failing through the old generic “expected `?fsm:name` or `+fsm`” message instead of a real construct boundary.
+- The active contract is now explicit on that malformed side too:
+  - supported FSM source roots remain `?fsm:module_name` and the legacy `+fsm` family,
+  - supported composition roots remain `?top:top_name` through the composition pipeline,
+  - bare top-level FSM content without a wrapping supported source root now fails through a dedicated source-root diagnostic.
 ## 2026-03-15: malformed update-shorthand tails now fail through a dedicated boundary
 - After tightening update-shorthand targets, one more misleading edge remained:
   - stray extra positional payloads like `3` in `(+= counter 4 3)` were being interpreted only after expansion,

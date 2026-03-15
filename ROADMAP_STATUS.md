@@ -318,6 +318,10 @@ Done:
 - [t/47-language-contract-source-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/47-language-contract-source-name-boundary.t) now locks the tagged source-name boundary explicitly:
   - top-level `?fsm:module_name` and `?top:top_name` roots now require HDL-identifier-compatible names and fail clearly if malformed,
   - malformed embedded composition child sources like `?fsm:bad-name` now also fail explicitly instead of truncating to a valid prefix.
+- [t/63-language-contract-source-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/63-language-contract-source-root-boundary.t) now locks the remaining unwrapped-source-root boundary explicitly:
+  - bare top-level FSM content like `(+system ...)` or `(idle ...)` is rejected unless it is wrapped in `?fsm:module_name` or the legacy `+fsm` root family,
+  - the classifier still leaves those files outside active source kinds (`kind => unknown`, no supported header),
+  - and parser, pipeline, and CLI entry points now reject those malformed roots without emitting HDL.
 - [t/48-language-contract-standalone-dt-classification.t](/Users/richarddje/Documents/github/fsmgen/t/48-language-contract-standalone-dt-classification.t) now locks the general/combinational DT boundary explicitly:
   - hyphen-prefixed general DT blocks now carry explicit `standalone_dt` classification in the AST,
   - they stay out of the encoded-state plan,

@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-15: bare top-level FSM content now fails early through an explicit source-root boundary
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now turns unwrapped top-level FSM content into a dedicated source-root diagnostic instead of the old generic “expected `?fsm:name` or `+fsm`” parser error.
+- [t/63-language-contract-source-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/63-language-contract-source-root-boundary.t) now locks:
+  - explicit rejection of bare top-level forms like `(+system ...)` and `(idle ...)`,
+  - classifier truth for files that remain outside active source kinds,
+  - and pipeline/CLI no-output behavior for those malformed roots.
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now states that files must wrap FSM content in `?fsm:module_name` or the legacy `+fsm` root family instead of starting directly with sections or state/DT blocks.
 ## 2026-03-15: malformed update-shorthand tails now fail early through an explicit boundary
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now turns stray extra positional update-shorthand tails into a dedicated user-facing diagnostic instead of letting them fall through the generic suffix-guard boundary.
 - [t/62-language-contract-update-shorthand-tail-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/62-language-contract-update-shorthand-tail-boundary.t) now locks:
