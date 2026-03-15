@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: computed test selectors are now part of the active contract
+- The shipped parser already supported the computed-selector test-node form:
+  - `?(expr)` where `expr` is a selector expression such as `(| A B)`.
+- This `R8` slice closes the runtime gap that kept that form from being honestly supported:
+  - [perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm) now analyzes the computed selector signal's driving AST, so the source signals used inside `expr` remain live inputs instead of disappearing from the generated interface.
+  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) now treats parser-created intermediate selector signals as real intermediate signals during later dependency/filtering analysis instead of dropping them through AST-factorization heuristics.
+- Focused regression coverage now exists in [t/37-language-contract-computed-test-selector.t](/Users/richarddje/Documents/github/fsmgen/t/37-language-contract-computed-test-selector.t) for:
+  - the computed-selector form itself,
+  - the synthesized intermediate selector signal,
+  - the source-signal interface exposure,
+  - and the emitted HDL wire/assign boundary.
+- Boundary decision:
+  - active test-node support now includes both `?SIG` and `?(expr)`,
+  - and `?(expr)` may synthesize an internal intermediate signal that the branch comparisons reuse explicitly in generated HDL.
 ## 2026-03-15: relational `?sig` selectors are now part of the active contract
 - The shipped corpus and active lowering path already relied on a broader `?sig` selector family than the docs admitted:
   - selectors like `!=8'0`, `>8'3`, and `<=8'3` are real active language forms, not just `=0` / `=1`.

@@ -2648,6 +2648,11 @@ sub is_intermediate_signal($self, $signal_name) {
         fsm_debug("  -> YES: Found in pre-scan referenced signals", 3);
         return 1;
     }
+
+    if ($self->_fsm_module_signal_declares_intermediate($signal_name)) {
+        fsm_debug("  -> YES: FSM module signal metadata marks this as an intermediate signal", 3);
+        return 1;
+    }
     
     # AST-BASED CHECK: Look for this signal in our AST-based operator type registry
     if ($self->is_signal_ast_based_intermediate($signal_name)) {
@@ -2656,6 +2661,29 @@ sub is_intermediate_signal($self, $signal_name) {
     }
     
     fsm_debug("  -> NO: Not an intermediate signal", 3);
+    return 0;
+}
+sub _fsm_module_signal_declares_intermediate($self, $signal_name) {
+    my $ctx = $self->{flattened_dt};
+    return 0 unless defined($signal_name) && $signal_name ne '';
+    return 0 unless $ctx->{fsm_module} && $ctx->{fsm_module}->can('signals') && $ctx->{fsm_module}->signals;
+
+    my $signal = $ctx->{fsm_module}->signals->{$signal_name} or return 0;
+
+    if (blessed($signal) && $signal->can('get_attribute')) {
+        my $marked = $signal->get_attribute('is_intermediate');
+        return 1 if defined($marked) && $marked;
+    }
+
+    if (blessed($signal) && $signal->can('attributes') && ref($signal->attributes) eq 'HASH') {
+        my $marked = $signal->attributes->{is_intermediate};
+        return 1 if defined($marked) && $marked;
+    }
+
+    if (blessed($signal) && $signal->can('is_intermediate') && $signal->can('driving_ast') && $signal->driving_ast) {
+        return 1 if $signal->is_intermediate;
+    }
+
     return 0;
 }
 sub is_signal_ast_based_intermediate($self, $signal_name) {

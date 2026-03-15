@@ -83,13 +83,7 @@ sub _analyze_ast_element($self, $element) {
             }
         }
     } elsif ($element->isa('FSM::CoreAST::TestNode')) {
-        if ($element->test_signal) {
-            my $signal_name = $element->test_signal->name;
-            my $usage = $self->{signal_manager}->initialize_signal_usage($signal_name);
-            $usage->{referenced_in_conditions}++;
-            push @{$usage->{contexts}}, 'TEST_NODE';
-            fsm_debug("    SIGNAL REFERENCE: '$signal_name' in context 'TEST_NODE'", 3);
-        }
+        $self->_analyze_test_signal_reference($element->test_signal, 'TEST_NODE');
         
         my $branches = $element->test_branches;
         if ($branches && ref($branches) eq 'ARRAY') {
@@ -141,13 +135,7 @@ sub _analyze_action_element($self, $action) {
     } elsif ($action->isa('FSM::CoreAST::ConditionalBranch')) {
         $self->_analyze_ast_element($action);
     } elsif ($action->isa('FSM::CoreAST::TestNode')) {
-        if ($action->test_signal) {
-            my $signal_name = $action->test_signal->name;
-            my $usage = $self->{signal_manager}->initialize_signal_usage($signal_name);
-            $usage->{referenced_in_conditions}++;
-            push @{$usage->{contexts}}, 'TEST_NODE';
-            fsm_debug("    SIGNAL REFERENCE: '$signal_name' in context 'TEST_NODE'", 3);
-        }
+        $self->_analyze_test_signal_reference($action->test_signal, 'TEST_NODE');
         
         my $branches = $action->test_branches;
         if ($branches && ref($branches) eq 'ARRAY') {
@@ -159,6 +147,20 @@ sub _analyze_action_element($self, $action) {
         }
     } elsif ($action->isa('FSM::CoreAST::StateTransition')) {
         fsm_debug("    STATE TRANSITION: -> $action->{target_state}", 3);
+    }
+}
+
+sub _analyze_test_signal_reference($self, $signal, $context = 'TEST_NODE') {
+    return unless $signal;
+
+    my $signal_name = $signal->name;
+    my $usage = $self->{signal_manager}->initialize_signal_usage($signal_name);
+    $usage->{referenced_in_conditions}++;
+    push @{$usage->{contexts}}, $context;
+    fsm_debug("    SIGNAL REFERENCE: '$signal_name' in context '$context'", 3);
+
+    if ($signal->can('driving_ast') && $signal->driving_ast) {
+        $self->_analyze_expression_references($signal->driving_ast, "$context.driving_ast");
     }
 }
 

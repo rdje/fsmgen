@@ -20,6 +20,30 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: computed test selectors now synthesize real intermediate wires end to end
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm) now analyzes `?(expr)` selector-driving ASTs so selector source signals remain live in the generated interface,
+  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) now treats parser-created computed-selector signals marked as intermediate as real intermediates during dependency/filtering analysis,
+  - [t/37-language-contract-computed-test-selector.t](/Users/richarddje/Documents/github/fsmgen/t/37-language-contract-computed-test-selector.t) now locks that end-to-end behavior,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents `?(expr)` as part of the active test-node contract.
+- Scope of the landed contract slice:
+  - explicit support for computed-selector test nodes such as `(?(| A B) (=0 ...) (=1 ...))`
+  - explicit emission of the synthesized intermediate selector wire in generated HDL
+  - explicit preservation of the computed selector's source signals as live interface inputs
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more real parser/runtime-visible test-node family as fully documented and regression-backed.
+- Validation for this slice:
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm`
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm`
+  - `perl -I perl -c t/37-language-contract-computed-test-selector.t`
+  - `prove -I perl t/12-enablegraph-capture-registry.t t/37-language-contract-computed-test-selector.t`
+  - `prove -I perl t`
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser/runtime-visible legacy constructs,
+  - and keep promoting or rejecting each construct family explicitly with focused regressions.
 ## 2026-03-15: `:=` init/reset directives are now explicit, and malformed DT actions fail explicitly
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now treats top-level `:=` as an explicit init/reset directive,

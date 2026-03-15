@@ -94,7 +94,9 @@ Standalone DT note:
 
 - `(+size ...)` signal-width declarations
 - Unconditional state transitions `(-> next_state)`
-- Test-node branching `(?SIG (=0 ...) (!=8'0 ...) (>8'3 ...) (<=8'3 ...))`
+- Test-node branching on a signal or computed selector, for example:
+  - `(?SIG (=0 ...) (!=8'0 ...) (>8'3 ...) (<=8'3 ...))`
+  - `(?(| A B) (=0 ...) (=1 ...))`
 - Register assignment `(A <- B)`
 - D-input style sequential assignment `(A <= B)`
 - Combinational assignment `(A = B)`
@@ -216,6 +218,8 @@ Boundary note:
 
 Test nodes:
 - `(?SIG (=0 ...actions...) (!=8'0 ...actions...) (>8'3 ...actions...) ...)` is the active multi-way selector form.
+- `?(expr ...)` is the active computed-selector form when the selector itself is a condition expression, for example:
+  - `(?(| A B) (=0 ...actions...) (=1 ...actions...))`
 - Each test branch must include:
   - a selector like `=0`, `=1`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, or `>=8'1`
   - and at least one nested action
@@ -224,6 +228,7 @@ Test nodes:
   - `=value` means equality
   - `!=value` means inequality
   - `<value`, `<=value`, `>value`, `>=value` mean the corresponding relational comparison against the test signal
+- Computed selectors may synthesize an internal intermediate signal so the expression can be reused by the branch comparisons during HDL generation.
 
 ### Draft normative contract for symbol-definition sections
 This is the current `R8` draft normative contract for the symbol-definition families that are now regression-backed explicitly.

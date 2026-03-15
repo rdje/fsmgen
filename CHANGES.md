@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### computed test selectors now synthesize real intermediate wires end to end
+- Updated [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) so parser-created computed-selector signals marked as intermediate remain visible to later dependency and filtering passes instead of being dropped by AST-factorization heuristics.
+- Updated [perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm) so `?(expr)` test nodes now analyze the selector signal's driving AST as well as the synthetic selector signal itself, which keeps the underlying selector inputs live in the generated interface.
+- Added focused regression coverage in [t/37-language-contract-computed-test-selector.t](/Users/richarddje/Documents/github/fsmgen/t/37-language-contract-computed-test-selector.t) for:
+  - the computed-selector form `(?(| A B) ...)`,
+  - intermediate condition-signal capture in phase 1,
+  - live input exposure for the selector source signals,
+  - and emitted HDL that declares and drives the computed-selector wire before branch comparisons reuse it.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) so the active test-node contract now includes the computed-selector form `?(expr)` explicitly instead of describing only `?SIG`.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so `R8` tracking reflects that one more real parser/runtime-visible construct family is now both documented and regression-backed.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
+- Validation:
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm` (pass)
+  - `perl -I perl -c perl/FSM/Synthesis/EnableGraph.pm` (pass)
+  - `perl -I perl -c t/37-language-contract-computed-test-selector.t` (pass)
+  - `prove -I perl t/12-enablegraph-capture-registry.t t/37-language-contract-computed-test-selector.t` (pass)
 ### relational test-node selectors are now explicit and regression-backed
 - Updated [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) so `?sig` selector branches now lower relational selectors with their actual comparison operators instead of collapsing the active selector family to equality-only behavior.
 - Added focused regression coverage in [t/36-language-contract-test-branch-selectors.t](/Users/richarddje/Documents/github/fsmgen/t/36-language-contract-test-branch-selectors.t) for:
