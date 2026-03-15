@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: legacy generic/template placeholder boundaries are now locked through pipeline and CLI too
+- The legacy generic/template placeholder family already had parser-level coverage in the active contract:
+  - placeholder selectors such as `?[READ]`,
+  - repeat macros such as `?repeat:[MAX_COUNT]`,
+  - and placeholder tokens such as `[DATAIN]`.
+- This slice does not change parser behavior. It makes the contract more honest across entry points:
+  - those out-of-support forms are now locked through pipeline and CLI no-output behavior too,
+  - so the legacy generic/template placeholder family is no longer parser-only in the regression set.
 ## 2026-03-15: unsupported top-level `+...` directive boundaries are now locked through pipeline and CLI too
 - The unsupported top-level `+...` directive family already had parser-level coverage in the active contract:
   - unknown `+` directives like `+bogus`,

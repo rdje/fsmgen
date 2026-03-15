@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### legacy generic/template placeholder boundaries now have pipeline and CLI coverage too
+- Added [t/71-language-contract-generic-placeholder-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/71-language-contract-generic-placeholder-entrypoints.t) to lock pipeline and CLI no-output behavior for:
+  - legacy placeholder selectors such as `?[READ]`,
+  - legacy repeat macros such as `?repeat:[MAX_COUNT]`,
+  - and legacy placeholder tokens such as `[DATAIN]`.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the legacy generic/template placeholder family is now tracked as an end-to-end entrypoint boundary instead of parser-only coverage.
 ### unsupported top-level `+...` directive boundaries now have pipeline and CLI coverage too
 - Added [t/70-language-contract-top-level-directive-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/70-language-contract-top-level-directive-entrypoints.t) to lock pipeline and CLI no-output behavior for:
   - unknown top-level `+` directives like `(+bogus ...)`,

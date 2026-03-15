@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-15: legacy generic/template placeholder boundaries are now locked across entry points
+- [t/71-language-contract-generic-placeholder-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/71-language-contract-generic-placeholder-entrypoints.t) now locks pipeline and CLI no-output behavior for:
+  - legacy placeholder selectors such as `?[READ]`,
+  - legacy repeat macros such as `?repeat:[MAX_COUNT]`,
+  - and legacy placeholder tokens such as `[DATAIN]`.
+- This is a regression-only hardening slice: parser behavior was already correct, but the legacy generic/template placeholder family is now covered end to end instead of only at direct parser level.
 ## 2026-03-15: unsupported top-level `+...` directive boundaries are now locked across entry points
 - [t/70-language-contract-top-level-directive-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/70-language-contract-top-level-directive-entrypoints.t) now locks pipeline and CLI no-output behavior for:
   - unknown top-level `+` directives like `(+bogus ...)`,

@@ -424,6 +424,7 @@ Done:
   - placeholder selectors such as `?[READ]`,
   - repeat macros such as `?repeat:[MAX_COUNT]`,
   - and placeholder tokens such as `[DATAIN]`.
+- [t/71-language-contract-generic-placeholder-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/71-language-contract-generic-placeholder-entrypoints.t) now locks pipeline and CLI no-output behavior for that same legacy generic/template placeholder family, so placeholder selectors, repeat macros, and placeholder tokens now have end-to-end entrypoint coverage instead of parser-only coverage.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.
