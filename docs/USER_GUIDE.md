@@ -95,10 +95,11 @@ Reset-state note:
 - Compact top-level init/reset directives like `(:= tester_reset=1)`
 
 Combinational DT note:
-- User-facingly, a hyphen-prefixed top-level block like `(-foobar ...)` describes a combinational DT block.
-- A regular named block like `(aState ...)` describes the behavior of FSM state `aState`.
+- Both syntaxes are decision trees, but they play different roles.
+- A regular named block like `(aState ...)` is an FSM-state DT for state `aState`.
+- A hyphen-prefixed top-level block like `(-foobar ...)` is a general/combinational DT block.
 - When an FSM contains only combinational DT blocks, the active runtime treats it as DT-only generation and does not synthesize a `current_state` / `next_state` state-register plan.
-- Regular named states still use the same underlying decision-tree machinery internally, but they additionally participate in state encoding and transition planning.
+- FSM-state DTs additionally participate in state encoding and transition planning.
 
 - `(+size ...)` signal-width declarations
 - Unconditional state transitions `(-> next_state)`

@@ -3,8 +3,9 @@ This is the persistent technical change history for FSMGen.
 ## 2026-03-15
 ### user-facing DT-versus-state terminology is now sharper
 - Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) so the supported-language section now uses the more precise user-facing distinction:
-  - `(-foobar ...)` describes a combinational DT block,
-  - `(aState ...)` describes FSM state behavior.
+  - both `(aState ...)` and `(-foobar ...)` are decision trees,
+  - `(aState ...)` is an FSM-state DT,
+  - `(-foobar ...)` is a general/combinational DT block.
 - Updated [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this terminology choice is preserved for future wording and roadmap work.
 - Live roadmap status change:
   - no phase status changed,

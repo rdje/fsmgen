@@ -1,15 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
-## 2026-03-15: terminology clarification for DT blocks versus state behavior
+## 2026-03-15: terminology clarification for FSM-state DTs versus general DTs
 - User wording matters here, and the docs should reflect the language model more precisely:
-  - a hyphen-prefixed top-level block like `(-foobar ...)` describes a combinational DT block,
-  - while a regular named block like `(aState ...)` describes the behavior of FSM state `aState`.
+  - both `(aState ...)` and `(-foobar ...)` are decision trees,
+  - `(aState ...)` is an FSM-state DT attached to state `aState`,
+  - `(-foobar ...)` is a general/combinational DT block.
 - This is a terminology clarification, not a behavioral change:
-  - regular named states still use the same underlying decision-tree machinery internally,
-  - but they are not described to users as “just DT blocks” because they participate in state encoding and transition planning.
+  - FSM-state DTs and general/combinational DTs still share the same underlying decision-tree machinery,
+  - but FSM-state DTs participate in state encoding and transition planning while general DTs do not.
 - The user guide should prefer:
-  - “combinational DT block” for `(-foobar ...)`,
-  - and “FSM state behavior block” or equivalent wording for `(aState ...)`.
+  - “FSM-state DT” for `(aState ...)`,
+  - and “general/combinational DT block” for `(-foobar ...)`.
 ## 2026-03-15: reset-state spellings are now a real contract instead of an accidental name trick
 - The next `R8` slice closes a real mismatch between the docs, the corpus, and the parser/runtime boundary:
   - the shipped corpus still uses legacy reset-state spellings like `-syncreset`,

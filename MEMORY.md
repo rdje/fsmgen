@@ -22,8 +22,9 @@ After each completed task, always do this in order:
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
 ## 2026-03-15: DT-versus-state wording is now clarified
 - Current worktree is a terminology-only follow-up:
-  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now says a hyphen-prefixed top-level block like `(-foobar ...)` describes a combinational DT block,
-  - and a regular named block like `(aState ...)` describes FSM state behavior.
+  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now says both syntaxes are decision trees,
+  - a regular named block like `(aState ...)` is an FSM-state DT,
+  - and a hyphen-prefixed top-level block like `(-foobar ...)` is a general/combinational DT block.
 - Scope of the clarification:
   - no runtime behavior changed,
   - the goal is to keep user-facing wording aligned with the intended language model.
