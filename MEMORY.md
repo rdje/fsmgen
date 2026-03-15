@@ -3024,6 +3024,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - reduce or replace the remaining identifier-scan fallback itself inside `extract_intermediate_signals_from_runtime_ast_miss(...)`,
   - keep ignoring dormant standalone declaration helpers unless they become live or can be retired outright.
+## 2026-03-15: malformed `:=` RHS values now fail early through the directive contract
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now turns malformed `:=` RHS values into the dedicated init/reset-contract diagnostic instead of leaking raw expression-parser failures.
+- [t/56-language-contract-init-directive-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/56-language-contract-init-directive-boundary.t) now locks:
+  - unsupported RHS values such as `[DATAIN]` and `<start`,
+  - and pipeline/CLI no-output behavior for malformed `:=` RHS values.
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the malformed-RHS side of the active `:=` boundary explicitly.
+
 ## 2026-03-15: computed test-selector malformed forms now fail early
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects malformed `?(expr)` forms explicitly instead of letting them fall into incidental expression/parser errors.
 - [t/55-language-contract-computed-test-selector-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/55-language-contract-computed-test-selector-boundary.t) now locks:

@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### `:=` reset/default RHS values now fail through the dedicated init contract
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so malformed `:=` RHS values now surface through the dedicated init/reset boundary instead of leaking raw expression-parser failures.
+- Added [t/56-language-contract-init-directive-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/56-language-contract-init-directive-boundary.t) to lock:
+  - explicit rejection of unsupported RHS reset/default values such as `[DATAIN]` and `<start`,
+  - and pipeline/CLI no-output behavior for malformed `:=` RHS values.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the active `:=` contract now documents the malformed-RHS boundary explicitly.
 ### computed test selectors now have an explicit malformed-boundary contract
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so computed test selectors must start with a real selector expression and include at least one branch instead of falling through to incidental parser/expression failures.
 - Added [t/55-language-contract-computed-test-selector-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/55-language-contract-computed-test-selector-boundary.t) to lock:

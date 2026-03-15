@@ -501,6 +501,7 @@ Current boundary:
   - `(:= signal=literal_or_scalar_expr)` at top level inside `(?fsm:name ...)`
 - Rejected explicitly:
   - malformed payloads such as `(:= BROKEN)`
+  - unsupported RHS reset/default values such as `(:= tester_reset=[DATAIN])` or `(:= tester_reset=<start)`
   - unsupported top-level bare alternatives such as `(tester_reset := 1)`
   - malformed DT actions such as `(BROKEN)`
   - empty guarded blocks such as `(<req)`

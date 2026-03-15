@@ -812,12 +812,13 @@ sub parse_init_assignment_directive($self, $init_ast) {
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless defined $signal_name && defined $reset_value;
 
-    my $reset_expr = $self->{expression_builder}->parse_expression($reset_value);
+    my $reset_expr = eval { $self->{expression_builder}->parse_expression($reset_value) };
+    my $reset_expr_error = $@;
     Carp::confess
         "Unsupported ':=' reset value '$reset_value' for signal '$signal_name'. ".
         "The active contract currently expects a valid scalar reset/default expression on the right-hand side. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
-        unless $reset_expr;
+        if $reset_expr_error || !$reset_expr;
 
     my %register_args = (
         attributes => {

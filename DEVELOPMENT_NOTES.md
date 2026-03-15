@@ -3971,6 +3971,13 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this is preferable to reviving another string-expression helper because the fallback still resolves dependencies through AST construction and AST traversal once a systematic legacy name is recognized,
   - the remaining regex scan is now narrowed further to genuinely opaque legacy names rather than all `legacy_string_registry` entries.
+## 2026-03-15: malformed `:=` RHS values now fail through the init/reset boundary
+- The active top-level `:=` directive was already supported, but malformed RHS values still leaked raw expression-parser diagnostics instead of surfacing through the directive contract itself.
+- The active contract is now explicit on that side too:
+  - `(:= tester_reset=[DATAIN])`
+  - `(:= tester_reset=<start)`
+  now fail as unsupported `:=` reset/default RHS values.
+
 ## 2026-03-15: computed test selectors now have an explicit malformed boundary
 - The active `?(expr)` success path was already supported and regression-backed, but malformed computed selectors still relied too much on incidental expression/parser fallout.
 - The contract is now explicit:
