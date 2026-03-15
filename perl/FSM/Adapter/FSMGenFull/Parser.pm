@@ -104,6 +104,8 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
         $module_name = $self->decode_structured_fsm_module_name($fsm_header);
         $fsm_contents = $contents;
     }
+
+    $self->validate_fsm_root_body($module_name, $fsm_contents, $is_flat_ast);
     
     fsm_debug("Parsing FSM module: $module_name", 3);
     
@@ -111,6 +113,12 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
     $self->{fsm_module} = $module;
     
     for my $element (@$fsm_contents) {
+        Carp::confess
+            "Malformed top-level FSM body item '".$self->describe_top_level_source_root([$element])."' in source '$module_name'. ".
+            "Inside '?fsm:module_name' and the legacy '+fsm' root family, top-level content must be a list of directive sections, ':=' directives, and state/DT blocks. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless ref($element) eq 'ARRAY';
+
         next unless ref($element) eq 'ARRAY';
         my $element_name = $element->[0];
         
@@ -191,6 +199,18 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
     $self->validate_no_combinational_self_dependency();
     fsm_trace_exit("Parser parse_fsm_module() completed for '$module_name'", 2);
     return $module;
+}
+
+sub validate_fsm_root_body($self, $module_name, $fsm_contents, $is_flat_ast = 0) {
+    my $root_family = $is_flat_ast ? '+fsm' : '?fsm:' . $module_name;
+
+    Carp::confess
+        "Malformed top-level FSM body for source '$root_family'. ".
+        "The active contract expects a non-empty list of directive sections, ':=' directives, and state/DT blocks inside the FSM source root. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless ref($fsm_contents) eq 'ARRAY' && @$fsm_contents;
+
+    return 1;
 }
 
 sub decode_flat_fsm_structure($self, $ast_array) {

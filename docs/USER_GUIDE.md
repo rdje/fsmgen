@@ -422,6 +422,7 @@ Current boundary:
   - malformed `+fsm` roots that do not provide a scalar module name in one of the two supported legacy layouts
   - malformed tagged source roots such as `?fsm:bad-name` or `?top:bad-name` whose source name is not HDL-identifier-compatible
   - bare top-level FSM content without a wrapping supported source root, such as files that start directly with `(+system ...)` or `(idle ...)`
+  - malformed structured `?fsm:name` roots whose body is empty or contains non-list top-level items such as `(?fsm:empty_root)` or `(?fsm:scalar_root BROKEN)`
 - Important rule:
   - an unsupported tagged top-level wrapper does not become supported just because it contains a nested `?fsm:name` somewhere inside it
 
@@ -447,6 +448,13 @@ Boundary note:
   - accepted: `?fsm:ctrl_unit`, `?top:packet_bridge`
   - rejected: `?fsm:bad-name`, `?top:bad-name`
   - malformed tagged names no longer truncate silently to a valid prefix.
+- Structured `?fsm:name` roots must also carry a real top-level item list:
+  - accepted:
+    - `(?fsm:ctrl_unit (+system ...) (idle ...))`
+  - rejected:
+    - `(?fsm:empty_root)`
+    - `(?fsm:scalar_root BROKEN)`
+    - any structured `?fsm:name` root whose top-level body items are not list forms
 
 ### Draft normative contract for the conventional `+system` section
 This is the current `R8` draft normative contract for the active `+system` boundary.

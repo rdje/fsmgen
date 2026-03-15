@@ -322,6 +322,10 @@ Done:
   - bare top-level FSM content like `(+system ...)` or `(idle ...)` is rejected unless it is wrapped in `?fsm:module_name` or the legacy `+fsm` root family,
   - the classifier still leaves those files outside active source kinds (`kind => unknown`, no supported header),
   - and parser, pipeline, and CLI entry points now reject those malformed roots without emitting HDL.
+- [t/64-language-contract-fsm-root-body-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/64-language-contract-fsm-root-body-boundary.t) now locks the structured FSM-root body boundary explicitly:
+  - empty structured roots like `(?fsm:empty_root)` are rejected explicitly,
+  - scalar top-level body items like `(?fsm:scalar_root BROKEN)` are rejected explicitly,
+  - and parser, pipeline, and CLI entry points now reject those malformed structured roots without emitting HDL.
 - [t/48-language-contract-standalone-dt-classification.t](/Users/richarddje/Documents/github/fsmgen/t/48-language-contract-standalone-dt-classification.t) now locks the general/combinational DT boundary explicitly:
   - hyphen-prefixed general DT blocks now carry explicit `standalone_dt` classification in the AST,
   - they stay out of the encoded-state plan,

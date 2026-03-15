@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-15: malformed structured `?fsm` root bodies now fail early through an explicit boundary
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now requires structured `?fsm:name` roots to carry a non-empty top-level item list and rejects scalar top-level body items explicitly.
+- [t/64-language-contract-fsm-root-body-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/64-language-contract-fsm-root-body-boundary.t) now locks:
+  - explicit rejection of `(?fsm:empty_root)`,
+  - explicit rejection of `(?fsm:scalar_root BROKEN)`,
+  - and pipeline/CLI no-output behavior for malformed structured root bodies.
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now states that structured `?fsm:name` roots must contain a real top-level item list rather than an empty or scalar payload.
 ## 2026-03-15: bare top-level FSM content now fails early through an explicit source-root boundary
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now turns unwrapped top-level FSM content into a dedicated source-root diagnostic instead of the old generic “expected `?fsm:name` or `+fsm`” parser error.
 - [t/63-language-contract-source-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/63-language-contract-source-root-boundary.t) now locks:

@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### malformed structured `?fsm` root bodies now fail through an explicit boundary
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so structured `?fsm:name` roots now require a non-empty top-level item list and reject scalar top-level body items explicitly instead of relying on incidental later-stage fallout.
+- Added [t/64-language-contract-fsm-root-body-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/64-language-contract-fsm-root-body-boundary.t) to lock:
+  - explicit rejection of empty structured roots like `(?fsm:empty_root)`,
+  - explicit rejection of scalar top-level items like `(?fsm:scalar_root BROKEN)`,
+  - and pipeline/CLI no-output behavior for those malformed structured roots.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the top-level source contract now documents the structured-root body boundary explicitly.
 ### bare top-level FSM content now fails through an explicit source-root boundary
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so unwrapped top-level FSM content now fails through a dedicated source-root diagnostic instead of the old generic “expected `?fsm:name` or `+fsm`” parser error.
 - Added [t/63-language-contract-source-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/63-language-contract-source-root-boundary.t) to lock:

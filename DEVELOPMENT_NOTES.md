@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: malformed structured `?fsm` root bodies now fail through an explicit boundary
+- After tightening bare source roots, one more source-level gap remained inside the structured `?fsm:name` family:
+  - `(?fsm:empty_root)` could still decode to an `undef` body,
+  - and `(?fsm:scalar_root BROKEN)` could still carry a scalar top-level body item that was skipped instead of rejected explicitly.
+- The active contract is now explicit on that malformed side too:
+  - structured `?fsm:name` roots must contain a non-empty list of top-level directive/state/DT items,
+  - empty structured roots now fail through a dedicated body diagnostic,
+  - and scalar top-level body items now fail through a dedicated body-item diagnostic.
 ## 2026-03-15: bare top-level FSM content now fails through an explicit source-root boundary
 - One generic parser message was still left at the very top of the FSM-only entry point:
   - files that started directly with `(+system ...)` or `(idle ...)` were outside the active source-root contract,
