@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### malformed empty test-node branches now fail explicitly
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so malformed empty `?sig` / case-style test branches now fail with a targeted diagnostic instead of leaking through a generic internal `undef` action path.
+- Added focused regression coverage in [t/35-language-contract-test-branch-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/35-language-contract-test-branch-boundary.t) for:
+  - empty branches such as `(?MODE (=0))`,
+  - and mixed test nodes where one branch is valid and another branch is empty.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) so the active test-node contract now says explicitly that each branch requires a selector plus at least one nested action, and malformed empty branches are now called out in the out-of-support bucket.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so `R8` done/left tracking reflects the removal of this generic parser-failure path from the test-node family.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
+- Validation:
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm` (pass)
+  - `perl -I perl -c t/35-language-contract-test-branch-boundary.t` (pass)
+  - `prove -I perl t/35-language-contract-test-branch-boundary.t` (pass)
 ### top-level `:=` is now explicit, and malformed DT actions now fail explicitly
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so top-level `:=` is now an explicit init/reset directive that records reset/default metadata for the target signal, while malformed decision-tree actions and empty guarded blocks no longer disappear silently during parsing.
 - Added focused regression coverage in [t/34-language-contract-malformed-actions.t](/Users/richarddje/Documents/github/fsmgen/t/34-language-contract-malformed-actions.t) for:

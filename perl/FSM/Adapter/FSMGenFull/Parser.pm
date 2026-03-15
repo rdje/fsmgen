@@ -725,28 +725,44 @@ sub parse_test_node_new_format($self, $action) {
     
     if (ref($branches) eq 'ARRAY') {
         for my $branch (@$branches) {
-            if (ref($branch) eq 'ARRAY' && @$branch >= 2) {
-                my ($test_value, @branch_actions) = @$branch;
-                my @parsed_actions;
-                
-                for my $branch_action (@branch_actions) {
-                    if (ref($branch_action) eq 'ARRAY') {
-                        if (@$branch_action > 0 && ref($branch_action->[0]) eq 'ARRAY') {
-                            for my $nested_assignment (@$branch_action) {
-                                my $parsed_action = $self->parse_action($nested_assignment);
-                                push @parsed_actions, $parsed_action if $parsed_action;
-                            }
-                        } else {
-                            my $parsed_action = $self->parse_action($branch_action);
+            my $branch_desc = defined($branch)
+                ? (ref($branch) eq 'ARRAY'
+                    ? '(' . join(' ', map { defined($_) ? (ref($_) ? ref($_) : $_) : 'undef' } @$branch) . ')'
+                    : (ref($branch) ? ref($branch) : $branch))
+                : 'undef';
+
+            Carp::confess
+                "Malformed test branch '$branch_desc'. ".
+                "Test-node branches must include a value selector like '=0' plus at least one nested action. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                unless ref($branch) eq 'ARRAY' && @$branch >= 2;
+
+            my ($test_value, @branch_actions) = @$branch;
+            my @parsed_actions;
+
+            for my $branch_action (@branch_actions) {
+                Carp::confess
+                    "Malformed test branch '$test_value'. ".
+                    "Test-node branches must include at least one real nested action after the selector. ".
+                    "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                    unless defined $branch_action;
+
+                if (ref($branch_action) eq 'ARRAY') {
+                    if (@$branch_action > 0 && ref($branch_action->[0]) eq 'ARRAY') {
+                        for my $nested_assignment (@$branch_action) {
+                            my $parsed_action = $self->parse_action($nested_assignment);
                             push @parsed_actions, $parsed_action if $parsed_action;
                         }
                     } else {
                         my $parsed_action = $self->parse_action($branch_action);
                         push @parsed_actions, $parsed_action if $parsed_action;
                     }
+                } else {
+                    my $parsed_action = $self->parse_action($branch_action);
+                    push @parsed_actions, $parsed_action if $parsed_action;
                 }
-                $test_node->add_test_branch($test_value, \@parsed_actions);
             }
+            $test_node->add_test_branch($test_value, \@parsed_actions);
         }
     }
     

@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: malformed empty test-node branches now fail explicitly
+- The next `R8` slice now tightens the `?sig` / case-style dispatch boundary:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now emits a targeted malformed-test-branch diagnostic instead of leaking malformed empty branches through a generic internal `undef` action failure.
+- Focused regression coverage now exists in [t/35-language-contract-test-branch-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/35-language-contract-test-branch-boundary.t) for:
+  - empty branches such as `(?MODE (=0))`,
+  - and mixed test nodes where one branch is valid but another branch is empty.
+- Boundary decision:
+  - active test-node support still treats `?sig` as the case/switch-style multi-way exact-value form,
+  - and each branch must now be understood as `selector + at least one nested action`.
 ## 2026-03-15: `:=` is now an explicit top-level init/reset directive, and future canonical forms are saved
 - The active tree already uses compact top-level directives such as `(:= tester_reset=1)` in shipped corpus files like [fsm/mipicsi2_configreg.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_configreg.fsm).
 - This `R8` slice makes that boundary explicit instead of leaving it accidental:

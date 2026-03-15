@@ -46,6 +46,26 @@ After each completed task, always do this in order:
   - keep `R8` active,
   - continue auditing remaining parser-visible implicit fallthroughs,
   - and keep turning them into either supported or explicitly rejected behavior.
+## 2026-03-15: malformed empty test-node branches now fail explicitly
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now emits a targeted malformed-test-branch diagnostic for empty `?sig` branches,
+  - [t/35-language-contract-test-branch-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/35-language-contract-test-branch-boundary.t) now locks that boundary,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now says explicitly that each test-node branch needs a selector plus at least one nested action.
+- Scope of the landed contract slice:
+  - explicit rejection of empty test branches such as `(?MODE (=0))`
+  - explicit rejection of mixed test nodes where one branch is valid and another branch is empty
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one less generic parser-failure path in the test-node family.
+- Validation for this slice:
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`
+  - `perl -I perl -c t/35-language-contract-test-branch-boundary.t`
+  - `prove -I perl t/35-language-contract-test-branch-boundary.t`
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser-visible legacy constructs,
+  - and keep replacing generic parser artifacts with supported or explicitly rejected behavior.
 ## 2026-03-15: bare condition suffixes now fail explicitly
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects bare suffix tails in assignment/transition suffix positions,

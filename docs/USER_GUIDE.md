@@ -156,6 +156,8 @@ Standalone DT note:
 - Malformed action forms or empty guarded blocks that do not carry a real action body, for example:
   - `(BROKEN)`
   - `(<req)`
+- Malformed test-node branches that do not carry a real branch body, for example:
+  - `(?MODE (=0))`
 - Legacy composition forms such as `?&...`, nested `?top`, `?ports` mapping directives, nested `?toplink`, and multi-source `?fsmc`
 
 ### Draft normative contract for guards, suffixes, updates, and operator expressions
@@ -211,6 +213,13 @@ Operator expressions:
 Boundary note:
 - Some future normalization ideas discussed in engineering notes are not part of the active contract yet.
 - In particular, the more systematic sugar direction such as `<foo==3` as canonical shorthand over a fully explicit guard expression remains saved in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), but it is not yet the active supported language contract.
+
+Test nodes:
+- `(?SIG (=0 ...actions...) (=1 ...actions...))` is the active multi-way exact-value dispatch form.
+- Each test branch must include:
+  - a selector like `=0`, `=1`, or `=3`
+  - and at least one nested action
+- Malformed empty branches such as `(?MODE (=0))` are rejected explicitly.
 
 ### Draft normative contract for symbol-definition sections
 This is the current `R8` draft normative contract for the symbol-definition families that are now regression-backed explicitly.
