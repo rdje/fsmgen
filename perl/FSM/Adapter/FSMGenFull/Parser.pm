@@ -643,6 +643,18 @@ sub parse_action($self, $action) {
     
     if ($action_target eq '->') {
         return $self->parse_transition_new_format($action);
+    } elsif ($action_target =~ /^\?repeat:/) {
+        Carp::confess
+            "Unsupported generic/template repeat action '$action_target'. ".
+            "The active contract does not support legacy '?repeat:...' expansion forms. ".
+            "Expand the template before parsing or keep it in legacy-only sources. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+    } elsif ($action_target =~ /^\?\[[^\]]+\]$/) {
+        Carp::confess
+            "Unsupported generic/template test selector '$action_target'. ".
+            "The active contract does not support legacy placeholder selectors like '?[NAME]'. ".
+            "Expand the template before parsing or keep it in legacy-only sources. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
     } elsif ($action_target =~ /^\?/) {
         return $self->parse_test_node_new_format($action);
     } elsif ($self->is_compound_update_shorthand($action_target, $action_spec)) {

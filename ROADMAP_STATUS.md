@@ -310,6 +310,10 @@ Done:
   - computed selectors synthesize a real intermediate condition signal,
   - the source expression signals stay live in the generated interface,
   - and emitted HDL reuses that computed selector signal in its branch comparisons.
+- [t/38-language-contract-generic-placeholder-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/38-language-contract-generic-placeholder-boundary.t) now locks explicit rejection of the legacy generic/template placeholder family in the FSM-only parser:
+  - placeholder selectors such as `?[READ]`,
+  - repeat macros such as `?repeat:[MAX_COUNT]`,
+  - and placeholder tokens such as `[DATAIN]`.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.

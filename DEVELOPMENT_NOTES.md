@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: legacy generic/template placeholders are now rejected explicitly
+- The old corpus still contains template-expansion syntax that belongs to the legacy generic system, not to the active `.fsm` contract:
+  - placeholder selectors such as `?[READ]`,
+  - repeat macros such as `?repeat:[MAX_COUNT]`,
+  - and placeholder tokens such as `[DATAIN]` or `[?size: ...]`.
+- User clarification preserved from the design discussion:
+  - forms like `?[READ]` act like generics to be populated later,
+  - so they should not be treated as live active-language constructs until a real generic/template lane exists.
+- This `R8` slice now makes that boundary explicit:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects placeholder test selectors and repeat macros with targeted diagnostics instead of letting them drift into ordinary `?sig` parsing.
+  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now rejects placeholder scalar tokens explicitly instead of registering them as ordinary signal names.
+- Focused regression coverage now exists in [t/38-language-contract-generic-placeholder-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/38-language-contract-generic-placeholder-boundary.t) for:
+  - `?[READ]`,
+  - `?repeat:[MAX_COUNT]`,
+  - and `[DATAIN]`.
+- Boundary decision:
+  - the active tool now treats these forms as explicit out-of-support legacy generic/template syntax,
+  - not as partially supported FSM constructs.
 ## 2026-03-15: computed test selectors are now part of the active contract
 - The shipped parser already supported the computed-selector test-node form:
   - `?(expr)` where `expr` is a selector expression such as `(| A B)`.

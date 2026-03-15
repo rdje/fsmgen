@@ -218,6 +218,14 @@ sub parse_expression($self, $expr) {
 
 sub parse_scalar_expression($self, $scalar) {
     fsm_debug("        PARSE_SCALAR: Processing scalar '$scalar'", 3);
+
+    if ($scalar =~ /^\[[^\]]+\](?:.*)?$/) {
+        Carp::confess
+            "Unsupported generic/template placeholder token '$scalar'. ".
+            "The active contract does not support legacy placeholder-expansion forms like '[NAME]' or '[?size: ...]'. ".
+            "Expand the template before parsing or keep it in legacy-only sources. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+    }
     
     if ($scalar =~ /^(\d+)'([bdhxBDHX])([0-9a-fA-F_]+)$/) {
         my ($width, $radix_char, $value) = ($1, lc($2), $3);

@@ -161,6 +161,10 @@ Standalone DT note:
 - Malformed test-node branches that do not carry a real branch body, for example:
   - `(?MODE (=0))`
 - Legacy composition forms such as `?&...`, nested `?top`, `?ports` mapping directives, nested `?toplink`, and multi-source `?fsmc`
+- Legacy generic/template expansion forms, including:
+  - placeholder selectors such as `?[READ]`
+  - repeat macros such as `?repeat:[MAX_COUNT]`
+  - placeholder tokens such as `[DATAIN]` or `[?size: MAX_COUNT]`
 
 ### Draft normative contract for guards, suffixes, updates, and operator expressions
 This is the current `R8` draft normative contract for the active language slice that is now regression-backed explicitly.

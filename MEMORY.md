@@ -20,6 +20,33 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: legacy generic/template placeholders now fail explicitly
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects placeholder selectors like `?[READ]` and repeat macros like `?repeat:[MAX_COUNT]` with targeted diagnostics,
+  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now rejects placeholder scalar tokens like `[DATAIN]` explicitly instead of registering them as ordinary signals,
+  - [t/38-language-contract-generic-placeholder-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/38-language-contract-generic-placeholder-boundary.t) now locks that boundary,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the whole placeholder/generic family as explicitly out of active support.
+- Scope of the landed contract slice:
+  - explicit rejection of placeholder selectors such as `?[READ]`
+  - explicit rejection of legacy repeat-expansion macros such as `?repeat:[MAX_COUNT]`
+  - explicit rejection of placeholder tokens such as `[DATAIN]` and `[?size: ...]`
+- Design context preserved in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md):
+  - user clarified that `[READ]`-style forms act like generics to be populated later,
+  - so they belong to a future generic/template lane, not the active `R8` support boundary.
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more parser-visible legacy family as explicitly rejected instead of ambiguously parser-visible.
+- Validation for this slice:
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm`
+  - `perl -I perl -c t/38-language-contract-generic-placeholder-boundary.t`
+  - `prove -I perl t/38-language-contract-generic-placeholder-boundary.t`
+  - `prove -I perl t`
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing the remaining parser/runtime-visible legacy forms,
+  - and keep classifying each one into supported or explicitly rejected buckets.
 ## 2026-03-15: computed test selectors now synthesize real intermediate wires end to end
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm) now analyzes `?(expr)` selector-driving ASTs so selector source signals remain live in the generated interface,

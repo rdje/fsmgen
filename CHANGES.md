@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### legacy generic placeholder forms now fail explicitly
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so legacy generic/template placeholder selectors such as `?[READ]` and repeat macros such as `?repeat:[MAX_COUNT]` now fail with targeted diagnostics instead of drifting into ordinary `?sig` parsing.
+- Updated [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) so placeholder tokens such as `[DATAIN]` or `[?size: ...]` now fail explicitly instead of being registered as ordinary signal names in the active parser.
+- Added focused regression coverage in [t/38-language-contract-generic-placeholder-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/38-language-contract-generic-placeholder-boundary.t) for:
+  - placeholder selectors like `?[READ]`,
+  - repeat macros like `?repeat:[MAX_COUNT]`,
+  - and placeholder tokens like `[DATAIN]`.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) so the legacy generic/template placeholder family is now called out explicitly in the out-of-support bucket.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so `R8` tracking reflects that one more parser-visible legacy family is now explicitly rejected instead of ambiguously accepted.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
+- Validation:
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm` (pass)
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm` (pass)
+  - `perl -I perl -c t/38-language-contract-generic-placeholder-boundary.t` (pass)
+  - `prove -I perl t/38-language-contract-generic-placeholder-boundary.t` (pass)
 ### computed test selectors now synthesize real intermediate wires end to end
 - Updated [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) so parser-created computed-selector signals marked as intermediate remain visible to later dependency and filtering passes instead of being dropped by AST-factorization heuristics.
 - Updated [perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm) so `?(expr)` test nodes now analyze the selector signal's driving AST as well as the synthetic selector signal itself, which keeps the underlying selector inputs live in the generated interface.
