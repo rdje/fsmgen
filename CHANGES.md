@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### user-facing DT-versus-state terminology is now sharper
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) so the supported-language section now uses the more precise user-facing distinction:
+  - `(-foobar ...)` describes a combinational DT block,
+  - `(aState ...)` describes FSM state behavior.
+- Updated [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this terminology choice is preserved for future wording and roadmap work.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task.
 ### reset-state spellings now have a real supported contract
 - Updated [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) so `FSM::CoreAST::State` now preserves `state_type` and exposes `state_type`, `is_reset_state`, and `is_regular_state`, instead of silently dropping reset-state classification metadata.
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so:

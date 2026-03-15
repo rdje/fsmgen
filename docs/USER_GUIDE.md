@@ -84,9 +84,9 @@ Reset-state note:
 - The short and long spellings normalize to the same internal reset-state identities:
   - `-syncrst` and `-syncreset` => `syncreset`
   - `-asyncrst` and `-asyncreset` => `asyncreset`
-- These reset blocks are supported as dedicated reset-state decision-tree blocks.
+- These reset blocks are supported as dedicated reset-state combinational-DT blocks.
 - They do not participate in regular state encoding or `current_state` comparisons.
-- Standalone decision-tree blocks like `(-alpha_dt ...)`, `(-misc ...)`, or `(-mycombit ...)`
+- Combinational DT blocks like `(-alpha_dt ...)`, `(-misc ...)`, or `(-mycombit ...)`
 - Symbol-definition sections:
   - `(+constants ...)`
   - `(+enums ...)`
@@ -94,10 +94,11 @@ Reset-state note:
   - `(+params ...)`
 - Compact top-level init/reset directives like `(:= tester_reset=1)`
 
-Standalone DT note:
-- User-facingly, hyphen-prefixed top-level blocks are supported as standalone DT blocks.
-- When an FSM contains only those blocks, the active runtime treats it as DT-only generation and does not synthesize a `current_state` / `next_state` state-register plan.
-- Regular named states still use the same underlying decision-tree machinery, but they additionally participate in state encoding and transition planning.
+Combinational DT note:
+- User-facingly, a hyphen-prefixed top-level block like `(-foobar ...)` describes a combinational DT block.
+- A regular named block like `(aState ...)` describes the behavior of FSM state `aState`.
+- When an FSM contains only combinational DT blocks, the active runtime treats it as DT-only generation and does not synthesize a `current_state` / `next_state` state-register plan.
+- Regular named states still use the same underlying decision-tree machinery internally, but they additionally participate in state encoding and transition planning.
 
 - `(+size ...)` signal-width declarations
 - Unconditional state transitions `(-> next_state)`

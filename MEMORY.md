@@ -20,6 +20,20 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: DT-versus-state wording is now clarified
+- Current worktree is a terminology-only follow-up:
+  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now says a hyphen-prefixed top-level block like `(-foobar ...)` describes a combinational DT block,
+  - and a regular named block like `(aState ...)` describes FSM state behavior.
+- Scope of the clarification:
+  - no runtime behavior changed,
+  - the goal is to keep user-facing wording aligned with the intended language model.
+- Roadmap board update:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - keep tightening the language contract,
+  - and keep the terminology in the docs as precise as the behavior.
 ## 2026-03-15: reset-state spelling and classification contract is now live
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) now preserves `state_type` on `FSM::CoreAST::State` and exposes `state_type`, `is_reset_state`, and `is_regular_state`,
