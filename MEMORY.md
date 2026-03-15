@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-15: malformed test-selector boundaries are now locked across entry points
+- [t/69-language-contract-test-selector-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/69-language-contract-test-selector-entrypoints.t) now locks pipeline and CLI no-output behavior for:
+  - bare symbolic test selectors like `(BUSY ...)`,
+  - and bare numeric test selectors like `(0 ...)`.
+- This is a regression-only hardening slice: parser behavior was already correct, but the malformed test-selector family is now covered end to end instead of only at direct parser level.
 ## 2026-03-15: malformed test-branch boundaries are now locked across entry points
 - [t/68-language-contract-test-branch-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/68-language-contract-test-branch-entrypoints.t) now locks pipeline and CLI no-output behavior for:
   - empty test-node branches like `(?MODE (=0))`,

@@ -357,6 +357,7 @@ Done:
 - [t/42-language-contract-test-selector-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/42-language-contract-test-selector-boundary.t) now locks the explicit-selector boundary for test-node branches:
   - operator-prefixed selectors such as `=0`, `=OTHER`, and `!=8'0` remain supported,
   - while malformed bare selectors such as `BUSY` or `0` are now rejected explicitly.
+- [t/69-language-contract-test-selector-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/69-language-contract-test-selector-entrypoints.t) now locks pipeline and CLI no-output behavior for the same malformed test-selector family, so bare symbolic and numeric branch selectors now have end-to-end entrypoint coverage instead of parser-only coverage.
 - [t/43-language-contract-top-level-form-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/43-language-contract-top-level-form-boundary.t) now locks explicit rejection of unsupported top-level bare forms inside `(?fsm:name ...)`, so future-looking forms such as `(lhs := value)` or malformed bare entries no longer disappear silently.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now also promotes the symbol-definition families into the fully supported bucket and documents their current normative contract:
   - `(+constants ...)`,
