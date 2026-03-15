@@ -93,7 +93,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
     } else {
         fsm_trace_decision(1, 'Using standard AST module header decoding path', 2);
         my ($fsm_header, $contents) = @$fsm_ast;
-        ($module_name) = $fsm_header =~ /\?fsm:(\w+)/;
+        $module_name = $self->decode_structured_fsm_module_name($fsm_header);
         $fsm_contents = $contents;
     }
     
@@ -236,6 +236,16 @@ sub decode_flat_fsm_structure($self, $ast_array) {
         "The active contract supports the legacy '+fsm' source family only as either ".
         "'(+fsm module_name)' followed by sibling sections/state/DT blocks, or ".
         "the nested legacy root form '(+fsm module_name ... )'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+}
+
+sub decode_structured_fsm_module_name($self, $fsm_header) {
+    return $1 if defined($fsm_header) && !ref($fsm_header) && $fsm_header =~ /\A\?fsm:([A-Za-z_]\w*)\z/;
+
+    my $display = defined($fsm_header) ? (ref($fsm_header) ? ref($fsm_header) : $fsm_header) : 'undef';
+    Carp::confess
+        "Malformed top-level FSM source '$display'. ".
+        "The active contract expects '?fsm:module_name' with an HDL-identifier-compatible module name ([A-Za-z_]\\w*). ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 

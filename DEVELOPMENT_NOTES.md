@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: tagged source names now have an explicit whole-name boundary
+- The next `R8` slice closes a real source-name mismatch between classification and decoding:
+  - the source classifier already treated headers like `?fsm:bad-name` and `?top:bad-name` as tagged source kinds,
+  - but the active parsers were decoding those names with `\w+`-style prefix matching,
+  - which meant malformed names could silently truncate to a valid prefix like `bad`.
+- Implementation:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates `?fsm:module_name` roots as a whole and rejects malformed names explicitly.
+  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now validates `?top:top_name` roots as a whole and also validates embedded composition child sources like `?fsm:source_name` as a whole.
+- Focused regression coverage now exists in [t/47-language-contract-source-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/47-language-contract-source-name-boundary.t) for:
+  - malformed top-level `?fsm:bad-name` roots,
+  - malformed top-level `?top:bad-name` roots,
+  - and malformed embedded composition child sources like `?fsm:bad-name`.
+- Boundary decision:
+  - tagged source names must now be HDL-identifier-compatible (`[A-Za-z_]\\w*`) and are accepted or rejected as a whole,
+  - malformed tagged names no longer truncate silently to their valid prefix.
 ## 2026-03-15: legacy `+fsm` roots are now a real contract instead of an under-validated compatibility path
 - The next `R8` slice closes a real support gap around the documented flattened legacy FSM root:
   - `+fsm` was already claimed as a supported source kind,

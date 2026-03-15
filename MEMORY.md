@@ -20,6 +20,24 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: tagged source-name boundary is now explicit
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates top-level `?fsm:module_name` roots as a whole,
+  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now validates top-level `?top:top_name` roots and embedded `?fsm:source_name` child sources as a whole,
+  - [t/47-language-contract-source-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/47-language-contract-source-name-boundary.t) now locks the malformed-name boundary for all three paths,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now states that tagged source names must be HDL-identifier-compatible.
+- Scope of the landed contract slice:
+  - explicit support now includes whole-name validation for tagged FSM/composition roots,
+  - explicit rejection now covers malformed tagged names like `?fsm:bad-name` and `?top:bad-name`,
+  - and malformed embedded composition child source names no longer truncate silently.
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more source-boundary family as explicitly documented and regression-backed.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser/runtime-visible language edges,
+  - and keep replacing implicit parser truncation/fallthrough behavior with explicit contract boundaries.
 ## 2026-03-15: legacy `+fsm` root contract is now explicit
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates the legacy `+fsm` source family before decoding the module name,

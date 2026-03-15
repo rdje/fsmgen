@@ -72,7 +72,7 @@ Standard used here:
 - "implemented but not fully regression-backed" means the parser/runtime has support for it, but the current test depth is not strong enough to present it as equally solid.
 
 ### Fully supported single-FSM constructs
-- Root form `(?fsm:name ...)`
+- Root form `(?fsm:module_name ...)` with an HDL-identifier-compatible module name (`[A-Za-z_]\\w*`)
 - Legacy `+fsm` root family:
   - flattened sibling form with a first top-level entry `(+fsm module_name)` and sibling `(+system ...)`, state blocks, and `(+size ...)`
   - nested legacy root form `(+fsm module_name ...)`
@@ -134,7 +134,7 @@ Combinational DT note:
 - Enforced diagnostics for `<N` with RHS other than literal `0` or `1`
 
 ### Fully supported composition `.fsm` constructs
-- Root form `(?top:name ...)`
+- Root form `(?top:top_name ...)` with an HDL-identifier-compatible top name (`[A-Za-z_]\\w*`)
 - Explicit `(?ports:block ...)` blocks with flat port tokens
 - Port tokens like `clk`, `rstn`, `data_in<8`, `txd>`, and `=final_data>8`
 - `(?fsmc:instance child_source)` with exactly one embedded FSM source name
@@ -347,15 +347,16 @@ Accepted source roots:
 
 Current boundary:
 - Supported:
-  - `?fsm:name` as the active FSM source root
+  - `?fsm:module_name` as the active FSM source root, with an HDL-identifier-compatible module name
   - `+fsm` as the legacy FSM root family:
     - either the flattened sibling form with a first top-level `(+fsm module_name)` entry,
     - or the nested legacy root form `(+fsm module_name ...)`
-  - `?top:name` as the active composition source root
+  - `?top:top_name` as the active composition source root, with an HDL-identifier-compatible top name
 - Rejected explicitly:
   - unsupported tagged wrapper/template roots such as `(?define:legacy_template ...)`
   - other tagged source kinds that are neither active FSM sources nor active composition sources
   - malformed `+fsm` roots that do not provide a scalar module name in one of the two supported legacy layouts
+  - malformed tagged source roots such as `?fsm:bad-name` or `?top:bad-name` whose source name is not HDL-identifier-compatible
 - Important rule:
   - an unsupported tagged top-level wrapper does not become supported just because it contains a nested `?fsm:name` somewhere inside it
 
@@ -369,6 +370,10 @@ Boundary note:
   - rejected:
     - `(+fsm)` without a scalar module name
     - malformed `+fsm` roots whose payload does not match either supported legacy layout
+- Tagged source-root names are now accepted or rejected as a whole:
+  - accepted: `?fsm:ctrl_unit`, `?top:packet_bridge`
+  - rejected: `?fsm:bad-name`, `?top:bad-name`
+  - malformed tagged names no longer truncate silently to a valid prefix.
 
 ### Draft normative contract for the conventional `+system` section
 This is the current `R8` draft normative contract for the active `+system` boundary.

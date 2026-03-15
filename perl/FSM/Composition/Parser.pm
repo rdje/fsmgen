@@ -58,8 +58,7 @@ sub find_top_root ($self, $raw_ast) {
 
 sub parse_top ($self, $top_ast) {
     my ($header, $children) = @$top_ast;
-    my ($top_name) = ($header // '') =~ /^\?top:(\w+)/;
-    confess "Composition top root must be shaped like '?top:name'" unless $top_name;
+    my $top_name = $self->decode_top_name($header);
 
     $children ||= [];
     confess "Composition top '$top_name' must contain a child list" unless ref($children) eq 'ARRAY';
@@ -262,12 +261,33 @@ sub collect_embedded_fsm_sources ($self, $raw_ast) {
         next unless ref($ast_node) eq 'ARRAY';
         next unless @$ast_node > 0;
         next if ref($ast_node->[0]);
-        my ($fsm_name) = $ast_node->[0] =~ /^\?fsm:(\w+)/;
+        next unless $ast_node->[0] =~ /^\?fsm:/;
+        my $fsm_name = $self->decode_embedded_fsm_source_name($ast_node->[0]);
         next unless $fsm_name;
         $embedded_fsm_sources{$fsm_name} = $ast_node;
     }
 
     return \%embedded_fsm_sources;
+}
+
+sub decode_top_name ($self, $header) {
+    return $1 if defined($header) && !ref($header) && $header =~ /\A\?top:([A-Za-z_]\w*)\z/;
+
+    my $display = defined($header) ? (ref($header) ? ref($header) : $header) : 'undef';
+    confess
+        "Malformed composition top root '$display'. ".
+        "The active contract expects '?top:top_name' with an HDL-identifier-compatible top name ([A-Za-z_]\\w*).".
+        $self->scope_docs_suffix;
+}
+
+sub decode_embedded_fsm_source_name ($self, $header) {
+    return $1 if defined($header) && !ref($header) && $header =~ /\A\?fsm:([A-Za-z_]\w*)\z/;
+
+    my $display = defined($header) ? (ref($header) ? ref($header) : $header) : 'undef';
+    confess
+        "Malformed embedded FSM source '$display'. ".
+        "The active composition contract expects embedded child sources shaped like '?fsm:source_name' with an HDL-identifier-compatible source name ([A-Za-z_]\\w*).".
+        $self->scope_docs_suffix;
 }
 
 1;

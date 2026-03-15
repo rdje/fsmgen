@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### tagged source names now have an explicit whole-name boundary
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so top-level `?fsm:module_name` roots now validate the whole source name and reject malformed names like `?fsm:bad-name` explicitly instead of truncating to `bad`.
+- Updated [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so top-level `?top:top_name` roots and embedded composition child sources like `?fsm:source_name` now also validate the whole source name instead of truncating malformed names silently.
+- Added focused regression coverage in [t/47-language-contract-source-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/47-language-contract-source-name-boundary.t) for:
+  - malformed top-level `?fsm:bad-name` roots,
+  - malformed top-level `?top:bad-name` roots,
+  - and malformed embedded composition child sources like `?fsm:bad-name`.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the live contract now states the tagged source-name rule explicitly.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
 ### legacy `+fsm` roots now have an explicit contract boundary
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so the legacy `+fsm` source family is now validated explicitly before module-name decoding:
   - accepted:
