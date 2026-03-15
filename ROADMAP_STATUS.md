@@ -306,6 +306,10 @@ Done:
 - [t/47-language-contract-source-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/47-language-contract-source-name-boundary.t) now locks the tagged source-name boundary explicitly:
   - top-level `?fsm:module_name` and `?top:top_name` roots now require HDL-identifier-compatible names and fail clearly if malformed,
   - malformed embedded composition child sources like `?fsm:bad-name` now also fail explicitly instead of truncating to a valid prefix.
+- [t/48-language-contract-standalone-dt-classification.t](/Users/richarddje/Documents/github/fsmgen/t/48-language-contract-standalone-dt-classification.t) now locks the general/combinational DT boundary explicitly:
+  - hyphen-prefixed general DT blocks now carry explicit `standalone_dt` classification in the AST,
+  - they stay out of the encoded-state plan,
+  - and they emit DT-style enables instead of regular `current_state` comparisons.
 - [t/42-language-contract-test-selector-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/42-language-contract-test-selector-boundary.t) now locks the explicit-selector boundary for test-node branches:
   - operator-prefixed selectors such as `=0`, `=OTHER`, and `!=8'0` remain supported,
   - while malformed bare selectors such as `BUSY` or `0` are now rejected explicitly.

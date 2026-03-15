@@ -100,6 +100,7 @@ Combinational DT note:
 - Both syntaxes are decision trees, but they play different roles.
 - A regular named block like `(aState ...)` is an FSM-state DT for state `aState`.
 - A hyphen-prefixed top-level block like `(-foobar ...)` is a general/combinational DT block.
+- General/combinational DT blocks now carry an explicit internal `standalone_dt` role and use DT-style enables instead of joining the encoded `current_state` set.
 - When an FSM contains only combinational DT blocks, the active runtime treats it as DT-only generation and does not synthesize a `current_state` / `next_state` state-register plan.
 - FSM-state DTs additionally participate in state encoding and transition planning.
 

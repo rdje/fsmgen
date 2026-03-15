@@ -1749,8 +1749,14 @@ package FSM::CoreAST::State;
         return $state_type eq 'sync_reset' || $state_type eq 'async_reset';
     }
 
+    sub is_standalone_dt($self) {
+        my $state_type = $self->state_type;
+        return 1 if $state_type eq 'standalone_dt';
+        return !$self->is_reset_state && $self->{name} =~ /^-/;
+    }
+
     sub is_regular_state($self) {
-        return !$self->is_reset_state && $self->{name} !~ /^-/;
+        return !$self->is_reset_state && !$self->is_standalone_dt;
     }
     
     sub add_decision_tree($self, $dt) {

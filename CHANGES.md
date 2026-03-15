@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### general/combinational DT blocks now have an explicit standalone contract
+- Updated [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) so `FSM::CoreAST::State` now exposes `is_standalone_dt` and treats standalone DTs through explicit state-role semantics instead of only inferring them from the leading hyphen in the name.
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so hyphen-prefixed non-reset DT blocks now parse with `state_type => standalone_dt`.
+- Added focused regression coverage in [t/48-language-contract-standalone-dt-classification.t](/Users/richarddje/Documents/github/fsmgen/t/48-language-contract-standalone-dt-classification.t) for:
+  - explicit `standalone_dt` AST classification,
+  - exclusion of general/combinational DT blocks from the encoded-state plan,
+  - and DT-style enable emission for those blocks.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the live language contract now states that general/combinational DT blocks are explicitly standalone DTs, not accidental pseudo-states.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
 ### tagged source names now have an explicit whole-name boundary
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so top-level `?fsm:module_name` roots now validate the whole source name and reject malformed names like `?fsm:bad-name` explicitly instead of truncating to `bad`.
 - Updated [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so top-level `?top:top_name` roots and embedded composition child sources like `?fsm:source_name` now also validate the whole source name instead of truncating malformed names silently.

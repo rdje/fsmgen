@@ -20,6 +20,24 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: general/combinational DT blocks now carry explicit standalone classification
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) now exposes `is_standalone_dt` on `FSM::CoreAST::State` and treats general/combinational DTs as an explicit state-role family,
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now classifies hyphen-prefixed non-reset DT blocks as `state_type => standalone_dt`,
+  - [t/48-language-contract-standalone-dt-classification.t](/Users/richarddje/Documents/github/fsmgen/t/48-language-contract-standalone-dt-classification.t) now locks AST classification plus non-encoding/DT-enable behavior,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now states the standalone DT role explicitly.
+- Scope of the landed contract slice:
+  - explicit support now includes a real AST/runtime distinction between FSM-state DTs and general/combinational standalone DT blocks,
+  - standalone DT blocks now stay out of the encoded-state plan by explicit role classification, not only by name heuristics,
+  - and they continue to use DT-style enables instead of joining the `current_state` family.
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more formerly implicit DT-role boundary as explicitly documented and regression-backed.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser/runtime-visible language edges,
+  - and keep replacing naming-heuristic behavior with explicit construct-role contracts where the language model already expects them.
 ## 2026-03-15: tagged source-name boundary is now explicit
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates top-level `?fsm:module_name` roots as a whole,

@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: general/combinational DT blocks are now explicit standalone DTs
+- The next `R8` slice closes a terminology-versus-runtime gap around hyphen-prefixed DT blocks:
+  - user-facing wording already distinguishes `(aState ...)` as an FSM-state DT from `(-mycombDT ...)` as a general/combinational DT block,
+  - runtime behavior was already mostly correct,
+  - but the AST contract still relied too much on the leading `-` naming convention instead of preserving that role explicitly.
+- Implementation:
+  - [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) now exposes `is_standalone_dt` and treats standalone DTs as an explicit state-role family beside regular states and reset-state DTs.
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now classifies hyphen-prefixed non-reset DT blocks as `state_type => standalone_dt`.
+- Focused regression coverage now exists in [t/48-language-contract-standalone-dt-classification.t](/Users/richarddje/Documents/github/fsmgen/t/48-language-contract-standalone-dt-classification.t) for:
+  - explicit `standalone_dt` AST classification,
+  - exclusion of those blocks from the encoded-state plan,
+  - and DT-style enable emission instead of `current_state == ...` comparisons.
+- Boundary decision:
+  - `(aState ...)` remains an FSM-state DT,
+  - reset-state DTs remain their own dedicated families,
+  - and hyphen-prefixed non-reset DT blocks are now explicitly standalone/general DTs instead of accidental pseudo-states.
 ## 2026-03-15: tagged source names now have an explicit whole-name boundary
 - The next `R8` slice closes a real source-name mismatch between classification and decoding:
   - the source classifier already treated headers like `?fsm:bad-name` and `?top:bad-name` as tagged source kinds,

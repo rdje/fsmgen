@@ -672,6 +672,8 @@ sub classify_state_name($self, $state_name) {
         if $state_name eq '-syncrst' || $state_name eq '-syncreset';
     return ('async_reset', 'asyncreset')
         if $state_name eq '-asyncrst' || $state_name eq '-asyncreset';
+    return ('standalone_dt', $state_name)
+        if defined($state_name) && !ref($state_name) && $state_name =~ /^-/;
     return ('normal', $state_name);
 }
 
