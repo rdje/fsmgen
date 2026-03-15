@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-15: alternate update-shorthand spellings are now explicitly documented and regression-backed
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the full active update-shorthand family more honestly:
+  - `(++ sig)` / `(-- sig)`,
+  - `(+= sig)` / `(-= sig)`,
+  - `(+=N sig)` / `(-=N sig)`,
+  - `(+= sig N)` / `(-= sig N)`.
+- [t/60-language-contract-update-shorthand-variants.t](/Users/richarddje/Documents/github/fsmgen/t/60-language-contract-update-shorthand-variants.t) now locks the separated delta-`1` and separated delta-carrying variants directly, including HDL generation through the active backend.
+- [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) now records those alternate spellings as part of the active `R8` update-shorthand contract instead of leaving them as undocumented parser behavior.
 ## 2026-03-15: unsupported assignment operators now fail early through an explicit boundary
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now turns unsupported assignment operators into a dedicated user-facing assignment-operator diagnostic instead of a raw internal parser `confess`.
 - [t/59-language-contract-assignment-operator-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/59-language-contract-assignment-operator-boundary.t) now locks:

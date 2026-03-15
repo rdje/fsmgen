@@ -484,6 +484,7 @@ sub is_compound_update_shorthand($self, $action_target, $action_spec) {
     # Supported forms:
     #   (++ signal)
     #   (-- signal)
+    #   (+= signal) / (-= signal)
     #   (+=2 signal) / (-=4 signal)
     #   (+= signal amount) / (-= signal amount)
     return ($action_target =~ /^(?:\+\+|--|\+=.*|-=.*)$/) ? 1 : 0;

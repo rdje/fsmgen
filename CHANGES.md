@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### alternate compound-update shorthand spellings are now part of the active contract
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) so the active update-shorthand family now documents the already-supported separated spellings:
+  - `(+= sig)` / `(-= sig)` as delta-`1` forms,
+  - `(+= sig N)` / `(-= sig N)` as separated delta-carrying forms,
+  - alongside the previously documented `++`, `--`, `+=N`, and `-=N` spellings.
+- Added [t/60-language-contract-update-shorthand-variants.t](/Users/richarddje/Documents/github/fsmgen/t/60-language-contract-update-shorthand-variants.t) to lock:
+  - separated delta-`1` update forms,
+  - separated delta-carrying update forms,
+  - and end-to-end HDL generation for those alternate spellings.
+- Updated the support snapshot in [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) and continuity notes in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the live contract now matches the shipped parser truthfully.
 ### unsupported assignment operators now fail through an explicit contract boundary
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so unsupported assignment operators now surface through a dedicated user-facing assignment-operator diagnostic instead of a raw internal parser `confess`.
 - Added [t/59-language-contract-assignment-operator-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/59-language-contract-assignment-operator-boundary.t) to lock:

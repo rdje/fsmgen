@@ -282,6 +282,10 @@ Done:
   - update shorthand,
   - and the currently regression-backed operator-expression families.
 - [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t) now locks the active parser/generator behavior for that same slice through focused regression coverage.
+- [t/60-language-contract-update-shorthand-variants.t](/Users/richarddje/Documents/github/fsmgen/t/60-language-contract-update-shorthand-variants.t) now extends the active update-shorthand contract explicitly:
+  - the separated forms `(+= sig)` and `(-= sig)` are now regression-backed as delta-`1` synonyms for `(++ sig)` and `(-- sig)`,
+  - the separated forms `(+= sig N)` and `(-= sig N)` are now regression-backed as delta-carrying synonyms for `(+=N sig)` and `(-=N sig)`,
+  - and those alternate spellings now generate HDL end to end through the active backend.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now also promotes the shorthand guard family into the active contract instead of leaving it as future-only:
   - `(<foo ...)` means `foo != 0`,
   - `(<!foo ...)` means `foo == 0`,

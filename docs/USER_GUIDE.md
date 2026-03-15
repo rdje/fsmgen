@@ -133,7 +133,7 @@ Combinational DT note:
 - Condition forms that are in the active supported path: `<sig`, `<!sig`, `<sig=value`, `<sig==value`, `<sig!=value`, `<sig<value`, `<sig<=value`, `<sig>value`, `<sig>=value`, and test-node selector branches like `=0`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, and `>=8'1`
 - Nested guarded blocks using standalone `< ...` / `<! ...` action forms
 - Condition suffixes attached directly to assignments or transitions, for example `(A <= B <start)` and `(-> busy <!full)`
-- Compound-update shorthand forms `(++ sig)`, `(-- sig)`, `(+=N sig)`, and `(-=N sig)`
+- Compound-update shorthand forms `(++ sig)`, `(-- sig)`, `(+= sig)`, `(-= sig)`, `(+=N sig)`, `(-=N sig)`, `(+= sig N)`, and `(-= sig N)`
 - Inline compound modifiers on assignments, for example `(A <- B (+= 2))` and `(C = D (-= 1))`
 - RHS operator expressions for the currently regression-backed active families:
   - unary `!`
@@ -243,8 +243,12 @@ Condition suffixes:
 Update shorthand:
 - `(++ counter)` means increment `counter` by `1`
 - `(-- retry_count)` means decrement `retry_count` by `1`
+- `(+= counter)` means increment `counter` by `1`
+- `(-= retry_count)` means decrement `retry_count` by `1`
 - `(+=4 byte_count)` means increment `byte_count` by `4`
 - `(-=1 remaining)` means decrement `remaining` by `1`
+- `(+= byte_count 4)` means increment `byte_count` by `4`
+- `(-= remaining 3)` means decrement `remaining` by `3`
 - Inline forms keep the surrounding assignment family:
   - `(ACC <- SRC (+= 2))`
   - `(COMB = SRC (-= 1))`

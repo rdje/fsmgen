@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: alternate update-shorthand spellings are now part of the active contract
+- The parser already supported more update-shorthand surface than the user guide claimed:
+  - `(+= sig)` / `(-= sig)` as delta-`1` forms,
+  - `(+= sig N)` / `(-= sig N)` as separated delta-carrying forms.
+- This `R8` slice does not widen the parser. It makes the contract truthful:
+  - the live docs now include those alternate spellings,
+  - focused regression coverage now locks their assignment intent, arithmetic lowering, and HDL generation,
+  - and the parser comment in [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now names the same supported family the docs do.
 ## 2026-03-15: unsupported assignment operators now fail through an explicit boundary
 - The active assignment family was already stable on the happy path, but unsupported operators like `?=` and `=>` were still leaking a raw internal parser `confess`.
 - The active contract is now explicit on that malformed side too:
