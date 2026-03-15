@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-15: malformed test-branch boundaries are now locked across entry points
+- [t/68-language-contract-test-branch-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/68-language-contract-test-branch-entrypoints.t) now locks pipeline and CLI no-output behavior for:
+  - empty test-node branches like `(?MODE (=0))`,
+  - and single malformed test-branch bodies that still omit a nested action.
+- This is a regression-only hardening slice: parser behavior was already correct, but the malformed test-branch family is now covered end to end instead of only at direct parser level.
 ## 2026-03-15: bare condition-suffix boundaries are now locked across entry points
 - [t/67-language-contract-condition-suffix-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/67-language-contract-condition-suffix-entrypoints.t) now locks pipeline and CLI no-output behavior for:
   - bare assignment condition suffixes like `(A <= B start)`,

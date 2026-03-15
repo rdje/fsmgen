@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### malformed test-branch boundaries now have pipeline and CLI coverage too
+- Added [t/68-language-contract-test-branch-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/68-language-contract-test-branch-entrypoints.t) to lock pipeline and CLI no-output behavior for:
+  - empty test-node branches like `(?MODE (=0))`,
+  - and single malformed test-branch bodies that still omit a nested action.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the malformed test-branch family is now tracked as an end-to-end entrypoint boundary instead of parser-only coverage.
 ### bare condition-suffix boundaries now have pipeline and CLI coverage too
 - Added [t/67-language-contract-condition-suffix-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/67-language-contract-condition-suffix-entrypoints.t) to lock pipeline and CLI no-output behavior for:
   - bare assignment condition suffixes like `(A <= B start)`,

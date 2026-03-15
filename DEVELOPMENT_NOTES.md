@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: malformed test-branch boundaries are now locked through pipeline and CLI too
+- The malformed test-branch family already had parser-level coverage in the active contract:
+  - empty test branches like `(?MODE (=0))`,
+  - and body-less `?sig` branches that still omit a nested action.
+- This slice does not change parser behavior. It makes the contract more honest across entry points:
+  - those malformed forms are now locked through pipeline and CLI no-output behavior too,
+  - so the malformed test-branch family is no longer parser-only in the regression set.
 ## 2026-03-15: bare condition-suffix boundaries are now locked through pipeline and CLI too
 - The bare condition-suffix family already had parser-level coverage in the active contract:
   - bare assignment tails like `(A <= B start)`,

@@ -400,6 +400,7 @@ Done:
   - unsupported operators such as `?=` or `=>` now fail through a dedicated assignment-operator boundary,
   - and those malformed assignment forms now fail clearly through parser, pipeline, and CLI entry points without emitting HDL.
 - [t/35-language-contract-test-branch-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/35-language-contract-test-branch-boundary.t) now locks explicit rejection of malformed empty test-node branches so `?sig` / case-style dispatch no longer fails through a generic internal `undef` action path.
+- [t/68-language-contract-test-branch-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/68-language-contract-test-branch-entrypoints.t) now locks pipeline and CLI no-output behavior for the same malformed test-branch family, so empty or body-less `?sig` branches now have end-to-end entrypoint coverage instead of parser-only coverage.
 - [t/36-language-contract-test-branch-selectors.t](/Users/richarddje/Documents/github/fsmgen/t/36-language-contract-test-branch-selectors.t) now locks active relational test-node selector lowering for `!=`, `>`, and `<=`, so the shipped `?sig` selector family is no longer documented more narrowly than the live lowering behavior.
 - [t/37-language-contract-computed-test-selector.t](/Users/richarddje/Documents/github/fsmgen/t/37-language-contract-computed-test-selector.t) now locks the active `?(expr)` computed-selector form end to end:
   - computed selectors synthesize a real intermediate condition signal,
