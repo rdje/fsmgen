@@ -149,6 +149,9 @@ Standalone DT note:
   - `(+clock clk)`
   - `(+asreset rstn)`
   - `(+bogus ...)`
+- Bare condition suffixes without an explicit guard marker, for example:
+  - `(A <= B start)`
+  - `(-> busy full)`
 - Legacy composition forms such as `?&...`, nested `?top`, `?ports` mapping directives, nested `?toplink`, and multi-source `?fsmc`
 
 ### Draft normative contract for guards, suffixes, updates, and operator expressions
@@ -166,6 +169,7 @@ Guarded blocks:
 
 Condition suffixes:
 - A suffix guard is the single-action form of a guarded block.
+- Suffix guards must use the explicit guarded forms `<...` or `<!...`; bare suffixes like `(A <= B start)` are not part of the active contract.
 - Examples:
   - `(A <= B <start)` is the single-action guarded form of `(<start (A <= B))`
   - `(-> busy <!full)` is the single-action guarded form of `(<!full (-> busy))`

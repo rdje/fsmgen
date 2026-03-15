@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### bare condition suffixes now fail explicitly
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so bare suffix tails no longer slip through as implicit positive conditions in assignment or transition suffix positions.
+- Added focused regression coverage in [t/33-language-contract-condition-suffix-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/33-language-contract-condition-suffix-boundary.t) for:
+  - bare assignment suffix rejection,
+  - and bare transition suffix rejection.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) so the suffix-guard contract now says plainly that active suffix guards must use explicit `<...` / `<!...` forms and that bare tails such as `(A <= B start)` are out of support.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so `R8` done/left tracking reflects the removal of this implicit legacy guard path.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
+- Validation:
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm` (pass)
+  - `perl -I perl -c t/33-language-contract-condition-suffix-boundary.t` (pass)
+  - `prove -I perl t/33-language-contract-condition-suffix-boundary.t` (pass)
 ### unsupported top-level `+...` directives now fail explicitly
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so unsupported top-level `+...` directive sections no longer drift into fake state parsing and now fail with a targeted diagnostic that lists the supported top-level directive family.
 - Added focused regression coverage in [t/32-language-contract-top-level-directive-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/32-language-contract-top-level-directive-boundary.t) for:

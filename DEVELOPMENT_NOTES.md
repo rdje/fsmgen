@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: bare condition suffixes now fail explicitly
+- The next `R8` slice now closes one more parser-visible legacy ambiguity around guarded-action syntax:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects bare suffix tails like `start` or `full` in assignment/transition suffix positions,
+  - so suffix guards must use the explicit active forms `<sig`, `<!sig`, or explicit condition-expression payloads.
+- Focused regression coverage now exists in [t/33-language-contract-condition-suffix-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/33-language-contract-condition-suffix-boundary.t) for:
+  - bare assignment suffix rejection,
+  - and bare transition suffix rejection.
+- Boundary decision:
+  - this slice does not shrink the supported guarded-block family,
+  - it only removes an implicit legacy acceptance path that was never part of the explicit language agreement.
 ## 2026-03-15: syntax-namespace rationale is now preserved for later language work
 - Historical syntax rationale from the current language discussion is now saved explicitly:
   - the `(?foo:...)` family was chosen because it visually resembles Perl 5 regex grouping syntax,

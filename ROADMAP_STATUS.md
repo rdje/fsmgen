@@ -299,6 +299,7 @@ Done:
   - targeted rejection of unsupported system directives,
   - and targeted rejection of incomplete `+system` sections.
 - [t/32-language-contract-top-level-directive-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/32-language-contract-top-level-directive-boundary.t) now locks explicit rejection of unsupported top-level `+...` directive sections so they no longer drift into fake state parsing.
+- [t/33-language-contract-condition-suffix-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/33-language-contract-condition-suffix-boundary.t) now locks explicit rejection of bare condition suffixes so suffix guards must use the active `<...` / `<!...` forms instead of implicit bare-word tails.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.

@@ -20,6 +20,26 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: bare condition suffixes now fail explicitly
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects bare suffix tails in assignment/transition suffix positions,
+  - [t/33-language-contract-condition-suffix-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/33-language-contract-condition-suffix-boundary.t) now locks that boundary,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now states that suffix guards must use explicit `<...` / `<!...` forms.
+- Scope of the landed contract slice:
+  - explicit rejection of malformed bare suffixes such as `(A <= B start)`
+  - explicit rejection of malformed bare transition tails such as `(-> busy full)`
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one less implicit parser-accepted legacy path in the guard family.
+- Validation for this slice:
+  - `perl -I perl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`
+  - `perl -I perl -c t/33-language-contract-condition-suffix-boundary.t`
+  - `prove -I perl t/33-language-contract-condition-suffix-boundary.t`
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing the remaining non-directive parser-visible legacy constructs,
+  - and keep shrinking implicit acceptance paths into either supported or explicitly rejected behavior.
 ## 2026-03-15: unsupported top-level `+...` directives now fail explicitly
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects unsupported top-level `+...` directive sections explicitly instead of parsing them as fake states,

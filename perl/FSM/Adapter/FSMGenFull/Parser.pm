@@ -349,7 +349,26 @@ sub build_full_condition_from_parts($self, @condition_parts) {
     
     # Legacy/string forms:
     #   '<signal', '<!signal', '<signal=value'
-    return $condition_parts[0];
+    if (@condition_parts == 1 && !ref($condition_parts[0]) && $condition_parts[0] =~ /^[<>]/) {
+        return $condition_parts[0];
+    }
+
+    my $raw_suffix = join(', ', map { ref($_) ? ref($_) : $_ } @condition_parts);
+    Carp::confess
+        "Unsupported bare condition suffix '$raw_suffix'. ".
+        "Suffix guards must use the explicit guarded forms '<sig', '<!sig', or an explicit condition expression payload. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+}
+
+sub normalize_explicit_condition_suffix($self, $raw_suffix) {
+    return $raw_suffix if ref($raw_suffix);
+    return $raw_suffix if defined($raw_suffix) && !ref($raw_suffix) && $raw_suffix =~ /^[<>]/;
+
+    my $display = defined($raw_suffix) ? (ref($raw_suffix) ? ref($raw_suffix) : $raw_suffix) : 'undef';
+    Carp::confess
+        "Unsupported bare condition suffix '$display'. ".
+        "Suffix guards must use the explicit guarded forms '<sig', '<!sig', or an explicit condition expression payload. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 sub reset_combinational_dependency_tracking($self) {
     $self->{combinational_dependency_graph} = {};
@@ -594,6 +613,7 @@ sub parse_transition_new_format($self, $action) {
     );
     
     if (defined $condition_suffix) {
+        $condition_suffix = $self->normalize_explicit_condition_suffix($condition_suffix);
         my $condition_expr = $self->{expression_builder}->parse_condition($condition_suffix);
         if ($condition_expr) {
             return FSM::CoreAST::ConditionalBranch->new(
