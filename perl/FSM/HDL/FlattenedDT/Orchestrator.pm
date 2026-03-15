@@ -47,8 +47,8 @@ sub flatten_all_decision_trees ($self, $fsm_module) {
     
     # Process regular states
     for my $state (@{$fsm_module->states}) {
-        next if $state->name =~ /^-/; # Skip standalone DTs for now
-        
+        next unless $state->can('is_regular_state') ? $state->is_regular_state : $state->name !~ /^-/;
+
         fsm_debug("Flattening state: " . $state->name, 3);
 
         # Flatten the state's decision trees
@@ -65,8 +65,8 @@ sub flatten_all_decision_trees ($self, $fsm_module) {
     
     # Process standalone decision trees
     for my $state (@{$fsm_module->states}) {
-        next unless $state->name =~ /^-/; # Only standalone DTs
-        
+        next if $state->can('is_regular_state') ? $state->is_regular_state : $state->name !~ /^-/;
+
         fsm_debug("Flattening standalone DT: " . $state->name, 3);
 
         # Flatten the standalone decision trees

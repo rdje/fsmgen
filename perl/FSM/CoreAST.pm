@@ -1733,6 +1733,7 @@ package FSM::CoreAST::State;
             name => $args{name} // Carp::confess("State name required"),
             decision_trees => $args{decision_trees} // [],
             encoding => $args{encoding},
+            state_type => $args{state_type} // 'normal',
             attributes => $args{attributes} // {},
         }, $class;
     }
@@ -1740,7 +1741,17 @@ package FSM::CoreAST::State;
     sub name($self) { $self->{name} }
     sub decision_trees($self) { $self->{decision_trees} }
     sub encoding($self) { $self->{encoding} }
+    sub state_type($self) { $self->{state_type} // 'normal' }
     sub attributes($self) { $self->{attributes} }
+
+    sub is_reset_state($self) {
+        my $state_type = $self->state_type;
+        return $state_type eq 'sync_reset' || $state_type eq 'async_reset';
+    }
+
+    sub is_regular_state($self) {
+        return !$self->is_reset_state && $self->{name} !~ /^-/;
+    }
     
     sub add_decision_tree($self, $dt) {
         push $self->{decision_trees}->@*, $dt;

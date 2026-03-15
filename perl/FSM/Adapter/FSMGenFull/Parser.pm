@@ -192,7 +192,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
                 "Unsupported top-level directive '$element_name'. ".
                 "The active contract currently supports only '+system', '+size', '+constants', '+enums', '+define', and '+params' inside '?fsm:name'. ".
                 "See docs/USER_GUIDE.md for the current supported boundary.\n";
-        } elsif ($element_name =~ /^[a-zA-Z_]/ && $element_name !~ /^(idle|-syncrst|-asyncrst)$/ && !ref($element->[1])) {
+        } elsif ($element_name =~ /^[a-zA-Z_]/ && $element_name !~ /^(idle|-syncrst|-syncreset|-asyncrst|-asyncreset)$/ && !ref($element->[1])) {
             my $detail = join(' ', map {
                 defined($_) ? (ref($_) ? ref($_) : $_) : 'undef'
             } @$element);
@@ -605,17 +605,8 @@ sub parse_init_assignment_directive($self, $init_ast) {
 
 sub parse_state($self, $state_ast) {
     my ($state_name, $decision_trees) = @$state_ast;
-    
-    my $state_type = 'normal';
-    my $clean_name = $state_name;
-    
-    if ($state_name eq '-syncrst') {
-        $state_type = 'sync_reset';
-        $clean_name = 'syncreset';
-    } elsif ($state_name eq '-asyncrst') {
-        $state_type = 'async_reset';
-        $clean_name = 'asyncreset';
-    }
+
+    my ($state_type, $clean_name) = $self->classify_state_name($state_name);
     
     my $state = FSM::CoreAST::State->new(
         name => $clean_name,
@@ -638,6 +629,14 @@ sub parse_state($self, $state_ast) {
     }
     
     return $state;
+}
+
+sub classify_state_name($self, $state_name) {
+    return ('sync_reset', 'syncreset')
+        if $state_name eq '-syncrst' || $state_name eq '-syncreset';
+    return ('async_reset', 'asyncreset')
+        if $state_name eq '-asyncrst' || $state_name eq '-asyncreset';
+    return ('normal', $state_name);
 }
 
 sub parse_decision_tree($self, $tree_ast) {

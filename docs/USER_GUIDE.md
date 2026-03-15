@@ -78,7 +78,14 @@ Standard used here:
   - `(+system (clock clk) (sreset rstn))`
   - `(+system (clock clk) (asreset rstn))`
 - Regular state blocks like `(s0 ...)`, `(idle ...)`
-- Special reset states `(-syncrst ...)` and `(-asyncrst ...)`
+- Special reset states `(-syncrst ...)`, `(-syncreset ...)`, `(-asyncrst ...)`, and `(-asyncreset ...)`
+
+Reset-state note:
+- The short and long spellings normalize to the same internal reset-state identities:
+  - `-syncrst` and `-syncreset` => `syncreset`
+  - `-asyncrst` and `-asyncreset` => `asyncreset`
+- These reset blocks are supported as dedicated reset-state decision-tree blocks.
+- They do not participate in regular state encoding or `current_state` comparisons.
 - Standalone decision-tree blocks like `(-alpha_dt ...)`, `(-misc ...)`, or `(-mycombit ...)`
 - Symbol-definition sections:
   - `(+constants ...)`

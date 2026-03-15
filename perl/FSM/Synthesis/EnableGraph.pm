@@ -1689,7 +1689,7 @@ sub build_state_register_plan($self, $fsm_module = undef) {
     $fsm_module //= $ctx->{fsm_module};
 
     my @regular_states = $fsm_module
-        ? grep { $_->name !~ /^-/ } @{$fsm_module->states}
+        ? grep { $_->can('is_regular_state') ? $_->is_regular_state : $_->name !~ /^-/ } @{$fsm_module->states}
         : ();
     my $state_count = scalar(@regular_states);
     my $state_bits = $state_count > 1 ? int(log($state_count) / log(2)) + 1 : 1;
@@ -2432,7 +2432,7 @@ sub initialize_state_and_dt_enable_conditions($self, $fsm_module) {
         my $state_name = $state->name;
         next unless defined($state_name) && $state_name ne '';
 
-        if ($state_name =~ /^-/) {
+        if ($state->can('is_regular_state') ? !$state->is_regular_state : $state_name =~ /^-/) {
             my $enable_ast = $self->build_dt_enable_condition_ast($state_name);
             $ctx->{dt_enables}->{$state_name} = $enable_ast;
             my $enable_sv = blessed($enable_ast) && $enable_ast->can('to_systemverilog')

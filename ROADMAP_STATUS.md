@@ -330,6 +330,10 @@ Done:
   - computed selectors synthesize a real intermediate condition signal,
   - the source expression signals stay live in the generated interface,
   - and emitted HDL reuses that computed selector signal in its branch comparisons.
+- [t/45-language-contract-reset-state-spellings.t](/Users/richarddje/Documents/github/fsmgen/t/45-language-contract-reset-state-spellings.t) now locks the active reset-state spelling and classification contract:
+  - `-syncrst` and `-syncreset` normalize to the same `syncreset` reset-state identity,
+  - `-asyncrst` and `-asyncreset` normalize to the same `asyncreset` reset-state identity,
+  - and those reset blocks stay out of the regular encoded-state plan while still generating DT-style enable handling.
 - [t/38-language-contract-generic-placeholder-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/38-language-contract-generic-placeholder-boundary.t) now locks explicit rejection of the legacy generic/template placeholder family in the FSM-only parser:
   - placeholder selectors such as `?[READ]`,
   - repeat macros such as `?repeat:[MAX_COUNT]`,

@@ -20,6 +20,25 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: reset-state spelling and classification contract is now live
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) now preserves `state_type` on `FSM::CoreAST::State` and exposes `state_type`, `is_reset_state`, and `is_regular_state`,
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now treats `-syncrst` / `-syncreset` and `-asyncrst` / `-asyncreset` as the same two reset-state families,
+  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm), and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now keep reset-state blocks out of the regular encoded-state set and treat them as DT-like blocks,
+  - [t/45-language-contract-reset-state-spellings.t](/Users/richarddje/Documents/github/fsmgen/t/45-language-contract-reset-state-spellings.t) now locks spelling normalization, non-encoding of reset blocks, and DT-style enable emission,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the reset-state family as a real supported contract.
+- Scope of the landed contract slice:
+  - explicit support now includes both short and long reset-state spellings,
+  - reset-state blocks now normalize to shared internal identities (`syncreset` / `asyncreset`),
+  - and reset-state blocks are no longer treated as ordinary encoded `current_state` states.
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more formerly accidental parser/runtime edge as an explicit supported construct family.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser/runtime-visible language edges,
+  - and keep converting accidental behavior into either regression-backed support or explicit rejection.
 ## 2026-03-15: n-ary relational operator contract is now executable
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now supports n-ary relational chains such as `(< low mid high)` and `(== a b c d)`, relational aliases such as `eq`, `ne`, `lt`, `le`, `gt`, and `ge`, and unary alias `not`,

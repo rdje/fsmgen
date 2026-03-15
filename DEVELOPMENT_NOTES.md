@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: reset-state spellings are now a real contract instead of an accidental name trick
+- The next `R8` slice closes a real mismatch between the docs, the corpus, and the parser/runtime boundary:
+  - the shipped corpus still uses legacy reset-state spellings like `-syncreset`,
+  - the docs claimed special reset states were supported,
+  - but the normalized reset-state metadata was not being preserved through `FSM::CoreAST::State`,
+  - and normalized reset-state names like `syncreset` were still being treated as ordinary encoded states because downstream code only checked for a leading `-`.
+- Implementation:
+  - [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) now preserves `state_type` on `FSM::CoreAST::State` and exposes `state_type`, `is_reset_state`, and `is_regular_state` accessors.
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now treats `-syncrst` and `-syncreset` as the same sync-reset family, and `-asyncrst` and `-asyncreset` as the same async-reset family.
+  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm), and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now classify reset-state blocks as DT-like blocks rather than regular encoded states.
+- Focused regression coverage now exists in [t/45-language-contract-reset-state-spellings.t](/Users/richarddje/Documents/github/fsmgen/t/45-language-contract-reset-state-spellings.t) for:
+  - canonical and legacy reset-state spellings normalizing to the same internal identities,
+  - reset-state blocks staying out of the regular state-encoding plan,
+  - and emitted HDL using DT-style enables instead of `current_state == SYNCRESET` / `ASYNCRESET` comparisons.
+- Boundary decision:
+  - reset-state blocks are now honestly supported as a dedicated contract family,
+  - legacy long spellings remain supported as aliases,
+  - and reset-state blocks are not part of the ordinary encoded-state set.
 ## 2026-03-15: the broader operator-arity contract is now active
 - The next `R8` slice promotes the previously saved operator-arity agreement into the active parser instead of leaving it as design-only continuity.
 - Implementation:

@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### reset-state spellings now have a real supported contract
+- Updated [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) so `FSM::CoreAST::State` now preserves `state_type` and exposes `state_type`, `is_reset_state`, and `is_regular_state`, instead of silently dropping reset-state classification metadata.
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so:
+  - `-syncrst` and `-syncreset` now normalize to the same `syncreset` reset-state identity,
+  - `-asyncrst` and `-asyncreset` now normalize to the same `asyncreset` reset-state identity,
+  - and the top-level FSM parser now accepts those legacy long spellings as part of the same reset-state family.
+- Updated [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm), and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so reset-state blocks are treated as DT-like blocks instead of regular encoded states.
+- Added focused regression coverage in [t/45-language-contract-reset-state-spellings.t](/Users/richarddje/Documents/github/fsmgen/t/45-language-contract-reset-state-spellings.t) for:
+  - canonical and legacy reset-state spelling normalization,
+  - exclusion of reset-state blocks from the encoded-state plan,
+  - and DT-style enable emission for reset-state blocks.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the live language contract now describes the reset-state family truthfully.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
 ### n-ary relational operators are now part of the active contract
 - Updated [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) so the active operator family now executes the previously saved broader contract instead of documenting only part of it:
   - n-ary relational operators such as `(< low mid high)` and `(== a b c d)` now lower as adjacent-pair comparison chains,

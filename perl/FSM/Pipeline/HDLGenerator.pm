@@ -1189,9 +1189,13 @@ sub analyze_fsm_module ($self, $fsm_module) {
     my @all_states = @{$fsm_module->states};
     my %all_signals = %{$fsm_module->signals};
     
-    # Separate regular states from standalone DTs
-    my @regular_states = grep { $_->name !~ /^-/ } @all_states;
-    my @standalone_dts = grep { $_->name =~ /^-/ } @all_states;
+    # Separate encoded states from DT-like blocks, including dedicated reset-state blocks.
+    my @regular_states = grep {
+        $_->can('is_regular_state') ? $_->is_regular_state : $_->name !~ /^-/
+    } @all_states;
+    my @standalone_dts = grep {
+        $_->can('is_regular_state') ? !$_->is_regular_state : $_->name =~ /^-/
+    } @all_states;
     
     fsm_debug("Module analysis:", 1);
     fsm_debug("  Module name: $module_name", 1);
