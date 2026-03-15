@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-15: malformed action-family boundaries are now locked across entry points
+- [t/66-language-contract-malformed-action-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/66-language-contract-malformed-action-entrypoints.t) now locks pipeline and CLI no-output behavior for:
+  - single-token malformed DT actions like `(BROKEN)`,
+  - and empty guarded blocks like `(<req)`.
+- This is a regression-only hardening slice: parser behavior was already correct, but the malformed-action family is now covered end to end instead of only at direct parser level.
 ## 2026-03-15: malformed legacy `+fsm` root bodies are now locked explicitly
 - [t/65-language-contract-plus-fsm-body-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/65-language-contract-plus-fsm-body-boundary.t) now locks the malformed-body side of the legacy `+fsm` root family directly:
   - empty `(+fsm plus_empty)` roots are rejected,

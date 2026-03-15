@@ -330,6 +330,10 @@ Done:
   - empty `+fsm` roots like `(+fsm plus_empty)` are rejected explicitly,
   - scalar `+fsm` body items like `(+fsm plus_scalar BROKEN)` are rejected explicitly,
   - and parser, pipeline, and CLI entry points now reject those malformed legacy roots without emitting HDL.
+- [t/66-language-contract-malformed-action-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/66-language-contract-malformed-action-entrypoints.t) now extends the malformed-action family across pipeline and CLI entry points explicitly:
+  - single-token malformed DT actions like `(BROKEN)` no longer stay parse-only in the contract,
+  - empty guarded blocks like `(<req)` are now also locked through pipeline and CLI no-output behavior,
+  - and the malformed-action family now has end-to-end entrypoint coverage instead of parser-only coverage.
 - [t/48-language-contract-standalone-dt-classification.t](/Users/richarddje/Documents/github/fsmgen/t/48-language-contract-standalone-dt-classification.t) now locks the general/combinational DT boundary explicitly:
   - hyphen-prefixed general DT blocks now carry explicit `standalone_dt` classification in the AST,
   - they stay out of the encoded-state plan,

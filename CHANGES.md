@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### malformed action-family boundaries now have pipeline and CLI coverage too
+- Added [t/66-language-contract-malformed-action-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/66-language-contract-malformed-action-entrypoints.t) to lock pipeline and CLI no-output behavior for:
+  - single-token malformed DT actions like `(BROKEN)`,
+  - and empty guarded blocks like `(<req)`.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the malformed-action family is now tracked as an end-to-end entrypoint boundary instead of parser-only coverage.
 ### malformed legacy `+fsm` root bodies are now regression-backed explicitly
 - Added [t/65-language-contract-plus-fsm-body-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/65-language-contract-plus-fsm-body-boundary.t) to lock the malformed-body side of the already-shipped legacy `+fsm` root family:
   - explicit rejection of empty `(+fsm plus_empty)` roots,

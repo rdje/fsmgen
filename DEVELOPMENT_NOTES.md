@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: malformed action-family boundaries are now locked through pipeline and CLI too
+- The malformed-action family already had parser-level coverage in the active contract:
+  - single-token malformed DT actions like `(BROKEN)`,
+  - and empty guarded blocks like `(<req)`.
+- This slice does not change parser behavior. It makes the contract more honest across entry points:
+  - those malformed forms are now locked through pipeline and CLI no-output behavior too,
+  - so the malformed-action family is no longer parser-only in the regression set.
 ## 2026-03-15: malformed legacy `+fsm` root bodies are now regression-backed explicitly
 - The previous root-body slice tightened both `?fsm:name` and `+fsm` in the parser, but only the structured `?fsm:name` side was locked directly in a focused regression.
 - The active contract is now explicit on the legacy side too:
