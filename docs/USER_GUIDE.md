@@ -278,7 +278,9 @@ Operator expressions:
 Boundary note:
 - The active contract now includes the systematic shorthand guard family for simple truthiness and inline comparisons.
 - Broader future language ideas may still refine the canonical spelling later, but the shorthand forms above are now real supported syntax in the active tool.
+- Malformed guard shorthand payloads such as `<mode=` or `<==3` are now rejected explicitly instead of falling through to generic expression-token errors.
 - Inline scalar comparison tokens such as `cnt[2:1]!=2'2` are part of the active expression surface.
+- Malformed inline comparison tokens such as `cnt[2:1]!=` or `=3` are now rejected explicitly instead of falling through to generic expression-token errors.
 - Parser-generated intermediate expression signals now keep the source signals from their driving AST live in the generated interface instead of hiding those dependencies behind the intermediate name alone.
 - Unsupported expression operators, malformed operator arity, and guard-only tokens in ordinary RHS expression position are now rejected explicitly instead of drifting through parser fallthrough.
 

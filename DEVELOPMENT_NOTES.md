@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: malformed guard shorthand and inline comparison tokens now fail through explicit boundaries
+- The active shorthand/inline comparison surface was already supported, but malformed forms like `<mode=` and `cnt[2:1]!=` were still leaking generic unsupported-expression-token diagnostics.
+- The active contract is now explicit on that malformed side too:
+  - malformed guard shorthand payloads such as `mode=` and `==3` fail through the guard-condition boundary,
+  - malformed inline comparison tokens such as `cnt[2:1]!=` and `=3` fail through the inline-comparison boundary.
+
 ## 2026-03-15: malformed delayed-pulse RHS values now fail through an explicit boundary
 - The active delayed-pulse `<N` form was already supported and covered on its happy path, but malformed RHS values still used raw internal parser messages.
 - The active contract is now explicit on that malformed side too:

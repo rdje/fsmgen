@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### malformed guard shorthand and inline comparison tokens now fail through explicit boundaries
+- Updated [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) so malformed guard shorthand payloads and malformed inline comparison tokens now surface through their dedicated contract diagnostics instead of falling through to generic unsupported-expression-token errors.
+- Added [t/58-language-contract-condition-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/58-language-contract-condition-expression-boundary.t) to lock:
+  - malformed guard shorthand payloads such as `mode=` and `==3`,
+  - malformed inline comparison tokens such as `cnt[2:1]!=` and `=3`,
+  - and pipeline/CLI no-output behavior for both malformed families.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the active contract now documents both malformed boundaries explicitly.
 ### delayed-pulse `<N` RHS values now fail through an explicit contract boundary
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so malformed delayed-pulse RHS values now surface through a clean user-facing contract diagnostic instead of raw internal parser messages.
 - Added [t/57-language-contract-pulse-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/57-language-contract-pulse-boundary.t) to lock:

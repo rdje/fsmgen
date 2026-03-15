@@ -71,6 +71,20 @@ sub condition_spec_has_explicit_operator($self, $condition_spec) {
     return $condition_spec =~ /^.+?(?:==|!=|<=|>=|=|<|>).+$/ ? 1 : 0;
 }
 
+sub malformed_guard_condition_error($self, $condition_spec) {
+    Carp::confess
+        "Malformed guard condition payload '$condition_spec'. ".
+        "Guard shorthand must use a valid signal/expression comparison such as '<foo', '<!foo', '<foo=3', or '<foo<=3'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+}
+
+sub malformed_inline_comparison_error($self, $scalar) {
+    Carp::confess
+        "Malformed inline comparison expression '$scalar'. ".
+        "Inline comparison tokens must use valid operands on both sides of the comparison operator. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+}
+
 sub parse_legacy_condition_spec($self, $condition_spec, %options) {
     # Parse legacy condition payload found after < or <! prefixes.
     # Supports:
@@ -88,28 +102,25 @@ sub parse_legacy_condition_spec($self, $condition_spec, %options) {
         $rhs_expr =~ s/^\s+|\s+$//g;
         $operator = '==' if $operator eq '=';
 
-        my $lhs = $self->parse_signal_reference($lhs_spec);
-        my $rhs = $self->parse_expression($rhs_expr);
+        my $lhs = eval { $self->parse_signal_reference($lhs_spec) };
+        my $lhs_error = $@;
+        my $rhs = eval { $self->parse_expression($rhs_expr) };
+        my $rhs_error = $@;
 
-        Carp::confess
-            "Malformed guard condition payload '$condition_spec'. ".
-            "Guard shorthand must use a valid signal/expression comparison such as '<foo', '<!foo', '<foo=3', or '<foo<=3'. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
-            unless $lhs && $rhs;
+        $self->malformed_guard_condition_error($condition_spec)
+            if $lhs_error || $rhs_error || !$lhs || !$rhs;
 
         fsm_debug("          Legacy condition parsed as comparison: $lhs_spec $operator $rhs_expr", 3);
         return FSM::CoreAST::BinaryOp->new($operator, $lhs, $rhs);
     }
 
     if (defined $options{bare_signal_operator}) {
-        my $lhs = $self->parse_signal_reference($condition_spec);
+        my $lhs = eval { $self->parse_signal_reference($condition_spec) };
+        my $lhs_error = $@;
         my $rhs = FSM::CoreAST::Literal->new('0');
 
-        Carp::confess
-            "Malformed guard condition payload '$condition_spec'. ".
-            "Guard shorthand must use a valid signal/expression comparison such as '<foo', '<!foo', '<foo=3', or '<foo<=3'. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
-            unless $lhs;
+        $self->malformed_guard_condition_error($condition_spec)
+            if $lhs_error || !$lhs;
 
         fsm_debug(
             "          Legacy condition parsed as bare-signal truthiness: $condition_spec $options{bare_signal_operator} 0",
@@ -375,10 +386,7 @@ sub parse_scalar_expression($self, $scalar) {
         my $lhs = $self->parse_expression($lhs_spec);
         my $rhs = $self->parse_expression($rhs_spec);
 
-        Carp::confess
-            "Malformed inline comparison expression '$scalar'. ".
-            "Inline comparison tokens must use valid operands on both sides of the comparison operator. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        $self->malformed_inline_comparison_error($scalar)
             unless $lhs && $rhs;
 
         return FSM::CoreAST::BinaryOp->new($operator, $lhs, $rhs);
@@ -414,6 +422,12 @@ sub parse_scalar_expression($self, $scalar) {
         }
         
         return FSM::CoreAST::SignalRef->new($signal);
+    } elsif (
+        $scalar =~ /^.+?(?:==|!=|<=|>=|=|<|>)$/ ||
+        $scalar =~ /^(?:==|!=|<=|>=|=|>).+$/ ||
+        $scalar =~ /^<(?![A-Za-z_!]).+$/
+    ) {
+        $self->malformed_inline_comparison_error($scalar);
     } else {
         Carp::confess
             "Unsupported expression token '$scalar'. ".

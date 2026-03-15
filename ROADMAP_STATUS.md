@@ -362,6 +362,10 @@ Done:
 - [t/57-language-contract-pulse-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/57-language-contract-pulse-boundary.t) now locks the malformed-RHS side of delayed-pulse `<N` assignments explicitly:
   - malformed delayed-pulse RHS values such as `B` or `2'0` now fail through a dedicated delayed-pulse boundary,
   - and malformed delayed-pulse RHS values now fail clearly through parser, pipeline, and CLI entry points without emitting HDL.
+- [t/58-language-contract-condition-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/58-language-contract-condition-expression-boundary.t) now locks the malformed-boundary side of guard shorthand and inline comparison tokens explicitly:
+  - malformed guard shorthand payloads such as `mode=` or `==3` now fail through the dedicated guard-condition boundary,
+  - malformed inline comparison tokens such as `cnt[2:1]!=` or `=3` now fail through the dedicated inline-comparison boundary,
+  - and both malformed families now fail clearly through parser, pipeline, and CLI entry points without emitting HDL.
 - [t/35-language-contract-test-branch-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/35-language-contract-test-branch-boundary.t) now locks explicit rejection of malformed empty test-node branches so `?sig` / case-style dispatch no longer fails through a generic internal `undef` action path.
 - [t/36-language-contract-test-branch-selectors.t](/Users/richarddje/Documents/github/fsmgen/t/36-language-contract-test-branch-selectors.t) now locks active relational test-node selector lowering for `!=`, `>`, and `<=`, so the shipped `?sig` selector family is no longer documented more narrowly than the live lowering behavior.
 - [t/37-language-contract-computed-test-selector.t](/Users/richarddje/Documents/github/fsmgen/t/37-language-contract-computed-test-selector.t) now locks the active `?(expr)` computed-selector form end to end:

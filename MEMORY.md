@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-15: malformed guard shorthand and inline comparison tokens now fail early through explicit boundaries
+- [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now turns malformed guard shorthand payloads and malformed inline comparison tokens into their dedicated contract diagnostics instead of generic unsupported-expression-token errors.
+- [t/58-language-contract-condition-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/58-language-contract-condition-expression-boundary.t) now locks:
+  - malformed guard shorthand payloads such as `mode=` and `==3`,
+  - malformed inline comparison tokens such as `cnt[2:1]!=` and `=3`,
+  - and pipeline/CLI no-output behavior for both malformed families.
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents both malformed boundaries explicitly in the active contract section.
+
 ## 2026-03-15: malformed delayed-pulse RHS values now fail early through a contract boundary
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now turns malformed delayed-pulse `<N` RHS values into a clean user-facing contract diagnostic instead of raw internal parser messages.
 - [t/57-language-contract-pulse-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/57-language-contract-pulse-boundary.t) now locks:
