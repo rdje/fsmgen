@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: unsupported expression forms now fail explicitly
+- The next `R8` slice now closes one more parser-visible gray zone around expressions:
+  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now rejects:
+    - unknown operator forms such as `(bogus B C)`,
+    - malformed active-operator arity such as `(== B C D)`,
+    - empty expression lists,
+    - unsupported payload types,
+    - and guard-only tokens used in ordinary RHS expression position such as `<start`.
+- This slice also preserves one real active compatibility path explicitly instead of accidentally:
+  - inline scalar comparison tokens such as `cnt[2:1]!=2'2` are now parsed as real comparison ASTs in ordinary expression position.
+- Focused regression coverage now exists in [t/40-language-contract-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/40-language-contract-expression-boundary.t) for:
+  - supported inline scalar comparison tokens,
+  - unsupported RHS operators,
+  - malformed RHS operator arity,
+  - and invalid RHS scalar tokens.
+- Boundary decision:
+  - this slice does not widen the active operator family,
+  - it makes the current operator boundary explicit and rejects unsupported expression forms truthfully instead of letting them drift through `undef` fallthrough or arbitrary fake-signal registration.
 ## 2026-03-15: shorthand guard comparisons are now part of the active contract
 - The saved guard-language agreement from 2026-03-14 is now partially promoted into the active `R8` contract instead of remaining a future-only note.
 - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now lowers the shorthand guard family explicitly:

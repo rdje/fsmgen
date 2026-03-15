@@ -2450,10 +2450,17 @@ sub initialize_state_and_dt_enable_conditions($self, $fsm_module) {
 sub extract_rhs_capture_value($self, $expr) {
     return 'unknown_expr' unless $expr && blessed($expr);
 
+    if ($expr->can('to_systemverilog')) {
+        my $sv = eval { $expr->to_systemverilog() };
+        return $sv if defined $sv && $sv ne '';
+    }
+
     if ($expr->isa('FSM::CoreAST::Literal')) {
         return $expr->value;
     } elsif ($expr->isa('FSM::CoreAST::SignalRef')) {
         return $expr->signal->name;
+    } elsif ($expr->isa('FSM::CoreAST::IndexedRef')) {
+        return $expr->to_systemverilog;
     } elsif ($expr->isa('FSM::CoreAST::BinaryOp')) {
         my $left = $self->extract_rhs_capture_value($expr->left);
         my $right = $self->extract_rhs_capture_value($expr->right);

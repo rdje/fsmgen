@@ -113,7 +113,7 @@ Standalone DT note:
 - Inline compound modifiers on assignments, for example `(A <- B (+= 2))` and `(C = D (-= 1))`
 - RHS operator expressions for the currently regression-backed active families:
   - unary `!`
-  - binary equality `==`
+  - binary comparison `==`, `!=`, `<`, `<=`, `>`, `>=`
   - n-ary `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`
   - word aliases `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
 - Enforced diagnostics for illegal combinational self-dependency with `=`
@@ -160,6 +160,10 @@ Standalone DT note:
   - `(<req)`
 - Malformed test-node branches that do not carry a real branch body, for example:
   - `(?MODE (=0))`
+- Unsupported or malformed expression forms outside the current active operator family, for example:
+  - `(A = (bogus B C))`
+  - `(A = (== B C D))`
+  - `(A = <start)`
 - Legacy composition forms such as `?&...`, nested `?top`, `?ports` mapping directives, nested `?toplink`, and multi-source `?fsmc`
 - Legacy generic/template expansion forms, including:
   - placeholder selectors such as `?[READ]`
@@ -210,13 +214,14 @@ Operator expressions:
 - The assignment operator decides timing/storage semantics; the RHS decides only the expression tree.
 - Current regression-backed operator surface:
   - unary: `!`
-  - binary equality: `==`
+  - binary comparison: `==`, `!=`, `<`, `<=`, `>`, `>=`
   - n-ary arithmetic/logic: `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`
   - aliases: `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
 - Current lowering model:
   - `+`, `*`, `&`, `|`, `^` are treated as n-ary expression families
   - `-`, `/`, `%` are treated as left-associative n-ary expression families
 - Examples:
+  - `(match = cnt[2:1]!=2'2)`
   - `(sum = (+ a b c d))`
   - `(diff = (- a b c d))`
   - `(prod = (* a b c d))`
@@ -228,6 +233,8 @@ Operator expressions:
 Boundary note:
 - The active contract now includes the systematic shorthand guard family for simple truthiness and inline comparisons.
 - Broader future language ideas may still refine the canonical spelling later, but the shorthand forms above are now real supported syntax in the active tool.
+- Inline scalar comparison tokens such as `cnt[2:1]!=2'2` are part of the active expression surface.
+- Unsupported expression operators, malformed operator arity, and guard-only tokens in ordinary RHS expression position are now rejected explicitly instead of drifting through parser fallthrough.
 
 Test nodes:
 - `(?SIG (=0 ...actions...) (!=8'0 ...actions...) (>8'3 ...actions...) ...)` is the active multi-way selector form.

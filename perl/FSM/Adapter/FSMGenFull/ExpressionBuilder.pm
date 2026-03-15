@@ -247,6 +247,12 @@ sub parse_expression($self, $expr) {
     if (!ref($expr)) {
         return $self->parse_scalar_expression($expr);
     } elsif (ref($expr) eq 'ARRAY') {
+        Carp::confess
+            "Malformed expression list '()'. ".
+            "Expressions must use a literal, signal reference, or supported operator form. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless @$expr;
+
         if ($self->is_recursive_expression($expr)) {
             fsm_debug("          Detected recursive expression - processing with new framework", 3);
             return $self->parse_recursive_expression($expr);
@@ -254,8 +260,10 @@ sub parse_expression($self, $expr) {
             return $self->parse_sexpr_expression($expr);
         }
     } else {
-        fsm_debug("Unknown expression type: " . ref($expr), 3);
-        return undef;
+        Carp::confess
+            "Unsupported expression payload type '" . ref($expr) . "'. ".
+            "Expressions must use a literal, signal reference, or supported operator form. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }
 }
 
@@ -288,6 +296,22 @@ sub parse_scalar_expression($self, $scalar) {
         $value =~ s/_//g;
         fsm_debug("          CONST LITERAL: '$scalar' -> ${width}'b$value", 3);
         return FSM::CoreAST::Literal->new($value, width => $width, radix => 'binary');
+    } elsif ($scalar =~ /^(.+?)(==|!=|<=|>=|=|<|>)(.+)$/) {
+        my ($lhs_spec, $operator, $rhs_spec) = ($1, $2, $3);
+        $lhs_spec =~ s/^\s+|\s+$//g;
+        $rhs_spec =~ s/^\s+|\s+$//g;
+        $operator = '==' if $operator eq '=';
+
+        my $lhs = $self->parse_expression($lhs_spec);
+        my $rhs = $self->parse_expression($rhs_spec);
+
+        Carp::confess
+            "Malformed inline comparison expression '$scalar'. ".
+            "Inline comparison tokens must use valid operands on both sides of the comparison operator. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless $lhs && $rhs;
+
+        return FSM::CoreAST::BinaryOp->new($operator, $lhs, $rhs);
     } elsif ($scalar =~ /^!([a-zA-Z_]\w*(?:\[[\d:]+\])?)$/) {
         # Legacy compact negation token, e.g. !wren
         my $operand = $self->parse_signal_reference($1);
@@ -321,17 +345,21 @@ sub parse_scalar_expression($self, $scalar) {
         
         return FSM::CoreAST::SignalRef->new($signal);
     } else {
-        if ($scalar =~ /^[!<>]/) {
-            fsm_debug("          WARNING: Invalid signal name detected: $scalar", 3);
-            return undef;
-        }
-        my $signal = $self->{signal_manager}->register_signal($scalar);
-        return FSM::CoreAST::SignalRef->new($signal);
+        Carp::confess
+            "Unsupported expression token '$scalar'. ".
+            "Active expressions must use a literal, a valid signal reference, or a supported operator form. ".
+            "Guard-prefixed tokens belong in condition position, not inside ordinary expressions. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }
 }
 
 sub parse_sexpr_expression($self, $sexpr) {
     my ($operator, @operands) = @$sexpr;
+
+    if (@operands == 1 && ref($operands[0]) eq 'ARRAY') {
+        @operands = @{$operands[0]};
+    }
+
     fsm_debug("          S-expression: $operator with " . scalar(@operands) . " operands", 3);
     
     if ($operator eq '+' && @operands == 2) {
@@ -347,8 +375,24 @@ sub parse_sexpr_expression($self, $sexpr) {
     } elsif ($operator eq '!' && @operands == 1) {
         return FSM::CoreAST::UnaryOp->new(operator => '!', operand => $self->parse_expression($operands[0]));
     } else {
-        fsm_debug("          Unknown S-expression operator: $operator", 3);
-        return undef;
+        if ($operator =~ /^(?:\+|-|&|\||==)$/ && @operands != 2) {
+            Carp::confess
+                "Malformed expression operator '$operator' with " . scalar(@operands) . " operand(s). ".
+                "This active form requires exactly 2 operands. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        }
+
+        if ($operator eq '!' && @operands != 1) {
+            Carp::confess
+                "Malformed expression operator '!' with " . scalar(@operands) . " operand(s). ".
+                "This active form requires exactly 1 operand. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        }
+
+        Carp::confess
+            "Unsupported expression operator '$operator'. ".
+            "Active expression operators currently include '!', '==', '+', '-', '*', '/', '%', '&', '|', '^' and their documented aliases. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }
 }
 

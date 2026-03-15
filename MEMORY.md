@@ -20,6 +20,24 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: unsupported expression forms now fail explicitly
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now parses real inline scalar comparison tokens such as `cnt[2:1]!=2'2` explicitly while rejecting unsupported expression operators, malformed active-operator arity, empty expression lists, unsupported payload types, and guard-only tokens in ordinary RHS expression position,
+  - [t/40-language-contract-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/40-language-contract-expression-boundary.t) now locks that rejection boundary directly,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents unsupported/malformed expression forms explicitly in the out-of-support bucket.
+- Scope of the landed contract slice:
+  - explicit support for inline scalar comparison tokens such as `cnt[2:1]!=2'2`
+  - explicit rejection of unsupported RHS operators such as `(bogus B C)`
+  - explicit rejection of malformed active-operator arity such as `(== B C D)`
+  - explicit rejection of guard-only tokens such as `<start` when used in ordinary expression position
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more parser-visible legacy/fallthrough boundary as explicitly rejected instead of implicit.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing the remaining parser/runtime-visible language edges,
+  - and keep making the current support boundary explicit construct family by construct family.
 ## 2026-03-15: shorthand guard comparisons are now part of the active contract
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now lowers the shorthand guard family explicitly for both guarded blocks and suffix guards,

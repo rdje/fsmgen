@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### unsupported expression forms now fail explicitly
+- Updated [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) so unsupported expression forms no longer drift through soft parser fallthrough:
+  - real inline scalar comparison tokens such as `cnt[2:1]!=2'2` now parse as comparison ASTs explicitly instead of relying on accidental fallback behavior,
+  - unknown operators such as `(bogus B C)` now fail explicitly,
+  - malformed active-operator arity such as `(== B C D)` now fails explicitly,
+  - empty expression lists and unsupported expression payload types now fail explicitly,
+  - and guard-only tokens like `<start` now fail when used in ordinary RHS expression position.
+- Added focused regression coverage in [t/40-language-contract-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/40-language-contract-expression-boundary.t) for:
+  - supported inline scalar comparison tokens,
+  - unsupported RHS operators,
+  - malformed RHS operator arity,
+  - and invalid RHS scalar tokens.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the active contract now documents this as an explicit rejection boundary instead of leaving it implicit.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
 ### shorthand guard comparisons are now active and regression-backed
 - Updated [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) so guarded blocks and suffix guards now lower the shorthand family explicitly instead of treating only the old equality form as special:
   - `(<foo ...)` now means `foo != 0`
