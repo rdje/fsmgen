@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### future placeholder syntax direction was saved
+- Updated [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) to preserve the current design conclusion for any future generic/template lane:
+  - prefer `$(VAR)` as the canonical placeholder syntax,
+  - allow `$VAR` only as optional sugar if that lane is ever implemented,
+  - and do not reuse `<VAR>` because `<...` is already reserved for guarded-block and suffix-guard syntax.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`.
 ### legacy generic placeholder forms now fail explicitly
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so legacy generic/template placeholder selectors such as `?[READ]` and repeat macros such as `?repeat:[MAX_COUNT]` now fail with targeted diagnostics instead of drifting into ordinary `?sig` parsing.
 - Updated [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) so placeholder tokens such as `[DATAIN]` or `[?size: ...]` now fail explicitly instead of being registered as ordinary signal names in the active parser.

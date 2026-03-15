@@ -20,6 +20,22 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: future placeholder syntax direction is now preserved
+- Current task was design-history only, not a support-boundary change:
+  - [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) now records the preferred future placeholder direction for any later generic/template lane.
+- Saved conclusion from the discussion:
+  - do not revive legacy `[VAR]` as the canonical placeholder form,
+  - do not use `<VAR>` because `<...` is already core guard syntax,
+  - prefer `$(VAR)` as the future canonical placeholder form,
+  - and treat `$VAR` only as possible sugar over `$(VAR)` if a real generic/template lane ever exists.
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - and there is no active-contract expansion from this note alone.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser/runtime-visible legacy forms,
+  - and keep separating active contract truth from future language-design ideas.
 ## 2026-03-15: legacy generic/template placeholders now fail explicitly
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects placeholder selectors like `?[READ]` and repeat macros like `?repeat:[MAX_COUNT]` with targeted diagnostics,

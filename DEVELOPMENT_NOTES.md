@@ -18,6 +18,15 @@ This document captures engineering rationale, design constraints, and working de
 - Boundary decision:
   - the active tool now treats these forms as explicit out-of-support legacy generic/template syntax,
   - not as partially supported FSM constructs.
+- Future placeholder-syntax note saved from the design discussion:
+  - `[VAR]` should remain legacy-only and should not be revived as the canonical future placeholder form.
+  - `<VAR>` is a bad fit because `<...` is already core guarded-block / suffix-guard syntax in the active language.
+  - `$VAR` could exist later as lightweight sugar, but it is not self-delimiting enough to be the canonical form.
+  - `$(VAR)` is the preferred future canonical placeholder form because it is explicit, bounded, and scales better to later structured forms such as `$(size MAX_COUNT)` or `$(expr MAX_COUNT-1)`.
+  - If a real generic/template lane is opened later, the clean direction would be:
+    - canonical form: `$(VAR)`
+    - optional sugar: `$VAR`
+    - with both remaining outside the current active `R8` contract until that lane exists.
 ## 2026-03-15: computed test selectors are now part of the active contract
 - The shipped parser already supported the computed-selector test-node form:
   - `?(expr)` where `expr` is a selector expression such as `(| A B)`.
