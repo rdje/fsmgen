@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### duplicate `+system` declarations are now regression-backed explicitly
+- Added [t/73-language-contract-system-section-duplicate-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/73-language-contract-system-section-duplicate-boundary.t) to lock the duplicate-declaration side of the conventional `+system` family:
+  - duplicate `(clock clk)` entries are rejected explicitly,
+  - duplicate reset declarations are rejected explicitly,
+  - and mixed `(sreset rstn)` plus `(asreset rstn)` is also rejected as a duplicate reset declaration.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the conventional `+system` contract now states “exactly one clock declaration and exactly one reset declaration” explicitly.
 ### shared-datapath `R11` note now captures default top-export versus peer-read internalization
 - Refined [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the future shared-datapath lane now says:
   - outputs from child FSMs or the shared datapath block are top-level outputs by default,

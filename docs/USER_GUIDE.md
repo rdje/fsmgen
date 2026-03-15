@@ -495,7 +495,7 @@ Current meaning:
 
 Current boundary:
 - Supported:
-  - exactly `(clock clk)`
+  - exactly one `(clock clk)`
   - exactly one reset declaration naming `rstn` via:
     - `(sreset rstn)`
     - or `(asreset rstn)`
@@ -503,6 +503,8 @@ Current boundary:
   - alternative clock names such as `(clock core_clk)`
   - alternative reset names such as `(sreset reset_n)`
   - unsupported directives such as `(areset rstn)` or other legacy `+system` entries
+  - duplicate clock entries such as two `(clock clk)` declarations
+  - duplicate reset declarations, including mixed `(sreset rstn)` plus `(asreset rstn)`
   - incomplete `+system` sections
 
 Regression-backed example:

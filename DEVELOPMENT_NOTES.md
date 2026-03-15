@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: duplicate `+system` declarations are now part of the explicit contract
+- The active parser already rejected duplicate `+system` declarations, but that part of the conventional-system contract was not yet documented or regression-locked clearly.
+- The duplicate side of the boundary is now explicit:
+  - duplicate `(clock clk)` entries are rejected,
+  - duplicate reset declarations are rejected,
+  - and mixed `(sreset rstn)` plus `(asreset rstn)` is also treated as a duplicate reset declaration rather than as a second supported reset form.
+- This keeps the `+system` contract honest as “exactly one clock declaration and exactly one reset declaration”, not just “only these names/directives are accepted”.
 ## 2026-03-16: future `R11` shared-datapath composition sub-lane
 - Captured a concrete future `R11` composition direction instead of leaving it as informal brainstorming only.
 - Intended scope:

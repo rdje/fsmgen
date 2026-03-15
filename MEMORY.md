@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: duplicate `+system` declarations are now locked explicitly
+- [t/73-language-contract-system-section-duplicate-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/73-language-contract-system-section-duplicate-boundary.t) now locks the duplicate-declaration side of the conventional `+system` family:
+  - duplicate `(clock clk)` entries are rejected,
+  - duplicate reset declarations are rejected,
+  - and mixed `(sreset rstn)` plus `(asreset rstn)` is also rejected as a duplicate reset declaration.
+- This is mostly a regression/doc slice: parser behavior was already correct, but the contract now says plainly that `+system` means exactly one clock declaration plus exactly one reset declaration.
 ## 2026-03-16: future `R11` now includes a concrete shared-datapath composition lane
 - [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) now treats the previously discussed multi-FSM shared-datapath idea as a concrete future `R11` sub-lane instead of an informal architecture note.
 - The saved direction is:
