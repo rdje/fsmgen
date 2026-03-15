@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### unsupported top-level bare forms now fail explicitly
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so unsupported top-level bare forms inside `(?fsm:name ...)` now fail explicitly instead of being skipped silently.
+- Added focused regression coverage in [t/43-language-contract-top-level-form-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/43-language-contract-top-level-form-boundary.t) for:
+  - future-looking bare init syntax like `(tester_reset := 1)`,
+  - malformed bare scalar forms like `(BROKEN 1)`,
+  - and pipeline/CLI confirmation that these forms do not disappear silently or emit HDL output.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the active contract now states that directive sections, `:=` init/reset directives, and state/DT blocks are the only supported top-level forms inside `(?fsm:name ...)`.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
 ### test-node selectors now require explicit operator prefixes
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so test-node branches now require explicit operator-prefixed selector tokens such as `=0`, `=OTHER`, `!=8'0`, or `>8'3`, instead of accepting malformed bare selectors implicitly.
 - Updated [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) so runtime lowering enforces the same selector boundary for direct AST callers.

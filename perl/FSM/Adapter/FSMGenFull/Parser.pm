@@ -158,13 +158,49 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
         } elsif ($element_name eq ':=') {
             fsm_debug("Parsing init/reset directive", 3);
             $self->parse_init_assignment_directive($element);
+        } elsif (
+            $element_name =~ /^[a-zA-Z_]/
+                && ref($element->[1]) eq 'ARRAY'
+                && @{$element->[1]} >= 1
+                && !ref($element->[1][0])
+                && $element->[1][0] eq ':='
+        ) {
+            my @tail = @{$element->[1]};
+            my $detail = join(' ', map {
+                defined($_) ? (ref($_) ? ref($_) : $_) : 'undef'
+            } ($element_name, @tail));
+            Carp::confess
+                "Unsupported top-level form '($detail)'. ".
+                "Inside '?fsm:name', the active contract supports directive sections, ':=' init/reset directives, and state/DT blocks only. ".
+                "Future-looking bare forms such as '(lhs := value)' are not part of the active contract yet. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        } elsif (
+            $element_name =~ /^[a-zA-Z_]/
+                && ref($element->[1]) eq 'ARRAY'
+                && @{$element->[1]} == 1
+                && !ref($element->[1][0])
+        ) {
+            my $detail = join(' ', map {
+                defined($_) ? (ref($_) ? ref($_) : $_) : 'undef'
+            } ($element_name, $element->[1][0]));
+            Carp::confess
+                "Unsupported top-level form '($detail)'. ".
+                "Inside '?fsm:name', the active contract supports directive sections, ':=' init/reset directives, and state/DT blocks only. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n";
         } elsif ($element_name =~ /^\+/) {
             Carp::confess
                 "Unsupported top-level directive '$element_name'. ".
                 "The active contract currently supports only '+system', '+size', '+constants', '+enums', '+define', and '+params' inside '?fsm:name'. ".
                 "See docs/USER_GUIDE.md for the current supported boundary.\n";
         } elsif ($element_name =~ /^[a-zA-Z_]/ && $element_name !~ /^(idle|-syncrst|-asyncrst)$/ && !ref($element->[1])) {
-            next;
+            my $detail = join(' ', map {
+                defined($_) ? (ref($_) ? ref($_) : $_) : 'undef'
+            } @$element);
+            Carp::confess
+                "Unsupported top-level form '($detail)'. ".
+                "Inside '?fsm:name', the active contract supports directive sections, ':=' init/reset directives, and state/DT blocks only. ".
+                "Future-looking bare forms such as '(lhs := value)' are not part of the active contract yet. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n";
         } else {
             fsm_debug("Parsing state block: $element_name", 3);
             my $state = $self->parse_state($element);

@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: unsupported top-level bare forms now fail explicitly
+- The next `R8` slice closes one more parser-visible gray zone at the top level of `(?fsm:name ...)`:
+  - some malformed bare forms were still being skipped silently instead of being classified clearly as unsupported.
+- This was especially misleading for future-looking syntax ideas such as:
+  - `(lhs := value)`
+  - which we have discussed as a possible future canonical form, but which is not part of the active contract yet.
+- Implementation:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects unsupported top-level bare forms explicitly instead of skipping them.
+- Focused regression coverage now exists in [t/43-language-contract-top-level-form-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/43-language-contract-top-level-form-boundary.t) for:
+  - explicit rejection of future-looking bare init syntax like `(tester_reset := 1)`,
+  - explicit rejection of malformed bare scalar forms like `(BROKEN 1)`,
+  - and pipeline/CLI confirmation that these forms no longer disappear silently.
+- Boundary decision:
+  - active top-level forms inside `(?fsm:name ...)` are directive sections, `:=` init/reset directives, and state/DT blocks,
+  - future bare forms such as `(lhs := value)` remain design ideas only until deliberately promoted into the active contract.
 ## 2026-03-15: test-node selectors now require explicit operator prefixes
 - The next `R8` slice closes a small but real selector-boundary gray zone in test nodes:
   - active branch selectors are meant to be explicit selector tokens like `=0`, `=OTHER`, `!=8'0`, or `>8'3`,

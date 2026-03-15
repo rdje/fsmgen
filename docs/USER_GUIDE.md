@@ -155,6 +155,9 @@ Standalone DT note:
 - Unsupported tagged top-level source kinds outside the active source family, for example:
   - `(?define:legacy_template ...)`
   - other legacy wrapper/template source kinds that are neither `?fsm:name` nor `?top:name`
+- Unsupported top-level bare forms inside `(?fsm:name ...)`, for example:
+  - `(tester_reset := 1)`
+  - `(BROKEN 1)`
 - Bare condition suffixes without an explicit guard marker, for example:
   - `(A <= B start)`
   - `(-> busy full)`
@@ -421,6 +424,7 @@ Current boundary:
   - `(:= signal=literal_or_scalar_expr)` at top level inside `(?fsm:name ...)`
 - Rejected explicitly:
   - malformed payloads such as `(:= BROKEN)`
+  - unsupported top-level bare alternatives such as `(tester_reset := 1)`
   - malformed DT actions such as `(BROKEN)`
   - empty guarded blocks such as `(<req)`
 

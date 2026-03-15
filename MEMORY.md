@@ -20,6 +20,22 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: unsupported top-level bare forms now fail explicitly
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects unsupported top-level bare forms inside `(?fsm:name ...)` instead of skipping them silently,
+  - [t/43-language-contract-top-level-form-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/43-language-contract-top-level-form-boundary.t) now locks parser, pipeline, and CLI behavior for future-looking bare init syntax like `(tester_reset := 1)` and malformed bare scalar forms like `(BROKEN 1)`,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents those forms as explicitly out of active support.
+- Scope of the landed contract slice:
+  - explicit support remains limited to directive sections, `:=` init/reset directives, and state/DT blocks at the top level of `(?fsm:name ...)`
+  - explicit rejection now covers unsupported bare top-level forms such as `(tester_reset := 1)` and `(BROKEN foo)`
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more silently-skipped legacy/malformed family as explicitly rejected instead.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser/runtime-visible language edges,
+  - and keep converting silent skips/fallbacks into explicit supported-or-rejected boundaries.
 ## 2026-03-15: test-node selectors now require explicit operator prefixes
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates test-branch selectors explicitly and rejects bare selectors like `BUSY` or `0`,
