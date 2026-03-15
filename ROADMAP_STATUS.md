@@ -362,6 +362,10 @@ Done:
   - computed selectors synthesize a real intermediate condition signal,
   - the source expression signals stay live in the generated interface,
   - and emitted HDL reuses that computed selector signal in its branch comparisons.
+- [t/54-language-contract-test-signal-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/54-language-contract-test-signal-name-boundary.t) now locks the plain `?SIG` signal-name boundary explicitly:
+  - plain test nodes must use an HDL-identifier-compatible signal name after `?`,
+  - computed selectors `?(expr)` remain supported separately,
+  - and malformed plain test-node signals such as `?bad-name` or `?0` now fail clearly through parser, pipeline, and CLI entry points.
 - [t/45-language-contract-reset-state-spellings.t](/Users/richarddje/Documents/github/fsmgen/t/45-language-contract-reset-state-spellings.t) now locks the active reset-state spelling and classification contract:
   - `-syncrst` and `-syncreset` normalize to the same `syncreset` reset-state identity,
   - `-asyncrst` and `-asyncreset` normalize to the same `asyncreset` reset-state identity,

@@ -20,6 +20,23 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: plain `?SIG` test-node names now fail early if malformed
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates the signal name in plain `?SIG` test nodes explicitly,
+  - [t/54-language-contract-test-signal-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/54-language-contract-test-signal-name-boundary.t) now locks valid plain-`?SIG` behavior plus malformed-name rejection through parser, pipeline, and CLI,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the distinction between plain `?SIG` and computed `?(expr)` explicitly.
+- Scope of the landed contract slice:
+  - explicit support remains for plain `?SIG` with HDL-identifier-compatible signal names,
+  - explicit support remains for computed selectors `?(expr)`,
+  - explicit rejection now covers malformed plain test-node signal names like `?bad-name` and `?0`.
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more test-node family boundary as fully bucketed.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser/runtime-visible language edges,
+  - and keep aligning every accepted construct with an explicit source-level contract.
 ## 2026-03-15: transition targets now fail early if malformed or undeclared
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates transition target spelling while parsing `->` and validates declared-target membership after the FSM is fully parsed,

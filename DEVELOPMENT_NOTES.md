@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: plain `?SIG` test-node names are now part of the explicit contract
+- The next `R8` slice closes a small but real test-node boundary gap:
+  - selector tokens and computed selectors were already explicit,
+  - but the plain `?SIG` form was still accepting the signal name more loosely than the rest of the active language.
+- Implementation:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now requires plain test nodes to use `?signal_name` with an HDL-identifier-compatible signal name.
+  - The computed-selector path `?(expr)` remains unchanged and supported.
+- Focused regression coverage now exists in [t/54-language-contract-test-signal-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/54-language-contract-test-signal-name-boundary.t) for:
+  - a valid plain `?SIG` success case,
+  - malformed signal names like `?bad-name` and `?0`,
+  - and pipeline/CLI confirmation that malformed plain test-node signal names do not emit HDL.
+- Boundary decision:
+  - plain `?SIG` now follows the same explicit identifier contract as source roots, state names, and transition targets,
+  - while `?(expr)` stays the separate supported computed-selector form.
 ## 2026-03-15: transition targets are now part of the explicit contract
 - The next `R8` slice closes a real control-flow boundary gap:
   - state/DT block names are now validated explicitly,

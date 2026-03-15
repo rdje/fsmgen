@@ -116,6 +116,8 @@ Combinational DT note:
 - Test-node branching on a signal or computed selector, for example:
   - `(?SIG (=0 ...) (!=8'0 ...) (>8'3 ...) (<=8'3 ...))`
   - `(?(| A B) (=0 ...) (=1 ...))`
+  - plain `?SIG` test nodes require an HDL-identifier-compatible signal name
+  - malformed plain test-node signal names such as `?bad-name` or `?0` are rejected explicitly
 - Register assignment `(A <- B)`
 - D-input style sequential assignment `(A <= B)`
 - Combinational assignment `(A = B)`
@@ -277,8 +279,10 @@ Boundary note:
 
 Test nodes:
 - `(?SIG (=0 ...actions...) (!=8'0 ...actions...) (>8'3 ...actions...) ...)` is the active multi-way selector form.
+- Plain `?SIG` test nodes require `SIG` to be HDL-identifier-compatible.
 - `?(expr ...)` is the active computed-selector form when the selector itself is a condition expression, for example:
   - `(?(| A B) (=0 ...actions...) (=1 ...actions...))`
+- Malformed plain test-node signal names such as `?bad-name` or `?0` are rejected explicitly.
 - Each test branch must include:
   - an explicit operator-prefixed selector token like `=0`, `=1`, `=OTHER`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, or `>=8'1`
   - and at least one nested action

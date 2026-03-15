@@ -1059,6 +1059,14 @@ sub parse_test_node_new_format($self, $action) {
     } else {
         # Format: (?is_last (=0 x))
         my ($signal_name) = $test_signal =~ /^\?(.+)/;
+
+        Carp::confess
+            "Malformed test signal '$test_signal'. ".
+            "Plain test nodes must use '?signal_name' with an HDL-identifier-compatible signal name, or the computed form '?(expr)'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless defined($signal_name)
+                && $signal_name =~ /\A[A-Za-z_]\w*\z/;
+
         $signal = $self->{signal_manager}->register_signal($signal_name);
     }
     
