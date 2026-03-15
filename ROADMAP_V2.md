@@ -101,7 +101,8 @@ Deliverable themes:
 - define one bounded multi-FSM shared-datapath composition lane instead of reopening broad implicit composition:
   - one `fsmgen` run may build one top from one `.fsm` source or from several `.fsm` sources,
   - some child outputs remain directly owned by their source FSMs and may become top-level outputs normally,
-  - selected child-owned targets may instead be lifted into one shared datapath block instantiated by the generated top,
+  - outputs assigned in at least two child FSMs are the shared-datapath candidates and may be lifted into one shared datapath block instantiated by the generated top,
+  - outputs assigned in only one child FSM are not shared and should remain directly child-owned,
   - that shared block owns the mux/register logic for those lifted targets and receives deterministic per-child drive-intent enables such as `A_P_Q_en`, `B_P_Q_en`, and aggregate enables such as `P_Q_en`,
   - lifted registered/shared outputs may be looped back into child FSM inputs and may be either top-local or top-exposed,
   - combinational outputs, whether shared or not, must not become cross-FSM read sources and should only exist as top-level outputs,
@@ -115,10 +116,10 @@ Planned bounded sub-lane inside `R11`:
 - shared datapath extraction for multi-FSM tops.
 - intent:
   - keep FSM children as controllers,
-  - let the generated top decide which targets stay directly child-owned,
-  - and let selected shared/register-bearing targets move into one common datapath block.
+  - keep singly-owned outputs in their owning child FSMs,
+  - and let only multiply-assigned shared/register-bearing targets move into one common datapath block.
 - first contract questions to settle:
-  - how lifted targets are declared,
+  - how multiply-assigned lifted targets are declared and detected,
   - which RHS/value sources must also be surfaced to the shared datapath block,
   - how per-child drive intents are named and reported,
   - how same-target/same-value aggregation differs from same-target/different-value conflicts,

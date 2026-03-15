@@ -5,7 +5,8 @@ This document captures engineering rationale, design constraints, and working de
 - Intended scope:
   - one generated top may instantiate several FSM children from one `.fsm` source or from several `.fsm` sources,
   - some outputs stay directly owned by FSM A / B / C and may become top-level outputs normally,
-  - selected targets may instead be lifted out of the child FSMs and moved into one shared datapath block instantiated by the generated top.
+  - only outputs assigned in at least two child FSMs are candidates to be lifted out of the child FSMs and moved into one shared datapath block instantiated by the generated top,
+  - outputs assigned in only one child FSM are not shared and should remain owned by that child FSM.
 - Shared-datapath direction:
   - the shared datapath block should own the mux/register logic for lifted targets,
   - child FSMs should emit deterministic per-source drive-intent enables such as `A_P_Q_en`, `B_P_Q_en`, and `C_P_Q_en`,

@@ -5,7 +5,8 @@ This is the live continuity document for fast session recovery after crashes, re
 - The saved direction is:
   - one generated top may be built from one `.fsm` source or several `.fsm` sources,
   - some child outputs remain directly child-owned,
-  - selected targets may instead be lifted into one shared datapath block instantiated by the generated top,
+  - only outputs assigned in at least two child FSMs are candidates to be lifted into one shared datapath block instantiated by the generated top,
+  - outputs assigned in only one child FSM are not shared and stay directly child-owned,
   - per-child drive-intent enables should be surfaced deterministically (for example `A_P_Q_en`) and aggregated in the shared block/top,
   - lifted registered outputs may loop back into child FSM inputs,
   - and combinational outputs must not become peer-FSM read sources.

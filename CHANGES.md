@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### shared-datapath `R11` note now uses the “written by at least two FSMs” rule
+- Refined [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the future shared-datapath lane is now explicit about the ownership split:
+  - outputs assigned in at least two child FSMs are the shared-datapath candidates,
+  - outputs assigned in only one child FSM are not shared and remain directly child-owned.
+- Updated [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the same rule is preserved in the continuity notes.
 ### roadmap v2 now includes a concrete shared-datapath composition sub-lane under `R11`
 - Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) so `R11` now includes one concrete bounded future composition lane:
   - multi-FSM top generation from one `.fsm` source or several `.fsm` sources,

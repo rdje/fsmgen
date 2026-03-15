@@ -474,7 +474,8 @@ Deliverables:
 - Define one bounded multi-FSM shared-datapath composition lane for generated tops:
   - one run may compose one top from one `.fsm` source or from several `.fsm` sources,
   - some child outputs remain directly child-owned,
-  - selected targets may be lifted into one shared datapath block with deterministic per-child drive-intent enables and shared aggregate enables,
+  - outputs assigned in at least two child FSMs are the shared-datapath candidates and may be lifted into one shared datapath block with deterministic per-child drive-intent enables and shared aggregate enables,
+  - outputs assigned in only one child FSM are not shared and stay directly child-owned,
   - only lifted registered outputs may loop back into child FSM inputs,
   - and combinational outputs must never become cross-FSM read sources.
 - Harden mixed `?fsmc` / `?rtl` flows before broader composition syntax is considered.
@@ -485,7 +486,7 @@ Done:
 Left:
 - Turn the `.rtlif` follow-up into a deliberate contract-improvement lane.
 - Turn the new shared-datapath extraction direction into a real contract:
-  - direct child-owned outputs vs lifted shared-datapath targets,
+  - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets,
   - per-child drive-intent aggregation,
   - conflict legality/default rejection,
   - registered-output loopback rules,
