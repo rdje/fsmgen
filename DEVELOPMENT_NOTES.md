@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: the broader operator-arity contract is now active
+- The next `R8` slice promotes the previously saved operator-arity agreement into the active parser instead of leaving it as design-only continuity.
+- Implementation:
+  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now supports:
+    - n-ary relational chains such as `(< low mid high)` and `(== a b c d)`,
+    - relational word aliases such as `eq`, `ne`, `lt`, `le`, `gt`, and `ge`,
+    - unary alias `not`,
+    - and explicit malformed-arity rejection against that broader contract.
+  - Chained relational semantics now follow the saved adjacent-pair rule directly in the active parser:
+    - `(< a b c)` => `((a < b) && (b < c))`
+    - `(eq a b c d)` => `((a == b) && (b == c) && (c == d))`
+- The slice also fixed one real end-to-end contract gap exposed by the new operator coverage:
+  - [perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm) now follows the driving AST of parser-created intermediate expression signals during signal-role analysis,
+  - so source inputs referenced only through those intermediate signals stay live in generated module interfaces.
+- Focused regression coverage now exists in:
+  - [t/44-language-contract-relational-operators.t](/Users/richarddje/Documents/github/fsmgen/t/44-language-contract-relational-operators.t),
+  - and [t/40-language-contract-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/40-language-contract-expression-boundary.t), whose malformed comparison-arity case is now `(== a)` instead of pretending chained comparison forms are unsupported.
+- Boundary decision:
+  - the broader operator family is no longer only a design note,
+  - it is now part of the active supported language contract,
+  - while malformed arity outside that contract is rejected explicitly.
 ## 2026-03-15: unsupported top-level bare forms now fail explicitly
 - The next `R8` slice closes one more parser-visible gray zone at the top level of `(?fsm:name ...)`:
   - some malformed bare forms were still being skipped silently instead of being classified clearly as unsupported.

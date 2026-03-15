@@ -102,11 +102,7 @@ sub _analyze_condition_references($self, $condition) {
     return unless $condition;
     
     if ($condition->isa('FSM::CoreAST::SignalRef')) {
-        my $signal_name = $condition->signal->name;
-        my $usage = $self->{signal_manager}->initialize_signal_usage($signal_name);
-        $usage->{referenced_in_conditions}++;
-        push @{$usage->{contexts}}, 'CONDITION';
-        fsm_debug("    SIGNAL REFERENCE: '$signal_name' in context 'CONDITION' (total refs: $usage->{referenced_in_conditions})", 3);
+        $self->_analyze_signal_ref_usage($condition->signal, 'CONDITION');
     } elsif ($condition->isa('FSM::CoreAST::BinaryOp')) {
         $self->_analyze_condition_references($condition->left) if $condition->left;
         $self->_analyze_condition_references($condition->right) if $condition->right;
@@ -153,15 +149,7 @@ sub _analyze_action_element($self, $action) {
 sub _analyze_test_signal_reference($self, $signal, $context = 'TEST_NODE') {
     return unless $signal;
 
-    my $signal_name = $signal->name;
-    my $usage = $self->{signal_manager}->initialize_signal_usage($signal_name);
-    $usage->{referenced_in_conditions}++;
-    push @{$usage->{contexts}}, $context;
-    fsm_debug("    SIGNAL REFERENCE: '$signal_name' in context '$context'", 3);
-
-    if ($signal->can('driving_ast') && $signal->driving_ast) {
-        $self->_analyze_expression_references($signal->driving_ast, "$context.driving_ast");
-    }
+    $self->_analyze_signal_ref_usage($signal, $context);
 }
 
 sub _analyze_expression_references($self, $expr, $context = 'RHS') {
@@ -170,11 +158,7 @@ sub _analyze_expression_references($self, $expr, $context = 'RHS') {
     fsm_debug("    EXPRESSION ANALYSIS: Type = " . ref($expr) . " in context '$context'", 3);
     
     if ($expr->isa('FSM::CoreAST::SignalRef')) {
-        my $signal_name = $expr->signal->name;
-        my $usage = $self->{signal_manager}->initialize_signal_usage($signal_name);
-        $usage->{referenced_in_conditions}++;
-        push @{$usage->{contexts}}, $context;
-        fsm_debug("    SIGNAL REFERENCE: '$signal_name' in context '$context' (total refs: $usage->{referenced_in_conditions})", 3);
+        $self->_analyze_signal_ref_usage($expr->signal, $context);
     } elsif ($expr->isa('FSM::CoreAST::BinaryOp')) {
         $self->_analyze_expression_references($expr->left, "$context.left") if $expr->left;
         $self->_analyze_expression_references($expr->right, "$context.right") if $expr->right;
@@ -190,6 +174,20 @@ sub _analyze_expression_references($self, $expr, $context = 'RHS') {
             push @{$usage->{contexts}}, "$context.indexed";
         }
         $self->_analyze_expression_references($expr->index, "$context.index") if $expr->index;
+    }
+}
+
+sub _analyze_signal_ref_usage($self, $signal, $context) {
+    return unless $signal;
+
+    my $signal_name = $signal->name;
+    my $usage = $self->{signal_manager}->initialize_signal_usage($signal_name);
+    $usage->{referenced_in_conditions}++;
+    push @{$usage->{contexts}}, $context;
+    fsm_debug("    SIGNAL REFERENCE: '$signal_name' in context '$context' (total refs: $usage->{referenced_in_conditions})", 3);
+
+    if ($signal->can('driving_ast') && $signal->driving_ast) {
+        $self->_analyze_expression_references($signal->driving_ast, "$context.driving_ast");
     }
 }
 

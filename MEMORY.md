@@ -20,6 +20,25 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: n-ary relational operator contract is now executable
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now supports n-ary relational chains such as `(< low mid high)` and `(== a b c d)`, relational aliases such as `eq`, `ne`, `lt`, `le`, `gt`, and `ge`, and unary alias `not`,
+  - [perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm) now walks the driving AST of parser-created intermediate expression signals during signal-role analysis, so underlying source inputs stay live in generated module interfaces,
+  - [t/44-language-contract-relational-operators.t](/Users/richarddje/Documents/github/fsmgen/t/44-language-contract-relational-operators.t) now locks the new relational/operator contract slice end to end,
+  - [t/40-language-contract-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/40-language-contract-expression-boundary.t) now keeps malformed-arity rejection aligned with the broader operator contract by rejecting `(== a)`,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the broader operator family truthfully.
+- Scope of the landed contract slice:
+  - explicit support now includes chained adjacent-pair relational lowering for `==`, `!=`, `<`, `<=`, `>`, and `>=`,
+  - explicit support now includes word aliases `not`, `eq`, `ne`, `lt`, `le`, `gt`, `ge`, `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, and `xor`,
+  - explicit rejection now covers malformed supported-operator arity against that broader contract instead of pretending chained comparisons are unsupported.
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more adopted operator family as regression-backed and normatively documented.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser/runtime-visible language edges,
+  - and either promote them with focused regressions or reject them explicitly.
 ## 2026-03-15: unsupported top-level bare forms now fail explicitly
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects unsupported top-level bare forms inside `(?fsm:name ...)` instead of skipping them silently,

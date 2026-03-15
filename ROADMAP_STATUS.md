@@ -290,8 +290,13 @@ Done:
 - [t/40-language-contract-expression-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/40-language-contract-expression-boundary.t) now locks explicit rejection of unsupported expression forms so the active operator family has a crisp parser boundary:
   - supported inline scalar comparison tokens such as `cnt[2:1]!=2'2`,
   - unsupported RHS operators such as `(bogus B C)`,
-  - malformed active-operator arity such as `(== B C D)`,
+  - malformed active-operator arity such as `(== B)`,
   - and guard-only tokens such as `<start` when used in ordinary expression position.
+- [t/44-language-contract-relational-operators.t](/Users/richarddje/Documents/github/fsmgen/t/44-language-contract-relational-operators.t) now locks the broader operator-arity contract beyond arithmetic/logical folds:
+  - n-ary relational chains such as `(< low mid high)` and `(== a b c d)`,
+  - relational word aliases such as `(eq a b c d)` and `(ge high mid low)`,
+  - the unary word alias `(not flag)`,
+  - and generated HDL that keeps the source inputs from parser-created relational intermediates live in the module interface.
 - [t/41-language-contract-top-level-source-kind-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/41-language-contract-top-level-source-kind-boundary.t) now locks explicit rejection of unsupported tagged top-level source kinds such as `?define:legacy_template`, so legacy wrapper/template roots no longer drift through the nested-`?fsm` fallback path.
 - [t/42-language-contract-test-selector-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/42-language-contract-test-selector-boundary.t) now locks the explicit-selector boundary for test-node branches:
   - operator-prefixed selectors such as `=0`, `=OTHER`, and `!=8'0` remain supported,

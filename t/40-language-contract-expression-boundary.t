@@ -77,13 +77,13 @@ subtest 'malformed active RHS operator arity is rejected explicitly' => sub {
     (D 8)
   )
   (-dt
-    (A = (== B C D))
+    (A = (== B))
   )
 )
 FSM
 
     my $error = parse_error_for($fsm_path);
-    like($error, qr/Malformed expression operator '==' with 3 operand\(s\)/, 'bad RHS equality arity gets a targeted diagnostic');
+    like($error, qr/Malformed expression operator '==' with 1 operand\(s\)/, 'bad RHS equality arity gets a targeted diagnostic');
 };
 
 subtest 'invalid RHS scalar tokens are rejected explicitly' => sub {

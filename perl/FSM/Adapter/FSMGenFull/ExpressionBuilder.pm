@@ -123,13 +123,82 @@ sub parse_legacy_condition_spec($self, $condition_spec, %options) {
 }
 
 sub is_recursive_expression($self, $expr) {
-    # Check if this is a recursive operator expression like ['&', 'a', 'b', ['|', 'c', 'd']]
-    if (ref($expr) eq 'ARRAY' && @$expr >= 1 && !ref($expr->[0])) {
-        my $op = $expr->[0];
-        my %valid_ops = map { $_ => 1 } qw(& | ^ + - * / % and or xor add sub mul div mod);
-        return 1 if $valid_ops{$op};
+    return 0 unless ref($expr) eq 'ARRAY' && @$expr >= 1 && !ref($expr->[0]);
+
+    my ($normalized_op) = $self->normalize_expression_operator($expr->[0]);
+    return defined($normalized_op) ? 1 : 0;
+}
+
+sub normalize_expression_operator($self, $operator) {
+    return undef unless defined $operator;
+
+    my %operator_aliases = (
+        and => '&',
+        or  => '|',
+        xor => '^',
+        add => '+',
+        sub => '-',
+        mul => '*',
+        div => '/',
+        mod => '%',
+        eq  => '==',
+        ne  => '!=',
+        lt  => '<',
+        le  => '<=',
+        gt  => '>',
+        ge  => '>=',
+        not => '!',
+    );
+
+    my $normalized = $operator_aliases{$operator} // $operator;
+    my %supported = map { $_ => 1 } qw(! == != < <= > >= & | ^ + - * / %);
+    return $supported{$normalized} ? $normalized : undef;
+}
+
+sub operator_family_for($self, $normalized_operator) {
+    return 'unary' if defined $normalized_operator && $normalized_operator eq '!';
+    return 'comparison'
+        if defined $normalized_operator && $normalized_operator =~ /^(?:==|!=|<|<=|>|>=)$/;
+    return 'nary'
+        if defined $normalized_operator && $normalized_operator =~ /^(?:&|\||\^|\+|-|\*|\/|%)$/;
+    return undef;
+}
+
+sub finalize_nary_expression($self, $operator, $parsed_operands) {
+    my %logical_ops = map { $_ => 1 } qw(& | ^);
+    my $ast_tree = $self->create_binary_operator_tree($operator, $parsed_operands);
+
+    if (@$parsed_operands > 1 && $logical_ops{$operator}) {
+        fsm_debug("          FACTORIZATION: Extracting complex $operator expression to intermediate signal", 3);
+
+        my $intermediate_name = $self->generate_intermediate_signal($operator, $parsed_operands);
+        my $signal = $self->{signal_manager}->register_signal(
+            $intermediate_name,
+            type => 'wire',
+            is_intermediate => 1
+        );
+
+        $signal->set_driving_ast($ast_tree);
+        fsm_debug("            Attached driving AST to intermediate signal $intermediate_name", 3);
+
+        return FSM::CoreAST::SignalRef->new($signal);
     }
-    return 0;
+
+    return $ast_tree;
+}
+
+sub build_chained_relational_expression($self, $operator, $parsed_operands) {
+    my @comparisons;
+    for my $i (0 .. ($#$parsed_operands - 1)) {
+        push @comparisons, FSM::CoreAST::BinaryOp->new(
+            $operator,
+            $parsed_operands->[$i],
+            $parsed_operands->[$i + 1],
+        );
+    }
+
+    return $comparisons[0] if @comparisons == 1;
+    return $self->finalize_nary_expression('&', \@comparisons);
 }
 
 sub parse_recursive_expression($self, $expr) {
@@ -142,45 +211,46 @@ sub parse_recursive_expression($self, $expr) {
         @operands = @{$operands[0]};
     }
     
+    my $normalized_operator = $self->normalize_expression_operator($operator);
+    my $operator_family = $self->operator_family_for($normalized_operator);
+
+    Carp::confess
+        "Unsupported expression operator '$operator'. ".
+        "Active expression operators currently include '!', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '&', '|', '^' and their documented aliases. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless $operator_family;
+
     fsm_debug("          Recursive expr: $operator with " . scalar(@operands) . " operands", 3);
-    
+
     my @parsed_operands;
     for my $operand (@operands) {
         my $parsed = $self->parse_expression($operand);
         push @parsed_operands, $parsed if $parsed;
     }
-    
-    # Special handling for boolean/logical operators to factor out intermediate terms
-    # This prevents deeply nested expressions in generated code
-    my %logical_ops = ('&' => 1, '|' => 1, '^' => 1, 'and' => 1, 'or' => 1, 'xor' => 1);
-    
-    # Create the AST tree
-    my $ast_tree = $self->create_binary_operator_tree($operator, \@parsed_operands);
-    
-    if (scalar(@parsed_operands) > 1 && $logical_ops{$operator}) {
-        # We need to factor this complex calculation into an intermediate wire
-        fsm_debug("          FACTORIZATION: Extracting complex $operator expression to intermediate signal", 3);
-        
-        # 1. Create a semantic name for the intermediate
-        my $intermediate_name = $self->generate_intermediate_signal($operator, \@parsed_operands);
-        
-        # 2. Register the intermediate signal to force it to be declared
-        my $signal = $self->{signal_manager}->register_signal($intermediate_name, 
-            type => 'wire',
-            is_intermediate => 1
+
+    if ($operator_family eq 'unary') {
+        Carp::confess
+            "Malformed expression operator '$operator' with " . scalar(@parsed_operands) . " operand(s). ".
+            "This active form requires exactly 1 operand. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless @parsed_operands == 1;
+
+        return FSM::CoreAST::UnaryOp->new(
+            operator => $normalized_operator,
+            operand  => $parsed_operands[0],
         );
-        
-        # 3. Important step: store the AST that drives this new signal
-        # This will be used by the HDL generator to create 'assign intermediate_name = ...'
-        $signal->set_driving_ast($ast_tree);
-        fsm_debug("            Attached driving AST to intermediate signal $intermediate_name", 3);
-        
-        # 4. Return a reference to the intermediate signal instead of the complex tree
-        return FSM::CoreAST::SignalRef->new($signal);
     }
-    
-    # For arithmetic operators or single operands, just return the AST tree
-    return $ast_tree;
+
+    Carp::confess
+        "Malformed expression operator '$operator' with " . scalar(@parsed_operands) . " operand(s). ".
+        "This active form requires at least 2 operands. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless @parsed_operands >= 2;
+
+    return $self->build_chained_relational_expression($normalized_operator, \@parsed_operands)
+        if $operator_family eq 'comparison';
+
+    return $self->finalize_nary_expression($normalized_operator, \@parsed_operands);
 }
 
 sub generate_intermediate_signal($self, $operator, $operands) {
@@ -362,38 +432,10 @@ sub parse_sexpr_expression($self, $sexpr) {
 
     fsm_debug("          S-expression: $operator with " . scalar(@operands) . " operands", 3);
     
-    if ($operator eq '+' && @operands == 2) {
-        return FSM::CoreAST::BinaryOp->new('+', $self->parse_expression($operands[0]), $self->parse_expression($operands[1]));
-    } elsif ($operator eq '-' && @operands == 2) {
-        return FSM::CoreAST::BinaryOp->new('-', $self->parse_expression($operands[0]), $self->parse_expression($operands[1]));
-    } elsif ($operator eq '&' && @operands == 2) {
-        return FSM::CoreAST::BinaryOp->new('&', $self->parse_expression($operands[0]), $self->parse_expression($operands[1]));
-    } elsif ($operator eq '|' && @operands == 2) {
-        return FSM::CoreAST::BinaryOp->new('|', $self->parse_expression($operands[0]), $self->parse_expression($operands[1]));
-    } elsif ($operator eq '==' && @operands == 2) {
-        return FSM::CoreAST::BinaryOp->new('==', $self->parse_expression($operands[0]), $self->parse_expression($operands[1]));
-    } elsif ($operator eq '!' && @operands == 1) {
-        return FSM::CoreAST::UnaryOp->new(operator => '!', operand => $self->parse_expression($operands[0]));
-    } else {
-        if ($operator =~ /^(?:\+|-|&|\||==)$/ && @operands != 2) {
-            Carp::confess
-                "Malformed expression operator '$operator' with " . scalar(@operands) . " operand(s). ".
-                "This active form requires exactly 2 operands. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n";
-        }
-
-        if ($operator eq '!' && @operands != 1) {
-            Carp::confess
-                "Malformed expression operator '!' with " . scalar(@operands) . " operand(s). ".
-                "This active form requires exactly 1 operand. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n";
-        }
-
-        Carp::confess
-            "Unsupported expression operator '$operator'. ".
-            "Active expression operators currently include '!', '==', '+', '-', '*', '/', '%', '&', '|', '^' and their documented aliases. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
-    }
+    Carp::confess
+        "Unsupported expression operator '$operator'. ".
+        "Active expression operators currently include '!', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '&', '|', '^' and their documented aliases. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 
 sub parse_signal_reference($self, $signal_spec) {

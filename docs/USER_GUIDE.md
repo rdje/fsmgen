@@ -113,9 +113,9 @@ Standalone DT note:
 - Inline compound modifiers on assignments, for example `(A <- B (+= 2))` and `(C = D (-= 1))`
 - RHS operator expressions for the currently regression-backed active families:
   - unary `!`
-  - binary comparison `==`, `!=`, `<`, `<=`, `>`, `>=`
+  - n-ary comparison `==`, `!=`, `<`, `<=`, `>`, `>=`
   - n-ary `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`
-  - word aliases `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
+  - word aliases `not`, `eq`, `ne`, `lt`, `le`, `gt`, `ge`, `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
 - Enforced diagnostics for illegal combinational self-dependency with `=`
 - Enforced diagnostics for mixing `=` with sequential operators on the same LHS
 - Enforced diagnostics for mixing pulse-delayed and non-pulse sequential operators on the same LHS
@@ -171,7 +171,7 @@ Standalone DT note:
   - `(?MODE (0 ...))`
 - Unsupported or malformed expression forms outside the current active operator family, for example:
   - `(A = (bogus B C))`
-  - `(A = (== B C D))`
+  - `(A = (== B))`
   - `(A = <start)`
 - Legacy composition forms such as `?&...`, nested `?top`, `?ports` mapping directives, nested `?toplink`, and multi-source `?fsmc`
 - Legacy generic/template expansion forms, including:
@@ -223,26 +223,33 @@ Operator expressions:
 - The assignment operator decides timing/storage semantics; the RHS decides only the expression tree.
 - Current regression-backed operator surface:
   - unary: `!`
-  - binary comparison: `==`, `!=`, `<`, `<=`, `>`, `>=`
+  - n-ary comparison: `==`, `!=`, `<`, `<=`, `>`, `>=`
   - n-ary arithmetic/logic: `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`
-  - aliases: `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
+  - aliases: `not`, `eq`, `ne`, `lt`, `le`, `gt`, `ge`, `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
 - Current lowering model:
   - `+`, `*`, `&`, `|`, `^` are treated as n-ary expression families
   - `-`, `/`, `%` are treated as left-associative n-ary expression families
+  - `==`, `!=`, `<`, `<=`, `>`, `>=` are treated as chained adjacent-pair comparison families
+    - `(< a b c)` means `((a < b) && (b < c))`
+    - `(eq a b c d)` means `((a == b) && (b == c) && (c == d))`
 - Examples:
   - `(match = cnt[2:1]!=2'2)`
   - `(sum = (+ a b c d))`
   - `(diff = (- a b c d))`
   - `(prod = (* a b c d))`
   - `(quo = (/ a b c d))`
+  - `(between = (< low value high))`
+  - `(equal_chain = (eq a b c d))`
   - `(mask = (^ x y z))`
   - `(alias_sum = (add a b c d))`
   - `(alias_xor = (xor x y z))`
+  - `(inv = (not ready))`
 
 Boundary note:
 - The active contract now includes the systematic shorthand guard family for simple truthiness and inline comparisons.
 - Broader future language ideas may still refine the canonical spelling later, but the shorthand forms above are now real supported syntax in the active tool.
 - Inline scalar comparison tokens such as `cnt[2:1]!=2'2` are part of the active expression surface.
+- Parser-generated intermediate expression signals now keep the source signals from their driving AST live in the generated interface instead of hiding those dependencies behind the intermediate name alone.
 - Unsupported expression operators, malformed operator arity, and guard-only tokens in ordinary RHS expression position are now rejected explicitly instead of drifting through parser fallthrough.
 
 Test nodes:
