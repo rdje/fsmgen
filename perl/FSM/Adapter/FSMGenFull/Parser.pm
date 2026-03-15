@@ -1040,9 +1040,26 @@ sub parse_test_node_new_format($self, $action) {
     
     my $signal;
     if ($test_signal eq '?') {
+        Carp::confess
+            "Malformed computed test selector '?'. ".
+            "Computed test nodes must use '?(expr)' with a valid selector expression followed by at least one selector branch such as '(?(| A B) (=0 ...) (=1 ...))'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless ref($branches) eq 'ARRAY' && @$branches >= 2;
+
         # Format: (?(| a b) (=0 x))
         # The condition expression is the first element of branches
         my $cond_ast = shift @$branches;
+
+        if (ref($cond_ast) eq 'ARRAY' && @$cond_ast) {
+            my $selector_head = $cond_ast->[0];
+            if (defined($selector_head) && !ref($selector_head) && $selector_head =~ /^(?:==|!=|<=|>=|=|<|>).+/) {
+                Carp::confess
+                    "Malformed computed test selector '?'. ".
+                    "Computed test nodes must start with a real selector expression before the branch list, for example '(?(| A B) (=0 ...) (=1 ...))'. ".
+                    "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            }
+        }
+
         my $condition_expr = $self->{expression_builder}->parse_condition($cond_ast);
         
         if ($condition_expr && $condition_expr->isa('FSM::CoreAST::SignalRef')) {

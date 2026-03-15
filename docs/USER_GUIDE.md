@@ -118,6 +118,7 @@ Combinational DT note:
   - `(?(| A B) (=0 ...) (=1 ...))`
   - plain `?SIG` test nodes require an HDL-identifier-compatible signal name
   - malformed plain test-node signal names such as `?bad-name` or `?0` are rejected explicitly
+  - computed selectors `?(expr)` must start with a real selector expression and include at least one branch
 - Register assignment `(A <- B)`
 - D-input style sequential assignment `(A <= B)`
 - Combinational assignment `(A = B)`
@@ -194,6 +195,9 @@ Combinational DT note:
 - Malformed test-node selectors that omit the explicit selector operator, for example:
   - `(?MODE (BUSY ...))`
   - `(?MODE (0 ...))`
+- Malformed computed test selectors that omit the selector expression or all branches, for example:
+  - `(? (=0 ...))`
+  - `(?(| A B))`
 - Unsupported or malformed expression forms outside the current active operator family, for example:
   - `(A = (bogus B C))`
   - `(A = (== B))`
@@ -282,12 +286,14 @@ Test nodes:
 - Plain `?SIG` test nodes require `SIG` to be HDL-identifier-compatible.
 - `?(expr ...)` is the active computed-selector form when the selector itself is a condition expression, for example:
   - `(?(| A B) (=0 ...actions...) (=1 ...actions...))`
+- Computed selectors must start with a real selector expression and include at least one selector branch.
 - Malformed plain test-node signal names such as `?bad-name` or `?0` are rejected explicitly.
 - Each test branch must include:
   - an explicit operator-prefixed selector token like `=0`, `=1`, `=OTHER`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, or `>=8'1`
   - and at least one nested action
 - Bare selectors like `BUSY` or `0` are not part of the active contract.
 - Malformed empty branches such as `(?MODE (=0))` are rejected explicitly.
+- Malformed computed selectors such as `(? (=0 ...))` or `(?(| A B))` are rejected explicitly.
 - Selector meaning:
   - `=value` means equality
   - `!=value` means inequality

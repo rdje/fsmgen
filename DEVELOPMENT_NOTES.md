@@ -3971,3 +3971,11 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this is preferable to reviving another string-expression helper because the fallback still resolves dependencies through AST construction and AST traversal once a systematic legacy name is recognized,
   - the remaining regex scan is now narrowed further to genuinely opaque legacy names rather than all `legacy_string_registry` entries.
+## 2026-03-15: computed test selectors now have an explicit malformed boundary
+- The active `?(expr)` success path was already supported and regression-backed, but malformed computed selectors still relied too much on incidental expression/parser fallout.
+- The contract is now explicit:
+  - `?(expr)` must start with a real selector expression,
+  - and it must include at least one branch after that selector expression.
+- Examples that are now rejected explicitly:
+  - `(? (=0 ...))`
+  - `(?(| A B))`

@@ -366,6 +366,10 @@ Done:
   - plain test nodes must use an HDL-identifier-compatible signal name after `?`,
   - computed selectors `?(expr)` remain supported separately,
   - and malformed plain test-node signals such as `?bad-name` or `?0` now fail clearly through parser, pipeline, and CLI entry points.
+- [t/55-language-contract-computed-test-selector-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/55-language-contract-computed-test-selector-boundary.t) now locks the malformed-boundary side of the active `?(expr)` form explicitly:
+  - computed test selectors must start with a real selector expression,
+  - computed test selectors must include at least one selector branch,
+  - and malformed forms such as `(? (=0 ...))` or `(?(| A B))` now fail clearly through parser, pipeline, and CLI entry points.
 - [t/45-language-contract-reset-state-spellings.t](/Users/richarddje/Documents/github/fsmgen/t/45-language-contract-reset-state-spellings.t) now locks the active reset-state spelling and classification contract:
   - `-syncrst` and `-syncreset` normalize to the same `syncreset` reset-state identity,
   - `-asyncrst` and `-asyncreset` normalize to the same `asyncreset` reset-state identity,

@@ -3024,3 +3024,10 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Highest-value next seam after this slice:
   - reduce or replace the remaining identifier-scan fallback itself inside `extract_intermediate_signals_from_runtime_ast_miss(...)`,
   - keep ignoring dormant standalone declaration helpers unless they become live or can be retired outright.
+## 2026-03-15: computed test-selector malformed forms now fail early
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects malformed `?(expr)` forms explicitly instead of letting them fall into incidental expression/parser errors.
+- [t/55-language-contract-computed-test-selector-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/55-language-contract-computed-test-selector-boundary.t) now locks:
+  - missing-expression computed selectors like `(? (=0 ...))`,
+  - branchless computed selectors like `(?(| A B))`,
+  - and pipeline/CLI no-output behavior for those malformed forms.
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now states the malformed boundary explicitly next to the supported `?(expr)` form.

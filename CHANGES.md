@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### computed test selectors now have an explicit malformed-boundary contract
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so computed test selectors must start with a real selector expression and include at least one branch instead of falling through to incidental parser/expression failures.
+- Added [t/55-language-contract-computed-test-selector-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/55-language-contract-computed-test-selector-boundary.t) to lock:
+  - rejection of missing-expression computed selectors such as `(? (=0 ...))`,
+  - rejection of branchless computed selectors such as `(?(| A B))`,
+  - and pipeline/CLI no-output behavior for those malformed forms.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the active `?(expr)` boundary is documented explicitly on both the success and malformed sides.
 ### plain `?SIG` test-node signal names now have an explicit boundary
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so plain test nodes now require `?signal_name` with an HDL-identifier-compatible signal name, while keeping computed selectors `?(expr)` on their existing supported path.
 - Added focused regression coverage in [t/54-language-contract-test-signal-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/54-language-contract-test-signal-name-boundary.t) for:
