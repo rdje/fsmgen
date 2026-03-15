@@ -471,15 +471,29 @@ Description:
 Deliverables:
 - Formalize the `.rtlif` contract clearly.
 - Decide whether later work should keep `.rtlif` as-is or place a stronger interface-source contract above it.
+- Define one bounded multi-FSM shared-datapath composition lane for generated tops:
+  - one run may compose one top from one `.fsm` source or from several `.fsm` sources,
+  - some child outputs remain directly child-owned,
+  - selected targets may be lifted into one shared datapath block with deterministic per-child drive-intent enables and shared aggregate enables,
+  - only lifted registered outputs may loop back into child FSM inputs,
+  - and combinational outputs must never become cross-FSM read sources.
 - Harden mixed `?fsmc` / `?rtl` flows before broader composition syntax is considered.
 Status: `not started`
 Done:
-- The scoped `R6` composition lane is complete and the `.rtlif` follow-up is already recorded as a future refinement note.
+- The scoped `R6` composition lane is complete.
+- The `.rtlif` follow-up and the bounded shared-datapath extraction direction are now both recorded as future `R11` contract work instead of loose brainstorming only.
 Left:
 - Turn the `.rtlif` follow-up into a deliberate contract-improvement lane.
+- Turn the new shared-datapath extraction direction into a real contract:
+  - direct child-owned outputs vs lifted shared-datapath targets,
+  - per-child drive-intent aggregation,
+  - conflict legality/default rejection,
+  - registered-output loopback rules,
+  - and the rule that combinational outputs may be top-level outputs but not peer-FSM inputs.
 - Add any needed diagnostics/tests before considering broader composition growth.
 Exit criteria:
 - External-RTL composition uses a clearly specified interface contract that is stronger and easier to reason about than the current “implemented convention” state.
+- The first multi-FSM shared-datapath composition lane is also bounded by an explicit ownership/readback contract instead of informal architecture notes.
 
 ### R12. Regression corpus and support accounting
 Description:

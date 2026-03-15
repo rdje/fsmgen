@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: future `R11` now includes a concrete shared-datapath composition lane
+- [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) now treats the previously discussed multi-FSM shared-datapath idea as a concrete future `R11` sub-lane instead of an informal architecture note.
+- The saved direction is:
+  - one generated top may be built from one `.fsm` source or several `.fsm` sources,
+  - some child outputs remain directly child-owned,
+  - selected targets may instead be lifted into one shared datapath block instantiated by the generated top,
+  - per-child drive-intent enables should be surfaced deterministically (for example `A_P_Q_en`) and aggregated in the shared block/top,
+  - lifted registered outputs may loop back into child FSM inputs,
+  - and combinational outputs must not become peer-FSM read sources.
+- [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) now reflects that `R11` deliverable/left/exit shape explicitly, and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) now records the same design rules in narrative form.
 ## 2026-03-15: malformed `+system` boundaries are now locked across entry points
 - [t/72-language-contract-system-section-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/72-language-contract-system-section-entrypoints.t) now locks pipeline and CLI no-output behavior for:
   - non-conventional `+system` clock names like `(clock core_clk)`,

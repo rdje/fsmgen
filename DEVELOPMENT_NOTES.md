@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: future `R11` shared-datapath composition sub-lane
+- Captured a concrete future `R11` composition direction instead of leaving it as informal brainstorming only.
+- Intended scope:
+  - one generated top may instantiate several FSM children from one `.fsm` source or from several `.fsm` sources,
+  - some outputs stay directly owned by FSM A / B / C and may become top-level outputs normally,
+  - selected targets may instead be lifted out of the child FSMs and moved into one shared datapath block instantiated by the generated top.
+- Shared-datapath direction:
+  - the shared datapath block should own the mux/register logic for lifted targets,
+  - child FSMs should emit deterministic per-source drive-intent enables such as `A_P_Q_en`, `B_P_Q_en`, and `C_P_Q_en`,
+  - and the top/shared block should aggregate them through shared enables such as `P_Q_en`.
+- Ownership/readback rules saved for later contract work:
+  - some child-emitted signals may stay top-local instead of becoming top-level outputs,
+  - lifted registered/shared outputs may loop back into FSM inputs,
+  - but combinational outputs, whether shared or not, must not be read by peer FSMs instantiated in the same generated top,
+  - so combinational outputs should remain top-level outputs only.
+- Future conflict rule:
+  - simultaneous drives to the same lifted target from different FSM children should default to illegal unless a later explicit priority contract is added.
 ## 2026-03-15: malformed `+system` boundaries are now locked through pipeline and CLI too
 - The conventional `+system` family already had parser-level coverage in the active contract for its malformed side:
   - non-conventional clock names like `core_clk`,
