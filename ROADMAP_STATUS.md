@@ -314,6 +314,10 @@ Done:
   - empty FSM-state DT blocks like `(idle)` are rejected,
   - empty general DT blocks like `(-misc)` are rejected,
   - and malformed empty pseudo-states no longer drift through to later runtime stages.
+- [t/50-language-contract-size-section-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/50-language-contract-size-section-boundary.t) now locks the active `+size` boundary explicitly:
+  - the legacy empty form `(+size)` is accepted as a no-op because it exists in the shipped corpus,
+  - malformed `+size` payloads like `(+size BROKEN)` are rejected,
+  - and malformed entries like `(A)` or non-positive widths are rejected with targeted diagnostics.
 - [t/42-language-contract-test-selector-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/42-language-contract-test-selector-boundary.t) now locks the explicit-selector boundary for test-node branches:
   - operator-prefixed selectors such as `=0`, `=OTHER`, and `!=8'0` remain supported,
   - while malformed bare selectors such as `BUSY` or `0` are now rejected explicitly.

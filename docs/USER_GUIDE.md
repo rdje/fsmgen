@@ -105,6 +105,7 @@ Combinational DT note:
 - FSM-state DTs additionally participate in state encoding and transition planning.
 
 - `(+size ...)` signal-width declarations
+  - including the legacy empty no-op form `(+size)`
 - Unconditional state transitions `(-> next_state)`
 - Test-node branching on a signal or computed selector, for example:
   - `(?SIG (=0 ...) (!=8'0 ...) (>8'3 ...) (<=8'3 ...))`
@@ -285,6 +286,14 @@ Test nodes:
 
 ### Draft normative contract for symbol-definition sections
 This is the current `R8` draft normative contract for the symbol-definition families that are now regression-backed explicitly.
+
+`(+size ...)`:
+- Declares signal widths through `(signal positive_integer_width)` entries.
+- The legacy empty form `(+size)` remains supported as a no-op because it still exists in the shipped corpus.
+- Current active use:
+  - `(+size (A 8) (B 8))`
+  - `(+size)`
+- Malformed payloads like `(+size BROKEN)`, malformed entries like `(+size (A))`, and non-positive widths like `(+size (A 0))` are rejected explicitly.
 
 `(+constants ...)`:
 - Defines named literal constants.

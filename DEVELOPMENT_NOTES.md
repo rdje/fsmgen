@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: `+size` is now explicit instead of partially silent
+- The next `R8` slice closes a small but real directive-boundary gap:
+  - the shipped corpus still contains a legacy empty `(+size)` block,
+  - and the parser was treating that as a silent no-op while also silently ignoring malformed non-list payloads.
+- Implementation:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now parses `+size` through an explicit contract helper.
+  - The helper keeps legacy empty `(+size)` supported as a no-op, but requires non-empty forms to be a list of `(signal positive_integer_width)` entries.
+- Focused regression coverage now exists in [t/50-language-contract-size-section-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/50-language-contract-size-section-boundary.t) for:
+  - successful parsing/generation with empty `(+size)`,
+  - targeted rejection of malformed payloads like `(+size BROKEN)`,
+  - targeted rejection of malformed entries like `(A)`,
+  - and targeted rejection of non-positive widths like `(A 0)`.
+- Boundary decision:
+  - legacy empty `(+size)` remains part of active support as a no-op,
+  - but malformed `+size` payloads are no longer silently tolerated.
 ## 2026-03-15: state/DT blocks now need a real body
 - The next `R8` slice closes a small but real parser-visible gray zone:
   - empty blocks like `(idle)` or `(-misc)` were not part of the intended language,

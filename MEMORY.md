@@ -20,6 +20,24 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: `+size` now has an explicit contract
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now parses `+size` through an explicit helper,
+  - the legacy empty form `(+size)` remains supported as a no-op,
+  - [t/50-language-contract-size-section-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/50-language-contract-size-section-boundary.t) now locks explicit rejection of malformed payloads, malformed entries, and non-positive widths,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the `+size` boundary explicitly.
+- Scope of the landed contract slice:
+  - explicit support now includes the legacy empty `(+size)` no-op because it exists in the shipped corpus,
+  - explicit support still includes regular `(signal width)` declarations,
+  - explicit rejection now covers malformed `+size` payloads and malformed/non-positive entries.
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more directive-family boundary as explicitly documented and regression-backed.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser/runtime-visible language edges,
+  - and keep turning silent tolerated legacy no-ops into explicit support or explicit rejection.
 ## 2026-03-15: state/DT blocks now need a real body
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects empty state/DT blocks instead of building empty pseudo-states,

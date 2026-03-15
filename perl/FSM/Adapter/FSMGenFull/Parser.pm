@@ -113,34 +113,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
             $self->parse_system_section($element);
         } elsif ($element_name eq '+size') {
             fsm_debug("Parsing +size block", 3);
-            if (ref($element->[1]) eq 'ARRAY') {
-                for my $size_def (@{$element->[1]}) {
-                    my ($sig, $width) = @$size_def;
-                    my $resolved_width = (ref($width) eq 'ARRAY') ? $width->[0] : $width;
-                    $self->{signal_manager}->register_signal($sig, width => $resolved_width);
-                    
-                    # Keep rm/mr auxiliary outputs width-aligned with their parent signal
-                    # even when +size appears after assignment actions.
-                    my $next_aux = "next_$sig";
-                    if ($self->{signal_manager}->get_signal($next_aux)) {
-                        $self->{signal_manager}->register_signal(
-                            $next_aux,
-                            width => $resolved_width,
-                            is_output => 1,
-                            is_aux_output => 1,
-                        );
-                    }
-                    my $q_aux = "${sig}_r";
-                    if ($self->{signal_manager}->get_signal($q_aux)) {
-                        $self->{signal_manager}->register_signal(
-                            $q_aux,
-                            width => $resolved_width,
-                            is_output => 1,
-                            is_aux_output => 1,
-                        );
-                    }
-                }
-            }
+            $self->parse_size_section($element);
         } elsif ($element_name eq '+constants') {
             fsm_debug("Parsing constants section", 3);
             $self->parse_constants_section($element);
@@ -257,6 +230,67 @@ sub parse_constants_section($self, $constants_ast) {
             $self->unwrap_scalar_token($value)
         );
         $self->{signal_manager}->store_constant($name, $literal_expr);
+    }
+}
+
+sub parse_size_section($self, $size_ast) {
+    my (undef, $size_entries) = @$size_ast;
+
+    # Legacy no-op form still exists in the shipped corpus.
+    return unless defined $size_entries;
+
+    Carp::confess
+        "Malformed '+size' section. ".
+        "The active contract supports '+size' only as a list of '(signal width)' entries, ".
+        "or the legacy empty no-op form '(+size)'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless ref($size_entries) eq 'ARRAY';
+
+    for my $size_def (@$size_entries) {
+        Carp::confess
+            "Malformed '+size' entry. ".
+            "Each '+size' entry must be a pair '(signal positive_integer_width)'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless ref($size_def) eq 'ARRAY' && @$size_def == 2;
+
+        my ($sig, $width) = @$size_def;
+        my $resolved_sig = $self->unwrap_scalar_token($sig);
+        my $resolved_width = $self->unwrap_scalar_token($width);
+
+        Carp::confess
+            "Malformed '+size' entry for signal '$resolved_sig'. ".
+            "Each '+size' entry must use an HDL-identifier-compatible signal name and a positive integer width. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless defined($resolved_sig)
+                && !ref($resolved_sig)
+                && $resolved_sig =~ /\A[A-Za-z_]\w*\z/
+                && defined($resolved_width)
+                && !ref($resolved_width)
+                && $resolved_width =~ /\A\d+\z/
+                && $resolved_width > 0;
+
+        $self->{signal_manager}->register_signal($resolved_sig, width => $resolved_width);
+
+        # Keep rm/mr auxiliary outputs width-aligned with their parent signal
+        # even when +size appears after assignment actions.
+        my $next_aux = "next_$resolved_sig";
+        if ($self->{signal_manager}->get_signal($next_aux)) {
+            $self->{signal_manager}->register_signal(
+                $next_aux,
+                width => $resolved_width,
+                is_output => 1,
+                is_aux_output => 1,
+            );
+        }
+        my $q_aux = "${resolved_sig}_r";
+        if ($self->{signal_manager}->get_signal($q_aux)) {
+            $self->{signal_manager}->register_signal(
+                $q_aux,
+                width => $resolved_width,
+                is_output => 1,
+                is_aux_output => 1,
+            );
+        }
     }
 }
 
