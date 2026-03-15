@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### unsupported top-level `+...` directive boundaries now have pipeline and CLI coverage too
+- Added [t/70-language-contract-top-level-directive-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/70-language-contract-top-level-directive-entrypoints.t) to lock pipeline and CLI no-output behavior for:
+  - unknown top-level `+` directives like `(+bogus ...)`,
+  - and unsupported future-style top-level directives like `(+clock clk)`.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the unsupported top-level `+...` directive family is now tracked as an end-to-end entrypoint boundary instead of parser-only coverage.
 ### malformed test-selector boundaries now have pipeline and CLI coverage too
 - Added [t/69-language-contract-test-selector-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/69-language-contract-test-selector-entrypoints.t) to lock pipeline and CLI no-output behavior for:
   - bare symbolic test selectors like `(BUSY ...)`,

@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: unsupported top-level `+...` directive boundaries are now locked through pipeline and CLI too
+- The unsupported top-level `+...` directive family already had parser-level coverage in the active contract:
+  - unknown `+` directives like `+bogus`,
+  - and future-style alternatives like `+clock` that are intentionally not active yet.
+- This slice does not change parser behavior. It makes the contract more honest across entry points:
+  - those malformed forms are now locked through pipeline and CLI no-output behavior too,
+  - so the unsupported top-level `+...` directive family is no longer parser-only in the regression set.
 ## 2026-03-15: malformed test-selector boundaries are now locked through pipeline and CLI too
 - The malformed test-selector family already had parser-level coverage in the active contract:
   - bare symbolic selectors like `BUSY`,
