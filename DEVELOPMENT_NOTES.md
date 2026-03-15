@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: malformed update-shorthand targets now fail through an explicit boundary
+- After promoting the alternate update-shorthand spellings, one remaining parser gap became obvious:
+  - recognized update-shorthand forms with malformed non-scalar targets were returning `undef`,
+  - which meant those malformed actions could disappear silently from a DT body instead of failing clearly.
+- The active contract is now explicit on that malformed side too:
+  - update shorthand must target a scalar signal name,
+  - malformed forms such as `(++ (counter))` and `(+= (byte_count) 4)` now fail through a dedicated update-shorthand boundary,
+  - and the same boundary is locked through parser, pipeline, and CLI entry points.
 ## 2026-03-15: alternate update-shorthand spellings are now part of the active contract
 - The parser already supported more update-shorthand surface than the user guide claimed:
   - `(+= sig)` / `(-= sig)` as delta-`1` forms,

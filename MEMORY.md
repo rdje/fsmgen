@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-15: malformed update-shorthand targets now fail early instead of disappearing silently
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now turns malformed update-shorthand targets into a dedicated user-facing diagnostic instead of returning `undef` for recognized update-shorthand forms.
+- [t/61-language-contract-update-shorthand-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/61-language-contract-update-shorthand-boundary.t) now locks:
+  - malformed targets such as `(++ (counter))` and `(+= (byte_count) 4)`,
+  - and pipeline/CLI no-output behavior for malformed update-shorthand forms.
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now states that update shorthand must target a scalar signal name and that malformed nested targets are rejected explicitly.
 ## 2026-03-15: alternate update-shorthand spellings are now explicitly documented and regression-backed
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the full active update-shorthand family more honestly:
   - `(++ sig)` / `(-- sig)`,

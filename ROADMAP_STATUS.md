@@ -286,6 +286,10 @@ Done:
   - the separated forms `(+= sig)` and `(-= sig)` are now regression-backed as delta-`1` synonyms for `(++ sig)` and `(-- sig)`,
   - the separated forms `(+= sig N)` and `(-= sig N)` are now regression-backed as delta-carrying synonyms for `(+=N sig)` and `(-=N sig)`,
   - and those alternate spellings now generate HDL end to end through the active backend.
+- [t/61-language-contract-update-shorthand-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/61-language-contract-update-shorthand-boundary.t) now locks the malformed-target side of the update-shorthand family explicitly:
+  - malformed targets such as `(++ (counter))` and `(+= (byte_count) 4)` no longer disappear silently,
+  - they now fail through a dedicated update-shorthand boundary,
+  - and parser, pipeline, and CLI entry points now reject those malformed update-shorthand forms without emitting HDL.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now also promotes the shorthand guard family into the active contract instead of leaving it as future-only:
   - `(<foo ...)` means `foo != 0`,
   - `(<!foo ...)` means `foo == 0`,

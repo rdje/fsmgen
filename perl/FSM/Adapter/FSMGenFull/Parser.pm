@@ -492,7 +492,11 @@ sub is_compound_update_shorthand($self, $action_target, $action_spec) {
 
 sub parse_compound_update_shorthand($self, $action) {
     my ($compound_token, $args) = @$action;
-    return undef unless ref($args) eq 'ARRAY' && @$args >= 1;
+    Carp::confess
+        "Malformed update shorthand '".$self->describe_action_for_error($action)."'. ".
+        "Update shorthand must target a scalar signal name, for example '(++ counter)', '(+= counter)', '(+=4 counter)', or '(+= counter 4)'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless ref($args) eq 'ARRAY' && @$args >= 1;
     
     my ($compound_op, $delta_spec);
     
@@ -513,7 +517,11 @@ sub parse_compound_update_shorthand($self, $action) {
     }
     
     my $signal_name = $args->[0];
-    return undef unless defined $signal_name && !ref($signal_name);
+    Carp::confess
+        "Malformed update shorthand '".$self->describe_action_for_error($action)."'. ".
+        "Update shorthand must target a scalar signal name, for example '(++ counter)', '(+= counter)', '(+=4 counter)', or '(+= counter 4)'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless defined $signal_name && !ref($signal_name);
     
     my @remaining = @$args[1 .. $#$args];
     if (!defined($delta_spec) && @remaining) {

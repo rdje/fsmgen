@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### malformed update-shorthand targets now fail explicitly instead of disappearing silently
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so recognized update-shorthand forms now reject malformed non-scalar targets through a dedicated update-shorthand diagnostic instead of returning `undef` and disappearing from the DT body.
+- Added [t/61-language-contract-update-shorthand-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/61-language-contract-update-shorthand-boundary.t) to lock:
+  - malformed targets such as `(++ (counter))` and `(+= (byte_count) 4)`,
+  - and pipeline/CLI no-output behavior for malformed update-shorthand forms.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the update-shorthand family now documents its malformed-target boundary explicitly.
 ### alternate compound-update shorthand spellings are now part of the active contract
 - Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) so the active update-shorthand family now documents the already-supported separated spellings:
   - `(+= sig)` / `(-= sig)` as delta-`1` forms,
