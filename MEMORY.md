@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-15: bare condition-suffix boundaries are now locked across entry points
+- [t/67-language-contract-condition-suffix-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/67-language-contract-condition-suffix-entrypoints.t) now locks pipeline and CLI no-output behavior for:
+  - bare assignment condition suffixes like `(A <= B start)`,
+  - and bare transition condition suffixes like `(-> busy full)`.
+- This is a regression-only hardening slice: parser behavior was already correct, but the malformed bare-suffix family is now covered end to end instead of only at direct parser level.
 ## 2026-03-15: malformed action-family boundaries are now locked across entry points
 - [t/66-language-contract-malformed-action-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/66-language-contract-malformed-action-entrypoints.t) now locks pipeline and CLI no-output behavior for:
   - single-token malformed DT actions like `(BROKEN)`,

@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### bare condition-suffix boundaries now have pipeline and CLI coverage too
+- Added [t/67-language-contract-condition-suffix-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/67-language-contract-condition-suffix-entrypoints.t) to lock pipeline and CLI no-output behavior for:
+  - bare assignment condition suffixes like `(A <= B start)`,
+  - and bare transition condition suffixes like `(-> busy full)`.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the malformed bare-suffix family is now tracked as an end-to-end entrypoint boundary instead of parser-only coverage.
 ### malformed action-family boundaries now have pipeline and CLI coverage too
 - Added [t/66-language-contract-malformed-action-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/66-language-contract-malformed-action-entrypoints.t) to lock pipeline and CLI no-output behavior for:
   - single-token malformed DT actions like `(BROKEN)`,
