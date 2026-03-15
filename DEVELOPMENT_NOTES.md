@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: state and DT block names are now part of the explicit contract
+- The next `R8` slice closes a real naming-boundary gap:
+  - source-root names were already validated explicitly,
+  - but state/DT block names were still mostly being accepted on trust and only failing later if HDL generation tripped over them.
+- Implementation:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates state/DT block names up front.
+  - Regular FSM-state DT names must be HDL-identifier-compatible.
+  - General/combinational DT names must use exactly one leading `-` plus an HDL-identifier-compatible base name.
+  - Reset-state names remain limited to the already supported special spellings.
+- Focused regression coverage now exists in [t/52-language-contract-state-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/52-language-contract-state-name-boundary.t) for:
+  - a success path with valid regular and standalone DT names,
+  - malformed regular state names like `bad-name`,
+  - malformed standalone DT names like `-bad-name` and `--bad`,
+  - and pipeline/CLI confirmation that malformed names do not emit HDL.
+- Boundary decision:
+  - state/DT naming is now an explicit source-level contract, not only an eventual HDL-side constraint,
+  - and malformed names fail early where the user can understand the construct boundary directly.
 ## 2026-03-15: symbol-definition sections now have an explicit malformed boundary
 - The next `R8` slice closes another real parser-visible gray zone:
   - `+constants`, `+define`, `+params`, and `+enums` already had a documented happy path,

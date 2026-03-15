@@ -20,6 +20,23 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: state and DT block names now fail early if malformed
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates regular FSM-state DT names and general/combinational DT names explicitly,
+  - [t/52-language-contract-state-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/52-language-contract-state-name-boundary.t) now locks valid-name success plus malformed-name rejection through parser, pipeline, and CLI entry points,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the naming rule directly.
+- Scope of the landed contract slice:
+  - explicit support remains for regular FSM-state DT names like `state_0`,
+  - explicit support remains for general/combinational DT names like `-comb_1`,
+  - explicit rejection now covers malformed names like `bad-name`, `-bad-name`, and `--bad`.
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more source-visible construct family as fully bucketed.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser/runtime-visible language edges,
+  - and keep failing malformed constructs at the language boundary instead of later in HDL generation.
 ## 2026-03-15: malformed symbol-definition sections now fail explicitly
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates `+constants`, `+define`, `+params`, and `+enums` explicitly instead of relying on loose list unpacking,

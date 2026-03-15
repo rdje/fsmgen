@@ -839,13 +839,29 @@ sub parse_state($self, $state_ast) {
 }
 
 sub classify_state_name($self, $state_name) {
+    Carp::confess
+        "Malformed state/DT name '".$self->describe_contract_name($state_name)."'. ".
+        "FSM-state DT blocks must use an HDL-identifier-compatible name like 'aState'; ".
+        "general/combinational DT blocks must use a single leading '-' plus an HDL-identifier-compatible name like '-mycombDT'; ".
+        "and reset-state names remain limited to '-syncrst', '-syncreset', '-asyncrst', or '-asyncreset'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless defined($state_name) && !ref($state_name);
+
     return ('sync_reset', 'syncreset')
         if $state_name eq '-syncrst' || $state_name eq '-syncreset';
     return ('async_reset', 'asyncreset')
         if $state_name eq '-asyncrst' || $state_name eq '-asyncreset';
     return ('standalone_dt', $state_name)
-        if defined($state_name) && !ref($state_name) && $state_name =~ /^-/;
-    return ('normal', $state_name);
+        if $state_name =~ /^-[A-Za-z_]\w*$/;
+    return ('normal', $state_name)
+        if $state_name =~ /^[A-Za-z_]\w*$/;
+
+    Carp::confess
+        "Malformed state/DT name '$state_name'. ".
+        "FSM-state DT blocks must use an HDL-identifier-compatible name like 'aState'; ".
+        "general/combinational DT blocks must use a single leading '-' plus an HDL-identifier-compatible name like '-mycombDT'; ".
+        "and reset-state names remain limited to '-syncrst', '-syncreset', '-asyncrst', or '-asyncreset'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 
 sub parse_decision_tree($self, $tree_ast) {

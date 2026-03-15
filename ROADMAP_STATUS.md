@@ -314,6 +314,10 @@ Done:
   - empty FSM-state DT blocks like `(idle)` are rejected,
   - empty general DT blocks like `(-misc)` are rejected,
   - and malformed empty pseudo-states no longer drift through to later runtime stages.
+- [t/52-language-contract-state-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/52-language-contract-state-name-boundary.t) now locks the state/DT name boundary explicitly:
+  - regular FSM-state DT names must be HDL-identifier-compatible,
+  - general/combinational DT names must use exactly one leading `-` plus an HDL-identifier-compatible base name,
+  - and malformed names such as `bad-name`, `-bad-name`, or `--bad` now fail clearly through parser, pipeline, and CLI entry points.
 - [t/50-language-contract-size-section-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/50-language-contract-size-section-boundary.t) now locks the active `+size` boundary explicitly:
   - the legacy empty form `(+size)` is accepted as a no-op because it exists in the shipped corpus,
   - malformed `+size` payloads like `(+size BROKEN)` are rejected,

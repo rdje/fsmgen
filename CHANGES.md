@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### state and DT block names now have an explicit active boundary
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so state/DT names are now validated explicitly:
+  - regular FSM-state DT names must be HDL-identifier-compatible,
+  - general/combinational DT names must use exactly one leading `-` plus an HDL-identifier-compatible base name,
+  - and reset-state names remain limited to the existing supported reset spellings.
+- Added focused regression coverage in [t/52-language-contract-state-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/52-language-contract-state-name-boundary.t) for:
+  - successful parsing/generation with valid regular and standalone DT names,
+  - explicit rejection of malformed regular state names like `bad-name`,
+  - explicit rejection of malformed standalone DT names like `-bad-name` and `--bad`,
+  - and pipeline/CLI confirmation that malformed state names do not emit HDL.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the live contract now states the state/DT naming rule explicitly.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
 ### malformed symbol-definition sections now fail explicitly
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so the symbol-definition family no longer relies on loose Perl list unpacking for malformed input:
   - `+constants` now requires a non-empty list of `(NAME scalar_value)` entries,
