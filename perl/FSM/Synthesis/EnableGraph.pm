@@ -497,7 +497,9 @@ sub parse_test_value_selector($self, $test_value) {
         return ($operator, $raw_value);
     }
 
-    return ('==', $test_value);
+    Carp::confess
+        "[EnableGraph.pm][parse_test_value_selector()] Unsupported test value selector '$test_value'. ".
+        "Active test-node selectors must use an explicit operator-prefixed token such as '=0', '=OTHER', '!=8'0', or '>8'3'";
 }
 
 sub build_test_condition_ast($self, $test_signal, $test_value) {

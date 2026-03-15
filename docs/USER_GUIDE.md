@@ -163,6 +163,9 @@ Standalone DT note:
   - `(<req)`
 - Malformed test-node branches that do not carry a real branch body, for example:
   - `(?MODE (=0))`
+- Malformed test-node selectors that omit the explicit selector operator, for example:
+  - `(?MODE (BUSY ...))`
+  - `(?MODE (0 ...))`
 - Unsupported or malformed expression forms outside the current active operator family, for example:
   - `(A = (bogus B C))`
   - `(A = (== B C D))`
@@ -244,8 +247,9 @@ Test nodes:
 - `?(expr ...)` is the active computed-selector form when the selector itself is a condition expression, for example:
   - `(?(| A B) (=0 ...actions...) (=1 ...actions...))`
 - Each test branch must include:
-  - a selector like `=0`, `=1`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, or `>=8'1`
+  - an explicit operator-prefixed selector token like `=0`, `=1`, `=OTHER`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, or `>=8'1`
   - and at least one nested action
+- Bare selectors like `BUSY` or `0` are not part of the active contract.
 - Malformed empty branches such as `(?MODE (=0))` are rejected explicitly.
 - Selector meaning:
   - `=value` means equality

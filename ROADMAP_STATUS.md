@@ -293,6 +293,9 @@ Done:
   - malformed active-operator arity such as `(== B C D)`,
   - and guard-only tokens such as `<start` when used in ordinary expression position.
 - [t/41-language-contract-top-level-source-kind-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/41-language-contract-top-level-source-kind-boundary.t) now locks explicit rejection of unsupported tagged top-level source kinds such as `?define:legacy_template`, so legacy wrapper/template roots no longer drift through the nested-`?fsm` fallback path.
+- [t/42-language-contract-test-selector-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/42-language-contract-test-selector-boundary.t) now locks the explicit-selector boundary for test-node branches:
+  - operator-prefixed selectors such as `=0`, `=OTHER`, and `!=8'0` remain supported,
+  - while malformed bare selectors such as `BUSY` or `0` are now rejected explicitly.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now also promotes the symbol-definition families into the fully supported bucket and documents their current normative contract:
   - `(+constants ...)`,
   - `(+enums ...)`,

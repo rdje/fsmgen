@@ -20,6 +20,23 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: test-node selectors now require explicit operator prefixes
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates test-branch selectors explicitly and rejects bare selectors like `BUSY` or `0`,
+  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) now enforces the same explicit-selector rule during runtime lowering,
+  - [t/42-language-contract-test-selector-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/42-language-contract-test-selector-boundary.t) now locks parser/runtime support for explicit operator-prefixed selectors and rejection of malformed bare selectors,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents that active test-node selectors must be operator-prefixed tokens.
+- Scope of the landed contract slice:
+  - explicit support remains for selectors like `=0`, `=OTHER`, `!=8'0`, and `>8'3`
+  - explicit rejection now covers bare selectors like `BUSY` and `0`
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more selector-boundary family as explicitly documented and regression-backed.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser/runtime-visible language edges,
+  - and keep tightening the contract where legacy permissiveness still leaks through.
 ## 2026-03-15: unsupported tagged top-level sources now fail explicitly
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects unsupported tagged top-level source kinds such as `?define:legacy_template` before any nested `?fsm` fallback can fire,

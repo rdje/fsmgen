@@ -744,8 +744,8 @@ sub parse_test_node_new_format($self, $action) {
     
     my $test_node = FSM::CoreAST::TestNode->new(test_signal => $signal);
     
-    if (ref($branches) eq 'ARRAY') {
-        for my $branch (@$branches) {
+	    if (ref($branches) eq 'ARRAY') {
+	        for my $branch (@$branches) {
             my $branch_desc = defined($branch)
                 ? (ref($branch) eq 'ARRAY'
                     ? '(' . join(' ', map { defined($_) ? (ref($_) ? ref($_) : $_) : 'undef' } @$branch) . ')'
@@ -758,8 +758,9 @@ sub parse_test_node_new_format($self, $action) {
                 "See docs/USER_GUIDE.md for the current supported boundary.\n"
                 unless ref($branch) eq 'ARRAY' && @$branch >= 2;
 
-            my ($test_value, @branch_actions) = @$branch;
-            my @parsed_actions;
+	            my ($test_value, @branch_actions) = @$branch;
+            $self->validate_test_branch_selector($test_value);
+	            my @parsed_actions;
 
             for my $branch_action (@branch_actions) {
                 Carp::confess
@@ -787,7 +788,23 @@ sub parse_test_node_new_format($self, $action) {
         }
     }
     
-    return $test_node;
+	    return $test_node;
+}
+
+sub validate_test_branch_selector($self, $test_value) {
+    my $display = defined($test_value)
+        ? (ref($test_value) ? ref($test_value) : $test_value)
+        : 'undef';
+
+    Carp::confess
+        "Malformed test selector '$display'. ".
+        "Test-node branches must use an explicit selector token like '=0', '=OTHER', '!=8\\'0', or '>8\\'3'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless defined($test_value)
+            && !ref($test_value)
+            && $test_value =~ /^(?:==|!=|<=|>=|=|<|>).+/;
+
+    return 1;
 }
 
 sub parse_nested_condition_new_format($self, $action) {

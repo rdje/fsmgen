@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: test-node selectors now require explicit operator prefixes
+- The next `R8` slice closes a small but real selector-boundary gray zone in test nodes:
+  - active branch selectors are meant to be explicit selector tokens like `=0`, `=OTHER`, `!=8'0`, or `>8'3`,
+  - not accidental bare selector payloads like `BUSY` or `0`.
+- Implementation:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now validates test-branch selectors explicitly during parse and rejects bare selector payloads with a targeted diagnostic.
+  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) now enforces the same operator-prefixed selector rule in runtime lowering so direct AST callers cannot bypass the active contract accidentally.
+- Focused regression coverage now exists in [t/42-language-contract-test-selector-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/42-language-contract-test-selector-boundary.t) for:
+  - explicit rejection of bare symbolic selectors like `BUSY`,
+  - explicit rejection of bare numeric selectors like `0`,
+  - and continued support for explicit symbolic equality selectors like `=OTHER`.
+- Boundary decision:
+  - active test-node selectors must use an explicit operator prefix,
+  - bare selector payloads are out of active support,
+  - and this is compatible with the already shipped relational selector family.
 ## 2026-03-15: unsupported tagged top-level sources now fail explicitly
 - The next `R8` slice closes one more parser-visible gray zone at the source-root boundary:
   - legacy tagged wrappers such as `?define:...` are no longer allowed to drift through the parser just because they contain a nested `?fsm:...` somewhere inside them.
