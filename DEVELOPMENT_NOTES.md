@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-15: unsupported tagged top-level sources now fail explicitly
+- The next `R8` slice closes one more parser-visible gray zone at the source-root boundary:
+  - legacy tagged wrappers such as `?define:...` are no longer allowed to drift through the parser just because they contain a nested `?fsm:...` somewhere inside them.
+- This slice is intentionally about top-level ownership, not inner content:
+  - the active toolchain now evaluates the root source kind first,
+  - and unsupported tagged source kinds fail at that boundary instead of being treated as accidental containers for live FSM parsing.
+- Implementation:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects unsupported tagged top-level source roots with a targeted diagnostic before the nested-`?fsm` fallback can fire.
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now rejects the same boundary explicitly in the active pipeline and CLI path.
+- Focused regression coverage now exists in [t/41-language-contract-top-level-source-kind-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/41-language-contract-top-level-source-kind-boundary.t) for:
+  - direct classifier truth (`kind => unknown`, `header => ?define:...`),
+  - direct adapter rejection,
+  - pipeline rejection,
+  - and CLI rejection without leaked HDL output.
+- Boundary decision:
+  - active top-level source kinds are `?fsm:name`, `+fsm`, and `?top:name`,
+  - other tagged source roots such as `?define:` are explicitly out of active support,
+  - and a nested live FSM inside an unsupported tagged wrapper does not make that wrapper supported.
 ## 2026-03-15: unsupported expression forms now fail explicitly
 - The next `R8` slice now closes one more parser-visible gray zone around expressions:
   - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now rejects:

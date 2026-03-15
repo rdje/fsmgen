@@ -20,6 +20,24 @@ After each completed task, always do this in order:
    - commit with `git commit -F git_message_brief.txt`
    - include `Co-Authored-By: Oz <oz-agent@warp.dev>`
    - clear `git_message_brief.txt` after commit (`truncate -s 0 git_message_brief.txt`)
+## 2026-03-15: unsupported tagged top-level sources now fail explicitly
+- Current worktree is the next `R8` implementation slice:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now rejects unsupported tagged top-level source kinds such as `?define:legacy_template` before any nested `?fsm` fallback can fire,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now rejects the same boundary in the active pipeline and CLI path,
+  - [t/41-language-contract-top-level-source-kind-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/41-language-contract-top-level-source-kind-boundary.t) now locks classifier, adapter, pipeline, and CLI behavior for that boundary,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents unsupported tagged top-level source roots explicitly.
+- Scope of the landed contract slice:
+  - explicit support remains limited to `?fsm:name`, `+fsm`, and `?top:name`
+  - explicit rejection now covers unsupported tagged roots such as `?define:...`
+  - nested live `?fsm` content inside an unsupported tagged root no longer makes that root parseable
+- Roadmap board update:
+  - no phase status changed,
+  - `R8` remains `in progress`,
+  - but `ROADMAP_STATUS.md` now records one more top-level legacy wrapper family as explicitly rejected instead of ambiguously accepted.
+- Immediate next direction after commit:
+  - keep `R8` active,
+  - continue auditing remaining parser/runtime-visible language edges,
+  - and keep tightening the contract at the root/source and construct-family boundaries.
 ## 2026-03-15: unsupported expression forms now fail explicitly
 - Current worktree is the next `R8` implementation slice:
   - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) now parses real inline scalar comparison tokens such as `cnt[2:1]!=2'2` explicitly while rejecting unsupported expression operators, malformed active-operator arity, empty expression lists, unsupported payload types, and guard-only tokens in ordinary RHS expression position,

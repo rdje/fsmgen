@@ -41,6 +41,15 @@ sub parse_fsm($self, $raw_ast) {
             "Composition source '$header' is not supported by the FSM-only parser. ".
             "Route '?top:name' inputs through the composition pipeline described in docs/COMPOSITION_SCOPE.md";
     }
+    if (($source_info->{kind} // 'unknown') eq 'unknown' && defined($source_info->{header}) && $source_info->{header} =~ /^\?[A-Za-z_][\w-]*:/) {
+        my $header = $source_info->{header};
+        fsm_trace_decision(0, "Detected unsupported tagged top-level source '$header'", 1);
+        Carp::confess
+            "Unsupported top-level source '$header'. ".
+            "The active toolchain supports '?fsm:name' and '+fsm' as FSM sources, and '?top:name' through the composition pipeline. ".
+            "Other tagged source kinds such as '?define:' are out of active support. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+    }
     
     if (ref($raw_ast) eq 'ARRAY') {
         if (@$raw_ast > 0 && !ref($raw_ast->[0]) && $raw_ast->[0] =~ /^\?fsm:/) {

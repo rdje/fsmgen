@@ -106,6 +106,14 @@ sub generate_hdl_from_file ($self, $fsm_file) {
     # Step 1: Parse the FSM file
     my $raw_ast = $self->parse_fsm_file($fsm_file);
     my $source_info = $self->classify_source_ast($raw_ast);
+    if (($source_info->{kind} // 'unknown') eq 'unknown' && defined($source_info->{header}) && $source_info->{header} =~ /^\?[A-Za-z_][\w-]*:/) {
+        my $header = $source_info->{header};
+        Carp::confess
+            "Unsupported top-level source '$header'. ".
+            "The active pipeline supports '?fsm:name', '+fsm', and '?top:name'. ".
+            "Other tagged source kinds such as '?define:' are out of active support. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+    }
     if ($source_info && $source_info->{kind} eq 'composition') {
         $source_info->{composition_spec} = $self->parse_composition_source($raw_ast);
         $self->dispatch_after_parse_source($fsm_file, $raw_ast, $source_info);

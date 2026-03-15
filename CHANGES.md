@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-15
+### unsupported tagged top-level sources now fail explicitly
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so unsupported tagged top-level source kinds such as `?define:legacy_template` now fail explicitly before the nested-`?fsm` fallback can parse inner FSM content accidentally.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the active pipeline and CLI reject the same tagged-source boundary directly instead of relying on later parser fallout.
+- Added focused regression coverage in [t/41-language-contract-top-level-source-kind-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/41-language-contract-top-level-source-kind-boundary.t) for:
+  - source classification,
+  - direct adapter rejection,
+  - pipeline rejection,
+  - and CLI rejection without emitted HDL output.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the active contract now calls out unsupported tagged top-level source roots explicitly.
+- Live roadmap status change:
+  - no phase status changed,
+  - the live roadmap snapshot is unchanged for this task,
+  - `R8` remains `in progress`, but its `Done`/`Left` detail advanced materially.
 ### unsupported expression forms now fail explicitly
 - Updated [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) so unsupported expression forms no longer drift through soft parser fallthrough:
   - real inline scalar comparison tokens such as `cnt[2:1]!=2'2` now parse as comparison ASTs explicitly instead of relying on accidental fallback behavior,

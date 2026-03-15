@@ -152,6 +152,9 @@ Standalone DT note:
   - `(+clock clk)`
   - `(+asreset rstn)`
   - `(+bogus ...)`
+- Unsupported tagged top-level source kinds outside the active source family, for example:
+  - `(?define:legacy_template ...)`
+  - other legacy wrapper/template source kinds that are neither `?fsm:name` nor `?top:name`
 - Bare condition suffixes without an explicit guard marker, for example:
   - `(A <= B start)`
   - `(-> busy full)`
@@ -308,6 +311,29 @@ Regression-backed examples:
 Boundary note:
 - This slice locks symbol resolution in assignment RHS expressions and guard equality conditions.
 - Broader semantics for these families should be documented explicitly if and when the contract is widened beyond that current active use.
+
+### Draft normative contract for top-level source kinds
+This is the current `R8` draft normative contract for the active top-level source boundary.
+
+Accepted source roots:
+- `(?fsm:name ...)`
+- flattened legacy `+fsm` roots
+- `(?top:name ...)` through the composition pipeline
+
+Current boundary:
+- Supported:
+  - `?fsm:name` as the active FSM source root
+  - `+fsm` as the legacy flattened FSM root
+  - `?top:name` as the active composition source root
+- Rejected explicitly:
+  - unsupported tagged wrapper/template roots such as `(?define:legacy_template ...)`
+  - other tagged source kinds that are neither active FSM sources nor active composition sources
+- Important rule:
+  - an unsupported tagged top-level wrapper does not become supported just because it contains a nested `?fsm:name` somewhere inside it
+
+Boundary note:
+- This slice makes the top-level source-kind boundary explicit instead of letting legacy tagged wrappers drift through the nested-`?fsm` fallback path.
+- The active toolchain now treats unsupported tagged roots as out of support at the top-level boundary, not as accidental containers for live FSM parsing.
 
 ### Draft normative contract for the conventional `+system` section
 This is the current `R8` draft normative contract for the active `+system` boundary.
