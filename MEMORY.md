@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: future `R11` shared-drive notes now prefer assertion bits over default arbitration
+- The future shared-datapath lane now records:
+  - no default auto-resolution or auto-priority for same-target conflicts,
+  - per-`(P, Q)` onehot0-style assertion bits over source enables such as `A_P_Q_en`, `B_P_Q_en`, and `C_P_Q_en`,
+  - and whole-target `P` assertion bits that detect multiple value families becoming active in the same cycle.
 ## 2026-03-16: future `R11` reusable-DT and shared-drive notes were refined again
 - The future reusable standalone-DT lane now also records:
   - `?dt:name` may contain any number of internal general DT blocks such as `(-foo ...)`,

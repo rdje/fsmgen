@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### future `R11` shared-drive notes now prefer assertion bits over default arbitration
+- Refined [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the future shared-datapath lane now says:
+  - do not auto-resolve or auto-prioritize same-target conflicts by default,
+  - generate per-`(P, Q)` onehot0-style assertion bits over source enables such as `A_P_Q_en`, `B_P_Q_en`, and `C_P_Q_en`,
+  - and generate whole-target `P` assertion bits that detect multiple value families becoming active in the same cycle.
+- Updated [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the saved `R11` direction now preserves “detect/report through assertions” instead of “prevent/resolve by default”.
 ### future `R11` reusable-DT and shared-drive notes were refined again
 - Refined [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the future reusable standalone-DT lane now also says:
   - `?dt:name` may contain any number of internal general DT blocks such as `(-foo ...)`,

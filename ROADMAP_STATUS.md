@@ -492,7 +492,9 @@ Deliverables:
   - only lifted registered outputs may loop back into child FSM inputs,
   - combinational outputs must never become cross-FSM read sources, so they remain top-level outputs only,
   - same-target/same-value aggregation must stay distinct from same-target/different-value conflicts,
-  - and multiple child FSMs must not drive different values to the same target `P` in the same cycle unless a later explicit priority contract is introduced.
+  - the default shared-drive contract should surface conflict/assertion bits rather than auto-resolve or auto-prioritize,
+  - per-`(P, Q)` source-enable families should support onehot0-style checks,
+  - and whole-target `P` families should support assertion bits that detect multiple value families becoming active in the same cycle.
 - Define one bounded reusable standalone-DT/module-library lane:
   - `?dt:name` as the smallest standalone module description,
   - `?dt:name` may contain any number of internal general DT blocks such as `(-foo ...)`,
@@ -513,14 +515,14 @@ Done:
 - That future `R11` direction now also records:
   - multi-`(-foo ...)` standalone `?dt:name` modules,
   - the implicit-system split between always-implicit `?fsm:name` `clk` / `rst_n` and conditional implicit `?dt:name` `clk` / `rst_n`,
-  - and the need to express arbitration through generated enable families instead of structural over-rejection.
+  - and the need to express arbitration/conflict reporting through generated enable families instead of structural over-rejection.
 Left:
 - Turn the `.rtlif` follow-up into a deliberate contract-improvement lane.
 - Turn the new shared-datapath extraction direction into a real contract:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets,
   - per-child drive-intent aggregation,
   - same-target/same-value aggregation vs same-target/different-value conflicts,
-  - explicit rejection/assertion strategy for multiple child FSMs driving different values to the same target `P` in the same cycle,
+  - assertion-bit strategy for per-`(P, Q)` source-enable conflicts and whole-target `P` multi-value conflicts,
   - default top-export vs peer-read internalization for registered outputs,
   - explicit user-directed re-export of now-internal registered outputs,
   - registered-output loopback rules,
@@ -536,7 +538,7 @@ Left:
 - Add any needed diagnostics/tests before considering broader composition growth.
 Exit criteria:
 - External-RTL composition uses a clearly specified interface contract that is stronger and easier to reason about than the current “implemented convention” state.
-- The first multi-FSM shared-datapath composition lane is also bounded by an explicit ownership/readback/export/arbitration contract instead of informal architecture notes.
+- The first multi-FSM shared-datapath composition lane is also bounded by an explicit ownership/readback/export/assertion contract instead of informal architecture notes.
 - The first reusable standalone-DT/module-library lane is also bounded by an explicit root/interface/lookup/system-port/arbitration contract instead of informal brainstorming.
 
 ### R12. Regression corpus and support accounting

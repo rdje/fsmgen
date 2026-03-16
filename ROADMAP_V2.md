@@ -110,7 +110,9 @@ Deliverable themes:
   - lifted registered/shared outputs may be looped back into child FSM inputs and may be either top-local or top-exposed,
   - combinational outputs, whether shared or not, must not become cross-FSM read sources and should only exist as top-level outputs,
   - same-target/same-value aggregation should remain distinct from same-target/different-value conflicts,
-  - and multiple child FSMs must not drive different values to the same target `P` in the same cycle unless a later explicit priority contract is added,
+  - the default shared-drive contract should surface conflict/assertion bits rather than auto-resolve or auto-prioritize,
+  - per `(P, Q)` families should support onehot0-style checks over source enables such as `A_P_Q_en`, `B_P_Q_en`, and `C_P_Q_en`,
+  - and per-target `P` families should support assertion bits that detect more than one value-family enable being active in the same cycle,
 - define one bounded reusable standalone-DT/module-library lane instead of reopening broad implicit hierarchy:
   - add `?dt:name` as the smallest standalone module description,
   - let `?dt:name` contain any number of internal general DT blocks such as `(-foo ...)`,
@@ -140,7 +142,7 @@ Planned bounded sub-lane inside `R11`:
   - which RHS/value sources must also be surfaced to the shared datapath block,
   - how per-child drive intents are named and reported,
   - how same-target/same-value aggregation differs from same-target/different-value conflicts,
-  - how conflict assertions are expressed so multiple child FSMs cannot drive different values to the same target `P` in the same cycle,
+  - how conflict/assertion bits are expressed for per-`(P, Q)` source-enable families and for whole-target `P` value-family conflicts,
   - which registered outputs should internalize automatically when peer-read,
   - how users explicitly re-export those now-internal registered signals when wanted,
   - and which lifted registered outputs may legally loop back into child FSM inputs.

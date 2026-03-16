@@ -10,10 +10,12 @@ This document captures engineering rationale, design constraints, and working de
 - Conflict/arbitration direction now carries this split:
   - multiple internal `(-foo ...)` blocks in one `?dt:name` may assign the same target without being rejected structurally,
   - same-target/same-value aggregation is a different problem from same-target/different-value conflict,
-  - and generated enable families should make those arbitration conditions explicit instead of relying on a blanket structural conflict ban.
+  - and generated enable families should make those arbitration conditions explicit through conflict/assertion bits instead of relying on a blanket structural conflict ban.
 - Multi-FSM shared-output direction now also carries the tighter conflict rule:
-  - multiple FSM children must not drive different values to the same target `P` in the same cycle unless a later explicit priority contract is introduced,
-  - while same-target/same-value aggregation remains a separate explicit aggregation case rather than being conflated with a conflict by default.
+  - there is no need to auto-resolve or auto-prioritize those conflicts by default,
+  - per-`(P, Q)` families should support onehot0-style checks over source enables such as `A_P_Q_en`, `B_P_Q_en`, and `C_P_Q_en`,
+  - whole-target `P` families should support assertion bits that detect multiple value families becoming active in the same cycle,
+  - and same-target/same-value aggregation remains a separate explicit aggregation case rather than being conflated with a different-value conflict by default.
 ## 2026-03-16: future `R11` reusable standalone-DT/module-library lane
 - Captured one more concrete future `R11` direction instead of leaving it as casual brainstorming only.
 - Working semantic model:
@@ -78,7 +80,9 @@ This document captures engineering rationale, design constraints, and working de
   - so combinational outputs should remain top-level outputs only.
 - Future conflict rule:
   - same-target/same-value aggregation should remain distinct from same-target/different-value conflicts,
-  - multiple FSM children should not drive different values to the same lifted target `P` in the same cycle unless a later explicit priority contract is added,
+  - there is no need to auto-resolve or auto-prioritize those conflicts by default,
+  - per-`(P, Q)` source-enable families should support onehot0-style conflict/assertion bits,
+  - whole-target `P` value families should support assertion bits that detect multiple active values in the same cycle,
   - and the generated enable families should make the arbitration boundary explicit instead of relying only on structural rejection.
 ## 2026-03-15: malformed `+system` boundaries are now locked through pipeline and CLI too
 - The conventional `+system` family already had parser-level coverage in the active contract for its malformed side:
