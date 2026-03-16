@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: malformed `:=` directive shapes now have explicit end-to-end coverage
+- The active top-level `:=` family was already covered for:
+  - supported compact directives like `(:= signal=value)`,
+  - malformed compact directives like `(:= BROKEN)` at parser level,
+  - and malformed RHS values like `(:= tester_reset=<start)` across parser, pipeline, and CLI.
+- The remaining gap was malformed payload shape, where non-scalar forms like `(:= (tester_reset=1 extra))` were rejected by the parser but not called out as their own regression-backed boundary.
+- [t/81-language-contract-init-directive-shape-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/81-language-contract-init-directive-shape-boundary.t) now locks:
+  - malformed non-scalar `:=` payloads through parser, pipeline, and CLI,
+  - and malformed compact directives like `(:= BROKEN)` through pipeline and CLI too.
 ## 2026-03-16: reset naming now distinguishes current `?fsm` compatibility residue from future/default convention
 - The wording around reset naming needed one more distinction:
   - current shipped explicit `(?fsm:name ... (+system ...))` compatibility residue still accepts `rstn`,

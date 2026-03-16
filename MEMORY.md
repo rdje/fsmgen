@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: malformed `:=` directive shapes now have explicit end-to-end coverage
+- [t/81-language-contract-init-directive-shape-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/81-language-contract-init-directive-shape-boundary.t) now locks:
+  - malformed non-scalar payloads such as `(:= (tester_reset=1 extra))`,
+  - malformed compact directives such as `(:= BROKEN)`,
+  - and parser, pipeline, and CLI no-output behavior for the malformed-shape side of the active `:=` family.
 ## 2026-03-16: reset naming now distinguishes current `?fsm` residue from future/default convention
 - Saved wording split:
   - current shipped explicit `(?fsm:name ... (+system ...))` compatibility residue still uses `rstn`,

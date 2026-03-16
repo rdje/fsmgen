@@ -427,6 +427,10 @@ Done:
 - [t/56-language-contract-init-directive-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/56-language-contract-init-directive-boundary.t) now locks the malformed-RHS side of the active `:=` directive explicitly:
   - unsupported reset/default RHS values such as `[DATAIN]` or `<start` now fail through the dedicated `:=` contract boundary,
   - and malformed `:=` RHS values now fail clearly through parser, pipeline, and CLI entry points without emitting HDL.
+- [t/81-language-contract-init-directive-shape-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/81-language-contract-init-directive-shape-boundary.t) now locks the malformed-shape side of the same `:=` directive explicitly:
+  - malformed non-scalar payloads such as `(:= (tester_reset=1 extra))` now fail through the dedicated `:=` payload boundary,
+  - malformed compact directives such as `(:= BROKEN)` now have focused pipeline and CLI no-output coverage too,
+  - and the active `:=` family is now regression-backed across parser, pipeline, and CLI for both malformed payload shape and malformed RHS value cases.
 - [t/57-language-contract-pulse-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/57-language-contract-pulse-boundary.t) now locks the malformed-RHS side of delayed-pulse `<N` assignments explicitly:
   - malformed delayed-pulse RHS values such as `B` or `2'0` now fail through a dedicated delayed-pulse boundary,
   - and malformed delayed-pulse RHS values now fail clearly through parser, pipeline, and CLI entry points without emitting HDL.

@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### malformed `:=` directive shapes now have explicit end-to-end coverage
+- Added [t/81-language-contract-init-directive-shape-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/81-language-contract-init-directive-shape-boundary.t) so the malformed-shape side of the active top-level `:=` family is now locked explicitly:
+  - malformed non-scalar payloads such as `(:= (tester_reset=1 extra))`,
+  - malformed compact directives such as `(:= BROKEN)`,
+  - and parser, pipeline, and CLI entry points all fail without emitting HDL for those malformed forms.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the live contract now says the `:=` family is bounded on both the malformed-RHS side and the malformed-payload/shape side.
 ### reset-naming continuity now distinguishes current `?fsm` residue from future/default convention
 - Refined [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), and [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) so the wording now says this explicitly:
   - current shipped explicit `(?fsm:name ... (+system ...))` compatibility residue still spells `rstn`,

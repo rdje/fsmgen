@@ -560,6 +560,7 @@ Current boundary:
 - Supported:
   - `(:= signal=literal_or_scalar_expr)` at top level inside `(?fsm:name ...)`
 - Rejected explicitly:
+  - malformed non-scalar payload shapes such as `(:= (tester_reset=1 extra))`
   - malformed payloads such as `(:= BROKEN)`
   - unsupported RHS reset/default values such as `(:= tester_reset=[DATAIN])` or `(:= tester_reset=<start)`
   - unsupported top-level bare alternatives such as `(tester_reset := 1)`
@@ -568,6 +569,7 @@ Current boundary:
 
 Boundary note:
 - This slice makes the legacy compact `:=` form explicit and regression-backed instead of leaving it as accidental parser behavior.
+- Malformed `:=` payload shapes and malformed compact directives are now regression-backed across parser, pipeline, and CLI too.
 - Future canonical alternatives such as `(:= (lhs value))` or `(lhs := value)` are design ideas only and are preserved in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), not part of the active contract yet.
 
 ## 3) Basic usage
