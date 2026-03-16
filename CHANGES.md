@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### inline compound modifiers now have an explicit active boundary
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so the inline compound-modifier family is now explicit instead of partly accidental:
+  - bare inline `(+=)` and `(-=)` remain supported as delta-`1` variants,
+  - malformed payloads such as `(+= 2 3)` now fail explicitly instead of silently truncating,
+  - and duplicate inline modifiers such as `(+= 2) (-= 1)` now fail through a targeted duplicate-modifier boundary instead of falling through a bare-suffix error.
+- Added [t/75-language-contract-inline-compound-modifier-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/75-language-contract-inline-compound-modifier-boundary.t) to lock supported bare inline modifiers plus parser/pipeline/CLI rejection for malformed and duplicate inline modifier forms.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the active contract and continuity notes now describe both the supported and malformed sides of that family.
+### future `R11` conflict-detection note now records the naming split from the saved response
+- Refined [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so the saved future `R11` conflict-detection direction now also records the naming/reporting split:
+  - per-value-source overlap signals such as `P_Q_multi_src_conflict`,
+  - and whole-target overlap signals such as `P_multi_value_conflict`.
 ### future `R11` shared-drive notes now prefer assertion bits over default arbitration
 - Refined [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the future shared-datapath lane now says:
   - do not auto-resolve or auto-prioritize same-target conflicts by default,

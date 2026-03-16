@@ -537,6 +537,63 @@ sub is_compound_update_shorthand($self, $action_target, $action_spec) {
     return ($action_target =~ /^(?:\+\+|--|\+=.*|-=.*)$/) ? 1 : 0;
 }
 
+sub is_inline_compound_modifier_spec($self, $spec) {
+    return 0 unless ref($spec) eq 'ARRAY' && @$spec >= 1;
+    return 0 if ref($spec->[0]);
+    return ($spec->[0] eq '+=' || $spec->[0] eq '-=') ? 1 : 0;
+}
+
+sub describe_inline_compound_modifier($self, $spec) {
+    return 'undef' unless defined $spec;
+    return ref($spec) unless ref($spec) eq 'ARRAY';
+
+    my @parts;
+    for my $part (@$spec) {
+        if (ref($part) eq 'ARRAY') {
+            push @parts, map {
+                !defined($_) ? 'undef'
+                : ref($_) ? ref($_)
+                : $_
+            } @$part;
+        } else {
+            push @parts, !defined($part) ? 'undef'
+                : ref($part) ? ref($part)
+                : $part;
+        }
+    }
+
+    return '(' . join(' ', @parts) . ')';
+}
+
+sub normalize_inline_compound_modifier($self, $signal_name, $compound_spec) {
+    my $modifier_desc = $self->describe_inline_compound_modifier($compound_spec);
+
+    Carp::confess
+        "Malformed inline compound modifier '$modifier_desc' on signal '$signal_name'. ".
+        "Inline compound modifiers must use '(+=)', '(-=)', '(+= delta)', or '(-= delta)' after the RHS expression. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless $self->is_inline_compound_modifier_spec($compound_spec) && @$compound_spec <= 2;
+
+    my ($compound_op, $compound_payload) = @$compound_spec;
+    my $delta_spec;
+
+    if (@$compound_spec == 1) {
+        $delta_spec = '1';
+    } elsif (ref($compound_payload) eq 'ARRAY') {
+        Carp::confess
+            "Malformed inline compound modifier '$modifier_desc' on signal '$signal_name'. ".
+            "Inline compound modifiers must use '(+=)', '(-=)', '(+= delta)', or '(-= delta)' after the RHS expression. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless @$compound_payload == 1;
+        $delta_spec = $compound_payload->[0];
+    } else {
+        $delta_spec = $compound_payload;
+    }
+
+    $delta_spec = '1' unless defined $delta_spec;
+    return ($compound_op, $delta_spec);
+}
+
 sub parse_compound_update_shorthand($self, $action) {
     my ($compound_token, $args) = @$action;
     Carp::confess
@@ -1320,7 +1377,12 @@ sub parse_signal_action($self, $action) {
     my $compound_spec;
     my @condition_parts;
     for my $tail (@operation_tail) {
-        if (!$compound_spec && ref($tail) eq 'ARRAY' && @$tail >= 1 && !ref($tail->[0]) && ($tail->[0] eq '+=' || $tail->[0] eq '-=')) {
+        if ($self->is_inline_compound_modifier_spec($tail)) {
+            Carp::confess
+                "Duplicate inline compound modifier '".$self->describe_inline_compound_modifier($tail)."' on signal '$signal_name'. ".
+                "Only one inline compound modifier may follow the RHS expression. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                if $compound_spec;
             $compound_spec = $tail;
             next;
         }
@@ -1333,15 +1395,7 @@ sub parse_signal_action($self, $action) {
     my ($compound_operator_used, $compound_delta_used);
     
     if ($compound_spec) {
-        my ($compound_op, $compound_payload) = @$compound_spec;
-        my $delta_spec;
-        
-        if (ref($compound_payload) eq 'ARRAY' && @$compound_payload) {
-            $delta_spec = $compound_payload->[0];
-        } elsif (defined $compound_payload) {
-            $delta_spec = $compound_payload;
-        }
-        $delta_spec = '1' unless defined $delta_spec;
+        my ($compound_op, $delta_spec) = $self->normalize_inline_compound_modifier($signal_name, $compound_spec);
         
         my $delta_expr = $self->{expression_builder}->parse_expression($delta_spec);
         $delta_expr //= FSM::CoreAST::Literal->new('1');

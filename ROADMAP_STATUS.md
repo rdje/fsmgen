@@ -297,6 +297,11 @@ Done:
   - valid guarded forms such as `(+= counter 4 <start)` remain supported,
   - malformed extra positional tails such as `(+= counter 4 3)` and `(+= counter 4 3 2)` now fail through a dedicated update-shorthand-tail boundary,
   - and parser, pipeline, and CLI entry points now reject those malformed forms without emitting HDL.
+- [t/75-language-contract-inline-compound-modifier-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/75-language-contract-inline-compound-modifier-boundary.t) now locks the inline compound-modifier family explicitly:
+  - bare inline forms such as `(ACC <- SRC (+=))` and `(COMB = SRC (-=))` are now regression-backed as delta-`1` variants,
+  - malformed inline modifier payloads such as `(ACC <- SRC (+= 2 3))` now fail through a dedicated inline-modifier boundary instead of silently truncating their payload,
+  - duplicate inline modifiers such as `(ACC <- SRC (+= 2) (-= 1))` now fail through a targeted duplicate-modifier boundary,
+  - and parser, pipeline, and CLI entry points now reject those malformed inline modifiers without emitting HDL.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now also promotes the shorthand guard family into the active contract instead of leaving it as future-only:
   - `(<foo ...)` means `foo != 0`,
   - `(<!foo ...)` means `foo == 0`,

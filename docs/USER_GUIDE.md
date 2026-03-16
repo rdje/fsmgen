@@ -136,7 +136,8 @@ Combinational DT note:
 - Compound-update shorthand forms `(++ sig)`, `(-- sig)`, `(+= sig)`, `(-= sig)`, `(+=N sig)`, `(-=N sig)`, `(+= sig N)`, and `(-= sig N)`
   - malformed update-shorthand targets such as `(++ (counter))` or `(+= (byte_count) 4)` are rejected explicitly
   - malformed extra positional tails such as `(+= counter 4 3)` are rejected explicitly
-- Inline compound modifiers on assignments, for example `(A <- B (+= 2))` and `(C = D (-= 1))`
+- Inline compound modifiers on assignments, for example `(A <- B (+=))`, `(A <- B (+= 2))`, `(C = D (-=))`, and `(C = D (-= 1))`
+  - malformed inline compound modifiers such as `(A <- B (+= 2 3))` or `(A <- B (+= 2) (-= 1))` are rejected explicitly
 - RHS operator expressions for the currently regression-backed active families:
   - unary `!`
   - n-ary comparison `==`, `!=`, `<`, `<=`, `>`, `>=`
@@ -254,8 +255,11 @@ Update shorthand:
 - Update shorthand must target a scalar signal name.
 - After the optional delta, update shorthand accepts only an explicit guard suffix such as `<start`, `<!full`, or `< (& req ready)`.
 - Inline forms keep the surrounding assignment family:
+  - `(ACC <- SRC (+=))`
   - `(ACC <- SRC (+= 2))`
+  - `(COMB = SRC (-=))`
   - `(COMB = SRC (-= 1))`
+  - Bare inline forms `(+=)` and `(-=)` mean delta `1`.
 
 Operator expressions:
 - The RHS expression grammar is shared across combinational and sequential assignments.

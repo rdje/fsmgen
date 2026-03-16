@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: inline compound modifiers are now explicit on both the supported and malformed sides
+- The active parser had one more truth gap in the assignment family:
+  - bare inline modifiers such as `(ACC <- SRC (+=))` and `(COMB = SRC (-=))` were already accepted as delta-`1` forms,
+  - but malformed payloads such as `(ACC <- SRC (+= 2 3))` were being truncated silently,
+  - and duplicate inline modifiers such as `(ACC <- SRC (+= 2) (-= 1))` were falling through an unrelated bare-suffix boundary.
+- The active contract is now explicit instead:
+  - bare inline `(+=)` / `(-=)` forms are supported delta-`1` variants,
+  - malformed multi-token inline modifier payloads now fail through a dedicated inline-modifier boundary,
+  - duplicate inline modifiers now fail through a targeted duplicate-modifier boundary,
+  - and the malformed side is now locked through parser, pipeline, and CLI entry points too.
 ## 2026-03-16: future `R11` reusable-DT and shared-drive notes were refined again
 - The newer `R11` brainstorming is now more precise about where structure ends and arbitration begins.
 - Reusable standalone-DT direction now carries these extra rules:
@@ -15,6 +25,7 @@ This document captures engineering rationale, design constraints, and working de
   - there is no need to auto-resolve or auto-prioritize those conflicts by default,
   - per-`(P, Q)` families should support onehot0-style checks over source enables such as `A_P_Q_en`, `B_P_Q_en`, and `C_P_Q_en`,
   - whole-target `P` families should support assertion bits that detect multiple value families becoming active in the same cycle,
+  - naming/reporting should likely stay split between per-value-source overlap signals such as `P_Q_multi_src_conflict` and whole-target overlap signals such as `P_multi_value_conflict`,
   - and same-target/same-value aggregation remains a separate explicit aggregation case rather than being conflated with a different-value conflict by default.
 ## 2026-03-16: future `R11` reusable standalone-DT/module-library lane
 - Captured one more concrete future `R11` direction instead of leaving it as casual brainstorming only.

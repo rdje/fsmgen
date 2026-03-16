@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: inline compound modifiers now have an explicit active boundary
+- The active assignment family now also records:
+  - bare inline `(+=)` and `(-=)` forms are supported as delta-`1` variants,
+  - malformed inline modifier payloads such as `(+= 2 3)` no longer truncate silently,
+  - duplicate inline modifiers such as `(+= 2) (-= 1)` no longer fall through a bare-suffix error,
+  - and [t/75-language-contract-inline-compound-modifier-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/75-language-contract-inline-compound-modifier-boundary.t) now locks parser, pipeline, and CLI behavior for that family.
+## 2026-03-16: future `R11` conflict-detection note now records the naming split too
+- The saved future shared-drive direction now also records:
+  - per-value-source overlap signals such as `P_Q_multi_src_conflict`,
+  - and whole-target overlap signals such as `P_multi_value_conflict`.
 ## 2026-03-16: future `R11` shared-drive notes now prefer assertion bits over default arbitration
 - The future shared-datapath lane now records:
   - no default auto-resolution or auto-priority for same-target conflicts,

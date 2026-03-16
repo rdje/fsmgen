@@ -142,7 +142,7 @@ Planned bounded sub-lane inside `R11`:
   - which RHS/value sources must also be surfaced to the shared datapath block,
   - how per-child drive intents are named and reported,
   - how same-target/same-value aggregation differs from same-target/different-value conflicts,
-  - how conflict/assertion bits are expressed for per-`(P, Q)` source-enable families and for whole-target `P` value-family conflicts,
+  - how conflict/assertion bits are expressed and named for per-`(P, Q)` source-enable families and for whole-target `P` value-family conflicts,
   - which registered outputs should internalize automatically when peer-read,
   - how users explicitly re-export those now-internal registered signals when wanted,
   - and which lifted registered outputs may legally loop back into child FSM inputs.
