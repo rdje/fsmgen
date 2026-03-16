@@ -47,7 +47,7 @@ The currently shipped composition behavior is intentionally bounded:
 - `C3` mixed composition currently supports exactly one generated child plus one external `?rtl` child,
 - `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one generated child, multiple generated children, or exactly one generated child plus one `?rtl` child,
 - each `=name` top port must resolve to exactly one same-named child endpoint with the same direction and width,
-- each `?rtl` child currently loads its interface from a sidecar `<module>.rtlif` metadata file searched first beside the composition source, then through explicit search roots such as repeated `--path DIR`, and then through the existing `FSMLIB` roots,
+- each `?rtl` child currently loads its interface from an embedded `(?rtlif:module_name ...)` companion root in the same composition source when present, otherwise from a sidecar `<module>.rtlif` metadata file searched first beside the composition source, then through explicit search roots such as repeated `--path DIR`, and then through the existing `FSMLIB` roots,
 - the shipped `.rtlif` mini-contract is one flat `(?rtlif:module_name ...)` root with declaration-ordered port tokens such as `clk`, `data_in<8`, `txd>`, `core_clk:clock`, and `rst_async_n:reset`,
 - explicit `.rtlif` type annotations are currently limited to `data`, `clock`, and `reset`,
 - typed `.rtlif` `clock` / `reset` tokens let custom-named RTL system ports auto-wire through composition without reviving broader hidden inference,
@@ -95,7 +95,7 @@ The language surface for the first composition lane recognizes exactly three chi
 Current shipped runtime subset:
 - `?fsmc` and `?dtc` are realized in the shipped `C1`, `C2`, and `C3` slices,
 - `?rtl` is now realized only in the first narrow `C3` slice,
-- the current `C3` slice expects one `<module>.rtlif` sidecar metadata file per external RTL module and does not parse/regenerate SV/VHDL module internals at composition time.
+- the current `C3` slice expects either one embedded `(?rtlif:module_name ...)` companion root or one `<module>.rtlif` sidecar metadata file per external RTL module and does not parse/regenerate SV/VHDL module internals at composition time.
 
 ### 3. Interface model
 Composition will use explicit typed interface data, not implicit global hashes.

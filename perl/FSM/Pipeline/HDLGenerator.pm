@@ -328,7 +328,7 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
         }
 
         if ($instance->kind eq 'rtl') {
-            push @realized_instances, $self->realize_rtl_child_instance($instance, $fsm_file, $header);
+            push @realized_instances, $self->realize_rtl_child_instance($instance, $composition_spec, $fsm_file, $header);
             next;
         }
 
@@ -547,11 +547,12 @@ sub resolve_external_generated_child_source_path ($self, $source_name, $fsm_file
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
-sub realize_rtl_child_instance ($self, $instance, $fsm_file, $header) {
+sub realize_rtl_child_instance ($self, $instance, $composition_spec, $fsm_file, $header) {
     my $module_name = $instance->module_name;
     my $loaded = $self->{rtl_interface_loader}->load_interface(
         module_name => $module_name,
         source_file => $fsm_file,
+        embedded_raw_ast => $composition_spec ? $composition_spec->raw_ast : undef,
     );
 
     return FSM::Composition::RealizedInstance->new(

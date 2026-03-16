@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: embedded `?rtlif` roots now have a first shipped `R11` slice
+- Saved shipped behavior:
+  - `?top:name` sources may now carry embedded `(?rtlif:module_name ...)` companion roots for external RTL children,
+  - embedded same-file interface roots take precedence over sidecar `<module>.rtlif` files,
+  - and mixed generated-child plus `?rtl` composition can now succeed without a separate sidecar file when the interface contract is declared locally.
+- Important continuity note:
+  - duplicate embedded `?rtlif` roots for the same RTL module name are rejected explicitly, so local precedence does not silently collapse into ambiguous metadata selection.
+- [t/89-composition-embedded-rtlif-roots.t](/Users/richarddje/Documents/github/fsmgen/t/89-composition-embedded-rtlif-roots.t) locks embedded-root precedence, no-sidecar mixed composition success, and duplicate embedded-root rejection.
+
 ## 2026-03-16: typed `.rtlif` ports now have a first deliberate `R11` contract slice
 - Saved shipped `.rtlif` contract:
   - one flat `(?rtlif:module_name ...)` root,

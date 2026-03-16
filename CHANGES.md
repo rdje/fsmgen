@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### embedded `?rtlif` roots now have a first shipped `R11` slice
+- Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so external RTL children can realize their interface from an embedded `(?rtlif:module_name ...)` companion root in the same composition source.
+- Shipped behavior now includes:
+  - embedded same-file `?rtlif` metadata taking precedence over sidecar `<module>.rtlif` files,
+  - mixed generated-child plus `?rtl` composition succeeding without a separate sidecar file when that local interface root exists,
+  - and explicit rejection of duplicate embedded `?rtlif` roots for the same RTL module name.
+- Added [t/89-composition-embedded-rtlif-roots.t](/Users/richarddje/Documents/github/fsmgen/t/89-composition-embedded-rtlif-roots.t) to lock embedded-root precedence, no-sidecar mixed composition success, and duplicate embedded-root rejection.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the active `R11` lane now records embedded `.rtlif` interface roots as shipped behavior.
+
 ### typed `.rtlif` ports now have a first deliberate `R11` contract slice
 - Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so sidecar RTL metadata now accepts typed default-input tokens such as `core_clk:clock` and `rst_async_n:reset` in addition to the earlier compact forms.
 - The shipped `.rtlif` contract now includes:

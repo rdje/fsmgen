@@ -170,6 +170,7 @@ Combinational DT note:
   - sequential `?dtc` children expose implicit `clk` / `rst_n` just like standalone `?dt:name` roots do
 - `(?rtl:module)` for external RTL children
 - External RTL interface loading via sidecar `<module>.rtlif`
+  - or via an embedded `(?rtlif:module_name ...)` companion root in the same composition source
   - flat `(?rtlif:module_name ...)` roots with explicit port tokens
   - token forms such as `clk`, `data_in<8`, `txd>`, `core_clk:clock`, and `rst_async_n:reset`
   - explicit type annotations currently limited to `:data`, `:clock`, and `:reset`
@@ -896,6 +897,7 @@ This currently works because:
 
 Current `.rtlif` token contract:
 - metadata uses one flat `(?rtlif:module_name ...)` root
+- when a composition source contains an embedded `(?rtlif:module_name ...)` companion root, that local declaration takes precedence over any sidecar `<module>.rtlif` file
 - declaration order is preserved
 - `port`, `port<8`, and `port>` still work as the compact forms
 - `port:data`, `port<8:data`, `core_clk:clock`, and `rst_async_n:reset` are also valid

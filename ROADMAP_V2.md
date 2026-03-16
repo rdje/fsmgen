@@ -133,11 +133,13 @@ First shipped `R11` slice now in tree:
 - `?dt:name` is now an active standalone-module root in the live toolchain.
 - The `.rtlif` mini-contract is now explicit enough to build on:
   - one flat `(?rtlif:module_name ...)` root,
+  - embedded same-file `(?rtlif:module_name ...)` companion roots taking precedence over sidecar metadata when present,
   - declaration-ordered port tokens,
   - compact tokens such as `clk`, `data_in<8`, and `txd>`,
   - typed tokens such as `core_clk:clock`, `rst_async_n:reset`, and `data_in<8:data`,
   - explicit type annotations currently limited to `data`, `clock`, and `reset`,
-  - and typed `clock` / `reset` metadata now enabling honest auto-wiring of custom-named RTL system ports in the shipped mixed-composition lane.
+  - typed `clock` / `reset` metadata now enabling honest auto-wiring of custom-named RTL system ports in the shipped mixed-composition lane,
+  - and mixed composition no longer requiring a separate sidecar file when the external RTL interface contract is embedded in the composition source itself.
 - The shipped first slice currently supports:
   - top-level general DT blocks such as `(-foo ...)`,
   - directive sections `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, and `(+params ...)`,

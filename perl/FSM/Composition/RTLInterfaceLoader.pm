@@ -28,6 +28,25 @@ sub load_interface ($self, %args) {
         or confess "RTLInterfaceLoader requires 'module_name'";
     my $source_file = $args{source_file}
         or confess "RTLInterfaceLoader requires 'source_file'";
+    my $embedded_raw_ast = $args{embedded_raw_ast};
+
+    if (defined $embedded_raw_ast) {
+        my $embedded_rtlif_ast = $self->find_embedded_rtlif_root(
+            $embedded_raw_ast,
+            $module_name,
+            $source_file,
+        );
+        if ($embedded_rtlif_ast) {
+            my $metadata_path = $self->embedded_metadata_label($source_file, $module_name);
+            my $ports = $self->parse_metadata_ast($module_name, $embedded_rtlif_ast, $metadata_path);
+            return {
+                module_name => $module_name,
+                metadata_path => $metadata_path,
+                interface_ports => $ports,
+                raw_ast => $embedded_rtlif_ast,
+            };
+        }
+    }
 
     my $metadata_path = $self->resolve_metadata_path($module_name, $source_file);
     my $raw_ast = Lispish::multi($metadata_path)
@@ -63,6 +82,10 @@ sub resolve_metadata_path ($self, $module_name, $source_file) {
         "Search roots: ".join(', ', @search_dirs).". ".
         "The active C3 lane requires external RTL interface metadata to be prepared separately and loaded for composition use. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+}
+
+sub embedded_metadata_label ($self, $source_file, $module_name) {
+    return "$source_file:?rtlif:$module_name";
 }
 
 sub parse_metadata_ast ($self, $module_name, $raw_ast, $metadata_path) {
@@ -114,20 +137,36 @@ sub parse_metadata_ast ($self, $module_name, $raw_ast, $metadata_path) {
 }
 
 sub find_rtlif_root ($self, $raw_ast, $module_name) {
+    my @matches = $self->find_rtlif_roots($raw_ast, $module_name);
+    return $matches[0];
+}
+
+sub find_embedded_rtlif_root ($self, $raw_ast, $module_name, $source_file) {
+    my @matches = $self->find_rtlif_roots($raw_ast, $module_name);
+    confess
+        "Composition source '$source_file' contains multiple embedded '?rtlif:$module_name' roots. ".
+        "The active RTL interface contract allows at most one embedded interface root per external RTL module name in the same source. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        if @matches > 1;
+    return $matches[0];
+}
+
+sub find_rtlif_roots ($self, $raw_ast, $module_name) {
     return undef unless ref($raw_ast) eq 'ARRAY';
+    my @matches;
 
     if (@$raw_ast > 0 && !ref($raw_ast->[0]) && $raw_ast->[0] eq "?rtlif:$module_name") {
-        return $raw_ast;
+        push @matches, $raw_ast;
     }
 
     for my $ast_node (@$raw_ast) {
         next unless ref($ast_node) eq 'ARRAY';
         next unless @$ast_node > 0;
         next if ref($ast_node->[0]);
-        return $ast_node if $ast_node->[0] eq "?rtlif:$module_name";
+        push @matches, $ast_node if $ast_node->[0] eq "?rtlif:$module_name";
     }
 
-    return undef;
+    return @matches;
 }
 
 sub parse_port_token ($self, $module_name, $token, $metadata_path) {

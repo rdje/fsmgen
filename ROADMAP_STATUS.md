@@ -60,7 +60,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `R11` Composition contract strengthening.
 - Current next decision point:
   - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, `?dtc` composition child reuse, and mixed generated-child plus `?rtl` declared connect-by-name are all fresh in the tree.
-  - The `.rtlif` mini-contract is now explicit enough to build on, so the next `R11` choice is whether to keep deepening sidecar-interface behavior or move into broader reusable-module interface/export questions.
+  - The `.rtlif` mini-contract now covers typed ports plus embedded same-file interface roots, so the next `R11` choice is whether to deepen interface-source behavior further or move into broader reusable-module interface/export questions.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
 
 ## Workstreams
@@ -547,6 +547,10 @@ Done:
   - typed tokens such as `core_clk:clock`, `rst_async_n:reset`, and `data_in<8:data` are now active too,
   - explicit type annotations are currently limited to `data`, `clock`, and `reset`,
   - and typed `clock` / `reset` metadata now lets mixed composition auto-wire custom-named RTL system ports honestly.
+- The next bounded `.rtlif` contract-improvement slice is now also shipped:
+  - `?top:name` sources may now carry embedded `(?rtlif:module_name ...)` companion roots for external RTL children,
+  - embedded same-file `?rtlif` roots take precedence over sidecar `<module>.rtlif` files,
+  - and mixed composition can therefore realize external RTL children without a separate sidecar file when the interface contract is declared locally.
 - The future reusable standalone-DT/module-library direction is now also recorded as explicit `R11` contract work instead of loose brainstorming only.
 - That future `R11` direction now also records:
   - multi-`(-foo ...)` standalone `?dt:name` modules,
@@ -597,8 +601,12 @@ Done:
   - direct `.rtlif` token parsing for declaration-ordered typed metadata,
   - custom-named RTL `clock` / `reset` auto-wiring in mixed `?dtc` plus `?rtl` composition,
   - and rejection of unsupported explicit `.rtlif` type names.
+- [t/89-composition-embedded-rtlif-roots.t](/Users/richarddje/Documents/github/fsmgen/t/89-composition-embedded-rtlif-roots.t) now locks:
+  - embedded `?rtlif` precedence over sidecar metadata,
+  - mixed generated-child plus `?rtl` success without a separate sidecar file,
+  - and rejection of duplicate embedded `?rtlif` roots for the same RTL module name.
 Left:
-- Decide whether later work should keep the now-formalized `.rtlif` mini-contract as the long-term sidecar interface layer or place a stronger interface-source contract above it.
+- Decide whether later work should keep the now-formalized `.rtlif` interface-source family as embedded-root plus sidecar metadata, or place a stronger interface-source contract above it.
 - Turn the new shared-datapath extraction direction into a real contract:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets,
   - per-child drive-intent aggregation,

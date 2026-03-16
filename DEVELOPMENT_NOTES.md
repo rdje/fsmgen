@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: embedded `?rtlif` roots now have a first shipped `R11` slice
+- Continued the active `R11` lane by turning the freshly formalized `.rtlif` mini-contract into a more usable interface-source behavior instead of widening composition syntax again.
+- Landed behavior:
+  - `?top:name` sources may now carry embedded `(?rtlif:module_name ...)` companion roots,
+  - embedded same-file interface roots take precedence over sidecar `<module>.rtlif` files,
+  - and mixed generated-child plus `?rtl` tops can now realize external RTL children without a separate sidecar file when the interface contract is declared locally.
+- This is a good next step because it strengthens interface provenance without changing the narrow mixed-composition topology:
+  - we still have one external RTL child in the shipped mixed lane,
+  - we still do not parse or regenerate external RTL internals,
+  - but we no longer force interface metadata to live in a second file when the composition author wants the contract beside the top.
+- [t/89-composition-embedded-rtlif-roots.t](/Users/richarddje/Documents/github/fsmgen/t/89-composition-embedded-rtlif-roots.t) locks embedded-root precedence, no-sidecar mixed composition success, and duplicate embedded-root rejection.
+
 ## 2026-03-16: typed `.rtlif` ports now have a first deliberate `R11` contract slice
 - Continued the active `R11` lane by tightening the smallest external-RTL contract that already affects real composition behavior instead of widening syntax again.
 - Landed behavior:
