@@ -1783,22 +1783,26 @@ sub build_internal_signal_declaration_plan($self, $fsm_module, $declared_ports =
     };
 }
 sub build_module_declaration_plan($self, $fsm_module) {
-    my $clock_name = $self->effective_clock_name($fsm_module);
-    my $reset_name = $self->effective_reset_name($fsm_module);
-    my @base_ports = (
-        {
-            direction => 'input',
-            storage => 'wire',
-            name => $clock_name,
-            width => 1,
-        },
-        {
-            direction => 'input',
-            storage => 'wire',
-            name => $reset_name,
-            width => 1,
-        },
-    );
+    my $system_contract = $self->effective_system_contract($fsm_module);
+    my $clock_name = $system_contract->{clock};
+    my $reset_name = $system_contract->{reset};
+    my @base_ports;
+    if ($system_contract->{declare_ports} // 1) {
+        @base_ports = (
+            {
+                direction => 'input',
+                storage => 'wire',
+                name => $clock_name,
+                width => 1,
+            },
+            {
+                direction => 'input',
+                storage => 'wire',
+                name => $reset_name,
+                width => 1,
+            },
+        );
+    }
 
     my $signals = $fsm_module->signals;
     my @inputs;
@@ -1806,8 +1810,12 @@ sub build_module_declaration_plan($self, $fsm_module) {
 
     fsm_debug("HDL Generation: Processing " . scalar(keys %$signals) . " signals for module declaration", 3);
 
-    my %seen_signals = ($clock_name => 1, $reset_name => 1);
-    my %port_directions = ($clock_name => 'input', $reset_name => 'input');
+    my %seen_signals;
+    my %port_directions;
+    if ($system_contract->{declare_ports} // 1) {
+        %seen_signals = ($clock_name => 1, $reset_name => 1);
+        %port_directions = ($clock_name => 'input', $reset_name => 'input');
+    }
     my %driven_signals = $self->get_driven_signals();
 
     for my $sig_name (sort keys %$signals) {

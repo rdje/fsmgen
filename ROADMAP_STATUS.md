@@ -57,11 +57,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- `R8` Language-contract hardening.
+- `R11` Composition contract strengthening.
 - Current next decision point:
-  - Continue the draft normative language reference beyond the now-locked guard/update/operator/symbol/system families.
-  - Audit the remaining non-directive parser-visible legacy constructs and classify each one into the supported or explicitly rejected buckets.
-  - Keep adding focused regressions that lock the adopted language boundary construct family by construct family.
+  - Keep the first `?dt:name` slice moving while the root/interface rules are fresh, instead of switching straight back into malformed-boundary hunting.
+  - Decide whether the next `R11` slice should deepen standalone-DT reuse itself or start the reusable-source lookup lane (`FSMLIB` plus repeatable `--path DIR`).
+  - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
 
 ## Workstreams
 ### Closed v1 foundation workstreams
@@ -507,7 +507,7 @@ Exit criteria:
 
 ### R11. Composition contract strengthening
 Description:
-- Deepen the shipped composition model without widening it carelessly, especially around external RTL interface contracts.
+- Deepen the shipped composition model and adjacent reusable module contracts without widening them carelessly.
 Deliverables:
 - Formalize the `.rtlif` contract clearly.
 - Decide whether later work should keep `.rtlif` as-is or place a stronger interface-source contract above it.
@@ -537,7 +537,7 @@ Deliverables:
   - `?top:name` remains the explicit composition-root concept unless a later family-level root-syntax decision introduces aliases such as `?mod:name` or `?module:name`,
   - and reusable-source lookup should grow through existing `FSMLIB` semantics plus repeatable per-invocation `--path DIR` roots.
 - Harden mixed `?fsmc` / `?rtl` flows before broader composition syntax is considered.
-Status: `not started`
+Status: `in progress`
 Done:
 - The scoped `R6` composition lane is complete.
 - The `.rtlif` follow-up and the bounded shared-datapath extraction direction are now both recorded as future `R11` contract work instead of loose brainstorming only.
@@ -546,6 +546,15 @@ Done:
   - multi-`(-foo ...)` standalone `?dt:name` modules,
   - the implicit-system split between always-implicit `?fsm:name` `clk` / `rst_n` and conditional implicit `?dt:name` `clk` / `rst_n`,
   - and the need to express arbitration/conflict reporting through generated enable families instead of structural over-rejection.
+- The first reusable standalone-DT slice is now shipped in the active toolchain:
+  - top-level `?dt:name` roots are classified, parsed, and generated end to end,
+  - the active `?dt:name` top-level contract currently supports `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`, compact top-level `(:= signal=value)` directives, and general DT blocks such as `(-foo ...)`,
+  - `?dt:name` rejects explicit `+system`, regular FSM-state blocks, and dedicated reset-state blocks at top level,
+  - purely combinational `?dt:name` modules expose no implicit `clk` / `rst_n`,
+  - sequential `?dt:name` modules expose implicit `clk` / `rst_n`,
+  - driven non-intermediate targets in `?dt:name` become module outputs by default,
+  - and standalone `?dt:name` generation stays out of the encoded `current_state` / `next_state` plan.
+- [t/82-standalone-dt-root-support.t](/Users/richarddje/Documents/github/fsmgen/t/82-standalone-dt-root-support.t) now locks both the combinational and sequential `?dt:name` success paths.
 Left:
 - Turn the `.rtlif` follow-up into a deliberate contract-improvement lane.
 - Turn the new shared-datapath extraction direction into a real contract:
@@ -558,12 +567,11 @@ Left:
   - registered-output loopback rules,
   - and the rule that combinational outputs may be top-level outputs but not peer-FSM inputs.
 - Turn the reusable standalone-DT/module-library direction into a real contract:
-  - settle the source-root family around `?fsm:name`, `?dt:name`, and `?top:name`,
-  - decide whether `?mod:name` / `?module:name` are aliases or distinct roots,
+  - decide whether the newly shipped `?dt:name` root is the final standalone-DT spelling or whether `?mod:name` / `?module:name` should later exist as aliases or distinct roots,
   - decide whether unnamed reusable DT roots such as `?dt:` exist at all,
-  - define how standalone DT interfaces are declared/exposed,
+  - extend the current shipped `?dt:name` interface rule into a fuller reusable-module contract, especially around multi-block enable surfacing and composition-facing exposure,
   - define how multi-`(-foo ...)` standalone DT modules expose block-level and module-level enable families,
-  - define the exact implicit-system rule split between `?fsm:name` and `?dt:name`,
+  - extend the now-shipped implicit-system rule split between `?fsm:name` and `?dt:name` into the broader reuse/composition contract,
   - and define deterministic lookup/precedence/diagnostics across explicit paths, repeatable `--path DIR`, `FSMLIB`, and local files.
 - Add any needed diagnostics/tests before considering broader composition growth.
 Exit criteria:

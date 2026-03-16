@@ -129,6 +129,19 @@ Deliverable themes:
   - and prefer repeatable `--path DIR` search-root options over comma-packed path lists so lookup stays deterministic and shell-friendly,
 - and harden mixed `?fsmc` / `?rtl` flows before adding broader composition syntax.
 
+First shipped `R11` slice now in tree:
+- `?dt:name` is now an active standalone-module root in the live toolchain.
+- The shipped first slice currently supports:
+  - top-level general DT blocks such as `(-foo ...)`,
+  - directive sections `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, and `(+params ...)`,
+  - compact top-level `(:= signal=value)` directives,
+  - implicit `clk` / `rst_n` only when the `?dt:name` source contains sequential assignments,
+  - and default output exposure for driven non-intermediate targets.
+- The shipped first slice does not yet widen into:
+  - explicit `+system` inside `?dt:name`,
+  - regular FSM-state blocks inside `?dt:name`,
+  - or reusable-source lookup / alias-root questions.
+
 Expected result:
 - composition remains explicit and serious instead of drifting back toward legacy implicit behavior.
 

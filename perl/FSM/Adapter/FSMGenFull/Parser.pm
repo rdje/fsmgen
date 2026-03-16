@@ -48,7 +48,7 @@ sub parse_fsm($self, $raw_ast) {
         fsm_trace_decision(0, "Detected unsupported tagged top-level source '$header'", 1);
         Carp::confess
             "Unsupported top-level source '$header'. ".
-            "The active toolchain supports '?fsm:name' and '+fsm' as FSM sources, and '?top:name' through the composition pipeline. ".
+            "The active toolchain supports '?fsm:name', '?dt:name', and '+fsm' as single-module sources, and '?top:name' through the composition pipeline. ".
             "Other tagged source kinds such as '?define:' are out of active support. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }
@@ -56,14 +56,21 @@ sub parse_fsm($self, $raw_ast) {
     if (ref($raw_ast) eq 'ARRAY') {
         if (@$raw_ast > 0 && !ref($raw_ast->[0]) && $raw_ast->[0] =~ /^\?fsm:/) {
             fsm_trace_decision(1, "Detected '?fsm:' structured AST header", 2);
-            my $module = $self->parse_fsm_module($raw_ast);
+            my $module = $self->parse_fsm_module($raw_ast, 0, 'fsm');
             fsm_trace_exit('Parser parse_fsm() completed via ?fsm path', 2);
+            return $module;
+        }
+
+        if (@$raw_ast > 0 && !ref($raw_ast->[0]) && $raw_ast->[0] =~ /^\?dt:/) {
+            fsm_trace_decision(1, "Detected '?dt:' structured AST header", 2);
+            my $module = $self->parse_fsm_module($raw_ast, 0, 'dt');
+            fsm_trace_exit('Parser parse_fsm() completed via ?dt path', 2);
             return $module;
         }
         
         if (@$raw_ast > 0 && ref($raw_ast->[0]) eq 'ARRAY' && $raw_ast->[0][0] eq '+fsm') {
             fsm_trace_decision(1, "Detected '+fsm' flattened AST header", 2);
-            my $module = $self->parse_fsm_module(['root_array', $raw_ast], 1);
+            my $module = $self->parse_fsm_module(['root_array', $raw_ast], 1, 'fsm');
             fsm_trace_exit('Parser parse_fsm() completed via +fsm path', 2);
             return $module;
         }
@@ -71,8 +78,14 @@ sub parse_fsm($self, $raw_ast) {
         for my $ast_node (@$raw_ast) {
             if (ref($ast_node) eq 'ARRAY' && @$ast_node > 0 && !ref($ast_node->[0]) && $ast_node->[0] =~ /^\?fsm:/) {
                 fsm_trace_decision(1, "Detected nested '?fsm:' AST node", 2);
-                my $module = $self->parse_fsm_module($ast_node);
+                my $module = $self->parse_fsm_module($ast_node, 0, 'fsm');
                 fsm_trace_exit('Parser parse_fsm() completed via nested ?fsm path', 2);
+                return $module;
+            }
+            if (ref($ast_node) eq 'ARRAY' && @$ast_node > 0 && !ref($ast_node->[0]) && $ast_node->[0] =~ /^\?dt:/) {
+                fsm_trace_decision(1, "Detected nested '?dt:' AST node", 2);
+                my $module = $self->parse_fsm_module($ast_node, 0, 'dt');
+                fsm_trace_exit('Parser parse_fsm() completed via nested ?dt path', 2);
                 return $module;
             }
         }
@@ -82,12 +95,12 @@ sub parse_fsm($self, $raw_ast) {
     my $root_display = $self->describe_top_level_source_root($raw_ast);
     Carp::confess
         "Malformed top-level source root '$root_display'. ".
-        "The active FSM parser expects '?fsm:module_name' or the legacy '+fsm' root family at the source root. ".
-        "Bare top-level forms like '(+system ...)' or '(idle ...)' must be wrapped inside a supported FSM source root. ".
+        "The active single-module parser expects '?fsm:module_name', '?dt:module_name', or the legacy '+fsm' root family at the source root. ".
+        "Bare top-level forms like '(+system ...)' or '(idle ...)' must be wrapped inside a supported source root. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 
-sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
+sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
     fsm_trace_enter('Parser parse_fsm_module() entry', 2);
     $self->reset_combinational_dependency_tracking();
     $self->reset_transition_target_tracking();
@@ -101,21 +114,25 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
     } else {
         fsm_trace_decision(1, 'Using standard AST module header decoding path', 2);
         my ($fsm_header, $contents) = @$fsm_ast;
-        $module_name = $self->decode_structured_fsm_module_name($fsm_header);
+        $module_name = $self->decode_structured_module_name($fsm_header, $root_kind);
         $fsm_contents = $contents;
     }
 
-    $self->validate_fsm_root_body($module_name, $fsm_contents, $is_flat_ast);
+    $self->validate_module_root_body($module_name, $fsm_contents, $is_flat_ast, $root_kind);
     
     fsm_debug("Parsing FSM module: $module_name", 3);
     
     my $module = FSM::CoreAST::FSMModule->new(name => $module_name);
     $self->{fsm_module} = $module;
+    $module->{attributes}{source_root_kind} = $root_kind;
+    my $root_contract_label = $self->root_contract_label($root_kind);
+    my $top_level_forms_desc = $self->supported_top_level_forms_description($root_kind, $is_flat_ast);
+    my $supported_directives_desc = $self->supported_directives_description($root_kind);
     
     for my $element (@$fsm_contents) {
         Carp::confess
-            "Malformed top-level FSM body item '".$self->describe_top_level_source_root([$element])."' in source '$module_name'. ".
-            "Inside '?fsm:module_name' and the legacy '+fsm' root family, top-level content must be a list of directive sections, ':=' directives, and state/DT blocks. ".
+            "Malformed top-level " . ($root_kind eq 'dt' ? 'DT' : 'FSM') . " body item '".$self->describe_top_level_source_root([$element])."' in source '$module_name'. ".
+            $top_level_forms_desc . " ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
             unless ref($element) eq 'ARRAY';
 
@@ -125,6 +142,13 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
         if ($element_name eq '+fsm') {
             next;
         } elsif ($element_name eq '+system') {
+            if ($root_kind eq 'dt') {
+                Carp::confess
+                    "Unsupported top-level directive '+system' inside '$root_contract_label'. ".
+                    "The active '?dt:name' contract currently keeps clock/reset ports implicit: combinational DT modules expose no system ports, and sequential DT modules use implicit 'clk' / 'rst_n'. ".
+                    "Explicit '+system' sections remain part of the '?fsm:name' contract only. ".
+                    "See docs/USER_GUIDE.md for the current supported boundary.\n";
+            }
             fsm_debug("Parsing +system block", 3);
             $self->parse_system_section($element);
         } elsif ($element_name eq '+size') {
@@ -158,7 +182,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
             } ($element_name, @tail));
             Carp::confess
                 "Unsupported top-level form '($detail)'. ".
-                "Inside '?fsm:name', the active contract supports directive sections, ':=' init/reset directives, and state/DT blocks only. ".
+                $top_level_forms_desc . " ".
                 "Future-looking bare forms such as '(lhs := value)' are not part of the active contract yet. ".
                 "See docs/USER_GUIDE.md for the current supported boundary.\n";
         } elsif (
@@ -172,12 +196,12 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
             } ($element_name, $element->[1][0]));
             Carp::confess
                 "Unsupported top-level form '($detail)'. ".
-                "Inside '?fsm:name', the active contract supports directive sections, ':=' init/reset directives, and state/DT blocks only. ".
+                $top_level_forms_desc . " ".
                 "See docs/USER_GUIDE.md for the current supported boundary.\n";
         } elsif ($element_name =~ /^\+/) {
             Carp::confess
                 "Unsupported top-level directive '$element_name'. ".
-                "The active contract currently supports only '+system', '+size', '+constants', '+enums', '+define', and '+params' inside '?fsm:name'. ".
+                $supported_directives_desc . " ".
                 "See docs/USER_GUIDE.md for the current supported boundary.\n";
         } elsif ($element_name =~ /^[a-zA-Z_]/ && $element_name !~ /^(idle|-syncrst|-syncreset|-asyncrst|-asyncreset)$/ && !ref($element->[1])) {
             my $detail = join(' ', map {
@@ -185,12 +209,20 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
             } @$element);
             Carp::confess
                 "Unsupported top-level form '($detail)'. ".
-                "Inside '?fsm:name', the active contract supports directive sections, ':=' init/reset directives, and state/DT blocks only. ".
+                $top_level_forms_desc . " ".
                 "Future-looking bare forms such as '(lhs := value)' are not part of the active contract yet. ".
                 "See docs/USER_GUIDE.md for the current supported boundary.\n";
         } else {
             fsm_debug("Parsing state block: $element_name", 3);
             my $state = $self->parse_state($element);
+            if ($root_kind eq 'dt' && $state) {
+                Carp::confess
+                    "Unsupported top-level block '$element_name' inside '$root_contract_label'. ".
+                    "The active '?dt:name' contract currently supports only general DT blocks named like '(-foo ...)' at top level. ".
+                    "FSM-state blocks and dedicated reset-state blocks remain part of '?fsm:name'. ".
+                    "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                    unless $state->can('is_standalone_dt') && $state->is_standalone_dt;
+            }
             $module->add_state($state) if $state;
         }
     }
@@ -201,12 +233,15 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0) {
     return $module;
 }
 
-sub validate_fsm_root_body($self, $module_name, $fsm_contents, $is_flat_ast = 0) {
-    my $root_family = $is_flat_ast ? '+fsm' : '?fsm:' . $module_name;
+sub validate_module_root_body($self, $module_name, $fsm_contents, $is_flat_ast = 0, $root_kind = 'fsm') {
+    my $root_family = $is_flat_ast ? '+fsm' : '?' . $root_kind . ':' . $module_name;
+    my $body_desc = $root_kind eq 'dt'
+        ? "The active contract expects a non-empty list of directive sections, ':=' directives, and general DT blocks inside the DT source root. "
+        : "The active contract expects a non-empty list of directive sections, ':=' directives, and state/DT blocks inside the FSM source root. ";
 
     Carp::confess
-        "Malformed top-level FSM body for source '$root_family'. ".
-        "The active contract expects a non-empty list of directive sections, ':=' directives, and state/DT blocks inside the FSM source root. ".
+        "Malformed top-level " . ($root_kind eq 'dt' ? 'DT' : 'FSM') . " body for source '$root_family'. ".
+        $body_desc .
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless ref($fsm_contents) eq 'ARRAY' && @$fsm_contents;
 
@@ -241,14 +276,37 @@ sub decode_flat_fsm_structure($self, $ast_array) {
         "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 
-sub decode_structured_fsm_module_name($self, $fsm_header) {
-    return $1 if defined($fsm_header) && !ref($fsm_header) && $fsm_header =~ /\A\?fsm:([A-Za-z_]\w*)\z/;
+sub decode_structured_module_name($self, $fsm_header, $root_kind = 'fsm') {
+    return $1
+        if defined($fsm_header)
+        && !ref($fsm_header)
+        && $fsm_header =~ /\A\?$root_kind:([A-Za-z_]\w*)\z/;
 
     my $display = defined($fsm_header) ? (ref($fsm_header) ? ref($fsm_header) : $fsm_header) : 'undef';
+    my $root_contract_label = $self->root_contract_label($root_kind);
     Carp::confess
-        "Malformed top-level FSM source '$display'. ".
-        "The active contract expects '?fsm:module_name' with an HDL-identifier-compatible module name ([A-Za-z_]\\w*). ".
+        "Malformed top-level " . ($root_kind eq 'dt' ? 'DT' : 'FSM') . " source '$display'. ".
+        "The active contract expects '$root_contract_label' with an HDL-identifier-compatible module name ([A-Za-z_]\\w*). ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n";
+}
+
+sub root_contract_label($self, $root_kind = 'fsm') {
+    return '?dt:name' if $root_kind eq 'dt';
+    return '?fsm:name';
+}
+
+sub supported_directives_description($self, $root_kind = 'fsm') {
+    return "The active contract currently supports only '+size', '+constants', '+enums', '+define', and '+params' inside '?dt:name'"
+        if $root_kind eq 'dt';
+    return "The active contract currently supports only '+system', '+size', '+constants', '+enums', '+define', and '+params' inside '?fsm:name'";
+}
+
+sub supported_top_level_forms_description($self, $root_kind = 'fsm', $is_flat_ast = 0) {
+    return "Inside '?dt:name', the active contract supports directive sections, ':=' init/reset directives, and general DT blocks like '(-foo ...)' only"
+        if $root_kind eq 'dt';
+    return "Inside '?fsm:module_name' and the legacy '+fsm' root family, top-level content must be a list of directive sections, ':=' directives, and state/DT blocks"
+        if $is_flat_ast;
+    return "Inside '?fsm:name', the active contract supports directive sections, ':=' init/reset directives, and state/DT blocks only";
 }
 
 sub describe_top_level_source_root($self, $raw_ast) {

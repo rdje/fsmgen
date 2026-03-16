@@ -35,7 +35,7 @@ sub analyze_signal_roles($self, $fsm_module) {
         my $usage = $usage_map->{$signal_name};
         my $signal = $registry->{$signal_name};
         
-        my $role = $self->_classify_signal_role($signal_name, $usage);
+        my $role = $self->_classify_signal_role($fsm_module, $signal_name, $usage);
         $signal->set_attribute('signal_role', $role);
         
         my $contexts_str = join(',', @{$usage->{contexts} || []});
@@ -191,12 +191,19 @@ sub _analyze_signal_ref_usage($self, $signal, $context) {
     }
 }
 
-sub _classify_signal_role($self, $signal_name, $usage) {
+sub _classify_signal_role($self, $fsm_module, $signal_name, $usage) {
     if ($usage->{is_intermediate}) {
         return 'INTERNAL_INTERMEDIATE';
     }
-    
+
     if ($usage->{has_output_marker}) {
+        return 'OUTPUT';
+    }
+
+    if ($fsm_module
+            && $fsm_module->can('is_dt_root')
+            && $fsm_module->is_dt_root
+            && $usage->{assigned_to} > 0) {
         return 'OUTPUT';
     }
     
@@ -232,6 +239,7 @@ sub generate_fsm_interface($self, $fsm_module) {
             $input_count++;
             fsm_debug("  Added INPUT: $signal_name", 3);
         } elsif ($role eq 'OUTPUT') {
+            $signal->set_attribute('is_output', 1);
             $fsm_module->add_signal($signal);
             $output_count++;
             fsm_debug("  Added OUTPUT: $signal_name", 3);

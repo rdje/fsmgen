@@ -110,7 +110,7 @@ sub generate_hdl_from_file ($self, $fsm_file) {
         my $header = $source_info->{header};
         Carp::confess
             "Unsupported top-level source '$header'. ".
-            "The active pipeline supports '?fsm:name', '+fsm', and '?top:name'. ".
+            "The active pipeline supports '?fsm:name', '?dt:name', '+fsm', and '?top:name'. ".
             "Other tagged source kinds such as '?define:' are out of active support. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }

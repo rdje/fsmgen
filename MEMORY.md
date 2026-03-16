@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: first `R11` standalone `?dt:name` slice is now shipped
+- `R11` is no longer purely future-note territory. The first reusable standalone-DT slice is now live.
+- Saved shipped contract:
+  - `?dt:name` is now a classified/generating source root,
+  - top-level `?dt:name` content currently supports `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`, compact `(:= signal=value)` directives, and general DT blocks such as `(-foo ...)`,
+  - explicit `+system` is rejected inside `?dt:name`,
+  - purely combinational `?dt:name` modules expose no implicit `clk` / `rst_n`,
+  - sequential `?dt:name` modules expose implicit `clk` / `rst_n`,
+  - driven non-intermediate targets in `?dt:name` become module outputs by default,
+  - and `?dt:name` generation does not synthesize `current_state` / `next_state`.
+- [t/82-standalone-dt-root-support.t](/Users/richarddje/Documents/github/fsmgen/t/82-standalone-dt-root-support.t) locks both the combinational and sequential success paths.
 ## 2026-03-16: malformed `:=` directive shapes now have explicit end-to-end coverage
 - [t/81-language-contract-init-directive-shape-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/81-language-contract-init-directive-shape-boundary.t) now locks:
   - malformed non-scalar payloads such as `(:= (tester_reset=1 extra))`,

@@ -28,7 +28,7 @@ A `.fsm` file defines states, decision trees, conditions, assignments, and trans
 
 ### Terms and concepts
 - **State**: named execution context in the FSM.
-- **Decision tree (DT)**: conditional/action structure evaluated within a state.
+- **Decision tree (DT)**: conditional/action structure evaluated within an FSM state or within a standalone `?dt:name` module root.
 - **Conditional branch**: guard plus actions (assignments or transitions).
 - **Transition**: state change action written as `->`.
 - **Standalone/reset-style DTs**: top-level DT blocks that are not normal runtime states (for reset/clear style control).
@@ -71,8 +71,14 @@ Standard used here:
 - "fully supported" means the construct is in the active parser, goes through the active SystemVerilog/Verilog generation path, and is locked by current regressions.
 - "implemented but not fully regression-backed" means the parser/runtime has support for it, but the current test depth is not strong enough to present it as equally solid.
 
-### Fully supported single-FSM constructs
+### Fully supported single-module constructs
 - Root form `(?fsm:module_name ...)` with an HDL-identifier-compatible module name (`[A-Za-z_]\\w*`)
+- Root form `(?dt:module_name ...)` with an HDL-identifier-compatible module name (`[A-Za-z_]\\w*`)
+  - top-level `?dt:name` content is currently limited to `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`, compact top-level `(:= signal=value)` directives, and general DT blocks like `(-foo ...)`
+  - purely combinational `?dt:name` modules expose no implicit system ports
+  - any `?dt:name` module that contains at least one sequential assignment implicitly exposes `clk` / `rst_n`
+  - driven non-intermediate targets in `?dt:name` are exposed as module outputs by default
+  - `?dt:name` does not synthesize `current_state` / `next_state`
 - Legacy `+fsm` root family:
   - flattened sibling form with a first top-level entry `(+fsm module_name)` and sibling `(+system ...)`, state blocks, and `(+size ...)`
   - nested legacy root form `(+fsm module_name ...)`
@@ -181,7 +187,7 @@ Combinational DT note:
   - `(+bogus ...)`
 - Unsupported tagged top-level source kinds outside the active source family, for example:
   - `(?define:legacy_template ...)`
-  - other legacy wrapper/template source kinds that are neither `?fsm:name` nor `?top:name`
+  - other legacy wrapper/template source kinds that are neither `?fsm:name`, `?dt:name`, nor `?top:name`
 - Unsupported top-level bare forms inside `(?fsm:name ...)`, for example:
   - `(tester_reset := 1)`
   - `(BROKEN 1)`
@@ -410,25 +416,27 @@ This is the current `R8` draft normative contract for the active top-level sourc
 
 Accepted source roots:
 - `(?fsm:name ...)`
+- `(?dt:name ...)`
 - flattened legacy `+fsm` roots
 - `(?top:name ...)` through the composition pipeline
 
 Current boundary:
 - Supported:
   - `?fsm:module_name` as the active FSM source root, with an HDL-identifier-compatible module name
+  - `?dt:module_name` as the active standalone-DT source root, with an HDL-identifier-compatible module name
   - `+fsm` as the legacy FSM root family:
     - either the flattened sibling form with a first top-level `(+fsm module_name)` entry,
     - or the nested legacy root form `(+fsm module_name ...)`
   - `?top:top_name` as the active composition source root, with an HDL-identifier-compatible top name
 - Rejected explicitly:
   - unsupported tagged wrapper/template roots such as `(?define:legacy_template ...)`
-  - other tagged source kinds that are neither active FSM sources nor active composition sources
+  - other tagged source kinds that are neither active FSM sources, active standalone-DT sources, nor active composition sources
   - malformed `+fsm` roots that do not provide a scalar module name in one of the two supported legacy layouts
-  - malformed tagged source roots such as `?fsm:bad-name` or `?top:bad-name` whose source name is not HDL-identifier-compatible
+  - malformed tagged source roots such as `?fsm:bad-name`, `?dt:bad-name`, or `?top:bad-name` whose source name is not HDL-identifier-compatible
   - bare top-level FSM content without a wrapping supported source root, such as files that start directly with `(+system ...)` or `(idle ...)`
   - malformed structured `?fsm:name` roots whose body is empty or contains non-list top-level items such as `(?fsm:empty_root)` or `(?fsm:scalar_root BROKEN)`
 - Important rule:
-  - an unsupported tagged top-level wrapper does not become supported just because it contains a nested `?fsm:name` somewhere inside it
+  - an unsupported tagged top-level wrapper does not become supported just because it contains a nested supported source root somewhere inside it
 
 Boundary note:
 - This slice makes the top-level source-kind boundary explicit instead of letting legacy tagged wrappers drift through the nested-`?fsm` fallback path.
@@ -444,13 +452,14 @@ Boundary note:
 - Files that start directly with FSM content like `(+system ...)` or `(idle ...)` must still be wrapped in a supported source root:
   - accepted:
     - `(?fsm:my_module ...)`
+    - `(?dt:my_dt_module ...)`
     - `(+fsm my_module)` followed by sibling FSM content
   - rejected:
     - a file whose first top-level form is `(+system ...)`
     - a file whose first top-level form is `(idle ...)`
 - Tagged source-root names are now accepted or rejected as a whole:
-  - accepted: `?fsm:ctrl_unit`, `?top:packet_bridge`
-  - rejected: `?fsm:bad-name`, `?top:bad-name`
+  - accepted: `?fsm:ctrl_unit`, `?dt:route_block`, `?top:packet_bridge`
+  - rejected: `?fsm:bad-name`, `?dt:bad-name`, `?top:bad-name`
   - malformed tagged names no longer truncate silently to a valid prefix.
 - Structured `?fsm:name` roots must also carry a real top-level item list:
   - accepted:
@@ -459,6 +468,13 @@ Boundary note:
     - `(?fsm:empty_root)`
     - `(?fsm:scalar_root BROKEN)`
     - any structured `?fsm:name` root whose top-level body items are not list forms
+- Structured `?dt:name` roots must also carry a real top-level item list:
+  - accepted:
+    - `(?dt:route_block (+size ...) (-drive ...))`
+  - rejected:
+    - `(?dt:empty_dt_root)`
+    - `(?dt:scalar_dt_root BROKEN)`
+    - any structured `?dt:name` root whose top-level body items are not list forms
 - Legacy `+fsm` roots must carry a real body too:
   - accepted:
     - `(+fsm my_module)` followed by sibling FSM content
@@ -467,6 +483,51 @@ Boundary note:
     - `(+fsm my_module)` with no sibling or nested body content at all
     - `(+fsm my_module BROKEN)`
     - any legacy `+fsm` root whose body items are not list forms
+
+### Draft normative contract for standalone `?dt:name` roots
+This is the current live contract for the first shipped reusable standalone-DT slice.
+
+Accepted shape:
+```lisp
+(?dt:route_block
+  (+size
+    (DATA_IN 8)
+    (DATA_OUT 8)
+  )
+  (-route_data
+    (DATA_OUT = DATA_IN)
+  )
+)
+```
+
+Current meaning:
+- `?dt:name` is a standalone module root, not an encoded FSM-state-machine root.
+- A `?dt:name` source may contain any number of top-level general DT blocks such as `(-foo ...)`.
+- `?dt:name` may mix combinational assignments such as `(P = RHS)` and sequential assignments such as `(Q <- RHS)` in the same module.
+- Driven non-intermediate targets are exposed as module outputs by default.
+- `?dt:name` does not synthesize `current_state` / `next_state`.
+
+Current top-level boundary:
+- Supported:
+  - `(+size ...)`
+  - `(+constants ...)`
+  - `(+enums ...)`
+  - `(+define ...)`
+  - `(+params ...)`
+  - compact top-level `(:= signal=value)` directives
+  - general DT blocks such as `(-foo ...)`
+- Rejected explicitly:
+  - explicit `(+system ...)` sections
+  - regular FSM-state DT blocks such as `(idle ...)`
+  - dedicated reset-state blocks such as `(-syncrst ...)`
+
+Implicit system-port rule:
+- purely combinational `?dt:name` modules expose no implicit `clk` / `rst_n`
+- if any sequential assignment appears in the `?dt:name` source, generation implicitly exposes `clk` / `rst_n`
+
+Boundary note:
+- The semantic split from `?fsm:name` is the control model, not “combinational-only” versus “sequential-capable”.
+- The current shipped `?dt:name` slice is the first reusable standalone-module step; broader reuse lookup and root-family alias questions remain future `R11` work.
 
 ### Draft normative contract for the conventional `+system` section
 This is the current `R8` draft normative contract for the active `+system` boundary.

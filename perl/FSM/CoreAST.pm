@@ -1789,6 +1789,28 @@ package FSM::CoreAST::FSMModule;
     sub parameters($self) { $self->{parameters} }
     sub attributes($self) { $self->{attributes} }
     sub explicit_system_contract($self) { return $self->{attributes}{system_contract} }
+    sub source_root_kind($self) { return $self->{attributes}{source_root_kind} // 'fsm' }
+    sub is_dt_root($self) { return $self->source_root_kind eq 'dt' }
+    sub is_fsm_root($self) { return $self->source_root_kind eq 'fsm' }
+
+    sub has_timed_actions($self) {
+        for my $state (@{$self->{states} || []}) {
+            next unless Scalar::Util::blessed($state) && $state->can('decision_trees');
+            for my $dt (@{$state->decision_trees || []}) {
+                next unless Scalar::Util::blessed($dt) && $dt->can('elements');
+                for my $element (@{$dt->elements || []}) {
+                    return 1 if $self->_element_has_timed_actions($element);
+                }
+            }
+        }
+        return 0;
+    }
+
+    sub requires_implicit_system_ports($self) {
+        return 1 if ref($self->explicit_system_contract) eq 'HASH';
+        return 1 unless $self->is_dt_root;
+        return $self->has_timed_actions ? 1 : 0;
+    }
 
     sub effective_system_contract($self) {
         my $explicit = $self->explicit_system_contract;
@@ -1801,6 +1823,7 @@ package FSM::CoreAST::FSMModule;
                     // (($explicit->{reset} // '') =~ /_n$/ ? 'asreset' : 'sreset')
                 ),
                 implicit => 0,
+                declare_ports => 1,
             };
         }
 
@@ -1809,6 +1832,7 @@ package FSM::CoreAST::FSMModule;
             reset => 'rst_n',
             reset_keyword => 'asreset',
             implicit => 1,
+            declare_ports => $self->requires_implicit_system_ports,
         };
     }
 
@@ -1824,6 +1848,24 @@ package FSM::CoreAST::FSMModule;
     
     sub get_signal($self, $name) {
         return $self->{signals}{$name};
+    }
+
+    sub _element_has_timed_actions($self, $element) {
+        return 0 unless Scalar::Util::blessed($element);
+
+        if ($element->isa('FSM::CoreAST::Action')) {
+            return ($element->can('has_timing_semantics') && $element->has_timing_semantics) ? 1 : 0;
+        }
+
+        if ($element->can('get_all_actions')) {
+            for my $action (@{$element->get_all_actions || []}) {
+                next unless Scalar::Util::blessed($action);
+                next unless $action->can('has_timing_semantics');
+                return 1 if $action->has_timing_semantics;
+            }
+        }
+
+        return 0;
     }
     
     # High-level analysis

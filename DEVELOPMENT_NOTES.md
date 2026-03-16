@@ -77,6 +77,17 @@ This document captures engineering rationale, design constraints, and working de
 - The regression set now closes that gap too:
   - malformed `+constants`, `+define`, and `+params` payloads are now covered through pipeline and CLI entry points,
   - so the malformed symbol-definition family is no longer “fully end-to-end for enums, parser-only for the rest”.
+## 2026-03-16: first `R11` standalone `?dt:name` slice is now shipped
+- The reusable standalone-DT lane is no longer just future wording. One first slice is now live in the active toolchain.
+- Shipped behavior:
+  - `?dt:name` is now a classified/parsing/generation root beside `?fsm:name`, `+fsm`, and `?top:name`,
+  - top-level `?dt:name` content currently supports `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`, compact `(:= signal=value)` directives, and general DT blocks such as `(-foo ...)`,
+  - explicit `+system` remains rejected inside `?dt:name`,
+  - purely combinational `?dt:name` modules expose no implicit `clk` / `rst_n`,
+  - any sequential assignment inside `?dt:name` causes implicit `clk` / `rst_n`,
+  - driven non-intermediate targets are exposed as module outputs by default,
+  - and standalone `?dt:name` generation stays out of the encoded `current_state` / `next_state` plan.
+- This is enough to treat `R11` as active implementation work rather than a pure notes lane, but the broader reuse/composition-facing interface and lookup questions remain open.
 ## 2026-03-16: inline compound modifiers are now explicit on both the supported and malformed sides
 - The active parser had one more truth gap in the assignment family:
   - bare inline modifiers such as `(ACC <- SRC (+=))` and `(COMB = SRC (-=))` were already accepted as delta-`1` forms,
