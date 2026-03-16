@@ -170,6 +170,10 @@ Combinational DT note:
   - sequential `?dtc` children expose implicit `clk` / `rst_n` just like standalone `?dt:name` roots do
 - `(?rtl:module)` for external RTL children
 - External RTL interface loading via sidecar `<module>.rtlif`
+  - flat `(?rtlif:module_name ...)` roots with explicit port tokens
+  - token forms such as `clk`, `data_in<8`, `txd>`, `core_clk:clock`, and `rst_async_n:reset`
+  - explicit type annotations currently limited to `:data`, `:clock`, and `:reset`
+  - typed `:clock` / `:reset` metadata lets custom-named RTL system ports auto-wire through mixed composition
 - Explicit `(?toplink:name ...)` blocks with flat `/source/target/` tokens
 - Dotted child endpoints in links, for example `/producer.output_data/consumer.input_data/`
 - `C1` lane: one `?top`, one generated child (`?fsmc` or `?dtc`), explicit `?ports`, deterministic same-name top wiring
@@ -889,6 +893,14 @@ This currently works because:
 - the external RTL child is instantiated but not regenerated,
 - composition loads the RTL interface from `uart_tx.rtlif` beside the source file, then through repeated `--path DIR` roots, then through the existing `FSMLIB` search roots,
 - non-system mixed-child connections remain explicit through `?toplink`.
+
+Current `.rtlif` token contract:
+- metadata uses one flat `(?rtlif:module_name ...)` root
+- declaration order is preserved
+- `port`, `port<8`, and `port>` still work as the compact forms
+- `port:data`, `port<8:data`, `core_clk:clock`, and `rst_async_n:reset` are also valid
+- only `data`, `clock`, and `reset` are currently accepted as explicit port types
+- typed `clock` / `reset` tokens let custom-named RTL system ports auto-wire without falling back to `clk` / `rst_n` naming
 
 ## 4) Useful options
 - `-o, --output <file>` : output file path

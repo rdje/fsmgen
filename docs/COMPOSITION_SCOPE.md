@@ -48,6 +48,9 @@ The currently shipped composition behavior is intentionally bounded:
 - `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one generated child, multiple generated children, or exactly one generated child plus one `?rtl` child,
 - each `=name` top port must resolve to exactly one same-named child endpoint with the same direction and width,
 - each `?rtl` child currently loads its interface from a sidecar `<module>.rtlif` metadata file searched first beside the composition source, then through explicit search roots such as repeated `--path DIR`, and then through the existing `FSMLIB` roots,
+- the shipped `.rtlif` mini-contract is one flat `(?rtlif:module_name ...)` root with declaration-ordered port tokens such as `clk`, `data_in<8`, `txd>`, `core_clk:clock`, and `rst_async_n:reset`,
+- explicit `.rtlif` type annotations are currently limited to `data`, `clock`, and `reset`,
+- typed `.rtlif` `clock` / `reset` tokens let custom-named RTL system ports auto-wire through composition without reviving broader hidden inference,
 - the current `C3` slice uses the RTL module name as the instance name,
 - top ports must match the realized child interface exactly by name, width, and direction in `C1`,
 - explicit `?toplink` endpoints must match by role and exact width in `C2`, `C3`, and `C4`,
@@ -223,7 +226,8 @@ Status:
 - Must prove:
   - generated child is compiled,
   - RTL child is instantiated but not regenerated,
-  - interface validation catches unknown ports and direction mismatches.
+  - interface validation catches unknown ports, unsupported `.rtlif` type names, and direction mismatches,
+  - typed `.rtlif` `clock` / `reset` metadata can carry custom-named RTL system ports honestly.
 
 ### C4. Connect-by-name only when unambiguous
 Status:

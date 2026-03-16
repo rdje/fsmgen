@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: typed `.rtlif` ports now have a first deliberate `R11` contract slice
+- Saved shipped `.rtlif` contract:
+  - one flat `(?rtlif:module_name ...)` root,
+  - declaration-ordered port tokens,
+  - compact tokens such as `clk`, `data_in<8`, and `txd>`,
+  - typed tokens such as `core_clk:clock`, `rst_async_n:reset`, and `data_in<8:data`,
+  - and explicit type annotations currently limited to `data`, `clock`, and `reset`.
+- Important runtime consequence:
+  - mixed generated-child plus `?rtl` composition can now auto-wire custom-named RTL system ports honestly through typed `.rtlif` metadata instead of depending on literal `clk` / `rst_n` naming.
+- [t/88-rtlif-typed-port-contract.t](/Users/richarddje/Documents/github/fsmgen/t/88-rtlif-typed-port-contract.t) locks direct typed-token parsing, custom-system-port auto-wiring, and rejection of unsupported explicit type names.
+
 ## 2026-03-16: mixed generated-child plus external RTL declared connect-by-name now has a first shipped `R11` slice
 - `?top:name` now has regression-backed declared `=name` support for the mixed one-generated-child plus one-`?rtl` lane too.
 - Saved shipped behavior:

@@ -60,7 +60,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `R11` Composition contract strengthening.
 - Current next decision point:
   - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, `?dtc` composition child reuse, and mixed generated-child plus `?rtl` declared connect-by-name are all fresh in the tree.
-  - Decide whether the next `R11` slice should formalize the `.rtlif` contract more deliberately or move into broader reusable-module interface/export questions.
+  - The `.rtlif` mini-contract is now explicit enough to build on, so the next `R11` choice is whether to keep deepening sidecar-interface behavior or move into broader reusable-module interface/export questions.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
 
 ## Workstreams
@@ -541,6 +541,12 @@ Status: `in progress`
 Done:
 - The scoped `R6` composition lane is complete.
 - The `.rtlif` follow-up and the bounded shared-datapath extraction direction are now both recorded as future `R11` contract work instead of loose brainstorming only.
+- The first deliberate `.rtlif` contract-improvement slice is now also shipped:
+  - sidecar metadata is now described as one flat `(?rtlif:module_name ...)` root with declaration-ordered port tokens,
+  - compact tokens like `clk`, `data_in<8`, and `txd>` remain active,
+  - typed tokens such as `core_clk:clock`, `rst_async_n:reset`, and `data_in<8:data` are now active too,
+  - explicit type annotations are currently limited to `data`, `clock`, and `reset`,
+  - and typed `clock` / `reset` metadata now lets mixed composition auto-wire custom-named RTL system ports honestly.
 - The future reusable standalone-DT/module-library direction is now also recorded as explicit `R11` contract work instead of loose brainstorming only.
 - That future `R11` direction now also records:
   - multi-`(-foo ...)` standalone `?dt:name` modules,
@@ -587,8 +593,12 @@ Done:
   - mixed `?fsmc` plus `?rtl` declared connect-by-name success,
   - mixed `?dtc` plus `?rtl` declared connect-by-name success,
   - and ambiguous same-name declared connect-by-name rejection across generated and external RTL child kinds.
+- [t/88-rtlif-typed-port-contract.t](/Users/richarddje/Documents/github/fsmgen/t/88-rtlif-typed-port-contract.t) now locks:
+  - direct `.rtlif` token parsing for declaration-ordered typed metadata,
+  - custom-named RTL `clock` / `reset` auto-wiring in mixed `?dtc` plus `?rtl` composition,
+  - and rejection of unsupported explicit `.rtlif` type names.
 Left:
-- Turn the `.rtlif` follow-up into a deliberate contract-improvement lane.
+- Decide whether later work should keep the now-formalized `.rtlif` mini-contract as the long-term sidecar interface layer or place a stronger interface-source contract above it.
 - Turn the new shared-datapath extraction direction into a real contract:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets,
   - per-child drive-intent aggregation,

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: typed `.rtlif` ports now have a first deliberate `R11` contract slice
+- Continued the active `R11` lane by tightening the smallest external-RTL contract that already affects real composition behavior instead of widening syntax again.
+- Landed behavior:
+  - sidecar metadata still uses one flat `(?rtlif:module_name ...)` root and preserves declaration order,
+  - compact tokens such as `clk`, `data_in<8`, and `txd>` still work,
+  - typed tokens such as `core_clk:clock`, `rst_async_n:reset`, and `data_in<8:data` now work too,
+  - and explicit type annotations are now deliberately bounded to `data`, `clock`, and `reset`.
+- Practical effect:
+  - mixed generated-child plus `?rtl` composition no longer has to pretend every external RTL system port is literally named `clk` or `rst_n`,
+  - typed `.rtlif` metadata can now carry custom-named RTL system ports honestly while still keeping auto-wiring narrow and explicit.
+- [t/88-rtlif-typed-port-contract.t](/Users/richarddje/Documents/github/fsmgen/t/88-rtlif-typed-port-contract.t) locks direct typed-token parsing, custom-system-port auto-wiring, and rejection of unsupported explicit type names.
+
 ## 2026-03-16: mixed generated-child plus external RTL declared connect-by-name now has a first shipped `R11` slice
 - Continued the active `R11` lane in the next bounded direction instead of widening composition syntax blindly.
 - Landed behavior:

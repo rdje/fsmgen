@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### typed `.rtlif` ports now have a first deliberate `R11` contract slice
+- Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so sidecar RTL metadata now accepts typed default-input tokens such as `core_clk:clock` and `rst_async_n:reset` in addition to the earlier compact forms.
+- The shipped `.rtlif` contract now includes:
+  - one flat `(?rtlif:module_name ...)` root,
+  - declaration-ordered port tokens,
+  - compact tokens like `clk`, `data_in<8`, and `txd>`,
+  - typed tokens like `core_clk:clock`, `rst_async_n:reset`, and `data_in<8:data`,
+  - and explicit type annotations limited to `data`, `clock`, and `reset`.
+- Mixed generated-child plus external RTL composition now auto-wires custom-named RTL system ports honestly when their `.rtlif` metadata marks them as `:clock` or `:reset`.
+- Added [t/88-rtlif-typed-port-contract.t](/Users/richarddje/Documents/github/fsmgen/t/88-rtlif-typed-port-contract.t) to lock:
+  - direct typed-token parsing,
+  - custom named RTL system-port auto-wiring,
+  - and rejection of unsupported explicit `.rtlif` type names.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the active `R11` lane now records the `.rtlif` mini-contract as shipped behavior instead of only a future note.
+
 ### mixed generated-child plus external RTL declared connect-by-name now has a first shipped `R11` slice
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition-facing child interface direction now prefers semantic `signal_role` over the older name-based output heuristic when building realized child interfaces.
 - Shipped behavior now includes:

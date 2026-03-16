@@ -131,7 +131,7 @@ sub find_rtlif_root ($self, $raw_ast, $module_name) {
 }
 
 sub parse_port_token ($self, $module_name, $token, $metadata_path) {
-    $token =~ /^(?<port>\w+)(?:(?<direction>[<>])(?<size>\d+)?(?:[:](?<type>\w+))?)?$/o;
+    $token =~ /^(?<port>\w+)(?:(?<direction>[<>])(?<size>\d+)?)?(?:[:](?<type>\w+))?$/o;
     my ($port, $direction, $size, $type) = @+{qw/port direction size type/};
     my $resolved_type = $type;
 
@@ -146,6 +146,13 @@ sub parse_port_token ($self, $module_name, $token, $metadata_path) {
 
     $resolved_type //= 'clock' if $port eq 'clk';
     $resolved_type //= 'reset' if $port eq 'rstn' || $port eq 'rst_n';
+    $resolved_type //= 'data';
+
+    confess
+        "RTL interface metadata '$metadata_path' contains unsupported port type '$resolved_type' in token '$token'. ".
+        "The active '.rtlif' contract currently supports only 'data', 'clock', and 'reset' type annotations. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless $resolved_type =~ /^(?:data|clock|reset)$/;
 
     return FSM::Composition::Port->new(
         name => $port,
