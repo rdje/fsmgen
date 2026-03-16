@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: explicit-link `C3` now covers multi-`?rtl` tops too
+- Continued the active `R11` lane by broadening the already-shipped external-RTL explicit-link planner one bounded step further instead of inventing a new composition family.
+- Landed behavior:
+  - `C3` explicit-link composition now works for multiple external `?rtl` children,
+  - and `C3` also now works for exactly one generated child (`?fsmc` or `?dtc`) plus multiple external `?rtl` children.
+- Why this is worth shipping:
+  - the typed `.rtlif` interface-source lane is now strong enough to describe several external children in one top without changing the topology language,
+  - the planner/emitter already handled the general case under the old guard, so this slice turns existing generality into an honest supported contract,
+  - and it gives `fsmgen` a useful wrapper/integration step for several existing RTL blocks before the bigger shared-datapath work lands.
+- [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) locks the first multi-`?rtl` `C3` success paths for both all-RTL and generated-plus-multi-RTL tops.
+
 ## 2026-03-16: single external `?rtl` child composition now has a first shipped `R11` slice
 - Continued the active `R11` lane by broadening the already-shipped composition planner in one bounded way instead of inventing a new syntax family.
 - Landed behavior:

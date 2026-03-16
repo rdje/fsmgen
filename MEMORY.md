@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: explicit-link `C3` now covers multi-`?rtl` tops too
+- Saved shipped behavior:
+  - `C3` explicit-link composition now works for multiple external `?rtl` children,
+  - and `C3` now also works for exactly one generated child plus multiple external `?rtl` children.
+- Important continuity note:
+  - this slice did not add a new lane or hidden inference; it only widened the already-shipped explicit-link `C3` guard to match what the planner/emitter already handled structurally.
+- [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) locks the first all-RTL and generated-plus-multi-RTL `C3` success paths.
+
 ## 2026-03-16: single external `?rtl` child composition now has a first shipped `R11` slice
 - Saved shipped behavior:
   - a lone `?rtl` child now works in `C1` passthrough tops,

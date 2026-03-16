@@ -59,8 +59,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R11` Composition contract strengthening.
 - Current next decision point:
-  - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, `?dtc` composition child reuse, embedded `.rtlif` roots, and single-`?rtl` composition are all fresh in the tree.
-  - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, and single-`?rtl` composition lanes, so the next `R11` choice is whether to deepen interface-source behavior further or move into broader reusable-module interface/export questions.
+  - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, `?dtc` composition child reuse, embedded `.rtlif` roots, and the new broader external-RTL `C3` slice are all fresh in the tree.
+  - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, single-`?rtl` composition edges, and multi-`?rtl` explicit-link realization, so the next `R11` choice is whether to deepen interface-source behavior further or move into broader reusable-module interface/export questions.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
 
 ## Workstreams
@@ -555,6 +555,9 @@ Done:
   - `C1` single-child passthrough now works for a lone `?rtl` child,
   - `C3` explicit-link composition now works for a lone `?rtl` child,
   - and `C4` declared connect-by-name now also works for a lone `?rtl` child.
+- The next bounded external-RTL explicit-link broadening slice is now also shipped:
+  - `C3` explicit-link composition now works for multiple `?rtl` children,
+  - and `C3` explicit-link composition now also works for exactly one generated child plus multiple `?rtl` children.
 - The future reusable standalone-DT/module-library direction is now also recorded as explicit `R11` contract work instead of loose brainstorming only.
 - That future `R11` direction now also records:
   - multi-`(-foo ...)` standalone `?dt:name` modules,
@@ -613,6 +616,9 @@ Done:
   - single `?rtl` passthrough `C1` success,
   - single `?rtl` explicit-toplink `C3` success,
   - and single `?rtl` declared connect-by-name `C4` success.
+- [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) now locks:
+  - multi-`?rtl` explicit-toplink `C3` success,
+  - and one-generated-plus-multi-`?rtl` explicit-toplink `C3` success.
 Left:
 - Decide whether later work should keep the now-formalized `.rtlif` interface-source family as embedded-root plus sidecar metadata, or place a stronger interface-source contract above it.
 - Turn the new shared-datapath extraction direction into a real contract:

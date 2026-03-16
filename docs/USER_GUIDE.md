@@ -15,11 +15,12 @@ Current limitation:
 - The currently shipped composition boundary is:
   - one `?top:name`,
   - one explicit `?ports` block,
-  - one or more generated children, currently `?fsmc` and `?dtc`,
+  - one or more child instances, currently `?fsmc`, `?dtc`, and `?rtl`,
   - generated child sources realized either from the same file or from external searchable `.fsm` child sources,
-  - `C1` single-generated-child passthrough via deterministic same-name wiring,
+  - external RTL children realized through embedded or sidecar `.rtlif` interface metadata,
+  - `C1` single-child passthrough via deterministic same-name wiring,
   - `C2` multi-generated-child composition via explicit `?toplink` wiring with `instance.port` child endpoints.
-  - `C3` mixed generated-child plus external RTL composition via explicit `?toplink` wiring and sidecar `<module>.rtlif` interface metadata.
+  - `C3` explicit-link composition for one or more `?rtl` children, or exactly one generated child plus one or more `?rtl` children.
   - `C4` declared top-port connect-by-name via `=name` declarations inside `?ports`.
 - See [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) for the scoped `R6` plan and [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) for historical context.
 
@@ -179,7 +180,7 @@ Combinational DT note:
 - Dotted child endpoints in links, for example `/producer.output_data/consumer.input_data/`
 - `C1` lane: one `?top`, one child (`?fsmc`, `?dtc`, or `?rtl`), explicit `?ports`, deterministic same-name top wiring
 - `C2` lane: multiple generated children (`?fsmc` / `?dtc`) plus explicit `?toplink` wiring and deterministic internal nets
-- `C3` lane: explicit `?toplink` composition with either one `?rtl` child or one generated child (`?fsmc` or `?dtc`) plus `?rtl`, with `.rtlif`-based interface validation
+- `C3` lane: explicit `?toplink` composition with one or more `?rtl` children, or exactly one generated child (`?fsmc` or `?dtc`) plus one or more `?rtl` children, with `.rtlif`-based interface validation
 - `C4` lane: declared connect-by-name through `=name` in `?ports` for one generated child, one `?rtl` child, multiple generated children, or one generated child plus `?rtl`
 - `C5` diagnostics: duplicate-driver rejection, explicit-link width mismatch rejection, connect-by-name ambiguity rejection, connect-by-name unknown-endpoint rejection, and width mismatch rejection
 - `C6` scoped rejection of legacy out-of-scope composition constructs

@@ -18,9 +18,10 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - deterministic internal-net creation for child-to-child wiring,
   - duplicate-driver rejection before emission.
 - The active toolchain now also ships the first `C3` composition lane:
-  - either exactly one external `?rtl` child, or exactly one generated child (`?fsmc` or `?dtc`) plus one external `?rtl` child,
+  - either one or more external `?rtl` children,
+  - or exactly one generated child (`?fsmc` or `?dtc`) plus one or more external `?rtl` children,
   - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
-  - external RTL interface metadata loaded from a sidecar `<module>.rtlif` artifact,
+  - external RTL interface metadata loaded from embedded or sidecar `.rtlif` artifacts,
   - deterministic internal-net creation and mixed-child instantiation without regenerating external RTL internals.
 - The active toolchain now also ships the first `C4` composition lane:
   - top ports can be declared as `=name` inside `?ports` to request explicit same-name connect-by-name,
@@ -30,12 +31,12 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - ambiguous or missing matches fail explicitly instead of falling back to hidden inference.
 - The active toolchain now also ships the first `C6` boundary:
   - out-of-scope legacy composition constructs fail explicitly and point to the scoped composition docs instead of falling through to generic parser behavior.
-- `?top:name` inputs are now classified explicitly at the active pipeline boundary, parsed into typed composition IR, and then routed either into the shipped `C1`/`C2`/`C3` runtime lanes or a deliberate scope-boundary diagnostic.
+- `?top:name` inputs are now classified explicitly at the active pipeline boundary, parsed into typed composition IR, and then routed either into the shipped `C1`/`C2`/`C3`/`C4` runtime lanes or a deliberate scope-boundary diagnostic.
 - This document remains the normative scope and acceptance boundary for the broader `R6` composition plan.
 
 ## Current active boundary
 - `bin/fsmgen` currently compiles a single FSM or standalone-DT source into HDL.
-- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) parses a source file with `Lispish::multi(...)`, classifies the top-level source kind, and routes `?top:name` inputs through a typed composition parser plus the shipped `C1`/`C2`/`C3` realization lanes or an explicit scope-boundary diagnostic.
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) parses a source file with `Lispish::multi(...)`, classifies the top-level source kind, and routes `?top:name` inputs through a typed composition parser plus the shipped `C1`/`C2`/`C3`/`C4` realization lanes or an explicit scope-boundary diagnostic.
 - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) currently accepts active single-module roots shaped like `?fsm:name`, `?dt:name`, or `+fsm`.
 
 ## Current shipped runtime subset
@@ -46,7 +47,7 @@ The currently shipped composition behavior is intentionally bounded:
 - every generated child must reference exactly one active child source, either embedded in the same file or resolved from an external `.fsm` file,
 - `C1` single-child passthrough works without `?toplink` for one `?fsmc`, `?dtc`, or `?rtl` child,
 - `C2` multi-generated-child composition uses explicit `?toplink`,
-- `C3` explicit-link composition currently supports either exactly one external `?rtl` child or exactly one generated child plus one external `?rtl` child,
+- `C3` explicit-link composition currently supports either one or more external `?rtl` children or exactly one generated child plus one or more external `?rtl` children,
 - `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one generated child, one external `?rtl` child, multiple generated children, or exactly one generated child plus one `?rtl` child,
 - each `=name` top port must resolve to exactly one same-named child endpoint with the same direction and width,
 - each `?rtl` child currently loads its interface from an embedded `(?rtlif:module_name ...)` companion root in the same composition source when present, otherwise from a sidecar `<module>.rtlif` metadata file searched first beside the composition source, then through explicit search roots such as repeated `--path DIR`, and then through the existing `FSMLIB` roots,
@@ -96,8 +97,8 @@ The language surface for the first composition lane recognizes exactly three chi
 
 Current shipped runtime subset:
 - `?fsmc` and `?dtc` are realized in the shipped `C1`, `C2`, and `C3` slices,
-- `?rtl` is now realized only in the first narrow `C3` slice,
-- the current `C3` slice expects either one embedded `(?rtlif:module_name ...)` companion root or one `<module>.rtlif` sidecar metadata file per external RTL module and does not parse/regenerate SV/VHDL module internals at composition time.
+- `?rtl` is now realized in the shipped single-child `C1`, explicit-link `C3`, and single-child declared by-name `C4` slices,
+- the current explicit-link `C3` slice expects either one embedded `(?rtlif:module_name ...)` companion root or one `<module>.rtlif` sidecar metadata file per external RTL module and does not parse/regenerate SV/VHDL module internals at composition time.
 
 ### 3. Interface model
 Composition will use explicit typed interface data, not implicit global hashes.
@@ -169,7 +170,7 @@ The first composition lane should be added above the current FSM-only parser bou
    - build a typed composition IR from `?top:*`, `?fsmc`, `?dtc`, `?rtl`, `?ports`, and `?toplink`.
 3. Child realization
    - compile `?fsmc` children through the existing FSM pipeline whether the child source is embedded or loaded from an external `.fsm` file,
-   - load/validate declared interfaces for `?rtl` children from sidecar metadata.
+   - load/validate declared interfaces for `?rtl` children from embedded or sidecar `.rtlif` metadata.
 4. Top planning
    - resolve ports, nets, instance wiring, and deterministic ordering.
 5. Top emission
@@ -195,7 +196,7 @@ Historical note:
 ## Acceptance matrix for the first composition lane
 These are the executable scenarios that must exist before `R6` can be closed.
 
-### C1. Single generated-child passthrough top
+### C1. Single-child passthrough top
 Status:
 - Implemented in the current active toolchain for one child (`?fsmc`, `?dtc`, or `?rtl`) with explicit same-name top exposure.
 
@@ -220,17 +221,18 @@ Status:
   - explicit link wiring is emitted correctly,
   - duplicate-driver errors are rejected.
 
-### C3. Mixed generated-child + external RTL composition
+### C3. Explicit-link external RTL composition
 Status:
-- Implemented in the current active toolchain for either exactly one external `?rtl` child or exactly one generated child (`?fsmc` or `?dtc`) plus one external `?rtl` child using the shipped `.rtlif` interface metadata.
+- Implemented in the current active toolchain for either one or more external `?rtl` children or exactly one generated child (`?fsmc` or `?dtc`) plus one or more external `?rtl` children using the shipped `.rtlif` interface metadata.
 
 - Input:
-  - either one `?rtl` child with explicit `?toplink` wiring,
-  - or one generated child plus one `?rtl` child with declared interface metadata.
+  - either one or more `?rtl` children with explicit `?toplink` wiring,
+  - or one generated child plus one or more `?rtl` children with declared interface metadata.
 - Must prove:
   - generated child is compiled,
-  - RTL child is instantiated but not regenerated,
+  - RTL children are instantiated but not regenerated,
   - interface validation catches unknown ports, unsupported `.rtlif` type names, and direction mismatches,
+  - deterministic carrier nets can feed more than one external RTL child from one resolved source,
   - typed `.rtlif` `clock` / `reset` metadata can carry custom-named RTL system ports honestly.
 
 ### C4. Connect-by-name only when unambiguous

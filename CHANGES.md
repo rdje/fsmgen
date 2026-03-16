@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### explicit-link `C3` now covers multi-`?rtl` tops too
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `C3` no longer stops at one external RTL child. The active explicit-link contract now accepts either:
+  - one or more `?rtl` children,
+  - or exactly one generated child (`?fsmc` or `?dtc`) plus one or more `?rtl` children.
+- Added [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) to lock:
+  - pure multi-`?rtl` explicit-link success,
+  - and one-generated-plus-multi-`?rtl` explicit-link success.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the active `R11` lane now records the broadened `C3` truthfully.
+
 ### single external `?rtl` child composition now has a first shipped `R11` slice
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so a lone `?rtl` child is no longer rejected as “not enough generated children”.
 - Shipped behavior now includes:
