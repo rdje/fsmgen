@@ -59,8 +59,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R11` Composition contract strengthening.
 - Current next decision point:
-  - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, `?dtc` composition child reuse, embedded `.rtlif` roots, and the new broader external-RTL `C3` slice are all fresh in the tree.
-  - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, single-`?rtl` composition edges, and multi-`?rtl` explicit-link realization, so the next `R11` choice is whether to deepen interface-source behavior further or move into broader reusable-module interface/export questions.
+  - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, `?dtc` composition child reuse, embedded `.rtlif` roots, and the new broader external-RTL `C3`/`C4` slices are all fresh in the tree.
+  - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, and single-/multi-`?rtl` composition edges across both explicit-link and declared by-name lanes, so the next `R11` choice is whether to deepen interface-source behavior further or move into broader reusable-module interface/export questions.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
 
 ## Workstreams
@@ -604,6 +604,9 @@ Done:
   - mixed `?fsmc` plus `?rtl` declared connect-by-name success,
   - mixed `?dtc` plus `?rtl` declared connect-by-name success,
   - and ambiguous same-name declared connect-by-name rejection across generated and external RTL child kinds.
+- The next bounded external-RTL declared connect-by-name broadening slice is now also shipped:
+  - `C4` declared connect-by-name now works for multiple `?rtl` children,
+  - and `C4` now also works for exactly one generated child plus multiple `?rtl` children.
 - [t/88-rtlif-typed-port-contract.t](/Users/richarddje/Documents/github/fsmgen/t/88-rtlif-typed-port-contract.t) now locks:
   - direct `.rtlif` token parsing for declaration-ordered typed metadata,
   - custom-named RTL `clock` / `reset` auto-wiring in mixed `?dtc` plus `?rtl` composition,
@@ -619,6 +622,10 @@ Done:
 - [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) now locks:
   - multi-`?rtl` explicit-toplink `C3` success,
   - and one-generated-plus-multi-`?rtl` explicit-toplink `C3` success.
+- [t/92-composition-multi-rtl-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/92-composition-multi-rtl-connect-by-name.t) now locks:
+  - multi-`?rtl` declared connect-by-name `C4` success,
+  - one-generated-plus-multi-`?rtl` declared connect-by-name `C4` success,
+  - and ambiguous multi-`?rtl` declared connect-by-name rejection.
 Left:
 - Decide whether later work should keep the now-formalized `.rtlif` interface-source family as embedded-root plus sidecar metadata, or place a stronger interface-source contract above it.
 - Turn the new shared-datapath extraction direction into a real contract:

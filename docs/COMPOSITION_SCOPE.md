@@ -25,7 +25,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - deterministic internal-net creation and mixed-child instantiation without regenerating external RTL internals.
 - The active toolchain now also ships the first `C4` composition lane:
   - top ports can be declared as `=name` inside `?ports` to request explicit same-name connect-by-name,
-  - declared connect-by-name now covers one generated child, one external `?rtl` child, multiple generated children, or exactly one generated child plus one external `?rtl` child,
+  - declared connect-by-name now covers one generated child, one or more external `?rtl` children, multiple generated children, or exactly one generated child plus one or more external `?rtl` children,
   - declared connect-by-name can also coexist with explicit `?toplink` child-to-child wiring in those same bounded lanes,
   - the planner auto-binds only when exactly one child endpoint matches by name, direction, and width,
   - ambiguous or missing matches fail explicitly instead of falling back to hidden inference.
@@ -48,7 +48,7 @@ The currently shipped composition behavior is intentionally bounded:
 - `C1` single-child passthrough works without `?toplink` for one `?fsmc`, `?dtc`, or `?rtl` child,
 - `C2` multi-generated-child composition uses explicit `?toplink`,
 - `C3` explicit-link composition currently supports either one or more external `?rtl` children or exactly one generated child plus one or more external `?rtl` children,
-- `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one generated child, one external `?rtl` child, multiple generated children, or exactly one generated child plus one `?rtl` child,
+- `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one generated child, one or more external `?rtl` children, multiple generated children, or exactly one generated child plus one or more `?rtl` children,
 - each `=name` top port must resolve to exactly one same-named child endpoint with the same direction and width,
 - each `?rtl` child currently loads its interface from an embedded `(?rtlif:module_name ...)` companion root in the same composition source when present, otherwise from a sidecar `<module>.rtlif` metadata file searched first beside the composition source, then through explicit search roots such as repeated `--path DIR`, and then through the existing `FSMLIB` roots,
 - the shipped `.rtlif` mini-contract is one flat `(?rtlif:module_name ...)` root with declaration-ordered port tokens such as `clk`, `data_in<8`, `txd>`, `core_clk:clock`, and `rst_async_n:reset`,
@@ -97,7 +97,7 @@ The language surface for the first composition lane recognizes exactly three chi
 
 Current shipped runtime subset:
 - `?fsmc` and `?dtc` are realized in the shipped `C1`, `C2`, and `C3` slices,
-- `?rtl` is now realized in the shipped single-child `C1`, explicit-link `C3`, and single-child declared by-name `C4` slices,
+- `?rtl` is now realized in the shipped single-child `C1`, explicit-link `C3`, and declared-by-name `C4` slices,
 - the current explicit-link `C3` slice expects either one embedded `(?rtlif:module_name ...)` companion root or one `<module>.rtlif` sidecar metadata file per external RTL module and does not parse/regenerate SV/VHDL module internals at composition time.
 
 ### 3. Interface model
@@ -237,7 +237,7 @@ Status:
 
 ### C4. Connect-by-name only when unambiguous
 Status:
-- Implemented in the current active toolchain for top ports declared as `=name` inside `?ports`, with exact same-name matching against exactly one compatible child endpoint across the shipped single-child (`?fsmc`, `?dtc`, or `?rtl`), multi-generated-child, and mixed generated-child plus `?rtl` lanes.
+- Implemented in the current active toolchain for top ports declared as `=name` inside `?ports`, with exact same-name matching against exactly one compatible child endpoint across the shipped single-child (`?fsmc`, `?dtc`, or `?rtl`), multi-generated-child, multi-`?rtl`, and mixed generated-child plus `?rtl` lanes.
 
 - Input:
   - composition relying on declared connect-by-name.

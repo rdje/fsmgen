@@ -796,11 +796,11 @@ sub build_c4_composition_plan ($self, $composition_spec, $top, $ports_block, $po
     Carp::confess
         "Composition source '$header' in '$fsm_file' requests declared connect-by-name, ".
         "but the current active C4 lane only extends the already shipped child-realization sets: ".
-        "either exactly one generated child, exactly one '?rtl' child, multiple generated children ('?fsmc' / '?dtc'), or exactly one generated child plus one '?rtl' child. ".
+        "either exactly one generated child, one or more '?rtl' children, multiple generated children ('?fsmc' / '?dtc'), or exactly one generated child plus one or more '?rtl' children. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless ($rtl_instance_count == 0 && $generated_instance_count >= 1)
-            || (@{$realized_instances || []} == 1 && $generated_instance_count == 0 && $rtl_instance_count == 1)
-            || (@{$realized_instances || []} == 2 && $generated_instance_count == 1 && $rtl_instance_count == 1);
+            || ($generated_instance_count == 0 && $rtl_instance_count >= 1)
+            || ($generated_instance_count == 1 && $rtl_instance_count >= 1);
 
     my @links = map { @{$_->links || []} } @{$toplinks || []};
     push @links, @{$self->build_declared_by_name_links($ports, $realized_instances, $fsm_file, $header)};

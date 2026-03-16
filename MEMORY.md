@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: declared connect-by-name `C4` now covers multi-`?rtl` tops too
+- Saved shipped behavior:
+  - `C4` declared connect-by-name now works for multiple external `?rtl` children,
+  - and `C4` now also works for exactly one generated child plus multiple external `?rtl` children.
+- Important continuity note:
+  - this slice stayed on the same exact-match rule as the earlier by-name work; it did not add hidden inference or arbitration, it only lifted the old one-RTL guard.
+- [t/92-composition-multi-rtl-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/92-composition-multi-rtl-connect-by-name.t) locks the first multi-RTL and generated-plus-multi-RTL `C4` success paths plus ambiguity rejection.
+
 ## 2026-03-16: explicit-link `C3` now covers multi-`?rtl` tops too
 - Saved shipped behavior:
   - `C3` explicit-link composition now works for multiple external `?rtl` children,
