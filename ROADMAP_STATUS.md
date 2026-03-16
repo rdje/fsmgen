@@ -490,10 +490,18 @@ Deliverables:
   - outputs coming from child FSMs or the shared datapath block are top-level outputs by default,
   - peer-read registered outputs become top-internal by default unless the user explicitly asks to re-export them,
   - only lifted registered outputs may loop back into child FSM inputs,
-  - and combinational outputs must never become cross-FSM read sources, so they remain top-level outputs only.
+  - combinational outputs must never become cross-FSM read sources, so they remain top-level outputs only,
+  - same-target/same-value aggregation must stay distinct from same-target/different-value conflicts,
+  - and multiple child FSMs must not drive different values to the same target `P` in the same cycle unless a later explicit priority contract is introduced.
 - Define one bounded reusable standalone-DT/module-library lane:
   - `?dt:name` as the smallest standalone module description,
+  - `?dt:name` may contain any number of internal general DT blocks such as `(-foo ...)`,
   - standalone DT modules may mix combinational and sequential outputs,
+  - `?fsm:name` implicitly declares `clk` / `rst_n`,
+  - `?dt:name` implicitly declares `clk` / `rst_n` only when at least one sequential assignment exists,
+  - `?dt:name` output-driving semantics stay aligned with current DT handling inside `?fsm:name`,
+  - multiple internal `(-foo ...)` blocks may assign the same target without structural rejection,
+  - and generated enable families should support explicit mutual-exclusion assertions instead of relying on an over-broad conflict ban,
   - `?top:name` remains the explicit composition-root concept unless a later family-level root-syntax decision introduces aliases such as `?mod:name` or `?module:name`,
   - and reusable-source lookup should grow through existing `FSMLIB` semantics plus repeatable per-invocation `--path DIR` roots.
 - Harden mixed `?fsmc` / `?rtl` flows before broader composition syntax is considered.
@@ -502,12 +510,17 @@ Done:
 - The scoped `R6` composition lane is complete.
 - The `.rtlif` follow-up and the bounded shared-datapath extraction direction are now both recorded as future `R11` contract work instead of loose brainstorming only.
 - The future reusable standalone-DT/module-library direction is now also recorded as explicit `R11` contract work instead of loose brainstorming only.
+- That future `R11` direction now also records:
+  - multi-`(-foo ...)` standalone `?dt:name` modules,
+  - the implicit-system split between always-implicit `?fsm:name` `clk` / `rst_n` and conditional implicit `?dt:name` `clk` / `rst_n`,
+  - and the need to express arbitration through generated enable families instead of structural over-rejection.
 Left:
 - Turn the `.rtlif` follow-up into a deliberate contract-improvement lane.
 - Turn the new shared-datapath extraction direction into a real contract:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets,
   - per-child drive-intent aggregation,
-  - conflict legality/default rejection,
+  - same-target/same-value aggregation vs same-target/different-value conflicts,
+  - explicit rejection/assertion strategy for multiple child FSMs driving different values to the same target `P` in the same cycle,
   - default top-export vs peer-read internalization for registered outputs,
   - explicit user-directed re-export of now-internal registered outputs,
   - registered-output loopback rules,
@@ -517,12 +530,14 @@ Left:
   - decide whether `?mod:name` / `?module:name` are aliases or distinct roots,
   - decide whether unnamed reusable DT roots such as `?dt:` exist at all,
   - define how standalone DT interfaces are declared/exposed,
+  - define how multi-`(-foo ...)` standalone DT modules expose block-level and module-level enable families,
+  - define the exact implicit-system rule split between `?fsm:name` and `?dt:name`,
   - and define deterministic lookup/precedence/diagnostics across explicit paths, repeatable `--path DIR`, `FSMLIB`, and local files.
 - Add any needed diagnostics/tests before considering broader composition growth.
 Exit criteria:
 - External-RTL composition uses a clearly specified interface contract that is stronger and easier to reason about than the current “implemented convention” state.
-- The first multi-FSM shared-datapath composition lane is also bounded by an explicit ownership/readback/export contract instead of informal architecture notes.
-- The first reusable standalone-DT/module-library lane is also bounded by an explicit root/interface/lookup contract instead of informal brainstorming.
+- The first multi-FSM shared-datapath composition lane is also bounded by an explicit ownership/readback/export/arbitration contract instead of informal architecture notes.
+- The first reusable standalone-DT/module-library lane is also bounded by an explicit root/interface/lookup/system-port/arbitration contract instead of informal brainstorming.
 
 ### R12. Regression corpus and support accounting
 Description:

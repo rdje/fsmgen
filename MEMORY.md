@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: future `R11` reusable-DT and shared-drive notes were refined again
+- The future reusable standalone-DT lane now also records:
+  - `?dt:name` may contain any number of internal general DT blocks such as `(-foo ...)`,
+  - `?fsm:name` always implicitly declares `clk` / `rst_n`,
+  - `?dt:name` implicitly declares `clk` / `rst_n` only when at least one sequential assignment exists,
+  - and standalone DT arbitration should be expressed through generated enable families rather than a blanket structural conflict ban.
+- The future shared-datapath lane now also records:
+  - same-target/same-value aggregation is a separate case from same-target/different-value conflict,
+  - and multiple FSMs must not drive different values to the same target `P` in the same cycle unless a later explicit priority contract is introduced.
 ## 2026-03-16: future `R11` now also includes a reusable standalone-DT/module-library lane
 - [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) now records a second concrete future `R11` composition direction beyond shared datapath extraction.
 - Saved direction:

@@ -1,12 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: future `R11` reusable-DT and shared-drive notes were refined again
+- The newer `R11` brainstorming is now more precise about where structure ends and arbitration begins.
+- Reusable standalone-DT direction now carries these extra rules:
+  - `?dt:name` should be allowed to contain any number of internal general DT blocks such as `(-foo ...)`,
+  - `?fsm:name` should always implicitly declare `clk` / `rst_n`,
+  - `?dt:name` should implicitly declare `clk` / `rst_n` only when at least one sequential assignment exists inside that standalone DT module,
+  - output-driving behavior inside `?dt:name` should stay aligned with current DT behavior inside `?fsm:name` rather than inventing a different assignment family.
+- Conflict/arbitration direction now carries this split:
+  - multiple internal `(-foo ...)` blocks in one `?dt:name` may assign the same target without being rejected structurally,
+  - same-target/same-value aggregation is a different problem from same-target/different-value conflict,
+  - and generated enable families should make those arbitration conditions explicit instead of relying on a blanket structural conflict ban.
+- Multi-FSM shared-output direction now also carries the tighter conflict rule:
+  - multiple FSM children must not drive different values to the same target `P` in the same cycle unless a later explicit priority contract is introduced,
+  - while same-target/same-value aggregation remains a separate explicit aggregation case rather than being conflated with a conflict by default.
 ## 2026-03-16: future `R11` reusable standalone-DT/module-library lane
 - Captured one more concrete future `R11` direction instead of leaving it as casual brainstorming only.
 - Working semantic model:
   - add `?dt:name` as the smallest standalone module description,
+  - allow `?dt:name` to contain any number of internal general DT blocks such as `(-foo ...)`,
   - a standalone DT module is not restricted to pure combinational behavior,
   - it may mix combinational outputs such as `(P = RHS)` and sequential outputs such as `(Q <- QRHS)` in the same `?dt:name` source,
-  - so the semantic split from `?fsm:name` is the control model, not “combinational-only” versus “sequential-capable”.
+  - so the semantic split from `?fsm:name` is the control model, not “combinational-only” versus “sequential-capable”,
+  - `?fsm:name` should implicitly declare `clk` / `rst_n`,
+  - `?dt:name` should implicitly declare `clk` / `rst_n` only when at least one sequential assignment exists in that standalone DT source,
+  - and output-driving behavior inside `?dt:name` should stay aligned with existing DT handling inside `?fsm:name`.
 - Root-family naming discussion captured for later contract work:
   - `?top:name` still has useful meaning as an explicit composition root,
   - `?mod:name` and `?module:name` are plausible future aliases or broader root-family spellings,
@@ -18,6 +36,7 @@ This document captures engineering rationale, design constraints, and working de
 - Open questions intentionally preserved:
   - whether unnamed reusable DT roots such as `?dt:` should exist at all,
   - how standalone DT interfaces are declared/exposed,
+  - how block-level and module-level enable families should be surfaced so multi-`(-foo ...)` arbitration stays explicit without structural over-rejection,
   - and how reusable DT/module roots are referenced without drifting back into legacy implicit behavior.
 ## 2026-03-16: implicit system defaults now use one module-level source of truth
 - The user called out the right design rule here: common information should be defined once and referenced, not recopied into multiple emitters/planners.
@@ -58,7 +77,9 @@ This document captures engineering rationale, design constraints, and working de
   - but combinational outputs, whether shared or not, must not be read by peer FSMs instantiated in the same generated top,
   - so combinational outputs should remain top-level outputs only.
 - Future conflict rule:
-  - simultaneous drives to the same lifted target from different FSM children should default to illegal unless a later explicit priority contract is added.
+  - same-target/same-value aggregation should remain distinct from same-target/different-value conflicts,
+  - multiple FSM children should not drive different values to the same lifted target `P` in the same cycle unless a later explicit priority contract is added,
+  - and the generated enable families should make the arbitration boundary explicit instead of relying only on structural rejection.
 ## 2026-03-15: malformed `+system` boundaries are now locked through pipeline and CLI too
 - The conventional `+system` family already had parser-level coverage in the active contract for its malformed side:
   - non-conventional clock names like `core_clk`,

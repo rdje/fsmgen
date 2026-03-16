@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### future `R11` reusable-DT and shared-drive notes were refined again
+- Refined [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the future reusable standalone-DT lane now also says:
+  - `?dt:name` may contain any number of internal general DT blocks such as `(-foo ...)`,
+  - `?fsm:name` keeps implicit `clk` / `rst_n`,
+  - `?dt:name` gets implicit `clk` / `rst_n` only when at least one sequential assignment exists,
+  - and standalone DT arbitration should be expressed through generated enable families rather than a blanket structural conflict ban.
+- Refined the same roadmap notes so the future shared-datapath lane now distinguishes:
+  - same-target/same-value aggregation,
+  - from same-target/different-value conflicts,
+  - and records that multiple FSMs must not drive different values to the same target `P` in the same cycle unless a later explicit priority contract is added.
+- Updated [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so those refined `R11` rules are preserved in continuity notes too.
 ### roadmap v2 now includes a reusable standalone-DT/module-library sub-lane under `R11`
 - Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) so `R11` now also carries one concrete bounded future lane for reusable standalone module roots:
   - `?dt:name` as the smallest standalone module description,

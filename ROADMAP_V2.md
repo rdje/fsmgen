@@ -109,11 +109,18 @@ Deliverable themes:
   - that shared block owns the mux/register logic for those lifted targets and receives deterministic per-child drive-intent enables such as `A_P_Q_en`, `B_P_Q_en`, and aggregate enables such as `P_Q_en`,
   - lifted registered/shared outputs may be looped back into child FSM inputs and may be either top-local or top-exposed,
   - combinational outputs, whether shared or not, must not become cross-FSM read sources and should only exist as top-level outputs,
-  - simultaneous conflicting drives from different child FSMs should default to illegal unless a later explicit priority contract is added,
+  - same-target/same-value aggregation should remain distinct from same-target/different-value conflicts,
+  - and multiple child FSMs must not drive different values to the same target `P` in the same cycle unless a later explicit priority contract is added,
 - define one bounded reusable standalone-DT/module-library lane instead of reopening broad implicit hierarchy:
   - add `?dt:name` as the smallest standalone module description,
+  - let `?dt:name` contain any number of internal general DT blocks such as `(-foo ...)`,
   - `?dt:name` may mix combinational outputs such as `(P = RHS)` and sequential outputs such as `(Q <- QRHS)` in the same standalone DT module,
   - the semantic split from `?fsm:name` is the control model, not “combinational only” versus “sequential allowed”,
+  - `?fsm:name` should implicitly declare `clk` / `rst_n`,
+  - `?dt:name` should implicitly declare `clk` / `rst_n` only when at least one sequential assignment exists in that standalone DT module,
+  - output-driving semantics inside `?dt:name` should stay aligned with the current DT handling inside `?fsm:name`,
+  - multiple internal `(-foo ...)` blocks in the same `?dt:name` may assign the same target without being rejected structurally,
+  - but the generated enable families must still support mutual-exclusion assertions so arbitration stays explicit,
   - keep `?top:name` as the explicit composition-root concept unless a later family-level root-syntax decision adds aliases such as `?mod:name` or `?module:name`,
   - let reusable `.fsm` module roots be located through existing `FSMLIB`-style search roots plus explicit per-invocation CLI search roots,
   - and prefer repeatable `--path DIR` search-root options over comma-packed path lists so lookup stays deterministic and shell-friendly,
@@ -133,19 +140,25 @@ Planned bounded sub-lane inside `R11`:
   - which RHS/value sources must also be surfaced to the shared datapath block,
   - how per-child drive intents are named and reported,
   - how same-target/same-value aggregation differs from same-target/different-value conflicts,
+  - how conflict assertions are expressed so multiple child FSMs cannot drive different values to the same target `P` in the same cycle,
   - which registered outputs should internalize automatically when peer-read,
   - how users explicitly re-export those now-internal registered signals when wanted,
   - and which lifted registered outputs may legally loop back into child FSM inputs.
 - reusable standalone-DT/module-library roots.
 - intent:
   - treat `?dt:name` as the smallest reusable standalone module form,
+  - allow one `?dt:name` source to contain any number of internal general DT blocks such as `(-foo ...)`,
   - allow that standalone DT module form to mix combinational and sequential outputs freely,
+  - keep `?fsm:name` on implicit `clk` / `rst_n` by default,
+  - let `?dt:name` acquire implicit `clk` / `rst_n` only when a sequential assignment exists,
+  - keep the output-driving semantics inside `?dt:name` aligned with existing DT handling instead of inventing a separate conflict model,
   - keep `?top:name` as the explicit composition root while leaving `?mod:name` / `?module:name` as an open family-level naming question rather than an ad hoc replacement,
   - and extend reusable-source lookup through existing `FSMLIB` semantics plus repeatable `--path DIR` CLI roots.
 - first contract questions to settle:
   - what the exact source-root family becomes: `?fsm:name`, `?dt:name`, `?top:name`, and whether `?mod:name` / `?module:name` are aliases or distinct roots,
   - whether unnamed reusable DT roots such as `?dt:` should exist at all or remain deferred,
   - how standalone DT interfaces are declared/exposed,
+  - how block-level and module-level enable families are surfaced so same-target arbitration stays explicit without structural over-rejection,
   - how lookup precedence works between explicit paths, `--path` roots, `FSMLIB`, and local files,
   - how duplicate-name shadowing is diagnosed,
   - and how reusable DT/module roots are referenced from other `.fsm` sources without drifting back into legacy implicit behavior.
