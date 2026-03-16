@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: future `R11` now also includes a reusable standalone-DT/module-library lane
+- [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) now records a second concrete future `R11` composition direction beyond shared datapath extraction.
+- Saved direction:
+  - add `?dt:name` as the smallest standalone module description,
+  - allow `?dt:name` to mix combinational outputs and sequential outputs in the same standalone DT module,
+  - keep the semantic split from `?fsm:name` about control model rather than output kind,
+  - keep `?top:name` as the explicit composition-root concept unless a later family-level decision introduces aliases such as `?mod:name` or `?module:name`,
+  - and grow reusable-source lookup through existing `FSMLIB` semantics plus repeatable per-invocation `--path DIR` roots.
+- Open questions intentionally preserved in the roadmap/design notes:
+  - whether unnamed reusable DT roots such as `?dt:` should exist at all,
+  - how standalone DT interfaces are declared/exposed,
+  - and how lookup precedence/diagnostics work across explicit paths, `--path`, `FSMLIB`, and local files.
 ## 2026-03-16: implicit no-`+system` generation now defaults to `clk` / `rst_n`
 - The effective system contract is now centralized at module level instead of being hardcoded separately in multiple generation paths.
 - Saved rule:

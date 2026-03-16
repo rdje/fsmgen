@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### roadmap v2 now includes a reusable standalone-DT/module-library sub-lane under `R11`
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) so `R11` now also carries one concrete bounded future lane for reusable standalone module roots:
+  - `?dt:name` as the smallest standalone module description,
+  - standalone DT modules allowed to mix combinational and sequential outputs,
+  - root-family naming follow-up around `?top:name`, `?mod:name`, and `?module:name`,
+  - and reusable-source lookup through `FSMLIB` plus repeatable `--path DIR` CLI roots.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so that future lane is now tracked as explicit `R11` contract work instead of loose brainstorming only.
 ### implicit no-`+system` generation now uses one centralized `clk` / `rst_n` contract
 - Added an explicit module-level effective-system accessor in [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) so clock/reset naming is defined once and referenced by generation paths instead of being hardcoded independently.
 - Updated [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm), [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm), and [perl/FSM/Backend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend.pm) so:

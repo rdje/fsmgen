@@ -110,6 +110,13 @@ Deliverable themes:
   - lifted registered/shared outputs may be looped back into child FSM inputs and may be either top-local or top-exposed,
   - combinational outputs, whether shared or not, must not become cross-FSM read sources and should only exist as top-level outputs,
   - simultaneous conflicting drives from different child FSMs should default to illegal unless a later explicit priority contract is added,
+- define one bounded reusable standalone-DT/module-library lane instead of reopening broad implicit hierarchy:
+  - add `?dt:name` as the smallest standalone module description,
+  - `?dt:name` may mix combinational outputs such as `(P = RHS)` and sequential outputs such as `(Q <- QRHS)` in the same standalone DT module,
+  - the semantic split from `?fsm:name` is the control model, not “combinational only” versus “sequential allowed”,
+  - keep `?top:name` as the explicit composition-root concept unless a later family-level root-syntax decision adds aliases such as `?mod:name` or `?module:name`,
+  - let reusable `.fsm` module roots be located through existing `FSMLIB`-style search roots plus explicit per-invocation CLI search roots,
+  - and prefer repeatable `--path DIR` search-root options over comma-packed path lists so lookup stays deterministic and shell-friendly,
 - and harden mixed `?fsmc` / `?rtl` flows before adding broader composition syntax.
 
 Expected result:
@@ -129,6 +136,19 @@ Planned bounded sub-lane inside `R11`:
   - which registered outputs should internalize automatically when peer-read,
   - how users explicitly re-export those now-internal registered signals when wanted,
   - and which lifted registered outputs may legally loop back into child FSM inputs.
+- reusable standalone-DT/module-library roots.
+- intent:
+  - treat `?dt:name` as the smallest reusable standalone module form,
+  - allow that standalone DT module form to mix combinational and sequential outputs freely,
+  - keep `?top:name` as the explicit composition root while leaving `?mod:name` / `?module:name` as an open family-level naming question rather than an ad hoc replacement,
+  - and extend reusable-source lookup through existing `FSMLIB` semantics plus repeatable `--path DIR` CLI roots.
+- first contract questions to settle:
+  - what the exact source-root family becomes: `?fsm:name`, `?dt:name`, `?top:name`, and whether `?mod:name` / `?module:name` are aliases or distinct roots,
+  - whether unnamed reusable DT roots such as `?dt:` should exist at all or remain deferred,
+  - how standalone DT interfaces are declared/exposed,
+  - how lookup precedence works between explicit paths, `--path` roots, `FSMLIB`, and local files,
+  - how duplicate-name shadowing is diagnosed,
+  - and how reusable DT/module roots are referenced from other `.fsm` sources without drifting back into legacy implicit behavior.
 
 ### R12. Regression corpus and support accounting
 Goal:

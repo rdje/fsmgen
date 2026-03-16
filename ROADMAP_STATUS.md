@@ -491,11 +491,17 @@ Deliverables:
   - peer-read registered outputs become top-internal by default unless the user explicitly asks to re-export them,
   - only lifted registered outputs may loop back into child FSM inputs,
   - and combinational outputs must never become cross-FSM read sources, so they remain top-level outputs only.
+- Define one bounded reusable standalone-DT/module-library lane:
+  - `?dt:name` as the smallest standalone module description,
+  - standalone DT modules may mix combinational and sequential outputs,
+  - `?top:name` remains the explicit composition-root concept unless a later family-level root-syntax decision introduces aliases such as `?mod:name` or `?module:name`,
+  - and reusable-source lookup should grow through existing `FSMLIB` semantics plus repeatable per-invocation `--path DIR` roots.
 - Harden mixed `?fsmc` / `?rtl` flows before broader composition syntax is considered.
 Status: `not started`
 Done:
 - The scoped `R6` composition lane is complete.
 - The `.rtlif` follow-up and the bounded shared-datapath extraction direction are now both recorded as future `R11` contract work instead of loose brainstorming only.
+- The future reusable standalone-DT/module-library direction is now also recorded as explicit `R11` contract work instead of loose brainstorming only.
 Left:
 - Turn the `.rtlif` follow-up into a deliberate contract-improvement lane.
 - Turn the new shared-datapath extraction direction into a real contract:
@@ -506,10 +512,17 @@ Left:
   - explicit user-directed re-export of now-internal registered outputs,
   - registered-output loopback rules,
   - and the rule that combinational outputs may be top-level outputs but not peer-FSM inputs.
+- Turn the reusable standalone-DT/module-library direction into a real contract:
+  - settle the source-root family around `?fsm:name`, `?dt:name`, and `?top:name`,
+  - decide whether `?mod:name` / `?module:name` are aliases or distinct roots,
+  - decide whether unnamed reusable DT roots such as `?dt:` exist at all,
+  - define how standalone DT interfaces are declared/exposed,
+  - and define deterministic lookup/precedence/diagnostics across explicit paths, repeatable `--path DIR`, `FSMLIB`, and local files.
 - Add any needed diagnostics/tests before considering broader composition growth.
 Exit criteria:
 - External-RTL composition uses a clearly specified interface contract that is stronger and easier to reason about than the current “implemented convention” state.
 - The first multi-FSM shared-datapath composition lane is also bounded by an explicit ownership/readback/export contract instead of informal architecture notes.
+- The first reusable standalone-DT/module-library lane is also bounded by an explicit root/interface/lookup contract instead of informal brainstorming.
 
 ### R12. Regression corpus and support accounting
 Description:

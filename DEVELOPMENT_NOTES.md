@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: future `R11` reusable standalone-DT/module-library lane
+- Captured one more concrete future `R11` direction instead of leaving it as casual brainstorming only.
+- Working semantic model:
+  - add `?dt:name` as the smallest standalone module description,
+  - a standalone DT module is not restricted to pure combinational behavior,
+  - it may mix combinational outputs such as `(P = RHS)` and sequential outputs such as `(Q <- QRHS)` in the same `?dt:name` source,
+  - so the semantic split from `?fsm:name` is the control model, not “combinational-only” versus “sequential-capable”.
+- Root-family naming discussion captured for later contract work:
+  - `?top:name` still has useful meaning as an explicit composition root,
+  - `?mod:name` and `?module:name` are plausible future aliases or broader root-family spellings,
+  - but they should be treated as a family-level root-syntax decision rather than as an ad hoc replacement for `?top:name`.
+- Reusable-source library discussion captured for later contract work:
+  - reuse the existing `FSMLIB` model instead of inventing a second environment-variable scheme,
+  - add repeatable per-invocation `--path DIR` roots rather than comma-packed path strings,
+  - and keep lookup/precedence/diagnostics deterministic across explicit paths, `--path`, `FSMLIB`, and local files.
+- Open questions intentionally preserved:
+  - whether unnamed reusable DT roots such as `?dt:` should exist at all,
+  - how standalone DT interfaces are declared/exposed,
+  - and how reusable DT/module roots are referenced without drifting back into legacy implicit behavior.
 ## 2026-03-16: implicit system defaults now use one module-level source of truth
 - The user called out the right design rule here: common information should be defined once and referenced, not recopied into multiple emitters/planners.
 - The active implementation now treats the effective system contract as module-level data:
