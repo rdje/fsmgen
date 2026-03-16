@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: malformed symbol-definition sections are now locked across entry points too
+- The malformed side of the symbol-definition family was already explicit at direct parser level:
+  - `+constants`,
+  - `+define`,
+  - `+params`,
+  - and `+enums`.
+- The remaining gap was that only the `+enums` malformed side was locked through pipeline and CLI no-output behavior directly.
+- The regression set now closes that gap too:
+  - malformed `+constants`, `+define`, and `+params` payloads are now covered through pipeline and CLI entry points,
+  - so the malformed symbol-definition family is no longer “fully end-to-end for enums, parser-only for the rest”.
 ## 2026-03-16: inline compound modifiers are now explicit on both the supported and malformed sides
 - The active parser had one more truth gap in the assignment family:
   - bare inline modifiers such as `(ACC <- SRC (+=))` and `(COMB = SRC (-=))` were already accepted as delta-`1` forms,

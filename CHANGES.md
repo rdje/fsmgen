@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### malformed symbol-definition sections now have full entrypoint coverage
+- Added [t/76-language-contract-symbol-definition-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/76-language-contract-symbol-definition-entrypoints.t) to lock pipeline and CLI no-output behavior for the malformed side of:
+  - `+constants`,
+  - `+define`,
+  - and `+params`.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the symbol-definition family is now tracked as end-to-end across parser, pipeline, and CLI instead of having that deeper coverage only for malformed `+enums`.
 ### inline compound modifiers now have an explicit active boundary
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so the inline compound-modifier family is now explicit instead of partly accidental:
   - bare inline `(+=)` and `(-=)` remain supported as delta-`1` variants,

@@ -378,7 +378,11 @@ Done:
 - [t/51-language-contract-symbol-definition-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/51-language-contract-symbol-definition-boundary.t) now locks the malformed section/entry boundary for the same symbol-definition family:
   - empty `+constants`, `+define`, `+params`, and `+enums` sections are rejected explicitly,
   - malformed entry shapes such as `(+constants BROKEN)`, `(+define (D0))`, `(+params (P0))`, and `(+enums (mode BROKEN))` are rejected explicitly,
-  - and malformed symbol-definition sections now fail through parser, pipeline, and CLI entry points without emitting HDL.
+  - and the malformed side of the symbol-definition family now has explicit parser coverage instead of only happy-path resolution coverage.
+- [t/76-language-contract-symbol-definition-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/76-language-contract-symbol-definition-entrypoints.t) now extends that malformed symbol-definition family across entry points explicitly:
+  - malformed `+constants`, `+define`, and `+params` payloads now have focused pipeline and CLI no-output coverage too,
+  - so the whole malformed symbol-definition family is no longer end-to-end only for `+enums`,
+  - and the active symbol-definition boundary is now regression-backed across parser, pipeline, and CLI entry points.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now also promotes the conventional `+system` section into the fully supported bucket and documents its current normative contract:
   - `(+system (clock clk) (sreset rstn))`,
   - `(+system (clock clk) (asreset rstn))`.

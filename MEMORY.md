@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: malformed symbol-definition sections now have full entrypoint coverage
+- [t/76-language-contract-symbol-definition-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/76-language-contract-symbol-definition-entrypoints.t) now locks pipeline and CLI no-output behavior for malformed:
+  - `+constants`,
+  - `+define`,
+  - and `+params`.
+- This closes the remaining end-to-end gap inside the malformed symbol-definition family, which previously had deeper entrypoint coverage only for malformed `+enums`.
 ## 2026-03-16: inline compound modifiers now have an explicit active boundary
 - The active assignment family now also records:
   - bare inline `(+=)` and `(-=)` forms are supported as delta-`1` variants,
