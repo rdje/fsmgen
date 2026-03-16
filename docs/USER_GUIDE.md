@@ -487,6 +487,9 @@ Current meaning:
 - If `+system` is present, the active contract currently treats it as a declarative confirmation of the conventional shared system-input pair:
   - `clk`
   - `rstn`
+- If `+system` is absent, the active generator now falls back to one implicit system contract:
+  - clock `clk`
+  - asynchronous active-low reset `rst_n`
 - The parser now validates that exact boundary explicitly instead of silently ignoring richer legacy `+system` content.
 - The parser records:
   - default clock domain `clk`,
@@ -523,6 +526,8 @@ Regression-backed example:
 Boundary note:
 - This slice makes the conventional shared-system declaration explicit and regression-backed.
 - It accepts the two legacy reset spellings already present in the active tree, but it does not yet widen the contract into arbitrary system metadata, custom clock/reset names, or richer reset-mode differentiation.
+- The active generator now also has one explicit implicit-default rule:
+  - if no `+system` section is present at all, generation uses `clk` plus asynchronous active-low `rst_n`.
 
 ### Draft normative contract for the `:=` init/reset directive
 This is the current `R8` draft normative contract for the active top-level init/reset boundary.
@@ -713,7 +718,7 @@ This is useful when:
 Practical rules for `=name`:
 - use it only when the top-level name should intentionally stay the same as the child endpoint name,
 - use normal explicit `?toplink` when you need renaming, remapping, or multiple non-system connections,
-- do not use `=clk` or `=rstn`; those already use the dedicated shared system-input contract,
+- do not use `=clk`, `=rstn`, or `=rst_n`; those already use the dedicated shared system-input contract,
 - a match is valid only when exactly one child endpoint has the same name, same direction, and same width.
 - if widths do not match, generation fails before emission and the diagnostic names both endpoints and their widths.
 

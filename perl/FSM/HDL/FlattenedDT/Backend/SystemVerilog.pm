@@ -696,6 +696,8 @@ sub generate_state_encoding ($self, $fsm_module) {
 }
 sub generate_state_register ($self, $fsm_module) {
     my $state_plan = $self->{flattened_dt}->{enable_graph}->build_state_register_plan($fsm_module);
+    my $clock_name = $self->{flattened_dt}->{enable_graph}->effective_clock_name($fsm_module);
+    my $reset_name = $self->{flattened_dt}->{enable_graph}->effective_reset_name($fsm_module);
     
     # Check if this FSM has no regular states (only standalone decision trees)
     if (!$state_plan->{has_state_registers}) {
@@ -707,8 +709,8 @@ sub generate_state_register ($self, $fsm_module) {
     $hdl .= "  reg [" . ($state_plan->{state_bits} - 1) . ":0] current_state, next_state;\n\n";
     
     $hdl .= "  // State sequential logic\n";
-    $hdl .= "  always_ff @(posedge clk or negedge rstn) begin\n";
-    $hdl .= "    if (!rstn) begin\n";
+    $hdl .= "  always_ff @(posedge $clock_name or negedge $reset_name) begin\n";
+    $hdl .= "    if (!$reset_name) begin\n";
     $hdl .= "      current_state <= $state_plan->{reset_state_name};\n";
     $hdl .= "    end else begin\n";
     $hdl .= "      current_state <= next_state;\n";

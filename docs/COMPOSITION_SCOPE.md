@@ -51,7 +51,9 @@ The currently shipped composition behavior is intentionally bounded:
 - explicit `?toplink` endpoints must match by role and exact width in `C2`, `C3`, and `C4`,
 - explicit and declared connect-by-name mismatches now fail before emission and identify the conflicting endpoints and widths,
 - realized child interface currently means:
-  - implicit `clk` / `rstn` system inputs from the active FSM generator contract,
+  - effective system inputs from the active FSM generator contract:
+    - explicit conventional `+system` currently yields `clk` / `rstn`,
+    - absent `+system` currently yields implicit `clk` / `rst_n`,
   - plus explicit user-facing child ports as exposed by the active FSM pipeline for `?fsmc`,
   - plus explicit ports declared in the loaded `<module>.rtlif` metadata for `?rtl`,
 - explicit-link endpoint syntax is currently:

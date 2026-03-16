@@ -1711,6 +1711,27 @@ sub build_state_register_plan($self, $fsm_module = undef) {
         encodings => \@encodings,
     };
 }
+sub effective_system_contract($self, $fsm_module = undef) {
+    my $ctx = $self->{flattened_dt};
+    $fsm_module //= $ctx->{fsm_module};
+
+    if ($fsm_module && $fsm_module->can('effective_system_contract')) {
+        return $fsm_module->effective_system_contract;
+    }
+
+    return {
+        clock => 'clk',
+        reset => 'rst_n',
+        reset_keyword => 'asreset',
+        implicit => 1,
+    };
+}
+sub effective_clock_name($self, $fsm_module = undef) {
+    return $self->effective_system_contract($fsm_module)->{clock};
+}
+sub effective_reset_name($self, $fsm_module = undef) {
+    return $self->effective_system_contract($fsm_module)->{reset};
+}
 sub build_internal_signal_declaration_plan($self, $fsm_module, $declared_ports = undef) {
     my $ctx = $self->{flattened_dt};
     my %declared_ports = ();
@@ -1762,17 +1783,19 @@ sub build_internal_signal_declaration_plan($self, $fsm_module, $declared_ports =
     };
 }
 sub build_module_declaration_plan($self, $fsm_module) {
+    my $clock_name = $self->effective_clock_name($fsm_module);
+    my $reset_name = $self->effective_reset_name($fsm_module);
     my @base_ports = (
         {
             direction => 'input',
             storage => 'wire',
-            name => 'clk',
+            name => $clock_name,
             width => 1,
         },
         {
             direction => 'input',
             storage => 'wire',
-            name => 'rstn',
+            name => $reset_name,
             width => 1,
         },
     );
@@ -1783,8 +1806,8 @@ sub build_module_declaration_plan($self, $fsm_module) {
 
     fsm_debug("HDL Generation: Processing " . scalar(keys %$signals) . " signals for module declaration", 3);
 
-    my %seen_signals = ('clk' => 1, 'rstn' => 1);
-    my %port_directions = ('clk' => 'input', 'rstn' => 'input');
+    my %seen_signals = ($clock_name => 1, $reset_name => 1);
+    my %port_directions = ($clock_name => 'input', $reset_name => 'input');
     my %driven_signals = $self->get_driven_signals();
 
     for my $sig_name (sort keys %$signals) {
@@ -1878,12 +1901,14 @@ sub generate_unified_pulse_delay_logic($self, $lhs, $lhs_analysis) {
     
     my @request_signals = map { $_->{enable_signal} } @{$lhs_analysis->{multiplexer}->{enables} || []};
     my $request_expr = @request_signals ? join(' | ', @request_signals) : "1'b0";
+    my $clock_name = $self->effective_clock_name();
+    my $reset_name = $self->effective_reset_name();
     
     my $hdl = "  // Delayed pulse logic for: $lhs_name (<$delay_cycles, exact Q+$delay_cycles)\n";
     
     if ($delay_cycles == 0) {
-        $hdl .= "  always_ff @(posedge clk or negedge rstn) begin\n";
-        $hdl .= "    if (!rstn) begin\n";
+        $hdl .= "  always_ff @(posedge $clock_name or negedge $reset_name) begin\n";
+        $hdl .= "    if (!$reset_name) begin\n";
         $hdl .= "      $lhs_name <= $rest_level;\n";
         $hdl .= "    end else begin\n";
         $hdl .= "      $lhs_name <= ($request_expr) ? $pulse_level : $rest_level;\n";
@@ -1901,8 +1926,8 @@ sub generate_unified_pulse_delay_logic($self, $lhs, $lhs_analysis) {
         ? "1'b0"
         : '{' . $delay_cycles . "{1'b0}}";
     
-    $hdl .= "  always_ff @(posedge clk or negedge rstn) begin\n";
-    $hdl .= "    if (!rstn) begin\n";
+    $hdl .= "  always_ff @(posedge $clock_name or negedge $reset_name) begin\n";
+    $hdl .= "    if (!$reset_name) begin\n";
     $hdl .= "      $lhs_name <= $rest_level;\n";
     $hdl .= "      $pipe_name <= $pipe_reset;\n";
     $hdl .= "    end else begin\n";
@@ -1974,6 +1999,8 @@ sub generate_unified_flop_mux($self, $lhs, $lhs_analysis) {
     
     # AST WEB: Get signal name for debugging and HDL generation
     my $lhs_name = blessed($lhs_ast) && $lhs_ast->can('name') ? $lhs_ast->name() : 'UNKNOWN';
+    my $clock_name = $self->effective_clock_name();
+    my $reset_name = $self->effective_reset_name();
     
     # Determine the assignment type by examining the operators used
     my $assignment_type = $self->get_signal_assignment_type($lhs, $lhs_analysis);
@@ -2013,8 +2040,8 @@ sub generate_unified_flop_mux($self, $lhs, $lhs_analysis) {
 
         
         # Generate the flip-flop
-        $hdl .= "  always_ff @(posedge clk or negedge rstn) begin\n";
-        $hdl .= "    if (!rstn) begin\n";
+        $hdl .= "  always_ff @(posedge $clock_name or negedge $reset_name) begin\n";
+        $hdl .= "    if (!$reset_name) begin\n";
         $hdl .= "      $lhs_name <= $reset_value;\n";
         $hdl .= "    end else begin\n";
         $hdl .= "      $lhs_name <= ${lhs_name}_next;\n";
@@ -2051,8 +2078,8 @@ sub generate_unified_flop_mux($self, $lhs, $lhs_analysis) {
         my $reset_value = $self->get_reset_value_from_ast($lhs_ast);
         
         # Generate the flip-flop (output is A_q, input is A)
-        $hdl .= "  always_ff @(posedge clk or negedge rstn) begin\n";
-        $hdl .= "    if (!rstn) begin\n";
+        $hdl .= "  always_ff @(posedge $clock_name or negedge $reset_name) begin\n";
+        $hdl .= "    if (!$reset_name) begin\n";
         $hdl .= "      ${lhs_name}_q <= $reset_value;\n";
         $hdl .= "    end else begin\n";
         $hdl .= "      ${lhs_name}_q <= $lhs_name;\n";

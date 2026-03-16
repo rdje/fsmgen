@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: implicit system defaults now use one module-level source of truth
+- The user called out the right design rule here: common information should be defined once and referenced, not recopied into multiple emitters/planners.
+- The active implementation now treats the effective system contract as module-level data:
+  - if explicit conventional `+system` is present, its declared `clock` / `reset` pair remains the source of truth,
+  - if `+system` is absent, the module-level implicit default is now `clk` plus asynchronous active-low `rst_n`.
+- Generation paths now reference that one effective-system accessor instead of each carrying their own fallback names:
+  - module declaration planning,
+  - state-register generation,
+  - unified flop/pulse generation,
+  - and composition child-interface realization/auto-wiring.
+- This keeps the intentional naming split explicit:
+  - explicit conventional `+system` still uses `rstn` because that is the current supported conventional declaration,
+  - implicit no-`+system` generation now uses `rst_n` because that is the requested default convention.
 ## 2026-03-16: duplicate `+system` declarations are now part of the explicit contract
 - The active parser already rejected duplicate `+system` declarations, but that part of the conventional-system contract was not yet documented or regression-locked clearly.
 - The duplicate side of the boundary is now explicit:

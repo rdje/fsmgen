@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: implicit no-`+system` generation now defaults to `clk` / `rst_n`
+- The effective system contract is now centralized at module level instead of being hardcoded separately in multiple generation paths.
+- Saved rule:
+  - if explicit conventional `+system` is present, generation keeps the declared `clk` / `rstn` pair,
+  - if `+system` is absent, generation defaults to implicit `clk` / asynchronous active-low `rst_n`.
+- The sweep updated:
+  - [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) for the shared effective-system accessor,
+  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) for emitted HDL/reset naming,
+  - and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition child interfaces and auto-wiring follow the effective child system ports too.
+- [t/74-language-contract-implicit-system-defaults.t](/Users/richarddje/Documents/github/fsmgen/t/74-language-contract-implicit-system-defaults.t) now locks the standalone implicit-default path, explicit `+system` override path, and single-child composition realization path.
 ## 2026-03-16: duplicate `+system` declarations are now locked explicitly
 - [t/73-language-contract-system-section-duplicate-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/73-language-contract-system-section-duplicate-boundary.t) now locks the duplicate-declaration side of the conventional `+system` family:
   - duplicate `(clock clk)` entries are rejected,

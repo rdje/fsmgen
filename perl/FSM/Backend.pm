@@ -373,7 +373,7 @@ package FSM::Backend::SystemVerilog {
 
         # Get clock and reset from system or assume defaults
         my $clock = $module->system()->{clock} // 'clk';
-        my $reset = $module->system()->{reset} // 'rstn';
+        my $reset = $module->system()->{reset} // 'rst_n';
 
         # Generate reset assignments
         my $reset_assignments = "        current_state <= $reset_state;\n";

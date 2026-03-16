@@ -1788,6 +1788,31 @@ package FSM::CoreAST::FSMModule;
     sub reset_domains($self) { $self->{reset_domains} }
     sub parameters($self) { $self->{parameters} }
     sub attributes($self) { $self->{attributes} }
+    sub explicit_system_contract($self) { return $self->{attributes}{system_contract} }
+
+    sub effective_system_contract($self) {
+        my $explicit = $self->explicit_system_contract;
+        if (ref($explicit) eq 'HASH') {
+            return {
+                clock => ($explicit->{clock} // 'clk'),
+                reset => ($explicit->{reset} // 'rst_n'),
+                reset_keyword => (
+                    $explicit->{reset_keyword}
+                    // (($explicit->{reset} // '') =~ /_n$/ ? 'asreset' : 'sreset')
+                ),
+                implicit => 0,
+            };
+        }
+
+        return {
+            clock => 'clk',
+            reset => 'rst_n',
+            reset_keyword => 'asreset',
+            implicit => 1,
+        };
+    }
+
+    sub system($self) { return $self->effective_system_contract }
     
     sub add_state($self, $state) {
         push $self->{states}->@*, $state;

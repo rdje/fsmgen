@@ -193,7 +193,10 @@ Done:
 - The typed parser/IR slice now creates `CompositionSpec`, `CompositionTop`, typed `fsmc`/`rtl` child instances, `PortsBlock`, `TopLink`, and typed per-port/per-link planning objects.
 - `docs/COMPOSITION_LEGACY_MAPPING.md` now records how the obsolete `fx/bin/fsmgen` composition lane maps onto the active `R6` plan without reviving `.plg` / `PPlugin` behavior.
 - The first shipped composition runtime lane now exists for `C1`: one `?top:name`, one embedded `?fsmc` child source in the same file, one explicit `?ports` block, deterministic same-name top wiring, and generated top emission through `bin/fsmgen`.
-- Realized child interface data is now carried as typed composition ports, with the current active child contract treating `clk`/`rstn` as implicit system inputs plus explicit user-facing child ports from the FSM pipeline.
+- Realized child interface data is now carried as typed composition ports, with the current active child contract treating effective child system inputs explicitly:
+  - explicit conventional `+system` children expose `clk` / `rstn`,
+  - children without `+system` expose implicit `clk` / `rst_n`,
+  - and explicit user-facing child ports from the FSM pipeline continue to ride alongside those system ports.
 - `t/20-composition-single-fsm-top.t` now locks the first end-to-end composition acceptance slice across pipeline, plan, HDL text, and CLI output.
 - The first shipped `C2` runtime slice now exists for multi-child FSM composition: two or more embedded `?fsmc` children, typed explicit `?toplink` endpoint resolution, deterministic instance ordering, deterministic internal-net creation for child-to-child wiring, and duplicate-driver rejection.
 - `t/21-composition-two-fsm-linking.t` now locks the multi-child `?fsmc` success path.
@@ -384,6 +387,10 @@ Done:
   - duplicate `(clock clk)` entries are rejected explicitly,
   - duplicate reset declarations are rejected explicitly, including mixed `(sreset rstn)` plus `(asreset rstn)`,
   - and parser, pipeline, and CLI entry points now fail without emitting HDL for those malformed duplicate sections.
+- [t/74-language-contract-implicit-system-defaults.t](/Users/richarddje/Documents/github/fsmgen/t/74-language-contract-implicit-system-defaults.t) now locks the no-`+system` default system contract explicitly:
+  - FSMs without `+system` now generate with implicit `clk` / `rst_n`,
+  - explicit conventional `+system` still keeps the declared `clk` / `rstn` pair,
+  - and composition child realization now exposes and auto-wires the effective child system ports instead of hardcoding `rstn`.
 - [t/32-language-contract-top-level-directive-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/32-language-contract-top-level-directive-boundary.t) now locks explicit rejection of unsupported top-level `+...` directive sections so they no longer drift into fake state parsing.
 - [t/70-language-contract-top-level-directive-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/70-language-contract-top-level-directive-entrypoints.t) now locks pipeline and CLI no-output behavior for the same unsupported top-level `+...` directive family, so unknown and future-style `+` sections now have end-to-end entrypoint coverage instead of parser-only coverage.
 - [t/33-language-contract-condition-suffix-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/33-language-contract-condition-suffix-boundary.t) now locks explicit rejection of bare condition suffixes so suffix guards must use the active `<...` / `<!...` forms instead of implicit bare-word tails.

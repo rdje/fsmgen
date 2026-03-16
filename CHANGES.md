@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### implicit no-`+system` generation now uses one centralized `clk` / `rst_n` contract
+- Added an explicit module-level effective-system accessor in [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) so clock/reset naming is defined once and referenced by generation paths instead of being hardcoded independently.
+- Updated [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm), [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm), and [perl/FSM/Backend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend.pm) so:
+  - FSMs without `+system` now generate with implicit `clk` / `rst_n`,
+  - explicit conventional `+system` still keeps the declared `clk` / `rstn` pair,
+  - and composition child realization/auto-wiring now follows the effective child system ports instead of assuming `rstn`.
+- Added [t/74-language-contract-implicit-system-defaults.t](/Users/richarddje/Documents/github/fsmgen/t/74-language-contract-implicit-system-defaults.t) to lock:
+  - standalone implicit default generation,
+  - explicit `+system` override behavior,
+  - and single-child composition realization with implicit `rst_n`.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the contract and continuity notes now say plainly that the implicit default is `clk` / `rst_n`.
 ### duplicate `+system` declarations are now regression-backed explicitly
 - Added [t/73-language-contract-system-section-duplicate-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/73-language-contract-system-section-duplicate-boundary.t) to lock the duplicate-declaration side of the conventional `+system` family:
   - duplicate `(clock clk)` entries are rejected explicitly,

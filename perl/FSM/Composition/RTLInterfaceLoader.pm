@@ -127,6 +127,7 @@ sub find_rtlif_root ($self, $raw_ast, $module_name) {
 sub parse_port_token ($self, $module_name, $token, $metadata_path) {
     $token =~ /^(?<port>\w+)(?:(?<direction>[<>])(?<size>\d+)?(?:[:](?<type>\w+))?)?$/o;
     my ($port, $direction, $size, $type) = @+{qw/port direction size type/};
+    my $resolved_type = $type;
 
     confess
         "RTL interface metadata '$metadata_path' contains invalid port token '$token' for module '$module_name'. ".
@@ -137,11 +138,14 @@ sub parse_port_token ($self, $module_name, $token, $metadata_path) {
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         if defined($size) && $size < 1;
 
+    $resolved_type //= 'clock' if $port eq 'clk';
+    $resolved_type //= 'reset' if $port eq 'rstn' || $port eq 'rst_n';
+
     return FSM::Composition::Port->new(
         name => $port,
         direction => defined($direction) ? ($direction eq '<' ? 'input' : 'output') : 'input',
         width => $size // 1,
-        type => $type,
+        type => $resolved_type,
         raw_token => $token,
     );
 }

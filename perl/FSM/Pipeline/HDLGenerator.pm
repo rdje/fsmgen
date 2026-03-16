@@ -440,6 +440,16 @@ sub realize_rtl_child_instance ($self, $instance, $fsm_file, $header) {
 
 sub build_realized_child_interface_ports ($self, $module_info) {
     my %ports;
+    my $system_contract = $module_info->{system_contract} || {
+        clock => 'clk',
+        reset => 'rst_n',
+        reset_keyword => 'asreset',
+        implicit => 1,
+    };
+    my %system_port_type = (
+        ($system_contract->{clock} => 'clock'),
+        ($system_contract->{reset} => 'reset'),
+    );
 
     for my $direction (qw(input output)) {
         my $list = $direction eq 'input'
@@ -451,36 +461,55 @@ sub build_realized_child_interface_ports ($self, $module_info) {
                 name => $entry->{name},
                 direction => $direction,
                 width => $entry->{width} || 1,
+                type => $system_port_type{$entry->{name}},
                 raw_token => undef,
             );
         }
     }
 
-    # The active FSM generator still exposes the standard clock/reset pair
-    # implicitly rather than carrying typed +system metadata through module_info.
-    $ports{clk} //= FSM::Composition::Port->new(
-        name => 'clk',
-        direction => 'input',
-        width => 1,
-        type => 'clock',
-        raw_token => undef,
-    );
-    $ports{rstn} //= FSM::Composition::Port->new(
-        name => 'rstn',
-        direction => 'input',
-        width => 1,
-        type => 'reset',
-        raw_token => undef,
-    );
+    for my $system_name (keys %system_port_type) {
+        $ports{$system_name} //= FSM::Composition::Port->new(
+            name => $system_name,
+            direction => 'input',
+            width => 1,
+            type => $system_port_type{$system_name},
+            raw_token => undef,
+        );
+    }
 
     my @ordered_names = sort {
-        (($a eq 'clk') ? 0 : ($a eq 'rstn') ? 1 : 2) <=>
-        (($b eq 'clk') ? 0 : ($b eq 'rstn') ? 1 : 2)
+        $self->system_port_sort_key($ports{$a}) <=> $self->system_port_sort_key($ports{$b})
         ||
         $a cmp $b
     } keys %ports;
 
     return [map { $ports{$_} } @ordered_names];
+}
+
+sub system_port_sort_key ($self, $port) {
+    return 0 if ($port->type || '') eq 'clock';
+    return 1 if ($port->type || '') eq 'reset';
+    return 2;
+}
+
+sub system_interface_ports ($self, $ports) {
+    return [
+        grep {
+            my $type = $_->type || '';
+            $type eq 'clock' || $type eq 'reset';
+        } @{$ports || []}
+    ];
+}
+
+sub system_port_names_from_endpoints ($self, $candidate_endpoints) {
+    my %names;
+    for my $endpoint (@{$candidate_endpoints || []}) {
+        my $port = $endpoint->{port} or next;
+        my $type = $port->type || '';
+        next unless $type eq 'clock' || $type eq 'reset';
+        $names{$port->name} = 1;
+    }
+    return sort keys %names;
 }
 
 sub index_ports_by_name ($self, $ports) {
@@ -680,15 +709,17 @@ sub build_declared_by_name_links ($self, $ports, $realized_instances, $fsm_file,
             };
         }
     }
+    my @system_port_names = $self->system_port_names_from_endpoints(\@candidate_endpoints);
+    my %system_port_names = map { $_ => 1 } @system_port_names;
 
     for my $top_port (@{$ports || []}) {
         next unless ($top_port->binding_mode || 'explicit') eq 'connect_by_name';
 
         Carp::confess
             "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
-            "but the shared system ports 'clk' and 'rstn' already use the dedicated system-input contract and must not be declared with '=port' connect-by-name syntax. ".
+            "but the shared system ports '".join("' and '", @system_port_names)."' already use the dedicated system-input contract and must not be declared with '=port' connect-by-name syntax. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            if $top_port->name eq 'clk' || $top_port->name eq 'rstn';
+            if $system_port_names{$top_port->name};
 
         my @same_name_candidates = grep { $_->{port}->name eq $top_port->name } @candidate_endpoints;
         my @direction_compatible_candidates = grep {
@@ -764,6 +795,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
     my %child_ports_by_instance;
     my %bindings_by_instance;
     my %reserved_targets;
+    my %system_top_ports;
 
     for my $instance (@{$realized_instances || []}) {
         Carp::confess
@@ -779,7 +811,8 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
     }
 
     for my $instance (@{$realized_instances || []}) {
-        for my $system_port_name (qw(clk rstn)) {
+        for my $system_port ($self->system_interface_ports($instance->interface_ports)->@*) {
+            my $system_port_name = $system_port->name;
             my $top_port = $top_ports_by_name->{$system_port_name} or next;
             my $child_port = $child_ports_by_instance{$instance->instance_name}{$system_port_name} or next;
 
@@ -797,6 +830,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
 
             $bindings_by_instance{$instance->instance_name}{$system_port_name} = $system_port_name;
             $reserved_targets{"child:".$instance->instance_name.".$system_port_name"} = "auto top input '$system_port_name'";
+            $system_top_ports{$system_port_name} = 1;
         }
     }
 
@@ -916,7 +950,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
 
     for my $top_port_name (sort keys %{$top_ports_by_name || {}}) {
         my $top_port = $top_ports_by_name->{$top_port_name};
-        next if $top_port_name eq 'clk' || $top_port_name eq 'rstn';
+        next if $system_top_ports{$top_port_name};
 
         if ($top_port->direction eq 'input') {
             Carp::confess
@@ -1212,6 +1246,16 @@ sub analyze_fsm_module ($self, $fsm_module) {
         standalone_dts => \@standalone_dts,
         signals => \%all_signals,
         signal_analysis => \%signal_analysis,
+        system_contract => (
+            $fsm_module->can('effective_system_contract')
+                ? $fsm_module->effective_system_contract
+                : {
+                    clock => 'clk',
+                    reset => 'rst_n',
+                    reset_keyword => 'asreset',
+                    implicit => 1,
+                }
+        ),
         state_count => scalar(@regular_states),
         signal_count => scalar(keys %all_signals),
     };
