@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: single external `?rtl` child composition now has a first shipped `R11` slice
+- Saved shipped behavior:
+  - a lone `?rtl` child now works in `C1` passthrough tops,
+  - a lone `?rtl` child now works in `C3` explicit-toplink tops,
+  - and a lone `?rtl` child now works in `C4` declared connect-by-name tops.
+- Important continuity note:
+  - the broadened planner rules do not invent a new lane or new syntax; they reuse the already-shipped C1/C3/C4 wiring contracts for a smaller child set.
+- [t/90-composition-single-rtl-child.t](/Users/richarddje/Documents/github/fsmgen/t/90-composition-single-rtl-child.t) locks those single-RTL success paths, and [t/13-composition-source-classification.t](/Users/richarddje/Documents/github/fsmgen/t/13-composition-source-classification.t) now names `?rtl` honestly in the no-child boundary.
+
 ## 2026-03-16: embedded `?rtlif` roots now have a first shipped `R11` slice
 - Saved shipped behavior:
   - `?top:name` sources may now carry embedded `(?rtlif:module_name ...)` companion roots for external RTL children,

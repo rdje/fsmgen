@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: single external `?rtl` child composition now has a first shipped `R11` slice
+- Continued the active `R11` lane by broadening the already-shipped composition planner in one bounded way instead of inventing a new syntax family.
+- Landed behavior:
+  - one external `?rtl` child now works in the single-child passthrough `C1` lane,
+  - one external `?rtl` child now also works in the explicit-toplink `C3` lane,
+  - and one external `?rtl` child now also works in the declared connect-by-name `C4` lane.
+- Why this is worth shipping:
+  - it turns the recently strengthened `.rtlif` interface-source contract into a more immediately useful wrapper/composition capability,
+  - it lets `fsmgen` generate narrow top wrappers around existing RTL blocks without forcing a generated FSM/DT child to be present,
+  - and it stays bounded because the child count is still one and the wiring rules are still the same exact explicit/by-name rules already used elsewhere.
+- [t/90-composition-single-rtl-child.t](/Users/richarddje/Documents/github/fsmgen/t/90-composition-single-rtl-child.t) locks the single-`?rtl` `C1`, `C3`, and `C4` success paths.
+
 ## 2026-03-16: embedded `?rtlif` roots now have a first shipped `R11` slice
 - Continued the active `R11` lane by turning the freshly formalized `.rtlif` mini-contract into a more usable interface-source behavior instead of widening composition syntax again.
 - Landed behavior:

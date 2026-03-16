@@ -297,7 +297,7 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
 
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active composition lanes require at least one generated child instance such as '?fsmc' or '?dtc'. ".
+        "but the current active composition lanes require at least one child instance such as '?fsmc', '?dtc', or '?rtl'. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @instances;
 
@@ -360,7 +360,7 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
         );
     }
 
-    if ($rtl_instance_count == 0 && @realized_instances == 1 && !@toplinks) {
+    if (@realized_instances == 1 && !@toplinks) {
         return $self->build_c1_composition_plan(
             $composition_spec,
             $ports_block,
@@ -761,9 +761,10 @@ sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $po
 sub build_c3_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $generated_instance_count, $fsmc_instance_count, $dtc_instance_count, $rtl_instance_count, $fsm_file, $header) {
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active C3 lane supports exactly one generated child ('?fsmc' or '?dtc') plus one '?rtl' child. ".
+        "but the current active C3 lane supports either exactly one '?rtl' child or exactly one generated child ('?fsmc' or '?dtc') plus one '?rtl' child. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless @{$realized_instances || []} == 2 && $generated_instance_count == 1 && $rtl_instance_count == 1;
+        unless (@{$realized_instances || []} == 1 && $generated_instance_count == 0 && $rtl_instance_count == 1)
+            || (@{$realized_instances || []} == 2 && $generated_instance_count == 1 && $rtl_instance_count == 1);
 
     return $self->build_explicit_link_composition_plan(
         'C3',
@@ -795,9 +796,10 @@ sub build_c4_composition_plan ($self, $composition_spec, $top, $ports_block, $po
     Carp::confess
         "Composition source '$header' in '$fsm_file' requests declared connect-by-name, ".
         "but the current active C4 lane only extends the already shipped child-realization sets: ".
-        "either exactly one generated child, multiple generated children ('?fsmc' / '?dtc'), or exactly one generated child plus one '?rtl' child. ".
+        "either exactly one generated child, exactly one '?rtl' child, multiple generated children ('?fsmc' / '?dtc'), or exactly one generated child plus one '?rtl' child. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless ($rtl_instance_count == 0 && $generated_instance_count >= 1)
+            || (@{$realized_instances || []} == 1 && $generated_instance_count == 0 && $rtl_instance_count == 1)
             || (@{$realized_instances || []} == 2 && $generated_instance_count == 1 && $rtl_instance_count == 1);
 
     my @links = map { @{$_->links || []} } @{$toplinks || []};

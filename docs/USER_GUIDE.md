@@ -177,10 +177,10 @@ Combinational DT note:
   - typed `:clock` / `:reset` metadata lets custom-named RTL system ports auto-wire through mixed composition
 - Explicit `(?toplink:name ...)` blocks with flat `/source/target/` tokens
 - Dotted child endpoints in links, for example `/producer.output_data/consumer.input_data/`
-- `C1` lane: one `?top`, one generated child (`?fsmc` or `?dtc`), explicit `?ports`, deterministic same-name top wiring
+- `C1` lane: one `?top`, one child (`?fsmc`, `?dtc`, or `?rtl`), explicit `?ports`, deterministic same-name top wiring
 - `C2` lane: multiple generated children (`?fsmc` / `?dtc`) plus explicit `?toplink` wiring and deterministic internal nets
-- `C3` lane: mixed generated child (`?fsmc` or `?dtc`) plus `?rtl`, with `.rtlif`-based interface validation
-- `C4` lane: declared connect-by-name through `=name` in `?ports` for one generated child, multiple generated children, or one generated child plus `?rtl`
+- `C3` lane: explicit `?toplink` composition with either one `?rtl` child or one generated child (`?fsmc` or `?dtc`) plus `?rtl`, with `.rtlif`-based interface validation
+- `C4` lane: declared connect-by-name through `=name` in `?ports` for one generated child, one `?rtl` child, multiple generated children, or one generated child plus `?rtl`
 - `C5` diagnostics: duplicate-driver rejection, explicit-link width mismatch rejection, connect-by-name ambiguity rejection, connect-by-name unknown-endpoint rejection, and width mismatch rejection
 - `C6` scoped rejection of legacy out-of-scope composition constructs
 

@@ -5,7 +5,9 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 ## Status
 - The active toolchain now ships the first `C1` composition lane:
   - one `?top:name`,
-  - one generated child source (`?fsmc` or `?dtc`) realized either from the same file or from a searchable external `.fsm` source,
+  - one child instance, currently `?fsmc`, `?dtc`, or `?rtl`,
+  - generated children realized either from the same file or from a searchable external `.fsm` source,
+  - external RTL children realized from the shipped `.rtlif` interface contract,
   - one explicit `?ports` block,
   - deterministic same-name top wiring,
   - generated child HDL plus generated top HDL through `bin/fsmgen`.
@@ -16,13 +18,13 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - deterministic internal-net creation for child-to-child wiring,
   - duplicate-driver rejection before emission.
 - The active toolchain now also ships the first `C3` composition lane:
-  - exactly one generated child (`?fsmc` or `?dtc`) plus one external `?rtl` child,
+  - either exactly one external `?rtl` child, or exactly one generated child (`?fsmc` or `?dtc`) plus one external `?rtl` child,
   - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
   - external RTL interface metadata loaded from a sidecar `<module>.rtlif` artifact,
   - deterministic internal-net creation and mixed-child instantiation without regenerating external RTL internals.
 - The active toolchain now also ships the first `C4` composition lane:
   - top ports can be declared as `=name` inside `?ports` to request explicit same-name connect-by-name,
-  - declared connect-by-name now covers one generated child, multiple generated children, or exactly one generated child plus one external `?rtl` child,
+  - declared connect-by-name now covers one generated child, one external `?rtl` child, multiple generated children, or exactly one generated child plus one external `?rtl` child,
   - declared connect-by-name can also coexist with explicit `?toplink` child-to-child wiring in those same bounded lanes,
   - the planner auto-binds only when exactly one child endpoint matches by name, direction, and width,
   - ambiguous or missing matches fail explicitly instead of falling back to hidden inference.
@@ -40,12 +42,12 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 The currently shipped composition behavior is intentionally bounded:
 - exactly one top-level `?top:name`,
 - exactly one explicit `?ports` block,
-- one or more generated children, currently `?fsmc` and `?dtc`,
+- one or more child instances, currently `?fsmc`, `?dtc`, and `?rtl`,
 - every generated child must reference exactly one active child source, either embedded in the same file or resolved from an external `.fsm` file,
-- `C1` single-child passthrough works without `?toplink`,
+- `C1` single-child passthrough works without `?toplink` for one `?fsmc`, `?dtc`, or `?rtl` child,
 - `C2` multi-generated-child composition uses explicit `?toplink`,
-- `C3` mixed composition currently supports exactly one generated child plus one external `?rtl` child,
-- `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one generated child, multiple generated children, or exactly one generated child plus one `?rtl` child,
+- `C3` explicit-link composition currently supports either exactly one external `?rtl` child or exactly one generated child plus one external `?rtl` child,
+- `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one generated child, one external `?rtl` child, multiple generated children, or exactly one generated child plus one `?rtl` child,
 - each `=name` top port must resolve to exactly one same-named child endpoint with the same direction and width,
 - each `?rtl` child currently loads its interface from an embedded `(?rtlif:module_name ...)` companion root in the same composition source when present, otherwise from a sidecar `<module>.rtlif` metadata file searched first beside the composition source, then through explicit search roots such as repeated `--path DIR`, and then through the existing `FSMLIB` roots,
 - the shipped `.rtlif` mini-contract is one flat `(?rtlif:module_name ...)` root with declaration-ordered port tokens such as `clk`, `data_in<8`, `txd>`, `core_clk:clock`, and `rst_async_n:reset`,
@@ -195,13 +197,14 @@ These are the executable scenarios that must exist before `R6` can be closed.
 
 ### C1. Single generated-child passthrough top
 Status:
-- Implemented in the current active toolchain.
+- Implemented in the current active toolchain for one child (`?fsmc`, `?dtc`, or `?rtl`) with explicit same-name top exposure.
 
 - Input:
-  - one `?top:name` with one generated child (`?fsmc` or `?dtc`) and explicit top-port exposure.
+  - one `?top:name` with one child (`?fsmc`, `?dtc`, or `?rtl`) and explicit top-port exposure.
 - Must prove:
   - top generation succeeds,
-  - generated child HDL is emitted through the active pipeline,
+  - generated child HDL is emitted through the active pipeline when the child is generated,
+  - external RTL children are instantiated but not regenerated when the child is `?rtl`,
   - top ports are emitted deterministically,
   - child ports are wired exactly as declared.
 
@@ -219,10 +222,11 @@ Status:
 
 ### C3. Mixed generated-child + external RTL composition
 Status:
-- Implemented in the current active toolchain for exactly one generated child (`?fsmc` or `?dtc`) plus one external `?rtl` child using sidecar `<module>.rtlif` interface metadata.
+- Implemented in the current active toolchain for either exactly one external `?rtl` child or exactly one generated child (`?fsmc` or `?dtc`) plus one external `?rtl` child using the shipped `.rtlif` interface metadata.
 
 - Input:
-  - one generated child and one `?rtl` child with declared interface metadata.
+  - either one `?rtl` child with explicit `?toplink` wiring,
+  - or one generated child plus one `?rtl` child with declared interface metadata.
 - Must prove:
   - generated child is compiled,
   - RTL child is instantiated but not regenerated,
@@ -231,7 +235,7 @@ Status:
 
 ### C4. Connect-by-name only when unambiguous
 Status:
-- Implemented in the current active toolchain for top ports declared as `=name` inside `?ports`, with exact same-name matching against exactly one compatible child endpoint across the shipped single-generated-child, multi-generated-child, and mixed generated-child plus `?rtl` lanes.
+- Implemented in the current active toolchain for top ports declared as `=name` inside `?ports`, with exact same-name matching against exactly one compatible child endpoint across the shipped single-child (`?fsmc`, `?dtc`, or `?rtl`), multi-generated-child, and mixed generated-child plus `?rtl` lanes.
 
 - Input:
   - composition relying on declared connect-by-name.

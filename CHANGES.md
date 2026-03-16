@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### single external `?rtl` child composition now has a first shipped `R11` slice
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so a lone `?rtl` child is no longer rejected as “not enough generated children”.
+- Shipped behavior now includes:
+  - `C1` passthrough tops with one external `?rtl` child and exact same-name top exposure,
+  - `C3` explicit-toplink tops with one external `?rtl` child and renamed top ports,
+  - and `C4` declared connect-by-name tops with one external `?rtl` child.
+- Added [t/90-composition-single-rtl-child.t](/Users/richarddje/Documents/github/fsmgen/t/90-composition-single-rtl-child.t) to lock the single-`?rtl` `C1`, `C3`, and `C4` success paths, and updated [t/13-composition-source-classification.t](/Users/richarddje/Documents/github/fsmgen/t/13-composition-source-classification.t) so the “no children” boundary now names `?rtl` honestly too.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the active `R11` lane now records this bounded single-RTL broadening explicitly.
+
 ### embedded `?rtlif` roots now have a first shipped `R11` slice
 - Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so external RTL children can realize their interface from an embedded `(?rtlif:module_name ...)` companion root in the same composition source.
 - Shipped behavior now includes:
