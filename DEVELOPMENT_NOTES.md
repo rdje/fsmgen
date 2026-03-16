@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: malformed `+system` entry structures are now locked explicitly too
+- The conventional `+system` family was already covered for:
+  - bad clock names,
+  - unsupported directives,
+  - incomplete sections,
+  - and duplicate declarations.
+- The remaining gray zone was malformed entry structure itself:
+  - scalar payloads like `BROKEN` inside `(+system ...)`,
+  - and wrong-arity entries like `(clock clk extra)`.
+- The regression set now closes that gap too:
+  - direct parser coverage now names malformed `+system` entry structure explicitly,
+  - and the same malformed structures are now locked through pipeline and CLI no-output behavior,
+  - so `+system` validation is no longer “name/directive covered, entry-structure implicit”.
 ## 2026-03-16: malformed symbol-definition token cases are now locked explicitly too
 - The malformed symbol-definition family was already covered for empty sections and malformed entry/member shapes.
 - The remaining gray zone was the token-validity side:

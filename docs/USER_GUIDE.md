@@ -507,6 +507,7 @@ Current boundary:
     - `(sreset rstn)`
     - or `(asreset rstn)`
 - Rejected explicitly:
+  - malformed entry structures such as `BROKEN` or `(clock clk extra)` inside `(+system ...)`
   - alternative clock names such as `(clock core_clk)`
   - alternative reset names such as `(sreset reset_n)`
   - unsupported directives such as `(areset rstn)` or other legacy `+system` entries

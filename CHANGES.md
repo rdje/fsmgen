@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### malformed `+system` entry structures now have explicit coverage
+- Added [t/79-language-contract-system-section-structure-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/79-language-contract-system-section-structure-boundary.t) to lock the malformed-entry-structure side of the conventional `+system` family:
+  - scalar entries like `BROKEN` inside `(+system ...)`,
+  - and wrong-arity entries like `(clock clk extra)`.
+- The same file also locks pipeline and CLI no-output behavior for those malformed `+system` structures, and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents that malformed-entry-structure rule explicitly too.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the live contract accounting stays aligned.
 ### malformed symbol-definition identifier and scalar-token cases now have full coverage
 - Added [t/78-language-contract-symbol-definition-token-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/78-language-contract-symbol-definition-token-boundary.t) to lock the token-validity side of the symbol-definition family:
   - bad identifiers in `+constants`, `+define`, and `+params`,

@@ -398,6 +398,12 @@ sub parse_system_section($self, $system_ast) {
             unless defined $directive && !ref($directive);
 
         Carp::confess
+            "Unsupported '+system' entry structure. ".
+            "The active contract currently supports only '(clock clk)' plus one reset declaration naming 'rstn' via '(sreset rstn)' or '(asreset rstn)' inside '+system'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless defined $resolved_name && !ref($resolved_name);
+
+        Carp::confess
             "Duplicate '+system' entry '$directive'. ".
             "The active contract currently expects exactly one '(clock clk)' and one reset declaration naming 'rstn'. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"

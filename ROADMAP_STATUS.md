@@ -404,6 +404,10 @@ Done:
   - duplicate `(clock clk)` entries are rejected explicitly,
   - duplicate reset declarations are rejected explicitly, including mixed `(sreset rstn)` plus `(asreset rstn)`,
   - and parser, pipeline, and CLI entry points now fail without emitting HDL for those malformed duplicate sections.
+- [t/79-language-contract-system-section-structure-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/79-language-contract-system-section-structure-boundary.t) now locks the malformed-entry-structure side of the same `+system` family explicitly:
+  - scalar payloads like `BROKEN` inside `(+system ...)` are rejected explicitly,
+  - wrong-arity entries like `(clock clk extra)` are rejected explicitly,
+  - and parser, pipeline, and CLI entry points now fail without emitting HDL for those malformed `+system` structures too.
 - [t/74-language-contract-implicit-system-defaults.t](/Users/richarddje/Documents/github/fsmgen/t/74-language-contract-implicit-system-defaults.t) now locks the no-`+system` default system contract explicitly:
   - FSMs without `+system` now generate with implicit `clk` / `rst_n`,
   - explicit conventional `+system` still keeps the declared `clk` / `rstn` pair,

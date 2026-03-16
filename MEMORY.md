@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: malformed `+system` entry structures now have full coverage
+- [t/79-language-contract-system-section-structure-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/79-language-contract-system-section-structure-boundary.t) now locks:
+  - scalar entries like `BROKEN` inside `(+system ...)`,
+  - and wrong-arity entries like `(clock clk extra)`.
+- Those malformed `+system` structures are now covered through direct parser checks plus pipeline and CLI no-output behavior, so the conventional `+system` family is no longer fully explicit only on names/directives/incompleteness/duplicates.
 ## 2026-03-16: malformed symbol-definition token cases now have full coverage
 - [t/78-language-contract-symbol-definition-token-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/78-language-contract-symbol-definition-token-boundary.t) now locks:
   - bad identifiers in `+constants`, `+define`, and `+params`,
