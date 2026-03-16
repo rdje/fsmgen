@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### reset-naming continuity now distinguishes current `?fsm` residue from future/default convention
+- Refined [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), and [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) so the wording now says this explicitly:
+  - current shipped explicit `(?fsm:name ... (+system ...))` compatibility residue still spells `rstn`,
+  - but the forward/default async-reset convention remains `rst_n`,
+  - including the implicit no-`+system` path and the planned `?top:name` / sequential `?dt:name` lanes.
+- Updated [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) to preserve that distinction in continuity notes too.
 ### non-conventional `+system` reset names now have explicit coverage
 - Added [t/80-language-contract-system-reset-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/80-language-contract-system-reset-name-boundary.t) to lock the reset-name side of the conventional `+system` family:
   - `(sreset reset)`,

@@ -526,6 +526,7 @@ Deliverables:
   - standalone DT modules may mix combinational and sequential outputs,
   - `?fsm:name` implicitly declares `clk` / `rst_n`,
   - `?dt:name` implicitly declares `clk` / `rst_n` only when at least one sequential assignment exists,
+  - `?top:name` and sequential `?dt:name` should keep `rst_n` as the default async-reset convention even though the current explicit `?fsm` `+system` compatibility residue still spells `rstn`,
   - `?dt:name` output-driving semantics stay aligned with current DT handling inside `?fsm:name`,
   - multiple internal `(-foo ...)` blocks may assign the same target without structural rejection,
   - and generated enable families should support explicit mutual-exclusion assertions instead of relying on an over-broad conflict ban,

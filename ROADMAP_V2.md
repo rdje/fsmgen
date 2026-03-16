@@ -120,6 +120,7 @@ Deliverable themes:
   - the semantic split from `?fsm:name` is the control model, not “combinational only” versus “sequential allowed”,
   - `?fsm:name` should implicitly declare `clk` / `rst_n`,
   - `?dt:name` should implicitly declare `clk` / `rst_n` only when at least one sequential assignment exists in that standalone DT module,
+  - `?top:name` and sequential `?dt:name` should keep `rst_n` as the default async-reset convention even if the current explicit `?fsm` `+system` compatibility residue still spells `rstn`,
   - output-driving semantics inside `?dt:name` should stay aligned with the current DT handling inside `?fsm:name`,
   - multiple internal `(-foo ...)` blocks in the same `?dt:name` may assign the same target without being rejected structurally,
   - but the generated enable families must still support mutual-exclusion assertions so arbitration stays explicit,

@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: reset naming now distinguishes current `?fsm` residue from future/default convention
+- Saved wording split:
+  - current shipped explicit `(?fsm:name ... (+system ...))` compatibility residue still uses `rstn`,
+  - but the forward/default async-reset convention remains `rst_n`,
+  - including the implicit no-`+system` path and the planned `?top:name` / sequential `?dt:name` lanes.
 ## 2026-03-16: non-conventional `+system` reset names now have full coverage
 - [t/80-language-contract-system-reset-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/80-language-contract-system-reset-name-boundary.t) now locks:
   - `(sreset reset)`,

@@ -531,8 +531,9 @@ Regression-backed example:
 
 Boundary note:
 - This slice makes the conventional shared-system declaration explicit and regression-backed.
-- It accepts the two legacy reset spellings already present in the active tree, but it does not yet widen the contract into arbitrary system metadata, custom clock/reset names, or richer reset-mode differentiation.
-- The accepted `(sreset rstn)` spelling is compatibility residue from the shipped tree, not a polarity-aware naming recommendation.
+- It accepts the two current shipped explicit `+system` reset declarations already present in the active tree, but it does not yet widen the contract into arbitrary system metadata, custom clock/reset names, or richer reset-mode differentiation.
+- The accepted explicit `(?fsm:name ... (+system ...))` spelling `(sreset rstn)` is compatibility residue from the shipped tree, not a polarity-aware naming recommendation.
+- The forward/default async-reset convention remains `rst_n`, including the implicit no-`+system` path and the planned `?top:name` / sequential `?dt:name` lanes.
 - The active generator now also has one explicit implicit-default rule:
   - if no `+system` section is present at all, generation uses `clk` plus asynchronous active-low `rst_n`.
 

@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: reset naming now distinguishes current `?fsm` compatibility residue from future/default convention
+- The wording around reset naming needed one more distinction:
+  - current shipped explicit `(?fsm:name ... (+system ...))` compatibility residue still accepts `rstn`,
+  - but that does not define the forward/default async-reset convention.
+- Saved direction:
+  - implicit no-`+system` generation stays on `rst_n`,
+  - planned `?top:name` defaults should also stay on `rst_n`,
+  - planned sequential `?dt:name` defaults should also stay on `rst_n`,
+  - and the explicit `rstn` spelling should be treated as current shipped compatibility residue rather than as the preferred async-reset name going forward.
 ## 2026-03-16: non-conventional `+system` reset names are now locked explicitly too
 - The conventional `+system` family was already covered for:
   - bad clock names,
@@ -17,7 +26,7 @@ This document captures engineering rationale, design constraints, and working de
 - Wording note:
   - using `reset_n` as the rejected synchronous-reset example was misleading because `_n` implies active-low naming,
   - so the synchronous rejected example now uses `(sreset reset)` instead,
-  - while the accepted `(sreset rstn)` form remains current compatibility residue from the shipped tree rather than a polarity-aware naming recommendation.
+  - while the accepted `(sreset rstn)` form remains current shipped `?fsm` compatibility residue rather than a polarity-aware naming recommendation or future default.
 ## 2026-03-16: malformed `+system` entry structures are now locked explicitly too
 - The conventional `+system` family was already covered for:
   - bad clock names,
@@ -671,7 +680,7 @@ This document captures engineering rationale, design constraints, and working de
   - and incomplete-section rejection.
 - Boundary decision:
   - this slice makes the conventional shared-system declaration explicit and supported,
-  - accepts the two legacy reset spellings already present in the active tree,
+  - accepts the two current shipped explicit `+system` reset declarations already present in the active tree,
   - but it still does not widen the contract into arbitrary system metadata, custom clock/reset names, or richer reset-mode differentiation.
 ## 2026-03-15: symbol-definition sections are now part of the active `R8` contract
 - The next `R8` slice is now regression-backed and promoted into the live support boundary:
