@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: malformed ordinary RHS expressions are now locked across entry points too
+- The malformed side of the ordinary RHS expression family was already explicit at direct parser level:
+  - unsupported operators such as `(bogus B C)`,
+  - malformed active-operator arity such as `(== B)`,
+  - and guard-only tokens such as `<start` in ordinary expression position.
+- The remaining gap was that this family did not yet have focused pipeline and CLI no-output coverage of its own.
+- The regression set now closes that gap:
+  - those malformed ordinary RHS expression forms are now covered through pipeline and CLI entry points too,
+  - so the active expression boundary is no longer “parser-explicit, but entrypoint-implicit” on that malformed side.
 ## 2026-03-16: malformed symbol-definition sections are now locked across entry points too
 - The malformed side of the symbol-definition family was already explicit at direct parser level:
   - `+constants`,

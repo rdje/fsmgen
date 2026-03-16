@@ -312,6 +312,10 @@ Done:
   - unsupported RHS operators such as `(bogus B C)`,
   - malformed active-operator arity such as `(== B)`,
   - and guard-only tokens such as `<start` when used in ordinary expression position.
+- [t/77-language-contract-expression-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/77-language-contract-expression-entrypoints.t) now extends that malformed ordinary-expression family across entry points explicitly:
+  - unsupported RHS operators, malformed active-operator arity, and guard-only ordinary RHS tokens now have focused pipeline and CLI no-output coverage too,
+  - so the malformed ordinary-expression family is no longer parser-explicit but entrypoint-implicit,
+  - and the active expression boundary is now regression-backed across parser, pipeline, and CLI for those malformed forms.
 - [t/44-language-contract-relational-operators.t](/Users/richarddje/Documents/github/fsmgen/t/44-language-contract-relational-operators.t) now locks the broader operator-arity contract beyond arithmetic/logical folds:
   - n-ary relational chains such as `(< low mid high)` and `(== a b c d)`,
   - relational word aliases such as `(eq a b c d)` and `(ge high mid low)`,

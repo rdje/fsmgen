@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### malformed ordinary RHS expression forms now have full entrypoint coverage
+- Added [t/77-language-contract-expression-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/77-language-contract-expression-entrypoints.t) to lock pipeline and CLI no-output behavior for the malformed side of ordinary RHS expressions:
+  - unsupported operators such as `(bogus B C)`,
+  - malformed active-operator arity such as `(== B)`,
+  - and guard-only tokens such as `<start` in ordinary RHS expression position.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the malformed ordinary-expression family is now tracked as end-to-end across parser, pipeline, and CLI instead of parser-covered only.
 ### malformed symbol-definition sections now have full entrypoint coverage
 - Added [t/76-language-contract-symbol-definition-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/76-language-contract-symbol-definition-entrypoints.t) to lock pipeline and CLI no-output behavior for the malformed side of:
   - `+constants`,

@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: malformed ordinary RHS expression forms now have full entrypoint coverage
+- [t/77-language-contract-expression-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/77-language-contract-expression-entrypoints.t) now locks pipeline and CLI no-output behavior for malformed ordinary RHS expressions:
+  - unsupported operators such as `(bogus B C)`,
+  - malformed active-operator arity such as `(== B)`,
+  - and guard-only tokens such as `<start` in ordinary RHS expression position.
+- This closes the remaining end-to-end gap for the malformed ordinary-expression family that was already explicit at direct parser level.
 ## 2026-03-16: malformed symbol-definition sections now have full entrypoint coverage
 - [t/76-language-contract-symbol-definition-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/76-language-contract-symbol-definition-entrypoints.t) now locks pipeline and CLI no-output behavior for malformed:
   - `+constants`,
