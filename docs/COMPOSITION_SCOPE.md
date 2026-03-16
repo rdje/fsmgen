@@ -5,7 +5,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 ## Status
 - The active toolchain now ships the first `C1` composition lane:
   - one `?top:name`,
-  - one embedded `?fsmc` child source in the same file,
+  - one `?fsmc` child source realized either from the same file or from a searchable external `.fsm` source,
   - one explicit `?ports` block,
   - deterministic same-name top wiring,
   - generated child HDL plus generated top HDL through `bin/fsmgen`.
@@ -16,7 +16,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - deterministic internal-net creation for child-to-child wiring,
   - duplicate-driver rejection before emission.
 - The active toolchain now also ships the first `C3` composition lane:
-  - exactly one embedded `?fsmc` child plus one external `?rtl` child,
+  - exactly one `?fsmc` child plus one external `?rtl` child,
   - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
   - external RTL interface metadata loaded from a sidecar `<module>.rtlif` artifact,
   - deterministic internal-net creation and mixed-child instantiation without regenerating external RTL internals.
@@ -39,10 +39,10 @@ The currently shipped composition behavior is intentionally bounded:
 - exactly one top-level `?top:name`,
 - exactly one explicit `?ports` block,
 - one or more `?fsmc` children,
-- every `?fsmc` child must reference one embedded `?fsm:name` source in the same file,
+- every `?fsmc` child must reference exactly one active child FSM source, either embedded in the same file or resolved from an external `.fsm` file,
 - `C1` single-child passthrough works without `?toplink`,
 - `C2` multi-child FSM composition uses explicit `?toplink`,
-- `C3` mixed composition currently supports exactly one embedded `?fsmc` child plus one external `?rtl` child,
+- `C3` mixed composition currently supports exactly one `?fsmc` child plus one external `?rtl` child,
 - `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports`,
 - each `=name` top port must resolve to exactly one same-named child endpoint with the same direction and width,
 - each `?rtl` child currently loads its interface from a sidecar `<module>.rtlif` metadata file searched first beside the composition source, then through explicit search roots such as repeated `--path DIR`, and then through the existing `FSMLIB` roots,
@@ -158,7 +158,7 @@ The first composition lane should be added above the current FSM-only parser bou
 2. Composition parsing
    - build a typed composition IR from `?top:*`, `?fsmc`, `?rtl`, `?ports`, and `?toplink`.
 3. Child realization
-   - compile `?fsmc` children through the existing FSM pipeline,
+   - compile `?fsmc` children through the existing FSM pipeline whether the child source is embedded or loaded from an external `.fsm` file,
    - load/validate declared interfaces for `?rtl` children from sidecar metadata.
 4. Top planning
    - resolve ports, nets, instance wiring, and deterministic ordering.
@@ -211,7 +211,7 @@ Status:
 
 ### C3. Mixed FSM + external RTL composition
 Status:
-- Implemented in the current active toolchain for exactly one embedded `?fsmc` child plus one external `?rtl` child using sidecar `<module>.rtlif` interface metadata.
+- Implemented in the current active toolchain for exactly one `?fsmc` child plus one external `?rtl` child using sidecar `<module>.rtlif` interface metadata.
 
 - Input:
   - one `?fsmc` child and one `?rtl` child with declared interface metadata.

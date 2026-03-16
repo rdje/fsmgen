@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: external composition child FSM reuse now has a first shipped `R11` slice
+- The reusable-root lane now reaches directly into the active composition runtime, not just bare top-level inputs and `.rtlif` metadata lookup.
+- Shipped behavior:
+  - `?top:name` can now realize `?fsmc` children from embedded child FSM sources in the same file,
+  - or from external searchable `.fsm` child sources,
+  - with lookup checking beside the composition source first, then repeated `--path DIR` roots, then `FSMLIB`, then the current directory.
+- This is still intentionally bounded:
+  - the generated child kind remains `?fsmc`,
+  - the external child source itself must still be an active FSM root (`?fsm:name` or legacy `+fsm`),
+  - and composition-facing standalone-DT child realization remains a later `R11` step rather than being widened implicitly here.
 ## 2026-03-16: malformed `:=` directive shapes now have explicit end-to-end coverage
 - The active top-level `:=` family was already covered for:
   - supported compact directives like `(:= signal=value)`,

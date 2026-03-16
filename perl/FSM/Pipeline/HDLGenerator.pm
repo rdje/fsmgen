@@ -9,6 +9,8 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 use FindBin;
+use File::Basename qw(dirname);
+use File::Spec;
 use lib "$FindBin::Bin";
 use FSM::Debug;
 use FSM::HDL::FlattenedDT;
@@ -23,6 +25,7 @@ use FSM::Extension::Context;
 use FSM::Extension::Loader;
 use FSM::Extension::Registry;
 use FSM::SourceClassifier;
+use FSM::SourcePathResolver;
 use Lispish;
 use Data::Dumper;
 
@@ -54,6 +57,10 @@ that separates the processing logic from the command line interface.
 
 sub new ($class, %args) {
     fsm_trace_enter('Initialize HDLGenerator pipeline', 2);
+    my $source_path_resolver = $args{source_path_resolver}
+        // FSM::SourcePathResolver->new(
+            extra_search_paths => ($args{source_search_paths} || []),
+        );
     my $extension_loader = $args{extension_loader}
         // FSM::Extension::Loader->new();
     my $extension_registry = $args{extension_registry};
@@ -80,10 +87,11 @@ sub new ($class, %args) {
         debug_level => $args{debug_level} // 0,
         target_language => $args{target_language} // 'systemverilog',
         quiet => $args{quiet} // 0,
+        source_path_resolver => $source_path_resolver,
         rtl_interface_loader => $args{rtl_interface_loader}
             // FSM::Composition::RTLInterfaceLoader->new(
                 debug => ($args{debug_level} // 0) > 0,
-                extra_search_paths => ($args{source_search_paths} || []),
+                path_resolver => $source_path_resolver,
             ),
         extension_loader => $extension_loader,
         extension_registry => $extension_registry,
@@ -394,12 +402,13 @@ sub assert_supported_composition_target ($self, $fsm_file, $header) {
 sub realize_fsmc_child_instance ($self, $instance, $composition_spec, $fsm_file, $header) {
     my $source_name = $instance->source_name;
     my $child_ast = $composition_spec->embedded_fsm_sources->{$source_name};
+    my $child_source_path;
+    my $child_source_info;
 
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active C1 lane only supports embedded '?fsm:$source_name' child sources in the same file. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless $child_ast;
+    unless ($child_ast) {
+        ($child_ast, $child_source_path, $child_source_info) =
+            $self->load_external_fsmc_child_source($source_name, $fsm_file, $header);
+    }
 
     my $child_module = $self->create_fsm_module($child_ast);
     my $child_module_info = $self->analyze_fsm_module($child_module);
@@ -415,6 +424,68 @@ sub realize_fsmc_child_instance ($self, $instance, $composition_spec, $fsm_file,
         module_info => $child_module_info,
         hdl_code => $child_hdl_code,
     );
+}
+
+sub load_external_fsmc_child_source ($self, $source_name, $fsm_file, $header) {
+    my ($child_source_path) =
+        $self->resolve_external_fsmc_child_source_path($source_name, $fsm_file, $header);
+
+    my $child_ast = $self->parse_fsm_file($child_source_path);
+    my $child_source_info = $self->classify_source_ast($child_ast);
+    my $child_kind = $child_source_info->{kind} // 'unknown';
+    return ($child_ast, $child_source_path, $child_source_info) if $child_kind eq 'fsm';
+
+    my $child_header = $child_source_info->{header} // 'unknown root';
+    my $kind_note = $child_kind eq 'dt'
+        ? "Standalone '?dt:name' roots are shipped as reusable modules, but composition-facing standalone-DT child realization is a later R11 slice."
+        : "The active composition child-FSM contract expects embedded or external child sources rooted at '?fsm:name' or legacy '+fsm' only.";
+
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' resolves '?fsmc' child '$source_name' to '$child_source_path', ".
+        "but that file is not an active FSM child source (detected root '$child_header'). ".
+        $kind_note." ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+}
+
+sub resolve_external_fsmc_child_source_path ($self, $source_name, $fsm_file, $header) {
+    my @preferred_dirs;
+    push @preferred_dirs, dirname($fsm_file) if defined($fsm_file) && $fsm_file =~ m{/};
+
+    my @search_dirs = @{
+        $self->{source_path_resolver}->normalized_search_paths(
+            preferred_dirs => \@preferred_dirs,
+            include_cwd => 1,
+        )
+    };
+
+    my @candidates;
+    if (File::Spec->file_name_is_absolute($source_name)) {
+        push @candidates, $source_name;
+        push @candidates, "$source_name.fsm" unless $source_name =~ /\.fsm$/i;
+    } elsif ($source_name =~ m{/}) {
+        for my $dir (@search_dirs) {
+            push @candidates, File::Spec->catfile($dir, $source_name);
+            push @candidates, File::Spec->catfile($dir, "$source_name.fsm")
+                unless $source_name =~ /\.fsm$/i;
+        }
+    } else {
+        my $target_filename = $source_name =~ /\.fsm$/i ? $source_name : "$source_name.fsm";
+        push @candidates, map { File::Spec->catfile($_, $target_filename) } @search_dirs;
+    }
+
+    my %seen;
+    my @searched_paths = grep { !$seen{$_}++ } @candidates;
+    for my $candidate (@searched_paths) {
+        return ($candidate, \@search_dirs, \@searched_paths) if -f $candidate;
+    }
+
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' declares '?fsmc' child '$source_name', ".
+        "but no active child FSM source was found either embedded in the same file or in an external '.fsm' file. ".
+        "Search roots: ".join(', ', @search_dirs).". ".
+        "Searched locations: ".join(', ', @searched_paths).". ".
+        "The active composition contract currently allows '?fsmc' to realize embedded child FSM sources or external FSM module files found beside the composition source, through repeated '--path DIR' roots, through 'FSMLIB', or in the current directory. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
 sub realize_rtl_child_instance ($self, $instance, $fsm_file, $header) {

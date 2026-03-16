@@ -1,5 +1,11 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: external composition child FSM reuse now has a first shipped `R11` slice
+- Saved shipped behavior:
+  - `?top:name` can now realize `?fsmc` children from embedded child FSM sources or from external searchable `.fsm` child sources,
+  - external child-source lookup checks beside the composition source first, then repeated `--path DIR` roots, then `FSMLIB`, then the current directory,
+  - and that broader reusable-root/reference slice now covers live composition child reuse instead of stopping at bare input lookup and `.rtlif` lookup.
+- [t/84-composition-external-fsm-child-sources.t](/Users/richarddje/Documents/github/fsmgen/t/84-composition-external-fsm-child-sources.t) locks sibling external child realization, `--path`-driven child realization, and `--path` precedence over `FSMLIB` for `?fsmc` child lookup.
 ## 2026-03-16: reusable-source lookup now has a first shipped `R11` slice
 - Saved shipped behavior:
   - the CLI now accepts repeatable `--path DIR` roots,

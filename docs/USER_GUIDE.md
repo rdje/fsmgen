@@ -15,7 +15,7 @@ Current limitation:
 - The currently shipped composition boundary is:
   - one `?top:name`,
   - one explicit `?ports` block,
-  - one or more embedded `?fsmc` children in the same file,
+  - one or more `?fsmc` children, each realized either from an embedded child FSM source in the same file or from an external searchable `.fsm` child source,
   - `C1` single-child passthrough via deterministic same-name wiring,
   - `C2` multi-child FSM composition via explicit `?toplink` wiring with `instance.port` child endpoints.
   - `C3` mixed FSM plus external RTL composition via explicit `?toplink` wiring and sidecar `<module>.rtlif` interface metadata.
@@ -159,7 +159,9 @@ Combinational DT note:
 - Root form `(?top:top_name ...)` with an HDL-identifier-compatible top name (`[A-Za-z_]\\w*`)
 - Explicit `(?ports:block ...)` blocks with flat port tokens
 - Port tokens like `clk`, `rstn`, `data_in<8`, `txd>`, and `=final_data>8`
-- `(?fsmc:instance child_source)` with exactly one embedded FSM source name
+- `(?fsmc:instance child_source)` with exactly one child FSM source token
+  - the active child source may be embedded in the same file as `?fsm:name`
+  - or resolved from an external `.fsm` file beside the composition source, through repeated `--path DIR` roots, then through `FSMLIB`
 - `(?rtl:module)` for external RTL children
 - External RTL interface loading via sidecar `<module>.rtlif`
 - Explicit `(?toplink:name ...)` blocks with flat `/source/target/` tokens
@@ -672,7 +674,7 @@ Current narrow composition example:
 ```
 
 This currently works because:
-- the child FSM is embedded in the same file,
+- the child FSM may be embedded in the same file or resolved from a sibling/searchable external `.fsm` source,
 - the child exposes `output_data` explicitly as an output,
 - the top `?ports` block matches the realized child interface exactly.
 
@@ -694,7 +696,7 @@ Current narrow multi-child example:
 ```
 
 This currently works because:
-- every child is an embedded `?fsmc`,
+- every child `?fsmc` resolves to one active child FSM source, either embedded or external,
 - `clk` and `rstn` use the shared system-input contract,
 - non-system connections are expressed explicitly through `?toplink`,
 - explicit link widths and endpoint roles must match exactly.
@@ -822,6 +824,7 @@ With sidecar interface metadata in `uart_tx.rtlif`:
 
 This currently works because:
 - the FSM child is still compiled through the active FSM pipeline,
+- the FSM child may be embedded or resolved from a sibling/searchable external `.fsm` source,
 - the external RTL child is instantiated but not regenerated,
 - composition loads the RTL interface from `uart_tx.rtlif` beside the source file, then through repeated `--path DIR` roots, then through the existing `FSMLIB` search roots,
 - non-system mixed-child connections remain explicit through `?toplink`.
