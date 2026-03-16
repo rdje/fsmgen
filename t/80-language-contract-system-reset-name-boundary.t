@@ -21,7 +21,7 @@ subtest 'non-conventional +system reset names are rejected explicitly' => sub {
 (?fsm:bad_sync_reset_name
   (+system
     (clock clk)
-    (sreset reset_n)
+    (sreset reset)
   )
   (-dt
     (A = 1)
@@ -29,7 +29,7 @@ subtest 'non-conventional +system reset names are rejected explicitly' => sub {
 )
 FSM
 
-    like($sync_error, qr/Unsupported '\+system' reset name 'reset_n'/, 'bad sreset name gets a targeted diagnostic');
+    like($sync_error, qr/Unsupported '\+system' reset name 'reset'/, 'bad sreset name gets a targeted diagnostic');
 
     my $async_error = parse_failure(<<'FSM');
 (?fsm:bad_async_reset_name
@@ -53,14 +53,14 @@ subtest 'pipeline and CLI do not emit HDL for non-conventional +system reset nam
 (?fsm:bad_sync_reset_name_cli
   (+system
     (clock clk)
-    (sreset reset_n)
+    (sreset reset)
   )
   (-dt
     (A = 1)
   )
 )
 FSM
-        qr/Unsupported '\+system' reset name 'reset_n'/,
+        qr/Unsupported '\+system' reset name 'reset'/,
         'non-conventional sreset name',
     );
 

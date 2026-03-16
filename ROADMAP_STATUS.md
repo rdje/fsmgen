@@ -409,7 +409,7 @@ Done:
   - wrong-arity entries like `(clock clk extra)` are rejected explicitly,
   - and parser, pipeline, and CLI entry points now fail without emitting HDL for those malformed `+system` structures too.
 - [t/80-language-contract-system-reset-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/80-language-contract-system-reset-name-boundary.t) now locks the reset-name side of the same `+system` family explicitly:
-  - non-conventional reset names like `(sreset reset_n)` are rejected explicitly,
+  - non-conventional synchronous-reset names like `(sreset reset)` are rejected explicitly,
   - the same applies to `(asreset reset_async_n)`,
   - and parser, pipeline, and CLI entry points now fail without emitting HDL for those malformed reset-name cases too.
 - [t/74-language-contract-implicit-system-defaults.t](/Users/richarddje/Documents/github/fsmgen/t/74-language-contract-implicit-system-defaults.t) now locks the no-`+system` default system contract explicitly:

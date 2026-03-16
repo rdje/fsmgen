@@ -3,7 +3,7 @@ This is the persistent technical change history for FSMGen.
 ## 2026-03-16
 ### non-conventional `+system` reset names now have explicit coverage
 - Added [t/80-language-contract-system-reset-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/80-language-contract-system-reset-name-boundary.t) to lock the reset-name side of the conventional `+system` family:
-  - `(sreset reset_n)`,
+  - `(sreset reset)`,
   - and `(asreset reset_async_n)`.
 - The same file also locks pipeline and CLI no-output behavior for those malformed reset-name cases, and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now names both rejected reset-name variants explicitly.
 - Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the live contract accounting stays aligned.

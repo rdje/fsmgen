@@ -2,9 +2,12 @@
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
 ## 2026-03-16: non-conventional `+system` reset names now have full coverage
 - [t/80-language-contract-system-reset-name-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/80-language-contract-system-reset-name-boundary.t) now locks:
-  - `(sreset reset_n)`,
+  - `(sreset reset)`,
   - and `(asreset reset_async_n)`.
 - Those malformed reset-name cases are now covered through direct parser checks plus pipeline and CLI no-output behavior, so the conventional `+system` family is no longer fully explicit only on clock names while leaving reset names as docs-only claims.
+- Wording note preserved:
+  - the synchronous rejected example now uses `reset` instead of `reset_n`,
+  - because `_n` implies active-low naming and was misleading in the synchronous case.
 ## 2026-03-16: malformed `+system` entry structures now have full coverage
 - [t/79-language-contract-system-section-structure-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/79-language-contract-system-section-structure-boundary.t) now locks:
   - scalar entries like `BROKEN` inside `(+system ...)`,

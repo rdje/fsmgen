@@ -509,7 +509,7 @@ Current boundary:
 - Rejected explicitly:
   - malformed entry structures such as `BROKEN` or `(clock clk extra)` inside `(+system ...)`
   - alternative clock names such as `(clock core_clk)`
-  - alternative reset names such as `(sreset reset_n)`
+  - alternative synchronous-reset names such as `(sreset reset)`
   - alternative reset names such as `(asreset reset_async_n)`
   - unsupported directives such as `(areset rstn)` or other legacy `+system` entries
   - duplicate clock entries such as two `(clock clk)` declarations
@@ -532,6 +532,7 @@ Regression-backed example:
 Boundary note:
 - This slice makes the conventional shared-system declaration explicit and regression-backed.
 - It accepts the two legacy reset spellings already present in the active tree, but it does not yet widen the contract into arbitrary system metadata, custom clock/reset names, or richer reset-mode differentiation.
+- The accepted `(sreset rstn)` spelling is compatibility residue from the shipped tree, not a polarity-aware naming recommendation.
 - The active generator now also has one explicit implicit-default rule:
   - if no `+system` section is present at all, generation uses `clk` plus asynchronous active-low `rst_n`.
 
