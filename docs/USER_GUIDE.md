@@ -510,6 +510,7 @@ Current boundary:
   - malformed entry structures such as `BROKEN` or `(clock clk extra)` inside `(+system ...)`
   - alternative clock names such as `(clock core_clk)`
   - alternative reset names such as `(sreset reset_n)`
+  - alternative reset names such as `(asreset reset_async_n)`
   - unsupported directives such as `(areset rstn)` or other legacy `+system` entries
   - duplicate clock entries such as two `(clock clk)` declarations
   - duplicate reset declarations, including mixed `(sreset rstn)` plus `(asreset rstn)`

@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: non-conventional `+system` reset names are now locked explicitly too
+- The conventional `+system` family was already covered for:
+  - bad clock names,
+  - malformed entry structure,
+  - unsupported directives,
+  - incomplete sections,
+  - and duplicate declarations.
+- The remaining small gap was the reset-name side specifically:
+  - `(sreset reset_n)`,
+  - and `(asreset reset_async_n)`.
+- The regression set now closes that gap too:
+  - direct parser coverage now names unsupported `+system` reset names explicitly,
+  - and the same malformed reset-name cases are now locked through pipeline and CLI no-output behavior,
+  - so the conventional `+system` family is no longer “clock names covered, reset names only documented”.
 ## 2026-03-16: malformed `+system` entry structures are now locked explicitly too
 - The conventional `+system` family was already covered for:
   - bad clock names,
