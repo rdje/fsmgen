@@ -823,7 +823,7 @@ With sidecar interface metadata in `uart_tx.rtlif`:
 This currently works because:
 - the FSM child is still compiled through the active FSM pipeline,
 - the external RTL child is instantiated but not regenerated,
-- composition loads the RTL interface from `uart_tx.rtlif` beside the source file or through the existing `FSMLIB` search roots,
+- composition loads the RTL interface from `uart_tx.rtlif` beside the source file, then through repeated `--path DIR` roots, then through the existing `FSMLIB` search roots,
 - non-system mixed-child connections remain explicit through `?toplink`.
 
 ## 4) Useful options
@@ -833,6 +833,7 @@ This currently works because:
 - `--trace-verbosity <none|low|medium|high|debug>` : named trace verbosity selector
 - `--trace-log[=FILE]` : route trace output to FILE (default: `trace.log`)
 - `--trace-emojis` / `--notrace-emojis` : enable/disable emoji markers in trace formatting
+- `--path <dir>` : add an explicit search root for bare `.fsm` names and related lookup (may be repeated)
 - `--extension-module <Module::Name>` : load an explicit typed extension module from `@INC` (may be repeated)
 - `--extension-config <file>` : load typed extension modules from an explicit config file (may be repeated)
 - `-q, --quiet` : suppress informational messages
@@ -840,14 +841,14 @@ This currently works because:
 
 ## 5) Input resolution and FSMLIB
 `fsmgen` resolves `<fsm_file>` as:
-1. bare name (`foo`) or `foo.fsm`: searched in `FSMLIB` paths, then current directory
+1. bare name (`foo`) or `foo.fsm`: searched in repeated `--path DIR` roots, then `FSMLIB` paths, then current directory
 2. relative path (`../fsm/foo.fsm`): used directly
 3. absolute path: used directly
 
 Example:
 ```bash
 export FSMLIB="/project/fsm:/shared/fsm"
-./bin/fsmgen lte_dif_pmaster
+./bin/fsmgen --path ./fsm --path ../shared_fsm lte_dif_pmaster
 ```
 
 ## 6) Debug workflow

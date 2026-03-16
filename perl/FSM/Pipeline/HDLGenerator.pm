@@ -83,6 +83,7 @@ sub new ($class, %args) {
         rtl_interface_loader => $args{rtl_interface_loader}
             // FSM::Composition::RTLInterfaceLoader->new(
                 debug => ($args{debug_level} // 0) > 0,
+                extra_search_paths => ($args{source_search_paths} || []),
             ),
         extension_loader => $extension_loader,
         extension_registry => $extension_registry,

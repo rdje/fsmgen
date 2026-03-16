@@ -10,11 +10,16 @@ no warnings 'experimental::signatures';
 use File::Basename qw(dirname);
 use File::Spec;
 use FSM::Composition::Port;
+use FSM::SourcePathResolver;
 use Lispish;
 
 sub new ($class, %args) {
     return bless {
         debug => $args{debug} // 0,
+        path_resolver => $args{path_resolver}
+            // FSM::SourcePathResolver->new(
+                extra_search_paths => ($args{extra_search_paths} || []),
+            ),
     }, $class;
 }
 
@@ -38,13 +43,14 @@ sub load_interface ($self, %args) {
 }
 
 sub resolve_metadata_path ($self, $module_name, $source_file) {
-    my @search_dirs;
-    push @search_dirs, dirname($source_file) if $source_file =~ m{/};
-    push @search_dirs, grep { defined && length } split /:/, ($ENV{FSMLIB} || '');
-    push @search_dirs, '.';
-
-    my %seen;
-    @search_dirs = grep { !$seen{$_}++ } @search_dirs;
+    my @preferred_dirs = ();
+    push @preferred_dirs, dirname($source_file) if $source_file =~ m{/};
+    my @search_dirs = @{
+        $self->{path_resolver}->normalized_search_paths(
+            preferred_dirs => \@preferred_dirs,
+            include_cwd => 1,
+        )
+    };
 
     my @candidates = map { File::Spec->catfile($_, "$module_name.rtlif") } @search_dirs;
     for my $candidate (@candidates) {

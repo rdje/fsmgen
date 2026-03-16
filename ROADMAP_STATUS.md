@@ -59,8 +59,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R11` Composition contract strengthening.
 - Current next decision point:
-  - Keep the first `?dt:name` slice moving while the root/interface rules are fresh, instead of switching straight back into malformed-boundary hunting.
-  - Decide whether the next `R11` slice should deepen standalone-DT reuse itself or start the reusable-source lookup lane (`FSMLIB` plus repeatable `--path DIR`).
+  - Keep the reusable-root lane moving while `?dt:name` and explicit search-root behavior are both fresh in the tree.
+  - Decide whether the next `R11` slice should deepen standalone-DT reuse itself or start wiring those reusable roots into broader composition/reference contracts.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
 
 ## Workstreams
@@ -555,6 +555,11 @@ Done:
   - driven non-intermediate targets in `?dt:name` become module outputs by default,
   - and standalone `?dt:name` generation stays out of the encoded `current_state` / `next_state` plan.
 - [t/82-standalone-dt-root-support.t](/Users/richarddje/Documents/github/fsmgen/t/82-standalone-dt-root-support.t) now locks both the combinational and sequential `?dt:name` success paths.
+- The first reusable-source lookup slice is now also shipped:
+  - the CLI accepts repeatable `--path DIR` roots for bare `.fsm` input resolution,
+  - explicit `--path` roots are searched before `FSMLIB`,
+  - and the same explicit search roots now also feed external `.rtlif` metadata lookup for the current composition lane.
+- [t/83-reusable-source-path-resolution.t](/Users/richarddje/Documents/github/fsmgen/t/83-reusable-source-path-resolution.t) now locks bare-name `--path` lookup, `--path` precedence over `FSMLIB`, and `--path`-driven external RTL metadata lookup.
 Left:
 - Turn the `.rtlif` follow-up into a deliberate contract-improvement lane.
 - Turn the new shared-datapath extraction direction into a real contract:
@@ -572,7 +577,7 @@ Left:
   - extend the current shipped `?dt:name` interface rule into a fuller reusable-module contract, especially around multi-block enable surfacing and composition-facing exposure,
   - define how multi-`(-foo ...)` standalone DT modules expose block-level and module-level enable families,
   - extend the now-shipped implicit-system rule split between `?fsm:name` and `?dt:name` into the broader reuse/composition contract,
-  - and define deterministic lookup/precedence/diagnostics across explicit paths, repeatable `--path DIR`, `FSMLIB`, and local files.
+  - and extend the now-shipped `--path` / `FSMLIB` lookup slice into the broader reusable-root/reference contract beyond bare top-level inputs and `.rtlif` metadata lookup.
 - Add any needed diagnostics/tests before considering broader composition growth.
 Exit criteria:
 - External-RTL composition uses a clearly specified interface contract that is stronger and easier to reason about than the current “implemented convention” state.

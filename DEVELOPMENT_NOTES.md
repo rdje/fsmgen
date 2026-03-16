@@ -77,6 +77,19 @@ This document captures engineering rationale, design constraints, and working de
 - The regression set now closes that gap too:
   - malformed `+constants`, `+define`, and `+params` payloads are now covered through pipeline and CLI entry points,
   - so the malformed symbol-definition family is no longer “fully end-to-end for enums, parser-only for the rest”.
+## 2026-03-16: reusable-source lookup now has a first shipped `R11` slice
+- The reusable-source lookup direction is no longer just roadmap wording either.
+- Shipped behavior:
+  - the CLI now accepts repeatable `--path DIR` search roots,
+  - bare `.fsm` input lookup searches those explicit roots before `FSMLIB`,
+  - and the same explicit roots now also feed `.rtlif` metadata lookup for the current external-RTL composition lane.
+- The implementation uses one small shared resolver instead of duplicating root ordering again:
+  - [perl/FSM/SourcePathResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/SourcePathResolver.pm) now normalizes explicit roots plus `FSMLIB`,
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) uses it for bare input resolution,
+  - and [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) uses it for sidecar metadata lookup.
+- This is still a bounded slice:
+  - it improves top-level bare input lookup and current `.rtlif` lookup,
+  - but it does not yet define the broader reusable-root/reference contract for future multi-source `.fsm` composition.
 ## 2026-03-16: first `R11` standalone `?dt:name` slice is now shipped
 - The reusable standalone-DT lane is no longer just future wording. One first slice is now live in the active toolchain.
 - Shipped behavior:

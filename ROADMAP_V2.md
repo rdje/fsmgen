@@ -136,7 +136,9 @@ First shipped `R11` slice now in tree:
   - directive sections `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, and `(+params ...)`,
   - compact top-level `(:= signal=value)` directives,
   - implicit `clk` / `rst_n` only when the `?dt:name` source contains sequential assignments,
-  - and default output exposure for driven non-intermediate targets.
+  - default output exposure for driven non-intermediate targets,
+  - repeatable `--path DIR` search roots for bare `.fsm` input lookup,
+  - and the same explicit search roots feeding current `.rtlif` metadata lookup ahead of `FSMLIB`.
 - The shipped first slice does not yet widen into:
   - explicit `+system` inside `?dt:name`,
   - regular FSM-state blocks inside `?dt:name`,

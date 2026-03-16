@@ -14,10 +14,11 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 # Load required modules
 use FSM::Debug;  # Global debug system
 use FSM::Pipeline::HDLGenerator;
+use FSM::SourcePathResolver;
 
 # FSM file resolution function using FSMLIB environment variable
 sub resolve_fsm_file {
-    my ($fsm_input) = @_;
+    my ($fsm_input, $path_resolver) = @_;
     
     # Case 3 & 4: Path contains slash - treat as relative or absolute path
     if ($fsm_input =~ m{/}) {
@@ -41,21 +42,11 @@ sub resolve_fsm_file {
     
     my @search_paths = ();
     my @searched_paths = ();  # For error reporting
-    
-    # Get FSMLIB paths (colon-separated like PATH)
     my $fsmlib = $ENV{FSMLIB} || '';
-    if ($fsmlib) {
-        @search_paths = split /:/, $fsmlib;
-        # Remove empty paths and expand ~ to home directory
-        @search_paths = grep { $_ } map {
-            my $path = $_;
-            $path =~ s/^~/$ENV{HOME}/;  # Expand ~ to home directory
-            $path;
-        } @search_paths;
-    }
-    
-    # Always add current directory as fallback
-    push @search_paths, '.';
+    my @explicit_paths = @{ $path_resolver ? $path_resolver->extra_search_paths : [] };
+    @search_paths = @{ $path_resolver
+        ? $path_resolver->normalized_search_paths(include_cwd => 1)
+        : FSM::SourcePathResolver->new()->normalized_search_paths(include_cwd => 1) };
     
     # Search for the file in each path
     for my $search_path (@search_paths) {
@@ -70,7 +61,13 @@ sub resolve_fsm_file {
     # File not found - generate comprehensive error message
     my $error_msg = "Error: FSM file '$target_filename' not found\n";
     $error_msg .= "Original input: $fsm_input\n";
-    
+
+    if (@explicit_paths) {
+        $error_msg .= "Explicit --path roots searched: " . join(':', @explicit_paths) . "\n";
+    } else {
+        $error_msg .= "Explicit --path roots searched: none\n";
+    }
+
     if ($fsmlib) {
         $error_msg .= "FSMLIB paths searched: " . join(':', split(/:/, $fsmlib)) . "\n";
     } else {
@@ -119,6 +116,7 @@ my $trace_log_enabled = 0;
 my $trace_emojis = 1;
 my @extension_modules = ();
 my @extension_config_files = ();
+my @source_search_paths = ();
 
 # Store original ARGV to check for bare flags before GetOptions processes them
 my $has_bare_debug_flag = grep { /^--?d(ebug)?$/ } @ARGV;
@@ -133,6 +131,7 @@ GetOptions(
     'trace-verbosity|verbosity=s' => \$trace_verbosity,
     'trace-log:s' => \$trace_log_path,
     'trace-emojis!' => \$trace_emojis,
+    'path=s@' => \@source_search_paths,
     'extension-module=s@' => \@extension_modules,
     'extension-config=s@' => \@extension_config_files,
 ) or die "Error in command line arguments\n";
@@ -199,6 +198,9 @@ Options:
                   instead of stdout
   --trace-emojis / --notrace-emojis
                   Enable/disable emoji markers in trace formatting
+  --path <dir>
+                  Add an explicit search root for bare .fsm names and related lookup
+                  May be repeated; searched before FSMLIB
   --extension-module <Module::Name>
                   Load an explicit typed extension module from @INC
                   May be repeated
@@ -213,26 +215,28 @@ Options:
 Environment Variables:
   FSMLIB          Colon-separated list of directories to search for .fsm files
                   Example: export FSMLIB="/path/to/fsm1:/path/to/fsm2:~/fsm"
-                  If not set, only current directory is searched for bare names
+                  If not set, bare-name lookup falls back to explicit --path roots and current directory
 
 FSM File Resolution:
   The tool uses different strategies based on the fsm_file argument:
   
   1. Bare name (e.g., 'lte_dif_pmaster')
      • Appends '.fsm' to get 'lte_dif_pmaster.fsm'
+     • Searches each explicit --path directory in order
      • Searches each FSMLIB directory in order
-     • Falls back to current directory if not found in FSMLIB
+     • Falls back to current directory if not found in explicit roots or FSMLIB
   
   2. Name with .fsm extension (e.g., 'lte_dif_pmaster.fsm')
+     • Searches each explicit --path directory in order
      • Searches each FSMLIB directory in order
-     • Falls back to current directory if not found in FSMLIB
+     • Falls back to current directory if not found in explicit roots or FSMLIB
   
   3. Relative path (e.g., '../fsm/lte_dif_pmaster.fsm')
-     • Uses the specified path directly (no FSMLIB search)
+     • Uses the specified path directly (no bare-name search)
      • Path is relative to current working directory
   
   4. Absolute path (e.g., '/home/user/fsm/lte_dif_pmaster.fsm')
-     • Uses the specified path directly (no FSMLIB search)
+     • Uses the specified path directly (no bare-name search)
 
 Supported Languages:
   - SystemVerilog (systemverilog, sv) - generates .sv files
@@ -243,6 +247,9 @@ FSMLIB Examples:
   # Set up FSMLIB environment
   export FSMLIB="/project/fsm:~/my_fsm:/shared/fsm_lib"
   
+  # Add explicit per-invocation search roots ahead of FSMLIB
+  perl generate_fsm_hdl.pl --path ./fsm --path ../shared_fsm my_block
+
   # Use bare name - searches FSMLIB paths
   perl generate_fsm_hdl.pl lte_dif_pmaster
   
@@ -308,9 +315,12 @@ if (@ARGV != 1) {
 }
 
 my $fsm_input = $ARGV[0];
+my $path_resolver = FSM::SourcePathResolver->new(
+    extra_search_paths => \@source_search_paths,
+);
 
 # Resolve FSM file path using FSMLIB-aware logic
-my $fsm_file = resolve_fsm_file($fsm_input);
+my $fsm_file = resolve_fsm_file($fsm_input, $path_resolver);
 
 # Convert to absolute path for consistency
 $fsm_file = File::Spec->rel2abs($fsm_file);
@@ -350,6 +360,7 @@ my $pipeline = FSM::Pipeline::HDLGenerator->new(
     debug_level => get_fsm_debug_level(),
     target_language => $target_language,
     quiet => $quiet,
+    source_search_paths => \@source_search_paths,
     extension_modules => \@extension_modules,
     extension_config_files => \@extension_config_files,
 );

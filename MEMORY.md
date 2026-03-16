@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: reusable-source lookup now has a first shipped `R11` slice
+- Saved shipped behavior:
+  - the CLI now accepts repeatable `--path DIR` roots,
+  - bare `.fsm` input lookup searches explicit `--path` roots before `FSMLIB`,
+  - and current external `.rtlif` metadata lookup also uses those explicit roots before `FSMLIB`.
+- [perl/FSM/SourcePathResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/SourcePathResolver.pm) now centralizes that root ordering so we do not duplicate it again in the CLI and metadata loader.
+- [t/83-reusable-source-path-resolution.t](/Users/richarddje/Documents/github/fsmgen/t/83-reusable-source-path-resolution.t) locks the bare-input lookup, precedence, and `.rtlif` lookup parts of that slice.
 ## 2026-03-16: first `R11` standalone `?dt:name` slice is now shipped
 - `R11` is no longer purely future-note territory. The first reusable standalone-DT slice is now live.
 - Saved shipped contract:
