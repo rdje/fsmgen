@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### single-child declared connect-by-name now has a first shipped `R11` slice
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so declared `=name` connect-by-name no longer starts only beyond the single-child passthrough case.
+- Shipped behavior now includes:
+  - one generated child (`?fsmc` or `?dtc`) with declared by-name top input/output binding,
+  - the same exact same-name, same-direction, same-width matching rule as the broader `C4` lane,
+  - and honest non-system interfaces for combinational standalone-DT children in that single-child by-name lane too.
+- Added [t/86-composition-single-child-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/86-composition-single-child-connect-by-name.t) to lock single-child `?fsmc` and `?dtc` declared connect-by-name success through pipeline and CLI.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the active `R11` lane now records that bounded `C4` extension explicitly.
+
 ### composition-facing standalone-DT children now have a first shipped `R11` slice
 - Updated [perl/FSM/Composition/Spec.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Spec.pm), [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm), and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition now accepts `?dtc:instance child_source` as a generated-child kind beside `?fsmc`.
 - Shipped behavior now includes:

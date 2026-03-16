@@ -787,16 +787,16 @@ sub build_c4_composition_plan ($self, $composition_spec, $top, $ports_block, $po
 
     Carp::confess
         "Composition source '$header' in '$fsm_file' requests declared connect-by-name, ".
-        "but the current active C4 lane starts beyond the single-child passthrough case and therefore requires multiple realized child instances. ".
+        "but the current active C4 lane requires at least one realized child instance. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless @{$realized_instances || []} >= 2;
+        unless @{$realized_instances || []} >= 1;
 
     Carp::confess
         "Composition source '$header' in '$fsm_file' requests declared connect-by-name, ".
         "but the current active C4 lane only extends the already shipped child-realization sets: ".
-        "either multiple generated children ('?fsmc' / '?dtc') or exactly one generated child plus one '?rtl' child. ".
+        "either exactly one generated child, multiple generated children ('?fsmc' / '?dtc'), or exactly one generated child plus one '?rtl' child. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless ($rtl_instance_count == 0 && $generated_instance_count >= 2)
+        unless ($rtl_instance_count == 0 && $generated_instance_count >= 1)
             || (@{$realized_instances || []} == 2 && $generated_instance_count == 1 && $rtl_instance_count == 1);
 
     my @links = map { @{$_->links || []} } @{$toplinks || []};

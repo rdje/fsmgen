@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: single-child declared connect-by-name now has a first shipped `R11` slice
+- `?top:name` now accepts declared `=name` connect-by-name with exactly one generated child (`?fsmc` or `?dtc`) instead of starting only beyond the single-child passthrough case.
+- The bounded rule stays the same:
+  - exactly one same-named child endpoint,
+  - same direction,
+  - same width.
+- Purely combinational standalone-DT children still keep an honest non-system interface in that single-child by-name lane.
+- [t/86-composition-single-child-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/86-composition-single-child-connect-by-name.t) locks the first single-child `?fsmc` and `?dtc` by-name success paths.
+
 ## 2026-03-16: composition-facing standalone-DT children now have a first shipped `R11` slice
 - Saved shipped behavior:
   - composition now accepts `?dtc:instance child_source` beside `?fsmc`,

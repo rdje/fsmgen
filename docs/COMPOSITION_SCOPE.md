@@ -22,6 +22,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - deterministic internal-net creation and mixed-child instantiation without regenerating external RTL internals.
 - The active toolchain now also ships the first `C4` composition lane:
   - top ports can be declared as `=name` inside `?ports` to request explicit same-name connect-by-name,
+  - declared connect-by-name now covers one generated child, multiple generated children, or exactly one generated child plus one external `?rtl` child,
   - the planner auto-binds only when exactly one child endpoint matches by name, direction, and width,
   - ambiguous or missing matches fail explicitly instead of falling back to hidden inference.
 - The active toolchain now also ships the first `C6` boundary:
@@ -43,7 +44,7 @@ The currently shipped composition behavior is intentionally bounded:
 - `C1` single-child passthrough works without `?toplink`,
 - `C2` multi-generated-child composition uses explicit `?toplink`,
 - `C3` mixed composition currently supports exactly one generated child plus one external `?rtl` child,
-- `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports`,
+- `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one generated child, multiple generated children, or exactly one generated child plus one `?rtl` child,
 - each `=name` top port must resolve to exactly one same-named child endpoint with the same direction and width,
 - each `?rtl` child currently loads its interface from a sidecar `<module>.rtlif` metadata file searched first beside the composition source, then through explicit search roots such as repeated `--path DIR`, and then through the existing `FSMLIB` roots,
 - the current `C3` slice uses the RTL module name as the instance name,
@@ -225,7 +226,7 @@ Status:
 
 ### C4. Connect-by-name only when unambiguous
 Status:
-- Implemented in the current active toolchain for top ports declared as `=name` inside `?ports`, with exact same-name matching against exactly one compatible child endpoint.
+- Implemented in the current active toolchain for top ports declared as `=name` inside `?ports`, with exact same-name matching against exactly one compatible child endpoint across the shipped single-generated-child, multi-generated-child, and mixed generated-child plus `?rtl` lanes.
 
 - Input:
   - composition relying on declared connect-by-name.

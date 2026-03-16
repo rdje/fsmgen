@@ -175,7 +175,7 @@ Combinational DT note:
 - `C1` lane: one `?top`, one generated child (`?fsmc` or `?dtc`), explicit `?ports`, deterministic same-name top wiring
 - `C2` lane: multiple generated children (`?fsmc` / `?dtc`) plus explicit `?toplink` wiring and deterministic internal nets
 - `C3` lane: mixed generated child (`?fsmc` or `?dtc`) plus `?rtl`, with `.rtlif`-based interface validation
-- `C4` lane: declared connect-by-name through `=name` in `?ports`
+- `C4` lane: declared connect-by-name through `=name` in `?ports` for one generated child, multiple generated children, or one generated child plus `?rtl`
 - `C5` diagnostics: duplicate-driver rejection, explicit-link width mismatch rejection, connect-by-name ambiguity rejection, connect-by-name unknown-endpoint rejection, and width mismatch rejection
 - `C6` scoped rejection of legacy out-of-scope composition constructs
 
@@ -735,23 +735,20 @@ This currently works because:
 
 Current narrow declared connect-by-name example:
 ```lisp
-(?top:connect_by_name_top
+(?top:single_by_name_top
   (?ports:public_io
     clk
-    rstn
-    =final_data>8
+    rst_n
+    =enable<
+    =output_data>8
   )
-  (?fsmc:producer producer_src)
-  (?fsmc:consumer consumer_src)
-  (?toplink:wiring
-    /producer.output_data/consumer.input_data/
-  )
+  (?fsmc:child child_src)
 )
 ```
 
 This currently works because:
-- `=final_data>8` declares that the top output `final_data` must be resolved by same-name matching rather than by an explicit top-output `?toplink`,
-- exactly one compatible child endpoint named `final_data` exists,
+- `=enable<` and `=output_data>8` declare that those top ports must be resolved by same-name matching rather than by explicit `?toplink` wiring,
+- exactly one compatible child endpoint exists for each declared top port,
 - compatibility means same name, same direction, and same width,
 - ambiguous or missing matches fail explicitly.
 
@@ -762,7 +759,7 @@ Realistic `=name` patterns:
 (?top:packet_formatter_top
   (?ports:public_io
     clk
-    rstn
+    rst_n
     =frame_valid>
     =frame_data>32
   )
@@ -779,7 +776,7 @@ This is useful when:
 (?top:stream_gate_top
   (?ports:public_io
     clk
-    rstn
+    rst_n
     =enable_stream
     gated_valid>
   )

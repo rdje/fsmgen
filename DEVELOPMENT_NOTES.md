@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: single-child declared connect-by-name now has a first shipped `R11` slice
+- Continued the active `R11` lane by broadening the already-shipped declared connect-by-name contract in one bounded direction instead of inventing a new composition family.
+- Landed behavior:
+  - `?top:name` can now use `=name` wiring with exactly one generated child (`?fsmc` or `?dtc`),
+  - the planner keeps the same deterministic rule as before: exactly one same-named child endpoint with the same direction and width,
+  - and combinational standalone-DT children still keep an honest non-system interface in that single-child by-name lane.
+- [t/86-composition-single-child-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/86-composition-single-child-connect-by-name.t) locks the first single-child `?fsmc` and `?dtc` success paths through pipeline and CLI.
+
 ## 2026-03-16: composition-facing standalone-DT children now have a first shipped `R11` slice
 - The reusable standalone-DT lane now reaches the active composition runtime directly too.
 - Shipped behavior:
