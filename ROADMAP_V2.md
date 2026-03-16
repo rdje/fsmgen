@@ -139,7 +139,8 @@ First shipped `R11` slice now in tree:
   - default output exposure for driven non-intermediate targets,
   - repeatable `--path DIR` search roots for bare `.fsm` input lookup,
   - the same explicit search roots feeding current `.rtlif` metadata lookup ahead of `FSMLIB`,
-  - and external `?fsmc` composition child sources resolved from sibling or searched `.fsm` files without leaving the active typed pipeline.
+  - external `?fsmc` composition child sources resolved from sibling or searched `.fsm` files without leaving the active typed pipeline,
+  - and `?dtc` composition child realization from embedded or external standalone-DT sources, including honest non-system interfaces for purely combinational DT children.
 - The shipped first slice does not yet widen into:
   - explicit `+system` inside `?dt:name`,
   - regular FSM-state blocks inside `?dt:name`,

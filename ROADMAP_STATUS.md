@@ -59,8 +59,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R11` Composition contract strengthening.
 - Current next decision point:
-  - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, and external composition child reuse are all fresh in the tree.
-  - Decide whether the next `R11` slice should broaden reusable generated child kinds beyond external `?fsmc` reuse or deepen standalone-DT composition-facing exposure directly.
+  - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, and `?dtc` composition child reuse are all fresh in the tree.
+  - Decide whether the next `R11` slice should deepen connect-by-name / mixed-lane behavior for generated `?dtc` children or move into broader reusable-module interface/export questions.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
 
 ## Workstreams
@@ -190,7 +190,7 @@ Done:
 - The active pipeline now classifies top-level source kind explicitly, so `?top:name` is recognized before the FSM-only parser runs.
 - Unsupported composition input now fails with a composition-specific boundary diagnostic in both `HDLGenerator` and direct FSM-only parser calls, with focused regression coverage.
 - The active pipeline now parses `?top:name` through a typed composition parser/IR boundary.
-- The typed parser/IR slice now creates `CompositionSpec`, `CompositionTop`, typed `fsmc`/`rtl` child instances, `PortsBlock`, `TopLink`, and typed per-port/per-link planning objects.
+- The typed parser/IR slice now creates `CompositionSpec`, `CompositionTop`, typed `fsmc` / `dtc` / `rtl` child instances, `PortsBlock`, `TopLink`, and typed per-port/per-link planning objects.
 - `docs/COMPOSITION_LEGACY_MAPPING.md` now records how the obsolete `fx/bin/fsmgen` composition lane maps onto the active `R6` plan without reviving `.plg` / `PPlugin` behavior.
 - The first shipped composition runtime lane now exists for `C1`: one `?top:name`, one `?fsmc` child source realized either from the same file or from a searchable external `.fsm` source, one explicit `?ports` block, deterministic same-name top wiring, and generated top emission through `bin/fsmgen`.
 - Realized child interface data is now carried as typed composition ports, with the current active child contract treating effective child system inputs explicitly:
@@ -198,11 +198,11 @@ Done:
   - children without `+system` expose implicit `clk` / `rst_n`,
   - and explicit user-facing child ports from the FSM pipeline continue to ride alongside those system ports.
 - `t/20-composition-single-fsm-top.t` now locks the first end-to-end composition acceptance slice across pipeline, plan, HDL text, and CLI output.
-- The first shipped `C2` runtime slice now exists for multi-child FSM composition: two or more `?fsmc` children, typed explicit `?toplink` endpoint resolution, deterministic instance ordering, deterministic internal-net creation for child-to-child wiring, and duplicate-driver rejection.
-- `t/21-composition-two-fsm-linking.t` now locks the multi-child `?fsmc` success path.
-- The first shipped `C3` runtime slice now exists for mixed composition: exactly one `?fsmc` child plus one external `?rtl` child, typed explicit `?toplink` endpoint resolution across mixed children, deterministic internal-net creation, and explicit RTL instantiation without regenerating external RTL internals.
+- The first shipped `C2` runtime slice now exists for multi-child generated-child composition: two or more generated children (`?fsmc` / `?dtc`), typed explicit `?toplink` endpoint resolution, deterministic instance ordering, deterministic internal-net creation for child-to-child wiring, and duplicate-driver rejection.
+- `t/21-composition-two-fsm-linking.t` and [t/85-composition-standalone-dt-children.t](/Users/richarddje/Documents/github/fsmgen/t/85-composition-standalone-dt-children.t) now lock the generated-child `C2` success paths.
+- The first shipped `C3` runtime slice now exists for mixed composition: exactly one generated child (`?fsmc` or `?dtc`) plus one external `?rtl` child, typed explicit `?toplink` endpoint resolution across mixed children, deterministic internal-net creation, and explicit RTL instantiation without regenerating external RTL internals.
 - External RTL interface metadata is now loaded through a typed sidecar contract (`<module>.rtlif`) searched relative to the composition source and existing source-library roots, which keeps `?rtl` as a composition-time interface-binding concern instead of reviving legacy plugin/eval loaders.
-- `t/22-composition-fsm-plus-rtl.t` now locks the first mixed `?fsmc` + `?rtl` success path, and `t/23-composition-errors.t` now also locks duplicate-driver, unknown external-port, and direction-mismatch diagnostics.
+- `t/22-composition-fsm-plus-rtl.t` and [t/85-composition-standalone-dt-children.t](/Users/richarddje/Documents/github/fsmgen/t/85-composition-standalone-dt-children.t) now lock the first mixed generated-child + `?rtl` success paths, and `t/23-composition-errors.t` now also locks duplicate-driver, unknown external-port, and direction-mismatch diagnostics.
 - The first shipped `C4` runtime slice now exists for declared top-port connect-by-name: `?ports` can mark a top port as `=name`, and the planner now auto-binds it only when exactly one same-named child endpoint matches by direction and width.
 - `t/24-composition-connect-by-name.t` now locks the first `C4` success path plus ambiguous-match and unknown-name failures, and `t/14-composition-parser.t` now locks the `=port` parser shape.
 - The first shipped `C5` diagnostic boundary now exists across both explicit links and declared connect-by-name:
@@ -536,7 +536,7 @@ Deliverables:
   - and generated enable families should support explicit mutual-exclusion assertions instead of relying on an over-broad conflict ban,
   - `?top:name` remains the explicit composition-root concept unless a later family-level root-syntax decision introduces aliases such as `?mod:name` or `?module:name`,
   - and reusable-source lookup should grow through existing `FSMLIB` semantics plus repeatable per-invocation `--path DIR` roots.
-- Harden mixed `?fsmc` / `?rtl` flows before broader composition syntax is considered.
+- Harden mixed generated-child / `?rtl` flows before broader composition syntax is considered.
 Status: `in progress`
 Done:
 - The scoped `R6` composition lane is complete.
@@ -565,6 +565,15 @@ Done:
   - external child source lookup checks beside the composition source first, then repeated `--path DIR` roots, then `FSMLIB`, then the current directory,
   - and existing `C1` / `C2` / `C3` composition lanes can therefore reuse child FSM modules across several `.fsm` files without reviving the legacy plugin/eval path.
 - [t/84-composition-external-fsm-child-sources.t](/Users/richarddje/Documents/github/fsmgen/t/84-composition-external-fsm-child-sources.t) now locks sibling external-child realization, `--path`-driven external child realization, and `--path` precedence over `FSMLIB` for `?fsmc` child lookup.
+- The first composition-facing standalone-DT child slice is now also shipped:
+  - composition now accepts `?dtc:instance child_source` as a generated-child kind beside `?fsmc`,
+  - `?dtc` child sources can be embedded `?dt:name` roots or external searchable `.fsm` standalone-DT sources,
+  - purely combinational `?dtc` children keep an honest non-system interface instead of growing fake `clk` / `rst_n` ports in composition,
+  - and the current `C1` / `C2` / `C3` generated-child lanes now cover standalone-DT child realization too.
+- [t/85-composition-standalone-dt-children.t](/Users/richarddje/Documents/github/fsmgen/t/85-composition-standalone-dt-children.t) now locks:
+  - embedded combinational `?dtc` success without fake system ports,
+  - mixed `?fsmc` + `?dtc` explicit-link composition,
+  - and external `?dtc` plus `?rtl` composition through repeated `--path DIR` roots.
 Left:
 - Turn the `.rtlif` follow-up into a deliberate contract-improvement lane.
 - Turn the new shared-datapath extraction direction into a real contract:
@@ -582,8 +591,8 @@ Left:
   - extend the current shipped `?dt:name` interface rule into a fuller reusable-module contract, especially around multi-block enable surfacing and composition-facing exposure,
   - define how multi-`(-foo ...)` standalone DT modules expose block-level and module-level enable families,
   - extend the now-shipped implicit-system rule split between `?fsm:name` and `?dt:name` into the broader reuse/composition contract,
-  - extend the now-shipped external `?fsmc` child-source reuse into a broader generated-child contract,
-  - and extend the now-shipped `--path` / `FSMLIB` lookup slice beyond bare top-level inputs, external `?fsmc` child sources, and `.rtlif` metadata lookup.
+  - extend the now-shipped generated-child contract beyond the current `?fsmc` / `?dtc` `C1` / `C2` / `C3` slices into fuller connect-by-name and reusable-module interface/export rules,
+  - and extend the now-shipped `--path` / `FSMLIB` lookup slice beyond bare top-level inputs, generated child sources, and `.rtlif` metadata lookup.
 - Add any needed diagnostics/tests before considering broader composition growth.
 Exit criteria:
 - External-RTL composition uses a clearly specified interface contract that is stronger and easier to reason about than the current “implemented convention” state.

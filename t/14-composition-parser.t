@@ -35,6 +35,10 @@ ok(
     exists $trial_one_spec->embedded_fsm_sources->{trial},
     'parser records embedded FSM roots alongside the typed composition top',
 );
+ok(
+    !exists $trial_one_spec->embedded_dt_sources->{trial},
+    'legacy composition fixture does not invent embedded DT roots',
+);
 
 my $tempdir = tempdir(CLEANUP => 1);
 my $explicit_top_path = File::Spec->catfile($tempdir, 'typed_top.fsm');
@@ -126,6 +130,53 @@ like(
     $multi_source_error,
     qr/requires exactly one source name per '\?fsmc'/s,
     'parser rejects legacy multi-source fsmc children outside the first active R6 lane',
+);
+
+my $dt_child_path = File::Spec->catfile($tempdir, 'dt_child_top.fsm');
+write_file(
+    $dt_child_path,
+    <<'FSM'
+(?top:dt_child_top
+  (?ports:io
+    data_in<8
+    result_data>8
+  )
+  (?dtc:router route_src)
+)
+
+(?dt:route_src
+  (-route
+    (result_data> = data_in)
+  )
+  (+size
+    (data_in 8)
+    (result_data 8)
+  )
+)
+FSM
+);
+my $dt_child_spec = $parser->parse_source(scalar Lispish::multi($dt_child_path));
+
+is($dt_child_spec->top->instances->[0]->kind, 'dtc', 'typed child instance records dtc kind');
+is($dt_child_spec->top->instances->[0]->name, 'router', 'dtc child preserves declared child name');
+is($dt_child_spec->top->instances->[0]->source_name, 'route_src', 'dtc child preserves source name');
+ok(
+    exists $dt_child_spec->embedded_dt_sources->{route_src},
+    'parser records embedded DT roots alongside the typed composition top',
+);
+
+my $multi_dtc_source_error = eval {
+    $parser->parse_source(
+        scalar Lispish::single(\'(?top:multi_dt_source (?dtc:combo a b))'),
+    );
+    undef;
+};
+$multi_dtc_source_error = $@;
+
+like(
+    $multi_dtc_source_error,
+    qr/requires exactly one source name per '\?dtc'/s,
+    'parser rejects multi-source dtc children outside the active generated-child lane',
 );
 
 done_testing();

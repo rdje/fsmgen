@@ -297,7 +297,7 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
 
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active composition lanes require at least one '?fsmc' child instance. ".
+        "but the current active composition lanes require at least one generated child instance such as '?fsmc' or '?dtc'. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @instances;
 
@@ -322,6 +322,11 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
             next;
         }
 
+        if ($instance->kind eq 'dtc') {
+            push @realized_instances, $self->realize_dtc_child_instance($instance, $composition_spec, $fsm_file, $header);
+            next;
+        }
+
         if ($instance->kind eq 'rtl') {
             push @realized_instances, $self->realize_rtl_child_instance($instance, $fsm_file, $header);
             next;
@@ -334,6 +339,8 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
 
     my $rtl_instance_count = scalar(grep { $_->kind eq 'rtl' } @realized_instances);
     my $fsmc_instance_count = scalar(grep { $_->kind eq 'fsmc' } @realized_instances);
+    my $dtc_instance_count = scalar(grep { $_->kind eq 'dtc' } @realized_instances);
+    my $generated_instance_count = scalar(grep { $self->is_generated_child_kind($_->kind) } @realized_instances);
     my $declared_by_name_port_count = scalar(grep { ($_->binding_mode || 'explicit') eq 'connect_by_name' } @ports);
 
     if ($declared_by_name_port_count > 0) {
@@ -344,7 +351,9 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
             \@ports,
             \@toplinks,
             \@realized_instances,
+            $generated_instance_count,
             $fsmc_instance_count,
+            $dtc_instance_count,
             $rtl_instance_count,
             $fsm_file,
             $header,
@@ -370,7 +379,9 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
             \@ports,
             \@toplinks,
             \@realized_instances,
+            $generated_instance_count,
             $fsmc_instance_count,
+            $dtc_instance_count,
             $rtl_instance_count,
             $fsm_file,
             $header,
@@ -426,6 +437,30 @@ sub realize_fsmc_child_instance ($self, $instance, $composition_spec, $fsm_file,
     );
 }
 
+sub realize_dtc_child_instance ($self, $instance, $composition_spec, $fsm_file, $header) {
+    my $source_name = $instance->source_name;
+    my $child_ast = $composition_spec->embedded_dt_sources->{$source_name};
+
+    unless ($child_ast) {
+        ($child_ast) = $self->load_external_dtc_child_source($source_name, $fsm_file, $header);
+    }
+
+    my $child_module = $self->create_fsm_module($child_ast);
+    my $child_module_info = $self->analyze_fsm_module($child_module);
+    my $child_hdl_code = $self->generate_hdl_code($child_module);
+    my $child_interface_ports = $self->build_realized_child_interface_ports($child_module_info);
+
+    return FSM::Composition::RealizedInstance->new(
+        kind => 'dtc',
+        instance_name => ($instance->name // $child_module->name),
+        module_name => $child_module->name,
+        source_name => $source_name,
+        interface_ports => $child_interface_ports,
+        module_info => $child_module_info,
+        hdl_code => $child_hdl_code,
+    );
+}
+
 sub load_external_fsmc_child_source ($self, $source_name, $fsm_file, $header) {
     my ($child_source_path) =
         $self->resolve_external_fsmc_child_source_path($source_name, $fsm_file, $header);
@@ -447,7 +482,28 @@ sub load_external_fsmc_child_source ($self, $source_name, $fsm_file, $header) {
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
+sub load_external_dtc_child_source ($self, $source_name, $fsm_file, $header) {
+    my ($child_source_path) =
+        $self->resolve_external_generated_child_source_path($source_name, $fsm_file, $header, '?dtc');
+
+    my $child_ast = $self->parse_fsm_file($child_source_path);
+    my $child_source_info = $self->classify_source_ast($child_ast);
+    my $child_kind = $child_source_info->{kind} // 'unknown';
+    return ($child_ast, $child_source_path, $child_source_info) if $child_kind eq 'dt';
+
+    my $child_header = $child_source_info->{header} // 'unknown root';
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' resolves '?dtc' child '$source_name' to '$child_source_path', ".
+        "but that file is not an active standalone-DT child source (detected root '$child_header'). ".
+        "The active standalone-DT composition contract currently expects '?dt:name' child roots for '?dtc'. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+}
+
 sub resolve_external_fsmc_child_source_path ($self, $source_name, $fsm_file, $header) {
+    return $self->resolve_external_generated_child_source_path($source_name, $fsm_file, $header, '?fsmc');
+}
+
+sub resolve_external_generated_child_source_path ($self, $source_name, $fsm_file, $header, $child_kind) {
     my @preferred_dirs;
     push @preferred_dirs, dirname($fsm_file) if defined($fsm_file) && $fsm_file =~ m{/};
 
@@ -479,12 +535,15 @@ sub resolve_external_fsmc_child_source_path ($self, $source_name, $fsm_file, $he
         return ($candidate, \@search_dirs, \@searched_paths) if -f $candidate;
     }
 
+    my $family_label = $child_kind eq '?dtc'
+        ? "standalone-DT child source"
+        : "child FSM source";
     Carp::confess
-        "Composition source '$header' in '$fsm_file' declares '?fsmc' child '$source_name', ".
-        "but no active child FSM source was found either embedded in the same file or in an external '.fsm' file. ".
+        "Composition source '$header' in '$fsm_file' declares '$child_kind' child '$source_name', ".
+        "but no active $family_label was found either embedded in the same file or in an external '.fsm' file. ".
         "Search roots: ".join(', ', @search_dirs).". ".
         "Searched locations: ".join(', ', @searched_paths).". ".
-        "The active composition contract currently allows '?fsmc' to realize embedded child FSM sources or external FSM module files found beside the composition source, through repeated '--path DIR' roots, through 'FSMLIB', or in the current directory. ".
+        "The active composition contract currently allows generated child instances to realize embedded sources or external '.fsm' module files found beside the composition source, through repeated '--path DIR' roots, through 'FSMLIB', or in the current directory. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
@@ -539,14 +598,16 @@ sub build_realized_child_interface_ports ($self, $module_info) {
         }
     }
 
-    for my $system_name (keys %system_port_type) {
-        $ports{$system_name} //= FSM::Composition::Port->new(
-            name => $system_name,
-            direction => 'input',
-            width => 1,
-            type => $system_port_type{$system_name},
-            raw_token => undef,
-        );
+    if ($system_contract->{declare_ports}) {
+        for my $system_name (keys %system_port_type) {
+            $ports{$system_name} //= FSM::Composition::Port->new(
+                name => $system_name,
+                direction => 'input',
+                width => 1,
+                type => $system_port_type{$system_name},
+                raw_token => undef,
+            );
+        }
     }
 
     my @ordered_names = sort {
@@ -562,6 +623,10 @@ sub system_port_sort_key ($self, $port) {
     return 0 if ($port->type || '') eq 'clock';
     return 1 if ($port->type || '') eq 'reset';
     return 2;
+}
+
+sub is_generated_child_kind ($self, $kind) {
+    return $kind eq 'fsmc' || $kind eq 'dtc';
 }
 
 sub system_interface_ports ($self, $ports) {
@@ -669,15 +734,15 @@ sub assert_c1_port_exposure_matches_child ($self, $ports_block, $realized_instan
 sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $fsm_file, $header) {
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active C2 lane requires at least two '?fsmc' child instances. ".
+        "but the current active C2 lane requires at least two generated child instances such as '?fsmc' or '?dtc'. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @{$realized_instances || []} >= 2;
 
     Carp::confess
-        "Composition source '$header' in '$fsm_file' mixes '?rtl' children into the FSM-only C2 lane. ".
+        "Composition source '$header' in '$fsm_file' mixes '?rtl' children into the generated-child-only C2 lane. ".
         "The active mixed external-RTL lane is C3 instead. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        if grep { $_->kind ne 'fsmc' } @{$realized_instances || []};
+        if grep { !$self->is_generated_child_kind($_->kind) } @{$realized_instances || []};
 
     return $self->build_explicit_link_composition_plan(
         'C2',
@@ -692,12 +757,12 @@ sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $po
     );
 }
 
-sub build_c3_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $fsmc_instance_count, $rtl_instance_count, $fsm_file, $header) {
+sub build_c3_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $generated_instance_count, $fsmc_instance_count, $dtc_instance_count, $rtl_instance_count, $fsm_file, $header) {
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active C3 lane supports exactly one '?fsmc' child and one '?rtl' child. ".
+        "but the current active C3 lane supports exactly one generated child ('?fsmc' or '?dtc') plus one '?rtl' child. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless @{$realized_instances || []} == 2 && $fsmc_instance_count == 1 && $rtl_instance_count == 1;
+        unless @{$realized_instances || []} == 2 && $generated_instance_count == 1 && $rtl_instance_count == 1;
 
     return $self->build_explicit_link_composition_plan(
         'C3',
@@ -712,7 +777,7 @@ sub build_c3_composition_plan ($self, $composition_spec, $top, $ports_block, $po
     );
 }
 
-sub build_c4_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $fsmc_instance_count, $rtl_instance_count, $fsm_file, $header) {
+sub build_c4_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $generated_instance_count, $fsmc_instance_count, $dtc_instance_count, $rtl_instance_count, $fsm_file, $header) {
     my $declared_by_name_port_count = scalar(grep { ($_->binding_mode || 'explicit') eq 'connect_by_name' } @{$ports || []});
     Carp::confess
         "Composition source '$header' in '$fsm_file' requests declared connect-by-name, ".
@@ -729,9 +794,10 @@ sub build_c4_composition_plan ($self, $composition_spec, $top, $ports_block, $po
     Carp::confess
         "Composition source '$header' in '$fsm_file' requests declared connect-by-name, ".
         "but the current active C4 lane only extends the already shipped child-realization sets: ".
-        "either multiple '?fsmc' children or exactly one '?fsmc' child plus one '?rtl' child. ".
+        "either multiple generated children ('?fsmc' / '?dtc') or exactly one generated child plus one '?rtl' child. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless ($rtl_instance_count == 0) || (@{$realized_instances || []} == 2 && $fsmc_instance_count == 1 && $rtl_instance_count == 1);
+        unless ($rtl_instance_count == 0 && $generated_instance_count >= 2)
+            || (@{$realized_instances || []} == 2 && $generated_instance_count == 1 && $rtl_instance_count == 1);
 
     my @links = map { @{$_->links || []} } @{$toplinks || []};
     push @links, @{$self->build_declared_by_name_links($ports, $realized_instances, $fsm_file, $header)};

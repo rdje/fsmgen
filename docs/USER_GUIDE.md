@@ -15,10 +15,11 @@ Current limitation:
 - The currently shipped composition boundary is:
   - one `?top:name`,
   - one explicit `?ports` block,
-  - one or more `?fsmc` children, each realized either from an embedded child FSM source in the same file or from an external searchable `.fsm` child source,
-  - `C1` single-child passthrough via deterministic same-name wiring,
-  - `C2` multi-child FSM composition via explicit `?toplink` wiring with `instance.port` child endpoints.
-  - `C3` mixed FSM plus external RTL composition via explicit `?toplink` wiring and sidecar `<module>.rtlif` interface metadata.
+  - one or more generated children, currently `?fsmc` and `?dtc`,
+  - generated child sources realized either from the same file or from external searchable `.fsm` child sources,
+  - `C1` single-generated-child passthrough via deterministic same-name wiring,
+  - `C2` multi-generated-child composition via explicit `?toplink` wiring with `instance.port` child endpoints.
+  - `C3` mixed generated-child plus external RTL composition via explicit `?toplink` wiring and sidecar `<module>.rtlif` interface metadata.
   - `C4` declared top-port connect-by-name via `=name` declarations inside `?ports`.
 - See [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) for the scoped `R6` plan and [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) for historical context.
 
@@ -162,13 +163,18 @@ Combinational DT note:
 - `(?fsmc:instance child_source)` with exactly one child FSM source token
   - the active child source may be embedded in the same file as `?fsm:name`
   - or resolved from an external `.fsm` file beside the composition source, through repeated `--path DIR` roots, then through `FSMLIB`
+- `(?dtc:instance child_source)` with exactly one standalone-DT child source token
+  - the active child source may be embedded in the same file as `?dt:name`
+  - or resolved from an external `.fsm` file beside the composition source, through repeated `--path DIR` roots, then through `FSMLIB`
+  - combinational `?dtc` children expose only their real user-facing interface ports
+  - sequential `?dtc` children expose implicit `clk` / `rst_n` just like standalone `?dt:name` roots do
 - `(?rtl:module)` for external RTL children
 - External RTL interface loading via sidecar `<module>.rtlif`
 - Explicit `(?toplink:name ...)` blocks with flat `/source/target/` tokens
 - Dotted child endpoints in links, for example `/producer.output_data/consumer.input_data/`
-- `C1` lane: one `?top`, one `?fsmc`, explicit `?ports`, deterministic same-name top wiring
-- `C2` lane: multiple `?fsmc` children plus explicit `?toplink` wiring and deterministic internal nets
-- `C3` lane: mixed `?fsmc` plus `?rtl`, with `.rtlif`-based interface validation
+- `C1` lane: one `?top`, one generated child (`?fsmc` or `?dtc`), explicit `?ports`, deterministic same-name top wiring
+- `C2` lane: multiple generated children (`?fsmc` / `?dtc`) plus explicit `?toplink` wiring and deterministic internal nets
+- `C3` lane: mixed generated child (`?fsmc` or `?dtc`) plus `?rtl`, with `.rtlif`-based interface validation
 - `C4` lane: declared connect-by-name through `=name` in `?ports`
 - `C5` diagnostics: duplicate-driver rejection, explicit-link width mismatch rejection, connect-by-name ambiguity rejection, connect-by-name unknown-endpoint rejection, and width mismatch rejection
 - `C6` scoped rejection of legacy out-of-scope composition constructs
@@ -678,6 +684,32 @@ This currently works because:
 - the child exposes `output_data` explicitly as an output,
 - the top `?ports` block matches the realized child interface exactly.
 
+Current narrow standalone-DT child example:
+```lisp
+(?top:comb_dt_child_top
+  (?ports:public_io
+    data_in<8
+    result_data>8
+  )
+  (?dtc:router route_src)
+)
+
+(?dt:route_src
+  (-route
+    (result_data> = data_in)
+  )
+  (+size
+    (data_in 8)
+    (result_data 8)
+  )
+)
+```
+
+This currently works because:
+- the child is a standalone `?dt:name` module source,
+- the combinational DT child exposes only its real user-facing ports,
+- and the top `?ports` block matches that realized child interface exactly.
+
 Current narrow multi-child example:
 ```lisp
 (?top:two_child_top
@@ -696,7 +728,7 @@ Current narrow multi-child example:
 ```
 
 This currently works because:
-- every child `?fsmc` resolves to one active child FSM source, either embedded or external,
+- every generated child resolves to one active `?fsm:name` or `?dt:name` source, either embedded or external,
 - `clk` and `rstn` use the shared system-input contract,
 - non-system connections are expressed explicitly through `?toplink`,
 - explicit link widths and endpoint roles must match exactly.
@@ -823,8 +855,8 @@ With sidecar interface metadata in `uart_tx.rtlif`:
 ```
 
 This currently works because:
-- the FSM child is still compiled through the active FSM pipeline,
-- the FSM child may be embedded or resolved from a sibling/searchable external `.fsm` source,
+- the generated child is still compiled through the active pipeline whether it comes from `?fsm:name` or `?dt:name`,
+- the generated child may be embedded or resolved from a sibling/searchable external `.fsm` source,
 - the external RTL child is instantiated but not regenerated,
 - composition loads the RTL interface from `uart_tx.rtlif` beside the source file, then through repeated `--path DIR` roots, then through the existing `FSMLIB` search roots,
 - non-system mixed-child connections remain explicit through `?toplink`.

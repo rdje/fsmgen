@@ -70,7 +70,7 @@ my $pipeline_exception = $@;
 ok(!$pipeline_error, 'pipeline does not return a result for composition shapes outside the shipped lanes');
 like(
     $pipeline_exception,
-    qr/Composition source '\?top:composition_smoke'.*recognized and parsed into typed composition IR.*current active composition lanes require at least one '\?fsmc' child instance/s,
+    qr/Composition source '\?top:composition_smoke'.*recognized and parsed into typed composition IR.*current active composition lanes require at least one generated child instance such as '\?fsmc' or '\?dtc'/s,
     'pipeline rejects unsupported composition shapes after typed parsing with a live-lane diagnostic',
 );
 like(
@@ -123,7 +123,7 @@ my $combined_output = join(
 
 like(
     $combined_output,
-    qr/Composition source '\?top:composition_smoke'.*recognized and parsed into typed composition IR.*current active composition lanes require at least one '\?fsmc' child instance/s,
+    qr/Composition source '\?top:composition_smoke'.*recognized and parsed into typed composition IR.*current active composition lanes require at least one generated child instance such as '\?fsmc' or '\?dtc'/s,
     'CLI surfaces the active-lane composition diagnostic',
 );
 unlike(

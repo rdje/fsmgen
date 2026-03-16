@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: composition-facing standalone-DT children now have a first shipped `R11` slice
+- The reusable standalone-DT lane now reaches the active composition runtime directly too.
+- Shipped behavior:
+  - composition now accepts `?dtc:instance child_source` as a generated-child kind beside `?fsmc`,
+  - `?dtc` children can be realized from embedded `?dt:name` roots or from external searchable `.fsm` standalone-DT sources,
+  - and the current `C1` / `C2` / `C3` generated-child lanes now allow standalone-DT child realization instead of being FSM-only.
+- Important interface fix shipped with that slice:
+  - purely combinational standalone-DT children no longer acquire fake `clk` / `rst_n` ports just because they are instantiated in composition,
+  - while sequential standalone-DT children still expose implicit `clk` / `rst_n` exactly when the standalone `?dt:name` contract says they should.
 ## 2026-03-16: external composition child FSM reuse now has a first shipped `R11` slice
 - The reusable-root lane now reaches directly into the active composition runtime, not just bare top-level inputs and `.rtlif` metadata lookup.
 - Shipped behavior:

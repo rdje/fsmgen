@@ -31,10 +31,12 @@ sub parse_source ($self, $raw_ast) {
 
     my $top = $self->parse_top($top_ast);
     my $embedded_fsm_sources = $self->collect_embedded_fsm_sources($raw_ast);
+    my $embedded_dt_sources = $self->collect_embedded_dt_sources($raw_ast);
 
     return FSM::Composition::Spec->new(
         top => $top,
         embedded_fsm_sources => $embedded_fsm_sources,
+        embedded_dt_sources => $embedded_dt_sources,
         raw_ast => $raw_ast,
     );
 }
@@ -117,6 +119,10 @@ sub parse_top_child ($self, $top_name, $child_ast) {
         my $child_name = defined($1) && length($1) ? $1 : undef;
         return ('instance', $self->parse_fsmc_child($top_name, $child_ast, $child_name, $items));
     }
+    if ($header =~ /^\?dtc(?::(\w*))?$/) {
+        my $child_name = defined($1) && length($1) ? $1 : undef;
+        return ('instance', $self->parse_dtc_child($top_name, $child_ast, $child_name, $items));
+    }
     if ($header =~ /^\?rtl:(\w+)$/) {
         return ('instance', FSM::Composition::Instance->new(
             kind => 'rtl',
@@ -147,7 +153,7 @@ sub parse_top_child ($self, $top_name, $child_ast) {
 
     confess
         "Composition top '$top_name' contains unsupported child '$header'. ".
-        "The active R6 parser currently accepts only '?fsmc', '?rtl', '?ports', and '?toplink'.".
+        "The active R6 parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', and '?toplink'.".
         $self->scope_docs_suffix;
 }
 
@@ -174,6 +180,36 @@ sub parse_fsmc_child ($self, $top_name, $child_ast, $child_name, $items) {
 
     return FSM::Composition::Instance->new(
         kind => 'fsmc',
+        name => $child_name,
+        source_name => $scalar_items[0],
+        raw_items => $items,
+        raw_ast => $child_ast,
+    );
+}
+
+sub parse_dtc_child ($self, $top_name, $child_ast, $child_name, $items) {
+    my @scalar_items = grep { !ref($_) } @$items;
+    my @non_scalar_items = grep { ref($_) } @$items;
+
+    if (@non_scalar_items) {
+        confess
+            "Composition top '$top_name' contains '?dtc' child ".
+            ($child_name ? "'$child_name'" : 'without a name').
+            " using nested option structures, but the active generated-child lane only supports a single standalone-DT source name.".
+            $self->scope_docs_suffix;
+    }
+
+    if (@scalar_items != 1) {
+        my $count = scalar(@scalar_items);
+        confess
+            "Composition top '$top_name' contains '?dtc' child ".
+            ($child_name ? "'$child_name'" : 'without a name').
+            " with $count standalone-DT source names, but the active generated-child lane requires exactly one source name per '?dtc'.".
+            $self->scope_docs_suffix;
+    }
+
+    return FSM::Composition::Instance->new(
+        kind => 'dtc',
         name => $child_name,
         source_name => $scalar_items[0],
         raw_items => $items,
@@ -270,6 +306,23 @@ sub collect_embedded_fsm_sources ($self, $raw_ast) {
     return \%embedded_fsm_sources;
 }
 
+sub collect_embedded_dt_sources ($self, $raw_ast) {
+    my %embedded_dt_sources;
+    return \%embedded_dt_sources unless ref($raw_ast) eq 'ARRAY';
+
+    for my $ast_node (@$raw_ast) {
+        next unless ref($ast_node) eq 'ARRAY';
+        next unless @$ast_node > 0;
+        next if ref($ast_node->[0]);
+        next unless $ast_node->[0] =~ /^\?dt:/;
+        my $dt_name = $self->decode_embedded_dt_source_name($ast_node->[0]);
+        next unless $dt_name;
+        $embedded_dt_sources{$dt_name} = $ast_node;
+    }
+
+    return \%embedded_dt_sources;
+}
+
 sub decode_top_name ($self, $header) {
     return $1 if defined($header) && !ref($header) && $header =~ /\A\?top:([A-Za-z_]\w*)\z/;
 
@@ -287,6 +340,16 @@ sub decode_embedded_fsm_source_name ($self, $header) {
     confess
         "Malformed embedded FSM source '$display'. ".
         "The active composition contract expects embedded child sources shaped like '?fsm:source_name' with an HDL-identifier-compatible source name ([A-Za-z_]\\w*).".
+        $self->scope_docs_suffix;
+}
+
+sub decode_embedded_dt_source_name ($self, $header) {
+    return $1 if defined($header) && !ref($header) && $header =~ /\A\?dt:([A-Za-z_]\w*)\z/;
+
+    my $display = defined($header) ? (ref($header) ? ref($header) : $header) : 'undef';
+    confess
+        "Malformed embedded DT source '$display'. ".
+        "The active composition contract expects embedded standalone-DT child sources shaped like '?dt:source_name' with an HDL-identifier-compatible source name ([A-Za-z_]\\w*).".
         $self->scope_docs_suffix;
 }
 

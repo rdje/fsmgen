@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: composition-facing standalone-DT children now have a first shipped `R11` slice
+- Saved shipped behavior:
+  - composition now accepts `?dtc:instance child_source` beside `?fsmc`,
+  - `?dtc` child sources can be embedded `?dt:name` roots or external searchable `.fsm` standalone-DT sources,
+  - and the current generated-child composition lanes now cover standalone-DT child realization too.
+- Important continuity note:
+  - purely combinational `?dtc` children keep an honest non-system interface in composition,
+  - sequential `?dtc` children still expose implicit `clk` / `rst_n` when the standalone `?dt:name` contract requires them.
+- [t/85-composition-standalone-dt-children.t](/Users/richarddje/Documents/github/fsmgen/t/85-composition-standalone-dt-children.t) locks the first success-path slice for `?dtc`.
 ## 2026-03-16: external composition child FSM reuse now has a first shipped `R11` slice
 - Saved shipped behavior:
   - `?top:name` can now realize `?fsmc` children from embedded child FSM sources or from external searchable `.fsm` child sources,

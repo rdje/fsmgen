@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### composition-facing standalone-DT children now have a first shipped `R11` slice
+- Updated [perl/FSM/Composition/Spec.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Spec.pm), [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm), and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition now accepts `?dtc:instance child_source` as a generated-child kind beside `?fsmc`.
+- Shipped behavior now includes:
+  - embedded `?dt:name` child realization,
+  - external searchable `.fsm` standalone-DT child realization,
+  - mixed generated-child composition across `?fsmc` / `?dtc`,
+  - mixed `?dtc` plus `?rtl` composition,
+  - and honest realized child interfaces for purely combinational DT modules without fake `clk` / `rst_n` ports.
+- Added [t/85-composition-standalone-dt-children.t](/Users/richarddje/Documents/github/fsmgen/t/85-composition-standalone-dt-children.t) and extended [t/14-composition-parser.t](/Users/richarddje/Documents/github/fsmgen/t/14-composition-parser.t) to lock:
+  - typed `?dtc` parsing,
+  - embedded combinational `?dtc` success,
+  - mixed `?fsmc` + `?dtc` success,
+  - and external `?dtc` plus `?rtl` success through `--path`.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the active `R11` lane now records the first composition-facing standalone-DT child slice.
 ### external composition child FSM reuse now has a first shipped `R11` slice
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `?top:name` now realizes `?fsmc` children from either:
   - embedded child FSM sources in the same file,

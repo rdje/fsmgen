@@ -5,18 +5,18 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 ## Status
 - The active toolchain now ships the first `C1` composition lane:
   - one `?top:name`,
-  - one `?fsmc` child source realized either from the same file or from a searchable external `.fsm` source,
+  - one generated child source (`?fsmc` or `?dtc`) realized either from the same file or from a searchable external `.fsm` source,
   - one explicit `?ports` block,
   - deterministic same-name top wiring,
   - generated child HDL plus generated top HDL through `bin/fsmgen`.
 - The active toolchain now also ships the first `C2` composition lane:
-  - two or more embedded `?fsmc` children,
+  - two or more generated children (`?fsmc` / `?dtc`),
   - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
   - deterministic instance ordering,
   - deterministic internal-net creation for child-to-child wiring,
   - duplicate-driver rejection before emission.
 - The active toolchain now also ships the first `C3` composition lane:
-  - exactly one `?fsmc` child plus one external `?rtl` child,
+  - exactly one generated child (`?fsmc` or `?dtc`) plus one external `?rtl` child,
   - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
   - external RTL interface metadata loaded from a sidecar `<module>.rtlif` artifact,
   - deterministic internal-net creation and mixed-child instantiation without regenerating external RTL internals.
@@ -38,11 +38,11 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 The currently shipped composition behavior is intentionally bounded:
 - exactly one top-level `?top:name`,
 - exactly one explicit `?ports` block,
-- one or more `?fsmc` children,
-- every `?fsmc` child must reference exactly one active child FSM source, either embedded in the same file or resolved from an external `.fsm` file,
+- one or more generated children, currently `?fsmc` and `?dtc`,
+- every generated child must reference exactly one active child source, either embedded in the same file or resolved from an external `.fsm` file,
 - `C1` single-child passthrough works without `?toplink`,
-- `C2` multi-child FSM composition uses explicit `?toplink`,
-- `C3` mixed composition currently supports exactly one `?fsmc` child plus one external `?rtl` child,
+- `C2` multi-generated-child composition uses explicit `?toplink`,
+- `C3` mixed composition currently supports exactly one generated child plus one external `?rtl` child,
 - `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports`,
 - each `=name` top port must resolve to exactly one same-named child endpoint with the same direction and width,
 - each `?rtl` child currently loads its interface from a sidecar `<module>.rtlif` metadata file searched first beside the composition source, then through explicit search roots such as repeated `--path DIR`, and then through the existing `FSMLIB` roots,
@@ -54,7 +54,8 @@ The currently shipped composition behavior is intentionally bounded:
   - effective system inputs from the active FSM generator contract:
     - explicit conventional `+system` currently yields `clk` / `rstn`,
     - absent `+system` currently yields implicit `clk` / `rst_n`,
-  - plus explicit user-facing child ports as exposed by the active FSM pipeline for `?fsmc`,
+    - purely combinational standalone-DT children do not acquire fake system ports just because they are instantiated in composition,
+  - plus explicit user-facing child ports as exposed by the active generation pipeline for `?fsmc` and `?dtc`,
   - plus explicit ports declared in the loaded `<module>.rtlif` metadata for `?rtl`,
 - explicit-link endpoint syntax is currently:
   - top-port name, for example `result_data`,
@@ -78,14 +79,16 @@ The active tool currently supports three top-level source families:
 - Composition source: one top-level `?top:name` form routed to a dedicated composition parser.
 
 ### 2. Child block kinds
-The language surface for the first composition lane recognizes exactly two child block kinds:
+The language surface for the first composition lane recognizes exactly three child block kinds:
 - `?fsmc`
   - Child instance compiled from an FSM source through the active FSM pipeline.
+- `?dtc`
+  - Child instance compiled from a standalone-DT source through the active generation pipeline.
 - `?rtl`
   - Child instance bound to an external RTL module with an explicitly declared interface.
 
 Current shipped runtime subset:
-- `?fsmc` is realized in the shipped `C1`, `C2`, and `C3` slices,
+- `?fsmc` and `?dtc` are realized in the shipped `C1`, `C2`, and `C3` slices,
 - `?rtl` is now realized only in the first narrow `C3` slice,
 - the current `C3` slice expects one `<module>.rtlif` sidecar metadata file per external RTL module and does not parse/regenerate SV/VHDL module internals at composition time.
 
@@ -115,7 +118,7 @@ The first lane supports:
 ### 5. Output model
 The first lane produces:
 - one generated top module in the selected HDL target,
-- generated child FSM modules for `?fsmc` children,
+- generated child modules for `?fsmc` and `?dtc` children,
 - references to external RTL children without attempting to regenerate their internals.
 
 ### 6. CLI behavior
@@ -156,7 +159,7 @@ The first composition lane should be added above the current FSM-only parser bou
 1. Source classification
    - inspect the Lispish root and choose FSM path or composition path.
 2. Composition parsing
-   - build a typed composition IR from `?top:*`, `?fsmc`, `?rtl`, `?ports`, and `?toplink`.
+   - build a typed composition IR from `?top:*`, `?fsmc`, `?dtc`, `?rtl`, `?ports`, and `?toplink`.
 3. Child realization
    - compile `?fsmc` children through the existing FSM pipeline whether the child source is embedded or loaded from an external `.fsm` file,
    - load/validate declared interfaces for `?rtl` children from sidecar metadata.
@@ -185,38 +188,38 @@ Historical note:
 ## Acceptance matrix for the first composition lane
 These are the executable scenarios that must exist before `R6` can be closed.
 
-### C1. Single child FSM passthrough top
+### C1. Single generated-child passthrough top
 Status:
 - Implemented in the current active toolchain.
 
 - Input:
-  - one `?top:name` with one `?fsmc` child and explicit top-port exposure.
+  - one `?top:name` with one generated child (`?fsmc` or `?dtc`) and explicit top-port exposure.
 - Must prove:
   - top generation succeeds,
-  - child FSM HDL is generated through the active pipeline,
+  - generated child HDL is emitted through the active pipeline,
   - top ports are emitted deterministically,
   - child ports are wired exactly as declared.
 
-### C2. Two child FSMs with explicit child-to-child wiring
+### C2. Two generated children with explicit child-to-child wiring
 Status:
-- Implemented in the current active toolchain for embedded `?fsmc` children with explicit `?toplink`.
+- Implemented in the current active toolchain for generated children with explicit `?toplink`.
 
 - Input:
-  - one `?top:name` with two `?fsmc` children and explicit links between them.
+  - one `?top:name` with two generated children (`?fsmc` / `?dtc`) and explicit links between them.
 - Must prove:
   - deterministic net creation,
   - deterministic instance ordering,
   - explicit link wiring is emitted correctly,
   - duplicate-driver errors are rejected.
 
-### C3. Mixed FSM + external RTL composition
+### C3. Mixed generated-child + external RTL composition
 Status:
-- Implemented in the current active toolchain for exactly one `?fsmc` child plus one external `?rtl` child using sidecar `<module>.rtlif` interface metadata.
+- Implemented in the current active toolchain for exactly one generated child (`?fsmc` or `?dtc`) plus one external `?rtl` child using sidecar `<module>.rtlif` interface metadata.
 
 - Input:
-  - one `?fsmc` child and one `?rtl` child with declared interface metadata.
+  - one generated child and one `?rtl` child with declared interface metadata.
 - Must prove:
-  - FSM child is compiled,
+  - generated child is compiled,
   - RTL child is instantiated but not regenerated,
   - interface validation catches unknown ports and direction mismatches.
 
