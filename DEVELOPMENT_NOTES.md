@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: mixed generated-child plus external RTL declared connect-by-name now has a first shipped `R11` slice
+- Continued the active `R11` lane in the next bounded direction instead of widening composition syntax blindly.
+- Landed behavior:
+  - one generated child plus one `?rtl` child can now use declared `=name` top exposure with the same exact-match rule as the rest of `C4`,
+  - mixed tops may combine explicit child-to-child `?toplink` wiring with declared by-name top ports,
+  - and composition-facing standalone-DT interfaces now trust semantic signal-role analysis before the old name-based output heuristic.
+- That last point fixed a real bug:
+  - RHS-only standalone-DT signals such as `payload_in` could be misclassified as outputs only because their names started with `p`,
+  - the mixed `?dtc` plus `?rtl` by-name slice now proves that those signals stay inputs when the semantic AST says they are inputs.
+- [t/87-composition-mixed-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/87-composition-mixed-connect-by-name.t) locks mixed `?fsmc` + `?rtl` success, mixed `?dtc` + `?rtl` success, and cross-kind ambiguity rejection.
+
 ## 2026-03-16: single-child declared connect-by-name now has a first shipped `R11` slice
 - Continued the active `R11` lane by broadening the already-shipped declared connect-by-name contract in one bounded direction instead of inventing a new composition family.
 - Landed behavior:

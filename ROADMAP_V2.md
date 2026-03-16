@@ -141,7 +141,9 @@ First shipped `R11` slice now in tree:
   - the same explicit search roots feeding current `.rtlif` metadata lookup ahead of `FSMLIB`,
   - external `?fsmc` composition child sources resolved from sibling or searched `.fsm` files without leaving the active typed pipeline,
   - `?dtc` composition child realization from embedded or external standalone-DT sources, including honest non-system interfaces for purely combinational DT children,
-  - and single-generated-child declared connect-by-name through `=name` for both `?fsmc` and `?dtc` children.
+  - single-generated-child declared connect-by-name through `=name` for both `?fsmc` and `?dtc` children,
+  - mixed generated-child plus external `?rtl` declared connect-by-name when the top-level exact-match rule is still unambiguous,
+  - and standalone-DT child interface direction now preferring semantic signal roles over the older name-based output heuristic in composition-facing interface realization.
 - The shipped first slice does not yet widen into:
   - explicit `+system` inside `?dt:name`,
   - regular FSM-state blocks inside `?dt:name`,

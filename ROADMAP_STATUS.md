@@ -59,8 +59,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R11` Composition contract strengthening.
 - Current next decision point:
-  - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, `?dtc` composition child reuse, and single-child declared connect-by-name are all fresh in the tree.
-  - Decide whether the next `R11` slice should deepen mixed generated-child plus `?rtl` connect-by-name behavior or move into broader reusable-module interface/export questions.
+  - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, `?dtc` composition child reuse, and mixed generated-child plus `?rtl` declared connect-by-name are all fresh in the tree.
+  - Decide whether the next `R11` slice should formalize the `.rtlif` contract more deliberately or move into broader reusable-module interface/export questions.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
 
 ## Workstreams
@@ -579,6 +579,14 @@ Done:
   - single-child by-name planning still stays deterministic and bounded by the existing exact same-name, same-direction, same-width rule,
   - and purely combinational standalone-DT children keep their honest non-system interface even in the single-child by-name lane.
 - [t/86-composition-single-child-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/86-composition-single-child-connect-by-name.t) now locks single-child `?fsmc` and combinational `?dtc` declared connect-by-name success paths across pipeline and CLI.
+- The first mixed generated-child plus external RTL declared connect-by-name slice is now also shipped:
+  - declared `=name` connect-by-name is now regression-backed for the one generated child plus one `?rtl` lane, not only for generated-child-only lanes,
+  - mixed `C4` tops may combine explicit child-to-child `?toplink` wiring with declared by-name top exposure,
+  - and standalone-DT child interfaces now respect semantic signal roles before the old name-based direction heuristic, so RHS-only signals like `payload_in` stay inputs in mixed composition.
+- [t/87-composition-mixed-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/87-composition-mixed-connect-by-name.t) now locks:
+  - mixed `?fsmc` plus `?rtl` declared connect-by-name success,
+  - mixed `?dtc` plus `?rtl` declared connect-by-name success,
+  - and ambiguous same-name declared connect-by-name rejection across generated and external RTL child kinds.
 Left:
 - Turn the `.rtlif` follow-up into a deliberate contract-improvement lane.
 - Turn the new shared-datapath extraction direction into a real contract:
@@ -596,7 +604,7 @@ Left:
   - extend the current shipped `?dt:name` interface rule into a fuller reusable-module contract, especially around multi-block enable surfacing and composition-facing exposure,
   - define how multi-`(-foo ...)` standalone DT modules expose block-level and module-level enable families,
   - extend the now-shipped implicit-system rule split between `?fsm:name` and `?dt:name` into the broader reuse/composition contract,
-  - extend the now-shipped generated-child contract beyond the current `?fsmc` / `?dtc` `C1` / `C2` / `C3` plus single-child `C4` slices into mixed-lane connect-by-name and reusable-module interface/export rules,
+  - extend the now-shipped generated-child contract beyond the current `?fsmc` / `?dtc` `C1` / `C2` / `C3` plus generated-only and mixed-lane `C4` slices into reusable-module interface/export rules,
   - and extend the now-shipped `--path` / `FSMLIB` lookup slice beyond bare top-level inputs, generated child sources, and `.rtlif` metadata lookup.
 - Add any needed diagnostics/tests before considering broader composition growth.
 Exit criteria:

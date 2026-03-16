@@ -1470,6 +1470,20 @@ sub analyze_signals ($self, $signals) {
 sub determine_signal_direction ($self, $signal, $sig_name) {
     fsm_trace_enter("Determine signal direction for '$sig_name'", 4);
     # Try to determine signal direction
+    if ($signal->can('get_attribute')) {
+        my $signal_role = $signal->get_attribute('signal_role');
+        if (defined $signal_role && $signal_role eq 'OUTPUT') {
+            fsm_trace_decision(1, "Signal '$sig_name' signal_role reports OUTPUT", 4);
+            fsm_trace_exit("Direction resolved for '$sig_name' => output", 4);
+            return "output";
+        }
+        if (defined $signal_role && $signal_role eq 'INPUT') {
+            fsm_trace_decision(1, "Signal '$sig_name' signal_role reports INPUT", 4);
+            fsm_trace_exit("Direction resolved for '$sig_name' => input", 4);
+            return "input";
+        }
+    }
+
     if ($signal->can('is_output') && $signal->is_output) {
         fsm_trace_decision(1, "Signal '$sig_name' is_output accessor reports true", 4);
         fsm_trace_exit("Direction resolved for '$sig_name' => output", 4);

@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: mixed generated-child plus external RTL declared connect-by-name now has a first shipped `R11` slice
+- `?top:name` now has regression-backed declared `=name` support for the mixed one-generated-child plus one-`?rtl` lane too.
+- Saved shipped behavior:
+  - mixed tops may combine explicit child-to-child `?toplink` wiring with by-name top exposure,
+  - mixed `?fsmc` + `?rtl` and mixed `?dtc` + `?rtl` declared connect-by-name both work,
+  - and cross-kind same-name ambiguity still fails explicitly.
+- Important bug fix continuity:
+  - composition-facing standalone-DT child interfaces now trust semantic `signal_role` before the old name-based heuristic,
+  - so RHS-only DT signals like `payload_in` no longer get misclassified as outputs just because they start with `p`.
+- [t/87-composition-mixed-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/87-composition-mixed-connect-by-name.t) locks the mixed-lane success and ambiguity cases.
+
 ## 2026-03-16: single-child declared connect-by-name now has a first shipped `R11` slice
 - `?top:name` now accepts declared `=name` connect-by-name with exactly one generated child (`?fsmc` or `?dtc`) instead of starting only beyond the single-child passthrough case.
 - The bounded rule stays the same:

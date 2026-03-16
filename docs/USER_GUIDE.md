@@ -817,6 +817,38 @@ This is useful when:
 - the external RTL module already uses the public top-level signal name you want,
 - so the composition can expose `txd` without an extra explicit `/uart_tx.txd/txd/` link.
 
+4. Mix declared top-port `=name` with explicit generated-child to external-RTL wiring
+```lisp
+(?top:router_uart_top
+  (?ports:public_io
+    clk
+    rst_n
+    =payload_in<8
+    =txd>
+  )
+  (?dtc:router route_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /router.route_data/uart_tx.data_in/
+  )
+)
+```
+
+With sidecar interface metadata:
+```lisp
+(?rtlif:uart_tx
+  clk
+  rst_n
+  data_in<8
+  txd>
+)
+```
+
+This is useful when:
+- one top input should pass through to the generated child by the same name,
+- one top output should be exposed directly from the external RTL child by the same name,
+- and the child-to-child data path still needs one explicit `?toplink`.
+
 Practical rules for `=name`:
 - use it only when the top-level name should intentionally stay the same as the child endpoint name,
 - use normal explicit `?toplink` when you need renaming, remapping, or multiple non-system connections,

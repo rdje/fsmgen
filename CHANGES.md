@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### mixed generated-child plus external RTL declared connect-by-name now has a first shipped `R11` slice
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition-facing child interface direction now prefers semantic `signal_role` over the older name-based output heuristic when building realized child interfaces.
+- Shipped behavior now includes:
+  - declared `=name` success for mixed one-generated-child plus one-`?rtl` tops,
+  - mixed `C4` tops that combine explicit child-to-child `?toplink` wiring with by-name top exposure,
+  - and correct standalone-DT child input classification for RHS-only signals such as `payload_in`.
+- Added [t/87-composition-mixed-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/87-composition-mixed-connect-by-name.t) to lock mixed `?fsmc` + `?rtl` success, mixed `?dtc` + `?rtl` success, and cross-kind same-name ambiguity rejection.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the active `R11` lane now records that mixed `C4` slice explicitly.
+
 ### single-child declared connect-by-name now has a first shipped `R11` slice
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so declared `=name` connect-by-name no longer starts only beyond the single-child passthrough case.
 - Shipped behavior now includes:

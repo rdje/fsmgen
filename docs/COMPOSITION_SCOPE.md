@@ -23,6 +23,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 - The active toolchain now also ships the first `C4` composition lane:
   - top ports can be declared as `=name` inside `?ports` to request explicit same-name connect-by-name,
   - declared connect-by-name now covers one generated child, multiple generated children, or exactly one generated child plus one external `?rtl` child,
+  - declared connect-by-name can also coexist with explicit `?toplink` child-to-child wiring in those same bounded lanes,
   - the planner auto-binds only when exactly one child endpoint matches by name, direction, and width,
   - ambiguous or missing matches fail explicitly instead of falling back to hidden inference.
 - The active toolchain now also ships the first `C6` boundary:
@@ -232,6 +233,7 @@ Status:
   - composition relying on declared connect-by-name.
 - Must prove:
   - exact declared matches connect automatically,
+  - declared `=name` may coexist with explicit child-to-child `?toplink` wiring in the same bounded top,
   - ambiguous matches are rejected,
   - undeclared/unknown names are rejected.
 
