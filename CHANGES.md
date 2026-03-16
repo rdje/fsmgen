@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-16
+### malformed symbol-definition identifier and scalar-token cases now have full coverage
+- Added [t/78-language-contract-symbol-definition-token-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/78-language-contract-symbol-definition-token-boundary.t) to lock the token-validity side of the symbol-definition family:
+  - bad identifiers in `+constants`, `+define`, and `+params`,
+  - and non-scalar member values in `+enums`.
+- The same file also locks pipeline and CLI no-output behavior for those malformed token cases, so the symbol-definition family is no longer fully end-to-end only for malformed shapes while leaving identifier/scalar-token validation implicit.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) to keep the live contract accounting aligned.
 ### malformed ordinary RHS expression forms now have full entrypoint coverage
 - Added [t/77-language-contract-expression-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/77-language-contract-expression-entrypoints.t) to lock pipeline and CLI no-output behavior for the malformed side of ordinary RHS expressions:
   - unsupported operators such as `(bogus B C)`,

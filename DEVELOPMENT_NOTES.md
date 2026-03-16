@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-16: malformed symbol-definition token cases are now locked explicitly too
+- The malformed symbol-definition family was already covered for empty sections and malformed entry/member shapes.
+- The remaining gray zone was the token-validity side:
+  - bad identifiers in `+constants`, `+define`, and `+params`,
+  - and non-scalar member values in `+enums`.
+- The regression set now closes that gap too:
+  - direct parser coverage now names those token-validity failures explicitly,
+  - and the same cases are now locked through pipeline and CLI no-output behavior,
+  - so symbol-definition validation is no longer “shape-covered, token-validity implicit”.
 ## 2026-03-16: malformed ordinary RHS expressions are now locked across entry points too
 - The malformed side of the ordinary RHS expression family was already explicit at direct parser level:
   - unsupported operators such as `(bogus B C)`,

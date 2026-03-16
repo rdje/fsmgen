@@ -1,5 +1,10 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-16: malformed symbol-definition token cases now have full coverage
+- [t/78-language-contract-symbol-definition-token-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/78-language-contract-symbol-definition-token-boundary.t) now locks:
+  - bad identifiers in `+constants`, `+define`, and `+params`,
+  - and non-scalar member values in `+enums`.
+- Those token-validity failures are now covered through direct parser checks plus pipeline and CLI no-output behavior, so the symbol-definition family is no longer fully end-to-end only on the malformed-shape side.
 ## 2026-03-16: malformed ordinary RHS expression forms now have full entrypoint coverage
 - [t/77-language-contract-expression-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/77-language-contract-expression-entrypoints.t) now locks pipeline and CLI no-output behavior for malformed ordinary RHS expressions:
   - unsupported operators such as `(bogus B C)`,

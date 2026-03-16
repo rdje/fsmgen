@@ -387,6 +387,10 @@ Done:
   - malformed `+constants`, `+define`, and `+params` payloads now have focused pipeline and CLI no-output coverage too,
   - so the whole malformed symbol-definition family is no longer end-to-end only for `+enums`,
   - and the active symbol-definition boundary is now regression-backed across parser, pipeline, and CLI entry points.
+- [t/78-language-contract-symbol-definition-token-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/78-language-contract-symbol-definition-token-boundary.t) now locks the token-validity side of that same symbol-definition family explicitly:
+  - bad identifiers in `+constants`, `+define`, and `+params` now fail through targeted token-validity diagnostics,
+  - non-scalar member values in `+enums` now fail through the corresponding member-token boundary,
+  - and those malformed token cases are now regression-backed across parser, pipeline, and CLI entry points too.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now also promotes the conventional `+system` section into the fully supported bucket and documents its current normative contract:
   - `(+system (clock clk) (sreset rstn))`,
   - `(+system (clock clk) (asreset rstn))`.
