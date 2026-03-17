@@ -472,7 +472,7 @@ sub assert_supported_composition_target ($self, $fsm_file, $header) {
 
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active composition lane only emits SystemVerilog/Verilog tops. ".
+        "but composition target support is blocked because the current active composition lanes only emit SystemVerilog/Verilog tops. ".
         "Target language '$self->{target_language}' is not implemented for composition yet. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }

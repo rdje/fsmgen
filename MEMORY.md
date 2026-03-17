@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: unsupported composition backend targets now say target support is blocked
+- Saved shipped behavior:
+  - valid composition sources now say explicitly when composition target support is blocked because the current composition lanes only emit SystemVerilog/Verilog tops,
+  - and the diagnostic still names the unsupported requested target language directly.
+- Important continuity note:
+  - this closes another older-wording pocket on a real composition CLI boundary,
+  - it keeps backend behavior unchanged,
+  - and it adds focused pipeline and CLI coverage instead of relying on incidental target-selection failures.
 ## 2026-03-17: endpoint-shape diagnostics now say when binding is blocked
 - Saved shipped behavior:
   - reserved-system `=name` declarations now say explicitly when declared connect-by-name is blocked because shared system ports already use the dedicated system-input contract,

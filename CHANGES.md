@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### unsupported composition backend targets now say target support is blocked
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so valid composition sources now say composition target support is blocked when they request a backend outside the currently emitted SystemVerilog/Verilog composition lanes.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the requested target language still appears in the exception text,
+  - and the wording now lines up with the rest of the active blocked diagnostics lane.
+- Added [t/114-composition-target-support-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/114-composition-target-support-diagnostics.t) to lock unsupported composition backend target wording through both pipeline and CLI entrypoints.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path wording slice under `R11`.
+
 ### endpoint-shape diagnostics now say when binding is blocked
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so reserved-system `=name` declarations and unsupported explicit endpoint syntax now say binding is blocked when those endpoint-shape errors make the composition contract invalid.
 - This shipped slice stays deliberately narrow:

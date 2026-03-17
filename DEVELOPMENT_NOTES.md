@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: unsupported composition backend targets now say target support is blocked
+- Continued the active `R11` diagnostics lane by tightening the remaining composition target-support gate without changing backend behavior.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says composition target support is *blocked* when a valid `?top` source asks for a backend outside the currently emitted SystemVerilog/Verilog composition lanes,
+  - and the diagnostic still keeps the concrete requested target language in the exception text.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on a real CLI-facing composition boundary,
+  - it keeps backend behavior unchanged while lining the target-support gate up with the rest of the blocked-wording lane,
+  - and it adds focused regression coverage through both pipeline and CLI entrypoints.
+- Added [t/114-composition-target-support-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/114-composition-target-support-diagnostics.t) to lock the blocked wording for unsupported composition backend targets.
 ## 2026-03-17: endpoint-shape diagnostics now say when binding is blocked
 - Continued the active `R11` diagnostics lane by tightening two remaining public endpoint-shape branches without changing composition behavior.
 - Landed behavior:
