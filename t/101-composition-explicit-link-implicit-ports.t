@@ -19,6 +19,8 @@ my $c2_out_path = File::Spec->catfile($tempdir, 'implicit_ports_generated_top.sv
 my $c3_path = File::Spec->catfile($tempdir, 'implicit_ports_rtl_top.fsm');
 my $c3_out_path = File::Spec->catfile($tempdir, 'implicit_ports_rtl_top.sv');
 my $mixed_role_path = File::Spec->catfile($tempdir, 'implicit_ports_mixed_role_top.fsm');
+my $width_mismatch_path = File::Spec->catfile($tempdir, 'implicit_ports_width_mismatch_top.fsm');
+my $type_mismatch_path = File::Spec->catfile($tempdir, 'implicit_ports_type_mismatch_top.fsm');
 
 write_file(
     $c2_path,
@@ -107,6 +109,44 @@ write_file(
   rst_async_n:reset
   data_in<8:data
   txd>:data
+)
+FSM
+);
+
+write_file(
+    $width_mismatch_path,
+    <<'FSM'
+(?top:implicit_ports_width_mismatch_top
+  (?ports:public_io)
+  (?rtl:typed_width_iface)
+  (?toplink:wiring
+    /shared/typed_width_iface.data_in/
+    /shared/typed_width_iface.short_in/
+  )
+)
+
+(?rtlif:typed_width_iface
+  data_in<8:data
+  short_in<4:data
+)
+FSM
+);
+
+write_file(
+    $type_mismatch_path,
+    <<'FSM'
+(?top:implicit_ports_type_mismatch_top
+  (?ports:public_io)
+  (?rtl:typed_type_iface)
+  (?toplink:wiring
+    /shared/typed_type_iface.data_in/
+    /shared/typed_type_iface.reset_like/
+  )
+)
+
+(?rtlif:typed_type_iface
+  data_in<1:data
+  reset_like<1:reset
 )
 FSM
 );
@@ -200,8 +240,36 @@ subtest 'explicit top-link port inference rejects one undeclared top endpoint us
 
     like(
         $exception,
-        qr/omits top port 'shared', .*same top endpoint used as both an input and an output across explicit links/s,
-        'mixed-role undeclared top endpoints are rejected explicitly',
+        qr/omits top port 'shared', .*explicit top-link port inference is blocked because that same top endpoint is used as both an input and an output across explicit links/s,
+        'mixed-role undeclared top endpoints now say explicit top-link inference is blocked',
+    );
+};
+
+subtest 'explicit top-link port inference says width disagreement blocks undeclared top-port inference' => sub {
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($width_mismatch_path);
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/omits top port 'shared', .*explicit top-link port inference is blocked because the linked child endpoints disagree on width \(8 vs 4\).*typed_width_iface\.data_in.*typed_width_iface\.short_in/s,
+        'width-mismatched undeclared top endpoints now say explicit top-link inference is blocked',
+    );
+};
+
+subtest 'explicit top-link port inference says type disagreement blocks undeclared top-port inference' => sub {
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($type_mismatch_path);
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/omits top port 'shared', .*explicit top-link port inference is blocked because the linked child endpoints disagree on interface type \('data' vs 'reset'\).*typed_type_iface\.data_in.*typed_type_iface\.reset_like/s,
+        'type-mismatched undeclared top endpoints now say explicit top-link inference is blocked',
     );
 };
 

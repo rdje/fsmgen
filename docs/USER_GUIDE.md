@@ -201,6 +201,7 @@ Combinational DT note:
   - it now also reports the first shipped blocked cases, including explicit child links blocking undeclared top-interface inference and inferred internal carriers staying internal by default,
   - and the first bounded failure-path wording slice is now shipped too, so plain explicit top-port same-name convention failures now say when the convention is blocked,
   - and that failure-path blocked-wording lane now also covers undeclared top-input/top-output and undeclared internal-carrier inference failures,
+  - and it now also covers explicit-toplink-driven undeclared top-port inference failures when direction, width, or type evidence disagrees,
   - and non-quiet `bin/fsmgen` runs now print the same composition provenance summary directly in the CLI close-out.
 
 ### Implemented, but not strong enough yet to call fully supported

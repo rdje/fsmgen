@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: explicit-toplink top-port inference failures now say when inference is blocked
+- Saved shipped behavior:
+  - explicit-toplink-driven undeclared top-port inference failures now say explicitly when that inference path is blocked,
+  - and the mixed-role, width-mismatch, and type-mismatch branches all keep their explicit-link evidence in the exception text.
+- Important continuity note:
+  - this broadens the blocked-wording diagnostics into the explicit-toplink inference family,
+  - it also closes previously untested width/type wording branches there,
+  - and the next diagnostics seam is now broader failure-path wording beyond these major convention-over-configuration inference paths.
+- Updated [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) to lock the broadened blocked-wording surface for explicit-toplink-driven undeclared top-port inference.
 ## 2026-03-17: undeclared inference failure diagnostics now say when convention is blocked
 - Saved shipped behavior:
   - undeclared top-input inference failures now say explicitly when that convention-first path is blocked,

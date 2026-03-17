@@ -908,7 +908,7 @@ sub record_inferred_top_port_from_explicit_link ($self, $inferred_specs, $top_na
             my $seen = join(', ', @{$existing->{evidence}}, $evidence);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
-                "but explicit top-link port inference sees that same top endpoint used as both an input and an output across explicit links. ".
+                "but explicit top-link port inference is blocked because that same top endpoint is used as both an input and an output across explicit links. ".
                 "Seen explicit link evidence: $seen. ".
                 "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on one direction. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -918,7 +918,7 @@ sub record_inferred_top_port_from_explicit_link ($self, $inferred_specs, $top_na
             my $seen = join(', ', @{$existing->{evidence}}, $evidence);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
-                "but explicit top-link port inference cannot choose one width because the linked child endpoints disagree (".$existing->{width}." vs $width). ".
+                "but explicit top-link port inference is blocked because the linked child endpoints disagree on width (".$existing->{width}." vs $width). ".
                 "Seen explicit link evidence: $seen. ".
                 "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on width. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -928,7 +928,7 @@ sub record_inferred_top_port_from_explicit_link ($self, $inferred_specs, $top_na
             my $seen = join(', ', @{$existing->{evidence}}, $evidence);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
-                "but explicit top-link port inference cannot choose one interface type because the linked child endpoints disagree ('".$existing->{type}."' vs '$type'). ".
+                "but explicit top-link port inference is blocked because the linked child endpoints disagree on interface type ('".$existing->{type}."' vs '$type'). ".
                 "Seen explicit link evidence: $seen. ".
                 "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on type metadata too. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: explicit-toplink top-port inference failures now say when inference is blocked
+- Continued the active `R11` lane by extending the blocked-wording diagnostics into the explicit-toplink-driven undeclared top-port inference path.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says explicit top-link port inference is *blocked* when one undeclared top endpoint is used as both input and output, or when the linked child endpoints disagree on width or type metadata,
+  - and it still reports the concrete explicit-link evidence instead of collapsing those failures into generic ambiguity text.
+- Why this is worth shipping:
+  - it broadens the failure-path blocked-wording lane into another important convention-over-configuration inference family,
+  - it closes previously untested width/type wording branches in the explicit-toplink path,
+  - and it keeps the current `R11` step on diagnostics clarity rather than new behavior.
+- Updated [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) to lock mixed-role, width-mismatch, and type-mismatch blocked diagnostics for explicit-toplink-driven undeclared top-port inference.
 ## 2026-03-17: undeclared inference failure diagnostics now say when convention is blocked
 - Continued the active `R11` lane by broadening the new blocked-wording diagnostics one step further without changing composition behavior.
 - Landed behavior:
