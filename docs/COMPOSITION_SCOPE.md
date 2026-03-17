@@ -18,8 +18,8 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - deterministic internal-net creation for child-to-child wiring,
   - duplicate-driver rejection before emission.
 - The active toolchain now also ships the first `C3` composition lane:
-  - either one or more external `?rtl` children,
-  - or exactly one generated child (`?fsmc` or `?dtc`) plus one or more external `?rtl` children,
+  - at least one external `?rtl` child,
+  - plus any number of generated children (`?fsmc` / `?dtc`) beside those external RTL children,
   - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
   - external RTL interface metadata loaded from embedded or sidecar `.rtlif` artifacts,
   - deterministic internal-net creation and mixed-child instantiation without regenerating external RTL internals.
@@ -47,7 +47,7 @@ The currently shipped composition behavior is intentionally bounded:
 - every generated child must reference exactly one active child source, either embedded in the same file or resolved from an external `.fsm` file,
 - `C1` single-child passthrough works without `?toplink` for one `?fsmc`, `?dtc`, or `?rtl` child,
 - `C2` multi-generated-child composition uses explicit `?toplink`,
-- `C3` explicit-link composition currently supports either one or more external `?rtl` children or exactly one generated child plus one or more external `?rtl` children,
+- `C3` explicit-link composition currently supports any explicit-link top with at least one external `?rtl` child, including pure multi-`?rtl`, one-generated-plus-`?rtl`, and multi-generated-plus-`?rtl` mixtures,
 - `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one generated child, one or more external `?rtl` children, multiple generated children, or exactly one generated child plus one or more `?rtl` children,
 - each `=name` top port must resolve to exactly one same-named child endpoint with the same direction and width,
 - each `?rtl` child currently loads its interface from an embedded `(?rtlif:module_name ...)` companion root in the same composition source when present, otherwise from a sidecar `<module>.rtlif` metadata file searched first beside the composition source, then through explicit search roots such as repeated `--path DIR`, and then through the existing `FSMLIB` roots,
@@ -223,16 +223,17 @@ Status:
 
 ### C3. Explicit-link external RTL composition
 Status:
-- Implemented in the current active toolchain for either one or more external `?rtl` children or exactly one generated child (`?fsmc` or `?dtc`) plus one or more external `?rtl` children using the shipped `.rtlif` interface metadata.
+- Implemented in the current active toolchain for explicit-link tops with at least one external `?rtl` child and any number of generated children (`?fsmc` or `?dtc`) beside those RTL children, using the shipped `.rtlif` interface metadata.
 
 - Input:
-  - either one or more `?rtl` children with explicit `?toplink` wiring,
-  - or one generated child plus one or more `?rtl` children with declared interface metadata.
+  - one or more `?rtl` children with explicit `?toplink` wiring,
+  - optionally mixed with one or more generated children that participate in the same explicit-link plan.
 - Must prove:
   - generated child is compiled,
   - RTL children are instantiated but not regenerated,
   - interface validation catches unknown ports, unsupported `.rtlif` type names, and direction mismatches,
   - deterministic carrier nets can feed more than one external RTL child from one resolved source,
+  - multiple generated children can still participate in the same explicit-link plan as long as at least one `?rtl` child is present,
   - typed `.rtlif` `clock` / `reset` metadata can carry custom-named RTL system ports honestly.
 
 ### C4. Connect-by-name only when unambiguous

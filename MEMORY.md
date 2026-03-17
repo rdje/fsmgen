@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: explicit-link `C3` now covers multi-generated-plus-`?rtl` tops too
+- Saved shipped behavior:
+  - `C3` explicit-link composition still requires at least one external `?rtl` child,
+  - and it now also works when multiple generated children participate beside those external RTL children.
+- Important continuity note:
+  - this slice still did not invent a new lane or hidden inference; it just lets the already-general explicit-link planner admit the broader mixed topology honestly.
+- [t/93-composition-multi-generated-plus-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/93-composition-multi-generated-plus-rtl-children.t) locks the first multi-generated-plus-`?rtl` `C3` success path.
+
 ## 2026-03-17: declared connect-by-name `C4` now covers multi-`?rtl` tops too
 - Saved shipped behavior:
   - `C4` declared connect-by-name now works for multiple external `?rtl` children,

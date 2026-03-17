@@ -761,10 +761,9 @@ sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $po
 sub build_c3_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $generated_instance_count, $fsmc_instance_count, $dtc_instance_count, $rtl_instance_count, $fsm_file, $header) {
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active C3 lane supports either one or more '?rtl' children, or exactly one generated child ('?fsmc' or '?dtc') plus one or more '?rtl' children. ".
+        "but the current active C3 lane requires at least one '?rtl' child and otherwise allows any number of generated children ('?fsmc' or '?dtc') beside those external RTL children. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless ($generated_instance_count == 0 && $rtl_instance_count >= 1)
-            || ($generated_instance_count == 1 && $rtl_instance_count >= 1);
+        unless $rtl_instance_count >= 1;
 
     return $self->build_explicit_link_composition_plan(
         'C3',

@@ -1,5 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-17
+### explicit-link `C3` now covers multi-generated-plus-`?rtl` tops too
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `C3` no longer stops after one generated child whenever external RTL already participates in the explicit-link plan. The active `C3` contract now requires at least one `?rtl` child and otherwise allows any number of generated children (`?fsmc` / `?dtc`) beside those RTL children.
+- Added [t/93-composition-multi-generated-plus-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/93-composition-multi-generated-plus-rtl-children.t) to lock the first multi-generated-plus-`?rtl` explicit-link `C3` success path.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the active `R11` lane now records the broader `C3` truthfully.
+
 ## 2026-03-16
 ### declared connect-by-name `C4` now covers multi-`?rtl` tops too
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `C4` no longer stops at one external RTL child. The active declared-by-name contract now accepts either:

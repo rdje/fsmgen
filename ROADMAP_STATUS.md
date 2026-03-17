@@ -60,7 +60,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `R11` Composition contract strengthening.
 - Current next decision point:
   - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, `?dtc` composition child reuse, embedded `.rtlif` roots, and the new broader external-RTL `C3`/`C4` slices are all fresh in the tree.
-  - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, and single-/multi-`?rtl` composition edges across both explicit-link and declared by-name lanes, so the next `R11` choice is whether to deepen interface-source behavior further or move into broader reusable-module interface/export questions.
+  - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, and single-/multi-`?rtl` composition edges across both explicit-link and declared by-name lanes, and `C3` now also covers multi-generated-child mixed explicit-link tops as long as at least one `?rtl` child is present.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
 
 ## Workstreams
@@ -557,7 +557,8 @@ Done:
   - and `C4` declared connect-by-name now also works for a lone `?rtl` child.
 - The next bounded external-RTL explicit-link broadening slice is now also shipped:
   - `C3` explicit-link composition now works for multiple `?rtl` children,
-  - and `C3` explicit-link composition now also works for exactly one generated child plus multiple `?rtl` children.
+  - `C3` explicit-link composition now also works for exactly one generated child plus multiple `?rtl` children,
+  - and `C3` explicit-link composition now also works for multiple generated children plus one or more `?rtl` children.
 - The future reusable standalone-DT/module-library direction is now also recorded as explicit `R11` contract work instead of loose brainstorming only.
 - That future `R11` direction now also records:
   - multi-`(-foo ...)` standalone `?dt:name` modules,
@@ -622,6 +623,8 @@ Done:
 - [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) now locks:
   - multi-`?rtl` explicit-toplink `C3` success,
   - and one-generated-plus-multi-`?rtl` explicit-toplink `C3` success.
+- [t/93-composition-multi-generated-plus-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/93-composition-multi-generated-plus-rtl-children.t) now locks:
+  - multi-generated-plus-`?rtl` explicit-toplink `C3` success.
 - [t/92-composition-multi-rtl-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/92-composition-multi-rtl-connect-by-name.t) now locks:
   - multi-`?rtl` declared connect-by-name `C4` success,
   - one-generated-plus-multi-`?rtl` declared connect-by-name `C4` success,

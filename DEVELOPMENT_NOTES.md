@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: explicit-link `C3` now covers multi-generated-plus-`?rtl` tops too
+- Continued the active `R11` lane by broadening the already-shipped external-RTL explicit-link planner one more bounded step instead of adding another composition family.
+- Landed behavior:
+  - `C3` explicit-link composition still requires at least one external `?rtl` child,
+  - and it now also works when multiple generated children (`?fsmc` / `?dtc`) participate beside those external RTL children.
+- Why this is worth shipping:
+  - the linked planner/emitter was already general enough to handle this topology honestly once the old guard was removed,
+  - it keeps explicit-link `C3` focused on “external RTL participates in the explicit-link plan” instead of freezing it at one generated child forever,
+  - and it gives `fsmgen` a more useful integration wrapper for mixed generated-controller/generated-datapath plus external-RTL tops without widening syntax.
+- [t/93-composition-multi-generated-plus-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/93-composition-multi-generated-plus-rtl-children.t) locks the first multi-generated-plus-`?rtl` `C3` success path.
+
 ## 2026-03-17: declared connect-by-name `C4` now covers multi-`?rtl` tops too
 - Continued the active `R11` lane by broadening the already-shipped declared connect-by-name planner one bounded step further instead of introducing another wiring mode.
 - Landed behavior:
