@@ -91,7 +91,9 @@ sub embedded_metadata_label ($self, $source_file, $module_name) {
 sub parse_metadata_ast ($self, $module_name, $raw_ast, $metadata_path) {
     my $rtlif_ast = $self->find_rtlif_root($raw_ast, $module_name);
     confess
-        "RTL interface metadata '$metadata_path' must contain a '?rtlif:$module_name' root. ".
+        "Composition references external RTL module '$module_name', ".
+        "but RTL interface metadata structure is blocked because declared interface metadata '$metadata_path' does not contain a '?rtlif:$module_name' root. ".
+        "The active C3 lane requires one flat '?rtlif:$module_name' root per external RTL child interface. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless $rtlif_ast;
 

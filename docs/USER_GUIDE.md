@@ -215,6 +215,7 @@ Combinational DT note:
   - and it now also covers generated child-source resolution/realization failures when external `?fsmc` / `?dtc` child sources are missing or resolve to the wrong active root kind,
   - and it now also covers blocked `C2` lane selection when an explicit-link generated-child composition still provides only one generated child,
   - and it now also covers blocked external RTL metadata resolution when a `?rtl` child has no reachable `.rtlif` metadata,
+  - and it now also covers blocked external RTL metadata structure when a reachable `.rtlif` file does not contain the required `?rtlif:<module>` root,
   - and non-quiet `bin/fsmgen` runs now print the same composition provenance summary directly in the CLI close-out.
 
 ### Implemented, but not strong enough yet to call fully supported

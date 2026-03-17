@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### external `.rtlif` files without the expected root now say metadata structure is blocked
+- Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so external RTL interface metadata now says structure is blocked when a reachable `.rtlif` file does not contain the required `?rtlif:<module>` root for that `?rtl` child.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the active module name and metadata path still appear in the exception text,
+  - and the wording now lines up with the rest of the active blocked diagnostics lane.
+- Added [t/118-composition-rtlif-root-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/118-composition-rtlif-root-diagnostics.t) to lock blocked wording for wrong-root or garbage external `.rtlif` metadata through both pipeline and CLI entrypoints.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path wording slice under `R11`.
+
 ### missing external `.rtlif` metadata now says resolution is blocked
 - Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so missing external RTL interface metadata now says resolution is blocked when no declared `uart_tx.rtlif`-style metadata can be found for a `?rtl` child.
 - This shipped slice stays deliberately narrow:

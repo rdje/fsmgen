@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: wrong-root external `.rtlif` metadata now says structure is blocked
+- Saved shipped behavior:
+  - reachable external RTL metadata now says explicitly when RTL interface metadata structure is blocked because the `.rtlif` file does not contain the required `?rtlif:<module>` root for that `?rtl` child.
+- Important continuity note:
+  - this closes another older-wording pocket on a real external-RTL interface-source boundary,
+  - it keeps the `.rtlif` contract unchanged,
+  - and it adds focused pipeline plus CLI coverage instead of relying on incidental wrong-root failures.
+
 ## 2026-03-17: missing external `.rtlif` metadata now says resolution is blocked
 - Saved shipped behavior:
   - missing external RTL metadata now says explicitly when RTL interface metadata resolution is blocked because no declared `.rtlif` metadata can be found for a `?rtl` child.

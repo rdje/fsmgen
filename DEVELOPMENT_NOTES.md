@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: wrong-root external `.rtlif` metadata now says structure is blocked
+- Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL failure path without changing composition planning behavior.
+- Landed behavior:
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata *structure* is blocked when a reachable external `.rtlif` file does not contain the required `?rtlif:<module>` root for the active `?rtl` child.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on a real external-RTL interface-source boundary,
+  - it keeps the `.rtlif` contract unchanged while lining the missing-root failure up with the rest of the blocked diagnostics lane,
+  - and it adds focused regression coverage through both pipeline and CLI entrypoints.
+- Added [t/118-composition-rtlif-root-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/118-composition-rtlif-root-diagnostics.t) to lock blocked wording for wrong-root or garbage external `.rtlif` metadata.
+
 ## 2026-03-17: missing external `.rtlif` metadata now says resolution is blocked
 - Continued the active `R11` diagnostics lane by tightening a reachable external-RTL failure path without changing composition planning behavior.
 - Landed behavior:
