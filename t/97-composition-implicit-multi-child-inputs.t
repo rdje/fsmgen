@@ -172,8 +172,8 @@ subtest 'undeclared shared top-input inference rejects width disagreement' => su
 
     like(
         $exception,
-        qr/omits top port 'shared_cfg', .*undeclared top-input inference cannot choose a width because same-name child inputs disagree.*left\.shared_cfg\[input, width=8\].*right\.shared_cfg\[input, width=4\]/s,
-        'undeclared shared top-input inference rejects same-name child inputs with mismatched widths',
+        qr/omits top port 'shared_cfg', .*undeclared top-input inference is blocked because same-name child inputs disagree on width.*left\.shared_cfg\[input, width=8\].*right\.shared_cfg\[input, width=4\]/s,
+        'undeclared shared top-input inference now says the convention is blocked when widths disagree',
     );
 };
 

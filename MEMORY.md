@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: undeclared inference failure diagnostics now say when convention is blocked
+- Saved shipped behavior:
+  - undeclared top-input inference failures now say explicitly when that convention-first path is blocked,
+  - undeclared top-output inference failures now say explicitly when that convention-first path is blocked,
+  - and undeclared same-name internal-carrier inference failures now do the same.
+- Important continuity note:
+  - this broadens the earlier blocked-wording slice beyond plain explicit top ports,
+  - it keeps the concrete child-endpoint detail intact,
+  - and the next diagnostics seam is now broader failure-path wording outside these main convention-first composition families.
+- Updated [t/97-composition-implicit-multi-child-inputs.t](/Users/richarddje/Documents/github/fsmgen/t/97-composition-implicit-multi-child-inputs.t), [t/98-composition-implicit-multi-child-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/98-composition-implicit-multi-child-outputs.t), and [t/99-composition-implicit-internal-carriers.t](/Users/richarddje/Documents/github/fsmgen/t/99-composition-implicit-internal-carriers.t) to lock the broadened blocked-wording failure surface.
 ## 2026-03-17: plain explicit top-port failure diagnostics now say when convention is blocked
 - Saved shipped behavior:
   - plain explicit top-port same-name convention failures now say explicitly when that convention is blocked,

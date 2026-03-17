@@ -223,8 +223,8 @@ subtest 'undeclared top-output inference rejects several same-name top-facing ch
 
     like(
         $exception,
-        qr/omits top port 'status_out', .*undeclared top-output inference cannot choose one top-facing child output because several same-name child outputs remain unconsumed by explicit links.*left\.status_out\[output, width=1\].*right\.status_out\[output, width=1\]/s,
-        'undeclared top-output inference rejects several same-name top-facing child outputs',
+        qr/omits top port 'status_out', .*undeclared top-output inference is blocked because several same-name child outputs remain unconsumed by explicit links.*left\.status_out\[output, width=1\].*right\.status_out\[output, width=1\]/s,
+        'undeclared top-output inference now says the convention is blocked when several top-facing child outputs remain',
     );
 };
 

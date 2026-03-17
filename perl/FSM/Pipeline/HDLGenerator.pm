@@ -999,7 +999,7 @@ sub augment_with_inferred_undeclared_top_inputs ($self, $ports, $realized_instan
             } @input_candidates);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' omits top port '$port_name', ".
-                "but undeclared top-input inference cannot choose a width because same-name child inputs disagree. ".
+                "but undeclared top-input inference is blocked because same-name child inputs disagree on width. ".
                 "Seen child inputs: $candidates. ".
                 "The current bounded inference slice only infers undeclared top inputs when all same-name child inputs agree exactly on width. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -1013,7 +1013,7 @@ sub augment_with_inferred_undeclared_top_inputs ($self, $ports, $realized_instan
             } @input_candidates);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' omits top port '$port_name', ".
-                "but undeclared top-input inference cannot choose one interface type because same-name child inputs disagree. ".
+                "but undeclared top-input inference is blocked because same-name child inputs disagree on interface type. ".
                 "Seen child inputs: $candidates. ".
                 "The current bounded inference slice only infers undeclared top inputs when all same-name child inputs agree exactly on type metadata too. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -1086,7 +1086,7 @@ sub augment_with_inferred_undeclared_top_outputs ($self, $ports, $realized_insta
             } @top_facing_output_candidates);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' omits top port '$port_name', ".
-                "but undeclared top-output inference cannot choose one top-facing child output because several same-name child outputs remain unconsumed by explicit links. ".
+                "but undeclared top-output inference is blocked because several same-name child outputs remain unconsumed by explicit links. ".
                 "Seen child outputs: $candidates. ".
                 "The current bounded inference slice only infers undeclared top outputs when exactly one same-name child output remains top-facing. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -1883,7 +1883,7 @@ sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $re
             } @candidates);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' omits explicit same-name internal wiring for '$port_name', ".
-                "but undeclared internal-carrier inference cannot choose one width because same-name child ports disagree. ".
+                "but undeclared internal-carrier inference is blocked because same-name child ports disagree on width. ".
                 "Seen child ports: $seen. ".
                 "The current bounded inference slice only infers internal same-name carriers when all participating child ports agree exactly on width. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -1897,7 +1897,7 @@ sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $re
             } @candidates);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' omits explicit same-name internal wiring for '$port_name', ".
-                "but undeclared internal-carrier inference cannot choose one interface type because same-name child ports disagree. ".
+                "but undeclared internal-carrier inference is blocked because same-name child ports disagree on interface type. ".
                 "Seen child ports: $seen. ".
                 "The current bounded inference slice only infers internal same-name carriers when all participating child ports agree exactly on resolved interface type too. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -1929,7 +1929,7 @@ sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $re
             } @output_candidates);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' omits explicit same-name internal wiring for '$port_name', ".
-                "but undeclared internal-carrier inference cannot choose one driving child output because several same-name child outputs remain available for same-name child inputs. ".
+                "but undeclared internal-carrier inference is blocked because several same-name child outputs remain available for same-name child inputs. ".
                 "Seen child outputs: $seen. ".
                 "The current bounded inference slice only infers internal same-name carriers when exactly one same-name child output remains available. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";

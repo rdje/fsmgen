@@ -290,8 +290,8 @@ subtest 'internal same-name carrier inference rejects several same-name child ou
 
     like(
         $exception,
-        qr/omits explicit same-name internal wiring for 'payload', .*undeclared internal-carrier inference cannot choose one driving child output because several same-name child outputs remain available.*left\.payload\[output, width=8\].*right\.payload\[output, width=8\]/s,
-        'same-name internal carrier inference rejects several same-name child outputs',
+        qr/omits explicit same-name internal wiring for 'payload', .*undeclared internal-carrier inference is blocked because several same-name child outputs remain available for same-name child inputs.*left\.payload\[output, width=8\].*right\.payload\[output, width=8\]/s,
+        'same-name internal carrier inference now says the convention is blocked when several child outputs remain',
     );
 };
 

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: undeclared inference failure diagnostics now say when convention is blocked
+- Continued the active `R11` lane by broadening the new blocked-wording diagnostics one step further without changing composition behavior.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says undeclared top-input inference, undeclared top-output inference, and undeclared same-name internal-carrier inference are *blocked* when width/type ambiguity or multiple drivers prevent the bounded convention-first path from applying,
+  - and the planner still keeps the concrete conflicting endpoint detail in the same exceptions.
+- Why this is worth shipping:
+  - it extends the earlier plain-explicit-top-port blocked-wording slice into the main undeclared inference families users hit while leaning on convention-first composition,
+  - it lines up those failure paths with the already-shipped successful-run `Convention Blocks` summary,
+  - and it keeps `R11` moving on diagnostics clarity rather than widening hidden auto-wiring.
+- Updated [t/97-composition-implicit-multi-child-inputs.t](/Users/richarddje/Documents/github/fsmgen/t/97-composition-implicit-multi-child-inputs.t), [t/98-composition-implicit-multi-child-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/98-composition-implicit-multi-child-outputs.t), and [t/99-composition-implicit-internal-carriers.t](/Users/richarddje/Documents/github/fsmgen/t/99-composition-implicit-internal-carriers.t) to lock the broadened blocked-wording surface across those three inference families.
 ## 2026-03-17: plain explicit top-port failure diagnostics now say when convention is blocked
 - Continued the active `R11` lane by closing the first failure-path wording seam instead of widening composition behavior again.
 - Landed behavior:
