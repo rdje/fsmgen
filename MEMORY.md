@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: explicit-link `C2` / `C3` plain explicit top ports now reuse same-name convention
+- Saved shipped behavior:
+  - plain explicit top inputs in explicit-link `C2` / `C3` may now fan out by same name when compatible child inputs still keep one direction plus exact width/type agreement,
+  - plain explicit top outputs in explicit-link `C2` / `C3` may now adopt one unique same-name top-facing child output when that child-side evidence stays exact,
+  - and explicit top-boundary links still override that convention locally instead of forcing whole-interface restatement.
+- Important continuity note:
+  - this slice is intentionally separate from `=name` `C4`,
+  - mixed input/output same-name families still rely on the already-shipped internal-carrier rule,
+  - mixed-direction plain-input families now fail explicitly,
+  - and ambiguous plain-output same-name families now fail explicitly too.
+- [t/102-composition-explicit-port-convention.t](/Users/richarddje/Documents/github/fsmgen/t/102-composition-explicit-port-convention.t) locks generated-child `C2` success, mixed generated-plus-`?rtl` `C3` success, mixed-direction rejection for plain explicit top inputs, and ambiguity rejection for plain explicit top outputs.
 ## 2026-03-17: architecture hotspot snapshot saved for future refactor work
 - Saved the latest architecture read-through from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) down the active imported `FSM::*` tree into the continuity docs and roadmap.
 - The recorded future seams are:

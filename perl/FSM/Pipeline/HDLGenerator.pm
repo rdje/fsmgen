@@ -1367,6 +1367,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
         push @resolved_links_input, @{
             $self->build_implicit_top_input_links(
                 $ports,
+                $links,
                 $realized_instances,
                 $fsm_file,
                 $header,
@@ -1375,6 +1376,8 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
         push @resolved_links_input, @{
             $self->build_implicit_top_output_links(
                 $ports,
+                $links,
+                $realized_instances,
                 $fsm_file,
                 $header,
             )
@@ -1590,7 +1593,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
     );
 }
 
-sub build_implicit_top_input_links ($self, $ports, $realized_instances, $fsm_file, $header) {
+sub build_implicit_top_input_links ($self, $ports, $explicit_links, $realized_instances, $fsm_file, $header) {
     my @links;
     my %system_port_names = map { $_ => 1 } $self->system_port_names_from_endpoints([
         map {
@@ -1603,34 +1606,175 @@ sub build_implicit_top_input_links ($self, $ports, $realized_instances, $fsm_fil
             } @{$instance->interface_ports || []}
         } @{$realized_instances || []}
     ]);
+    my %explicit_sources = map { (($_->source || '') => 1) } @{$explicit_links || []};
+    my %explicit_targets = map { (($_->target || '') => 1) } @{$explicit_links || []};
+    my @candidate_endpoints = map {
+        my $instance = $_;
+        map {
+            {
+                instance_name => $instance->instance_name,
+                port => $_,
+            }
+        } @{$instance->interface_ports || []}
+    } @{$realized_instances || []};
 
     for my $top_port (@{$ports || []}) {
-        next unless ($top_port->binding_mode || 'explicit') eq 'implicit_fanout';
+        my $binding_mode = $top_port->binding_mode || 'explicit';
+        next unless $binding_mode eq 'implicit_fanout' || ($binding_mode eq 'explicit' && ($top_port->direction || '') eq 'input');
         next if $system_port_names{$top_port->name};
 
-        for my $instance (@{$realized_instances || []}) {
-            for my $port (@{$instance->interface_ports || []}) {
-                next unless $port->name eq $top_port->name;
-                next unless ($port->direction || '') eq 'input';
-                next unless $port->width == $top_port->width;
-
-                push @links, FSM::Composition::Link->new(
-                    source => $top_port->name,
-                    target => $instance->instance_name.'.'.$port->name,
-                    raw_token => '=implicit:'.$top_port->name,
-                );
+        my @same_name_candidates = grep { $_->{port}->name eq $top_port->name } @candidate_endpoints;
+        if ($binding_mode eq 'explicit' && @same_name_candidates) {
+            my @direction_incompatible_candidates = grep {
+                ($_->{port}->direction || '') ne 'input'
+            } @same_name_candidates;
+            if (@direction_incompatible_candidates) {
+                my $candidates = join(', ', map {
+                    $_->{instance_name}.'.'.$_->{port}->name.
+                    '['.$_->{port}->direction.', width='.$_->{port}->width.']'
+                } @same_name_candidates);
+                Carp::confess
+                    "Composition source '$header' in '$fsm_file' declares top input '".$top_port->name."', ".
+                    "and the current bounded convention-first C2/C3 slice would otherwise bind it by same name, ".
+                    "but same-name child endpoints include incompatible directions. ".
+                    "Seen same-name child endpoints: $candidates. ".
+                    "Use explicit '?toplink' wiring for that family if the mixed-direction naming is intentional. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
             }
+
+            my @width_incompatible_candidates = grep {
+                $_->{port}->width != $top_port->width
+            } @same_name_candidates;
+            if (@width_incompatible_candidates) {
+                my $candidates = join(', ', map {
+                    $_->{instance_name}.'.'.$_->{port}->name.
+                    '['.$_->{port}->direction.', width='.$_->{port}->width.']'
+                } @same_name_candidates);
+                Carp::confess
+                    "Composition source '$header' in '$fsm_file' declares top input '".$top_port->name."' with width ".$top_port->width.", ".
+                    "and the current bounded convention-first C2/C3 slice would otherwise bind it by same name, ".
+                    "but same-name child inputs do not all match that width. ".
+                    "Seen same-name child endpoints: $candidates. ".
+                    "Use explicit '?toplink' wiring or align the interface widths. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+            }
+
+            my $declared_type = $self->normalized_interface_type($top_port->type);
+            my @type_incompatible_candidates = grep {
+                $self->normalized_interface_type($_->{port}->type) ne $declared_type
+            } @same_name_candidates;
+            if (@type_incompatible_candidates) {
+                my $candidates = join(', ', map {
+                    $_->{instance_name}.'.'.$_->{port}->name.
+                    '['.$_->{port}->direction.', width='.$_->{port}->width.', type='.$self->normalized_interface_type($_->{port}->type).']'
+                } @same_name_candidates);
+                Carp::confess
+                    "Composition source '$header' in '$fsm_file' declares top input '".$top_port->name."' with interface type '$declared_type', ".
+                    "and the current bounded convention-first C2/C3 slice would otherwise bind it by same name, ".
+                    "but same-name child inputs do not all match that type metadata. ".
+                    "Seen same-name child endpoints: $candidates. ".
+                    "Use explicit '?toplink' wiring or align the interface types. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+            }
+        }
+
+        next if $binding_mode eq 'explicit' && ($explicit_sources{$top_port->name} || $explicit_targets{$top_port->name});
+
+        for my $candidate (@same_name_candidates) {
+            next unless ($candidate->{port}->direction || '') eq 'input';
+            next unless $candidate->{port}->width == $top_port->width;
+            next unless $self->normalized_interface_type($candidate->{port}->type)
+                eq $self->normalized_interface_type($top_port->type);
+
+            my $target_endpoint = $candidate->{instance_name}.'.'.$candidate->{port}->name;
+            next if $binding_mode eq 'explicit' && $explicit_targets{$target_endpoint};
+
+            push @links, FSM::Composition::Link->new(
+                source => $top_port->name,
+                target => $target_endpoint,
+                raw_token => '=implicit:'.$top_port->name,
+            );
         }
     }
 
     return \@links;
 }
 
-sub build_implicit_top_output_links ($self, $ports, $fsm_file, $header) {
+sub build_implicit_top_output_links ($self, $ports, $explicit_links, $realized_instances, $fsm_file, $header) {
     my @links;
+    my %explicit_sources = map { (($_->source || '') => 1) } @{$explicit_links || []};
+    my %explicit_targets = map { (($_->target || '') => 1) } @{$explicit_links || []};
+    my %port_groups;
+
+    for my $instance (@{$realized_instances || []}) {
+        for my $port (@{$instance->interface_ports || []}) {
+            push @{$port_groups{$port->name}}, {
+                instance_name => $instance->instance_name,
+                port => $port,
+            };
+        }
+    }
 
     for my $top_port (@{$ports || []}) {
-        next unless ($top_port->binding_mode || 'explicit') eq 'implicit_unique_output';
+        my $binding_mode = $top_port->binding_mode || 'explicit';
+        next unless $binding_mode eq 'implicit_unique_output' || ($binding_mode eq 'explicit' && ($top_port->direction || '') eq 'output');
+
+        if ($binding_mode eq 'explicit') {
+            next if $explicit_sources{$top_port->name} || $explicit_targets{$top_port->name};
+
+            my @same_name_candidates = @{$port_groups{$top_port->name} || []};
+            my @input_candidates = grep { ($_->{port}->direction || '') eq 'input' } @same_name_candidates;
+            next if @input_candidates;
+
+            my @output_candidates = grep { ($_->{port}->direction || '') eq 'output' } @same_name_candidates;
+            my @top_facing_output_candidates = grep {
+                !$explicit_sources{$_->{instance_name}.'.'.$_->{port}->name}
+            } @output_candidates;
+
+            if (@top_facing_output_candidates > 1) {
+                my $candidates = join(', ', map {
+                    $_->{instance_name}.'.'.$_->{port}->name.
+                    '['.$_->{port}->direction.', width='.$_->{port}->width.']'
+                } @top_facing_output_candidates);
+                Carp::confess
+                    "Composition source '$header' in '$fsm_file' declares top output '".$top_port->name."', ".
+                    "and the current bounded convention-first C2/C3 slice would otherwise bind it by same name, ".
+                    "but several same-name child outputs remain top-facing. ".
+                    "Seen child outputs: $candidates. ".
+                    "Use explicit '?toplink' wiring if that ambiguity is intentional. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+            }
+
+            if (@top_facing_output_candidates == 1) {
+                my $candidate = $top_facing_output_candidates[0];
+                my $candidate_type = $self->normalized_interface_type($candidate->{port}->type);
+                my $declared_type = $self->normalized_interface_type($top_port->type);
+
+                Carp::confess
+                    "Composition source '$header' in '$fsm_file' declares top output '".$top_port->name."' with width ".$top_port->width.", ".
+                    "and the current bounded convention-first C2/C3 slice would otherwise bind it by same name, ".
+                    "but the remaining top-facing child output '".$candidate->{instance_name}.'.'.$candidate->{port}->name."' has width ".$candidate->{port}->width.". ".
+                    "Use explicit '?toplink' wiring or align the interface widths. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                    unless $candidate->{port}->width == $top_port->width;
+
+                Carp::confess
+                    "Composition source '$header' in '$fsm_file' declares top output '".$top_port->name."' with interface type '$declared_type', ".
+                    "and the current bounded convention-first C2/C3 slice would otherwise bind it by same name, ".
+                    "but the remaining top-facing child output '".$candidate->{instance_name}.'.'.$candidate->{port}->name."' has interface type '$candidate_type'. ".
+                    "Use explicit '?toplink' wiring or align the interface types. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                    unless $candidate_type eq $declared_type;
+
+                push @links, FSM::Composition::Link->new(
+                    source => $candidate->{instance_name}.'.'.$candidate->{port}->name,
+                    target => $top_port->name,
+                    raw_token => '=implicit:'.$top_port->name,
+                );
+            }
+
+            next;
+        }
 
         my $source_endpoint = $top_port->raw_token;
         Carp::confess

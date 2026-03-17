@@ -182,6 +182,12 @@ First shipped `R11` slice now in tree:
   - bounded explicit-link `C2` / `C3` omitted/empty-`?ports` inference when explicit `?toplink` endpoints themselves still make the top boundary unambiguous, including renamed top-boundary signals with one consistent direction plus exact width/type agreement,
   - bounded explicit-link `C2` / `C3` undeclared top-input inference when same-name child inputs remain top-facing and agree exactly on direction, width, and type metadata,
   - bounded explicit-link `C2` / `C3` undeclared top-output inference when exactly one same-name child output remains top-facing and is not already consumed by explicit child-to-child wiring,
+  - bounded explicit-link `C2` / `C3` plain-explicit-top-port same-name convention when child-side evidence is still exact and safe:
+    - plain explicit top inputs may fan out by same name when compatible child inputs agree exactly on direction, width, and type metadata,
+    - plain explicit top outputs may adopt one unique same-name top-facing child output when that child-side evidence stays exact,
+    - mixed-direction plain-input families fail explicitly,
+    - multi-output plain-output families fail explicitly,
+    - and explicit top-boundary links still override that convention locally,
   - bounded explicit-link `C2` / `C3` undeclared same-name internal-carrier inference when no explicit link already touches that name family, exactly one same-name child output remains available, and one or more same-name child inputs remain available,
   - bounded local override on top of that convention: an explicit same-name top output may adopt and re-export one of those inferred carriers when direction, width, and type metadata still match exactly,
   - single-generated-child declared connect-by-name through `=name` for both `?fsmc` and `?dtc` children,

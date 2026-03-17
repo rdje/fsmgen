@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: explicit-link `C2` / `C3` plain explicit top ports can now reuse same-name convention
+- Continued the active `R11` lane by removing another layer of top-boundary boilerplate without collapsing `C2` / `C3` into broad hidden auto-wiring.
+- Landed behavior:
+  - plain explicit top inputs in explicit-link `C2` / `C3` may now fan out by same name when compatible child inputs still keep one direction plus exact width/type agreement,
+  - plain explicit top outputs in explicit-link `C2` / `C3` may now adopt one unique same-name top-facing child output when that child-side evidence stays exact,
+  - the already-shipped same-name internal-carrier rule still handles the mixed input/output family separately,
+  - and explicit top-boundary links still override that convention locally instead of forcing users to restate the whole interface manually.
+- Why this is worth shipping:
+  - it moves the tool closer to the intended convention-over-configuration integration style,
+  - it keeps `=name` available as the stricter opt-in `C4` contract instead of turning every same-name case into that lane,
+  - and it preserves honest boundaries by still failing mixed-direction input families and ambiguous output families explicitly.
+- [t/102-composition-explicit-port-convention.t](/Users/richarddje/Documents/github/fsmgen/t/102-composition-explicit-port-convention.t) locks generated-child `C2` success, mixed generated-plus-`?rtl` `C3` success, mixed-direction rejection for plain explicit top inputs, and ambiguity rejection for plain explicit top outputs.
 ## 2026-03-17: architecture hotspot snapshot for future refactor work
 - Took a fresh read-through from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) down the active imported `FSM::*` tree and recorded the main refactor seams explicitly instead of leaving them as conversational analysis only.
 - Current hotspot set worth tracking deliberately:

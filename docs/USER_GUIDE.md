@@ -19,8 +19,8 @@ Current limitation:
   - generated child sources realized either from the same file or from external searchable `.fsm` child sources,
   - external RTL children realized through embedded or sidecar `.rtlif` interface metadata,
   - `C1` single-child passthrough via deterministic same-name wiring or exact child-interface inference when `?ports` is omitted or empty,
-  - `C2` multi-generated-child composition via explicit `?toplink` wiring with `instance.port` child endpoints, plus bounded omitted/empty-`?ports` inference when explicit top links themselves still make the top boundary unambiguous, bounded undeclared top-interface inference for still-top-facing child inputs and unique top-facing child outputs, and bounded same-name internal-carrier inference for unique producer-to-consumer families.
-  - `C3` explicit-link composition for any explicit-link top that includes at least one `?rtl` child, with the same bounded undeclared top-interface and internal-carrier inference rules.
+  - `C2` multi-generated-child composition via explicit `?toplink` wiring with `instance.port` child endpoints, plus bounded omitted/empty-`?ports` inference when explicit top links themselves still make the top boundary unambiguous, bounded undeclared top-interface inference for still-top-facing child inputs and unique top-facing child outputs, bounded plain-explicit-port same-name convention, and bounded same-name internal-carrier inference for unique producer-to-consumer families.
+  - `C3` explicit-link composition for any explicit-link top that includes at least one `?rtl` child, with the same bounded undeclared top-interface, plain-explicit-port convention, and internal-carrier inference rules.
   - `C4` declared top-port connect-by-name via `=name` declarations inside `?ports`.
 - See [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) for the scoped `R6` plan and [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) for historical context.
 
@@ -184,6 +184,10 @@ Combinational DT note:
 - `C4` lane: declared connect-by-name through `=name` in `?ports` for one or more generated children, one or more `?rtl` children, or any mixture of those generated and external RTL children
   - top outputs still require exactly one matching child output
   - top inputs may fan out to one or more matching child inputs of the same name and width
+- In explicit-link `C2` / `C3`, plain explicit top ports may now also adopt the same-name convention in a narrower way:
+  - plain explicit top inputs may fan out to matching child inputs when same-name child-side evidence keeps one direction plus exact width/type agreement,
+  - plain explicit top outputs may bind one unique same-name top-facing child output when that child-side evidence is still exact,
+  - and explicit top-boundary links still override that convention locally.
 - `C5` diagnostics: duplicate-driver rejection, explicit-link width mismatch rejection, connect-by-name ambiguity rejection, connect-by-name unknown-endpoint rejection, and width mismatch rejection
 - `C6` scoped rejection of legacy out-of-scope composition constructs
 
@@ -737,9 +741,34 @@ This currently works because:
 - `?ports` may now be omitted or empty in explicit-link `C2` / `C3` when explicit `?toplink` endpoints themselves still imply the missing top ports honestly, including renamed top-boundary names,
 - undeclared top-facing child inputs may now be inferred when the child-side evidence is unambiguous and those inputs are not already consumed by explicit child-to-child links,
 - undeclared unique top-facing child outputs may now also be inferred when they are not already consumed by explicit child-to-child links,
+- plain explicit top inputs may now also reuse that same-name convention when compatible child inputs keep one direction plus exact width/type agreement,
+- plain explicit top outputs may now also reuse that same-name convention when one unique same-name child output remains top-facing,
 - undeclared same-name internal child-to-child carriers may now be inferred when one unique child output and one or more child inputs share the same name and no explicit link already touches that name family,
 - those inferred same-name carriers stay internal by default, but an explicit same-name top output may adopt and re-export one of them when width/type metadata still match,
 - explicit link widths and endpoint roles must match exactly.
+
+Current narrow plain-explicit-port convention example:
+```lisp
+(?top:plain_port_convention_top
+  (?ports:public_io
+    payload_in<8
+    result_data>8
+  )
+  (?dtc:producer producer_src)
+  (?dtc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.mid/consumer.mid/
+  )
+)
+```
+
+This currently works because:
+- `payload_in<8` is an ordinary explicit top input, not `=payload_in<8`,
+- `result_data>8` is an ordinary explicit top output, not `=result_data>8`,
+- explicit-link `C2` / `C3` may now still reuse the same-name convention for those plain explicit ports when the child-side evidence is exact,
+- top-input convention still requires compatible child inputs only, with exact width/type agreement,
+- top-output convention still requires one unique same-name top-facing child output,
+- and any explicit top-boundary `?toplink` touching that port still overrides the convention locally.
 
 Current narrow declared connect-by-name example:
 ```lisp

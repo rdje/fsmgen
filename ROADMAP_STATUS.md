@@ -684,6 +684,16 @@ Done:
   - generated-child `C2` success with omitted `?ports` and renamed top endpoints,
   - RTL-backed `C3` success with empty `(?ports)` and renamed top endpoints,
   - and mixed-role undeclared-endpoint rejection.
+- The next convention-first top-boundary refinement is now also shipped:
+  - explicit-link `C2` / `C3` plain explicit top inputs may now adopt same-name fanout convention when compatible child inputs still agree exactly on direction, width, and type metadata,
+  - explicit-link `C2` / `C3` plain explicit top outputs may now adopt one unique same-name top-facing child output when that child-side evidence is still exact,
+  - the same-name internal-carrier re-export rule still handles the mixed input/output family separately,
+  - and explicit top-boundary links still override that convention locally instead of forcing a whole-interface restatement.
+- [t/102-composition-explicit-port-convention.t](/Users/richarddje/Documents/github/fsmgen/t/102-composition-explicit-port-convention.t) now locks:
+  - generated-child `C2` success for plain explicit top-input fanout and plain explicit top-output adoption,
+  - mixed generated-plus-`?rtl` `C3` success for the same plain explicit top-port convention,
+  - mixed-direction rejection for plain explicit top-input convention,
+  - and multi-output ambiguity rejection for plain explicit top-output convention.
 - [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) now locks:
   - multi-`?rtl` explicit-toplink `C3` success,
   - and one-generated-plus-multi-`?rtl` explicit-toplink `C3` success.
@@ -730,7 +740,7 @@ Left:
   - and keep explicit type declarations available as bounded overrides instead of the default authoring burden.
 - Refine declared top-port connect-by-name into an asymmetric integration-oriented contract:
   - decide how far future convention-over-configuration work should widen undeclared top-interface inference beyond the newly shipped `C1` passthrough slice and the newly shipped `C2` / `C3` omitted/empty-`?ports`, undeclared top-input/top-output/internal-carrier slices,
-  - decide whether future convention-over-configuration work should let some top inputs/outputs be inferred even without `=name`,
+  - decide how far future convention-over-configuration work should widen beyond the newly shipped plain-explicit-top-port same-name convention in `C2` / `C3`,
   - decide whether the newly shipped explicit top-output re-export slice is enough or whether lighter/further override forms are warranted,
   - keep convention as the default authoring path while making explicit port/link declarations override inference locally instead of replacing the whole inferred interface,
   - keep that explicit override layer elegant and expressive rather than verbose duplicate configuration,

@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### explicit-link `C2` / `C3` plain explicit top ports can now reuse same-name convention
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so explicit-link `C2` / `C3` tops may now keep ordinary explicit top-port declarations such as `payload_in<8` or `result_data>8` while still reusing the same-name convention when the child-side evidence stays exact.
+- This shipped slice is intentionally bounded:
+  - plain explicit top inputs may fan out by same name when compatible child inputs keep one direction plus exact width/type agreement,
+  - plain explicit top outputs may adopt one unique same-name top-facing child output when that child-side evidence stays exact,
+  - mixed input/output same-name families still flow through the already-shipped internal-carrier rule instead of this new slice,
+  - explicit top-boundary links still override that convention locally,
+  - mixed-direction plain-input families now fail explicitly,
+  - and multi-output plain-output families now fail explicitly.
+- Added [t/102-composition-explicit-port-convention.t](/Users/richarddje/Documents/github/fsmgen/t/102-composition-explicit-port-convention.t) to lock:
+  - generated-child `C2` success for plain explicit top-input fanout and plain explicit top-output adoption,
+  - mixed generated-plus-`?rtl` `C3` success for the same plain-explicit-port convention,
+  - mixed-direction rejection for plain explicit top-input convention,
+  - and ambiguous same-name output rejection for plain explicit top-output convention.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this now reads as shipped convention-first behavior rather than a future question.
+
 ### recorded the current architecture hotspot set for future bounded refactor work
 - Saved the current hotspot/refactor snapshot into the live roadmap/continuity docs instead of leaving it as one-off analysis only.
 - The recorded future seams are:
