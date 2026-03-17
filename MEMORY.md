@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: explicit-link lane-entry and topology failures now say they are blocked
+- Saved shipped behavior:
+  - explicit-link lane entry now says explicitly when it is blocked because `C2`/`C3` was entered without any `?toplink`,
+  - and explicit-link topology now says explicitly when it is blocked because a top input tries to drive a top output directly or one source tries to drive multiple top outputs.
+- Important continuity note:
+  - this closes another older-wording pocket in the explicit-link family,
+  - it adds focused coverage instead of widening planner behavior,
+  - and it keeps the same endpoint/source detail in the exception text.
 ## 2026-03-17: explicit-link unwired-port failures now say wiring is blocked
 - Saved shipped behavior:
   - explicit-link top-port failures now say explicitly when top wiring is blocked because a declared non-system top port remains unused,

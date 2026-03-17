@@ -1236,7 +1236,7 @@ sub build_explicit_link_composition_plan ($self, $lane, $composition_spec, $top,
     my @links = map { @{$_->links || []} } @{$toplinks || []};
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active $lane lane requires explicit '?toplink' wiring. ".
+        "but explicit-link lane entry is blocked because the current active $lane lane requires explicit '?toplink' wiring. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @links;
 
@@ -1510,7 +1510,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
             for my $resolved_link (@group) {
                 Carp::confess
                     "Composition source '$header' in '$fsm_file' links top input '".$source->{raw}."' directly to top output '".$resolved_link->{target}{raw}."', ".
-                    "but the current active $lane lane only supports top inputs driving child inputs. ".
+                    "but explicit-link topology is blocked because the current active $lane lane only supports top inputs driving child inputs. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                     if $resolved_link->{target}{kind} eq 'top_port';
             }
@@ -1521,7 +1521,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
         my @top_output_targets = grep { $_->{target}{kind} eq 'top_port' } @group;
         Carp::confess
             "Composition source '$header' in '$fsm_file' drives multiple top outputs from '".$source->{raw}."', ".
-            "but the current active $lane lane supports at most one top-output target per resolved source. ".
+            "but explicit-link topology is blocked because the current active $lane lane supports at most one top-output target per resolved source. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             if @top_output_targets > 1;
 

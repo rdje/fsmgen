@@ -20,6 +20,16 @@ This document captures engineering rationale, design constraints, and working de
   - it closes previously untested width/type wording branches in the explicit-toplink path,
   - and it keeps the current `R11` step on diagnostics clarity rather than new behavior.
 - Updated [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) to lock mixed-role, width-mismatch, and type-mismatch blocked diagnostics for explicit-toplink-driven undeclared top-port inference.
+## 2026-03-17: explicit-link lane-entry and topology failures now say they are blocked
+- Continued the active `R11` diagnostics lane by tightening the remaining explicit-link lane-entry and topology branches without changing composition behavior.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says explicit-link lane entry is *blocked* when a `C2`/`C3` lane is entered without any explicit `?toplink`,
+  - and it now says explicit-link topology is *blocked* when a top input tries to drive a top output directly or when one source tries to drive multiple top outputs.
+- Why this is worth shipping:
+  - it closes another older-wording pocket in the explicit-link diagnostics family,
+  - it keeps the planner behavior unchanged while making the failure surface read consistently,
+  - and it adds focused regression coverage instead of relying on indirect behavior.
+- Added [t/109-composition-explicit-link-topology-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/109-composition-explicit-link-topology-diagnostics.t) to lock missing-`?toplink`, top-input-to-top-output, and multi-top-output-source diagnostics.
 ## 2026-03-17: explicit-link unwired-port failures now say wiring is blocked
 - Continued the active `R11` diagnostics lane by tightening the remaining explicit-link unwired-port branches without changing composition behavior.
 - Landed behavior:

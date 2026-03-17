@@ -202,6 +202,7 @@ First shipped `R11` slice now in tree:
     - explicit-toplink-driven undeclared top-port inference failures now also say when that inference path is blocked by direction, width, or type disagreement,
     - explicit `?toplink` validation failures now also say when endpoint resolution, direction, duplicate-drive, or width evidence blocks the declared link,
     - explicit-link top-wiring and realized-child-wiring failures now also say when declared top ports or realized child ports remain unwired in explicit-link lanes,
+    - explicit-link lane-entry and topology failures now also say when explicit-link lanes are entered without `?toplink`, when top inputs try to drive top outputs directly, or when one source tries to drive multiple top outputs,
     - explicit top-output re-export mismatches for inferred same-name internal carriers now also say when that bounded re-export path is blocked by width or type disagreement,
     - declared `=name` connect-by-name failures now also say when the declared match is blocked by direction, width, ambiguity, or missing-endpoint evidence,
     - and `bin/fsmgen` now prints the same provenance summary for non-quiet composition runs,
