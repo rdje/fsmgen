@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### missing external `.rtlif` metadata now says resolution is blocked
+- Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so missing external RTL interface metadata now says resolution is blocked when no declared `uart_tx.rtlif`-style metadata can be found for a `?rtl` child.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the search-root evidence still appears in the exception text,
+  - and the wording now lines up with the rest of the active blocked diagnostics lane.
+- Added [t/117-composition-rtlif-metadata-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/117-composition-rtlif-metadata-diagnostics.t) to lock blocked wording for missing external `.rtlif` metadata through both pipeline and CLI entrypoints.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path wording slice under `R11`.
+
 ### blocked `C2` lane selection now says so explicitly
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so one-generated-child explicit-link tops now say `C2` lane selection is blocked when they do not satisfy the minimum two-generated-child `C2` shape.
 - This shipped slice stays deliberately narrow:

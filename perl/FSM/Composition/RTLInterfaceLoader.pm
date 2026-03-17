@@ -78,7 +78,7 @@ sub resolve_metadata_path ($self, $module_name, $source_file) {
 
     confess
         "Composition references external RTL module '$module_name', ".
-        "but no declared interface metadata file '$module_name.rtlif' was found. ".
+        "but RTL interface metadata resolution is blocked because no declared interface metadata file '$module_name.rtlif' was found. ".
         "Search roots: ".join(', ', @search_dirs).". ".
         "The active C3 lane requires external RTL interface metadata to be prepared separately and loaded for composition use. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";

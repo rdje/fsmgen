@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: missing external `.rtlif` metadata now says resolution is blocked
+- Saved shipped behavior:
+  - missing external RTL metadata now says explicitly when RTL interface metadata resolution is blocked because no declared `.rtlif` metadata can be found for a `?rtl` child.
+- Important continuity note:
+  - this closes another older-wording pocket on a real mixed-composition integration boundary,
+  - it keeps the external-RTL contract unchanged,
+  - and it adds focused pipeline plus CLI coverage instead of relying on incidental metadata lookup failures.
 ## 2026-03-17: blocked `C2` lane selection now says so explicitly
 - Saved shipped behavior:
   - one-generated-child explicit-link tops now say explicitly when `C2` lane selection is blocked because the active `C2` lane requires at least two generated children.

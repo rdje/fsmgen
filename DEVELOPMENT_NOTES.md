@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: missing external `.rtlif` metadata now says resolution is blocked
+- Continued the active `R11` diagnostics lane by tightening a reachable external-RTL failure path without changing composition planning behavior.
+- Landed behavior:
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata *resolution* is blocked when a `?rtl` child has no reachable sidecar or embedded `.rtlif` metadata.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on a real mixed-composition integration boundary,
+  - it keeps the external-RTL contract unchanged while lining the metadata-lookup failure up with the rest of the blocked diagnostics lane,
+  - and it adds focused regression coverage through both pipeline and CLI entrypoints.
+- Added [t/117-composition-rtlif-metadata-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/117-composition-rtlif-metadata-diagnostics.t) to lock blocked wording for missing external `.rtlif` metadata.
 ## 2026-03-17: blocked `C2` lane selection now says so explicitly
 - Continued the active `R11` diagnostics lane by tightening a reachable lane-selection gate without changing composition planning behavior.
 - Landed behavior:
