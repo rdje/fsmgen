@@ -539,12 +539,12 @@ sub load_external_fsmc_child_source ($self, $source_name, $fsm_file, $header) {
 
     my $child_header = $child_source_info->{header} // 'unknown root';
     my $kind_note = $child_kind eq 'dt'
-        ? "Standalone '?dt:name' roots are shipped as reusable modules, but composition-facing standalone-DT child realization is a later R11 slice."
+        ? "Standalone '?dt:name' roots are shipped as composition children, but '?fsmc' specifically requires an FSM child source. Use '?dtc' for standalone-DT children instead."
         : "The active composition child-FSM contract expects embedded or external child sources rooted at '?fsm:name' or legacy '+fsm' only.";
 
     Carp::confess
         "Composition source '$header' in '$fsm_file' resolves '?fsmc' child '$source_name' to '$child_source_path', ".
-        "but that file is not an active FSM child source (detected root '$child_header'). ".
+        "but child-source realization is blocked because that resolved file is not an active FSM child source (detected root '$child_header'). ".
         $kind_note." ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
@@ -559,10 +559,14 @@ sub load_external_dtc_child_source ($self, $source_name, $fsm_file, $header) {
     return ($child_ast, $child_source_path, $child_source_info) if $child_kind eq 'dt';
 
     my $child_header = $child_source_info->{header} // 'unknown root';
+    my $kind_note = $child_kind eq 'fsm'
+        ? "FSM child roots are shipped as composition children, but '?dtc' specifically requires a standalone-DT child source. Use '?fsmc' for FSM children instead."
+        : "The active standalone-DT composition contract currently expects '?dt:name' child roots for '?dtc'.";
+
     Carp::confess
         "Composition source '$header' in '$fsm_file' resolves '?dtc' child '$source_name' to '$child_source_path', ".
-        "but that file is not an active standalone-DT child source (detected root '$child_header'). ".
-        "The active standalone-DT composition contract currently expects '?dt:name' child roots for '?dtc'. ".
+        "but child-source realization is blocked because that resolved file is not an active standalone-DT child source (detected root '$child_header'). ".
+        $kind_note." ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
@@ -607,7 +611,7 @@ sub resolve_external_generated_child_source_path ($self, $source_name, $fsm_file
         : "child FSM source";
     Carp::confess
         "Composition source '$header' in '$fsm_file' declares '$child_kind' child '$source_name', ".
-        "but no active $family_label was found either embedded in the same file or in an external '.fsm' file. ".
+        "but child-source resolution is blocked because no active $family_label was found either embedded in the same file or in an external '.fsm' file. ".
         "Search roots: ".join(', ', @search_dirs).". ".
         "Searched locations: ".join(', ', @searched_paths).". ".
         "The active composition contract currently allows generated child instances to realize embedded sources or external '.fsm' module files found beside the composition source, through repeated '--path DIR' roots, through 'FSMLIB', or in the current directory. ".

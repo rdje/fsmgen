@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: generated child-source failures now say resolution or realization is blocked
+- Saved shipped behavior:
+  - external `?fsmc` / `?dtc` lookup failures now say explicitly when child-source resolution is blocked because no active child source can be found,
+  - and wrong-kind resolved child files now say explicitly when child-source realization is blocked because the resolved source is rooted under the wrong active source kind.
+  - wrong-kind `?fsmc` failures now point users to `?dtc`,
+  - and wrong-kind `?dtc` failures now point users to `?fsmc`.
+- Important continuity note:
+  - this closes another older-wording pocket on a real reusable-module integration boundary,
+  - it fixes an outdated note that still described standalone-DT child realization as future work,
+  - and it adds focused pipeline plus CLI coverage instead of relying on incidental child-load failures.
 ## 2026-03-17: unsupported composition backend targets now say target support is blocked
 - Saved shipped behavior:
   - valid composition sources now say explicitly when composition target support is blocked because the current composition lanes only emit SystemVerilog/Verilog tops,

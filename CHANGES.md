@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### generated child-source failures now say resolution or realization is blocked
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so external `?fsmc` / `?dtc` lookup failures now say child-source resolution is blocked when no active child source can be found, and wrong-kind resolved child files now say child-source realization is blocked when they are rooted under the wrong active source kind.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the resolved path, detected root, and search-root evidence still appear in the exception text,
+  - and wrong-kind `?fsmc` / `?dtc` failures now point users to the correct shipped child kind instead of leaving an outdated roadmap-era hint in place.
+- Added [t/115-composition-child-source-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/115-composition-child-source-diagnostics.t) to lock missing-child, wrong-kind-`?fsmc`, and wrong-kind-`?dtc` wording across pipeline and CLI entrypoints.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path wording slice under `R11`.
+
 ### unsupported composition backend targets now say target support is blocked
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so valid composition sources now say composition target support is blocked when they request a backend outside the currently emitted SystemVerilog/Verilog composition lanes.
 - This shipped slice stays deliberately narrow:

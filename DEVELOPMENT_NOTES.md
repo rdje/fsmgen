@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: generated child-source failures now say resolution or realization is blocked
+- Continued the active `R11` diagnostics lane by tightening the external generated-child failure path without changing composition realization behavior.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says child-source *resolution* is blocked when external `?fsmc` / `?dtc` lookup cannot find an embedded or searchable `.fsm` child source,
+  - and it now says child-source *realization* is blocked when a resolved external `?fsmc` / `?dtc` file exists but is rooted under the wrong active source kind.
+  - wrong-kind `?fsmc` failures now also point users to `?dtc` for standalone-DT children,
+  - and wrong-kind `?dtc` failures now also point users to `?fsmc` for FSM children.
+- Why this is worth shipping:
+  - it closes another older-wording pocket right on a common reusable-module integration failure path,
+  - it fixes an outdated diagnostic note that still described standalone-DT child realization as future work even though `?dtc` is already shipped,
+  - and it adds focused regression coverage through both pipeline and CLI entrypoints.
+- Added [t/115-composition-child-source-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/115-composition-child-source-diagnostics.t) to lock missing-child, wrong-kind-`?fsmc`, and wrong-kind-`?dtc` wording.
 ## 2026-03-17: unsupported composition backend targets now say target support is blocked
 - Continued the active `R11` diagnostics lane by tightening the remaining composition target-support gate without changing backend behavior.
 - Landed behavior:
