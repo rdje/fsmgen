@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### blocked `C2` lane selection now says so explicitly
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so one-generated-child explicit-link tops now say `C2` lane selection is blocked when they do not satisfy the minimum two-generated-child `C2` shape.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the existing `C2` minimum-shape rule is unchanged,
+  - and the wording now lines up with the rest of the active blocked diagnostics lane.
+- Added [t/116-composition-c2-lane-selection-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/116-composition-c2-lane-selection-diagnostics.t) to lock blocked wording for one-generated-child explicit-link tops through both pipeline and CLI entrypoints.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path wording slice under `R11`.
+
 ### generated child-source failures now say resolution or realization is blocked
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so external `?fsmc` / `?dtc` lookup failures now say child-source resolution is blocked when no active child source can be found, and wrong-kind resolved child files now say child-source realization is blocked when they are rooted under the wrong active source kind.
 - This shipped slice stays deliberately narrow:

@@ -1156,7 +1156,7 @@ sub assert_c1_port_exposure_matches_child ($self, $ports_block, $realized_instan
 sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $fsm_file, $header) {
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active C2 lane requires at least two generated child instances such as '?fsmc' or '?dtc'. ".
+        "but C2 lane selection is blocked because the current active C2 lane requires at least two generated child instances such as '?fsmc' or '?dtc'. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @{$realized_instances || []} >= 2;
 

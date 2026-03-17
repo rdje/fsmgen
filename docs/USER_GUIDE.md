@@ -213,6 +213,7 @@ Combinational DT note:
   - and it now also covers reserved system-port `=name` declarations and unsupported explicit endpoint syntax when those endpoint-shape errors would otherwise leave the binding contract ambiguous,
   - and it now also covers unsupported composition backend targets when a valid composition source asks for a backend that the current composition lanes do not emit,
   - and it now also covers generated child-source resolution/realization failures when external `?fsmc` / `?dtc` child sources are missing or resolve to the wrong active root kind,
+  - and it now also covers blocked `C2` lane selection when an explicit-link generated-child composition still provides only one generated child,
   - and non-quiet `bin/fsmgen` runs now print the same composition provenance summary directly in the CLI close-out.
 
 ### Implemented, but not strong enough yet to call fully supported

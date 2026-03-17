@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: blocked `C2` lane selection now says so explicitly
+- Saved shipped behavior:
+  - one-generated-child explicit-link tops now say explicitly when `C2` lane selection is blocked because the active `C2` lane requires at least two generated children.
+- Important continuity note:
+  - this closes another older-wording pocket on a real explicit-link composition path,
+  - it keeps the `C2` planner behavior unchanged,
+  - and it adds focused pipeline plus CLI coverage instead of relying on incidental lane-selection fallout.
 ## 2026-03-17: generated child-source failures now say resolution or realization is blocked
 - Saved shipped behavior:
   - external `?fsmc` / `?dtc` lookup failures now say explicitly when child-source resolution is blocked because no active child source can be found,

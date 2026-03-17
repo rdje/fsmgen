@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: blocked `C2` lane selection now says so explicitly
+- Continued the active `R11` diagnostics lane by tightening a reachable lane-selection gate without changing composition planning behavior.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says `C2` lane selection is *blocked* when an explicit-link generated-child composition still provides only one generated child instead of the minimum two-child `C2` shape.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on a real explicit-link composition path that users can hit directly,
+  - it keeps planner behavior unchanged while lining the `C2` minimum-shape gate up with the rest of the blocked diagnostics lane,
+  - and it adds focused regression coverage through both pipeline and CLI entrypoints.
+- Added [t/116-composition-c2-lane-selection-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/116-composition-c2-lane-selection-diagnostics.t) to lock the blocked wording for one-generated-child explicit-link tops.
 ## 2026-03-17: generated child-source failures now say resolution or realization is blocked
 - Continued the active `R11` diagnostics lane by tightening the external generated-child failure path without changing composition realization behavior.
 - Landed behavior:
