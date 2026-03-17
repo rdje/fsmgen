@@ -154,6 +154,7 @@ First shipped `R11` slice now in tree:
   - `?dtc` composition child realization from embedded or external standalone-DT sources, including honest non-system interfaces for purely combinational DT children,
   - single-generated-child declared connect-by-name through `=name` for both `?fsmc` and `?dtc` children,
   - and declared connect-by-name now covering one or more generated children, one or more external `?rtl` children, or any mixture of those generated and external RTL children when the top-level exact-match rule is still unambiguous,
+  - future refinement: `=name` should become direction-asymmetric at the top boundary, with top outputs staying exact-one-match while top inputs may fan out to all matching child inputs of the same name and width,
   - and standalone-DT child interface direction now preferring semantic signal roles over the older name-based output heuristic in composition-facing interface realization.
 - The shipped first slice does not yet widen into:
   - explicit `+system` inside `?dt:name`,

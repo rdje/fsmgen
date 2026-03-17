@@ -61,6 +61,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Current next decision point:
   - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, `?dtc` composition child reuse, embedded `.rtlif` roots, and the new broader external-RTL `C3`/`C4` slices are all fresh in the tree.
   - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, and single-/multi-`?rtl` composition edges across both explicit-link and declared by-name lanes, `C3` now covers multi-generated-child mixed explicit-link tops as long as at least one `?rtl` child is present, and `C4` now covers the same broader mixed child set under the exact-match by-name rule.
+  - The next bounded `C4` refinement is now identified too: keep single-source exact-match semantics for top outputs, but let top inputs declared with `=name` fan out to all matching child inputs of the same name and width.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
 
 ## Workstreams
@@ -651,6 +652,11 @@ Left:
   - extend the now-shipped implicit-system rule split between `?fsm:name` and `?dt:name` into the broader reuse/composition contract,
   - extend the now-shipped generated-child contract beyond the current `?fsmc` / `?dtc` `C1` / `C2` / `C3` plus generated-only and mixed-lane `C4` slices into reusable-module interface/export rules,
   - and extend the now-shipped `--path` / `FSMLIB` lookup slice beyond bare top-level inputs, generated child sources, and `.rtlif` metadata lookup.
+- Refine declared top-port connect-by-name into an asymmetric integration-oriented contract:
+  - top outputs declared with `=name` should still require exactly one matching child output of the same name and width,
+  - top inputs declared with `=name` should fan out to all matching child inputs of the same name and width,
+  - mixed-direction or width-mismatched same-name candidates should still fail explicitly,
+  - and this refinement should stay top-boundary-only rather than turning child-to-child wiring into hidden inference.
 - Add any needed diagnostics/tests before considering broader composition growth.
 Exit criteria:
 - External-RTL composition uses a clearly specified interface contract that is stronger and easier to reason about than the current “implemented convention” state.

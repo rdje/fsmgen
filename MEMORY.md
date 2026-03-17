@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: future `=name` connect-by-name should become asymmetric for top inputs vs outputs
+- Saved future direction:
+  - `=name` top outputs should stay exact-one-match against child outputs,
+  - `=name` top inputs should later be allowed to fan out to all matching child inputs with the same name and width.
+- Important continuity note:
+  - this is not shipped yet; current `C4` still uses the stricter exact-one-match rule for both directions.
+  - the saved reason for the later change is integration ergonomics: one parent input often needs to feed several conventionally named child inputs, while outputs still need single-source ownership.
+
 ## 2026-03-17: declared connect-by-name `C4` now covers multi-generated-plus-`?rtl` tops too
 - Saved shipped behavior:
   - `C4` declared connect-by-name still uses the same exact same-name, same-direction, same-width rule,

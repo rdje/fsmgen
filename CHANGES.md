@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### saved future asymmetric `=name` refinement for top-boundary integration
+- Recorded the next likely `R11` connect-by-name refinement in [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md):
+  - `=name` top outputs should stay exact-one-match,
+  - `=name` top inputs should later fan out to all matching child inputs with the same name and width,
+  - and this should remain a top-boundary convenience rather than becoming hidden child-to-child inference.
+
 ### declared connect-by-name `C4` now covers multi-generated-plus-`?rtl` tops too
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `C4` no longer stops after one generated child when external RTL already participates in the by-name plan. The active `C4` contract now accepts one or more generated children, one or more `?rtl` children, or any mixture of those generated and external RTL children under the same exact-match rule.
 - Added [t/94-composition-multi-generated-plus-rtl-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/94-composition-multi-generated-plus-rtl-connect-by-name.t) to lock the first multi-generated-plus-`?rtl` declared connect-by-name `C4` success path.
