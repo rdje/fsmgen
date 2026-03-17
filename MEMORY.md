@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: declared connect-by-name `C4` now covers multi-generated-plus-`?rtl` tops too
+- Saved shipped behavior:
+  - `C4` declared connect-by-name still uses the same exact same-name, same-direction, same-width rule,
+  - and it now also works when multiple generated children participate beside one or more external `?rtl` children.
+- Important continuity note:
+  - this slice still did not add hidden inference or a new lane; it just lets the already-general by-name linker admit the broader mixed topology honestly.
+- [t/94-composition-multi-generated-plus-rtl-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/94-composition-multi-generated-plus-rtl-connect-by-name.t) locks the first multi-generated-plus-`?rtl` `C4` success path.
+
 ## 2026-03-17: explicit-link `C3` now covers multi-generated-plus-`?rtl` tops too
 - Saved shipped behavior:
   - `C3` explicit-link composition still requires at least one external `?rtl` child,

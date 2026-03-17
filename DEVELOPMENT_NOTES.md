@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: declared connect-by-name `C4` now covers multi-generated-plus-`?rtl` tops too
+- Continued the active `R11` lane by broadening the already-shipped declared connect-by-name planner one more bounded step instead of introducing another wiring mode.
+- Landed behavior:
+  - `C4` declared connect-by-name still keeps the same exact-match rule,
+  - and it now also works when multiple generated children (`?fsmc` / `?dtc`) participate beside one or more external `?rtl` children.
+- Why this is worth shipping:
+  - it keeps `C4` symmetric with the broader mixed `C3` slice we already ship,
+  - the by-name linker was already general enough once the old guard stopped rejecting this topology,
+  - and it lets users expose top-facing signals by exact name without falling back to all-explicit top wiring just because the composition mixes several generated children with RTL children.
+- [t/94-composition-multi-generated-plus-rtl-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/94-composition-multi-generated-plus-rtl-connect-by-name.t) locks the first multi-generated-plus-`?rtl` `C4` success path.
+
 ## 2026-03-17: explicit-link `C3` now covers multi-generated-plus-`?rtl` tops too
 - Continued the active `R11` lane by broadening the already-shipped external-RTL explicit-link planner one more bounded step instead of adding another composition family.
 - Landed behavior:

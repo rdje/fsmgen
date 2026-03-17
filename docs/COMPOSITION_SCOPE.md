@@ -25,7 +25,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - deterministic internal-net creation and mixed-child instantiation without regenerating external RTL internals.
 - The active toolchain now also ships the first `C4` composition lane:
   - top ports can be declared as `=name` inside `?ports` to request explicit same-name connect-by-name,
-  - declared connect-by-name now covers one generated child, one or more external `?rtl` children, multiple generated children, or exactly one generated child plus one or more external `?rtl` children,
+  - declared connect-by-name now covers one or more generated children, one or more external `?rtl` children, or any mixture of those generated and external RTL children,
   - declared connect-by-name can also coexist with explicit `?toplink` child-to-child wiring in those same bounded lanes,
   - the planner auto-binds only when exactly one child endpoint matches by name, direction, and width,
   - ambiguous or missing matches fail explicitly instead of falling back to hidden inference.
@@ -48,7 +48,7 @@ The currently shipped composition behavior is intentionally bounded:
 - `C1` single-child passthrough works without `?toplink` for one `?fsmc`, `?dtc`, or `?rtl` child,
 - `C2` multi-generated-child composition uses explicit `?toplink`,
 - `C3` explicit-link composition currently supports any explicit-link top with at least one external `?rtl` child, including pure multi-`?rtl`, one-generated-plus-`?rtl`, and multi-generated-plus-`?rtl` mixtures,
-- `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one generated child, one or more external `?rtl` children, multiple generated children, or exactly one generated child plus one or more `?rtl` children,
+- `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one or more generated children, one or more external `?rtl` children, or any mixture of those generated and external RTL children,
 - each `=name` top port must resolve to exactly one same-named child endpoint with the same direction and width,
 - each `?rtl` child currently loads its interface from an embedded `(?rtlif:module_name ...)` companion root in the same composition source when present, otherwise from a sidecar `<module>.rtlif` metadata file searched first beside the composition source, then through explicit search roots such as repeated `--path DIR`, and then through the existing `FSMLIB` roots,
 - the shipped `.rtlif` mini-contract is one flat `(?rtlif:module_name ...)` root with declaration-ordered port tokens such as `clk`, `data_in<8`, `txd>`, `core_clk:clock`, and `rst_async_n:reset`,
@@ -238,7 +238,7 @@ Status:
 
 ### C4. Connect-by-name only when unambiguous
 Status:
-- Implemented in the current active toolchain for top ports declared as `=name` inside `?ports`, with exact same-name matching against exactly one compatible child endpoint across the shipped single-child (`?fsmc`, `?dtc`, or `?rtl`), multi-generated-child, multi-`?rtl`, and mixed generated-child plus `?rtl` lanes.
+- Implemented in the current active toolchain for top ports declared as `=name` inside `?ports`, with exact same-name matching against exactly one compatible child endpoint across the shipped single-child (`?fsmc`, `?dtc`, or `?rtl`), multi-generated-child, multi-`?rtl`, and mixed generated-child plus external RTL lanes.
 
 - Input:
   - composition relying on declared connect-by-name.

@@ -153,7 +153,7 @@ First shipped `R11` slice now in tree:
   - external `?fsmc` composition child sources resolved from sibling or searched `.fsm` files without leaving the active typed pipeline,
   - `?dtc` composition child realization from embedded or external standalone-DT sources, including honest non-system interfaces for purely combinational DT children,
   - single-generated-child declared connect-by-name through `=name` for both `?fsmc` and `?dtc` children,
-  - one or more external `?rtl` children plus mixed one-generated-child plus one-or-more-`?rtl` children under declared connect-by-name when the top-level exact-match rule is still unambiguous,
+  - and declared connect-by-name now covering one or more generated children, one or more external `?rtl` children, or any mixture of those generated and external RTL children when the top-level exact-match rule is still unambiguous,
   - and standalone-DT child interface direction now preferring semantic signal roles over the older name-based output heuristic in composition-facing interface realization.
 - The shipped first slice does not yet widen into:
   - explicit `+system` inside `?dt:name`,

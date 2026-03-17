@@ -181,7 +181,7 @@ Combinational DT note:
 - `C1` lane: one `?top`, one child (`?fsmc`, `?dtc`, or `?rtl`), explicit `?ports`, deterministic same-name top wiring
 - `C2` lane: multiple generated children (`?fsmc` / `?dtc`) plus explicit `?toplink` wiring and deterministic internal nets
 - `C3` lane: explicit `?toplink` composition with at least one `?rtl` child and any number of generated children (`?fsmc` or `?dtc`) beside those RTL children, with `.rtlif`-based interface validation
-- `C4` lane: declared connect-by-name through `=name` in `?ports` for one generated child, one or more `?rtl` children, multiple generated children, or one generated child plus one or more `?rtl` children
+- `C4` lane: declared connect-by-name through `=name` in `?ports` for one or more generated children, one or more `?rtl` children, or any mixture of those generated and external RTL children
 - `C5` diagnostics: duplicate-driver rejection, explicit-link width mismatch rejection, connect-by-name ambiguity rejection, connect-by-name unknown-endpoint rejection, and width mismatch rejection
 - `C6` scoped rejection of legacy out-of-scope composition constructs
 
