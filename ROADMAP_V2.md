@@ -200,6 +200,7 @@ First shipped `R11` slice now in tree:
     - plain explicit top-port same-name convention failures now also say when that convention is blocked instead of only implying it,
     - undeclared top-input/top-output and undeclared internal-carrier inference failures now also say when those convention-first inference paths are blocked,
     - explicit-toplink-driven undeclared top-port inference failures now also say when that inference path is blocked by direction, width, or type disagreement,
+    - declared `=name` connect-by-name failures now also say when the declared match is blocked by direction, width, ambiguity, or missing-endpoint evidence,
     - and `bin/fsmgen` now prints the same provenance summary for non-quiet composition runs,
   - bounded explicit-link `C2` / `C3` undeclared same-name internal-carrier inference when no explicit link already touches that name family, exactly one same-name child output remains available, and one or more same-name child inputs remain available,
   - bounded local override on top of that convention: an explicit same-name top output may adopt and re-export one of those inferred carriers when direction, width, and type metadata still match exactly,

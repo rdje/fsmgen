@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: declared connect-by-name failures now say when the declared match is blocked
+- Saved shipped behavior:
+  - declared `=name` connect-by-name failures now say explicitly when the declared match is blocked,
+  - and the mixed-direction, width-mismatch, ambiguity, and missing-endpoint branches all keep their same-name endpoint evidence in the exception text.
+- Important continuity note:
+  - this broadens the blocked-wording diagnostics into the `C4` declared connect-by-name family,
+  - it reuses existing focused coverage instead of widening planner behavior,
+  - and the next diagnostics seam is now broader failure-path wording beyond these major composition families.
+- Updated [t/24-composition-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/24-composition-connect-by-name.t) and [t/95-composition-connect-by-name-input-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/95-composition-connect-by-name-input-fanout.t) to lock the broadened blocked-wording surface for declared connect-by-name.
 ## 2026-03-17: explicit-toplink top-port inference failures now say when inference is blocked
 - Saved shipped behavior:
   - explicit-toplink-driven undeclared top-port inference failures now say explicitly when that inference path is blocked,

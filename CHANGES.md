@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### declared connect-by-name failures now say when the declared match is blocked
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so declared `=name` connect-by-name failures now say the declared match is blocked when direction, width, ambiguity, or missing-endpoint evidence prevents the `C4` rule from applying.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the same-name endpoint detail remains in the exception text,
+  - and the wording now aligns better with the already-shipped `Convention Blocks` reporting surface.
+- Updated [t/24-composition-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/24-composition-connect-by-name.t) and [t/95-composition-connect-by-name-input-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/95-composition-connect-by-name-input-fanout.t) to lock blocked-wording diagnostics across the declared connect-by-name family.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path blocked-wording slice under `R11`.
+
 ### explicit-toplink top-port inference failures now say when inference is blocked
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so explicit-toplink-driven undeclared top-port inference failures now say the inference path is blocked when direction, width, or type evidence disagrees.
 - This shipped slice stays deliberately narrow:

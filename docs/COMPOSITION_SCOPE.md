@@ -100,6 +100,7 @@ The currently shipped composition behavior is intentionally bounded:
   - and the first bounded failure-path wording slice is now shipped too, so plain explicit top-port same-name convention failures now say when that convention is blocked rather than only implying it,
   - and that failure-path blocked-wording lane now also covers undeclared top-input/top-output and undeclared internal-carrier inference failures,
   - and it now also covers explicit-toplink-driven undeclared top-port inference failures when direction, width, or type evidence disagrees,
+  - and it now also covers declared `=name` connect-by-name failures when direction, width, ambiguity, or missing-endpoint evidence blocks the declared match,
   - and `bin/fsmgen` now prints the same provenance summary during non-quiet composition runs,
 - realized child interface currently means:
   - effective system inputs from the active FSM generator contract:

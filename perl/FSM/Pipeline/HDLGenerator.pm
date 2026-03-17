@@ -1287,7 +1287,7 @@ sub build_declared_by_name_links ($self, $ports, $realized_instances, $fsm_file,
             } @same_name_candidates);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
-                "but same-name child endpoints include incompatible directions for a top ".$top_port->direction." port. ".
+                "but declared connect-by-name is blocked because same-name child endpoints include incompatible directions for a top ".$top_port->direction." port. ".
                 "Seen same-name child endpoints: $candidates. ".
                 "The active C4 lane currently keeps top-boundary connect-by-name direction-strict even when several same-name child ports exist. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -1303,7 +1303,7 @@ sub build_declared_by_name_links ($self, $ports, $realized_instances, $fsm_file,
             } @same_name_candidates);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
-                "but same-name child endpoints do not all match the declared width ".$top_port->width.". ".
+                "but declared connect-by-name is blocked because same-name child endpoints do not all match the declared width ".$top_port->width.". ".
                 "Seen same-name child endpoints: $candidates. ".
                 "The current active composition lanes require exact width agreement. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -1325,7 +1325,7 @@ sub build_declared_by_name_links ($self, $ports, $realized_instances, $fsm_file,
             my $candidates = join(', ', map { $_->{instance_name}.'.'.$_->{port}->name } @same_name_candidates);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
-                "but that name resolves ambiguously to multiple compatible child endpoints: $candidates. ".
+                "but declared connect-by-name is blocked because that name resolves ambiguously to multiple compatible child endpoints: $candidates. ".
                 "The current active C4 lane requires exactly one compatible child output for each '=port' top output declaration. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
@@ -1348,14 +1348,14 @@ sub build_declared_by_name_links ($self, $ports, $realized_instances, $fsm_file,
             } @same_name_candidates);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
-                "but no compatible child endpoint matches its declared direction/width (".$top_port->direction.", width=".$top_port->width."). ".
+                "but declared connect-by-name is blocked because no compatible child endpoint matches its declared direction/width (".$top_port->direction.", width=".$top_port->width."). ".
                 "Seen same-name child endpoints: $candidates. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
         Carp::confess
             "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
-            "but no realized child endpoint with that name exists. ".
+            "but declared connect-by-name is blocked because no realized child endpoint with that name exists. ".
             "The current active C4 lane requires each '=port' declaration to match one or more child inputs for top inputs, or exactly one child output for top outputs. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }

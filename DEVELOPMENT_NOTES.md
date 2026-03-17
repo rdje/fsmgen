@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: declared connect-by-name failures now say when the declared match is blocked
+- Continued the active `R11` lane by extending the blocked-wording diagnostics into the declared `=name` connect-by-name path.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says declared connect-by-name is *blocked* when same-name child endpoints disagree on direction or width, when an output-side match is ambiguous, or when no realized child endpoint exists,
+  - and it still keeps the concrete same-name endpoint evidence in those failures.
+- Why this is worth shipping:
+  - it broadens the blocked-wording lane into another major composition family users hit directly,
+  - it reuses already-shipped focused `C4` coverage instead of inventing a larger feature slice,
+  - and it keeps `R11` moving on diagnostics clarity rather than hidden planner changes.
+- Updated [t/24-composition-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/24-composition-connect-by-name.t) and [t/95-composition-connect-by-name-input-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/95-composition-connect-by-name-input-fanout.t) to lock the broadened blocked-wording surface for declared connect-by-name.
 ## 2026-03-17: explicit-toplink top-port inference failures now say when inference is blocked
 - Continued the active `R11` lane by extending the blocked-wording diagnostics into the explicit-toplink-driven undeclared top-port inference path.
 - Landed behavior:

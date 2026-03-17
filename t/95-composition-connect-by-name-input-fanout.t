@@ -139,8 +139,8 @@ FSM
 
     like(
         $exception,
-        qr/same-name child endpoints include incompatible directions for a top input port/s,
-        'top-input fanout by-name rejects mixed-direction same-name child candidates',
+        qr/declared connect-by-name is blocked because same-name child endpoints include incompatible directions for a top input port/s,
+        'top-input fanout by-name now says mixed-direction same-name child candidates block declared connect-by-name',
     );
     like(
         $exception,

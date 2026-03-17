@@ -221,8 +221,8 @@ $ambiguous_exception = $@;
 
 like(
     $ambiguous_exception,
-    qr/declared connect-by-name, .*resolves ambiguously to multiple compatible child endpoints: left\.shared_status, right\.shared_status/s,
-    'declared connect-by-name rejects ambiguous same-name child matches',
+    qr/declared connect-by-name, .*declared connect-by-name is blocked because that name resolves ambiguously to multiple compatible child endpoints: left\.shared_status, right\.shared_status/s,
+    'declared connect-by-name now says ambiguity blocks same-name child matching',
 );
 
 my $unknown_exception = eval {
@@ -233,8 +233,8 @@ $unknown_exception = $@;
 
 like(
     $unknown_exception,
-    qr/declared connect-by-name, .*no realized child endpoint with that name exists/s,
-    'declared connect-by-name rejects top ports with no same-name child endpoint',
+    qr/declared connect-by-name, .*declared connect-by-name is blocked because no realized child endpoint with that name exists/s,
+    'declared connect-by-name now says missing child endpoints block the match',
 );
 
 my $width_mismatch_exception = eval {
@@ -245,8 +245,8 @@ $width_mismatch_exception = $@;
 
 like(
     $width_mismatch_exception,
-    qr/same-name child endpoints do not all match the declared width 4.*consumer\.final_data\[output, width=8\]/s,
-    'declared connect-by-name rejects width mismatches while naming the conflicting same-name endpoint set',
+    qr/declared connect-by-name is blocked because same-name child endpoints do not all match the declared width 4.*consumer\.final_data\[output, width=8\]/s,
+    'declared connect-by-name now says width mismatches block the match while naming the conflicting same-name endpoint set',
 );
 like(
     $width_mismatch_exception,
