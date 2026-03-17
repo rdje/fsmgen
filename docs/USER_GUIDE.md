@@ -19,7 +19,7 @@ Current limitation:
   - generated child sources realized either from the same file or from external searchable `.fsm` child sources,
   - external RTL children realized through embedded or sidecar `.rtlif` interface metadata,
   - `C1` single-child passthrough via deterministic same-name wiring or exact child-interface inference when `?ports` is omitted or empty,
-  - `C2` multi-generated-child composition via explicit `?toplink` wiring with `instance.port` child endpoints, plus bounded omitted/empty-`?ports` inference when top-link endpoints stay conventional, bounded undeclared top-interface inference for still-top-facing child inputs and unique top-facing child outputs, and bounded same-name internal-carrier inference for unique producer-to-consumer families.
+  - `C2` multi-generated-child composition via explicit `?toplink` wiring with `instance.port` child endpoints, plus bounded omitted/empty-`?ports` inference when explicit top links themselves still make the top boundary unambiguous, bounded undeclared top-interface inference for still-top-facing child inputs and unique top-facing child outputs, and bounded same-name internal-carrier inference for unique producer-to-consumer families.
   - `C3` explicit-link composition for any explicit-link top that includes at least one `?rtl` child, with the same bounded undeclared top-interface and internal-carrier inference rules.
   - `C4` declared top-port connect-by-name via `=name` declarations inside `?ports`.
 - See [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) for the scoped `R6` plan and [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) for historical context.
@@ -734,7 +734,7 @@ This currently works because:
 - every generated child resolves to one active `?fsm:name` or `?dt:name` source, either embedded or external,
 - `clk` and `rstn` use the shared system-input contract,
 - non-system connections are expressed explicitly through `?toplink`,
-- `?ports` may now be omitted or empty in explicit-link `C2` / `C3` only when those top-link endpoints still line up with the shipped same-name inference rules,
+- `?ports` may now be omitted or empty in explicit-link `C2` / `C3` when explicit `?toplink` endpoints themselves still imply the missing top ports honestly, including renamed top-boundary names,
 - undeclared top-facing child inputs may now be inferred when the child-side evidence is unambiguous and those inputs are not already consumed by explicit child-to-child links,
 - undeclared unique top-facing child outputs may now also be inferred when they are not already consumed by explicit child-to-child links,
 - undeclared same-name internal child-to-child carriers may now be inferred when one unique child output and one or more child inputs share the same name and no explicit link already touches that name family,

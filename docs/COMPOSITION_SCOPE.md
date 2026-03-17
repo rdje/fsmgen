@@ -14,7 +14,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 - The active toolchain now also ships the first `C2` composition lane:
   - two or more generated children (`?fsmc` / `?dtc`),
   - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
-  - either one explicit `?ports` block or an omitted/empty `?ports` shape when the explicit top-link endpoints can still be realized through the shipped bounded inference rules,
+  - either one explicit `?ports` block or an omitted/empty `?ports` shape when the explicit `?toplink` endpoints can still supply one consistent top-boundary contract,
   - deterministic instance ordering,
   - deterministic internal-net creation for child-to-child wiring,
   - bounded undeclared top-interface inference for same-name child inputs and unique child outputs that remain top-facing,
@@ -24,7 +24,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - at least one external `?rtl` child,
   - plus any number of generated children (`?fsmc` / `?dtc`) beside those external RTL children,
   - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
-  - either one explicit `?ports` block or an omitted/empty `?ports` shape when the explicit top-link endpoints can still be realized through the shipped bounded inference rules,
+  - either one explicit `?ports` block or an omitted/empty `?ports` shape when the explicit `?toplink` endpoints can still supply one consistent top-boundary contract,
   - external RTL interface metadata loaded from embedded or sidecar `.rtlif` artifacts,
   - bounded undeclared top-interface inference for same-name child inputs and unique child outputs that remain top-facing,
   - bounded undeclared same-name internal-carrier inference for unique producer-to-consumer child families that remain otherwise unwired,
@@ -56,7 +56,7 @@ The currently shipped composition behavior is intentionally bounded:
 - `C1` single-child passthrough works without `?toplink` for one `?fsmc`, `?dtc`, or `?rtl` child,
 - `C1` may infer the whole top interface directly from that lone child when `?ports` is omitted or empty,
 - `C2` multi-generated-child composition uses explicit `?toplink`,
-- `C2` and `C3` may now also omit `?ports` or use an empty `(?ports)` block when the top-boundary endpoints referenced in `?toplink` still line up with the shipped same-name inference rules,
+- `C2` and `C3` may now also omit `?ports` or use an empty `(?ports)` block when the top-boundary endpoints referenced in `?toplink` still imply one consistent top-boundary contract,
 - `C2` and `C3` may now also infer undeclared top inputs when one or more child inputs share the same name, width, and type metadata and those inputs are not already targeted by explicit child-to-child links,
 - `C2` and `C3` may now also infer undeclared top outputs when exactly one same-name child output remains top-facing and is not already consumed by explicit child-to-child links,
 - `C2` and `C3` may now also infer undeclared same-name internal carriers when no explicit link already touches that name family, exactly one same-name child output remains available, and one or more same-name child inputs remain available,
@@ -73,7 +73,7 @@ The currently shipped composition behavior is intentionally bounded:
 - the current `C3` slice uses the RTL module name as the instance name,
 - top ports must match the realized child interface exactly by name, width, and direction in `C1`,
 - when `C1` infers ports, that inferred top interface is exactly the realized child interface by name, width, and direction,
-- when `C2` / `C3` omit `?ports`, only same-name top-link endpoints that can be backed honestly by the shipped top-input/top-output inference rules are eligible,
+- when `C2` / `C3` omit `?ports`, undeclared top endpoints may be inferred directly from explicit `?toplink` evidence, including renamed top-boundary names, but each such endpoint must still keep one direction plus exact width/type agreement,
 - when `C2` / `C3` infer undeclared top inputs, only input-only same-name groups with exact width/type agreement are eligible,
 - when `C2` / `C3` infer undeclared top outputs, only exactly one same-name child output may remain top-facing,
 - when `C2` / `C3` infer undeclared same-name internal carriers, only exactly one same-name child output plus one or more same-name child inputs may remain available and no explicit link may already touch that name family,
@@ -237,7 +237,7 @@ Status:
 
 ### C2. Two generated children with explicit child-to-child wiring
 Status:
-- Implemented in the current active toolchain for generated children with explicit `?toplink`, plus bounded omitted/empty-`?ports` inference, bounded undeclared top-interface inference for child-input groups and unique child outputs that are still top-facing, and bounded same-name internal-carrier inference for unique producer-to-consumer families that remain otherwise unwired or are explicitly re-exported through a matching top output.
+- Implemented in the current active toolchain for generated children with explicit `?toplink`, plus bounded omitted/empty-`?ports` inference, bounded explicit-toplink top-port inference, bounded undeclared top-interface inference for child-input groups and unique child outputs that are still top-facing, and bounded same-name internal-carrier inference for unique producer-to-consumer families that remain otherwise unwired or are explicitly re-exported through a matching top output.
 
 - Input:
   - one `?top:name` with two generated children (`?fsmc` / `?dtc`) and explicit links between them.
@@ -245,7 +245,7 @@ Status:
   - deterministic net creation,
   - deterministic instance ordering,
   - explicit link wiring is emitted correctly,
-  - omitted/empty `?ports` can still work when the explicit top-link endpoints stay same-name and inferable,
+  - omitted/empty `?ports` can still work when explicit `?toplink` provides enough consistent evidence to infer the missing top ports, including renamed top-boundary names,
   - undeclared shared top inputs can be inferred when they are not already consumed by explicit child-to-child links,
   - undeclared unique top-facing child outputs can be inferred when they are not already consumed by explicit child-to-child links,
   - undeclared same-name internal carriers can be inferred when one unique child output and one or more child inputs share the same name and no explicit link already touches that family,
@@ -254,7 +254,7 @@ Status:
 
 ### C3. Explicit-link external RTL composition
 Status:
-- Implemented in the current active toolchain for explicit-link tops with at least one external `?rtl` child and any number of generated children (`?fsmc` or `?dtc`) beside those RTL children, using the shipped `.rtlif` interface metadata and the same bounded omitted/empty-`?ports`, undeclared top-interface, and internal-carrier inference rules as `C2`.
+- Implemented in the current active toolchain for explicit-link tops with at least one external `?rtl` child and any number of generated children (`?fsmc` or `?dtc`) beside those RTL children, using the shipped `.rtlif` interface metadata and the same bounded omitted/empty-`?ports`, explicit-toplink top-port inference, undeclared top-interface, and internal-carrier inference rules as `C2`.
 
 - Input:
   - one or more `?rtl` children with explicit `?toplink` wiring,
@@ -265,7 +265,7 @@ Status:
   - interface validation catches unknown ports, unsupported `.rtlif` type names, and direction mismatches,
   - deterministic carrier nets can feed more than one external RTL child from one resolved source,
   - multiple generated children can still participate in the same explicit-link plan as long as at least one `?rtl` child is present,
-  - omitted/empty `?ports` can still work when the explicit top-link endpoints stay same-name and inferable,
+  - omitted/empty `?ports` can still work when explicit `?toplink` provides enough consistent evidence to infer the missing top ports, including renamed top-boundary names,
   - undeclared shared top inputs can still be inferred when they are not already consumed by explicit child-to-child links,
   - undeclared unique top-facing child outputs can still be inferred when they are not already consumed by explicit child-to-child links,
   - undeclared same-name internal carriers can still be inferred when one unique child output and one or more child inputs share the same name and no explicit link already touches that family,

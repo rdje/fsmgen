@@ -372,6 +372,15 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
 
     if (!$declared_by_name_port_count && !$is_single_child_passthrough) {
         @ports = @{
+            $self->augment_with_inferred_top_ports_from_explicit_links(
+                \@ports,
+                \@toplinks,
+                \@realized_instances,
+                $fsm_file,
+                $header,
+            )
+        };
+        @ports = @{
             $self->augment_with_inferred_undeclared_top_inputs(
                 \@ports,
                 \@realized_instances,
@@ -785,6 +794,139 @@ sub infer_c1_ports_from_child_interface ($self, $realized_instance, $fsm_file, $
             )
         } @child_ports
     ];
+}
+
+sub augment_with_inferred_top_ports_from_explicit_links ($self, $ports, $toplinks, $realized_instances, $fsm_file, $header) {
+    my @ports = @{$ports || []};
+    my %declared_by_name = map { $_->name => $_ } @ports;
+    my %instances_by_name;
+    my %child_ports_by_instance;
+    my %inferred_specs;
+
+    for my $instance (@{$realized_instances || []}) {
+        $instances_by_name{$instance->instance_name} = $instance;
+        $child_ports_by_instance{$instance->instance_name} = $self->index_ports_by_name($instance->interface_ports);
+    }
+
+    for my $toplink (@{$toplinks || []}) {
+        for my $link (@{$toplink->links || []}) {
+            my $source = $link->source || '';
+            my $target = $link->target || '';
+
+            my ($source_top_name) = $source =~ /^(\w+)$/;
+            my ($target_top_name) = $target =~ /^(\w+)$/;
+            my $source_is_top = defined $source_top_name;
+            my $target_is_top = defined $target_top_name;
+
+            if ($source_is_top && !$declared_by_name{$source_top_name} && $target =~ /^\w+\.\w+$/) {
+                my $child_endpoint = $self->resolve_composition_endpoint(
+                    $target,
+                    {},
+                    \%instances_by_name,
+                    \%child_ports_by_instance,
+                    $fsm_file,
+                    $header,
+                );
+                $self->record_inferred_top_port_from_explicit_link(
+                    \%inferred_specs,
+                    $source_top_name,
+                    'input',
+                    $child_endpoint,
+                    $source.' -> '.$target,
+                    $fsm_file,
+                    $header,
+                );
+            }
+
+            if ($target_is_top && !$declared_by_name{$target_top_name} && $source =~ /^\w+\.\w+$/) {
+                my $child_endpoint = $self->resolve_composition_endpoint(
+                    $source,
+                    {},
+                    \%instances_by_name,
+                    \%child_ports_by_instance,
+                    $fsm_file,
+                    $header,
+                );
+                $self->record_inferred_top_port_from_explicit_link(
+                    \%inferred_specs,
+                    $target_top_name,
+                    'output',
+                    $child_endpoint,
+                    $source.' -> '.$target,
+                    $fsm_file,
+                    $header,
+                );
+            }
+        }
+    }
+
+    my @inferred_ports = map {
+        FSM::Composition::Port->new(
+            name => $_->{name},
+            direction => $_->{direction},
+            width => $_->{width},
+            type => $_->{type},
+            raw_token => undef,
+            binding_mode => 'explicit',
+        )
+    } values %inferred_specs;
+
+    @inferred_ports = sort {
+        $self->system_port_sort_key($a) <=> $self->system_port_sort_key($b)
+        ||
+        $a->name cmp $b->name
+    } @inferred_ports;
+
+    return [@ports, @inferred_ports];
+}
+
+sub record_inferred_top_port_from_explicit_link ($self, $inferred_specs, $top_name, $direction, $child_endpoint, $evidence, $fsm_file, $header) {
+    my $width = $child_endpoint->{port}->width;
+    my $type = $self->normalized_interface_type($child_endpoint->{port}->type);
+    my $existing = $inferred_specs->{$top_name};
+
+    if ($existing) {
+        if ($existing->{direction} ne $direction) {
+            my $seen = join(', ', @{$existing->{evidence}}, $evidence);
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
+                "but explicit top-link port inference sees that same top endpoint used as both an input and an output across explicit links. ".
+                "Seen explicit link evidence: $seen. ".
+                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on one direction. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        if ($existing->{width} != $width) {
+            my $seen = join(', ', @{$existing->{evidence}}, $evidence);
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
+                "but explicit top-link port inference cannot choose one width because the linked child endpoints disagree (".$existing->{width}." vs $width). ".
+                "Seen explicit link evidence: $seen. ".
+                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on width. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        if ($existing->{type} ne $type) {
+            my $seen = join(', ', @{$existing->{evidence}}, $evidence);
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
+                "but explicit top-link port inference cannot choose one interface type because the linked child endpoints disagree ('".$existing->{type}."' vs '$type'). ".
+                "Seen explicit link evidence: $seen. ".
+                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on type metadata too. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        push @{$existing->{evidence}}, $evidence;
+        return;
+    }
+
+    $inferred_specs->{$top_name} = {
+        name => $top_name,
+        direction => $direction,
+        width => $width,
+        type => $type,
+        evidence => [$evidence],
+    };
 }
 
 sub augment_with_inferred_undeclared_top_inputs ($self, $ports, $realized_instances, $toplinks, $fsm_file, $header) {

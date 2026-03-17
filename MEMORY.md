@@ -1,14 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
-## 2026-03-17: explicit-link `C2` / `C3` now allow omitted or empty `?ports` when top-link endpoints stay inferable
+## 2026-03-17: explicit-link `C2` / `C3` now infer top ports directly from explicit `?toplink`
 - Saved shipped behavior:
   - explicit-link multi-child tops may now omit `?ports` entirely, or use an empty `(?ports)`,
-  - and the top boundary is still realized when same-name top-link endpoints plus the already-shipped top-input/top-output inference rules are enough to infer the missing top ports honestly.
+  - and the top boundary is now realized directly from explicit `?toplink` endpoints when those undeclared top endpoints imply one consistent direction plus exact width/type agreement.
 - Important continuity note:
   - same-name explicit top-input links now infer the top port declaration without duplicating the already-declared explicit bindings,
-  - renamed top endpoints still need an explicit top-port declaration,
-  - and this slice does not introduce any broader hidden top-output renaming inference.
-- [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) locks generated-child omitted-`?ports` success, RTL-backed empty-`?ports` success, and renamed-endpoint rejection.
+  - renamed top endpoints are now supported through explicit `?toplink` evidence instead of requiring an explicit top-port declaration,
+  - and undeclared top endpoints still fail explicitly when they are used as both inputs and outputs.
+- [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) locks generated-child renamed-endpoint success, RTL-backed renamed-endpoint success, and mixed-role undeclared-endpoint rejection.
 
 ## 2026-03-17: explicit-link `C2` / `C3` now re-export inferred same-name internal carriers through explicit top outputs
 - Saved shipped behavior:
