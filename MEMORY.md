@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: future `R11` now includes a portable synthesizable-type and inference-first lane
+- Saved future direction:
+  - `R11` now explicitly includes portable synthesizable scalar/aggregate types as a concrete sub-lane instead of relying on conversation memory,
+  - the saved portable type core is bits/vectors, enums, records, fixed arrays, arrays of records, and aliases/subtypes,
+  - and the preferred user workflow is inference-first: infer scalar versus aggregate signal/port types from LHS/RHS/member/index usage whenever that is honest.
+- Important continuity note:
+  - explicit type declarations are still part of the future design, but mainly as overrides, ambiguity anchors, and interface-stability controls rather than as mandatory boilerplate,
+  - and the future frontend contract should not promise SystemVerilog-only packed-casting convenience that would make a later VHDL backend dishonest.
+- [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) now records proposed `(+types ...)` syntax plus phased implementation boundaries for that lane, and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) tracks it under `R11 Left`.
+
 ## 2026-03-17: declared top-input `=name` now fans out across matching child inputs
 - Saved shipped behavior:
   - `=name` top outputs still stay exact-one-match against child outputs,

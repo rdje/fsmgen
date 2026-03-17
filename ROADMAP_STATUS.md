@@ -62,6 +62,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, `?dtc` composition child reuse, embedded `.rtlif` roots, and the new broader external-RTL `C3`/`C4` slices are all fresh in the tree.
   - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, and single-/multi-`?rtl` composition edges across both explicit-link and declared by-name lanes, `C3` now covers multi-generated-child mixed explicit-link tops as long as at least one `?rtl` child is present, and `C4` now covers the same broader mixed child set with exact-one-match top outputs and fanout-capable top inputs.
   - The next bounded convention-over-configuration choice is now above that: whether safe undeclared top-interface inference should start creating parent inputs/outputs and internal same-name carriers automatically.
+  - A second future convention-over-configuration lane is now explicitly recorded too: whether scalar and aggregate signal types should be inferred by default from LHS/RHS/member/index usage, with explicit declarations used mainly as overrides.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
 
 ## Workstreams
@@ -508,7 +509,7 @@ Exit criteria:
 
 ### R11. Composition contract strengthening
 Description:
-- Deepen the shipped composition model and adjacent reusable module contracts without widening them carelessly.
+- Deepen the shipped composition model and adjacent reusable module/type contracts without widening them carelessly.
 Deliverables:
 - Formalize the `.rtlif` contract clearly.
 - Decide whether later work should keep `.rtlif` as-is or place a stronger interface-source contract above it.
@@ -537,6 +538,10 @@ Deliverables:
   - and generated enable families should support explicit mutual-exclusion assertions instead of relying on an over-broad conflict ban,
   - `?top:name` remains the explicit composition-root concept unless a later family-level root-syntax decision introduces aliases such as `?mod:name` or `?module:name`,
   - and reusable-source lookup should grow through existing `FSMLIB` semantics plus repeatable per-invocation `--path DIR` roots.
+- Define one bounded portable synthesizable-type lane:
+  - bits / bit-vectors, enums, records / packed-struct-like aggregates, fixed-size arrays, arrays of records, and named aliases / subtypes should become a deliberate frontend type core,
+  - that type core should stay portable across SystemVerilog and future VHDL instead of promising backend-specific conveniences such as free aggregate-to-vector casting,
+  - and type inference should be the default path for most signal and port declarations, with explicit type declarations mainly acting as overrides, disambiguation anchors, and interface-stability controls.
 - Harden mixed generated-child / `?rtl` flows before broader composition syntax is considered.
 Status: `in progress`
 Done:
@@ -561,10 +566,17 @@ Done:
   - `C3` explicit-link composition now also works for exactly one generated child plus multiple `?rtl` children,
   - and `C3` explicit-link composition now also works for multiple generated children plus one or more `?rtl` children.
 - The future reusable standalone-DT/module-library direction is now also recorded as explicit `R11` contract work instead of loose brainstorming only.
+- The future portable synthesizable-type direction is now also recorded as explicit `R11` contract work instead of loose brainstorming only.
 - That future `R11` direction now also records:
   - multi-`(-foo ...)` standalone `?dt:name` modules,
   - the implicit-system split between always-implicit `?fsm:name` `clk` / `rst_n` and conditional implicit `?dt:name` `clk` / `rst_n`,
   - and the need to express arbitration/conflict reporting through generated enable families instead of structural over-rejection.
+- That same future `R11` direction now also records:
+  - a portable synthesizable-type core built around bits/vectors, enums, records, fixed arrays, arrays of records, and aliases/subtypes,
+  - a strong convention-over-configuration preference for inferring scalar versus aggregate signal/port types from LHS/RHS/member/index usage,
+  - explicit type declarations as bounded overrides rather than the default authoring path,
+  - proposed explicit syntax centered on a future `(+types ...)` family,
+  - and phased boundaries that start with type AST plus explicit declarations before broadening into inference, member access, exact-type aggregate assignment, and backend-specific conversion helpers.
 - The first reusable standalone-DT slice is now shipped in the active toolchain:
   - top-level `?dt:name` roots are classified, parsed, and generated end to end,
   - the active `?dt:name` top-level contract currently supports `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`, compact top-level `(:= signal=value)` directives, and general DT blocks such as `(-foo ...)`,
@@ -659,6 +671,13 @@ Left:
   - extend the now-shipped implicit-system rule split between `?fsm:name` and `?dt:name` into the broader reuse/composition contract,
   - extend the now-shipped generated-child contract beyond the current `?fsmc` / `?dtc` `C1` / `C2` / `C3` plus generated-only and mixed-lane `C4` slices into reusable-module interface/export rules,
   - and extend the now-shipped `--path` / `FSMLIB` lookup slice beyond bare top-level inputs, generated child sources, and `.rtlif` metadata lookup.
+- Turn the portable synthesizable-type direction into a real contract:
+  - settle the portable type core and keep it honest across SystemVerilog and future VHDL,
+  - decide how a future `(+types ...)` family coexists with the already-shipped `(+enums ...)` lane,
+  - define how far inference may go before the tool must require an explicit type anchor,
+  - define how inferred scalar/aggregate declarations are surfaced in generated interfaces and internal declarations,
+  - add member/field and fixed-size array access without overcommitting to aggregate literals too early,
+  - and keep explicit type declarations available as bounded overrides instead of the default authoring burden.
 - Refine declared top-port connect-by-name into an asymmetric integration-oriented contract:
   - decide whether future convention-over-configuration work should let some top inputs/outputs be inferred even without `=name`,
   - decide whether unique same-name producer-to-consumer child links should create internal carriers automatically,
@@ -669,6 +688,7 @@ Exit criteria:
 - External-RTL composition uses a clearly specified interface contract that is stronger and easier to reason about than the current “implemented convention” state.
 - The first multi-FSM shared-datapath composition lane is also bounded by an explicit ownership/readback/export/assertion contract instead of informal architecture notes.
 - The first reusable standalone-DT/module-library lane is also bounded by an explicit root/interface/lookup/system-port/arbitration contract instead of informal brainstorming.
+- The first portable synthesizable-type lane is also bounded by an explicit frontend type core plus inference/override contract instead of informal brainstorming.
 
 ### R12. Regression corpus and support accounting
 Description:

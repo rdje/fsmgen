@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: future `R11` now includes a portable synthesizable-type and inference-first lane
+- Captured one more concrete future `R11` direction instead of leaving scalar/aggregate type support as loose brainstorming only.
+- The saved direction is deliberately portable across SystemVerilog and future VHDL:
+  - first-class bits/vectors,
+  - enums,
+  - records / packed-struct-like aggregates,
+  - fixed-size arrays,
+  - arrays of records,
+  - and aliases / subtypes.
+- The most important workflow rule in that future lane is convention over configuration:
+  - `fsmgen` should infer scalar versus aggregate signal/port types from LHS/RHS/member/index usage most of the time,
+  - and explicit type declarations should exist mainly as overrides, ambiguity anchors, and interface-stability controls rather than as mandatory boilerplate.
+- The proposed explicit syntax is centered on a future `(+types ...)` family, but the phased implementation boundary is intentionally narrower than the eventual syntax surface:
+  1. type AST plus explicit declarations,
+  2. conservative inference,
+  3. member/field and array access,
+  4. exact-type whole-aggregate assignment,
+  5. backend-specific conversion helpers where the VHDL/SV lowering boundary needs them.
+- The saved contract also keeps one important portability constraint explicit:
+  - do not let SystemVerilog packed-type convenience leak into a frontend promise that would make a future VHDL backend dishonest.
+
 ## 2026-03-17: declared top-input `=name` now fans out across matching child inputs
 - Continued the active `R11` lane by implementing the asymmetric top-boundary connect-by-name refinement we had just captured.
 - Landed behavior:

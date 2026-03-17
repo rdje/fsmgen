@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### future `R11` now includes a portable synthesizable-type and inference-first lane
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) so `R11` now carries a concrete future sub-lane for portable synthesizable scalar/aggregate types instead of leaving that topic as informal brainstorming.
+- The saved future contract now records:
+  - a portable type core built around bits/vectors, enums, records, fixed-size arrays, arrays of records, and aliases/subtypes,
+  - a strong convention-over-configuration preference for inferring scalar versus aggregate signal and port types from LHS/RHS/member/index usage,
+  - a future explicit syntax centered on `(+types ...)`,
+  - and phased implementation boundaries from type AST and explicit declarations through inference, member access, exact-type aggregate assignment, and backend-specific conversion helpers.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the future type/inference lane is tracked as explicit `R11` work rather than remembered conversationally only.
+
 ### declared top-input `=name` now fans out across matching child inputs
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so declared connect-by-name is now direction-asymmetric at the top boundary:
   - `=name` top outputs still require exactly one matching child output,

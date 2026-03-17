@@ -93,7 +93,7 @@ Expected result:
 
 ### R11. Composition contract strengthening
 Goal:
-- deepen the shipped `R6` composition model without widening it carelessly.
+- deepen the shipped `R6` composition model and adjacent reusable module/type contracts without widening them carelessly.
 
 Deliverable themes:
 - formalize the `.rtlif` mini-contract,
@@ -127,6 +127,24 @@ Deliverable themes:
   - keep `?top:name` as the explicit composition-root concept unless a later family-level root-syntax decision adds aliases such as `?mod:name` or `?module:name`,
   - let reusable `.fsm` module roots be located through existing `FSMLIB`-style search roots plus explicit per-invocation CLI search roots,
   - and prefer repeatable `--path DIR` search-root options over comma-packed path lists so lookup stays deterministic and shell-friendly,
+- define one bounded portable synthesizable-type lane instead of bolting backend-specific struct/record behavior onto the current scalar-oriented language:
+  - add one frontend type core that maps honestly to both SystemVerilog and future VHDL:
+    - bits / bit-vectors,
+    - enums,
+    - records / packed-struct-like aggregates,
+    - fixed-size arrays,
+    - arrays of records,
+    - and named aliases / subtypes,
+  - defer backend-specific or semantically sharp-edged features such as unions and user-visible promises of free aggregate-to-vector casting until the portable core is stable,
+  - prefer convention over configuration by making type inference the default path for most signals and ports:
+    - infer scalar versus aggregate shape from LHS and RHS usage,
+    - infer record fields and array shapes from member/index access and compatible assignments,
+    - and keep explicit type declarations available mainly as overrides, disambiguation anchors, and interface-stability controls,
+  - keep the initial operational contract narrower than the eventual syntax surface:
+    - member/field reads and writes,
+    - fixed-index and bounded array-element access,
+    - exact-type whole-aggregate assignment only after the member-access lane is stable,
+    - and explicit conversion helpers later where backend differences require them,
 - and harden mixed `?fsmc` / `?rtl` flows before adding broader composition syntax.
 
 First shipped `R11` slice now in tree:
@@ -199,6 +217,51 @@ Planned bounded sub-lane inside `R11`:
   - how lookup precedence works between explicit paths, `--path` roots, `FSMLIB`, and local files,
   - how duplicate-name shadowing is diagnosed,
   - and how reusable DT/module roots are referenced from other `.fsm` sources without drifting back into legacy implicit behavior.
+- portable synthesizable scalar/aggregate types with inference-first declarations.
+- intent:
+  - add one portable synthesizable type system that works as a frontend contract first and a backend lowering problem second,
+  - let most users omit explicit type declarations most of the time by inferring signal and port types from how names are used in assignments and expressions,
+  - and keep explicit type declarations mainly as overrides where inference is ambiguous or where the user wants to freeze an interface contract.
+- proposed syntax:
+```lisp
+(+types
+  (type bit1 bit)
+  (type byte (bits 8))
+  (type word (bits 32))
+  (type state_t (enum IDLE RUN DONE))
+  (type axi_t
+    (record
+      (valid bit)
+      (data (bits 32))
+      (keep (bits 4))))
+  (type axi_vec_t
+    (array 4 axi_t)))
+```
+```lisp
+(+ports
+  (in  payload_in byte)
+  (out status     state_t)
+  (out bus        axi_t))
+```
+```lisp
+(bus.valid = 1)
+(bus.data  = payload_in)
+(lanes[0].keep = 15)
+(pkt <- next_pkt)
+```
+- phased implementation boundaries:
+  1. add a first-class type AST plus explicit type declarations and backend-lowerable named types, without yet promising broad inference or aggregate-wide operations,
+  2. add conservative inference for scalar versus aggregate declarations from LHS/RHS/member/index usage, while allowing explicit declarations to override or pin intent,
+  3. add member/field and fixed-size array access in DT expressions and assignments,
+  4. add exact-type whole-aggregate assignment and typed port/interface exposure rules,
+  5. add explicit conversion/helper boundaries for backend differences, especially future VHDL record/vector lowering.
+- first contract questions to settle:
+  - which syntax is the canonical explicit declaration surface: `(+types ...)` only, or a paired signal/port type-annotation family too,
+  - how far inference is allowed to go before the tool must require an explicit type anchor,
+  - whether inferred aggregate declarations are recorded back into generated interface/type sections or remain internal planner facts only,
+  - how enums interact with the already-shipped `(+enums ...)` lane versus a future unified type section,
+  - how record/array literals are deferred or introduced without overcommitting early,
+  - and how SystemVerilog packed-type convenience is prevented from leaking into a VHDL-hostile frontend promise.
 
 ### R12. Regression corpus and support accounting
 Goal:
