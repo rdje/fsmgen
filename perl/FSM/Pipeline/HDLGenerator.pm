@@ -1472,7 +1472,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
 
         Carp::confess
             "Composition source '$header' in '$fsm_file' links '".$source->{raw}."' (width ".$source->{port}->width.") to '".$target->{raw}."' (width ".$target->{port}->width."), ".
-            "but the current active composition lanes require exact width agreement. ".
+            "but explicit link is blocked because the current active composition lanes require exact width agreement. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $source->{port}->width == $target->{port}->width;
 
@@ -1480,7 +1480,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
         if ($reserved_targets{$target_key}) {
             Carp::confess
                 "Composition source '$header' in '$fsm_file' assigns explicit link driver '".$source->{raw}."' to target '".$target->{raw}."', ".
-                "but that target is already driven by ".$reserved_targets{$target_key}.". ".
+                "but explicit link is blocked because that target is already driven by ".$reserved_targets{$target_key}.". ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
         $reserved_targets{$target_key} = "explicit link '".$source->{raw}."'";
@@ -1977,14 +1977,14 @@ sub resolve_composition_endpoint ($self, $endpoint, $top_ports_by_name, $instanc
         my $instance = $instances_by_name->{$instance_name};
         Carp::confess
             "Composition source '$header' in '$fsm_file' references child endpoint '$endpoint', ".
-            "but no realized child instance named '$instance_name' exists. ".
+            "but explicit link endpoint resolution is blocked because no realized child instance named '$instance_name' exists. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $instance;
 
         my $port = $child_ports_by_instance->{$instance_name}{$port_name};
         Carp::confess
             "Composition source '$header' in '$fsm_file' references child endpoint '$endpoint', ".
-            "but instance '$instance_name' has no port named '$port_name'. ".
+            "but explicit link endpoint resolution is blocked because instance '$instance_name' has no port named '$port_name'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $port;
 
@@ -2004,7 +2004,7 @@ sub resolve_composition_endpoint ($self, $endpoint, $top_ports_by_name, $instanc
         my $port = $top_ports_by_name->{$port_name};
         Carp::confess
             "Composition source '$header' in '$fsm_file' references top-level endpoint '$endpoint', ".
-            "but '?ports' declares no top port with that name. ".
+            "but explicit link endpoint resolution is blocked because '?ports' declares no top port with that name. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $port;
 
@@ -2027,13 +2027,13 @@ sub assert_explicit_link_roles ($self, $source, $target, $fsm_file, $header) {
     if ($source->{kind} eq 'top_port') {
         Carp::confess
             "Composition source '$header' in '$fsm_file' uses top port '".$source->{raw}."' as an explicit link source, ".
-            "but that top port is declared as ".$source->{port}->direction." instead of input. ".
+            "but explicit link is blocked because that top port is declared as ".$source->{port}->direction." instead of input. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $source->{port}->direction eq 'input';
     } else {
         Carp::confess
             "Composition source '$header' in '$fsm_file' uses child endpoint '".$source->{raw}."' as an explicit link source, ".
-            "but that child port is ".$source->{port}->direction." instead of output. ".
+            "but explicit link is blocked because that child port is ".$source->{port}->direction." instead of output. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $source->{port}->direction eq 'output';
     }
@@ -2041,13 +2041,13 @@ sub assert_explicit_link_roles ($self, $source, $target, $fsm_file, $header) {
     if ($target->{kind} eq 'top_port') {
         Carp::confess
             "Composition source '$header' in '$fsm_file' uses top port '".$target->{raw}."' as an explicit link target, ".
-            "but that top port is declared as ".$target->{port}->direction." instead of output. ".
+            "but explicit link is blocked because that top port is declared as ".$target->{port}->direction." instead of output. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $target->{port}->direction eq 'output';
     } else {
         Carp::confess
             "Composition source '$header' in '$fsm_file' uses child endpoint '".$target->{raw}."' as an explicit link target, ".
-            "but that child port is ".$target->{port}->direction." instead of input. ".
+            "but explicit link is blocked because that child port is ".$target->{port}->direction." instead of input. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $target->{port}->direction eq 'input';
     }

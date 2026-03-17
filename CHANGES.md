@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### explicit toplink validation failures now say when the declared link is blocked
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so explicit `?toplink` validation failures now say the declared link is blocked when endpoint resolution, direction, duplicate-drive, or width evidence prevents the declared link from applying.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the same endpoint/detail evidence still appears in the exception text,
+  - and the wording now lines up with the other convention-first and explicit-link diagnostics we have already shipped.
+- Updated [t/23-composition-errors.t](/Users/richarddje/Documents/github/fsmgen/t/23-composition-errors.t) to lock blocked wording across duplicate-driver, width-mismatch, unknown-endpoint, and direction-mismatch explicit-link failures.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path wording slice under `R11`.
+
 ### explicit top-output re-export mismatches now say when re-export is blocked
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so explicit top-output re-export mismatches for inferred same-name internal carriers now say that bounded re-export path is blocked when width or interface type disagrees.
 - This shipped slice stays deliberately narrow:

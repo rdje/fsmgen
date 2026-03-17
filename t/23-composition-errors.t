@@ -198,8 +198,8 @@ $exception = $@;
 
 like(
     $exception,
-    qr/assigns explicit link driver 'producer_b\.output_data' to target 'result_data', .*already driven by explicit link 'producer_a\.output_data'/s,
-    'composition planner rejects duplicate explicit drivers to the same target endpoint',
+    qr/assigns explicit link driver 'producer_b\.output_data' to target 'result_data', .*explicit link is blocked because that target is already driven by explicit link 'producer_a\.output_data'/s,
+    'duplicate explicit drivers now say the explicit link is blocked',
 );
 like(
     $exception,
@@ -220,8 +220,8 @@ $width_mismatch_exception = $@;
 
 like(
     $width_mismatch_exception,
-    qr/links 'consumer\.final_data' \(width 8\) to 'result_data' \(width 4\), .*exact width agreement/s,
-    'explicit composition links reject width mismatches with both endpoints and conflicting widths',
+    qr/links 'consumer\.final_data' \(width 8\) to 'result_data' \(width 4\), .*explicit link is blocked because the current active composition lanes require exact width agreement/s,
+    'explicit width mismatches now say the explicit link is blocked',
 );
 like(
     $width_mismatch_exception,
@@ -237,8 +237,8 @@ $unknown_rtl_port_exception = $@;
 
 like(
     $unknown_rtl_port_exception,
-    qr/instance 'uart_tx' has no port named 'missing_port'/s,
-    'mixed composition rejects explicit links to unknown external RTL ports',
+    qr/references child endpoint 'uart_tx\.missing_port', .*explicit link endpoint resolution is blocked because instance 'uart_tx' has no port named 'missing_port'/s,
+    'unknown external RTL ports now say explicit link endpoint resolution is blocked',
 );
 like(
     $unknown_rtl_port_exception,
@@ -254,8 +254,8 @@ $rtl_direction_mismatch_exception = $@;
 
 like(
     $rtl_direction_mismatch_exception,
-    qr/uses child endpoint 'uart_tx\.txd' as an explicit link target, .*output instead of input/s,
-    'mixed composition rejects direction-mismatched external RTL targets',
+    qr/uses child endpoint 'uart_tx\.txd' as an explicit link target, .*explicit link is blocked because that child port is output instead of input/s,
+    'direction-mismatched external RTL targets now say the explicit link is blocked',
 );
 like(
     $rtl_direction_mismatch_exception,

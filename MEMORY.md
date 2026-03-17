@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: explicit toplink validation failures now say when the declared link is blocked
+- Saved shipped behavior:
+  - explicit `?toplink` endpoint resolution failures now say explicitly when the declared link is blocked by a missing endpoint,
+  - and explicit `?toplink` validation now says the declared link is blocked when direction, duplicate-drive, or width evidence prevents it from applying.
+- Important continuity note:
+  - this broadens the blocked-wording surface into the core explicit-link validation family,
+  - it reuses the existing composition-error coverage rather than widening planner behavior,
+  - and it keeps the detailed endpoint evidence intact in the exception text.
 ## 2026-03-17: explicit top-output re-export mismatches now say when re-export is blocked
 - Saved shipped behavior:
   - explicit top-output re-export mismatches for inferred same-name internal carriers now say explicitly when that bounded re-export path is blocked,

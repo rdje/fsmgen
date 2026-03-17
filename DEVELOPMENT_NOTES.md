@@ -20,6 +20,16 @@ This document captures engineering rationale, design constraints, and working de
   - it closes previously untested width/type wording branches in the explicit-toplink path,
   - and it keeps the current `R11` step on diagnostics clarity rather than new behavior.
 - Updated [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) to lock mixed-role, width-mismatch, and type-mismatch blocked diagnostics for explicit-toplink-driven undeclared top-port inference.
+## 2026-03-17: explicit toplink validation failures now say when the declared link is blocked
+- Continued the active `R11` diagnostics lane by tightening the main explicit `?toplink` validation family without changing composition behavior.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says explicit link endpoint resolution is *blocked* when a declared link names a missing endpoint,
+  - and explicit link validation now says the declared link is *blocked* when direction, duplicate-drive, or width evidence prevents that declared `?toplink` from applying.
+- Why this is worth shipping:
+  - it extends the same blocked-wording style into the core explicit-link validation family instead of leaving that branch in older direct-error wording,
+  - it keeps the existing endpoint detail intact,
+  - and it broadens diagnostics clarity without widening planner behavior.
+- Updated [t/23-composition-errors.t](/Users/richarddje/Documents/github/fsmgen/t/23-composition-errors.t) to lock blocked wording across duplicate-driver, width-mismatch, unknown-endpoint, and direction-mismatch explicit-link failures.
 ## 2026-03-17: explicit top-output re-export mismatches now say when re-export is blocked
 - Continued the active `R11` diagnostics lane with the next small failure-path wording seam instead of widening behavior again.
 - Landed behavior:
