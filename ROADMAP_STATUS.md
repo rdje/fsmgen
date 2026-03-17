@@ -736,6 +736,14 @@ Left:
   - keep that explicit override layer elegant and expressive rather than verbose duplicate configuration,
   - make diagnostics explain whether a port/link was inferred, blocked, or overridden,
   - and keep any such convention top-boundary-oriented rather than turning child-to-child wiring into hidden inference everywhere.
+- Track and later retire the current architectural hotspot set deliberately instead of letting it stay ambient debt:
+  - split composition policy, interface inference, and top emission back out of `FSM::Pipeline::HDLGenerator`,
+  - shrink `FSM::Synthesis::EnableGraph` toward a clearer synthesis boundary,
+  - move planning/normalization residue out of `FSM::HDL::FlattenedDT::Backend::SystemVerilog` so backend responsibilities are more honest,
+  - make the `FSM::CoreAST::*` versus `FSM::AST::*` bridge explicit instead of rediscovering it inside `EnableGraph`,
+  - decide whether `FSM::ExpressionNamer` remains live architectural surface or should be retired as compatibility residue,
+  - remove stale compatibility wording in `bin/fsmgen` help/output,
+  - and revisit the global-state shape in `FSM::Debug` before `R13` embedding/API work depends on it.
 - Add any needed diagnostics/tests before considering broader composition growth.
 Exit criteria:
 - External-RTL composition uses a clearly specified interface contract that is stronger and easier to reason about than the current “implemented convention” state.

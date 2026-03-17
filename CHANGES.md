@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### recorded the current architecture hotspot set for future bounded refactor work
+- Saved the current hotspot/refactor snapshot into the live roadmap/continuity docs instead of leaving it as one-off analysis only.
+- The recorded future seams are:
+  - `FSM::Pipeline::HDLGenerator` still carrying too much composition policy/orchestration/planning surface,
+  - `FSM::Synthesis::EnableGraph` still acting as the largest synthesis gravity well,
+  - `FSM::HDL::FlattenedDT::Backend::SystemVerilog` still owning too much planning/normalization for a “backend” boundary,
+  - the still-implicit bridge between `FSM::CoreAST::*` and `FSM::AST::*`,
+  - the unresolved status of `FSM::ExpressionNamer` as either live surface or residue,
+  - stale compatibility wording in `bin/fsmgen`,
+  - and the global-state shape in `FSM::Debug` ahead of future embedding/API work.
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so those seams are now tracked as deliberate future work instead of ambient debt.
+
 ### explicit-link `C2` / `C3` can now infer top ports directly from explicit `?toplink`
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so explicit-link tops may now omit `?ports` entirely, or use an empty `(?ports)`, when the missing top boundary can be realized honestly from explicit `?toplink` endpoints themselves.
 - This shipped slice is intentionally bounded:

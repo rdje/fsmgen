@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: architecture hotspot snapshot saved for future refactor work
+- Saved the latest architecture read-through from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) down the active imported `FSM::*` tree into the continuity docs and roadmap.
+- The recorded future seams are:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) still owning too much composition orchestration/policy/planning,
+  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) remaining the main synthesis gravity well,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) still carrying enough planning/normalization logic that the backend boundary is not purely rendering-oriented,
+  - the still-implicit bridge between [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) and the `FSM::AST::*` family,
+  - [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm) still needing an eventual “live surface vs residue” decision,
+  - stale compatibility wording still present in [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen),
+  - and global debug state in [perl/FSM/Debug.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Debug.pm) that should be revisited before deeper embedding/API work.
+- Continuity note:
+  - this is now explicit roadmap work, not just one-session analysis,
+  - and the intended follow-up is bounded seam-by-seam retirement while `R11` is still actively shaping composition/type contracts.
 ## 2026-03-17: explicit-link `C2` / `C3` now infer top ports directly from explicit `?toplink`
 - Saved shipped behavior:
   - explicit-link multi-child tops may now omit `?ports` entirely, or use an empty `(?ports)`,

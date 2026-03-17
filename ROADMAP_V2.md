@@ -98,6 +98,14 @@ Goal:
 Deliverable themes:
 - formalize the `.rtlif` mini-contract,
 - decide whether a stronger interface-source contract should later replace or sit above `.rtlif`,
+- record and later deliberately reduce the current architectural hotspot set instead of letting those seams stay as unnamed background debt:
+  - split composition policy, interface inference, and top-emission planning back out of `FSM::Pipeline::HDLGenerator`,
+  - shrink `FSM::Synthesis::EnableGraph` toward a clearer synthesis ownership boundary instead of one ever-growing semantic gravity well,
+  - move planning/normalization residue out of `FSM::HDL::FlattenedDT::Backend::SystemVerilog` so the backend boundary becomes more honestly rendering-oriented,
+  - make the bridge between `FSM::CoreAST::*` and `FSM::AST::*` more explicit so future work is not forced to rediscover that seam inside `EnableGraph`,
+  - decide whether `FSM::ExpressionNamer` is real remaining surface or compatibility residue that should eventually be retired,
+  - remove stale CLI/help compatibility wording from `bin/fsmgen`,
+  - and revisit the global-state shape in `FSM::Debug` before `R13` embedding/API work makes that harder to change,
 - define one bounded multi-FSM shared-datapath composition lane instead of reopening broad implicit composition:
   - one `fsmgen` run may build one top from one `.fsm` source or from several `.fsm` sources,
   - some child outputs remain directly owned by their source FSMs,
@@ -362,9 +370,10 @@ Prerequisite:
 - the tool itself should first be strong enough that the website is amplifying a genuinely trustworthy product rather than compensating for an unstable one.
 
 ## Current intent
-The active immediate lane is `R8`.
+The active immediate lane is `R11`.
 
-The first honest `R8` slices are:
-1. extend the new draft normative language-reference slice beyond the now-locked guard/update/operator/symbol/system families,
-2. audit any remaining non-directive parser-visible legacy constructs that still lack a clean support-tier bucket,
-3. keep adding focused regressions that lock the adopted language contract family by family.
+The first honest `R11` slices are now:
+1. keep widening convention-first composition only where the child-side evidence is still deterministic,
+2. let explicit local overrides stay precise without forcing whole-interface restatement,
+3. capture and then deliberately retire the current architectural hotspot set while the composition/type surface is still settling,
+4. keep `R8` open as opportunistic contract hardening when a feature slice touches a boundary that still needs to be locked.

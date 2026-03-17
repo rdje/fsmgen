@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: architecture hotspot snapshot for future refactor work
+- Took a fresh read-through from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) down the active imported `FSM::*` tree and recorded the main refactor seams explicitly instead of leaving them as conversational analysis only.
+- Current hotspot set worth tracking deliberately:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now owns too much of the composition story at once: source orchestration, child realization, interface inference, lane selection, top planning, and top emission,
+  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) remains the strongest synthesis gravity well in the tree and is still the most likely future refactor hotspot,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) still carries enough planning/normalization logic that the backend boundary is not yet a purely honest rendering boundary,
+  - the coexistence of [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) and the `FSM::AST::*` family is workable but still a real complexity seam, with too much of the bridge remaining implicit inside `EnableGraph`,
+  - [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm) now looks secondary relative to the active AST-first factoring path and should eventually be either justified as live surface or retired as residue,
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) still carries some stale compatibility/help wording,
+  - and [perl/FSM/Debug.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Debug.pm) still relies on global state that is acceptable for the CLI but worth revisiting before deeper embedding/API work.
+- Design note from this audit:
+  - the right follow-up is not a broad “refactor everything” pass,
+  - it is to keep naming these seams in the roadmap and then retire them in bounded slices while the active `R11` composition/type contracts are still being shaped.
 ## 2026-03-17: explicit-link `C2` / `C3` can now infer top ports directly from explicit `?toplink`
 - Continued the active `R11` lane by removing another layer of parent-interface boilerplate without reopening broad hidden wiring.
 - Landed behavior:
