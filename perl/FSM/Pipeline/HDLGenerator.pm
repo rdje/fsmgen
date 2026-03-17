@@ -2173,6 +2173,9 @@ sub build_composition_module_info ($self, $composition_plan, $composition_report
         composition_override_count => $composition_report
             ? $composition_report->{override_count}
             : 0,
+        composition_block_count => $composition_report
+            ? $composition_report->{block_count}
+            : 0,
         composition_lane => $composition_plan->lane,
         composition_provenance => $composition_report,
     };
@@ -2188,6 +2191,9 @@ sub build_composition_statistics ($self, $composition_plan, $composition_report 
         : scalar(@{$composition_plan->resolved_links || []});
     $stats->{composition_override_count} = $composition_report
         ? $composition_report->{override_count}
+        : 0;
+    $stats->{composition_block_count} = $composition_report
+        ? $composition_report->{block_count}
         : 0;
     $stats->{composition_lane} = $composition_plan->lane;
     $stats->{composition_provenance} = $composition_report if $composition_report;
@@ -2239,19 +2245,28 @@ sub build_composition_provenance_report ($self, $composition_plan) {
         $override_kind_counts{$event->{kind}}++;
     }
 
+    my @block_events = @{$self->build_composition_block_events($composition_plan)};
+    my %block_kind_counts;
+    for my $event (@block_events) {
+        $block_kind_counts{$event->{kind}}++;
+    }
+
     return {
         lane => $composition_plan->lane,
         top_port_count => scalar(@ports),
         resolved_link_count => scalar(@resolved_links),
         override_count => scalar(@override_events),
+        block_count => scalar(@block_events),
         ports => \@ports,
         resolved_links => \@resolved_links,
         override_events => \@override_events,
+        block_events => \@block_events,
         port_origin_counts => \%port_origin_counts,
         port_category_counts => \%port_category_counts,
         resolved_link_origin_counts => \%resolved_link_origin_counts,
         resolved_link_category_counts => \%resolved_link_category_counts,
         override_kind_counts => \%override_kind_counts,
+        block_kind_counts => \%block_kind_counts,
         ordered_port_origins => [
             sort {
                 $self->composition_provenance_sort_key($a) <=> $self->composition_provenance_sort_key($b)
@@ -2269,6 +2284,10 @@ sub build_composition_provenance_report ($self, $composition_plan) {
         ordered_override_kinds => [
             sort { $self->composition_override_label($a) cmp $self->composition_override_label($b) }
             keys %override_kind_counts
+        ],
+        ordered_block_kinds => [
+            sort { $self->composition_block_label($a) cmp $self->composition_block_label($b) }
+            keys %block_kind_counts
         ],
     };
 }
@@ -2361,6 +2380,102 @@ sub build_composition_override_events ($self, $composition_plan) {
     return \@events;
 }
 
+sub build_composition_block_events ($self, $composition_plan) {
+    my @events;
+    my %declared_top_ports = map { $_->name => $_ } @{$composition_plan->ports || []};
+    my @declared_links = @{$composition_plan->links || []};
+    my @resolved_links = @{$composition_plan->resolved_links || []};
+    my %port_groups;
+
+    for my $instance (@{$composition_plan->instances || []}) {
+        for my $port (@{$instance->interface_ports || []}) {
+            push @{$port_groups{$port->name}}, {
+                instance_name => $instance->instance_name,
+                port => $port,
+            };
+        }
+    }
+
+    my %explicitly_linked_child_input_names;
+    my %explicitly_linked_child_output_endpoints;
+    for my $link (@declared_links) {
+        my $source = $link->source || '';
+        my $target = $link->target || '';
+
+        my ($target_instance, $target_port_name) = $target =~ /^(\w+)\.(\w+)$/;
+        if (defined $target_port_name) {
+            my $source_is_child_endpoint = $source =~ /^\w+\.\w+$/;
+            my $source_is_declared_top_port = exists $declared_top_ports{$source};
+            if ($source_is_child_endpoint || $source_is_declared_top_port) {
+                $explicitly_linked_child_input_names{$target_port_name} = 1;
+            }
+        }
+
+        my ($source_instance, $source_port_name) = $source =~ /^(\w+)\.(\w+)$/;
+        if (defined $source_port_name) {
+            $explicitly_linked_child_output_endpoints{"$source_instance.$source_port_name"} = 1;
+        }
+    }
+
+    for my $port_name (sort keys %port_groups) {
+        next if $declared_top_ports{$port_name};
+        my @candidates = @{$port_groups{$port_name}};
+        next unless @candidates;
+
+        my @input_candidates = grep { ($_->{port}->direction || '') eq 'input' } @candidates;
+        if (@input_candidates && @input_candidates == @candidates && $explicitly_linked_child_input_names{$port_name}) {
+            my %widths = map { $_->{port}->width => 1 } @input_candidates;
+            my %types = map { $self->normalized_interface_type($_->{port}->type) => 1 } @input_candidates;
+            if (keys(%widths) == 1 && keys(%types) == 1) {
+                push @events, {
+                    kind => 'explicit_child_links_block_undeclared_top_input_inference',
+                    signal_name => $port_name,
+                    lane => $composition_plan->lane,
+                };
+            }
+            next;
+        }
+
+        my @output_candidates = grep { ($_->{port}->direction || '') eq 'output' } @candidates;
+        if (@output_candidates && @output_candidates == @candidates && @output_candidates == 1) {
+            my $endpoint = $output_candidates[0]{instance_name}.'.'.$output_candidates[0]{port}->name;
+            if ($explicitly_linked_child_output_endpoints{$endpoint}) {
+                push @events, {
+                    kind => 'explicit_child_links_block_undeclared_top_output_inference',
+                    signal_name => $port_name,
+                    lane => $composition_plan->lane,
+                };
+                next;
+            }
+        }
+    }
+
+    my %internal_carrier_family;
+    my %reexported_internal_carrier_family;
+    for my $link (@resolved_links) {
+        my $raw_token = $link->raw_token || '';
+        my ($family_name) = $raw_token =~ /^=implicit-internal:(\w+)$/;
+        next unless defined $family_name;
+
+        if (($link->origin_kind || '') eq 'inferred_internal_carrier_link') {
+            $internal_carrier_family{$family_name} = 1;
+        } elsif (($link->origin_kind || '') eq 'inferred_internal_carrier_reexport_link') {
+            $reexported_internal_carrier_family{$family_name} = 1;
+        }
+    }
+
+    for my $family_name (sort keys %internal_carrier_family) {
+        next if $reexported_internal_carrier_family{$family_name};
+        push @events, {
+            kind => 'inferred_internal_carrier_kept_internal_by_default',
+            signal_name => $family_name,
+            lane => $composition_plan->lane,
+        };
+    }
+
+    return \@events;
+}
+
 sub composition_provenance_category ($self, $origin_kind) {
     return 'declared' if $origin_kind =~ /^declared_/;
     return 'inferred' if $origin_kind =~ /^inferred_/;
@@ -2416,6 +2531,19 @@ sub composition_override_label ($self, $kind) {
         explicit_toplink_overrides_same_name_top_input_convention => 'explicit toplink overrides same-name top-input convention',
         explicit_toplink_overrides_same_name_top_output_convention => 'explicit toplink overrides same-name top-output convention',
         explicit_top_output_reexports_internal_carrier => 'explicit top output re-exports internal carrier',
+    );
+
+    return $labels{$kind} if defined $labels{$kind};
+
+    (my $label = $kind) =~ s/_/ /g;
+    return $label;
+}
+
+sub composition_block_label ($self, $kind) {
+    my %labels = (
+        explicit_child_links_block_undeclared_top_input_inference => 'explicit child links block undeclared top-input inference',
+        explicit_child_links_block_undeclared_top_output_inference => 'explicit child links block undeclared top-output inference',
+        inferred_internal_carrier_kept_internal_by_default => 'inferred internal carrier kept internal by default',
     );
 
     return $labels{$kind} if defined $labels{$kind};

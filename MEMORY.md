@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: composition provenance now reports blocked convention cases too
+- Saved shipped behavior:
+  - `composition_report` now includes the first surfaced blocked-event family,
+  - non-quiet `bin/fsmgen` runs now print a `Convention Blocks` summary when those events are present,
+  - and composition `module_info` / `statistics` now carry the block count too.
+- Important continuity note:
+  - the currently shipped blocked events are bounded to explicit child links blocking undeclared top-input/top-output inference and inferred internal carriers staying internal by default,
+  - this closes the first successful-run “blocked” visibility gap,
+  - and the next reporting/diagnostics seam is now broader failure-path wording rather than more successful-run hidden behavior.
+- [t/106-composition-blocked-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/106-composition-blocked-reporting.t) locks the new blocked-report surface.
 ## 2026-03-17: composition provenance now reports local override events too
 - Saved shipped behavior:
   - `composition_report` now includes the first surfaced override-event family,

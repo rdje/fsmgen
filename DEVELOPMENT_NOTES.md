@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: composition provenance now reports blocked convention cases too
+- Continued the active `R11` lane by making the first successful-run “blocked” cases visible instead of leaving that concept only in future notes.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now derives blocked convention events into `composition_report`,
+  - those events currently cover explicit child links blocking undeclared top-input/top-output inference and inferred internal carriers staying internal by default,
+  - and [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prints a dedicated `Convention Blocks` section when such events are present.
+- Why this is worth shipping:
+  - it closes the first user-facing “blocked” gap for successful composition runs,
+  - it stays additive on top of the new provenance and override summaries,
+  - and it makes the next remaining diagnostics seam clearer: broader failure-path wording rather than more success-path inference.
+- [t/106-composition-blocked-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/106-composition-blocked-reporting.t) locks both blocked undeclared top-interface inference and kept-internal carrier reporting across pipeline and CLI surfaces.
 ## 2026-03-17: composition provenance now reports local override events too
 - Continued the active `R11` lane by making the first “overridden” cases visible in successful composition runs instead of stopping at declared-versus-inferred counts.
 - Landed behavior:

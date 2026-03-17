@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### composition provenance now reports blocked convention cases too
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `composition_report` now surfaces the first shipped blocked convention events:
+  - explicit child links blocking undeclared top-input inference,
+  - explicit child links blocking undeclared top-output inference,
+  - and inferred internal carriers staying internal by default.
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet composition runs now print a `Convention Blocks` section when those blocked events are present.
+- This shipped slice stays additive:
+  - it builds on the earlier provenance summary plus override summary,
+  - it also flows the block count through composition `module_info` and `statistics`,
+  - and it leaves the next diagnostics gap mainly on the failure-path wording side.
+- Added [t/106-composition-blocked-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/106-composition-blocked-reporting.t) to lock:
+  - pipeline-side blocked reporting for explicit child links consuming otherwise-inferable top-interface families,
+  - pipeline-side blocked reporting for inferred internal carriers kept internal by default,
+  - and CLI blocked-summary output.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the first shipped blocked-case reporting slice under `R11`.
+
 ### composition provenance now reports local override events too
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `composition_report` now surfaces the first shipped override events:
   - explicit toplinks overriding same-name top-input convention,
