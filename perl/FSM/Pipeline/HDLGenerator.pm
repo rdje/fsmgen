@@ -675,6 +675,10 @@ sub system_port_sort_key ($self, $port) {
     return 2;
 }
 
+sub normalized_interface_type ($self, $type) {
+    return defined($type) && length($type) ? $type : 'data';
+}
+
 sub is_generated_child_kind ($self, $kind) {
     return $kind eq 'fsmc' || $kind eq 'dtc';
 }
@@ -823,11 +827,11 @@ sub augment_with_inferred_undeclared_top_inputs ($self, $ports, $realized_instan
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
-        my %types = map { (defined($_->{port}->type) ? $_->{port}->type : '') => 1 } @input_candidates;
+        my %types = map { $self->normalized_interface_type($_->{port}->type) => 1 } @input_candidates;
         if (keys(%types) > 1) {
             my $candidates = join(', ', map {
                 $_->{instance_name}.'.'.$_->{port}->name.
-                '['.$_->{port}->direction.', width='.$_->{port}->width.', type='.(defined($_->{port}->type) ? $_->{port}->type : 'data').']'
+                '['.$_->{port}->direction.', width='.$_->{port}->width.', type='.$self->normalized_interface_type($_->{port}->type).']'
             } @input_candidates);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' omits top port '$port_name', ".
@@ -842,7 +846,7 @@ sub augment_with_inferred_undeclared_top_inputs ($self, $ports, $realized_instan
             name => $template->name,
             direction => 'input',
             width => $template->width,
-            type => $template->type,
+            type => $self->normalized_interface_type($template->type),
             raw_token => undef,
             binding_mode => 'implicit_fanout',
         );
@@ -913,7 +917,7 @@ sub augment_with_inferred_undeclared_top_outputs ($self, $ports, $realized_insta
             name => $template->name,
             direction => 'output',
             width => $template->width,
-            type => $template->type,
+            type => $self->normalized_interface_type($template->type),
             raw_token => $source_endpoint,
             binding_mode => 'implicit_unique_output',
         );
@@ -1213,6 +1217,15 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
                 $header,
             )
         };
+        push @resolved_links_input, @{
+            $self->build_implicit_internal_same_name_links(
+                $ports,
+                $links,
+                $realized_instances,
+                $fsm_file,
+                $header,
+            )
+        };
     }
 
     for my $instance (@{$realized_instances || []}) {
@@ -1322,7 +1335,18 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
         if (@top_output_targets == 1) {
             $carrier_signal_name = $top_output_targets[0]{target}{port}->name;
         } else {
-            my $net_name = $self->allocate_composition_net_name($source, $top_ports_by_name, \@nets);
+            my $preferred_net_name;
+            if (@group) {
+                my @implicit_internal_names = map {
+                    $_->{link}->raw_token =~ /^=implicit-internal:(\w+)$/ ? $1 : ()
+                } @group;
+                if (@implicit_internal_names == @group) {
+                    my %names = map { $_ => 1 } @implicit_internal_names;
+                    $preferred_net_name = $implicit_internal_names[0] if keys(%names) == 1;
+                }
+            }
+
+            my $net_name = $self->allocate_composition_net_name($source, $top_ports_by_name, \@nets, $preferred_net_name);
             push @nets, FSM::Composition::Net->new(
                 name => $net_name,
                 width => $source->{port}->width,
@@ -1463,6 +1487,105 @@ sub build_implicit_top_output_links ($self, $ports, $fsm_file, $header) {
     return \@links;
 }
 
+sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $realized_instances, $fsm_file, $header) {
+    my @links;
+    my %declared_top_ports = map { $_->name => 1 } @{$ports || []};
+    my %system_port_names = map { $_ => 1 } $self->system_port_names_from_endpoints([
+        map {
+            my $instance = $_;
+            map {
+                {
+                    instance_name => $instance->instance_name,
+                    port => $_,
+                }
+            } @{$instance->interface_ports || []}
+        } @{$realized_instances || []}
+    ]);
+    my %explicit_child_endpoints;
+    my %port_groups;
+
+    for my $link (@{$explicit_links || []}) {
+        for my $endpoint ($link->source, $link->target) {
+            next unless defined $endpoint && $endpoint =~ /^(\w+)\.(\w+)$/;
+            $explicit_child_endpoints{"$1.$2"} = 1;
+        }
+    }
+
+    for my $instance (@{$realized_instances || []}) {
+        for my $port (@{$instance->interface_ports || []}) {
+            push @{$port_groups{$port->name}}, {
+                instance_name => $instance->instance_name,
+                port => $port,
+            };
+        }
+    }
+
+    for my $port_name (sort keys %port_groups) {
+        next if $declared_top_ports{$port_name};
+        next if $system_port_names{$port_name};
+
+        my @candidates = @{$port_groups{$port_name}};
+        next if grep { $explicit_child_endpoints{$_->{instance_name}.'.'.$_->{port}->name} } @candidates;
+
+        my @input_candidates = grep { ($_->{port}->direction || '') eq 'input' } @candidates;
+        my @output_candidates = grep { ($_->{port}->direction || '') eq 'output' } @candidates;
+        next unless @input_candidates && @output_candidates;
+
+        my %widths = map { $_->{port}->width => 1 } @candidates;
+        if (keys(%widths) > 1) {
+            my $seen = join(', ', map {
+                $_->{instance_name}.'.'.$_->{port}->name.
+                '['.$_->{port}->direction.', width='.$_->{port}->width.']'
+            } @candidates);
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' omits explicit same-name internal wiring for '$port_name', ".
+                "but undeclared internal-carrier inference cannot choose one width because same-name child ports disagree. ".
+                "Seen child ports: $seen. ".
+                "The current bounded inference slice only infers internal same-name carriers when all participating child ports agree exactly on width. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        my %types = map { $self->normalized_interface_type($_->{port}->type) => 1 } @candidates;
+        if (keys(%types) > 1) {
+            my $seen = join(', ', map {
+                $_->{instance_name}.'.'.$_->{port}->name.
+                '['.$_->{port}->direction.', width='.$_->{port}->width.', type='.$self->normalized_interface_type($_->{port}->type).']'
+            } @candidates);
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' omits explicit same-name internal wiring for '$port_name', ".
+                "but undeclared internal-carrier inference cannot choose one interface type because same-name child ports disagree. ".
+                "Seen child ports: $seen. ".
+                "The current bounded inference slice only infers internal same-name carriers when all participating child ports agree exactly on resolved interface type too. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        if (@output_candidates > 1) {
+            my $seen = join(', ', map {
+                $_->{instance_name}.'.'.$_->{port}->name.
+                '['.$_->{port}->direction.', width='.$_->{port}->width.']'
+            } @output_candidates);
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' omits explicit same-name internal wiring for '$port_name', ".
+                "but undeclared internal-carrier inference cannot choose one driving child output because several same-name child outputs remain available for same-name child inputs. ".
+                "Seen child outputs: $seen. ".
+                "The current bounded inference slice only infers internal same-name carriers when exactly one same-name child output remains available. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        my $source = $output_candidates[0];
+        my $source_endpoint = $source->{instance_name}.'.'.$source->{port}->name;
+        for my $target (@input_candidates) {
+            push @links, FSM::Composition::Link->new(
+                source => $source_endpoint,
+                target => $target->{instance_name}.'.'.$target->{port}->name,
+                raw_token => '=implicit-internal:'.$port_name,
+            );
+        }
+    }
+
+    return \@links;
+}
+
 sub clone_realized_instance_with_bindings ($self, $instance, $port_bindings) {
     return FSM::Composition::RealizedInstance->new(
         kind => $instance->kind,
@@ -1558,8 +1681,8 @@ sub assert_explicit_link_roles ($self, $source, $target, $fsm_file, $header) {
     }
 }
 
-sub allocate_composition_net_name ($self, $source, $top_ports_by_name, $existing_nets) {
-    my $base_name = "comp_link_" . $source->{instance_name} . "_" . $source->{port_name};
+sub allocate_composition_net_name ($self, $source, $top_ports_by_name, $existing_nets, $preferred_name = undef) {
+    my $base_name = $preferred_name // ("comp_link_" . $source->{instance_name} . "_" . $source->{port_name});
     $base_name =~ s/\W+/_/g;
     my %reserved = map { $_ => 1 } keys %{$top_ports_by_name || {}};
     $reserved{$_->name} = 1 for @{$existing_nets || []};

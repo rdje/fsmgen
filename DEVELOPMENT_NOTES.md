@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: explicit-link `C2` / `C3` can now infer same-name internal carriers
+- Continued the active `R11` lane by landing the next convention-first slice after undeclared top inputs and undeclared unique top outputs.
+- Landed behavior:
+  - explicit-link `C2` / `C3` tops may now omit some same-name child-to-child links entirely,
+  - `fsmgen` infers those internal carriers only when exactly one same-name child output remains available, one or more same-name child inputs remain available, and no explicit top port or explicit link already touches that name family,
+  - and the inferred carrier stays internal by default instead of being re-exported automatically.
+- Why this is worth shipping:
+  - it restores one of the most useful convention-over-configuration integration shortcuts without reopening broad hidden wiring,
+  - it keeps explicit declarations as precise local overrides because any explicit top port or explicit link touching that signal family suppresses the inference,
+  - and it narrows the next question cleanly to re-export/override behavior for those inferred internal carriers rather than to whether carrier inference should exist at all.
+- [t/99-composition-implicit-internal-carriers.t](/Users/richarddje/Documents/github/fsmgen/t/99-composition-implicit-internal-carriers.t) locks generated-child fanout success, mixed generated-plus-RTL success, and ambiguity rejection for several same-name driving outputs.
+
 ## 2026-03-17: explicit-link `C2` / `C3` can now infer undeclared unique top outputs
 - Continued the active `R11` lane by widening undeclared top-interface inference one more careful step beyond the earlier single-child `C1` slice and the just-shipped multi-child top-input slice.
 - Landed behavior:

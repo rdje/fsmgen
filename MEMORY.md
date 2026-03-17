@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: explicit-link `C2` / `C3` now infer same-name internal carriers
+- Saved shipped behavior:
+  - explicit-link tops may now infer internal same-name child-to-child carriers when exactly one same-name child output and one or more same-name child inputs remain available,
+  - and the inferred carrier uses the shared signal name and stays internal by default.
+- Important continuity note:
+  - any explicit top port or explicit link touching that name family suppresses the inference locally,
+  - several same-name child outputs now fail through a dedicated internal-carrier diagnostic,
+  - and the next convention-over-configuration question is now how those inferred internal carriers should be re-exported or overridden explicitly at the top boundary.
+- [t/99-composition-implicit-internal-carriers.t](/Users/richarddje/Documents/github/fsmgen/t/99-composition-implicit-internal-carriers.t) locks generated-child fanout success, mixed generated-plus-`?rtl` success, and several-output ambiguity rejection.
+
 ## 2026-03-17: explicit-link `C2` / `C3` now infer undeclared unique top outputs
 - Saved shipped behavior:
   - explicit-link tops may now infer undeclared top outputs when exactly one same-name child output remains top-facing,
@@ -7,7 +17,7 @@ This is the live continuity document for fast session recovery after crashes, re
 - Important continuity note:
   - child outputs already consumed by explicit child-to-child links are not re-inferred as top outputs,
   - several same-name top-facing child outputs now fail through a dedicated inference diagnostic,
-  - and the harder same-name producer-to-consumer internal-carrier convention is still future work rather than shipped behavior.
+  - and that top-output slice is now complemented by a separate shipped internal-carrier slice for same-name producer-to-consumer families.
 - [t/98-composition-implicit-multi-child-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/98-composition-implicit-multi-child-outputs.t) locks generated-child success, single-`?rtl` explicit-link success, and same-name output ambiguity rejection.
 
 ## 2026-03-17: future `R11` now carries a convention-first, local-override composition rule
