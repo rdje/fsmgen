@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: explicit-link `C2` / `C3` now infer undeclared unique top outputs
+- Saved shipped behavior:
+  - explicit-link tops may now infer undeclared top outputs when exactly one same-name child output remains top-facing,
+  - and that inferred top output binds directly back to the unique child output.
+- Important continuity note:
+  - child outputs already consumed by explicit child-to-child links are not re-inferred as top outputs,
+  - several same-name top-facing child outputs now fail through a dedicated inference diagnostic,
+  - and the harder same-name producer-to-consumer internal-carrier convention is still future work rather than shipped behavior.
+- [t/98-composition-implicit-multi-child-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/98-composition-implicit-multi-child-outputs.t) locks generated-child success, single-`?rtl` explicit-link success, and same-name output ambiguity rejection.
+
 ## 2026-03-17: future `R11` now carries a convention-first, local-override composition rule
 - Saved future direction:
   - convention should stay the default integration path wherever child/top wiring is unambiguous,

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: explicit-link `C2` / `C3` can now infer undeclared unique top outputs
+- Continued the active `R11` lane by widening undeclared top-interface inference one more careful step beyond the earlier single-child `C1` slice and the just-shipped multi-child top-input slice.
+- Landed behavior:
+  - explicit-link `C2` / `C3` tops may now omit some top-output declarations,
+  - `fsmgen` infers those undeclared top outputs only when exactly one same-name child output remains top-facing,
+  - and child outputs already consumed by explicit child-to-child links are kept internal instead of being re-exported automatically.
+- Why this is worth shipping:
+  - it removes another common layer of top-level boilerplate from real integration work,
+  - it stays aligned with the convention-first rule that top-facing unique child outputs should surface naturally while internally consumed outputs should stay internal by default,
+  - and it keeps the harder same-name producer-to-consumer internal-carrier question as a future bounded slice instead of mixing that semantics into this one.
+- [t/98-composition-implicit-multi-child-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/98-composition-implicit-multi-child-outputs.t) locks generated-child success, external-RTL success, and several-same-name-output ambiguity rejection.
+
 ## 2026-03-17: future `R11` now records a convention-first, local-override composition policy
 - Captured one more future `R11` rule so we do not drift into either extreme:
   - do not make users restate whole parent interfaces once convention can infer them honestly,

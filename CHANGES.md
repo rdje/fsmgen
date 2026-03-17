@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### explicit-link `C2` / `C3` can now infer undeclared unique top outputs
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so explicit-link tops can now infer undeclared top outputs when:
+  - exactly one same-name child output remains top-facing,
+  - that child output is not already consumed by explicit child-to-child wiring,
+  - and the planner can therefore bind it deterministically back to a generated top output.
+- This shipped slice is intentionally bounded:
+  - it applies to explicit-link `C2` / `C3` tops,
+  - it still does not create internal same-name producer-to-consumer carriers automatically,
+  - and several same-name top-facing child outputs still fail explicitly instead of being guessed through.
+- Added [t/98-composition-implicit-multi-child-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/98-composition-implicit-multi-child-outputs.t) to lock:
+  - inferred undeclared unique top-output success in explicit-link `C2`,
+  - inferred undeclared unique top-output success in explicit-link `C3`,
+  - and ambiguity rejection for several same-name top-facing child outputs.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the active `R11` lane now records this bounded top-output inference slice honestly.
+
 ### future `R11` now records convention-first inference plus local override control
 - Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so future composition work is now governed by an explicit convention-over-configuration rule:
   - convention should remain the primary integration path,

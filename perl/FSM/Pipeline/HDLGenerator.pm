@@ -373,6 +373,15 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
                 $header,
             )
         };
+        @ports = @{
+            $self->augment_with_inferred_undeclared_top_outputs(
+                \@ports,
+                \@realized_instances,
+                \@toplinks,
+                $fsm_file,
+                $header,
+            )
+        };
     }
 
     if (@ports && (!$ports_block || scalar(@{$ports_block->ports || []}) != scalar(@ports))) {
@@ -848,6 +857,77 @@ sub augment_with_inferred_undeclared_top_inputs ($self, $ports, $realized_instan
     return [@ports, @inferred_ports];
 }
 
+sub augment_with_inferred_undeclared_top_outputs ($self, $ports, $realized_instances, $toplinks, $fsm_file, $header) {
+    my @ports = @{$ports || []};
+    my %declared_by_name = map { $_->name => $_ } @ports;
+    my %port_groups;
+    my %explicitly_linked_child_output_endpoints;
+
+    for my $toplink (@{$toplinks || []}) {
+        for my $link (@{$toplink->links || []}) {
+            my $source = $link->source || '';
+            next unless $source =~ /^(\w+)\.(\w+)$/;
+            $explicitly_linked_child_output_endpoints{"$1.$2"} = 1;
+        }
+    }
+
+    for my $instance (@{$realized_instances || []}) {
+        for my $port (@{$instance->interface_ports || []}) {
+            push @{$port_groups{$port->name}}, {
+                instance_name => $instance->instance_name,
+                port => $port,
+            };
+        }
+    }
+
+    my @inferred_ports;
+    for my $port_name (sort keys %port_groups) {
+        next if $declared_by_name{$port_name};
+
+        my @candidates = @{$port_groups{$port_name}};
+        my @output_candidates = grep { ($_->{port}->direction || '') eq 'output' } @candidates;
+        next unless @output_candidates;
+        next unless @output_candidates == @candidates;
+
+        my @top_facing_output_candidates = grep {
+            !$explicitly_linked_child_output_endpoints{$_->{instance_name}.'.'.$_->{port}->name}
+        } @output_candidates;
+        next unless @top_facing_output_candidates;
+
+        if (@top_facing_output_candidates > 1) {
+            my $candidates = join(', ', map {
+                $_->{instance_name}.'.'.$_->{port}->name.
+                '['.$_->{port}->direction.', width='.$_->{port}->width.']'
+            } @top_facing_output_candidates);
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' omits top port '$port_name', ".
+                "but undeclared top-output inference cannot choose one top-facing child output because several same-name child outputs remain unconsumed by explicit links. ".
+                "Seen child outputs: $candidates. ".
+                "The current bounded inference slice only infers undeclared top outputs when exactly one same-name child output remains top-facing. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        my $template = $top_facing_output_candidates[0]{port};
+        my $source_endpoint = $top_facing_output_candidates[0]{instance_name}.'.'.$template->name;
+        push @inferred_ports, FSM::Composition::Port->new(
+            name => $template->name,
+            direction => 'output',
+            width => $template->width,
+            type => $template->type,
+            raw_token => $source_endpoint,
+            binding_mode => 'implicit_unique_output',
+        );
+    }
+
+    @inferred_ports = sort {
+        $self->system_port_sort_key($a) <=> $self->system_port_sort_key($b)
+        ||
+        $a->name cmp $b->name
+    } @inferred_ports;
+
+    return [@ports, @inferred_ports];
+}
+
 sub assert_c1_port_exposure_matches_child ($self, $ports_block, $realized_instance, $child_port_info, $fsm_file, $header) {
     my $top_ports_by_name = $self->assert_unique_top_ports($ports_block, $fsm_file, $header);
 
@@ -1126,6 +1206,13 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
                 $header,
             )
         };
+        push @resolved_links_input, @{
+            $self->build_implicit_top_output_links(
+                $ports,
+                $fsm_file,
+                $header,
+            )
+        };
     }
 
     for my $instance (@{$realized_instances || []}) {
@@ -1348,6 +1435,29 @@ sub build_implicit_top_input_links ($self, $ports, $realized_instances, $fsm_fil
                 );
             }
         }
+    }
+
+    return \@links;
+}
+
+sub build_implicit_top_output_links ($self, $ports, $fsm_file, $header) {
+    my @links;
+
+    for my $top_port (@{$ports || []}) {
+        next unless ($top_port->binding_mode || 'explicit') eq 'implicit_unique_output';
+
+        my $source_endpoint = $top_port->raw_token;
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' inferred undeclared top output '".$top_port->name."', ".
+            "but the planner lost the unique source endpoint needed to bind it deterministically. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless defined $source_endpoint && $source_endpoint =~ /^\w+\.\w+$/;
+
+        push @links, FSM::Composition::Link->new(
+            source => $source_endpoint,
+            target => $top_port->name,
+            raw_token => '=implicit:'.$top_port->name,
+        );
     }
 
     return \@links;

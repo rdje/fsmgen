@@ -19,8 +19,8 @@ Current limitation:
   - generated child sources realized either from the same file or from external searchable `.fsm` child sources,
   - external RTL children realized through embedded or sidecar `.rtlif` interface metadata,
   - `C1` single-child passthrough via deterministic same-name wiring or exact child-interface inference when `?ports` is omitted or empty,
-  - `C2` multi-generated-child composition via explicit `?toplink` wiring with `instance.port` child endpoints, plus bounded undeclared top-input inference for still-top-facing child inputs.
-  - `C3` explicit-link composition for any explicit-link top that includes at least one `?rtl` child, with the same bounded undeclared top-input inference rule.
+  - `C2` multi-generated-child composition via explicit `?toplink` wiring with `instance.port` child endpoints, plus bounded undeclared top-interface inference for still-top-facing child inputs and unique top-facing child outputs.
+  - `C3` explicit-link composition for any explicit-link top that includes at least one `?rtl` child, with the same bounded undeclared top-interface inference rule.
   - `C4` declared top-port connect-by-name via `=name` declarations inside `?ports`.
 - See [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) for the scoped `R6` plan and [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) for historical context.
 
@@ -735,6 +735,7 @@ This currently works because:
 - `clk` and `rstn` use the shared system-input contract,
 - non-system connections are expressed explicitly through `?toplink`,
 - undeclared top-facing child inputs may now be inferred when the child-side evidence is unambiguous and those inputs are not already consumed by explicit child-to-child links,
+- undeclared unique top-facing child outputs may now also be inferred when they are not already consumed by explicit child-to-child links,
 - explicit link widths and endpoint roles must match exactly.
 
 Current narrow declared connect-by-name example:

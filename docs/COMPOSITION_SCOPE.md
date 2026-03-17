@@ -16,14 +16,14 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
   - deterministic instance ordering,
   - deterministic internal-net creation for child-to-child wiring,
-  - bounded undeclared top-input inference for same-name child inputs that are not already consumed by explicit child-to-child links,
+  - bounded undeclared top-interface inference for same-name child inputs and unique child outputs that remain top-facing,
   - duplicate-driver rejection before emission.
 - The active toolchain now also ships the first `C3` composition lane:
   - at least one external `?rtl` child,
   - plus any number of generated children (`?fsmc` / `?dtc`) beside those external RTL children,
   - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
   - external RTL interface metadata loaded from embedded or sidecar `.rtlif` artifacts,
-  - bounded undeclared top-input inference for same-name child inputs that are not already consumed by explicit child-to-child links,
+  - bounded undeclared top-interface inference for same-name child inputs and unique child outputs that remain top-facing,
   - deterministic internal-net creation and mixed-child instantiation without regenerating external RTL internals.
 - The active toolchain now also ships the first `C4` composition lane:
   - top ports can be declared as `=name` inside `?ports` to request explicit same-name connect-by-name,
@@ -53,6 +53,7 @@ The currently shipped composition behavior is intentionally bounded:
 - `C1` may infer the whole top interface directly from that lone child when `?ports` is omitted or empty,
 - `C2` multi-generated-child composition uses explicit `?toplink`,
 - `C2` and `C3` may now also infer undeclared top inputs when one or more child inputs share the same name, width, and type metadata and those inputs are not already targeted by explicit child-to-child links,
+- `C2` and `C3` may now also infer undeclared top outputs when exactly one same-name child output remains top-facing and is not already consumed by explicit child-to-child links,
 - `C3` explicit-link composition currently supports any explicit-link top with at least one external `?rtl` child, including pure multi-`?rtl`, one-generated-plus-`?rtl`, and multi-generated-plus-`?rtl` mixtures,
 - `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one or more generated children, one or more external `?rtl` children, or any mixture of those generated and external RTL children,
 - each `=name` top output must resolve to exactly one same-named child output with the same width,
@@ -66,7 +67,9 @@ The currently shipped composition behavior is intentionally bounded:
 - top ports must match the realized child interface exactly by name, width, and direction in `C1`,
 - when `C1` infers ports, that inferred top interface is exactly the realized child interface by name, width, and direction,
 - when `C2` / `C3` infer undeclared top inputs, only input-only same-name groups with exact width/type agreement are eligible,
+- when `C2` / `C3` infer undeclared top outputs, only exactly one same-name child output may remain top-facing,
 - child inputs already consumed by explicit child-to-child links are not inferred back out as top inputs,
+- child outputs already consumed by explicit child-to-child links are not inferred back out as top outputs,
 - explicit `?toplink` endpoints must match by role and exact width in `C2`, `C3`, and `C4`,
 - explicit and declared connect-by-name mismatches now fail before emission and identify the conflicting endpoints and widths,
 - realized child interface currently means:
@@ -223,7 +226,7 @@ Status:
 
 ### C2. Two generated children with explicit child-to-child wiring
 Status:
-- Implemented in the current active toolchain for generated children with explicit `?toplink`, plus bounded undeclared top-input inference for child-input groups that are still top-facing.
+- Implemented in the current active toolchain for generated children with explicit `?toplink`, plus bounded undeclared top-interface inference for child-input groups and unique child outputs that are still top-facing.
 
 - Input:
   - one `?top:name` with two generated children (`?fsmc` / `?dtc`) and explicit links between them.
@@ -232,11 +235,12 @@ Status:
   - deterministic instance ordering,
   - explicit link wiring is emitted correctly,
   - undeclared shared top inputs can be inferred when they are not already consumed by explicit child-to-child links,
+  - undeclared unique top-facing child outputs can be inferred when they are not already consumed by explicit child-to-child links,
   - duplicate-driver errors are rejected.
 
 ### C3. Explicit-link external RTL composition
 Status:
-- Implemented in the current active toolchain for explicit-link tops with at least one external `?rtl` child and any number of generated children (`?fsmc` or `?dtc`) beside those RTL children, using the shipped `.rtlif` interface metadata and the same bounded undeclared top-input inference rule as `C2`.
+- Implemented in the current active toolchain for explicit-link tops with at least one external `?rtl` child and any number of generated children (`?fsmc` or `?dtc`) beside those RTL children, using the shipped `.rtlif` interface metadata and the same bounded undeclared top-interface inference rule as `C2`.
 
 - Input:
   - one or more `?rtl` children with explicit `?toplink` wiring,
@@ -248,6 +252,7 @@ Status:
   - deterministic carrier nets can feed more than one external RTL child from one resolved source,
   - multiple generated children can still participate in the same explicit-link plan as long as at least one `?rtl` child is present,
   - undeclared shared top inputs can still be inferred when they are not already consumed by explicit child-to-child links,
+  - undeclared unique top-facing child outputs can still be inferred when they are not already consumed by explicit child-to-child links,
   - typed `.rtlif` `clock` / `reset` metadata can carry custom-named RTL system ports honestly.
 
 ### C4. Connect-by-name only when unambiguous
