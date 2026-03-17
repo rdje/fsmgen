@@ -63,6 +63,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, and single-/multi-`?rtl` composition edges across both explicit-link and declared by-name lanes, `C3` now covers multi-generated-child mixed explicit-link tops as long as at least one `?rtl` child is present, `C4` now covers the same broader mixed child set with exact-one-match top outputs and fanout-capable top inputs, `C1` now supports omitted/empty-`?ports` passthrough inference, and `C2`/`C3` now support bounded omitted/empty-`?ports`, explicit-toplink-driven top-port inference, undeclared top-interface, and same-name internal-carrier inference when child-side evidence is unambiguous, including explicit top-output re-export of those carriers.
   - The next bounded convention-over-configuration choice is now above that: how much farther top-boundary inference and local override should go beyond the newly shipped explicit-link omitted/empty-`?ports` slice without turning composition back into hidden broad auto-wiring.
   - The new composition provenance metadata is now visible in both pipeline results and non-quiet CLI summaries, so the next honest diagnostics step is broader “blocked” / “overridden” reporting rather than more hidden inference.
+  - The first shipped “overridden” reporting slice is now in place too, so the next honest diagnostics step is the “blocked” side of that story rather than more hidden inference.
   - The governing future rule is now explicit too: convention should stay primary, but explicit port/link declarations should override inference locally instead of forcing whole-interface restatement.
   - A second future convention-over-configuration lane is now explicitly recorded too: whether scalar and aggregate signal types should be inferred by default from LHS/RHS/member/index usage, with explicit declarations used mainly as overrides.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
@@ -711,6 +712,14 @@ Done:
 - [t/104-composition-provenance-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/104-composition-provenance-reporting.t) now locks:
   - pipeline-side `composition_report` counts for a mixed explicit-link `C3` composition,
   - and CLI composition provenance summary output for the same bounded fixture.
+- The next local-override reporting slice is now also shipped:
+  - `composition_report` now surfaces the first shipped override events,
+  - those override counts now also flow through composition `module_info` and `statistics`,
+  - and non-quiet `bin/fsmgen` runs now print a dedicated `Convention Overrides` summary when override events are present.
+- [t/105-composition-override-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/105-composition-override-reporting.t) now locks:
+  - pipeline-side reporting when explicit toplinks override same-name top-input/top-output convention,
+  - pipeline-side reporting when an explicit top output re-exports an inferred internal carrier,
+  - and CLI override-summary output for a bounded mixed explicit-link fixture.
 - [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) now locks:
   - multi-`?rtl` explicit-toplink `C3` success,
   - and one-generated-plus-multi-`?rtl` explicit-toplink `C3` success.
@@ -761,7 +770,7 @@ Left:
   - decide whether the newly shipped explicit top-output re-export slice is enough or whether lighter/further override forms are warranted,
   - keep convention as the default authoring path while making explicit port/link declarations override inference locally instead of replacing the whole inferred interface,
   - keep that explicit override layer elegant and expressive rather than verbose duplicate configuration,
-  - extend the newly shipped result/CLI provenance reporting beyond the new composition summary so “inferred”, “blocked”, and “overridden” are explained consistently in more diagnostics and failure paths,
+  - extend the newly shipped result/CLI provenance reporting beyond the new composition summary and override counts so the “blocked” side is explained consistently in more diagnostics and failure paths too,
   - and keep any such convention top-boundary-oriented rather than turning child-to-child wiring into hidden inference everywhere.
 - Track and later retire the current architectural hotspot set deliberately instead of letting it stay ambient debt:
   - split composition policy, interface inference, and top emission back out of `FSM::Pipeline::HDLGenerator`,

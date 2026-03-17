@@ -2170,6 +2170,9 @@ sub build_composition_module_info ($self, $composition_plan, $composition_report
         composition_resolved_link_count => $composition_report
             ? $composition_report->{resolved_link_count}
             : scalar(@{$composition_plan->resolved_links || []}),
+        composition_override_count => $composition_report
+            ? $composition_report->{override_count}
+            : 0,
         composition_lane => $composition_plan->lane,
         composition_provenance => $composition_report,
     };
@@ -2183,6 +2186,9 @@ sub build_composition_statistics ($self, $composition_plan, $composition_report 
     $stats->{composition_resolved_link_count} = $composition_report
         ? $composition_report->{resolved_link_count}
         : scalar(@{$composition_plan->resolved_links || []});
+    $stats->{composition_override_count} = $composition_report
+        ? $composition_report->{override_count}
+        : 0;
     $stats->{composition_lane} = $composition_plan->lane;
     $stats->{composition_provenance} = $composition_report if $composition_report;
     return $stats;
@@ -2227,16 +2233,25 @@ sub build_composition_provenance_report ($self, $composition_plan) {
         $resolved_link_category_counts{$entry->{origin_category}}++;
     }
 
+    my @override_events = @{$self->build_composition_override_events($composition_plan)};
+    my %override_kind_counts;
+    for my $event (@override_events) {
+        $override_kind_counts{$event->{kind}}++;
+    }
+
     return {
         lane => $composition_plan->lane,
         top_port_count => scalar(@ports),
         resolved_link_count => scalar(@resolved_links),
+        override_count => scalar(@override_events),
         ports => \@ports,
         resolved_links => \@resolved_links,
+        override_events => \@override_events,
         port_origin_counts => \%port_origin_counts,
         port_category_counts => \%port_category_counts,
         resolved_link_origin_counts => \%resolved_link_origin_counts,
         resolved_link_category_counts => \%resolved_link_category_counts,
+        override_kind_counts => \%override_kind_counts,
         ordered_port_origins => [
             sort {
                 $self->composition_provenance_sort_key($a) <=> $self->composition_provenance_sort_key($b)
@@ -2251,7 +2266,99 @@ sub build_composition_provenance_report ($self, $composition_plan) {
                 $self->composition_provenance_label($a) cmp $self->composition_provenance_label($b)
             } keys %resolved_link_origin_counts
         ],
+        ordered_override_kinds => [
+            sort { $self->composition_override_label($a) cmp $self->composition_override_label($b) }
+            keys %override_kind_counts
+        ],
     };
+}
+
+sub build_composition_override_events ($self, $composition_plan) {
+    my @events;
+    my @resolved_links = @{$composition_plan->resolved_links || []};
+    my %same_name_endpoints;
+
+    for my $instance (@{$composition_plan->instances || []}) {
+        for my $port (@{$instance->interface_ports || []}) {
+            push @{$same_name_endpoints{$port->name}}, {
+                instance_name => $instance->instance_name,
+                port => $port,
+            };
+        }
+    }
+
+    for my $top_port (@{$composition_plan->ports || []}) {
+        next unless ($top_port->binding_mode || 'explicit') eq 'explicit';
+        my $type = $top_port->type || '';
+        next if $type eq 'clock' || $type eq 'reset';
+
+        my @same_name_candidates = @{$same_name_endpoints{$top_port->name} || []};
+        next unless @same_name_candidates;
+
+        my @touching_explicit_toplinks = grep {
+            (($_->origin_kind || '') eq 'declared_explicit_toplink')
+            && (
+                (($_->source || '') eq $top_port->name)
+                || (($_->target || '') eq $top_port->name)
+            )
+        } @resolved_links;
+        next unless @touching_explicit_toplinks;
+
+        if (($top_port->direction || '') eq 'input') {
+            my @compatible = grep {
+                (($_->{port}->direction || '') eq 'input')
+                && $_->{port}->width == $top_port->width
+                && $self->normalized_interface_type($_->{port}->type)
+                    eq $self->normalized_interface_type($top_port->type)
+            } @same_name_candidates;
+
+            next unless @compatible == @same_name_candidates;
+
+            push @events, {
+                kind => 'explicit_toplink_overrides_same_name_top_input_convention',
+                top_port_name => $top_port->name,
+                lane => $composition_plan->lane,
+            };
+            next;
+        }
+
+        next unless ($top_port->direction || '') eq 'output';
+
+        my @input_candidates = grep { (($_->{port}->direction || '') eq 'input') } @same_name_candidates;
+        next if @input_candidates;
+
+        my @compatible_output_candidates = grep {
+            (($_->{port}->direction || '') eq 'output')
+            && $_->{port}->width == $top_port->width
+            && $self->normalized_interface_type($_->{port}->type)
+                eq $self->normalized_interface_type($top_port->type)
+        } @same_name_candidates;
+
+        next unless @compatible_output_candidates == @same_name_candidates;
+        next unless @compatible_output_candidates == 1;
+
+        push @events, {
+            kind => 'explicit_toplink_overrides_same_name_top_output_convention',
+            top_port_name => $top_port->name,
+            lane => $composition_plan->lane,
+        };
+    }
+
+    my %seen_reexports;
+    for my $resolved_link (@resolved_links) {
+        next unless ($resolved_link->origin_kind || '') eq 'inferred_internal_carrier_reexport_link';
+        my $top_port_name = $resolved_link->target;
+        next if $seen_reexports{$top_port_name}++;
+
+        push @events, {
+            kind => 'explicit_top_output_reexports_internal_carrier',
+            top_port_name => $top_port_name,
+            source => $resolved_link->source,
+            lane => $composition_plan->lane,
+        };
+    }
+
+    return \@events;
 }
 
 sub composition_provenance_category ($self, $origin_kind) {
@@ -2301,6 +2408,19 @@ sub composition_provenance_label ($self, $origin_kind) {
     return $labels{$origin_kind} if defined $labels{$origin_kind};
 
     (my $label = $origin_kind) =~ s/_/ /g;
+    return $label;
+}
+
+sub composition_override_label ($self, $kind) {
+    my %labels = (
+        explicit_toplink_overrides_same_name_top_input_convention => 'explicit toplink overrides same-name top-input convention',
+        explicit_toplink_overrides_same_name_top_output_convention => 'explicit toplink overrides same-name top-output convention',
+        explicit_top_output_reexports_internal_carrier => 'explicit top output re-exports internal carrier',
+    );
+
+    return $labels{$kind} if defined $labels{$kind};
+
+    (my $label = $kind) =~ s/_/ /g;
     return $label;
 }
 

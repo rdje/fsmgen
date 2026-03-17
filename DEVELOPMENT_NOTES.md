@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: composition provenance now reports local override events too
+- Continued the active `R11` lane by making the first “overridden” cases visible in successful composition runs instead of stopping at declared-versus-inferred counts.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now derives override events into `composition_report`,
+  - those events currently cover explicit toplinks overriding same-name top-input/top-output convention and explicit top outputs re-exporting inferred internal carriers,
+  - and [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prints a dedicated `Convention Overrides` section when such events are present.
+- Why this is worth shipping:
+  - it turns the roadmap’s “overridden” concept into real surfaced data instead of leaving it implicit in planner behavior,
+  - it keeps the reporting layer additive and bounded,
+  - and it makes the next diagnostics step clearer: the remaining gap is now mostly the “blocked” side, not override visibility.
+- [t/105-composition-override-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/105-composition-override-reporting.t) locks both explicit-toplink override reporting and explicit top-output internal-carrier re-export reporting across pipeline and CLI surfaces.
 ## 2026-03-17: composition provenance now reaches the result hash and CLI summary
 - Continued the active `R11` lane by turning the new plan-side provenance metadata into something users and embedding callers can actually see without spelunking typed plan objects manually.
 - Landed behavior:

@@ -197,6 +197,7 @@ Combinational DT note:
 - Composition results now also carry a user-facing provenance summary:
   - `generate_hdl_from_file(...)` returns `composition_report` for composition sources,
   - that report summarizes top-port and resolved-link provenance by `origin_kind`,
+  - it also reports the first shipped local override cases, including explicit top links overriding same-name convention and explicit top outputs re-exporting inferred internal carriers,
   - and non-quiet `bin/fsmgen` runs now print the same composition provenance summary directly in the CLI close-out.
 
 ### Implemented, but not strong enough yet to call fully supported

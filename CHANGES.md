@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### composition provenance now reports local override events too
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `composition_report` now surfaces the first shipped override events:
+  - explicit toplinks overriding same-name top-input convention,
+  - explicit toplinks overriding same-name top-output convention,
+  - and explicit top outputs re-exporting inferred internal carriers.
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet composition runs now print a `Convention Overrides` section when those override events are present.
+- This shipped slice stays additive:
+  - it builds on the earlier provenance summary instead of replacing it,
+  - it also flows the override count through composition `module_info` and `statistics`,
+  - and it leaves the next diagnostics gap clearly on the “blocked” side.
+- Added [t/105-composition-override-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/105-composition-override-reporting.t) to lock:
+  - pipeline-side override reporting for explicit toplinks overriding same-name convention,
+  - pipeline-side override reporting for explicit top-output re-export of inferred internal carriers,
+  - and CLI override-summary output.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this is tracked as a deliberate `R11` reporting slice.
+
 ### composition provenance now reaches the result hash and CLI summary
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition runs now produce `composition_report`, including top-port and resolved-link provenance counts grouped from the earlier `origin_kind` metadata.
 - Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet composition runs now print:

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: composition provenance now reports local override events too
+- Saved shipped behavior:
+  - `composition_report` now includes the first surfaced override-event family,
+  - non-quiet `bin/fsmgen` runs now print a `Convention Overrides` summary when those events are present,
+  - and composition `module_info` / `statistics` now carry the override count too.
+- Important continuity note:
+  - the currently shipped override events are bounded to explicit toplinks overriding same-name top-input/top-output convention and explicit top-output re-export of inferred internal carriers,
+  - this closes the first “overridden” visibility gap,
+  - and the next reporting/diagnostics gap is now mostly “blocked” cases rather than more successful-run override visibility.
+- [t/105-composition-override-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/105-composition-override-reporting.t) locks the new override-report surface.
 ## 2026-03-17: composition provenance now reaches the result hash and CLI summary
 - Saved shipped behavior:
   - composition runs now return `composition_report`,

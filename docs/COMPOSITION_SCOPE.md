@@ -95,6 +95,7 @@ The currently shipped composition behavior is intentionally bounded:
 - composition generation results now also expose a user-facing provenance summary:
   - `FSM::Pipeline::HDLGenerator->generate_hdl_from_file(...)` returns `composition_report` for composition sources,
   - that report summarizes top-port and resolved-link provenance by `origin_kind`,
+  - it also summarizes the first shipped local override events, such as explicit top links overriding same-name convention and explicit top outputs re-exporting inferred internal carriers,
   - and `bin/fsmgen` now prints the same provenance summary during non-quiet composition runs,
 - realized child interface currently means:
   - effective system inputs from the active FSM generator contract:

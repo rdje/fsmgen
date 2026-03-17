@@ -405,6 +405,7 @@ unless ($quiet) {
         print "Children: " . ($module_info->{composition_child_count} // 0) . "\n";
         print "Top ports: " . ($composition_report->{top_port_count} // 0) . "\n";
         print "Resolved links: " . ($composition_report->{resolved_link_count} // 0) . "\n";
+        print "Convention overrides: " . ($composition_report->{override_count} // 0) . "\n";
         print "Internal nets: " . ($module_info->{composition_net_count} // 0) . "\n";
 
         if (@{$composition_report->{ordered_port_origins} || []}) {
@@ -421,6 +422,15 @@ unless ($quiet) {
             for my $origin_kind (@{$composition_report->{ordered_resolved_link_origins}}) {
                 my $label = $pipeline->composition_provenance_label($origin_kind);
                 my $count = $composition_report->{resolved_link_origin_counts}{$origin_kind} || 0;
+                print "  - $label: $count\n";
+            }
+        }
+
+        if (@{$composition_report->{ordered_override_kinds} || []}) {
+            print "\nConvention Overrides:\n";
+            for my $kind (@{$composition_report->{ordered_override_kinds}}) {
+                my $label = $pipeline->composition_override_label($kind);
+                my $count = $composition_report->{override_kind_counts}{$kind} || 0;
                 print "  - $label: $count\n";
             }
         }
