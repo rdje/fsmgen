@@ -182,6 +182,8 @@ Combinational DT note:
 - `C2` lane: multiple generated children (`?fsmc` / `?dtc`) plus explicit `?toplink` wiring and deterministic internal nets
 - `C3` lane: explicit `?toplink` composition with at least one `?rtl` child and any number of generated children (`?fsmc` or `?dtc`) beside those RTL children, with `.rtlif`-based interface validation
 - `C4` lane: declared connect-by-name through `=name` in `?ports` for one or more generated children, one or more `?rtl` children, or any mixture of those generated and external RTL children
+  - top outputs still require exactly one matching child output
+  - top inputs may fan out to one or more matching child inputs of the same name and width
 - `C5` diagnostics: duplicate-driver rejection, explicit-link width mismatch rejection, connect-by-name ambiguity rejection, connect-by-name unknown-endpoint rejection, and width mismatch rejection
 - `C6` scoped rejection of legacy out-of-scope composition constructs
 
@@ -754,7 +756,8 @@ Current narrow declared connect-by-name example:
 
 This currently works because:
 - `=enable<` and `=output_data>8` declare that those top ports must be resolved by same-name matching rather than by explicit `?toplink` wiring,
-- exactly one compatible child endpoint exists for each declared top port,
+- each declared top output has exactly one compatible child output,
+- each declared top input has one or more compatible child inputs,
 - compatibility means same name, same direction, and same width,
 - ambiguous or missing matches fail explicitly.
 
@@ -859,7 +862,8 @@ Practical rules for `=name`:
 - use it only when the top-level name should intentionally stay the same as the child endpoint name,
 - use normal explicit `?toplink` when you need renaming, remapping, or multiple non-system connections,
 - do not use `=clk`, `=rstn`, or `=rst_n`; those already use the dedicated shared system-input contract,
-- a match is valid only when exactly one child endpoint has the same name, same direction, and same width.
+- a top-output match is valid only when exactly one child output has the same name and width.
+- a top-input match is valid when one or more child inputs have the same name and width.
 - if widths do not match, generation fails before emission and the diagnostic names both endpoints and their widths.
 
 Current narrow mixed FSM + external RTL example:

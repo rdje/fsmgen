@@ -1,14 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
-## 2026-03-17: future `=name` connect-by-name should become asymmetric at the top boundary
-- Captured a useful integration-oriented refinement before implementing it:
-  - top outputs declared with `=name` should stay strict and bind only when exactly one matching child output exists with the same name and width,
-  - but top inputs declared with `=name` should be allowed to fan out to all matching child inputs of the same name and width.
-- Why this direction is better:
-  - single-source output binding keeps producer ownership explicit and avoids hidden multi-driver behavior,
-  - input broadcast is a real integration convenience because one top input often feeds several child inputs with the same conventional name,
-  - and it keeps `=name` useful for real wrapper/integration work without widening child-to-child wiring into implicit inference.
-- This is intentionally saved as future `R11` contract work, not shipped behavior yet. The current tool still uses the stricter exact-one-match rule for both directions until a dedicated implementation slice lands.
+## 2026-03-17: declared top-input `=name` now fans out across matching child inputs
+- Continued the active `R11` lane by implementing the asymmetric top-boundary connect-by-name refinement we had just captured.
+- Landed behavior:
+  - top outputs declared with `=name` still require exactly one matching child output of the same name and width,
+  - top inputs declared with `=name` now fan out to all matching child inputs of the same name and width,
+  - and mixed-direction or width-mismatched same-name candidates still fail explicitly instead of being silently ignored.
+- Why this is worth shipping:
+  - it keeps producer ownership strict on outputs,
+  - it gives a real convention-over-configuration speedup for common integration cases where one parent input should feed several children,
+  - and it improves the usefulness of the current explicit `=name` contract without yet widening into full undeclared top-interface inference.
+- [t/95-composition-connect-by-name-input-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/95-composition-connect-by-name-input-fanout.t) locks fanout success plus mixed-direction rejection.
 
 ## 2026-03-17: declared connect-by-name `C4` now covers multi-generated-plus-`?rtl` tops too
 - Continued the active `R11` lane by broadening the already-shipped declared connect-by-name planner one more bounded step instead of introducing another wiring mode.

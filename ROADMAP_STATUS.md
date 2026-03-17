@@ -60,8 +60,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `R11` Composition contract strengthening.
 - Current next decision point:
   - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, `?dtc` composition child reuse, embedded `.rtlif` roots, and the new broader external-RTL `C3`/`C4` slices are all fresh in the tree.
-  - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, and single-/multi-`?rtl` composition edges across both explicit-link and declared by-name lanes, `C3` now covers multi-generated-child mixed explicit-link tops as long as at least one `?rtl` child is present, and `C4` now covers the same broader mixed child set under the exact-match by-name rule.
-  - The next bounded `C4` refinement is now identified too: keep single-source exact-match semantics for top outputs, but let top inputs declared with `=name` fan out to all matching child inputs of the same name and width.
+  - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, and single-/multi-`?rtl` composition edges across both explicit-link and declared by-name lanes, `C3` now covers multi-generated-child mixed explicit-link tops as long as at least one `?rtl` child is present, and `C4` now covers the same broader mixed child set with exact-one-match top outputs and fanout-capable top inputs.
+  - The next bounded convention-over-configuration choice is now above that: whether safe undeclared top-interface inference should start creating parent inputs/outputs and internal same-name carriers automatically.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
 
 ## Workstreams
@@ -204,7 +204,7 @@ Done:
 - The first shipped `C3` runtime slice now exists for mixed composition: exactly one generated child (`?fsmc` or `?dtc`) plus one external `?rtl` child, typed explicit `?toplink` endpoint resolution across mixed children, deterministic internal-net creation, and explicit RTL instantiation without regenerating external RTL internals.
 - External RTL interface metadata is now loaded through a typed sidecar contract (`<module>.rtlif`) searched relative to the composition source and existing source-library roots, which keeps `?rtl` as a composition-time interface-binding concern instead of reviving legacy plugin/eval loaders.
 - `t/22-composition-fsm-plus-rtl.t` and [t/85-composition-standalone-dt-children.t](/Users/richarddje/Documents/github/fsmgen/t/85-composition-standalone-dt-children.t) now lock the first mixed generated-child + `?rtl` success paths, and `t/23-composition-errors.t` now also locks duplicate-driver, unknown external-port, and direction-mismatch diagnostics.
-- The first shipped `C4` runtime slice now exists for declared top-port connect-by-name: `?ports` can mark a top port as `=name`, and the planner now auto-binds it only when exactly one same-named child endpoint matches by direction and width.
+- The first shipped `C4` runtime slice now exists for declared top-port connect-by-name: `?ports` can mark a top port as `=name`, top outputs still require exactly one same-named child output with matching width, and top inputs can now fan out to all same-named child inputs with matching width.
 - `t/24-composition-connect-by-name.t` now locks the first `C4` success path plus ambiguous-match and unknown-name failures, and `t/14-composition-parser.t` now locks the `=port` parser shape.
 - The first shipped `C5` diagnostic boundary now exists across both explicit links and declared connect-by-name:
   - explicit `?toplink` width mismatches are locked by regression,
@@ -633,6 +633,13 @@ Done:
   - and ambiguous multi-`?rtl` declared connect-by-name rejection.
 - [t/94-composition-multi-generated-plus-rtl-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/94-composition-multi-generated-plus-rtl-connect-by-name.t) now locks:
   - multi-generated-plus-`?rtl` declared connect-by-name `C4` success.
+- The next bounded declared connect-by-name refinement is now also shipped:
+  - top outputs still require exactly one matching child output,
+  - top inputs declared with `=name` now fan out to all matching child inputs of the same name and width,
+  - and mixed-direction same-name candidates now fail explicitly instead of being ignored.
+- [t/95-composition-connect-by-name-input-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/95-composition-connect-by-name-input-fanout.t) now locks:
+  - top-input fanout success across multiple same-name child inputs,
+  - and mixed-direction same-name rejection for declared top-input connect-by-name.
 Left:
 - Decide whether later work should keep the now-formalized `.rtlif` interface-source family as embedded-root plus sidecar metadata, or place a stronger interface-source contract above it.
 - Turn the new shared-datapath extraction direction into a real contract:
@@ -653,10 +660,10 @@ Left:
   - extend the now-shipped generated-child contract beyond the current `?fsmc` / `?dtc` `C1` / `C2` / `C3` plus generated-only and mixed-lane `C4` slices into reusable-module interface/export rules,
   - and extend the now-shipped `--path` / `FSMLIB` lookup slice beyond bare top-level inputs, generated child sources, and `.rtlif` metadata lookup.
 - Refine declared top-port connect-by-name into an asymmetric integration-oriented contract:
-  - top outputs declared with `=name` should still require exactly one matching child output of the same name and width,
-  - top inputs declared with `=name` should fan out to all matching child inputs of the same name and width,
-  - mixed-direction or width-mismatched same-name candidates should still fail explicitly,
-  - and this refinement should stay top-boundary-only rather than turning child-to-child wiring into hidden inference.
+  - decide whether future convention-over-configuration work should let some top inputs/outputs be inferred even without `=name`,
+  - decide whether unique same-name producer-to-consumer child links should create internal carriers automatically,
+  - decide how such inferred internal carriers may be re-exported explicitly at the top boundary,
+  - and keep any such convention top-boundary-oriented rather than turning child-to-child wiring into hidden inference everywhere.
 - Add any needed diagnostics/tests before considering broader composition growth.
 Exit criteria:
 - External-RTL composition uses a clearly specified interface contract that is stronger and easier to reason about than the current “implemented convention” state.

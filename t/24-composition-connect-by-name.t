@@ -245,8 +245,8 @@ $width_mismatch_exception = $@;
 
 like(
     $width_mismatch_exception,
-    qr/top port 'final_data' has width 4 while child endpoint 'consumer\.final_data' has width 8/s,
-    'declared connect-by-name rejects width mismatches with both endpoints and conflicting widths',
+    qr/same-name child endpoints do not all match the declared width 4.*consumer\.final_data\[output, width=8\]/s,
+    'declared connect-by-name rejects width mismatches while naming the conflicting same-name endpoint set',
 );
 like(
     $width_mismatch_exception,

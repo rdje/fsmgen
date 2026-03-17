@@ -1,12 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
-## 2026-03-17: future `=name` connect-by-name should become asymmetric for top inputs vs outputs
-- Saved future direction:
-  - `=name` top outputs should stay exact-one-match against child outputs,
-  - `=name` top inputs should later be allowed to fan out to all matching child inputs with the same name and width.
+## 2026-03-17: declared top-input `=name` now fans out across matching child inputs
+- Saved shipped behavior:
+  - `=name` top outputs still stay exact-one-match against child outputs,
+  - `=name` top inputs now fan out to all matching child inputs with the same name and width.
 - Important continuity note:
-  - this is not shipped yet; current `C4` still uses the stricter exact-one-match rule for both directions.
-  - the saved reason for the later change is integration ergonomics: one parent input often needs to feed several conventionally named child inputs, while outputs still need single-source ownership.
+  - mixed-direction or width-mismatched same-name candidates now fail explicitly instead of being silently filtered,
+  - so the current boundary is more integration-friendly without becoming broad undeclared inference.
+- [t/95-composition-connect-by-name-input-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/95-composition-connect-by-name-input-fanout.t) locks the new fanout behavior plus mixed-direction rejection.
 
 ## 2026-03-17: declared connect-by-name `C4` now covers multi-generated-plus-`?rtl` tops too
 - Saved shipped behavior:

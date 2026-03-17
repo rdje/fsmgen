@@ -1,11 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
-### saved future asymmetric `=name` refinement for top-boundary integration
-- Recorded the next likely `R11` connect-by-name refinement in [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md):
-  - `=name` top outputs should stay exact-one-match,
-  - `=name` top inputs should later fan out to all matching child inputs with the same name and width,
-  - and this should remain a top-boundary convenience rather than becoming hidden child-to-child inference.
+### declared top-input `=name` now fans out across matching child inputs
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so declared connect-by-name is now direction-asymmetric at the top boundary:
+  - `=name` top outputs still require exactly one matching child output,
+  - `=name` top inputs now fan out to all matching child inputs with the same name and width,
+  - and mixed-direction or width-mismatched same-name candidates now fail explicitly instead of being ignored.
+- Added [t/95-composition-connect-by-name-input-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/95-composition-connect-by-name-input-fanout.t) to lock:
+  - top-input fanout success across multiple same-name child inputs,
+  - and mixed-direction same-name rejection for declared top-input connect-by-name.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the active `R11` lane now describes the asymmetric by-name rule honestly.
 
 ### declared connect-by-name `C4` now covers multi-generated-plus-`?rtl` tops too
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `C4` no longer stops after one generated child when external RTL already participates in the by-name plan. The active `C4` contract now accepts one or more generated children, one or more `?rtl` children, or any mixture of those generated and external RTL children under the same exact-match rule.

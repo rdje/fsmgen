@@ -27,7 +27,9 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - top ports can be declared as `=name` inside `?ports` to request explicit same-name connect-by-name,
   - declared connect-by-name now covers one or more generated children, one or more external `?rtl` children, or any mixture of those generated and external RTL children,
   - declared connect-by-name can also coexist with explicit `?toplink` child-to-child wiring in those same bounded lanes,
-  - the planner auto-binds only when exactly one child endpoint matches by name, direction, and width,
+  - declared top outputs still require exactly one matching child output,
+  - declared top inputs may now fan out to all matching child inputs with the same name and width,
+  - the planner still stays deterministic: exact-one-match for top outputs, fanout across fully compatible child inputs for top inputs,
   - ambiguous or missing matches fail explicitly instead of falling back to hidden inference.
 - The active toolchain now also ships the first `C6` boundary:
   - out-of-scope legacy composition constructs fail explicitly and point to the scoped composition docs instead of falling through to generic parser behavior.
@@ -49,7 +51,9 @@ The currently shipped composition behavior is intentionally bounded:
 - `C2` multi-generated-child composition uses explicit `?toplink`,
 - `C3` explicit-link composition currently supports any explicit-link top with at least one external `?rtl` child, including pure multi-`?rtl`, one-generated-plus-`?rtl`, and multi-generated-plus-`?rtl` mixtures,
 - `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one or more generated children, one or more external `?rtl` children, or any mixture of those generated and external RTL children,
-- each `=name` top port must resolve to exactly one same-named child endpoint with the same direction and width,
+- each `=name` top output must resolve to exactly one same-named child output with the same width,
+- each `=name` top input may resolve to one or more same-named child inputs with the same width,
+- mixed-direction or width-mismatched same-name candidates still fail explicitly,
 - each `?rtl` child currently loads its interface from an embedded `(?rtlif:module_name ...)` companion root in the same composition source when present, otherwise from a sidecar `<module>.rtlif` metadata file searched first beside the composition source, then through explicit search roots such as repeated `--path DIR`, and then through the existing `FSMLIB` roots,
 - the shipped `.rtlif` mini-contract is one flat `(?rtlif:module_name ...)` root with declaration-ordered port tokens such as `clk`, `data_in<8`, `txd>`, `core_clk:clock`, and `rst_async_n:reset`,
 - explicit `.rtlif` type annotations are currently limited to `data`, `clock`, and `reset`,
@@ -238,12 +242,16 @@ Status:
 
 ### C4. Connect-by-name only when unambiguous
 Status:
-- Implemented in the current active toolchain for top ports declared as `=name` inside `?ports`, with exact same-name matching against exactly one compatible child endpoint across the shipped single-child (`?fsmc`, `?dtc`, or `?rtl`), multi-generated-child, multi-`?rtl`, and mixed generated-child plus external RTL lanes.
+- Implemented in the current active toolchain for top ports declared as `=name` inside `?ports`, with direction-asymmetric same-name matching across the shipped single-child (`?fsmc`, `?dtc`, or `?rtl`), multi-generated-child, multi-`?rtl`, and mixed generated-child plus external RTL lanes.
+- Implemented in the current active toolchain for top ports declared as `=name` inside `?ports`, with direction-asymmetric same-name matching:
+  - top outputs still require exactly one compatible child output,
+  - top inputs may fan out to one or more compatible child inputs.
 
 - Input:
   - composition relying on declared connect-by-name.
 - Must prove:
-  - exact declared matches connect automatically,
+  - exact declared top outputs connect automatically when one unique child output matches,
+  - exact declared top inputs can fan out automatically to one or more child inputs,
   - declared `=name` may coexist with explicit child-to-child `?toplink` wiring in the same bounded top,
   - ambiguous matches are rejected,
   - undeclared/unknown names are rejected.
