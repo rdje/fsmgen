@@ -301,20 +301,6 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @instances;
 
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active composition lanes require exactly one explicit '?ports' block. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless @ports_blocks == 1;
-
-    my $ports_block = $ports_blocks[0];
-    my @ports = @{$ports_block->ports || []};
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active composition lanes require '?ports' to declare at least one explicit top port. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless @ports;
-
     my @realized_instances;
     for my $instance (@instances) {
         if ($instance->kind eq 'fsmc') {
@@ -335,6 +321,39 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
         Carp::confess
             "Composition source '$header' in '$fsm_file' uses unsupported child kind '".$instance->kind."'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    my $is_single_child_passthrough = @realized_instances == 1 && !@toplinks;
+    my $allows_implicit_c1_ports =
+        $is_single_child_passthrough
+        && (
+            @ports_blocks == 0
+            || (@ports_blocks == 1 && !(scalar(@{$ports_blocks[0]->ports || []})))
+        );
+
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
+        "but the current active composition lanes require exactly one explicit '?ports' block, ".
+        "except that the single-child passthrough C1 lane may now infer the top interface when '?ports' is omitted or empty. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless @ports_blocks <= 1;
+
+    my $ports_block = $ports_blocks[0];
+    my @ports = $ports_block ? @{$ports_block->ports || []} : ();
+
+    if (!$allows_implicit_c1_ports) {
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
+            "but the current active composition lanes require exactly one explicit '?ports' block. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless @ports_blocks == 1;
+
+        Carp::confess
+            "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
+            "but the current active composition lanes require '?ports' to declare at least one explicit top port, ".
+            "except that the single-child passthrough C1 lane may now infer the top interface when '?ports' is omitted or empty. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless @ports;
     }
 
     my $rtl_instance_count = scalar(grep { $_->kind eq 'rtl' } @realized_instances);
@@ -676,26 +695,55 @@ sub assert_unique_top_ports ($self, $ports_block, $fsm_file, $header) {
 
 sub build_c1_composition_plan ($self, $composition_spec, $ports_block, $ports, $realized_instance, $fsm_file, $header) {
     my $child_port_info = $self->index_ports_by_name($realized_instance->interface_ports);
-    $self->assert_c1_port_exposure_matches_child($ports_block, $realized_instance, $child_port_info, $fsm_file, $header);
+    my @effective_ports = @{$ports || []};
+
+    if (@effective_ports) {
+        $self->assert_c1_port_exposure_matches_child($ports_block, $realized_instance, $child_port_info, $fsm_file, $header);
+    } else {
+        @effective_ports = @{$self->infer_c1_ports_from_child_interface($realized_instance, $fsm_file, $header)};
+    }
 
     my @port_bindings = map {
         {
             port_name => $_->name,
             signal_name => $_->name,
         }
-    } @{$ports || []};
+    } @effective_ports;
 
     my $planned_instance = $self->clone_realized_instance_with_bindings($realized_instance, \@port_bindings);
 
     return FSM::Composition::Plan->new(
         lane => 'C1',
         top_name => $composition_spec->top->name,
-        ports => $ports,
+        ports => \@effective_ports,
         links => [],
         nets => [],
         instances => [$planned_instance],
         raw_spec => $composition_spec,
     );
+}
+
+sub infer_c1_ports_from_child_interface ($self, $realized_instance, $fsm_file, $header) {
+    my @child_ports = @{$realized_instance->interface_ports || []};
+
+    Carp::confess
+        "Composition source '$header' in '$fsm_file' omits explicit top-port declarations in the single-child passthrough C1 lane, ".
+        "but realized child instance '".$realized_instance->instance_name."' exposes no ports to infer. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless @child_ports;
+
+    return [
+        map {
+            FSM::Composition::Port->new(
+                name => $_->name,
+                direction => $_->direction,
+                width => $_->width,
+                type => $_->type,
+                raw_token => undef,
+                binding_mode => 'implicit_passthrough',
+            )
+        } @child_ports
+    ];
 }
 
 sub assert_c1_port_exposure_matches_child ($self, $ports_block, $realized_instance, $child_port_info, $fsm_file, $header) {

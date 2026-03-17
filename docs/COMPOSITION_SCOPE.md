@@ -8,8 +8,8 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - one child instance, currently `?fsmc`, `?dtc`, or `?rtl`,
   - generated children realized either from the same file or from a searchable external `.fsm` source,
   - external RTL children realized from the shipped `.rtlif` interface contract,
-  - one explicit `?ports` block,
-  - deterministic same-name top wiring,
+  - either one explicit `?ports` block or an omitted/empty `?ports` shape that triggers bounded single-child top-interface inference,
+  - deterministic passthrough top wiring,
   - generated child HDL plus generated top HDL through `bin/fsmgen`.
 - The active toolchain now also ships the first `C2` composition lane:
   - two or more generated children (`?fsmc` / `?dtc`),
@@ -44,10 +44,11 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 ## Current shipped runtime subset
 The currently shipped composition behavior is intentionally bounded:
 - exactly one top-level `?top:name`,
-- exactly one explicit `?ports` block,
+- zero or one `?ports` block, with omitted/empty `?ports` currently allowed only for the single-child `C1` passthrough lane,
 - one or more child instances, currently `?fsmc`, `?dtc`, and `?rtl`,
 - every generated child must reference exactly one active child source, either embedded in the same file or resolved from an external `.fsm` file,
 - `C1` single-child passthrough works without `?toplink` for one `?fsmc`, `?dtc`, or `?rtl` child,
+- `C1` may infer the whole top interface directly from that lone child when `?ports` is omitted or empty,
 - `C2` multi-generated-child composition uses explicit `?toplink`,
 - `C3` explicit-link composition currently supports any explicit-link top with at least one external `?rtl` child, including pure multi-`?rtl`, one-generated-plus-`?rtl`, and multi-generated-plus-`?rtl` mixtures,
 - `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one or more generated children, one or more external `?rtl` children, or any mixture of those generated and external RTL children,
@@ -60,6 +61,7 @@ The currently shipped composition behavior is intentionally bounded:
 - typed `.rtlif` `clock` / `reset` tokens let custom-named RTL system ports auto-wire through composition without reviving broader hidden inference,
 - the current `C3` slice uses the RTL module name as the instance name,
 - top ports must match the realized child interface exactly by name, width, and direction in `C1`,
+- when `C1` infers ports, that inferred top interface is exactly the realized child interface by name, width, and direction,
 - explicit `?toplink` endpoints must match by role and exact width in `C2`, `C3`, and `C4`,
 - explicit and declared connect-by-name mismatches now fail before emission and identify the conflicting endpoints and widths,
 - realized child interface currently means:
@@ -202,16 +204,17 @@ These are the executable scenarios that must exist before `R6` can be closed.
 
 ### C1. Single-child passthrough top
 Status:
-- Implemented in the current active toolchain for one child (`?fsmc`, `?dtc`, or `?rtl`) with explicit same-name top exposure.
+- Implemented in the current active toolchain for one child (`?fsmc`, `?dtc`, or `?rtl`) with either explicit same-name top exposure or bounded omitted/empty-`?ports` top-interface inference.
 
 - Input:
-  - one `?top:name` with one child (`?fsmc`, `?dtc`, or `?rtl`) and explicit top-port exposure.
+  - one `?top:name` with one child (`?fsmc`, `?dtc`, or `?rtl`) and either explicit top-port exposure or an omitted/empty `?ports` shape.
 - Must prove:
   - top generation succeeds,
   - generated child HDL is emitted through the active pipeline when the child is generated,
   - external RTL children are instantiated but not regenerated when the child is `?rtl`,
   - top ports are emitted deterministically,
-  - child ports are wired exactly as declared.
+  - child ports are wired exactly as declared,
+  - and omitted/empty `?ports` in `C1` infers a top interface that matches the realized child interface exactly.
 
 ### C2. Two generated children with explicit child-to-child wiring
 Status:

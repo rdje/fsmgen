@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### single-child `C1` can now infer the top interface when `?ports` is omitted or empty
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the single-child `C1` composition lane now accepts either:
+  - no `?ports` block at all,
+  - or an empty `(?ports)` block,
+  - and in that bounded case infers the top interface directly from the lone realized child interface.
+- The shipped inference is intentionally narrow:
+  - it works only for single-child passthrough,
+  - it covers generated children and external `?rtl` children,
+  - and it does not yet widen into multi-child inferred carriers or broader undeclared top-interface inference.
+- Added [t/96-composition-implicit-single-child-ports.t](/Users/richarddje/Documents/github/fsmgen/t/96-composition-implicit-single-child-ports.t) to lock:
+  - omitted-`?ports` single-child `?fsmc` passthrough inference,
+  - and empty-`?ports` single-child `?rtl` passthrough inference.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the active `R11` lane now records this first undeclared-top-interface slice honestly.
+
 ### future `R11` now includes a portable synthesizable-type and inference-first lane
 - Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) so `R11` now carries a concrete future sub-lane for portable synthesizable scalar/aggregate types instead of leaving that topic as informal brainstorming.
 - The saved future contract now records:

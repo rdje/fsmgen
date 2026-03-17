@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: single-child `C1` now infers top ports when `?ports` is omitted or empty
+- Saved shipped behavior:
+  - `C1` single-child passthrough now accepts no `?ports` block or an empty `(?ports)` block,
+  - and in that bounded case the generated top interface is inferred directly from the lone realized child interface.
+- Important continuity note:
+  - this is deliberately not broad multi-child inference yet,
+  - it works because both generated children and external `?rtl` children already realize typed interfaces,
+  - and the next convention-over-configuration question is whether undeclared inference should widen beyond this simple passthrough slice.
+- [t/96-composition-implicit-single-child-ports.t](/Users/richarddje/Documents/github/fsmgen/t/96-composition-implicit-single-child-ports.t) locks omitted-`?ports` `?fsmc` passthrough inference and empty-`?ports` `?rtl` passthrough inference.
+
 ## 2026-03-17: future `R11` now includes a portable synthesizable-type and inference-first lane
 - Saved future direction:
   - `R11` now explicitly includes portable synthesizable scalar/aggregate types as a concrete sub-lane instead of relying on conversation memory,

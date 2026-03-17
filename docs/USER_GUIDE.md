@@ -14,11 +14,11 @@ Current limitation:
 - Composition/top-level generation is implemented in a deliberately narrow active model.
 - The currently shipped composition boundary is:
   - one `?top:name`,
-  - one explicit `?ports` block,
+  - zero or one `?ports` block, with omitted/empty `?ports` currently allowed only for bounded single-child `C1` passthrough inference,
   - one or more child instances, currently `?fsmc`, `?dtc`, and `?rtl`,
   - generated child sources realized either from the same file or from external searchable `.fsm` child sources,
   - external RTL children realized through embedded or sidecar `.rtlif` interface metadata,
-  - `C1` single-child passthrough via deterministic same-name wiring,
+  - `C1` single-child passthrough via deterministic same-name wiring or exact child-interface inference when `?ports` is omitted or empty,
   - `C2` multi-generated-child composition via explicit `?toplink` wiring with `instance.port` child endpoints.
   - `C3` explicit-link composition for any explicit-link top that includes at least one `?rtl` child.
   - `C4` declared top-port connect-by-name via `=name` declarations inside `?ports`.
@@ -665,11 +665,6 @@ Examples:
 Current narrow composition example:
 ```lisp
 (?top:single_child_top
-  (?ports:public_io
-    clk
-    rstn
-    output_data>8
-  )
   (?fsmc:child_ctrl child_ctrl_src)
 )
 
@@ -690,7 +685,7 @@ Current narrow composition example:
 This currently works because:
 - the child FSM may be embedded in the same file or resolved from a sibling/searchable external `.fsm` source,
 - the child exposes `output_data` explicitly as an output,
-- the top `?ports` block matches the realized child interface exactly.
+- and in the bounded `C1` lane the top interface may now be inferred directly from that lone realized child when `?ports` is omitted.
 
 Current narrow standalone-DT child example:
 ```lisp
@@ -716,7 +711,7 @@ Current narrow standalone-DT child example:
 This currently works because:
 - the child is a standalone `?dt:name` module source,
 - the combinational DT child exposes only its real user-facing ports,
-- and the top `?ports` block matches that realized child interface exactly.
+- and the explicit top `?ports` block matches that realized child interface exactly.
 
 Current narrow multi-child example:
 ```lisp

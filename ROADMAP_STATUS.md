@@ -60,8 +60,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `R11` Composition contract strengthening.
 - Current next decision point:
   - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, `?dtc` composition child reuse, embedded `.rtlif` roots, and the new broader external-RTL `C3`/`C4` slices are all fresh in the tree.
-  - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, and single-/multi-`?rtl` composition edges across both explicit-link and declared by-name lanes, `C3` now covers multi-generated-child mixed explicit-link tops as long as at least one `?rtl` child is present, and `C4` now covers the same broader mixed child set with exact-one-match top outputs and fanout-capable top inputs.
-  - The next bounded convention-over-configuration choice is now above that: whether safe undeclared top-interface inference should start creating parent inputs/outputs and internal same-name carriers automatically.
+  - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, and single-/multi-`?rtl` composition edges across both explicit-link and declared by-name lanes, `C3` now covers multi-generated-child mixed explicit-link tops as long as at least one `?rtl` child is present, `C4` now covers the same broader mixed child set with exact-one-match top outputs and fanout-capable top inputs, and `C1` now supports the first bounded undeclared top-interface inference slice for omitted/empty `?ports`.
+  - The next bounded convention-over-configuration choice is now above that: whether safe undeclared top-interface inference should widen beyond single-child passthrough into multi-child parent inputs/outputs and internal same-name carriers.
   - A second future convention-over-configuration lane is now explicitly recorded too: whether scalar and aggregate signal types should be inferred by default from LHS/RHS/member/index usage, with explicit declarations used mainly as overrides.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
 
@@ -634,6 +634,13 @@ Done:
   - single `?rtl` passthrough `C1` success,
   - single `?rtl` explicit-toplink `C3` success,
   - and single `?rtl` declared connect-by-name `C4` success.
+- The first bounded undeclared top-interface inference slice is now also shipped:
+  - `C1` single-child passthrough may now omit `?ports` entirely or use an empty `(?ports)` block,
+  - in that bounded case the top interface is inferred directly from the lone realized child interface,
+  - and that inference currently stays limited to the single-child passthrough lane instead of widening into broader multi-child carrier inference.
+- [t/96-composition-implicit-single-child-ports.t](/Users/richarddje/Documents/github/fsmgen/t/96-composition-implicit-single-child-ports.t) now locks:
+  - omitted-`?ports` single-child `?fsmc` passthrough inference,
+  - and empty-`?ports` single-child `?rtl` passthrough inference.
 - [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) now locks:
   - multi-`?rtl` explicit-toplink `C3` success,
   - and one-generated-plus-multi-`?rtl` explicit-toplink `C3` success.
@@ -679,6 +686,7 @@ Left:
   - add member/field and fixed-size array access without overcommitting to aggregate literals too early,
   - and keep explicit type declarations available as bounded overrides instead of the default authoring burden.
 - Refine declared top-port connect-by-name into an asymmetric integration-oriented contract:
+  - decide how far future convention-over-configuration work should widen undeclared top-interface inference beyond the newly shipped single-child `C1` passthrough slice,
   - decide whether future convention-over-configuration work should let some top inputs/outputs be inferred even without `=name`,
   - decide whether unique same-name producer-to-consumer child links should create internal carriers automatically,
   - decide how such inferred internal carriers may be re-exported explicitly at the top boundary,

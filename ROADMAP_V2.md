@@ -170,6 +170,7 @@ First shipped `R11` slice now in tree:
   - the same explicit search roots feeding current `.rtlif` metadata lookup ahead of `FSMLIB`,
   - external `?fsmc` composition child sources resolved from sibling or searched `.fsm` files without leaving the active typed pipeline,
   - `?dtc` composition child realization from embedded or external standalone-DT sources, including honest non-system interfaces for purely combinational DT children,
+  - bounded single-child `C1` top-interface inference when `?ports` is omitted or empty, with the inferred top interface matching the lone realized child interface exactly,
   - single-generated-child declared connect-by-name through `=name` for both `?fsmc` and `?dtc` children,
   - and declared connect-by-name now covering one or more generated children, one or more external `?rtl` children, or any mixture of those generated and external RTL children when the top-level exact-match rule is still unambiguous,
   - and declared connect-by-name is now direction-asymmetric at the top boundary, with top outputs staying exact-one-match while top inputs may fan out to all matching child inputs of the same name and width,
@@ -177,7 +178,7 @@ First shipped `R11` slice now in tree:
 - The shipped first slice does not yet widen into:
   - explicit `+system` inside `?dt:name`,
   - regular FSM-state blocks inside `?dt:name`,
-  - broader implicit parent-interface inference for undeclared top ports,
+  - broader implicit parent-interface inference for undeclared top ports beyond the bounded single-child `C1` passthrough slice,
   - broader reusable-module interface/export rules,
   - or alias-root questions.
 

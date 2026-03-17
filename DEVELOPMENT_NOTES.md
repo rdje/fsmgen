@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: single-child `C1` can now infer the top interface when `?ports` is omitted or empty
+- Continued the active `R11` lane by taking the first bounded undeclared top-interface inference step instead of jumping straight into multi-child auto-wiring.
+- Landed behavior:
+  - in `C1` single-child passthrough, `?top:name` may now omit `?ports` entirely,
+  - or use an empty `(?ports)` block,
+  - and the top interface is then inferred directly from the lone realized child interface.
+- Why this is worth shipping:
+  - it brings back a useful convention-over-configuration shortcut for the simplest integration case,
+  - it works for generated children and external `?rtl` children alike because both already realize a typed interface,
+  - and it stays bounded because it does not yet create multi-child internal carriers or ambiguous inferred top exports.
+- [t/96-composition-implicit-single-child-ports.t](/Users/richarddje/Documents/github/fsmgen/t/96-composition-implicit-single-child-ports.t) locks omitted-`?ports` and empty-`?ports` inference through pipeline and CLI.
+
 ## 2026-03-17: future `R11` now includes a portable synthesizable-type and inference-first lane
 - Captured one more concrete future `R11` direction instead of leaving scalar/aggregate type support as loose brainstorming only.
 - The saved direction is deliberately portable across SystemVerilog and future VHDL:
