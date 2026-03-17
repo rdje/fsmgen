@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: `C1` passthrough exposure failures now say when exposure is blocked
+- Continued the active `R11` diagnostics lane by tightening the remaining public `C1` passthrough exposure branches without changing composition behavior.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says `C1` passthrough exposure is *blocked* when explicit top exposure omits a realized child port,
+  - and it now says the same thing when an explicitly declared top port does not exist on the realized child interface or disagrees with that child interface on width or direction.
+- Why this is worth shipping:
+  - it closes another older-wording pocket in the remaining single-child public-path diagnostics,
+  - it keeps behavior unchanged while lining those `C1` failures up with the rest of the active blocked-wording lane,
+  - and it adds focused coverage instead of relying only on the older `C1` success test.
+- Added [t/111-composition-c1-port-exposure-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/111-composition-c1-port-exposure-diagnostics.t) to lock missing-exposure, unknown-child-port, width-mismatch, and direction-mismatch wording for `C1` passthrough exposure.
 ## 2026-03-17: declared connect-by-name failures now say when the declared match is blocked
 - Continued the active `R11` lane by extending the blocked-wording diagnostics into the declared `=name` connect-by-name path.
 - Landed behavior:

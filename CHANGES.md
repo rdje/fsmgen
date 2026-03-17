@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### `C1` passthrough exposure failures now say when exposure is blocked
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `C1` passthrough exposure failures now say exposure is blocked when explicit top exposure omits a realized child port or disagrees with the realized child interface on name, width, or direction.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the same child-port detail still appears in the exception text,
+  - and the wording now lines up with the rest of the active blocked diagnostics lane.
+- Added [t/111-composition-c1-port-exposure-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/111-composition-c1-port-exposure-diagnostics.t) to lock missing-exposure, unknown-port, width-mismatch, and direction-mismatch wording for the public `C1` exposure contract.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path wording slice under `R11`.
+
 ### top-level composition lane and shape gates now say they are blocked
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so top-level composition lane/shape gates now say they are blocked when no child instances exist, when `?ports` multiplicity is invalid, or when omitted/empty `?ports` appears outside the bounded inference cases.
 - This shipped slice stays deliberately narrow:

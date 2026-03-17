@@ -1120,7 +1120,7 @@ sub assert_c1_port_exposure_matches_child ($self, $ports_block, $realized_instan
     for my $child_port_name (sort keys %$child_port_info) {
         Carp::confess
             "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-            "but the current active C1 lane requires every child port to be explicitly exposed in '?ports'. ".
+            "but C1 passthrough exposure is blocked because the current active C1 lane requires every child port to be explicitly exposed in '?ports'. ".
             "Missing top exposure for child port '$child_port_name' on instance '".$realized_instance->instance_name."'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $top_ports_by_name->{$child_port_name};
@@ -1130,19 +1130,19 @@ sub assert_c1_port_exposure_matches_child ($self, $ports_block, $realized_instan
         my $child_port = $child_port_info->{$port->name};
         Carp::confess
             "Composition source '$header' in '$fsm_file' declares top port '".$port->name."', ".
-            "but the realized child interface has no port with that name. ".
+            "but C1 passthrough exposure is blocked because the realized child interface has no port with that name. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $child_port;
 
         Carp::confess
             "Composition source '$header' in '$fsm_file' declares top port '".$port->name."' with width ".$port->width.", ".
-            "but child port '".$port->name."' has width ".$child_port->width.".".
+            "but C1 passthrough exposure is blocked because child port '".$port->name."' has width ".$child_port->width.".".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $port->width == $child_port->width;
 
         Carp::confess
             "Composition source '$header' in '$fsm_file' declares top port '".$port->name."' as ".$port->direction.", ".
-            "but child port '".$port->name."' is ".$child_port->direction.".".
+            "but C1 passthrough exposure is blocked because child port '".$port->name."' is ".$child_port->direction.".".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $port->direction eq $child_port->direction;
     }

@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: `C1` passthrough exposure failures now say when exposure is blocked
+- Saved shipped behavior:
+  - `C1` passthrough exposure now says explicitly when it is blocked because explicit top exposure omitted a realized child port,
+  - and it now says the same thing when an explicitly declared top port disagrees with the realized child interface on existence, width, or direction.
+- Important continuity note:
+  - this closes another older-wording pocket in the public single-child composition path,
+  - it keeps the planner behavior unchanged,
+  - and it adds focused regression coverage instead of relying only on existing `C1` success tests.
 ## 2026-03-17: top-level composition lane and shape gates now say they are blocked
 - Saved shipped behavior:
   - top-level composition lane entry now says explicitly when it is blocked because no child instances exist,

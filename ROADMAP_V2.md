@@ -400,5 +400,5 @@ The active immediate lane is `R11`.
 The first honest `R11` slices are now:
 1. keep widening convention-first composition only where the child-side evidence is still deterministic,
 2. let explicit local overrides stay precise without forcing whole-interface restatement,
-3. capture and then deliberately retire the current architectural hotspot set while the composition/type surface is still settling,
+3. keep broadening failure-path wording and reporting across the remaining public composition families before widening hidden inference again,
 4. keep `R8` open as opportunistic contract hardening when a feature slice touches a boundary that still needs to be locked.
