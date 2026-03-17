@@ -1578,13 +1578,13 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
         if ($top_port->direction eq 'input') {
             Carp::confess
                 "Composition source '$header' in '$fsm_file' declares top input '$top_port_name', ".
-                "but the current active $lane lane requires explicit '?toplink' usage for every non-system top input. ".
+                "but explicit-link top wiring is blocked because the current active $lane lane requires explicit '?toplink' usage for every non-system top input. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                 unless $top_port_usage{$top_port_name}{source};
         } else {
             Carp::confess
                 "Composition source '$header' in '$fsm_file' declares top output '$top_port_name', ".
-                "but the current active $lane lane requires explicit '?toplink' usage for every top output. ".
+                "but explicit-link top wiring is blocked because the current active $lane lane requires explicit '?toplink' usage for every top output. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                 unless $top_port_usage{$top_port_name}{target};
         }
@@ -1598,7 +1598,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
 
             Carp::confess
                 "Composition source '$header' in '$fsm_file' leaves child port '".$instance->instance_name.".".$port->name."' unconnected, ".
-                "but the current active $lane lane requires every realized child port to be wired explicitly, through declared connect-by-name, or through the shared system-input contract. ".
+                "but realized child wiring is blocked because the current active $lane lane requires every realized child port to be wired explicitly, through declared connect-by-name, or through the shared system-input contract. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                 unless defined $signal_name;
 

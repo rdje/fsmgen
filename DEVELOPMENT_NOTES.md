@@ -20,6 +20,16 @@ This document captures engineering rationale, design constraints, and working de
   - it closes previously untested width/type wording branches in the explicit-toplink path,
   - and it keeps the current `R11` step on diagnostics clarity rather than new behavior.
 - Updated [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) to lock mixed-role, width-mismatch, and type-mismatch blocked diagnostics for explicit-toplink-driven undeclared top-port inference.
+## 2026-03-17: explicit-link unwired-port failures now say wiring is blocked
+- Continued the active `R11` diagnostics lane by tightening the remaining explicit-link unwired-port branches without changing composition behavior.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says explicit-link top wiring is *blocked* when a declared non-system top port remains unused in an explicit-link lane,
+  - and it now says realized child wiring is *blocked* when a realized child port is still left unconnected after explicit-link planning.
+- Why this is worth shipping:
+  - it closes another older-wording pocket in the explicit-link family,
+  - it lines those unwired-port branches up with the same blocked-language used everywhere else in the active diagnostics lane,
+  - and it keeps the planner behavior unchanged.
+- Added [t/108-composition-explicit-link-wiring-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/108-composition-explicit-link-wiring-diagnostics.t) to lock unused declared top-input, unused declared top-output, and unconnected realized-child-port diagnostics.
 ## 2026-03-17: explicit toplink validation failures now say when the declared link is blocked
 - Continued the active `R11` diagnostics lane by tightening the main explicit `?toplink` validation family without changing composition behavior.
 - Landed behavior:

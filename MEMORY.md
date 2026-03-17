@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: explicit-link unwired-port failures now say wiring is blocked
+- Saved shipped behavior:
+  - explicit-link top-port failures now say explicitly when top wiring is blocked because a declared non-system top port remains unused,
+  - and explicit-link child-port failures now say explicitly when realized child wiring is blocked because a realized child port remains unconnected.
+- Important continuity note:
+  - this closes the remaining unwired-port wording pocket in the explicit-link family,
+  - it adds focused regression coverage instead of widening planner behavior,
+  - and it keeps the same top-port and child-port detail in the exception text.
 ## 2026-03-17: explicit toplink validation failures now say when the declared link is blocked
 - Saved shipped behavior:
   - explicit `?toplink` endpoint resolution failures now say explicitly when the declared link is blocked by a missing endpoint,
