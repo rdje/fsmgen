@@ -192,6 +192,10 @@ First shipped `R11` slice now in tree:
     - top ports carry `origin_kind` so declared versus inferred top-boundary decisions remain visible,
     - links carry `origin_kind` so explicit toplinks, `=name`, same-name convention links, internal-carrier links, and auto system-port links can be distinguished,
     - and the typed composition plan exposes `resolved_links` as the full resolved link set used by planning,
+  - first bounded user-facing composition provenance reporting on top of that metadata:
+    - composition generation results now carry `composition_report`,
+    - the report summarizes top-port and resolved-link provenance by `origin_kind`,
+    - and `bin/fsmgen` now prints the same provenance summary for non-quiet composition runs,
   - bounded explicit-link `C2` / `C3` undeclared same-name internal-carrier inference when no explicit link already touches that name family, exactly one same-name child output remains available, and one or more same-name child inputs remain available,
   - bounded local override on top of that convention: an explicit same-name top output may adopt and re-export one of those inferred carriers when direction, width, and type metadata still match exactly,
   - single-generated-child declared connect-by-name through `=name` for both `?fsmc` and `?dtc` children,

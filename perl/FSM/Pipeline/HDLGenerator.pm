@@ -242,14 +242,16 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
         || $self->parse_composition_source($raw_ast);
 
     my $composition_plan = $self->build_composition_plan($composition_spec, $fsm_file, $header);
+    my $composition_report = $self->build_composition_provenance_report($composition_plan);
     my $hdl_code = $self->generate_composition_hdl_code($composition_plan);
-    my $module_info = $self->build_composition_module_info($composition_plan);
-    my $statistics = $self->build_composition_statistics($composition_plan);
+    my $module_info = $self->build_composition_module_info($composition_plan, $composition_report);
+    my $statistics = $self->build_composition_statistics($composition_plan, $composition_report);
 
     return {
         fsm_module => undef,
         composition_spec => $composition_spec,
         composition_plan => $composition_plan,
+        composition_report => $composition_report,
         module_info => $module_info,
         hdl_code => $hdl_code,
         statistics => $statistics,
@@ -2121,7 +2123,7 @@ sub emit_composition_top_module ($self, $composition_plan) {
     return join("\n", @body_lines);
 }
 
-sub build_composition_module_info ($self, $composition_plan) {
+sub build_composition_module_info ($self, $composition_plan, $composition_report = undef) {
     my (@inputs, @outputs, @multi_bit, @single_bit);
     my %signals;
 
@@ -2165,17 +2167,141 @@ sub build_composition_module_info ($self, $composition_plan) {
         signal_count => scalar(@{$composition_plan->ports}),
         composition_child_count => scalar(@{$composition_plan->instances}),
         composition_net_count => scalar(@{$composition_plan->nets || []}),
+        composition_resolved_link_count => $composition_report
+            ? $composition_report->{resolved_link_count}
+            : scalar(@{$composition_plan->resolved_links || []}),
         composition_lane => $composition_plan->lane,
+        composition_provenance => $composition_report,
     };
 }
 
-sub build_composition_statistics ($self, $composition_plan) {
+sub build_composition_statistics ($self, $composition_plan, $composition_report = undef) {
     my $stats = $self->gather_statistics(undef);
     $stats->{composition_child_count} = scalar(@{$composition_plan->instances});
     $stats->{composition_top_port_count} = scalar(@{$composition_plan->ports});
     $stats->{composition_net_count} = scalar(@{$composition_plan->nets || []});
+    $stats->{composition_resolved_link_count} = $composition_report
+        ? $composition_report->{resolved_link_count}
+        : scalar(@{$composition_plan->resolved_links || []});
     $stats->{composition_lane} = $composition_plan->lane;
+    $stats->{composition_provenance} = $composition_report if $composition_report;
     return $stats;
+}
+
+sub build_composition_provenance_report ($self, $composition_plan) {
+    my @ports = map {
+        my $origin_kind = $_->origin_kind || 'unknown_port_origin';
+        +{
+            name => $_->name,
+            direction => $_->direction,
+            width => $_->width,
+            type => $_->type,
+            origin_kind => $origin_kind,
+            origin_category => $self->composition_provenance_category($origin_kind),
+            origin_label => $self->composition_provenance_label($origin_kind),
+        }
+    } @{$composition_plan->ports || []};
+
+    my @resolved_links = map {
+        my $origin_kind = $_->origin_kind || 'unknown_link_origin';
+        +{
+            source => $_->source,
+            target => $_->target,
+            origin_kind => $origin_kind,
+            origin_category => $self->composition_provenance_category($origin_kind),
+            origin_label => $self->composition_provenance_label($origin_kind),
+        }
+    } @{$composition_plan->resolved_links || []};
+
+    my %port_origin_counts;
+    my %port_category_counts;
+    for my $entry (@ports) {
+        $port_origin_counts{$entry->{origin_kind}}++;
+        $port_category_counts{$entry->{origin_category}}++;
+    }
+
+    my %resolved_link_origin_counts;
+    my %resolved_link_category_counts;
+    for my $entry (@resolved_links) {
+        $resolved_link_origin_counts{$entry->{origin_kind}}++;
+        $resolved_link_category_counts{$entry->{origin_category}}++;
+    }
+
+    return {
+        lane => $composition_plan->lane,
+        top_port_count => scalar(@ports),
+        resolved_link_count => scalar(@resolved_links),
+        ports => \@ports,
+        resolved_links => \@resolved_links,
+        port_origin_counts => \%port_origin_counts,
+        port_category_counts => \%port_category_counts,
+        resolved_link_origin_counts => \%resolved_link_origin_counts,
+        resolved_link_category_counts => \%resolved_link_category_counts,
+        ordered_port_origins => [
+            sort {
+                $self->composition_provenance_sort_key($a) <=> $self->composition_provenance_sort_key($b)
+                ||
+                $self->composition_provenance_label($a) cmp $self->composition_provenance_label($b)
+            } keys %port_origin_counts
+        ],
+        ordered_resolved_link_origins => [
+            sort {
+                $self->composition_provenance_sort_key($a) <=> $self->composition_provenance_sort_key($b)
+                ||
+                $self->composition_provenance_label($a) cmp $self->composition_provenance_label($b)
+            } keys %resolved_link_origin_counts
+        ],
+    };
+}
+
+sub composition_provenance_category ($self, $origin_kind) {
+    return 'declared' if $origin_kind =~ /^declared_/;
+    return 'inferred' if $origin_kind =~ /^inferred_/;
+    return 'auto' if $origin_kind =~ /^auto_/;
+    return 'realized' if $origin_kind =~ /^realized_/;
+    return 'declared' if $origin_kind =~ /^rtlif_/;
+    return 'other';
+}
+
+sub composition_provenance_sort_key ($self, $origin_kind) {
+    my %rank = (
+        declared => 0,
+        inferred => 1,
+        auto => 2,
+        realized => 3,
+        other => 4,
+    );
+
+    return $rank{$self->composition_provenance_category($origin_kind)};
+}
+
+sub composition_provenance_label ($self, $origin_kind) {
+    my %labels = (
+        declared_explicit_port => 'declared explicit top port',
+        declared_connect_by_name_port => 'declared connect-by-name top port',
+        declared_explicit_toplink => 'declared explicit toplink',
+        declared_connect_by_name_link => 'declared connect-by-name link',
+        declared_c1_passthrough_link => 'declared single-child passthrough link',
+        inferred_c1_passthrough_port => 'inferred single-child passthrough top port',
+        inferred_c1_passthrough_link => 'inferred single-child passthrough link',
+        inferred_explicit_toplink_port => 'inferred top port from explicit toplink',
+        inferred_undeclared_top_input_port => 'inferred undeclared top input',
+        inferred_undeclared_top_output_port => 'inferred undeclared top output',
+        inferred_plain_explicit_top_input_link => 'inferred plain explicit top-input convention link',
+        inferred_plain_explicit_top_output_link => 'inferred plain explicit top-output convention link',
+        inferred_undeclared_top_input_link => 'inferred undeclared top-input link',
+        inferred_undeclared_top_output_link => 'inferred undeclared top-output link',
+        inferred_internal_carrier_link => 'inferred internal carrier link',
+        inferred_internal_carrier_reexport_link => 'inferred internal carrier re-export link',
+        auto_system_port_link => 'auto system-port link',
+        realized_child_interface_port => 'realized child interface port',
+        rtlif_declared_port => 'declared rtlif port',
+    );
+
+    return $labels{$origin_kind} if defined $labels{$origin_kind};
+
+    (my $label = $origin_kind) =~ s/_/ /g;
+    return $label;
 }
 
 sub analyze_fsm_module ($self, $fsm_module) {

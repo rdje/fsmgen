@@ -92,6 +92,10 @@ The currently shipped composition behavior is intentionally bounded:
   - `FSM::Composition::Port->origin_kind` distinguishes declared and inferred top-port paths,
   - `FSM::Composition::Link->origin_kind` distinguishes explicit toplinks, declared `=name`, same-name convention links, internal-carrier links, and auto system-port links,
   - and `FSM::Composition::Plan->resolved_links` now surfaces the full resolved link set used by planning instead of only the original declared `links` input,
+- composition generation results now also expose a user-facing provenance summary:
+  - `FSM::Pipeline::HDLGenerator->generate_hdl_from_file(...)` returns `composition_report` for composition sources,
+  - that report summarizes top-port and resolved-link provenance by `origin_kind`,
+  - and `bin/fsmgen` now prints the same provenance summary during non-quiet composition runs,
 - realized child interface currently means:
   - effective system inputs from the active FSM generator contract:
     - explicit conventional `+system` currently yields `clk` / `rstn`,

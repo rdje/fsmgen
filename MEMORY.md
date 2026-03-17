@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: composition provenance now reaches the result hash and CLI summary
+- Saved shipped behavior:
+  - composition runs now return `composition_report`,
+  - that report summarizes top-port and resolved-link provenance from the earlier `origin_kind` / `resolved_links` metadata,
+  - and non-quiet `bin/fsmgen` runs now print the same composition provenance summary directly.
+- Important continuity note:
+  - this is the first user-facing reporting layer on top of the earlier typed provenance metadata,
+  - it also populates composition-side resolved-link counts in `module_info` and `statistics`,
+  - and the next remaining diagnostics lane is broader failure/report wording for “blocked” / “overridden” cases, not another hidden inference jump.
+- [t/104-composition-provenance-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/104-composition-provenance-reporting.t) locks the new report surface.
 ## 2026-03-17: typed composition plans now expose provenance metadata
 - Saved shipped behavior:
   - top ports now carry `origin_kind`,

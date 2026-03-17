@@ -369,6 +369,7 @@ my $result = $pipeline->generate_hdl_from_file($fsm_file);
 my $hdl_code = $result->{hdl_code};
 my $module_info = $result->{module_info};
 my $statistics = $result->{statistics};
+my $composition_report = $result->{composition_report};
 
 # Output HDL code to stdout unless quiet mode
 unless ($quiet) {
@@ -395,6 +396,35 @@ unless ($quiet) {
     print "  - Input signals: " . scalar(@{$signal_analysis->{inputs}}) . "\n";
     print "  - Output signals: " . scalar(@{$signal_analysis->{outputs}}) . "\n";
     print "  - Multi-bit signals: " . scalar(@{$signal_analysis->{multi_bit}}) . "\n";
+}
+
+unless ($quiet) {
+    if ($composition_report) {
+        print "\n=== Composition Summary ===\n";
+        print "Lane: " . ($composition_report->{lane} // 'unknown') . "\n";
+        print "Children: " . ($module_info->{composition_child_count} // 0) . "\n";
+        print "Top ports: " . ($composition_report->{top_port_count} // 0) . "\n";
+        print "Resolved links: " . ($composition_report->{resolved_link_count} // 0) . "\n";
+        print "Internal nets: " . ($module_info->{composition_net_count} // 0) . "\n";
+
+        if (@{$composition_report->{ordered_port_origins} || []}) {
+            print "\nTop Port Provenance:\n";
+            for my $origin_kind (@{$composition_report->{ordered_port_origins}}) {
+                my $label = $pipeline->composition_provenance_label($origin_kind);
+                my $count = $composition_report->{port_origin_counts}{$origin_kind} || 0;
+                print "  - $label: $count\n";
+            }
+        }
+
+        if (@{$composition_report->{ordered_resolved_link_origins} || []}) {
+            print "\nResolved Link Provenance:\n";
+            for my $origin_kind (@{$composition_report->{ordered_resolved_link_origins}}) {
+                my $label = $pipeline->composition_provenance_label($origin_kind);
+                my $count = $composition_report->{resolved_link_origin_counts}{$origin_kind} || 0;
+                print "  - $label: $count\n";
+            }
+        }
+    }
 }
 
 # Print expression factoring statistics only if not quiet

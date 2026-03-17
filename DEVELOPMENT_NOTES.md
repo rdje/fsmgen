@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: composition provenance now reaches the result hash and CLI summary
+- Continued the active `R11` lane by turning the new plan-side provenance metadata into something users and embedding callers can actually see without spelunking typed plan objects manually.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now builds `composition_report` for composition sources,
+  - that report summarizes top-port and resolved-link provenance by `origin_kind` plus declared / inferred / auto category counts,
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prints a composition summary plus provenance counts in non-quiet runs,
+  - and composition `module_info` / `statistics` now carry the resolved-link count and attached provenance summary too.
+- Why this is worth shipping:
+  - it turns the earlier transparency metadata into a usable diagnostics/reporting surface instead of leaving it as an internal-only affordance,
+  - it keeps the result additive and structured for future embedding work,
+  - and it gives us a clean base for later “blocked” / “overridden” diagnostics without inventing a second reporting model.
+- [t/104-composition-provenance-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/104-composition-provenance-reporting.t) locks both the pipeline-facing report counts and the CLI-facing provenance summary.
 ## 2026-03-17: typed composition plans now surface first-pass provenance
 - Continued the active `R11` lane by making the convention engine more transparent without widening the wiring contract again.
 - Landed behavior:

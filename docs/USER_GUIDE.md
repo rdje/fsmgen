@@ -194,6 +194,10 @@ Combinational DT note:
   - top ports expose `origin_kind` so declared versus inferred top-boundary decisions stay visible,
   - links expose `origin_kind` so explicit toplinks, `=name`, same-name convention, internal-carrier, and auto-system links can be distinguished,
   - and `composition_plan->resolved_links` exposes the final planned link set instead of only the originally declared `links`.
+- Composition results now also carry a user-facing provenance summary:
+  - `generate_hdl_from_file(...)` returns `composition_report` for composition sources,
+  - that report summarizes top-port and resolved-link provenance by `origin_kind`,
+  - and non-quiet `bin/fsmgen` runs now print the same composition provenance summary directly in the CLI close-out.
 
 ### Implemented, but not strong enough yet to call fully supported
 - No additional construct family is currently parked in this middle bucket.

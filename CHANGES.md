@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### composition provenance now reaches the result hash and CLI summary
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition runs now produce `composition_report`, including top-port and resolved-link provenance counts grouped from the earlier `origin_kind` metadata.
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet composition runs now print:
+  - the active composition lane,
+  - child/top-port/resolved-link/internal-net counts,
+  - and top-port / resolved-link provenance counts.
+- This shipped slice is intentionally layered on top of the earlier metadata:
+  - it does not replace `composition_plan`,
+  - it keeps `origin_kind` / `resolved_links` as the lower-level typed source of truth,
+  - and it makes that same information visible to both embedding callers and CLI users.
+- Added [t/104-composition-provenance-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/104-composition-provenance-reporting.t) to lock:
+  - pipeline-facing `composition_report` counts,
+  - and CLI-facing provenance summary output.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as a deliberate user-facing transparency slice instead of an incidental print change.
+
 ### typed composition plans now surface first-pass provenance metadata
 - Updated [perl/FSM/Composition/Port.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Port.pm), [perl/FSM/Composition/Link.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Link.pm), and [perl/FSM/Composition/Plan.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Plan.pm) so typed composition results can now expose provenance explicitly.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm), [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm), and [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so:
