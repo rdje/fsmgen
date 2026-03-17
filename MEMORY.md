@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: endpoint-shape diagnostics now say when binding is blocked
+- Saved shipped behavior:
+  - reserved-system `=name` declarations now say explicitly when declared connect-by-name is blocked because shared system ports already use the dedicated system-input contract,
+  - and unsupported explicit endpoint syntax now says explicitly when explicit link endpoint resolution is blocked because only top-port names and `instance.port` child endpoints are supported.
+- Important continuity note:
+  - this closes another older-wording pocket on the public composition endpoint surface,
+  - it keeps binding behavior unchanged,
+  - and it adds focused coverage instead of relying on incidental endpoint-shape failures.
 ## 2026-03-17: duplicate composition declarations now say when shape is blocked
 - Saved shipped behavior:
   - duplicate top-port declarations now say explicitly when composition shape is blocked because top port names must be unique,

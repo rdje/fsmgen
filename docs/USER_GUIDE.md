@@ -210,6 +210,7 @@ Combinational DT note:
   - and it now also covers declared `=name` connect-by-name failures when direction, width, ambiguity, or missing-endpoint evidence blocks the declared match,
   - and it now also covers `C1` passthrough exposure failures when explicit top exposure omits a realized child port or disagrees with the realized child interface on name, width, or direction,
   - and it now also covers duplicate top-port and duplicate child-instance declarations when those composition-shape conflicts would otherwise make planning ambiguous,
+  - and it now also covers reserved system-port `=name` declarations and unsupported explicit endpoint syntax when those endpoint-shape errors would otherwise leave the binding contract ambiguous,
   - and non-quiet `bin/fsmgen` runs now print the same composition provenance summary directly in the CLI close-out.
 
 ### Implemented, but not strong enough yet to call fully supported

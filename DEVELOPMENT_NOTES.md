@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: endpoint-shape diagnostics now say when binding is blocked
+- Continued the active `R11` diagnostics lane by tightening two remaining public endpoint-shape branches without changing composition behavior.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says declared connect-by-name is *blocked* when a top author tries to declare shared system ports like `clk` or `rstn` with `=name`,
+  - and it now says explicit link endpoint resolution is *blocked* when a `?toplink` endpoint uses unsupported syntax instead of a top-port name or `instance.port`.
+- Why this is worth shipping:
+  - it closes another older-wording pocket right on the composition endpoint surface users type directly,
+  - it keeps binding behavior unchanged while lining those endpoint-shape failures up with the rest of the blocked-wording lane,
+  - and it adds focused regression coverage instead of relying on incidental parser/planner fallout.
+- Added [t/113-composition-endpoint-shape-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/113-composition-endpoint-shape-diagnostics.t) to lock reserved-system `=name` and unsupported explicit endpoint syntax wording.
 ## 2026-03-17: duplicate composition declarations now say when shape is blocked
 - Continued the active `R11` diagnostics lane by tightening the remaining duplicate-declaration branches without changing composition behavior.
 - Landed behavior:

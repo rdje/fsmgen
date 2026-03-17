@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### endpoint-shape diagnostics now say when binding is blocked
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so reserved-system `=name` declarations and unsupported explicit endpoint syntax now say binding is blocked when those endpoint-shape errors make the composition contract invalid.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the same endpoint detail still appears in the exception text,
+  - and the wording now lines up with the rest of the active blocked diagnostics lane.
+- Added [t/113-composition-endpoint-shape-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/113-composition-endpoint-shape-diagnostics.t) to lock reserved-system `=name` and unsupported explicit endpoint syntax wording.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path wording slice under `R11`.
+
 ### duplicate composition declarations now say when shape is blocked
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so duplicate top-port and duplicate child-instance declaration failures now say composition shape is blocked when those declarations make planning ambiguous.
 - This shipped slice stays deliberately narrow:

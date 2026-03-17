@@ -1273,7 +1273,7 @@ sub build_declared_by_name_links ($self, $ports, $realized_instances, $fsm_file,
 
         Carp::confess
             "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
-            "but the shared system ports '".join("' and '", @system_port_names)."' already use the dedicated system-input contract and must not be declared with '=port' connect-by-name syntax. ".
+            "but declared connect-by-name is blocked because the shared system ports '".join("' and '", @system_port_names)."' already use the dedicated system-input contract and must not be declared with '=port' connect-by-name syntax. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             if $system_port_names{$top_port->name};
 
@@ -2020,8 +2020,9 @@ sub resolve_composition_endpoint ($self, $endpoint, $top_ports_by_name, $instanc
     }
 
     Carp::confess
-        "Composition source '$header' in '$fsm_file' uses unsupported explicit endpoint syntax '$endpoint'. ".
-        "The current active C2 lane accepts only top-port names or 'instance.port' child endpoints. ".
+        "Composition source '$header' in '$fsm_file' uses explicit endpoint '$endpoint', ".
+        "but explicit link endpoint resolution is blocked because that syntax is unsupported. ".
+        "The current active composition lanes accept only top-port names or 'instance.port' child endpoints. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
