@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### explicit-link `C2` / `C3` can now omit `?ports` when top-link endpoints stay inferable
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so explicit-link tops may now omit `?ports` entirely, or use an empty `(?ports)`, when the top boundary can still be realized honestly from child-side evidence plus same-name top-link endpoints.
+- This shipped slice is intentionally bounded:
+  - it applies to explicit-link `C2` / `C3`,
+  - top-link endpoints still have to stay conventional enough for the shipped top-input/top-output inference rules,
+  - same-name explicit top-input links now infer the top port declaration without duplicating the already-declared child bindings,
+  - and renamed top endpoints still require an explicit top-port declaration instead of being guessed through.
+- Added [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) to lock:
+  - generated-child `C2` success with omitted `?ports`,
+  - RTL-backed `C3` success with an empty `(?ports)` block,
+  - and renamed top-endpoint rejection without `?ports`.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the active `R11` lane records this explicit-link omitted/empty-`?ports` slice as shipped behavior.
+
 ### explicit-link `C2` / `C3` can now re-export inferred same-name internal carriers through explicit top outputs
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so explicit-link tops can now keep convention-first same-name internal-carrier inference while letting a matching explicit top output adopt and expose that carrier.
 - This shipped override is intentionally bounded:

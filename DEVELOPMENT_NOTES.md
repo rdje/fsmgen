@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: explicit-link `C2` / `C3` can now omit `?ports` when top-link endpoints stay inferable
+- Continued the active `R11` lane by removing another layer of parent-interface boilerplate without reopening broad hidden wiring.
+- Landed behavior:
+  - explicit-link `C2` / `C3` tops may now omit `?ports` entirely, or use an empty `(?ports)`,
+  - the planner will still realize the top boundary when same-name top-link endpoints plus the already-shipped top-input/top-output inference rules make that boundary unambiguous,
+  - and same-name explicit top-input links now cause the top port to be inferred without inventing duplicate fanout links on top of the already-declared bindings.
+- Why this is worth shipping:
+  - it moves the active tool closer to the intended “convention first, configuration only where needed” integration style,
+  - it preserves honest boundaries by still rejecting renamed top endpoints when no explicit top port exists,
+  - and it builds directly on the already-shipped undeclared top-input/top-output/internal-carrier slices instead of inventing a separate auto-wiring system.
+- [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) locks generated-child success with omitted `?ports`, RTL-backed success with empty `(?ports)`, and renamed-endpoint rejection without `?ports`.
+
 ## 2026-03-17: explicit-link `C2` / `C3` can now re-export inferred same-name internal carriers through explicit top outputs
 - Continued the active `R11` lane by turning the last internal-carrier follow-up question into a shipped local-override rule instead of leaving it as future design intent.
 - Landed behavior:

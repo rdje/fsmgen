@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: explicit-link `C2` / `C3` now allow omitted or empty `?ports` when top-link endpoints stay inferable
+- Saved shipped behavior:
+  - explicit-link multi-child tops may now omit `?ports` entirely, or use an empty `(?ports)`,
+  - and the top boundary is still realized when same-name top-link endpoints plus the already-shipped top-input/top-output inference rules are enough to infer the missing top ports honestly.
+- Important continuity note:
+  - same-name explicit top-input links now infer the top port declaration without duplicating the already-declared explicit bindings,
+  - renamed top endpoints still need an explicit top-port declaration,
+  - and this slice does not introduce any broader hidden top-output renaming inference.
+- [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) locks generated-child omitted-`?ports` success, RTL-backed empty-`?ports` success, and renamed-endpoint rejection.
+
 ## 2026-03-17: explicit-link `C2` / `C3` now re-export inferred same-name internal carriers through explicit top outputs
 - Saved shipped behavior:
   - explicit-link tops may still infer same-name internal child-to-child carriers conventionally,

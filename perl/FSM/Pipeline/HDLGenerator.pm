@@ -325,6 +325,13 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
     }
 
     my $is_single_child_passthrough = @realized_instances == 1 && !@toplinks;
+    my $allows_implicit_explicit_link_ports =
+        !$is_single_child_passthrough
+        && @toplinks
+        && (
+            @ports_blocks == 0
+            || (@ports_blocks == 1 && !(scalar(@{$ports_blocks[0]->ports || []})))
+        );
     my $allows_implicit_c1_ports =
         $is_single_child_passthrough
         && (
@@ -335,14 +342,14 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
         "but the current active composition lanes require exactly one explicit '?ports' block, ".
-        "except that the single-child passthrough C1 lane may now infer the top interface when '?ports' is omitted or empty. ".
+        "except that the single-child passthrough C1 lane and the explicit-link C2/C3 lanes may now infer the top interface when '?ports' is omitted or empty. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @ports_blocks <= 1;
 
     my $ports_block = $ports_blocks[0];
     my @ports = $ports_block ? @{$ports_block->ports || []} : ();
 
-    if (!$allows_implicit_c1_ports) {
+    if (!$allows_implicit_c1_ports && !$allows_implicit_explicit_link_ports) {
         Carp::confess
             "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
             "but the current active composition lanes require exactly one explicit '?ports' block. ".
@@ -352,7 +359,7 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
         Carp::confess
             "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
             "but the current active composition lanes require '?ports' to declare at least one explicit top port, ".
-            "except that the single-child passthrough C1 lane may now infer the top interface when '?ports' is omitted or empty. ".
+            "except that the single-child passthrough C1 lane and the explicit-link C2/C3 lanes may now infer the top interface when '?ports' is omitted or empty. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless @ports;
     }
@@ -785,12 +792,23 @@ sub augment_with_inferred_undeclared_top_inputs ($self, $ports, $realized_instan
     my %declared_by_name = map { $_->name => $_ } @ports;
     my %port_groups;
     my %explicitly_linked_child_input_names;
+    my %same_name_undeclared_top_input_links;
 
     for my $toplink (@{$toplinks || []}) {
         for my $link (@{$toplink->links || []}) {
+            my $source = $link->source || '';
             my $target = $link->target || '';
-            next unless $target =~ /^\w+\.(\w+)$/;
-            $explicitly_linked_child_input_names{$1} = 1;
+            my ($target_port_name) = $target =~ /^\w+\.(\w+)$/;
+            next unless defined $target_port_name;
+            my $source_is_child_endpoint = $source =~ /^\w+\.\w+$/;
+            my ($source_top_port_name) = $source =~ /^(\w+)$/;
+            my $source_is_declared_top_port = defined($source_top_port_name) && $declared_by_name{$source_top_port_name};
+            if (defined($source_top_port_name) && !$source_is_declared_top_port && $source_top_port_name eq $target_port_name) {
+                $same_name_undeclared_top_input_links{$target_port_name} = 1;
+                next;
+            }
+            next unless $source_is_child_endpoint || $source_is_declared_top_port;
+            $explicitly_linked_child_input_names{$target_port_name} = 1;
         }
     }
 
@@ -848,7 +866,9 @@ sub augment_with_inferred_undeclared_top_inputs ($self, $ports, $realized_instan
             width => $template->width,
             type => $self->normalized_interface_type($template->type),
             raw_token => undef,
-            binding_mode => 'implicit_fanout',
+            binding_mode => $same_name_undeclared_top_input_links{$template->name}
+                ? 'explicit'
+                : 'implicit_fanout',
         );
     }
 

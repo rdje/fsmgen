@@ -60,8 +60,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `R11` Composition contract strengthening.
 - Current next decision point:
   - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, `?dtc` composition child reuse, embedded `.rtlif` roots, and the new broader external-RTL `C3`/`C4` slices are all fresh in the tree.
-  - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, and single-/multi-`?rtl` composition edges across both explicit-link and declared by-name lanes, `C3` now covers multi-generated-child mixed explicit-link tops as long as at least one `?rtl` child is present, `C4` now covers the same broader mixed child set with exact-one-match top outputs and fanout-capable top inputs, `C1` now supports omitted/empty-`?ports` passthrough inference, and `C2`/`C3` now support bounded undeclared top-interface plus same-name internal-carrier inference when child-side evidence is unambiguous, including explicit top-output re-export of those carriers.
-  - The next bounded convention-over-configuration choice is now above that: how much farther top-boundary inference and local override should go beyond the newly shipped explicit top-output re-export slice without turning composition back into hidden broad auto-wiring.
+  - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, and single-/multi-`?rtl` composition edges across both explicit-link and declared by-name lanes, `C3` now covers multi-generated-child mixed explicit-link tops as long as at least one `?rtl` child is present, `C4` now covers the same broader mixed child set with exact-one-match top outputs and fanout-capable top inputs, `C1` now supports omitted/empty-`?ports` passthrough inference, and `C2`/`C3` now support bounded omitted/empty-`?ports`, undeclared top-interface, and same-name internal-carrier inference when child-side evidence is unambiguous, including explicit top-output re-export of those carriers.
+  - The next bounded convention-over-configuration choice is now above that: how much farther top-boundary inference and local override should go beyond the newly shipped explicit-link omitted/empty-`?ports` slice without turning composition back into hidden broad auto-wiring.
   - The governing future rule is now explicit too: convention should stay primary, but explicit port/link declarations should override inference locally instead of forcing whole-interface restatement.
   - A second future convention-over-configuration lane is now explicitly recorded too: whether scalar and aggregate signal types should be inferred by default from LHS/RHS/member/index usage, with explicit declarations used mainly as overrides.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
@@ -675,6 +675,14 @@ Done:
   - mixed generated-plus-`?rtl` internal-carrier re-export success in explicit-link `C3`,
   - ambiguity rejection for several same-name child outputs even when re-export is requested,
   - and explicit top-output type-mismatch rejection for the re-export path.
+- The next convention-first top-boundary slice is now also shipped:
+  - explicit-link `C2` / `C3` tops may now omit `?ports` entirely, or use an empty `(?ports)`, when the top-link endpoints still line up with the shipped same-name top-input/top-output inference rules,
+  - same-name explicit top-input links now infer the top port declaration without duplicating the already-declared explicit bindings,
+  - and renamed top endpoints still fail unless the user declares the top port explicitly.
+- [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) now locks:
+  - generated-child `C2` success with omitted `?ports`,
+  - RTL-backed `C3` success with empty `(?ports)`,
+  - and renamed-endpoint rejection without `?ports`.
 - [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) now locks:
   - multi-`?rtl` explicit-toplink `C3` success,
   - and one-generated-plus-multi-`?rtl` explicit-toplink `C3` success.
@@ -720,7 +728,7 @@ Left:
   - add member/field and fixed-size array access without overcommitting to aggregate literals too early,
   - and keep explicit type declarations available as bounded overrides instead of the default authoring burden.
 - Refine declared top-port connect-by-name into an asymmetric integration-oriented contract:
-  - decide how far future convention-over-configuration work should widen undeclared top-interface inference beyond the newly shipped `C1` passthrough slice and the newly shipped `C2` / `C3` undeclared top-input/top-output/internal-carrier slices,
+  - decide how far future convention-over-configuration work should widen undeclared top-interface inference beyond the newly shipped `C1` passthrough slice and the newly shipped `C2` / `C3` omitted/empty-`?ports`, undeclared top-input/top-output/internal-carrier slices,
   - decide whether future convention-over-configuration work should let some top inputs/outputs be inferred even without `=name`,
   - decide whether the newly shipped explicit top-output re-export slice is enough or whether lighter/further override forms are warranted,
   - keep convention as the default authoring path while making explicit port/link declarations override inference locally instead of replacing the whole inferred interface,
