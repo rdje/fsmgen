@@ -20,6 +20,16 @@ This document captures engineering rationale, design constraints, and working de
   - it closes previously untested width/type wording branches in the explicit-toplink path,
   - and it keeps the current `R11` step on diagnostics clarity rather than new behavior.
 - Updated [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) to lock mixed-role, width-mismatch, and type-mismatch blocked diagnostics for explicit-toplink-driven undeclared top-port inference.
+## 2026-03-17: explicit top-output re-export mismatches now say when re-export is blocked
+- Continued the active `R11` diagnostics lane with the next small failure-path wording seam instead of widening behavior again.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says explicit top-output re-export is *blocked* when a declared top output disagrees with the inferred same-name internal-carrier family on width or interface type,
+  - and the exception still keeps the resolved child-side width/type detail.
+- Why this is worth shipping:
+  - it lines the re-export override boundary up with the same blocked-wording style already used across the other convention-first composition families,
+  - it makes the local-override failure easier to read without changing planner behavior,
+  - and it closes the remaining older-wording pocket in the internal-carrier branch.
+- Expanded [t/100-composition-internal-carrier-top-reexport.t](/Users/richarddje/Documents/github/fsmgen/t/100-composition-internal-carrier-top-reexport.t) to lock both width-mismatch and type-mismatch blocked wording for explicit top-output re-export.
 ## 2026-03-17: undeclared inference failure diagnostics now say when convention is blocked
 - Continued the active `R11` lane by broadening the new blocked-wording diagnostics one step further without changing composition behavior.
 - Landed behavior:

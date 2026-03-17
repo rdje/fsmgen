@@ -19,6 +19,7 @@ my $c2_out_path = File::Spec->catfile($tempdir, 'reexport_internal_carrier_top.s
 my $c3_path = File::Spec->catfile($tempdir, 'reexport_mixed_internal_carrier_top.fsm');
 my $c3_out_path = File::Spec->catfile($tempdir, 'reexport_mixed_internal_carrier_top.sv');
 my $ambiguous_path = File::Spec->catfile($tempdir, 'ambiguous_reexport_internal_carrier_top.fsm');
+my $width_mismatch_path = File::Spec->catfile($tempdir, 'width_mismatch_reexport_internal_carrier_top.fsm');
 my $type_mismatch_path = File::Spec->catfile($tempdir, 'type_mismatch_reexport_internal_carrier_top.fsm');
 
 write_file(
@@ -205,6 +206,44 @@ FSM
 );
 
 write_file(
+    $width_mismatch_path,
+    <<'FSM'
+(?top:width_mismatch_reexport_internal_carrier_top
+  (?ports:public_io
+    go
+    payload>4
+    result_data>8
+  )
+  (?dtc:producer producer_src)
+  (?rtl:rtl_sink)
+  (?toplink:wiring
+    /go/producer.go/
+    /rtl_sink.status_out/result_data/
+  )
+)
+
+(?dt:producer_src
+  (-produce
+    (<go
+      (payload> = 8'12)
+    )
+  )
+  (+size
+    (go 1)
+    (payload 8)
+  )
+)
+
+(?rtlif:rtl_sink
+  clk:clock
+  rstn:reset
+  payload<8:data
+  status_out>8:data
+)
+FSM
+);
+
+write_file(
     $type_mismatch_path,
     <<'FSM'
 (?top:type_mismatch_reexport_internal_carrier_top
@@ -334,6 +373,20 @@ subtest 'same-name internal-carrier re-export still rejects several same-name ch
     );
 };
 
+subtest 'same-name internal-carrier re-export requires exact top-output width agreement' => sub {
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($width_mismatch_path);
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/declares top output 'payload' with width 4, .*explicit top-output re-export is blocked because the same-name internal-carrier family resolves to width 8/s,
+        'width-mismatched top-output re-export says the convention is blocked explicitly',
+    );
+};
+
 subtest 'same-name internal-carrier re-export requires exact top-output type agreement' => sub {
     my $exception = eval {
         $pipeline->generate_hdl_from_file($type_mismatch_path);
@@ -343,8 +396,8 @@ subtest 'same-name internal-carrier re-export requires exact top-output type agr
 
     like(
         $exception,
-        qr/declares top output 'payload' with interface type 'reset', .*same-name internal-carrier family resolves to interface type 'data'/s,
-        'type-mismatched top-output re-export is rejected explicitly',
+        qr/declares top output 'payload' with interface type 'reset', .*explicit top-output re-export is blocked because the same-name internal-carrier family resolves to interface type 'data'/s,
+        'type-mismatched top-output re-export says the convention is blocked explicitly',
     );
 };
 

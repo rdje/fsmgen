@@ -1908,7 +1908,7 @@ sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $re
         if ($declared_top_port) {
             Carp::confess
                 "Composition source '$header' in '$fsm_file' declares top output '$port_name' with width ".$declared_top_port->width.", ".
-                "but the same-name internal-carrier family resolves to width $resolved_width. ".
+                "but explicit top-output re-export is blocked because the same-name internal-carrier family resolves to width $resolved_width. ".
                 "The current bounded convention-over-configuration slice only re-exports an inferred same-name internal carrier when the explicit top output matches the child-side width exactly. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                 unless $declared_top_port->width == $resolved_width;
@@ -1916,7 +1916,7 @@ sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $re
             my $declared_top_type = $self->normalized_interface_type($declared_top_port->type);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' declares top output '$port_name' with interface type '$declared_top_type', ".
-                "but the same-name internal-carrier family resolves to interface type '$resolved_type'. ".
+                "but explicit top-output re-export is blocked because the same-name internal-carrier family resolves to interface type '$resolved_type'. ".
                 "The current bounded convention-over-configuration slice only re-exports an inferred same-name internal carrier when the explicit top output matches the child-side type metadata exactly. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                 unless $declared_top_type eq $resolved_type;

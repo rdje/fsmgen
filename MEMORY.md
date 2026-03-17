@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: explicit top-output re-export mismatches now say when re-export is blocked
+- Saved shipped behavior:
+  - explicit top-output re-export mismatches for inferred same-name internal carriers now say explicitly when that bounded re-export path is blocked,
+  - and the width/type mismatch branches still keep the resolved child-side width/type detail in the exception text.
+- Important continuity note:
+  - this closes the remaining older-wording pocket in the internal-carrier re-export branch,
+  - it reuses the existing local-override rule instead of widening planner behavior,
+  - and it adds focused coverage for both width and type mismatch wording in [t/100-composition-internal-carrier-top-reexport.t](/Users/richarddje/Documents/github/fsmgen/t/100-composition-internal-carrier-top-reexport.t).
 ## 2026-03-17: declared connect-by-name failures now say when the declared match is blocked
 - Saved shipped behavior:
   - declared `=name` connect-by-name failures now say explicitly when the declared match is blocked,
