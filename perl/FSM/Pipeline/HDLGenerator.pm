@@ -1489,7 +1489,7 @@ sub build_implicit_top_output_links ($self, $ports, $fsm_file, $header) {
 
 sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $realized_instances, $fsm_file, $header) {
     my @links;
-    my %declared_top_ports = map { $_->name => 1 } @{$ports || []};
+    my %declared_top_ports = map { $_->name => $_ } @{$ports || []};
     my %system_port_names = map { $_ => 1 } $self->system_port_names_from_endpoints([
         map {
             my $instance = $_;
@@ -1521,7 +1521,6 @@ sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $re
     }
 
     for my $port_name (sort keys %port_groups) {
-        next if $declared_top_ports{$port_name};
         next if $system_port_names{$port_name};
 
         my @candidates = @{$port_groups{$port_name}};
@@ -1530,6 +1529,16 @@ sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $re
         my @input_candidates = grep { ($_->{port}->direction || '') eq 'input' } @candidates;
         my @output_candidates = grep { ($_->{port}->direction || '') eq 'output' } @candidates;
         next unless @input_candidates && @output_candidates;
+
+        my $declared_top_port = $declared_top_ports{$port_name};
+        if ($declared_top_port && ($declared_top_port->direction || '') ne 'output') {
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' declares top port '$port_name' as ".$declared_top_port->direction.", ".
+                "but same-name child ports include one driving output and one or more consuming inputs. ".
+                "The current bounded convention-over-configuration slice only allows that same-name internal carrier family to be re-exported through an explicit top output, not through a top input of the same name. ".
+                "Keep '$port_name' internal by omitting the top port, or declare '$port_name' as an output if it should be re-exported. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
 
         my %widths = map { $_->{port}->width => 1 } @candidates;
         if (keys(%widths) > 1) {
@@ -1559,6 +1568,25 @@ sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $re
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
+        my $resolved_width = $candidates[0]{port}->width;
+        my $resolved_type = $self->normalized_interface_type($candidates[0]{port}->type);
+        if ($declared_top_port) {
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' declares top output '$port_name' with width ".$declared_top_port->width.", ".
+                "but the same-name internal-carrier family resolves to width $resolved_width. ".
+                "The current bounded convention-over-configuration slice only re-exports an inferred same-name internal carrier when the explicit top output matches the child-side width exactly. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                unless $declared_top_port->width == $resolved_width;
+
+            my $declared_top_type = $self->normalized_interface_type($declared_top_port->type);
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' declares top output '$port_name' with interface type '$declared_top_type', ".
+                "but the same-name internal-carrier family resolves to interface type '$resolved_type'. ".
+                "The current bounded convention-over-configuration slice only re-exports an inferred same-name internal carrier when the explicit top output matches the child-side type metadata exactly. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                unless $declared_top_type eq $resolved_type;
+        }
+
         if (@output_candidates > 1) {
             my $seen = join(', ', map {
                 $_->{instance_name}.'.'.$_->{port}->name.
@@ -1574,6 +1602,13 @@ sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $re
 
         my $source = $output_candidates[0];
         my $source_endpoint = $source->{instance_name}.'.'.$source->{port}->name;
+        if ($declared_top_port) {
+            push @links, FSM::Composition::Link->new(
+                source => $source_endpoint,
+                target => $declared_top_port->name,
+                raw_token => '=implicit-internal:'.$port_name,
+            );
+        }
         for my $target (@input_candidates) {
             push @links, FSM::Composition::Link->new(
                 source => $source_endpoint,

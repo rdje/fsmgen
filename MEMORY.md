@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: explicit-link `C2` / `C3` now re-export inferred same-name internal carriers through explicit top outputs
+- Saved shipped behavior:
+  - explicit-link tops may still infer same-name internal child-to-child carriers conventionally,
+  - those carriers still stay internal by default,
+  - but an explicit same-name top output may now adopt and re-export one of those inferred carriers when direction, width, and type metadata still match.
+- Important continuity note:
+  - explicit links touching that family still suppress the inference locally,
+  - several same-name child outputs still fail through the dedicated internal-carrier ambiguity diagnostic,
+  - and type-mismatched explicit top-output re-export requests now fail explicitly instead of silently riding the old width-only link path.
+- [t/100-composition-internal-carrier-top-reexport.t](/Users/richarddje/Documents/github/fsmgen/t/100-composition-internal-carrier-top-reexport.t) locks generated-child success, mixed generated-plus-`?rtl` success, ambiguity rejection, and top-output type-mismatch rejection for the shipped re-export slice.
+
 ## 2026-03-17: explicit-link `C2` / `C3` now infer same-name internal carriers
 - Saved shipped behavior:
   - explicit-link tops may now infer internal same-name child-to-child carriers when exactly one same-name child output and one or more same-name child inputs remain available,
@@ -7,7 +18,7 @@ This is the live continuity document for fast session recovery after crashes, re
 - Important continuity note:
   - any explicit top port or explicit link touching that name family suppresses the inference locally,
   - several same-name child outputs now fail through a dedicated internal-carrier diagnostic,
-  - and the next convention-over-configuration question is now how those inferred internal carriers should be re-exported or overridden explicitly at the top boundary.
+  - and that follow-up question is now answered by the newer shipped explicit top-output re-export slice recorded above.
 - [t/99-composition-implicit-internal-carriers.t](/Users/richarddje/Documents/github/fsmgen/t/99-composition-implicit-internal-carriers.t) locks generated-child fanout success, mixed generated-plus-`?rtl` success, and several-output ambiguity rejection.
 
 ## 2026-03-17: explicit-link `C2` / `C3` now infer undeclared unique top outputs

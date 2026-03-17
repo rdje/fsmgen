@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### explicit-link `C2` / `C3` can now re-export inferred same-name internal carriers through explicit top outputs
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so explicit-link tops can now keep convention-first same-name internal-carrier inference while letting a matching explicit top output adopt and expose that carrier.
+- This shipped override is intentionally bounded:
+  - it applies only to same-name internal-carrier families that already qualify for inference,
+  - the top override must be an output with exact width/type agreement,
+  - the carrier still stays internal by default when no such top output is declared,
+  - and several same-name child outputs still fail explicitly instead of being guessed through.
+- Added [t/100-composition-internal-carrier-top-reexport.t](/Users/richarddje/Documents/github/fsmgen/t/100-composition-internal-carrier-top-reexport.t) to lock:
+  - generated-child internal-carrier re-export success in explicit-link `C2`,
+  - mixed generated-plus-`?rtl` internal-carrier re-export success in explicit-link `C3`,
+  - same-name output ambiguity rejection even with an explicit re-export request,
+  - and explicit top-output type-mismatch rejection for re-export.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the active `R11` lane records this local-override slice as shipped behavior rather than future intent.
+
 ### explicit-link `C2` / `C3` can now infer same-name internal carriers
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so explicit-link tops can now infer internal same-name child-to-child carriers when:
   - no explicit top port of that name exists,

@@ -56,7 +56,8 @@ The currently shipped composition behavior is intentionally bounded:
 - `C2` multi-generated-child composition uses explicit `?toplink`,
 - `C2` and `C3` may now also infer undeclared top inputs when one or more child inputs share the same name, width, and type metadata and those inputs are not already targeted by explicit child-to-child links,
 - `C2` and `C3` may now also infer undeclared top outputs when exactly one same-name child output remains top-facing and is not already consumed by explicit child-to-child links,
-- `C2` and `C3` may now also infer undeclared same-name internal carriers when no explicit top port of that name exists, no explicit link already touches that name family, exactly one same-name child output remains available, and one or more same-name child inputs remain available,
+- `C2` and `C3` may now also infer undeclared same-name internal carriers when no explicit link already touches that name family, exactly one same-name child output remains available, and one or more same-name child inputs remain available,
+- those inferred same-name internal carriers stay internal by default, but an explicit same-name top output may adopt and re-export that carrier when its direction, width, and type metadata match the child-side family exactly,
 - `C3` explicit-link composition currently supports any explicit-link top with at least one external `?rtl` child, including pure multi-`?rtl`, one-generated-plus-`?rtl`, and multi-generated-plus-`?rtl` mixtures,
 - `C4` declared connect-by-name currently supports top ports marked as `=name` inside `?ports` for one or more generated children, one or more external `?rtl` children, or any mixture of those generated and external RTL children,
 - each `=name` top output must resolve to exactly one same-named child output with the same width,
@@ -71,10 +72,11 @@ The currently shipped composition behavior is intentionally bounded:
 - when `C1` infers ports, that inferred top interface is exactly the realized child interface by name, width, and direction,
 - when `C2` / `C3` infer undeclared top inputs, only input-only same-name groups with exact width/type agreement are eligible,
 - when `C2` / `C3` infer undeclared top outputs, only exactly one same-name child output may remain top-facing,
-- when `C2` / `C3` infer undeclared same-name internal carriers, only exactly one same-name child output plus one or more same-name child inputs may remain available and no explicit top port or explicit link may already touch that name family,
+- when `C2` / `C3` infer undeclared same-name internal carriers, only exactly one same-name child output plus one or more same-name child inputs may remain available and no explicit link may already touch that name family,
 - child inputs already consumed by explicit child-to-child links are not inferred back out as top inputs,
 - child outputs already consumed by explicit child-to-child links are not inferred back out as top outputs,
 - inferred same-name internal carriers stay internal by default instead of being re-exported as top ports automatically,
+- an explicit same-name top output may re-export one of those inferred carriers without forcing manual child-to-child restatement,
 - explicit `?toplink` endpoints must match by role and exact width in `C2`, `C3`, and `C4`,
 - explicit and declared connect-by-name mismatches now fail before emission and identify the conflicting endpoints and widths,
 - realized child interface currently means:
@@ -231,7 +233,7 @@ Status:
 
 ### C2. Two generated children with explicit child-to-child wiring
 Status:
-- Implemented in the current active toolchain for generated children with explicit `?toplink`, plus bounded undeclared top-interface inference for child-input groups and unique child outputs that are still top-facing, and bounded same-name internal-carrier inference for unique producer-to-consumer families that remain otherwise unwired.
+- Implemented in the current active toolchain for generated children with explicit `?toplink`, plus bounded undeclared top-interface inference for child-input groups and unique child outputs that are still top-facing, and bounded same-name internal-carrier inference for unique producer-to-consumer families that remain otherwise unwired or are explicitly re-exported through a matching top output.
 
 - Input:
   - one `?top:name` with two generated children (`?fsmc` / `?dtc`) and explicit links between them.
@@ -241,7 +243,8 @@ Status:
   - explicit link wiring is emitted correctly,
   - undeclared shared top inputs can be inferred when they are not already consumed by explicit child-to-child links,
   - undeclared unique top-facing child outputs can be inferred when they are not already consumed by explicit child-to-child links,
-  - undeclared same-name internal carriers can be inferred when one unique child output and one or more child inputs share the same name and no explicit top port or explicit link already touches that family,
+  - undeclared same-name internal carriers can be inferred when one unique child output and one or more child inputs share the same name and no explicit link already touches that family,
+  - an explicit same-name top output may adopt and re-export that inferred carrier when width/type metadata still agree,
   - duplicate-driver errors are rejected.
 
 ### C3. Explicit-link external RTL composition
@@ -259,7 +262,8 @@ Status:
   - multiple generated children can still participate in the same explicit-link plan as long as at least one `?rtl` child is present,
   - undeclared shared top inputs can still be inferred when they are not already consumed by explicit child-to-child links,
   - undeclared unique top-facing child outputs can still be inferred when they are not already consumed by explicit child-to-child links,
-  - undeclared same-name internal carriers can still be inferred when one unique child output and one or more child inputs share the same name and no explicit top port or explicit link already touches that family,
+  - undeclared same-name internal carriers can still be inferred when one unique child output and one or more child inputs share the same name and no explicit link already touches that family,
+  - an explicit same-name top output may also adopt and re-export that inferred carrier when the top-boundary width/type contract still matches,
   - typed `.rtlif` `clock` / `reset` metadata can carry custom-named RTL system ports honestly.
 
 ### C4. Connect-by-name only when unambiguous

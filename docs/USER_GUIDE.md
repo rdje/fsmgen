@@ -736,7 +736,8 @@ This currently works because:
 - non-system connections are expressed explicitly through `?toplink`,
 - undeclared top-facing child inputs may now be inferred when the child-side evidence is unambiguous and those inputs are not already consumed by explicit child-to-child links,
 - undeclared unique top-facing child outputs may now also be inferred when they are not already consumed by explicit child-to-child links,
-- undeclared same-name internal child-to-child carriers may now be inferred when one unique child output and one or more child inputs share the same name and no explicit top port or explicit link already touches that name family,
+- undeclared same-name internal child-to-child carriers may now be inferred when one unique child output and one or more child inputs share the same name and no explicit link already touches that name family,
+- those inferred same-name carriers stay internal by default, but an explicit same-name top output may adopt and re-export one of them when width/type metadata still match,
 - explicit link widths and endpoint roles must match exactly.
 
 Current narrow declared connect-by-name example:

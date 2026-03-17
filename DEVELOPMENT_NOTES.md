@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: explicit-link `C2` / `C3` can now re-export inferred same-name internal carriers through explicit top outputs
+- Continued the active `R11` lane by turning the last internal-carrier follow-up question into a shipped local-override rule instead of leaving it as future design intent.
+- Landed behavior:
+  - explicit-link `C2` / `C3` tops still infer same-name internal carriers conventionally when one unique child output and one or more child inputs share the same name and no explicit link already touches that family,
+  - those inferred carriers still stay internal by default,
+  - but an explicit same-name top output may now adopt and re-export that carrier when the top-boundary direction, width, and type metadata still match the child-side family exactly.
+- Why this is worth shipping:
+  - it keeps convention as the default integration path,
+  - it adds the first real “local override without whole-interface restatement” slice on top of that convention,
+  - and it matches the intended integration model more honestly than forcing users back into manual child-to-child links just to expose one already-conventional carrier.
+- [t/100-composition-internal-carrier-top-reexport.t](/Users/richarddje/Documents/github/fsmgen/t/100-composition-internal-carrier-top-reexport.t) locks generated-child success, mixed generated-plus-RTL success, same-name output ambiguity rejection, and explicit top-output type-mismatch rejection for this re-export rule.
+
 ## 2026-03-17: explicit-link `C2` / `C3` can now infer same-name internal carriers
 - Continued the active `R11` lane by landing the next convention-first slice after undeclared top inputs and undeclared unique top outputs.
 - Landed behavior:
@@ -9,7 +21,7 @@ This document captures engineering rationale, design constraints, and working de
 - Why this is worth shipping:
   - it restores one of the most useful convention-over-configuration integration shortcuts without reopening broad hidden wiring,
   - it keeps explicit declarations as precise local overrides because any explicit top port or explicit link touching that signal family suppresses the inference,
-  - and it narrows the next question cleanly to re-export/override behavior for those inferred internal carriers rather than to whether carrier inference should exist at all.
+  - and it established the base carrier-inference rule that the newer shipped explicit top-output re-export slice now builds on.
 - [t/99-composition-implicit-internal-carriers.t](/Users/richarddje/Documents/github/fsmgen/t/99-composition-implicit-internal-carriers.t) locks generated-child fanout success, mixed generated-plus-RTL success, and ambiguity rejection for several same-name driving outputs.
 
 ## 2026-03-17: explicit-link `C2` / `C3` can now infer undeclared unique top outputs
