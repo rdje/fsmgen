@@ -62,6 +62,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Keep the reusable-root lane moving while `?dt:name`, explicit search-root behavior, `?dtc` composition child reuse, embedded `.rtlif` roots, and the new broader external-RTL `C3`/`C4` slices are all fresh in the tree.
   - The `.rtlif` interface-source family now covers typed ports, embedded same-file roots, and single-/multi-`?rtl` composition edges across both explicit-link and declared by-name lanes, `C3` now covers multi-generated-child mixed explicit-link tops as long as at least one `?rtl` child is present, `C4` now covers the same broader mixed child set with exact-one-match top outputs and fanout-capable top inputs, `C1` now supports omitted/empty-`?ports` passthrough inference, and `C2`/`C3` now support bounded undeclared top-input inference when child-side evidence is unambiguous.
   - The next bounded convention-over-configuration choice is now above that: whether safe undeclared top-interface inference should widen beyond `C1` passthrough and `C2`/`C3` top inputs into undeclared top outputs and internal same-name carriers.
+  - The governing future rule is now explicit too: convention should stay primary, but explicit port/link declarations should override inference locally instead of forcing whole-interface restatement.
   - A second future convention-over-configuration lane is now explicitly recorded too: whether scalar and aggregate signal types should be inferred by default from LHS/RHS/member/index usage, with explicit declarations used mainly as overrides.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
 
@@ -697,6 +698,9 @@ Left:
   - decide whether future convention-over-configuration work should let some top inputs/outputs be inferred even without `=name`,
   - decide whether unique same-name producer-to-consumer child links should create internal carriers automatically,
   - decide how such inferred internal carriers may be re-exported explicitly at the top boundary,
+  - keep convention as the default authoring path while making explicit port/link declarations override inference locally instead of replacing the whole inferred interface,
+  - keep that explicit override layer elegant and expressive rather than verbose duplicate configuration,
+  - make diagnostics explain whether a port/link was inferred, blocked, or overridden,
   - and keep any such convention top-boundary-oriented rather than turning child-to-child wiring into hidden inference everywhere.
 - Add any needed diagnostics/tests before considering broader composition growth.
 Exit criteria:

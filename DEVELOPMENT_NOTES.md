@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: future `R11` now records a convention-first, local-override composition policy
+- Captured one more future `R11` rule so we do not drift into either extreme:
+  - do not make users restate whole parent interfaces once convention can infer them honestly,
+  - but do keep precise explicit control available when a specific port or link needs non-default behavior.
+- The saved policy is:
+  - convention is the primary authoring path,
+  - explicit port/link declarations override inference locally instead of replacing the whole inferred interface,
+  - ambiguity must fail instead of being guessed through,
+  - and diagnostics should say whether a connection was inferred, blocked, or overridden.
+- Why this matters:
+  - it keeps `fsmgen` integration fast in the common case,
+  - it preserves precise top-boundary control when integration stops being conventional,
+  - and it keeps configuration elegant and expressive instead of turning every exception into verbose duplicate wiring.
+
 ## 2026-03-17: explicit-link `C2` / `C3` can now infer undeclared top inputs
 - Continued the active `R11` lane by widening undeclared top-interface inference one careful step past the earlier single-child `C1` slice.
 - Landed behavior:

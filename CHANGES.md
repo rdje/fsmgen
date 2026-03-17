@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### future `R11` now records convention-first inference plus local override control
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so future composition work is now governed by an explicit convention-over-configuration rule:
+  - convention should remain the primary integration path,
+  - explicit port/link declarations should override inference locally rather than forcing full parent-interface restatement,
+  - and ambiguity diagnostics should say whether a connection was inferred, blocked, or overridden.
+- Updated [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this policy is preserved as continuity guidance for future `R11` work rather than left as conversational context only.
+
 ### explicit-link `C2` / `C3` can now infer undeclared top inputs
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so explicit-link multi-child tops can now infer undeclared top inputs when:
   - the same-name child ports are all inputs,

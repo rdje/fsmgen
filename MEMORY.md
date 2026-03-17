@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: future `R11` now carries a convention-first, local-override composition rule
+- Saved future direction:
+  - convention should stay the default integration path wherever child/top wiring is unambiguous,
+  - explicit port/link declarations should override inference locally instead of forcing whole-interface restatement,
+  - and configuration should stay elegant and expressive rather than verbose duplicate wiring.
+- Important continuity note:
+  - ambiguity should still fail instead of being guessed through,
+  - and future diagnostics should explain whether a connection was inferred, blocked, or overridden.
+
 ## 2026-03-17: explicit-link `C2` / `C3` now infer undeclared top inputs
 - Saved shipped behavior:
   - explicit-link multi-child tops may now infer undeclared top inputs when same-name child inputs remain top-facing,

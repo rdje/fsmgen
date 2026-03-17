@@ -185,6 +185,7 @@ First shipped `R11` slice now in tree:
 
 Expected result:
 - composition remains explicit and serious instead of drifting back toward legacy implicit behavior.
+- convention should stay the primary integration path, while explicit configuration should act as a precise local override instead of forcing whole-interface restatement.
 
 Planned bounded sub-lane inside `R11`:
 - shared datapath extraction for multi-FSM tops.
