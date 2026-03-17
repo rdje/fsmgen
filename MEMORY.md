@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: duplicate composition declarations now say when shape is blocked
+- Saved shipped behavior:
+  - duplicate top-port declarations now say explicitly when composition shape is blocked because top port names must be unique,
+  - and duplicate realized child instance names now say explicitly when composition shape is blocked because child instance names must be unique.
+- Important continuity note:
+  - this closes another older-wording pocket in public composition-shape diagnostics,
+  - it keeps planning behavior unchanged,
+  - and it adds focused coverage instead of relying on incidental duplicate-declaration failures.
 ## 2026-03-17: `C1` passthrough exposure failures now say when exposure is blocked
 - Saved shipped behavior:
   - `C1` passthrough exposure now says explicitly when it is blocked because explicit top exposure omitted a realized child port,

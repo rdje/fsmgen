@@ -737,7 +737,8 @@ sub assert_unique_top_ports ($self, $ports_block, $fsm_file, $header) {
     my %top_ports_by_name;
     for my $port (@{$ports_block->ports}) {
         Carp::confess
-            "Composition source '$header' in '$fsm_file' declares duplicate top port '".$port->name."' in '?ports'. ".
+            "Composition source '$header' in '$fsm_file' declares duplicate top port '".$port->name."' in '?ports', ".
+            "but composition shape is blocked because the active composition lanes require each top port name to be unique. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             if $top_ports_by_name{$port->name};
 
@@ -1374,7 +1375,8 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
 
     for my $instance (@{$realized_instances || []}) {
         Carp::confess
-            "Composition source '$header' in '$fsm_file' declares duplicate child instance name '".$instance->instance_name."'. ".
+            "Composition source '$header' in '$fsm_file' declares duplicate child instance name '".$instance->instance_name."', ".
+            "but composition shape is blocked because the active composition lanes require each realized child instance name to be unique. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             if $instances_by_name{$instance->instance_name};
 

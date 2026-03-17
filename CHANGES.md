@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### duplicate composition declarations now say when shape is blocked
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so duplicate top-port and duplicate child-instance declaration failures now say composition shape is blocked when those declarations make planning ambiguous.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the same duplicate declaration detail still appears in the exception text,
+  - and the wording now lines up with the rest of the active blocked diagnostics lane.
+- Added [t/112-composition-duplicate-declaration-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/112-composition-duplicate-declaration-diagnostics.t) to lock duplicate top-port and duplicate child-instance wording.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path wording slice under `R11`.
+
 ### `C1` passthrough exposure failures now say when exposure is blocked
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `C1` passthrough exposure failures now say exposure is blocked when explicit top exposure omits a realized child port or disagrees with the realized child interface on name, width, or direction.
 - This shipped slice stays deliberately narrow:

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: duplicate composition declarations now say when shape is blocked
+- Continued the active `R11` diagnostics lane by tightening the remaining duplicate-declaration branches without changing composition behavior.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says composition shape is *blocked* when `?ports` declares the same top port name more than once,
+  - and it now says the same thing when linked planning sees the same realized child instance name more than once.
+- Why this is worth shipping:
+  - it closes another older-wording pocket in public composition-shape diagnostics,
+  - it keeps planning behavior unchanged while lining duplicate declarations up with the rest of the blocked-wording lane,
+  - and it adds focused regression coverage instead of relying on incidental failures.
+- Added [t/112-composition-duplicate-declaration-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/112-composition-duplicate-declaration-diagnostics.t) to lock duplicate top-port and duplicate child-instance wording.
 ## 2026-03-17: `C1` passthrough exposure failures now say when exposure is blocked
 - Continued the active `R11` diagnostics lane by tightening the remaining public `C1` passthrough exposure branches without changing composition behavior.
 - Landed behavior:
