@@ -197,6 +197,7 @@ First shipped `R11` slice now in tree:
     - the report summarizes top-port and resolved-link provenance by `origin_kind`,
     - the report now also surfaces the first shipped local override events,
     - the report now also surfaces the first shipped blocked convention events,
+    - plain explicit top-port same-name convention failures now also say when that convention is blocked instead of only implying it,
     - and `bin/fsmgen` now prints the same provenance summary for non-quiet composition runs,
   - bounded explicit-link `C2` / `C3` undeclared same-name internal-carrier inference when no explicit link already touches that name family, exactly one same-name child output remains available, and one or more same-name child inputs remain available,
   - bounded local override on top of that convention: an explicit same-name top output may adopt and re-export one of those inferred carriers when direction, width, and type metadata still match exactly,

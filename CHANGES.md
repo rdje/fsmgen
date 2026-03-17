@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### plain explicit top-port failure diagnostics now say when convention is blocked
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the plain explicit top-port same-name convention failure paths now say the convention is blocked instead of only implying it.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the existing concrete child-endpoint detail remains in the exception text,
+  - and the wording now aligns better with the already-shipped `Convention Blocks` reporting surface.
+- Added [t/107-composition-blocked-failure-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/107-composition-blocked-failure-diagnostics.t) to lock blocked-wording failure diagnostics for plain explicit top-input and top-output convention.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the first bounded failure-path blocked-wording slice under `R11`.
+
 ### composition provenance now reports blocked convention cases too
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `composition_report` now surfaces the first shipped blocked convention events:
   - explicit child links blocking undeclared top-input inference,

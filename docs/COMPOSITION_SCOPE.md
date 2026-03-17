@@ -97,6 +97,7 @@ The currently shipped composition behavior is intentionally bounded:
   - that report summarizes top-port and resolved-link provenance by `origin_kind`,
   - it also summarizes the first shipped local override events, such as explicit top links overriding same-name convention and explicit top outputs re-exporting inferred internal carriers,
   - and it now summarizes the first shipped “blocked” convention cases too, such as explicit child links blocking undeclared top-interface inference and inferred internal carriers staying internal by default,
+  - and the first bounded failure-path wording slice is now shipped too, so plain explicit top-port same-name convention failures now say when that convention is blocked rather than only implying it,
   - and `bin/fsmgen` now prints the same provenance summary during non-quiet composition runs,
 - realized child interface currently means:
   - effective system inputs from the active FSM generator contract:

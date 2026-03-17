@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: plain explicit top-port failure diagnostics now say when convention is blocked
+- Continued the active `R11` lane by closing the first failure-path wording seam instead of widening composition behavior again.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says the plain explicit top-port same-name convention is *blocked* when mixed-direction, width-mismatched, type-mismatched, or ambiguous child-side evidence prevents convention-first binding,
+  - and it keeps the existing concrete detail about the conflicting child endpoints instead of replacing it with a vaguer message.
+- Why this is worth shipping:
+  - it aligns failure-path wording with the already-shipped successful-run `Convention Blocks` summary,
+  - it makes the roadmap’s “inferred / blocked / overridden” vocabulary more consistent in actual troubleshooting,
+  - and it keeps the current `R11` step focused on diagnostics clarity rather than new hidden inference.
+- [t/107-composition-blocked-failure-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/107-composition-blocked-failure-diagnostics.t) locks the first bounded blocked-wording failure cases for plain explicit top-input and top-output convention.
 ## 2026-03-17: composition provenance now reports blocked convention cases too
 - Continued the active `R11` lane by making the first successful-run “blocked” cases visible instead of leaving that concept only in future notes.
 - Landed behavior:

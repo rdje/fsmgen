@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: plain explicit top-port failure diagnostics now say when convention is blocked
+- Saved shipped behavior:
+  - plain explicit top-port same-name convention failures now say explicitly when that convention is blocked,
+  - and they still list the conflicting child endpoints instead of collapsing into generic ambiguity text.
+- Important continuity note:
+  - this is the first bounded failure-path blocked-wording slice,
+  - it lines up the exception surface with the already-shipped successful-run `Convention Blocks` reporting,
+  - and the next diagnostics seam is now broader failure-path wording beyond these plain explicit top-port cases.
+- [t/107-composition-blocked-failure-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/107-composition-blocked-failure-diagnostics.t) locks the new blocked-wording failure surface.
 ## 2026-03-17: composition provenance now reports blocked convention cases too
 - Saved shipped behavior:
   - `composition_report` now includes the first surfaced blocked-event family,

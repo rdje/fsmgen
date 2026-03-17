@@ -1665,8 +1665,7 @@ sub build_implicit_top_input_links ($self, $ports, $explicit_links, $realized_in
                 } @same_name_candidates);
                 Carp::confess
                     "Composition source '$header' in '$fsm_file' declares top input '".$top_port->name."', ".
-                    "and the current bounded convention-first C2/C3 slice would otherwise bind it by same name, ".
-                    "but same-name child endpoints include incompatible directions. ".
+                    "but same-name top-input convention is blocked because same-name child endpoints include incompatible directions. ".
                     "Seen same-name child endpoints: $candidates. ".
                     "Use explicit '?toplink' wiring for that family if the mixed-direction naming is intentional. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -1682,8 +1681,7 @@ sub build_implicit_top_input_links ($self, $ports, $explicit_links, $realized_in
                 } @same_name_candidates);
                 Carp::confess
                     "Composition source '$header' in '$fsm_file' declares top input '".$top_port->name."' with width ".$top_port->width.", ".
-                    "and the current bounded convention-first C2/C3 slice would otherwise bind it by same name, ".
-                    "but same-name child inputs do not all match that width. ".
+                    "but same-name top-input convention is blocked because same-name child inputs do not all match that width. ".
                     "Seen same-name child endpoints: $candidates. ".
                     "Use explicit '?toplink' wiring or align the interface widths. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -1700,8 +1698,7 @@ sub build_implicit_top_input_links ($self, $ports, $explicit_links, $realized_in
                 } @same_name_candidates);
                 Carp::confess
                     "Composition source '$header' in '$fsm_file' declares top input '".$top_port->name."' with interface type '$declared_type', ".
-                    "and the current bounded convention-first C2/C3 slice would otherwise bind it by same name, ".
-                    "but same-name child inputs do not all match that type metadata. ".
+                    "but same-name top-input convention is blocked because same-name child inputs do not all match that type metadata. ".
                     "Seen same-name child endpoints: $candidates. ".
                     "Use explicit '?toplink' wiring or align the interface types. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -1771,8 +1768,7 @@ sub build_implicit_top_output_links ($self, $ports, $explicit_links, $realized_i
                 } @top_facing_output_candidates);
                 Carp::confess
                     "Composition source '$header' in '$fsm_file' declares top output '".$top_port->name."', ".
-                    "and the current bounded convention-first C2/C3 slice would otherwise bind it by same name, ".
-                    "but several same-name child outputs remain top-facing. ".
+                    "but same-name top-output convention is blocked because several same-name child outputs remain top-facing. ".
                     "Seen child outputs: $candidates. ".
                     "Use explicit '?toplink' wiring if that ambiguity is intentional. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -1785,16 +1781,14 @@ sub build_implicit_top_output_links ($self, $ports, $explicit_links, $realized_i
 
                 Carp::confess
                     "Composition source '$header' in '$fsm_file' declares top output '".$top_port->name."' with width ".$top_port->width.", ".
-                    "and the current bounded convention-first C2/C3 slice would otherwise bind it by same name, ".
-                    "but the remaining top-facing child output '".$candidate->{instance_name}.'.'.$candidate->{port}->name."' has width ".$candidate->{port}->width.". ".
+                    "but same-name top-output convention is blocked because the remaining top-facing child output '".$candidate->{instance_name}.'.'.$candidate->{port}->name."' has width ".$candidate->{port}->width.". ".
                     "Use explicit '?toplink' wiring or align the interface widths. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                     unless $candidate->{port}->width == $top_port->width;
 
                 Carp::confess
                     "Composition source '$header' in '$fsm_file' declares top output '".$top_port->name."' with interface type '$declared_type', ".
-                    "and the current bounded convention-first C2/C3 slice would otherwise bind it by same name, ".
-                    "but the remaining top-facing child output '".$candidate->{instance_name}.'.'.$candidate->{port}->name."' has interface type '$candidate_type'. ".
+                    "but same-name top-output convention is blocked because the remaining top-facing child output '".$candidate->{instance_name}.'.'.$candidate->{port}->name."' has interface type '$candidate_type'. ".
                     "Use explicit '?toplink' wiring or align the interface types. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                     unless $candidate_type eq $declared_type;
