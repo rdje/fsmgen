@@ -694,6 +694,15 @@ Done:
   - mixed generated-plus-`?rtl` `C3` success for the same plain explicit top-port convention,
   - mixed-direction rejection for plain explicit top-input convention,
   - and multi-output ambiguity rejection for plain explicit top-output convention.
+- The next transparency/provenance slice is now also shipped:
+  - typed composition ports now expose `origin_kind` so declared versus inferred top-boundary decisions stay visible,
+  - typed composition links now expose `origin_kind` so explicit toplinks, declared `=name`, same-name convention links, internal-carrier links, and auto system-port links can be distinguished,
+  - and `FSM::Composition::Plan` now exposes `resolved_links` as the full resolved link set used by planning instead of only the originally declared `links` input.
+- [t/103-composition-provenance-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/103-composition-provenance-metadata.t) now locks:
+  - declared parser-side top-port and explicit-toplink provenance,
+  - `C1` inferred passthrough provenance,
+  - explicit-toplink-driven inferred top-port provenance,
+  - and resolved-link provenance for plain-explicit-port convention plus internal-carrier re-export.
 - [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) now locks:
   - multi-`?rtl` explicit-toplink `C3` success,
   - and one-generated-plus-multi-`?rtl` explicit-toplink `C3` success.
@@ -744,7 +753,7 @@ Left:
   - decide whether the newly shipped explicit top-output re-export slice is enough or whether lighter/further override forms are warranted,
   - keep convention as the default authoring path while making explicit port/link declarations override inference locally instead of replacing the whole inferred interface,
   - keep that explicit override layer elegant and expressive rather than verbose duplicate configuration,
-  - make diagnostics explain whether a port/link was inferred, blocked, or overridden,
+  - extend the newly shipped plan-side provenance metadata into broader user-facing diagnostics/reporting so “inferred”, “blocked”, and “overridden” are explained consistently,
   - and keep any such convention top-boundary-oriented rather than turning child-to-child wiring into hidden inference everywhere.
 - Track and later retire the current architectural hotspot set deliberately instead of letting it stay ambient debt:
   - split composition policy, interface inference, and top emission back out of `FSM::Pipeline::HDLGenerator`,

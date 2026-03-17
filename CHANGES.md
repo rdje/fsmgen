@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### typed composition plans now surface first-pass provenance metadata
+- Updated [perl/FSM/Composition/Port.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Port.pm), [perl/FSM/Composition/Link.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Link.pm), and [perl/FSM/Composition/Plan.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Plan.pm) so typed composition results can now expose provenance explicitly.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm), [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm), and [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so:
+  - top ports expose `origin_kind`,
+  - links expose `origin_kind`,
+  - and composition plans expose `resolved_links` as the full resolved link set used by planning.
+- This shipped slice is intentionally additive:
+  - the existing `links` field remains as-is for compatibility,
+  - `resolved_links` is the new full planned-link view,
+  - and the new provenance values now cover declared explicit ports/links, declared `=name`, inferred passthrough ports/links, explicit-toplink-driven inferred top ports, plain-explicit-port convention links, internal-carrier links/re-exports, and auto system-port links.
+- Added [t/103-composition-provenance-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/103-composition-provenance-metadata.t) to lock:
+  - parser-side declared provenance,
+  - `C1` inferred passthrough provenance,
+  - explicit-toplink inferred top-port provenance,
+  - and resolved-link provenance for convention and override paths.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as a deliberate transparency contract, not just extra fields.
+
 ### explicit-link `C2` / `C3` plain explicit top ports can now reuse same-name convention
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so explicit-link `C2` / `C3` tops may now keep ordinary explicit top-port declarations such as `payload_in<8` or `result_data>8` while still reusing the same-name convention when the child-side evidence stays exact.
 - This shipped slice is intentionally bounded:

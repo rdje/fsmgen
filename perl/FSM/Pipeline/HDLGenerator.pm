@@ -660,6 +660,7 @@ sub build_realized_child_interface_ports ($self, $module_info) {
                 width => $entry->{width} || 1,
                 type => $system_port_type{$entry->{name}},
                 raw_token => undef,
+                origin_kind => 'realized_child_interface_port',
             );
         }
     }
@@ -672,6 +673,7 @@ sub build_realized_child_interface_ports ($self, $module_info) {
                 width => 1,
                 type => $system_port_type{$system_name},
                 raw_token => undef,
+                origin_kind => 'realized_child_interface_port',
             );
         }
     }
@@ -759,6 +761,17 @@ sub build_c1_composition_plan ($self, $composition_spec, $ports_block, $ports, $
             signal_name => $_->name,
         }
     } @effective_ports;
+    my @resolved_links = map {
+        my $port = $_;
+        FSM::Composition::Link->new(
+            source => ($port->direction eq 'input' ? $port->name : $realized_instance->instance_name.'.'.$port->name),
+            target => ($port->direction eq 'input' ? $realized_instance->instance_name.'.'.$port->name : $port->name),
+            raw_token => undef,
+            origin_kind => ($port->binding_mode || 'explicit') eq 'implicit_passthrough'
+                ? 'inferred_c1_passthrough_link'
+                : 'declared_c1_passthrough_link',
+        );
+    } @effective_ports;
 
     my $planned_instance = $self->clone_realized_instance_with_bindings($realized_instance, \@port_bindings);
 
@@ -767,6 +780,7 @@ sub build_c1_composition_plan ($self, $composition_spec, $ports_block, $ports, $
         top_name => $composition_spec->top->name,
         ports => \@effective_ports,
         links => [],
+        resolved_links => \@resolved_links,
         nets => [],
         instances => [$planned_instance],
         raw_spec => $composition_spec,
@@ -791,6 +805,7 @@ sub infer_c1_ports_from_child_interface ($self, $realized_instance, $fsm_file, $
                 type => $_->type,
                 raw_token => undef,
                 binding_mode => 'implicit_passthrough',
+                origin_kind => 'inferred_c1_passthrough_port',
             )
         } @child_ports
     ];
@@ -868,6 +883,7 @@ sub augment_with_inferred_top_ports_from_explicit_links ($self, $ports, $toplink
             type => $_->{type},
             raw_token => undef,
             binding_mode => 'explicit',
+            origin_kind => 'inferred_explicit_toplink_port',
         )
     } values %inferred_specs;
 
@@ -1011,6 +1027,7 @@ sub augment_with_inferred_undeclared_top_inputs ($self, $ports, $realized_instan
             binding_mode => $same_name_undeclared_top_input_links{$template->name}
                 ? 'explicit'
                 : 'implicit_fanout',
+            origin_kind => 'inferred_undeclared_top_input_port',
         );
     }
 
@@ -1082,6 +1099,7 @@ sub augment_with_inferred_undeclared_top_outputs ($self, $ports, $realized_insta
             type => $self->normalized_interface_type($template->type),
             raw_token => $source_endpoint,
             binding_mode => 'implicit_unique_output',
+            origin_kind => 'inferred_undeclared_top_output_port',
         );
     }
 
@@ -1295,6 +1313,7 @@ sub build_declared_by_name_links ($self, $ports, $realized_instances, $fsm_file,
                     source => $top_port->name,
                     target => $_->{instance_name}.'.'.$_->{port}->name,
                     raw_token => '=byname:'.$top_port->name,
+                    origin_kind => 'declared_connect_by_name_link',
                 )
             } @same_name_candidates;
             next;
@@ -1315,6 +1334,7 @@ sub build_declared_by_name_links ($self, $ports, $realized_instances, $fsm_file,
                 source => $match->{instance_name}.'.'.$match->{port}->name,
                 target => $top_port->name,
                 raw_token => '=byname:'.$top_port->name,
+                origin_kind => 'declared_connect_by_name_link',
             );
             next;
         }
@@ -1348,6 +1368,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
     my %bindings_by_instance;
     my %reserved_targets;
     my %system_top_ports;
+    my @system_auto_links;
 
     for my $instance (@{$realized_instances || []}) {
         Carp::confess
@@ -1414,6 +1435,12 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
             $bindings_by_instance{$instance->instance_name}{$system_port_name} = $system_port_name;
             $reserved_targets{"child:".$instance->instance_name.".$system_port_name"} = "auto top input '$system_port_name'";
             $system_top_ports{$system_port_name} = 1;
+            push @system_auto_links, FSM::Composition::Link->new(
+                source => $system_port_name,
+                target => $instance->instance_name.'.'.$system_port_name,
+                raw_token => undef,
+                origin_kind => 'auto_system_port_link',
+            );
         }
     }
 
@@ -1587,6 +1614,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
         top_name => $top->name,
         ports => $ports,
         links => $links,
+        resolved_links => [@system_auto_links, @resolved_links_input],
         nets => \@nets,
         instances => \@planned_instances,
         raw_spec => $composition_spec,
@@ -1693,6 +1721,9 @@ sub build_implicit_top_input_links ($self, $ports, $explicit_links, $realized_in
                 source => $top_port->name,
                 target => $target_endpoint,
                 raw_token => '=implicit:'.$top_port->name,
+                origin_kind => $binding_mode eq 'implicit_fanout'
+                    ? 'inferred_undeclared_top_input_link'
+                    : 'inferred_plain_explicit_top_input_link',
             );
         }
     }
@@ -1770,6 +1801,7 @@ sub build_implicit_top_output_links ($self, $ports, $explicit_links, $realized_i
                     source => $candidate->{instance_name}.'.'.$candidate->{port}->name,
                     target => $top_port->name,
                     raw_token => '=implicit:'.$top_port->name,
+                    origin_kind => 'inferred_plain_explicit_top_output_link',
                 );
             }
 
@@ -1787,6 +1819,7 @@ sub build_implicit_top_output_links ($self, $ports, $explicit_links, $realized_i
             source => $source_endpoint,
             target => $top_port->name,
             raw_token => '=implicit:'.$top_port->name,
+            origin_kind => 'inferred_undeclared_top_output_link',
         );
     }
 
@@ -1913,6 +1946,7 @@ sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $re
                 source => $source_endpoint,
                 target => $declared_top_port->name,
                 raw_token => '=implicit-internal:'.$port_name,
+                origin_kind => 'inferred_internal_carrier_reexport_link',
             );
         }
         for my $target (@input_candidates) {
@@ -1920,6 +1954,7 @@ sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $re
                 source => $source_endpoint,
                 target => $target->{instance_name}.'.'.$target->{port}->name,
                 raw_token => '=implicit-internal:'.$port_name,
+                origin_kind => 'inferred_internal_carrier_link',
             );
         }
     }

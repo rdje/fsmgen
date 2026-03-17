@@ -88,6 +88,10 @@ The currently shipped composition behavior is intentionally bounded:
 - an explicit same-name top output may re-export one of those inferred carriers without forcing manual child-to-child restatement,
 - explicit `?toplink` endpoints must match by role and exact width in `C2`, `C3`, and `C4`,
 - explicit and declared connect-by-name mismatches now fail before emission and identify the conflicting endpoints and widths,
+- the typed composition plan now also exposes first-pass provenance metadata for downstream tooling and diagnostics:
+  - `FSM::Composition::Port->origin_kind` distinguishes declared and inferred top-port paths,
+  - `FSM::Composition::Link->origin_kind` distinguishes explicit toplinks, declared `=name`, same-name convention links, internal-carrier links, and auto system-port links,
+  - and `FSM::Composition::Plan->resolved_links` now surfaces the full resolved link set used by planning instead of only the original declared `links` input,
 - realized child interface currently means:
   - effective system inputs from the active FSM generator contract:
     - explicit conventional `+system` currently yields `clk` / `rstn`,

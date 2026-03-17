@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: typed composition plans now surface first-pass provenance
+- Continued the active `R11` lane by making the convention engine more transparent without widening the wiring contract again.
+- Landed behavior:
+  - [perl/FSM/Composition/Port.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Port.pm) now carries `origin_kind`,
+  - [perl/FSM/Composition/Link.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Link.pm) now carries `origin_kind`,
+  - [perl/FSM/Composition/Plan.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Plan.pm) now carries `resolved_links`,
+  - and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now annotates declared, inferred, convention-based, internal-carrier, and auto-system composition decisions with that metadata.
+- Why this is worth shipping:
+  - it is the first concrete step toward the roadmap rule that diagnostics should explain whether a port or link was inferred, blocked, or overridden,
+  - it helps future embedding/reporting work without changing the existing planner contract abruptly,
+  - and it keeps the new transparency contract additive by leaving the old `links` field alone while introducing `resolved_links` for the full planned link set.
+- [t/103-composition-provenance-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/103-composition-provenance-metadata.t) locks parser-side declared provenance, `C1` inferred passthrough provenance, explicit-toplink-driven inferred top-port provenance, and resolved-link provenance for plain-explicit-port convention plus internal-carrier re-export.
 ## 2026-03-17: explicit-link `C2` / `C3` plain explicit top ports can now reuse same-name convention
 - Continued the active `R11` lane by removing another layer of top-boundary boilerplate without collapsing `C2` / `C3` into broad hidden auto-wiring.
 - Landed behavior:

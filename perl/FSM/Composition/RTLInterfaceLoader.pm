@@ -199,6 +199,7 @@ sub parse_port_token ($self, $module_name, $token, $metadata_path) {
         width => $size // 1,
         type => $resolved_type,
         raw_token => $token,
+        origin_kind => 'rtlif_declared_port',
     );
 }
 

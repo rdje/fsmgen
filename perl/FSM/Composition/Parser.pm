@@ -256,6 +256,7 @@ sub parse_port_token ($self, $top_name, $token) {
         type => $type,
         binding_mode => defined($binding) ? 'connect_by_name' : 'explicit',
         raw_token => $token,
+        origin_kind => defined($binding) ? 'declared_connect_by_name_port' : 'declared_explicit_port',
     );
 }
 
@@ -272,6 +273,7 @@ sub parse_toplink_block ($self, $top_name, $child_ast, $block_name, $items) {
                 source => $1,
                 target => $2,
                 raw_token => $item,
+                origin_kind => 'declared_explicit_toplink',
             );
             next;
         }

@@ -190,6 +190,10 @@ Combinational DT note:
   - and explicit top-boundary links still override that convention locally.
 - `C5` diagnostics: duplicate-driver rejection, explicit-link width mismatch rejection, connect-by-name ambiguity rejection, connect-by-name unknown-endpoint rejection, and width mismatch rejection
 - `C6` scoped rejection of legacy out-of-scope composition constructs
+- The typed composition result now also carries first-pass provenance metadata for tooling/debugging:
+  - top ports expose `origin_kind` so declared versus inferred top-boundary decisions stay visible,
+  - links expose `origin_kind` so explicit toplinks, `=name`, same-name convention, internal-carrier, and auto-system links can be distinguished,
+  - and `composition_plan->resolved_links` exposes the final planned link set instead of only the originally declared `links`.
 
 ### Implemented, but not strong enough yet to call fully supported
 - No additional construct family is currently parked in this middle bucket.

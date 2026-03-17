@@ -188,6 +188,10 @@ First shipped `R11` slice now in tree:
     - mixed-direction plain-input families fail explicitly,
     - multi-output plain-output families fail explicitly,
     - and explicit top-boundary links still override that convention locally,
+  - first bounded composition-plan transparency metadata:
+    - top ports carry `origin_kind` so declared versus inferred top-boundary decisions remain visible,
+    - links carry `origin_kind` so explicit toplinks, `=name`, same-name convention links, internal-carrier links, and auto system-port links can be distinguished,
+    - and the typed composition plan exposes `resolved_links` as the full resolved link set used by planning,
   - bounded explicit-link `C2` / `C3` undeclared same-name internal-carrier inference when no explicit link already touches that name family, exactly one same-name child output remains available, and one or more same-name child inputs remain available,
   - bounded local override on top of that convention: an explicit same-name top output may adopt and re-export one of those inferred carriers when direction, width, and type metadata still match exactly,
   - single-generated-child declared connect-by-name through `=name` for both `?fsmc` and `?dtc` children,

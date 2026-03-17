@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: typed composition plans now expose provenance metadata
+- Saved shipped behavior:
+  - top ports now carry `origin_kind`,
+  - links now carry `origin_kind`,
+  - and composition plans now carry `resolved_links` as the full planned-link set instead of exposing only the original `links` input.
+- Important continuity note:
+  - this is additive, not a replacement of the older `links` field,
+  - the current metadata now distinguishes declared explicit ports/links, declared `=name`, inferred passthrough ports/links, explicit-toplink inferred ports, plain-explicit-port convention links, internal-carrier links/re-exports, and auto system-port links,
+  - and this is the first bounded step toward the roadmap goal of explaining whether a port/link was inferred, blocked, or overridden.
+- [t/103-composition-provenance-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/103-composition-provenance-metadata.t) locks the new provenance surface.
 ## 2026-03-17: explicit-link `C2` / `C3` plain explicit top ports now reuse same-name convention
 - Saved shipped behavior:
   - plain explicit top inputs in explicit-link `C2` / `C3` may now fan out by same name when compatible child inputs still keep one direction plus exact width/type agreement,

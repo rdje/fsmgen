@@ -14,6 +14,7 @@ sub new ($class, %args) {
         type => $args{type},
         binding_mode => $args{binding_mode} // 'explicit',
         raw_token => $args{raw_token},
+        origin_kind => $args{origin_kind},
     }, $class;
 }
 
@@ -23,5 +24,6 @@ sub width ($self) { return $self->{width} }
 sub type ($self) { return $self->{type} }
 sub binding_mode ($self) { return $self->{binding_mode} }
 sub raw_token ($self) { return $self->{raw_token} }
+sub origin_kind ($self) { return $self->{origin_kind} }
 
 1;
