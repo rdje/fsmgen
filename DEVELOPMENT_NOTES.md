@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: explicit-link `C2` / `C3` can now infer undeclared top inputs
+- Continued the active `R11` lane by widening undeclared top-interface inference one careful step past the earlier single-child `C1` slice.
+- Landed behavior:
+  - explicit-link `C2` / `C3` tops may now omit some top-input declarations,
+  - `fsmgen` infers those undeclared top inputs only when same-name child inputs remain top-facing and agree exactly on direction, width, and type metadata,
+  - and child inputs already consumed by explicit child-to-child links are not re-exported as inferred top inputs.
+- Why this is worth shipping:
+  - it removes repetitive top-input boilerplate from real multi-child integration cases,
+  - it stays convention-over-configuration without becoming hidden carrier inference,
+  - and it keeps output exposure and producer-to-consumer internalization as future explicit design questions rather than mixing them into this slice.
+- [t/97-composition-implicit-multi-child-inputs.t](/Users/richarddje/Documents/github/fsmgen/t/97-composition-implicit-multi-child-inputs.t) locks shared-input success plus width-mismatch rejection.
+
 ## 2026-03-17: single-child `C1` can now infer the top interface when `?ports` is omitted or empty
 - Continued the active `R11` lane by taking the first bounded undeclared top-interface inference step instead of jumping straight into multi-child auto-wiring.
 - Landed behavior:

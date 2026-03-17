@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: explicit-link `C2` / `C3` now infer undeclared top inputs
+- Saved shipped behavior:
+  - explicit-link multi-child tops may now infer undeclared top inputs when same-name child inputs remain top-facing,
+  - and the inference requires exact agreement on direction, width, and type metadata.
+- Important continuity note:
+  - child inputs already consumed by explicit child-to-child links are not re-inferred as top ports,
+  - this slice still does not infer undeclared top outputs,
+  - and it still does not create internal same-name producer-to-consumer carriers automatically.
+- [t/97-composition-implicit-multi-child-inputs.t](/Users/richarddje/Documents/github/fsmgen/t/97-composition-implicit-multi-child-inputs.t) locks shared-input success and width-mismatch rejection.
+
 ## 2026-03-17: single-child `C1` now infers top ports when `?ports` is omitted or empty
 - Saved shipped behavior:
   - `C1` single-child passthrough now accepts no `?ports` block or an empty `(?ports)` block,

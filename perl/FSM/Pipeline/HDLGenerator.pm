@@ -19,6 +19,7 @@ use FSM::Composition::Parser;
 use FSM::Composition::Net;
 use FSM::Composition::Port;
 use FSM::Composition::Plan;
+use FSM::Composition::PortsBlock;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::RTLInterfaceLoader;
 use FSM::Extension::Context;
@@ -361,6 +362,26 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
     my $dtc_instance_count = scalar(grep { $_->kind eq 'dtc' } @realized_instances);
     my $generated_instance_count = scalar(grep { $self->is_generated_child_kind($_->kind) } @realized_instances);
     my $declared_by_name_port_count = scalar(grep { ($_->binding_mode || 'explicit') eq 'connect_by_name' } @ports);
+
+    if (!$declared_by_name_port_count && !$is_single_child_passthrough) {
+        @ports = @{
+            $self->augment_with_inferred_undeclared_top_inputs(
+                \@ports,
+                \@realized_instances,
+                \@toplinks,
+                $fsm_file,
+                $header,
+            )
+        };
+    }
+
+    if (@ports && (!$ports_block || scalar(@{$ports_block->ports || []}) != scalar(@ports))) {
+        $ports_block = FSM::Composition::PortsBlock->new(
+            name => ($ports_block ? $ports_block->name : undef),
+            ports => \@ports,
+            raw_ast => ($ports_block ? $ports_block->raw_ast : undef),
+        );
+    }
 
     if ($declared_by_name_port_count > 0) {
         return $self->build_c4_composition_plan(
@@ -746,6 +767,87 @@ sub infer_c1_ports_from_child_interface ($self, $realized_instance, $fsm_file, $
     ];
 }
 
+sub augment_with_inferred_undeclared_top_inputs ($self, $ports, $realized_instances, $toplinks, $fsm_file, $header) {
+    my @ports = @{$ports || []};
+    my %declared_by_name = map { $_->name => $_ } @ports;
+    my %port_groups;
+    my %explicitly_linked_child_input_names;
+
+    for my $toplink (@{$toplinks || []}) {
+        for my $link (@{$toplink->links || []}) {
+            my $target = $link->target || '';
+            next unless $target =~ /^\w+\.(\w+)$/;
+            $explicitly_linked_child_input_names{$1} = 1;
+        }
+    }
+
+    for my $instance (@{$realized_instances || []}) {
+        for my $port (@{$instance->interface_ports || []}) {
+            push @{$port_groups{$port->name}}, {
+                instance_name => $instance->instance_name,
+                port => $port,
+            };
+        }
+    }
+
+    my @inferred_ports;
+    for my $port_name (sort keys %port_groups) {
+        next if $declared_by_name{$port_name};
+        next if $explicitly_linked_child_input_names{$port_name};
+
+        my @candidates = @{$port_groups{$port_name}};
+        my @input_candidates = grep { ($_->{port}->direction || '') eq 'input' } @candidates;
+        next unless @input_candidates;
+        next unless @input_candidates == @candidates;
+
+        my %widths = map { $_->{port}->width => 1 } @input_candidates;
+        if (keys(%widths) > 1) {
+            my $candidates = join(', ', map {
+                $_->{instance_name}.'.'.$_->{port}->name.
+                '['.$_->{port}->direction.', width='.$_->{port}->width.']'
+            } @input_candidates);
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' omits top port '$port_name', ".
+                "but undeclared top-input inference cannot choose a width because same-name child inputs disagree. ".
+                "Seen child inputs: $candidates. ".
+                "The current bounded inference slice only infers undeclared top inputs when all same-name child inputs agree exactly on width. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        my %types = map { (defined($_->{port}->type) ? $_->{port}->type : '') => 1 } @input_candidates;
+        if (keys(%types) > 1) {
+            my $candidates = join(', ', map {
+                $_->{instance_name}.'.'.$_->{port}->name.
+                '['.$_->{port}->direction.', width='.$_->{port}->width.', type='.(defined($_->{port}->type) ? $_->{port}->type : 'data').']'
+            } @input_candidates);
+            Carp::confess
+                "Composition source '$header' in '$fsm_file' omits top port '$port_name', ".
+                "but undeclared top-input inference cannot choose one interface type because same-name child inputs disagree. ".
+                "Seen child inputs: $candidates. ".
+                "The current bounded inference slice only infers undeclared top inputs when all same-name child inputs agree exactly on type metadata too. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        my $template = $input_candidates[0]{port};
+        push @inferred_ports, FSM::Composition::Port->new(
+            name => $template->name,
+            direction => 'input',
+            width => $template->width,
+            type => $template->type,
+            raw_token => undef,
+            binding_mode => 'implicit_fanout',
+        );
+    }
+
+    @inferred_ports = sort {
+        $self->system_port_sort_key($a) <=> $self->system_port_sort_key($b)
+        ||
+        $a->name cmp $b->name
+    } @inferred_ports;
+
+    return [@ports, @inferred_ports];
+}
+
 sub assert_c1_port_exposure_matches_child ($self, $ports_block, $realized_instance, $child_port_info, $fsm_file, $header) {
     my $top_ports_by_name = $self->assert_unique_top_ports($ports_block, $fsm_file, $header);
 
@@ -1014,6 +1116,18 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
         };
     }
 
+    my @resolved_links_input = @{$links || []};
+    if ($lane eq 'C2' || $lane eq 'C3') {
+        push @resolved_links_input, @{
+            $self->build_implicit_top_input_links(
+                $ports,
+                $realized_instances,
+                $fsm_file,
+                $header,
+            )
+        };
+    }
+
     for my $instance (@{$realized_instances || []}) {
         for my $system_port ($self->system_interface_ports($instance->interface_ports)->@*) {
             my $system_port_name = $system_port->name;
@@ -1042,7 +1156,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
     my %links_by_source;
     my %source_endpoint_by_key;
 
-    for my $link (@{$links || []}) {
+    for my $link (@resolved_links_input) {
         my $source = $self->resolve_composition_endpoint(
             $link->source,
             $top_ports_by_name,
@@ -1201,6 +1315,42 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
         instances => \@planned_instances,
         raw_spec => $composition_spec,
     );
+}
+
+sub build_implicit_top_input_links ($self, $ports, $realized_instances, $fsm_file, $header) {
+    my @links;
+    my %system_port_names = map { $_ => 1 } $self->system_port_names_from_endpoints([
+        map {
+            my $instance = $_;
+            map {
+                {
+                    instance_name => $instance->instance_name,
+                    port => $_,
+                }
+            } @{$instance->interface_ports || []}
+        } @{$realized_instances || []}
+    ]);
+
+    for my $top_port (@{$ports || []}) {
+        next unless ($top_port->binding_mode || 'explicit') eq 'implicit_fanout';
+        next if $system_port_names{$top_port->name};
+
+        for my $instance (@{$realized_instances || []}) {
+            for my $port (@{$instance->interface_ports || []}) {
+                next unless $port->name eq $top_port->name;
+                next unless ($port->direction || '') eq 'input';
+                next unless $port->width == $top_port->width;
+
+                push @links, FSM::Composition::Link->new(
+                    source => $top_port->name,
+                    target => $instance->instance_name.'.'.$port->name,
+                    raw_token => '=implicit:'.$top_port->name,
+                );
+            }
+        }
+    }
+
+    return \@links;
 }
 
 sub clone_realized_instance_with_bindings ($self, $instance, $port_bindings) {

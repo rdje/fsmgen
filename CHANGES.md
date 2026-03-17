@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-17
+### explicit-link `C2` / `C3` can now infer undeclared top inputs
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so explicit-link multi-child tops can now infer undeclared top inputs when:
+  - the same-name child ports are all inputs,
+  - they agree exactly on width and type metadata,
+  - and they are not already consumed by explicit child-to-child links.
+- This shipped slice is intentionally bounded:
+  - it infers top inputs only,
+  - it applies to explicit-link `C2` / `C3` tops,
+  - and it does not yet create undeclared top outputs or internal same-name carriers.
+- Added [t/97-composition-implicit-multi-child-inputs.t](/Users/richarddje/Documents/github/fsmgen/t/97-composition-implicit-multi-child-inputs.t) to lock:
+  - inferred undeclared shared top-input success in explicit-link `C2`,
+  - and width-mismatch rejection for undeclared shared top-input inference.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the active `R11` lane now records this bounded multi-child inference slice honestly.
+
 ### single-child `C1` can now infer the top interface when `?ports` is omitted or empty
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the single-child `C1` composition lane now accepts either:
   - no `?ports` block at all,
