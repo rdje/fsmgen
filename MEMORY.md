@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: top-level composition lane and shape gates now say they are blocked
+- Saved shipped behavior:
+  - top-level composition lane entry now says explicitly when it is blocked because no child instances exist,
+  - and top-level composition shape now says explicitly when it is blocked because `?ports` multiplicity is invalid or omitted/empty `?ports` appears outside the bounded inference cases.
+- Important continuity note:
+  - this extends the blocked-wording surface from explicit-link execution into the top-level composition gates,
+  - it updates the existing no-child coverage and adds focused shape-gate coverage,
+  - and it keeps the planner behavior unchanged.
 ## 2026-03-17: explicit-link lane-entry and topology failures now say they are blocked
 - Saved shipped behavior:
   - explicit-link lane entry now says explicitly when it is blocked because `C2`/`C3` was entered without any `?toplink`,

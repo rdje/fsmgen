@@ -20,6 +20,16 @@ This document captures engineering rationale, design constraints, and working de
   - it closes previously untested width/type wording branches in the explicit-toplink path,
   - and it keeps the current `R11` step on diagnostics clarity rather than new behavior.
 - Updated [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) to lock mixed-role, width-mismatch, and type-mismatch blocked diagnostics for explicit-toplink-driven undeclared top-port inference.
+## 2026-03-17: top-level composition lane/shape gates now say they are blocked
+- Continued the active `R11` diagnostics lane by tightening the remaining top-level composition lane/shape gates without changing planning behavior.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now says composition lane entry is *blocked* when no child instances exist,
+  - and it now says composition shape is *blocked* when `?ports` multiplicity is invalid or when omitted/empty `?ports` appears outside the bounded inference cases.
+- Why this is worth shipping:
+  - it extends the same blocked-wording style all the way up to the top-level composition shape gates,
+  - it keeps the planner behavior unchanged,
+  - and it adds focused regression coverage instead of relying only on older generic wording.
+- Updated [t/13-composition-source-classification.t](/Users/richarddje/Documents/github/fsmgen/t/13-composition-source-classification.t) and added [t/110-composition-shape-gate-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/110-composition-shape-gate-diagnostics.t) to lock the no-child, multi-`?ports`, omitted-`?ports`, and empty-`?ports` blocked wording.
 ## 2026-03-17: explicit-link lane-entry and topology failures now say they are blocked
 - Continued the active `R11` diagnostics lane by tightening the remaining explicit-link lane-entry and topology branches without changing composition behavior.
 - Landed behavior:

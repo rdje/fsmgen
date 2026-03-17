@@ -300,7 +300,7 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
 
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active composition lanes require at least one child instance such as '?fsmc', '?dtc', or '?rtl'. ".
+        "but composition lane entry is blocked because the current active composition lanes require at least one child instance such as '?fsmc', '?dtc', or '?rtl'. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @instances;
 
@@ -343,7 +343,7 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
 
     Carp::confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active composition lanes require exactly one explicit '?ports' block, ".
+        "but composition shape is blocked because the current active composition lanes require exactly one explicit '?ports' block, ".
         "except that the single-child passthrough C1 lane and the explicit-link C2/C3 lanes may now infer the top interface when '?ports' is omitted or empty. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @ports_blocks <= 1;
@@ -354,13 +354,13 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
     if (!$allows_implicit_c1_ports && !$allows_implicit_explicit_link_ports) {
         Carp::confess
             "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-            "but the current active composition lanes require exactly one explicit '?ports' block. ".
+            "but composition shape is blocked because the current active composition lanes require exactly one explicit '?ports' block. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless @ports_blocks == 1;
 
         Carp::confess
             "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-            "but the current active composition lanes require '?ports' to declare at least one explicit top port, ".
+            "but composition shape is blocked because the current active composition lanes require '?ports' to declare at least one explicit top port, ".
             "except that the single-child passthrough C1 lane and the explicit-link C2/C3 lanes may now infer the top interface when '?ports' is omitted or empty. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless @ports;
