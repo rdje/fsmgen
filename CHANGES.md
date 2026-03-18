@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-18
+### future note logged: `?toplink` naming may later gain a clearer alias
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the recent design discussion is now tracked explicitly:
+  - `?toplink` is acceptable but not ideal from a naming/ergonomics point of view,
+  - a future syntax-cleanup pass may decide whether to keep it canonical or add a clearer preferred alias such as `?wiring`,
+  - and that decision is now recorded as future work rather than left as conversation residue.
+
+### legacy `?ports` mapping directives now say port declaration mode is blocked
+- Updated [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so legacy `?ports` mapping directives like `/foo/bar/` now say composition port declaration mode is blocked instead of using the older raw wording.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the offending mapping directive still appears in the exception text,
+  - and the wording now lines up with the rest of the active blocked diagnostics lane.
+- Added [t/127-composition-ports-mapping-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/127-composition-ports-mapping-diagnostics.t) to lock that diagnostic through both pipeline and CLI entrypoints, and updated [t/25-composition-legacy-scope-errors.t](/Users/richarddje/Documents/github/fsmgen/t/25-composition-legacy-scope-errors.t) so the direct parser check expects the same wording.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the task and the future naming note are both preserved in the live continuity trail.
+
 ### malformed `?ports` and `?toplink` parser items now say parser token boundaries are blocked
 - Updated [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so malformed composition parser items now say blocked token-boundary failures for nested `?ports`, invalid `?ports` tokens, non-positive `?ports` widths, nested `?toplink` items, and unsupported `?toplink` tokens.
 - This shipped slice stays deliberately narrow:

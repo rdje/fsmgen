@@ -229,7 +229,7 @@ sub parse_ports_block ($self, $top_name, $child_ast, $block_name, $items) {
         if ($item =~ m{^/} || $item =~ /^\{/) {
             confess
                 "Composition top '$top_name' contains '?ports' mapping directive '$item', ".
-                "but the first active R6 realization lane only supports explicit top-port declarations inside '?ports'.".
+                "but composition port declaration mode is blocked because the active composition parser only supports explicit top-port declarations inside '?ports'.".
                 $self->scope_docs_suffix;
         }
 

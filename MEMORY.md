@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-18: `?toplink` naming cleanup is now tracked as future syntax work
+- Saved future note:
+  - `?toplink` is acceptable but not ideal as composition wiring syntax,
+  - a future syntax-cleanup pass may later decide whether it stays canonical or gains a clearer preferred alias such as `?wiring`,
+  - and compatibility should be preferred over abrupt source breakage if that future lane is taken.
+
+## 2026-03-18: legacy `?ports` mapping directives now say port declaration mode is blocked
+- Saved shipped behavior:
+  - composition parser diagnostics now say explicitly when composition port declaration mode is blocked because `?ports` contains a legacy mapping directive like `/foo/bar/` instead of explicit top-port declarations.
+- Important continuity note:
+  - this closes another older-wording pocket on a real composition parser boundary,
+  - it keeps the parser contract unchanged,
+  - and it adds focused pipeline plus CLI coverage on top of the existing direct parser check.
+
 ## 2026-03-18: malformed `?ports` and `?toplink` parser items now say parser token boundaries are blocked
 - Saved shipped behavior:
   - composition parser diagnostics now say blocked token-boundary failures for nested `?ports`, invalid `?ports` tokens, non-positive `?ports` widths, nested `?toplink` items, and unsupported `?toplink` tokens.

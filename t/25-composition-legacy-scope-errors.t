@@ -133,8 +133,8 @@ $ports_mapping_error = $@;
 
 like(
     $ports_mapping_error,
-    qr/\?ports' mapping directive '\/foo\/bar\/'.*only supports explicit top-port declarations/s,
-    'parser rejects legacy ports mapping directives explicitly',
+    qr/\?ports' mapping directive '\/foo\/bar\/'.*composition port declaration mode is blocked because the active composition parser only supports explicit top-port declarations/s,
+    'parser now says legacy ports mapping directives block composition port declaration mode',
 );
 
 my $nested_toplink_error = eval {

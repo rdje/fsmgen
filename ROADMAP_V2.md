@@ -154,6 +154,9 @@ Deliverable themes:
     - exact-type whole-aggregate assignment only after the member-access lane is stable,
     - and explicit conversion helpers later where backend differences require them,
 - and harden mixed `?fsmc` / `?rtl` flows before adding broader composition syntax.
+- record one future composition-syntax cleanup decision instead of leaving it as untracked taste:
+  - decide whether `?toplink` should remain the canonical spelling,
+  - or whether a clearer preferred alias such as `?wiring` should be added above it while keeping `?toplink` as compatibility spelling until a deliberate syntax cleanup pass says otherwise.
 
 First shipped `R11` slice now in tree:
 - `?dt:name` is now an active standalone-module root in the live toolchain.

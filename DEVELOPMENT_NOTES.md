@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-18: `?toplink` naming cleanup is now tracked as future syntax work
+- Captured the recent naming discussion explicitly instead of leaving it in chat only.
+- Saved future note:
+  - `?toplink` is serviceable but not ideal as composition wiring syntax,
+  - a future syntax-cleanup pass may decide whether it should remain canonical or gain a clearer preferred alias such as `?wiring`,
+  - and any such change should prefer compatibility/aliasing over abrupt source breakage.
+
+## 2026-03-18: legacy `?ports` mapping directives now say port declaration mode is blocked
+- Continued the active `R11` diagnostics lane by tightening the next reachable composition-parser legacy-`?ports` boundary without changing composition planning behavior.
+- Landed behavior:
+  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now says composition port declaration *mode* is blocked when `?ports` contains a legacy mapping directive like `/foo/bar/` instead of explicit top-port declarations.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on a real parser-visible composition boundary,
+  - it keeps the current parser contract unchanged while lining legacy mapping-directive failures up with the rest of the blocked diagnostics lane,
+  - and it adds focused regression coverage through pipeline and CLI entrypoints in addition to the existing direct parser check.
+- Added [t/127-composition-ports-mapping-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/127-composition-ports-mapping-diagnostics.t) and updated [t/25-composition-legacy-scope-errors.t](/Users/richarddje/Documents/github/fsmgen/t/25-composition-legacy-scope-errors.t) to lock the new wording.
+
 ## 2026-03-18: malformed `?ports` and `?toplink` parser items now say parser token boundaries are blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable composition-parser token-boundary family without changing composition planning behavior.
 - Landed behavior:
