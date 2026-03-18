@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-18: unsupported composition child kinds now say child-kind support is blocked
+- Saved shipped behavior:
+  - composition parser diagnostics now say explicitly when composition child-kind support is blocked because a child header falls outside the active `?fsmc` / `?dtc` / `?rtl` / `?ports` / `?toplink` family.
+- Important continuity note:
+  - this closes another older-wording pocket on a real composition parser family boundary,
+  - it keeps the child-kind contract unchanged,
+  - and it adds focused direct parser plus pipeline and CLI coverage instead of relying on incidental raw “unsupported child” wording.
+
 ## 2026-03-18: malformed composition child entries now say child structure is blocked
 - Saved shipped behavior:
   - composition parser diagnostics now say blocked child-structure failures for empty child entries, blocked child-header-shape failures for non-string child headers, and blocked child item-list-shape failures for dotted-pair child payloads.

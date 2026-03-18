@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-18
+### unsupported composition child kinds now say child-kind support is blocked
+- Updated [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so unsupported composition child kinds now say composition child-kind support is blocked instead of using the older raw “unsupported child” wording.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the offending child header still appears in the exception text,
+  - and the wording now lines up with the rest of the active blocked diagnostics lane.
+- Added [t/129-composition-unsupported-child-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/129-composition-unsupported-child-diagnostics.t) to lock that diagnostic through both pipeline and CLI entrypoints, and updated [t/25-composition-legacy-scope-errors.t](/Users/richarddje/Documents/github/fsmgen/t/25-composition-legacy-scope-errors.t) so the direct parser check expects the same wording.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path wording slice under `R11`.
+
 ### malformed composition child entries now say child structure is blocked
 - Updated [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so malformed composition child entries now say blocked child-structure failures for empty child entries, non-string child headers, and dotted-pair child payloads.
 - This shipped slice stays deliberately narrow:

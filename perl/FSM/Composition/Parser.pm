@@ -175,8 +175,8 @@ sub parse_top_child ($self, $top_name, $child_ast) {
     }
 
     confess
-        "Composition top '$top_name' contains unsupported child '$header'. ".
-        "The active R6 parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', and '?toplink'.".
+        "Composition top '$top_name' contains child '$header', ".
+        "but composition child kind support is blocked because the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', and '?toplink'.".
         $self->scope_docs_suffix;
 }
 

@@ -21,6 +21,7 @@ my $macro_path = File::Spec->catfile($tempdir, 'legacy_macro_top.fsm');
 my $nested_top_path = File::Spec->catfile($tempdir, 'nested_top_top.fsm');
 my $ports_mapping_path = File::Spec->catfile($tempdir, 'ports_mapping_top.fsm');
 my $toplink_nested_path = File::Spec->catfile($tempdir, 'nested_toplink_top.fsm');
+my $unsupported_child_path = File::Spec->catfile($tempdir, 'unsupported_child_top.fsm');
 my $macro_out_path = File::Spec->catfile($tempdir, 'legacy_macro_top.sv');
 
 write_file(
@@ -91,6 +92,15 @@ write_file(
 FSM
 );
 
+write_file(
+    $unsupported_child_path,
+    <<'FSM'
+(?top:unsupported_child_top
+  (?bogus:child foo)
+)
+FSM
+);
+
 my $macro_error = eval {
     $parser->parse_source(scalar Lispish::multi($macro_path));
     undef;
@@ -147,6 +157,18 @@ like(
     $nested_toplink_error,
     qr/nested '\?toplink' item.*only supports flat '\/source\/target\/' link tokens/s,
     'parser rejects nested toplink structures explicitly',
+);
+
+my $unsupported_child_error = eval {
+    $parser->parse_source(scalar Lispish::multi($unsupported_child_path));
+    undef;
+};
+$unsupported_child_error = $@;
+
+like(
+    $unsupported_child_error,
+    qr/contains child '\?bogus:child', .*composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', and '\?toplink'/s,
+    'parser now says unsupported child kinds block composition child-kind support',
 );
 
 my $pipeline = FSM::Pipeline::HDLGenerator->new(

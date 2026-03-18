@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-18: unsupported composition child kinds now say child-kind support is blocked
+- Continued the active `R11` diagnostics lane by tightening the next reachable composition child-kind parser boundary without changing composition planning behavior.
+- Landed behavior:
+  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now says composition child-kind support is blocked when a composition child header falls outside the active `?fsmc` / `?dtc` / `?rtl` / `?ports` / `?toplink` family.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on a real composition parser-visible family boundary,
+  - it keeps the shipped child-kind contract unchanged while aligning unsupported-child failures with the rest of the blocked diagnostics lane,
+  - and it adds focused regression coverage through direct parser, pipeline, and CLI entrypoints.
+- Added [t/129-composition-unsupported-child-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/129-composition-unsupported-child-diagnostics.t) and updated [t/25-composition-legacy-scope-errors.t](/Users/richarddje/Documents/github/fsmgen/t/25-composition-legacy-scope-errors.t) to lock the new wording.
+
 ## 2026-03-18: malformed composition child entries now say child structure is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable composition child-entry parser boundary without changing composition planning behavior.
 - Landed behavior:
