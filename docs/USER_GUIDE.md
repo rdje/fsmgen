@@ -216,6 +216,7 @@ Combinational DT note:
   - and it now also covers blocked `C2` lane selection when an explicit-link generated-child composition still provides only one generated child,
   - and it now also covers blocked external RTL metadata resolution when a `?rtl` child has no reachable `.rtlif` metadata,
   - and it now also covers blocked external RTL metadata structure when a reachable `.rtlif` file does not contain the required `?rtlif:<module>` root,
+  - and it now also covers blocked external RTL metadata port typing when a reachable `.rtlif` token resolves to an unsupported explicit type,
   - and non-quiet `bin/fsmgen` runs now print the same composition provenance summary directly in the CLI close-out.
 
 ### Implemented, but not strong enough yet to call fully supported

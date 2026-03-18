@@ -190,7 +190,8 @@ sub parse_port_token ($self, $module_name, $token, $metadata_path) {
     $resolved_type //= 'data';
 
     confess
-        "RTL interface metadata '$metadata_path' contains unsupported port type '$resolved_type' in token '$token'. ".
+        "Composition references external RTL module '$module_name', ".
+        "but RTL interface metadata port typing is blocked because token '$token' resolves to unsupported port type '$resolved_type'. ".
         "The active '.rtlif' contract currently supports only 'data', 'clock', and 'reset' type annotations. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless $resolved_type =~ /^(?:data|clock|reset)$/;

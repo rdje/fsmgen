@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-17: unsupported external `.rtlif` port types now say metadata typing is blocked
+- Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL token-contract failure path without changing composition planning behavior.
+- Landed behavior:
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata port *typing* is blocked when a reachable `.rtlif` token resolves to an unsupported explicit type outside the current `data|clock|reset` contract.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on a real external-RTL integration boundary,
+  - it keeps the shipped `.rtlif` token contract unchanged while lining unsupported-type failures up with the rest of the blocked diagnostics lane,
+  - and it adds focused regression coverage through both pipeline and CLI entrypoints while preserving the existing direct loader coverage.
+- Added [t/119-composition-rtlif-type-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/119-composition-rtlif-type-diagnostics.t) to lock blocked wording for unsupported external `.rtlif` port types.
+
 ## 2026-03-17: wrong-root external `.rtlif` metadata now says structure is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL failure path without changing composition planning behavior.
 - Landed behavior:

@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-17: unsupported external `.rtlif` port types now say metadata typing is blocked
+- Saved shipped behavior:
+  - reachable external RTL metadata now says explicitly when RTL interface metadata port typing is blocked because a `.rtlif` token resolves to an unsupported explicit type outside the current `data|clock|reset` contract.
+- Important continuity note:
+  - this closes another older-wording pocket on a real external-RTL token-contract boundary,
+  - it keeps the `.rtlif` contract unchanged,
+  - and it adds focused pipeline plus CLI coverage while keeping the older direct loader coverage meaningful.
+
 ## 2026-03-17: wrong-root external `.rtlif` metadata now says structure is blocked
 - Saved shipped behavior:
   - reachable external RTL metadata now says explicitly when RTL interface metadata structure is blocked because the `.rtlif` file does not contain the required `?rtlif:<module>` root for that `?rtl` child.
