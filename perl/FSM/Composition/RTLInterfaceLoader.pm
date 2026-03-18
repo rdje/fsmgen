@@ -149,8 +149,8 @@ sub find_rtlif_root ($self, $raw_ast, $module_name) {
 sub find_embedded_rtlif_root ($self, $raw_ast, $module_name, $source_file) {
     my @matches = $self->find_rtlif_roots($raw_ast, $module_name);
     confess
-        "Composition source '$source_file' contains multiple embedded '?rtlif:$module_name' roots. ".
-        "The active RTL interface contract allows at most one embedded interface root per external RTL module name in the same source. ".
+        "Composition source '$source_file' contains multiple embedded '?rtlif:$module_name' roots, ".
+        "but RTL interface metadata embedded-root uniqueness is blocked because the active RTL interface contract allows at most one embedded interface root per external RTL module name in the same source. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         if @matches > 1;
     return $matches[0];

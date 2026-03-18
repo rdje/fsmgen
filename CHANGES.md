@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-18
+### duplicate embedded `.rtlif` roots now say embedded-root uniqueness is blocked
+- Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so composition sources with multiple embedded `?rtlif:<module>` roots for the same external RTL child now say embedded-root uniqueness is blocked.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the duplicate embedded root family and active source path still appear in the exception text,
+  - and the wording now lines up with the rest of the active blocked diagnostics lane.
+- Added [t/125-composition-embedded-rtlif-duplicate-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/125-composition-embedded-rtlif-duplicate-diagnostics.t) to lock blocked wording for duplicate embedded `.rtlif` roots through both pipeline and CLI entrypoints, and updated [t/89-composition-embedded-rtlif-roots.t](/Users/richarddje/Documents/github/fsmgen/t/89-composition-embedded-rtlif-roots.t) so the direct loader check expects the same wording.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path wording slice under `R11`.
+
 ### nested `.rtlif` metadata now says flatness is blocked
 - Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so external RTL interface metadata now says flatness is blocked when a reachable `.rtlif` file contains nested structure under the required `?rtlif:<module>` root.
 - This shipped slice stays deliberately narrow:

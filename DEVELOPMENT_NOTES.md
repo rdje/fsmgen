@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-18: duplicate embedded `.rtlif` roots now say embedded-root uniqueness is blocked
+- Continued the active `R11` diagnostics lane by tightening the next reachable embedded-RTL metadata uniqueness failure path without changing composition planning behavior.
+- Landed behavior:
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata embedded-root *uniqueness* is blocked when the same composition source contains multiple embedded `?rtlif:<module>` roots for one external RTL child.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on a real embedded-RTL metadata-contract boundary,
+  - it keeps the shipped embedded-root precedence/uniqueness contract unchanged while lining duplicate-embedded-root failures up with the rest of the blocked diagnostics lane,
+  - and it adds focused regression coverage through pipeline and CLI entrypoints in addition to the existing direct-loader check.
+- Added [t/125-composition-embedded-rtlif-duplicate-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/125-composition-embedded-rtlif-duplicate-diagnostics.t) and updated [t/89-composition-embedded-rtlif-roots.t](/Users/richarddje/Documents/github/fsmgen/t/89-composition-embedded-rtlif-roots.t) to lock the new wording.
+
 ## 2026-03-18: nested external `.rtlif` metadata now says flatness is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL flatness failure path without changing composition planning behavior.
 - Landed behavior:

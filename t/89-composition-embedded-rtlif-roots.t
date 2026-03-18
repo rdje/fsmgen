@@ -224,8 +224,8 @@ FSM
 
     like(
         $error,
-        qr/multiple embedded '\?rtlif:uart_tx' roots/,
-        'loader rejects duplicate embedded interface roots for the same RTL module',
+        qr/multiple embedded '\?rtlif:uart_tx' roots, .*RTL interface metadata embedded-root uniqueness is blocked/s,
+        'loader now says duplicate embedded interface roots block embedded-root uniqueness',
     );
 };
 

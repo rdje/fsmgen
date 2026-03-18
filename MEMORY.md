@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-18: duplicate embedded `.rtlif` roots now say embedded-root uniqueness is blocked
+- Saved shipped behavior:
+  - embedded RTL metadata now says explicitly when RTL interface metadata embedded-root uniqueness is blocked because the same composition source contains multiple embedded `?rtlif:<module>` roots for one external RTL child.
+- Important continuity note:
+  - this closes another older-wording pocket on a real embedded-RTL metadata-contract boundary,
+  - it keeps the embedded-root precedence/uniqueness contract unchanged,
+  - and it adds focused pipeline plus CLI coverage on top of the existing direct-loader check.
+
 ## 2026-03-18: nested external `.rtlif` metadata now says flatness is blocked
 - Saved shipped behavior:
   - reachable external RTL metadata now says explicitly when RTL interface metadata flatness is blocked because a `.rtlif` file contains nested structure under the required `?rtlif:<module>` root.
