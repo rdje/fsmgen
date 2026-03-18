@@ -2572,6 +2572,10 @@ sub build_composition_failure_report ($self, $error_text) {
         $report{rtl_module_name} = $1;
     }
 
+    if ($summary_text =~ /\b(?:the\s+)?(?:current\s+)?active\s+(C[1-4])\s+lane\b/is) {
+        $report{lane} = uc($1);
+    }
+
     my $context = $self->composition_failure_context_excerpt($summary_text);
     if ($context) {
         $report{context_label} = $context->{label};

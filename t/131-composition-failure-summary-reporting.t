@@ -107,6 +107,58 @@ FSM
     is($report->{blocked_reason}, "child port 'output_data' has width 8", 'failure report preserves the concise top-port failure reason');
 };
 
+subtest 'pipeline derives active composition lane when blocked diagnostics expose it' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'c1_missing_exposure_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:c1_missing_exposure_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked lane-visible failures');
+    is($report->{top_name}, 'c1_missing_exposure_failure_summary_top', 'failure report preserves the top name for lane-visible failures');
+    is($report->{lane}, 'C1', 'failure report preserves the active composition lane when the blocked diagnostic exposes it');
+    is($report->{context_label}, 'Child port', 'failure report classifies the blocked child port as context');
+    is($report->{context_value}, "'output_data'", 'failure report preserves the blocked child-port name');
+    is($report->{blocked_boundary}, 'C1 passthrough exposure', 'failure report preserves the blocked boundary for lane-visible failures');
+};
+
 subtest 'pipeline derives blocked composition failure summaries from rtl-module failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'missing_rtlif_failure_summary_top.fsm');
@@ -159,6 +211,7 @@ FSM
 
     ok($report, 'pipeline derives a composition failure report from blocked rtlif failures');
     is($report->{rtl_module_name}, 'uart_tx', 'failure report preserves the external RTL module name');
+    is($report->{lane}, 'C3', 'failure report preserves the active composition lane for rtlif failures');
     is($report->{blocked_boundary}, 'RTL interface metadata resolution', 'failure report preserves the blocked rtlif boundary');
     is($report->{blocked_boundary_label}, 'RTL interface metadata resolution', 'failure report keeps the RTL boundary label readable');
     is(
@@ -166,6 +219,63 @@ FSM
         "no declared interface metadata file 'uart_tx.rtlif' was found",
         'failure report trims the blocked reason before search-root follow-up details',
     );
+};
+
+subtest 'CLI prints composition failure lane when blocked diagnostics expose it' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'missing_rtlif_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'missing_rtlif_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:missing_rtlif_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    serial_out>
+  )
+  (?fsmc:producer producer_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /producer.output_data/uart_tx.data_in/
+    /uart_tx.txd/serial_out/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked missing-rtlif composition fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked missing-rtlif fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for missing-rtlif failures');
+    like($combined_output, qr/RTL module:\s+uart_tx/s, 'CLI reports the external RTL module for missing-rtlif failures');
+    like($combined_output, qr/Lane:\s+C3/s, 'CLI reports the active lane when the blocked diagnostic exposes it');
+    like($combined_output, qr/Reason:\s+no declared interface metadata file 'uart_tx\.rtlif' was found/s, 'CLI reports the concise missing-rtlif reason');
 };
 
 subtest 'CLI prints composition failure summary for non-quiet blocked composition runs' => sub {
