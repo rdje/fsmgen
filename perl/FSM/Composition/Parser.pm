@@ -188,7 +188,7 @@ sub parse_fsmc_child ($self, $top_name, $child_ast, $child_name, $items) {
         confess
             "Composition top '$top_name' contains '?fsmc' child ".
             ($child_name ? "'$child_name'" : 'without a name').
-            " using nested option structures, but the first active R6 lane only supports a single FSM source name.".
+            ", but composition child source shape is blocked because the active composition parser currently requires exactly one flat FSM source name per '?fsmc'.".
             $self->scope_docs_suffix;
     }
 
@@ -197,7 +197,7 @@ sub parse_fsmc_child ($self, $top_name, $child_ast, $child_name, $items) {
         confess
             "Composition top '$top_name' contains '?fsmc' child ".
             ($child_name ? "'$child_name'" : 'without a name').
-            " with $count FSM source names, but the first active R6 lane requires exactly one source name per '?fsmc'.".
+            " with $count FSM source names, but composition child source count is blocked because the active composition parser currently requires exactly one FSM source name per '?fsmc'.".
             $self->scope_docs_suffix;
     }
 
@@ -218,7 +218,7 @@ sub parse_dtc_child ($self, $top_name, $child_ast, $child_name, $items) {
         confess
             "Composition top '$top_name' contains '?dtc' child ".
             ($child_name ? "'$child_name'" : 'without a name').
-            " using nested option structures, but the active generated-child lane only supports a single standalone-DT source name.".
+            ", but composition child source shape is blocked because the active composition parser currently requires exactly one flat standalone-DT source name per '?dtc'.".
             $self->scope_docs_suffix;
     }
 
@@ -227,7 +227,7 @@ sub parse_dtc_child ($self, $top_name, $child_ast, $child_name, $items) {
         confess
             "Composition top '$top_name' contains '?dtc' child ".
             ($child_name ? "'$child_name'" : 'without a name').
-            " with $count standalone-DT source names, but the active generated-child lane requires exactly one source name per '?dtc'.".
+            " with $count standalone-DT source names, but composition child source count is blocked because the active composition parser currently requires exactly one standalone-DT source name per '?dtc'.".
             $self->scope_docs_suffix;
     }
 

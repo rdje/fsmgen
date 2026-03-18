@@ -128,8 +128,22 @@ $multi_source_error = $@;
 
 like(
     $multi_source_error,
-    qr/requires exactly one source name per '\?fsmc'/s,
-    'parser rejects legacy multi-source fsmc children outside the first active R6 lane',
+    qr/contains '\?fsmc' child 'combo' with 2 FSM source names, .*composition child source count is blocked because the active composition parser currently requires exactly one FSM source name per '\?fsmc'/s,
+    'parser now says multi-source fsmc children block composition child source count',
+);
+
+my $nested_fsm_source_error = eval {
+    $parser->parse_source(
+        scalar Lispish::single(\'(?top:nested_fsm_source (?fsmc:combo (opt a)))'),
+    );
+    undef;
+};
+$nested_fsm_source_error = $@;
+
+like(
+    $nested_fsm_source_error,
+    qr/contains '\?fsmc' child 'combo', .*composition child source shape is blocked because the active composition parser currently requires exactly one flat FSM source name per '\?fsmc'/s,
+    'parser now says nested fsmc source payloads block composition child source shape',
 );
 
 my $dt_child_path = File::Spec->catfile($tempdir, 'dt_child_top.fsm');
@@ -175,8 +189,22 @@ $multi_dtc_source_error = $@;
 
 like(
     $multi_dtc_source_error,
-    qr/requires exactly one source name per '\?dtc'/s,
-    'parser rejects multi-source dtc children outside the active generated-child lane',
+    qr/contains '\?dtc' child 'combo' with 2 standalone-DT source names, .*composition child source count is blocked because the active composition parser currently requires exactly one standalone-DT source name per '\?dtc'/s,
+    'parser now says multi-source dtc children block composition child source count',
+);
+
+my $nested_dtc_source_error = eval {
+    $parser->parse_source(
+        scalar Lispish::single(\'(?top:nested_dt_source (?dtc:combo (opt a)))'),
+    );
+    undef;
+};
+$nested_dtc_source_error = $@;
+
+like(
+    $nested_dtc_source_error,
+    qr/contains '\?dtc' child 'combo', .*composition child source shape is blocked because the active composition parser currently requires exactly one flat standalone-DT source name per '\?dtc'/s,
+    'parser now says nested dtc source payloads block composition child source shape',
 );
 
 done_testing();

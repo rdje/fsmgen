@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-18: malformed generated-child source payloads now say source shape/count is blocked
+- Continued the active `R11` diagnostics lane by tightening the next reachable generated-child payload parser boundary without changing composition planning behavior.
+- Landed behavior:
+  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now says composition child source shape is blocked when `?fsmc` / `?dtc` payloads use nested option structures instead of one flat source name,
+  - and it now says composition child source count is blocked when those same payloads declare zero or multiple flat source names instead of exactly one.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on a real composition parser-visible generated-child boundary,
+  - it keeps the shipped one-source-per-generated-child contract unchanged while aligning malformed source-payload failures with the rest of the blocked diagnostics lane,
+  - and it adds focused direct parser plus pipeline and CLI coverage for both `?fsmc` and `?dtc`.
+- Added [t/130-composition-generated-child-source-shape-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/130-composition-generated-child-source-shape-diagnostics.t) and updated [t/14-composition-parser.t](/Users/richarddje/Documents/github/fsmgen/t/14-composition-parser.t) to lock the new wording.
+
 ## 2026-03-18: unsupported composition child kinds now say child-kind support is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable composition child-kind parser boundary without changing composition planning behavior.
 - Landed behavior:

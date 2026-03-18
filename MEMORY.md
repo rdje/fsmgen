@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-18: malformed generated-child source payloads now say source shape/count is blocked
+- Saved shipped behavior:
+  - composition parser diagnostics now say blocked generated-child source-shape failures for nested `?fsmc` / `?dtc` payloads,
+  - and blocked generated-child source-count failures when those same payloads declare zero or multiple flat source names instead of exactly one.
+- Important continuity note:
+  - this closes another older-wording pocket on a real generated-child parser boundary,
+  - it keeps the one-source-per-generated-child contract unchanged,
+  - and it adds focused direct parser plus pipeline and CLI coverage for both `?fsmc` and `?dtc`.
+
 ## 2026-03-18: unsupported composition child kinds now say child-kind support is blocked
 - Saved shipped behavior:
   - composition parser diagnostics now say explicitly when composition child-kind support is blocked because a child header falls outside the active `?fsmc` / `?dtc` / `?rtl` / `?ports` / `?toplink` family.
