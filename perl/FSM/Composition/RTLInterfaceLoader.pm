@@ -181,12 +181,12 @@ sub parse_port_token ($self, $module_name, $token, $metadata_path) {
 
     confess
         "Composition references external RTL module '$module_name', ".
-        "but RTL interface metadata token shape is blocked because token '$token' is an invalid port token for the current '.rtlif' contract. ".
+        "but RTL interface metadata token shape is blocked because token '$token' in declared interface metadata '$metadata_path' is an invalid port token for the current '.rtlif' contract. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless $port;
     confess
         "Composition references external RTL module '$module_name', ".
-        "but RTL interface metadata port sizing is blocked because token '$token' declares non-positive port width '$size'. ".
+        "but RTL interface metadata port sizing is blocked because token '$token' in declared interface metadata '$metadata_path' declares non-positive port width '$size'. ".
         "The active '.rtlif' contract requires positive explicit widths when a width is declared. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         if defined($size) && $size < 1;
@@ -197,7 +197,7 @@ sub parse_port_token ($self, $module_name, $token, $metadata_path) {
 
     confess
         "Composition references external RTL module '$module_name', ".
-        "but RTL interface metadata port typing is blocked because token '$token' resolves to unsupported port type '$resolved_type'. ".
+        "but RTL interface metadata port typing is blocked because token '$token' in declared interface metadata '$metadata_path' resolves to unsupported port type '$resolved_type'. ".
         "The active '.rtlif' contract currently supports only 'data', 'clock', and 'reset' type annotations. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless $resolved_type =~ /^(?:data|clock|reset)$/;

@@ -75,7 +75,7 @@ $exception = $@;
 
 like(
     $exception,
-    qr/Composition references external RTL module 'uart_tx', .*RTL interface metadata token shape is blocked because token 'data-in<8:data' is an invalid port token/s,
+    qr/Composition references external RTL module 'uart_tx', .*RTL interface metadata token shape is blocked because token 'data-in<8:data' in declared interface metadata '.*uart_tx\.rtlif' is an invalid port token/s,
     'pipeline now says invalid rtlif tokens block metadata token shape',
 );
 like(
@@ -105,7 +105,7 @@ my $combined_output = join(
 
 like(
     $combined_output,
-    qr/RTL interface metadata token shape is blocked because token 'data-in<8:data' is an invalid port token/s,
+    qr/RTL interface metadata token shape is blocked because token 'data-in<8:data' in declared interface metadata '.*uart_tx\.rtlif' is an invalid port token/s,
     'CLI surfaces the blocked invalid-token rtlif diagnostic',
 );
 

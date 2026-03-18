@@ -2636,6 +2636,7 @@ sub composition_failure_reason_excerpt ($self, $reason_text) {
     $reason =~ s/\s+/ /g;
     $reason =~ s/^\s+|\s+$//g;
     $reason =~ s/^declared interface metadata '[^']+'\s+//;
+    $reason =~ s/\s+in declared interface metadata '[^']+'//g;
     $reason =~ s/\s*See docs\/.*\z//i;
     $reason =~ s/\.\s+(?:Search roots:|Seen |The active |The current |Use '\?toplink'|Use '\?ports'|Use '\?fsmc'|Use '\?dtc'|Standalone '\?dt:name' roots|FSM child roots are shipped as composition children).*\z//;
     $reason =~ s/\.\z//;
@@ -2707,9 +2708,9 @@ sub composition_failure_context_excerpt ($self, $summary_text) {
         [ qr/leaves child port '([^']+)'/s, sub { return ('Child port', "'$_[0]'"); } ],
         [ qr/child port '([^']+)'/s, sub { return ('Child port', "'$_[0]'"); } ],
         [ qr/instance '([^']+)' has no port named '([^']+)'/s, sub { return ('Child endpoint', "'$_[0].$_[1]'"); } ],
+        [ qr/token '([^']+)'/s, sub { return ('Token', "'$_[0]'"); } ],
         [ qr/declared interface metadata '([^']+)'/s, sub { return ('Metadata', "'$_[0]'"); } ],
         [ qr/RTL interface metadata '([^']+)'/s, sub { return ('Metadata', "'$_[0]'"); } ],
-        [ qr/token '([^']+)'/s, sub { return ('Token', "'$_[0]'"); } ],
     );
 
     for my $entry (@patterns) {

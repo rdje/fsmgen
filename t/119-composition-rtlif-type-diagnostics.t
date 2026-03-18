@@ -75,7 +75,7 @@ $exception = $@;
 
 like(
     $exception,
-    qr/Composition references external RTL module 'uart_tx', .*RTL interface metadata port typing is blocked because token 'data_in<8:status' resolves to unsupported port type 'status'\./s,
+    qr/Composition references external RTL module 'uart_tx', .*RTL interface metadata port typing is blocked because token 'data_in<8:status' in declared interface metadata '.*uart_tx\.rtlif' resolves to unsupported port type 'status'\./s,
     'pipeline now says unsupported rtlif port types block metadata typing',
 );
 like(
@@ -105,7 +105,7 @@ my $combined_output = join(
 
 like(
     $combined_output,
-    qr/RTL interface metadata port typing is blocked because token 'data_in<8:status' resolves to unsupported port type 'status'\./s,
+    qr/RTL interface metadata port typing is blocked because token 'data_in<8:status' in declared interface metadata '.*uart_tx\.rtlif' resolves to unsupported port type 'status'\./s,
     'CLI surfaces the blocked unsupported-type rtlif diagnostic',
 );
 

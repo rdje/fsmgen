@@ -75,7 +75,7 @@ $exception = $@;
 
 like(
     $exception,
-    qr/Composition references external RTL module 'uart_tx', .*RTL interface metadata port sizing is blocked because token 'data_in<0:data' declares non-positive port width '0'\./s,
+    qr/Composition references external RTL module 'uart_tx', .*RTL interface metadata port sizing is blocked because token 'data_in<0:data' in declared interface metadata '.*uart_tx\.rtlif' declares non-positive port width '0'\./s,
     'pipeline now says non-positive rtlif widths block metadata port sizing',
 );
 like(
@@ -105,7 +105,7 @@ my $combined_output = join(
 
 like(
     $combined_output,
-    qr/RTL interface metadata port sizing is blocked because token 'data_in<0:data' declares non-positive port width '0'\./s,
+    qr/RTL interface metadata port sizing is blocked because token 'data_in<0:data' in declared interface metadata '.*uart_tx\.rtlif' declares non-positive port width '0'\./s,
     'CLI surfaces the blocked non-positive-width rtlif diagnostic',
 );
 
