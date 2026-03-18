@@ -2591,9 +2591,16 @@ sub build_composition_failure_report ($self, $error_text) {
 
     my $context = $self->composition_failure_context_excerpt($summary_text);
     if ($context) {
-        $report{context_label} = $context->{label};
-        $report{context_value} = $context->{value};
-        $report{context_summary} = $context->{summary};
+        unless (
+            defined($report{artifact_value})
+            && length($report{artifact_value})
+            && $context->{label} eq 'Metadata'
+            && $context->{value} eq $report{artifact_value}
+        ) {
+            $report{context_label} = $context->{label};
+            $report{context_value} = $context->{value};
+            $report{context_summary} = $context->{summary};
+        }
     }
 
     if ($summary_text =~ /\b(?:but )?([A-Za-z0-9?'\-\/][A-Za-z0-9?'\-\/ ]+?) is blocked because\b/s) {
@@ -2628,6 +2635,7 @@ sub composition_failure_reason_excerpt ($self, $reason_text) {
     my $reason = $reason_text;
     $reason =~ s/\s+/ /g;
     $reason =~ s/^\s+|\s+$//g;
+    $reason =~ s/^declared interface metadata '[^']+'\s+//;
     $reason =~ s/\s*See docs\/.*\z//i;
     $reason =~ s/\.\s+(?:Search roots:|Seen |The active |The current |Use '\?toplink'|Use '\?ports'|Use '\?fsmc'|Use '\?dtc'|Standalone '\?dt:name' roots|FSM child roots are shipped as composition children).*\z//;
     $reason =~ s/\.\z//;
@@ -2665,6 +2673,7 @@ sub composition_failure_artifact_excerpt ($self, $summary_text) {
 
     my @patterns = (
         [ qr/resolves '\?(?:fsmc|dtc)' child '[^']+' to '([^']+)'/s, sub { return ('Child source file', "'$_[0]'"); } ],
+        [ qr/declared interface metadata '([^']+)'/s, sub { return ('RTL metadata file', "'$_[0]'"); } ],
     );
 
     for my $entry (@patterns) {
