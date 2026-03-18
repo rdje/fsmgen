@@ -3,7 +3,7 @@ This is the live continuity document for fast session recovery after crashes, re
 ## 2026-03-18: non-quiet failed composition runs now print a first bounded failure summary
 - Saved shipped behavior:
   - the pipeline can now derive a small composition failure report from blocked composition diagnostics,
-  - and the CLI now prints a bounded composition-failure summary during non-quiet failed composition runs when the raised diagnostic exposes a blocked composition boundary, including a `Lane:` line when that diagnostic already names the active `C1` / `C2` / `C3` / `C4` lane, a `Construct:` line when that same diagnostic points clearly at one active syntax construct such as `?ports`, `?toplink`, `?rtl`, `?fsmc`, `?dtc`, or `=port`, a concise context line for the offending child/top-port/metadata/token when that context can be separated honestly from longer follow-up detail, plus a concise blocked-reason line.
+  - and the CLI now prints a bounded composition-failure summary during non-quiet failed composition runs when the raised diagnostic exposes a blocked composition boundary, including a `Lane:` line when that diagnostic already names the active `C1` / `C2` / `C3` / `C4` lane, a `Construct:` line when that same diagnostic points clearly at one active syntax construct such as `?ports`, `?toplink`, `?rtl`, `?fsmc`, `?dtc`, or `=port`, a concise context line for the offending child/top-port/explicit-endpoint/metadata/token when that context can be separated honestly from longer follow-up detail, plus a concise blocked-reason line.
 - Important continuity note:
   - quiet-mode failure behavior stays unchanged,
   - the original exception text still surfaces after the summary,
