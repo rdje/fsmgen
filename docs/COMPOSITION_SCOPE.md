@@ -126,7 +126,7 @@ The currently shipped composition behavior is intentionally bounded:
   - and it now also covers unsupported child kinds when a composition child header falls outside the active `?fsmc` / `?dtc` / `?rtl` / `?ports` / `?toplink` family,
   - and it now also covers malformed generated-child source payloads when `?fsmc` / `?dtc` payloads use nested option structures or the wrong number of flat source names,
   - and `bin/fsmgen` now prints the same provenance summary during non-quiet composition runs,
-  - and non-quiet failed composition runs now also print a first bounded composition-failure summary when a blocked composition boundary can be extracted from the raised diagnostic, including a concise blocked-reason line when that reason can be separated cleanly from the longer failure text,
+  - and non-quiet failed composition runs now also print a first bounded composition-failure summary when a blocked composition boundary can be extracted from the raised diagnostic, including a concise context line for the offending child/top-port/metadata/token when that context can be separated honestly from the longer failure text, plus a concise blocked-reason line,
 - realized child interface currently means:
   - effective system inputs from the active FSM generator contract:
     - explicit conventional `+system` currently yields `clk` / `rstn`,

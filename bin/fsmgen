@@ -379,6 +379,8 @@ if ($@) {
             if defined $failure_report->{top_name} && length $failure_report->{top_name};
         print "RTL module: " . $failure_report->{rtl_module_name} . "\n"
             if defined $failure_report->{rtl_module_name} && length $failure_report->{rtl_module_name};
+        print "Context: " . $failure_report->{context_summary} . "\n"
+            if defined $failure_report->{context_summary} && length $failure_report->{context_summary};
         print "Blocked boundary: " . $failure_report->{blocked_boundary_label} . "\n"
             if defined $failure_report->{blocked_boundary_label} && length $failure_report->{blocked_boundary_label};
         print "Reason: " . $failure_report->{blocked_reason} . "\n"

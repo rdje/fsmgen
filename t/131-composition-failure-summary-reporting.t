@@ -41,6 +41,9 @@ FSM
 
     ok($report, 'pipeline derives a composition failure report from blocked unsupported-child failures');
     is($report->{top_name}, 'unsupported_child_failure_summary_top', 'failure report preserves the composition top name');
+    is($report->{context_label}, 'Child', 'failure report classifies child-header context');
+    is($report->{context_value}, "'?bogus:child'", 'failure report preserves the offending child header as context');
+    is($report->{context_summary}, "Child '?bogus:child'", 'failure report exposes a concise child context summary');
     is($report->{blocked_boundary}, 'composition child kind support', 'failure report preserves the blocked boundary');
     is($report->{blocked_boundary_label}, 'child kind support', 'failure report exposes a CLI-friendly blocked-boundary label');
     is(
@@ -48,6 +51,60 @@ FSM
         "the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', and '?toplink'",
         'failure report preserves the concise blocked reason for parser-scoped failures',
     );
+};
+
+subtest 'pipeline derives top-port context from blocked top-port failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'c1_width_mismatch_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:c1_width_mismatch_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+    output_data>4
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked top-port failures');
+    is($report->{top_name}, 'c1_width_mismatch_failure_summary_top', 'failure report preserves the top name for top-port failures');
+    is($report->{context_label}, 'Top port', 'failure report classifies top-port context');
+    is($report->{context_value}, "'output_data'", 'failure report preserves the blocked top-port name');
+    is($report->{context_summary}, "Top port 'output_data'", 'failure report exposes a concise top-port context summary');
+    is($report->{blocked_boundary}, 'C1 passthrough exposure', 'failure report preserves the blocked top-port boundary');
+    is($report->{blocked_reason}, "child port 'output_data' has width 8", 'failure report preserves the concise top-port failure reason');
 };
 
 subtest 'pipeline derives blocked composition failure summaries from rtl-module failures' => sub {
@@ -141,6 +198,7 @@ FSM
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section');
     like($combined_output, qr/Top:\s+unsupported_child_failure_cli_top/s, 'CLI reports the failing composition top name');
+    like($combined_output, qr/Context:\s+Child '\?bogus:child'/s, 'CLI reports the concise child context');
     like($combined_output, qr/Blocked boundary:\s+child kind support/s, 'CLI reports the blocked composition boundary');
     like(
         $combined_output,

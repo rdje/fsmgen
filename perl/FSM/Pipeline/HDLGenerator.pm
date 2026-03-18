@@ -2564,9 +2564,19 @@ sub build_composition_failure_report ($self, $error_text) {
     if ($summary_text =~ /Composition top '([^']+)'/s) {
         $report{top_name} = $1;
     }
+    elsif ($summary_text =~ /Composition source '\?top:([^']+)'/s) {
+        $report{top_name} = $1;
+    }
 
     if ($summary_text =~ /Composition references external RTL module '([^']+)'/s) {
         $report{rtl_module_name} = $1;
+    }
+
+    my $context = $self->composition_failure_context_excerpt($summary_text);
+    if ($context) {
+        $report{context_label} = $context->{label};
+        $report{context_value} = $context->{value};
+        $report{context_summary} = $context->{summary};
     }
 
     if ($summary_text =~ /\b(?:but )?([A-Za-z0-9?'\-\/][A-Za-z0-9?'\-\/ ]+?) is blocked because\b/s) {
@@ -2601,11 +2611,45 @@ sub composition_failure_reason_excerpt ($self, $reason_text) {
     my $reason = $reason_text;
     $reason =~ s/\s+/ /g;
     $reason =~ s/^\s+|\s+$//g;
-    $reason =~ s/\s+See docs\/.*\z//i;
+    $reason =~ s/\s*See docs\/.*\z//i;
     $reason =~ s/\.\s+(?:Search roots:|Seen |The active |The current |Use '\?toplink'|Use '\?ports').*\z//;
     $reason =~ s/\.\z//;
     $reason =~ s/^\s+|\s+$//g;
     return $reason;
+}
+
+sub composition_failure_context_excerpt ($self, $summary_text) {
+    return undef unless defined $summary_text && length $summary_text;
+
+    my @patterns = (
+        [ qr/contains child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
+        [ qr/declares '\?(?:fsmc|dtc|rtl)' child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
+        [ qr/resolves '\?(?:fsmc|dtc)' child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
+        [ qr/omits top port '([^']+)'/s, sub { return ('Top port', "'$_[0]'"); } ],
+        [ qr/declares top port '([^']+)'/s, sub { return ('Top port', "'$_[0]'"); } ],
+        [ qr/marks top port '([^']+)'/s, sub { return ('Top port', "'$_[0]'"); } ],
+        [ qr/uses top port '([^']+)'/s, sub { return ('Top port', "'$_[0]'"); } ],
+        [ qr/leaves child port '([^']+)'/s, sub { return ('Child port', "'$_[0]'"); } ],
+        [ qr/child port '([^']+)'/s, sub { return ('Child port', "'$_[0]'"); } ],
+        [ qr/instance '([^']+)' has no port named '([^']+)'/s, sub { return ('Child endpoint', "'$_[0].$_[1]'"); } ],
+        [ qr/declared interface metadata '([^']+)'/s, sub { return ('Metadata', "'$_[0]'"); } ],
+        [ qr/RTL interface metadata '([^']+)'/s, sub { return ('Metadata', "'$_[0]'"); } ],
+        [ qr/token '([^']+)'/s, sub { return ('Token', "'$_[0]'"); } ],
+    );
+
+    for my $entry (@patterns) {
+        my ($pattern, $formatter) = @$entry;
+        next unless my @captures = ($summary_text =~ $pattern);
+        my ($label, $value) = $formatter->(@captures);
+        next unless defined $label && defined $value;
+        return {
+            label => $label,
+            value => $value,
+            summary => "$label $value",
+        };
+    }
+
+    return undef;
 }
 
 sub analyze_fsm_module ($self, $fsm_module) {
