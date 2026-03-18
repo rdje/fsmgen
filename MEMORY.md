@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-18: non-quiet failed composition runs now print a first bounded failure summary
+- Saved shipped behavior:
+  - the pipeline can now derive a small composition failure report from blocked composition diagnostics,
+  - and the CLI now prints a bounded composition-failure summary during non-quiet failed composition runs when the raised diagnostic exposes a blocked composition boundary.
+- Important continuity note:
+  - quiet-mode failure behavior stays unchanged,
+  - the original exception text still surfaces after the summary,
+  - and this is the first deliberate move from pure exception text into richer failed-run composition reporting.
+
 ## 2026-03-18: malformed generated-child source payloads now say source shape/count is blocked
 - Saved shipped behavior:
   - composition parser diagnostics now say blocked generated-child source-shape failures for nested `?fsmc` / `?dtc` payloads,

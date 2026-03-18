@@ -2553,6 +2553,40 @@ sub composition_block_label ($self, $kind) {
     return $label;
 }
 
+sub build_composition_failure_report ($self, $error_text) {
+    return undef unless defined $error_text && length $error_text;
+
+    my %report;
+
+    if ($error_text =~ /Composition top '([^']+)'/s) {
+        $report{top_name} = $1;
+    }
+
+    if ($error_text =~ /Composition references external RTL module '([^']+)'/s) {
+        $report{rtl_module_name} = $1;
+    }
+
+    if ($error_text =~ /\b(?:but )?([A-Za-z0-9?'\-\/][A-Za-z0-9?'\-\/ ]+?) is blocked because\b/s) {
+        my $blocked_boundary = $1;
+        $blocked_boundary =~ s/\s+/ /g;
+        $blocked_boundary =~ s/^\s+|\s+$//g;
+        $report{blocked_boundary} = $blocked_boundary;
+        $report{blocked_boundary_label} = $self->composition_failure_boundary_label($blocked_boundary);
+    }
+
+    return undef unless $report{blocked_boundary};
+    return \%report;
+}
+
+sub composition_failure_boundary_label ($self, $blocked_boundary) {
+    return '' unless defined $blocked_boundary && length $blocked_boundary;
+
+    my $label = $blocked_boundary;
+    $label =~ s/^\s+|\s+$//g;
+    $label =~ s/^composition //i;
+    return $label;
+}
+
 sub analyze_fsm_module ($self, $fsm_module) {
     fsm_trace_enter('Analyze FSM module structure and signals', 2);
     fsm_debug("Analyzing FSM module structure", 1);

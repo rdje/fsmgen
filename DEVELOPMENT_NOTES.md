@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-18: non-quiet failed composition runs now print a first bounded failure summary
+- Continued the active `R11` diagnostics/reporting lane by moving one step beyond pure exception text for failed composition runs.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now derives a small composition failure report from blocked composition diagnostics,
+  - and [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prints a bounded `=== Composition Failure Summary ===` section during non-quiet failed composition runs when that blocked boundary can be classified honestly.
+- Why this is worth shipping:
+  - it gives users a cleaner read on blocked composition failures without mutating the underlying exception text,
+  - it keeps quiet-mode and test-facing raw failure behavior intact,
+  - and it is the first bounded step from successful-run provenance/block summaries into failed-run composition reporting.
+- Added [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both pipeline-side failure-report extraction and the non-quiet CLI summary surface.
+
 ## 2026-03-18: malformed generated-child source payloads now say source shape/count is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable generated-child payload parser boundary without changing composition planning behavior.
 - Landed behavior:

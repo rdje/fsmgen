@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-18
+### non-quiet failed composition runs now print a first bounded failure summary
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the pipeline can derive a small composition failure report from blocked composition diagnostics, including the failing top name or external RTL module when available plus the blocked boundary label.
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet failed composition runs now print a first bounded `=== Composition Failure Summary ===` section before re-raising the original error.
+- This shipped slice stays deliberately narrow:
+  - quiet-mode failure behavior is unchanged,
+  - the original exception text still surfaces unchanged after the summary,
+  - and the new summary only appears when the raised diagnostic exposes a blocked composition boundary the CLI can classify honestly.
+- Added [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both the pipeline-side failure-report extraction and the non-quiet CLI summary for blocked composition failures.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the first bounded move from pure exception text into richer failed-run composition reporting.
+
 ### malformed generated-child source payloads now say source shape/count is blocked
 - Updated [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so malformed `?fsmc` / `?dtc` payloads now say blocked generated-child source-shape or source-count failures when nested option structures appear or when the wrong number of flat source names is declared.
 - This shipped slice stays deliberately narrow:

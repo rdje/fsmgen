@@ -365,7 +365,27 @@ my $pipeline = FSM::Pipeline::HDLGenerator->new(
     extension_config_files => \@extension_config_files,
 );
 
-my $result = $pipeline->generate_hdl_from_file($fsm_file);
+my $result = eval {
+    $pipeline->generate_hdl_from_file($fsm_file);
+};
+
+if ($@) {
+    my $error = $@;
+    my $failure_report = $pipeline->build_composition_failure_report($error);
+
+    unless ($quiet || !$failure_report) {
+        print "\n=== Composition Failure Summary ===\n";
+        print "Top: " . $failure_report->{top_name} . "\n"
+            if defined $failure_report->{top_name} && length $failure_report->{top_name};
+        print "RTL module: " . $failure_report->{rtl_module_name} . "\n"
+            if defined $failure_report->{rtl_module_name} && length $failure_report->{rtl_module_name};
+        print "Blocked boundary: " . $failure_report->{blocked_boundary_label} . "\n"
+            if defined $failure_report->{blocked_boundary_label} && length $failure_report->{blocked_boundary_label};
+    }
+
+    die $error;
+}
+
 my $hdl_code = $result->{hdl_code};
 my $module_info = $result->{module_info};
 my $statistics = $result->{statistics};
