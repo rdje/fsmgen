@@ -43,6 +43,11 @@ FSM
     is($report->{top_name}, 'unsupported_child_failure_summary_top', 'failure report preserves the composition top name');
     is($report->{blocked_boundary}, 'composition child kind support', 'failure report preserves the blocked boundary');
     is($report->{blocked_boundary_label}, 'child kind support', 'failure report exposes a CLI-friendly blocked-boundary label');
+    is(
+        $report->{blocked_reason},
+        "the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', and '?toplink'",
+        'failure report preserves the concise blocked reason for parser-scoped failures',
+    );
 };
 
 subtest 'pipeline derives blocked composition failure summaries from rtl-module failures' => sub {
@@ -99,6 +104,11 @@ FSM
     is($report->{rtl_module_name}, 'uart_tx', 'failure report preserves the external RTL module name');
     is($report->{blocked_boundary}, 'RTL interface metadata resolution', 'failure report preserves the blocked rtlif boundary');
     is($report->{blocked_boundary_label}, 'RTL interface metadata resolution', 'failure report keeps the RTL boundary label readable');
+    is(
+        $report->{blocked_reason},
+        "no declared interface metadata file 'uart_tx.rtlif' was found",
+        'failure report trims the blocked reason before search-root follow-up details',
+    );
 };
 
 subtest 'CLI prints composition failure summary for non-quiet blocked composition runs' => sub {
@@ -132,6 +142,11 @@ FSM
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section');
     like($combined_output, qr/Top:\s+unsupported_child_failure_cli_top/s, 'CLI reports the failing composition top name');
     like($combined_output, qr/Blocked boundary:\s+child kind support/s, 'CLI reports the blocked composition boundary');
+    like(
+        $combined_output,
+        qr/Reason:\s+the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', and '\?toplink'/s,
+        'CLI reports the concise blocked reason',
+    );
     like($combined_output, qr/composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', and '\?toplink'/s, 'CLI still surfaces the original blocked diagnostic text');
 };
 

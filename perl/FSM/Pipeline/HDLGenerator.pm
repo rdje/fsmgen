@@ -2556,22 +2556,30 @@ sub composition_block_label ($self, $kind) {
 sub build_composition_failure_report ($self, $error_text) {
     return undef unless defined $error_text && length $error_text;
 
+    my $summary_text = $error_text;
+    $summary_text =~ s/\n\s*at\s+\S.*\z//s;
+
     my %report;
 
-    if ($error_text =~ /Composition top '([^']+)'/s) {
+    if ($summary_text =~ /Composition top '([^']+)'/s) {
         $report{top_name} = $1;
     }
 
-    if ($error_text =~ /Composition references external RTL module '([^']+)'/s) {
+    if ($summary_text =~ /Composition references external RTL module '([^']+)'/s) {
         $report{rtl_module_name} = $1;
     }
 
-    if ($error_text =~ /\b(?:but )?([A-Za-z0-9?'\-\/][A-Za-z0-9?'\-\/ ]+?) is blocked because\b/s) {
+    if ($summary_text =~ /\b(?:but )?([A-Za-z0-9?'\-\/][A-Za-z0-9?'\-\/ ]+?) is blocked because\b/s) {
         my $blocked_boundary = $1;
         $blocked_boundary =~ s/\s+/ /g;
         $blocked_boundary =~ s/^\s+|\s+$//g;
         $report{blocked_boundary} = $blocked_boundary;
         $report{blocked_boundary_label} = $self->composition_failure_boundary_label($blocked_boundary);
+    }
+
+    if ($summary_text =~ /\bis blocked because\s+(.+)\z/s) {
+        my $reason = $self->composition_failure_reason_excerpt($1);
+        $report{blocked_reason} = $reason if defined $reason && length $reason;
     }
 
     return undef unless $report{blocked_boundary};
@@ -2585,6 +2593,19 @@ sub composition_failure_boundary_label ($self, $blocked_boundary) {
     $label =~ s/^\s+|\s+$//g;
     $label =~ s/^composition //i;
     return $label;
+}
+
+sub composition_failure_reason_excerpt ($self, $reason_text) {
+    return '' unless defined $reason_text && length $reason_text;
+
+    my $reason = $reason_text;
+    $reason =~ s/\s+/ /g;
+    $reason =~ s/^\s+|\s+$//g;
+    $reason =~ s/\s+See docs\/.*\z//i;
+    $reason =~ s/\.\s+(?:Search roots:|Seen |The active |The current |Use '\?toplink'|Use '\?ports').*\z//;
+    $reason =~ s/\.\z//;
+    $reason =~ s/^\s+|\s+$//g;
+    return $reason;
 }
 
 sub analyze_fsm_module ($self, $fsm_module) {
