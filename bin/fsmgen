@@ -381,6 +381,8 @@ if ($@) {
             if defined $failure_report->{rtl_module_name} && length $failure_report->{rtl_module_name};
         print "Lane: " . $failure_report->{lane} . "\n"
             if defined $failure_report->{lane} && length $failure_report->{lane};
+        print "Construct: " . $failure_report->{construct_summary} . "\n"
+            if defined $failure_report->{construct_summary} && length $failure_report->{construct_summary};
         print "Context: " . $failure_report->{context_summary} . "\n"
             if defined $failure_report->{context_summary} && length $failure_report->{context_summary};
         print "Blocked boundary: " . $failure_report->{blocked_boundary_label} . "\n"

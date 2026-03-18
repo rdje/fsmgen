@@ -2576,6 +2576,12 @@ sub build_composition_failure_report ($self, $error_text) {
         $report{lane} = uc($1);
     }
 
+    my $construct = $self->composition_failure_construct_excerpt($summary_text);
+    if ($construct) {
+        $report{construct} = $construct->{token};
+        $report{construct_summary} = $construct->{summary};
+    }
+
     my $context = $self->composition_failure_context_excerpt($summary_text);
     if ($context) {
         $report{context_label} = $context->{label};
@@ -2620,6 +2626,31 @@ sub composition_failure_reason_excerpt ($self, $reason_text) {
     $reason =~ s/\.\z//;
     $reason =~ s/^\s+|\s+$//g;
     return $reason;
+}
+
+sub composition_failure_construct_excerpt ($self, $summary_text) {
+    return undef unless defined $summary_text && length $summary_text;
+
+    my @patterns = (
+        [ qr/declared connect-by-name|=port/s, '=port', '=port' ],
+        [ qr/requests declared connect-by-name/s, '=port', '=port' ],
+        [ qr/Composition references external RTL module|RTL interface metadata|contains embedded '\?rtlif:/s, '?rtl', '?rtl' ],
+        [ qr/explicit link|explicit-link|nested '\?toplink' item|contains '\?toplink' token/s, '?toplink', '?toplink' ],
+        [ qr/omits top port|declares top port|marks top port|uses top port|nested '\?ports' item|contains '\?ports' token|contains '\?ports' mapping directive/s, '?ports', '?ports' ],
+        [ qr/\?fsmc' child|active FSM child source/s, '?fsmc', '?fsmc' ],
+        [ qr/\?dtc' child|standalone-DT child source/s, '?dtc', '?dtc' ],
+    );
+
+    for my $entry (@patterns) {
+        my ($pattern, $token, $summary) = @$entry;
+        next unless $summary_text =~ $pattern;
+        return {
+            token => $token,
+            summary => $summary,
+        };
+    }
+
+    return undef;
 }
 
 sub composition_failure_context_excerpt ($self, $summary_text) {

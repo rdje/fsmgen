@@ -41,6 +41,7 @@ FSM
 
     ok($report, 'pipeline derives a composition failure report from blocked unsupported-child failures');
     is($report->{top_name}, 'unsupported_child_failure_summary_top', 'failure report preserves the composition top name');
+    ok(!defined($report->{construct}), 'failure report does not invent a construct for unsupported child headers');
     is($report->{context_label}, 'Child', 'failure report classifies child-header context');
     is($report->{context_value}, "'?bogus:child'", 'failure report preserves the offending child header as context');
     is($report->{context_summary}, "Child '?bogus:child'", 'failure report exposes a concise child context summary');
@@ -100,6 +101,8 @@ FSM
 
     ok($report, 'pipeline derives a composition failure report from blocked top-port failures');
     is($report->{top_name}, 'c1_width_mismatch_failure_summary_top', 'failure report preserves the top name for top-port failures');
+    is($report->{construct}, '?ports', 'failure report preserves the active top-interface construct for top-port failures');
+    is($report->{construct_summary}, '?ports', 'failure report exposes a concise top-interface construct summary');
     is($report->{context_label}, 'Top port', 'failure report classifies top-port context');
     is($report->{context_value}, "'output_data'", 'failure report preserves the blocked top-port name');
     is($report->{context_summary}, "Top port 'output_data'", 'failure report exposes a concise top-port context summary');
@@ -212,6 +215,8 @@ FSM
     ok($report, 'pipeline derives a composition failure report from blocked rtlif failures');
     is($report->{rtl_module_name}, 'uart_tx', 'failure report preserves the external RTL module name');
     is($report->{lane}, 'C3', 'failure report preserves the active composition lane for rtlif failures');
+    is($report->{construct}, '?rtl', 'failure report preserves the external RTL construct for rtlif failures');
+    is($report->{construct_summary}, '?rtl', 'failure report exposes a concise external RTL construct summary');
     is($report->{blocked_boundary}, 'RTL interface metadata resolution', 'failure report preserves the blocked rtlif boundary');
     is($report->{blocked_boundary_label}, 'RTL interface metadata resolution', 'failure report keeps the RTL boundary label readable');
     is(
@@ -275,6 +280,7 @@ FSM
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for missing-rtlif failures');
     like($combined_output, qr/RTL module:\s+uart_tx/s, 'CLI reports the external RTL module for missing-rtlif failures');
     like($combined_output, qr/Lane:\s+C3/s, 'CLI reports the active lane when the blocked diagnostic exposes it');
+    like($combined_output, qr/Construct:\s+\?rtl/s, 'CLI reports the external RTL construct when the blocked diagnostic exposes it');
     like($combined_output, qr/Reason:\s+no declared interface metadata file 'uart_tx\.rtlif' was found/s, 'CLI reports the concise missing-rtlif reason');
 };
 
@@ -308,6 +314,7 @@ FSM
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section');
     like($combined_output, qr/Top:\s+unsupported_child_failure_cli_top/s, 'CLI reports the failing composition top name');
+    unlike($combined_output, qr/Construct:/s, 'CLI does not invent a construct line for unsupported child headers');
     like($combined_output, qr/Context:\s+Child '\?bogus:child'/s, 'CLI reports the concise child context');
     like($combined_output, qr/Blocked boundary:\s+child kind support/s, 'CLI reports the blocked composition boundary');
     like(
