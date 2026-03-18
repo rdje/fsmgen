@@ -2707,6 +2707,7 @@ sub composition_failure_context_excerpt ($self, $summary_text) {
         [ qr/uses top port '([^']+)'/s, sub { return ('Top port', "'$_[0]'"); } ],
         [ qr/leaves child port '([^']+)'/s, sub { return ('Child port', "'$_[0]'"); } ],
         [ qr/child port '([^']+)'/s, sub { return ('Child port', "'$_[0]'"); } ],
+        [ qr/repeats port '([^']+)'/s, sub { return ('RTL port', "'$_[0]'"); } ],
         [ qr/instance '([^']+)' has no port named '([^']+)'/s, sub { return ('Child endpoint', "'$_[0].$_[1]'"); } ],
         [ qr/token '([^']+)'/s, sub { return ('Token', "'$_[0]'"); } ],
         [ qr/declared interface metadata '([^']+)'/s, sub { return ('Metadata', "'$_[0]'"); } ],

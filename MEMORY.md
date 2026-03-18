@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: duplicate-port `.rtlif` failures now keep repeated RTL port context in failed-run summaries
+- Saved shipped behavior:
+  - failed composition summaries can now keep `Context: RTL port '...'` for blocked duplicate-port `.rtlif` declaration failures,
+  - while still preserving the resolved `.rtlif` path as the separate `RTL metadata file:` artifact line.
+- Important continuity note:
+  - this is a narrow reporting refinement only,
+  - it relies on the existing blocked diagnostic already naming the repeated port,
+  - and it keeps the current failed-run summary lane moving by surfacing stable context rather than inventing parallel summary logic.
+
 ## 2026-03-18: non-quiet failed composition runs now print a first bounded failure summary
 - Saved shipped behavior:
   - the pipeline can now derive a small composition failure report from blocked composition diagnostics,

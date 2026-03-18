@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: duplicate-port `.rtlif` failures now keep repeated RTL port context in failed-run summaries
+- Continued the active `R11` diagnostics/reporting lane by enriching one more stable failed-run context family instead of widening composition behavior again.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now extracts repeated `.rtlif` port names as `RTL port` context when a blocked declaration-uniqueness diagnostic already names the repeated port,
+  - while still preserving the resolved metadata file as the primary `RTL metadata file:` artifact line.
+- Why this is worth shipping:
+  - duplicate-port `.rtlif` failures already had a clean blocked boundary and artifact line, but the most actionable subject, the repeated port name itself, was still buried in the longer raw exception text,
+  - this keeps the failed-run summary model honest by reusing structure the diagnostic already exposes instead of inventing a second parser,
+  - and it is a good fit for the current lane because it improves failed-run ergonomics without changing any composition planning behavior.
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both pipeline-side extraction and non-quiet CLI summary output for blocked duplicate-port `.rtlif` failures.
+
 ## 2026-03-18: non-quiet failed composition runs now print a first bounded failure summary
 - Continued the active `R11` diagnostics/reporting lane by moving one step beyond pure exception text for failed composition runs.
 - Landed behavior:

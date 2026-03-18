@@ -1,5 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-19
+### duplicate-port `.rtlif` failures now keep repeated RTL port context in failed-run summaries
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so failed composition summaries now keep `Context: RTL port '...'` when a blocked external `.rtlif` declaration failure repeats a port name while the same summary is already surfacing the resolved `RTL metadata file:` artifact line.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - duplicate-port `.rtlif` failures still keep the resolved metadata file as the primary artifact line,
+  - and the new context extraction only appears when the raised diagnostic already exposes a stable repeated port name such as `txd`.
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both the pipeline-side failure-report extraction and the non-quiet CLI summary for blocked duplicate-port `.rtlif` failures, including `RTL metadata file:`, `Context: RTL port 'txd'`, `Blocked boundary: RTL interface metadata port declaration uniqueness`, and `Reason: repeats port 'txd'`.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failed-run reporting refinement under `R11`.
+
 ## 2026-03-18
 ### non-quiet failed composition runs now print a first bounded failure summary
 - Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so blocked `.rtlif` token-shape, port-sizing, and port-typing diagnostics now name the declaring metadata file directly instead of only naming the offending token.
