@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-18: empty external `.rtlif` interfaces now say metadata port presence is blocked
+- Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL port-presence failure path without changing composition planning behavior.
+- Landed behavior:
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata port *presence* is blocked when a reachable `.rtlif` file declares no ports under the required `?rtlif:<module>` root.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on a real external-RTL interface-contract boundary,
+  - it keeps the shipped `.rtlif` port-presence contract unchanged while lining empty-interface failures up with the rest of the blocked diagnostics lane,
+  - and it adds focused regression coverage through both pipeline and CLI entrypoints.
+- Added [t/123-composition-rtlif-empty-port-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/123-composition-rtlif-empty-port-diagnostics.t) to lock blocked wording for empty external `.rtlif` interfaces.
+
 ## 2026-03-18: duplicate external `.rtlif` ports now say declaration uniqueness is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL duplicate-declaration failure path without changing composition planning behavior.
 - Landed behavior:

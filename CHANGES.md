@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-18
+### empty `.rtlif` interfaces now say metadata port presence is blocked
+- Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so external RTL interface metadata now says port presence is blocked when a reachable `.rtlif` file declares no ports under the required `?rtlif:<module>` root.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the empty root and metadata path still appear in the exception text,
+  - and the wording now lines up with the rest of the active blocked diagnostics lane.
+- Added [t/123-composition-rtlif-empty-port-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/123-composition-rtlif-empty-port-diagnostics.t) to lock blocked wording for empty external `.rtlif` interfaces through both pipeline and CLI entrypoints.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path wording slice under `R11`.
+
 ### duplicate `.rtlif` ports now say declaration uniqueness is blocked
 - Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so external RTL interface metadata now says port declaration uniqueness is blocked when a reachable `.rtlif` file repeats the same port name.
 - This shipped slice stays deliberately narrow:

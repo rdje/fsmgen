@@ -132,7 +132,8 @@ sub parse_metadata_ast ($self, $module_name, $raw_ast, $metadata_path) {
     }
 
     confess
-        "RTL interface metadata '$metadata_path' declares no ports under '?rtlif:$module_name'. ".
+        "Composition references external RTL module '$module_name', ".
+        "but RTL interface metadata port presence is blocked because declared interface metadata '$metadata_path' declares no ports under '?rtlif:$module_name'. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @ports;
 

@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-18: empty external `.rtlif` interfaces now say metadata port presence is blocked
+- Saved shipped behavior:
+  - reachable external RTL metadata now says explicitly when RTL interface metadata port presence is blocked because a `.rtlif` file declares no ports under the required `?rtlif:<module>` root.
+- Important continuity note:
+  - this closes another older-wording pocket on a real external-RTL interface-contract boundary,
+  - it keeps the `.rtlif` port-presence contract unchanged,
+  - and it adds focused pipeline plus CLI coverage instead of relying on incidental empty-interface failures.
+
 ## 2026-03-18: duplicate external `.rtlif` ports now say declaration uniqueness is blocked
 - Saved shipped behavior:
   - reachable external RTL metadata now says explicitly when RTL interface metadata port declaration uniqueness is blocked because a `.rtlif` file repeats the same port name.
