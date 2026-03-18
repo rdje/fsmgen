@@ -177,7 +177,8 @@ sub parse_port_token ($self, $module_name, $token, $metadata_path) {
     my $resolved_type = $type;
 
     confess
-        "RTL interface metadata '$metadata_path' contains invalid port token '$token' for module '$module_name'. ".
+        "Composition references external RTL module '$module_name', ".
+        "but RTL interface metadata token shape is blocked because token '$token' is an invalid port token for the current '.rtlif' contract. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless $port;
     confess

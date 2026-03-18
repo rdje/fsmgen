@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-18: invalid external `.rtlif` port tokens now say metadata token shape is blocked
+- Saved shipped behavior:
+  - reachable external RTL metadata now says explicitly when RTL interface metadata token shape is blocked because a `.rtlif` token is syntactically invalid for the current flat port-token contract.
+- Important continuity note:
+  - this closes another older-wording pocket on a real external-RTL token-contract boundary,
+  - it keeps the `.rtlif` contract unchanged,
+  - and it adds focused pipeline plus CLI coverage instead of relying on incidental invalid-token failures.
+
 ## 2026-03-17: unsupported external `.rtlif` port types now say metadata typing is blocked
 - Saved shipped behavior:
   - reachable external RTL metadata now says explicitly when RTL interface metadata port typing is blocked because a `.rtlif` token resolves to an unsupported explicit type outside the current `data|clock|reset` contract.

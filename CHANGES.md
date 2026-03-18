@@ -1,5 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-18
+### invalid `.rtlif` port tokens now say metadata token shape is blocked
+- Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so external RTL interface metadata now says token shape is blocked when a reachable `.rtlif` token is syntactically invalid for the current flat port-token contract.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the offending token and active module name still appear in the exception text,
+  - and the wording now lines up with the rest of the active blocked diagnostics lane.
+- Added [t/120-composition-rtlif-token-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/120-composition-rtlif-token-diagnostics.t) to lock blocked wording for invalid external `.rtlif` port tokens through both pipeline and CLI entrypoints.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path wording slice under `R11`.
+
 ## 2026-03-17
 ### unsupported `.rtlif` port types now say metadata typing is blocked
 - Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so external RTL interface metadata now says port typing is blocked when a reachable `.rtlif` token resolves to an unsupported explicit type such as `status`.

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-18: invalid external `.rtlif` port tokens now say metadata token shape is blocked
+- Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL token-shape failure path without changing composition planning behavior.
+- Landed behavior:
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata token *shape* is blocked when a reachable `.rtlif` token is syntactically invalid for the current flat port-token contract.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on a real external-RTL token-contract boundary,
+  - it keeps the shipped `.rtlif` token contract unchanged while lining invalid-token failures up with the rest of the blocked diagnostics lane,
+  - and it adds focused regression coverage through both pipeline and CLI entrypoints.
+- Added [t/120-composition-rtlif-token-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/120-composition-rtlif-token-diagnostics.t) to lock blocked wording for invalid external `.rtlif` port tokens.
+
 ## 2026-03-17: unsupported external `.rtlif` port types now say metadata typing is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL token-contract failure path without changing composition planning behavior.
 - Landed behavior:
