@@ -109,6 +109,7 @@ The currently shipped composition behavior is intentionally bounded:
   - and it now also covers `C1` passthrough exposure failures when explicit top exposure omits a realized child port or disagrees with the realized child interface on name, width, or direction,
   - and it now also covers duplicate top-port and duplicate child-instance declarations when those composition-shape conflicts would otherwise make planning ambiguous,
   - and it now also covers reserved system-port `=name` declarations and unsupported explicit endpoint syntax when those endpoint-shape errors would otherwise leave the binding contract ambiguous,
+  - and it now also covers malformed `?ports` and `?toplink` parser items when top-port or top-link token flatness/shape/sizing would otherwise fail through older raw wording,
   - and it now also covers unsupported composition backend targets when a valid composition source asks for a backend that the current composition lanes do not emit,
   - and it now also covers generated child-source resolution/realization failures when external `?fsmc` / `?dtc` child sources are missing or resolve to the wrong active root kind,
   - and it now also covers blocked `C2` lane selection when an explicit-link generated-child composition still provides only one generated child,

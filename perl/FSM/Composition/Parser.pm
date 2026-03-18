@@ -221,7 +221,8 @@ sub parse_ports_block ($self, $top_name, $child_ast, $block_name, $items) {
     my @ports;
 
     for my $item (@$items) {
-        confess "Composition top '$top_name' contains a nested '?ports' item, but the first active R6 lane only supports flat explicit port tokens.".
+        confess "Composition top '$top_name' contains a nested '?ports' item, ".
+            "but composition port declaration flatness is blocked because the active composition parser only supports flat explicit port tokens.".
             $self->scope_docs_suffix
             if ref($item);
 
@@ -246,8 +247,14 @@ sub parse_port_token ($self, $top_name, $token) {
     $token =~ /^(?<binding>=)?(?<port>\w+)(?:(?<direction>[<>])(?<size>\d+)?(?:[:](?<type>\w+))?)?$/o;
     my ($binding, $port, $direction, $size, $type) = @+{qw/binding port direction size type/};
 
-    confess "Composition top '$top_name' contains invalid '?ports' token '$token'.".$self->scope_docs_suffix unless $port;
-    confess "Composition top '$top_name' contains non-positive port width in token '$token'.".$self->scope_docs_suffix if defined($size) && $size < 1;
+    confess "Composition top '$top_name' contains '?ports' token '$token', ".
+        "but composition port token shape is blocked because it is not a valid explicit top-port token for the current active contract.".
+        $self->scope_docs_suffix
+        unless $port;
+    confess "Composition top '$top_name' contains '?ports' token '$token', ".
+        "but composition port sizing is blocked because it declares non-positive width '$size'.".
+        $self->scope_docs_suffix
+        if defined($size) && $size < 1;
 
     return FSM::Composition::Port->new(
         name => $port,
@@ -264,7 +271,8 @@ sub parse_toplink_block ($self, $top_name, $child_ast, $block_name, $items) {
     my @links;
 
     for my $item (@$items) {
-        confess "Composition top '$top_name' contains a nested '?toplink' item, but the first active R6 lane only supports flat '/source/target/' link tokens.".
+        confess "Composition top '$top_name' contains a nested '?toplink' item, ".
+            "but explicit top-link token flatness is blocked because the active composition parser only supports flat '/source/target/' link tokens.".
             $self->scope_docs_suffix
             if ref($item);
 
@@ -279,8 +287,8 @@ sub parse_toplink_block ($self, $top_name, $child_ast, $block_name, $items) {
         }
 
         confess
-            "Composition top '$top_name' contains unsupported '?toplink' token '$item'. ".
-            "The current parser only accepts simple '/source/target/' link forms.".
+            "Composition top '$top_name' contains '?toplink' token '$item', ".
+            "but explicit top-link token shape is blocked because the current parser only accepts simple '/source/target/' link forms.".
             $self->scope_docs_suffix;
     }
 

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-18: malformed `?ports` and `?toplink` parser items now say parser token boundaries are blocked
+- Continued the active `R11` diagnostics lane by tightening the next reachable composition-parser token-boundary family without changing composition planning behavior.
+- Landed behavior:
+  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now says blocked parser token-boundary failures for nested `?ports`, invalid `?ports` tokens, non-positive `?ports` widths, nested `?toplink` items, and unsupported `?toplink` tokens.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on real composition parser boundaries that users can hit before planning,
+  - it keeps the shipped parser token contract unchanged while lining malformed `?ports` / `?toplink` failures up with the rest of the blocked diagnostics lane,
+  - and it adds focused regression coverage through pipeline and CLI entrypoints.
+- Added [t/126-composition-parser-token-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/126-composition-parser-token-diagnostics.t) to lock the new wording.
+
 ## 2026-03-18: duplicate embedded `.rtlif` roots now say embedded-root uniqueness is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable embedded-RTL metadata uniqueness failure path without changing composition planning behavior.
 - Landed behavior:

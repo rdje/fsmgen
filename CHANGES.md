@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-18
+### malformed `?ports` and `?toplink` parser items now say parser token boundaries are blocked
+- Updated [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so malformed composition parser items now say blocked token-boundary failures for nested `?ports`, invalid `?ports` tokens, non-positive `?ports` widths, nested `?toplink` items, and unsupported `?toplink` tokens.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the offending parser token or nested block context still appears in the exception text,
+  - and the wording now lines up with the rest of the active blocked diagnostics lane.
+- Added [t/126-composition-parser-token-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/126-composition-parser-token-diagnostics.t) to lock those parser token-boundary diagnostics through both pipeline and CLI entrypoints.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path wording slice under `R11`.
+
 ### duplicate embedded `.rtlif` roots now say embedded-root uniqueness is blocked
 - Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so composition sources with multiple embedded `?rtlif:<module>` roots for the same external RTL child now say embedded-root uniqueness is blocked.
 - This shipped slice stays deliberately narrow:

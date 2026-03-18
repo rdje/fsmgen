@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-18: malformed `?ports` and `?toplink` parser items now say parser token boundaries are blocked
+- Saved shipped behavior:
+  - composition parser diagnostics now say blocked token-boundary failures for nested `?ports`, invalid `?ports` tokens, non-positive `?ports` widths, nested `?toplink` items, and unsupported `?toplink` tokens.
+- Important continuity note:
+  - this closes another older-wording pocket on real composition parser boundaries,
+  - it keeps the parser token contract unchanged,
+  - and it adds focused pipeline plus CLI coverage instead of relying on incidental parser exceptions.
+
 ## 2026-03-18: duplicate embedded `.rtlif` roots now say embedded-root uniqueness is blocked
 - Saved shipped behavior:
   - embedded RTL metadata now says explicitly when RTL interface metadata embedded-root uniqueness is blocked because the same composition source contains multiple embedded `?rtlif:<module>` roots for one external RTL child.
