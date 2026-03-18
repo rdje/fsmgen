@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-18: duplicate external `.rtlif` ports now say declaration uniqueness is blocked
+- Saved shipped behavior:
+  - reachable external RTL metadata now says explicitly when RTL interface metadata port declaration uniqueness is blocked because a `.rtlif` file repeats the same port name.
+- Important continuity note:
+  - this closes another older-wording pocket on a real external-RTL declaration-contract boundary,
+  - it keeps the `.rtlif` declaration contract unchanged,
+  - and it adds focused pipeline plus CLI coverage instead of relying on incidental duplicate-port failures.
+
 ## 2026-03-18: non-positive external `.rtlif` widths now say metadata port sizing is blocked
 - Saved shipped behavior:
   - reachable external RTL metadata now says explicitly when RTL interface metadata port sizing is blocked because a `.rtlif` token declares a non-positive explicit width.

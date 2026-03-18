@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-18: duplicate external `.rtlif` ports now say declaration uniqueness is blocked
+- Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL duplicate-declaration failure path without changing composition planning behavior.
+- Landed behavior:
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata port declaration *uniqueness* is blocked when a reachable `.rtlif` file repeats the same port name.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on a real external-RTL interface-contract boundary,
+  - it keeps the shipped `.rtlif` declaration contract unchanged while lining duplicate-port failures up with the rest of the blocked diagnostics lane,
+  - and it adds focused regression coverage through both pipeline and CLI entrypoints.
+- Added [t/122-composition-rtlif-duplicate-port-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/122-composition-rtlif-duplicate-port-diagnostics.t) to lock blocked wording for duplicate external `.rtlif` ports.
+
 ## 2026-03-18: non-positive external `.rtlif` widths now say metadata port sizing is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL width-contract failure path without changing composition planning behavior.
 - Landed behavior:
