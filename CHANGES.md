@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-18
+### nested `.rtlif` metadata now says flatness is blocked
+- Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so external RTL interface metadata now says flatness is blocked when a reachable `.rtlif` file contains nested structure under the required `?rtlif:<module>` root.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the nested root context and metadata path still appear in the exception text,
+  - and the wording now lines up with the rest of the active blocked diagnostics lane.
+- Added [t/124-composition-rtlif-flatness-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/124-composition-rtlif-flatness-diagnostics.t) to lock blocked wording for nested external `.rtlif` metadata through both pipeline and CLI entrypoints.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failure-path wording slice under `R11`.
+
 ### empty `.rtlif` interfaces now say metadata port presence is blocked
 - Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so external RTL interface metadata now says port presence is blocked when a reachable `.rtlif` file declares no ports under the required `?rtlif:<module>` root.
 - This shipped slice stays deliberately narrow:

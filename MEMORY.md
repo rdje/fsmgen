@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-18: nested external `.rtlif` metadata now says flatness is blocked
+- Saved shipped behavior:
+  - reachable external RTL metadata now says explicitly when RTL interface metadata flatness is blocked because a `.rtlif` file contains nested structure under the required `?rtlif:<module>` root.
+- Important continuity note:
+  - this closes another older-wording pocket on a real external-RTL interface-contract boundary,
+  - it keeps the `.rtlif` flat-token contract unchanged,
+  - and it adds focused pipeline plus CLI coverage instead of relying on incidental nested-metadata failures.
+
 ## 2026-03-18: empty external `.rtlif` interfaces now say metadata port presence is blocked
 - Saved shipped behavior:
   - reachable external RTL metadata now says explicitly when RTL interface metadata port presence is blocked because a `.rtlif` file declares no ports under the required `?rtlif:<module>` root.

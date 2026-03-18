@@ -115,8 +115,9 @@ sub parse_metadata_ast ($self, $module_name, $raw_ast, $metadata_path) {
     my %ports_by_name;
     for my $item (@$items) {
         confess
-            "RTL interface metadata '$metadata_path' contains nested structure under '?rtlif:$module_name', ".
-            "but the active C3 lane only accepts flat explicit port tokens. ".
+            "Composition references external RTL module '$module_name', ".
+            "but RTL interface metadata flatness is blocked because declared interface metadata '$metadata_path' contains nested structure under '?rtlif:$module_name'. ".
+            "The active C3 lane only accepts flat explicit port tokens. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             if ref($item);
 

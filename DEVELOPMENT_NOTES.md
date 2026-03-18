@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-18: nested external `.rtlif` metadata now says flatness is blocked
+- Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL flatness failure path without changing composition planning behavior.
+- Landed behavior:
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata *flatness* is blocked when a reachable `.rtlif` file contains nested structure under the required `?rtlif:<module>` root.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on a real external-RTL interface-contract boundary,
+  - it keeps the shipped `.rtlif` flat-token contract unchanged while lining nested-metadata failures up with the rest of the blocked diagnostics lane,
+  - and it adds focused regression coverage through both pipeline and CLI entrypoints.
+- Added [t/124-composition-rtlif-flatness-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/124-composition-rtlif-flatness-diagnostics.t) to lock blocked wording for nested external `.rtlif` metadata.
+
 ## 2026-03-18: empty external `.rtlif` interfaces now say metadata port presence is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL port-presence failure path without changing composition planning behavior.
 - Landed behavior:
