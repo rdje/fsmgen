@@ -224,6 +224,7 @@ Combinational DT note:
   - and it now also covers blocked external RTL metadata port presence when a reachable `.rtlif` file declares no ports under the required root,
   - and it now also covers blocked external RTL metadata flatness when a reachable `.rtlif` file contains nested structure under the required root,
   - and it now also covers blocked embedded RTL metadata root uniqueness when the same composition source contains multiple embedded `?rtlif:<module>` roots for one external RTL child,
+  - and it now also covers malformed child-entry structure when empty child entries, non-string child headers, or dotted-pair child payloads would otherwise fail through older raw wording or warnings,
   - and non-quiet `bin/fsmgen` runs now print the same composition provenance summary directly in the CLI close-out.
 
 ### Implemented, but not strong enough yet to call fully supported

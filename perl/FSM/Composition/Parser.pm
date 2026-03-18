@@ -108,12 +108,35 @@ sub parse_top ($self, $top_ast) {
 }
 
 sub parse_top_child ($self, $top_name, $child_ast) {
-    confess "Composition child in top '$top_name' is empty" unless @$child_ast;
-    my $header = $child_ast->[0];
-    confess "Composition child in top '$top_name' is missing a string header" if ref($header);
+    confess
+        "Composition top '$top_name' contains a child entry that is empty or missing its header, ".
+        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', or '?toplink:name'.".
+        $self->scope_docs_suffix
+        unless @$child_ast;
 
-    my $items = $child_ast->[1] || [];
-    confess "Composition child '$header' in top '$top_name' must contain an item list" unless ref($items) eq 'ARRAY';
+    my $header = $child_ast->[0];
+    confess
+        "Composition top '$top_name' contains a child entry that is empty or missing its header, ".
+        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', or '?toplink:name'.".
+        $self->scope_docs_suffix
+        unless defined($header) && length($header);
+    confess
+        "Composition top '$top_name' contains a child entry that does not begin with a string header, ".
+        "but composition child header shape is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', or '?toplink:name'.".
+        $self->scope_docs_suffix
+        if ref($header);
+
+    my $items = $child_ast->[1] // [];
+    confess
+        "Composition top '$top_name' contains child '$header', ".
+        "but composition child item-list shape is blocked because that child does not contain a proper item list.".
+        $self->scope_docs_suffix
+        unless ref($items) eq 'ARRAY';
+    confess
+        "Composition top '$top_name' contains child '$header', ".
+        "but composition child item-list shape is blocked because dotted-pair payloads are outside the current active composition parser contract.".
+        $self->scope_docs_suffix
+        if @$items && !ref($items->[0]) && $items->[0] eq '.';
 
     if ($header =~ /^\?fsmc(?::(\w*))?$/) {
         my $child_name = defined($1) && length($1) ? $1 : undef;

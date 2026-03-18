@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-18: malformed composition child entries now say child structure is blocked
+- Saved shipped behavior:
+  - composition parser diagnostics now say blocked child-structure failures for empty child entries, blocked child-header-shape failures for non-string child headers, and blocked child item-list-shape failures for dotted-pair child payloads.
+- Important continuity note:
+  - this closes another older-wording pocket on real malformed composition parser input,
+  - it keeps the child-kind contract unchanged,
+  - and it removes the older undef-header warning path while adding focused pipeline plus CLI coverage.
+
 ## 2026-03-18: `?toplink` naming cleanup is now tracked as future syntax work
 - Saved future note:
   - `?toplink` is acceptable but not ideal as composition wiring syntax,

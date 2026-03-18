@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-18: malformed composition child entries now say child structure is blocked
+- Continued the active `R11` diagnostics lane by tightening the next reachable composition child-entry parser boundary without changing composition planning behavior.
+- Landed behavior:
+  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now says blocked child-structure failures for empty child entries, blocked child-header-shape failures for non-string child headers, and blocked child item-list-shape failures for dotted-pair child payloads.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on real malformed composition parser input that users can reach directly,
+  - it keeps the shipped child-kind contract unchanged while aligning malformed child-entry failures with the rest of the blocked diagnostics lane,
+  - and it also retires the older undef-header warning path instead of leaving that noise to leak through pipeline and CLI runs.
+- Added [t/128-composition-child-structure-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/128-composition-child-structure-diagnostics.t) to lock the new wording through both pipeline and CLI entrypoints.
+
 ## 2026-03-18: `?toplink` naming cleanup is now tracked as future syntax work
 - Captured the recent naming discussion explicitly instead of leaving it in chat only.
 - Saved future note:
