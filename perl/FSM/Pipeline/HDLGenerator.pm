@@ -2582,6 +2582,13 @@ sub build_composition_failure_report ($self, $error_text) {
         $report{construct_summary} = $construct->{summary};
     }
 
+    my $artifact = $self->composition_failure_artifact_excerpt($summary_text);
+    if ($artifact) {
+        $report{artifact_label} = $artifact->{label};
+        $report{artifact_value} = $artifact->{value};
+        $report{artifact_summary} = $artifact->{summary};
+    }
+
     my $context = $self->composition_failure_context_excerpt($summary_text);
     if ($context) {
         $report{context_label} = $context->{label};
@@ -2622,7 +2629,7 @@ sub composition_failure_reason_excerpt ($self, $reason_text) {
     $reason =~ s/\s+/ /g;
     $reason =~ s/^\s+|\s+$//g;
     $reason =~ s/\s*See docs\/.*\z//i;
-    $reason =~ s/\.\s+(?:Search roots:|Seen |The active |The current |Use '\?toplink'|Use '\?ports').*\z//;
+    $reason =~ s/\.\s+(?:Search roots:|Seen |The active |The current |Use '\?toplink'|Use '\?ports'|Use '\?fsmc'|Use '\?dtc'|Standalone '\?dt:name' roots|FSM child roots are shipped as composition children).*\z//;
     $reason =~ s/\.\z//;
     $reason =~ s/^\s+|\s+$//g;
     return $reason;
@@ -2647,6 +2654,27 @@ sub composition_failure_construct_excerpt ($self, $summary_text) {
         return {
             token => $token,
             summary => $summary,
+        };
+    }
+
+    return undef;
+}
+
+sub composition_failure_artifact_excerpt ($self, $summary_text) {
+    return undef unless defined $summary_text && length $summary_text;
+
+    my @patterns = (
+        [ qr/resolves '\?(?:fsmc|dtc)' child '[^']+' to '([^']+)'/s, sub { return ('Child source file', "'$_[0]'"); } ],
+    );
+
+    for my $entry (@patterns) {
+        my ($pattern, $builder) = @$entry;
+        next unless $summary_text =~ $pattern;
+        my ($label, $value) = $builder->($1);
+        return {
+            label => $label,
+            value => $value,
+            summary => "$label $value",
         };
     }
 

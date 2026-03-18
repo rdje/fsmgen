@@ -226,6 +226,69 @@ FSM
     );
 };
 
+subtest 'pipeline derives child-source file context from blocked generated-child realization failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'wrong_fsmc_kind_failure_summary_top.fsm');
+    my $child_path = File::Spec->catfile($tempdir, 'route_src.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:wrong_fsmc_kind_failure_summary_top
+  (?ports:public_io
+    data_in<8
+    route_data>8
+  )
+  (?fsmc:router route_src)
+)
+FSM
+    );
+
+    write_file(
+        $child_path,
+        <<'FSM'
+(?dt:route_src
+  (-route
+    (route_data> = data_in)
+  )
+  (+size
+    (data_in 8)
+    (route_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked generated-child realization failures');
+    is($report->{top_name}, 'wrong_fsmc_kind_failure_summary_top', 'failure report preserves the top name for blocked generated-child realization failures');
+    is($report->{construct}, '?fsmc', 'failure report preserves the generated-child construct for blocked generated-child realization failures');
+    is($report->{artifact_label}, 'Child source file', 'failure report classifies the resolved generated-child file as artifact context');
+    is($report->{artifact_value}, "'$child_path'", 'failure report preserves the resolved generated-child file path');
+    is($report->{artifact_summary}, "Child source file '$child_path'", 'failure report exposes a concise generated-child file summary');
+    is($report->{context_label}, 'Child', 'failure report preserves the generated-child name as logical context');
+    is($report->{context_value}, "'route_src'", 'failure report preserves the offending generated-child source name');
+    is($report->{blocked_boundary}, 'child-source realization', 'failure report preserves the blocked generated-child realization boundary');
+    is(
+        $report->{blocked_reason},
+        "that resolved file is not an active FSM child source (detected root '?dt:route_src')",
+        'failure report trims the blocked generated-child reason before the corrective note',
+    );
+};
+
 subtest 'pipeline derives child-endpoint context from blocked explicit-link endpoint failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'missing_child_endpoint_failure_summary_top.fsm');
@@ -420,6 +483,63 @@ FSM
     like($combined_output, qr/Lane:\s+C3/s, 'CLI reports the active lane when the blocked diagnostic exposes it');
     like($combined_output, qr/Construct:\s+\?rtl/s, 'CLI reports the external RTL construct when the blocked diagnostic exposes it');
     like($combined_output, qr/Reason:\s+no declared interface metadata file 'uart_tx\.rtlif' was found/s, 'CLI reports the concise missing-rtlif reason');
+};
+
+subtest 'CLI prints child-source file context for blocked generated-child realization failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'wrong_fsmc_kind_failure_summary_cli_top.fsm');
+    my $child_path = File::Spec->catfile($tempdir, 'route_src.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'wrong_fsmc_kind_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:wrong_fsmc_kind_failure_summary_cli_top
+  (?ports:public_io
+    data_in<8
+    route_data>8
+  )
+  (?fsmc:router route_src)
+)
+FSM
+    );
+
+    write_file(
+        $child_path,
+        <<'FSM'
+(?dt:route_src
+  (-route
+    (route_data> = data_in)
+  )
+  (+size
+    (data_in 8)
+    (route_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked wrong-kind generated-child composition fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked wrong-kind generated-child fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked generated-child realization failures');
+    like($combined_output, qr/Top:\s+wrong_fsmc_kind_failure_summary_cli_top/s, 'CLI reports the failing top for blocked generated-child realization failures');
+    like($combined_output, qr/Construct:\s+\?fsmc/s, 'CLI reports the generated-child construct for blocked generated-child realization failures');
+    like($combined_output, qr/Child source file:\s+'\Q$child_path\E'/s, 'CLI reports the resolved generated-child file path');
+    like($combined_output, qr/Context:\s+Child 'route_src'/s, 'CLI reports the generated-child source name as context');
+    like($combined_output, qr/Blocked boundary:\s+child-source realization/s, 'CLI reports the blocked generated-child realization boundary');
+    like($combined_output, qr/Reason:\s+that resolved file is not an active FSM child source \(detected root '\?dt:route_src'\)/s, 'CLI reports the concise blocked generated-child reason');
 };
 
 subtest 'CLI prints endpoint context for blocked explicit-link endpoint failures' => sub {
