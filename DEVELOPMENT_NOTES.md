@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-18: non-positive external `.rtlif` widths now say metadata port sizing is blocked
+- Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL width-contract failure path without changing composition planning behavior.
+- Landed behavior:
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now says RTL interface metadata port *sizing* is blocked when a reachable `.rtlif` token declares a non-positive explicit width.
+- Why this is worth shipping:
+  - it closes another older-wording pocket on a real external-RTL token-contract boundary,
+  - it keeps the shipped `.rtlif` width contract unchanged while lining non-positive-width failures up with the rest of the blocked diagnostics lane,
+  - and it adds focused regression coverage through both pipeline and CLI entrypoints.
+- Added [t/121-composition-rtlif-width-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/121-composition-rtlif-width-diagnostics.t) to lock blocked wording for non-positive external `.rtlif` widths.
+
 ## 2026-03-18: invalid external `.rtlif` port tokens now say metadata token shape is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable external-RTL token-shape failure path without changing composition planning behavior.
 - Landed behavior:

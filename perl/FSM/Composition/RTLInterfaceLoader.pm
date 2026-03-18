@@ -182,7 +182,9 @@ sub parse_port_token ($self, $module_name, $token, $metadata_path) {
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless $port;
     confess
-        "RTL interface metadata '$metadata_path' contains non-positive port width in token '$token'. ".
+        "Composition references external RTL module '$module_name', ".
+        "but RTL interface metadata port sizing is blocked because token '$token' declares non-positive port width '$size'. ".
+        "The active '.rtlif' contract requires positive explicit widths when a width is declared. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         if defined($size) && $size < 1;
 
