@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: blocked unsupported explicit-endpoint syntax is now regression-locked at CLI level
+- Continued the active `R11` failed-run reporting lane by hardening another already-shipped explicit-link summary family instead of widening composition behavior.
+- Landed behavior:
+  - the existing failed-run summary path now has explicit CLI regression coverage for blocked unsupported explicit-endpoint syntax,
+  - so these runs keep `Construct: ?toplink`, endpoint context, the blocked `explicit link endpoint resolution` boundary, and the concise “that syntax is unsupported” reason.
+- Why this is worth shipping:
+  - this is a real user-facing explicit-link failure path,
+  - the summary behavior already existed,
+  - and the new coverage proves that the CLI keeps the offending endpoint token visible instead of forcing users back into the raw exception text.
+
 ## 2026-03-19: blocked shared-system-port `=port` summaries are now regression-locked at CLI level
 - Continued the active `R11` failed-run reporting lane by hardening another already-shipped declared connect-by-name summary family instead of widening composition behavior.
 - Landed behavior:

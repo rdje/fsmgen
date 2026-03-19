@@ -2259,6 +2259,76 @@ FSM
     like($combined_output, qr/Reason:\s+no realized child instance named 'missing' exists/s, 'CLI reports the concise missing child-instance reason');
 };
 
+subtest 'CLI prints unsupported explicit-endpoint syntax in blocked explicit-link summaries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'unsupported_endpoint_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'unsupported_endpoint_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:unsupported_endpoint_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data.extra/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'2)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (final_data> <= 8'3)
+  )
+  (+size
+    (final_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked unsupported-explicit-endpoint composition fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked unsupported-explicit-endpoint fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for unsupported explicit endpoints');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked unsupported-endpoint failures');
+    like($combined_output, qr/Context:\s+Endpoint 'producer\.output_data\.extra'/s, 'CLI reports the unsupported explicit endpoint as summary context');
+    like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for unsupported endpoint syntax');
+    like($combined_output, qr/Reason:\s+that syntax is unsupported/s, 'CLI reports the concise unsupported-endpoint reason');
+};
+
 subtest 'CLI prints composition failure summary for non-quiet blocked composition runs' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'unsupported_child_failure_cli_top.fsm');

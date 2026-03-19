@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: blocked unsupported explicit-endpoint syntax is now explicitly locked at CLI level
+- Saved shipped behavior:
+  - failed composition summaries now have explicit CLI regression coverage for blocked unsupported explicit-endpoint syntax, including the offending endpoint token and concise unsupported-syntax reason.
+- Important continuity note:
+  - this slice did not widen extractor behavior,
+  - it hardens another already-shipped explicit-link summary family at the CLI boundary,
+  - and it keeps unsupported explicit-endpoint syntax aligned with the previously locked missing-endpoint and declared connect-by-name summary families.
+
 ## 2026-03-19: blocked shared-system-port `=port` summaries are now explicitly locked at CLI level
 - Saved shipped behavior:
   - failed composition summaries now have explicit CLI regression coverage for blocked shared-system-port declared connect-by-name failures, including the concise dedicated-system-input-contract reason and top-port context.

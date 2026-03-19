@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### blocked unsupported explicit-endpoint syntax now stays visible in CLI failure summaries
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for the reachable unsupported explicit-endpoint syntax family too.
+- This keeps the slice narrow and honest:
+  - behavior is unchanged,
+  - the summary already knew how to expose `?toplink` plus endpoint context,
+  - and the new coverage simply proves that non-quiet CLI failures preserve the unsupported endpoint token and concise “that syntax is unsupported” reason without relying only on the raw exception text.
+
 ### blocked shared-system-port `=port` failures now keep concise system-contract reasons in CLI summaries
 - Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for the reachable shared-system-port declared connect-by-name family too.
 - This keeps the slice narrow and honest:
