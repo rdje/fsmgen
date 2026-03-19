@@ -1162,6 +1162,79 @@ RTLIF
     is($report->{blocked_reason}, 'that top port is declared as output instead of input', 'failure report preserves the concise top-port role-mismatch reason');
 };
 
+subtest 'pipeline derives top-port context from blocked explicit-link duplicate-driver failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'duplicate_driver_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:duplicate_driver_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer_a producer_a_src)
+  (?fsmc:producer_b producer_b_src)
+  (?toplink:wiring
+    /producer_a.output_data/result_data/
+    /producer_b.output_data/result_data/
+  )
+)
+
+(?fsm:producer_a_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:producer_b_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'2)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked explicit-link duplicate-driver failures');
+    is($report->{top_name}, 'duplicate_driver_failure_summary_top', 'failure report preserves the top name for blocked explicit-link duplicate-driver failures');
+    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked duplicate-driver failures');
+    is($report->{context_label}, 'Top port', 'failure report classifies duplicate-driver target conflicts as top-port context');
+    is($report->{context_value}, "'result_data'", 'failure report preserves the conflicted top-port target for duplicate-driver failures');
+    is($report->{context_summary}, "Top port 'result_data'", 'failure report exposes a concise duplicate-driver target summary');
+    is($report->{blocked_boundary}, 'explicit link', 'failure report preserves the blocked explicit-link boundary for duplicate-driver failures');
+    is($report->{blocked_reason}, "that target is already driven by explicit link 'producer_a.output_data'", 'failure report preserves the concise duplicate-driver reason');
+};
+
 subtest 'pipeline derives explicit-endpoint context from blocked endpoint-syntax failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'unsupported_endpoint_failure_summary_top.fsm');
@@ -2822,6 +2895,77 @@ RTLIF
     like($combined_output, qr/Context:\s+Top port 'result_data'/s, 'CLI reports the blocked top port as summary context for top-port role mismatches');
     like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for top-port role mismatches');
     like($combined_output, qr/Reason:\s+that top port is declared as output instead of input/s, 'CLI reports the concise top-port role-mismatch reason');
+};
+
+subtest 'CLI prints top-port context for blocked explicit-link duplicate-driver summaries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'duplicate_driver_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'duplicate_driver_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:duplicate_driver_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer_a producer_a_src)
+  (?fsmc:producer_b producer_b_src)
+  (?toplink:wiring
+    /producer_a.output_data/result_data/
+    /producer_b.output_data/result_data/
+  )
+)
+
+(?fsm:producer_a_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:producer_b_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'2)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked explicit-link duplicate-driver fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked explicit-link duplicate-driver fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link duplicate-driver failures');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked duplicate-driver failures');
+    like($combined_output, qr/Context:\s+Top port 'result_data'/s, 'CLI reports the conflicted top-port target as summary context for duplicate-driver failures');
+    like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for duplicate-driver failures');
+    like($combined_output, qr/Reason:\s+that target is already driven by explicit link 'producer_a\.output_data'/s, 'CLI reports the concise duplicate-driver reason');
 };
 
 subtest 'CLI prints missing top-endpoint context in blocked explicit-link summaries' => sub {

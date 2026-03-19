@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### blocked explicit-link duplicate-driver failures now keep target context in CLI summaries
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so failed composition summaries now recognize `assigns explicit link driver '...' to target '...'` diagnostics as target context instead of leaving that conflict point only in the raw exception text.
+- This keeps the slice narrow and honest:
+  - planner behavior is unchanged,
+  - the only runtime change is summary extraction for an already-shipped explicit-link conflict family,
+  - and the new coverage proves that non-quiet CLI failures preserve `Construct: ?toplink`, `Context: Top port 'result_data'`, the blocked `explicit link` boundary, and the concise duplicate-driver reason.
+
 ### blocked explicit-link top-port role mismatches now keep top-port context in CLI summaries
 - Updated [t/23-composition-errors.t](/Users/richarddje/Documents/github/fsmgen/t/23-composition-errors.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for the reachable explicit-link family where a declared top port is used with the wrong role.
 - This keeps the slice narrow and honest:

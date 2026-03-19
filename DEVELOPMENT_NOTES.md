@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: blocked explicit-link duplicate-driver failures now keep target context in CLI summaries
+- Continued the active `R11` failed-run reporting lane with another small shipped extractor improvement instead of a broader planner change.
+- Landed behavior:
+  - failed composition summaries now recognize `assigns explicit link driver '...' to target '...'` blocked diagnostics as target context,
+  - so reachable duplicate-driver conflicts keep `Construct: ?toplink`, `Context: Top port 'result_data'`, the blocked `explicit link` boundary, and the concise duplicate-driver reason.
+- Why this is worth shipping:
+  - this is a real user-facing explicit-link conflict family,
+  - the diagnostic already exposed the target clearly,
+  - and teaching the summary extractor to keep that same target makes the short failure summary materially more actionable without changing planner behavior.
+
 ## 2026-03-19: blocked explicit-link top-port role mismatches are now regression-locked at CLI level
 - Continued the active `R11` failed-run reporting lane by hardening another already-shipped explicit-link summary family instead of widening composition behavior.
 - Landed behavior:

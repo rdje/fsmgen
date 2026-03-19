@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: blocked explicit-link duplicate-driver failures now keep target context in CLI summaries
+- Saved shipped behavior:
+  - failed composition summaries now recognize duplicate-driver blocked diagnostics as target context, so the conflicted target `result_data` stays visible in the summary.
+- Important continuity note:
+  - this slice did widen extractor behavior slightly,
+  - but only at the failed-run summary layer,
+  - and it keeps duplicate-driver conflicts aligned with the already improved direction-mismatch family instead of leaving their target only in the raw exception text.
+
 ## 2026-03-19: blocked explicit-link top-port role mismatches are now explicitly locked at CLI level
 - Saved shipped behavior:
   - failed composition summaries now have explicit CLI regression coverage for blocked explicit-link top-port role mismatches, including `Top port 'result_data'` context and the concise top-port role reason.
