@@ -3988,3 +3988,12 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - `Context: Top port 'start'`
   - the blocked `explicit link` boundary and the existing concise role-mismatch reasons
 - Runtime behavior was already correct here; this slice makes the sibling role-mismatch summary contract explicit.
+
+## 2026-03-19: missing generated-child source-resolution summaries now cover both constructs
+- [t/115-composition-child-source-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/115-composition-child-source-diagnostics.t) now also locks the direct blocked missing-`?dtc` source-resolution diagnostic beside the earlier missing-`?fsmc` one.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks the matching failed-run summary shapes so non-quiet runs keep:
+  - `Construct: ?fsmc` plus `Context: Child 'missing_src'`
+  - `Construct: ?dtc` plus `Context: Child 'missing_dt_src'`
+  - the blocked `child-source resolution` boundary and the existing concise missing-source reason
+  - and no invented `Child source file:` artifact when no external file was resolved
+- Runtime behavior was already correct here; this slice makes the unresolved-source summary contract explicit for both generated-child constructs.

@@ -1081,6 +1081,100 @@ FSM
     );
 };
 
+subtest 'pipeline derives child context from blocked missing ?fsmc child-source resolution failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'missing_fsmc_child_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:missing_fsmc_child_failure_summary_top
+  (?ports:public_io
+    clk
+    rst_n
+    output_data>8
+  )
+  (?fsmc:child missing_src)
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked missing ?fsmc child-source resolution failures');
+    is($report->{top_name}, 'missing_fsmc_child_failure_summary_top', 'failure report preserves the top name for blocked missing ?fsmc child-source resolution failures');
+    is($report->{construct}, '?fsmc', 'failure report preserves the ?fsmc construct for blocked missing ?fsmc child-source resolution failures');
+    ok(!defined($report->{artifact_label}), 'failure report does not invent a child-source file artifact for unresolved ?fsmc child-source failures');
+    is($report->{context_label}, 'Child', 'failure report classifies missing ?fsmc child-source resolution failures as child context');
+    is($report->{context_value}, "'missing_src'", 'failure report preserves the missing ?fsmc child source name');
+    is($report->{context_summary}, "Child 'missing_src'", 'failure report exposes a concise missing ?fsmc child-source summary');
+    is($report->{blocked_boundary}, 'child-source resolution', 'failure report preserves the blocked ?fsmc child-source resolution boundary');
+    is(
+        $report->{blocked_reason},
+        "no active child FSM source was found either embedded in the same file or in an external '.fsm' file",
+        'failure report trims the missing ?fsmc child-source resolution reason before search-root details',
+    );
+};
+
+subtest 'pipeline derives child context from blocked missing ?dtc child-source resolution failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'missing_dtc_child_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:missing_dtc_child_failure_summary_top
+  (?ports:public_io
+    clk
+    rst_n
+    output_data>8
+  )
+  (?dtc:child missing_dt_src)
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked missing ?dtc child-source resolution failures');
+    is($report->{top_name}, 'missing_dtc_child_failure_summary_top', 'failure report preserves the top name for blocked missing ?dtc child-source resolution failures');
+    is($report->{construct}, '?dtc', 'failure report preserves the ?dtc construct for blocked missing ?dtc child-source resolution failures');
+    ok(!defined($report->{artifact_label}), 'failure report does not invent a child-source file artifact for unresolved ?dtc child-source failures');
+    is($report->{context_label}, 'Child', 'failure report classifies missing ?dtc child-source resolution failures as child context');
+    is($report->{context_value}, "'missing_dt_src'", 'failure report preserves the missing ?dtc child source name');
+    is($report->{context_summary}, "Child 'missing_dt_src'", 'failure report exposes a concise missing ?dtc child-source summary');
+    is($report->{blocked_boundary}, 'child-source resolution', 'failure report preserves the blocked ?dtc child-source resolution boundary');
+    is(
+        $report->{blocked_reason},
+        "no active standalone-DT child source was found either embedded in the same file or in an external '.fsm' file",
+        'failure report trims the missing ?dtc child-source resolution reason before search-root details',
+    );
+};
+
 subtest 'pipeline derives child-endpoint context from blocked explicit-link endpoint failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'missing_child_endpoint_failure_summary_top.fsm');
@@ -3479,6 +3573,88 @@ FSM
     like($combined_output, qr/Context:\s+Child 'route_src'/s, 'CLI reports the generated-child source name as context');
     like($combined_output, qr/Blocked boundary:\s+child-source realization/s, 'CLI reports the blocked generated-child realization boundary');
     like($combined_output, qr/Reason:\s+that resolved file is not an active FSM child source \(detected root '\?dt:route_src'\)/s, 'CLI reports the concise blocked generated-child reason');
+};
+
+subtest 'CLI prints child context for blocked missing ?fsmc child-source resolution failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'missing_fsmc_child_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'missing_fsmc_child_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:missing_fsmc_child_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rst_n
+    output_data>8
+  )
+  (?fsmc:child missing_src)
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked missing ?fsmc child-source resolution fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked missing ?fsmc child-source resolution fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked missing ?fsmc child-source resolution failures');
+    like($combined_output, qr/Construct:\s+\?fsmc/s, 'CLI reports the ?fsmc construct for blocked missing ?fsmc child-source resolution failures');
+    unlike($combined_output, qr/Child source file:/s, 'CLI does not invent a child-source file artifact for unresolved ?fsmc child-source failures');
+    like($combined_output, qr/Context:\s+Child 'missing_src'/s, 'CLI reports the missing ?fsmc child source as summary context');
+    like($combined_output, qr/Blocked boundary:\s+child-source resolution/s, 'CLI reports the blocked ?fsmc child-source resolution boundary');
+    like($combined_output, qr/Reason:\s+no active child FSM source was found either embedded in the same file or in an external '\.fsm' file/s, 'CLI reports the concise missing ?fsmc child-source resolution reason');
+};
+
+subtest 'CLI prints child context for blocked missing ?dtc child-source resolution failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'missing_dtc_child_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'missing_dtc_child_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:missing_dtc_child_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rst_n
+    output_data>8
+  )
+  (?dtc:child missing_dt_src)
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked missing ?dtc child-source resolution fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked missing ?dtc child-source resolution fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked missing ?dtc child-source resolution failures');
+    like($combined_output, qr/Construct:\s+\?dtc/s, 'CLI reports the ?dtc construct for blocked missing ?dtc child-source resolution failures');
+    unlike($combined_output, qr/Child source file:/s, 'CLI does not invent a child-source file artifact for unresolved ?dtc child-source failures');
+    like($combined_output, qr/Context:\s+Child 'missing_dt_src'/s, 'CLI reports the missing ?dtc child source as summary context');
+    like($combined_output, qr/Blocked boundary:\s+child-source resolution/s, 'CLI reports the blocked ?dtc child-source resolution boundary');
+    like($combined_output, qr/Reason:\s+no active standalone-DT child source was found either embedded in the same file or in an external '\.fsm' file/s, 'CLI reports the concise missing ?dtc child-source resolution reason');
 };
 
 subtest 'CLI prints endpoint context for blocked explicit-link endpoint failures' => sub {

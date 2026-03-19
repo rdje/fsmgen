@@ -5225,3 +5225,15 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - no runtime change was needed here; the existing summary extractor already behaved correctly,
   - the value is in making the role-mismatch family symmetric and provable across both source/target sides.
+
+## 2026-03-19: missing generated-child source-resolution summaries are now explicit for both source families
+- Continued the active `R11` failed-run reporting lane by hardening another already-shipped summary family instead of widening composition behavior.
+- The summary extractor was already correctly deriving construct + child context from blocked missing-source diagnostics, but the contract had only been locked for generated-child realization failures after a file had already been resolved.
+- The active contract is now explicit for the unresolved-source sibling family too:
+  - unresolved `?fsmc` children keep `Construct: ?fsmc` plus `Context: Child 'missing_src'`
+  - unresolved `?dtc` children keep `Construct: ?dtc` plus `Context: Child 'missing_dt_src'`
+  - both keep the blocked `child-source resolution` boundary and the concise missing-source reason
+  - and neither invents a `Child source file:` artifact when no external file was actually resolved
+- Design note from this slice:
+  - no runtime change was needed here; the existing summary extractor already behaved correctly,
+  - the value is in making the unresolved-source family explicit and symmetric across both generated-child constructs.

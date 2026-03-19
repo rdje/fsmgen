@@ -195,6 +195,43 @@ FSM
     );
 };
 
+subtest 'missing external ?dtc child now says child-source resolution is blocked' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'missing_dtc_child_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:missing_dtc_child_top
+  (?ports:public_io
+    clk
+    rst_n
+    output_data>8
+  )
+  (?dtc:child missing_dt_src)
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/declares '\?dtc' child 'missing_dt_src', .*child-source resolution is blocked because no active standalone-DT child source was found either embedded in the same file or in an external '\.fsm' file.*Search roots: .*Searched locations: /s,
+        'pipeline now says missing external ?dtc child resolution is blocked',
+    );
+};
+
 done_testing();
 
 sub write_file {

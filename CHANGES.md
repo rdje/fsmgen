@@ -4245,3 +4245,8 @@ This is the persistent technical change history for FSMGen.
   - child-endpoint sources keep `Context: Child endpoint 'instance.port'` with the concise `input instead of output` reason
   - top-port targets keep `Context: Top port '...'` with the concise `input instead of output` reason
 - This follow-on slice is regression/contract hardening only; runtime behavior was already covered by the existing summary extractor.
+- The missing generated-child source-resolution summary contract is now locked for both construct families too:
+  - unresolved `?fsmc` children keep `Construct: ?fsmc` plus `Context: Child '...'`
+  - unresolved `?dtc` children keep `Construct: ?dtc` plus `Context: Child '...'`
+  - both keep the blocked `child-source resolution` boundary and the concise missing-source reason without inventing a `Child source file:` artifact
+- This follow-on slice is also regression/contract hardening only; runtime behavior was already covered by the existing summary extractor.
