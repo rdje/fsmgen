@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: blocked existing-instance missing-port explicit-link summaries are now explicitly locked at CLI level
+- Saved shipped behavior:
+  - failed composition summaries now have explicit CLI regression coverage for blocked explicit-link endpoint-resolution failures where the child instance exists but the named child port does not, including `Child endpoint 'uart_tx.missing_port'` context and the concise missing-port reason.
+- Important continuity note:
+  - this slice did not widen extractor behavior,
+  - it hardens another already-shipped explicit-link summary family at the CLI boundary,
+  - and it keeps existing-instance missing-port failures aligned with the previously locked missing child-endpoint, missing top-endpoint, and unsupported explicit-endpoint summary families.
+
 ## 2026-03-19: blocked missing top-level explicit-link endpoint summaries are now explicitly locked at CLI level
 - Saved shipped behavior:
   - failed composition summaries now have explicit CLI regression coverage for blocked missing top-level explicit-link endpoint failures, including `Top endpoint` context and the concise `'?ports' declares no top port with that name` reason.

@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### blocked existing-instance missing-port explicit-link failures now keep child-endpoint context in CLI summaries
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for the reachable explicit-link endpoint-resolution family where the child instance exists but the named child port does not.
+- This keeps the slice narrow and honest:
+  - behavior is unchanged,
+  - the extractor already knew how to preserve `Child endpoint 'uart_tx.missing_port'`,
+  - and the new coverage simply proves that non-quiet CLI failures preserve `Construct: ?toplink`, `Context: Child endpoint 'uart_tx.missing_port'`, the blocked `explicit link endpoint resolution` boundary, and the concise `instance 'uart_tx' has no port named 'missing_port'` reason.
+
 ### blocked missing top-level explicit-link endpoint failures now keep top-endpoint context in CLI summaries
 - Updated [t/23-composition-errors.t](/Users/richarddje/Documents/github/fsmgen/t/23-composition-errors.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for the reachable missing top-level explicit-link endpoint family too.
 - This keeps the slice narrow and honest:
