@@ -1,5 +1,31 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: future syntax-power guidance is now recorded with a bounded meta-programming rule
+- Recorded the recent “what would make `fsmgen` much more powerful while staying terse and elegant” discussion as future language guidance rather than leaving it in conversation only.
+- Current highest-leverage feature set:
+  - aggregate types with inference-first declarations,
+  - interface bundles / protocol groups,
+  - enum-first `case` / `match`-style control capture,
+  - small local alias/default forms for repeated guards and output intent,
+  - bounded replication for repeated lanes/instances,
+  - first-class intent helpers for common RTL patterns such as edge/pulse/sticky/handshake/conflict checks,
+  - terse invariant/assertion forms,
+  - and stronger explain/report surfaces for inferred behavior.
+- Saved design rules:
+  - convention first, explicit local override second,
+  - inference by default, explicit declarations as anchors/overrides,
+  - portable frontend semantics across SystemVerilog and future VHDL,
+  - and bounded sugar that compresses common RTL intent instead of renaming verbosity.
+- Saved avoid list:
+  - broad hidden child-to-child auto-wiring,
+  - backend-specific frontend promises,
+  - and a general macro/template/metaprogramming system.
+- Important refinement from the follow-up discussion:
+  - a small amount of list-oriented, functional-style meta-programming may still be valuable later because the language family is Lisp-like,
+  - but if that lane ever opens, it should be semantic and RTL-specific rather than textual,
+  - it should lower into the same typed AST/diagnostics pipeline as ordinary syntax,
+  - and it should stay elaboration-bounded instead of becoming an unrestricted source generator.
+
 ## 2026-03-19: `.rtlif` width/type failures are now regression-locked through the token-summary path
 - Continued the active `R11` diagnostics/reporting lane by closing the next nearby token-scoped `.rtlif` summary seam without changing any extractor behavior.
 - Landed behavior:

@@ -586,6 +586,9 @@ Done:
   - explicit type declarations as bounded overrides rather than the default authoring path,
   - proposed explicit syntax centered on a future `(+types ...)` family,
   - and phased boundaries that start with type AST plus explicit declarations before broadening into inference, member access, exact-type aggregate assignment, and backend-specific conversion helpers.
+- That same future `R11` direction now also records:
+  - interface bundles/protocol groups, enum-first `case` / `match`, small local alias/default blocks, bounded replication, first-class RTL intent helpers, terse invariant/assertion forms, and stronger explain/report surfaces as the current highest-leverage candidates for keeping the language powerful without making it noisy,
+  - and a bounded meta-programming rule: if a future generic/meta lane exists at all, it should stay semantic, list-oriented, elaboration-bounded, and RTL-focused rather than becoming a broad macro/template system.
 - The first reusable standalone-DT slice is now shipped in the active toolchain:
   - top-level `?dt:name` roots are classified, parsed, and generated end to end,
   - the active `?dt:name` top-level contract currently supports `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`, compact top-level `(:= signal=value)` directives, and general DT blocks such as `(-foo ...)`,

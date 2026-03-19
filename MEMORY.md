@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: future syntax-power guidance is now saved
+- Saved future note:
+  - the current highest-leverage language-growth candidates are aggregate types with inference, interface bundles, enum-first case/match capture, small alias/default forms, bounded replication, intent helpers, assertions, and stronger explain/report mode.
+- Important continuity note:
+  - the saved rule is still “bounded semantic power, not a general macro system”,
+  - and the follow-up nuance is preserved too: a later list-oriented meta-programming lane can exist only if it stays semantic, elaboration-bounded, and 100% RTL/synthesis-focused.
+
 ## 2026-03-19: `.rtlif` width/type failures are now explicitly locked through the token-summary path
 - Saved shipped behavior:
   - failed composition summaries now have explicit regression coverage for blocked `.rtlif` port-sizing and port-typing failures through the same `RTL metadata file:` plus `Context: Token '...'` pairing used by the token-shape family.

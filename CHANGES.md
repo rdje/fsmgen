@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### future note logged: high-leverage syntax-power direction should stay bounded and RTL-focused
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the recent design discussion is now preserved as future language guidance instead of conversation-only memory.
+- The saved direction is:
+  - the highest-leverage future additions are aggregate types with inference, interface bundles, enum-first match/case capture, small alias/default forms, bounded replication, intent helpers, assertions, and stronger explain/report mode,
+  - the language should stay convention-first, terse, portable, and readable,
+  - and if a future generic/meta-programming lane exists at all, it should be a very small semantic RTL layer, not a broad macro/template system.
+
 ### `.rtlif` width/type failures now keep token context in failed-run summaries
 - Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the already-supported token-summary path is now explicitly locked for blocked `.rtlif` port-sizing and port-typing failures too, not just token-shape failures.
 - This shipped slice stays deliberately narrow:

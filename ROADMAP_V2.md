@@ -157,6 +157,18 @@ Deliverable themes:
 - record one future composition-syntax cleanup decision instead of leaving it as untracked taste:
   - decide whether `?toplink` should remain the canonical spelling,
   - or whether a clearer preferred alias such as `?wiring` should be added above it while keeping `?toplink` as compatibility spelling until a deliberate syntax cleanup pass says otherwise.
+- record one future bounded syntax-power direction instead of drifting either into verbosity or into a general macro language:
+  - highest-leverage candidates currently look like:
+    - interface bundles / protocol groups,
+    - enum-first `case` / `match` style control capture,
+    - small local aliasing/default blocks for repeated guards and output intent,
+    - bounded replication for repeated instances/lanes,
+    - first-class intent helpers for common RTL patterns such as edge/pulse/sticky/handshake/conflict checks,
+    - terse invariant/assertion forms,
+    - and stronger explain/report surfaces for inferred behavior,
+  - if a future generic/meta-programming lane is opened, it should stay list-oriented, semantic, elaboration-bounded, and 100% RTL/synthesis-focused,
+  - such a lane should lower into the same typed AST / diagnostics path as ordinary syntax instead of acting like a parallel text/template preprocessor,
+  - and it should explicitly avoid broad source-to-source macros, general-purpose metaprogramming, or anything that reopens the old legacy placeholder/template ambiguity.
 
 First shipped `R11` slice now in tree:
 - `?dt:name` is now an active standalone-module root in the live toolchain.
