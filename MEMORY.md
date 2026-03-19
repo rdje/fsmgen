@@ -3961,3 +3961,12 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - `Context: Top port 'start'`
   - `Blocked boundary: explicit-link topology`
   - `Reason: the current active C2 lane only supports top inputs driving child inputs`
+
+## 2026-03-19: explicit-link lane-entry summaries now explicitly avoid fabricated context
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks the missing-`?toplink` explicit-link lane-entry family so non-quiet failed runs keep:
+  - `Lane: C2`
+  - `Construct: ?toplink`
+  - `Blocked boundary: explicit-link lane entry`
+  - `Reason: the current active C2 lane requires explicit '?toplink' wiring`
+  - and no `Context:` line
+- Runtime behavior was already correct here; this slice makes the no-invented-context contract provable.

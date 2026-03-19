@@ -5190,3 +5190,15 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this required only a narrow extractor addition for the existing topology diagnostic shape,
   - planner behavior stays unchanged, and the summary now covers both main reachable explicit-link topology families with structured context rather than reason-only text.
+
+## 2026-03-19: explicit-link lane-entry summaries now have an explicit no-context contract
+- The blocked explicit-link lane-entry family `requires explicit '?toplink' wiring` already exposed a stable lane + construct + boundary + reason shape, but it still relied on implicit behavior that happened not to invent any context line.
+- The active contract is now explicit for that family too:
+  - `Lane: C2`
+  - `Construct: ?toplink`
+  - `Blocked boundary: explicit-link lane entry`
+  - `Reason: the current active C2 lane requires explicit '?toplink' wiring`
+  - and no fabricated `Context:` line
+- Design note from this slice:
+  - no runtime change was needed here; the existing summary extractor already behaved correctly,
+  - the value is in making that absence-of-context contract explicit so future refactors do not start inventing synthetic context for diagnostics that do not expose a stable subject.

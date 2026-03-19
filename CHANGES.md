@@ -4231,3 +4231,9 @@ This is the persistent technical change history for FSMGen.
 - This slice includes a small extractor improvement in `perl/FSM/Pipeline/HDLGenerator.pm`; planner behavior is unchanged.
 - Failed-run composition summaries now also keep top-port source context for the sibling blocked explicit-link topology family where a top input is wired directly to a top output.
 - This follow-on slice is another small extractor improvement in `perl/FSM/Pipeline/HDLGenerator.pm`; planner behavior is unchanged.
+- The missing-`?toplink` explicit-link lane-entry summary contract is now regression-locked too:
+  - `Lane: C2`
+  - `Construct: ?toplink`
+  - blocked boundary + concise reason preserved
+  - no fabricated `Context:` line
+- This slice is coverage/contract hardening only; runtime behavior is unchanged.

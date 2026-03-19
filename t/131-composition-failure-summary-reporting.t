@@ -162,6 +162,74 @@ FSM
     is($report->{blocked_boundary}, 'C1 passthrough exposure', 'failure report preserves the blocked boundary for lane-visible failures');
 };
 
+subtest 'pipeline derives explicit-link lane-entry summaries without inventing context' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'missing_toplink_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:missing_toplink_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'3)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (final_data> <= 8'5)
+  )
+  (+size
+    (final_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked explicit-link lane-entry failures');
+    is($report->{top_name}, 'missing_toplink_failure_summary_top', 'failure report preserves the top name for blocked explicit-link lane-entry failures');
+    is($report->{lane}, 'C2', 'failure report preserves the active C2 lane for blocked explicit-link lane-entry failures');
+    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked lane-entry failures');
+    ok(!defined($report->{context_label}), 'failure report does not invent context for blocked explicit-link lane-entry failures');
+    is($report->{blocked_boundary}, 'explicit-link lane entry', 'failure report preserves the blocked explicit-link lane-entry boundary');
+    is($report->{blocked_reason}, "the current active C2 lane requires explicit '?toplink' wiring", 'failure report preserves the concise explicit-link lane-entry reason');
+};
+
 subtest 'pipeline derives blocked composition failure summaries from rtl-module failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'missing_rtlif_failure_summary_top.fsm');
@@ -1977,6 +2045,74 @@ FSM
     like($combined_output, qr/Lane:\s+C2/s, 'CLI reports the C2 lane for blocked C2 lane-selection failures');
     like($combined_output, qr/Blocked boundary:\s+C2 lane selection/s, 'CLI reports the blocked C2 lane-selection boundary');
     like($combined_output, qr/Reason:\s+the current active C2 lane requires at least two generated child instances such as '\?fsmc' or '\?dtc'/s, 'CLI reports the concise C2 lane-selection reason');
+};
+
+subtest 'CLI prints explicit-link lane-entry summaries without inventing context' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'missing_toplink_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'missing_toplink_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:missing_toplink_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'3)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (final_data> <= 8'5)
+  )
+  (+size
+    (final_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked explicit-link lane-entry fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked explicit-link lane-entry fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked explicit-link lane-entry failures');
+    like($combined_output, qr/Lane:\s+C2/s, 'CLI reports the active C2 lane for blocked explicit-link lane-entry failures');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked lane-entry failures');
+    unlike($combined_output, qr/Context:/s, 'CLI does not invent a context line for blocked explicit-link lane-entry failures');
+    like($combined_output, qr/Blocked boundary:\s+explicit-link lane entry/s, 'CLI reports the blocked explicit-link lane-entry boundary');
+    like($combined_output, qr/Reason:\s+the current active C2 lane requires explicit '\?toplink' wiring/s, 'CLI reports the concise explicit-link lane-entry reason');
 };
 
 subtest 'CLI prints the C4 lane and =port context for blocked declared connect-by-name failures' => sub {
