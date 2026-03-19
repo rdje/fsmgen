@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### blocked `C4` declared connect-by-name failures now keep `Lane: C4` and `=port` context in CLI summaries
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for a reachable `C4` declared connect-by-name family at CLI level too.
+- This keeps the slice narrow and honest:
+  - behavior is unchanged,
+  - the extractor already knew how to surface `C4`, `=port`, and top-port context from blocked declared connect-by-name diagnostics,
+  - and the new coverage simply proves that non-quiet CLI failures preserve `Lane: C4`, `Construct: =port`, `Context: Top port 'missing_port'`, and the concise missing-endpoint reason.
+
 ### blocked `C2` lane-selection failures now keep `Lane: C2` in CLI summaries
 - Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for the reachable `C2` lane-selection family at CLI level too.
 - This keeps the slice narrow and honest:

@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: blocked `C4` declared connect-by-name summaries are now explicitly locked at CLI level
+- Saved shipped behavior:
+  - failed composition summaries now have explicit CLI regression coverage for a reachable blocked `C4` declared connect-by-name failure through the existing `Lane: C4`, `Construct: =port`, and `Top port` context lines.
+- Important continuity note:
+  - this slice did not widen extractor behavior,
+  - it hardens an already-shipped `C4` summary family at the CLI boundary,
+  - and it keeps the reachable declared connect-by-name path aligned with the previously locked `C1`, `C2`, and `C3` failed-run summary coverage.
+
 ## 2026-03-19: blocked `C2` lane-selection summaries are now explicitly locked at CLI level
 - Saved shipped behavior:
   - failed composition summaries now have explicit CLI regression coverage for blocked `C2` lane-selection failures through the existing `Lane: C2` line and concise blocked-lane reason.

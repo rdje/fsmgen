@@ -1233,6 +1233,78 @@ FSM
     like($combined_output, qr/Reason:\s+the current active C2 lane requires at least two generated child instances such as '\?fsmc' or '\?dtc'/s, 'CLI reports the concise C2 lane-selection reason');
 };
 
+subtest 'CLI prints the C4 lane and =port context for blocked declared connect-by-name failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'connect_by_name_unknown_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'connect_by_name_unknown_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:connect_by_name_unknown_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    =missing_port>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data/consumer.input_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (final_data> <= input_data)
+  )
+  (+size
+    (input_data 8)
+    (final_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked C4 declared connect-by-name fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked C4 declared connect-by-name fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked C4 declared connect-by-name failures');
+    like($combined_output, qr/Lane:\s+C4/s, 'CLI reports the C4 lane for blocked declared connect-by-name failures');
+    like($combined_output, qr/Construct:\s+=port/s, 'CLI reports the =port construct for blocked declared connect-by-name failures');
+    like($combined_output, qr/Context:\s+Top port 'missing_port'/s, 'CLI reports the blocked =port top port as summary context');
+    like($combined_output, qr/Blocked boundary:\s+declared connect-by-name/s, 'CLI reports the blocked declared connect-by-name boundary');
+    like($combined_output, qr/Reason:\s+no realized child endpoint with that name exists/s, 'CLI reports the concise missing-endpoint reason for blocked declared connect-by-name failures');
+};
+
 subtest 'CLI prints RTL metadata file artifacts for blocked metadata-structure failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'bad_rtlif_root_failure_summary_cli_top.fsm');

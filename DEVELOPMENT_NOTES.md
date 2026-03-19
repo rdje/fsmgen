@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: blocked `C4` declared connect-by-name summaries are now regression-locked at CLI level
+- Continued the active `R11` failed-run reporting lane by hardening another already-shipped summary family instead of widening composition behavior.
+- Landed behavior:
+  - the existing failed-run summary path now has explicit CLI regression coverage for a reachable blocked `C4` declared connect-by-name failure,
+  - so `=port` missing-endpoint failures keep `Lane: C4`, `Construct: =port`, `Context: Top port 'missing_port'`, the blocked `declared connect-by-name` boundary, and the concise missing-endpoint reason in non-quiet runs.
+- Why this is worth shipping:
+  - `C4` was a reachable lane/construct family not yet explicitly locked in the CLI summary contract,
+  - the extractor behavior already existed,
+  - and this keeps the failed-run summary surface balanced across the main active composition lanes without adding new planner or diagnostics behavior.
+
 ## 2026-03-19: blocked `C2` lane-selection summaries are now regression-locked at CLI level
 - Continued the active `R11` failed-run reporting lane by hardening another already-shipped summary family instead of widening composition behavior.
 - Landed behavior:
