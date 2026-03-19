@@ -4270,3 +4270,8 @@ This is the persistent technical change history for FSMGen.
   - blocked `?dtc` source-shape failures keep `Construct: ?dtc` plus `Context: Child 'child'`
   - both keep their existing blocked child-source boundary labels and concise parser reasons
 - This slice includes a small extractor improvement in `perl/FSM/Pipeline/HDLGenerator.pm`; parser behavior is unchanged.
+- Failed-run parser-boundary summaries now also keep construct context for malformed child item-list payloads when the raised diagnostic still names a real child header:
+  - blocked dotted-pair payloads like `?fsmc:child` keep `Construct: ?fsmc`
+  - they also keep `Context: Child '?fsmc:child'`
+  - and preserve the blocked `child item-list shape` boundary plus the existing concise dotted-pair-contract reason
+- This slice includes another small extractor improvement in `perl/FSM/Pipeline/HDLGenerator.pm`; parser behavior is unchanged.

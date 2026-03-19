@@ -5281,3 +5281,14 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this required only a narrow extractor addition for `contains '?fsmc' child '...'` / `contains '?dtc' child '...'`,
   - parser behavior stays unchanged, and the summary remains derived from the raised diagnostic instead of a parallel reporting path.
+
+## 2026-03-19: malformed child item-list parser summaries now keep construct context too
+- Continued the active `R11` failed-run reporting lane by tightening another parser-boundary family instead of widening composition behavior.
+- The blocked child item-list diagnostics already named the offending child header such as `?fsmc:child`, and the failed-run summary extractor was already surfacing that header as child context, but it was not yet preserving the corresponding child construct explicitly.
+- The active contract is now explicit for the reachable dotted-pair child-item family:
+  - blocked `?fsmc:child` dotted-pair payloads keep `Construct: ?fsmc`
+  - they also keep `Context: Child '?fsmc:child'`
+  - and they preserve the blocked `child item-list shape` boundary plus the concise dotted-pair-contract reason
+- Design note from this slice:
+  - this required only a narrow construct-extractor addition for `contains child '?fsmc:...'` and the same known-child-header family,
+  - parser behavior stays unchanged, and the summary remains derived from the raised diagnostic rather than a parallel reporting path.

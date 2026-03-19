@@ -2662,8 +2662,13 @@ sub composition_failure_construct_excerpt ($self, $summary_text) {
         [ qr/requests declared connect-by-name/s, '=port', '=port' ],
         [ qr/Composition references external RTL module|RTL interface metadata|contains embedded '\?rtlif:/s, '?rtl', '?rtl' ],
         [ qr/explicit link|explicit-link|nested '\?toplink' item|contains '\?toplink' token/s, '?toplink', '?toplink' ],
+        [ qr/contains child '\?toplink(?::[^']+)?'/s, '?toplink', '?toplink' ],
         [ qr/omits top port|declares top port|declares duplicate top port|marks top port|uses top port|nested '\?ports' item|contains '\?ports' token|contains '\?ports' mapping directive/s, '?ports', '?ports' ],
+        [ qr/contains child '\?ports(?::[^']+)?'/s, '?ports', '?ports' ],
+        [ qr/contains child '\?rtl:[^']+'/s, '?rtl', '?rtl' ],
+        [ qr/contains child '\?fsmc(?::[^']+)?'/s, '?fsmc', '?fsmc' ],
         [ qr/\?fsmc' child|active FSM child source/s, '?fsmc', '?fsmc' ],
+        [ qr/contains child '\?dtc(?::[^']+)?'/s, '?dtc', '?dtc' ],
         [ qr/\?dtc' child|standalone-DT child source/s, '?dtc', '?dtc' ],
     );
 

@@ -4028,3 +4028,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - `Construct: ?dtc` plus `Context: Child 'child'` for blocked source-shape failures
   - the blocked child-source boundary labels and the existing concise parser reasons for both families
 - Parser behavior is unchanged here; this slice improves only the failed-run summary surface for malformed generated-child declarations.
+
+## 2026-03-19: malformed child item-list parser summaries now keep construct context too
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now recognizes known child headers like `?fsmc:child` inside blocked `contains child '...'` parser diagnostics as construct-scoped failed-run summaries too.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks the matching failed-run summary shape so non-quiet runs keep:
+  - `Construct: ?fsmc`
+  - `Context: Child '?fsmc:child'`
+  - the blocked `child item-list shape` boundary and the existing concise dotted-pair-contract reason
+- Parser behavior is unchanged here; this slice improves only the failed-run summary surface for malformed child item-list payloads.
