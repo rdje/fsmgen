@@ -3952,3 +3952,12 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - `Context: Child endpoint 'producer.output_data'`
   - `Blocked boundary: explicit-link topology`
   - `Reason: the current active C2 lane supports at most one top-output target per resolved source`
+
+## 2026-03-19: explicit-link top-to-top summaries now keep top-port source context
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now recognizes the sibling blocked topology diagnostic shape `links top input '...' directly to top output '...'` as structured context.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks the reachable summary shape so non-quiet failed runs keep:
+  - `Lane: C2`
+  - `Construct: ?toplink`
+  - `Context: Top port 'start'`
+  - `Blocked boundary: explicit-link topology`
+  - `Reason: the current active C2 lane only supports top inputs driving child inputs`

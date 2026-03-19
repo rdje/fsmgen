@@ -2713,6 +2713,9 @@ sub composition_failure_context_excerpt ($self, $summary_text) {
         [ qr/under '(\?rtlif:[^']+)'/s, sub { return ('RTL root', "'$_[0]'"); } ],
         [ qr/references child endpoint '([^']+)'/s, sub { return ('Child endpoint', "'$_[0]'"); } ],
         [ qr/uses child endpoint '([^']+)'/s, sub { return ('Child endpoint', "'$_[0]'"); } ],
+        [ qr/links top input '([^']+)' directly to top output '([^']+)'/s, sub {
+            return ('Top port', "'$_[0]'");
+        } ],
         [ qr/drives multiple top outputs from '([^']+)'/s, sub {
             return $_[0] =~ /\./
                 ? ('Child endpoint', "'$_[0]'")

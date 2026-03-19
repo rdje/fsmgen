@@ -5178,3 +5178,15 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this required only a narrow extractor addition for the existing `drives multiple top outputs from '...'` diagnostic shape,
   - planner behavior stays unchanged, and the summary remains derived from the raised diagnostic rather than a separate reporting model.
+
+## 2026-03-19: explicit-link top-to-top topology summaries now preserve source context too
+- The sibling blocked explicit-link topology family `links top input '...' directly to top output '...'` also exposed a stable sentence, but the failed-run summary extractor was still leaving the top-input source only in the raw exception text.
+- The active contract is now explicit for that family as well:
+  - `Lane: C2`
+  - `Construct: ?toplink`
+  - `Context: Top port 'start'`
+  - `Blocked boundary: explicit-link topology`
+  - `Reason: the current active C2 lane only supports top inputs driving child inputs`
+- Design note from this slice:
+  - this required only a narrow extractor addition for the existing topology diagnostic shape,
+  - planner behavior stays unchanged, and the summary now covers both main reachable explicit-link topology families with structured context rather than reason-only text.
