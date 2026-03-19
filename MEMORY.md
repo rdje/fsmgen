@@ -3922,3 +3922,9 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - branchless computed selectors like `(?(| A B))`,
   - and pipeline/CLI no-output behavior for those malformed forms.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now states the malformed boundary explicitly next to the supported `?(expr)` form.
+
+## 2026-03-19: duplicate-driver failed summaries now keep child-target context too
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now explicitly locks both blocked explicit-link duplicate-driver target families:
+  - top-boundary targets keep `Context: Top port '...'`
+  - child-input targets keep `Context: Child endpoint 'instance.port'`
+- Runtime behavior was already extractor-based from the raised diagnostic; this slice makes the child-target side provable and keeps the concise reason focused on the earlier explicit link that already reserved the target.

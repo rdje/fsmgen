@@ -4211,3 +4211,11 @@ This is the persistent technical change history for FSMGen.
 - Refactored monolithic FSM adapter flow into modular parser components (`SignalManager`, `ExpressionBuilder`, `Parser`, `SignalAnalyzer`).
 - Standardized fatal error reporting with `Carp::confess`.
 - Established baseline regression infrastructure (`t/01-regression.t`) and project self-containment.
+
+## 2026-03-19
+- Failed-run composition summaries now keep duplicate-driver target context for both explicit-link target families:
+  - top-boundary duplicate drivers keep `Context: Top port '...'`
+  - child-input duplicate drivers keep `Context: Child endpoint 'instance.port'`
+- This is a reporting-contract hardening slice only:
+  - planning behavior is unchanged,
+  - the concise reason still names the earlier explicit link that already reserved the target.

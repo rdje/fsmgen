@@ -1235,6 +1235,95 @@ FSM
     is($report->{blocked_reason}, "that target is already driven by explicit link 'producer_a.output_data'", 'failure report preserves the concise duplicate-driver reason');
 };
 
+subtest 'pipeline derives child-endpoint context from blocked explicit-link duplicate-driver failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'duplicate_driver_failure_summary_child.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:duplicate_driver_failure_summary_child
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer_a producer_a_src)
+  (?fsmc:producer_b producer_b_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer_a.output_data/consumer.input_data/
+    /producer_b.output_data/consumer.input_data/
+    /consumer.final_data/result_data/
+  )
+)
+
+(?fsm:producer_a_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:producer_b_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'2)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (final_data> <= input_data)
+  )
+  (+size
+    (input_data 8)
+    (final_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked explicit-link duplicate-driver child-target failures');
+    is($report->{top_name}, 'duplicate_driver_failure_summary_child', 'failure report preserves the top name for blocked explicit-link duplicate-driver child-target failures');
+    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked duplicate-driver child-target failures');
+    is($report->{context_label}, 'Child endpoint', 'failure report classifies duplicate-driver child-target conflicts as child-endpoint context');
+    is($report->{context_value}, "'consumer.input_data'", 'failure report preserves the conflicted child-endpoint target for duplicate-driver failures');
+    is($report->{context_summary}, "Child endpoint 'consumer.input_data'", 'failure report exposes a concise duplicate-driver child-target summary');
+    is($report->{blocked_boundary}, 'explicit link', 'failure report preserves the blocked explicit-link boundary for duplicate-driver child-target failures');
+    is($report->{blocked_reason}, "that target is already driven by explicit link 'producer_a.output_data'", 'failure report preserves the concise duplicate-driver child-target reason');
+};
+
 subtest 'pipeline derives explicit-endpoint context from blocked endpoint-syntax failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'unsupported_endpoint_failure_summary_top.fsm');
@@ -2966,6 +3055,93 @@ FSM
     like($combined_output, qr/Context:\s+Top port 'result_data'/s, 'CLI reports the conflicted top-port target as summary context for duplicate-driver failures');
     like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for duplicate-driver failures');
     like($combined_output, qr/Reason:\s+that target is already driven by explicit link 'producer_a\.output_data'/s, 'CLI reports the concise duplicate-driver reason');
+};
+
+subtest 'CLI prints child-endpoint context for blocked explicit-link duplicate-driver summaries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'duplicate_driver_failure_summary_cli_child.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'duplicate_driver_failure_summary_cli_child.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:duplicate_driver_failure_summary_cli_child
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer_a producer_a_src)
+  (?fsmc:producer_b producer_b_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer_a.output_data/consumer.input_data/
+    /producer_b.output_data/consumer.input_data/
+    /consumer.final_data/result_data/
+  )
+)
+
+(?fsm:producer_a_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:producer_b_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'2)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (final_data> <= input_data)
+  )
+  (+size
+    (input_data 8)
+    (final_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked explicit-link duplicate-driver child-target fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked explicit-link duplicate-driver child-target fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link duplicate-driver child-target failures');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked duplicate-driver child-target failures');
+    like($combined_output, qr/Context:\s+Child endpoint 'consumer\.input_data'/s, 'CLI reports the conflicted child-endpoint target as summary context for duplicate-driver failures');
+    like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for duplicate-driver child-target failures');
+    like($combined_output, qr/Reason:\s+that target is already driven by explicit link 'producer_a\.output_data'/s, 'CLI reports the concise duplicate-driver child-target reason');
 };
 
 subtest 'CLI prints missing top-endpoint context in blocked explicit-link summaries' => sub {

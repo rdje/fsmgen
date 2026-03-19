@@ -5139,3 +5139,12 @@ It is an exact-delay pulse request:
 - Examples that are now rejected explicitly:
   - `(? (=0 ...))`
   - `(?(| A B))`
+
+## 2026-03-19: duplicate-driver failure summaries now preserve both target families
+- The failed-run composition-summary extractor already recognized blocked explicit-link duplicate-driver diagnostics as target context, but only the top-port target family was regression-locked.
+- The active contract is now explicit for both reachable target kinds:
+  - top-boundary duplicate targets keep `Context: Top port '...'`
+  - child-input duplicate targets keep `Context: Child endpoint 'instance.port'`
+- Design note from this slice:
+  - this is the right bounded refinement because it improves failed-run usability without inventing any parallel reporting logic,
+  - the summary is still derived from the raised diagnostic itself, and the concise reason remains the earlier explicit link that already reserved that target.
