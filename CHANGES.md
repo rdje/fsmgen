@@ -4275,3 +4275,8 @@ This is the persistent technical change history for FSMGen.
   - they also keep `Context: Child '?fsmc:child'`
   - and preserve the blocked `child item-list shape` boundary plus the existing concise dotted-pair-contract reason
 - This slice includes another small extractor improvement in `perl/FSM/Pipeline/HDLGenerator.pm`; parser behavior is unchanged.
+- That same child-item parser-summary contract is now locked for the `?toplink` sibling too:
+  - blocked dotted-pair payloads like `?toplink:wiring` keep `Construct: ?toplink`
+  - they also keep `Context: Child '?toplink:wiring'`
+  - and preserve the same blocked `child item-list shape` boundary plus the concise dotted-pair-contract reason
+- This follow-on slice is regression/contract hardening only; runtime behavior was already covered by the existing summary extractor.

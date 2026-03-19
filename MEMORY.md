@@ -4036,3 +4036,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - `Context: Child '?fsmc:child'`
   - the blocked `child item-list shape` boundary and the existing concise dotted-pair-contract reason
 - Parser behavior is unchanged here; this slice improves only the failed-run summary surface for malformed child item-list payloads.
+
+## 2026-03-19: the dotted-pair child-item summary contract now covers ?toplink too
+- [t/128-composition-child-structure-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/128-composition-child-structure-diagnostics.t) now also locks the direct blocked dotted-pair `?toplink:wiring` diagnostic beside the earlier `?fsmc:child` case.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks the matching failed-run summary shape so non-quiet runs keep:
+  - `Construct: ?toplink`
+  - `Context: Child '?toplink:wiring'`
+  - the blocked `child item-list shape` boundary and the existing concise dotted-pair-contract reason
+- Runtime behavior was already correct here; this slice makes the `?toplink` child-item summary contract explicit too.

@@ -5292,3 +5292,14 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this required only a narrow construct-extractor addition for `contains child '?fsmc:...'` and the same known-child-header family,
   - parser behavior stays unchanged, and the summary remains derived from the raised diagnostic rather than a parallel reporting path.
+
+## 2026-03-19: the dotted-pair child-item summary contract now covers ?toplink too
+- Continued the active `R11` failed-run reporting lane by hardening the sibling child-item family instead of widening composition behavior.
+- The summary extractor already recognized known child headers across constructs, but the dotted-pair child-item contract had only been explicitly locked on the `?fsmc` side.
+- The active contract is now explicit for the `?toplink` sibling too:
+  - blocked `?toplink:wiring` dotted-pair payloads keep `Construct: ?toplink`
+  - they also keep `Context: Child '?toplink:wiring'`
+  - and they preserve the blocked `child item-list shape` boundary plus the concise dotted-pair-contract reason
+- Design note from this slice:
+  - no runtime change was needed here; the existing summary extractor already behaved correctly,
+  - the value is in making the child-item summary contract explicit and symmetric on the `?toplink` side too.
