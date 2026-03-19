@@ -5314,3 +5314,14 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - no runtime change was needed here; the existing summary extractor already behaved correctly,
   - the value is in making the child-item summary contract explicit and symmetric on the `?ports` side too.
+
+## 2026-03-19: the dotted-pair child-item summary contract now covers ?dtc too
+- Continued the active `R11` failed-run reporting lane by hardening the generated-child sibling item-list family instead of widening composition behavior.
+- The summary extractor already recognized known child headers across constructs, but the dotted-pair child-item contract had still not been explicitly locked on the `?dtc` side.
+- The active contract is now explicit for the `?dtc` sibling too:
+  - blocked `?dtc:child` dotted-pair payloads keep `Construct: ?dtc`
+  - they also keep `Context: Child '?dtc:child'`
+  - and they preserve the blocked `child item-list shape` boundary plus the concise dotted-pair-contract reason
+- Design note from this slice:
+  - no runtime change was needed here; the existing summary extractor already behaved correctly,
+  - the value is in making the child-item summary contract explicit and symmetric on the `?dtc` side too.
