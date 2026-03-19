@@ -15,6 +15,7 @@ my $tempdir = tempdir(CLEANUP => 1);
 my $composition_path = File::Spec->catfile($tempdir, 'duplicate_driver_top.fsm');
 my $width_mismatch_path = File::Spec->catfile($tempdir, 'explicit_width_mismatch_top.fsm');
 my $unknown_rtl_port_path = File::Spec->catfile($tempdir, 'unknown_rtl_port_top.fsm');
+my $unknown_top_port_path = File::Spec->catfile($tempdir, 'unknown_top_port_top.fsm');
 my $rtl_direction_mismatch_path = File::Spec->catfile($tempdir, 'rtl_direction_mismatch_top.fsm');
 my $rtl_metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
 
@@ -142,6 +143,47 @@ FSM
 );
 
 write_file(
+    $unknown_top_port_path,
+    <<'FSM'
+(?top:unknown_top_port_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /missing_top/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (ack> <= 1'0)
+  )
+)
+FSM
+);
+
+write_file(
     $rtl_direction_mismatch_path,
     <<'FSM'
 (?top:rtl_direction_mismatch_top
@@ -244,6 +286,23 @@ like(
     $unknown_rtl_port_exception,
     qr/docs\/COMPOSITION_SCOPE\.md/s,
     'unknown external RTL port diagnostics point to the scoped composition doc',
+);
+
+my $unknown_top_port_exception = eval {
+    $pipeline->generate_hdl_from_file($unknown_top_port_path);
+    undef;
+};
+$unknown_top_port_exception = $@;
+
+like(
+    $unknown_top_port_exception,
+    qr/references top-level endpoint 'missing_top', .*explicit link endpoint resolution is blocked because '\?ports' declares no top port with that name/s,
+    'unknown top-level endpoints now say explicit link endpoint resolution is blocked',
+);
+like(
+    $unknown_top_port_exception,
+    qr/docs\/COMPOSITION_SCOPE\.md/s,
+    'unknown top-level endpoint diagnostics point to the scoped composition doc',
 );
 
 my $rtl_direction_mismatch_exception = eval {

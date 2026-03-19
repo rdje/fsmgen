@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### blocked missing top-level explicit-link endpoint failures now keep top-endpoint context in CLI summaries
+- Updated [t/23-composition-errors.t](/Users/richarddje/Documents/github/fsmgen/t/23-composition-errors.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for the reachable missing top-level explicit-link endpoint family too.
+- This keeps the slice narrow and honest:
+  - behavior is unchanged,
+  - the extractor already knew how to classify `references top-level endpoint '...'` as `Top endpoint` context,
+  - and the new coverage simply proves that non-quiet CLI failures preserve `Construct: ?toplink`, `Context: Top endpoint 'missing_top'`, the blocked `explicit link endpoint resolution` boundary, and the concise `'?ports' declares no top port with that name` reason.
+
 ### blocked unsupported explicit-endpoint syntax now stays visible in CLI failure summaries
 - Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for the reachable unsupported explicit-endpoint syntax family too.
 - This keeps the slice narrow and honest:

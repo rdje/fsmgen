@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: blocked missing top-level explicit-link endpoint summaries are now explicitly locked at CLI level
+- Saved shipped behavior:
+  - failed composition summaries now have explicit CLI regression coverage for blocked missing top-level explicit-link endpoint failures, including `Top endpoint` context and the concise `'?ports' declares no top port with that name` reason.
+- Important continuity note:
+  - this slice did not widen extractor behavior,
+  - it hardens another already-shipped explicit-link summary family at the CLI boundary,
+  - and it keeps missing top-level endpoint failures aligned with the previously locked missing child-endpoint and unsupported explicit-endpoint summary families.
+
 ## 2026-03-19: blocked unsupported explicit-endpoint syntax is now explicitly locked at CLI level
 - Saved shipped behavior:
   - failed composition summaries now have explicit CLI regression coverage for blocked unsupported explicit-endpoint syntax, including the offending endpoint token and concise unsupported-syntax reason.

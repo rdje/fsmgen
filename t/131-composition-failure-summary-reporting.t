@@ -1015,6 +1015,75 @@ FSM
     is($report->{blocked_reason}, 'that syntax is unsupported', 'failure report preserves the concise unsupported-endpoint reason');
 };
 
+subtest 'pipeline derives top-endpoint context from blocked missing top-endpoint failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'missing_top_endpoint_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:missing_top_endpoint_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /missing_top/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (ack> <= 1'0)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked missing-top-endpoint failures');
+    is($report->{top_name}, 'missing_top_endpoint_failure_summary_top', 'failure report preserves the top name for blocked missing-top-endpoint failures');
+    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked missing-top-endpoint failures');
+    is($report->{context_label}, 'Top endpoint', 'failure report classifies missing top endpoints as endpoint context');
+    is($report->{context_value}, "'missing_top'", 'failure report preserves the missing top endpoint');
+    is($report->{context_summary}, "Top endpoint 'missing_top'", 'failure report exposes a concise missing top-endpoint summary');
+    is($report->{blocked_boundary}, 'explicit link endpoint resolution', 'failure report preserves the blocked endpoint-resolution boundary for missing top endpoints');
+    is($report->{blocked_reason}, "'?ports' declares no top port with that name", 'failure report preserves the concise missing top-endpoint reason');
+};
+
 subtest 'CLI prints top-port context for blocked C1 top-port failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'c1_width_mismatch_failure_summary_cli_top.fsm');
@@ -2327,6 +2396,73 @@ FSM
     like($combined_output, qr/Context:\s+Endpoint 'producer\.output_data\.extra'/s, 'CLI reports the unsupported explicit endpoint as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for unsupported endpoint syntax');
     like($combined_output, qr/Reason:\s+that syntax is unsupported/s, 'CLI reports the concise unsupported-endpoint reason');
+};
+
+subtest 'CLI prints missing top-endpoint context in blocked explicit-link summaries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'missing_top_endpoint_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'missing_top_endpoint_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:missing_top_endpoint_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /missing_top/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (ack> <= 1'0)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked missing-top-endpoint composition fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked missing-top-endpoint fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for missing top endpoints');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked missing-top-endpoint failures');
+    like($combined_output, qr/Context:\s+Top endpoint 'missing_top'/s, 'CLI reports the missing top endpoint as summary context');
+    like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for missing top endpoints');
+    like($combined_output, qr/Reason:\s+'\?ports' declares no top port with that name/s, 'CLI reports the concise missing top-endpoint reason');
 };
 
 subtest 'CLI prints composition failure summary for non-quiet blocked composition runs' => sub {
