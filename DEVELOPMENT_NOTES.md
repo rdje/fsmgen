@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: blocked incompatible-direction `C4` declared connect-by-name summaries now keep endpoint sets at CLI level
+- Continued the active `R11` failed-run reporting lane by hardening one more already-shipped `C4` summary family instead of widening composition behavior.
+- Landed behavior:
+  - the existing failed-run summary path now has explicit CLI regression coverage for a reachable blocked incompatible-direction `C4` declared connect-by-name failure,
+  - so same-name direction conflicts keep the conflicting child endpoint set in the concise `Reason:` line while still preserving `Lane: C4`, `Construct: =port`, and top-port context.
+- Why this is worth shipping:
+  - incompatible direction is another main user-facing declared connect-by-name failure mode,
+  - the summary behavior already existed,
+  - and this proves that the short summary still carries the endpoint evidence needed to fix the mismatch without forcing users back into the raw exception text.
+
 ## 2026-03-19: blocked width-mismatch `C4` declared connect-by-name summaries now keep endpoint sets at CLI level
 - Continued the active `R11` failed-run reporting lane by hardening one more already-shipped `C4` summary family instead of widening composition behavior.
 - Landed behavior:

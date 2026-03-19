@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: blocked incompatible-direction `C4` declared connect-by-name summaries now keep endpoint sets at CLI level
+- Saved shipped behavior:
+  - failed composition summaries now have explicit CLI regression coverage for a reachable blocked incompatible-direction `C4` declared connect-by-name failure, including the conflicting same-name endpoint set in the concise `Reason:` line.
+- Important continuity note:
+  - this slice did not widen extractor behavior,
+  - it hardens another already-shipped `C4` summary family at the CLI boundary,
+  - and it keeps incompatible-direction, width-mismatch, ambiguity, missing-endpoint, and the previously locked `C1` / `C2` / `C3` summary families aligned under the same reporting contract.
+
 ## 2026-03-19: blocked width-mismatch `C4` declared connect-by-name summaries now keep endpoint sets at CLI level
 - Saved shipped behavior:
   - failed composition summaries now have explicit CLI regression coverage for a reachable blocked width-mismatch `C4` declared connect-by-name failure, including the conflicting same-name endpoint set in the concise `Reason:` line.

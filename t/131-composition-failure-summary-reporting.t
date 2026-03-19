@@ -1445,6 +1445,67 @@ FSM
     like($combined_output, qr/Reason:\s+same-name child endpoints do not all match the declared width 4\. Seen same-name child endpoints: consumer\.final_data\[output, width=8\]/s, 'CLI preserves the conflicting same-name endpoint set in the concise width-mismatch reason');
 };
 
+subtest 'CLI keeps incompatible-direction C4 endpoint sets in blocked declared connect-by-name summaries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'connect_by_name_direction_mismatch_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'connect_by_name_direction_mismatch_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:connect_by_name_direction_mismatch_failure_summary_cli_top
+  (?ports:public_io
+    =foo<8
+    =bar>8
+  )
+  (?dtc:producer producer_src)
+  (?dtc:consumer consumer_src)
+)
+
+(?dt:producer_src
+  (-route
+    (foo> = bar)
+  )
+  (+size
+    (foo 8)
+    (bar 8)
+  )
+)
+
+(?dt:consumer_src
+  (-route
+    (bar> = foo)
+  )
+  (+size
+    (foo 8)
+    (bar 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked incompatible-direction C4 declared connect-by-name fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked incompatible-direction C4 declared connect-by-name fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked incompatible-direction C4 declared connect-by-name failures');
+    like($combined_output, qr/Lane:\s+C4/s, 'CLI reports the C4 lane for blocked incompatible-direction declared connect-by-name failures');
+    like($combined_output, qr/Construct:\s+=port/s, 'CLI reports the =port construct for blocked incompatible-direction declared connect-by-name failures');
+    like($combined_output, qr/Context:\s+Top port 'foo'/s, 'CLI reports the blocked incompatible-direction =port top port as summary context');
+    like($combined_output, qr/Blocked boundary:\s+declared connect-by-name/s, 'CLI reports the blocked declared connect-by-name boundary for incompatible-direction matches');
+    like($combined_output, qr/Reason:\s+same-name child endpoints include incompatible directions for a top input port\. Seen same-name child endpoints: producer\.foo\[output, width=8\], consumer\.foo\[input, width=8\]/s, 'CLI preserves the conflicting same-name endpoint set in the concise incompatible-direction reason');
+};
+
 subtest 'CLI prints RTL metadata file artifacts for blocked metadata-structure failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'bad_rtlif_root_failure_summary_cli_top.fsm');

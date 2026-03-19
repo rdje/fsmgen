@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### blocked incompatible-direction `C4` declared connect-by-name failures now keep endpoint sets in CLI summaries
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for a reachable incompatible-direction `C4` declared connect-by-name family at CLI level too.
+- This keeps the slice narrow and honest:
+  - behavior is unchanged,
+  - the extractor already knew how to keep the blocked `=port` top-port context and conflicting same-name endpoint set,
+  - and the new coverage simply proves that non-quiet CLI failures preserve the endpoint evidence in the concise `Reason:` line for same-name direction conflicts too.
+
 ### blocked width-mismatch `C4` declared connect-by-name failures now keep endpoint sets in CLI summaries
 - Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for a reachable width-mismatch `C4` declared connect-by-name family at CLI level too.
 - This keeps the slice narrow and honest:
