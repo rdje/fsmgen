@@ -17,6 +17,7 @@ my $width_mismatch_path = File::Spec->catfile($tempdir, 'explicit_width_mismatch
 my $unknown_rtl_port_path = File::Spec->catfile($tempdir, 'unknown_rtl_port_top.fsm');
 my $unknown_top_port_path = File::Spec->catfile($tempdir, 'unknown_top_port_top.fsm');
 my $rtl_direction_mismatch_path = File::Spec->catfile($tempdir, 'rtl_direction_mismatch_top.fsm');
+my $top_port_direction_mismatch_path = File::Spec->catfile($tempdir, 'top_port_direction_mismatch_top.fsm');
 my $rtl_metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
 
 write_file(
@@ -215,6 +216,37 @@ FSM
 );
 
 write_file(
+    $top_port_direction_mismatch_path,
+    <<'FSM'
+(?top:top_port_direction_mismatch_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /result_data/uart_tx.data_in/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+);
+
+write_file(
     $rtl_metadata_path,
     <<'RTLIF'
 (?rtlif:uart_tx
@@ -320,6 +352,23 @@ like(
     $rtl_direction_mismatch_exception,
     qr/docs\/COMPOSITION_LEGACY_MAPPING\.md/s,
     'direction-mismatch diagnostics still point to the legacy mapping note',
+);
+
+my $top_port_direction_mismatch_exception = eval {
+    $pipeline->generate_hdl_from_file($top_port_direction_mismatch_path);
+    undef;
+};
+$top_port_direction_mismatch_exception = $@;
+
+like(
+    $top_port_direction_mismatch_exception,
+    qr/uses top port 'result_data' as an explicit link source, .*explicit link is blocked because that top port is declared as output instead of input/s,
+    'direction-mismatched top-port sources now say the explicit link is blocked',
+);
+like(
+    $top_port_direction_mismatch_exception,
+    qr/docs\/COMPOSITION_SCOPE\.md/s,
+    'top-port direction-mismatch diagnostics point to the scoped composition doc',
 );
 
 done_testing();

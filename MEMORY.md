@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: blocked explicit-link top-port role mismatches are now explicitly locked at CLI level
+- Saved shipped behavior:
+  - failed composition summaries now have explicit CLI regression coverage for blocked explicit-link top-port role mismatches, including `Top port 'result_data'` context and the concise top-port role reason.
+- Important continuity note:
+  - this slice did not widen extractor behavior,
+  - it hardens another already-shipped explicit-link summary family at the CLI boundary,
+  - and it keeps top-port role mismatches aligned with the previously locked child-endpoint direction mismatch, missing-child-endpoint, missing-top-endpoint, existing-instance missing-port, and unsupported explicit-endpoint families.
+
 ## 2026-03-19: blocked explicit-link direction mismatches now keep child-endpoint context in CLI summaries
 - Saved shipped behavior:
   - failed composition summaries now recognize blocked `uses child endpoint '...'` diagnostics as `Child endpoint` context, so explicit-link direction mismatches keep `uart_tx.txd` visible in the summary.

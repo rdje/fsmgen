@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### blocked explicit-link top-port role mismatches now keep top-port context in CLI summaries
+- Updated [t/23-composition-errors.t](/Users/richarddje/Documents/github/fsmgen/t/23-composition-errors.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for the reachable explicit-link family where a declared top port is used with the wrong role.
+- This keeps the slice narrow and honest:
+  - behavior is unchanged,
+  - the extractor already knew how to classify `uses top port '...'` diagnostics as `Top port` context,
+  - and the new coverage simply proves that non-quiet CLI failures preserve `Construct: ?toplink`, `Context: Top port 'result_data'`, the blocked `explicit link` boundary, and the concise `that top port is declared as output instead of input` reason.
+
 ### blocked explicit-link direction mismatches now keep child-endpoint context in CLI summaries
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so failed composition summaries now recognize `uses child endpoint '...'` diagnostics as `Child endpoint` context instead of leaving that token only in the raw exception text.
 - This keeps the slice narrow and honest:

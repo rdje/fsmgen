@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: blocked explicit-link top-port role mismatches are now regression-locked at CLI level
+- Continued the active `R11` failed-run reporting lane by hardening another already-shipped explicit-link summary family instead of widening composition behavior.
+- Landed behavior:
+  - the existing failed-run summary path now has explicit CLI regression coverage for reachable explicit-link failures where a declared top port is used with the wrong role,
+  - so these runs keep `Construct: ?toplink`, `Context: Top port 'result_data'`, the blocked `explicit link` boundary, and the concise `that top port is declared as output instead of input` reason.
+- Why this is worth shipping:
+  - this is a real user-facing explicit-link failure path,
+  - the summary behavior already existed,
+  - and the new coverage proves that the CLI keeps the offending top-port name visible instead of forcing users back into the raw exception text.
+
 ## 2026-03-19: blocked explicit-link direction mismatches now keep child-endpoint context in CLI summaries
 - Continued the active `R11` failed-run reporting lane with a small shipped extractor improvement instead of another pure regression lock.
 - Landed behavior:
