@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### file-based `.rtlif` root failures now keep RTL root context in failed-run summaries
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so failed composition summaries now keep `Context: RTL root '?rtlif:...'` for file-based root-scoped `.rtlif` failures when the blocked diagnostic already names the active root token, including missing-root and empty-port cases.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the summary still keeps the resolved `.rtlif` path as the primary `RTL metadata file:` artifact line,
+  - and the new root-context extraction only appears when the raised diagnostic already exposes a stable `?rtlif:<module>` token.
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both the pipeline-side failure-report extraction and the non-quiet CLI summary for blocked file-based root-scoped `.rtlif` failures, including the existing missing-root path plus the empty-port path.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failed-run reporting refinement under `R11`.
+
 ### embedded `.rtlif` duplicate-root failures now keep RTL root context in failed-run summaries
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so failed composition summaries now keep `Context: RTL root '?rtlif:...'` when a blocked embedded `.rtlif` duplicate-root diagnostic already names the repeated embedded root token.
 - This shipped slice stays deliberately narrow:

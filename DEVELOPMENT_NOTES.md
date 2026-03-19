@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: file-based `.rtlif` root failures now keep RTL root context in failed-run summaries
+- Continued the active `R11` diagnostics/reporting lane by broadening one already-shipped `RTL root` context family into the file-based `.rtlif` path where the same token is already present in the blocked diagnostic.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now extracts `?rtlif:<module>` as `RTL root` context for file-based root-scoped `.rtlif` failures such as missing-root and empty-port cases,
+  - while still preserving the resolved metadata file as the primary `RTL metadata file:` artifact line.
+- Why this is worth shipping:
+  - file-based root-contract failures already had clear blocked boundaries and metadata-file artifacts, but the root token itself was still buried in the longer reason text,
+  - this keeps the summary model consistent across embedded and file-based `.rtlif` root failures,
+  - and it stays bounded because it only reuses structure that the raised diagnostics already expose.
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both pipeline-side extraction and non-quiet CLI summary output for missing-root and empty-port root-scoped `.rtlif` failures.
+
 ## 2026-03-19: embedded `.rtlif` duplicate-root failures now keep RTL root context in failed-run summaries
 - Continued the active `R11` diagnostics/reporting lane by surfacing one more stable failed-run subject that was already present in the raw diagnostic.
 - Landed behavior:

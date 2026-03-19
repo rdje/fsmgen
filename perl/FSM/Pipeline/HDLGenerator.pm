@@ -2699,6 +2699,8 @@ sub composition_failure_context_excerpt ($self, $summary_text) {
         [ qr/declares '\?(?:fsmc|dtc|rtl)' child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/resolves '\?(?:fsmc|dtc)' child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/contains multiple embedded '(\?rtlif:[^']+)' roots/s, sub { return ('RTL root', "'$_[0]'"); } ],
+        [ qr/does not contain a '(\?rtlif:[^']+)' root/s, sub { return ('RTL root', "'$_[0]'"); } ],
+        [ qr/under '(\?rtlif:[^']+)'/s, sub { return ('RTL root', "'$_[0]'"); } ],
         [ qr/references child endpoint '([^']+)'/s, sub { return ('Child endpoint', "'$_[0]'"); } ],
         [ qr/references top-level endpoint '([^']+)'/s, sub { return ('Top endpoint', "'$_[0]'"); } ],
         [ qr/uses explicit endpoint '([^']+)'/s, sub { return ('Endpoint', "'$_[0]'"); } ],
