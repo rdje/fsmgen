@@ -2662,7 +2662,7 @@ sub composition_failure_construct_excerpt ($self, $summary_text) {
         [ qr/requests declared connect-by-name/s, '=port', '=port' ],
         [ qr/Composition references external RTL module|RTL interface metadata|contains embedded '\?rtlif:/s, '?rtl', '?rtl' ],
         [ qr/explicit link|explicit-link|nested '\?toplink' item|contains '\?toplink' token/s, '?toplink', '?toplink' ],
-        [ qr/omits top port|declares top port|marks top port|uses top port|nested '\?ports' item|contains '\?ports' token|contains '\?ports' mapping directive/s, '?ports', '?ports' ],
+        [ qr/omits top port|declares top port|declares duplicate top port|marks top port|uses top port|nested '\?ports' item|contains '\?ports' token|contains '\?ports' mapping directive/s, '?ports', '?ports' ],
         [ qr/\?fsmc' child|active FSM child source/s, '?fsmc', '?fsmc' ],
         [ qr/\?dtc' child|standalone-DT child source/s, '?dtc', '?dtc' ],
     );
@@ -2706,6 +2706,7 @@ sub composition_failure_context_excerpt ($self, $summary_text) {
 
     my @patterns = (
         [ qr/contains child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
+        [ qr/declares duplicate child instance name '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/declares '\?(?:fsmc|dtc|rtl)' child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/resolves '\?(?:fsmc|dtc)' child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/contains multiple embedded '(\?rtlif:[^']+)' roots/s, sub { return ('RTL root', "'$_[0]'"); } ],
@@ -2733,6 +2734,7 @@ sub composition_failure_context_excerpt ($self, $summary_text) {
         } ],
         [ qr/references top-level endpoint '([^']+)'/s, sub { return ('Top endpoint', "'$_[0]'"); } ],
         [ qr/uses explicit endpoint '([^']+)'/s, sub { return ('Endpoint', "'$_[0]'"); } ],
+        [ qr/declares duplicate top port '([^']+)'/s, sub { return ('Top port', "'$_[0]'"); } ],
         [ qr/omits top port '([^']+)'/s, sub { return ('Top port', "'$_[0]'"); } ],
         [ qr/declares top port '([^']+)'/s, sub { return ('Top port', "'$_[0]'"); } ],
         [ qr/marks top port '([^']+)'/s, sub { return ('Top port', "'$_[0]'"); } ],

@@ -3970,3 +3970,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - `Reason: the current active C2 lane requires explicit '?toplink' wiring`
   - and no `Context:` line
 - Runtime behavior was already correct here; this slice makes the no-invented-context contract provable.
+
+## 2026-03-19: duplicate-declaration summaries now keep duplicate-name context
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now recognizes duplicate top-port and duplicate child-instance declaration diagnostics as structured failed-run summary context.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks the reachable summary shapes so non-quiet failed runs keep:
+  - `Construct: ?ports` plus `Context: Top port 'output_data'` for duplicate top-port declarations
+  - `Context: Child 'dup'` for duplicate child-instance declarations
+  - `Blocked boundary: shape` plus the existing uniqueness reason for both families
+- This is a small extractor/classification improvement only; planner behavior is unchanged.

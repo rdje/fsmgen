@@ -5202,3 +5202,14 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - no runtime change was needed here; the existing summary extractor already behaved correctly,
   - the value is in making that absence-of-context contract explicit so future refactors do not start inventing synthetic context for diagnostics that do not expose a stable subject.
+
+## 2026-03-19: duplicate-declaration summaries now keep duplicate-name context
+- Continued the active `R11` failed-run reporting lane with another narrow extractor improvement instead of widening composition behavior.
+- The blocked duplicate-declaration families already exposed stable duplicate names in the raised diagnostics, but the failed-run summary extractor was still leaving those names only in the raw exception text.
+- The active contract is now explicit for both reachable families:
+  - duplicate top-port declarations keep `Construct: ?ports` plus `Context: Top port 'output_data'`
+  - duplicate child-instance declarations keep `Context: Child 'dup'`
+  - both keep the blocked `shape` boundary and the existing uniqueness reason
+- Design note from this slice:
+  - this required only narrow extractor/construct classification work in `FSM::Pipeline::HDLGenerator`,
+  - planner behavior stays unchanged, and the summary remains derived from the raised diagnostic rather than a parallel reporting path.

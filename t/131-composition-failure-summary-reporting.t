@@ -54,6 +54,142 @@ FSM
     );
 };
 
+subtest 'pipeline derives top-port context from blocked duplicate top-port declarations' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'duplicate_top_port_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:duplicate_top_port_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+    output_data>8
+    output_data>8
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked duplicate top-port declarations');
+    is($report->{top_name}, 'duplicate_top_port_failure_summary_top', 'failure report preserves the top name for blocked duplicate top-port declarations');
+    is($report->{construct}, '?ports', 'failure report preserves the top-interface construct for blocked duplicate top-port declarations');
+    is($report->{context_label}, 'Top port', 'failure report classifies duplicate top-port declarations as top-port context');
+    is($report->{context_value}, "'output_data'", 'failure report preserves the duplicated top-port name');
+    is($report->{context_summary}, "Top port 'output_data'", 'failure report exposes a concise duplicate top-port summary');
+    is($report->{blocked_boundary}, 'composition shape', 'failure report preserves the blocked composition-shape boundary for duplicate top-port declarations');
+    is($report->{blocked_reason}, 'the active composition lanes require each top port name to be unique', 'failure report preserves the concise duplicate top-port reason');
+};
+
+subtest 'pipeline derives child context from blocked duplicate child-instance declarations' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'duplicate_child_instance_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:duplicate_child_instance_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+    start
+    result_data>8
+  )
+  (?fsmc:dup producer_src)
+  (?fsmc:dup consumer_src)
+  (?toplink:wiring
+    /start/dup.go/
+    /dup.output_data/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (<go
+      (output_data> <= 8'2)
+    )
+  )
+  (+size
+    (go 1)
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (<go
+      (output_data> <= 8'3)
+    )
+  )
+  (+size
+    (go 1)
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked duplicate child-instance declarations');
+    is($report->{top_name}, 'duplicate_child_instance_failure_summary_top', 'failure report preserves the top name for blocked duplicate child-instance declarations');
+    ok(!defined($report->{construct}), 'failure report does not invent a construct for duplicate child-instance declarations');
+    is($report->{context_label}, 'Child', 'failure report classifies duplicate child-instance declarations as child context');
+    is($report->{context_value}, "'dup'", 'failure report preserves the duplicated child-instance name');
+    is($report->{context_summary}, "Child 'dup'", 'failure report exposes a concise duplicate child-instance summary');
+    is($report->{blocked_boundary}, 'composition shape', 'failure report preserves the blocked composition-shape boundary for duplicate child-instance declarations');
+    is($report->{blocked_reason}, 'the active composition lanes require each realized child instance name to be unique', 'failure report preserves the concise duplicate child-instance reason');
+};
+
 subtest 'pipeline derives top-port context from blocked top-port failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'c1_width_mismatch_failure_summary_top.fsm');
@@ -1880,6 +2016,138 @@ FSM
     like($combined_output, qr/Context:\s+Top port 'output_data'/s, 'CLI reports the blocked top port as summary context');
     like($combined_output, qr/Blocked boundary:\s+C1 passthrough exposure/s, 'CLI reports the blocked C1 exposure boundary for top-port failures');
     like($combined_output, qr/Reason:\s+child port 'output_data' has width 8/s, 'CLI reports the concise top-port mismatch reason');
+};
+
+subtest 'CLI prints top-port context for blocked duplicate top-port declarations' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'duplicate_top_port_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'duplicate_top_port_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:duplicate_top_port_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    output_data>8
+    output_data>8
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked duplicate top-port declaration fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked duplicate top-port declaration fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for duplicate top-port declarations');
+    like($combined_output, qr/Construct:\s+\?ports/s, 'CLI reports the top-interface construct for blocked duplicate top-port declarations');
+    like($combined_output, qr/Context:\s+Top port 'output_data'/s, 'CLI reports the duplicated top port as summary context');
+    like($combined_output, qr/Blocked boundary:\s+shape/s, 'CLI reports the blocked composition-shape boundary for duplicate top-port declarations');
+    like($combined_output, qr/Reason:\s+the active composition lanes require each top port name to be unique/s, 'CLI reports the concise duplicate top-port reason');
+};
+
+subtest 'CLI prints child context for blocked duplicate child-instance declarations' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'duplicate_child_instance_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'duplicate_child_instance_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:duplicate_child_instance_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    start
+    result_data>8
+  )
+  (?fsmc:dup producer_src)
+  (?fsmc:dup consumer_src)
+  (?toplink:wiring
+    /start/dup.go/
+    /dup.output_data/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (<go
+      (output_data> <= 8'2)
+    )
+  )
+  (+size
+    (go 1)
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (<go
+      (output_data> <= 8'3)
+    )
+  )
+  (+size
+    (go 1)
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked duplicate child-instance declaration fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked duplicate child-instance declaration fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for duplicate child-instance declarations');
+    unlike($combined_output, qr/Construct:/s, 'CLI does not invent a construct line for duplicate child-instance declarations');
+    like($combined_output, qr/Context:\s+Child 'dup'/s, 'CLI reports the duplicated child instance as summary context');
+    like($combined_output, qr/Blocked boundary:\s+shape/s, 'CLI reports the blocked composition-shape boundary for duplicate child-instance declarations');
+    like($combined_output, qr/Reason:\s+the active composition lanes require each realized child instance name to be unique/s, 'CLI reports the concise duplicate child-instance reason');
 };
 
 subtest 'CLI prints child-port context for blocked C1 child-port failures' => sub {

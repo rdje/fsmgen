@@ -4237,3 +4237,7 @@ This is the persistent technical change history for FSMGen.
   - blocked boundary + concise reason preserved
   - no fabricated `Context:` line
 - This slice is coverage/contract hardening only; runtime behavior is unchanged.
+- Failed-run duplicate-declaration summaries now also surface duplicate-name context instead of leaving it only in the raw exception text:
+  - duplicate top-port declarations keep `Construct: ?ports` plus `Context: Top port '...'`
+  - duplicate child-instance declarations keep `Context: Child '...'`
+- This slice includes a small extractor improvement in `perl/FSM/Pipeline/HDLGenerator.pm`; planner behavior is unchanged.
