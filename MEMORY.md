@@ -3943,3 +3943,12 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - `Context: Top port 'result_data'`
   - `Blocked boundary: explicit link`
   - `Reason: the current active composition lanes require exact width agreement`
+
+## 2026-03-19: explicit-link multi-top-output summaries now keep source context
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now recognizes the existing blocked explicit-link topology diagnostic shape `drives multiple top outputs from '...'` as structured context.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks the reachable summary shape so non-quiet failed runs keep:
+  - `Lane: C2`
+  - `Construct: ?toplink`
+  - `Context: Child endpoint 'producer.output_data'`
+  - `Blocked boundary: explicit-link topology`
+  - `Reason: the current active C2 lane supports at most one top-output target per resolved source`

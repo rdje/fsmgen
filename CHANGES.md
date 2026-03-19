@@ -4227,3 +4227,5 @@ This is the persistent technical change history for FSMGen.
   - child-target mismatches
   - top-boundary mismatches
 - This follow-on slice is coverage/contract hardening only; runtime behavior is unchanged from the prior extractor improvement.
+- Failed-run composition summaries now also keep source-endpoint context for the blocked explicit-link topology family where one resolved source tries to drive multiple top outputs.
+- This slice includes a small extractor improvement in `perl/FSM/Pipeline/HDLGenerator.pm`; planner behavior is unchanged.

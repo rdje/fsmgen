@@ -5166,3 +5166,15 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - no runtime change was needed here; the extractor improvement was already sufficient,
   - this is pure contract hardening so later summary refactors cannot accidentally keep one target family while regressing the other.
+
+## 2026-03-19: explicit-link multi-top-output topology summaries now preserve source context
+- Blocked explicit-link topology diagnostics already exposed a good stable sentence for the reachable `one resolved source drives multiple top outputs` family, but the failed-run summary extractor was not yet surfacing the resolved source as structured context.
+- The active contract is now explicit for that family:
+  - `Lane: C2`
+  - `Construct: ?toplink`
+  - `Context: Child endpoint 'producer.output_data'`
+  - `Blocked boundary: explicit-link topology`
+  - `Reason: the current active C2 lane supports at most one top-output target per resolved source`
+- Design note from this slice:
+  - this required only a narrow extractor addition for the existing `drives multiple top outputs from '...'` diagnostic shape,
+  - planner behavior stays unchanged, and the summary remains derived from the raised diagnostic rather than a separate reporting model.

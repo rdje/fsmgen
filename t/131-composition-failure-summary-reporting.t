@@ -1472,6 +1472,83 @@ FSM
     is($report->{blocked_reason}, 'the current active composition lanes require exact width agreement', 'failure report preserves the concise explicit-link top-port width-mismatch reason');
 };
 
+subtest 'pipeline derives child-endpoint context from blocked explicit-link multi-top-output topology failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'multi_top_output_topology_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:multi_top_output_topology_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data_a>8
+    result_data_b>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data/result_data_a/
+    /producer.output_data/result_data_b/
+    /producer.output_data/consumer.input_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (final_data> <= input_data)
+  )
+  (+size
+    (input_data 8)
+    (final_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked explicit-link multi-top-output topology failures');
+    is($report->{top_name}, 'multi_top_output_topology_failure_summary_top', 'failure report preserves the top name for blocked explicit-link multi-top-output topology failures');
+    is($report->{lane}, 'C2', 'failure report preserves the active C2 lane for blocked multi-top-output topology failures');
+    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked multi-top-output topology failures');
+    is($report->{context_label}, 'Child endpoint', 'failure report classifies multi-top-output topology failures as child-endpoint context');
+    is($report->{context_value}, "'producer.output_data'", 'failure report preserves the blocked resolved source endpoint for multi-top-output topology failures');
+    is($report->{context_summary}, "Child endpoint 'producer.output_data'", 'failure report exposes a concise multi-top-output topology summary');
+    is($report->{blocked_boundary}, 'explicit-link topology', 'failure report preserves the blocked explicit-link topology boundary');
+    is($report->{blocked_reason}, 'the current active C2 lane supports at most one top-output target per resolved source', 'failure report preserves the concise multi-top-output topology reason');
+};
+
 subtest 'pipeline derives explicit-endpoint context from blocked endpoint-syntax failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'unsupported_endpoint_failure_summary_top.fsm');
@@ -3434,6 +3511,81 @@ FSM
     like($combined_output, qr/Context:\s+Top port 'result_data'/s, 'CLI reports the blocked top-port target as summary context for width mismatches');
     like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for top-port width-mismatch failures');
     like($combined_output, qr/Reason:\s+the current active composition lanes require exact width agreement/s, 'CLI reports the concise explicit-link top-port width-mismatch reason');
+};
+
+subtest 'CLI prints child-endpoint context for blocked explicit-link multi-top-output topology summaries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'multi_top_output_topology_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'multi_top_output_topology_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:multi_top_output_topology_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data_a>8
+    result_data_b>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data/result_data_a/
+    /producer.output_data/result_data_b/
+    /producer.output_data/consumer.input_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (final_data> <= input_data)
+  )
+  (+size
+    (input_data 8)
+    (final_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked explicit-link multi-top-output topology fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked explicit-link multi-top-output topology fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link multi-top-output topology failures');
+    like($combined_output, qr/Lane:\s+C2/s, 'CLI reports the active C2 lane for blocked multi-top-output topology failures');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked multi-top-output topology failures');
+    like($combined_output, qr/Context:\s+Child endpoint 'producer\.output_data'/s, 'CLI reports the blocked resolved source endpoint as summary context for multi-top-output topology failures');
+    like($combined_output, qr/Blocked boundary:\s+explicit-link topology/s, 'CLI reports the blocked explicit-link topology boundary');
+    like($combined_output, qr/Reason:\s+the current active C2 lane supports at most one top-output target per resolved source/s, 'CLI reports the concise multi-top-output topology reason');
 };
 
 subtest 'CLI prints missing top-endpoint context in blocked explicit-link summaries' => sub {
