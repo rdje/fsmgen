@@ -1019,6 +1019,77 @@ RTLIF
     is($report->{blocked_reason}, "instance 'uart_tx' has no port named 'missing_port'", 'failure report preserves the concise existing-instance missing-port reason');
 };
 
+subtest 'pipeline derives child-endpoint context from blocked explicit-link direction-mismatch failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'direction_mismatch_failure_summary_top.fsm');
+    my $rtl_metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:direction_mismatch_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+  )
+  (?fsmc:producer producer_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /producer.output_data/uart_tx.txd/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    write_file(
+        $rtl_metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  clk
+  rstn
+  data_in<8:data
+  txd>:data
+)
+RTLIF
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked explicit-link direction-mismatch failures');
+    is($report->{top_name}, 'direction_mismatch_failure_summary_top', 'failure report preserves the top name for blocked explicit-link direction-mismatch failures');
+    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked direction-mismatch failures');
+    is($report->{context_label}, 'Child endpoint', 'failure report classifies direction-mismatch failures as child-endpoint context');
+    is($report->{context_value}, "'uart_tx.txd'", 'failure report preserves the blocked child endpoint for direction-mismatch failures');
+    is($report->{context_summary}, "Child endpoint 'uart_tx.txd'", 'failure report exposes a concise direction-mismatch child-endpoint summary');
+    is($report->{blocked_boundary}, 'explicit link', 'failure report preserves the blocked explicit-link boundary for direction-mismatch failures');
+    is($report->{blocked_reason}, 'that child port is output instead of input', 'failure report preserves the concise direction-mismatch reason');
+};
+
 subtest 'pipeline derives explicit-endpoint context from blocked endpoint-syntax failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'unsupported_endpoint_failure_summary_top.fsm');
@@ -2540,6 +2611,75 @@ RTLIF
     like($combined_output, qr/Context:\s+Child endpoint 'uart_tx\.missing_port'/s, 'CLI reports the missing child endpoint on the existing instance as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for existing-instance missing-port failures');
     like($combined_output, qr/Reason:\s+instance 'uart_tx' has no port named 'missing_port'/s, 'CLI reports the concise existing-instance missing-port reason');
+};
+
+subtest 'CLI prints child-endpoint context for blocked explicit-link direction-mismatch summaries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'direction_mismatch_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direction_mismatch_failure_summary_cli_top.sv');
+    my $rtl_metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:direction_mismatch_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+  )
+  (?fsmc:producer producer_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /producer.output_data/uart_tx.txd/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    write_file(
+        $rtl_metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  clk
+  rstn
+  data_in<8:data
+  txd>:data
+)
+RTLIF
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked explicit-link direction-mismatch composition fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked explicit-link direction-mismatch fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link direction-mismatch failures');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked direction-mismatch failures');
+    like($combined_output, qr/Context:\s+Child endpoint 'uart_tx\.txd'/s, 'CLI reports the blocked child endpoint as summary context for direction-mismatch failures');
+    like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for direction-mismatch failures');
+    like($combined_output, qr/Reason:\s+that child port is output instead of input/s, 'CLI reports the concise direction-mismatch reason');
 };
 
 subtest 'CLI prints missing top-endpoint context in blocked explicit-link summaries' => sub {

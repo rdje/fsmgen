@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### blocked explicit-link direction mismatches now keep child-endpoint context in CLI summaries
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so failed composition summaries now recognize `uses child endpoint '...'` diagnostics as `Child endpoint` context instead of leaving that token only in the raw exception text.
+- This keeps the slice narrow and honest:
+  - planner behavior is unchanged,
+  - the only runtime change is summary extraction for an already-shipped explicit-link failure family,
+  - and the new coverage proves that non-quiet CLI failures preserve `Construct: ?toplink`, `Context: Child endpoint 'uart_tx.txd'`, the blocked `explicit link` boundary, and the concise `that child port is output instead of input` reason.
+
 ### blocked existing-instance missing-port explicit-link failures now keep child-endpoint context in CLI summaries
 - Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for the reachable explicit-link endpoint-resolution family where the child instance exists but the named child port does not.
 - This keeps the slice narrow and honest:

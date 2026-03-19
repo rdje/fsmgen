@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: blocked explicit-link direction mismatches now keep child-endpoint context in CLI summaries
+- Continued the active `R11` failed-run reporting lane with a small shipped extractor improvement instead of another pure regression lock.
+- Landed behavior:
+  - failed composition summaries now recognize `uses child endpoint '...'` blocked diagnostics as `Child endpoint` context,
+  - so reachable explicit-link direction-mismatch failures keep `Construct: ?toplink`, `Context: Child endpoint 'uart_tx.txd'`, the blocked `explicit link` boundary, and the concise `that child port is output instead of input` reason.
+- Why this is worth shipping:
+  - this is a real user-facing explicit-link failure family,
+  - the diagnostic already exposed the endpoint token clearly,
+  - and teaching the summary extractor to keep that same token makes the short failure summary materially more actionable without changing planner behavior.
+
 ## 2026-03-19: blocked existing-instance missing-port explicit-link summaries are now regression-locked at CLI level
 - Continued the active `R11` failed-run reporting lane by hardening another already-shipped explicit-link summary family instead of widening composition behavior.
 - Landed behavior:
