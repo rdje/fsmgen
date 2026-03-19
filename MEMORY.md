@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: blocked ambiguous `C4` declared connect-by-name summaries now keep candidate lists at CLI level
+- Saved shipped behavior:
+  - failed composition summaries now have explicit CLI regression coverage for a reachable blocked ambiguous `C4` declared connect-by-name failure, including the compatible-child-endpoint list in the concise `Reason:` line.
+- Important continuity note:
+  - this slice did not widen extractor behavior,
+  - it hardens another already-shipped `C4` summary family at the CLI boundary,
+  - and it keeps ambiguity, missing-endpoint, and the previously locked `C1` / `C2` / `C3` summary families aligned under the same reporting contract.
+
 ## 2026-03-19: blocked `C4` declared connect-by-name summaries are now explicitly locked at CLI level
 - Saved shipped behavior:
   - failed composition summaries now have explicit CLI regression coverage for a reachable blocked `C4` declared connect-by-name failure through the existing `Lane: C4`, `Construct: =port`, and `Top port` context lines.

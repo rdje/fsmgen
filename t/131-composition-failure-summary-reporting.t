@@ -1305,6 +1305,74 @@ FSM
     like($combined_output, qr/Reason:\s+no realized child endpoint with that name exists/s, 'CLI reports the concise missing-endpoint reason for blocked declared connect-by-name failures');
 };
 
+subtest 'CLI keeps ambiguous C4 candidate lists in blocked declared connect-by-name summaries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'connect_by_name_ambiguous_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'connect_by_name_ambiguous_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:connect_by_name_ambiguous_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    =shared_status>8
+  )
+  (?fsmc:left left_src)
+  (?fsmc:right right_src)
+)
+
+(?fsm:left_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (shared_status> <= 8'1)
+  )
+  (+size
+    (shared_status 8)
+  )
+)
+
+(?fsm:right_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (shared_status> <= 8'2)
+  )
+  (+size
+    (shared_status 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked ambiguous C4 declared connect-by-name fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked ambiguous C4 declared connect-by-name fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked ambiguous C4 declared connect-by-name failures');
+    like($combined_output, qr/Lane:\s+C4/s, 'CLI reports the C4 lane for blocked ambiguous declared connect-by-name failures');
+    like($combined_output, qr/Construct:\s+=port/s, 'CLI reports the =port construct for blocked ambiguous declared connect-by-name failures');
+    like($combined_output, qr/Context:\s+Top port 'shared_status'/s, 'CLI reports the blocked ambiguous =port top port as summary context');
+    like($combined_output, qr/Blocked boundary:\s+declared connect-by-name/s, 'CLI reports the blocked declared connect-by-name boundary for ambiguous matches');
+    like($combined_output, qr/Reason:\s+that name resolves ambiguously to multiple compatible child endpoints: left\.shared_status, right\.shared_status/s, 'CLI preserves the ambiguous same-name candidate list in the concise reason');
+};
+
 subtest 'CLI prints RTL metadata file artifacts for blocked metadata-structure failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'bad_rtlif_root_failure_summary_cli_top.fsm');

@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### blocked ambiguous `C4` declared connect-by-name failures now keep candidate lists in CLI summaries
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for a reachable ambiguous `C4` declared connect-by-name family at CLI level too.
+- This keeps the slice narrow and honest:
+  - behavior is unchanged,
+  - the extractor already knew how to keep the blocked `=port` top-port context and ambiguous same-name reason,
+  - and the new coverage simply proves that non-quiet CLI failures preserve the compatible-child-endpoint list in the concise `Reason:` line instead of leaving it only in the raw exception text.
+
 ### blocked `C4` declared connect-by-name failures now keep `Lane: C4` and `=port` context in CLI summaries
 - Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for a reachable `C4` declared connect-by-name family at CLI level too.
 - This keeps the slice narrow and honest:
