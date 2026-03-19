@@ -4013,3 +4013,10 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - `Construct: ?toplink` plus `Context: Token 'child.result_data->result_data'`
   - the blocked parser-boundary labels and the existing concise parser reasons
 - Parser behavior was already correct here; this slice improves only the failed-run summary surface for the `?ports` mapping-directive family and makes both parser-boundary summary contracts explicit.
+
+## 2026-03-19: the remaining ?ports token-family summaries now have explicit contracts
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now also locks the matching failed-run summary shapes so non-quiet runs keep:
+  - `Construct: ?ports` plus `Context: Token 'bad-name>8'` for invalid explicit top-port tokens
+  - `Construct: ?ports` plus `Context: Token 'data_in<0'` for non-positive width tokens
+  - the blocked parser-boundary labels and the existing concise parser reasons for both siblings
+- Runtime behavior was already correct here; this slice makes the remaining `?ports` parser-token summary contracts explicit.

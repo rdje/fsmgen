@@ -113,6 +113,122 @@ FSM
     );
 };
 
+subtest 'pipeline derives token context from blocked invalid ?ports token failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'invalid_ports_token_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:invalid_ports_token_failure_summary_top
+  (?ports:public_io
+    bad-name>8
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_data> <= 8'1)
+  )
+  (+size
+    (result_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked invalid ?ports token failures');
+    is($report->{top_name}, 'invalid_ports_token_failure_summary_top', 'failure report preserves the top name for blocked invalid ?ports token failures');
+    is($report->{construct}, '?ports', 'failure report preserves the ?ports construct for blocked invalid ?ports token failures');
+    is($report->{context_label}, 'Token', 'failure report classifies blocked invalid ?ports token failures as token context');
+    is($report->{context_value}, "'bad-name>8'", 'failure report preserves the offending ?ports token');
+    is($report->{context_summary}, "Token 'bad-name>8'", 'failure report exposes a concise invalid ?ports token summary');
+    is($report->{blocked_boundary}, 'composition port token shape', 'failure report preserves the blocked ?ports token-shape boundary');
+    is($report->{blocked_boundary_label}, 'port token shape', 'failure report exposes a CLI-friendly blocked-boundary label for invalid ?ports token failures');
+    is(
+        $report->{blocked_reason},
+        'it is not a valid explicit top-port token for the current active contract',
+        'failure report preserves the concise invalid ?ports token reason',
+    );
+};
+
+subtest 'pipeline derives token context from blocked non-positive ?ports width failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'nonpositive_ports_width_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:nonpositive_ports_width_failure_summary_top
+  (?ports:public_io
+    data_in<0
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_data> <= 8'1)
+  )
+  (+size
+    (result_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked non-positive ?ports width failures');
+    is($report->{top_name}, 'nonpositive_ports_width_failure_summary_top', 'failure report preserves the top name for blocked non-positive ?ports width failures');
+    is($report->{construct}, '?ports', 'failure report preserves the ?ports construct for blocked non-positive ?ports width failures');
+    is($report->{context_label}, 'Token', 'failure report classifies blocked non-positive ?ports width failures as token context');
+    is($report->{context_value}, "'data_in<0'", 'failure report preserves the offending ?ports width token');
+    is($report->{context_summary}, "Token 'data_in<0'", 'failure report exposes a concise non-positive ?ports width summary');
+    is($report->{blocked_boundary}, 'composition port sizing', 'failure report preserves the blocked ?ports sizing boundary');
+    is($report->{blocked_boundary_label}, 'port sizing', 'failure report exposes a CLI-friendly blocked-boundary label for non-positive ?ports width failures');
+    is(
+        $report->{blocked_reason},
+        "it declares non-positive width '0'",
+        'failure report preserves the concise non-positive ?ports width reason',
+    );
+};
+
 subtest 'pipeline derives token context from blocked ?toplink token-shape failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'unsupported_toplink_token_failure_summary_top.fsm');
@@ -4987,6 +5103,108 @@ FSM
     like($combined_output, qr/Context:\s+Mapping directive '\/foo\/bar\/'/s, 'CLI reports the blocked ?ports mapping directive as summary context');
     like($combined_output, qr/Blocked boundary:\s+port declaration mode/s, 'CLI reports the blocked ?ports declaration-mode boundary');
     like($combined_output, qr/Reason:\s+the active composition parser only supports explicit top-port declarations inside '\?ports'/s, 'CLI reports the concise ?ports mapping reason');
+};
+
+subtest 'CLI prints token context for blocked invalid ?ports token failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'invalid_ports_token_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'invalid_ports_token_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:invalid_ports_token_failure_summary_cli_top
+  (?ports:public_io
+    bad-name>8
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_data> <= 8'1)
+  )
+  (+size
+    (result_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked invalid ?ports token fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked invalid ?ports token fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked invalid ?ports token failures');
+    like($combined_output, qr/Construct:\s+\?ports/s, 'CLI reports the ?ports construct for blocked invalid ?ports token failures');
+    like($combined_output, qr/Context:\s+Token 'bad-name>8'/s, 'CLI reports the blocked ?ports token as summary context');
+    like($combined_output, qr/Blocked boundary:\s+port token shape/s, 'CLI reports the blocked ?ports token-shape boundary');
+    like($combined_output, qr/Reason:\s+it is not a valid explicit top-port token for the current active contract/s, 'CLI reports the concise invalid ?ports token reason');
+};
+
+subtest 'CLI prints token context for blocked non-positive ?ports width failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'nonpositive_ports_width_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'nonpositive_ports_width_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:nonpositive_ports_width_failure_summary_cli_top
+  (?ports:public_io
+    data_in<0
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_data> <= 8'1)
+  )
+  (+size
+    (result_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked non-positive ?ports width fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked non-positive ?ports width fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked non-positive ?ports width failures');
+    like($combined_output, qr/Construct:\s+\?ports/s, 'CLI reports the ?ports construct for blocked non-positive ?ports width failures');
+    like($combined_output, qr/Context:\s+Token 'data_in<0'/s, 'CLI reports the blocked ?ports width token as summary context');
+    like($combined_output, qr/Blocked boundary:\s+port sizing/s, 'CLI reports the blocked ?ports sizing boundary');
+    like($combined_output, qr/Reason:\s+it declares non-positive width '0'/s, 'CLI reports the concise non-positive ?ports width reason');
 };
 
 subtest 'CLI prints token context for blocked ?toplink token-shape failures' => sub {

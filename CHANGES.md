@@ -4260,3 +4260,8 @@ This is the persistent technical change history for FSMGen.
   - blocked malformed `?toplink` tokens keep `Construct: ?toplink` plus `Context: Token '...'`
   - both keep their existing blocked-boundary labels and concise parser reasons
 - This slice includes a small extractor improvement in `perl/FSM/Pipeline/HDLGenerator.pm` for `?ports` mapping-directive context; parser behavior is unchanged.
+- The remaining `?ports` token-family summaries are now locked too:
+  - invalid explicit top-port tokens keep `Construct: ?ports` plus `Context: Token 'bad-name>8'`
+  - non-positive width tokens keep `Construct: ?ports` plus `Context: Token 'data_in<0'`
+  - both keep the blocked parser-boundary labels and the existing concise parser reasons
+- This follow-on slice is regression/contract hardening only; runtime behavior was already covered by the existing summary extractor.

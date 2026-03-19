@@ -5259,3 +5259,14 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this required only a narrow extractor addition for `mapping directive '...'`,
   - parser behavior stays unchanged, and the summary remains derived from the raised diagnostic instead of a parallel reporting path.
+
+## 2026-03-19: the remaining ?ports token-family summaries are now explicit too
+- Continued the active `R11` failed-run reporting lane by hardening the sibling `?ports` token families instead of widening composition behavior.
+- The summary extractor was already correctly deriving `Token '...'` context from parser token diagnostics, but the contract had only been locked for `?ports` mapping directives and malformed `?toplink` tokens.
+- The active contract is now explicit for the remaining `?ports` parser-token siblings:
+  - invalid explicit top-port tokens keep `Construct: ?ports` plus `Context: Token 'bad-name>8'`
+  - non-positive width tokens keep `Construct: ?ports` plus `Context: Token 'data_in<0'`
+  - both keep the blocked parser-boundary labels and the existing concise parser reasons
+- Design note from this slice:
+  - no runtime change was needed here; the existing summary extractor already behaved correctly,
+  - the value is in making the `?ports` token family explicit and symmetric instead of relying on generic token extraction only.
