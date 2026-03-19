@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: embedded `.rtlif` duplicate-root failures now keep RTL root context in failed-run summaries
+- Continued the active `R11` diagnostics/reporting lane by surfacing one more stable failed-run subject that was already present in the raw diagnostic.
+- Landed behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now extracts embedded `.rtlif` duplicate-root tokens as `RTL root` context when a blocked uniqueness diagnostic already names the repeated root,
+  - and the non-quiet CLI summary now prints that concise `Context:` line without inventing an external metadata-file artifact for embedded metadata.
+- Why this is worth shipping:
+  - embedded-root uniqueness failures already had a clear blocked boundary, but the most actionable subject, the repeated `?rtlif:<module>` root token, was still buried in the raw exception text,
+  - this keeps the current failed-run summary model honest by reusing structure the diagnostic already exposes,
+  - and it stays bounded because it does not widen extraction beyond the embedded duplicate-root family.
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both pipeline-side extraction and non-quiet CLI summary output for blocked embedded `.rtlif` duplicate-root failures.
+
 ## 2026-03-19: duplicate-port `.rtlif` failures now keep repeated RTL port context in failed-run summaries
 - Continued the active `R11` diagnostics/reporting lane by enriching one more stable failed-run context family instead of widening composition behavior again.
 - Landed behavior:

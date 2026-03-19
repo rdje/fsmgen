@@ -447,6 +447,79 @@ RTLIF
     is($report->{blocked_reason}, "repeats port 'txd'", 'failure report trims the blocked duplicate-port reason without repeating the metadata file path');
 };
 
+subtest 'pipeline derives rtl root context from blocked embedded-root uniqueness failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'duplicate_embedded_root_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:duplicate_embedded_root_failure_summary_top
+  (?ports:public_io
+    clk
+    rst_n
+    serial_out>
+  )
+  (?dtc:router route_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /router.route_data/uart_tx.data_in/
+    /uart_tx.txd/serial_out/
+  )
+)
+
+(?dt:route_src
+  (-route
+    (route_data> = payload_in)
+  )
+  (+size
+    (payload_in 8)
+    (route_data 8)
+  )
+)
+
+(?rtlif:uart_tx
+  clk:clock
+  rst_n:reset
+  data_in<8:data
+  txd>:data
+)
+
+(?rtlif:uart_tx
+  clk
+  rst_n
+  txd>
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked embedded rtlif duplicate-root failures');
+    is($report->{construct}, '?rtl', 'failure report preserves the external RTL construct for embedded duplicate-root failures');
+    is($report->{context_label}, 'RTL root', 'failure report preserves embedded rtlif root context when no external metadata artifact line exists');
+    is($report->{context_value}, "'?rtlif:uart_tx'", 'failure report preserves the duplicate embedded rtlif root as summary context');
+    is($report->{context_summary}, "RTL root '?rtlif:uart_tx'", 'failure report exposes a concise duplicate embedded-root summary');
+    is($report->{blocked_boundary}, 'RTL interface metadata embedded-root uniqueness', 'failure report preserves the blocked embedded-root uniqueness boundary');
+    is(
+        $report->{blocked_reason},
+        'the active RTL interface contract allows at most one embedded interface root per external RTL module name in the same source',
+        'failure report preserves the concise embedded-root uniqueness reason',
+    );
+};
+
 subtest 'pipeline derives child-source file context from blocked generated-child realization failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'wrong_fsmc_kind_failure_summary_top.fsm');
@@ -922,6 +995,75 @@ RTLIF
     like($combined_output, qr/Context:\s+RTL port 'txd'/s, 'CLI keeps repeated rtlif port context alongside the rtlif file artifact');
     like($combined_output, qr/Blocked boundary:\s+RTL interface metadata port declaration uniqueness/s, 'CLI reports the blocked rtlif duplicate-port boundary');
     like($combined_output, qr/Reason:\s+repeats port 'txd'/s, 'CLI reports the concise rtlif duplicate-port reason without repeating the metadata file path');
+};
+
+subtest 'CLI prints rtl root context for blocked embedded-root uniqueness failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'duplicate_embedded_root_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'duplicate_embedded_root_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:duplicate_embedded_root_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rst_n
+    serial_out>
+  )
+  (?dtc:router route_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /router.route_data/uart_tx.data_in/
+    /uart_tx.txd/serial_out/
+  )
+)
+
+(?dt:route_src
+  (-route
+    (route_data> = payload_in)
+  )
+  (+size
+    (payload_in 8)
+    (route_data 8)
+  )
+)
+
+(?rtlif:uart_tx
+  clk:clock
+  rst_n:reset
+  data_in<8:data
+  txd>:data
+)
+
+(?rtlif:uart_tx
+  clk
+  rst_n
+  txd>
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked embedded rtlif duplicate-root composition fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked embedded rtlif duplicate-root fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked embedded rtlif duplicate-root failures');
+    like($combined_output, qr/Construct:\s+\?rtl/s, 'CLI reports the external RTL construct for blocked embedded rtlif duplicate-root failures');
+    unlike($combined_output, qr/RTL metadata file:/s, 'CLI does not invent an external metadata artifact line for embedded rtlif duplicate-root failures');
+    like($combined_output, qr/Context:\s+RTL root '\?rtlif:uart_tx'/s, 'CLI reports the duplicate embedded rtlif root as summary context');
+    like($combined_output, qr/Blocked boundary:\s+RTL interface metadata embedded-root uniqueness/s, 'CLI reports the blocked embedded-root uniqueness boundary');
+    like($combined_output, qr/Reason:\s+the active RTL interface contract allows at most one embedded interface root per external RTL module name in the same source/s, 'CLI reports the concise embedded-root uniqueness reason');
 };
 
 subtest 'CLI prints child-source file context for blocked generated-child realization failures' => sub {

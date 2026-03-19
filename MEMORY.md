@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: embedded `.rtlif` duplicate-root failures now keep RTL root context in failed-run summaries
+- Saved shipped behavior:
+  - failed composition summaries can now keep `Context: RTL root '?rtlif:...'` for blocked embedded `.rtlif` duplicate-root failures,
+  - and those same summaries still avoid inventing an `RTL metadata file:` artifact line because the metadata lives in the composition source itself.
+- Important continuity note:
+  - this is a narrow reporting refinement only,
+  - it relies on the existing blocked diagnostic already naming the repeated embedded root token,
+  - and it keeps the current failed-run summary lane moving by surfacing stable context instead of inventing parallel reporting logic.
+
 ## 2026-03-19: duplicate-port `.rtlif` failures now keep repeated RTL port context in failed-run summaries
 - Saved shipped behavior:
   - failed composition summaries can now keep `Context: RTL port '...'` for blocked duplicate-port `.rtlif` declaration failures,

@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### embedded `.rtlif` duplicate-root failures now keep RTL root context in failed-run summaries
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so failed composition summaries now keep `Context: RTL root '?rtlif:...'` when a blocked embedded `.rtlif` duplicate-root diagnostic already names the repeated embedded root token.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the summary still does not invent an `RTL metadata file:` artifact line for embedded-root failures because the metadata lives in the composition source itself,
+  - and the new context extraction only appears when the raised diagnostic already exposes a stable embedded root token such as `?rtlif:uart_tx`.
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both the pipeline-side failure-report extraction and the non-quiet CLI summary for blocked embedded `.rtlif` duplicate-root failures, including `Construct: ?rtl`, `Context: RTL root '?rtlif:uart_tx'`, `Blocked boundary: RTL interface metadata embedded-root uniqueness`, and the concise embedded-root uniqueness reason.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reads as the next bounded failed-run reporting refinement under `R11`.
+
 ### duplicate-port `.rtlif` failures now keep repeated RTL port context in failed-run summaries
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so failed composition summaries now keep `Context: RTL port '...'` when a blocked external `.rtlif` declaration failure repeats a port name while the same summary is already surfacing the resolved `RTL metadata file:` artifact line.
 - This shipped slice stays deliberately narrow:
