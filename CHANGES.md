@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### blocked unnamed generated-child parser failures now keep child context in CLI summaries
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm), [t/130-composition-generated-child-source-shape-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/130-composition-generated-child-source-shape-diagnostics.t), and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so failed composition summaries now recognize blocked parser diagnostics of the form `contains '?fsmc' child without a name` / `contains '?dtc' child without a name` as child context instead of dropping child identity entirely.
+- This keeps the slice narrow and honest:
+  - parser behavior is unchanged,
+  - the only runtime change is summary extraction for two already-shipped generated-child parser families,
+  - and the new coverage proves that non-quiet CLI failures preserve `Construct: ?fsmc` plus `Context: Child '?fsmc'` for unnamed source-count failures and `Construct: ?dtc` plus `Context: Child '?dtc'` for unnamed source-shape failures.
+
 ### blocked explicit-link duplicate-driver failures now keep target context in CLI summaries
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so failed composition summaries now recognize `assigns explicit link driver '...' to target '...'` diagnostics as target context instead of leaving that conflict point only in the raw exception text.
 - This keeps the slice narrow and honest:

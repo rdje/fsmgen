@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: blocked unnamed generated-child parser failures now keep child context in CLI summaries
+- Continued the active `R11` failed-run reporting lane with another small shipped extractor improvement instead of widening parser or planner behavior.
+- Landed behavior:
+  - failed composition summaries now recognize blocked parser diagnostics of the form `contains '?fsmc' child without a name` / `contains '?dtc' child without a name` as `Child` context,
+  - so unnamed generated-child parser failures now keep `Construct: ?fsmc` plus `Child '?fsmc'` for source-count failures and `Construct: ?dtc` plus `Child '?dtc'` for source-shape failures.
+- Why this is worth shipping:
+  - these are real parser-visible generated-child failures,
+  - the blocked diagnostics already expose the active construct honestly,
+  - and teaching the summary extractor to keep that same unnamed-child evidence makes the short failure summary materially more actionable without changing parser behavior.
+
 ## 2026-03-19: blocked explicit-link duplicate-driver failures now keep target context in CLI summaries
 - Continued the active `R11` failed-run reporting lane with another small shipped extractor improvement instead of a broader planner change.
 - Landed behavior:

@@ -2711,6 +2711,7 @@ sub composition_failure_context_excerpt ($self, $summary_text) {
 
     my @patterns = (
         [ qr/contains child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
+        [ qr/contains '(\?(?:fsmc|dtc))' child without a name/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/contains '\?(?:fsmc|dtc|rtl)' child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/declares duplicate child instance name '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/declares '\?(?:fsmc|dtc|rtl)' child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],

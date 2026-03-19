@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: blocked unnamed generated-child parser failures now keep child context in CLI summaries
+- Saved shipped behavior:
+  - failed composition summaries now recognize blocked unnamed `?fsmc` / `?dtc` parser diagnostics as child context, so these runs can keep `Child '?fsmc'` / `Child '?dtc'` instead of losing child identity in the short summary.
+- Important continuity note:
+  - this slice did widen extractor behavior slightly,
+  - but only at the failed-run summary layer,
+  - and it keeps unnamed generated-child parser failures aligned with the already improved named-child generated-source summary family.
+
 ## 2026-03-19: blocked explicit-link duplicate-driver failures now keep target context in CLI summaries
 - Saved shipped behavior:
   - failed composition summaries now recognize duplicate-driver blocked diagnostics as target context, so the conflicted target `result_data` stays visible in the summary.
