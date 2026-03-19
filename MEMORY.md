@@ -3928,3 +3928,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - top-boundary targets keep `Context: Top port '...'`
   - child-input targets keep `Context: Child endpoint 'instance.port'`
 - Runtime behavior was already extractor-based from the raised diagnostic; this slice makes the child-target side provable and keeps the concise reason focused on the earlier explicit link that already reserved the target.
+
+## 2026-03-19: explicit-link width-mismatch failed summaries now keep target context
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now recognizes the existing blocked explicit-link width-mismatch diagnostic shape (`links '...' (width ...) to '...' (width ...)`) as target context.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks the reachable child-target width-mismatch summary shape so non-quiet failed runs keep:
+  - `Construct: ?toplink`
+  - `Context: Child endpoint 'consumer.input_data'`
+  - `Blocked boundary: explicit link`
+  - `Reason: the current active composition lanes require exact width agreement`

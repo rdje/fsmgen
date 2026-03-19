@@ -4219,3 +4219,7 @@ This is the persistent technical change history for FSMGen.
 - This is a reporting-contract hardening slice only:
   - planning behavior is unchanged,
   - the concise reason still names the earlier explicit link that already reserved the target.
+- Failed-run composition summaries now also keep blocked explicit-link width-mismatch target context:
+  - top-boundary width mismatches can summarize as `Context: Top port '...'`
+  - child-target width mismatches can summarize as `Context: Child endpoint 'instance.port'`
+- This slice includes a small extractor improvement in `perl/FSM/Pipeline/HDLGenerator.pm`; planning behavior is unchanged.

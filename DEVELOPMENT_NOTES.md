@@ -5148,3 +5148,12 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this is the right bounded refinement because it improves failed-run usability without inventing any parallel reporting logic,
   - the summary is still derived from the raised diagnostic itself, and the concise reason remains the earlier explicit link that already reserved that target.
+
+## 2026-03-19: explicit-link width-mismatch summaries now preserve target context
+- Blocked explicit-link width-mismatch diagnostics already had a clean concise reason, but the failed-run summary extractor was still treating them as reason-only failures with no endpoint context line.
+- The active contract is now explicit for the reachable target families there too:
+  - top-boundary width mismatches can summarize as `Context: Top port '...'`
+  - child-target width mismatches can summarize as `Context: Child endpoint 'instance.port'`
+- Design note from this slice:
+  - this required only a small extractor improvement in `composition_failure_context_excerpt(...)` to recognize the existing `links '...' (width ...) to '...' (width ...)` diagnostic shape,
+  - planning behavior stays unchanged, and the concise reason remains the exact-width-agreement boundary rather than duplicating the full source/target sentence.
