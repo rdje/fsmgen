@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: flatness `.rtlif` failures are now explicitly locked through the RTL-root summary path
+- Saved shipped behavior:
+  - failed composition summaries now have explicit regression coverage for blocked `.rtlif` flatness failures through the same `RTL metadata file:` plus `Context: RTL root '?rtlif:...'` pairing used by the other file-based root-scoped families.
+- Important continuity note:
+  - this slice did not widen extractor behavior,
+  - it hardens the already-shipped root-scoped summary contract,
+  - and it keeps the missing-root / empty-port / flatness trio aligned under one tested `RTL root` summary family.
+
 ## 2026-03-19: file-based `.rtlif` root failures now keep RTL root context in failed-run summaries
 - Saved shipped behavior:
   - failed composition summaries can now keep `Context: RTL root '?rtlif:...'` for file-based root-scoped `.rtlif` failures such as missing-root and empty-port cases,

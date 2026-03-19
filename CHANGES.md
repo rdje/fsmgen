@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### flatness `.rtlif` failures now keep RTL root context in failed-run summaries
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the already-supported `RTL root` summary path is now explicitly locked for blocked `.rtlif` flatness failures too, alongside the existing missing-root and empty-port root-scoped cases.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the resolved `.rtlif` path still stays the primary `RTL metadata file:` artifact line,
+  - and the flatness summary now proves that `Context: RTL root '?rtlif:uart_tx'` and `Reason: contains nested structure under '?rtlif:uart_tx'` survive the same summarization path cleanly.
+- Updated [t/124-composition-rtlif-flatness-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/124-composition-rtlif-flatness-diagnostics.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) together in focused validation, then updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this coverage is preserved as an explicit `R11` reporting refinement.
+
 ### file-based `.rtlif` root failures now keep RTL root context in failed-run summaries
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so failed composition summaries now keep `Context: RTL root '?rtlif:...'` for file-based root-scoped `.rtlif` failures when the blocked diagnostic already names the active root token, including missing-root and empty-port cases.
 - This shipped slice stays deliberately narrow:

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: flatness `.rtlif` failures are now regression-locked through the RTL-root summary path
+- Continued the active `R11` diagnostics/reporting lane by closing the next nearby root-scoped `.rtlif` summary seam without changing any extractor behavior.
+- Landed behavior:
+  - the existing `RTL root` summary extraction now has explicit regression coverage for blocked `.rtlif` flatness failures,
+  - so non-quiet failed composition runs now prove the same `RTL metadata file:` plus `Context: RTL root '?rtlif:...'` pairing across missing-root, empty-port, and nested-structure root-scoped failures.
+- Why this is worth shipping:
+  - the extractor already supported the flatness wording through the shared `under '?rtlif:<module>'` shape,
+  - but without this regression lock, that branch could drift while the nearby root-scoped families stayed green,
+  - and this keeps the failed-run summary contract honest without widening reporting logic any further.
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both pipeline-side extraction and non-quiet CLI summary output for blocked `.rtlif` flatness failures.
+
 ## 2026-03-19: file-based `.rtlif` root failures now keep RTL root context in failed-run summaries
 - Continued the active `R11` diagnostics/reporting lane by broadening one already-shipped `RTL root` context family into the file-based `.rtlif` path where the same token is already present in the blocked diagnostic.
 - Landed behavior:

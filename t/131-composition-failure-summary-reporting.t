@@ -368,6 +368,82 @@ RTLIF
     is($report->{blocked_reason}, "declares no ports under '?rtlif:uart_tx'", 'failure report trims the blocked empty-port reason without repeating the metadata file path');
 };
 
+subtest 'pipeline keeps rtl root context alongside RTL metadata file artifacts for blocked flatness failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'nested_rtlif_failure_summary_top.fsm');
+    my $metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:nested_rtlif_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+    serial_out>
+  )
+  (?fsmc:producer producer_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /producer.output_data/uart_tx.data_in/
+    /uart_tx.txd/serial_out/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    write_file(
+        $metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  clk:clock
+  rstn:reset
+  (group
+    data_in<8:data
+  )
+  txd>:data
+)
+RTLIF
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked rtlif flatness failures');
+    is($report->{rtl_module_name}, 'uart_tx', 'failure report preserves the external RTL module name for flatness failures');
+    is($report->{construct}, '?rtl', 'failure report preserves the external RTL construct for flatness failures');
+    is($report->{artifact_label}, 'RTL metadata file', 'failure report classifies the resolved rtlif file as artifact context for flatness failures');
+    is($report->{artifact_value}, "'$metadata_path'", 'failure report preserves the resolved rtlif file path for flatness failures');
+    is($report->{context_label}, 'RTL root', 'failure report preserves the flatness rtlif root token as summary context');
+    is($report->{context_value}, "'?rtlif:uart_tx'", 'failure report preserves the flatness rtlif root token');
+    is($report->{blocked_boundary}, 'RTL interface metadata flatness', 'failure report preserves the blocked rtlif flatness boundary');
+    is($report->{blocked_reason}, "contains nested structure under '?rtlif:uart_tx'", 'failure report trims the blocked flatness reason without repeating the metadata file path');
+};
+
 subtest 'pipeline keeps token context alongside RTL metadata file artifacts for blocked token failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'invalid_token_failure_summary_top.fsm');
@@ -986,6 +1062,81 @@ RTLIF
     like($combined_output, qr/Context:\s+RTL root '\?rtlif:uart_tx'/s, 'CLI keeps rtlif root context alongside the rtlif file artifact for empty-port failures');
     like($combined_output, qr/Blocked boundary:\s+RTL interface metadata port presence/s, 'CLI reports the blocked rtlif empty-port boundary');
     like($combined_output, qr/Reason:\s+declares no ports under '\?rtlif:uart_tx'/s, 'CLI reports the concise rtlif empty-port reason without repeating the metadata file path');
+};
+
+subtest 'CLI prints rtl root context alongside RTL metadata file artifacts for blocked flatness failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'nested_rtlif_failure_summary_cli_top.fsm');
+    my $metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+    my $output_path = File::Spec->catfile($tempdir, 'nested_rtlif_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:nested_rtlif_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    serial_out>
+  )
+  (?fsmc:producer producer_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /producer.output_data/uart_tx.data_in/
+    /uart_tx.txd/serial_out/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    write_file(
+        $metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  clk:clock
+  rstn:reset
+  (group
+    data_in<8:data
+  )
+  txd>:data
+)
+RTLIF
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked rtlif flatness composition fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked rtlif flatness fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked rtlif flatness failures');
+    like($combined_output, qr/RTL module:\s+uart_tx/s, 'CLI reports the external RTL module for blocked rtlif flatness failures');
+    like($combined_output, qr/Construct:\s+\?rtl/s, 'CLI reports the external RTL construct for blocked rtlif flatness failures');
+    like($combined_output, qr/RTL metadata file:\s+'\Q$metadata_path\E'/s, 'CLI reports the resolved rtlif file path for blocked rtlif flatness failures');
+    like($combined_output, qr/Context:\s+RTL root '\?rtlif:uart_tx'/s, 'CLI keeps rtlif root context alongside the rtlif file artifact for flatness failures');
+    like($combined_output, qr/Blocked boundary:\s+RTL interface metadata flatness/s, 'CLI reports the blocked rtlif flatness boundary');
+    like($combined_output, qr/Reason:\s+contains nested structure under '\?rtlif:uart_tx'/s, 'CLI reports the concise rtlif flatness reason without repeating the metadata file path');
 };
 
 subtest 'CLI prints token context alongside RTL metadata file artifacts for blocked token failures' => sub {
