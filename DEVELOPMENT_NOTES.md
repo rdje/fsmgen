@@ -5325,3 +5325,14 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - no runtime change was needed here; the existing summary extractor already behaved correctly,
   - the value is in making the child-item summary contract explicit and symmetric on the `?dtc` side too.
+
+## 2026-03-19: the dotted-pair child-item summary contract now covers ?rtl too
+- Continued the active `R11` failed-run reporting lane by hardening the external-RTL sibling item-list family instead of widening composition behavior.
+- The summary extractor already recognized known child headers across constructs, but the dotted-pair child-item contract had still not been explicitly locked on the `?rtl` side.
+- The active contract is now explicit for the `?rtl` sibling too:
+  - blocked `?rtl:uart_tx` dotted-pair payloads keep `Construct: ?rtl`
+  - they also keep `Context: Child '?rtl:uart_tx'`
+  - and they preserve the blocked `child item-list shape` boundary plus the concise dotted-pair-contract reason
+- Design note from this slice:
+  - no runtime change was needed here; the existing summary extractor already behaved correctly,
+  - the value is in making the child-item summary contract explicit and symmetric on the `?rtl` side too.

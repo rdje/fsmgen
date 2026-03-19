@@ -4290,3 +4290,8 @@ This is the persistent technical change history for FSMGen.
   - they also keep `Context: Child '?dtc:child'`
   - and preserve the same blocked `child item-list shape` boundary plus the concise dotted-pair-contract reason
 - This follow-on slice is again regression/contract hardening only; runtime behavior was already covered by the existing summary extractor.
+- That same child-item parser-summary contract is now locked for the `?rtl` sibling too:
+  - blocked dotted-pair payloads like `?rtl:uart_tx` keep `Construct: ?rtl`
+  - they also keep `Context: Child '?rtl:uart_tx'`
+  - and preserve the same blocked `child item-list shape` boundary plus the concise dotted-pair-contract reason
+- This follow-on slice is again regression/contract hardening only; runtime behavior was already covered by the existing summary extractor.

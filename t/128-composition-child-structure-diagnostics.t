@@ -104,6 +104,20 @@ FSM
     );
 };
 
+subtest 'dotted-pair ?rtl payloads now say child item-list shape is blocked' => sub {
+    expect_failure(
+        name => 'dotted_pair_rtl_child_top',
+        body => <<'FSM',
+(?top:dotted_pair_rtl_child_top
+  (?rtl:uart_tx . foo)
+)
+FSM
+        pipeline_regex => qr/Composition top 'dotted_pair_rtl_child_top' contains child '\?rtl:uart_tx', .*composition child item-list shape is blocked because dotted-pair payloads are outside the current active composition parser contract/s,
+        cli_regex => qr/composition child item-list shape is blocked because dotted-pair payloads are outside the current active composition parser contract/s,
+        cli_failure_name => 'dotted-pair ?rtl payloads',
+    );
+};
+
 done_testing();
 
 sub expect_failure {

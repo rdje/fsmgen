@@ -4060,3 +4060,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - `Context: Child '?dtc:child'`
   - the blocked `child item-list shape` boundary and the existing concise dotted-pair-contract reason
 - Runtime behavior was already correct here; this slice makes the `?dtc` child-item summary contract explicit too.
+
+## 2026-03-19: the dotted-pair child-item summary contract now covers ?rtl too
+- [t/128-composition-child-structure-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/128-composition-child-structure-diagnostics.t) now also locks the direct blocked dotted-pair `?rtl:uart_tx` diagnostic beside the earlier `?fsmc:child`, `?toplink:wiring`, `?ports`, and `?dtc:child` cases.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks the matching failed-run summary shape so non-quiet runs keep:
+  - `Construct: ?rtl`
+  - `Context: Child '?rtl:uart_tx'`
+  - the blocked `child item-list shape` boundary and the existing concise dotted-pair-contract reason
+- Runtime behavior was already correct here; this slice makes the `?rtl` child-item summary contract explicit too.
