@@ -89,6 +89,7 @@ subtest 'wrong-kind external ?dtc child now says child-source realization is blo
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'wrong_dtc_kind_top.fsm');
     my $child_path = File::Spec->catfile($tempdir, 'child_src.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'wrong_dtc_kind_top.sv');
 
     write_file(
         $composition_path,
@@ -134,6 +135,26 @@ FSM
         $exception,
         qr/resolves '\?dtc' child 'child_src' to '.*child_src\.fsm', .*child-source realization is blocked because that resolved file is not an active standalone-DT child source \(detected root '\?fsm:child_src'\).*Use '\?fsmc' for FSM children instead/s,
         'pipeline now says wrong-kind external ?dtc child realization is blocked and points to ?fsmc',
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI rejects wrong-kind external ?dtc child sources');
+    ok(!-e $output_path, 'CLI does not emit output for wrong-kind external ?dtc child sources');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like(
+        $combined_output,
+        qr/child-source realization is blocked because that resolved file is not an active standalone-DT child source .*Use '\?fsmc' for FSM children instead/s,
+        'CLI surfaces the blocked wrong-kind ?dtc child diagnostic',
     );
 };
 

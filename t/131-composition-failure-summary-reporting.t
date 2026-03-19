@@ -1081,6 +1081,69 @@ FSM
     );
 };
 
+subtest 'pipeline derives child-source file context from blocked wrong-kind ?dtc realization failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'wrong_dtc_kind_failure_summary_top.fsm');
+    my $child_path = File::Spec->catfile($tempdir, 'child_src.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:wrong_dtc_kind_failure_summary_top
+  (?ports:public_io
+    clk
+    rst_n
+    output_data>8
+  )
+  (?dtc:child child_src)
+)
+FSM
+    );
+
+    write_file(
+        $child_path,
+        <<'FSM'
+(?fsm:child_src
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked wrong-kind ?dtc realization failures');
+    is($report->{top_name}, 'wrong_dtc_kind_failure_summary_top', 'failure report preserves the top name for blocked wrong-kind ?dtc realization failures');
+    is($report->{construct}, '?dtc', 'failure report preserves the ?dtc construct for blocked wrong-kind ?dtc realization failures');
+    is($report->{artifact_label}, 'Child source file', 'failure report classifies the resolved ?dtc child file as artifact context');
+    is($report->{artifact_value}, "'$child_path'", 'failure report preserves the resolved ?dtc child file path');
+    is($report->{artifact_summary}, "Child source file '$child_path'", 'failure report exposes a concise ?dtc child file summary');
+    is($report->{context_label}, 'Child', 'failure report preserves the ?dtc child name as logical context');
+    is($report->{context_value}, "'child_src'", 'failure report preserves the offending ?dtc child source name');
+    is($report->{blocked_boundary}, 'child-source realization', 'failure report preserves the blocked ?dtc child realization boundary');
+    is(
+        $report->{blocked_reason},
+        "that resolved file is not an active standalone-DT child source (detected root '?fsm:child_src')",
+        'failure report trims the blocked wrong-kind ?dtc realization reason before the corrective note',
+    );
+};
+
 subtest 'pipeline derives child context from blocked missing ?fsmc child-source resolution failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'missing_fsmc_child_failure_summary_top.fsm');
@@ -3573,6 +3636,63 @@ FSM
     like($combined_output, qr/Context:\s+Child 'route_src'/s, 'CLI reports the generated-child source name as context');
     like($combined_output, qr/Blocked boundary:\s+child-source realization/s, 'CLI reports the blocked generated-child realization boundary');
     like($combined_output, qr/Reason:\s+that resolved file is not an active FSM child source \(detected root '\?dt:route_src'\)/s, 'CLI reports the concise blocked generated-child reason');
+};
+
+subtest 'CLI prints child-source file context for blocked wrong-kind ?dtc realization failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'wrong_dtc_kind_failure_summary_cli_top.fsm');
+    my $child_path = File::Spec->catfile($tempdir, 'child_src.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'wrong_dtc_kind_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:wrong_dtc_kind_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rst_n
+    output_data>8
+  )
+  (?dtc:child child_src)
+)
+FSM
+    );
+
+    write_file(
+        $child_path,
+        <<'FSM'
+(?fsm:child_src
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked wrong-kind ?dtc realization fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked wrong-kind ?dtc realization fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked wrong-kind ?dtc realization failures');
+    like($combined_output, qr/Top:\s+wrong_dtc_kind_failure_summary_cli_top/s, 'CLI reports the failing top for blocked wrong-kind ?dtc realization failures');
+    like($combined_output, qr/Construct:\s+\?dtc/s, 'CLI reports the ?dtc construct for blocked wrong-kind ?dtc realization failures');
+    like($combined_output, qr/Child source file:\s+'\Q$child_path\E'/s, 'CLI reports the resolved ?dtc child file path');
+    like($combined_output, qr/Context:\s+Child 'child_src'/s, 'CLI reports the ?dtc child source name as context');
+    like($combined_output, qr/Blocked boundary:\s+child-source realization/s, 'CLI reports the blocked ?dtc child realization boundary');
+    like($combined_output, qr/Reason:\s+that resolved file is not an active standalone-DT child source \(detected root '\?fsm:child_src'\)/s, 'CLI reports the concise blocked wrong-kind ?dtc realization reason');
 };
 
 subtest 'CLI prints child context for blocked missing ?fsmc child-source resolution failures' => sub {

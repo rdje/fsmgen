@@ -4250,3 +4250,8 @@ This is the persistent technical change history for FSMGen.
   - unresolved `?dtc` children keep `Construct: ?dtc` plus `Context: Child '...'`
   - both keep the blocked `child-source resolution` boundary and the concise missing-source reason without inventing a `Child source file:` artifact
 - This follow-on slice is also regression/contract hardening only; runtime behavior was already covered by the existing summary extractor.
+- The wrong-kind generated-child realization summary contract is now locked for both construct families too:
+  - wrong-kind `?fsmc` resolutions keep `Construct: ?fsmc`, `Child source file`, and `Context: Child '...'`
+  - wrong-kind `?dtc` resolutions keep `Construct: ?dtc`, `Child source file`, and `Context: Child '...'`
+  - both keep the blocked `child-source realization` boundary and the concise wrong-kind reason
+- This follow-on slice is again regression/contract hardening only; runtime behavior was already covered by the existing summary extractor.

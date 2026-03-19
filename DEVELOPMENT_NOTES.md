@@ -5237,3 +5237,14 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - no runtime change was needed here; the existing summary extractor already behaved correctly,
   - the value is in making the unresolved-source family explicit and symmetric across both generated-child constructs.
+
+## 2026-03-19: wrong-kind generated-child realization summaries are now explicit for both constructs
+- Continued the active `R11` failed-run reporting lane by hardening the sibling realization family instead of widening composition behavior.
+- The summary extractor was already correctly deriving construct + resolved-file artifact + child context from blocked wrong-kind realization diagnostics, but the contract had only been locked for the `?fsmc` side.
+- The active contract is now explicit for both realization siblings:
+  - wrong-kind `?fsmc` resolutions keep `Construct: ?fsmc`, `Child source file`, and `Child 'route_src'`
+  - wrong-kind `?dtc` resolutions keep `Construct: ?dtc`, `Child source file`, and `Child 'child_src'`
+  - both keep the blocked `child-source realization` boundary and the concise wrong-kind reason
+- Design note from this slice:
+  - no runtime change was needed here; the existing summary extractor already behaved correctly,
+  - the value is in making the wrong-kind realization family explicit and symmetric across both generated-child constructs.

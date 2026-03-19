@@ -3997,3 +3997,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - the blocked `child-source resolution` boundary and the existing concise missing-source reason
   - and no invented `Child source file:` artifact when no external file was resolved
 - Runtime behavior was already correct here; this slice makes the unresolved-source summary contract explicit for both generated-child constructs.
+
+## 2026-03-19: wrong-kind generated-child realization summaries now cover both constructs
+- [t/115-composition-child-source-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/115-composition-child-source-diagnostics.t) now also locks the direct CLI diagnostic for wrong-kind external `?dtc` children beside the earlier wrong-kind `?fsmc` one.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks the matching failed-run summary shapes so non-quiet runs keep:
+  - `Construct: ?fsmc` plus `Child source file` and `Context: Child 'route_src'`
+  - `Construct: ?dtc` plus `Child source file` and `Context: Child 'child_src'`
+  - the blocked `child-source realization` boundary and the existing concise wrong-kind reason
+- Runtime behavior was already correct here; this slice makes the wrong-kind realization summary contract explicit for both generated-child constructs.
