@@ -1373,6 +1373,78 @@ FSM
     like($combined_output, qr/Reason:\s+that name resolves ambiguously to multiple compatible child endpoints: left\.shared_status, right\.shared_status/s, 'CLI preserves the ambiguous same-name candidate list in the concise reason');
 };
 
+subtest 'CLI keeps width-mismatch C4 endpoint sets in blocked declared connect-by-name summaries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'connect_by_name_width_mismatch_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'connect_by_name_width_mismatch_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:connect_by_name_width_mismatch_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    =final_data>4
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data/consumer.input_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (final_data> <= input_data)
+  )
+  (+size
+    (input_data 8)
+    (final_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked width-mismatch C4 declared connect-by-name fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked width-mismatch C4 declared connect-by-name fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked width-mismatch C4 declared connect-by-name failures');
+    unlike($combined_output, qr/Lane:\s+C4/s, 'CLI does not invent a C4 lane when the width-mismatch diagnostic only names the active composition lanes');
+    like($combined_output, qr/Construct:\s+=port/s, 'CLI reports the =port construct for blocked width-mismatch declared connect-by-name failures');
+    like($combined_output, qr/Context:\s+Top port 'final_data'/s, 'CLI reports the blocked width-mismatch =port top port as summary context');
+    like($combined_output, qr/Blocked boundary:\s+declared connect-by-name/s, 'CLI reports the blocked declared connect-by-name boundary for width mismatches');
+    like($combined_output, qr/Reason:\s+same-name child endpoints do not all match the declared width 4\. Seen same-name child endpoints: consumer\.final_data\[output, width=8\]/s, 'CLI preserves the conflicting same-name endpoint set in the concise width-mismatch reason');
+};
+
 subtest 'CLI prints RTL metadata file artifacts for blocked metadata-structure failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'bad_rtlif_root_failure_summary_cli_top.fsm');

@@ -2638,6 +2638,16 @@ sub composition_failure_reason_excerpt ($self, $reason_text) {
     $reason =~ s/^declared interface metadata '[^']+'\s+//;
     $reason =~ s/\s+in declared interface metadata '[^']+'//g;
     $reason =~ s/\s*See docs\/.*\z//i;
+
+    if (
+        $reason =~ /\A(.+?)\.\s+Seen same-name child endpoints:\s+(.+?)\.\s+(?:The active|The current|Use '\?toplink'|Use '\?ports'|Use '\?fsmc'|Use '\?dtc'|Standalone '\?dt:name' roots|FSM child roots are shipped as composition children).*\z/s
+    ) {
+        my ($headline, $seen) = ($1, $2);
+        $headline =~ s/^\s+|\s+$//g;
+        $seen =~ s/^\s+|\s+$//g;
+        return "$headline. Seen same-name child endpoints: $seen";
+    }
+
     $reason =~ s/\.\s+(?:Search roots:|Seen |The active |The current |Use '\?toplink'|Use '\?ports'|Use '\?fsmc'|Use '\?dtc'|Standalone '\?dt:name' roots|FSM child roots are shipped as composition children).*\z//;
     $reason =~ s/\.\z//;
     $reason =~ s/^\s+|\s+$//g;
