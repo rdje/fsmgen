@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: blocked shared-system-port `=port` summaries are now explicitly locked at CLI level
+- Saved shipped behavior:
+  - failed composition summaries now have explicit CLI regression coverage for blocked shared-system-port declared connect-by-name failures, including the concise dedicated-system-input-contract reason and top-port context.
+- Important continuity note:
+  - this slice did not widen extractor behavior,
+  - it hardens another already-shipped `=port` summary family at the CLI boundary,
+  - and it keeps the shared-system-port path aligned with the previously locked ambiguity, width-mismatch, incompatible-direction, missing-endpoint, and `C1` / `C2` / `C3` summary families.
+
 ## 2026-03-19: blocked incompatible-direction `C4` declared connect-by-name summaries now keep endpoint sets at CLI level
 - Saved shipped behavior:
   - failed composition summaries now have explicit CLI regression coverage for a reachable blocked incompatible-direction `C4` declared connect-by-name failure, including the conflicting same-name endpoint set in the concise `Reason:` line.

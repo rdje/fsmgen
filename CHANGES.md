@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### blocked shared-system-port `=port` failures now keep concise system-contract reasons in CLI summaries
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for the reachable shared-system-port declared connect-by-name family too.
+- This keeps the slice narrow and honest:
+  - behavior is unchanged,
+  - the summary already knew how to show `=port` plus top-port context,
+  - and the new coverage simply proves that non-quiet CLI failures preserve the concise dedicated-system-input-contract reason without inventing a `Lane:` line the raw diagnostic does not actually provide.
+
 ### blocked incompatible-direction `C4` declared connect-by-name failures now keep endpoint sets in CLI summaries
 - Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for a reachable incompatible-direction `C4` declared connect-by-name family at CLI level too.
 - This keeps the slice narrow and honest:

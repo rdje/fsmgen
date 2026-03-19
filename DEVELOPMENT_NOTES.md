@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: blocked shared-system-port `=port` summaries are now regression-locked at CLI level
+- Continued the active `R11` failed-run reporting lane by hardening another already-shipped declared connect-by-name summary family instead of widening composition behavior.
+- Landed behavior:
+  - the existing failed-run summary path now has explicit CLI regression coverage for blocked shared-system-port declared connect-by-name failures,
+  - so these runs keep `Construct: =port`, top-port context, the blocked `declared connect-by-name` boundary, and the concise dedicated-system-input-contract reason, while correctly omitting any invented `Lane:` line.
+- Why this is worth shipping:
+  - this is a real user-facing `=port` failure path,
+  - the summary behavior already existed,
+  - and the new coverage proves that the CLI stays honest when the raw diagnostic does not actually expose a lane name.
+
 ## 2026-03-19: blocked incompatible-direction `C4` declared connect-by-name summaries now keep endpoint sets at CLI level
 - Continued the active `R11` failed-run reporting lane by hardening one more already-shipped `C4` summary family instead of widening composition behavior.
 - Landed behavior:
