@@ -5270,3 +5270,14 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - no runtime change was needed here; the existing summary extractor already behaved correctly,
   - the value is in making the `?ports` token family explicit and symmetric instead of relying on generic token extraction only.
+
+## 2026-03-19: malformed generated-child parser summaries now surface child context too
+- Continued the active `R11` failed-run reporting lane by extending parser-boundary summaries into malformed generated-child declarations instead of widening composition behavior.
+- The blocked `?fsmc` / `?dtc` parser diagnostics already named the declared child, but the failed-run summary extractor was not surfacing that child name as explicit summary context.
+- The active contract is now explicit for two generated-child parser families:
+  - blocked `?fsmc` source-count failures keep `Construct: ?fsmc` plus `Context: Child 'child'`
+  - blocked `?dtc` source-shape failures keep `Construct: ?dtc` plus `Context: Child 'child'`
+  - both keep the existing blocked child-source boundary labels and concise parser reasons
+- Design note from this slice:
+  - this required only a narrow extractor addition for `contains '?fsmc' child '...'` / `contains '?dtc' child '...'`,
+  - parser behavior stays unchanged, and the summary remains derived from the raised diagnostic instead of a parallel reporting path.

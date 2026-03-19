@@ -4265,3 +4265,8 @@ This is the persistent technical change history for FSMGen.
   - non-positive width tokens keep `Construct: ?ports` plus `Context: Token 'data_in<0'`
   - both keep the blocked parser-boundary labels and the existing concise parser reasons
 - This follow-on slice is regression/contract hardening only; runtime behavior was already covered by the existing summary extractor.
+- Failed-run parser-boundary summaries now also keep named-child context for malformed generated-child declarations:
+  - blocked `?fsmc` source-count failures keep `Construct: ?fsmc` plus `Context: Child 'child'`
+  - blocked `?dtc` source-shape failures keep `Construct: ?dtc` plus `Context: Child 'child'`
+  - both keep their existing blocked child-source boundary labels and concise parser reasons
+- This slice includes a small extractor improvement in `perl/FSM/Pipeline/HDLGenerator.pm`; parser behavior is unchanged.
