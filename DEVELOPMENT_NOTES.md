@@ -5248,3 +5248,14 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - no runtime change was needed here; the existing summary extractor already behaved correctly,
   - the value is in making the wrong-kind realization family explicit and symmetric across both generated-child constructs.
+
+## 2026-03-19: parser-boundary summaries now surface mapping/token context more explicitly
+- Continued the active `R11` failed-run reporting lane by extending construct-scoped parser summaries instead of widening composition behavior.
+- The parser failure summary path already classified malformed `?ports` and `?toplink` runs by construct, but the contract had not yet been locked for those families and the `?ports` mapping-directive case was still leaving the specific directive only in the raw exception text.
+- The active contract is now explicit for two parser-boundary families:
+  - blocked `?ports` mapping directives keep `Construct: ?ports` plus `Context: Mapping directive '/foo/bar/'`
+  - blocked malformed `?toplink` tokens keep `Construct: ?toplink` plus `Context: Token 'child.result_data->result_data'`
+  - both keep their existing blocked-boundary labels and concise parser reasons
+- Design note from this slice:
+  - this required only a narrow extractor addition for `mapping directive '...'`,
+  - parser behavior stays unchanged, and the summary remains derived from the raised diagnostic instead of a parallel reporting path.

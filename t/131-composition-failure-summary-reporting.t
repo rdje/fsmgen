@@ -54,6 +54,127 @@ FSM
     );
 };
 
+subtest 'pipeline derives mapping-directive context from blocked ?ports mapping failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'ports_mapping_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:ports_mapping_failure_summary_top
+  (?ports:public_io
+    /foo/bar/
+    result_data>8
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_data> <= 8'1)
+  )
+  (+size
+    (result_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked ?ports mapping failures');
+    is($report->{top_name}, 'ports_mapping_failure_summary_top', 'failure report preserves the top name for blocked ?ports mapping failures');
+    is($report->{construct}, '?ports', 'failure report preserves the ?ports construct for blocked ?ports mapping failures');
+    is($report->{context_label}, 'Mapping directive', 'failure report classifies blocked ?ports mapping directives as mapping-directive context');
+    is($report->{context_value}, "'/foo/bar/'", 'failure report preserves the offending ?ports mapping directive');
+    is($report->{context_summary}, "Mapping directive '/foo/bar/'", 'failure report exposes a concise ?ports mapping summary');
+    is($report->{blocked_boundary}, 'composition port declaration mode', 'failure report preserves the blocked ?ports declaration-mode boundary');
+    is($report->{blocked_boundary_label}, 'port declaration mode', 'failure report exposes a CLI-friendly blocked-boundary label for ?ports mapping failures');
+    is(
+        $report->{blocked_reason},
+        "the active composition parser only supports explicit top-port declarations inside '?ports'",
+        'failure report preserves the concise ?ports mapping reason',
+    );
+};
+
+subtest 'pipeline derives token context from blocked ?toplink token-shape failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'unsupported_toplink_token_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:unsupported_toplink_token_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:child child_src)
+  (?toplink:wiring
+    child.result_data->result_data
+  )
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_data> <= 8'1)
+  )
+  (+size
+    (result_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked ?toplink token-shape failures');
+    is($report->{top_name}, 'unsupported_toplink_token_failure_summary_top', 'failure report preserves the top name for blocked ?toplink token-shape failures');
+    is($report->{construct}, '?toplink', 'failure report preserves the ?toplink construct for blocked ?toplink token-shape failures');
+    is($report->{context_label}, 'Token', 'failure report classifies blocked ?toplink token-shape failures as token context');
+    is($report->{context_value}, "'child.result_data->result_data'", 'failure report preserves the offending ?toplink token');
+    is($report->{context_summary}, "Token 'child.result_data->result_data'", 'failure report exposes a concise ?toplink token summary');
+    is($report->{blocked_boundary}, 'explicit top-link token shape', 'failure report preserves the blocked ?toplink token-shape boundary');
+    is(
+        $report->{blocked_reason},
+        "the current parser only accepts simple '/source/target/' link forms",
+        'failure report preserves the concise ?toplink token-shape reason',
+    );
+};
+
 subtest 'pipeline derives top-port context from blocked duplicate top-port declarations' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'duplicate_top_port_failure_summary_top.fsm');
@@ -4814,6 +4935,114 @@ FSM
         'CLI reports the concise blocked reason',
     );
     like($combined_output, qr/composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', and '\?toplink'/s, 'CLI still surfaces the original blocked diagnostic text');
+};
+
+subtest 'CLI prints mapping-directive context for blocked ?ports mapping failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'ports_mapping_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'ports_mapping_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:ports_mapping_failure_summary_cli_top
+  (?ports:public_io
+    /foo/bar/
+    result_data>8
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_data> <= 8'1)
+  )
+  (+size
+    (result_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked ?ports mapping fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked ?ports mapping fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked ?ports mapping failures');
+    like($combined_output, qr/Construct:\s+\?ports/s, 'CLI reports the ?ports construct for blocked ?ports mapping failures');
+    like($combined_output, qr/Context:\s+Mapping directive '\/foo\/bar\/'/s, 'CLI reports the blocked ?ports mapping directive as summary context');
+    like($combined_output, qr/Blocked boundary:\s+port declaration mode/s, 'CLI reports the blocked ?ports declaration-mode boundary');
+    like($combined_output, qr/Reason:\s+the active composition parser only supports explicit top-port declarations inside '\?ports'/s, 'CLI reports the concise ?ports mapping reason');
+};
+
+subtest 'CLI prints token context for blocked ?toplink token-shape failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'unsupported_toplink_token_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'unsupported_toplink_token_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:unsupported_toplink_token_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:child child_src)
+  (?toplink:wiring
+    child.result_data->result_data
+  )
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_data> <= 8'1)
+  )
+  (+size
+    (result_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked ?toplink token-shape fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked ?toplink token-shape fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked ?toplink token-shape failures');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the ?toplink construct for blocked ?toplink token-shape failures');
+    like($combined_output, qr/Context:\s+Token 'child\.result_data->result_data'/s, 'CLI reports the blocked ?toplink token as summary context');
+    like($combined_output, qr/Blocked boundary:\s+explicit top-link token shape/s, 'CLI reports the blocked ?toplink token-shape boundary');
+    like($combined_output, qr/Reason:\s+the current parser only accepts simple '\/source\/target\/' link forms/s, 'CLI reports the concise ?toplink token-shape reason');
 };
 
 done_testing();

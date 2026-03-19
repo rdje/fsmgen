@@ -4005,3 +4005,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - `Construct: ?dtc` plus `Child source file` and `Context: Child 'child_src'`
   - the blocked `child-source realization` boundary and the existing concise wrong-kind reason
 - Runtime behavior was already correct here; this slice makes the wrong-kind realization summary contract explicit for both generated-child constructs.
+
+## 2026-03-19: parser-boundary summaries now cover mapping directives and malformed top-link tokens
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now recognizes `mapping directive '...'` diagnostics as structured failed-run summary context.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks the matching failed-run summary shapes so non-quiet runs keep:
+  - `Construct: ?ports` plus `Context: Mapping directive '/foo/bar/'`
+  - `Construct: ?toplink` plus `Context: Token 'child.result_data->result_data'`
+  - the blocked parser-boundary labels and the existing concise parser reasons
+- Parser behavior was already correct here; this slice improves only the failed-run summary surface for the `?ports` mapping-directive family and makes both parser-boundary summary contracts explicit.

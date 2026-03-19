@@ -4255,3 +4255,8 @@ This is the persistent technical change history for FSMGen.
   - wrong-kind `?dtc` resolutions keep `Construct: ?dtc`, `Child source file`, and `Context: Child '...'`
   - both keep the blocked `child-source realization` boundary and the concise wrong-kind reason
 - This follow-on slice is again regression/contract hardening only; runtime behavior was already covered by the existing summary extractor.
+- Failed-run parser-boundary summaries now also cover two construct-scoped families explicitly:
+  - blocked `?ports` mapping directives keep `Construct: ?ports` plus `Context: Mapping directive '...'`
+  - blocked malformed `?toplink` tokens keep `Construct: ?toplink` plus `Context: Token '...'`
+  - both keep their existing blocked-boundary labels and concise parser reasons
+- This slice includes a small extractor improvement in `perl/FSM/Pipeline/HDLGenerator.pm` for `?ports` mapping-directive context; parser behavior is unchanged.
