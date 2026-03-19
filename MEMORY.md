@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: blocked `C1` exposure summaries are now explicitly locked at CLI level
+- Saved shipped behavior:
+  - failed composition summaries now have explicit CLI regression coverage for blocked `C1` top-port mismatch and blocked `C1` omitted-child-port exposure failures through the existing `Top port` / `Child port` context lines.
+- Important continuity note:
+  - this slice did not widen extractor behavior,
+  - it hardens already-shipped failure-summary behavior at the CLI boundary,
+  - and it keeps the reachable `C1` exposure families aligned across pipeline extraction and user-visible summary output.
+
 ## 2026-03-19: future syntax-power guidance is now saved
 - Saved future note:
   - the current highest-leverage language-growth candidates are aggregate types with inference, interface bundles, enum-first case/match capture, small alias/default forms, bounded replication, intent helpers, assertions, and stronger explain/report mode.

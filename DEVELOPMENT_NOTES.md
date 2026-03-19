@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: blocked `C1` exposure summaries are now regression-locked at CLI level
+- Continued the active `R11` diagnostics/reporting lane by hardening one more already-shipped summary family instead of widening composition behavior again.
+- Landed behavior:
+  - the existing failed-run summary path now has explicit CLI regression coverage for blocked `C1` top-port mismatch failures and blocked `C1` omitted-child-port exposure failures,
+  - so the same `Top port` / `Child port` context already extracted at pipeline level is now proved through the non-quiet CLI summary surface too.
+- Why this is worth shipping:
+  - these were reachable, user-facing `C1` failure families with stable context subjects,
+  - the summary behavior already existed,
+  - and this keeps the failure-summary contract honest instead of letting CLI coverage lag behind the pipeline-side extractor.
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock those two CLI summary branches, while [t/23-composition-errors.t](/Users/richarddje/Documents/github/fsmgen/t/23-composition-errors.t) remains the focused explicit-link regression anchor nearby.
+
 ## 2026-03-19: future syntax-power guidance is now recorded with a bounded meta-programming rule
 - Recorded the recent “what would make `fsmgen` much more powerful while staying terse and elegant” discussion as future language guidance rather than leaving it in conversation only.
 - Current highest-leverage feature set:

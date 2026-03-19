@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### blocked `C1` exposure failures now keep top-port and child-port context in CLI summaries
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for the reachable `C1` exposure families at CLI level too:
+  - blocked top-port mismatch keeps `Context: Top port 'output_data'`,
+  - and blocked omitted-child-port exposure keeps `Context: Child port 'output_data'`.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the pipeline-side extraction for those contexts was already in place,
+  - and the new coverage simply proves that the same concise context survives through the non-quiet CLI summary surface.
+- Focused validation covered [t/23-composition-errors.t](/Users/richarddje/Documents/github/fsmgen/t/23-composition-errors.t) beside the updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t), then [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) were updated so this coverage is preserved as an explicit `R11` reporting refinement.
+
 ### future note logged: high-leverage syntax-power direction should stay bounded and RTL-focused
 - Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the recent design discussion is now preserved as future language guidance instead of conversation-only memory.
 - The saved direction is:

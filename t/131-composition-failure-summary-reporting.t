@@ -1015,6 +1015,111 @@ FSM
     is($report->{blocked_reason}, 'that syntax is unsupported', 'failure report preserves the concise unsupported-endpoint reason');
 };
 
+subtest 'CLI prints top-port context for blocked C1 top-port failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'c1_width_mismatch_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'c1_width_mismatch_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:c1_width_mismatch_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    output_data>4
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked C1 top-port mismatch fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked C1 top-port mismatch fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked C1 top-port failures');
+    like($combined_output, qr/Construct:\s+\?ports/s, 'CLI reports the top-interface construct for blocked top-port failures');
+    like($combined_output, qr/Context:\s+Top port 'output_data'/s, 'CLI reports the blocked top port as summary context');
+    like($combined_output, qr/Blocked boundary:\s+C1 passthrough exposure/s, 'CLI reports the blocked C1 exposure boundary for top-port failures');
+    like($combined_output, qr/Reason:\s+child port 'output_data' has width 8/s, 'CLI reports the concise top-port mismatch reason');
+};
+
+subtest 'CLI prints child-port context for blocked C1 child-port failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'c1_missing_exposure_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'c1_missing_exposure_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:c1_missing_exposure_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked C1 child-port exposure fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked C1 child-port exposure fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked C1 child-port failures');
+    like($combined_output, qr/Lane:\s+C1/s, 'CLI reports the C1 lane for blocked child-port failures');
+    like($combined_output, qr/Context:\s+Child port 'output_data'/s, 'CLI reports the blocked child port as summary context');
+    like($combined_output, qr/Blocked boundary:\s+C1 passthrough exposure/s, 'CLI reports the blocked C1 exposure boundary for child-port failures');
+    like($combined_output, qr/Reason:\s+the current active C1 lane requires every child port to be explicitly exposed in '\?ports'/s, 'CLI reports the concise child-port omission reason');
+};
+
 subtest 'CLI prints composition failure lane when blocked diagnostics expose it' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'missing_rtlif_failure_summary_cli_top.fsm');
