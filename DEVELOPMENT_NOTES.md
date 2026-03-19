@@ -5213,3 +5213,15 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this required only narrow extractor/construct classification work in `FSM::Pipeline::HDLGenerator`,
   - planner behavior stays unchanged, and the summary remains derived from the raised diagnostic rather than a parallel reporting path.
+
+## 2026-03-19: explicit-link role-mismatch summaries are now symmetric across source/target siblings
+- Continued the active `R11` failed-run reporting lane by hardening the remaining sibling role-mismatch families instead of widening composition behavior.
+- The summary extractor already handled explicit-link role mismatches generically, but the contract had only been locked for:
+  - child-endpoint targets blocked as `output instead of input`
+  - top-port sources blocked as `output instead of input`
+- The active contract is now explicit for the sibling families too:
+  - child-endpoint sources keep `Context: Child endpoint 'consumer.input_data'` with `Reason: that child port is input instead of output`
+  - top-port targets keep `Context: Top port 'start'` with `Reason: that top port is declared as input instead of output`
+- Design note from this slice:
+  - no runtime change was needed here; the existing summary extractor already behaved correctly,
+  - the value is in making the role-mismatch family symmetric and provable across both source/target sides.

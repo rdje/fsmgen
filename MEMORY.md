@@ -3978,3 +3978,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - `Context: Child 'dup'` for duplicate child-instance declarations
   - `Blocked boundary: shape` plus the existing uniqueness reason for both families
 - This is a small extractor/classification improvement only; planner behavior is unchanged.
+
+## 2026-03-19: explicit-link role-mismatch summaries now cover the remaining sibling families too
+- [t/23-composition-errors.t](/Users/richarddje/Documents/github/fsmgen/t/23-composition-errors.t) now locks the direct blocked diagnostics for:
+  - child-endpoint sources used as explicit-link sources when that child port is input instead of output
+  - top-port targets used as explicit-link targets when that top port is input instead of output
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks the matching failed-run summary shapes so non-quiet runs keep:
+  - `Context: Child endpoint 'consumer.input_data'`
+  - `Context: Top port 'start'`
+  - the blocked `explicit link` boundary and the existing concise role-mismatch reasons
+- Runtime behavior was already correct here; this slice makes the sibling role-mismatch summary contract explicit.

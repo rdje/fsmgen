@@ -4241,3 +4241,7 @@ This is the persistent technical change history for FSMGen.
   - duplicate top-port declarations keep `Construct: ?ports` plus `Context: Top port '...'`
   - duplicate child-instance declarations keep `Context: Child '...'`
 - This slice includes a small extractor improvement in `perl/FSM/Pipeline/HDLGenerator.pm`; planner behavior is unchanged.
+- The explicit-link role-mismatch summary contract is now locked for the remaining sibling families too:
+  - child-endpoint sources keep `Context: Child endpoint 'instance.port'` with the concise `input instead of output` reason
+  - top-port targets keep `Context: Top port '...'` with the concise `input instead of output` reason
+- This follow-on slice is regression/contract hardening only; runtime behavior was already covered by the existing summary extractor.

@@ -18,6 +18,8 @@ my $unknown_rtl_port_path = File::Spec->catfile($tempdir, 'unknown_rtl_port_top.
 my $unknown_top_port_path = File::Spec->catfile($tempdir, 'unknown_top_port_top.fsm');
 my $rtl_direction_mismatch_path = File::Spec->catfile($tempdir, 'rtl_direction_mismatch_top.fsm');
 my $top_port_direction_mismatch_path = File::Spec->catfile($tempdir, 'top_port_direction_mismatch_top.fsm');
+my $child_source_direction_mismatch_path = File::Spec->catfile($tempdir, 'child_source_direction_mismatch_top.fsm');
+my $top_target_direction_mismatch_path = File::Spec->catfile($tempdir, 'top_target_direction_mismatch_top.fsm');
 my $rtl_metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
 
 write_file(
@@ -247,6 +249,89 @@ FSM
 );
 
 write_file(
+    $child_source_direction_mismatch_path,
+    <<'FSM'
+(?top:child_source_direction_mismatch_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /consumer.input_data/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_shadow> <= input_data)
+  )
+  (+size
+    (input_data 8)
+    (result_shadow 8)
+  )
+)
+FSM
+);
+
+write_file(
+    $top_target_direction_mismatch_path,
+    <<'FSM'
+(?top:top_target_direction_mismatch_top
+  (?ports:public_io
+    clk
+    rstn
+    start
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data/start/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 1'1)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (ack> <= 1'0)
+  )
+)
+FSM
+);
+
+write_file(
     $rtl_metadata_path,
     <<'RTLIF'
 (?rtlif:uart_tx
@@ -369,6 +454,40 @@ like(
     $top_port_direction_mismatch_exception,
     qr/docs\/COMPOSITION_SCOPE\.md/s,
     'top-port direction-mismatch diagnostics point to the scoped composition doc',
+);
+
+my $child_source_direction_mismatch_exception = eval {
+    $pipeline->generate_hdl_from_file($child_source_direction_mismatch_path);
+    undef;
+};
+$child_source_direction_mismatch_exception = $@;
+
+like(
+    $child_source_direction_mismatch_exception,
+    qr/uses child endpoint 'consumer\.input_data' as an explicit link source, .*explicit link is blocked because that child port is input instead of output/s,
+    'direction-mismatched child-endpoint sources now say the explicit link is blocked',
+);
+like(
+    $child_source_direction_mismatch_exception,
+    qr/docs\/COMPOSITION_LEGACY_MAPPING\.md/s,
+    'child-endpoint source direction-mismatch diagnostics still point to the legacy mapping note',
+);
+
+my $top_target_direction_mismatch_exception = eval {
+    $pipeline->generate_hdl_from_file($top_target_direction_mismatch_path);
+    undef;
+};
+$top_target_direction_mismatch_exception = $@;
+
+like(
+    $top_target_direction_mismatch_exception,
+    qr/uses top port 'start' as an explicit link target, .*explicit link is blocked because that top port is declared as input instead of output/s,
+    'direction-mismatched top-port targets now say the explicit link is blocked',
+);
+like(
+    $top_target_direction_mismatch_exception,
+    qr/docs\/COMPOSITION_SCOPE\.md/s,
+    'top-port target direction-mismatch diagnostics point to the scoped composition doc',
 );
 
 done_testing();

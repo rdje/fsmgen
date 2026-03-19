@@ -1366,6 +1366,145 @@ RTLIF
     is($report->{blocked_reason}, 'that top port is declared as output instead of input', 'failure report preserves the concise top-port role-mismatch reason');
 };
 
+subtest 'pipeline derives child-endpoint context from blocked explicit-link child-source role mismatches' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'child_source_direction_mismatch_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:child_source_direction_mismatch_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /consumer.input_data/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_shadow> <= input_data)
+  )
+  (+size
+    (input_data 8)
+    (result_shadow 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked explicit-link child-source role mismatches');
+    is($report->{top_name}, 'child_source_direction_mismatch_failure_summary_top', 'failure report preserves the top name for blocked explicit-link child-source role mismatches');
+    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked child-source role mismatches');
+    is($report->{context_label}, 'Child endpoint', 'failure report classifies child-source role mismatches as child-endpoint context');
+    is($report->{context_value}, "'consumer.input_data'", 'failure report preserves the blocked child endpoint for child-source role mismatches');
+    is($report->{context_summary}, "Child endpoint 'consumer.input_data'", 'failure report exposes a concise child-source role-mismatch summary');
+    is($report->{blocked_boundary}, 'explicit link', 'failure report preserves the blocked explicit-link boundary for child-source role mismatches');
+    is($report->{blocked_reason}, 'that child port is input instead of output', 'failure report preserves the concise child-source role-mismatch reason');
+};
+
+subtest 'pipeline derives top-port context from blocked explicit-link top-target role mismatches' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'top_target_direction_mismatch_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:top_target_direction_mismatch_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+    start
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data/start/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 1'1)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (ack> <= 1'0)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked explicit-link top-target role mismatches');
+    is($report->{top_name}, 'top_target_direction_mismatch_failure_summary_top', 'failure report preserves the top name for blocked explicit-link top-target role mismatches');
+    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked top-target role mismatches');
+    is($report->{context_label}, 'Top port', 'failure report classifies top-target role mismatches as top-port context');
+    is($report->{context_value}, "'start'", 'failure report preserves the blocked top port for top-target role mismatches');
+    is($report->{context_summary}, "Top port 'start'", 'failure report exposes a concise top-target role-mismatch summary');
+    is($report->{blocked_boundary}, 'explicit link', 'failure report preserves the blocked explicit-link boundary for top-target role mismatches');
+    is($report->{blocked_reason}, 'that top port is declared as input instead of output', 'failure report preserves the concise top-target role-mismatch reason');
+};
+
 subtest 'pipeline derives top-port context from blocked explicit-link duplicate-driver failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'duplicate_driver_failure_summary_top.fsm');
@@ -3687,6 +3826,141 @@ RTLIF
     like($combined_output, qr/Context:\s+Top port 'result_data'/s, 'CLI reports the blocked top port as summary context for top-port role mismatches');
     like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for top-port role mismatches');
     like($combined_output, qr/Reason:\s+that top port is declared as output instead of input/s, 'CLI reports the concise top-port role-mismatch reason');
+};
+
+subtest 'CLI prints child-endpoint context for blocked explicit-link child-source role mismatches' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'child_source_direction_mismatch_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'child_source_direction_mismatch_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:child_source_direction_mismatch_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /consumer.input_data/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_shadow> <= input_data)
+  )
+  (+size
+    (input_data 8)
+    (result_shadow 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked explicit-link child-source role-mismatch fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked explicit-link child-source role-mismatch fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link child-source role mismatches');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked child-source role mismatches');
+    like($combined_output, qr/Context:\s+Child endpoint 'consumer\.input_data'/s, 'CLI reports the blocked child endpoint as summary context for child-source role mismatches');
+    like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for child-source role mismatches');
+    like($combined_output, qr/Reason:\s+that child port is input instead of output/s, 'CLI reports the concise child-source role-mismatch reason');
+};
+
+subtest 'CLI prints top-port context for blocked explicit-link top-target role mismatches' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'top_target_direction_mismatch_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'top_target_direction_mismatch_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:top_target_direction_mismatch_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    start
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data/start/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 1'1)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (ack> <= 1'0)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked explicit-link top-target role-mismatch fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked explicit-link top-target role-mismatch fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link top-target role mismatches');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked top-target role mismatches');
+    like($combined_output, qr/Context:\s+Top port 'start'/s, 'CLI reports the blocked top port as summary context for top-target role mismatches');
+    like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for top-target role mismatches');
+    like($combined_output, qr/Reason:\s+that top port is declared as input instead of output/s, 'CLI reports the concise top-target role-mismatch reason');
 };
 
 subtest 'CLI prints top-port context for blocked explicit-link duplicate-driver summaries' => sub {
