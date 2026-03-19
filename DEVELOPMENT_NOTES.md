@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: Rust FSMGen is now tracked with an initial repo-shape recommendation
+- Recorded the recent long-term Rust discussion under the existing `H1` horizon instead of turning it into an active lane prematurely.
+- Saved direction:
+  - a Rust FSMGen remains a good long-term idea,
+  - it should be treated as a second implementation of the eventually-stable FSMGen contract rather than as a line-by-line port of the current Perl structure,
+  - and it will likely be faster in practice, especially on parsing/planning/corpus-scale work, but the real leverage comes from contract clarity and shared regression backing rather than from language choice alone.
+- Saved repository recommendation:
+  - start the first serious Rust implementation in this same repository,
+  - keep the Perl implementation as the semantic oracle during the parity-building phase,
+  - share one roadmap, one documentation set, one fixture/corpus set, and one differential-test surface across both implementations,
+  - and only split into a separate repository later if packaging, cadence, or team ownership diverge enough that a monorepo becomes more expensive than helpful.
+
 ## 2026-03-19: flatness `.rtlif` failures are now regression-locked through the RTL-root summary path
 - Continued the active `R11` diagnostics/reporting lane by closing the next nearby root-scoped `.rtlif` summary seam without changing any extractor behavior.
 - Landed behavior:

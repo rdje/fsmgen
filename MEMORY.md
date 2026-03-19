@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: Rust FSMGen repo strategy is now saved
+- Saved future note:
+  - the existing `H1` Rust FSMGen horizon now carries an explicit initial repo recommendation,
+  - namely: start a future Rust implementation in this same repository beside the Perl reference implementation instead of beginning with a separate repository plus Perl submodule split.
+- Important continuity note:
+  - the saved rationale is shared contract/corpus/differential-test leverage and avoidance of submodule drift while semantic parity is still being proven,
+  - and a later repository split is still allowed if release cadence, packaging, or ownership eventually diverge enough to justify it.
 ## 2026-03-19: flatness `.rtlif` failures are now explicitly locked through the RTL-root summary path
 - Saved shipped behavior:
   - failed composition summaries now have explicit regression coverage for blocked `.rtlif` flatness failures through the same `RTL metadata file:` plus `Context: RTL root '?rtlif:...'` pairing used by the other file-based root-scoped families.

@@ -381,6 +381,17 @@ Intent:
 Prerequisite:
 - the language contract, diagnostics contract, support accounting, and embedding surface must already be stable enough that a Rust implementation is an execution project, not a moving-target rewrite.
 
+Initial execution guidance:
+- start the first serious Rust implementation in this same repository rather than in a separate repository with the current Perl tree as a submodule,
+- keep the Perl implementation as the reference/oracle while the Rust implementation grows beside it,
+- share one roadmap, one documentation set, one regression corpus, and one differential-test harness across both implementations,
+- and only consider splitting into a separate repository later if release cadence, contributor workflow, packaging, or ownership really diverge enough that a monorepo becomes friction rather than leverage.
+
+Rationale:
+- a same-repo start keeps the contract, fixtures, snapshots, and expected diagnostics physically close to both implementations,
+- it avoids submodule drift and cross-repository version skew while the Rust implementation is still proving semantic parity,
+- and it makes it much easier to treat the Perl codebase as a semantic reference instead of trying to maintain two partially decoupled moving targets.
+
 ### H2. Public project website
 Long-term goal:
 - create a very nice, beautiful, and dynamic public website for FSMGen so other people can discover and use the project.

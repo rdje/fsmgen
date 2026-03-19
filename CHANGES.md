@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### future note logged: Rust FSMGen should likely start in the same repository
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the recent Rust-brainstorming exchange is now tracked explicitly as horizon guidance.
+- The saved direction is:
+  - a Rust implementation remains a long-term `H1` goal rather than an active lane,
+  - it is expected to be faster in practice but should be treated as a second implementation of a stable contract rather than a line-by-line rewrite,
+  - and its first serious execution path should likely live in this same repository beside the Perl reference implementation so both versions can share one roadmap, one corpus, one diagnostics contract, and one differential-test story before any later split is considered.
+
 ### flatness `.rtlif` failures now keep RTL root context in failed-run summaries
 - Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the already-supported `RTL root` summary path is now explicitly locked for blocked `.rtlif` flatness failures too, alongside the existing missing-root and empty-port root-scoped cases.
 - This shipped slice stays deliberately narrow:
