@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: blocked `C2` lane-selection summaries are now explicitly locked at CLI level
+- Saved shipped behavior:
+  - failed composition summaries now have explicit CLI regression coverage for blocked `C2` lane-selection failures through the existing `Lane: C2` line and concise blocked-lane reason.
+- Important continuity note:
+  - this slice did not widen extractor behavior,
+  - it hardens an already-shipped lane-summary family at the CLI boundary,
+  - and it keeps the reachable `C2` path aligned with the previously locked `C1` / `C3` failed-run summary coverage.
+
 ## 2026-03-19: blocked `C1` exposure summaries are now explicitly locked at CLI level
 - Saved shipped behavior:
   - failed composition summaries now have explicit CLI regression coverage for blocked `C1` top-port mismatch and blocked `C1` omitted-child-port exposure failures through the existing `Top port` / `Child port` context lines.

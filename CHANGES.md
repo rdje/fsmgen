@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### blocked `C2` lane-selection failures now keep `Lane: C2` in CLI summaries
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for the reachable `C2` lane-selection family at CLI level too.
+- This keeps the slice narrow and honest:
+  - behavior is unchanged,
+  - the lane extractor already knew how to surface `C2`,
+  - and the new coverage simply proves that non-quiet CLI failures preserve both `Lane: C2` and the concise blocked lane-selection reason for one-generated-child explicit-link tops.
+
 ### blocked `C1` exposure failures now keep top-port and child-port context in CLI summaries
 - Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the existing failed-run summary path is now explicitly locked for the reachable `C1` exposure families at CLI level too:
   - blocked top-port mismatch keeps `Context: Top port 'output_data'`,

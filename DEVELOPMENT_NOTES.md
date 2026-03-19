@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: blocked `C2` lane-selection summaries are now regression-locked at CLI level
+- Continued the active `R11` failed-run reporting lane by hardening another already-shipped summary family instead of widening composition behavior.
+- Landed behavior:
+  - the existing failed-run summary path now has explicit CLI regression coverage for blocked `C2` lane-selection failures,
+  - so one-generated-child explicit-link tops keep `Lane: C2`, the blocked `C2 lane selection` boundary, and the concise minimum-generated-children reason in user-visible non-quiet runs.
+- Why this is worth shipping:
+  - `C2` was a reachable lane family not yet explicitly locked in the CLI summary contract,
+  - the extractor behavior already existed,
+  - and this keeps lane reporting balanced across the active composition lanes without adding new inference or diagnostics branches.
+
 ## 2026-03-19: blocked `C1` exposure summaries are now regression-locked at CLI level
 - Continued the active `R11` diagnostics/reporting lane by hardening one more already-shipped summary family instead of widening composition behavior again.
 - Landed behavior:

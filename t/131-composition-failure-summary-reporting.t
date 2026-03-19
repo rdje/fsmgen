@@ -1178,6 +1178,61 @@ FSM
     like($combined_output, qr/Reason:\s+no declared interface metadata file 'uart_tx\.rtlif' was found/s, 'CLI reports the concise missing-rtlif reason');
 };
 
+subtest 'CLI prints the C2 lane for blocked C2 lane-selection failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'single_generated_explicit_link_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'single_generated_explicit_link_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:single_generated_explicit_link_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?toplink:wiring
+    /producer.output_data/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'3)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked C2 lane-selection fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked C2 lane-selection fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked C2 lane-selection failures');
+    like($combined_output, qr/Lane:\s+C2/s, 'CLI reports the C2 lane for blocked C2 lane-selection failures');
+    like($combined_output, qr/Blocked boundary:\s+C2 lane selection/s, 'CLI reports the blocked C2 lane-selection boundary');
+    like($combined_output, qr/Reason:\s+the current active C2 lane requires at least two generated child instances such as '\?fsmc' or '\?dtc'/s, 'CLI reports the concise C2 lane-selection reason');
+};
+
 subtest 'CLI prints RTL metadata file artifacts for blocked metadata-structure failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'bad_rtlif_root_failure_summary_cli_top.fsm');
