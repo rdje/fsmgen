@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-19: `.rtlif` width/type failures are now regression-locked through the token-summary path
+- Continued the active `R11` diagnostics/reporting lane by closing the next nearby token-scoped `.rtlif` summary seam without changing any extractor behavior.
+- Landed behavior:
+  - the existing `Token` summary extraction now has explicit regression coverage for blocked `.rtlif` port-sizing and port-typing failures,
+  - so non-quiet failed composition runs now prove the same `RTL metadata file:` plus `Context: Token '...'` pairing across invalid-token, non-positive-width, and unsupported-type token-scoped failures.
+- Why this is worth shipping:
+  - the extractor already supported these width/type token wordings through the shared `token '...'` diagnostic shape,
+  - but without this regression lock, the token-shape branch could stay green while width/type summary behavior drifted,
+  - and this keeps the failed-run summary contract honest without widening reporting logic any further.
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both pipeline-side extraction and non-quiet CLI summary output for blocked `.rtlif` port-sizing and port-typing failures.
+
 ## 2026-03-19: Rust FSMGen is now tracked with an initial repo-shape recommendation
 - Recorded the recent long-term Rust discussion under the existing `H1` horizon instead of turning it into an active lane prematurely.
 - Saved direction:

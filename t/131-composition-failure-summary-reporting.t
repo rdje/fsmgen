@@ -518,6 +518,154 @@ RTLIF
     is($report->{blocked_reason}, "token 'data-in<8:data' is an invalid port token for the current '.rtlif' contract", 'failure report trims the blocked rtlif token reason without repeating the metadata file path');
 };
 
+subtest 'pipeline keeps token context alongside RTL metadata file artifacts for blocked width failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'invalid_width_failure_summary_top.fsm');
+    my $metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:invalid_width_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+    serial_out>
+  )
+  (?fsmc:producer producer_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /producer.output_data/uart_tx.data_in/
+    /uart_tx.txd/serial_out/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    write_file(
+        $metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  clk:clock
+  rstn:reset
+  data_in<0:data
+  txd>:data
+)
+RTLIF
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked rtlif width failures');
+    is($report->{rtl_module_name}, 'uart_tx', 'failure report preserves the external RTL module name for width failures');
+    is($report->{construct}, '?rtl', 'failure report preserves the external RTL construct for width failures');
+    is($report->{artifact_label}, 'RTL metadata file', 'failure report classifies the resolved rtlif file as artifact context for width failures');
+    is($report->{artifact_value}, "'$metadata_path'", 'failure report preserves the resolved rtlif file path for width failures');
+    is($report->{context_label}, 'Token', 'failure report preserves token context when the metadata file is already surfaced as an artifact for width failures');
+    is($report->{context_value}, "'data_in<0:data'", 'failure report preserves the invalid-width token as summary context');
+    is($report->{blocked_boundary}, 'RTL interface metadata port sizing', 'failure report preserves the blocked rtlif width boundary');
+    is($report->{blocked_reason}, "token 'data_in<0:data' declares non-positive port width '0'", 'failure report trims the blocked rtlif width reason without repeating the metadata file path');
+};
+
+subtest 'pipeline keeps token context alongside RTL metadata file artifacts for blocked type failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'invalid_type_failure_summary_top.fsm');
+    my $metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:invalid_type_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+    serial_out>
+  )
+  (?fsmc:producer producer_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /producer.output_data/uart_tx.data_in/
+    /uart_tx.txd/serial_out/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    write_file(
+        $metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  clk:clock
+  rstn:reset
+  data_in<8:status
+  txd>:data
+)
+RTLIF
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked rtlif type failures');
+    is($report->{rtl_module_name}, 'uart_tx', 'failure report preserves the external RTL module name for type failures');
+    is($report->{construct}, '?rtl', 'failure report preserves the external RTL construct for type failures');
+    is($report->{artifact_label}, 'RTL metadata file', 'failure report classifies the resolved rtlif file as artifact context for type failures');
+    is($report->{artifact_value}, "'$metadata_path'", 'failure report preserves the resolved rtlif file path for type failures');
+    is($report->{context_label}, 'Token', 'failure report preserves token context when the metadata file is already surfaced as an artifact for type failures');
+    is($report->{context_value}, "'data_in<8:status'", 'failure report preserves the unsupported-type token as summary context');
+    is($report->{blocked_boundary}, 'RTL interface metadata port typing', 'failure report preserves the blocked rtlif type boundary');
+    is($report->{blocked_reason}, "token 'data_in<8:status' resolves to unsupported port type 'status'", 'failure report trims the blocked rtlif type reason without repeating the metadata file path');
+};
+
 subtest 'pipeline keeps rtl port context alongside RTL metadata file artifacts for blocked duplicate-port failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'duplicate_port_failure_summary_top.fsm');
@@ -1210,6 +1358,152 @@ RTLIF
     like($combined_output, qr/Context:\s+Token 'data-in<8:data'/s, 'CLI keeps token context alongside the rtlif file artifact');
     like($combined_output, qr/Blocked boundary:\s+RTL interface metadata token shape/s, 'CLI reports the blocked rtlif token boundary');
     like($combined_output, qr/Reason:\s+token 'data-in<8:data' is an invalid port token for the current '\.rtlif' contract/s, 'CLI reports the concise rtlif token reason without repeating the metadata file path');
+};
+
+subtest 'CLI prints token context alongside RTL metadata file artifacts for blocked width failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'invalid_width_failure_summary_cli_top.fsm');
+    my $metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+    my $output_path = File::Spec->catfile($tempdir, 'invalid_width_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:invalid_width_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    serial_out>
+  )
+  (?fsmc:producer producer_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /producer.output_data/uart_tx.data_in/
+    /uart_tx.txd/serial_out/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    write_file(
+        $metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  clk:clock
+  rstn:reset
+  data_in<0:data
+  txd>:data
+)
+RTLIF
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked rtlif width composition fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked rtlif width fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked rtlif width failures');
+    like($combined_output, qr/RTL module:\s+uart_tx/s, 'CLI reports the external RTL module for blocked rtlif width failures');
+    like($combined_output, qr/Construct:\s+\?rtl/s, 'CLI reports the external RTL construct for blocked rtlif width failures');
+    like($combined_output, qr/RTL metadata file:\s+'\Q$metadata_path\E'/s, 'CLI reports the resolved rtlif file path for blocked rtlif width failures');
+    like($combined_output, qr/Context:\s+Token 'data_in<0:data'/s, 'CLI keeps token context alongside the rtlif file artifact for width failures');
+    like($combined_output, qr/Blocked boundary:\s+RTL interface metadata port sizing/s, 'CLI reports the blocked rtlif width boundary');
+    like($combined_output, qr/Reason:\s+token 'data_in<0:data' declares non-positive port width '0'/s, 'CLI reports the concise rtlif width reason without repeating the metadata file path');
+};
+
+subtest 'CLI prints token context alongside RTL metadata file artifacts for blocked type failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'invalid_type_failure_summary_cli_top.fsm');
+    my $metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+    my $output_path = File::Spec->catfile($tempdir, 'invalid_type_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:invalid_type_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    serial_out>
+  )
+  (?fsmc:producer producer_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /producer.output_data/uart_tx.data_in/
+    /uart_tx.txd/serial_out/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)
+FSM
+    );
+
+    write_file(
+        $metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  clk:clock
+  rstn:reset
+  data_in<8:status
+  txd>:data
+)
+RTLIF
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked rtlif type composition fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked rtlif type fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked rtlif type failures');
+    like($combined_output, qr/RTL module:\s+uart_tx/s, 'CLI reports the external RTL module for blocked rtlif type failures');
+    like($combined_output, qr/Construct:\s+\?rtl/s, 'CLI reports the external RTL construct for blocked rtlif type failures');
+    like($combined_output, qr/RTL metadata file:\s+'\Q$metadata_path\E'/s, 'CLI reports the resolved rtlif file path for blocked rtlif type failures');
+    like($combined_output, qr/Context:\s+Token 'data_in<8:status'/s, 'CLI keeps token context alongside the rtlif file artifact for type failures');
+    like($combined_output, qr/Blocked boundary:\s+RTL interface metadata port typing/s, 'CLI reports the blocked rtlif type boundary');
+    like($combined_output, qr/Reason:\s+token 'data_in<8:status' resolves to unsupported port type 'status'/s, 'CLI reports the concise rtlif type reason without repeating the metadata file path');
 };
 
 subtest 'CLI prints rtl port context alongside RTL metadata file artifacts for blocked duplicate-port failures' => sub {

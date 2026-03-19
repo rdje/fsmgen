@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-19
+### `.rtlif` width/type failures now keep token context in failed-run summaries
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the already-supported token-summary path is now explicitly locked for blocked `.rtlif` port-sizing and port-typing failures too, not just token-shape failures.
+- This shipped slice stays deliberately narrow:
+  - behavior is unchanged,
+  - the resolved `.rtlif` path still stays the primary `RTL metadata file:` artifact line,
+  - and the new regression coverage proves that `Context: Token '...'` and the concise `Reason:` line survive the same summary path across invalid-token, non-positive-width, and unsupported-type families.
+- Updated [t/119-composition-rtlif-type-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/119-composition-rtlif-type-diagnostics.t), [t/120-composition-rtlif-token-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/120-composition-rtlif-token-diagnostics.t), [t/121-composition-rtlif-width-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/121-composition-rtlif-width-diagnostics.t), and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) together in focused validation, then updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this coverage is preserved as an explicit `R11` reporting refinement.
+
 ### future note logged: Rust FSMGen should likely start in the same repository
 - Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [CHANGES.md](/Users/richarddje/Documents/github/fsmgen/CHANGES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the recent Rust-brainstorming exchange is now tracked explicitly as horizon guidance.
 - The saved direction is:

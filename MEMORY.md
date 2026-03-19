@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: `.rtlif` width/type failures are now explicitly locked through the token-summary path
+- Saved shipped behavior:
+  - failed composition summaries now have explicit regression coverage for blocked `.rtlif` port-sizing and port-typing failures through the same `RTL metadata file:` plus `Context: Token '...'` pairing used by the token-shape family.
+- Important continuity note:
+  - this slice did not widen extractor behavior,
+  - it hardens the already-shipped token-scoped summary contract,
+  - and it keeps the invalid-token / non-positive-width / unsupported-type trio aligned under one tested `Token` summary family.
+
 ## 2026-03-19: Rust FSMGen repo strategy is now saved
 - Saved future note:
   - the existing `H1` Rust FSMGen horizon now carries an explicit initial repo recommendation,
