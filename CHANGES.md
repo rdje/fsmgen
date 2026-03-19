@@ -4223,3 +4223,7 @@ This is the persistent technical change history for FSMGen.
   - top-boundary width mismatches can summarize as `Context: Top port '...'`
   - child-target width mismatches can summarize as `Context: Child endpoint 'instance.port'`
 - This slice includes a small extractor improvement in `perl/FSM/Pipeline/HDLGenerator.pm`; planning behavior is unchanged.
+- The explicit-link width-mismatch summary contract is now regression-locked for both reachable target families:
+  - child-target mismatches
+  - top-boundary mismatches
+- This follow-on slice is coverage/contract hardening only; runtime behavior is unchanged from the prior extractor improvement.

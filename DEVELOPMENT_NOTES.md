@@ -5157,3 +5157,12 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this required only a small extractor improvement in `composition_failure_context_excerpt(...)` to recognize the existing `links '...' (width ...) to '...' (width ...)` diagnostic shape,
   - planning behavior stays unchanged, and the concise reason remains the exact-width-agreement boundary rather than duplicating the full source/target sentence.
+
+## 2026-03-19: explicit-link width-mismatch summary coverage is now symmetric
+- The prior slice made explicit-link width mismatches capable of surfacing either a top-port target or a child-endpoint target as summary context, but only the child-target branch was regression-locked.
+- The active failed-run summary contract is now symmetric and explicit:
+  - child-target width mismatches keep `Context: Child endpoint 'instance.port'`
+  - top-boundary width mismatches keep `Context: Top port '...'`
+- Design note from this slice:
+  - no runtime change was needed here; the extractor improvement was already sufficient,
+  - this is pure contract hardening so later summary refactors cannot accidentally keep one target family while regressing the other.

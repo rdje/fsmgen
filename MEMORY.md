@@ -3936,3 +3936,10 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - `Context: Child endpoint 'consumer.input_data'`
   - `Blocked boundary: explicit link`
   - `Reason: the current active composition lanes require exact width agreement`
+
+## 2026-03-19: explicit-link width-mismatch summary coverage now locks the top-port side too
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now also locks the sibling explicit-link width-mismatch family where the blocked target is the declared top output.
+- Non-quiet failed runs are now explicitly regression-backed to keep:
+  - `Context: Top port 'result_data'`
+  - `Blocked boundary: explicit link`
+  - `Reason: the current active composition lanes require exact width agreement`
