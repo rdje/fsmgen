@@ -461,6 +461,48 @@ FSM
     );
 };
 
+subtest 'pipeline derives child-header context from blocked ?ports child item-list shape failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'dotted_pair_ports_child_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:dotted_pair_ports_child_failure_summary_top
+  (?ports . foo)
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked ?ports child item-list shape failures');
+    is($report->{top_name}, 'dotted_pair_ports_child_failure_summary_top', 'failure report preserves the top name for blocked ?ports child item-list shape failures');
+    is($report->{construct}, '?ports', 'failure report preserves the ?ports construct for blocked child item-list shape failures');
+    is($report->{context_label}, 'Child', 'failure report classifies blocked ?ports child item-list shape failures as child context');
+    is($report->{context_value}, "'?ports'", 'failure report preserves the offending ?ports child header');
+    is($report->{context_summary}, "Child '?ports'", 'failure report exposes a concise ?ports child-header summary');
+    is($report->{blocked_boundary}, 'composition child item-list shape', 'failure report preserves the blocked ?ports child item-list shape boundary');
+    is($report->{blocked_boundary_label}, 'child item-list shape', 'failure report exposes a CLI-friendly blocked-boundary label for ?ports child item-list shape failures');
+    is(
+        $report->{blocked_reason},
+        'dotted-pair payloads are outside the current active composition parser contract',
+        'failure report preserves the concise ?ports child item-list shape reason',
+    );
+};
+
 subtest 'pipeline derives top-port context from blocked duplicate top-port declarations' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'duplicate_top_port_failure_summary_top.fsm');
@@ -5573,6 +5615,41 @@ FSM
     like($combined_output, qr/Context:\s+Child '\?toplink:wiring'/s, 'CLI reports the offending ?toplink child header as summary context');
     like($combined_output, qr/Blocked boundary:\s+child item-list shape/s, 'CLI reports the blocked ?toplink child item-list shape boundary');
     like($combined_output, qr/Reason:\s+dotted-pair payloads are outside the current active composition parser contract/s, 'CLI reports the concise ?toplink child item-list shape reason');
+};
+
+subtest 'CLI prints child-header context for blocked ?ports child item-list shape failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'dotted_pair_ports_child_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'dotted_pair_ports_child_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:dotted_pair_ports_child_failure_summary_cli_top
+  (?ports . foo)
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked ?ports child item-list shape fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked ?ports child item-list shape fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked ?ports child item-list shape failures');
+    like($combined_output, qr/Construct:\s+\?ports/s, 'CLI reports the ?ports construct for blocked child item-list shape failures');
+    like($combined_output, qr/Context:\s+Child '\?ports'/s, 'CLI reports the offending ?ports child header as summary context');
+    like($combined_output, qr/Blocked boundary:\s+child item-list shape/s, 'CLI reports the blocked ?ports child item-list shape boundary');
+    like($combined_output, qr/Reason:\s+dotted-pair payloads are outside the current active composition parser contract/s, 'CLI reports the concise ?ports child item-list shape reason');
 };
 
 done_testing();

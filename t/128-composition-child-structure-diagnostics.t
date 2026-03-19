@@ -76,6 +76,20 @@ FSM
     );
 };
 
+subtest 'dotted-pair ?ports payloads now say child item-list shape is blocked' => sub {
+    expect_failure(
+        name => 'dotted_pair_ports_child_top',
+        body => <<'FSM',
+(?top:dotted_pair_ports_child_top
+  (?ports . foo)
+)
+FSM
+        pipeline_regex => qr/Composition top 'dotted_pair_ports_child_top' contains child '\?ports', .*composition child item-list shape is blocked because dotted-pair payloads are outside the current active composition parser contract/s,
+        cli_regex => qr/composition child item-list shape is blocked because dotted-pair payloads are outside the current active composition parser contract/s,
+        cli_failure_name => 'dotted-pair ?ports payloads',
+    );
+};
+
 done_testing();
 
 sub expect_failure {
