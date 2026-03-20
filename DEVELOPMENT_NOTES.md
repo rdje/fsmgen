@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-20: active CLI help now names `bin/fsmgen` honestly
+- Continued the active `R11` lane by retiring one small but real architectural/user-facing hotspot instead of opening another behavior lane.
+- Landed behavior:
+  - built-in `--help` output now names `./bin/fsmgen` instead of the old `generate_fsm_hdl.pl` wrapper,
+  - built-in examples now use the active CLI entrypoint consistently,
+  - and the help text now says the default output lands in the current working directory, which matches the actual runtime.
+- Why this is worth shipping:
+  - the roadmap already called out stale compatibility wording in `bin/fsmgen` help/output as debt to retire deliberately,
+  - this is one of the first things users see when they approach the active tool directly,
+  - and the new focused regression means the active CLI surface will not silently drift back toward the legacy wrapper story.
+
 ## 2026-03-20: top-level composition lane and `?ports` shape gates now summarize cleanly
 - Continued the active `R11` failed-run reporting lane with a small but user-visible extractor fix at the top-level composition gate boundary.
 - Landed behavior:

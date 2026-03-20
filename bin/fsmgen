@@ -178,12 +178,12 @@ if ($help) {
     print <<'EOF';
 FSM HDL Generator - Generate HDL code (SystemVerilog, Verilog, VHDL) from FSM specifications
 
-Usage: perl generate_fsm_hdl.pl [OPTIONS] <fsm_file>
+Usage: ./bin/fsmgen [OPTIONS] <fsm_file>
 
 Arguments:
   fsm_file        FSM file specification - one of:
-                  • bare_name         - searches FSMLIB paths for bare_name.fsm
-                  • bare_name.fsm     - searches FSMLIB paths for bare_name.fsm  
+                  • bare_name         - searches explicit --path roots, FSMLIB, then current directory
+                  • bare_name.fsm     - searches explicit --path roots, FSMLIB, then current directory
                   • relative/path.fsm - uses relative path (no FSMLIB search)
                   • /absolute/path.fsm - uses absolute path (no FSMLIB search)
 
@@ -209,7 +209,7 @@ Options:
                   May be repeated
   -q, --quiet     Suppress informational messages
   -l, --language  Target HDL language: systemverilog|sv|verilog|v|vhdl (default: systemverilog)
-  -o, --output    Specify output file (default: <fsm_name>.<ext> in script directory)
+  -o, --output    Specify output file (default: <fsm_name>.<ext> in current working directory)
   -h, --help      Show this help message
 
 Environment Variables:
@@ -248,58 +248,58 @@ FSMLIB Examples:
   export FSMLIB="/project/fsm:~/my_fsm:/shared/fsm_lib"
   
   # Add explicit per-invocation search roots ahead of FSMLIB
-  perl generate_fsm_hdl.pl --path ./fsm --path ../shared_fsm my_block
+  ./bin/fsmgen --path ./fsm --path ../shared_fsm my_block
 
   # Use bare name - searches FSMLIB paths
-  perl generate_fsm_hdl.pl lte_dif_pmaster
+  ./bin/fsmgen lte_dif_pmaster
   
   # Use .fsm name - searches FSMLIB paths  
-  perl generate_fsm_hdl.pl lte_dif_pmaster.fsm
+  ./bin/fsmgen lte_dif_pmaster.fsm
   
   # Use relative path - no FSMLIB search
-  perl generate_fsm_hdl.pl ../fsm/lte_dif_pmaster.fsm
+  ./bin/fsmgen ../fsm/lte_dif_pmaster.fsm
   
   # Use absolute path - no FSMLIB search
-  perl generate_fsm_hdl.pl /full/path/to/lte_dif_pmaster.fsm
+  ./bin/fsmgen /full/path/to/lte_dif_pmaster.fsm
 
 Debug Examples:
   # No trace output (default)
-  perl generate_fsm_hdl.pl my_fsm
+  ./bin/fsmgen my_fsm
   
   # Low trace verbosity (numeric compatibility)
-  perl generate_fsm_hdl.pl --debug=1 my_fsm
+  ./bin/fsmgen --debug=1 my_fsm
   
   # Medium trace verbosity
-  perl generate_fsm_hdl.pl --debug=2 my_fsm
+  ./bin/fsmgen --debug=2 my_fsm
   
   # High / debug trace verbosity
-  perl generate_fsm_hdl.pl --debug=3 my_fsm
-  perl generate_fsm_hdl.pl --debug=4 my_fsm
-  perl generate_fsm_hdl.pl --debug my_fsm
+  ./bin/fsmgen --debug=3 my_fsm
+  ./bin/fsmgen --debug=4 my_fsm
+  ./bin/fsmgen --debug my_fsm
   
   # Named verbosity with trace file routing
-  perl generate_fsm_hdl.pl --trace-verbosity=debug --trace-log=trace.log my_fsm
+  ./bin/fsmgen --trace-verbosity=debug --trace-log=trace.log my_fsm
   
   # Short form numeric trace
-  perl generate_fsm_hdl.pl -d2 my_fsm
+  ./bin/fsmgen -d2 my_fsm
 
 Other Examples:
   # Generate Verilog RTL with debug tracing using FSMLIB lookup
-  perl generate_fsm_hdl.pl --language verilog --debug=2 lte_dif_pmaster
+  ./bin/fsmgen --language verilog --debug=2 lte_dif_pmaster
   
   # Generate VHDL RTL quietly to specific file using relative path
-  perl generate_fsm_hdl.pl --language vhdl --quiet --output my_output.vhd ../fsm/my_fsm.fsm
+  ./bin/fsmgen --language vhdl --quiet --output my_output.vhd ../fsm/my_fsm.fsm
   
   # Debug SystemVerilog with custom output using FSMLIB lookup
-  perl generate_fsm_hdl.pl -l sv -d3 -o debug_output.sv my_fsm
+  ./bin/fsmgen -l sv -d3 -o debug_output.sv my_fsm
 
   # Load an explicit typed extension module from @INC
-  PERL5LIB=./my_extensions perl generate_fsm_hdl.pl \
+  PERL5LIB=./my_extensions ./bin/fsmgen \
     --extension-module My::Extension \
     my_fsm
 
   # Load extension modules from an explicit config file
-  PERL5LIB=./my_extensions perl generate_fsm_hdl.pl \
+  PERL5LIB=./my_extensions ./bin/fsmgen \
     --extension-config extensions.fsmext \
     my_fsm
 
@@ -310,7 +310,7 @@ EOF
 # Check for required positional argument
 if (@ARGV != 1) {
     die "Error: Exactly one FSM file must be specified as argument\n" .
-        "Usage: perl generate_fsm_hdl.pl [OPTIONS] <fsm_file>\n" .
+        "Usage: ./bin/fsmgen [OPTIONS] <fsm_file>\n" .
         "Use --help for more information\n";
 }
 

@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-20
+### active CLI help now names `bin/fsmgen` honestly
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so the built-in help and missing-argument usage now name the active `./bin/fsmgen` entrypoint instead of the old `generate_fsm_hdl.pl` wrapper.
+- Updated the same help surface so its default-output wording now matches the shipped runtime too: without `-o`, output is written in the current working directory, not a legacy “script directory”.
+- Added [t/132-cli-help-wording.t](/Users/richarddje/Documents/github/fsmgen/t/132-cli-help-wording.t) to lock both the `--help` surface and the missing-argument usage branch.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this small remaining `R11` hotspot is tracked as retired instead of ambient debt.
+
 ### top-level composition lane and `?ports` shape gates now summarize cleanly
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so failed composition summaries now cover the top-level lane/shape gate family explicitly:
   - no-child tops keep the blocked `lane entry` summary without invented construct/context,

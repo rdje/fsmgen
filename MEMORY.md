@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-20: active CLI help now names `bin/fsmgen` honestly
+- Saved shipped behavior:
+  - the built-in help and missing-argument usage now name `./bin/fsmgen` instead of the old `generate_fsm_hdl.pl` wrapper,
+  - the built-in examples now use the active CLI entrypoint consistently,
+  - and the help text now describes the default output location as the current working directory, which matches the shipped runtime.
+- Important continuity note:
+  - this slice does not change parsing, planning, or HDL emission behavior,
+  - it retires a small user-facing `R11` hotspot the roadmap had already called out explicitly,
+  - and [t/132-cli-help-wording.t](/Users/richarddje/Documents/github/fsmgen/t/132-cli-help-wording.t) now locks both the `--help` surface and the missing-argument usage branch.
+
 ## 2026-03-20: top-level composition lane and `?ports` shape gates now summarize cleanly
 - Saved shipped behavior:
   - failed composition summaries now keep clean top-level gate handling: no-child tops stay construct-free with the blocked `lane entry` summary, and blocked multiple-`?ports`, omitted-`?ports`, and empty-`?ports` tops now keep `Construct: ?ports` plus the shorter `shape` reason.

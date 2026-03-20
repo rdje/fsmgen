@@ -784,6 +784,10 @@ Done:
   - and ambiguous multi-`?rtl` declared connect-by-name rejection.
 - [t/94-composition-multi-generated-plus-rtl-connect-by-name.t](/Users/richarddje/Documents/github/fsmgen/t/94-composition-multi-generated-plus-rtl-connect-by-name.t) now locks:
   - multi-generated-plus-`?rtl` declared connect-by-name `C4` success.
+- The stale compatibility wording in `bin/fsmgen` help/usage output is now retired for the active CLI path:
+  - built-in help now names `./bin/fsmgen` instead of the old `generate_fsm_hdl.pl` wrapper,
+  - built-in examples now use the active entrypoint consistently,
+  - and help text now describes the default output location as the current working directory, which matches the shipped runtime.
 - The next bounded declared connect-by-name refinement is now also shipped:
   - top outputs still require exactly one matching child output,
   - top inputs declared with `=name` now fan out to all matching child inputs of the same name and width,
@@ -831,7 +835,6 @@ Left:
   - move planning/normalization residue out of `FSM::HDL::FlattenedDT::Backend::SystemVerilog` so backend responsibilities are more honest,
   - make the `FSM::CoreAST::*` versus `FSM::AST::*` bridge explicit instead of rediscovering it inside `EnableGraph`,
   - decide whether `FSM::ExpressionNamer` remains live architectural surface or should be retired as compatibility residue,
-  - remove stale compatibility wording in `bin/fsmgen` help/output,
   - and revisit the global-state shape in `FSM::Debug` before `R13` embedding/API work depends on it.
 - Add any needed diagnostics/tests before considering broader composition growth.
 Exit criteria:
