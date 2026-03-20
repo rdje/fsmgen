@@ -76,9 +76,10 @@ Standard used here:
 ### Fully supported single-module constructs
 - Root form `(?fsm:module_name ...)` with an HDL-identifier-compatible module name (`[A-Za-z_]\\w*`)
 - Root form `(?dt:module_name ...)` with an HDL-identifier-compatible module name (`[A-Za-z_]\\w*`)
-  - top-level `?dt:name` content is currently limited to `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`, compact top-level `(:= signal=value)` directives, and general DT blocks like `(-foo ...)`
-  - purely combinational `?dt:name` modules expose no implicit system ports
-  - any `?dt:name` module that contains at least one sequential assignment implicitly exposes `clk` / `rst_n`
+  - top-level standalone-DT content is currently limited to the conventional `(+system ...)` form, `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`, compact top-level `(:= signal=value)` directives, and general DT blocks like `(-foo ...)`
+  - explicit conventional `(+system ...)` yields `clk` / `rstn` in standalone-DT roots too
+  - without explicit `(+system ...)`, purely combinational `?dt:name` modules expose no implicit system ports
+  - without explicit `(+system ...)`, any `?dt:name` module that contains at least one sequential assignment implicitly exposes `clk` / `rst_n`
   - driven non-intermediate targets in `?dt:name` are exposed as module outputs by default
   - `?dt:name` does not synthesize `current_state` / `next_state`
 - Legacy `+fsm` root family:
@@ -168,7 +169,8 @@ Combinational DT note:
   - the active child source may be embedded in the same file as `?dt:name`
   - or resolved from an external `.fsm` file beside the composition source, through repeated `--path DIR` roots, then through `FSMLIB`
   - combinational `?dtc` children expose only their real user-facing interface ports
-  - sequential `?dtc` children expose implicit `clk` / `rst_n` just like standalone `?dt:name` roots do
+  - standalone `?dtc` children with explicit conventional `(+system ...)` expose `clk` / `rstn`
+  - standalone `?dtc` children without explicit `(+system ...)` expose implicit `clk` / `rst_n` only when they contain sequential assignments
 - `(?rtl:module)` for external RTL children
 - External RTL interface loading via sidecar `<module>.rtlif`
   - or via an embedded `(?rtlif:module_name ...)` companion root in the same composition source
@@ -570,6 +572,7 @@ Current meaning:
 
 Current top-level boundary:
 - Supported:
+  - conventional `(+system (clock clk) (sreset rstn))` or `(+system (clock clk) (asreset rstn))`
   - `(+size ...)`
   - `(+constants ...)`
   - `(+enums ...)`
@@ -578,16 +581,17 @@ Current top-level boundary:
   - compact top-level `(:= signal=value)` directives
   - general DT blocks such as `(-foo ...)`
 - Rejected explicitly:
-  - explicit `(+system ...)` sections
   - regular FSM-state DT blocks such as `(idle ...)`
   - dedicated reset-state blocks such as `(-syncrst ...)`
 
-Implicit system-port rule:
-- purely combinational standalone-DT roots in that family expose no implicit `clk` / `rst_n`
-- if any sequential assignment appears in that standalone-DT source, generation implicitly exposes `clk` / `rst_n`
+System-port rule:
+- explicit conventional `(+system ...)` inside a standalone-DT root exposes `clk` / `rstn`
+- without explicit `(+system ...)`, purely combinational standalone-DT roots in that family expose no implicit `clk` / `rst_n`
+- without explicit `(+system ...)`, if any sequential assignment appears in that standalone-DT source, generation implicitly exposes `clk` / `rst_n`
 
 Boundary note:
 - The semantic split from `?fsm:name` is the control model, not “combinational-only” versus “sequential-capable”.
+- Explicit conventional `(+system ...)` now gives reusable standalone-DT roots and `?dtc` composition children one deliberate way to align with the shared `clk` / `rstn` contract when that interface stability matters.
 - The current shipped standalone-DT slice now includes `?dt:name`, `?mod:name`, and `?module:name` as one active reusable root family; broader reusable-module interface and unnamed-root questions remain future `R11` work.
 
 ### Draft normative contract for the conventional `+system` section

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-20: standalone-DT roots now also accept the conventional explicit `+system` contract
+- Saved shipped behavior:
+  - standalone-DT roots may now use the same conventional explicit `(+system (clock clk) (sreset rstn))` / `(+system (clock clk) (asreset rstn))` section already accepted by `?fsm:name`,
+  - direct standalone-DT generation now preserves that explicit `clk` / `rstn` contract,
+  - and composition-facing `?dtc` children now expose and auto-wire those explicit system ports too.
+- Important continuity note:
+  - this is real `R11` feature growth in the reusable-module lane,
+  - it does not replace the existing implicit `clk` / `rst_n` fallback for sequential standalone-DT roots,
+  - and it gives reusable standalone-DT modules one deliberate interface-stability knob without reopening broad implicit hierarchy.
+
 ## 2026-03-20: standalone-DT roots now also accept `?mod:name` and `?module:name`
 - Saved shipped behavior:
   - `?mod:name` and `?module:name` now act as active standalone-DT root aliases beside `?dt:name`,

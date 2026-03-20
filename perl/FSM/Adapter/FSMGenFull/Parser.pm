@@ -142,13 +142,6 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
         if ($element_name eq '+fsm') {
             next;
         } elsif ($element_name eq '+system') {
-            if ($root_kind eq 'dt') {
-                Carp::confess
-                    "Unsupported top-level directive '+system' inside '$root_contract_label'. ".
-                    "The active '?dt:name' contract currently keeps clock/reset ports implicit: combinational DT modules expose no system ports, and sequential DT modules use implicit 'clk' / 'rst_n'. ".
-                    "Explicit '+system' sections remain part of the '?fsm:name' contract only. ".
-                    "See docs/USER_GUIDE.md for the current supported boundary.\n";
-            }
             fsm_debug("Parsing +system block", 3);
             $self->parse_system_section($element);
         } elsif ($element_name eq '+size') {
@@ -303,13 +296,13 @@ sub root_contract_label($self, $root_kind = 'fsm') {
 }
 
 sub supported_directives_description($self, $root_kind = 'fsm') {
-    return "The active contract currently supports only '+size', '+constants', '+enums', '+define', and '+params' inside '?dt:name'"
+    return "The active contract currently supports only the conventional '+system' form, '+size', '+constants', '+enums', '+define', and '+params' inside '?dt:name'"
         if $root_kind eq 'dt';
     return "The active contract currently supports only '+system', '+size', '+constants', '+enums', '+define', and '+params' inside '?fsm:name'";
 }
 
 sub supported_top_level_forms_description($self, $root_kind = 'fsm', $is_flat_ast = 0) {
-    return "Inside '?dt:name', the active contract supports directive sections, ':=' init/reset directives, and general DT blocks like '(-foo ...)' only"
+    return "Inside '?dt:name', the active contract supports the conventional '+system' section, other directive sections, ':=' init/reset directives, and general DT blocks like '(-foo ...)' only"
         if $root_kind eq 'dt';
     return "Inside '?fsm:module_name' and the legacy '+fsm' root family, top-level content must be a list of directive sections, ':=' directives, and state/DT blocks"
         if $is_flat_ast;

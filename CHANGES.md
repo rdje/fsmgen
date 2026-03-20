@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-20
+### standalone-DT roots now also accept the conventional explicit `+system` contract
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so standalone-DT roots now accept the same conventional `(+system (clock clk) (sreset rstn))` / `(+system (clock clk) (asreset rstn))` section already used by `?fsm:name`, instead of rejecting `+system` outright at the `?dt:name` boundary.
+- Added [t/134-standalone-dt-explicit-system-support.t](/Users/richarddje/Documents/github/fsmgen/t/134-standalone-dt-explicit-system-support.t) to lock both direct standalone-DT generation with explicit `clk` / `rstn` and `C1` composition auto-wiring for `?dtc` children that expose those explicit system ports.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reusable-module system-contract slice is tracked as shipped `R11` feature work rather than future-only intent.
+
 ### standalone-DT roots now also accept `?mod:name` and `?module:name`
 - Updated [perl/FSM/SourceClassifier.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/SourceClassifier.pm), [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm), [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm), and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `?mod:name` and `?module:name` now act as active standalone-DT root aliases beside `?dt:name`.
 - Added [t/133-standalone-dt-root-aliases.t](/Users/richarddje/Documents/github/fsmgen/t/133-standalone-dt-root-aliases.t) to lock direct standalone generation, bare-name CLI compilation, and composition `?dtc` child realization across those alias roots.

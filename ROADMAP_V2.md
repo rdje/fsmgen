@@ -186,9 +186,10 @@ First shipped `R11` slice now in tree:
   - and explicit-link composition now also covering any explicit-link top with at least one `?rtl` child, including multiple generated children beside those RTL children.
 - The shipped first slice currently supports:
   - top-level general DT blocks such as `(-foo ...)`,
-  - directive sections `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, and `(+params ...)`,
+  - the conventional explicit `(+system ...)` section plus directive sections `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, and `(+params ...)`,
   - compact top-level `(:= signal=value)` directives,
-  - implicit `clk` / `rst_n` only when the `?dt:name` source contains sequential assignments,
+  - explicit conventional `+system` yielding `clk` / `rstn` in standalone-DT roots and composition-facing `?dtc` children,
+  - implicit `clk` / `rst_n` only when the `?dt:name` source contains sequential assignments and no explicit `+system` is present,
   - default output exposure for driven non-intermediate targets,
   - repeatable `--path DIR` search roots for bare `.fsm` input lookup,
   - the same explicit search roots feeding current `.rtlif` metadata lookup ahead of `FSMLIB`,
@@ -230,11 +231,10 @@ First shipped `R11` slice now in tree:
   - and declared connect-by-name is now direction-asymmetric at the top boundary, with top outputs staying exact-one-match while top inputs may fan out to all matching child inputs of the same name and width,
   - and standalone-DT child interface direction now preferring semantic signal roles over the older name-based output heuristic in composition-facing interface realization.
 - The shipped first slice does not yet widen into:
-  - explicit `+system` inside `?dt:name`,
   - regular FSM-state blocks inside `?dt:name`,
   - broader implicit parent-interface inference for undeclared top ports beyond the bounded single-child `C1` passthrough slice and bounded `C2` / `C3` undeclared top-input/top-output/internal-carrier slices,
   - broader reusable-module interface/export rules,
-  - or alias-root questions.
+  - or unnamed-root questions.
 
 Expected result:
 - composition remains explicit and serious instead of drifting back toward legacy implicit behavior.

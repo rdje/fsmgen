@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-20: standalone-DT roots now also accept the conventional explicit `+system` contract
+- Continued the active `R11` lane by shipping another reusable-module feature slice instead of returning to reporting-only work.
+- Landed behavior:
+  - standalone-DT roots now accept the same conventional explicit `+system` section already used by `?fsm:name`,
+  - that explicit system contract now carries through direct standalone-DT generation,
+  - and composition-facing `?dtc` child realization now exposes and auto-wires explicit `clk` / `rstn` when a reusable standalone-DT source asks for them.
+- Why this is worth shipping:
+  - it broadens the reusable-module lane with a real interface-control feature instead of another naming or reporting tweak,
+  - it gives reusable standalone-DT modules one deliberate way to stabilize their system-port contract for composition and integration,
+  - and it keeps the implementation honest by reusing the existing typed system-contract path instead of inventing a parallel standalone-only mechanism.
+
 ## 2026-03-20: standalone-DT roots now also accept `?mod:name` and `?module:name`
 - Continued the active `R11` lane by shipping a real reusable-module feature slice instead of another reporting-only refinement.
 - Landed behavior:

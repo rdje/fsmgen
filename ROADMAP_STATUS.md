@@ -627,10 +627,11 @@ Done:
   - and a bounded meta-programming rule: if a future generic/meta lane exists at all, it should stay semantic, list-oriented, elaboration-bounded, and RTL-focused rather than becoming a broad macro/template system.
 - The first reusable standalone-DT slice is now shipped in the active toolchain:
   - top-level `?dt:name` roots are classified, parsed, and generated end to end,
-  - the active `?dt:name` top-level contract currently supports `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`, compact top-level `(:= signal=value)` directives, and general DT blocks such as `(-foo ...)`,
-  - `?dt:name` rejects explicit `+system`, regular FSM-state blocks, and dedicated reset-state blocks at top level,
-  - purely combinational `?dt:name` modules expose no implicit `clk` / `rst_n`,
-  - sequential `?dt:name` modules expose implicit `clk` / `rst_n`,
+  - the active standalone-DT top-level contract currently supports the conventional `(+system ...)` form, `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`, compact top-level `(:= signal=value)` directives, and general DT blocks such as `(-foo ...)`,
+  - standalone-DT roots still reject regular FSM-state blocks and dedicated reset-state blocks at top level,
+  - explicit conventional `(+system ...)` now yields `clk` / `rstn` in standalone-DT roots and composition-facing `?dtc` children,
+  - without explicit `(+system ...)`, purely combinational `?dt:name` modules expose no implicit `clk` / `rst_n`,
+  - without explicit `(+system ...)`, sequential `?dt:name` modules expose implicit `clk` / `rst_n`,
   - driven non-intermediate targets in `?dt:name` become module outputs by default,
   - and standalone `?dt:name` generation stays out of the encoded `current_state` / `next_state` plan.
 - [t/82-standalone-dt-root-support.t](/Users/richarddje/Documents/github/fsmgen/t/82-standalone-dt-root-support.t) now locks both the combinational and sequential `?dt:name` success paths.
@@ -657,6 +658,13 @@ Done:
   - embedded combinational `?dtc` success without fake system ports,
   - mixed `?fsmc` + `?dtc` explicit-link composition,
   - and external `?dtc` plus `?rtl` composition through repeated `--path DIR` roots.
+- The next reusable standalone-DT system-contract slice is now also shipped:
+  - standalone-DT roots may now opt into the same conventional explicit `(+system ...)` contract already used by `?fsm:name`,
+  - that explicit standalone-DT system contract now flows through direct generation and composition-facing `?dtc` child realization,
+  - and reusable standalone-DT modules may therefore choose the shared `clk` / `rstn` system-input contract explicitly instead of relying only on the implicit `clk` / `rst_n` fallback for sequential roots.
+- [t/134-standalone-dt-explicit-system-support.t](/Users/richarddje/Documents/github/fsmgen/t/134-standalone-dt-explicit-system-support.t) now locks:
+  - direct standalone-DT generation with explicit conventional `+system`,
+  - and `C1` composition auto-wiring for `?dtc` children that expose explicit `clk` / `rstn`.
 - The first `R11` connect-by-name broadening slice beyond the original multi-child success case is now also shipped:
   - declared `=name` connect-by-name now works for a single generated child (`?fsmc` or `?dtc`) instead of starting only beyond the single-child passthrough case,
   - single-child by-name planning still stays deterministic and bounded by the existing exact same-name, same-direction, same-width rule,

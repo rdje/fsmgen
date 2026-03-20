@@ -131,7 +131,8 @@ The currently shipped composition behavior is intentionally bounded:
   - effective system inputs from the active FSM generator contract:
     - explicit conventional `+system` currently yields `clk` / `rstn`,
     - absent `+system` currently yields implicit `clk` / `rst_n`,
-    - purely combinational standalone-DT children do not acquire fake system ports just because they are instantiated in composition,
+    - standalone-DT children may now expose explicit `clk` / `rstn` through the same conventional `+system` contract,
+    - and purely combinational standalone-DT children still do not acquire fake system ports just because they are instantiated in composition when that explicit contract is absent,
   - plus explicit user-facing child ports as exposed by the active generation pipeline for `?fsmc` and `?dtc`,
   - plus explicit ports declared in the loaded `<module>.rtlif` metadata for `?rtl`,
 - explicit-link endpoint syntax is currently:
