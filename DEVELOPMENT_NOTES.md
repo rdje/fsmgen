@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-20: blocked empty child entries and non-string child headers now keep child-entry context in CLI summaries
+- Continued the active `R11` failed-run reporting lane with a small shipped extractor improvement at the parser-boundary level instead of widening parser behavior.
+- Landed behavior:
+  - failed composition summaries now recognize blocked empty child entries as `Child entry 'missing header'`,
+  - and blocked non-string child headers as `Child entry 'non-string header'`,
+  - while still keeping the existing blocked `child structure` / `child header shape` boundaries and concise reasons.
+- Why this is worth shipping:
+  - these are the top-level malformed-child parser gates, so they are real user-facing failures,
+  - the blocked diagnostics already expose stable child-entry meaning even though they do not expose a real child header token,
+  - and surfacing that same meaning in the short summary makes parser-boundary failures easier to scan without inventing a fake construct.
+
 ## 2026-03-19: unnamed generated-child parser summaries are now symmetric across count and shape failures
 - Continued the active `R11` failed-run reporting lane by closing the sibling half of a reporting family we had only partially locked.
 - Landed behavior:

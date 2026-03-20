@@ -1,5 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-20
+### blocked empty child entries and non-string child headers now keep child-entry context in CLI summaries
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so failed composition summaries now recognize the top-level child-structure parser family as child-entry context instead of leaving it context-free.
+- This keeps the slice narrow and honest:
+  - parser behavior is unchanged,
+  - the only runtime change is summary extraction for the already-shipped empty-child-entry and non-string-child-header diagnostics,
+  - and the new coverage proves that non-quiet CLI failures preserve `Context: Child entry 'missing header'` for blocked child-structure failures and `Context: Child entry 'non-string header'` for blocked child-header-shape failures, while correctly avoiding any invented `Construct:` line.
+
 ## 2026-03-19
 ### unnamed generated-child parser summaries are now symmetric across count and shape failures
 - Updated [t/130-composition-generated-child-source-shape-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/130-composition-generated-child-source-shape-diagnostics.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the unnamed generated-child parser-summary family is now fully locked across both parser boundaries:

@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-20: blocked empty child entries and non-string child headers now keep child-entry context in CLI summaries
+- Saved shipped behavior:
+  - failed composition summaries now keep `Child entry 'missing header'` for blocked empty child entries and `Child entry 'non-string header'` for blocked non-string child headers.
+- Important continuity note:
+  - this slice did widen extractor behavior slightly,
+  - but only at the failed-run summary layer,
+  - and it closes the remaining context-free pocket in the top-level child-structure parser family without inventing a fake construct line.
+
 ## 2026-03-19: unnamed generated-child parser summaries are now symmetric across count and shape failures
 - Saved shipped behavior:
   - unnamed generated-child parser summaries now have explicit regression coverage across both parser boundaries, so unnamed `?fsmc` and unnamed `?dtc` failures both keep child context through count and shape branches.

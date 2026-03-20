@@ -54,6 +54,90 @@ FSM
     );
 };
 
+subtest 'pipeline derives child-entry context from blocked empty child entries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'empty_child_entry_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:empty_child_entry_failure_summary_top
+  ()
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked empty child entries');
+    is($report->{top_name}, 'empty_child_entry_failure_summary_top', 'failure report preserves the top name for blocked empty child entries');
+    ok(!defined($report->{construct}), 'failure report does not invent a construct for blocked empty child entries');
+    is($report->{context_label}, 'Child entry', 'failure report classifies blocked empty child entries as child-entry context');
+    is($report->{context_value}, "'missing header'", 'failure report preserves the empty-child-entry summary token as context');
+    is($report->{context_summary}, "Child entry 'missing header'", 'failure report exposes a concise empty-child-entry summary');
+    is($report->{blocked_boundary}, 'composition child structure', 'failure report preserves the blocked child-structure boundary');
+    is($report->{blocked_boundary_label}, 'child structure', 'failure report exposes a CLI-friendly blocked-boundary label for empty child entries');
+    is(
+        $report->{blocked_reason},
+        "every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', or '?toplink:name'",
+        'failure report preserves the concise empty-child-entry reason',
+    );
+};
+
+subtest 'pipeline derives child-entry context from blocked non-string child headers' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'nonstring_child_header_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:nonstring_child_header_failure_summary_top
+  ((foo))
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked non-string child headers');
+    is($report->{top_name}, 'nonstring_child_header_failure_summary_top', 'failure report preserves the top name for blocked non-string child headers');
+    ok(!defined($report->{construct}), 'failure report does not invent a construct for blocked non-string child headers');
+    is($report->{context_label}, 'Child entry', 'failure report classifies blocked non-string child headers as child-entry context');
+    is($report->{context_value}, "'non-string header'", 'failure report preserves the non-string-child-header summary token as context');
+    is($report->{context_summary}, "Child entry 'non-string header'", 'failure report exposes a concise non-string-child-header summary');
+    is($report->{blocked_boundary}, 'composition child header shape', 'failure report preserves the blocked child-header-shape boundary');
+    is($report->{blocked_boundary_label}, 'child header shape', 'failure report exposes a CLI-friendly blocked-boundary label for non-string child headers');
+    is(
+        $report->{blocked_reason},
+        "every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', or '?toplink:name'",
+        'failure report preserves the concise non-string child-header reason',
+    );
+};
+
 subtest 'pipeline derives mapping-directive context from blocked ?ports mapping failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'ports_mapping_failure_summary_top.fsm');
@@ -5764,6 +5848,76 @@ FSM
     like($combined_output, qr/Context:\s+Child 'child'/s, 'CLI reports the named ?fsmc child as summary context');
     like($combined_output, qr/Blocked boundary:\s+child source count/s, 'CLI reports the blocked ?fsmc source-count boundary');
     like($combined_output, qr/Reason:\s+the active composition parser currently requires exactly one FSM source name per '\?fsmc'/s, 'CLI reports the concise ?fsmc source-count reason');
+};
+
+subtest 'CLI prints child-entry context for blocked empty child entries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'empty_child_entry_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'empty_child_entry_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:empty_child_entry_failure_summary_cli_top
+  ()
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked empty child-entry fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked empty child-entry fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked empty child entries');
+    unlike($combined_output, qr/Construct:\s+/s, 'CLI does not invent a construct for blocked empty child entries');
+    like($combined_output, qr/Context:\s+Child entry 'missing header'/s, 'CLI reports empty child-entry context in the summary');
+    like($combined_output, qr/Blocked boundary:\s+child structure/s, 'CLI reports the blocked child-structure boundary');
+    like($combined_output, qr/Reason:\s+every child must start with a real string header such as '\?fsmc:name', '\?dtc:name', '\?rtl:module', '\?ports', or '\?toplink:name'/s, 'CLI reports the concise empty child-entry reason');
+};
+
+subtest 'CLI prints child-entry context for blocked non-string child headers' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'nonstring_child_header_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'nonstring_child_header_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:nonstring_child_header_failure_summary_cli_top
+  ((foo))
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked non-string child-header fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked non-string child-header fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked non-string child headers');
+    unlike($combined_output, qr/Construct:\s+/s, 'CLI does not invent a construct for blocked non-string child headers');
+    like($combined_output, qr/Context:\s+Child entry 'non-string header'/s, 'CLI reports non-string child-header context in the summary');
+    like($combined_output, qr/Blocked boundary:\s+child header shape/s, 'CLI reports the blocked child-header-shape boundary');
+    like($combined_output, qr/Reason:\s+every child must start with a real string header such as '\?fsmc:name', '\?dtc:name', '\?rtl:module', '\?ports', or '\?toplink:name'/s, 'CLI reports the concise non-string child-header reason');
 };
 
 subtest 'CLI prints child context for blocked unnamed ?fsmc source-count failures' => sub {
