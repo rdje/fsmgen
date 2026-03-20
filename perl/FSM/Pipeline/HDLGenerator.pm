@@ -2638,6 +2638,7 @@ sub composition_failure_reason_excerpt ($self, $reason_text) {
     $reason =~ s/^declared interface metadata '[^']+'\s+//;
     $reason =~ s/\s+in declared interface metadata '[^']+'//g;
     $reason =~ s/\s*See docs\/.*\z//i;
+    $reason =~ s/,\s+except that the single-child passthrough C1 lane and the explicit-link C2\/C3 lanes may now infer the top interface when '\?ports' is omitted or empty//g;
 
     if (
         $reason =~ /\A(.+?)\.\s+Seen same-name child endpoints:\s+(.+?)\.\s+(?:The active|The current|Use '\?toplink'|Use '\?ports'|Use '\?fsmc'|Use '\?dtc'|Standalone '\?dt:name' roots|FSM child roots are shipped as composition children).*\z/s
@@ -2661,6 +2662,7 @@ sub composition_failure_construct_excerpt ($self, $summary_text) {
         [ qr/declared connect-by-name|=port/s, '=port', '=port' ],
         [ qr/requests declared connect-by-name/s, '=port', '=port' ],
         [ qr/Composition references external RTL module|RTL interface metadata|contains embedded '\?rtlif:/s, '?rtl', '?rtl' ],
+        [ qr/explicit '\?ports' block|'\?ports' to declare at least one explicit top port/s, '?ports', '?ports' ],
         [ qr/explicit link|explicit-link|nested '\?toplink' item|contains '\?toplink' token/s, '?toplink', '?toplink' ],
         [ qr/contains child '\?toplink(?::[^']+)?'/s, '?toplink', '?toplink' ],
         [ qr/omits top port|declares top port|declares duplicate top port|marks top port|uses top port|nested '\?ports' item|contains '\?ports' token|contains '\?ports' mapping directive/s, '?ports', '?ports' ],

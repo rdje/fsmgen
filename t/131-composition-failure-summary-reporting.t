@@ -54,6 +54,238 @@ FSM
     );
 };
 
+subtest 'pipeline derives lane-entry summaries from blocked no-child composition failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'no_child_lane_entry_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:no_child_lane_entry_failure_summary_top)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked no-child composition failures');
+    is($report->{top_name}, 'no_child_lane_entry_failure_summary_top', 'failure report preserves the top name for blocked no-child composition failures');
+    ok(!defined($report->{construct}), 'failure report does not invent a construct for blocked no-child composition failures');
+    ok(!defined($report->{context_label}), 'failure report does not invent context for blocked no-child composition failures');
+    is($report->{blocked_boundary}, 'composition lane entry', 'failure report preserves the blocked lane-entry boundary');
+    is($report->{blocked_boundary_label}, 'lane entry', 'failure report exposes a CLI-friendly blocked-boundary label for blocked no-child composition failures');
+    is(
+        $report->{blocked_reason},
+        "the current active composition lanes require at least one child instance such as '?fsmc', '?dtc', or '?rtl'",
+        'failure report preserves the concise no-child composition reason',
+    );
+};
+
+subtest 'pipeline derives ?ports construct from blocked multi-?ports composition shape failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'multi_ports_blocks_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:multi_ports_blocks_failure_summary_top
+  (?ports:first
+    clk
+  )
+  (?ports:second
+    rstn
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (OUT <= 1)
+  )
+  (+size
+    (OUT 1)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked multi-?ports composition shape failures');
+    is($report->{top_name}, 'multi_ports_blocks_failure_summary_top', 'failure report preserves the top name for blocked multi-?ports composition shape failures');
+    is($report->{construct}, '?ports', 'failure report preserves the ?ports construct for blocked multi-?ports composition shape failures');
+    ok(!defined($report->{context_label}), 'failure report does not invent context for blocked multi-?ports composition shape failures');
+    is($report->{blocked_boundary}, 'composition shape', 'failure report preserves the blocked composition-shape boundary for multi-?ports failures');
+    is($report->{blocked_boundary_label}, 'shape', 'failure report exposes a CLI-friendly blocked-boundary label for multi-?ports failures');
+    is(
+        $report->{blocked_reason},
+        "the current active composition lanes require exactly one explicit '?ports' block",
+        'failure report preserves the concise multi-?ports shape reason',
+    );
+};
+
+subtest 'pipeline derives ?ports construct from blocked omitted-?ports composition shape failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'missing_ports_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:missing_ports_failure_summary_top
+  (?fsmc:left left_src)
+  (?fsmc:right right_src)
+)
+
+(?fsm:left_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (OUT <= 1)
+  )
+  (+size
+    (OUT 1)
+  )
+)
+
+(?fsm:right_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (DONE <= 1)
+  )
+  (+size
+    (DONE 1)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked omitted-?ports composition shape failures');
+    is($report->{top_name}, 'missing_ports_failure_summary_top', 'failure report preserves the top name for blocked omitted-?ports composition shape failures');
+    is($report->{construct}, '?ports', 'failure report preserves the ?ports construct for blocked omitted-?ports composition shape failures');
+    ok(!defined($report->{context_label}), 'failure report does not invent context for blocked omitted-?ports composition shape failures');
+    is($report->{blocked_boundary}, 'composition shape', 'failure report preserves the blocked composition-shape boundary for omitted-?ports failures');
+    is($report->{blocked_boundary_label}, 'shape', 'failure report exposes a CLI-friendly blocked-boundary label for omitted-?ports failures');
+    is(
+        $report->{blocked_reason},
+        "the current active composition lanes require exactly one explicit '?ports' block",
+        'failure report preserves the concise omitted-?ports shape reason',
+    );
+};
+
+subtest 'pipeline derives ?ports construct from blocked empty-?ports composition shape failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'empty_ports_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:empty_ports_failure_summary_top
+  (?ports)
+  (?fsmc:left left_src)
+  (?fsmc:right right_src)
+)
+
+(?fsm:left_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (OUT <= 1)
+  )
+  (+size
+    (OUT 1)
+  )
+)
+
+(?fsm:right_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (DONE <= 1)
+  )
+  (+size
+    (DONE 1)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked empty-?ports composition shape failures');
+    is($report->{top_name}, 'empty_ports_failure_summary_top', 'failure report preserves the top name for blocked empty-?ports composition shape failures');
+    is($report->{construct}, '?ports', 'failure report preserves the ?ports construct for blocked empty-?ports composition shape failures');
+    ok(!defined($report->{context_label}), 'failure report does not invent context for blocked empty-?ports composition shape failures');
+    is($report->{blocked_boundary}, 'composition shape', 'failure report preserves the blocked composition-shape boundary for empty-?ports failures');
+    is($report->{blocked_boundary_label}, 'shape', 'failure report exposes a CLI-friendly blocked-boundary label for empty-?ports failures');
+    is(
+        $report->{blocked_reason},
+        "the current active composition lanes require '?ports' to declare at least one explicit top port",
+        'failure report preserves the concise empty-?ports shape reason',
+    );
+};
+
 subtest 'pipeline derives child-entry context from blocked empty child entries' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'empty_child_entry_failure_summary_top.fsm');
@@ -3255,6 +3487,218 @@ FSM
     is($report->{context_summary}, "Top endpoint 'missing_top'", 'failure report exposes a concise missing top-endpoint summary');
     is($report->{blocked_boundary}, 'explicit link endpoint resolution', 'failure report preserves the blocked endpoint-resolution boundary for missing top endpoints');
     is($report->{blocked_reason}, "'?ports' declares no top port with that name", 'failure report preserves the concise missing top-endpoint reason');
+};
+
+subtest 'CLI prints lane-entry summaries for blocked no-child composition failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'no_child_lane_entry_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'no_child_lane_entry_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:no_child_lane_entry_failure_summary_cli_top)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked no-child composition fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked no-child composition fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked no-child composition failures');
+    unlike($combined_output, qr/Construct:\s+/s, 'CLI does not invent a construct for blocked no-child composition failures');
+    unlike($combined_output, qr/Context:\s+/s, 'CLI does not invent context for blocked no-child composition failures');
+    like($combined_output, qr/Blocked boundary:\s+lane entry/s, 'CLI reports the blocked lane-entry boundary for blocked no-child composition failures');
+    like($combined_output, qr/Reason:\s+the current active composition lanes require at least one child instance such as '\?fsmc', '\?dtc', or '\?rtl'/s, 'CLI reports the concise no-child composition reason');
+};
+
+subtest 'CLI prints ?ports construct for blocked multi-?ports composition shape failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'multi_ports_blocks_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'multi_ports_blocks_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:multi_ports_blocks_failure_summary_cli_top
+  (?ports:first
+    clk
+  )
+  (?ports:second
+    rstn
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (OUT <= 1)
+  )
+  (+size
+    (OUT 1)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked multi-?ports composition shape fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked multi-?ports composition shape fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked multi-?ports composition shape failures');
+    like($combined_output, qr/Construct:\s+\?ports/s, 'CLI reports the ?ports construct for blocked multi-?ports composition shape failures');
+    unlike($combined_output, qr/Context:\s+/s, 'CLI does not invent context for blocked multi-?ports composition shape failures');
+    like($combined_output, qr/Blocked boundary:\s+shape/s, 'CLI reports the blocked composition-shape boundary for multi-?ports failures');
+    like($combined_output, qr/Reason:\s+the current active composition lanes require exactly one explicit '\?ports' block/s, 'CLI reports the concise multi-?ports shape reason');
+};
+
+subtest 'CLI prints ?ports construct for blocked omitted-?ports composition shape failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'missing_ports_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'missing_ports_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:missing_ports_failure_summary_cli_top
+  (?fsmc:left left_src)
+  (?fsmc:right right_src)
+)
+
+(?fsm:left_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (OUT <= 1)
+  )
+  (+size
+    (OUT 1)
+  )
+)
+
+(?fsm:right_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (DONE <= 1)
+  )
+  (+size
+    (DONE 1)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked omitted-?ports composition shape fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked omitted-?ports composition shape fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked omitted-?ports composition shape failures');
+    like($combined_output, qr/Construct:\s+\?ports/s, 'CLI reports the ?ports construct for blocked omitted-?ports composition shape failures');
+    unlike($combined_output, qr/Context:\s+/s, 'CLI does not invent context for blocked omitted-?ports composition shape failures');
+    like($combined_output, qr/Blocked boundary:\s+shape/s, 'CLI reports the blocked composition-shape boundary for omitted-?ports failures');
+    like($combined_output, qr/Reason:\s+the current active composition lanes require exactly one explicit '\?ports' block/s, 'CLI reports the concise omitted-?ports shape reason');
+};
+
+subtest 'CLI prints ?ports construct for blocked empty-?ports composition shape failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'empty_ports_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'empty_ports_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:empty_ports_failure_summary_cli_top
+  (?ports)
+  (?fsmc:left left_src)
+  (?fsmc:right right_src)
+)
+
+(?fsm:left_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (OUT <= 1)
+  )
+  (+size
+    (OUT 1)
+  )
+)
+
+(?fsm:right_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (DONE <= 1)
+  )
+  (+size
+    (DONE 1)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked empty-?ports composition shape fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked empty-?ports composition shape fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked empty-?ports composition shape failures');
+    like($combined_output, qr/Construct:\s+\?ports/s, 'CLI reports the ?ports construct for blocked empty-?ports composition shape failures');
+    unlike($combined_output, qr/Context:\s+/s, 'CLI does not invent context for blocked empty-?ports composition shape failures');
+    like($combined_output, qr/Blocked boundary:\s+shape/s, 'CLI reports the blocked composition-shape boundary for empty-?ports failures');
+    like($combined_output, qr/Reason:\s+the current active composition lanes require '\?ports' to declare at least one explicit top port/s, 'CLI reports the concise empty-?ports shape reason');
 };
 
 subtest 'CLI prints top-port context for blocked C1 top-port failures' => sub {

@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-20
+### top-level composition lane and `?ports` shape gates now summarize cleanly
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so failed composition summaries now cover the top-level lane/shape gate family explicitly:
+  - no-child tops keep the blocked `lane entry` summary without invented construct/context,
+  - and blocked multiple-`?ports`, omitted-`?ports`, and empty-`?ports` tops now keep `Construct: ?ports` with the blocked `shape` boundary.
+- This keeps the slice narrow and honest:
+  - planner and parser behavior are unchanged,
+  - the runtime change is limited to failed-run summary extraction and concise-reason trimming for the already-shipped top-level lane/shape diagnostics,
+  - and the new coverage proves those runs no longer misclassify the shape-gate family as `?toplink` just because the raw diagnostic mentions the explicit-link `C2/C3` inference exception.
+
 ### named generated-child parser summaries are now symmetric across count and shape failures
 - Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the named generated-child parser-summary family is now fully locked across both parser boundaries too:
   - named `?fsmc` source-count and source-shape failures,

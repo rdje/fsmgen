@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-20: top-level composition lane and `?ports` shape gates now summarize cleanly
+- Saved shipped behavior:
+  - failed composition summaries now keep clean top-level gate handling: no-child tops stay construct-free with the blocked `lane entry` summary, and blocked multiple-`?ports`, omitted-`?ports`, and empty-`?ports` tops now keep `Construct: ?ports` plus the shorter `shape` reason.
+- Important continuity note:
+  - this slice did widen extractor behavior slightly and narrowed concise-reason text slightly,
+  - but only at the failed-run summary layer,
+  - and it fixes a real misclassification where top-level `?ports` shape gates could previously show up as `?toplink` because the raw diagnostic mentioned the explicit-link `C2/C3` inference exception.
+
 ## 2026-03-20: named generated-child parser summaries are now symmetric across count and shape failures
 - Saved shipped behavior:
   - named generated-child parser summaries now have explicit regression coverage across both parser boundaries, so named `?fsmc` and named `?dtc` failures both keep child context through count and shape branches.

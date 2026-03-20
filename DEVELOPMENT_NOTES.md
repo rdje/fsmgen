@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-20: top-level composition lane and `?ports` shape gates now summarize cleanly
+- Continued the active `R11` failed-run reporting lane with a small but user-visible extractor fix at the top-level composition gate boundary.
+- Landed behavior:
+  - blocked no-child tops now keep the concise `lane entry` summary without any invented construct/context,
+  - and blocked multiple-`?ports`, omitted-`?ports`, and empty-`?ports` tops now keep `Construct: ?ports` with the blocked `shape` boundary and the shorter shape-gate reason.
+- Why this is worth shipping:
+  - these are early user-facing composition failures, so the short summary matters,
+  - the prior extractor could misclassify the shape-gate family as `?toplink` because the raw diagnostic mentions the explicit-link `C2/C3` inference exception,
+  - and trimming that exception clause from the short `Reason:` line makes the summary noticeably easier to scan without changing planner or parser behavior.
+
 ## 2026-03-20: named generated-child parser summaries are now symmetric across count and shape failures
 - Continued the active `R11` failed-run reporting lane by closing the sibling half of another parser-summary family we had only partially locked.
 - Landed behavior:
