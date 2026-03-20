@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-20: standalone-DT roots now also accept `?mod:name` and `?module:name`
+- Saved shipped behavior:
+  - `?mod:name` and `?module:name` now act as active standalone-DT root aliases beside `?dt:name`,
+  - and composition `?dtc` children may now realize embedded or external standalone-DT sources rooted at any of those three spellings.
+- Important continuity note:
+  - this is real `R11` feature growth, not just hardening,
+  - it keeps the semantic root family unified under the existing `dt` runtime path,
+  - and it retires the old roadmap question about whether those aliases should exist at all.
+
 ## 2026-03-20: composition override/block summaries now keep one example subject per kind
 - Saved shipped behavior:
   - `composition_report` now keeps one concise example subject for each shipped override kind and block kind,

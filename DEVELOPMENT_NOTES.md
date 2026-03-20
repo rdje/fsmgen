@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-20: standalone-DT roots now also accept `?mod:name` and `?module:name`
+- Continued the active `R11` lane by shipping a real reusable-module feature slice instead of another reporting-only refinement.
+- Landed behavior:
+  - `?mod:name` and `?module:name` now classify, parse, and generate through the same standalone-DT contract as `?dt:name`,
+  - and composition `?dtc` children may now realize embedded or external standalone-DT sources rooted at any of those three spellings.
+- Why this is worth shipping:
+  - this turns one explicit roadmap naming question into active tool behavior,
+  - it broadens reusable-module authoring without inventing a new semantic lane,
+  - and it keeps the implementation honest by extending both direct compilation and composition child realization together.
+
 ## 2026-03-20: composition override/block summaries now keep one example subject per kind
 - Continued the active `R11` reporting lane by moving one step beyond counts-only composition summaries without widening planner behavior.
 - Landed behavior:

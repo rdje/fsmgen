@@ -347,7 +347,7 @@ sub collect_embedded_dt_sources ($self, $raw_ast) {
         next unless ref($ast_node) eq 'ARRAY';
         next unless @$ast_node > 0;
         next if ref($ast_node->[0]);
-        next unless $ast_node->[0] =~ /^\?dt:/;
+        next unless $ast_node->[0] =~ /^\?(?:dt|mod|module):/;
         my $dt_name = $self->decode_embedded_dt_source_name($ast_node->[0]);
         next unless $dt_name;
         $embedded_dt_sources{$dt_name} = $ast_node;
@@ -377,12 +377,12 @@ sub decode_embedded_fsm_source_name ($self, $header) {
 }
 
 sub decode_embedded_dt_source_name ($self, $header) {
-    return $1 if defined($header) && !ref($header) && $header =~ /\A\?dt:([A-Za-z_]\w*)\z/;
+    return $1 if defined($header) && !ref($header) && $header =~ /\A\?(?:dt|mod|module):([A-Za-z_]\w*)\z/;
 
     my $display = defined($header) ? (ref($header) ? ref($header) : $header) : 'undef';
     confess
         "Malformed embedded DT source '$display'. ".
-        "The active composition contract expects embedded standalone-DT child sources shaped like '?dt:source_name' with an HDL-identifier-compatible source name ([A-Za-z_]\\w*).".
+        "The active composition contract expects embedded standalone-DT child sources shaped like '?dt:source_name', '?mod:source_name', or '?module:source_name' with an HDL-identifier-compatible source name ([A-Za-z_]\\w*).".
         $self->scope_docs_suffix;
 }
 

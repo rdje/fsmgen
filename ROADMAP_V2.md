@@ -172,6 +172,7 @@ Deliverable themes:
 
 First shipped `R11` slice now in tree:
 - `?dt:name` is now an active standalone-module root in the live toolchain.
+- `?mod:name` and `?module:name` are now also active standalone-DT root aliases in the live toolchain.
 - The `.rtlif` mini-contract is now explicit enough to build on:
   - one flat `(?rtlif:module_name ...)` root,
   - embedded same-file `(?rtlif:module_name ...)` companion roots taking precedence over sidecar metadata when present,
@@ -262,10 +263,10 @@ Planned bounded sub-lane inside `R11`:
   - keep `?fsm:name` on implicit `clk` / `rst_n` by default,
   - let `?dt:name` acquire implicit `clk` / `rst_n` only when a sequential assignment exists,
   - keep the output-driving semantics inside `?dt:name` aligned with existing DT handling instead of inventing a separate conflict model,
-  - keep `?top:name` as the explicit composition root while leaving `?mod:name` / `?module:name` as an open family-level naming question rather than an ad hoc replacement,
+  - keep `?top:name` as the explicit composition root while treating `?dt:name`, `?mod:name`, and `?module:name` as the current standalone-DT root family,
   - and extend reusable-source lookup through existing `FSMLIB` semantics plus repeatable `--path DIR` CLI roots.
 - first contract questions to settle:
-  - what the exact source-root family becomes: `?fsm:name`, `?dt:name`, `?top:name`, and whether `?mod:name` / `?module:name` are aliases or distinct roots,
+  - what the exact source-root family becomes beyond the now-shipped `?fsm:name`, `?dt:name`, `?mod:name`, `?module:name`, and `?top:name`,
   - whether unnamed reusable DT roots such as `?dt:` should exist at all or remain deferred,
   - how standalone DT interfaces are declared/exposed,
   - how block-level and module-level enable families are surfaced so same-target arbitration stays explicit without structural over-rejection,

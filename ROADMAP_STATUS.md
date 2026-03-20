@@ -634,6 +634,10 @@ Done:
   - driven non-intermediate targets in `?dt:name` become module outputs by default,
   - and standalone `?dt:name` generation stays out of the encoded `current_state` / `next_state` plan.
 - [t/82-standalone-dt-root-support.t](/Users/richarddje/Documents/github/fsmgen/t/82-standalone-dt-root-support.t) now locks both the combinational and sequential `?dt:name` success paths.
+- The next reusable-root naming slice is now also shipped:
+  - `?mod:name` and `?module:name` now act as active standalone-DT root aliases beside `?dt:name`,
+  - those aliases classify, parse, and generate through the same standalone-DT contract,
+  - and composition `?dtc` children may now realize embedded or external standalone-DT sources rooted at any of those three spellings.
 - The first reusable-source lookup slice is now also shipped:
   - the CLI accepts repeatable `--path DIR` roots for bare `.fsm` input resolution,
   - explicit `--path` roots are searched before `FSMLIB`,
@@ -811,7 +815,6 @@ Left:
   - registered-output loopback rules,
   - and the rule that combinational outputs may be top-level outputs but not peer-FSM inputs.
 - Turn the reusable standalone-DT/module-library direction into a real contract:
-  - decide whether the newly shipped `?dt:name` root is the final standalone-DT spelling or whether `?mod:name` / `?module:name` should later exist as aliases or distinct roots,
   - decide whether unnamed reusable DT roots such as `?dt:` exist at all,
   - extend the current shipped `?dt:name` interface rule into a fuller reusable-module contract, especially around multi-block enable surfacing and composition-facing exposure,
   - define how multi-`(-foo ...)` standalone DT modules expose block-level and module-level enable families,

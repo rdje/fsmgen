@@ -13,7 +13,7 @@ sub classify_source_ast ($raw_ast) {
     if (defined $header) {
         if ($header eq '+fsm' || $header =~ /^\?fsm:/) {
             $kind = 'fsm';
-        } elsif ($header =~ /^\?dt:/) {
+        } elsif ($header =~ /^\?(?:dt|mod|module):/) {
             $kind = 'dt';
         } elsif ($header =~ /^\?top:/) {
             $kind = 'composition';

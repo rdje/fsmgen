@@ -120,7 +120,7 @@ sub generate_hdl_from_file ($self, $fsm_file) {
         my $header = $source_info->{header};
         Carp::confess
             "Unsupported top-level source '$header'. ".
-            "The active pipeline supports '?fsm:name', '?dt:name', '+fsm', and '?top:name'. ".
+            "The active pipeline supports '?fsm:name', '?dt:name', '?mod:name', '?module:name', '+fsm', and '?top:name'. ".
             "Other tagged source kinds such as '?define:' are out of active support. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }
@@ -561,7 +561,7 @@ sub load_external_dtc_child_source ($self, $source_name, $fsm_file, $header) {
     my $child_header = $child_source_info->{header} // 'unknown root';
     my $kind_note = $child_kind eq 'fsm'
         ? "FSM child roots are shipped as composition children, but '?dtc' specifically requires a standalone-DT child source. Use '?fsmc' for FSM children instead."
-        : "The active standalone-DT composition contract currently expects '?dt:name' child roots for '?dtc'.";
+        : "The active standalone-DT composition contract currently expects '?dt:name', '?mod:name', or '?module:name' child roots for '?dtc'.";
 
     Carp::confess
         "Composition source '$header' in '$fsm_file' resolves '?dtc' child '$source_name' to '$child_source_path', ".

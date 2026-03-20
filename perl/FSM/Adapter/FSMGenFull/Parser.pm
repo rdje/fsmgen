@@ -48,7 +48,7 @@ sub parse_fsm($self, $raw_ast) {
         fsm_trace_decision(0, "Detected unsupported tagged top-level source '$header'", 1);
         Carp::confess
             "Unsupported top-level source '$header'. ".
-            "The active toolchain supports '?fsm:name', '?dt:name', and '+fsm' as single-module sources, and '?top:name' through the composition pipeline. ".
+            "The active toolchain supports '?fsm:name', '?dt:name', '?mod:name', '?module:name', and '+fsm' as single-module sources, and '?top:name' through the composition pipeline. ".
             "Other tagged source kinds such as '?define:' are out of active support. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }
@@ -61,8 +61,8 @@ sub parse_fsm($self, $raw_ast) {
             return $module;
         }
 
-        if (@$raw_ast > 0 && !ref($raw_ast->[0]) && $raw_ast->[0] =~ /^\?dt:/) {
-            fsm_trace_decision(1, "Detected '?dt:' structured AST header", 2);
+        if (@$raw_ast > 0 && !ref($raw_ast->[0]) && $raw_ast->[0] =~ /^\?(?:dt|mod|module):/) {
+            fsm_trace_decision(1, "Detected standalone-DT structured AST header", 2);
             my $module = $self->parse_fsm_module($raw_ast, 0, 'dt');
             fsm_trace_exit('Parser parse_fsm() completed via ?dt path', 2);
             return $module;
@@ -82,8 +82,8 @@ sub parse_fsm($self, $raw_ast) {
                 fsm_trace_exit('Parser parse_fsm() completed via nested ?fsm path', 2);
                 return $module;
             }
-            if (ref($ast_node) eq 'ARRAY' && @$ast_node > 0 && !ref($ast_node->[0]) && $ast_node->[0] =~ /^\?dt:/) {
-                fsm_trace_decision(1, "Detected nested '?dt:' AST node", 2);
+            if (ref($ast_node) eq 'ARRAY' && @$ast_node > 0 && !ref($ast_node->[0]) && $ast_node->[0] =~ /^\?(?:dt|mod|module):/) {
+                fsm_trace_decision(1, "Detected nested standalone-DT AST node", 2);
                 my $module = $self->parse_fsm_module($ast_node, 0, 'dt');
                 fsm_trace_exit('Parser parse_fsm() completed via nested ?dt path', 2);
                 return $module;
@@ -95,7 +95,7 @@ sub parse_fsm($self, $raw_ast) {
     my $root_display = $self->describe_top_level_source_root($raw_ast);
     Carp::confess
         "Malformed top-level source root '$root_display'. ".
-        "The active single-module parser expects '?fsm:module_name', '?dt:module_name', or the legacy '+fsm' root family at the source root. ".
+        "The active single-module parser expects '?fsm:module_name', one of '?dt:module_name' / '?mod:module_name' / '?module:module_name', or the legacy '+fsm' root family at the source root. ".
         "Bare top-level forms like '(+system ...)' or '(idle ...)' must be wrapped inside a supported source root. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
@@ -277,6 +277,13 @@ sub decode_flat_fsm_structure($self, $ast_array) {
 }
 
 sub decode_structured_module_name($self, $fsm_header, $root_kind = 'fsm') {
+    if ($root_kind eq 'dt') {
+        return $1
+            if defined($fsm_header)
+            && !ref($fsm_header)
+            && $fsm_header =~ /\A\?(?:dt|mod|module):([A-Za-z_]\w*)\z/;
+    }
+
     return $1
         if defined($fsm_header)
         && !ref($fsm_header)
@@ -291,7 +298,7 @@ sub decode_structured_module_name($self, $fsm_header, $root_kind = 'fsm') {
 }
 
 sub root_contract_label($self, $root_kind = 'fsm') {
-    return '?dt:name' if $root_kind eq 'dt';
+    return "one of '?dt:name', '?mod:name', or '?module:name'" if $root_kind eq 'dt';
     return '?fsm:name';
 }
 

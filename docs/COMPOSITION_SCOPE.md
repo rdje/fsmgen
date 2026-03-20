@@ -47,7 +47,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 ## Current active boundary
 - `bin/fsmgen` currently compiles a single FSM or standalone-DT source into HDL.
 - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) parses a source file with `Lispish::multi(...)`, classifies the top-level source kind, and routes `?top:name` inputs through a typed composition parser plus the shipped `C1`/`C2`/`C3`/`C4` realization lanes or an explicit scope-boundary diagnostic.
-- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) currently accepts active single-module roots shaped like `?fsm:name`, `?dt:name`, or `+fsm`.
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) currently accepts active single-module roots shaped like `?fsm:name`, `?dt:name`, `?mod:name`, `?module:name`, or `+fsm`.
 
 ## Current shipped runtime subset
 The currently shipped composition behavior is intentionally bounded:
@@ -152,7 +152,7 @@ The first composition lane is intentionally narrow:
 ### 1. Source kind
 The active tool currently supports three top-level source families:
 - FSM source: existing `?fsm:name` / `+fsm` path.
-- Standalone-DT source: `?dt:name` for reusable DT-root modules.
+- Standalone-DT source: `?dt:name`, `?mod:name`, or `?module:name` for reusable DT-root modules.
 - Composition source: one top-level `?top:name` form routed to a dedicated composition parser.
 
 ### 2. Child block kinds
