@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-20: composition override/block summaries now keep one example subject per kind
+- Saved shipped behavior:
+  - `composition_report` now keeps one concise example subject for each shipped override kind and block kind,
+  - and non-quiet `bin/fsmgen` runs now print those examples inline with the existing `Convention Overrides` and `Convention Blocks` summaries.
+- Important continuity note:
+  - this slice does not widen planning or convention behavior,
+  - it only promotes already-known override/block event structure into more actionable reporting,
+  - and it closes the old counts-only reporting gap that was still left on the `R11` board.
+
 ## 2026-03-20: active CLI help now names `bin/fsmgen` honestly
 - Saved shipped behavior:
   - the built-in help and missing-argument usage now name `./bin/fsmgen` instead of the old `generate_fsm_hdl.pl` wrapper,

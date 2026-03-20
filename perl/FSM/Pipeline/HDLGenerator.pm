@@ -2242,14 +2242,18 @@ sub build_composition_provenance_report ($self, $composition_plan) {
 
     my @override_events = @{$self->build_composition_override_events($composition_plan)};
     my %override_kind_counts;
+    my %override_kind_examples;
     for my $event (@override_events) {
         $override_kind_counts{$event->{kind}}++;
+        $override_kind_examples{$event->{kind}} //= $self->composition_override_example_summary($event);
     }
 
     my @block_events = @{$self->build_composition_block_events($composition_plan)};
     my %block_kind_counts;
+    my %block_kind_examples;
     for my $event (@block_events) {
         $block_kind_counts{$event->{kind}}++;
+        $block_kind_examples{$event->{kind}} //= $self->composition_block_example_summary($event);
     }
 
     return {
@@ -2268,6 +2272,8 @@ sub build_composition_provenance_report ($self, $composition_plan) {
         resolved_link_category_counts => \%resolved_link_category_counts,
         override_kind_counts => \%override_kind_counts,
         block_kind_counts => \%block_kind_counts,
+        override_kind_examples => \%override_kind_examples,
+        block_kind_examples => \%block_kind_examples,
         ordered_port_origins => [
             sort {
                 $self->composition_provenance_sort_key($a) <=> $self->composition_provenance_sort_key($b)
@@ -2540,6 +2546,20 @@ sub composition_override_label ($self, $kind) {
     return $label;
 }
 
+sub composition_override_example_summary ($self, $event) {
+    return '' unless $event && ref($event) eq 'HASH';
+
+    if (defined $event->{top_port_name} && length $event->{top_port_name}) {
+        return "Top port '$event->{top_port_name}'";
+    }
+
+    if (defined $event->{signal_name} && length $event->{signal_name}) {
+        return "Signal name '$event->{signal_name}'";
+    }
+
+    return '';
+}
+
 sub composition_block_label ($self, $kind) {
     my %labels = (
         explicit_child_links_block_undeclared_top_input_inference => 'explicit child links block undeclared top-input inference',
@@ -2551,6 +2571,20 @@ sub composition_block_label ($self, $kind) {
 
     (my $label = $kind) =~ s/_/ /g;
     return $label;
+}
+
+sub composition_block_example_summary ($self, $event) {
+    return '' unless $event && ref($event) eq 'HASH';
+
+    if (defined $event->{signal_name} && length $event->{signal_name}) {
+        return "Signal name '$event->{signal_name}'";
+    }
+
+    if (defined $event->{top_port_name} && length $event->{top_port_name}) {
+        return "Top port '$event->{top_port_name}'";
+    }
+
+    return '';
 }
 
 sub build_composition_failure_report ($self, $error_text) {

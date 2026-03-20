@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-20: composition override/block summaries now keep one example subject per kind
+- Continued the active `R11` reporting lane by moving one step beyond counts-only composition summaries without widening planner behavior.
+- Landed behavior:
+  - `composition_report` now keeps one concise example subject for each shipped override kind and block kind,
+  - non-quiet `bin/fsmgen` runs now print those examples inline with the existing `Convention Overrides` and `Convention Blocks` counts,
+  - and the carried example data stays bounded to the already-shipped event families instead of inventing a broader reporting model.
+- Why this is worth shipping:
+  - override/block counts alone prove that convention activity happened, but not where,
+  - the report builder already had structured override/block events available, so this slice can stay reporting-only,
+  - and this is the first honest step beyond counts toward the roadmap’s goal of making blocked/overridden convention behavior easier to understand without digging through plan internals.
+
 ## 2026-03-20: active CLI help now names `bin/fsmgen` honestly
 - Continued the active `R11` lane by retiring one small but real architectural/user-facing hotspot instead of opening another behavior lane.
 - Landed behavior:

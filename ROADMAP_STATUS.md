@@ -773,6 +773,10 @@ Done:
   - pipeline-side reporting when explicit child links block undeclared top-input/top-output inference,
   - pipeline-side reporting when inferred internal carriers stay internal by default,
   - and CLI blocked-summary output for a bounded explicit-link fixture.
+- The next bounded reporting refinement is now also shipped:
+  - `composition_report` now keeps one concise example subject for each shipped override kind and block kind instead of stopping at counts only,
+  - those example subjects now also flow through `module_info` and `statistics` via the same carried `composition_provenance` payload,
+  - and non-quiet `bin/fsmgen` runs now print those examples inline with the existing `Convention Overrides` and `Convention Blocks` counts.
 - [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) now locks:
   - multi-`?rtl` explicit-toplink `C3` success,
   - and one-generated-plus-multi-`?rtl` explicit-toplink `C3` success.
@@ -827,7 +831,6 @@ Left:
   - decide whether the newly shipped explicit top-output re-export slice is enough or whether lighter/further override forms are warranted,
   - keep convention as the default authoring path while making explicit port/link declarations override inference locally instead of replacing the whole inferred interface,
   - keep that explicit override layer elegant and expressive rather than verbose duplicate configuration,
-  - extend the newly shipped result/CLI provenance reporting beyond the new composition summary plus override/block counts so failure-path diagnostics explain “blocked” and “overridden” consistently too,
   - and keep any such convention top-boundary-oriented rather than turning child-to-child wiring into hidden inference everywhere.
 - Track and later retire the current architectural hotspot set deliberately instead of letting it stay ambient debt:
   - split composition policy, interface inference, and top emission back out of `FSM::Pipeline::HDLGenerator`,

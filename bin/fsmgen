@@ -463,7 +463,10 @@ unless ($quiet) {
             for my $kind (@{$composition_report->{ordered_override_kinds}}) {
                 my $label = $pipeline->composition_override_label($kind);
                 my $count = $composition_report->{override_kind_counts}{$kind} || 0;
-                print "  - $label: $count\n";
+                my $example = $composition_report->{override_kind_examples}{$kind} || '';
+                print "  - $label: $count";
+                print " (example: $example)" if length $example;
+                print "\n";
             }
         }
 
@@ -472,7 +475,10 @@ unless ($quiet) {
             for my $kind (@{$composition_report->{ordered_block_kinds}}) {
                 my $label = $pipeline->composition_block_label($kind);
                 my $count = $composition_report->{block_kind_counts}{$kind} || 0;
-                print "  - $label: $count\n";
+                my $example = $composition_report->{block_kind_examples}{$kind} || '';
+                print "  - $label: $count";
+                print " (example: $example)" if length $example;
+                print "\n";
             }
         }
     }

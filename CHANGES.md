@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-20
+### composition override/block summaries now keep one example subject per kind
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) and [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so composition provenance reporting now carries and prints one concise example subject for each shipped override kind and block kind instead of stopping at counts only.
+- Updated [t/105-composition-override-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/105-composition-override-reporting.t) and [t/106-composition-blocked-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/106-composition-blocked-reporting.t) to lock both the pipeline-side `composition_report` examples and the non-quiet CLI summary output.
+- Updated [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this `R11` reporting refinement is tracked as shipped rather than left as a counts-only gap.
+
 ### active CLI help now names `bin/fsmgen` honestly
 - Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so the built-in help and missing-argument usage now name the active `./bin/fsmgen` entrypoint instead of the old `generate_fsm_hdl.pl` wrapper.
 - Updated the same help surface so its default-output wording now matches the shipped runtime too: without `-o`, output is written in the current working directory, not a legacy “script directory”.

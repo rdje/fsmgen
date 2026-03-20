@@ -74,9 +74,19 @@ FSM
         'report counts explicit toplink override of same-name top-input convention',
     );
     is(
+        $report->{override_kind_examples}{explicit_toplink_overrides_same_name_top_input_convention},
+        "Top port 'trigger'",
+        'report keeps one example top port for the same-name top-input override family',
+    );
+    is(
         $report->{override_kind_counts}{explicit_toplink_overrides_same_name_top_output_convention},
         1,
         'report counts explicit toplink override of same-name top-output convention',
+    );
+    is(
+        $report->{override_kind_examples}{explicit_toplink_overrides_same_name_top_output_convention},
+        "Top port 'serial_out'",
+        'report keeps one example top port for the same-name top-output override family',
     );
     is(
         $result->{module_info}{composition_override_count},
@@ -164,6 +174,11 @@ FSM
         1,
         'report counts explicit top-output re-export of an inferred internal carrier',
     );
+    is(
+        $report->{override_kind_examples}{explicit_top_output_reexports_internal_carrier},
+        "Top port 'payload'",
+        'report keeps one example top port for the internal-carrier re-export override family',
+    );
 };
 
 subtest 'CLI prints convention override summary for non-quiet composition runs' => sub {
@@ -230,13 +245,13 @@ FSM
     like($combined_output, qr/Convention Overrides:/s, 'CLI prints the convention override section');
     like(
         $combined_output,
-        qr/explicit toplink overrides same-name top-input convention:\s+1/s,
-        'CLI reports the top-input override kind',
+        qr/explicit toplink overrides same-name top-input convention:\s+1 \(example: Top port 'trigger'\)/s,
+        'CLI reports the top-input override kind with one example top port',
     );
     like(
         $combined_output,
-        qr/explicit toplink overrides same-name top-output convention:\s+1/s,
-        'CLI reports the top-output override kind',
+        qr/explicit toplink overrides same-name top-output convention:\s+1 \(example: Top port 'serial_out'\)/s,
+        'CLI reports the top-output override kind with one example top port',
     );
 };
 

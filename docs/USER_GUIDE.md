@@ -197,8 +197,8 @@ Combinational DT note:
 - Composition results now also carry a user-facing provenance summary:
   - `generate_hdl_from_file(...)` returns `composition_report` for composition sources,
   - that report summarizes top-port and resolved-link provenance by `origin_kind`,
-  - it also reports the first shipped local override cases, including explicit top links overriding same-name convention and explicit top outputs re-exporting inferred internal carriers,
-  - it now also reports the first shipped blocked cases, including explicit child links blocking undeclared top-interface inference and inferred internal carriers staying internal by default,
+  - it also reports the first shipped local override cases, including explicit top links overriding same-name convention and explicit top outputs re-exporting inferred internal carriers, and now keeps one concise example subject per override kind,
+  - it now also reports the first shipped blocked cases, including explicit child links blocking undeclared top-interface inference and inferred internal carriers staying internal by default, and now keeps one concise example subject per block kind,
   - and the first bounded failure-path wording slice is now shipped too, so plain explicit top-port same-name convention failures now say when the convention is blocked,
   - and that failure-path blocked-wording lane now also covers undeclared top-input/top-output and undeclared internal-carrier inference failures,
   - and it now also covers explicit top-output re-export mismatches when a declared top output does not match the inferred same-name internal-carrier family exactly,
