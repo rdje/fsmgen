@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-19: unnamed generated-child parser summaries are now symmetric across count and shape failures
+- Saved shipped behavior:
+  - unnamed generated-child parser summaries now have explicit regression coverage across both parser boundaries, so unnamed `?fsmc` and unnamed `?dtc` failures both keep child context through count and shape branches.
+- Important continuity note:
+  - this slice did not widen extractor behavior,
+  - it hardens the already-shipped unnamed-child summary path,
+  - and it closes the remaining symmetry gap in the unnamed generated-child parser family.
+
 ## 2026-03-19: blocked unnamed generated-child parser failures now keep child context in CLI summaries
 - Saved shipped behavior:
   - failed composition summaries now recognize blocked unnamed `?fsmc` / `?dtc` parser diagnostics as child context, so these runs can keep `Child '?fsmc'` / `Child '?dtc'` instead of losing child identity in the short summary.

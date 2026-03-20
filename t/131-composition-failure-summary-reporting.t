@@ -375,6 +375,50 @@ FSM
     );
 };
 
+subtest 'pipeline derives child context from blocked unnamed ?fsmc source-shape failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'unnamed_nested_fsm_source_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:unnamed_nested_fsm_source_failure_summary_top
+  (?fsmc
+    (opt foo)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked unnamed ?fsmc source-shape failures');
+    is($report->{top_name}, 'unnamed_nested_fsm_source_failure_summary_top', 'failure report preserves the top name for blocked unnamed ?fsmc source-shape failures');
+    is($report->{construct}, '?fsmc', 'failure report preserves the ?fsmc construct for blocked unnamed source-shape failures');
+    is($report->{context_label}, 'Child', 'failure report classifies blocked unnamed ?fsmc source-shape failures as child context');
+    is($report->{context_value}, "'?fsmc'", 'failure report preserves the unnamed ?fsmc child header as context');
+    is($report->{context_summary}, "Child '?fsmc'", 'failure report exposes a concise unnamed ?fsmc child context summary');
+    is($report->{blocked_boundary}, 'composition child source shape', 'failure report preserves the blocked unnamed ?fsmc source-shape boundary');
+    is($report->{blocked_boundary_label}, 'child source shape', 'failure report exposes a CLI-friendly blocked-boundary label for unnamed ?fsmc source-shape failures');
+    is(
+        $report->{blocked_reason},
+        "the active composition parser currently requires exactly one flat FSM source name per '?fsmc'",
+        'failure report preserves the concise unnamed ?fsmc source-shape reason',
+    );
+};
+
 subtest 'pipeline derives child context from blocked ?dtc source-shape failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'nested_dt_source_failure_summary_top.fsm');
@@ -416,6 +460,48 @@ FSM
         $report->{blocked_reason},
         "the active composition parser currently requires exactly one flat standalone-DT source name per '?dtc'",
         'failure report preserves the concise ?dtc source-shape reason',
+    );
+};
+
+subtest 'pipeline derives child context from blocked unnamed ?dtc source-count failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'unnamed_missing_dt_source_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:unnamed_missing_dt_source_failure_summary_top
+  (?dtc)
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked unnamed ?dtc source-count failures');
+    is($report->{top_name}, 'unnamed_missing_dt_source_failure_summary_top', 'failure report preserves the top name for blocked unnamed ?dtc source-count failures');
+    is($report->{construct}, '?dtc', 'failure report preserves the ?dtc construct for blocked unnamed source-count failures');
+    is($report->{context_label}, 'Child', 'failure report classifies blocked unnamed ?dtc source-count failures as child context');
+    is($report->{context_value}, "'?dtc'", 'failure report preserves the unnamed ?dtc child header as context');
+    is($report->{context_summary}, "Child '?dtc'", 'failure report exposes a concise unnamed ?dtc child context summary');
+    is($report->{blocked_boundary}, 'composition child source count', 'failure report preserves the blocked unnamed ?dtc source-count boundary');
+    is($report->{blocked_boundary_label}, 'child source count', 'failure report exposes a CLI-friendly blocked-boundary label for unnamed ?dtc source-count failures');
+    is(
+        $report->{blocked_reason},
+        "the active composition parser currently requires exactly one standalone-DT source name per '?dtc'",
+        'failure report preserves the concise unnamed ?dtc source-count reason',
     );
 };
 
@@ -5715,6 +5801,43 @@ FSM
     like($combined_output, qr/Reason:\s+the active composition parser currently requires exactly one FSM source name per '\?fsmc'/s, 'CLI reports the concise unnamed ?fsmc source-count reason');
 };
 
+subtest 'CLI prints child context for blocked unnamed ?fsmc source-shape failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'unnamed_nested_fsm_source_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'unnamed_nested_fsm_source_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:unnamed_nested_fsm_source_failure_summary_cli_top
+  (?fsmc
+    (opt foo)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked unnamed ?fsmc source-shape fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked unnamed ?fsmc source-shape fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked unnamed ?fsmc source-shape failures');
+    like($combined_output, qr/Construct:\s+\?fsmc/s, 'CLI reports the ?fsmc construct for blocked unnamed source-shape failures');
+    like($combined_output, qr/Context:\s+Child '\?fsmc'/s, 'CLI reports the unnamed ?fsmc child header as summary context');
+    like($combined_output, qr/Blocked boundary:\s+child source shape/s, 'CLI reports the blocked unnamed ?fsmc source-shape boundary');
+    like($combined_output, qr/Reason:\s+the active composition parser currently requires exactly one flat FSM source name per '\?fsmc'/s, 'CLI reports the concise unnamed ?fsmc source-shape reason');
+};
+
 subtest 'CLI prints child context for blocked ?dtc source-shape failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'nested_dt_source_failure_summary_cli_top.fsm');
@@ -5750,6 +5873,41 @@ FSM
     like($combined_output, qr/Context:\s+Child 'child'/s, 'CLI reports the named ?dtc child as summary context');
     like($combined_output, qr/Blocked boundary:\s+child source shape/s, 'CLI reports the blocked ?dtc source-shape boundary');
     like($combined_output, qr/Reason:\s+the active composition parser currently requires exactly one flat standalone-DT source name per '\?dtc'/s, 'CLI reports the concise ?dtc source-shape reason');
+};
+
+subtest 'CLI prints child context for blocked unnamed ?dtc source-count failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'unnamed_missing_dt_source_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'unnamed_missing_dt_source_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:unnamed_missing_dt_source_failure_summary_cli_top
+  (?dtc)
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked unnamed ?dtc source-count fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked unnamed ?dtc source-count fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked unnamed ?dtc source-count failures');
+    like($combined_output, qr/Construct:\s+\?dtc/s, 'CLI reports the ?dtc construct for blocked unnamed source-count failures');
+    like($combined_output, qr/Context:\s+Child '\?dtc'/s, 'CLI reports the unnamed ?dtc child header as summary context');
+    like($combined_output, qr/Blocked boundary:\s+child source count/s, 'CLI reports the blocked unnamed ?dtc source-count boundary');
+    like($combined_output, qr/Reason:\s+the active composition parser currently requires exactly one standalone-DT source name per '\?dtc'/s, 'CLI reports the concise unnamed ?dtc source-count reason');
 };
 
 subtest 'CLI prints child context for blocked unnamed ?dtc source-shape failures' => sub {

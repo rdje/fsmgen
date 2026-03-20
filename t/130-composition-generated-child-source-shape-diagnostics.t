@@ -64,6 +64,22 @@ FSM
     );
 };
 
+subtest 'unnamed nested ?fsmc source payloads now say source shape is blocked' => sub {
+    expect_failure(
+        name => 'unnamed_nested_fsm_source_top',
+        body => <<'FSM',
+(?top:unnamed_nested_fsm_source_top
+  (?fsmc
+    (opt foo)
+  )
+)
+FSM
+        pipeline_regex => qr/Composition top 'unnamed_nested_fsm_source_top' contains '\?fsmc' child without a name, .*composition child source shape is blocked because the active composition parser currently requires exactly one flat FSM source name per '\?fsmc'/s,
+        cli_regex => qr/composition child source shape is blocked because the active composition parser currently requires exactly one flat FSM source name per '\?fsmc'/s,
+        cli_failure_name => 'unnamed nested ?fsmc source payloads',
+    );
+};
+
 subtest 'missing ?dtc source now says source count is blocked' => sub {
     expect_failure(
         name => 'missing_dt_source_top',
@@ -75,6 +91,20 @@ FSM
         pipeline_regex => qr/Composition top 'missing_dt_source_top' contains '\?dtc' child 'child' with 0 standalone-DT source names, .*composition child source count is blocked because the active composition parser currently requires exactly one standalone-DT source name per '\?dtc'/s,
         cli_regex => qr/composition child source count is blocked because the active composition parser currently requires exactly one standalone-DT source name per '\?dtc'/s,
         cli_failure_name => 'missing ?dtc source names',
+    );
+};
+
+subtest 'unnamed ?dtc source now says source count is blocked' => sub {
+    expect_failure(
+        name => 'unnamed_missing_dt_source_top',
+        body => <<'FSM',
+(?top:unnamed_missing_dt_source_top
+  (?dtc)
+)
+FSM
+        pipeline_regex => qr/Composition top 'unnamed_missing_dt_source_top' contains '\?dtc' child without a name with 0 standalone-DT source names, .*composition child source count is blocked because the active composition parser currently requires exactly one standalone-DT source name per '\?dtc'/s,
+        cli_regex => qr/composition child source count is blocked because the active composition parser currently requires exactly one standalone-DT source name per '\?dtc'/s,
+        cli_failure_name => 'unnamed ?dtc source names',
     );
 };
 
