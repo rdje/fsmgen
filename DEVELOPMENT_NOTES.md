@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-20: named generated-child parser summaries are now symmetric across count and shape failures
+- Continued the active `R11` failed-run reporting lane by closing the sibling half of another parser-summary family we had only partially locked.
+- Landed behavior:
+  - named `?fsmc` parser failures now have explicit summary coverage across both source-count and source-shape branches,
+  - and named `?dtc` parser failures now have explicit summary coverage across both source-count and source-shape branches too.
+- Why this is worth shipping:
+  - the extractor already supported these siblings through the same named-child diagnostic patterns,
+  - but only half the reachable family was regression-locked,
+  - and closing that symmetry gap keeps this generated-child parser-summary path honest without changing parser or planner behavior.
+
 ## 2026-03-20: blocked nested `?ports` and `?toplink` items now keep child context in CLI summaries
 - Continued the active `R11` failed-run reporting lane with another small shipped extractor improvement at the parser-boundary level instead of widening parser behavior.
 - Landed behavior:

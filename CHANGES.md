@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-20
+### named generated-child parser summaries are now symmetric across count and shape failures
+- Updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so the named generated-child parser-summary family is now fully locked across both parser boundaries too:
+  - named `?fsmc` source-count and source-shape failures,
+  - named `?dtc` source-count and source-shape failures.
+- This keeps the slice narrow and honest:
+  - runtime extractor behavior is unchanged,
+  - parser behavior is unchanged,
+  - and the new coverage proves that non-quiet CLI failures keep `Construct: ?fsmc` plus `Context: Child 'child'` and `Construct: ?dtc` plus `Context: Child 'child'` consistently across both count and shape branches.
+
 ### blocked nested `?ports` and `?toplink` items now keep child context in CLI summaries
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so failed composition summaries now preserve the nested child-block identity for the parser flatness family instead of showing only construct + boundary.
 - This keeps the slice narrow and honest:
