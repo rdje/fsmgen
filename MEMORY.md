@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-20: blocked nested `?ports` and `?toplink` items now keep child context in CLI summaries
+- Saved shipped behavior:
+  - failed composition summaries now keep `Child '?ports'` for blocked nested `?ports` items and `Child '?toplink'` for blocked nested `?toplink` items.
+- Important continuity note:
+  - this slice did widen extractor behavior slightly,
+  - but only at the failed-run summary layer,
+  - and it closes the remaining context-thin pocket in the parser flatness family without changing parser behavior.
+
 ## 2026-03-20: blocked empty child entries and non-string child headers now keep child-entry context in CLI summaries
 - Saved shipped behavior:
   - failed composition summaries now keep `Child entry 'missing header'` for blocked empty child entries and `Child entry 'non-string header'` for blocked non-string child headers.

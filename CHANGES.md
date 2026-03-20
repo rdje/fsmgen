@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-20
+### blocked nested `?ports` and `?toplink` items now keep child context in CLI summaries
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so failed composition summaries now preserve the nested child-block identity for the parser flatness family instead of showing only construct + boundary.
+- This keeps the slice narrow and honest:
+  - parser behavior is unchanged,
+  - the only runtime change is summary extraction for the already-shipped nested `?ports` and nested `?toplink` diagnostics,
+  - and the new coverage proves that non-quiet CLI failures preserve `Context: Child '?ports'` for blocked port-declaration flatness and `Context: Child '?toplink'` for blocked explicit top-link token flatness.
+
 ### blocked empty child entries and non-string child headers now keep child-entry context in CLI summaries
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so failed composition summaries now recognize the top-level child-structure parser family as child-entry context instead of leaving it context-free.
 - This keeps the slice narrow and honest:

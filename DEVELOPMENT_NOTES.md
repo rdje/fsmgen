@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-20: blocked nested `?ports` and `?toplink` items now keep child context in CLI summaries
+- Continued the active `R11` failed-run reporting lane with another small shipped extractor improvement at the parser-boundary level instead of widening parser behavior.
+- Landed behavior:
+  - failed composition summaries now recognize blocked nested `?ports` items as `Child '?ports'`,
+  - and blocked nested `?toplink` items as `Child '?toplink'`,
+  - while still keeping the existing blocked `port declaration flatness` / `explicit top-link token flatness` boundaries and concise reasons.
+- Why this is worth shipping:
+  - these nested-item parser failures are reachable and already regression-backed at the diagnostic level,
+  - the blocked diagnostics already expose the active child-block identity clearly,
+  - and surfacing that same identity in the short summary makes the flatness family easier to scan without changing parser behavior.
+
 ## 2026-03-20: blocked empty child entries and non-string child headers now keep child-entry context in CLI summaries
 - Continued the active `R11` failed-run reporting lane with a small shipped extractor improvement at the parser-boundary level instead of widening parser behavior.
 - Landed behavior:

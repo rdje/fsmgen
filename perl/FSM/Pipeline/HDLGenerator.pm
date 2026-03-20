@@ -2712,6 +2712,7 @@ sub composition_failure_context_excerpt ($self, $summary_text) {
     my @patterns = (
         [ qr/contains a child entry that is empty or missing its header/s, sub { return ('Child entry', "'missing header'"); } ],
         [ qr/contains a child entry that does not begin with a string header/s, sub { return ('Child entry', "'non-string header'"); } ],
+        [ qr/contains a nested '(\?(?:ports|toplink))' item/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/contains child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/contains '(\?(?:fsmc|dtc))' child without a name/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/contains '\?(?:fsmc|dtc|rtl)' child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],

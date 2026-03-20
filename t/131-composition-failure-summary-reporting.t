@@ -197,6 +197,64 @@ FSM
     );
 };
 
+subtest 'pipeline derives child context from blocked nested ?ports items' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'nested_ports_item_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:nested_ports_item_failure_summary_top
+  (?ports:public_io
+    (nested)
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_data> <= 8'1)
+  )
+  (+size
+    (result_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked nested ?ports items');
+    is($report->{top_name}, 'nested_ports_item_failure_summary_top', 'failure report preserves the top name for blocked nested ?ports items');
+    is($report->{construct}, '?ports', 'failure report preserves the ?ports construct for blocked nested ?ports items');
+    is($report->{context_label}, 'Child', 'failure report classifies blocked nested ?ports items as child context');
+    is($report->{context_value}, "'?ports'", 'failure report preserves the nested ?ports block as context');
+    is($report->{context_summary}, "Child '?ports'", 'failure report exposes a concise nested ?ports child summary');
+    is($report->{blocked_boundary}, 'composition port declaration flatness', 'failure report preserves the blocked ?ports flatness boundary');
+    is($report->{blocked_boundary_label}, 'port declaration flatness', 'failure report exposes a CLI-friendly blocked-boundary label for nested ?ports items');
+    is(
+        $report->{blocked_reason},
+        'the active composition parser only supports flat explicit port tokens',
+        'failure report preserves the concise nested ?ports flatness reason',
+    );
+};
+
 subtest 'pipeline derives token context from blocked invalid ?ports token failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'invalid_ports_token_failure_summary_top.fsm');
@@ -372,6 +430,69 @@ FSM
         $report->{blocked_reason},
         "the current parser only accepts simple '/source/target/' link forms",
         'failure report preserves the concise ?toplink token-shape reason',
+    );
+};
+
+subtest 'pipeline derives child context from blocked nested ?toplink items' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'nested_toplink_item_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:nested_toplink_item_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:child child_src)
+  (?toplink:wiring
+    (nested)
+  )
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_data> <= 8'1)
+  )
+  (+size
+    (result_data 8)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = $pipeline->build_composition_failure_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked nested ?toplink items');
+    is($report->{top_name}, 'nested_toplink_item_failure_summary_top', 'failure report preserves the top name for blocked nested ?toplink items');
+    is($report->{construct}, '?toplink', 'failure report preserves the ?toplink construct for blocked nested ?toplink items');
+    is($report->{context_label}, 'Child', 'failure report classifies blocked nested ?toplink items as child context');
+    is($report->{context_value}, "'?toplink'", 'failure report preserves the nested ?toplink block as context');
+    is($report->{context_summary}, "Child '?toplink'", 'failure report exposes a concise nested ?toplink child summary');
+    is($report->{blocked_boundary}, 'explicit top-link token flatness', 'failure report preserves the blocked ?toplink flatness boundary');
+    is($report->{blocked_boundary_label}, 'explicit top-link token flatness', 'failure report exposes a CLI-friendly blocked-boundary label for nested ?toplink items');
+    is(
+        $report->{blocked_reason},
+        "the active composition parser only supports flat '/source/target/' link tokens",
+        'failure report preserves the concise nested ?toplink flatness reason',
     );
 };
 
@@ -5813,6 +5934,113 @@ FSM
     like($combined_output, qr/Context:\s+Token 'child\.result_data->result_data'/s, 'CLI reports the blocked ?toplink token as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit top-link token shape/s, 'CLI reports the blocked ?toplink token-shape boundary');
     like($combined_output, qr/Reason:\s+the current parser only accepts simple '\/source\/target\/' link forms/s, 'CLI reports the concise ?toplink token-shape reason');
+};
+
+subtest 'CLI prints child context for blocked nested ?ports items' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'nested_ports_item_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'nested_ports_item_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:nested_ports_item_failure_summary_cli_top
+  (?ports:public_io
+    (nested)
+  )
+  (?fsmc:child child_src)
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_data> <= 8'1)
+  )
+  (+size
+    (result_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked nested ?ports-item fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked nested ?ports-item fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked nested ?ports items');
+    like($combined_output, qr/Construct:\s+\?ports/s, 'CLI reports the ?ports construct for blocked nested ?ports items');
+    like($combined_output, qr/Context:\s+Child '\?ports'/s, 'CLI reports the nested ?ports block as summary context');
+    like($combined_output, qr/Blocked boundary:\s+port declaration flatness/s, 'CLI reports the blocked ?ports flatness boundary');
+    like($combined_output, qr/Reason:\s+the active composition parser only supports flat explicit port tokens/s, 'CLI reports the concise nested ?ports flatness reason');
+};
+
+subtest 'CLI prints child context for blocked nested ?toplink items' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'nested_toplink_item_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'nested_toplink_item_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:nested_toplink_item_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:child child_src)
+  (?toplink:wiring
+    (nested)
+  )
+)
+
+(?fsm:child_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (result_data> <= 8'1)
+  )
+  (+size
+    (result_data 8)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked nested ?toplink-item fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked nested ?toplink-item fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked nested ?toplink items');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the ?toplink construct for blocked nested ?toplink items');
+    like($combined_output, qr/Context:\s+Child '\?toplink'/s, 'CLI reports the nested ?toplink block as summary context');
+    like($combined_output, qr/Blocked boundary:\s+explicit top-link token flatness/s, 'CLI reports the blocked ?toplink flatness boundary');
+    like($combined_output, qr/Reason:\s+the active composition parser only supports flat '\/source\/target\/' link tokens/s, 'CLI reports the concise nested ?toplink flatness reason');
 };
 
 subtest 'CLI prints child context for blocked ?fsmc source-count failures' => sub {
