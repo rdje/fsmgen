@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-20
+### named generated children may now default their source name locally in composition
+- Updated [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so named `?fsmc:name` and `?dtc:name` children may now omit the explicit child-source token and default it to `name`, while unnamed generated children still fail as before.
+- Added [t/135-composition-generated-child-default-source-names.t](/Users/richarddje/Documents/github/fsmgen/t/135-composition-generated-child-default-source-names.t) to lock both embedded named `?fsmc` default-source realization and `--path`-driven named `?dtc` default-source realization.
+- Updated [t/130-composition-generated-child-source-shape-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/130-composition-generated-child-source-shape-diagnostics.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to retire the old named zero-source failure contract now that that spelling is a shipped feature.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reusable-root/reference composition slice is tracked as shipped `R11` feature work.
+
 ### standalone-DT roots now also accept the conventional explicit `+system` contract
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so standalone-DT roots now accept the same conventional `(+system (clock clk) (sreset rstn))` / `(+system (clock clk) (asreset rstn))` section already used by `?fsm:name`, instead of rejecting `+system` outright at the `?dt:name` boundary.
 - Added [t/134-standalone-dt-explicit-system-support.t](/Users/richarddje/Documents/github/fsmgen/t/134-standalone-dt-explicit-system-support.t) to lock both direct standalone-DT generation with explicit `clk` / `rstn` and `C1` composition auto-wiring for `?dtc` children that expose those explicit system ports.

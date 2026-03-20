@@ -194,6 +194,7 @@ First shipped `R11` slice now in tree:
   - repeatable `--path DIR` search roots for bare `.fsm` input lookup,
   - the same explicit search roots feeding current `.rtlif` metadata lookup ahead of `FSMLIB`,
   - external `?fsmc` composition child sources resolved from sibling or searched `.fsm` files without leaving the active typed pipeline,
+  - named `?fsmc:name` and `?dtc:name` children omitting the explicit source token when the child source should default to `name`,
   - `?dtc` composition child realization from embedded or external standalone-DT sources, including honest non-system interfaces for purely combinational DT children,
   - bounded single-child `C1` top-interface inference when `?ports` is omitted or empty, with the inferred top interface matching the lone realized child interface exactly,
   - bounded explicit-link `C2` / `C3` omitted/empty-`?ports` inference when explicit `?toplink` endpoints themselves still make the top boundary unambiguous, including renamed top-boundary signals with one consistent direction plus exact width/type agreement,

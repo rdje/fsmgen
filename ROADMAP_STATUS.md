@@ -646,9 +646,10 @@ Done:
 - [t/83-reusable-source-path-resolution.t](/Users/richarddje/Documents/github/fsmgen/t/83-reusable-source-path-resolution.t) now locks bare-name `--path` lookup, `--path` precedence over `FSMLIB`, and `--path`-driven external RTL metadata lookup.
 - The first broader reusable-root/reference composition follow-up is now also shipped:
   - `?top:name` can now realize `?fsmc` children from embedded child FSM sources or from external searchable `.fsm` child sources,
+  - named `?fsmc:name` and `?dtc:name` children may now omit the explicit source token and default it to the child name,
   - external child source lookup checks beside the composition source first, then repeated `--path DIR` roots, then `FSMLIB`, then the current directory,
   - and existing `C1` / `C2` / `C3` composition lanes can therefore reuse child FSM modules across several `.fsm` files without reviving the legacy plugin/eval path.
-- [t/84-composition-external-fsm-child-sources.t](/Users/richarddje/Documents/github/fsmgen/t/84-composition-external-fsm-child-sources.t) now locks sibling external-child realization, `--path`-driven external child realization, and `--path` precedence over `FSMLIB` for `?fsmc` child lookup.
+- [t/84-composition-external-fsm-child-sources.t](/Users/richarddje/Documents/github/fsmgen/t/84-composition-external-fsm-child-sources.t) and [t/135-composition-generated-child-default-source-names.t](/Users/richarddje/Documents/github/fsmgen/t/135-composition-generated-child-default-source-names.t) now lock sibling external-child realization, default-source named generated children, `--path`-driven external child realization, and `--path` precedence over `FSMLIB` for generated-child lookup.
 - The first composition-facing standalone-DT child slice is now also shipped:
   - composition now accepts `?dtc:instance child_source` as a generated-child kind beside `?fsmc`,
   - `?dtc` child sources can be embedded `?dt:name` roots or external searchable `.fsm` standalone-DT sources,

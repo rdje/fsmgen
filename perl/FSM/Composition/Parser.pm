@@ -192,6 +192,16 @@ sub parse_fsmc_child ($self, $top_name, $child_ast, $child_name, $items) {
             $self->scope_docs_suffix;
     }
 
+    if (!@scalar_items && $child_name) {
+        return FSM::Composition::Instance->new(
+            kind => 'fsmc',
+            name => $child_name,
+            source_name => $child_name,
+            raw_items => $items,
+            raw_ast => $child_ast,
+        );
+    }
+
     if (@scalar_items != 1) {
         my $count = scalar(@scalar_items);
         confess
@@ -220,6 +230,16 @@ sub parse_dtc_child ($self, $top_name, $child_ast, $child_name, $items) {
             ($child_name ? "'$child_name'" : 'without a name').
             ", but composition child source shape is blocked because the active composition parser currently requires exactly one flat standalone-DT source name per '?dtc'.".
             $self->scope_docs_suffix;
+    }
+
+    if (!@scalar_items && $child_name) {
+        return FSM::Composition::Instance->new(
+            kind => 'dtc',
+            name => $child_name,
+            source_name => $child_name,
+            raw_items => $items,
+            raw_ast => $child_ast,
+        );
     }
 
     if (@scalar_items != 1) {

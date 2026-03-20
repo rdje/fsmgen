@@ -163,9 +163,11 @@ Combinational DT note:
 - Explicit `(?ports:block ...)` blocks with flat port tokens
 - Port tokens like `clk`, `rstn`, `data_in<8`, `txd>`, and `=final_data>8`
 - `(?fsmc:instance child_source)` with exactly one child FSM source token
+  - or `(?fsmc:instance)` on named children, which defaults the child source to `instance`
   - the active child source may be embedded in the same file as `?fsm:name`
   - or resolved from an external `.fsm` file beside the composition source, through repeated `--path DIR` roots, then through `FSMLIB`
 - `(?dtc:instance child_source)` with exactly one standalone-DT child source token
+  - or `(?dtc:instance)` on named children, which defaults the child source to `instance`
   - the active child source may be embedded in the same file as `?dt:name`
   - or resolved from an external `.fsm` file beside the composition source, through repeated `--path DIR` roots, then through `FSMLIB`
   - combinational `?dtc` children expose only their real user-facing interface ports

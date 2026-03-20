@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-20: named generated children now default their source name locally in composition
+- Continued the active `R11` lane by shipping another reusable-root/reference feature slice instead of returning to diagnostics-only work.
+- Landed behavior:
+  - named `?fsmc:name` and `?dtc:name` children may now omit the explicit child-source token and default it to `name`,
+  - that defaulted source name flows through the existing embedded/sibling/`--path`/`FSMLIB` lookup path without inventing a separate resolution mechanism,
+  - and unnamed generated children still fail explicitly, so the contract stays bounded instead of turning into broad hidden inference.
+- Why this is worth shipping:
+  - it removes repetition at one high-frequency composition seam without widening the language into a new child kind,
+  - it answers part of the open “how reusable roots are referenced from other `.fsm` sources” question with a small concrete rule,
+  - and it keeps the new behavior honest by retiring the older named zero-source failure contract at the same time.
+
 ## 2026-03-20: standalone-DT roots now also accept the conventional explicit `+system` contract
 - Continued the active `R11` lane by shipping another reusable-module feature slice instead of returning to reporting-only work.
 - Landed behavior:

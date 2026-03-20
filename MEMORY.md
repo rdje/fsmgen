@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-20: named generated children now default their source name locally in composition
+- Saved shipped behavior:
+  - named `?fsmc:name` and `?dtc:name` children may now omit the explicit child-source token and default it to `name`,
+  - the defaulted source then goes through the same embedded/sibling/`--path`/`FSMLIB` lookup order as before,
+  - and unnamed generated children still keep the explicit missing-source failure path.
+- Important continuity note:
+  - this is real `R11` feature growth in the reusable-root/reference lane,
+  - it retires the old named zero-source parser-failure contract,
+  - and it gives composition one bounded shorthand for reusable child references without reopening legacy implicit hierarchy.
+
 ## 2026-03-20: standalone-DT roots now also accept the conventional explicit `+system` contract
 - Saved shipped behavior:
   - standalone-DT roots may now use the same conventional explicit `(+system (clock clk) (sreset rstn))` / `(+system (clock clk) (asreset rstn))` section already accepted by `?fsm:name`,
