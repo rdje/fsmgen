@@ -729,6 +729,13 @@ sub shared_datapath_value_enable_name ($self, $signal_name, $rhs_value) {
     return "${clean_signal}_${clean_rhs}_shared_en";
 }
 
+sub shared_datapath_source_value_enable_name ($self, $instance_name, $signal_name, $rhs_value) {
+    my $clean_instance = $self->clean_enable_name_token($instance_name || 'child');
+    my $clean_signal = $self->clean_enable_name_token($signal_name);
+    my $clean_rhs = $self->clean_enable_name_token($rhs_value);
+    return "${clean_instance}_${clean_signal}_${clean_rhs}_src_en";
+}
+
 sub shared_datapath_target_enable_name ($self, $signal_name) {
     my $clean_signal = $self->clean_enable_name_token($signal_name);
     return "${clean_signal}_shared_en";
@@ -743,6 +750,19 @@ sub shared_datapath_same_value_conflict_name ($self, $signal_name, $rhs_value) {
 sub shared_datapath_multi_value_conflict_name ($self, $signal_name) {
     my $clean_signal = $self->clean_enable_name_token($signal_name);
     return "${clean_signal}_multi_value_conflict";
+}
+
+sub shared_datapath_assertion_metadata ($self, $result_signal, $input_enable_signals) {
+    my @inputs = grep {
+        defined($_) && length($_)
+    } @{$input_enable_signals || []};
+
+    return {
+        kind => 'onehot0',
+        result_signal => $result_signal,
+        input_count => scalar(@inputs),
+        input_enable_signals => \@inputs,
+    };
 }
 
 sub is_generated_child_kind ($self, $kind) {
@@ -2385,6 +2405,11 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
                 push @{$aggregate->{contributors}}, {
                     endpoint => $contributor->{endpoint},
                     family_enable_signal => $rhs_family->{family_enable_signal},
+                    source_enable_signal => $self->shared_datapath_source_value_enable_name(
+                        $contributor->{instance_name},
+                        $group->{signal_name},
+                        $rhs_value,
+                    ),
                     driver_blocks => [@{$rhs_family->{driver_blocks} || []}],
                     driver_enable_signals => [@{$rhs_family->{driver_enable_signals} || []}],
                 };
@@ -2393,14 +2418,28 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
 
         my @aggregate_enable_families = map {
             my $family = $aggregate_families_by_rhs{$_};
+            my $same_value_conflict_signal = $self->shared_datapath_same_value_conflict_name(
+                $group->{signal_name},
+                $family->{rhs_value},
+            );
             +{
                 rhs_value => $family->{rhs_value},
                 aggregate_enable_signal => $family->{aggregate_enable_signal},
-                same_value_conflict_signal => $self->shared_datapath_same_value_conflict_name($group->{signal_name}, $family->{rhs_value}),
+                same_value_conflict_signal => $same_value_conflict_signal,
+                same_value_assertion => $self->shared_datapath_assertion_metadata(
+                    $same_value_conflict_signal,
+                    [
+                        map {
+                            $_->{source_enable_signal}
+                        } @{$family->{contributors} || []}
+                    ],
+                ),
                 contributor_count => scalar(@{$family->{contributors} || []}),
                 contributors => $family->{contributors},
             }
         } sort keys %aggregate_families_by_rhs;
+
+        my $multi_value_conflict_signal = $self->shared_datapath_multi_value_conflict_name($group->{signal_name});
 
         push @candidates, {
             signal_name => $group->{signal_name},
@@ -2410,7 +2449,15 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
             contributors => \@contributors,
             top_output_signals => [ sort keys %top_output_signals ],
             aggregate_target_enable_signal => $self->shared_datapath_target_enable_name($group->{signal_name}),
-            multi_value_conflict_signal => $self->shared_datapath_multi_value_conflict_name($group->{signal_name}),
+            multi_value_conflict_signal => $multi_value_conflict_signal,
+            multi_value_assertion => $self->shared_datapath_assertion_metadata(
+                $multi_value_conflict_signal,
+                [
+                    map {
+                        $_->{aggregate_enable_signal}
+                    } @aggregate_enable_families
+                ],
+            ),
             aggregate_enable_family_count => scalar(@aggregate_enable_families),
             aggregate_enable_families => \@aggregate_enable_families,
         };

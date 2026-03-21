@@ -5530,3 +5530,14 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - no runtime change was needed here; the existing summary extractor already behaved correctly,
   - the value is in making the child-item summary contract explicit and symmetric on the `?rtl` side too.
+
+## 2026-03-21: shared-datapath candidates now expose assertion-planning metadata too
+- Continued the active `R11` feature lane by moving the shared-datapath contract past candidate/enable/conflict naming into explicit assertion-planning structure.
+- The important missing piece after aggregate-enable and conflict-bit naming was that same-value checks still lacked top/shared-block-facing source-enable aliases, so the contract could name conflicts but not yet say exactly what the onehot check would read.
+- The active shared-datapath candidate surface now also includes:
+  - deterministic per-child source-enable aliases for shared-value contributor families,
+  - onehot0-style same-value assertion metadata over those source-enable aliases,
+  - and onehot0-style whole-target assertion metadata over the aggregate value-enable families.
+- Design note from this slice:
+  - this still does not claim lifted shared-datapath HDL exists yet,
+  - but it turns the conflict/assertion part of the roadmap from naming-only metadata into a clearer embeddable planning contract that downstream lifting work can consume directly.

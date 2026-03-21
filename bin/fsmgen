@@ -517,6 +517,13 @@ unless ($quiet) {
                 if (my $multi_value_conflict = $candidate->{multi_value_conflict_signal}) {
                     print "    * multi-value conflict: $multi_value_conflict\n";
                 }
+                if (my $multi_value_assertion = $candidate->{multi_value_assertion}) {
+                    my $inputs = join(', ', @{$multi_value_assertion->{input_enable_signals} || []});
+                    if (($multi_value_assertion->{input_count} || 0) > 1 && length $inputs) {
+                        print "    * multi-value onehot0 over $inputs"
+                            . " => " . ($multi_value_assertion->{result_signal} || 'unknown_signal') . "\n";
+                    }
+                }
 
                 for my $family (@{$candidate->{aggregate_enable_families} || []}) {
                     my $family_refs = join(', ', map {
@@ -531,6 +538,14 @@ unless ($quiet) {
                     if (my $same_value_conflict = $family->{same_value_conflict_signal}) {
                         print "    * same-value conflict " . ($family->{rhs_value} || 'unknown')
                             . " => " . $same_value_conflict . "\n";
+                    }
+                    if (my $same_value_assertion = $family->{same_value_assertion}) {
+                        my $inputs = join(', ', @{$same_value_assertion->{input_enable_signals} || []});
+                        if (($same_value_assertion->{input_count} || 0) > 1 && length $inputs) {
+                            print "    * same-value onehot0 " . ($family->{rhs_value} || 'unknown')
+                                . " over " . $inputs
+                                . " => " . ($same_value_assertion->{result_signal} || 'unknown_signal') . "\n";
+                        }
                     }
                 }
 

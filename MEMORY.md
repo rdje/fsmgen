@@ -4234,3 +4234,12 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - `Context: Child '?rtl:uart_tx'`
   - the blocked `child item-list shape` boundary and the existing concise dotted-pair-contract reason
 - Runtime behavior was already correct here; this slice makes the `?rtl` child-item summary contract explicit too.
+
+## 2026-03-21: shared-datapath candidates now expose source-enable aliases and onehot0 assertion metadata
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now extends shared-datapath candidate metadata with:
+  - deterministic per-child `source_enable_signal` aliases on aggregate value-family contributors,
+  - `same_value_assertion` onehot0 metadata over those source-enable aliases,
+  - and `multi_value_assertion` onehot0 metadata over the aggregate value-enable families.
+- [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prints those planned multi-value and same-value onehot0 inputs in non-quiet `Shared-Datapath Candidates` summaries.
+- [t/142-composition-shared-datapath-assertion-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/142-composition-shared-datapath-assertion-metadata.t) locks the new assertion-planning metadata directly, while [t/139-composition-shared-datapath-candidate-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/139-composition-shared-datapath-candidate-metadata.t), [t/140-composition-shared-datapath-drive-intent-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/140-composition-shared-datapath-drive-intent-metadata.t), and [t/141-composition-shared-datapath-aggregate-enable-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/141-composition-shared-datapath-aggregate-enable-metadata.t) now also include the new nested metadata surface.
+- This is still planning/export metadata, not lifted shared-datapath HDL emission, but it makes the assertion side of the contract explicit enough for later lifting work.

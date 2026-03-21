@@ -4414,3 +4414,8 @@ This is the persistent technical change history for FSMGen.
   - they also keep `Context: Child '?rtl:uart_tx'`
   - and preserve the same blocked `child item-list shape` boundary plus the concise dotted-pair-contract reason
 - This follow-on slice is again regression/contract hardening only; runtime behavior was already covered by the existing summary extractor.
+- Shared-datapath candidate metadata now also exposes one bounded assertion-planning layer on top of the already-shipped aggregate-enable and conflict-bit surface:
+  - deterministic per-child source-enable aliases for each shared-value contributor family,
+  - onehot0-style same-value assertion metadata over those source-enable aliases,
+  - and onehot0-style whole-target assertion metadata over the aggregate value-enable families.
+- Non-quiet `bin/fsmgen` composition runs now also print those planned multi-value and same-value onehot0 inputs under `Shared-Datapath Candidates`.

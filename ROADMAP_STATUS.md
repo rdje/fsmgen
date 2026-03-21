@@ -709,6 +709,11 @@ Done:
   - per-value aggregate enable family metadata for both single-contributor and shared-value cases,
   - the first planned same-value and cross-value conflict-bit names on top of that aggregate surface,
   - and the matching non-quiet CLI aggregate-enable/conflict summary lines.
+- [t/142-composition-shared-datapath-assertion-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/142-composition-shared-datapath-assertion-metadata.t) now locks:
+  - deterministic per-child shared-datapath source-enable aliases for shared-value families,
+  - onehot0-style same-value assertion metadata over those source-enable aliases,
+  - onehot0-style whole-target assertion metadata over aggregate value enables,
+  - and the matching non-quiet CLI assertion-planning summary lines.
 - The first `R11` connect-by-name broadening slice beyond the original multi-child success case is now also shipped:
   - declared `=name` connect-by-name now works for a single generated child (`?fsmc` or `?dtc`) instead of starting only beyond the single-child passthrough case,
   - single-child by-name planning still stays deterministic and bounded by the existing exact same-name, same-direction, same-width rule,
@@ -861,7 +866,7 @@ Left:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets beyond the now-shipped candidate-discovery surface,
   - per-child drive-intent aggregation,
   - same-target/same-value aggregation vs same-target/different-value conflicts,
-  - assertion-bit strategy for per-`(P, Q)` source-enable conflicts and whole-target `P` multi-value conflicts,
+  - driven/lifted assertion-bit behavior for the now-shipped per-`(P, Q)` source-enable and whole-target `P` onehot0 metadata,
   - default top-export vs peer-read internalization for registered outputs,
   - explicit user-directed re-export of now-internal registered outputs,
   - registered-output loopback rules,

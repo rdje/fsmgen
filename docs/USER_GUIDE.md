@@ -604,6 +604,7 @@ Boundary note:
 - Those shared-datapath candidates now also carry one bounded per-contributor `drive_intent` summary, and non-quiet `bin/fsmgen` runs print one concise per-child drive-intent line under each candidate.
 - Those shared-datapath candidates now also surface one deterministic whole-target aggregate enable plus per-value aggregate enable families built from the child-local `P_Q_en` families, and non-quiet `bin/fsmgen` runs print those planned aggregate enable names too.
 - Those shared-datapath candidates now also surface the first planned conflict-bit names: one `P_Q_multi_src_conflict`-style name per aggregate value family and one `P_multi_value_conflict`-style name per whole target.
+- Those shared-datapath candidates now also surface deterministic per-child source-enable aliases plus onehot0-style assertion metadata over those aliases and the aggregate value-enable families, and non-quiet `bin/fsmgen` runs print those planned assertion inputs too.
 
 ### Draft normative contract for the conventional `+system` section
 This is the current `R8` draft normative contract for the active `+system` boundary.

@@ -209,17 +209,35 @@ FSM
                 top_output_signals => ['left_status', 'right_status'],
                 aggregate_target_enable_signal => 'status_bus_shared_en',
                 multi_value_conflict_signal => 'status_bus_multi_value_conflict',
+                multi_value_assertion => {
+                    kind => 'onehot0',
+                    result_signal => 'status_bus_multi_value_conflict',
+                    input_count => 4,
+                    input_enable_signals => [
+                        'status_bus__8_d1_shared_en',
+                        'status_bus__8_d2_shared_en',
+                        'status_bus__8_d3_shared_en',
+                        'status_bus__8_d4_shared_en',
+                    ],
+                },
                 aggregate_enable_family_count => 4,
                 aggregate_enable_families => [
                     {
                         rhs_value => "8'd1",
                         aggregate_enable_signal => 'status_bus__8_d1_shared_en',
                         same_value_conflict_signal => 'status_bus__8_d1_multi_src_conflict',
+                        same_value_assertion => {
+                            kind => 'onehot0',
+                            result_signal => 'status_bus__8_d1_multi_src_conflict',
+                            input_count => 1,
+                            input_enable_signals => ['left_status_bus__8_d1_src_en'],
+                        },
                         contributor_count => 1,
                         contributors => [
                             {
                                 endpoint => 'left.status_bus',
                                 family_enable_signal => 'status_bus__8_d1_en',
+                                source_enable_signal => 'left_status_bus__8_d1_src_en',
                                 driver_blocks => ['-path_a'],
                                 driver_enable_signals => ['path_a_status_bus__8_d1_en'],
                             },
@@ -229,11 +247,18 @@ FSM
                         rhs_value => "8'd2",
                         aggregate_enable_signal => 'status_bus__8_d2_shared_en',
                         same_value_conflict_signal => 'status_bus__8_d2_multi_src_conflict',
+                        same_value_assertion => {
+                            kind => 'onehot0',
+                            result_signal => 'status_bus__8_d2_multi_src_conflict',
+                            input_count => 1,
+                            input_enable_signals => ['left_status_bus__8_d2_src_en'],
+                        },
                         contributor_count => 1,
                         contributors => [
                             {
                                 endpoint => 'left.status_bus',
                                 family_enable_signal => 'status_bus__8_d2_en',
+                                source_enable_signal => 'left_status_bus__8_d2_src_en',
                                 driver_blocks => ['-path_b'],
                                 driver_enable_signals => ['path_b_status_bus__8_d2_en'],
                             },
@@ -243,11 +268,18 @@ FSM
                         rhs_value => "8'd3",
                         aggregate_enable_signal => 'status_bus__8_d3_shared_en',
                         same_value_conflict_signal => 'status_bus__8_d3_multi_src_conflict',
+                        same_value_assertion => {
+                            kind => 'onehot0',
+                            result_signal => 'status_bus__8_d3_multi_src_conflict',
+                            input_count => 1,
+                            input_enable_signals => ['right_status_bus__8_d3_src_en'],
+                        },
                         contributor_count => 1,
                         contributors => [
                             {
                                 endpoint => 'right.status_bus',
                                 family_enable_signal => 'status_bus__8_d3_en',
+                                source_enable_signal => 'right_status_bus__8_d3_src_en',
                                 driver_blocks => ['-path_a'],
                                 driver_enable_signals => ['path_a_status_bus__8_d3_en'],
                             },
@@ -257,11 +289,18 @@ FSM
                         rhs_value => "8'd4",
                         aggregate_enable_signal => 'status_bus__8_d4_shared_en',
                         same_value_conflict_signal => 'status_bus__8_d4_multi_src_conflict',
+                        same_value_assertion => {
+                            kind => 'onehot0',
+                            result_signal => 'status_bus__8_d4_multi_src_conflict',
+                            input_count => 1,
+                            input_enable_signals => ['right_status_bus__8_d4_src_en'],
+                        },
                         contributor_count => 1,
                         contributors => [
                             {
                                 endpoint => 'right.status_bus',
                                 family_enable_signal => 'status_bus__8_d4_en',
+                                source_enable_signal => 'right_status_bus__8_d4_src_en',
                                 driver_blocks => ['-path_b'],
                                 driver_enable_signals => ['path_b_status_bus__8_d4_en'],
                             },
@@ -356,6 +395,7 @@ FSM
     like($combined_output, qr/status_bus \[width=8, type=data\] from left\.status_bus, right\.status_bus \(top outputs: left_status, right_status\)/s, 'CLI still prints the grouped shared-datapath family');
     like($combined_output, qr/\* aggregate target enable: status_bus_shared_en/s, 'CLI prints the whole-target aggregate enable for the candidate');
     like($combined_output, qr/\* multi-value conflict: status_bus_multi_value_conflict/s, 'CLI prints the whole-target multi-value conflict name');
+    like($combined_output, qr/\* multi-value onehot0 over status_bus__8_d1_shared_en, status_bus__8_d2_shared_en, status_bus__8_d3_shared_en, status_bus__8_d4_shared_en => status_bus_multi_value_conflict/s, 'CLI prints the planned multi-value onehot0 check for the candidate');
     like($combined_output, qr/\* aggregate value 8'd1 => status_bus__8_d1_shared_en from left\.status_bus\/status_bus__8_d1_en/s, 'CLI prints the first aggregate value-enable family');
     like($combined_output, qr/\* same-value conflict 8'd1 => status_bus__8_d1_multi_src_conflict/s, 'CLI prints the first same-value conflict name');
     like($combined_output, qr/\* aggregate value 8'd4 => status_bus__8_d4_shared_en from right\.status_bus\/status_bus__8_d4_en/s, 'CLI prints the last aggregate value-enable family');
