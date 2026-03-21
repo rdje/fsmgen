@@ -511,6 +511,21 @@ unless ($quiet) {
                     . "] from " . $contributors;
                 print " (top outputs: $top_outputs)" if length $top_outputs;
                 print "\n";
+
+                for my $contributor (@{$candidate->{contributors} || []}) {
+                    my $drive_intent = $contributor->{drive_intent} || {};
+                    next unless ($drive_intent->{driver_count} || 0) > 0;
+
+                    my $driver_blocks = join(', ', @{$drive_intent->{driver_blocks} || []});
+                    my $rhs_values = join(', ', @{$drive_intent->{rhs_values} || []});
+                    my $mux_type = $drive_intent->{multiplexer_type} || 'unknown';
+
+                    print "    * " . ($contributor->{endpoint} || 'unknown_endpoint')
+                        . " drives via " . $mux_type
+                        . " blocks [" . $driver_blocks . "]";
+                    print " with RHS [" . $rhs_values . "]" if length $rhs_values;
+                    print "\n";
+                }
             }
         }
     }

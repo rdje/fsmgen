@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-21: shared-datapath candidates now carry per-child drive intent
+- Saved shipped behavior:
+  - generated roots and realized generated children now surface `output_drive_family_count` and `output_drive_families` in `module_info`,
+  - shared-datapath candidate contributors now also carry one bounded `drive_intent` summary with mux type, driver blocks, RHS families, and enable-signal families,
+  - and non-quiet `bin/fsmgen` runs now print one concise per-child drive-intent line under each shared-datapath candidate.
+- Important continuity note:
+  - this is the first real shipped slice of the roadmap’s per-child drive-intent aggregation lane,
+  - it still does not lift those families into a shared synthesized block yet,
+  - and it gives later shared-datapath ownership/export work one honest child-owned metadata surface to build on.
+
 ## 2026-03-21: composition tops now surface first shared-datapath candidate metadata
 - Saved shipped behavior:
   - composition-top `module_info` now reports shared-datapath candidate families through `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates`,

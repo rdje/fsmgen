@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-21: shared-datapath candidates now carry per-child drive intent
+- Continued the active `R11` lane by moving one step beyond candidate discovery into a bounded drive-intent surface instead of jumping straight to datapath lifting.
+- Landed behavior:
+  - generated roots and realized generated children now surface `output_drive_family_count` and `output_drive_families` in `module_info`,
+  - shared-datapath candidate contributors now also carry one bounded `drive_intent` summary built from that generated output-drive-family metadata,
+  - and non-quiet `bin/fsmgen` composition runs now print one concise per-child drive-intent line under each shared-datapath candidate.
+- Why this is worth shipping:
+  - it turns the roadmap’s “per-child drive-intent aggregation” note into active runtime behavior,
+  - it gives later shared-datapath lifting/export/assertion work one stable child-owned metadata surface instead of forcing it to inspect backend internals directly,
+  - and it still keeps the scope bounded to metadata/reporting rather than prematurely rewriting ownership into a lifted shared block.
+
 ## 2026-03-21: composition tops now surface first shared-datapath candidate metadata
 - Continued the active `R11` lane by starting the shared-datapath direction with one bounded discovery/export slice instead of jumping straight into lifting behavior.
 - Landed behavior:

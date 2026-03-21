@@ -2265,6 +2265,9 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
         my %bindings = map {
             (($_->{port_name} || '') => ($_->{signal_name} || ''))
         } @{$instance->port_bindings || []};
+        my %drive_family_by_signal = map {
+            (($_->{signal_name} || '') => $_)
+        } @{$instance->module_info->{output_drive_families} || []};
 
         for my $port (@{$instance->interface_ports || []}) {
             next unless ($port->direction || '') eq 'output';
@@ -2275,11 +2278,21 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
                 ($port->width // 1),
                 $normalized_type;
 
+            my $drive_family = $drive_family_by_signal{$port->name} || {};
             push @{$candidate_groups{$key}{contributors}}, {
                 instance_name => $instance->instance_name,
                 module_name => $instance->module_name,
                 endpoint => ($instance->instance_name // 'unknown').'.'.($port->name // 'unknown'),
                 bound_signal => $bindings{$port->name},
+                drive_intent => {
+                    multiplexer_type => ($drive_family->{multiplexer_type} // 'unknown'),
+                    default_value => $drive_family->{default_value},
+                    driver_count => ($drive_family->{driver_count} || 0),
+                    driver_blocks => [@{$drive_family->{driver_blocks} || []}],
+                    rhs_values => [@{$drive_family->{rhs_values} || []}],
+                    driver_enable_signals => [@{$drive_family->{driver_enable_signals} || []}],
+                    family_enable_signals => [@{$drive_family->{family_enable_signals} || []}],
+                },
             };
             $candidate_groups{$key}{signal_name} = $port->name;
             $candidate_groups{$key}{width} = $port->width || 1;
@@ -3035,22 +3048,29 @@ sub build_standalone_dt_enable_metadata ($self, $all_states) {
     };
 }
 
-sub enrich_module_info_from_generated_analysis ($self, $module_info, $fsm_module) {
-    return $module_info unless ref($module_info) eq 'HASH';
-    return $module_info unless $fsm_module && $fsm_module->can('is_dt_root') && $fsm_module->is_dt_root;
+sub build_output_drive_family_metadata ($self, $module_info) {
+    return [] unless ref($module_info) eq 'HASH';
+
+    my %output_widths = map {
+        (($_->{name} // '') => ($_->{width} || 1))
+    } @{$module_info->{signal_analysis}{outputs} || []};
+
+    return [] unless %output_widths;
 
     my $hdl_gen = $self->{hdl_generator};
     my $assignment_analysis = $hdl_gen ? ($hdl_gen->{assignment_analysis} || {}) : {};
-    my @multi_drive_targets;
+    my @drive_families;
 
     for my $lhs (sort keys %$assignment_analysis) {
+        next unless exists $output_widths{$lhs};
+
         my $lhs_analysis = $assignment_analysis->{$lhs};
         next unless ref($lhs_analysis) eq 'HASH';
 
-        my %dt_names;
+        my %driver_blocks;
         my %rhs_values;
-        my %dt_enable_signals;
-        my %lhs_enable_signals;
+        my %driver_enable_signals;
+        my %family_enable_signals;
 
         for my $rhs (sort keys %{ $lhs_analysis->{rhs_groups} || {} }) {
             my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
@@ -3060,28 +3080,57 @@ sub enrich_module_info_from_generated_analysis ($self, $module_info, $fsm_module
 
             my $lhs_level_enable = $rhs_group->{lhs_level_enable};
             if (ref($lhs_level_enable) eq 'HASH' && defined $lhs_level_enable->{name}) {
-                $lhs_enable_signals{$lhs_level_enable->{name}} = 1;
+                $family_enable_signals{$lhs_level_enable->{name}} = 1;
             }
 
             for my $dt_enable_info (@{ $rhs_group->{dt_specific_enables} || [] }) {
                 next unless ref($dt_enable_info) eq 'HASH';
-                $dt_names{$dt_enable_info->{dt}} = 1 if defined $dt_enable_info->{dt};
-                $dt_enable_signals{$dt_enable_info->{enable_name}} = 1 if defined $dt_enable_info->{enable_name};
+                $driver_blocks{$dt_enable_info->{dt}} = 1 if defined $dt_enable_info->{dt};
+                $driver_enable_signals{$dt_enable_info->{enable_name}} = 1
+                    if defined $dt_enable_info->{enable_name};
             }
         }
 
-        my @dt_names = sort keys %dt_names;
-        next unless @dt_names > 1;
+        my @driver_blocks = sort keys %driver_blocks;
+        my @rhs_values = sort keys %rhs_values;
+        next unless @driver_blocks || @rhs_values;
 
-        push @multi_drive_targets, {
+        push @drive_families, {
             signal_name => $lhs,
+            width => $output_widths{$lhs},
             multiplexer_type => ($lhs_analysis->{multiplexer}{type} // 'unknown'),
-            dt_names => \@dt_names,
-            rhs_values => [ sort keys %rhs_values ],
-            dt_enable_signals => [ sort keys %dt_enable_signals ],
-            lhs_enable_signals => [ sort keys %lhs_enable_signals ],
+            default_value => $lhs_analysis->{multiplexer}{default_value},
+            driver_count => scalar(@driver_blocks),
+            driver_blocks => \@driver_blocks,
+            rhs_values => \@rhs_values,
+            driver_enable_signals => [ sort keys %driver_enable_signals ],
+            family_enable_signals => [ sort keys %family_enable_signals ],
         };
     }
+
+    return \@drive_families;
+}
+
+sub enrich_module_info_from_generated_analysis ($self, $module_info, $fsm_module) {
+    return $module_info unless ref($module_info) eq 'HASH';
+    my $output_drive_families = $self->build_output_drive_family_metadata($module_info);
+    $module_info->{output_drive_family_count} = scalar(@$output_drive_families);
+    $module_info->{output_drive_families} = $output_drive_families;
+
+    return $module_info unless $fsm_module && $fsm_module->can('is_dt_root') && $fsm_module->is_dt_root;
+
+    my @multi_drive_targets = map {
+        +{
+            signal_name => $_->{signal_name},
+            multiplexer_type => $_->{multiplexer_type},
+            dt_names => [@{$_->{driver_blocks} || []}],
+            rhs_values => [@{$_->{rhs_values} || []}],
+            dt_enable_signals => [@{$_->{driver_enable_signals} || []}],
+            lhs_enable_signals => [@{$_->{family_enable_signals} || []}],
+        }
+    } grep {
+        ($_->{driver_count} || 0) > 1
+    } @$output_drive_families;
 
     $module_info->{standalone_dt_multi_drive_target_count} = scalar(@multi_drive_targets);
     $module_info->{standalone_dt_multi_drive_targets} = \@multi_drive_targets;

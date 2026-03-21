@@ -600,6 +600,8 @@ Boundary note:
 - Composition tops that realize `?dtc` children now also aggregate those reusable standalone-DT exports through `composition_standalone_dt_child_count`, `composition_standalone_dt_block_count`, `composition_standalone_dt_multi_drive_target_count`, and `composition_standalone_dt_children`.
 - Non-quiet `bin/fsmgen` composition runs now print one concise reusable standalone-DT child summary section built from that aggregated top-level export metadata.
 - Composition tops with multiple `?fsmc` children now also surface first shared-datapath candidate metadata through `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates`, grouping same-name child output families that agree on width and interface type.
+- Generated roots and realized generated children now also surface `output_drive_family_count` and `output_drive_families` in `module_info`, so embedders can see how each output family is driven without scraping emitted HDL.
+- Those shared-datapath candidates now also carry one bounded per-contributor `drive_intent` summary, and non-quiet `bin/fsmgen` runs print one concise per-child drive-intent line under each candidate.
 
 ### Draft normative contract for the conventional `+system` section
 This is the current `R8` draft normative contract for the active `+system` boundary.
