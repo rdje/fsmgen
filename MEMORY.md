@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-22: combinational shared-datapath peer-read families now have a first top-facing runtime slice
+- Saved shipped behavior:
+  - the bounded combinational peer-read public-preserving case now emits one shared top-facing combinational carrier in the generated top,
+  - peer-read child inputs are rebound to that carrier, preserved public outputs are re-exported from it, and contributor outputs move to private raw nets,
+  - and candidate peer-read endpoints are now filtered to inputs actually bound to contributor carriers before that runtime is planned.
+- Important continuity note:
+  - this turns the combinational peer-read lane into real emitted behavior instead of policy metadata only,
+  - it also keeps the peer-read metadata surface honest for later ownership work,
+  - and the next likely seam is how far the combinational top-facing lane should widen beyond the bounded public-preserving case.
+
 ## 2026-03-22: shared-datapath lifting now covers mixed public/internal registered peer-read families
 - Saved shipped behavior:
   - the bounded registered public-preserving lift path now also works when one contributor preserves a public top output while sibling contributors in the same shared family are consumed only internally,

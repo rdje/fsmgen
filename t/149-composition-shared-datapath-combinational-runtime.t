@@ -14,9 +14,9 @@ use FSM::Pipeline::HDLGenerator;
 
 my $tempdir = tempdir(CLEANUP => 1);
 
-subtest 'shared-datapath candidates keep combinational peer-read families top-output-only' => sub {
-    my $composition_path = write_fsm('shared_datapath_comb_peer_read_top.fsm', <<'FSM');
-(?top:shared_datapath_comb_peer_read_top
+subtest 'combinational peer-read shared-datapath families now synthesize one top-facing shared carrier' => sub {
+    my $composition_path = write_fsm('shared_datapath_comb_runtime_top.fsm', <<'FSM');
+(?top:shared_datapath_comb_runtime_top
   (?ports:public_io
     select
     left_status>8
@@ -95,27 +95,30 @@ FSM
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $candidate = $result->{module_info}{composition_shared_datapath_candidates}[0];
+    my $hdl = $result->{hdl_code};
 
-    is($candidate->{storage_class}, 'combinational', 'shared candidate is classified as combinational');
-    is($candidate->{peer_input_count}, 1, 'shared candidate reports one peer-read input endpoint');
-    is($candidate->{default_lifted_visibility}, 'top_output', 'shared combinational peer-read family stays top-output-only by default');
-    is($candidate->{peer_read_policy}, 'top_output_only', 'shared combinational peer-read family advertises top-output-only policy');
-    is(
-        $candidate->{peer_read_block_reason},
-        'combinational shared families must stay top-facing and are not internalized into lifted state',
-        'shared combinational peer-read family surfaces the bounded top-facing constraint',
-    );
-    is_deeply(
-        $candidate->{planned_reexport_top_output_signals},
-        [],
-        'shared combinational peer-read family does not invent internal re-exports',
-    );
-    ok(!$candidate->{loopback_allowed}, 'shared combinational peer-read family does not allow loopback planning');
+    is($candidate->{lifted_runtime_kind}, 'combinational_shared_reexport', 'shared candidate now records the bounded combinational top-facing runtime kind');
+    is($candidate->{lifted_runtime_signal}, 'status_bus_shared_comb', 'shared candidate records the lifted combinational shared carrier');
+
+    like($hdl, qr/\blogic\s+\[7:0\]\s+status_bus_shared_comb;/s, 'top HDL declares the lifted combinational shared carrier');
+    like($hdl, qr/always_comb begin\s+status_bus_shared_comb = 1'b0;/s, 'top HDL defaults the lifted combinational shared carrier to zero');
+    like($hdl, qr/if \(status_bus__8_d1_shared_en\) begin\s+status_bus_shared_comb = 8'd1;/s, 'top HDL updates the shared combinational carrier from the first aggregate value family');
+    like($hdl, qr/if \(status_bus__8_d2_shared_en\) begin\s+status_bus_shared_comb = 8'd2;/s, 'top HDL updates the shared combinational carrier from the second aggregate value family');
+    unlike($hdl, qr/\balways_ff\b/s, 'top HDL does not invent lifted sequential state for the combinational carrier');
+
+    like($hdl, qr/\bwire\s+\[7:0\]\s+shared_dp_raw_left_status_bus;/s, 'top HDL declares the raw left contributor output binding');
+    like($hdl, qr/\bwire\s+\[7:0\]\s+shared_dp_raw_right_status_bus;/s, 'top HDL declares the raw right contributor output binding');
+    like($hdl, qr/left_src left \([\s\S]*?\.status_bus\(shared_dp_raw_left_status_bus\)/s, 'left contributor output now binds to a private raw source net');
+    like($hdl, qr/right_src right \([\s\S]*?\.status_bus\(shared_dp_raw_right_status_bus\)/s, 'right contributor output now binds to a private raw source net');
+    like($hdl, qr/consumer_src consumer \([\s\S]*?\.status_bus\(status_bus_shared_comb\)/s, 'peer-read child input now binds to the lifted combinational shared carrier');
+
+    like($hdl, qr/assign left_status = status_bus_shared_comb;/s, 'top HDL preserves the first public top output from the shared combinational carrier');
+    like($hdl, qr/assign right_status = status_bus_shared_comb;/s, 'top HDL preserves the second public top output from the shared combinational carrier');
 };
 
-subtest 'CLI prints top-output-only policy for combinational peer-read shared-datapath families' => sub {
-    my $composition_path = write_fsm('shared_datapath_comb_peer_read_cli_top.fsm', <<'FSM');
-(?top:shared_datapath_comb_peer_read_cli_top
+subtest 'CLI reports the bounded combinational top-facing shared carrier runtime' => sub {
+    my $composition_path = write_fsm('shared_datapath_comb_runtime_cli_top.fsm', <<'FSM');
+(?top:shared_datapath_comb_runtime_cli_top
   (?ports:public_io
     select
     left_status>8
@@ -185,14 +188,15 @@ subtest 'CLI prints top-output-only policy for combinational peer-read shared-da
   )
 )
 FSM
-    my $output_path = File::Spec->catfile($tempdir, 'shared_datapath_comb_peer_read_cli_top.sv');
+
+    my $output_path = File::Spec->catfile($tempdir, 'shared_datapath_comb_runtime_cli_top.sv');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
     );
 
-    ok($success, 'CLI succeeds for combinational peer-read shared-datapath summary fixture');
-    ok(-e $output_path, 'CLI writes HDL for combinational peer-read shared-datapath summary fixture');
+    ok($success, 'CLI succeeds for combinational shared-datapath runtime fixture');
+    ok(-e $output_path, 'CLI writes HDL for combinational shared-datapath runtime fixture');
 
     my $combined_output = join(
         '',
@@ -201,16 +205,8 @@ FSM
         ($error_message || ''),
     );
 
-    like($combined_output, qr/\* storage class: combinational/s, 'CLI prints the combinational storage class');
-    like($combined_output, qr/\* default lifted visibility: top_output/s, 'CLI prints the top-output-only default visibility');
-    like($combined_output, qr/\* peer-read inputs: consumer\.status_bus/s, 'CLI prints the peer-read input endpoint');
-    like($combined_output, qr/\* peer-read policy: top-output-only/s, 'CLI prints the top-output-only peer-read policy');
-    like(
-        $combined_output,
-        qr/\* peer-read constraint: combinational shared families must stay top-facing and are not internalized into lifted state/s,
-        'CLI prints the combinational peer-read top-facing constraint',
-    );
-    like($combined_output, qr/\* loopback allowed: no/s, 'CLI prints the negative loopback planning decision');
+    like($combined_output, qr/\* lifted runtime: combinational shared top-facing carrier active/s, 'CLI reports the active combinational shared-carrier runtime');
+    like($combined_output, qr/\* lifted signal: status_bus_shared_comb/s, 'CLI reports the lifted combinational shared carrier name');
 };
 
 done_testing();

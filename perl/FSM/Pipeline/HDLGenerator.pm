@@ -763,6 +763,11 @@ sub shared_datapath_lifted_register_name ($self, $signal_name) {
     return "${clean_signal}_shared_q";
 }
 
+sub shared_datapath_lifted_comb_name ($self, $signal_name) {
+    my $clean_signal = $self->clean_enable_name_token($signal_name);
+    return "${clean_signal}_shared_comb";
+}
+
 sub shared_datapath_raw_source_name ($self, $instance_name, $signal_name) {
     my $clean_instance = $self->clean_enable_name_token($instance_name || 'child');
     my $clean_signal = $self->clean_enable_name_token($signal_name);
@@ -903,7 +908,7 @@ sub shared_datapath_peer_read_policy ($self, $storage_class, $peer_input_endpoin
     return {
         peer_read_policy => 'top_output_only',
         peer_read_block_reason =>
-            'combinational outputs may only exist as top-level outputs and must not become peer-FSM inputs',
+            'combinational shared families must stay top-facing and are not internalized into lifted state',
     } if ($storage_class || '') eq 'combinational';
 
     return undef;
@@ -2360,6 +2365,9 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
         my %planned_reexports = map {
             ($_ => 1)
         } @{$candidate->{planned_reexport_top_output_signals} || []};
+        my %preserved_top_outputs = map {
+            ($_ => 1)
+        } @{$candidate->{top_output_signals} || []};
         my $runtime_mode =
             (($candidate->{storage_class} || '') eq 'registered')
             && (($candidate->{peer_read_policy} || '') eq 'registered_loopback')
@@ -2370,7 +2378,12 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
                 ? (%planned_reexports
                     ? 'registered_shared_reexport'
                     : 'registered_shared_internal')
-                : '';
+            : (($candidate->{storage_class} || '') eq 'combinational')
+                && (($candidate->{peer_read_policy} || '') eq 'top_output_only')
+                && %preserved_top_outputs
+                    ? 'combinational_shared_reexport'
+                    : ''
+                ;
         my $can_lift_runtime = length($runtime_mode) ? 1 : 0;
 
         next unless $can_lift_runtime;
@@ -2379,41 +2392,65 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
         my $width = $candidate->{width} || 1;
         my $lifted_next_signal = $self->shared_datapath_lifted_next_name($signal_name);
         my $lifted_register_signal = $self->shared_datapath_lifted_register_name($signal_name);
+        my $lifted_comb_signal = $self->shared_datapath_lifted_comb_name($signal_name);
         my $width_decl = $width > 1 ? sprintf("[%d:0] ", $width - 1) : '';
 
         $candidate->{lifted_runtime_kind} = $runtime_mode;
-        $candidate->{lifted_runtime_next_signal} = $lifted_next_signal;
-        $candidate->{lifted_runtime_signal} = $lifted_register_signal;
-        $candidate->{lifted_runtime_reset_value} = $candidate->{reset_value};
+        my @runtime_lines;
+        if ($runtime_mode eq 'combinational_shared_reexport') {
+            $candidate->{lifted_runtime_signal} = $lifted_comb_signal;
+            @runtime_lines = (
+                "    logic ${width_decl}${lifted_comb_signal};",
+                "",
+                "    always_comb begin",
+                "      ${lifted_comb_signal} = 1'b0;",
+            );
 
-        my @runtime_lines = (
-            "    logic ${width_decl}${lifted_next_signal};",
-            "    logic ${width_decl}${lifted_register_signal};",
-            "",
-            "    always_comb begin",
-            "      ${lifted_next_signal} = ${lifted_register_signal};",
-        );
+            for my $family (@{$candidate->{aggregate_enable_families} || []}) {
+                next unless ref($family) eq 'HASH';
+                my $aggregate_enable_signal = $family->{aggregate_enable_signal} || next;
+                my $rhs_value = $family->{rhs_value} // next;
+                push @runtime_lines,
+                    "      if ($aggregate_enable_signal) begin",
+                    "        ${lifted_comb_signal} = $rhs_value;",
+                    "      end";
+            }
 
-        for my $family (@{$candidate->{aggregate_enable_families} || []}) {
-            next unless ref($family) eq 'HASH';
-            my $aggregate_enable_signal = $family->{aggregate_enable_signal} || next;
-            my $rhs_value = $family->{rhs_value} // next;
+            push @runtime_lines, "    end";
+        } else {
+            $candidate->{lifted_runtime_next_signal} = $lifted_next_signal;
+            $candidate->{lifted_runtime_signal} = $lifted_register_signal;
+            $candidate->{lifted_runtime_reset_value} = $candidate->{reset_value};
+
+            @runtime_lines = (
+                "    logic ${width_decl}${lifted_next_signal};",
+                "    logic ${width_decl}${lifted_register_signal};",
+                "",
+                "    always_comb begin",
+                "      ${lifted_next_signal} = ${lifted_register_signal};",
+            );
+
+            for my $family (@{$candidate->{aggregate_enable_families} || []}) {
+                next unless ref($family) eq 'HASH';
+                my $aggregate_enable_signal = $family->{aggregate_enable_signal} || next;
+                my $rhs_value = $family->{rhs_value} // next;
+                push @runtime_lines,
+                    "      if ($aggregate_enable_signal) begin",
+                    "        ${lifted_next_signal} = $rhs_value;",
+                    "      end";
+            }
+
             push @runtime_lines,
-                "      if ($aggregate_enable_signal) begin",
-                "        ${lifted_next_signal} = $rhs_value;",
-                "      end";
+                "    end",
+                "",
+                "    always_ff @(posedge $clock_name or negedge $reset_name) begin",
+                "      if (!$reset_name) begin",
+                "        ${lifted_register_signal} <= $candidate->{reset_value};",
+                "      end else begin",
+                "        ${lifted_register_signal} <= ${lifted_next_signal};",
+                "      end",
+                "    end";
         }
-
-        push @runtime_lines,
-            "    end",
-            "",
-            "    always_ff @(posedge $clock_name or negedge $reset_name) begin",
-            "      if (!$reset_name) begin",
-            "        ${lifted_register_signal} <= $candidate->{reset_value};",
-            "      end else begin",
-            "        ${lifted_register_signal} <= ${lifted_next_signal};",
-            "      end",
-            "    end";
 
         for my $contributor (@{$candidate->{contributors} || []}) {
             next unless ref($contributor) eq 'HASH';
@@ -2430,12 +2467,21 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
             my ($instance_name, $port_name) = ($peer_input->{endpoint} || '') =~ /^(\w+)\.(\w+)$/;
             next unless defined($instance_name) && defined($port_name);
             my $instance = $instances_by_name{$instance_name} || next;
-            $self->set_instance_port_binding($instance, $port_name, $lifted_register_signal);
+            my $lifted_signal = $runtime_mode eq 'combinational_shared_reexport'
+                ? $lifted_comb_signal
+                : $lifted_register_signal;
+            $self->set_instance_port_binding($instance, $port_name, $lifted_signal);
         }
 
         if ($runtime_mode eq 'registered_shared_reexport') {
             for my $top_output_signal (sort keys %planned_reexports) {
                 push @runtime_lines, "    assign $top_output_signal = $lifted_register_signal;";
+            }
+        }
+
+        if ($runtime_mode eq 'combinational_shared_reexport') {
+            for my $top_output_signal (sort keys %preserved_top_outputs) {
+                push @runtime_lines, "    assign $top_output_signal = $lifted_comb_signal;";
             }
         }
 

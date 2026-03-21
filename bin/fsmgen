@@ -542,6 +542,7 @@ unless ($quiet) {
                     my %runtime_label = (
                         registered_shared_reexport => 'registered shared re-export active',
                         registered_shared_internal => 'registered shared internal lift active',
+                        combinational_shared_reexport => 'combinational shared top-facing carrier active',
                     );
                     print "    * lifted runtime: "
                         . ($runtime_label{$lifted_runtime_kind} || $lifted_runtime_kind) . "\n";

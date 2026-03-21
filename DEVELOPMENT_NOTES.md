@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-22: combinational shared-datapath peer-read families now have a first top-facing runtime slice
+- Continued the active `R11` lane by turning the bounded combinational peer-read policy into actual emitted behavior instead of leaving it as metadata/reporting only.
+- Landed behavior:
+  - shared combinational peer-read families with preserved public outputs now emit one shared top-facing combinational carrier in the generated top,
+  - peer-read child inputs are rebound to that carrier,
+  - preserved public top outputs are re-exported from that carrier,
+  - contributor outputs are rebound to private raw nets,
+  - and candidate peer-read endpoints are now filtered to inputs actually bound to contributor carriers before that runtime is planned.
+- Why this is worth shipping:
+  - it closes the biggest remaining asymmetry between the combinational and registered peer-read lanes,
+  - it makes the top-facing combinational policy honest as real runtime behavior instead of summary text only,
+  - and it leaves the next seam where it belongs: how far that combinational lane should widen beyond the bounded public-preserving case.
+
 ## 2026-03-22: shared-datapath lifting now covers mixed public/internal registered peer-read families
 - Continued the active `R11` lane by widening the public-preserving lifted-runtime case into the mixed-boundary sibling instead of stopping at the all-public and all-internal ends.
 - Landed behavior:
