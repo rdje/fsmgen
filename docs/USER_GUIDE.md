@@ -603,6 +603,7 @@ Boundary note:
 - Generated roots and realized generated children now also surface `output_drive_family_count` and `output_drive_families` in `module_info`, so embedders can see how each output family is driven without scraping emitted HDL.
 - Those shared-datapath candidates now also carry one bounded per-contributor `drive_intent` summary, and non-quiet `bin/fsmgen` runs print one concise per-child drive-intent line under each candidate.
 - Those shared-datapath candidates now also surface one deterministic whole-target aggregate enable plus per-value aggregate enable families built from the child-local `P_Q_en` families, and non-quiet `bin/fsmgen` runs print those planned aggregate enable names too.
+- Those shared-datapath candidates now also surface the first planned conflict-bit names: one `P_Q_multi_src_conflict`-style name per aggregate value family and one `P_multi_value_conflict`-style name per whole target.
 
 ### Draft normative contract for the conventional `+system` section
 This is the current `R8` draft normative contract for the active `+system` boundary.

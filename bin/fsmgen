@@ -514,6 +514,9 @@ unless ($quiet) {
                 if (my $target_enable = $candidate->{aggregate_target_enable_signal}) {
                     print "    * aggregate target enable: $target_enable\n";
                 }
+                if (my $multi_value_conflict = $candidate->{multi_value_conflict_signal}) {
+                    print "    * multi-value conflict: $multi_value_conflict\n";
+                }
 
                 for my $family (@{$candidate->{aggregate_enable_families} || []}) {
                     my $family_refs = join(', ', map {
@@ -525,6 +528,10 @@ unless ($quiet) {
                         . " => " . ($family->{aggregate_enable_signal} || 'unknown_enable');
                     print " from $family_refs" if length $family_refs;
                     print "\n";
+                    if (my $same_value_conflict = $family->{same_value_conflict_signal}) {
+                        print "    * same-value conflict " . ($family->{rhs_value} || 'unknown')
+                            . " => " . $same_value_conflict . "\n";
+                    }
                 }
 
                 for my $contributor (@{$candidate->{contributors} || []}) {

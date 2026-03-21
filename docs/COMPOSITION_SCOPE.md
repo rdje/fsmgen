@@ -175,6 +175,7 @@ Current shipped runtime subset:
 - realized generated children now also preserve `output_drive_family_count` and `output_drive_families` in their `module_info` surface,
 - and those shared-datapath candidate contributors now also carry one bounded `drive_intent` summary derived from generated assignment analysis,
 - and those shared-datapath candidate families now also expose one deterministic whole-target aggregate enable plus per-value aggregate enable families derived from the child-local `P_Q` families,
+- and those shared-datapath candidate families now also expose the first planned same-value and cross-value conflict-bit names without claiming lifted shared-datapath HDL exists yet,
 - `?rtl` is now realized in the shipped single-child `C1`, explicit-link `C3`, and declared-by-name `C4` slices,
 - the current explicit-link `C3` slice expects either one embedded `(?rtlif:module_name ...)` companion root or one `<module>.rtlif` sidecar metadata file per external RTL module and does not parse/regenerate SV/VHDL module internals at composition time.
 

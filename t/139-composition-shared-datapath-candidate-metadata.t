@@ -128,11 +128,13 @@ FSM
                 ],
                 top_output_signals => ['left_status', 'right_status'],
                 aggregate_target_enable_signal => 'status_bus_shared_en',
+                multi_value_conflict_signal => 'status_bus_multi_value_conflict',
                 aggregate_enable_family_count => 2,
                 aggregate_enable_families => [
                     {
                         rhs_value => "8'd1",
                         aggregate_enable_signal => 'status_bus__8_d1_shared_en',
+                        same_value_conflict_signal => 'status_bus__8_d1_multi_src_conflict',
                         contributor_count => 1,
                         contributors => [
                             {
@@ -146,6 +148,7 @@ FSM
                     {
                         rhs_value => "8'd2",
                         aggregate_enable_signal => 'status_bus__8_d2_shared_en',
+                        same_value_conflict_signal => 'status_bus__8_d2_multi_src_conflict',
                         contributor_count => 1,
                         contributors => [
                             {
@@ -226,8 +229,11 @@ FSM
     like($combined_output, qr/Count:\s+1/s, 'CLI reports one shared-datapath candidate family');
     like($combined_output, qr/status_bus \[width=8, type=data\] from left\.status_bus, right\.status_bus \(top outputs: left_status, right_status\)/s, 'CLI prints the grouped same-name output family');
     like($combined_output, qr/\* aggregate target enable: status_bus_shared_en/s, 'CLI prints the shared target aggregate enable name');
+    like($combined_output, qr/\* multi-value conflict: status_bus_multi_value_conflict/s, 'CLI prints the whole-target multi-value conflict name');
     like($combined_output, qr/\* aggregate value 8'd1 => status_bus__8_d1_shared_en from left\.status_bus\/status_bus__8_d1_en/s, 'CLI prints the first aggregate value-enable family');
+    like($combined_output, qr/\* same-value conflict 8'd1 => status_bus__8_d1_multi_src_conflict/s, 'CLI prints the first same-value conflict name');
     like($combined_output, qr/\* aggregate value 8'd2 => status_bus__8_d2_shared_en from right\.status_bus\/status_bus__8_d2_en/s, 'CLI prints the second aggregate value-enable family');
+    like($combined_output, qr/\* same-value conflict 8'd2 => status_bus__8_d2_multi_src_conflict/s, 'CLI prints the second same-value conflict name');
 };
 
 done_testing();

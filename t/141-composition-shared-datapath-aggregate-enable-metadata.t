@@ -87,6 +87,7 @@ FSM
     my $candidate = $result->{module_info}{composition_shared_datapath_candidates}[0];
 
     is($candidate->{aggregate_target_enable_signal}, 'status_bus_shared_en', 'candidate reports one deterministic whole-target aggregate enable');
+    is($candidate->{multi_value_conflict_signal}, 'status_bus_multi_value_conflict', 'candidate reports one deterministic whole-target multi-value conflict name');
     is($candidate->{aggregate_enable_family_count}, 3, 'candidate reports three aggregate value-enable families');
     is_deeply(
         $candidate->{aggregate_enable_families},
@@ -94,6 +95,7 @@ FSM
             {
                 rhs_value => "8'd1",
                 aggregate_enable_signal => 'status_bus__8_d1_shared_en',
+                same_value_conflict_signal => 'status_bus__8_d1_multi_src_conflict',
                 contributor_count => 2,
                 contributors => [
                     {
@@ -113,6 +115,7 @@ FSM
             {
                 rhs_value => "8'd2",
                 aggregate_enable_signal => 'status_bus__8_d2_shared_en',
+                same_value_conflict_signal => 'status_bus__8_d2_multi_src_conflict',
                 contributor_count => 1,
                 contributors => [
                     {
@@ -126,6 +129,7 @@ FSM
             {
                 rhs_value => "8'd3",
                 aggregate_enable_signal => 'status_bus__8_d3_shared_en',
+                same_value_conflict_signal => 'status_bus__8_d3_multi_src_conflict',
                 contributor_count => 1,
                 contributors => [
                     {
@@ -220,7 +224,9 @@ FSM
     );
 
     like($combined_output, qr/\* aggregate target enable: status_bus_shared_en/s, 'CLI prints the whole-target aggregate enable');
+    like($combined_output, qr/\* multi-value conflict: status_bus_multi_value_conflict/s, 'CLI prints the whole-target multi-value conflict name');
     like($combined_output, qr/\* aggregate value 8'd1 => status_bus__8_d1_shared_en from left\.status_bus\/status_bus__8_d1_en, right\.status_bus\/status_bus__8_d1_en/s, 'CLI prints the same-value aggregate family across both contributors');
+    like($combined_output, qr/\* same-value conflict 8'd1 => status_bus__8_d1_multi_src_conflict/s, 'CLI prints the same-value multi-source conflict name');
 };
 
 done_testing();

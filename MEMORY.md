@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-21: shared-datapath candidates now surface planned conflict-bit names
+- Saved shipped behavior:
+  - each aggregate value family now carries one deterministic `P_Q_multi_src_conflict`-style name,
+  - each whole target now carries one deterministic `P_multi_value_conflict`-style name,
+  - and non-quiet `bin/fsmgen` runs now print those planned conflict names under each shared-datapath candidate.
+- Important continuity note:
+  - this is the first shipped explicit conflict-naming slice in the shared-datapath lane,
+  - it makes the same-value versus different-value split concrete in runtime metadata,
+  - and it still does not generate lifted shared-datapath HDL or assertion logic yet.
+
 ## 2026-03-21: shared-datapath candidates now surface aggregate enable families
 - Saved shipped behavior:
   - generated-child `output_drive_families` now preserve per-RHS family metadata,

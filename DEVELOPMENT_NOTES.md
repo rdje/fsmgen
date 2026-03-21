@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-21: shared-datapath candidates now surface planned conflict-bit names
+- Continued the active `R11` lane by adding the first explicit conflict/check naming layer on top of aggregate enable families instead of jumping straight to generated shared-datapath HDL.
+- Landed behavior:
+  - each aggregate value family now carries one deterministic `P_Q_multi_src_conflict`-style name,
+  - each whole target now carries one deterministic `P_multi_value_conflict`-style name,
+  - and non-quiet `bin/fsmgen` runs now print those planned conflict names under each shared-datapath candidate.
+- Why this is worth shipping:
+  - it turns the roadmap’s same-value versus different-value conflict split into active runtime metadata,
+  - it gives later assertion/onehot/lifted-ownership work stable naming to build on,
+  - and it still keeps the scope honest by exposing planned conflict bits without pretending those signals already exist in emitted shared-datapath HDL.
+
 ## 2026-03-21: shared-datapath candidates now surface aggregate enable families
 - Continued the active `R11` lane by moving one step past child-local drive intent into candidate-level aggregation instead of jumping straight to lifted shared-block codegen.
 - Landed behavior:

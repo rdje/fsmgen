@@ -734,6 +734,17 @@ sub shared_datapath_target_enable_name ($self, $signal_name) {
     return "${clean_signal}_shared_en";
 }
 
+sub shared_datapath_same_value_conflict_name ($self, $signal_name, $rhs_value) {
+    my $clean_signal = $self->clean_enable_name_token($signal_name);
+    my $clean_rhs = $self->clean_enable_name_token($rhs_value);
+    return "${clean_signal}_${clean_rhs}_multi_src_conflict";
+}
+
+sub shared_datapath_multi_value_conflict_name ($self, $signal_name) {
+    my $clean_signal = $self->clean_enable_name_token($signal_name);
+    return "${clean_signal}_multi_value_conflict";
+}
+
 sub is_generated_child_kind ($self, $kind) {
     return $kind eq 'fsmc' || $kind eq 'dtc';
 }
@@ -2385,6 +2396,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
             +{
                 rhs_value => $family->{rhs_value},
                 aggregate_enable_signal => $family->{aggregate_enable_signal},
+                same_value_conflict_signal => $self->shared_datapath_same_value_conflict_name($group->{signal_name}, $family->{rhs_value}),
                 contributor_count => scalar(@{$family->{contributors} || []}),
                 contributors => $family->{contributors},
             }
@@ -2398,6 +2410,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
             contributors => \@contributors,
             top_output_signals => [ sort keys %top_output_signals ],
             aggregate_target_enable_signal => $self->shared_datapath_target_enable_name($group->{signal_name}),
+            multi_value_conflict_signal => $self->shared_datapath_multi_value_conflict_name($group->{signal_name}),
             aggregate_enable_family_count => scalar(@aggregate_enable_families),
             aggregate_enable_families => \@aggregate_enable_families,
         };
