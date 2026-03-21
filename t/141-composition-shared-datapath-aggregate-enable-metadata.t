@@ -86,6 +86,11 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $candidate = $result->{module_info}{composition_shared_datapath_candidates}[0];
 
+    is($candidate->{storage_class}, 'registered', 'candidate classifies the shared family as registered');
+    is($candidate->{peer_input_count}, 0, 'candidate reports no peer-read inputs in this top-facing-only fixture');
+    is($candidate->{default_lifted_visibility}, 'top_output', 'candidate keeps top-output visibility by default when no peer-read inputs exist');
+    is_deeply($candidate->{planned_reexport_top_output_signals}, [], 'candidate does not need planned top re-exports when it remains top-facing by default');
+    ok(!$candidate->{loopback_allowed}, 'candidate does not plan loopback without peer-read inputs');
     is($candidate->{aggregate_target_enable_signal}, 'status_bus_shared_en', 'candidate reports one deterministic whole-target aggregate enable');
     is($candidate->{multi_value_conflict_signal}, 'status_bus_multi_value_conflict', 'candidate reports one deterministic whole-target multi-value conflict name');
     is_deeply(
@@ -262,6 +267,9 @@ FSM
         ($error_message || ''),
     );
 
+    like($combined_output, qr/\* storage class: registered/s, 'CLI prints the shared-datapath storage class');
+    like($combined_output, qr/\* default lifted visibility: top_output/s, 'CLI prints the default lifted visibility for the candidate');
+    like($combined_output, qr/\* loopback allowed: no/s, 'CLI prints that loopback is not planned in the top-facing-only case');
     like($combined_output, qr/\* aggregate target enable: status_bus_shared_en/s, 'CLI prints the whole-target aggregate enable');
     like($combined_output, qr/\* multi-value conflict: status_bus_multi_value_conflict/s, 'CLI prints the whole-target multi-value conflict name');
     like($combined_output, qr/\* multi-value onehot0 over status_bus__8_d1_shared_en, status_bus__8_d2_shared_en, status_bus__8_d3_shared_en => status_bus_multi_value_conflict/s, 'CLI prints the whole-target onehot0 assertion inputs');

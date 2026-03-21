@@ -511,6 +511,25 @@ unless ($quiet) {
                     . "] from " . $contributors;
                 print " (top outputs: $top_outputs)" if length $top_outputs;
                 print "\n";
+                if (my $storage_class = $candidate->{storage_class}) {
+                    print "    * storage class: $storage_class\n";
+                }
+                if (my $visibility = $candidate->{default_lifted_visibility}) {
+                    print "    * default lifted visibility: $visibility\n";
+                }
+                if (($candidate->{peer_input_count} || 0) > 0) {
+                    my $peer_inputs = join(', ', map {
+                        $_->{endpoint} || 'unknown_endpoint'
+                    } @{$candidate->{peer_input_endpoints} || []});
+                    print "    * peer-read inputs: $peer_inputs\n" if length $peer_inputs;
+                }
+                if (@{$candidate->{planned_reexport_top_output_signals} || []}) {
+                    print "    * planned top re-exports: "
+                        . join(', ', @{$candidate->{planned_reexport_top_output_signals} || []}) . "\n";
+                }
+                if (exists $candidate->{loopback_allowed}) {
+                    print "    * loopback allowed: " . ($candidate->{loopback_allowed} ? 'yes' : 'no') . "\n";
+                }
                 if (my $target_enable = $candidate->{aggregate_target_enable_signal}) {
                     print "    * aggregate target enable: $target_enable\n";
                 }

@@ -177,6 +177,7 @@ Current shipped runtime subset:
 - and those shared-datapath candidate families now also expose one deterministic whole-target aggregate enable plus per-value aggregate enable families derived from the child-local `P_Q` families,
 - and those shared-datapath candidate families now also expose the first planned same-value and cross-value conflict-bit names without claiming lifted shared-datapath HDL exists yet,
 - and those shared-datapath candidate families now also expose deterministic per-child shared-datapath source-enable aliases plus onehot0-style assertion metadata for same-value source overlap and whole-target multi-value overlap,
+- and those shared-datapath candidate families now also expose the first lifted-ownership planning metadata for registered peer-read families through storage-class, peer-read endpoint, default lifted visibility, planned top re-export, and loopback-policy fields,
 - `?rtl` is now realized in the shipped single-child `C1`, explicit-link `C3`, and declared-by-name `C4` slices,
 - the current explicit-link `C3` slice expects either one embedded `(?rtlif:module_name ...)` companion root or one `<module>.rtlif` sidecar metadata file per external RTL module and does not parse/regenerate SV/VHDL module internals at composition time.
 

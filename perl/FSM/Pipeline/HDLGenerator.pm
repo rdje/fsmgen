@@ -765,6 +765,18 @@ sub shared_datapath_assertion_metadata ($self, $result_signal, $input_enable_sig
     };
 }
 
+sub shared_datapath_storage_class ($self, $contributors) {
+    my %types = map {
+        my $type = $_->{drive_intent}{multiplexer_type} // 'unknown';
+        ($type => 1);
+    } @{$contributors || []};
+
+    return 'registered' if keys(%types) == 1 && $types{flop};
+    return 'combinational' if keys(%types) == 1 && $types{comb};
+    return 'unknown' if !keys(%types) || (keys(%types) == 1 && $types{unknown});
+    return 'mixed';
+}
+
 sub is_generated_child_kind ($self, $kind) {
     return $kind eq 'fsmc' || $kind eq 'dtc';
 }
@@ -2318,6 +2330,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
     } @{$composition_plan->ports || []};
 
     my %candidate_groups;
+    my %peer_input_groups;
     for my $instance (@{$composition_plan->instances || []}) {
         next unless ($instance->kind || '') eq 'fsmc';
 
@@ -2367,6 +2380,23 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
             $candidate_groups{$key}{width} = $port->width || 1;
             $candidate_groups{$key}{interface_type} = $normalized_type;
         }
+
+        for my $port (@{$instance->interface_ports || []}) {
+            next unless ($port->direction || '') eq 'input';
+
+            my $normalized_type = $self->normalized_interface_type($port->type);
+            my $key = join "\x1E",
+                ($port->name // ''),
+                ($port->width // 1),
+                $normalized_type;
+
+            push @{$peer_input_groups{$key}}, {
+                instance_name => $instance->instance_name,
+                module_name => $instance->module_name,
+                endpoint => ($instance->instance_name // 'unknown').'.'.($port->name // 'unknown'),
+                bound_signal => $bindings{$port->name},
+            };
+        }
     }
 
     my @candidates;
@@ -2387,6 +2417,21 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
             next unless length $bound_signal;
             $top_output_signals{$bound_signal} = 1 if exists $top_output_by_name{$bound_signal};
         }
+
+        my @peer_input_endpoints = sort {
+            ($a->{instance_name} // '') cmp ($b->{instance_name} // '')
+                ||
+            ($a->{module_name} // '') cmp ($b->{module_name} // '')
+                ||
+            ($a->{endpoint} // '') cmp ($b->{endpoint} // '')
+        } @{$peer_input_groups{$key} || []};
+        my $storage_class = $self->shared_datapath_storage_class(\@contributors);
+        my $default_lifted_visibility = (@peer_input_endpoints && $storage_class eq 'registered')
+            ? 'internal'
+            : 'top_output';
+        my @planned_reexport_top_output_signals = $default_lifted_visibility eq 'internal'
+            ? sort keys %top_output_signals
+            : ();
 
         my %aggregate_families_by_rhs;
         for my $contributor (@contributors) {
@@ -2445,9 +2490,15 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
             signal_name => $group->{signal_name},
             width => $group->{width},
             interface_type => $group->{interface_type},
+            storage_class => $storage_class,
             contributor_count => scalar(@contributors),
             contributors => \@contributors,
             top_output_signals => [ sort keys %top_output_signals ],
+            peer_input_count => scalar(@peer_input_endpoints),
+            peer_input_endpoints => \@peer_input_endpoints,
+            default_lifted_visibility => $default_lifted_visibility,
+            planned_reexport_top_output_signals => \@planned_reexport_top_output_signals,
+            loopback_allowed => (@peer_input_endpoints && $storage_class eq 'registered') ? 1 : 0,
             aggregate_target_enable_signal => $self->shared_datapath_target_enable_name($group->{signal_name}),
             multi_value_conflict_signal => $multi_value_conflict_signal,
             multi_value_assertion => $self->shared_datapath_assertion_metadata(

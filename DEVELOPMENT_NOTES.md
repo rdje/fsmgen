@@ -5541,3 +5541,16 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this still does not claim lifted shared-datapath HDL exists yet,
   - but it turns the conflict/assertion part of the roadmap from naming-only metadata into a clearer embeddable planning contract that downstream lifting work can consume directly.
+
+## 2026-03-21: shared-datapath candidates now expose first lifted-ownership planning metadata
+- Continued the active `R11` feature lane by pushing the shared-datapath contract one step past assertion planning into ownership/visibility planning.
+- The next missing piece after source-enable and onehot planning was that the metadata still could not say which shared registered families should stay top-facing and which should become top-internal by default once lifting exists.
+- The active shared-datapath candidate surface now also includes:
+  - storage-class classification,
+  - peer-read input endpoint metadata,
+  - default lifted visibility,
+  - planned top re-export signals for internalized registered families,
+  - and a bounded loopback-allowed flag.
+- Design note from this slice:
+  - this is still planning/export metadata rather than emitted lifted shared-datapath HDL,
+  - but it makes the registered peer-read internalization rule concrete enough that later lifting work can consume it without re-deriving policy from prose.

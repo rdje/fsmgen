@@ -4419,3 +4419,10 @@ This is the persistent technical change history for FSMGen.
   - onehot0-style same-value assertion metadata over those source-enable aliases,
   - and onehot0-style whole-target assertion metadata over the aggregate value-enable families.
 - Non-quiet `bin/fsmgen` composition runs now also print those planned multi-value and same-value onehot0 inputs under `Shared-Datapath Candidates`.
+- Shared-datapath candidate metadata now also exposes the first lifted-ownership planning layer for registered peer-read families:
+  - storage-class classification,
+  - peer-read input endpoint metadata,
+  - internal-by-default lifted visibility for registered peer-read families,
+  - planned top re-export signals for those internalized public outputs,
+  - and a bounded loopback-allowed flag.
+- Non-quiet `bin/fsmgen` composition runs now also print those planned visibility/re-export/loopback decisions under `Shared-Datapath Candidates`.

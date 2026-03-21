@@ -4243,3 +4243,15 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prints those planned multi-value and same-value onehot0 inputs in non-quiet `Shared-Datapath Candidates` summaries.
 - [t/142-composition-shared-datapath-assertion-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/142-composition-shared-datapath-assertion-metadata.t) locks the new assertion-planning metadata directly, while [t/139-composition-shared-datapath-candidate-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/139-composition-shared-datapath-candidate-metadata.t), [t/140-composition-shared-datapath-drive-intent-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/140-composition-shared-datapath-drive-intent-metadata.t), and [t/141-composition-shared-datapath-aggregate-enable-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/141-composition-shared-datapath-aggregate-enable-metadata.t) now also include the new nested metadata surface.
 - This is still planning/export metadata, not lifted shared-datapath HDL emission, but it makes the assertion side of the contract explicit enough for later lifting work.
+
+## 2026-03-21: shared-datapath candidates now expose lifted-ownership planning metadata
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now extends shared-datapath candidate metadata with:
+  - `storage_class`,
+  - `peer_input_count`,
+  - `peer_input_endpoints`,
+  - `default_lifted_visibility`,
+  - `planned_reexport_top_output_signals`,
+  - and `loopback_allowed`.
+- [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prints those planned storage/visibility/re-export/loopback decisions in non-quiet `Shared-Datapath Candidates` summaries.
+- [t/143-composition-shared-datapath-visibility-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/143-composition-shared-datapath-visibility-metadata.t) locks the bounded registered peer-read case directly, while [t/139-composition-shared-datapath-candidate-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/139-composition-shared-datapath-candidate-metadata.t), [t/140-composition-shared-datapath-drive-intent-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/140-composition-shared-datapath-drive-intent-metadata.t), and [t/141-composition-shared-datapath-aggregate-enable-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/141-composition-shared-datapath-aggregate-enable-metadata.t) now include the new default top-output case too.
+- This is still planning/export metadata rather than emitted lifted shared-datapath HDL, but it makes the registered peer-read internalization rule concrete enough for later lifting work.

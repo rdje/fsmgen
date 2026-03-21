@@ -695,6 +695,7 @@ Done:
   - and those contributors now also carry one bounded `drive_intent` summary with mux type, driver blocks, RHS families, and enable-signal families,
   - each shared-datapath candidate now also carries one deterministic whole-target aggregate enable plus per-value aggregate enable families built from the child-local `P_Q` families,
   - and those candidate families now also carry the first planned conflict-bit names for same-value multi-source overlap and whole-target multi-value overlap,
+  - and those candidate families now also carry first lifted-ownership planning metadata through storage-class, peer-read endpoint, default lifted visibility, planned top re-export, and loopback-policy fields,
   - and non-quiet `bin/fsmgen` composition runs now print one concise `Shared-Datapath Candidates` summary section from that metadata surface.
 - [t/139-composition-shared-datapath-candidate-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/139-composition-shared-datapath-candidate-metadata.t) now locks:
   - composition-top shared-datapath candidate metadata for multi-`?fsmc` tops,
@@ -714,6 +715,12 @@ Done:
   - onehot0-style same-value assertion metadata over those source-enable aliases,
   - onehot0-style whole-target assertion metadata over aggregate value enables,
   - and the matching non-quiet CLI assertion-planning summary lines.
+- [t/143-composition-shared-datapath-visibility-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/143-composition-shared-datapath-visibility-metadata.t) now locks:
+  - peer-read endpoint metadata for shared registered output families,
+  - internal-by-default lifted visibility planning for those registered peer-read families,
+  - planned top re-export metadata for the still-top-visible public outputs,
+  - loopback-allowed planning for that bounded registered case,
+  - and the matching non-quiet CLI visibility-planning summary lines.
 - The first `R11` connect-by-name broadening slice beyond the original multi-child success case is now also shipped:
   - declared `=name` connect-by-name now works for a single generated child (`?fsmc` or `?dtc`) instead of starting only beyond the single-child passthrough case,
   - single-child by-name planning still stays deterministic and bounded by the existing exact same-name, same-direction, same-width rule,
@@ -867,9 +874,7 @@ Left:
   - per-child drive-intent aggregation,
   - same-target/same-value aggregation vs same-target/different-value conflicts,
   - driven/lifted assertion-bit behavior for the now-shipped per-`(P, Q)` source-enable and whole-target `P` onehot0 metadata,
-  - default top-export vs peer-read internalization for registered outputs,
-  - explicit user-directed re-export of now-internal registered outputs,
-  - registered-output loopback rules,
+  - realized lifting behavior on top of the now-shipped registered peer-read visibility/re-export/loopback planning metadata,
   - and the rule that combinational outputs may be top-level outputs but not peer-FSM inputs.
 - Turn the reusable standalone-DT/module-library direction into a real contract:
   - decide whether unnamed reusable DT roots such as `?dt:` exist at all,
