@@ -4435,3 +4435,7 @@ This is the persistent technical change history for FSMGen.
   - richer composition hierarchy, generate-heavy RTL, and macro/preprocessor-heavy RTL are in scope as later widening targets rather than being ruled out,
   - parser support alone is explicitly not enough and the note now calls for preprocessing/elaboration plus a typed canonical RTL IR with provenance,
   - and the note now keeps one core honesty rule explicit: do not force weak HDL evidence into fake high-level elegance when residue reporting would be more truthful.
+- Clarified the elaboration point in that same saved horizon note:
+  - HDL import would not need a full backend compile/synthesis flow,
+  - but it would still need substantial frontend semantic compilation work before elaboration can happen honestly,
+  - so the saved pipeline is now explicit about preprocess -> parse -> semantic resolution -> elaboration -> canonical RTL IR -> intent recovery.

@@ -4275,3 +4275,10 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - The saved honesty rule is also explicit now:
   - recover real intent where the evidence is strong,
   - and keep ambiguity or opaque logic visible as residue instead of forcing a fake high-level reconstruction.
+
+## 2026-03-21: clarified that HDL import still needs frontend semantic compilation before elaboration
+- The saved HDL-import direction now also distinguishes “no full backend compile needed” from “no compilation work needed,” because those are not the same.
+- The saved clarification is:
+  - no synthesis/backend compile is required for the import lane itself,
+  - but elaboration still depends on real frontend semantic compilation work after preprocessing,
+  - so the expected importer shape is now explicitly `preprocess -> parse -> semantic resolution -> elaboration -> canonical RTL IR -> intent recovery -> recovery report`.

@@ -460,8 +460,10 @@ Recovery stance:
 - and prefer explicit residue/annotation reporting over forcing weak evidence into fake high-level elegance.
 
 Expected technical pipeline:
-- parse `SystemVerilog` / `VHDL`,
-- preprocess and/or elaborate when needed,
+- preprocess `SystemVerilog` / `VHDL` when needed,
+- parse the HDL into an AST,
+- run frontend semantic compilation work such as name/type/parameter/interface resolution,
+- elaborate hierarchy, generate structure, and resolved bindings without requiring a full backend compile/synthesis flow,
 - build a typed canonical RTL IR with provenance,
 - recover design intent from that IR into `.fsm`,
 - and emit a recovery report alongside the recovered source.

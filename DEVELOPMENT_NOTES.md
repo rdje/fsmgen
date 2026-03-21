@@ -5579,3 +5579,18 @@ It is an exact-delay pulse request:
 - Design note from this refinement:
   - the real technical bottleneck is not only parsing,
   - it is the elaboration/canonical-IR/provenance/recovery pipeline that has to sit between parsed HDL and recovered `.fsm`.
+
+## 2026-03-21: the HDL-import horizon note now distinguishes elaboration from full compilation more explicitly
+- Added one more clarification to the saved HDL-import direction after the follow-up question about elaboration.
+- The saved execution model now says:
+  - HDL import would not require a full backend compile, synthesis flow, or simulator-oriented compilation stage,
+  - but it would still require real frontend semantic compilation work before elaboration can happen honestly,
+  - because hierarchy/generate/interface/type/parameter resolution depends on that semantic layer even after preprocessing is done.
+- The saved pipeline is now explicit:
+  - preprocess,
+  - parse,
+  - semantic resolution,
+  - elaboration,
+  - canonical RTL IR,
+  - intent recovery,
+  - recovery report.
