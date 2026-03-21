@@ -5561,7 +5561,21 @@ It is an exact-delay pulse request:
   - not as a promise that arbitrary HDL can be inverted back into the original source exactly.
 - Saved guidance from the discussion:
   - the most honest first round-trip target would be `fsmgen`-generated `SystemVerilog`,
-  - then a bounded handwritten HDL subset where ports, clocks/resets, FSMs, DT-like logic, and simple composition structure are recognizable,
+  - the real boundary should be synthesizable RTL rather than arbitrary simulation/testbench HDL,
+  - then a bounded handwritten synthesizable HDL subset where ports, clocks/resets, FSMs, DT-like logic, datapath structure, and composition hierarchy are recognizable,
+  - richer hierarchy, generate-heavy RTL, macro/preprocessor-heavy RTL, and even some hand-optimized logic are valid later targets rather than permanent exclusions,
+  - but parser support alone is not the hard part: real recovery would need preprocessing/elaboration, a typed canonical RTL IR, provenance, and then intent recovery into `.fsm`,
   - and any such importer should always emit a report that distinguishes recognized structure, heuristic recovery, and unsupported residue.
 - Design note from this slice:
   - this belongs in the long-term horizon only after the forward `.fsm` contract and embedding/result surfaces are stable enough that HDL import targets a known IR.
+
+## 2026-03-21: the HDL-import horizon note now captures the stronger synthesizable-RTL refinement too
+- Refined the saved HDL-import direction rather than changing the active roadmap.
+- The main clarifications from the follow-up discussion are:
+  - the intended boundary is synthesizable `SystemVerilog` / `VHDL`, not arbitrary HDL,
+  - “start simple” is sequencing guidance rather than a permanent ceiling on hierarchy or generated structure,
+  - `.fsm` may grow new first-class semantic constructs if repeated honest recovery work reveals missing design-intent forms,
+  - and weak HDL evidence should remain explicit residue instead of being forced into a fake elegant `.fsm` shape.
+- Design note from this refinement:
+  - the real technical bottleneck is not only parsing,
+  - it is the elaboration/canonical-IR/provenance/recovery pipeline that has to sit between parsed HDL and recovered `.fsm`.

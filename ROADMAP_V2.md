@@ -438,17 +438,40 @@ Intent:
 - and treat HDL-to-`.fsm` as import/recovery rather than as a claim of exact source inversion.
 
 Constraint:
-- do not promise full or lossless recovery for arbitrary handwritten HDL.
+- do not promise full or lossless recovery for arbitrary handwritten HDL,
+- even when the input stays within synthesizable RTL.
+
+Primary scope boundary:
+- target synthesizable RTL rather than arbitrary simulation/testbench HDL.
 
 Preferred execution order:
 - start with `fsmgen`-generated `SystemVerilog` as the first round-trip/import target,
-- then support a bounded handwritten HDL subset where FSMs, DT-like logic, ports, clocks/resets, and simple composition structure are recognizable,
+- then support a bounded handwritten synthesizable HDL subset where ports, clocks/resets, FSMs, DT-like logic, datapath structure, and composition hierarchy are recognizable,
 - and only later decide how much broader `SystemVerilog` or `VHDL` recovery is worth attempting.
 
 Required behavior:
 - recover recognizable structure honestly into `.fsm`,
 - surface a report that distinguishes recognized intent, bounded heuristics, and unsupported residue,
 - and never pretend certainty where the HDL structure is ambiguous.
+
+Recovery stance:
+- do not freeze `.fsm` prematurely if repeated HDL recovery cases reveal a missing first-class semantic construct,
+- but keep any such growth semantic, readable, and elegant instead of turning the language into a generic macro or syntax mirror of HDL,
+- and prefer explicit residue/annotation reporting over forcing weak evidence into fake high-level elegance.
+
+Expected technical pipeline:
+- parse `SystemVerilog` / `VHDL`,
+- preprocess and/or elaborate when needed,
+- build a typed canonical RTL IR with provenance,
+- recover design intent from that IR into `.fsm`,
+- and emit a recovery report alongside the recovered source.
+
+Advanced synthesizable targets worth considering later, not rejecting upfront:
+- macro/preprocessor-heavy RTL after preprocessing with provenance retained,
+- generate-heavy RTL after elaboration,
+- richer composition hierarchies beyond the first bounded recovery slice,
+- hand-optimized logic where some regions may recover as FSM/datapath intent and other regions remain opaque,
+- and bounded pragma/attribute recovery where those annotations represent durable design intent rather than backend-specific implementation residue.
 
 Prerequisite:
 - the forward `.fsm` contract, diagnostics contract, and embedding/result surfaces should already be stable enough that HDL import targets a known IR instead of a moving language boundary.

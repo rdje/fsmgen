@@ -4261,6 +4261,17 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - The saved guidance is explicit:
   - treat this as bounded HDL import / intent recovery rather than exact reverse compilation,
   - start with `fsmgen`-generated `SystemVerilog` as the first honest round-trip/import target,
-  - then only later consider bounded handwritten `SystemVerilog` / `VHDL` recovery,
+  - keep synthesizable RTL as the real import boundary,
+  - then only later widen into bounded handwritten `SystemVerilog` / `VHDL` recovery,
   - and always surface what was recognized, heuristically recovered, or left unsupported.
 - This is a logged design direction only; no runtime behavior changed.
+
+## 2026-03-21: refined the HDL-import horizon note around synthesizable RTL and recovery scope
+- The saved HDL-import direction now also records the stronger follow-up refinement:
+  - “start with simpler recognizable hierarchy” is sequencing guidance, not a permanent ceiling,
+  - richer hierarchy, generate-heavy RTL, macro/preprocessor-heavy RTL, and some optimized logic are still valid later targets,
+  - parser support alone is not enough and the note now explicitly calls for preprocessing/elaboration plus a typed canonical RTL IR with provenance,
+  - and `.fsm` is allowed to grow new first-class semantic constructs if repeated honest recovery work shows that the current design-intent vocabulary is too small.
+- The saved honesty rule is also explicit now:
+  - recover real intent where the evidence is strong,
+  - and keep ambiguity or opaque logic visible as residue instead of forcing a fake high-level reconstruction.
