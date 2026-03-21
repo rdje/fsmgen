@@ -687,6 +687,14 @@ Done:
 - [t/138-composition-standalone-dt-export-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/138-composition-standalone-dt-export-metadata.t) now locks:
   - composition-top aggregation of reusable standalone-DT child export metadata,
   - and the non-quiet CLI summary for that same composition-facing export surface.
+- The first shared-datapath candidate-discovery slice is now also shipped:
+  - composition-top `module_info` now reports `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates`,
+  - those candidate families are currently bounded to same-name output families across multiple realized `?fsmc` children that agree on width and interface type,
+  - each candidate now carries contributor instance/module/endpoint identity plus any current top-output bindings,
+  - and non-quiet `bin/fsmgen` composition runs now print one concise `Shared-Datapath Candidates` summary section from that metadata surface.
+- [t/139-composition-shared-datapath-candidate-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/139-composition-shared-datapath-candidate-metadata.t) now locks:
+  - composition-top shared-datapath candidate metadata for multi-`?fsmc` tops,
+  - and the matching non-quiet CLI summary.
 - The first `R11` connect-by-name broadening slice beyond the original multi-child success case is now also shipped:
   - declared `=name` connect-by-name now works for a single generated child (`?fsmc` or `?dtc`) instead of starting only beyond the single-child passthrough case,
   - single-child by-name planning still stays deterministic and bounded by the existing exact same-name, same-direction, same-width rule,
@@ -836,7 +844,7 @@ Done:
 Left:
 - Decide whether later work should keep the now-formalized `.rtlif` interface-source family as embedded-root plus sidecar metadata, or place a stronger interface-source contract above it.
 - Turn the new shared-datapath extraction direction into a real contract:
-  - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets,
+  - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets beyond the now-shipped candidate-discovery surface,
   - per-child drive-intent aggregation,
   - same-target/same-value aggregation vs same-target/different-value conflicts,
   - assertion-bit strategy for per-`(P, Q)` source-enable conflicts and whole-target `P` multi-value conflicts,

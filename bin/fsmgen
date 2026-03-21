@@ -497,6 +497,22 @@ unless ($quiet) {
                     . ")\n";
             }
         }
+
+        if (($module_info->{composition_shared_datapath_candidate_count} || 0) > 0) {
+            print "\nShared-Datapath Candidates:\n";
+            print "  - Count: " . ($module_info->{composition_shared_datapath_candidate_count} || 0) . "\n";
+
+            for my $candidate (@{$module_info->{composition_shared_datapath_candidates} || []}) {
+                my $contributors = join(', ', map { $_->{endpoint} } @{$candidate->{contributors} || []});
+                my $top_outputs = join(', ', @{$candidate->{top_output_signals} || []});
+                print "  - " . ($candidate->{signal_name} || 'unknown_signal')
+                    . " [width=" . ($candidate->{width} || 1)
+                    . ", type=" . ($candidate->{interface_type} || 'data')
+                    . "] from " . $contributors;
+                print " (top outputs: $top_outputs)" if length $top_outputs;
+                print "\n";
+            }
+        }
     }
 }
 

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-21: composition tops now surface first shared-datapath candidate metadata
+- Continued the active `R11` lane by starting the shared-datapath direction with one bounded discovery/export slice instead of jumping straight into lifting behavior.
+- Landed behavior:
+  - composition-top `module_info` now reports shared-datapath candidate families through `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates`,
+  - that first slice is intentionally bounded to same-name output families across multiple realized `?fsmc` children that agree on width and interface type,
+  - and each candidate now carries contributor instance/module/endpoint identity plus any current top-output bindings.
+- Why this is worth shipping:
+  - it turns the shared-datapath direction into active runtime behavior instead of leaving it entirely as architecture notes,
+  - it gives later lifting/assertion work one stable candidate-discovery surface to build on,
+  - and the matching non-quiet CLI summary makes those candidate families visible during normal composition runs.
+
 ## 2026-03-21: composition tops now aggregate reusable standalone-DT child exports
 - Continued the active `R11` lane with another real reusable-module feature slice instead of returning to hardening-only work.
 - Landed behavior:

@@ -197,6 +197,7 @@ First shipped `R11` slice now in tree:
   - named `?fsmc:name` and `?dtc:name` children omitting the explicit source token when the child source should default to `name`,
   - `?dtc` composition child realization from embedded or external standalone-DT sources, including honest non-system interfaces for purely combinational DT children,
   - module-info-level reusable standalone-DT metadata for direct roots, realized `?dtc` children, and top-level composition aggregation of those realized child exports,
+  - and module-info-level shared-datapath candidate metadata for same-name output families across multiple realized `?fsmc` children,
   - bounded single-child `C1` top-interface inference when `?ports` is omitted or empty, with the inferred top interface matching the lone realized child interface exactly,
   - bounded explicit-link `C2` / `C3` omitted/empty-`?ports` inference when explicit `?toplink` endpoints themselves still make the top boundary unambiguous, including renamed top-boundary signals with one consistent direction plus exact width/type agreement,
   - bounded explicit-link `C2` / `C3` undeclared top-input inference when same-name child inputs remain top-facing and agree exactly on direction, width, and type metadata,
@@ -249,7 +250,7 @@ Planned bounded sub-lane inside `R11`:
   - keep singly-owned outputs in their owning child FSMs,
   - and let only multiply-assigned shared/register-bearing targets move into one common datapath block.
 - first contract questions to settle:
-  - how multiply-assigned lifted targets are declared and detected,
+  - beyond the now-shipped same-name candidate-discovery metadata, how multiply-assigned lifted targets are declared and detected,
   - which RHS/value sources must also be surfaced to the shared datapath block,
   - how per-child drive intents are named and reported,
   - how same-target/same-value aggregation differs from same-target/different-value conflicts,

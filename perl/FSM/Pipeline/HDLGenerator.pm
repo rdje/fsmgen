@@ -2131,6 +2131,7 @@ sub build_composition_module_info ($self, $composition_plan, $composition_report
     my (@inputs, @outputs, @multi_bit, @single_bit);
     my %signals;
     my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
+    my $shared_datapath_candidates = $self->build_composition_shared_datapath_candidates($composition_plan);
 
     for my $port (@{$composition_plan->ports}) {
         my $entry = {
@@ -2185,6 +2186,8 @@ sub build_composition_module_info ($self, $composition_plan, $composition_report
         composition_standalone_dt_block_count => $standalone_dt_child_exports->{block_count},
         composition_standalone_dt_multi_drive_target_count => $standalone_dt_child_exports->{multi_drive_target_count},
         composition_standalone_dt_children => $standalone_dt_child_exports->{children},
+        composition_shared_datapath_candidate_count => scalar(@$shared_datapath_candidates),
+        composition_shared_datapath_candidates => $shared_datapath_candidates,
         composition_lane => $composition_plan->lane,
         composition_provenance => $composition_report,
     };
@@ -2248,6 +2251,74 @@ sub build_composition_standalone_dt_child_exports ($self, $composition_plan) {
     };
 }
 
+sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
+    my %top_output_by_name = map {
+        (($_->name || '') => $_)
+    } grep {
+        (($_->direction || '') eq 'output')
+    } @{$composition_plan->ports || []};
+
+    my %candidate_groups;
+    for my $instance (@{$composition_plan->instances || []}) {
+        next unless ($instance->kind || '') eq 'fsmc';
+
+        my %bindings = map {
+            (($_->{port_name} || '') => ($_->{signal_name} || ''))
+        } @{$instance->port_bindings || []};
+
+        for my $port (@{$instance->interface_ports || []}) {
+            next unless ($port->direction || '') eq 'output';
+
+            my $normalized_type = $self->normalized_interface_type($port->type);
+            my $key = join "\x1E",
+                ($port->name // ''),
+                ($port->width // 1),
+                $normalized_type;
+
+            push @{$candidate_groups{$key}{contributors}}, {
+                instance_name => $instance->instance_name,
+                module_name => $instance->module_name,
+                endpoint => ($instance->instance_name // 'unknown').'.'.($port->name // 'unknown'),
+                bound_signal => $bindings{$port->name},
+            };
+            $candidate_groups{$key}{signal_name} = $port->name;
+            $candidate_groups{$key}{width} = $port->width || 1;
+            $candidate_groups{$key}{interface_type} = $normalized_type;
+        }
+    }
+
+    my @candidates;
+    for my $key (sort keys %candidate_groups) {
+        my $group = $candidate_groups{$key};
+        my @contributors = sort {
+            ($a->{instance_name} // '') cmp ($b->{instance_name} // '')
+                ||
+            ($a->{module_name} // '') cmp ($b->{module_name} // '')
+                ||
+            ($a->{endpoint} // '') cmp ($b->{endpoint} // '')
+        } @{$group->{contributors} || []};
+        next unless @contributors >= 2;
+
+        my %top_output_signals;
+        for my $contributor (@contributors) {
+            my $bound_signal = $contributor->{bound_signal} || '';
+            next unless length $bound_signal;
+            $top_output_signals{$bound_signal} = 1 if exists $top_output_by_name{$bound_signal};
+        }
+
+        push @candidates, {
+            signal_name => $group->{signal_name},
+            width => $group->{width},
+            interface_type => $group->{interface_type},
+            contributor_count => scalar(@contributors),
+            contributors => \@contributors,
+            top_output_signals => [ sort keys %top_output_signals ],
+        };
+    }
+
+    return \@candidates;
+}
+
 sub build_composition_statistics ($self, $composition_plan, $composition_report = undef) {
     my $stats = $self->gather_statistics(undef);
     $stats->{composition_child_count} = scalar(@{$composition_plan->instances});
@@ -2262,6 +2333,8 @@ sub build_composition_statistics ($self, $composition_plan, $composition_report 
     $stats->{composition_block_count} = $composition_report
         ? $composition_report->{block_count}
         : 0;
+    $stats->{composition_shared_datapath_candidate_count} =
+        scalar(@{$self->build_composition_shared_datapath_candidates($composition_plan)});
     $stats->{composition_lane} = $composition_plan->lane;
     $stats->{composition_provenance} = $composition_report if $composition_report;
     return $stats;

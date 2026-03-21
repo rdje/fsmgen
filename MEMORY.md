@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-21: composition tops now surface first shared-datapath candidate metadata
+- Saved shipped behavior:
+  - composition-top `module_info` now reports shared-datapath candidate families through `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates`,
+  - those candidates are currently bounded to same-name output families across multiple realized `?fsmc` children that agree on width and interface type,
+  - and each candidate now carries contributor instance/module/endpoint identity plus any current top-output bindings.
+- Important continuity note:
+  - this is the first real shared-datapath `R11` feature slice, not just another roadmap note,
+  - it still does not lift or rewrite ownership into a shared datapath block yet,
+  - and it gives later shared-datapath extraction work one stable discovery/reporting surface to build on.
+
 ## 2026-03-21: composition tops now aggregate reusable standalone-DT child exports
 - Saved shipped behavior:
   - composition-top `module_info` now aggregates realized `?dtc` child exports through `composition_standalone_dt_child_count`, `composition_standalone_dt_block_count`, `composition_standalone_dt_multi_drive_target_count`, and `composition_standalone_dt_children`,
