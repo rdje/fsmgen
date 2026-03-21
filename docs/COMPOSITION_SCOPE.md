@@ -169,6 +169,7 @@ Current shipped runtime subset:
 - `?fsmc` and `?dtc` are realized in the shipped `C1`, `C2`, and `C3` slices,
 - named `?fsmc:name` and `?dtc:name` children may now omit the explicit source token and default it to `name`,
 - realized `?dtc` children now preserve standalone-DT block-enable family metadata in their `module_info` result surface,
+- realized `?dtc` children now also preserve grouped standalone-DT multi-drive target metadata in that same `module_info` surface,
 - `?rtl` is now realized in the shipped single-child `C1`, explicit-link `C3`, and declared-by-name `C4` slices,
 - the current explicit-link `C3` slice expects either one embedded `(?rtlif:module_name ...)` companion root or one `<module>.rtlif` sidecar metadata file per external RTL module and does not parse/regenerate SV/VHDL module internals at composition time.
 

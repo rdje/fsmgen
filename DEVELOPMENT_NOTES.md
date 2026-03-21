@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-21: standalone-DT roots now surface grouped multi-drive target metadata
+- Continued the active `R11` lane by shipping the next reusable-module arbitration-metadata slice instead of returning to hardening-only work.
+- Landed behavior:
+  - direct standalone-DT generation now reports grouped multi-drive target families through `module_info`,
+  - those grouped families now carry the target name plus contributing DT names, RHS families, DT-specific enable names, and grouped LHS enable names,
+  - and realized `?dtc` children now preserve that same grouped multi-drive metadata through composition.
+- Why this is worth shipping:
+  - it turns another open reusable-module contract question around multi-block same-target behavior into active shipped metadata,
+  - it gives future assertion/shared-datapath work a stable grouped summary instead of forcing it to inspect raw backend assignment analysis,
+  - and it keeps the slice bounded by surfacing grouped families in analysis/module-info first rather than widening the child interface contract too early.
+
 ## 2026-03-21: standalone-DT roots now surface stable block-enable family metadata
 - Continued the active `R11` lane by shipping a reusable-module enable-surfacing slice instead of another reporting-only pass.
 - Landed behavior:

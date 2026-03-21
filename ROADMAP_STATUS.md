@@ -673,6 +673,13 @@ Done:
 - [t/136-standalone-dt-enable-family-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/136-standalone-dt-enable-family-metadata.t) now locks:
   - direct standalone-DT block-enable metadata,
   - and preservation of that same metadata for realized `?dtc` children.
+- The next reusable standalone-DT arbitration-metadata slice is now also shipped:
+  - direct standalone-DT generation now reports grouped multi-drive target families through `module_info`,
+  - those grouped target families include the affected target name, contributing standalone-DT block names, RHS families, DT-specific enable names, and grouped LHS enable names,
+  - and realized `?dtc` children now preserve that same grouped multi-drive metadata through composition.
+- [t/137-standalone-dt-multi-drive-family-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/137-standalone-dt-multi-drive-family-metadata.t) now locks:
+  - direct standalone-DT grouped multi-drive target metadata,
+  - and preservation of that same metadata for realized `?dtc` children.
 - The first `R11` connect-by-name broadening slice beyond the original multi-child success case is now also shipped:
   - declared `=name` connect-by-name now works for a single generated child (`?fsmc` or `?dtc`) instead of starting only beyond the single-child passthrough case,
   - single-child by-name planning still stays deterministic and bounded by the existing exact same-name, same-direction, same-width rule,

@@ -234,7 +234,7 @@ First shipped `R11` slice now in tree:
 - The shipped first slice does not yet widen into:
   - regular FSM-state blocks inside `?dt:name`,
   - broader implicit parent-interface inference for undeclared top ports beyond the bounded single-child `C1` passthrough slice and bounded `C2` / `C3` undeclared top-input/top-output/internal-carrier slices,
-  - broader reusable-module interface/export rules beyond the now-shipped module-info-level standalone-DT enable-family surfacing slice,
+  - broader reusable-module interface/export rules beyond the now-shipped module-info-level standalone-DT enable-family and grouped multi-drive-family surfacing slices,
   - or unnamed-root questions.
 
 Expected result:

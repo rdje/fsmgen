@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-21: standalone-DT roots now surface grouped multi-drive target metadata
+- Saved shipped behavior:
+  - direct standalone-DT generation now reports grouped multi-drive target families through `module_info`,
+  - those grouped families now carry target name, contributing standalone-DT block names, RHS families, DT-specific enable names, and grouped LHS enable names,
+  - and realized `?dtc` children now preserve that same grouped multi-drive metadata through composition.
+- Important continuity note:
+  - this is real `R11` feature growth in the reusable-module lane,
+  - it gives future assertion/shared-datapath work one honest grouped summary for same-target standalone-DT behavior,
+  - and it still leaves child interface/export widening for a later deliberate contract slice.
+
 ## 2026-03-21: standalone-DT roots now surface stable block-enable family metadata
 - Saved shipped behavior:
   - direct standalone-DT generation now reports plain-scalar block names and stable per-block enable-signal families through `module_info`,

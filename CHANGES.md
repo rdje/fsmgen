@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-21
+### standalone-DT roots now surface grouped multi-drive target metadata
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so post-generation `module_info` now reports grouped standalone-DT multi-drive target families, including target name, contributing block names, RHS families, DT-specific enable names, and grouped LHS enable names.
+- Added [t/137-standalone-dt-multi-drive-family-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/137-standalone-dt-multi-drive-family-metadata.t) to lock both direct standalone-DT grouped multi-drive metadata and preservation of that same metadata for realized `?dtc` children inside composition.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this reusable-module arbitration-metadata slice is tracked as shipped `R11` feature work.
+
 ### standalone-DT roots now surface stable block-enable family metadata
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `module_info` now reports plain-scalar standalone-DT block names plus stable per-block enable-signal families and one grouped module-level enable-family summary.
 - Added [t/136-standalone-dt-enable-family-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/136-standalone-dt-enable-family-metadata.t) to lock both direct standalone-DT metadata and preservation of that same metadata for realized `?dtc` children inside composition.

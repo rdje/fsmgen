@@ -140,6 +140,7 @@ sub generate_hdl_from_file ($self, $fsm_file) {
     
     # Step 4: Generate HDL code
     my $hdl_code = $self->generate_hdl_code($fsm_module);
+    $self->enrich_module_info_from_generated_analysis($module_info, $fsm_module);
     
     # Step 5: Gather statistics
     my $statistics = $self->gather_statistics($fsm_module);
@@ -491,6 +492,7 @@ sub realize_fsmc_child_instance ($self, $instance, $composition_spec, $fsm_file,
     my $child_module = $self->create_fsm_module($child_ast);
     my $child_module_info = $self->analyze_fsm_module($child_module);
     my $child_hdl_code = $self->generate_hdl_code($child_module);
+    $self->enrich_module_info_from_generated_analysis($child_module_info, $child_module);
     my $child_interface_ports = $self->build_realized_child_interface_ports($child_module_info);
 
     return FSM::Composition::RealizedInstance->new(
@@ -515,6 +517,7 @@ sub realize_dtc_child_instance ($self, $instance, $composition_spec, $fsm_file, 
     my $child_module = $self->create_fsm_module($child_ast);
     my $child_module_info = $self->analyze_fsm_module($child_module);
     my $child_hdl_code = $self->generate_hdl_code($child_module);
+    $self->enrich_module_info_from_generated_analysis($child_module_info, $child_module);
     my $child_interface_ports = $self->build_realized_child_interface_ports($child_module_info);
 
     return FSM::Composition::RealizedInstance->new(
@@ -2894,6 +2897,59 @@ sub build_standalone_dt_enable_metadata ($self, $all_states) {
             enable_signals => \@enable_signals,
         },
     };
+}
+
+sub enrich_module_info_from_generated_analysis ($self, $module_info, $fsm_module) {
+    return $module_info unless ref($module_info) eq 'HASH';
+    return $module_info unless $fsm_module && $fsm_module->can('is_dt_root') && $fsm_module->is_dt_root;
+
+    my $hdl_gen = $self->{hdl_generator};
+    my $assignment_analysis = $hdl_gen ? ($hdl_gen->{assignment_analysis} || {}) : {};
+    my @multi_drive_targets;
+
+    for my $lhs (sort keys %$assignment_analysis) {
+        my $lhs_analysis = $assignment_analysis->{$lhs};
+        next unless ref($lhs_analysis) eq 'HASH';
+
+        my %dt_names;
+        my %rhs_values;
+        my %dt_enable_signals;
+        my %lhs_enable_signals;
+
+        for my $rhs (sort keys %{ $lhs_analysis->{rhs_groups} || {} }) {
+            my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
+            next unless ref($rhs_group) eq 'HASH';
+
+            $rhs_values{$rhs} = 1;
+
+            my $lhs_level_enable = $rhs_group->{lhs_level_enable};
+            if (ref($lhs_level_enable) eq 'HASH' && defined $lhs_level_enable->{name}) {
+                $lhs_enable_signals{$lhs_level_enable->{name}} = 1;
+            }
+
+            for my $dt_enable_info (@{ $rhs_group->{dt_specific_enables} || [] }) {
+                next unless ref($dt_enable_info) eq 'HASH';
+                $dt_names{$dt_enable_info->{dt}} = 1 if defined $dt_enable_info->{dt};
+                $dt_enable_signals{$dt_enable_info->{enable_name}} = 1 if defined $dt_enable_info->{enable_name};
+            }
+        }
+
+        my @dt_names = sort keys %dt_names;
+        next unless @dt_names > 1;
+
+        push @multi_drive_targets, {
+            signal_name => $lhs,
+            multiplexer_type => ($lhs_analysis->{multiplexer}{type} // 'unknown'),
+            dt_names => \@dt_names,
+            rhs_values => [ sort keys %rhs_values ],
+            dt_enable_signals => [ sort keys %dt_enable_signals ],
+            lhs_enable_signals => [ sort keys %lhs_enable_signals ],
+        };
+    }
+
+    $module_info->{standalone_dt_multi_drive_target_count} = scalar(@multi_drive_targets);
+    $module_info->{standalone_dt_multi_drive_targets} = \@multi_drive_targets;
+    return $module_info;
 }
 
 sub analyze_signals ($self, $signals) {
