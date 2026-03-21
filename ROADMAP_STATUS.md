@@ -9,6 +9,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) is the detailed companion roadmap; this file remains the canonical live status board.
 - Long-term horizon goals beyond the active `R8`..`R14` lanes are also tracked in [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), but they are intentionally gated behind the “make the tool state-of-the-art and very stable first” rule.
 - The current saved `H1` guidance is that a future Rust implementation should likely start in this same repository beside the Perl reference implementation, not in a separate repository plus submodule arrangement, unless release cadence or ownership later diverge enough to justify a split.
+- The current saved `H3` guidance is that any future HDL-to-`.fsm` direction should be framed as bounded HDL import / intent recovery, not as a promise of exact reverse compilation, with `fsmgen`-generated `SystemVerilog` as the most honest first round-trip target.
 
 ## Update rule
 - Update this file before every commit if the completed task changes:

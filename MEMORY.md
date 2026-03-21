@@ -4255,3 +4255,12 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prints those planned storage/visibility/re-export/loopback decisions in non-quiet `Shared-Datapath Candidates` summaries.
 - [t/143-composition-shared-datapath-visibility-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/143-composition-shared-datapath-visibility-metadata.t) locks the bounded registered peer-read case directly, while [t/139-composition-shared-datapath-candidate-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/139-composition-shared-datapath-candidate-metadata.t), [t/140-composition-shared-datapath-drive-intent-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/140-composition-shared-datapath-drive-intent-metadata.t), and [t/141-composition-shared-datapath-aggregate-enable-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/141-composition-shared-datapath-aggregate-enable-metadata.t) now include the new default top-output case too.
 - This is still planning/export metadata rather than emitted lifted shared-datapath HDL, but it makes the registered peer-read internalization rule concrete enough for later lifting work.
+
+## 2026-03-21: logged long-term HDL import / intent recovery direction
+- [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) now tracks a new long-term horizon goal for HDL-to-`.fsm` work.
+- The saved guidance is explicit:
+  - treat this as bounded HDL import / intent recovery rather than exact reverse compilation,
+  - start with `fsmgen`-generated `SystemVerilog` as the first honest round-trip/import target,
+  - then only later consider bounded handwritten `SystemVerilog` / `VHDL` recovery,
+  - and always surface what was recognized, heuristically recovered, or left unsupported.
+- This is a logged design direction only; no runtime behavior changed.

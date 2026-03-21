@@ -5554,3 +5554,14 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this is still planning/export metadata rather than emitted lifted shared-datapath HDL,
   - but it makes the registered peer-read internalization rule concrete enough that later lifting work can consume it without re-deriving policy from prose.
+
+## 2026-03-21: long-term horizon now explicitly includes HDL import / intent recovery
+- Logged a new long-term brainstorming direction rather than opening a new active lane:
+  - future `SystemVerilog` / `VHDL` to `.fsm` work should be treated as bounded HDL import / design-intent recovery,
+  - not as a promise that arbitrary HDL can be inverted back into the original source exactly.
+- Saved guidance from the discussion:
+  - the most honest first round-trip target would be `fsmgen`-generated `SystemVerilog`,
+  - then a bounded handwritten HDL subset where ports, clocks/resets, FSMs, DT-like logic, and simple composition structure are recognizable,
+  - and any such importer should always emit a report that distinguishes recognized structure, heuristic recovery, and unsupported residue.
+- Design note from this slice:
+  - this belongs in the long-term horizon only after the forward `.fsm` contract and embedding/result surfaces are stable enough that HDL import targets a known IR.

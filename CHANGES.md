@@ -4426,3 +4426,7 @@ This is the persistent technical change history for FSMGen.
   - planned top re-export signals for those internalized public outputs,
   - and a bounded loopback-allowed flag.
 - Non-quiet `bin/fsmgen` composition runs now also print those planned visibility/re-export/loopback decisions under `Shared-Datapath Candidates`.
+- Logged a new long-term horizon direction in the roadmap:
+  - a future HDL-to-`.fsm` lane should be treated as bounded HDL import / intent recovery rather than exact reverse compilation,
+  - the most honest first target would be `fsmgen`-generated `SystemVerilog`,
+  - and any later broader `SystemVerilog` / `VHDL` support should surface recognized structure, heuristic recovery, and unsupported residue explicitly.

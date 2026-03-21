@@ -429,6 +429,30 @@ Intent:
 Prerequisite:
 - the tool itself should first be strong enough that the website is amplifying a genuinely trustworthy product rather than compensating for an unstable one.
 
+### H3. HDL import / intent recovery
+Long-term goal:
+- add a bounded reverse-direction lane that can recover `.fsm`-style design intent from `SystemVerilog` or `VHDL` inputs.
+
+Intent:
+- treat `.fsm` as the canonical design-intent IR,
+- and treat HDL-to-`.fsm` as import/recovery rather than as a claim of exact source inversion.
+
+Constraint:
+- do not promise full or lossless recovery for arbitrary handwritten HDL.
+
+Preferred execution order:
+- start with `fsmgen`-generated `SystemVerilog` as the first round-trip/import target,
+- then support a bounded handwritten HDL subset where FSMs, DT-like logic, ports, clocks/resets, and simple composition structure are recognizable,
+- and only later decide how much broader `SystemVerilog` or `VHDL` recovery is worth attempting.
+
+Required behavior:
+- recover recognizable structure honestly into `.fsm`,
+- surface a report that distinguishes recognized intent, bounded heuristics, and unsupported residue,
+- and never pretend certainty where the HDL structure is ambiguous.
+
+Prerequisite:
+- the forward `.fsm` contract, diagnostics contract, and embedding/result surfaces should already be stable enough that HDL import targets a known IR instead of a moving language boundary.
+
 ## Current intent
 The active immediate lane is `R11`.
 
