@@ -92,6 +92,14 @@ FSM
                             rhs_values => ["8'd1"],
                             driver_enable_signals => ['state0_status_bus__8_d1_en'],
                             family_enable_signals => ['status_bus__8_d1_en'],
+                            rhs_enable_families => [
+                                {
+                                    rhs_value => "8'd1",
+                                    family_enable_signal => 'status_bus__8_d1_en',
+                                    driver_blocks => ['-state0'],
+                                    driver_enable_signals => ['state0_status_bus__8_d1_en'],
+                                },
+                            ],
                         },
                     },
                     {
@@ -107,10 +115,48 @@ FSM
                             rhs_values => ["8'd2"],
                             driver_enable_signals => ['state0_status_bus__8_d2_en'],
                             family_enable_signals => ['status_bus__8_d2_en'],
+                            rhs_enable_families => [
+                                {
+                                    rhs_value => "8'd2",
+                                    family_enable_signal => 'status_bus__8_d2_en',
+                                    driver_blocks => ['-state0'],
+                                    driver_enable_signals => ['state0_status_bus__8_d2_en'],
+                                },
+                            ],
                         },
                     },
                 ],
                 top_output_signals => ['left_status', 'right_status'],
+                aggregate_target_enable_signal => 'status_bus_shared_en',
+                aggregate_enable_family_count => 2,
+                aggregate_enable_families => [
+                    {
+                        rhs_value => "8'd1",
+                        aggregate_enable_signal => 'status_bus__8_d1_shared_en',
+                        contributor_count => 1,
+                        contributors => [
+                            {
+                                endpoint => 'left.status_bus',
+                                family_enable_signal => 'status_bus__8_d1_en',
+                                driver_blocks => ['-state0'],
+                                driver_enable_signals => ['state0_status_bus__8_d1_en'],
+                            },
+                        ],
+                    },
+                    {
+                        rhs_value => "8'd2",
+                        aggregate_enable_signal => 'status_bus__8_d2_shared_en',
+                        contributor_count => 1,
+                        contributors => [
+                            {
+                                endpoint => 'right.status_bus',
+                                family_enable_signal => 'status_bus__8_d2_en',
+                                driver_blocks => ['-state0'],
+                                driver_enable_signals => ['state0_status_bus__8_d2_en'],
+                            },
+                        ],
+                    },
+                ],
             },
         ],
         'top module_info groups same-name fsm child outputs into one shared-datapath candidate family',
@@ -179,6 +225,9 @@ FSM
     like($combined_output, qr/Shared-Datapath Candidates:/s, 'CLI prints shared-datapath candidate summary header');
     like($combined_output, qr/Count:\s+1/s, 'CLI reports one shared-datapath candidate family');
     like($combined_output, qr/status_bus \[width=8, type=data\] from left\.status_bus, right\.status_bus \(top outputs: left_status, right_status\)/s, 'CLI prints the grouped same-name output family');
+    like($combined_output, qr/\* aggregate target enable: status_bus_shared_en/s, 'CLI prints the shared target aggregate enable name');
+    like($combined_output, qr/\* aggregate value 8'd1 => status_bus__8_d1_shared_en from left\.status_bus\/status_bus__8_d1_en/s, 'CLI prints the first aggregate value-enable family');
+    like($combined_output, qr/\* aggregate value 8'd2 => status_bus__8_d2_shared_en from right\.status_bus\/status_bus__8_d2_en/s, 'CLI prints the second aggregate value-enable family');
 };
 
 done_testing();

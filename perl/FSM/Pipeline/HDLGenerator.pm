@@ -706,6 +706,34 @@ sub normalized_interface_type ($self, $type) {
     return defined($type) && length($type) ? $type : 'data';
 }
 
+sub clean_enable_name_token ($self, $name) {
+    $name = lc($name // '');
+    $name =~ s/[^a-zA-Z0-9_]/_/g;
+    $name =~ s/__+/_/g;
+    $name =~ s/^_+//;
+    $name =~ s/_+$//;
+
+    if ($name eq '0') {
+        return '0';
+    } elsif ($name eq '1') {
+        return '1';
+    }
+
+    $name =~ s/^(\d)/_$1/;
+    return $name;
+}
+
+sub shared_datapath_value_enable_name ($self, $signal_name, $rhs_value) {
+    my $clean_signal = $self->clean_enable_name_token($signal_name);
+    my $clean_rhs = $self->clean_enable_name_token($rhs_value);
+    return "${clean_signal}_${clean_rhs}_shared_en";
+}
+
+sub shared_datapath_target_enable_name ($self, $signal_name) {
+    my $clean_signal = $self->clean_enable_name_token($signal_name);
+    return "${clean_signal}_shared_en";
+}
+
 sub is_generated_child_kind ($self, $kind) {
     return $kind eq 'fsmc' || $kind eq 'dtc';
 }
@@ -2292,6 +2320,16 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
                     rhs_values => [@{$drive_family->{rhs_values} || []}],
                     driver_enable_signals => [@{$drive_family->{driver_enable_signals} || []}],
                     family_enable_signals => [@{$drive_family->{family_enable_signals} || []}],
+                    rhs_enable_families => [
+                        map {
+                            +{
+                                rhs_value => $_->{rhs_value},
+                                family_enable_signal => $_->{family_enable_signal},
+                                driver_blocks => [@{$_->{driver_blocks} || []}],
+                                driver_enable_signals => [@{$_->{driver_enable_signals} || []}],
+                            }
+                        } @{$drive_family->{rhs_enable_families} || []}
+                    ],
                 },
             };
             $candidate_groups{$key}{signal_name} = $port->name;
@@ -2319,6 +2357,39 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
             $top_output_signals{$bound_signal} = 1 if exists $top_output_by_name{$bound_signal};
         }
 
+        my %aggregate_families_by_rhs;
+        for my $contributor (@contributors) {
+            my $drive_intent = $contributor->{drive_intent} || {};
+            for my $rhs_family (@{$drive_intent->{rhs_enable_families} || []}) {
+                next unless ref($rhs_family) eq 'HASH';
+                my $rhs_value = $rhs_family->{rhs_value};
+                next unless defined $rhs_value;
+
+                my $aggregate = ($aggregate_families_by_rhs{$rhs_value} ||= {
+                    rhs_value => $rhs_value,
+                    aggregate_enable_signal => $self->shared_datapath_value_enable_name($group->{signal_name}, $rhs_value),
+                    contributors => [],
+                });
+
+                push @{$aggregate->{contributors}}, {
+                    endpoint => $contributor->{endpoint},
+                    family_enable_signal => $rhs_family->{family_enable_signal},
+                    driver_blocks => [@{$rhs_family->{driver_blocks} || []}],
+                    driver_enable_signals => [@{$rhs_family->{driver_enable_signals} || []}],
+                };
+            }
+        }
+
+        my @aggregate_enable_families = map {
+            my $family = $aggregate_families_by_rhs{$_};
+            +{
+                rhs_value => $family->{rhs_value},
+                aggregate_enable_signal => $family->{aggregate_enable_signal},
+                contributor_count => scalar(@{$family->{contributors} || []}),
+                contributors => $family->{contributors},
+            }
+        } sort keys %aggregate_families_by_rhs;
+
         push @candidates, {
             signal_name => $group->{signal_name},
             width => $group->{width},
@@ -2326,6 +2397,9 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
             contributor_count => scalar(@contributors),
             contributors => \@contributors,
             top_output_signals => [ sort keys %top_output_signals ],
+            aggregate_target_enable_signal => $self->shared_datapath_target_enable_name($group->{signal_name}),
+            aggregate_enable_family_count => scalar(@aggregate_enable_families),
+            aggregate_enable_families => \@aggregate_enable_families,
         };
     }
 
@@ -3071,22 +3145,34 @@ sub build_output_drive_family_metadata ($self, $module_info) {
         my %rhs_values;
         my %driver_enable_signals;
         my %family_enable_signals;
+        my %rhs_enable_families;
 
         for my $rhs (sort keys %{ $lhs_analysis->{rhs_groups} || {} }) {
             my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
             next unless ref($rhs_group) eq 'HASH';
 
             $rhs_values{$rhs} = 1;
+            $rhs_enable_families{$rhs} ||= {
+                rhs_value => $rhs,
+                family_enable_signal => undef,
+                driver_blocks => {},
+                driver_enable_signals => {},
+            };
 
             my $lhs_level_enable = $rhs_group->{lhs_level_enable};
             if (ref($lhs_level_enable) eq 'HASH' && defined $lhs_level_enable->{name}) {
                 $family_enable_signals{$lhs_level_enable->{name}} = 1;
+                $rhs_enable_families{$rhs}{family_enable_signal} = $lhs_level_enable->{name};
             }
 
             for my $dt_enable_info (@{ $rhs_group->{dt_specific_enables} || [] }) {
                 next unless ref($dt_enable_info) eq 'HASH';
                 $driver_blocks{$dt_enable_info->{dt}} = 1 if defined $dt_enable_info->{dt};
                 $driver_enable_signals{$dt_enable_info->{enable_name}} = 1
+                    if defined $dt_enable_info->{enable_name};
+                $rhs_enable_families{$rhs}{driver_blocks}{$dt_enable_info->{dt}} = 1
+                    if defined $dt_enable_info->{dt};
+                $rhs_enable_families{$rhs}{driver_enable_signals}{$dt_enable_info->{enable_name}} = 1
                     if defined $dt_enable_info->{enable_name};
             }
         }
@@ -3105,6 +3191,18 @@ sub build_output_drive_family_metadata ($self, $module_info) {
             rhs_values => \@rhs_values,
             driver_enable_signals => [ sort keys %driver_enable_signals ],
             family_enable_signals => [ sort keys %family_enable_signals ],
+            rhs_enable_families => [
+                map {
+                    +{
+                        rhs_value => $_->{rhs_value},
+                        family_enable_signal => $_->{family_enable_signal},
+                        driver_blocks => [ sort keys %{$_->{driver_blocks} || {}} ],
+                        driver_enable_signals => [ sort keys %{$_->{driver_enable_signals} || {}} ],
+                    }
+                } map {
+                    $rhs_enable_families{$_}
+                } sort keys %rhs_enable_families
+            ],
         };
     }
 

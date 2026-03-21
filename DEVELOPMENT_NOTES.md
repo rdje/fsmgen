@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-21: shared-datapath candidates now surface aggregate enable families
+- Continued the active `R11` lane by moving one step past child-local drive intent into candidate-level aggregation instead of jumping straight to lifted shared-block codegen.
+- Landed behavior:
+  - generated-child `output_drive_families` now preserve per-RHS family metadata, not only flattened unions,
+  - shared-datapath candidates now expose one deterministic whole-target aggregate enable plus per-value aggregate enable families,
+  - and those per-value aggregate families now explicitly name the child-local family enables they would aggregate.
+- Why this is worth shipping:
+  - it turns the roadmap’s “shared aggregate enables such as `P_Q_en`” note into active runtime behavior,
+  - it gives future onehot/conflict/assertion work a stable target/value-family metadata surface,
+  - and it still keeps the scope bounded to metadata/reporting rather than prematurely lifting ownership into generated shared datapath HDL.
+
 ## 2026-03-21: shared-datapath candidates now carry per-child drive intent
 - Continued the active `R11` lane by moving one step beyond candidate discovery into a bounded drive-intent surface instead of jumping straight to datapath lifting.
 - Landed behavior:

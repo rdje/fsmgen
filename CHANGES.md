@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-21
+### shared-datapath candidates now surface aggregate enable families
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so generated-child `output_drive_families` now preserve per-RHS family metadata, and shared-datapath candidates now surface one deterministic whole-target aggregate enable plus per-value aggregate enable families built from contributor `P_Q` families.
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet composition runs now print the planned whole-target and per-value aggregate enable names under each shared-datapath candidate.
+- Updated [t/139-composition-shared-datapath-candidate-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/139-composition-shared-datapath-candidate-metadata.t) and [t/140-composition-shared-datapath-drive-intent-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/140-composition-shared-datapath-drive-intent-metadata.t) to lock the widened candidate and drive-intent metadata shape.
+- Added [t/141-composition-shared-datapath-aggregate-enable-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/141-composition-shared-datapath-aggregate-enable-metadata.t) to lock both aggregate-enable metadata and the matching non-quiet CLI summary for a same-value shared family across contributors.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next shared-datapath `R11` feature slice is tracked as shipped.
+
 ### shared-datapath candidates now carry per-child drive intent
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so generated roots and realized generated children now surface `output_drive_family_count` and `output_drive_families` in `module_info`, and shared-datapath candidate contributors now carry one bounded `drive_intent` summary derived from generated assignment analysis.
 - Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet composition runs now print one concise per-child drive-intent line under each shared-datapath candidate.

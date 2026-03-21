@@ -693,6 +693,7 @@ Done:
   - generated roots and realized generated children now also report `output_drive_family_count` and `output_drive_families` in `module_info`,
   - each shared-datapath candidate now carries contributor instance/module/endpoint identity plus any current top-output bindings,
   - and those contributors now also carry one bounded `drive_intent` summary with mux type, driver blocks, RHS families, and enable-signal families,
+  - each shared-datapath candidate now also carries one deterministic whole-target aggregate enable plus per-value aggregate enable families built from the child-local `P_Q` families,
   - and non-quiet `bin/fsmgen` composition runs now print one concise `Shared-Datapath Candidates` summary section from that metadata surface.
 - [t/139-composition-shared-datapath-candidate-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/139-composition-shared-datapath-candidate-metadata.t) now locks:
   - composition-top shared-datapath candidate metadata for multi-`?fsmc` tops,
@@ -702,6 +703,10 @@ Done:
   - realized generated-child `output_drive_families` metadata for a multi-driver output family,
   - shared-datapath candidate contributor `drive_intent` metadata for that same multi-driver family,
   - and the matching per-child drive-intent CLI summary lines.
+- [t/141-composition-shared-datapath-aggregate-enable-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/141-composition-shared-datapath-aggregate-enable-metadata.t) now locks:
+  - shared-datapath candidate whole-target aggregate enable naming,
+  - per-value aggregate enable family metadata for both single-contributor and shared-value cases,
+  - and the matching non-quiet CLI aggregate-enable summary lines.
 - The first `R11` connect-by-name broadening slice beyond the original multi-child success case is now also shipped:
   - declared `=name` connect-by-name now works for a single generated child (`?fsmc` or `?dtc`) instead of starting only beyond the single-child passthrough case,
   - single-child by-name planning still stays deterministic and bounded by the existing exact same-name, same-direction, same-width rule,

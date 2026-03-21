@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-21: shared-datapath candidates now surface aggregate enable families
+- Saved shipped behavior:
+  - generated-child `output_drive_families` now preserve per-RHS family metadata,
+  - shared-datapath candidates now also expose one deterministic whole-target aggregate enable plus per-value aggregate enable families,
+  - and those aggregate value families now explicitly list the child-local family enables they aggregate.
+- Important continuity note:
+  - this is the first shipped slice of the roadmap’s shared aggregate-enable lane,
+  - it gives later onehot/conflict/assertion work one stable target/value-family metadata surface,
+  - and it still does not lift those families into generated shared-datapath HDL yet.
+
 ## 2026-03-21: shared-datapath candidates now carry per-child drive intent
 - Saved shipped behavior:
   - generated roots and realized generated children now surface `output_drive_family_count` and `output_drive_families` in `module_info`,

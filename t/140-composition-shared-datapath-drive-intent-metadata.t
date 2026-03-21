@@ -107,6 +107,20 @@ FSM
                     'status_bus__8_d1_en',
                     'status_bus__8_d2_en',
                 ],
+                rhs_enable_families => [
+                    {
+                        rhs_value => "8'd1",
+                        family_enable_signal => 'status_bus__8_d1_en',
+                        driver_blocks => ['-path_a'],
+                        driver_enable_signals => ['path_a_status_bus__8_d1_en'],
+                    },
+                    {
+                        rhs_value => "8'd2",
+                        family_enable_signal => 'status_bus__8_d2_en',
+                        driver_blocks => ['-path_b'],
+                        driver_enable_signals => ['path_b_status_bus__8_d2_en'],
+                    },
+                ],
             },
         ],
         'realized fsm child preserves output drive-family metadata',
@@ -140,6 +154,20 @@ FSM
                                 'status_bus__8_d1_en',
                                 'status_bus__8_d2_en',
                             ],
+                            rhs_enable_families => [
+                                {
+                                    rhs_value => "8'd1",
+                                    family_enable_signal => 'status_bus__8_d1_en',
+                                    driver_blocks => ['-path_a'],
+                                    driver_enable_signals => ['path_a_status_bus__8_d1_en'],
+                                },
+                                {
+                                    rhs_value => "8'd2",
+                                    family_enable_signal => 'status_bus__8_d2_en',
+                                    driver_blocks => ['-path_b'],
+                                    driver_enable_signals => ['path_b_status_bus__8_d2_en'],
+                                },
+                            ],
                         },
                     },
                     {
@@ -161,10 +189,80 @@ FSM
                                 'status_bus__8_d3_en',
                                 'status_bus__8_d4_en',
                             ],
+                            rhs_enable_families => [
+                                {
+                                    rhs_value => "8'd3",
+                                    family_enable_signal => 'status_bus__8_d3_en',
+                                    driver_blocks => ['-path_a'],
+                                    driver_enable_signals => ['path_a_status_bus__8_d3_en'],
+                                },
+                                {
+                                    rhs_value => "8'd4",
+                                    family_enable_signal => 'status_bus__8_d4_en',
+                                    driver_blocks => ['-path_b'],
+                                    driver_enable_signals => ['path_b_status_bus__8_d4_en'],
+                                },
+                            ],
                         },
                     },
                 ],
                 top_output_signals => ['left_status', 'right_status'],
+                aggregate_target_enable_signal => 'status_bus_shared_en',
+                aggregate_enable_family_count => 4,
+                aggregate_enable_families => [
+                    {
+                        rhs_value => "8'd1",
+                        aggregate_enable_signal => 'status_bus__8_d1_shared_en',
+                        contributor_count => 1,
+                        contributors => [
+                            {
+                                endpoint => 'left.status_bus',
+                                family_enable_signal => 'status_bus__8_d1_en',
+                                driver_blocks => ['-path_a'],
+                                driver_enable_signals => ['path_a_status_bus__8_d1_en'],
+                            },
+                        ],
+                    },
+                    {
+                        rhs_value => "8'd2",
+                        aggregate_enable_signal => 'status_bus__8_d2_shared_en',
+                        contributor_count => 1,
+                        contributors => [
+                            {
+                                endpoint => 'left.status_bus',
+                                family_enable_signal => 'status_bus__8_d2_en',
+                                driver_blocks => ['-path_b'],
+                                driver_enable_signals => ['path_b_status_bus__8_d2_en'],
+                            },
+                        ],
+                    },
+                    {
+                        rhs_value => "8'd3",
+                        aggregate_enable_signal => 'status_bus__8_d3_shared_en',
+                        contributor_count => 1,
+                        contributors => [
+                            {
+                                endpoint => 'right.status_bus',
+                                family_enable_signal => 'status_bus__8_d3_en',
+                                driver_blocks => ['-path_a'],
+                                driver_enable_signals => ['path_a_status_bus__8_d3_en'],
+                            },
+                        ],
+                    },
+                    {
+                        rhs_value => "8'd4",
+                        aggregate_enable_signal => 'status_bus__8_d4_shared_en',
+                        contributor_count => 1,
+                        contributors => [
+                            {
+                                endpoint => 'right.status_bus',
+                                family_enable_signal => 'status_bus__8_d4_en',
+                                driver_blocks => ['-path_b'],
+                                driver_enable_signals => ['path_b_status_bus__8_d4_en'],
+                            },
+                        ],
+                    },
+                ],
             },
         ],
         'shared-datapath candidates now carry per-child drive intent from generated assignment analysis',
@@ -251,6 +349,9 @@ FSM
 
     like($combined_output, qr/Shared-Datapath Candidates:/s, 'CLI prints shared-datapath candidate summary header');
     like($combined_output, qr/status_bus \[width=8, type=data\] from left\.status_bus, right\.status_bus \(top outputs: left_status, right_status\)/s, 'CLI still prints the grouped shared-datapath family');
+    like($combined_output, qr/\* aggregate target enable: status_bus_shared_en/s, 'CLI prints the whole-target aggregate enable for the candidate');
+    like($combined_output, qr/\* aggregate value 8'd1 => status_bus__8_d1_shared_en from left\.status_bus\/status_bus__8_d1_en/s, 'CLI prints the first aggregate value-enable family');
+    like($combined_output, qr/\* aggregate value 8'd4 => status_bus__8_d4_shared_en from right\.status_bus\/status_bus__8_d4_en/s, 'CLI prints the last aggregate value-enable family');
     like($combined_output, qr/\* left\.status_bus drives via flop blocks \[-path_a, -path_b\] with RHS \[8'd1, 8'd2\]/s, 'CLI prints per-child drive intent for the left contributor');
     like($combined_output, qr/\* right\.status_bus drives via flop blocks \[-path_a, -path_b\] with RHS \[8'd3, 8'd4\]/s, 'CLI prints per-child drive intent for the right contributor');
 };

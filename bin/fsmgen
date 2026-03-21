@@ -511,6 +511,21 @@ unless ($quiet) {
                     . "] from " . $contributors;
                 print " (top outputs: $top_outputs)" if length $top_outputs;
                 print "\n";
+                if (my $target_enable = $candidate->{aggregate_target_enable_signal}) {
+                    print "    * aggregate target enable: $target_enable\n";
+                }
+
+                for my $family (@{$candidate->{aggregate_enable_families} || []}) {
+                    my $family_refs = join(', ', map {
+                        ($_->{endpoint} || 'unknown_endpoint')
+                            . "/"
+                            . ($_->{family_enable_signal} || 'unknown_enable')
+                    } @{$family->{contributors} || []});
+                    print "    * aggregate value " . ($family->{rhs_value} || 'unknown')
+                        . " => " . ($family->{aggregate_enable_signal} || 'unknown_enable');
+                    print " from $family_refs" if length $family_refs;
+                    print "\n";
+                }
 
                 for my $contributor (@{$candidate->{contributors} || []}) {
                     my $drive_intent = $contributor->{drive_intent} || {};
