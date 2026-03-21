@@ -493,6 +493,13 @@ sub realize_fsmc_child_instance ($self, $instance, $composition_spec, $fsm_file,
     my $child_module_info = $self->analyze_fsm_module($child_module);
     my $child_hdl_code = $self->generate_hdl_code($child_module);
     $self->enrich_module_info_from_generated_analysis($child_module_info, $child_module);
+    my $shared_datapath_source_exports = $self->build_shared_datapath_source_export_metadata($child_module_info);
+    $child_module_info->{shared_datapath_source_export_count} = scalar(@$shared_datapath_source_exports);
+    $child_module_info->{shared_datapath_source_exports} = $shared_datapath_source_exports;
+    $child_hdl_code = $self->augment_generated_child_hdl_with_shared_datapath_exports(
+        $child_hdl_code,
+        $shared_datapath_source_exports,
+    );
     my $child_interface_ports = $self->build_realized_child_interface_ports($child_module_info);
 
     return FSM::Composition::RealizedInstance->new(
@@ -729,6 +736,11 @@ sub shared_datapath_value_enable_name ($self, $signal_name, $rhs_value) {
     return "${clean_signal}_${clean_rhs}_shared_en";
 }
 
+sub shared_datapath_export_port_name ($self, $family_enable_signal) {
+    my $clean_signal = $self->clean_enable_name_token($family_enable_signal);
+    return "shared_dp_export_${clean_signal}";
+}
+
 sub shared_datapath_source_value_enable_name ($self, $instance_name, $signal_name, $rhs_value) {
     my $clean_instance = $self->clean_enable_name_token($instance_name || 'child');
     my $clean_signal = $self->clean_enable_name_token($signal_name);
@@ -763,6 +775,94 @@ sub shared_datapath_assertion_metadata ($self, $result_signal, $input_enable_sig
         input_count => scalar(@inputs),
         input_enable_signals => \@inputs,
     };
+}
+
+sub shared_datapath_or_expression ($self, $input_enable_signals) {
+    my @inputs = grep {
+        defined($_) && length($_)
+    } @{$input_enable_signals || []};
+
+    return "1'b0" unless @inputs;
+    return $inputs[0] if @inputs == 1;
+    return join(' | ', @inputs);
+}
+
+sub shared_datapath_conflict_expression ($self, $input_enable_signals) {
+    my @inputs = grep {
+        defined($_) && length($_)
+    } @{$input_enable_signals || []};
+
+    return "1'b0" if @inputs < 2;
+
+    my @pairs;
+    for my $i (0 .. $#inputs - 1) {
+        for my $j ($i + 1 .. $#inputs) {
+            push @pairs, "($inputs[$i] & $inputs[$j])";
+        }
+    }
+
+    return join(' | ', @pairs);
+}
+
+sub build_shared_datapath_source_export_metadata ($self, $module_info) {
+    my %seen;
+    my @exports;
+
+    for my $drive_family (@{$module_info->{output_drive_families} || []}) {
+        next unless ref($drive_family) eq 'HASH';
+        my $signal_name = $drive_family->{signal_name} || next;
+
+        for my $rhs_family (@{$drive_family->{rhs_enable_families} || []}) {
+            next unless ref($rhs_family) eq 'HASH';
+            my $family_enable_signal = $rhs_family->{family_enable_signal} || next;
+            my $rhs_value = $rhs_family->{rhs_value};
+            my $key = join "\x1E", $signal_name, ($rhs_value // ''), $family_enable_signal;
+            next if $seen{$key}++;
+
+            push @exports, {
+                signal_name => $signal_name,
+                rhs_value => $rhs_value,
+                source_signal => $family_enable_signal,
+                port_name => $self->shared_datapath_export_port_name($family_enable_signal),
+            };
+        }
+    }
+
+    @exports = sort {
+        ($a->{signal_name} // '') cmp ($b->{signal_name} // '')
+            ||
+        (($a->{rhs_value} // '') cmp ($b->{rhs_value} // ''))
+            ||
+        (($a->{port_name} // '') cmp ($b->{port_name} // ''))
+    } @exports;
+
+    return \@exports;
+}
+
+sub augment_generated_child_hdl_with_shared_datapath_exports ($self, $hdl_code, $exports) {
+    return $hdl_code unless defined($hdl_code) && length($hdl_code);
+    return $hdl_code unless @{$exports || []};
+
+    my @port_lines = map {
+        "  output  wire " . $_->{port_name}
+    } @{$exports || []};
+
+    my $patched = $hdl_code;
+    my $port_block = join(",\n", @port_lines);
+    my $header_replaced = ($patched =~ s/\n\);\n\n/\n,\n$port_block\n\);\n\n/s);
+    Carp::confess("Failed to inject shared-datapath export ports into generated child HDL\n")
+        unless $header_replaced;
+
+    my $assign_block = "\n  // Shared-datapath source-enable exports\n"
+        . join('', map {
+            "  assign " . $_->{port_name} . " = " . $_->{source_signal} . ";\n"
+        } @{$exports || []});
+
+    my $endmodule_replaced = ($patched =~ s/\nendmodule\s*\z/$assign_block . "endmodule\n"/se);
+    Carp::confess("Failed to inject shared-datapath export assignments into generated child HDL\n")
+        unless $endmodule_replaced;
+
+    return $patched;
 }
 
 sub shared_datapath_storage_class ($self, $contributors) {
@@ -1707,7 +1807,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
         push @planned_instances, $self->clone_realized_instance_with_bindings($instance, \@port_bindings);
     }
 
-    return FSM::Composition::Plan->new(
+    my $composition_plan = FSM::Composition::Plan->new(
         lane => $lane,
         top_name => $top->name,
         ports => $ports,
@@ -1715,8 +1815,11 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
         resolved_links => [@system_auto_links, @resolved_links_input],
         nets => \@nets,
         instances => \@planned_instances,
+        auxiliary_assignments => [],
         raw_spec => $composition_spec,
     );
+
+    return $self->augment_with_shared_datapath_runtime_support($composition_plan);
 }
 
 sub build_implicit_top_input_links ($self, $ports, $explicit_links, $realized_instances, $fsm_file, $header) {
@@ -2067,6 +2170,118 @@ sub clone_realized_instance_with_bindings ($self, $instance, $port_bindings) {
     );
 }
 
+sub ensure_composition_net ($self, $nets, $name, $width = 1) {
+    return unless defined($name) && length($name);
+    return if grep { ($_->name || '') eq $name } @{$nets || []};
+
+    push @{$nets || []}, FSM::Composition::Net->new(
+        name => $name,
+        width => $width,
+        source => undef,
+        targets => [],
+    );
+}
+
+sub ensure_instance_port_binding ($self, $instance, $port_name, $signal_name) {
+    return unless $instance && defined($port_name) && length($port_name);
+    return unless defined($signal_name) && length($signal_name);
+
+    for my $binding (@{$instance->{port_bindings} || []}) {
+        next unless ($binding->{port_name} || '') eq $port_name;
+        return if ($binding->{signal_name} || '') eq $signal_name;
+    }
+
+    push @{$instance->{port_bindings}}, {
+        port_name => $port_name,
+        signal_name => $signal_name,
+    };
+}
+
+sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
+    return $composition_plan unless $composition_plan;
+
+    my $nets = $composition_plan->{nets} ||= [];
+    $composition_plan->{auxiliary_assignments} ||= [];
+    my $shared_datapath_candidates = $self->build_composition_shared_datapath_candidates($composition_plan);
+    return $composition_plan unless @{$shared_datapath_candidates || []};
+
+    my %needed_exports;
+    for my $candidate (@{$shared_datapath_candidates || []}) {
+        next unless ref($candidate) eq 'HASH';
+        my $signal_name = $candidate->{signal_name} || next;
+
+        for my $family (@{$candidate->{aggregate_enable_families} || []}) {
+            next unless ref($family) eq 'HASH';
+            my $rhs_value = $family->{rhs_value};
+
+            for my $contributor (@{$family->{contributors} || []}) {
+                next unless ref($contributor) eq 'HASH';
+                my $endpoint = $contributor->{endpoint} || '';
+                my ($instance_name) = $endpoint =~ /^(\w+)\./;
+                next unless defined $instance_name;
+                $needed_exports{join "\x1E", $instance_name, $signal_name, ($rhs_value // '')} = 1;
+            }
+        }
+    }
+
+    for my $instance (@{$composition_plan->{instances} || []}) {
+        next unless ($instance->kind || '') eq 'fsmc';
+
+        for my $export (@{$instance->module_info->{shared_datapath_source_exports} || []}) {
+            next unless ref($export) eq 'HASH';
+            my $signal_name = $export->{signal_name} || next;
+            my $rhs_value = $export->{rhs_value};
+            next unless $needed_exports{join "\x1E", $instance->instance_name, $signal_name, ($rhs_value // '')};
+            my $source_enable_signal = $self->shared_datapath_source_value_enable_name(
+                $instance->instance_name,
+                $signal_name,
+                $rhs_value,
+            );
+
+            $self->ensure_composition_net($nets, $source_enable_signal, 1);
+            $self->ensure_instance_port_binding($instance, $export->{port_name}, $source_enable_signal);
+        }
+    }
+
+    my @assignments;
+    for my $candidate (@{$shared_datapath_candidates || []}) {
+        next unless ref($candidate) eq 'HASH';
+
+        $self->ensure_composition_net($nets, $candidate->{aggregate_target_enable_signal}, 1);
+        $self->ensure_composition_net($nets, $candidate->{multi_value_conflict_signal}, 1);
+
+        my @aggregate_value_enables;
+        for my $family (@{$candidate->{aggregate_enable_families} || []}) {
+            next unless ref($family) eq 'HASH';
+            my $aggregate_enable_signal = $family->{aggregate_enable_signal} || next;
+            my @source_enable_signals = map {
+                $_->{source_enable_signal}
+            } grep {
+                ref($_) eq 'HASH'
+            } @{$family->{contributors} || []};
+
+            $self->ensure_composition_net($nets, $aggregate_enable_signal, 1);
+            $self->ensure_composition_net($nets, $family->{same_value_conflict_signal}, 1);
+
+            push @aggregate_value_enables, $aggregate_enable_signal;
+            push @assignments,
+                "  assign $aggregate_enable_signal = "
+                    . $self->shared_datapath_or_expression(\@source_enable_signals) . ";",
+                "  assign $family->{same_value_conflict_signal} = "
+                    . $self->shared_datapath_conflict_expression(\@source_enable_signals) . ";";
+        }
+
+        push @assignments,
+            "  assign $candidate->{aggregate_target_enable_signal} = "
+                . $self->shared_datapath_or_expression(\@aggregate_value_enables) . ";",
+            "  assign $candidate->{multi_value_conflict_signal} = "
+                . $self->shared_datapath_conflict_expression(\@aggregate_value_enables) . ";";
+    }
+
+    $composition_plan->{auxiliary_assignments} = \@assignments;
+    return $composition_plan;
+}
+
 sub resolve_composition_endpoint ($self, $endpoint, $top_ports_by_name, $instances_by_name, $child_ports_by_instance, $fsm_file, $header) {
     if ($endpoint =~ /^(\w+)\.(\w+)$/) {
         my ($instance_name, $port_name) = ($1, $2);
@@ -2177,6 +2392,7 @@ sub emit_composition_top_module ($self, $composition_plan) {
     my @ports = @{$composition_plan->ports};
     my @nets = @{$composition_plan->nets || []};
     my @instances = @{$composition_plan->instances || []};
+    my @auxiliary_assignments = @{$composition_plan->auxiliary_assignments || []};
 
     my @port_lines = map {
         my $width = $_->width > 1 ? sprintf("[%d:0] ", $_->width - 1) : '';
@@ -2205,11 +2421,12 @@ sub emit_composition_top_module ($self, $composition_plan) {
         "module $top_name (",
         join(",\n", @port_lines),
         ");",
-        "endmodule",
     );
 
-    splice @body_lines, 4, 0, ("", @net_lines) if @net_lines;
-    splice @body_lines, $#body_lines, 0, ("", join("\n\n", @instance_blocks), "") if @instance_blocks;
+    push @body_lines, "", @net_lines if @net_lines;
+    push @body_lines, "", @auxiliary_assignments if @auxiliary_assignments;
+    push @body_lines, "", join("\n\n", @instance_blocks), "" if @instance_blocks;
+    push @body_lines, "endmodule";
 
     return join("\n", @body_lines);
 }

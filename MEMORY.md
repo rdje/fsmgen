@@ -4283,3 +4283,4 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - but elaboration still depends on real frontend semantic compilation work after preprocessing,
   - so the expected importer shape is now explicitly `preprocess -> parse -> semantic resolution -> elaboration -> canonical RTL IR -> intent recovery -> recovery report`.
 - `R11` shared-datapath planning now also exposes a bounded combinational peer-read policy surface: shared combinational output families that feed peer child inputs stay top-output-only, report a block reason, and print that rule in non-quiet `bin/fsmgen` summaries.
+- `R11` shared-datapath now has a first real runtime HDL slice on top of the earlier metadata: realized `?fsmc` children export hidden per-value enable ports, composition tops bind those exports into deterministic source-enable alias nets, and the top now emits aggregate/conflict helper wires from that surface.

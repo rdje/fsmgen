@@ -695,7 +695,8 @@ Done:
   - each shared-datapath candidate now carries contributor instance/module/endpoint identity plus any current top-output bindings,
   - and those contributors now also carry one bounded `drive_intent` summary with mux type, driver blocks, RHS families, and enable-signal families,
   - each shared-datapath candidate now also carries one deterministic whole-target aggregate enable plus per-value aggregate enable families built from the child-local `P_Q` families,
-  - and those candidate families now also carry the first planned conflict-bit names for same-value multi-source overlap and whole-target multi-value overlap,
+  - realized `?fsmc` children now also carry hidden shared-datapath source-export metadata for those per-value enable families,
+  - and generated composition tops now also synthesize the first actual shared-datapath helper HDL from that surface through hidden child source-enable export bindings plus per-value/whole-target aggregate and conflict wires,
   - and those candidate families now also carry first lifted-ownership planning metadata through storage-class, peer-read endpoint, default lifted visibility, planned top re-export, and loopback-policy fields,
   - and those candidate families now also carry explicit peer-read policy metadata for bounded combinational peer-read cases, keeping those families top-output-only with a surfaced block reason instead of making them look loopback-eligible,
   - and non-quiet `bin/fsmgen` composition runs now print one concise `Shared-Datapath Candidates` summary section from that metadata surface.
@@ -728,6 +729,11 @@ Done:
   - top-output-only peer-read policy metadata for shared combinational output families,
   - the surfaced combinational peer-read block reason,
   - and the matching non-quiet CLI peer-read-policy summary lines.
+- [t/145-composition-shared-datapath-runtime-hdl.t](/Users/richarddje/Documents/github/fsmgen/t/145-composition-shared-datapath-runtime-hdl.t) now locks:
+  - hidden realized-`?fsmc` source-enable export metadata for shared-datapath per-value families,
+  - hidden child export-port injection in generated child HDL,
+  - top-level binding of those hidden exports into deterministic per-child source-enable alias nets,
+  - and generated composition-top aggregate/conflict helper HDL for shared-datapath families.
 - The first `R11` connect-by-name broadening slice beyond the original multi-child success case is now also shipped:
   - declared `=name` connect-by-name now works for a single generated child (`?fsmc` or `?dtc`) instead of starting only beyond the single-child passthrough case,
   - single-child by-name planning still stays deterministic and bounded by the existing exact same-name, same-direction, same-width rule,
@@ -880,7 +886,7 @@ Left:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets beyond the now-shipped candidate-discovery surface,
   - per-child drive-intent aggregation,
   - same-target/same-value aggregation vs same-target/different-value conflicts,
-  - driven/lifted assertion-bit behavior for the now-shipped per-`(P, Q)` source-enable and whole-target `P` onehot0 metadata,
+  - lifted shared-target mux/register ownership on top of the now-shipped aggregate/conflict helper HDL,
   - realized lifting behavior on top of the now-shipped registered peer-read visibility/re-export/loopback planning metadata,
   - and realized behavior on top of the now-shipped combinational top-output-only peer-read policy metadata.
 - Turn the reusable standalone-DT/module-library direction into a real contract:

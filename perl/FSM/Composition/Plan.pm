@@ -15,6 +15,7 @@ sub new ($class, %args) {
         resolved_links => $args{resolved_links} || [],
         nets => $args{nets} || [],
         instances => $args{instances} || [],
+        auxiliary_assignments => $args{auxiliary_assignments} || [],
         raw_spec => $args{raw_spec},
     }, $class;
 }
@@ -26,6 +27,7 @@ sub links ($self) { return $self->{links} }
 sub resolved_links ($self) { return $self->{resolved_links} }
 sub nets ($self) { return $self->{nets} }
 sub instances ($self) { return $self->{instances} }
+sub auxiliary_assignments ($self) { return $self->{auxiliary_assignments} }
 sub raw_spec ($self) { return $self->{raw_spec} }
 
 1;

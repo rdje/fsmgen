@@ -5595,3 +5595,4 @@ It is an exact-delay pulse request:
   - intent recovery,
   - recovery report.
 - `R11` shared-datapath planning now distinguishes registered peer-read families from combinational peer-read families explicitly: registered families stay loopback-eligible/internalizable in the bounded planning surface, while combinational families now surface an explicit top-output-only policy plus block reason instead of silently looking like generic `loopback_allowed = no` cases.
+- `R11` shared-datapath work now has a first real HDL behavior slice: we kept the lifted shared-target mux/register block out of scope, but realized `?fsmc` children now export hidden per-value enable ports for composition use and the generated top now synthesizes aggregate/conflict helper wires from those exports. That keeps the first runtime step honest and mechanically testable without over-claiming that lifted ownership is finished.
