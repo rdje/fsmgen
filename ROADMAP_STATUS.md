@@ -699,7 +699,7 @@ Done:
   - and generated composition tops now also synthesize the first actual shared-datapath helper HDL from that surface through hidden child source-enable export bindings plus per-value/whole-target aggregate and conflict wires,
   - and those candidate families now also carry first lifted-ownership planning metadata through storage-class, peer-read endpoint, default lifted visibility, planned top re-export, and loopback-policy fields,
   - and those candidate families now also carry explicit peer-read policy metadata for bounded combinational peer-read cases, keeping those families top-output-only with a surfaced block reason instead of making them look loopback-eligible,
-  - and the bounded registered peer-read re-export case now also realizes the first actual lifted shared-target behavior through one emitted shared top-level register plus peer-input rebinding and explicit top-output re-export assignments,
+  - and the bounded registered peer-read public-preserving case now also realizes the first actual lifted shared-target behavior through one emitted shared top-level register plus peer-input rebinding and preserved top-output re-export assignments, including mixed public/internal carrier families,
   - and the sibling bounded registered peer-read internal-only case now also realizes that lifted shared-target behavior through the same emitted shared register plus peer-input rebinding without inventing public top re-export assignments,
   - and non-quiet `bin/fsmgen` composition runs now print one concise `Shared-Datapath Candidates` summary section from that metadata surface.
 - [t/139-composition-shared-datapath-candidate-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/139-composition-shared-datapath-candidate-metadata.t) now locks:
@@ -737,10 +737,10 @@ Done:
   - top-level binding of those hidden exports into deterministic per-child source-enable alias nets,
   - and generated composition-top aggregate/conflict helper HDL for shared-datapath families.
 - [t/146-composition-shared-datapath-lifted-register-runtime.t](/Users/richarddje/Documents/github/fsmgen/t/146-composition-shared-datapath-lifted-register-runtime.t) now locks:
-  - reset-aware shared-datapath candidate metadata for the bounded registered peer-read re-export case,
+  - reset-aware shared-datapath candidate metadata for the bounded registered peer-read public-preserving case,
   - the emitted shared top-level register and next-value logic for that case,
   - peer-read child-input rebinding to the lifted shared register,
-  - explicit top-output re-export assignments from the lifted shared register,
+  - preserved top-output re-export assignments from the lifted shared register,
   - and the matching non-quiet CLI lifted-runtime summary lines.
 - [t/147-composition-shared-datapath-internal-lifted-register-runtime.t](/Users/richarddje/Documents/github/fsmgen/t/147-composition-shared-datapath-internal-lifted-register-runtime.t) now locks:
   - reset-aware shared-datapath candidate metadata for the bounded registered peer-read internal-only case,
@@ -748,6 +748,12 @@ Done:
   - peer-read child-input rebinding to the lifted shared register,
   - absence of invented public re-export assignments for that internal-only runtime,
   - and the matching non-quiet CLI lifted-runtime summary lines.
+- [t/148-composition-shared-datapath-mixed-reexport-runtime.t](/Users/richarddje/Documents/github/fsmgen/t/148-composition-shared-datapath-mixed-reexport-runtime.t) now locks:
+  - mixed-boundary shared-datapath candidate metadata for the bounded registered public-preserving case,
+  - peer-read endpoint filtering down to only inputs actually bound to contributor carriers,
+  - the emitted lifted shared-register runtime for one-public-one-internal contributor families,
+  - preserved public top re-exports without invented internal-carrier re-export assignments,
+  - and the matching non-quiet CLI summary lines.
 - The first `R11` connect-by-name broadening slice beyond the original multi-child success case is now also shipped:
   - declared `=name` connect-by-name now works for a single generated child (`?fsmc` or `?dtc`) instead of starting only beyond the single-child passthrough case,
   - single-child by-name planning still stays deterministic and bounded by the existing exact same-name, same-direction, same-width rule,
@@ -898,7 +904,7 @@ Left:
 - Decide whether later work should keep the now-formalized `.rtlif` interface-source family as embedded-root plus sidecar metadata, or place a stronger interface-source contract above it.
 - Turn the new shared-datapath extraction direction into a real contract:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets beyond the now-shipped discovery/metadata/helper/runtime slices,
-  - lifted shared-target mux/register ownership beyond the now-shipped registered peer-read explicit-top-reexport and internal-only slices,
+  - lifted shared-target mux/register ownership beyond the now-shipped registered peer-read public-preserving, mixed-boundary, and internal-only slices,
   - public re-export/default-visibility policy beyond the now-shipped bounded registered peer-read cases,
   - and realized behavior on top of the now-shipped combinational top-output-only peer-read policy metadata.
 - Turn the reusable standalone-DT/module-library direction into a real contract:

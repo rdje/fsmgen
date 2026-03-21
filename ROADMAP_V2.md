@@ -205,7 +205,7 @@ First shipped `R11` slice now in tree:
   - plus the first actual shared-datapath helper HDL slice for those candidates through hidden child source-enable export bindings and generated aggregate/conflict wires in the composition top,
   - plus one bounded lifted-ownership planning layer for those candidates through storage-class, peer-read endpoint, default-visibility, planned re-export, and loopback-policy metadata,
   - plus one bounded combinational peer-read policy layer for those candidates through explicit top-output-only policy and surfaced block-reason metadata,
-  - plus the first actual lifted shared-target behavior for the bounded registered peer-read re-export case through one emitted shared top-level register, peer-input rebinding, and explicit top-output re-export assignments,
+  - plus the first actual lifted shared-target behavior for the bounded registered peer-read public-preserving case through one emitted shared top-level register, peer-input rebinding, and preserved top-output re-export assignments, now including mixed public/internal carrier families,
   - plus the sibling bounded registered peer-read internal-only runtime case through that same emitted shared top-level register and peer-input rebinding without invented public re-export assignments,
   - bounded single-child `C1` top-interface inference when `?ports` is omitted or empty, with the inferred top interface matching the lone realized child interface exactly,
   - bounded explicit-link `C2` / `C3` omitted/empty-`?ports` inference when explicit `?toplink` endpoints themselves still make the top boundary unambiguous, including renamed top-boundary signals with one consistent direction plus exact width/type agreement,
@@ -264,7 +264,7 @@ Planned bounded sub-lane inside `R11`:
   - how per-child drive intents are named and reported,
   - how same-target/same-value aggregation differs from same-target/different-value conflicts,
   - how conflict/assertion bits are expressed and named for per-`(P, Q)` source-enable families and for whole-target `P` value-family conflicts,
-  - the bounded registered peer-read lane now ships in both explicit public re-export and internal-only forms,
+  - the bounded registered peer-read lane now ships in public-preserving, mixed-boundary, and internal-only forms,
   - and the remaining question is which broader registered outputs should internalize automatically, when public re-export should stay explicit or defaulted, and which lifted registered outputs may legally loop back into child FSM inputs.
 - reusable standalone-DT/module-library roots.
 - intent:

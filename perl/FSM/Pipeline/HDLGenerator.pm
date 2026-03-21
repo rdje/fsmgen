@@ -2373,29 +2373,6 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
                 : '';
         my $can_lift_runtime = length($runtime_mode) ? 1 : 0;
 
-        if ($can_lift_runtime && $runtime_mode eq 'registered_shared_reexport') {
-            for my $contributor (@{$candidate->{contributors} || []}) {
-                next unless ref($contributor) eq 'HASH';
-                my $bound_signal = $contributor->{bound_signal} || '';
-                unless (length($bound_signal) && $planned_reexports{$bound_signal}) {
-                    $can_lift_runtime = 0;
-                    last;
-                }
-            }
-        }
-
-        if ($can_lift_runtime && $runtime_mode eq 'registered_shared_reexport') {
-            for my $peer_input (@{$candidate->{peer_input_endpoints} || []}) {
-                next unless ref($peer_input) eq 'HASH';
-                my $bound_signal = $peer_input->{bound_signal} || '';
-                next unless length $bound_signal;
-                unless ($planned_reexports{$bound_signal}) {
-                    $can_lift_runtime = 0;
-                    last;
-                }
-            }
-        }
-
         next unless $can_lift_runtime;
 
         my $signal_name = $candidate->{signal_name} || next;
@@ -2847,12 +2824,20 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
             $top_output_signals{$bound_signal} = 1 if exists $top_output_by_name{$bound_signal};
         }
 
+        my %candidate_carriers = map {
+            my $bound_signal = $_->{bound_signal} || '';
+            length($bound_signal) ? ($bound_signal => 1) : ();
+        } @contributors;
+
         my @peer_input_endpoints = sort {
             ($a->{instance_name} // '') cmp ($b->{instance_name} // '')
                 ||
             ($a->{module_name} // '') cmp ($b->{module_name} // '')
                 ||
             ($a->{endpoint} // '') cmp ($b->{endpoint} // '')
+        } grep {
+            my $bound_signal = $_->{bound_signal} || '';
+            length($bound_signal) && $candidate_carriers{$bound_signal}
         } @{$peer_input_groups{$key} || []};
         my $storage_class = $self->shared_datapath_storage_class(\@contributors);
         my %reset_values = map {

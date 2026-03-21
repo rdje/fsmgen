@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-22: shared-datapath lifting now covers mixed public/internal registered peer-read families
+- Continued the active `R11` lane by widening the public-preserving lifted-runtime case into the mixed-boundary sibling instead of stopping at the all-public and all-internal ends.
+- Landed behavior:
+  - the bounded registered public-preserving lift path no longer assumes every contributor and peer-read endpoint rides one preserved public top output,
+  - mixed-boundary families can now lift when one contributor keeps a public top output while sibling contributors in the same shared family are consumed only internally,
+  - and candidate peer-read endpoints are now filtered to inputs actually bound to contributor carriers before that runtime planning happens.
+- Why this is worth shipping:
+  - it turns the first lifted registered lane into a real ownership feature instead of two edge cases,
+  - it makes the metadata/runtime surface more honest by not treating unrelated same-name inputs as peer readers,
+  - and it leaves the next seam where it belongs: broader ownership/default-visibility policy rather than another missing sibling.
+
 ## 2026-03-22: shared-datapath lifting now covers the internal-only registered peer-read sibling
 - Continued the active `R11` lane with the sibling lifted-runtime case instead of another metadata-only increment.
 - Landed behavior:

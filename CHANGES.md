@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-22
+### shared-datapath lifting now covers mixed public/internal registered peer-read families
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the bounded registered public-preserving lift path no longer assumes every contributor and peer-read endpoint rides a preserved public top output. Mixed-boundary families can now lift when one contributor preserves a public top output and a sibling contributor in the same shared family is consumed only through an internal carrier.
+- The same update now also filters `peer_input_endpoints` down to inputs actually bound to contributor carriers before the shared-datapath candidate is planned, so the mixed lift path rebinds only real readers of the shared family.
+- Added [t/148-composition-shared-datapath-mixed-reexport-runtime.t](/Users/richarddje/Documents/github/fsmgen/t/148-composition-shared-datapath-mixed-reexport-runtime.t) to lock both the mixed-boundary candidate metadata and the emitted lifted-runtime HDL/CLI summary.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next `R11` shared-datapath feature slice is tracked honestly.
+
 ### shared-datapath lifting now covers the internal-only registered peer-read sibling
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the bounded registered loopback lift path no longer requires public top re-exports to exist before it can activate. Registered peer-read shared families with no preserved public status outputs now still emit the lifted shared register, rebind peer-read child inputs to it, and rebind contributor outputs to private raw nets.
 - Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet composition runs distinguish the new `registered shared internal lift active` runtime from the earlier public re-export case.

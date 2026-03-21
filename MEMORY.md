@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-22: shared-datapath lifting now covers mixed public/internal registered peer-read families
+- Saved shipped behavior:
+  - the bounded registered public-preserving lift path now also works when one contributor preserves a public top output while sibling contributors in the same shared family are consumed only internally,
+  - candidate peer-read endpoints are now filtered to inputs actually bound to contributor carriers before lift planning/runtime,
+  - and the lifted runtime still preserves only the actual public top re-exports instead of inventing new public assignments for internal carriers.
+- Important continuity note:
+  - this closes the mixed-boundary sibling of the first registered shared-datapath runtime lane,
+  - it also makes peer-read metadata more honest for later ownership work,
+  - and the next likely seam is broader ownership/default-visibility policy beyond the now-shipped public-preserving, mixed-boundary, and internal-only trio.
+
 ## 2026-03-22: shared-datapath lifting now covers the internal-only registered peer-read sibling
 - Saved shipped behavior:
   - the bounded registered loopback lift path no longer requires planned public re-exports before it activates,
