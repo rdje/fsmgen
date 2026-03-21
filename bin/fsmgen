@@ -523,6 +523,17 @@ unless ($quiet) {
                     } @{$candidate->{peer_input_endpoints} || []});
                     print "    * peer-read inputs: $peer_inputs\n" if length $peer_inputs;
                 }
+                if (my $peer_read_policy = $candidate->{peer_read_policy}) {
+                    my %policy_label = (
+                        registered_loopback => 'registered loopback eligible',
+                        top_output_only => 'top-output-only',
+                    );
+                    print "    * peer-read policy: "
+                        . ($policy_label{$peer_read_policy} || $peer_read_policy) . "\n";
+                }
+                if (my $peer_read_block_reason = $candidate->{peer_read_block_reason}) {
+                    print "    * peer-read constraint: $peer_read_block_reason\n";
+                }
                 if (@{$candidate->{planned_reexport_top_output_signals} || []}) {
                     print "    * planned top re-exports: "
                         . join(', ', @{$candidate->{planned_reexport_top_output_signals} || []}) . "\n";

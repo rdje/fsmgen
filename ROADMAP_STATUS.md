@@ -697,6 +697,7 @@ Done:
   - each shared-datapath candidate now also carries one deterministic whole-target aggregate enable plus per-value aggregate enable families built from the child-local `P_Q` families,
   - and those candidate families now also carry the first planned conflict-bit names for same-value multi-source overlap and whole-target multi-value overlap,
   - and those candidate families now also carry first lifted-ownership planning metadata through storage-class, peer-read endpoint, default lifted visibility, planned top re-export, and loopback-policy fields,
+  - and those candidate families now also carry explicit peer-read policy metadata for bounded combinational peer-read cases, keeping those families top-output-only with a surfaced block reason instead of making them look loopback-eligible,
   - and non-quiet `bin/fsmgen` composition runs now print one concise `Shared-Datapath Candidates` summary section from that metadata surface.
 - [t/139-composition-shared-datapath-candidate-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/139-composition-shared-datapath-candidate-metadata.t) now locks:
   - composition-top shared-datapath candidate metadata for multi-`?fsmc` tops,
@@ -721,7 +722,12 @@ Done:
   - internal-by-default lifted visibility planning for those registered peer-read families,
   - planned top re-export metadata for the still-top-visible public outputs,
   - loopback-allowed planning for that bounded registered case,
+  - registered loopback-eligible peer-read policy metadata for that bounded case,
   - and the matching non-quiet CLI visibility-planning summary lines.
+- [t/144-composition-shared-datapath-combinational-peer-read-policy.t](/Users/richarddje/Documents/github/fsmgen/t/144-composition-shared-datapath-combinational-peer-read-policy.t) now locks:
+  - top-output-only peer-read policy metadata for shared combinational output families,
+  - the surfaced combinational peer-read block reason,
+  - and the matching non-quiet CLI peer-read-policy summary lines.
 - The first `R11` connect-by-name broadening slice beyond the original multi-child success case is now also shipped:
   - declared `=name` connect-by-name now works for a single generated child (`?fsmc` or `?dtc`) instead of starting only beyond the single-child passthrough case,
   - single-child by-name planning still stays deterministic and bounded by the existing exact same-name, same-direction, same-width rule,
@@ -876,7 +882,7 @@ Left:
   - same-target/same-value aggregation vs same-target/different-value conflicts,
   - driven/lifted assertion-bit behavior for the now-shipped per-`(P, Q)` source-enable and whole-target `P` onehot0 metadata,
   - realized lifting behavior on top of the now-shipped registered peer-read visibility/re-export/loopback planning metadata,
-  - and the rule that combinational outputs may be top-level outputs but not peer-FSM inputs.
+  - and realized behavior on top of the now-shipped combinational top-output-only peer-read policy metadata.
 - Turn the reusable standalone-DT/module-library direction into a real contract:
   - decide whether unnamed reusable DT roots such as `?dt:` exist at all,
   - extend the current shipped `?dt:name` interface rule into a fuller reusable-module contract beyond the now-shipped multi-block enable, grouped shared-target, and composition-facing child-export metadata surfaces,

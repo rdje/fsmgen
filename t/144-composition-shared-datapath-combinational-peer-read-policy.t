@@ -14,9 +14,9 @@ use FSM::Pipeline::HDLGenerator;
 
 my $tempdir = tempdir(CLEANUP => 1);
 
-subtest 'shared-datapath candidates classify peer-read registered outputs as internal-by-default when lifted' => sub {
-    my $composition_path = write_fsm('shared_datapath_visibility_top.fsm', <<'FSM');
-(?top:shared_datapath_visibility_top
+subtest 'shared-datapath candidates keep combinational peer-read families top-output-only' => sub {
+    my $composition_path = write_fsm('shared_datapath_comb_peer_read_top.fsm', <<'FSM');
+(?top:shared_datapath_comb_peer_read_top
   (?ports:public_io
     select
     left_status>8
@@ -44,7 +44,7 @@ subtest 'shared-datapath candidates classify peer-read registered outputs as int
   )
   (-path_a
     (<select==1'b0
-      (status_bus> <= 8'1)
+      (status_bus> = 8'1)
     )
   )
   (+size
@@ -60,7 +60,7 @@ subtest 'shared-datapath candidates classify peer-read registered outputs as int
   )
   (-path_a
     (<select==1'b0
-      (status_bus> <= 8'2)
+      (status_bus> = 8'2)
     )
   )
   (+size
@@ -76,7 +76,7 @@ subtest 'shared-datapath candidates classify peer-read registered outputs as int
   )
   (-path_a
     (<select==1'b0
-      (result_data> <= status_bus)
+      (result_data> = status_bus)
     )
   )
   (+size
@@ -96,33 +96,26 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $candidate = $result->{module_info}{composition_shared_datapath_candidates}[0];
 
-    is($candidate->{storage_class}, 'registered', 'shared candidate is classified as registered');
+    is($candidate->{storage_class}, 'combinational', 'shared candidate is classified as combinational');
     is($candidate->{peer_input_count}, 1, 'shared candidate reports one peer-read input endpoint');
-    is_deeply(
-        $candidate->{peer_input_endpoints},
-        [
-            {
-                instance_name => 'consumer',
-                module_name => 'consumer_src',
-                endpoint => 'consumer.status_bus',
-                bound_signal => 'left_status',
-            },
-        ],
-        'shared candidate surfaces peer-read input endpoint identity and current bound signal',
+    is($candidate->{default_lifted_visibility}, 'top_output', 'shared combinational peer-read family stays top-output-only by default');
+    is($candidate->{peer_read_policy}, 'top_output_only', 'shared combinational peer-read family advertises top-output-only policy');
+    is(
+        $candidate->{peer_read_block_reason},
+        'combinational outputs may only exist as top-level outputs and must not become peer-FSM inputs',
+        'shared combinational peer-read family surfaces the bounded block reason',
     );
-    is($candidate->{default_lifted_visibility}, 'internal', 'shared registered output becomes internal-by-default when peer-read');
-    is($candidate->{peer_read_policy}, 'registered_loopback', 'shared registered output advertises loopback-eligible peer-read policy');
     is_deeply(
         $candidate->{planned_reexport_top_output_signals},
-        ['left_status', 'right_status'],
-        'shared candidate preserves explicit top outputs as planned re-exports when internalized',
+        [],
+        'shared combinational peer-read family does not invent internal re-exports',
     );
-    ok($candidate->{loopback_allowed}, 'shared registered output allows loopback planning for peer-read inputs');
+    ok(!$candidate->{loopback_allowed}, 'shared combinational peer-read family does not allow loopback planning');
 };
 
-subtest 'CLI prints shared-datapath visibility planning for peer-read registered outputs' => sub {
-    my $composition_path = write_fsm('shared_datapath_visibility_cli_top.fsm', <<'FSM');
-(?top:shared_datapath_visibility_cli_top
+subtest 'CLI prints top-output-only policy for combinational peer-read shared-datapath families' => sub {
+    my $composition_path = write_fsm('shared_datapath_comb_peer_read_cli_top.fsm', <<'FSM');
+(?top:shared_datapath_comb_peer_read_cli_top
   (?ports:public_io
     select
     left_status>8
@@ -150,7 +143,7 @@ subtest 'CLI prints shared-datapath visibility planning for peer-read registered
   )
   (-path_a
     (<select==1'b0
-      (status_bus> <= 8'1)
+      (status_bus> = 8'1)
     )
   )
   (+size
@@ -166,7 +159,7 @@ subtest 'CLI prints shared-datapath visibility planning for peer-read registered
   )
   (-path_a
     (<select==1'b0
-      (status_bus> <= 8'2)
+      (status_bus> = 8'2)
     )
   )
   (+size
@@ -182,7 +175,7 @@ subtest 'CLI prints shared-datapath visibility planning for peer-read registered
   )
   (-path_a
     (<select==1'b0
-      (result_data> <= status_bus)
+      (result_data> = status_bus)
     )
   )
   (+size
@@ -192,14 +185,14 @@ subtest 'CLI prints shared-datapath visibility planning for peer-read registered
   )
 )
 FSM
-    my $output_path = File::Spec->catfile($tempdir, 'shared_datapath_visibility_cli_top.sv');
+    my $output_path = File::Spec->catfile($tempdir, 'shared_datapath_comb_peer_read_cli_top.sv');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
     );
 
-    ok($success, 'CLI succeeds for shared-datapath visibility summary fixture');
-    ok(-e $output_path, 'CLI writes HDL for shared-datapath visibility summary fixture');
+    ok($success, 'CLI succeeds for combinational peer-read shared-datapath summary fixture');
+    ok(-e $output_path, 'CLI writes HDL for combinational peer-read shared-datapath summary fixture');
 
     my $combined_output = join(
         '',
@@ -208,12 +201,16 @@ FSM
         ($error_message || ''),
     );
 
-    like($combined_output, qr/\* storage class: registered/s, 'CLI prints the registered storage class');
-    like($combined_output, qr/\* default lifted visibility: internal/s, 'CLI prints the internal-by-default lifted visibility');
+    like($combined_output, qr/\* storage class: combinational/s, 'CLI prints the combinational storage class');
+    like($combined_output, qr/\* default lifted visibility: top_output/s, 'CLI prints the top-output-only default visibility');
     like($combined_output, qr/\* peer-read inputs: consumer\.status_bus/s, 'CLI prints the peer-read input endpoint');
-    like($combined_output, qr/\* peer-read policy: registered loopback eligible/s, 'CLI prints the registered peer-read policy');
-    like($combined_output, qr/\* planned top re-exports: left_status, right_status/s, 'CLI prints the planned top re-export list');
-    like($combined_output, qr/\* loopback allowed: yes/s, 'CLI prints the positive loopback planning decision');
+    like($combined_output, qr/\* peer-read policy: top-output-only/s, 'CLI prints the top-output-only peer-read policy');
+    like(
+        $combined_output,
+        qr/\* peer-read constraint: combinational outputs may only exist as top-level outputs and must not become peer-FSM inputs/s,
+        'CLI prints the combinational peer-read block reason',
+    );
+    like($combined_output, qr/\* loopback allowed: no/s, 'CLI prints the negative loopback planning decision');
 };
 
 done_testing();

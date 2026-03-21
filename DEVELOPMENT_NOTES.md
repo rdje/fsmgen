@@ -5594,3 +5594,4 @@ It is an exact-delay pulse request:
   - canonical RTL IR,
   - intent recovery,
   - recovery report.
+- `R11` shared-datapath planning now distinguishes registered peer-read families from combinational peer-read families explicitly: registered families stay loopback-eligible/internalizable in the bounded planning surface, while combinational families now surface an explicit top-output-only policy plus block reason instead of silently looking like generic `loopback_allowed = no` cases.

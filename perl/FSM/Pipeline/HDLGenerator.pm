@@ -777,6 +777,22 @@ sub shared_datapath_storage_class ($self, $contributors) {
     return 'mixed';
 }
 
+sub shared_datapath_peer_read_policy ($self, $storage_class, $peer_input_endpoints) {
+    return undef unless @{$peer_input_endpoints || []};
+
+    return {
+        peer_read_policy => 'registered_loopback',
+    } if ($storage_class || '') eq 'registered';
+
+    return {
+        peer_read_policy => 'top_output_only',
+        peer_read_block_reason =>
+            'combinational outputs may only exist as top-level outputs and must not become peer-FSM inputs',
+    } if ($storage_class || '') eq 'combinational';
+
+    return undef;
+}
+
 sub is_generated_child_kind ($self, $kind) {
     return $kind eq 'fsmc' || $kind eq 'dtc';
 }
@@ -2432,6 +2448,10 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
         my @planned_reexport_top_output_signals = $default_lifted_visibility eq 'internal'
             ? sort keys %top_output_signals
             : ();
+        my $peer_read_policy = $self->shared_datapath_peer_read_policy(
+            $storage_class,
+            \@peer_input_endpoints,
+        );
 
         my %aggregate_families_by_rhs;
         for my $contributor (@contributors) {
@@ -2499,6 +2519,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
             default_lifted_visibility => $default_lifted_visibility,
             planned_reexport_top_output_signals => \@planned_reexport_top_output_signals,
             loopback_allowed => (@peer_input_endpoints && $storage_class eq 'registered') ? 1 : 0,
+            (%{$peer_read_policy || {}}),
             aggregate_target_enable_signal => $self->shared_datapath_target_enable_name($group->{signal_name}),
             multi_value_conflict_signal => $multi_value_conflict_signal,
             multi_value_assertion => $self->shared_datapath_assertion_metadata(

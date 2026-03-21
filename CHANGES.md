@@ -4439,3 +4439,4 @@ This is the persistent technical change history for FSMGen.
   - HDL import would not need a full backend compile/synthesis flow,
   - but it would still need substantial frontend semantic compilation work before elaboration can happen honestly,
   - so the saved pipeline is now explicit about preprocess -> parse -> semantic resolution -> elaboration -> canonical RTL IR -> intent recovery.
+- Shared-datapath candidate metadata now also makes the bounded combinational peer-read rule explicit: peer-read combinational families stay top-output-only, surface a block reason, and no longer look loopback-eligible in non-quiet `bin/fsmgen` summaries.
