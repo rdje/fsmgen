@@ -4284,3 +4284,9 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - so the expected importer shape is now explicitly `preprocess -> parse -> semantic resolution -> elaboration -> canonical RTL IR -> intent recovery -> recovery report`.
 - `R11` shared-datapath planning now also exposes a bounded combinational peer-read policy surface: shared combinational output families that feed peer child inputs stay top-output-only, report a block reason, and print that rule in non-quiet `bin/fsmgen` summaries.
 - `R11` shared-datapath now has a first real runtime HDL slice on top of the earlier metadata: realized `?fsmc` children export hidden per-value enable ports, composition tops bind those exports into deterministic source-enable alias nets, and the top now emits aggregate/conflict helper wires from that surface.
+- `R11` shared-datapath now also has its first actual lifted registered ownership/runtime slice:
+  - bounded registered peer-read families with explicit public re-exports now surface reset-aware lifted-runtime metadata,
+  - generated tops emit one shared lifted register plus next-value logic for that case,
+  - peer-read child inputs are rebound to that lifted shared register,
+  - contributor outputs are rebound to private raw nets,
+  - and the kept public top outputs are re-exported from the lifted shared register rather than directly from one child.

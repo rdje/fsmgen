@@ -5596,3 +5596,18 @@ It is an exact-delay pulse request:
   - recovery report.
 - `R11` shared-datapath planning now distinguishes registered peer-read families from combinational peer-read families explicitly: registered families stay loopback-eligible/internalizable in the bounded planning surface, while combinational families now surface an explicit top-output-only policy plus block reason instead of silently looking like generic `loopback_allowed = no` cases.
 - `R11` shared-datapath work now has a first real HDL behavior slice: we kept the lifted shared-target mux/register block out of scope, but realized `?fsmc` children now export hidden per-value enable ports for composition use and the generated top now synthesizes aggregate/conflict helper wires from those exports. That keeps the first runtime step honest and mechanically testable without over-claiming that lifted ownership is finished.
+
+## 2026-03-21: shared-datapath lifting now has a first actual registered peer-read runtime slice
+- Continued the active `R11` feature lane by moving one bounded shared-datapath case from planning into real ownership/runtime behavior.
+- The first actual lifted shared-target behavior is now shipped for the narrowest honest registered case:
+  - same-name shared registered output families across multiple realized `?fsmc` children,
+  - with peer-read child inputs present,
+  - and with explicit public top outputs already acting as the kept re-export surface.
+- The generated composition top now:
+  - emits one shared lifted register plus next-value logic from the aggregate value-enable families,
+  - rebinds peer-read child inputs to that lifted shared register,
+  - rebinds the contributing child output ports away from the public top outputs into private raw nets,
+  - and re-exports the public top outputs from the lifted shared register instead of directly from one child.
+- Design note from this slice:
+  - this is intentionally narrower than the full shared-datapath contract,
+  - because internal-only registered lifting and combinational peer-read behavior still need their own explicit bounded follow-on rules.

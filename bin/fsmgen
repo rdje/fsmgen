@@ -538,6 +538,19 @@ unless ($quiet) {
                     print "    * planned top re-exports: "
                         . join(', ', @{$candidate->{planned_reexport_top_output_signals} || []}) . "\n";
                 }
+                if (my $lifted_runtime_kind = $candidate->{lifted_runtime_kind}) {
+                    my %runtime_label = (
+                        registered_shared_reexport => 'registered shared re-export active',
+                    );
+                    print "    * lifted runtime: "
+                        . ($runtime_label{$lifted_runtime_kind} || $lifted_runtime_kind) . "\n";
+                }
+                if (my $lifted_runtime_signal = $candidate->{lifted_runtime_signal}) {
+                    print "    * lifted signal: $lifted_runtime_signal\n";
+                }
+                if (my $lifted_runtime_reset_value = $candidate->{lifted_runtime_reset_value}) {
+                    print "    * lifted reset: $lifted_runtime_reset_value\n";
+                }
                 if (exists $candidate->{loopback_allowed}) {
                     print "    * loopback allowed: " . ($candidate->{loopback_allowed} ? 'yes' : 'no') . "\n";
                 }

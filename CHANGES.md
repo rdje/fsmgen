@@ -4441,3 +4441,8 @@ This is the persistent technical change history for FSMGen.
   - so the saved pipeline is now explicit about preprocess -> parse -> semantic resolution -> elaboration -> canonical RTL IR -> intent recovery.
 - Shared-datapath candidate metadata now also makes the bounded combinational peer-read rule explicit: peer-read combinational families stay top-output-only, surface a block reason, and no longer look loopback-eligible in non-quiet `bin/fsmgen` summaries.
 - Shared-datapath runtime behavior now exists in generated composition HDL, not just metadata: realized `?fsmc` children export hidden per-value enable families for composition use, and composition tops now synthesize aggregate-enable and conflict helper wires from those exports.
+- Shared-datapath lifting now has its first actual ownership/runtime slice on top of that helper HDL:
+  - shared registered peer-read families with explicit public re-exports now synthesize one lifted top-level shared register in the generated composition top,
+  - peer-read child inputs are rebound to that lifted shared register,
+  - explicit top outputs are re-exported from that lifted shared register instead of binding directly to one child output,
+  - and non-quiet `bin/fsmgen` runs now print the active lifted-runtime signal/reset summary for that bounded case.

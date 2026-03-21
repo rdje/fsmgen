@@ -608,6 +608,7 @@ Boundary note:
 - Those shared-datapath candidates now also surface deterministic per-child source-enable aliases plus onehot0-style assertion metadata over those aliases and the aggregate value-enable families, and non-quiet `bin/fsmgen` runs print those planned assertion inputs too.
 - Those shared-datapath candidates now also surface first lifted-ownership planning metadata: storage class, peer-read input endpoints, default lifted visibility, planned top re-exports for internalized registered families, and a bounded loopback-allowed flag.
 - Those shared-datapath candidates now also surface explicit peer-read policy metadata for bounded combinational peer-read cases, and non-quiet `bin/fsmgen` runs now say when such families stay top-output-only with a surfaced block reason instead of looking loopback-eligible.
+- Registered peer-read shared-datapath families with explicit public re-exports now also realize the first actual lifted runtime behavior: generated tops synthesize one shared top-level register from the aggregate value-enable families, rebind peer-read child inputs to that lifted register, and re-export the kept public outputs from that shared register instead of driving them directly from one child.
 
 ### Draft normative contract for the conventional `+system` section
 This is the current `R8` draft normative contract for the active `+system` boundary.

@@ -205,6 +205,7 @@ First shipped `R11` slice now in tree:
   - plus the first actual shared-datapath helper HDL slice for those candidates through hidden child source-enable export bindings and generated aggregate/conflict wires in the composition top,
   - plus one bounded lifted-ownership planning layer for those candidates through storage-class, peer-read endpoint, default-visibility, planned re-export, and loopback-policy metadata,
   - plus one bounded combinational peer-read policy layer for those candidates through explicit top-output-only policy and surfaced block-reason metadata,
+  - plus the first actual lifted shared-target behavior for the bounded registered peer-read re-export case through one emitted shared top-level register, peer-input rebinding, and explicit top-output re-export assignments,
   - bounded single-child `C1` top-interface inference when `?ports` is omitted or empty, with the inferred top interface matching the lone realized child interface exactly,
   - bounded explicit-link `C2` / `C3` omitted/empty-`?ports` inference when explicit `?toplink` endpoints themselves still make the top boundary unambiguous, including renamed top-boundary signals with one consistent direction plus exact width/type agreement,
   - bounded explicit-link `C2` / `C3` undeclared top-input inference when same-name child inputs remain top-facing and agree exactly on direction, width, and type metadata,

@@ -753,6 +753,22 @@ sub shared_datapath_target_enable_name ($self, $signal_name) {
     return "${clean_signal}_shared_en";
 }
 
+sub shared_datapath_lifted_next_name ($self, $signal_name) {
+    my $clean_signal = $self->clean_enable_name_token($signal_name);
+    return "${clean_signal}_shared_next";
+}
+
+sub shared_datapath_lifted_register_name ($self, $signal_name) {
+    my $clean_signal = $self->clean_enable_name_token($signal_name);
+    return "${clean_signal}_shared_q";
+}
+
+sub shared_datapath_raw_source_name ($self, $instance_name, $signal_name) {
+    my $clean_instance = $self->clean_enable_name_token($instance_name || 'child');
+    my $clean_signal = $self->clean_enable_name_token($signal_name);
+    return "shared_dp_raw_${clean_instance}_${clean_signal}";
+}
+
 sub shared_datapath_same_value_conflict_name ($self, $signal_name, $rhs_value) {
     my $clean_signal = $self->clean_enable_name_token($signal_name);
     my $clean_rhs = $self->clean_enable_name_token($rhs_value);
@@ -1816,6 +1832,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
         nets => \@nets,
         instances => \@planned_instances,
         auxiliary_assignments => [],
+        shared_datapath_candidates => [],
         raw_spec => $composition_spec,
     );
 
@@ -2197,12 +2214,69 @@ sub ensure_instance_port_binding ($self, $instance, $port_name, $signal_name) {
     };
 }
 
+sub set_instance_port_binding ($self, $instance, $port_name, $signal_name) {
+    return unless $instance && defined($port_name) && length($port_name);
+    return unless defined($signal_name) && length($signal_name);
+
+    for my $binding (@{$instance->{port_bindings} || []}) {
+        next unless ($binding->{port_name} || '') eq $port_name;
+        $binding->{signal_name} = $signal_name;
+        return;
+    }
+
+    push @{$instance->{port_bindings}}, {
+        port_name => $port_name,
+        signal_name => $signal_name,
+    };
+}
+
+sub composition_system_signal_names ($self, $composition_plan) {
+    my ($clock_name, $reset_name);
+    for my $port (@{$composition_plan->ports || []}) {
+        my $type = $port->type || '';
+        $clock_name ||= $port->name if $type eq 'clock';
+        $reset_name ||= $port->name if $type eq 'reset';
+    }
+
+    if ((!defined($clock_name) || !length($clock_name)) || (!defined($reset_name) || !length($reset_name))) {
+        for my $instance (@{$composition_plan->instances || []}) {
+            my %bindings = map {
+                (($_->{port_name} || '') => ($_->{signal_name} || ''))
+            } @{$instance->port_bindings || []};
+
+            for my $port (@{$instance->interface_ports || []}) {
+                my $bound_signal = $bindings{$port->name} || next;
+                my $type = $port->type || '';
+                $clock_name ||= $bound_signal if $type eq 'clock';
+                $reset_name ||= $bound_signal if $type eq 'reset';
+            }
+        }
+    }
+
+    return ($clock_name, $reset_name);
+}
+
+sub composition_shared_datapath_candidates_for_plan ($self, $composition_plan) {
+    return [] unless $composition_plan;
+
+    if ($composition_plan->can('shared_datapath_candidates')
+        && ref($composition_plan->shared_datapath_candidates) eq 'ARRAY'
+        && @{$composition_plan->shared_datapath_candidates})
+    {
+        return $composition_plan->shared_datapath_candidates;
+    }
+
+    my $shared_datapath_candidates = $self->build_composition_shared_datapath_candidates($composition_plan);
+    $composition_plan->{shared_datapath_candidates} = $shared_datapath_candidates;
+    return $shared_datapath_candidates;
+}
+
 sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
     return $composition_plan unless $composition_plan;
 
     my $nets = $composition_plan->{nets} ||= [];
     $composition_plan->{auxiliary_assignments} ||= [];
-    my $shared_datapath_candidates = $self->build_composition_shared_datapath_candidates($composition_plan);
+    my $shared_datapath_candidates = $self->composition_shared_datapath_candidates_for_plan($composition_plan);
     return $composition_plan unless @{$shared_datapath_candidates || []};
 
     my %needed_exports;
@@ -2243,7 +2317,13 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
         }
     }
 
-    my @assignments;
+    my @helper_assignments;
+    my @lifted_runtime_sections;
+    my ($clock_name, $reset_name) = $self->composition_system_signal_names($composition_plan);
+    my %instances_by_name = map {
+        (($_->instance_name || '') => $_)
+    } @{$composition_plan->{instances} || []};
+
     for my $candidate (@{$shared_datapath_candidates || []}) {
         next unless ref($candidate) eq 'HASH';
 
@@ -2264,21 +2344,130 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
             $self->ensure_composition_net($nets, $family->{same_value_conflict_signal}, 1);
 
             push @aggregate_value_enables, $aggregate_enable_signal;
-            push @assignments,
+            push @helper_assignments,
                 "  assign $aggregate_enable_signal = "
                     . $self->shared_datapath_or_expression(\@source_enable_signals) . ";",
                 "  assign $family->{same_value_conflict_signal} = "
                     . $self->shared_datapath_conflict_expression(\@source_enable_signals) . ";";
         }
 
-        push @assignments,
+        push @helper_assignments,
             "  assign $candidate->{aggregate_target_enable_signal} = "
                 . $self->shared_datapath_or_expression(\@aggregate_value_enables) . ";",
             "  assign $candidate->{multi_value_conflict_signal} = "
                 . $self->shared_datapath_conflict_expression(\@aggregate_value_enables) . ";";
+
+        my %planned_reexports = map {
+            ($_ => 1)
+        } @{$candidate->{planned_reexport_top_output_signals} || []};
+        my $can_lift_runtime =
+            (($candidate->{storage_class} || '') eq 'registered')
+            && (($candidate->{peer_read_policy} || '') eq 'registered_loopback')
+            && ($candidate->{loopback_allowed} || 0)
+            && %planned_reexports
+            && defined($candidate->{reset_value}) && length($candidate->{reset_value})
+            && defined($clock_name) && length($clock_name)
+            && defined($reset_name) && length($reset_name);
+
+        if ($can_lift_runtime) {
+            for my $contributor (@{$candidate->{contributors} || []}) {
+                next unless ref($contributor) eq 'HASH';
+                my $bound_signal = $contributor->{bound_signal} || '';
+                unless (length($bound_signal) && $planned_reexports{$bound_signal}) {
+                    $can_lift_runtime = 0;
+                    last;
+                }
+            }
+        }
+
+        if ($can_lift_runtime) {
+            for my $peer_input (@{$candidate->{peer_input_endpoints} || []}) {
+                next unless ref($peer_input) eq 'HASH';
+                my $bound_signal = $peer_input->{bound_signal} || '';
+                next unless length $bound_signal;
+                unless ($planned_reexports{$bound_signal}) {
+                    $can_lift_runtime = 0;
+                    last;
+                }
+            }
+        }
+
+        next unless $can_lift_runtime;
+
+        my $signal_name = $candidate->{signal_name} || next;
+        my $width = $candidate->{width} || 1;
+        my $lifted_next_signal = $self->shared_datapath_lifted_next_name($signal_name);
+        my $lifted_register_signal = $self->shared_datapath_lifted_register_name($signal_name);
+        my $width_decl = $width > 1 ? sprintf("[%d:0] ", $width - 1) : '';
+
+        $candidate->{lifted_runtime_kind} = 'registered_shared_reexport';
+        $candidate->{lifted_runtime_next_signal} = $lifted_next_signal;
+        $candidate->{lifted_runtime_signal} = $lifted_register_signal;
+        $candidate->{lifted_runtime_reset_value} = $candidate->{reset_value};
+
+        my @runtime_lines = (
+            "    logic ${width_decl}${lifted_next_signal};",
+            "    logic ${width_decl}${lifted_register_signal};",
+            "",
+            "    always_comb begin",
+            "      ${lifted_next_signal} = ${lifted_register_signal};",
+        );
+
+        for my $family (@{$candidate->{aggregate_enable_families} || []}) {
+            next unless ref($family) eq 'HASH';
+            my $aggregate_enable_signal = $family->{aggregate_enable_signal} || next;
+            my $rhs_value = $family->{rhs_value} // next;
+            push @runtime_lines,
+                "      if ($aggregate_enable_signal) begin",
+                "        ${lifted_next_signal} = $rhs_value;",
+                "      end";
+        }
+
+        push @runtime_lines,
+            "    end",
+            "",
+            "    always_ff @(posedge $clock_name or negedge $reset_name) begin",
+            "      if (!$reset_name) begin",
+            "        ${lifted_register_signal} <= $candidate->{reset_value};",
+            "      end else begin",
+            "        ${lifted_register_signal} <= ${lifted_next_signal};",
+            "      end",
+            "    end";
+
+        for my $contributor (@{$candidate->{contributors} || []}) {
+            next unless ref($contributor) eq 'HASH';
+            my ($instance_name, $port_name) = ($contributor->{endpoint} || '') =~ /^(\w+)\.(\w+)$/;
+            next unless defined($instance_name) && defined($port_name);
+            my $instance = $instances_by_name{$instance_name} || next;
+            my $raw_signal = $self->shared_datapath_raw_source_name($instance_name, $signal_name);
+            $self->ensure_composition_net($nets, $raw_signal, $width);
+            $self->set_instance_port_binding($instance, $port_name, $raw_signal);
+        }
+
+        for my $peer_input (@{$candidate->{peer_input_endpoints} || []}) {
+            next unless ref($peer_input) eq 'HASH';
+            my ($instance_name, $port_name) = ($peer_input->{endpoint} || '') =~ /^(\w+)\.(\w+)$/;
+            next unless defined($instance_name) && defined($port_name);
+            my $instance = $instances_by_name{$instance_name} || next;
+            $self->set_instance_port_binding($instance, $port_name, $lifted_register_signal);
+        }
+
+        for my $top_output_signal (sort keys %planned_reexports) {
+            push @runtime_lines, "    assign $top_output_signal = $lifted_register_signal;";
+        }
+
+        push @lifted_runtime_sections, @runtime_lines;
     }
 
-    $composition_plan->{auxiliary_assignments} = \@assignments;
+    my @auxiliary_lines;
+    push @auxiliary_lines, @helper_assignments if @helper_assignments;
+    if (@lifted_runtime_sections) {
+        push @auxiliary_lines, "" if @auxiliary_lines;
+        push @auxiliary_lines, @lifted_runtime_sections;
+    }
+
+    $composition_plan->{auxiliary_assignments} = \@auxiliary_lines;
+    $composition_plan->{shared_datapath_candidates} = $shared_datapath_candidates;
     return $composition_plan;
 }
 
@@ -2435,7 +2624,7 @@ sub build_composition_module_info ($self, $composition_plan, $composition_report
     my (@inputs, @outputs, @multi_bit, @single_bit);
     my %signals;
     my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
-    my $shared_datapath_candidates = $self->build_composition_shared_datapath_candidates($composition_plan);
+    my $shared_datapath_candidates = $self->composition_shared_datapath_candidates_for_plan($composition_plan);
 
     for my $port (@{$composition_plan->ports}) {
         my $entry = {
@@ -2589,12 +2778,13 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
                 module_name => $instance->module_name,
                 endpoint => ($instance->instance_name // 'unknown').'.'.($port->name // 'unknown'),
                 bound_signal => $bindings{$port->name},
-                drive_intent => {
-                    multiplexer_type => ($drive_family->{multiplexer_type} // 'unknown'),
-                    default_value => $drive_family->{default_value},
-                    driver_count => ($drive_family->{driver_count} || 0),
-                    driver_blocks => [@{$drive_family->{driver_blocks} || []}],
-                    rhs_values => [@{$drive_family->{rhs_values} || []}],
+                        drive_intent => {
+                            multiplexer_type => ($drive_family->{multiplexer_type} // 'unknown'),
+                            default_value => $drive_family->{default_value},
+                            reset_value => $drive_family->{reset_value},
+                            driver_count => ($drive_family->{driver_count} || 0),
+                            driver_blocks => [@{$drive_family->{driver_blocks} || []}],
+                            rhs_values => [@{$drive_family->{rhs_values} || []}],
                     driver_enable_signals => [@{$drive_family->{driver_enable_signals} || []}],
                     family_enable_signals => [@{$drive_family->{family_enable_signals} || []}],
                     rhs_enable_families => [
@@ -2659,6 +2849,15 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
             ($a->{endpoint} // '') cmp ($b->{endpoint} // '')
         } @{$peer_input_groups{$key} || []};
         my $storage_class = $self->shared_datapath_storage_class(\@contributors);
+        my %reset_values = map {
+            my $reset_value = $_->{drive_intent}{reset_value};
+            defined($reset_value) && length($reset_value)
+                ? ($reset_value => 1)
+                : ();
+        } @contributors;
+        my $reset_value = keys(%reset_values) == 1
+            ? (sort keys %reset_values)[0]
+            : undef;
         my $default_lifted_visibility = (@peer_input_endpoints && $storage_class eq 'registered')
             ? 'internal'
             : 'top_output';
@@ -2728,6 +2927,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
             width => $group->{width},
             interface_type => $group->{interface_type},
             storage_class => $storage_class,
+            reset_value => $reset_value,
             contributor_count => scalar(@contributors),
             contributors => \@contributors,
             top_output_signals => [ sort keys %top_output_signals ],
@@ -2757,6 +2957,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
 
 sub build_composition_statistics ($self, $composition_plan, $composition_report = undef) {
     my $stats = $self->gather_statistics(undef);
+    my $shared_datapath_candidates = $self->composition_shared_datapath_candidates_for_plan($composition_plan);
     $stats->{composition_child_count} = scalar(@{$composition_plan->instances});
     $stats->{composition_top_port_count} = scalar(@{$composition_plan->ports});
     $stats->{composition_net_count} = scalar(@{$composition_plan->nets || []});
@@ -2770,7 +2971,7 @@ sub build_composition_statistics ($self, $composition_plan, $composition_report 
         ? $composition_report->{block_count}
         : 0;
     $stats->{composition_shared_datapath_candidate_count} =
-        scalar(@{$self->build_composition_shared_datapath_candidates($composition_plan)});
+        scalar(@{$shared_datapath_candidates || []});
     $stats->{composition_lane} = $composition_plan->lane;
     $stats->{composition_provenance} = $composition_report if $composition_report;
     return $stats;
@@ -3530,11 +3731,16 @@ sub build_output_drive_family_metadata ($self, $module_info) {
         my @rhs_values = sort keys %rhs_values;
         next unless @driver_blocks || @rhs_values;
 
+        my $reset_value = $hdl_gen
+            ? $hdl_gen->{enable_graph}->get_reset_value_from_ast($lhs_analysis->{lhs_ast})
+            : undef;
+
         push @drive_families, {
             signal_name => $lhs,
             width => $output_widths{$lhs},
             multiplexer_type => ($lhs_analysis->{multiplexer}{type} // 'unknown'),
             default_value => $lhs_analysis->{multiplexer}{default_value},
+            reset_value => $reset_value,
             driver_count => scalar(@driver_blocks),
             driver_blocks => \@driver_blocks,
             rhs_values => \@rhs_values,

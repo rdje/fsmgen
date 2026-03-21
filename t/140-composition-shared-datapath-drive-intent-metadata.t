@@ -96,6 +96,7 @@ FSM
                 width => 8,
                 multiplexer_type => 'flop',
                 default_value => 'status_bus',
+                reset_value => "8'h00",
                 driver_count => 2,
                 driver_blocks => ['-path_a', '-path_b'],
                 rhs_values => ["8'd1", "8'd2"],
@@ -134,6 +135,7 @@ FSM
                 width => 8,
                 interface_type => 'data',
                 storage_class => 'registered',
+                reset_value => "8'h00",
                 contributor_count => 2,
                 contributors => [
                     {
@@ -144,6 +146,7 @@ FSM
                         drive_intent => {
                             multiplexer_type => 'flop',
                             default_value => 'status_bus',
+                            reset_value => "8'h00",
                             driver_count => 2,
                             driver_blocks => ['-path_a', '-path_b'],
                             rhs_values => ["8'd1", "8'd2"],
@@ -179,6 +182,7 @@ FSM
                         drive_intent => {
                             multiplexer_type => 'flop',
                             default_value => 'status_bus',
+                            reset_value => "8'h00",
                             driver_count => 2,
                             driver_blocks => ['-path_a', '-path_b'],
                             rhs_values => ["8'd3", "8'd4"],
