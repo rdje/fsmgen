@@ -680,6 +680,13 @@ Done:
 - [t/137-standalone-dt-multi-drive-family-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/137-standalone-dt-multi-drive-family-metadata.t) now locks:
   - direct standalone-DT grouped multi-drive target metadata,
   - and preservation of that same metadata for realized `?dtc` children.
+- The next reusable standalone-DT composition-export slice is now also shipped:
+  - composition-top `module_info` now aggregates reusable `?dtc` child exports through `composition_standalone_dt_child_count`, `composition_standalone_dt_block_count`, `composition_standalone_dt_multi_drive_target_count`, and `composition_standalone_dt_children`,
+  - those child exports now surface instance/module/source identity together with the already-shipped standalone-DT enable-family and grouped shared-target metadata,
+  - and non-quiet `bin/fsmgen` composition runs now print one concise reusable standalone-DT child summary section from that top-level export surface instead of leaving callers to crawl realized children manually.
+- [t/138-composition-standalone-dt-export-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/138-composition-standalone-dt-export-metadata.t) now locks:
+  - composition-top aggregation of reusable standalone-DT child export metadata,
+  - and the non-quiet CLI summary for that same composition-facing export surface.
 - The first `R11` connect-by-name broadening slice beyond the original multi-child success case is now also shipped:
   - declared `=name` connect-by-name now works for a single generated child (`?fsmc` or `?dtc`) instead of starting only beyond the single-child passthrough case,
   - single-child by-name planning still stays deterministic and bounded by the existing exact same-name, same-direction, same-width rule,
@@ -839,8 +846,8 @@ Left:
   - and the rule that combinational outputs may be top-level outputs but not peer-FSM inputs.
 - Turn the reusable standalone-DT/module-library direction into a real contract:
   - decide whether unnamed reusable DT roots such as `?dt:` exist at all,
-  - extend the current shipped `?dt:name` interface rule into a fuller reusable-module contract, especially around multi-block enable surfacing and composition-facing exposure,
-  - define how multi-`(-foo ...)` standalone DT modules expose block-level and module-level enable families,
+  - extend the current shipped `?dt:name` interface rule into a fuller reusable-module contract beyond the now-shipped multi-block enable, grouped shared-target, and composition-facing child-export metadata surfaces,
+  - define how multi-`(-foo ...)` standalone DT modules expose block-level and module-level enable families beyond those current metadata/export summaries,
   - extend the now-shipped implicit-system rule split between `?fsm:name` and `?dt:name` into the broader reuse/composition contract,
   - extend the now-shipped generated-child contract beyond the current `?fsmc` / `?dtc` `C1` / `C2` / `C3` plus generated-only and mixed-lane `C4` slices into reusable-module interface/export rules,
   - and extend the now-shipped `--path` / `FSMLIB` lookup slice beyond bare top-level inputs, generated child sources, and `.rtlif` metadata lookup.

@@ -196,6 +196,7 @@ First shipped `R11` slice now in tree:
   - external `?fsmc` composition child sources resolved from sibling or searched `.fsm` files without leaving the active typed pipeline,
   - named `?fsmc:name` and `?dtc:name` children omitting the explicit source token when the child source should default to `name`,
   - `?dtc` composition child realization from embedded or external standalone-DT sources, including honest non-system interfaces for purely combinational DT children,
+  - module-info-level reusable standalone-DT metadata for direct roots, realized `?dtc` children, and top-level composition aggregation of those realized child exports,
   - bounded single-child `C1` top-interface inference when `?ports` is omitted or empty, with the inferred top interface matching the lone realized child interface exactly,
   - bounded explicit-link `C2` / `C3` omitted/empty-`?ports` inference when explicit `?toplink` endpoints themselves still make the top boundary unambiguous, including renamed top-boundary signals with one consistent direction plus exact width/type agreement,
   - bounded explicit-link `C2` / `C3` undeclared top-input inference when same-name child inputs remain top-facing and agree exactly on direction, width, and type metadata,
@@ -234,7 +235,7 @@ First shipped `R11` slice now in tree:
 - The shipped first slice does not yet widen into:
   - regular FSM-state blocks inside `?dt:name`,
   - broader implicit parent-interface inference for undeclared top ports beyond the bounded single-child `C1` passthrough slice and bounded `C2` / `C3` undeclared top-input/top-output/internal-carrier slices,
-  - broader reusable-module interface/export rules beyond the now-shipped module-info-level standalone-DT enable-family and grouped multi-drive-family surfacing slices,
+  - broader reusable-module interface/export rules beyond the now-shipped module-info-level standalone-DT enable-family, grouped multi-drive-family, and composition-facing child-export surfacing slices,
   - or unnamed-root questions.
 
 Expected result:

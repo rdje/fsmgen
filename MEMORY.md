@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-21: composition tops now aggregate reusable standalone-DT child exports
+- Saved shipped behavior:
+  - composition-top `module_info` now aggregates realized `?dtc` child exports through `composition_standalone_dt_child_count`, `composition_standalone_dt_block_count`, `composition_standalone_dt_multi_drive_target_count`, and `composition_standalone_dt_children`,
+  - each exported child summary now carries instance/module/source identity plus the already-shipped standalone-DT enable-family and grouped shared-target metadata,
+  - and non-quiet `bin/fsmgen` composition runs now print one concise reusable standalone-DT child summary section from that same top-level export surface.
+- Important continuity note:
+  - this is real `R11` feature growth in the reusable-module lane,
+  - it retires the immediate “composition-facing exposure” gap for the already-shipped standalone-DT metadata slices,
+  - and it still leaves broader reusable-module interface/export rules for a later deliberate contract pass.
+
 ## 2026-03-21: standalone-DT roots now surface grouped multi-drive target metadata
 - Saved shipped behavior:
   - direct standalone-DT generation now reports grouped multi-drive target families through `module_info`,

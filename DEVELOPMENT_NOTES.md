@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-21: composition tops now aggregate reusable standalone-DT child exports
+- Continued the active `R11` lane with another real reusable-module feature slice instead of returning to hardening-only work.
+- Landed behavior:
+  - composition-top `module_info` now aggregates realized `?dtc` child exports instead of forcing callers to traverse each realized child manually,
+  - that top-level export surface now includes child count, aggregate standalone-DT block count, aggregate grouped shared-target count, and one ordered `composition_standalone_dt_children` list,
+  - and each child export now carries instance/module/source identity together with the already-shipped enable-family and grouped shared-target metadata.
+- Why this is worth shipping:
+  - it turns one open “composition-facing exposure” roadmap note into active runtime behavior,
+  - it gives embedders and future reusable-module/shared-datapath work one deliberate top-level metadata surface,
+  - and the matching non-quiet CLI summary now makes that surface visible without asking users to inspect nested plan internals.
+
 ## 2026-03-21: standalone-DT roots now surface grouped multi-drive target metadata
 - Continued the active `R11` lane by shipping the next reusable-module arbitration-metadata slice instead of returning to hardening-only work.
 - Landed behavior:

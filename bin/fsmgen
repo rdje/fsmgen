@@ -481,6 +481,22 @@ unless ($quiet) {
                 print "\n";
             }
         }
+
+        if (($module_info->{composition_standalone_dt_child_count} || 0) > 0) {
+            print "\nReusable Standalone-DT Children:\n";
+            print "  - Count: " . ($module_info->{composition_standalone_dt_child_count} || 0) . "\n";
+            print "  - Standalone-DT blocks: " . ($module_info->{composition_standalone_dt_block_count} || 0) . "\n";
+            print "  - Grouped shared targets: " . ($module_info->{composition_standalone_dt_multi_drive_target_count} || 0) . "\n";
+
+            for my $child (@{$module_info->{composition_standalone_dt_children} || []}) {
+                print "  - " . ($child->{instance_name} || 'unknown_instance')
+                    . " => " . ($child->{module_name} || 'unknown_module')
+                    . " (source: " . ($child->{source_name} || 'unknown_source')
+                    . ", blocks: " . ($child->{standalone_dt_count} || 0)
+                    . ", grouped shared targets: " . ($child->{standalone_dt_multi_drive_target_count} || 0)
+                    . ")\n";
+            }
+        }
     }
 }
 

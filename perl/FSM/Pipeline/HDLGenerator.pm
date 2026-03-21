@@ -2130,6 +2130,7 @@ sub emit_composition_top_module ($self, $composition_plan) {
 sub build_composition_module_info ($self, $composition_plan, $composition_report = undef) {
     my (@inputs, @outputs, @multi_bit, @single_bit);
     my %signals;
+    my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
 
     for my $port (@{$composition_plan->ports}) {
         my $entry = {
@@ -2180,8 +2181,70 @@ sub build_composition_module_info ($self, $composition_plan, $composition_report
         composition_block_count => $composition_report
             ? $composition_report->{block_count}
             : 0,
+        composition_standalone_dt_child_count => $standalone_dt_child_exports->{child_count},
+        composition_standalone_dt_block_count => $standalone_dt_child_exports->{block_count},
+        composition_standalone_dt_multi_drive_target_count => $standalone_dt_child_exports->{multi_drive_target_count},
+        composition_standalone_dt_children => $standalone_dt_child_exports->{children},
         composition_lane => $composition_plan->lane,
         composition_provenance => $composition_report,
+    };
+}
+
+sub build_composition_standalone_dt_child_exports ($self, $composition_plan) {
+    my @children;
+    my $block_count = 0;
+    my $multi_drive_target_count = 0;
+
+    for my $instance (@{$composition_plan->instances || []}) {
+        next unless ($instance->kind || '') eq 'dtc';
+
+        my $child_info = $instance->module_info || {};
+        my @enable_families = map {
+            +{
+                dt_name => $_->{dt_name},
+                enable_signal => $_->{enable_signal},
+            }
+        } @{$child_info->{standalone_dt_enable_families} || []};
+
+        my $module_enable_family = $child_info->{standalone_dt_module_enable_family} || {};
+        my @multi_drive_targets = map {
+            +{
+                signal_name => $_->{signal_name},
+                multiplexer_type => $_->{multiplexer_type},
+                dt_names => [@{$_->{dt_names} || []}],
+                rhs_values => [@{$_->{rhs_values} || []}],
+                dt_enable_signals => [@{$_->{dt_enable_signals} || []}],
+                lhs_enable_signals => [@{$_->{lhs_enable_signals} || []}],
+            }
+        } @{$child_info->{standalone_dt_multi_drive_targets} || []};
+
+        my $standalone_dt_count = $child_info->{standalone_dt_count} || 0;
+        my $child_multi_drive_target_count = $child_info->{standalone_dt_multi_drive_target_count} || 0;
+
+        push @children, {
+            instance_name => $instance->instance_name,
+            module_name => $instance->module_name,
+            source_name => $instance->source_name,
+            standalone_dt_count => $standalone_dt_count,
+            standalone_dt_names => [@{$child_info->{standalone_dt_names} || []}],
+            standalone_dt_enable_families => \@enable_families,
+            standalone_dt_module_enable_family => {
+                dt_names => [@{$module_enable_family->{dt_names} || []}],
+                enable_signals => [@{$module_enable_family->{enable_signals} || []}],
+            },
+            standalone_dt_multi_drive_target_count => $child_multi_drive_target_count,
+            standalone_dt_multi_drive_targets => \@multi_drive_targets,
+        };
+
+        $block_count += $standalone_dt_count;
+        $multi_drive_target_count += $child_multi_drive_target_count;
+    }
+
+    return {
+        child_count => scalar(@children),
+        block_count => $block_count,
+        multi_drive_target_count => $multi_drive_target_count,
+        children => \@children,
     };
 }
 
