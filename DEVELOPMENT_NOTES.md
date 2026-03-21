@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-22: shared-datapath lifting now covers the internal-only registered peer-read sibling
+- Continued the active `R11` lane with the sibling lifted-runtime case instead of another metadata-only increment.
+- Landed behavior:
+  - the bounded registered loopback lift path no longer requires public re-exports before it activates,
+  - registered peer-read shared families with no preserved public status outputs now still emit one shared top-level register plus next-value logic,
+  - contributor outputs are rebound to private raw nets and peer-read child inputs are rebound to the lifted shared register just like the earlier public re-export case,
+  - and non-quiet `bin/fsmgen` runs now distinguish that internal-only runtime from the public re-export runtime.
+- Why this is worth shipping:
+  - it closes the most obvious sibling gap in the first lifted shared-target behavior,
+  - it proves the bounded registered lifting lane is about ownership, not merely about public re-export sugar,
+  - and it sets up the next honest seam around broader ownership policy instead of leaving the internal-only case as roadmap prose only.
+
 ## 2026-03-21: shared-datapath candidates now surface planned conflict-bit names
 - Continued the active `R11` lane by adding the first explicit conflict/check naming layer on top of aggregate enable families instead of jumping straight to generated shared-datapath HDL.
 - Landed behavior:

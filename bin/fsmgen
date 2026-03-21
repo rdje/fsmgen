@@ -541,6 +541,7 @@ unless ($quiet) {
                 if (my $lifted_runtime_kind = $candidate->{lifted_runtime_kind}) {
                     my %runtime_label = (
                         registered_shared_reexport => 'registered shared re-export active',
+                        registered_shared_internal => 'registered shared internal lift active',
                     );
                     print "    * lifted runtime: "
                         . ($runtime_label{$lifted_runtime_kind} || $lifted_runtime_kind) . "\n";

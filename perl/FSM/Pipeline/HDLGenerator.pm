@@ -2360,16 +2360,20 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
         my %planned_reexports = map {
             ($_ => 1)
         } @{$candidate->{planned_reexport_top_output_signals} || []};
-        my $can_lift_runtime =
+        my $runtime_mode =
             (($candidate->{storage_class} || '') eq 'registered')
             && (($candidate->{peer_read_policy} || '') eq 'registered_loopback')
             && ($candidate->{loopback_allowed} || 0)
-            && %planned_reexports
             && defined($candidate->{reset_value}) && length($candidate->{reset_value})
             && defined($clock_name) && length($clock_name)
-            && defined($reset_name) && length($reset_name);
+            && defined($reset_name) && length($reset_name)
+                ? (%planned_reexports
+                    ? 'registered_shared_reexport'
+                    : 'registered_shared_internal')
+                : '';
+        my $can_lift_runtime = length($runtime_mode) ? 1 : 0;
 
-        if ($can_lift_runtime) {
+        if ($can_lift_runtime && $runtime_mode eq 'registered_shared_reexport') {
             for my $contributor (@{$candidate->{contributors} || []}) {
                 next unless ref($contributor) eq 'HASH';
                 my $bound_signal = $contributor->{bound_signal} || '';
@@ -2380,7 +2384,7 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
             }
         }
 
-        if ($can_lift_runtime) {
+        if ($can_lift_runtime && $runtime_mode eq 'registered_shared_reexport') {
             for my $peer_input (@{$candidate->{peer_input_endpoints} || []}) {
                 next unless ref($peer_input) eq 'HASH';
                 my $bound_signal = $peer_input->{bound_signal} || '';
@@ -2400,7 +2404,7 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
         my $lifted_register_signal = $self->shared_datapath_lifted_register_name($signal_name);
         my $width_decl = $width > 1 ? sprintf("[%d:0] ", $width - 1) : '';
 
-        $candidate->{lifted_runtime_kind} = 'registered_shared_reexport';
+        $candidate->{lifted_runtime_kind} = $runtime_mode;
         $candidate->{lifted_runtime_next_signal} = $lifted_next_signal;
         $candidate->{lifted_runtime_signal} = $lifted_register_signal;
         $candidate->{lifted_runtime_reset_value} = $candidate->{reset_value};
@@ -2452,8 +2456,10 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
             $self->set_instance_port_binding($instance, $port_name, $lifted_register_signal);
         }
 
-        for my $top_output_signal (sort keys %planned_reexports) {
-            push @runtime_lines, "    assign $top_output_signal = $lifted_register_signal;";
+        if ($runtime_mode eq 'registered_shared_reexport') {
+            for my $top_output_signal (sort keys %planned_reexports) {
+                push @runtime_lines, "    assign $top_output_signal = $lifted_register_signal;";
+            }
         }
 
         push @lifted_runtime_sections, @runtime_lines;

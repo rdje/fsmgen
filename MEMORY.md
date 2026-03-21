@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-22: shared-datapath lifting now covers the internal-only registered peer-read sibling
+- Saved shipped behavior:
+  - the bounded registered loopback lift path no longer requires planned public re-exports before it activates,
+  - generated tops now still emit one lifted shared register plus next-value logic when the shared family is only consumed internally,
+  - contributor outputs are rebound to private raw nets and peer-read child inputs are rebound to that lifted register,
+  - and non-quiet `bin/fsmgen` runs now distinguish the internal-only lifted runtime from the earlier public re-export runtime.
+- Important continuity note:
+  - this closes the most obvious sibling gap in the first lifted shared-target behavior,
+  - it keeps the bounded registered lifting lane honest as an ownership/runtime feature instead of a public re-export special case only,
+  - and the next likely seam is broader ownership policy beyond the now-shipped explicit-reexport/internal-only pair.
+
 ## 2026-03-21: shared-datapath candidates now surface planned conflict-bit names
 - Saved shipped behavior:
   - each aggregate value family now carries one deterministic `P_Q_multi_src_conflict`-style name,

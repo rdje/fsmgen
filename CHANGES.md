@@ -1,5 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-22
+### shared-datapath lifting now covers the internal-only registered peer-read sibling
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the bounded registered loopback lift path no longer requires public top re-exports to exist before it can activate. Registered peer-read shared families with no preserved public status outputs now still emit the lifted shared register, rebind peer-read child inputs to it, and rebind contributor outputs to private raw nets.
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet composition runs distinguish the new `registered shared internal lift active` runtime from the earlier public re-export case.
+- Added [t/147-composition-shared-datapath-internal-lifted-register-runtime.t](/Users/richarddje/Documents/github/fsmgen/t/147-composition-shared-datapath-internal-lifted-register-runtime.t) to lock both emitted HDL and the non-quiet CLI summary for the internal-only lifted-register case.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next `R11` shared-datapath feature slice is tracked honestly.
+
 ## 2026-03-21
 ### shared-datapath candidates now surface planned conflict-bit names
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so shared-datapath candidate metadata now also carries `same_value_conflict_signal` on each aggregate value family and `multi_value_conflict_signal` on the whole target, following the existing `P_Q_multi_src_conflict` / `P_multi_value_conflict` naming direction recorded in the roadmap notes.

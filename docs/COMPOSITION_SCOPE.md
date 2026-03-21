@@ -181,6 +181,7 @@ Current shipped runtime subset:
 - and those shared-datapath candidate families now also expose the first lifted-ownership planning metadata for registered peer-read families through storage-class, peer-read endpoint, default lifted visibility, planned top re-export, and loopback-policy fields,
 - and those shared-datapath candidate families now also expose explicit peer-read policy metadata for bounded combinational peer-read cases, keeping those families top-output-only with a surfaced block reason instead of treating them as loopback-eligible,
 - and the bounded registered peer-read re-export case now also realizes the first actual lifted shared-target behavior, with one shared top-level register emitted in the generated top, peer-read child inputs rebound to that lifted register, and explicit public top outputs re-exported from the lifted register instead of binding directly to one child output,
+- and the sibling bounded registered peer-read internal-only case now also realizes that same lifted shared-target runtime without inventing public top re-export assignments when no such outputs exist,
 - `?rtl` is now realized in the shipped single-child `C1`, explicit-link `C3`, and declared-by-name `C4` slices,
 - the current explicit-link `C3` slice expects either one embedded `(?rtlif:module_name ...)` companion root or one `<module>.rtlif` sidecar metadata file per external RTL module and does not parse/regenerate SV/VHDL module internals at composition time.
 
