@@ -595,6 +595,7 @@ Boundary note:
 - The semantic split from `?fsm:name` is the control model, not “combinational-only” versus “sequential-capable”.
 - Explicit conventional `(+system ...)` now gives reusable standalone-DT roots and `?dtc` composition children one deliberate way to align with the shared `clk` / `rstn` contract when that interface stability matters.
 - The current shipped standalone-DT slice now includes `?dt:name`, `?mod:name`, and `?module:name` as one active reusable root family; broader reusable-module interface and unnamed-root questions remain future `R11` work.
+- Direct standalone-DT generation and realized `?dtc` children now also surface stable block-enable metadata through `module_info`: `standalone_dt_count`, `standalone_dt_names`, `standalone_dt_enable_families`, and one grouped `standalone_dt_module_enable_family` summary.
 
 ### Draft normative contract for the conventional `+system` section
 This is the current `R8` draft normative contract for the active `+system` boundary.

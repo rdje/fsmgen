@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-21: standalone-DT roots now surface stable block-enable family metadata
+- Continued the active `R11` lane by shipping a reusable-module enable-surfacing slice instead of another reporting-only pass.
+- Landed behavior:
+  - direct standalone-DT generation now reports plain-scalar block names through `module_info`,
+  - that same `module_info` surface now carries stable per-block enable-signal families for standalone-DT blocks,
+  - and one grouped module-level family summary now collects those block-level enable signals without pretending they are already interface ports.
+- Why this is worth shipping:
+  - it turns one open reusable-module contract question about multi-block enable surfacing into active shipped behavior,
+  - it gives embedders and composition follow-on work a stable metadata surface instead of forcing them to reverse-engineer generated HDL naming,
+  - and it keeps the slice bounded by surfacing enable families in analysis/module-info first rather than widening child interfaces prematurely.
+
 ## 2026-03-20: named generated children now default their source name locally in composition
 - Continued the active `R11` lane by shipping another reusable-root/reference feature slice instead of returning to diagnostics-only work.
 - Landed behavior:

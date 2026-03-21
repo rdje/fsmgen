@@ -666,6 +666,13 @@ Done:
 - [t/134-standalone-dt-explicit-system-support.t](/Users/richarddje/Documents/github/fsmgen/t/134-standalone-dt-explicit-system-support.t) now locks:
   - direct standalone-DT generation with explicit conventional `+system`,
   - and `C1` composition auto-wiring for `?dtc` children that expose explicit `clk` / `rstn`.
+- The next reusable standalone-DT enable-surfacing slice is now also shipped:
+  - direct standalone-DT generation now reports plain-scalar block names and stable per-block enable-signal families through `module_info`,
+  - realized `?dtc` children now preserve that same standalone-DT enable metadata through composition,
+  - and `module_info` now also groups those block enables into one module-level family summary without yet turning them into child interface ports.
+- [t/136-standalone-dt-enable-family-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/136-standalone-dt-enable-family-metadata.t) now locks:
+  - direct standalone-DT block-enable metadata,
+  - and preservation of that same metadata for realized `?dtc` children.
 - The first `R11` connect-by-name broadening slice beyond the original multi-child success case is now also shipped:
   - declared `=name` connect-by-name now works for a single generated child (`?fsmc` or `?dtc`) instead of starting only beyond the single-child passthrough case,
   - single-child by-name planning still stays deterministic and bounded by the existing exact same-name, same-direction, same-width rule,

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-21: standalone-DT roots now surface stable block-enable family metadata
+- Saved shipped behavior:
+  - direct standalone-DT generation now reports plain-scalar block names and stable per-block enable-signal families through `module_info`,
+  - realized `?dtc` children now preserve that same standalone-DT enable metadata through composition,
+  - and `module_info` now also groups those block enable signals into one module-level family summary.
+- Important continuity note:
+  - this is real `R11` feature growth in the reusable-module lane,
+  - it gives future composition/shared-datapath work one honest metadata surface for standalone-DT block enables,
+  - and it keeps child interfaces unchanged for now instead of widening them before the reusable-module export contract is settled.
+
 ## 2026-03-20: named generated children now default their source name locally in composition
 - Saved shipped behavior:
   - named `?fsmc:name` and `?dtc:name` children may now omit the explicit child-source token and default it to `name`,

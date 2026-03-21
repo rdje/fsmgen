@@ -2834,7 +2834,8 @@ sub analyze_fsm_module ($self, $fsm_module) {
     
     # Analyze signals in detail
     my %signal_analysis = $self->analyze_signals(\%all_signals);
-    
+    my $standalone_dt_enable_metadata = $self->build_standalone_dt_enable_metadata(\@all_states);
+
     my $result = {
         module_name => $module_name,
         regular_states => \@regular_states,
@@ -2853,9 +2854,46 @@ sub analyze_fsm_module ($self, $fsm_module) {
         ),
         state_count => scalar(@regular_states),
         signal_count => scalar(keys %all_signals),
+        standalone_dt_count => $standalone_dt_enable_metadata->{standalone_dt_count},
+        standalone_dt_names => $standalone_dt_enable_metadata->{standalone_dt_names},
+        standalone_dt_enable_families => $standalone_dt_enable_metadata->{standalone_dt_enable_families},
+        standalone_dt_module_enable_family => $standalone_dt_enable_metadata->{standalone_dt_module_enable_family},
     };
     fsm_trace_exit('FSM module analysis complete', 2);
     return $result;
+}
+
+sub build_standalone_dt_enable_metadata ($self, $all_states) {
+    my @standalone_dt_blocks = sort {
+        $a->name cmp $b->name
+    } grep {
+        ref($_) && $_->can('is_standalone_dt') && $_->is_standalone_dt
+    } @{$all_states || []};
+
+    my @enable_families = map {
+        my $dt_name = $_->name;
+        my $enable_signal = $dt_name;
+        $enable_signal =~ s/^-//;
+        $enable_signal .= '_en';
+
+        {
+            dt_name => $dt_name,
+            enable_signal => $enable_signal,
+        };
+    } @standalone_dt_blocks;
+
+    my @dt_names = map { $_->{dt_name} } @enable_families;
+    my @enable_signals = map { $_->{enable_signal} } @enable_families;
+
+    return {
+        standalone_dt_count => scalar(@enable_families),
+        standalone_dt_names => \@dt_names,
+        standalone_dt_enable_families => \@enable_families,
+        standalone_dt_module_enable_family => {
+            dt_names => \@dt_names,
+            enable_signals => \@enable_signals,
+        },
+    };
 }
 
 sub analyze_signals ($self, $signals) {
