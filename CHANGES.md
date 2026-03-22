@@ -4538,6 +4538,9 @@ This is the persistent technical change history for FSMGen.
   - direct `?top` composition results now expose serialized `structural_rtl_ir`,
   - composition-top `module_info` now mirrors that same structural surface,
   - and composition-top HDL emission now walks the extracted structural layer for explicit ports, nets, instances, pin bindings, and auxiliary assignments instead of re-reading only plan state during top-module dumping.
+- Widened that structural extraction slice into direct generated roots and child exports:
+  - direct generated `?fsm` / `?dt` results now expose a bounded structural module-interface slice through `structural_rtl_ir`,
+  - and realized generated-child export surfaces now preserve that same child `structural_rtl_ir` beside `intent_hir` and `lowered_rtl_ir`.
 - Logged the next forward-IR architecture refinement for future implementation:
   - the current extracted `Lowered RTL IR` is now explicitly treated as a lowered summary layer rather than the final full connectivity graph,
   - the forward compiler is now steered toward `Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend`,

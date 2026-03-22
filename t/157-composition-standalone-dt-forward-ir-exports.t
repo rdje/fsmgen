@@ -94,12 +94,26 @@ FSM
     is($router_a->{lowered_rtl_ir}{source_root_kind}, 'dt', 'first exported dt child preserves dt root kind in lowered_rtl_ir');
     is($router_a->{lowered_rtl_ir}{output_drive_family_count}, 1, 'first exported dt child preserves output-drive family count in lowered_rtl_ir');
     is($router_a->{lowered_rtl_ir}{standalone_dt_multi_drive_target_count}, 1, 'first exported dt child preserves grouped shared-target count in lowered_rtl_ir');
+    is($router_a->{structural_rtl_ir}{module_name}, 'route_a', 'first exported dt child preserves module name in structural_rtl_ir');
+    is($router_a->{structural_rtl_ir}{port_count}, 4, 'first exported dt child preserves module boundary port count in structural_rtl_ir');
+    is_deeply(
+        [sort map { $_->{name} } @{$router_a->{structural_rtl_ir}{ports}}],
+        [qw(a b out sel)],
+        'first exported dt child preserves module boundary port names in structural_rtl_ir',
+    );
 
     is($router_b->{intent_hir}{module_name}, 'route_b', 'second exported dt child preserves module name in intent_hir');
     is($router_b->{intent_hir}{standalone_dt_count}, 1, 'second exported dt child preserves standalone block count in intent_hir');
     is($router_b->{lowered_rtl_ir}{module_name}, 'route_b', 'second exported dt child preserves module name in lowered_rtl_ir');
     is($router_b->{lowered_rtl_ir}{output_drive_family_count}, 1, 'second exported dt child preserves output-drive family count in lowered_rtl_ir');
     is($router_b->{lowered_rtl_ir}{standalone_dt_multi_drive_target_count}, 0, 'second exported dt child preserves empty grouped shared-target count in lowered_rtl_ir');
+    is($router_b->{structural_rtl_ir}{module_name}, 'route_b', 'second exported dt child preserves module name in structural_rtl_ir');
+    is($router_b->{structural_rtl_ir}{port_count}, 2, 'second exported dt child preserves module boundary port count in structural_rtl_ir');
+    is_deeply(
+        [sort map { $_->{name} } @{$router_b->{structural_rtl_ir}{ports}}],
+        [qw(final_out in)],
+        'second exported dt child preserves module boundary port names in structural_rtl_ir',
+    );
     is($intent_hir->{composition_standalone_dt_child_count}, 2, 'composition intent_hir reports realized standalone-DT child count');
     is($intent_hir->{composition_standalone_dt_block_count}, 3, 'composition intent_hir reports aggregated standalone-DT block count');
     is($intent_hir->{composition_standalone_dt_multi_drive_target_count}, 1, 'composition intent_hir reports aggregated standalone-DT grouped shared-target count');

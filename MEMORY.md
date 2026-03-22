@@ -4431,6 +4431,9 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - direct `?top` results now expose `structural_rtl_ir`,
   - composition-top `module_info` mirrors the same structural surface,
   - and the active composition-top emitter now walks that structural layer for top-module dumping.
+- The next structural widening step is also live:
+  - direct generated `?fsm` / `?dt` results now expose a bounded structural module-interface slice through `structural_rtl_ir`,
+  - and realized generated-child export surfaces now preserve that same child `structural_rtl_ir` beside `intent_hir` and `lowered_rtl_ir`.
 - The composition provenance/reporting surface now preserves that same forward context too:
   - resolved-link entries keep source/target endpoint context,
   - generated-child endpoint contexts keep `intent_hir`,

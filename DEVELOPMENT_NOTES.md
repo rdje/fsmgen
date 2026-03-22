@@ -5817,6 +5817,10 @@ It is an exact-delay pulse request:
   - realized instances,
   - per-instance pin bindings,
   - and auxiliary assignments.
+- The next bounded widening step is now also live:
+  - direct generated `?fsm` / `?dt` results now expose a structural module-interface slice through `structural_rtl_ir`,
+  - that direct-root slice currently captures explicit module ports plus empty nets/instances/auxiliary structure,
+  - and realized generated-child export surfaces now preserve the same child `structural_rtl_ir` beside `intent_hir` and `lowered_rtl_ir`.
 - Design note from this slice:
   - this is the first structural slice, not the whole universal connectivity story yet,
   - but it establishes the right boundary between `Lowered RTL IR` as lowered semantic summary and `Structural RTL IR` as the first extracted wiring/netlist layer.

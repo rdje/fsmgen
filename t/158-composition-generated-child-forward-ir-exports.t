@@ -124,6 +124,11 @@ FSM
         $producer_instance->module_info->{lowered_rtl_ir},
         'first exported generated child preserves the same lowered_rtl_ir as its realized module_info',
     );
+    is_deeply(
+        $producer_export->{structural_rtl_ir},
+        $producer_instance->module_info->{structural_rtl_ir},
+        'first exported generated child preserves the same structural_rtl_ir as its realized module_info',
+    );
 
     is($router_export->{kind}, 'dtc', 'second exported generated child keeps its composition kind');
     is($router_export->{source_root_kind}, 'dt', 'second exported generated child keeps its source root kind');
@@ -139,6 +144,11 @@ FSM
         $router_export->{lowered_rtl_ir},
         $router_instance->module_info->{lowered_rtl_ir},
         'second exported generated child preserves the same lowered_rtl_ir as its realized module_info',
+    );
+    is_deeply(
+        $router_export->{structural_rtl_ir},
+        $router_instance->module_info->{structural_rtl_ir},
+        'second exported generated child preserves the same structural_rtl_ir as its realized module_info',
     );
 };
 

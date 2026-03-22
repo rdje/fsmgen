@@ -78,9 +78,11 @@ FSM::IR::StructuralRTLIR - Explicit forward structural RTL connectivity summary
 =head1 DESCRIPTION
 
 This module provides the first extracted forward structural RTL/connectivity layer
-used by the active `.fsm` to HDL pipeline. It is currently bounded to composition
-tops and captures explicit ports, nets, instances, pin bindings, and auxiliary
-assignments so backend emission can begin walking one explicit structural graph
-instead of rediscovering wiring shape ad hoc from mixed plan/emitter state.
+used by the active `.fsm` to HDL pipeline. It currently has two bounded shapes:
+composition tops carry explicit ports, nets, instances, pin bindings, and
+auxiliary assignments; direct generated roots carry an explicit module-interface
+boundary slice with ports plus empty nets/instances/auxiliary structure. That
+lets backend and export work begin walking one explicit structural graph instead
+of rediscovering wiring shape ad hoc from mixed plan/emitter state.
 
 =cut

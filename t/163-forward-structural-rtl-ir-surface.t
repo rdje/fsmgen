@@ -1,0 +1,91 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Test::More;
+use File::Spec;
+use File::Temp qw(tempdir);
+use FindBin;
+
+use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+
+use FSM::Pipeline::HDLGenerator;
+
+my $tempdir = tempdir(CLEANUP => 1);
+
+subtest 'direct generated roots now surface a bounded structural_rtl_ir module-interface summary' => sub {
+    my $fsm_path = write_fsm('structural_rtl_ir_direct.fsm', <<'FSM');
+(?fsm:structural_rtl_ir_direct
+  (+system
+    (clock clk)
+    (asreset rstn)
+  )
+  (+size
+    (IN 8)
+    (OUT 8)
+  )
+  (IDLE
+    (OUT> <= IN)
+  )
+)
+FSM
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug_level => 0,
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($fsm_path);
+    my $structural_rtl_ir = $result->{structural_rtl_ir};
+
+    ok($structural_rtl_ir, 'direct result now exposes a structural_rtl_ir summary');
+    is_deeply(
+        $result->{module_info}{structural_rtl_ir},
+        $structural_rtl_ir,
+        'module_info preserves the same serialized structural_rtl_ir summary',
+    );
+    is($structural_rtl_ir->{module_name}, 'structural_rtl_ir_direct', 'structural_rtl_ir preserves the direct module name');
+    is($structural_rtl_ir->{source_root_kind}, 'fsm', 'structural_rtl_ir preserves the direct root kind');
+    is($structural_rtl_ir->{target_language}, 'systemverilog', 'structural_rtl_ir preserves the direct target language');
+    is($structural_rtl_ir->{port_count}, 4, 'structural_rtl_ir reports the full direct module port count');
+    is_deeply(
+        [sort map { $_->{name} } @{$structural_rtl_ir->{ports}}],
+        [qw(IN OUT clk rstn)],
+        'structural_rtl_ir preserves the direct module port names',
+    );
+
+    my %ports_by_name = map { $_->{name} => $_ } @{$structural_rtl_ir->{ports}};
+    is_deeply(
+        {
+            map {
+                $_ => {
+                    direction => $ports_by_name{$_}{direction},
+                    width => $ports_by_name{$_}{width},
+                    type => $ports_by_name{$_}{type},
+                }
+            } sort keys %ports_by_name
+        },
+        {
+            IN => { direction => 'input', width => 8, type => 'wire' },
+            OUT => { direction => 'output', width => 8, type => 'wire' },
+            clk => { direction => 'input', width => 1, type => 'clock' },
+            rstn => { direction => 'input', width => 1, type => 'reset' },
+        },
+        'structural_rtl_ir preserves direct module boundary port metadata',
+    );
+    is($structural_rtl_ir->{net_count}, 0, 'bounded direct structural_rtl_ir keeps internal net count empty at this slice');
+    is($structural_rtl_ir->{instance_count}, 0, 'bounded direct structural_rtl_ir keeps instance count empty at this slice');
+    is($structural_rtl_ir->{auxiliary_assignment_count}, 0, 'bounded direct structural_rtl_ir keeps auxiliary assignment count empty at this slice');
+};
+
+done_testing();
+
+sub write_fsm {
+    my ($filename, $content) = @_;
+    my $path = File::Spec->catfile($tempdir, $filename);
+    open my $fh, '>', $path or die "Cannot open $path for write: $!";
+    print {$fh} $content or die "Cannot write $path: $!";
+    close $fh or die "Cannot close $path: $!";
+    return $path;
+}

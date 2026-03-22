@@ -770,6 +770,14 @@ Done:
   - preservation of that same serialized structural surface through composition-top `module_info`,
   - stable top-port / net / instance / pin-binding connectivity details in the first bounded structural slice,
   - and that the active composition-top emitter can render the top module by walking the serialized structural layer.
+- The next structural widening step is now also shipped:
+  - direct generated `?fsm` / `?dt` results now expose a bounded structural module-interface slice through `structural_rtl_ir`,
+  - that direct-root structural slice currently covers explicit module ports plus empty nets/instances/auxiliary structure,
+  - and realized generated-child export surfaces now preserve that same child `structural_rtl_ir` beside `intent_hir` and `lowered_rtl_ir`.
+- [t/163-forward-structural-rtl-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/163-forward-structural-rtl-ir-surface.t) now locks:
+  - direct-result `structural_rtl_ir` surfacing for generated `?fsm` roots,
+  - stable direct-module boundary port metadata in that bounded structural slice,
+  - and the effective system boundary (`clock` / `reset`) being preserved there when those ports are really part of the generated module contract.
 - The next forward-IR widening step through the composition provenance/reporting surface is now also shipped:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
   - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,

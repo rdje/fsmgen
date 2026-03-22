@@ -146,6 +146,8 @@ sub generate_hdl_from_file ($self, $fsm_file) {
     # Step 4: Generate HDL code
     my $hdl_code = $self->generate_hdl_code($fsm_module);
     $self->enrich_module_info_from_generated_analysis($module_info, $fsm_module);
+    my $structural_rtl_ir = $self->build_structural_rtl_ir($module_info, $fsm_module);
+    $module_info->{structural_rtl_ir} = $structural_rtl_ir->as_hashref;
     $hdl_code = $self->augment_generated_hdl_with_standalone_dt_assertions($hdl_code, $module_info);
     
     # Step 5: Gather statistics
@@ -157,6 +159,7 @@ sub generate_hdl_from_file ($self, $fsm_file) {
         fsm_module => $fsm_module,
         intent_hir => $intent_hir->as_hashref,
         lowered_rtl_ir => $module_info->{lowered_rtl_ir},
+        structural_rtl_ir => $module_info->{structural_rtl_ir},
         module_info => $module_info,
         hdl_code => $hdl_code,
         statistics => $statistics,
@@ -521,6 +524,8 @@ sub realize_fsmc_child_instance ($self, $instance, $composition_spec, $fsm_file,
     my $child_module_info = $self->analyze_fsm_module($child_module, $child_intent_hir);
     my $child_hdl_code = $self->generate_hdl_code($child_module);
     $self->enrich_module_info_from_generated_analysis($child_module_info, $child_module);
+    my $child_structural_rtl_ir = $self->build_structural_rtl_ir($child_module_info, $child_module);
+    $child_module_info->{structural_rtl_ir} = $child_structural_rtl_ir->as_hashref;
     $child_hdl_code = $self->augment_generated_hdl_with_standalone_dt_assertions($child_hdl_code, $child_module_info);
     my $shared_datapath_source_exports = $self->build_shared_datapath_source_export_metadata($child_module_info);
     $child_module_info->{shared_datapath_source_export_count} = scalar(@$shared_datapath_source_exports);
@@ -555,6 +560,8 @@ sub realize_dtc_child_instance ($self, $instance, $composition_spec, $fsm_file, 
     my $child_module_info = $self->analyze_fsm_module($child_module, $child_intent_hir);
     my $child_hdl_code = $self->generate_hdl_code($child_module);
     $self->enrich_module_info_from_generated_analysis($child_module_info, $child_module);
+    my $child_structural_rtl_ir = $self->build_structural_rtl_ir($child_module_info, $child_module);
+    $child_module_info->{structural_rtl_ir} = $child_structural_rtl_ir->as_hashref;
     $child_hdl_code = $self->augment_generated_hdl_with_standalone_dt_assertions($child_hdl_code, $child_module_info);
     my $child_interface_ports = $self->build_realized_child_interface_ports($child_module_info);
 
@@ -3155,6 +3162,7 @@ sub build_composition_generated_child_exports ($self, $composition_plan) {
         my $child_info = $instance->module_info || {};
         my $intent_hir = $self->module_intent_hir($child_info);
         my $lowered_rtl_ir = $self->module_lowered_rtl_ir($child_info);
+        my $structural_rtl_ir = $self->module_structural_rtl_ir($child_info);
 
         push @children, {
             kind => $instance->kind,
@@ -3172,6 +3180,7 @@ sub build_composition_generated_child_exports ($self, $composition_plan) {
             standalone_dt_multi_drive_target_count => ($lowered_rtl_ir->{standalone_dt_multi_drive_target_count} || 0),
             intent_hir => $intent_hir,
             lowered_rtl_ir => $lowered_rtl_ir,
+            structural_rtl_ir => $structural_rtl_ir,
         };
 
         $fsm_child_count++ if ($instance->kind || '') eq 'fsmc';
@@ -3228,6 +3237,7 @@ sub build_composition_standalone_dt_child_exports ($self, $composition_plan) {
             source_name => $instance->source_name,
             intent_hir => $self->module_intent_hir($child_info),
             lowered_rtl_ir => $self->module_lowered_rtl_ir($child_info),
+            structural_rtl_ir => $self->module_structural_rtl_ir($child_info),
             standalone_dt_count => $standalone_dt_count,
             standalone_dt_names => [@{$child_info->{standalone_dt_names} || []}],
             standalone_dt_enable_families => \@enable_families,
@@ -3292,6 +3302,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
                 bound_signal => $bindings{$port->name},
                 intent_hir => $self->module_intent_hir($instance->module_info),
                 lowered_rtl_ir => $self->module_lowered_rtl_ir($instance->module_info),
+                structural_rtl_ir => $self->module_structural_rtl_ir($instance->module_info),
                 output_drive_family => $output_drive_family,
                 drive_intent => $self->shared_datapath_drive_intent_from_output_drive_family($output_drive_family),
             };
@@ -3636,6 +3647,7 @@ sub composition_provenance_endpoint_context ($self, $composition_plan, $endpoint
     my $module_info = $instance->module_info || {};
     my $intent_hir = $self->module_intent_hir($module_info);
     my $lowered_rtl_ir = $self->module_lowered_rtl_ir($module_info);
+    my $structural_rtl_ir = $self->module_structural_rtl_ir($module_info);
     my $source_root_kind = $intent_hir->{source_root_kind}
         // $module_info->{source_root_kind}
         // (($instance->kind || '') eq 'dtc' ? 'dt'
@@ -3659,6 +3671,7 @@ sub composition_provenance_endpoint_context ($self, $composition_plan, $endpoint
         output_drive_family_count => ($lowered_rtl_ir->{output_drive_family_count} || 0),
         intent_hir => $intent_hir,
         lowered_rtl_ir => $lowered_rtl_ir,
+        structural_rtl_ir => $structural_rtl_ir,
     };
 }
 
@@ -4531,6 +4544,11 @@ sub module_lowered_rtl_ir ($self, $module_info) {
     return _clone_structured_value($module_info->{lowered_rtl_ir} || {});
 }
 
+sub module_structural_rtl_ir ($self, $module_info) {
+    return {} unless ref($module_info) eq 'HASH';
+    return _clone_structured_value($module_info->{structural_rtl_ir} || {});
+}
+
 sub module_standalone_dt_multi_drive_targets ($self, $module_info) {
     return [] unless ref($module_info) eq 'HASH';
 
@@ -4577,6 +4595,72 @@ sub build_lowered_rtl_ir ($self, $module_info, $fsm_module) {
                 ? \@standalone_dt_multi_drive_targets
                 : []
         ),
+    );
+}
+
+sub build_structural_rtl_ir ($self, $module_info, $fsm_module = undef) {
+    return unless ref($module_info) eq 'HASH';
+
+    my @ports;
+    my %seen_ports;
+    for my $bucket (
+        [ inputs => 'input' ],
+        [ outputs => 'output' ],
+    ) {
+        my ($analysis_key, $direction) = @$bucket;
+        for my $entry (@{$module_info->{signal_analysis}{$analysis_key} || []}) {
+            my $signal_name = $entry->{name};
+            my $signal = ref($module_info->{signals}) eq 'HASH'
+                ? $module_info->{signals}{$signal_name}
+                : undef;
+            my $type = (ref($signal) && $signal->can('type')) ? $signal->type : undef;
+
+            push @ports, {
+                name => $signal_name,
+                direction => $direction,
+                width => ($entry->{width} || 1),
+                type => $type,
+            };
+            $seen_ports{$signal_name} = 1;
+        }
+    }
+
+    my $system_contract = $module_info->{system_contract} || {};
+    if (($module_info->{requires_implicit_system_ports} || $module_info->{explicit_system_contract})
+        && defined($system_contract->{clock}) && length($system_contract->{clock})
+        && !$seen_ports{$system_contract->{clock}}) {
+        push @ports, {
+            name => $system_contract->{clock},
+            direction => 'input',
+            width => 1,
+            type => 'clock',
+        };
+        $seen_ports{$system_contract->{clock}} = 1;
+    }
+
+    if (($module_info->{requires_implicit_system_ports} || $module_info->{explicit_system_contract})
+        && defined($system_contract->{reset}) && length($system_contract->{reset})
+        && !$seen_ports{$system_contract->{reset}}) {
+        push @ports, {
+            name => $system_contract->{reset},
+            direction => 'input',
+            width => 1,
+            type => 'reset',
+        };
+        $seen_ports{$system_contract->{reset}} = 1;
+    }
+
+    return FSM::IR::StructuralRTLIR->new(
+        module_name => ($module_info->{module_name} // ''),
+        source_root_kind => (
+            $module_info->{source_root_kind}
+                // ($fsm_module && $fsm_module->can('source_root_kind') ? $fsm_module->source_root_kind : 'fsm')
+        ),
+        target_language => ($self->{target_language} // 'systemverilog'),
+        ports => \@ports,
+        nets => [],
+        instances => [],
+        auxiliary_assignments => [],
     );
 }
 

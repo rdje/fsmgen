@@ -90,6 +90,11 @@ FSM
         'first contributor preserves the same lowered_rtl_ir as its realized child module_info',
     );
     is_deeply(
+        $left_contributor->{structural_rtl_ir},
+        $left_instance->module_info->{structural_rtl_ir},
+        'first contributor preserves the same structural_rtl_ir as its realized child module_info',
+    );
+    is_deeply(
         $left_contributor->{output_drive_family},
         $left_instance->module_info->{lowered_rtl_ir}{output_drive_families}[0],
         'first contributor preserves the exact selected output_drive_family from its child lowered_rtl_ir',
@@ -106,6 +111,11 @@ FSM
         $right_contributor->{lowered_rtl_ir},
         $right_instance->module_info->{lowered_rtl_ir},
         'second contributor preserves the same lowered_rtl_ir as its realized child module_info',
+    );
+    is_deeply(
+        $right_contributor->{structural_rtl_ir},
+        $right_instance->module_info->{structural_rtl_ir},
+        'second contributor preserves the same structural_rtl_ir as its realized child module_info',
     );
     is_deeply(
         $right_contributor->{output_drive_family},

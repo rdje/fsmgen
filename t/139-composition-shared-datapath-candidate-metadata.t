@@ -347,7 +347,7 @@ sub clone_without_forward_ir {
                 my $key = $_;
                 ($key => clone_without_forward_ir($value->{$key}))
             } grep {
-                $_ ne 'intent_hir' && $_ ne 'lowered_rtl_ir'
+                $_ ne 'intent_hir' && $_ ne 'lowered_rtl_ir' && $_ ne 'structural_rtl_ir'
             } sort keys %$value
         };
     }
