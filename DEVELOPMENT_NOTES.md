@@ -5777,6 +5777,7 @@ It is an exact-delay pulse request:
 - The next widening step is now also shipped through composition tops themselves:
   - direct `?top` generation results now expose serialized top-level `intent_hir` and serialized top-level `lowered_rtl_ir`,
   - the composition-top `intent_hir` slice is intentionally bounded to top-port analysis plus composition child-count / lane metadata,
+  - that same composition-top `intent_hir` slice now also carries the broader generated-child export instead of leaving it only as a separate top-level compatibility summary,
   - the composition-top `lowered_rtl_ir` slice is intentionally bounded to internal-net / instance / auxiliary-assignment summaries plus the shared-datapath candidate surface,
   - and composition `module_info` now mirrors those same serialized forward layers instead of leaving `?top` as the remaining forward-IR hole.
 - The next widening step is now also shipped through the composition provenance/reporting surface:

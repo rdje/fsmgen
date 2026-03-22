@@ -4521,6 +4521,7 @@ This is the persistent technical change history for FSMGen.
   - and non-quiet `bin/fsmgen` runs now print one concise contributor-context line before the existing shared-datapath drive-intent summary.
 - Widened the same forward IR story through composition tops themselves:
   - direct `?top` generation results now expose serialized top-level `intent_hir` and serialized top-level `lowered_rtl_ir`,
+  - that same composition-top `intent_hir` now also carries the broader generated-child export instead of leaving it only as a separate top-level compatibility summary,
   - those composition-top forward layers now carry bounded top-port / child-count / lane summaries on the intent side plus bounded internal-net / instance / auxiliary-assignment summaries and the shared-datapath candidate surface on the lowered side,
   - and composition `module_info` now mirrors those same serialized forward IR layers instead of leaving composition tops as the remaining explicit forward-IR gap.
 - Widened the same forward IR story through the composition provenance/reporting surface:

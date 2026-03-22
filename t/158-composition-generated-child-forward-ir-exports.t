@@ -83,6 +83,7 @@ FSM
     );
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
+    my $intent_hir = $result->{intent_hir};
     my $module_info = $result->{module_info};
     my ($producer_instance, $router_instance) = @{$result->{composition_plan}->instances};
     my ($producer_export, $router_export) = @{$module_info->{composition_generated_children}};
@@ -94,6 +95,19 @@ FSM
         [map { $_->{instance_name} } @{$module_info->{composition_generated_children}}],
         ['producer', 'router'],
         'top module_info preserves realized generated child order',
+    );
+    is($intent_hir->{composition_generated_child_count}, 2, 'top intent_hir counts realized generated children');
+    is($intent_hir->{composition_generated_fsm_child_count}, 1, 'top intent_hir counts realized generated fsm children');
+    is($intent_hir->{composition_generated_dt_child_count}, 1, 'top intent_hir counts realized generated dt children');
+    is_deeply(
+        [map { $_->{instance_name} } @{$intent_hir->{composition_generated_children}}],
+        ['producer', 'router'],
+        'top intent_hir preserves realized generated child order',
+    );
+    is_deeply(
+        $intent_hir->{composition_generated_children},
+        $module_info->{composition_generated_children},
+        'top module_info mirrors the broader generated-child export from intent_hir',
     );
 
     is($producer_export->{kind}, 'fsmc', 'first exported generated child keeps its composition kind');

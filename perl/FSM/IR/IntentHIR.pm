@@ -28,6 +28,7 @@ sub new ($class, %args) {
         composition_generated_child_count => $args{composition_generated_child_count},
         composition_generated_fsm_child_count => $args{composition_generated_fsm_child_count},
         composition_generated_dt_child_count => $args{composition_generated_dt_child_count},
+        composition_generated_children => _clone($args{composition_generated_children}),
         composition_lane => $args{composition_lane},
     }, $class;
 }
@@ -48,6 +49,7 @@ sub composition_child_count ($self) { return $self->{composition_child_count} }
 sub composition_generated_child_count ($self) { return $self->{composition_generated_child_count} }
 sub composition_generated_fsm_child_count ($self) { return $self->{composition_generated_fsm_child_count} }
 sub composition_generated_dt_child_count ($self) { return $self->{composition_generated_dt_child_count} }
+sub composition_generated_children ($self) { return $self->{composition_generated_children} }
 sub composition_lane ($self) { return $self->{composition_lane} }
 
 sub as_hashref ($self) {
@@ -84,6 +86,8 @@ sub as_hashref ($self) {
         if defined $self->composition_generated_fsm_child_count;
     $result->{composition_generated_dt_child_count} = $self->composition_generated_dt_child_count
         if defined $self->composition_generated_dt_child_count;
+    $result->{composition_generated_children} = _clone($self->composition_generated_children)
+        if defined $self->composition_generated_children;
     $result->{composition_lane} = $self->composition_lane
         if defined $self->composition_lane;
 
@@ -118,8 +122,8 @@ FSM::IR::IntentHIR - Explicit forward semantic intent summary for `.fsm` generat
 
 This module provides the first extracted forward-compiler semantic IR surface used by
 the active `.fsm` to HDL pipeline. It is intentionally narrow: root identity, system
-contract, state/DT families, signal/interface analysis, and standalone-DT enable
-families are captured explicitly so later lowering work can stop rediscovering them
-ad hoc inside generation code.
+contract, state/DT families, signal/interface analysis, and bounded composition
+hierarchy summaries such as generated-child exports are captured explicitly so later
+lowering work can stop rediscovering them ad hoc inside generation code.
 
 =cut

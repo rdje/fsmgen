@@ -4416,6 +4416,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Composition tops themselves now preserve the same forward-IR story too:
   - direct `?top` results expose serialized top-level `intent_hir`,
   - direct `?top` results also expose serialized top-level `lowered_rtl_ir`,
+  - that same composition-top `intent_hir` now also carries the broader generated-child export instead of leaving it only as a separate top-level compatibility summary,
   - and composition `module_info` mirrors those same serialized forward layers with bounded top-port, lane, internal-net, instance, auxiliary-assignment, and shared-datapath-candidate summaries.
 - The composition provenance/reporting surface now preserves that same forward context too:
   - resolved-link entries keep source/target endpoint context,

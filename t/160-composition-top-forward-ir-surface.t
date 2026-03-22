@@ -111,6 +111,16 @@ FSM
     is($intent_hir->{composition_generated_child_count}, 2, 'composition intent_hir reports realized generated child count');
     is($intent_hir->{composition_generated_fsm_child_count}, 1, 'composition intent_hir reports realized generated fsm child count');
     is($intent_hir->{composition_generated_dt_child_count}, 1, 'composition intent_hir reports realized generated dt child count');
+    is_deeply(
+        [map { $_->{instance_name} } @{$intent_hir->{composition_generated_children}}],
+        ['producer', 'router'],
+        'composition intent_hir preserves realized generated child export order',
+    );
+    is_deeply(
+        $intent_hir->{composition_generated_children},
+        $module_info->{composition_generated_children},
+        'composition module_info mirrors the broader generated-child export from intent_hir',
+    );
     is($intent_hir->{composition_lane}, 'C2', 'composition intent_hir preserves the composition lane');
     is($intent_hir->{regular_state_count}, 0, 'composition intent_hir keeps top roots separate from regular FSM state counts');
     is($intent_hir->{standalone_dt_count}, 0, 'composition intent_hir keeps top roots separate from standalone-DT counts');

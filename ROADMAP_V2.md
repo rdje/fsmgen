@@ -282,6 +282,7 @@ First shipped `R11` slice now in tree:
 - The next widening step is now also shipped through composition tops themselves:
   - direct `?top` generation results now expose serialized top-level `intent_hir` and serialized top-level `lowered_rtl_ir`,
   - those composition-top forward layers now carry stable top-port analysis plus composition child-count / lane metadata on the intent side,
+  - that same composition-top `intent_hir` surface now also carries the broader generated-child export instead of leaving it only as a separate top-level compatibility summary,
   - those same composition-top forward layers now also carry stable internal-net / instance / auxiliary-assignment summaries plus the bounded shared-datapath candidate surface on the lowered side,
   - and `module_info` now mirrors those same serialized composition-top forward IR layers instead of leaving composition tops as the remaining forward-IR gap.
 - The next widening step is now also shipped through the composition provenance/reporting surface:

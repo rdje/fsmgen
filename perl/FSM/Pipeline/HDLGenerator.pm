@@ -2906,6 +2906,7 @@ sub build_composition_intent_hir ($self, $composition_plan, $generated_child_exp
         composition_generated_child_count => $generated_child_exports->{child_count},
         composition_generated_fsm_child_count => $generated_child_exports->{fsm_child_count},
         composition_generated_dt_child_count => $generated_child_exports->{dt_child_count},
+        composition_generated_children => $generated_child_exports->{children},
         composition_lane => $composition_plan->lane,
     );
 }
@@ -3002,10 +3003,24 @@ sub build_composition_module_info (
         composition_block_count => $composition_report
             ? $composition_report->{block_count}
             : 0,
-        composition_generated_child_count => $generated_child_exports->{child_count},
-        composition_generated_fsm_child_count => $generated_child_exports->{fsm_child_count},
-        composition_generated_dt_child_count => $generated_child_exports->{dt_child_count},
-        composition_generated_children => $generated_child_exports->{children},
+        composition_generated_child_count => (
+            exists $intent_hir_hash->{composition_generated_child_count}
+                ? $intent_hir_hash->{composition_generated_child_count}
+                : 0
+        ),
+        composition_generated_fsm_child_count => (
+            exists $intent_hir_hash->{composition_generated_fsm_child_count}
+                ? $intent_hir_hash->{composition_generated_fsm_child_count}
+                : 0
+        ),
+        composition_generated_dt_child_count => (
+            exists $intent_hir_hash->{composition_generated_dt_child_count}
+                ? $intent_hir_hash->{composition_generated_dt_child_count}
+                : 0
+        ),
+        composition_generated_children => (
+            $intent_hir_hash->{composition_generated_children} || []
+        ),
         composition_standalone_dt_child_count => $standalone_dt_child_exports->{child_count},
         composition_standalone_dt_block_count => $standalone_dt_child_exports->{block_count},
         composition_standalone_dt_multi_drive_target_count => $standalone_dt_child_exports->{multi_drive_target_count},
