@@ -172,6 +172,7 @@ Current shipped runtime subset:
 - realized `?dtc` children now also preserve grouped standalone-DT multi-drive target metadata in that same `module_info` surface,
 - parent composition tops now also aggregate those realized `?dtc` child exports through `composition_standalone_dt_child_count`, `composition_standalone_dt_block_count`, `composition_standalone_dt_multi_drive_target_count`, and `composition_standalone_dt_children` in top-level `module_info`,
 - and that same top-level `composition_standalone_dt_children` surface now also preserves each realized child's forward `intent_hir` and `lowered_rtl_ir` summaries,
+- and that same reusable standalone-DT child export now also lives inside composition-top `intent_hir`, with top-level `module_info` mirroring it back out from that explicit semantic layer instead of keeping a separate ad hoc export path,
 - and parent composition tops now also surface one broader generated-child export through `composition_generated_child_count`, `composition_generated_fsm_child_count`, `composition_generated_dt_child_count`, and `composition_generated_children`,
 - and that broader generated-child surface now preserves each realized `?fsmc` / `?dtc` child's forward `intent_hir` and `lowered_rtl_ir` summaries together with stable kind/root/count metadata,
 - and that same broader generated-child export now also lives inside composition-top `intent_hir`, with top-level `module_info` mirroring it back out from that explicit semantic layer instead of keeping a separate ad hoc export path,

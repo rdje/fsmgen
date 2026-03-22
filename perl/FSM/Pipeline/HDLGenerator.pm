@@ -252,7 +252,12 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
     my $composition_report = $self->build_composition_provenance_report($composition_plan);
     my $hdl_code = $self->generate_composition_hdl_code($composition_plan);
     my $generated_child_exports = $self->build_composition_generated_child_exports($composition_plan);
-    my $intent_hir = $self->build_composition_intent_hir($composition_plan, $generated_child_exports);
+    my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
+    my $intent_hir = $self->build_composition_intent_hir(
+        $composition_plan,
+        $generated_child_exports,
+        $standalone_dt_child_exports,
+    );
     my $lowered_rtl_ir = $self->build_composition_lowered_rtl_ir($composition_plan);
     my $module_info = $self->build_composition_module_info(
         $composition_plan,
@@ -2885,8 +2890,14 @@ sub build_composition_port_metadata ($self, $composition_plan) {
     };
 }
 
-sub build_composition_intent_hir ($self, $composition_plan, $generated_child_exports = undef) {
+sub build_composition_intent_hir (
+    $self,
+    $composition_plan,
+    $generated_child_exports = undef,
+    $standalone_dt_child_exports = undef,
+) {
     $generated_child_exports //= $self->build_composition_generated_child_exports($composition_plan);
+    $standalone_dt_child_exports //= $self->build_composition_standalone_dt_child_exports($composition_plan);
     my $port_metadata = $self->build_composition_port_metadata($composition_plan);
 
     return FSM::IR::IntentHIR->new(
@@ -2907,6 +2918,10 @@ sub build_composition_intent_hir ($self, $composition_plan, $generated_child_exp
         composition_generated_fsm_child_count => $generated_child_exports->{fsm_child_count},
         composition_generated_dt_child_count => $generated_child_exports->{dt_child_count},
         composition_generated_children => $generated_child_exports->{children},
+        composition_standalone_dt_child_count => $standalone_dt_child_exports->{child_count},
+        composition_standalone_dt_block_count => $standalone_dt_child_exports->{block_count},
+        composition_standalone_dt_multi_drive_target_count => $standalone_dt_child_exports->{multi_drive_target_count},
+        composition_standalone_dt_children => $standalone_dt_child_exports->{children},
         composition_lane => $composition_plan->lane,
     );
 }
@@ -2936,10 +2951,13 @@ sub build_composition_module_info (
     $lowered_rtl_ir = undef,
 ) {
     $generated_child_exports //= $self->build_composition_generated_child_exports($composition_plan);
-    $intent_hir //= $self->build_composition_intent_hir($composition_plan, $generated_child_exports);
-    $lowered_rtl_ir //= $self->build_composition_lowered_rtl_ir($composition_plan);
-
     my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
+    $intent_hir //= $self->build_composition_intent_hir(
+        $composition_plan,
+        $generated_child_exports,
+        $standalone_dt_child_exports,
+    );
+    $lowered_rtl_ir //= $self->build_composition_lowered_rtl_ir($composition_plan);
     my $port_metadata = $self->build_composition_port_metadata($composition_plan);
     my $intent_hir_hash = $intent_hir->as_hashref;
     my $lowered_rtl_ir_hash = $lowered_rtl_ir->as_hashref;
@@ -3021,10 +3039,25 @@ sub build_composition_module_info (
         composition_generated_children => (
             $intent_hir_hash->{composition_generated_children} || []
         ),
-        composition_standalone_dt_child_count => $standalone_dt_child_exports->{child_count},
-        composition_standalone_dt_block_count => $standalone_dt_child_exports->{block_count},
-        composition_standalone_dt_multi_drive_target_count => $standalone_dt_child_exports->{multi_drive_target_count},
-        composition_standalone_dt_children => $standalone_dt_child_exports->{children},
+        composition_standalone_dt_child_count => (
+            exists $intent_hir_hash->{composition_standalone_dt_child_count}
+                ? $intent_hir_hash->{composition_standalone_dt_child_count}
+                : $standalone_dt_child_exports->{child_count}
+        ),
+        composition_standalone_dt_block_count => (
+            exists $intent_hir_hash->{composition_standalone_dt_block_count}
+                ? $intent_hir_hash->{composition_standalone_dt_block_count}
+                : $standalone_dt_child_exports->{block_count}
+        ),
+        composition_standalone_dt_multi_drive_target_count => (
+            exists $intent_hir_hash->{composition_standalone_dt_multi_drive_target_count}
+                ? $intent_hir_hash->{composition_standalone_dt_multi_drive_target_count}
+                : $standalone_dt_child_exports->{multi_drive_target_count}
+        ),
+        composition_standalone_dt_children => (
+            $intent_hir_hash->{composition_standalone_dt_children}
+                || $standalone_dt_child_exports->{children}
+        ),
         composition_shared_datapath_candidate_count => (
             exists $lowered_rtl_ir_hash->{composition_shared_datapath_candidate_count}
                 ? $lowered_rtl_ir_hash->{composition_shared_datapath_candidate_count}

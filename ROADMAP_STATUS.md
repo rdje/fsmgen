@@ -720,8 +720,10 @@ Done:
 - The first forward-IR widening step into a top-level composition export surface is now also shipped:
   - aggregated `composition_standalone_dt_children` entries now preserve each realized `?dtc` child's serialized `intent_hir` summary,
   - those same exports now also preserve each realized child's serialized `lowered_rtl_ir` summary,
+  - that same reusable standalone-DT child export now also lives inside composition-top `intent_hir`,
   - and the reusable standalone-DT export surface no longer drops the new explicit forward IR layers at the composition-top boundary.
 - [t/157-composition-standalone-dt-forward-ir-exports.t](/Users/richarddje/Documents/github/fsmgen/t/157-composition-standalone-dt-forward-ir-exports.t) now locks:
+  - preservation of reusable standalone-DT child exports through composition-top `intent_hir`,
   - preservation of child `intent_hir` through aggregated `composition_standalone_dt_children`,
   - and preservation of child `lowered_rtl_ir` through that same top-level composition export surface.
 - The next forward-IR widening step into one broader generated-child composition export is now also shipped:
@@ -753,6 +755,7 @@ Done:
   - direct-result `intent_hir` surfacing for `?top` composition roots,
   - direct-result `lowered_rtl_ir` surfacing for `?top` composition roots,
   - preservation of those same serialized forward IR layers through composition-top `module_info`,
+  - preservation of the reusable standalone-DT child export through composition-top `intent_hir`,
   - preservation of the broader generated-child export through composition-top `intent_hir`,
   - and the initial bounded composition-top fields for top-port analysis, child counts, lane, internal nets, instances, auxiliary assignments, and shared-datapath candidates.
 - The next forward-IR widening step through the composition provenance/reporting surface is now also shipped:

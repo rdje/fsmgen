@@ -70,7 +70,14 @@ FSM
     );
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
+    my $intent_hir = $result->{intent_hir};
     my ($router_a, $router_b) = @{$result->{module_info}{composition_standalone_dt_children}};
+
+    is_deeply(
+        $intent_hir->{composition_standalone_dt_children},
+        $result->{module_info}{composition_standalone_dt_children},
+        'composition module_info mirrors reusable standalone-DT child exports from intent_hir',
+    );
 
     is($router_a->{intent_hir}{module_name}, 'route_a', 'first exported dt child preserves module name in intent_hir');
     is($router_a->{intent_hir}{source_root_kind}, 'dt', 'first exported dt child preserves dt root kind in intent_hir');
@@ -93,6 +100,9 @@ FSM
     is($router_b->{lowered_rtl_ir}{module_name}, 'route_b', 'second exported dt child preserves module name in lowered_rtl_ir');
     is($router_b->{lowered_rtl_ir}{output_drive_family_count}, 1, 'second exported dt child preserves output-drive family count in lowered_rtl_ir');
     is($router_b->{lowered_rtl_ir}{standalone_dt_multi_drive_target_count}, 0, 'second exported dt child preserves empty grouped shared-target count in lowered_rtl_ir');
+    is($intent_hir->{composition_standalone_dt_child_count}, 2, 'composition intent_hir reports realized standalone-DT child count');
+    is($intent_hir->{composition_standalone_dt_block_count}, 3, 'composition intent_hir reports aggregated standalone-DT block count');
+    is($intent_hir->{composition_standalone_dt_multi_drive_target_count}, 1, 'composition intent_hir reports aggregated standalone-DT grouped shared-target count');
 };
 
 done_testing();

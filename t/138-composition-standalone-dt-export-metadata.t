@@ -71,6 +71,7 @@ FSM
     );
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
+    my $intent_hir = $result->{intent_hir};
     my $module_info = $result->{module_info};
     my $children = $module_info->{composition_standalone_dt_children};
     my ($router_a, $router_b) = @$children;
@@ -79,10 +80,23 @@ FSM
     is($module_info->{composition_standalone_dt_child_count}, 2, 'top module_info counts realized dt children');
     is($module_info->{composition_standalone_dt_block_count}, 3, 'top module_info sums standalone-DT blocks across realized dt children');
     is($module_info->{composition_standalone_dt_multi_drive_target_count}, 1, 'top module_info sums grouped shared targets across realized dt children');
+    is($intent_hir->{composition_standalone_dt_child_count}, 2, 'top intent_hir counts realized dt children');
+    is($intent_hir->{composition_standalone_dt_block_count}, 3, 'top intent_hir sums standalone-DT blocks across realized dt children');
+    is($intent_hir->{composition_standalone_dt_multi_drive_target_count}, 1, 'top intent_hir sums grouped shared targets across realized dt children');
     is_deeply(
         [map { $_->{instance_name} } @$children],
         ['router_a', 'router_b'],
         'top module_info keeps reusable dt children in stable instance order',
+    );
+    is_deeply(
+        [map { $_->{instance_name} } @{$intent_hir->{composition_standalone_dt_children}}],
+        ['router_a', 'router_b'],
+        'top intent_hir keeps reusable dt children in stable instance order',
+    );
+    is_deeply(
+        $intent_hir->{composition_standalone_dt_children},
+        $module_info->{composition_standalone_dt_children},
+        'top module_info mirrors the reusable dt child export from intent_hir',
     );
     is_deeply(
         {

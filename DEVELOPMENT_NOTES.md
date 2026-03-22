@@ -5763,6 +5763,7 @@ It is an exact-delay pulse request:
 - The next widening step is now also shipped:
   - the existing top-level reusable `?dtc` export surface in `composition_standalone_dt_children` now preserves each realized child's `intent_hir`,
   - that same export surface now also preserves each realized child's `lowered_rtl_ir`,
+  - that same reusable standalone-DT child export now also lives inside composition-top `intent_hir`,
   - so embedders no longer need to reach back through composition-plan internals just to recover the explicit forward IR layers for reusable standalone-DT children.
 - The broader generated-child export seam is now also shipped:
   - top-level composition `module_info` now exposes `composition_generated_children` for realized `?fsmc` and `?dtc` children together,

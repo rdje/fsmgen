@@ -4509,6 +4509,7 @@ This is the persistent technical change history for FSMGen.
 - Widened those explicit forward IR layers one step further into a top-level composition export:
   - aggregated `composition_standalone_dt_children` entries now preserve each realized `?dtc` child's serialized `intent_hir`,
   - and those same reusable-child exports now also preserve each child's serialized `lowered_rtl_ir` instead of stripping the forward IR layers back off at the composition-top boundary.
+  - that same reusable standalone-DT child export now also lives inside composition-top `intent_hir`, and the compatible top-level `module_info` surface mirrors it back out from that explicit semantic layer.
 - Widened the same forward IR story into one broader generated-child composition export:
   - top-level `composition_generated_children` now covers realized `?fsmc` and `?dtc` children together,
   - those exported generated-child summaries preserve both serialized `intent_hir` and serialized `lowered_rtl_ir`,
