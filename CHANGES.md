@@ -4491,6 +4491,11 @@ This is the persistent technical change history for FSMGen.
   - HDL import would not need a full backend compile/synthesis flow,
   - but it would still need substantial frontend semantic compilation work before elaboration can happen honestly,
   - so the saved pipeline is now explicit about preprocess -> parse -> semantic resolution -> elaboration -> canonical RTL IR -> intent recovery.
+- Refined that same long-term HDL-import note again with the planned IR architecture:
+  - forward compilation is now explicitly framed as `.fsm AST -> semantic Intent HIR -> lowered RTL IR -> backend emission`,
+  - reverse recovery is now explicitly framed as `HDL CST/AST -> semantic HDL HIR -> elaborated RTL IR -> Flat IR -> recovered Intent IR -> .fsm + recovery report`,
+  - the note now explicitly rejects the phrase “non-semantic HIR” for the reverse path because the non-semantic layer is just the parsed HDL tree,
+  - and the saved architecture direction is now to share the semantic middle (`Intent HIR`, `Lowered RTL IR`, maybe `Flat IR`/provenance later) rather than building two unrelated semantic stacks.
 - Shared-datapath candidate metadata now also makes the bounded combinational peer-read rule explicit: peer-read combinational families stay top-output-only, surface a block reason, and no longer look loopback-eligible in non-quiet `bin/fsmgen` summaries.
 - Shared-datapath runtime behavior now exists in generated composition HDL, not just metadata: realized `?fsmc` children export hidden per-value enable families for composition use, and composition tops now synthesize aggregate-enable and conflict helper wires from those exports.
 - Shared-datapath lifting now has its first actual ownership/runtime slice on top of that helper HDL:

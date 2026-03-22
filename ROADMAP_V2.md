@@ -479,6 +479,27 @@ Expected technical pipeline:
 - recover design intent from that IR into `.fsm`,
 - and emit a recovery report alongside the recovered source.
 
+Planned IR layering:
+- do not describe the reverse-path early layer as a “non-semantic HIR”; the non-semantic layer is the parsed HDL CST/AST, and honest recovery actually needs more semantic structure rather than less,
+- the forward `.fsm` to HDL compiler should converge toward `parsed .fsm AST -> semantic Intent HIR -> elaborated/lowered RTL IR -> backend emission`,
+- the reverse HDL-import path should converge toward `parsed HDL CST/AST -> semantic HDL HIR -> elaborated RTL IR -> Flat IR -> recovered Intent IR -> .fsm output + recovery report`,
+- `Flat IR` is likely optional in the forward path at first but valuable later for deeper optimization/analysis, while it is much more likely to be necessary in the reverse path because many hardware facts only become obvious after elaboration/flattening,
+- and the reverse path therefore needs one extra semantic stage beyond the forward path: a recovered-intent layer that can preserve confidence, ambiguity, and residue instead of pretending that inference is the same thing as authored intent.
+
+Shared-middle rule:
+- do not build two completely separate semantic worlds for forward compilation and reverse recovery,
+- keep the parse/surface trees separate (`.fsm` AST vs HDL CST/AST),
+- keep the early HDL-specific semantic layer separate where the source languages genuinely differ,
+- but aim to share the semantic middle:
+  - one backend-independent `Intent HIR` that represents `.fsm`-level design intent,
+  - one backend-independent `Lowered RTL IR` for normalized registers/drivers/wiring/shared-datapath structure,
+  - and possibly one shared `Flat IR` plus one general provenance model if they prove broad enough,
+- while keeping recovery-specific residue/confidence reporting separate from authored-source semantics.
+
+Refactoring implication:
+- the current Perl runtime already has proto-HIR/proto-lowered-IR behavior spread across modules such as `HDLGenerator`, `FSMGenFull`, composition planning, and `FlattenedDT`,
+- so the future goal is not to invent semantics from nothing but to make those semantic layers explicit, shareable, and backend-independent instead of continuing to rediscover them ad hoc inside generation code.
+
 Advanced synthesizable targets worth considering later, not rejecting upfront:
 - macro/preprocessor-heavy RTL after preprocessing with provenance retained,
 - generate-heavy RTL after elaboration,

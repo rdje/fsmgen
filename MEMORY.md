@@ -4375,3 +4375,13 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - peer-read child inputs are rebound to that lifted shared register,
   - contributor outputs are rebound to private raw nets,
   - and the kept public top outputs are re-exported from the lifted shared register rather than directly from one child.
+
+## 2026-03-22: logged the planned shared IR architecture for forward compilation and HDL recovery
+- The saved long-term HDL-import note now also records the IR split more explicitly:
+  - forward `.fsm -> HDL` should converge toward `AST -> semantic Intent HIR -> lowered RTL IR -> backend`,
+  - reverse `HDL -> .fsm` should converge toward `HDL CST/AST -> semantic HDL HIR -> elaborated RTL IR -> Flat IR -> recovered Intent IR -> .fsm + recovery report`,
+  - and the reverse path should not call its early layer a “non-semantic HIR” because the non-semantic layer is just the parsed HDL tree.
+- The saved architecture rule is now:
+  - keep surface trees separate,
+  - keep early HDL-specific semantic work separate,
+  - but share the semantic middle where possible through `Intent HIR`, `Lowered RTL IR`, and maybe a shared `Flat IR`/provenance model later.

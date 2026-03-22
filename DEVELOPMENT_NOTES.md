@@ -5706,3 +5706,21 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this is intentionally narrower than the full shared-datapath contract,
   - because internal-only registered lifting and combinational peer-read behavior still need their own explicit bounded follow-on rules.
+
+## 2026-03-22: the long-term HDL-import note now records the planned IR architecture too
+- Logged the follow-up IR-architecture discussion into the same long-term horizon thread rather than leaving it implicit in chat.
+- The saved guidance is now explicit that:
+  - the reverse path should not describe its early layer as a “non-semantic HIR,”
+  - the truly non-semantic layer is the parsed HDL CST/AST,
+  - and honest HDL recovery actually needs more semantic structure, not less.
+- The planned directional stacks are now captured as:
+  - forward compilation: `parsed .fsm AST -> semantic Intent HIR -> elaborated/lowered RTL IR -> backend emission`,
+  - reverse recovery: `parsed HDL CST/AST -> semantic HDL HIR -> elaborated RTL IR -> Flat IR -> recovered Intent IR -> .fsm output + recovery report`.
+- The saved sharing rule is also explicit now:
+  - keep `.fsm` AST and HDL CST/AST separate,
+  - keep the early HDL-specific semantic layer separate where the source languages genuinely differ,
+  - but aim to share the semantic middle through one backend-independent `Intent HIR`, one backend-independent `Lowered RTL IR`, and possibly one shared `Flat IR` plus one general provenance model if those prove broad enough,
+  - while leaving recovery-specific confidence/residue reporting separate from authored-source semantics.
+- Design note from this refinement:
+  - the current Perl runtime already has proto-HIR/proto-lowered-IR behavior spread across `HDLGenerator`, `FSMGenFull`, composition planning, and `FlattenedDT`,
+  - so the future task is to make those layers explicit and shareable rather than keep discovering them ad hoc inside generation code.
