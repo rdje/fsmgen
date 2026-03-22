@@ -785,6 +785,12 @@ Done:
   - realized `?fsmc` child interface ports mirroring the child structural boundary summary,
   - realized `?dtc` child interface ports mirroring the child structural boundary summary,
   - and the structural-to-interface normalization boundary for generic `wire`-typed data ports.
+- The next IR-to-IR handoff step is now also shipped:
+  - composition-top `lowered_rtl_ir` now consumes `structural_rtl_ir` for internal-net names, realized-instance names, and auxiliary-assignment counts instead of rebuilding that bounded connectivity summary directly from the plan.
+- [t/160-composition-top-forward-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/160-composition-top-forward-ir-surface.t) now also locks:
+  - composition-top `lowered_rtl_ir` internal-net counts/names mirroring `structural_rtl_ir`,
+  - composition-top `lowered_rtl_ir` realized-instance counts/names mirroring `structural_rtl_ir`,
+  - and composition-top `lowered_rtl_ir` auxiliary-assignment counts mirroring `structural_rtl_ir`.
 - The next forward-IR widening step through the composition provenance/reporting surface is now also shipped:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
   - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,

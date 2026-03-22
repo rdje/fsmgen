@@ -4544,6 +4544,8 @@ This is the persistent technical change history for FSMGen.
 - Started consuming that structural layer in realized-child planning too:
   - generated-child interface ports are now derived from `structural_rtl_ir` first instead of rebuilding only from signal analysis,
   - and the structural-to-interface handoff now normalizes low-level declaration types like `wire` / `logic` back to plain semantic data ports while preserving `clock` / `reset`.
+- Started consuming that structural layer in composition-top lowered summaries too:
+  - composition-top `lowered_rtl_ir` now derives internal-net names, realized-instance names, and auxiliary-assignment counts from `structural_rtl_ir` instead of rebuilding that bounded connectivity slice directly from the plan.
 - Logged the next forward-IR architecture refinement for future implementation:
   - the current extracted `Lowered RTL IR` is now explicitly treated as a lowered summary layer rather than the final full connectivity graph,
   - the forward compiler is now steered toward `Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend`,

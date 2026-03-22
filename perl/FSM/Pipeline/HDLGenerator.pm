@@ -262,8 +262,8 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
         $generated_child_exports,
         $standalone_dt_child_exports,
     );
-    my $lowered_rtl_ir = $self->build_composition_lowered_rtl_ir($composition_plan);
     my $structural_rtl_ir = $self->build_composition_structural_rtl_ir($composition_plan);
+    my $lowered_rtl_ir = $self->build_composition_lowered_rtl_ir($composition_plan, $structural_rtl_ir);
     my $hdl_code = $self->generate_composition_hdl_code($composition_plan, $structural_rtl_ir);
     my $module_info = $self->build_composition_module_info(
         $composition_plan,
@@ -3023,8 +3023,18 @@ sub build_composition_intent_hir (
     );
 }
 
-sub build_composition_lowered_rtl_ir ($self, $composition_plan) {
+sub build_composition_lowered_rtl_ir ($self, $composition_plan, $structural_rtl_ir = undef) {
     my $shared_datapath_candidates = $self->composition_shared_datapath_candidates_for_plan($composition_plan);
+    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
+    my $internal_net_names = [
+        map { $_->{name} }
+        @{$structural_rtl_ir_hash->{nets} || []}
+    ];
+    my $instance_names = [
+        map { $_->{instance_name} }
+        @{$structural_rtl_ir_hash->{instances} || []}
+    ];
 
     return FSM::IR::LoweredRTLIR->new(
         module_name => ($composition_plan->top_name // ''),
@@ -3033,9 +3043,9 @@ sub build_composition_lowered_rtl_ir ($self, $composition_plan) {
         output_drive_families => [],
         standalone_dt_multi_drive_targets => [],
         composition_shared_datapath_candidates => $shared_datapath_candidates,
-        internal_net_names => [ map { $_->name } @{$composition_plan->nets || []} ],
-        instance_names => [ map { $_->instance_name } @{$composition_plan->instances || []} ],
-        auxiliary_assignment_count => scalar(@{$composition_plan->auxiliary_assignments || []}),
+        internal_net_names => $internal_net_names,
+        instance_names => $instance_names,
+        auxiliary_assignment_count => scalar(@{$structural_rtl_ir_hash->{auxiliary_assignments} || []}),
     );
 }
 
@@ -3055,8 +3065,8 @@ sub build_composition_module_info (
         $generated_child_exports,
         $standalone_dt_child_exports,
     );
-    $lowered_rtl_ir //= $self->build_composition_lowered_rtl_ir($composition_plan);
     $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    $lowered_rtl_ir //= $self->build_composition_lowered_rtl_ir($composition_plan, $structural_rtl_ir);
     my $port_metadata = $self->build_composition_port_metadata($composition_plan);
     my $intent_hir_hash = $intent_hir->as_hashref;
     my $lowered_rtl_ir_hash = $lowered_rtl_ir->as_hashref;

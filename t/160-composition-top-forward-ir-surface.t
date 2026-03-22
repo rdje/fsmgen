@@ -84,10 +84,12 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $intent_hir = $result->{intent_hir};
     my $lowered_rtl_ir = $result->{lowered_rtl_ir};
+    my $structural_rtl_ir = $result->{structural_rtl_ir};
     my $module_info = $result->{module_info};
 
     ok($intent_hir, 'composition top now exposes a top-level intent_hir summary');
     ok($lowered_rtl_ir, 'composition top now exposes a top-level lowered_rtl_ir summary');
+    ok($structural_rtl_ir, 'composition top now exposes a top-level structural_rtl_ir summary');
     is_deeply(
         $module_info->{intent_hir},
         $intent_hir,
@@ -162,6 +164,31 @@ FSM
         'composition lowered_rtl_ir preserves realized instance names',
     );
     is($lowered_rtl_ir->{auxiliary_assignment_count}, 0, 'composition lowered_rtl_ir reports auxiliary assignment count');
+    is(
+        $lowered_rtl_ir->{internal_net_count},
+        $structural_rtl_ir->{net_count},
+        'composition lowered_rtl_ir now derives internal net count from structural_rtl_ir',
+    );
+    is_deeply(
+        $lowered_rtl_ir->{internal_net_names},
+        [map { $_->{name} } @{$structural_rtl_ir->{nets}}],
+        'composition lowered_rtl_ir now derives internal net names from structural_rtl_ir',
+    );
+    is(
+        $lowered_rtl_ir->{instance_count},
+        $structural_rtl_ir->{instance_count},
+        'composition lowered_rtl_ir now derives instance count from structural_rtl_ir',
+    );
+    is_deeply(
+        $lowered_rtl_ir->{instance_names},
+        [map { $_->{instance_name} } @{$structural_rtl_ir->{instances}}],
+        'composition lowered_rtl_ir now derives instance names from structural_rtl_ir',
+    );
+    is(
+        $lowered_rtl_ir->{auxiliary_assignment_count},
+        $structural_rtl_ir->{auxiliary_assignment_count},
+        'composition lowered_rtl_ir now derives auxiliary assignment count from structural_rtl_ir',
+    );
 };
 
 done_testing();
