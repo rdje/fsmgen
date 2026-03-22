@@ -5768,3 +5768,7 @@ It is an exact-delay pulse request:
   - top-level composition `module_info` now exposes `composition_generated_children` for realized `?fsmc` and `?dtc` children together,
   - those exported generated-child summaries preserve both `intent_hir` and `lowered_rtl_ir`,
   - and `bin/fsmgen` now prints one concise generated-child section so that broader export surface is visible without embedding code.
+- The shared-datapath candidate surface is now widened in the same direction:
+  - each shared-datapath contributor now preserves the realized child's `intent_hir` and `lowered_rtl_ir`,
+  - those contributor entries now also preserve stable generated-child identity through `kind` and `source_name`,
+  - and `bin/fsmgen` now prints one small contributor-context line before the existing drive-intent line so that self-contained forward child context is visible in the shared-datapath summary too.

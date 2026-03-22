@@ -4407,3 +4407,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - The broader generated-child composition export is now also live:
   - top-level `composition_generated_children` covers realized `?fsmc` and `?dtc` children together,
   - and those exported child summaries preserve both `intent_hir` and `lowered_rtl_ir`.
+- The shared-datapath candidate surface now preserves that same forward child context too:
+  - candidate contributors keep `intent_hir`,
+  - keep `lowered_rtl_ir`,
+  - and also keep stable generated-child identity through `kind` and `source_name`.

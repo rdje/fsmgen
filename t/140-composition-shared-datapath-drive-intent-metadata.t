@@ -128,7 +128,7 @@ FSM
     );
 
     is_deeply(
-        $module_info->{composition_shared_datapath_candidates},
+        clone_without_forward_ir($module_info->{composition_shared_datapath_candidates}),
         [
             {
                 signal_name => 'status_bus',
@@ -139,8 +139,10 @@ FSM
                 contributor_count => 2,
                 contributors => [
                     {
+                        kind => 'fsmc',
                         instance_name => 'left',
                         module_name => 'left_src',
+                        source_name => 'left_src',
                         endpoint => 'left.status_bus',
                         bound_signal => 'left_status',
                         drive_intent => {
@@ -175,8 +177,10 @@ FSM
                         },
                     },
                     {
+                        kind => 'fsmc',
                         instance_name => 'right',
                         module_name => 'right_src',
+                        source_name => 'right_src',
                         endpoint => 'right.status_bus',
                         bound_signal => 'right_status',
                         drive_intent => {
@@ -432,4 +436,26 @@ sub write_fsm {
     print {$fh} $content or die "Cannot write $path: $!";
     close $fh or die "Cannot close $path: $!";
     return $path;
+}
+
+sub clone_without_forward_ir {
+    my ($value) = @_;
+    return undef unless defined $value;
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { clone_without_forward_ir($_) } @$value ];
+    }
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map {
+                my $key = $_;
+                ($key => clone_without_forward_ir($value->{$key}))
+            } grep {
+                $_ ne 'intent_hir' && $_ ne 'lowered_rtl_ir'
+            } sort keys %$value
+        };
+    }
+
+    return $value;
 }

@@ -273,6 +273,10 @@ First shipped `R11` slice now in tree:
   - top-level `composition_generated_children` now covers realized `?fsmc` and `?dtc` children together instead of only the reusable standalone-DT subset,
   - those exported generated-child entries preserve both serialized `intent_hir` and serialized `lowered_rtl_ir`,
   - and non-quiet `bin/fsmgen` runs now print one concise generated-child summary derived from that broader export instead of requiring plan-internal inspection.
+- The next widening step is now also shipped through the shared-datapath candidate surface:
+  - shared-datapath candidate contributors now preserve their realized child's serialized `intent_hir` and serialized `lowered_rtl_ir`,
+  - those contributor entries now also preserve stable generated-child identity through `kind` and `source_name`,
+  - and non-quiet `bin/fsmgen` runs now print one concise contributor-context line from that forward child IR surface before the existing drive-intent summary.
 
 Expected result:
 - composition remains explicit and serious instead of drifting back toward legacy implicit behavior.

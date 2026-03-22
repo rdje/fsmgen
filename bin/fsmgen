@@ -639,6 +639,26 @@ unless ($quiet) {
                 }
 
                 for my $contributor (@{$candidate->{contributors} || []}) {
+                    my $intent_hir = $contributor->{intent_hir} || {};
+                    my $lowered_rtl_ir = $contributor->{lowered_rtl_ir} || {};
+                    my $source_root_kind = $intent_hir->{source_root_kind}
+                        || $contributor->{kind}
+                        || 'unknown_root';
+                    my $source_name = $contributor->{source_name}
+                        || $contributor->{module_name}
+                        || 'unknown_source';
+                    my $state_or_block_label = (($contributor->{kind} || '') eq 'fsmc') ? 'states' : 'blocks';
+                    my $state_or_block_count = (($contributor->{kind} || '') eq 'fsmc')
+                        ? ($intent_hir->{regular_state_count} || 0)
+                        : ($intent_hir->{standalone_dt_count} || 0);
+                    my $output_drive_family_count = $lowered_rtl_ir->{output_drive_family_count} || 0;
+
+                    print "    * contributor context: " . ($contributor->{endpoint} || 'unknown_endpoint')
+                        . " => ?" . $source_root_kind
+                        . " (" . $state_or_block_label . ": " . $state_or_block_count
+                        . ", output drive families: " . $output_drive_family_count
+                        . ", source: " . $source_name . ")\n";
+
                     my $drive_intent = $contributor->{drive_intent} || {};
                     next unless ($drive_intent->{driver_count} || 0) > 0;
 

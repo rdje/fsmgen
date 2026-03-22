@@ -4513,6 +4513,10 @@ This is the persistent technical change history for FSMGen.
   - top-level `composition_generated_children` now covers realized `?fsmc` and `?dtc` children together,
   - those exported generated-child summaries preserve both serialized `intent_hir` and serialized `lowered_rtl_ir`,
   - and non-quiet `bin/fsmgen` runs now print one concise generated-child summary from that broader exported surface.
+- Widened the same forward IR story into the shared-datapath candidate surface:
+  - shared-datapath contributor entries now preserve both serialized `intent_hir` and serialized `lowered_rtl_ir`,
+  - those contributor entries now also preserve stable generated-child identity through `kind` and `source_name`,
+  - and non-quiet `bin/fsmgen` runs now print one concise contributor-context line before the existing shared-datapath drive-intent summary.
 - Shared-datapath candidate metadata now also makes the bounded combinational peer-read rule explicit: peer-read combinational families stay top-output-only, surface a block reason, and no longer look loopback-eligible in non-quiet `bin/fsmgen` summaries.
 - Shared-datapath runtime behavior now exists in generated composition HDL, not just metadata: realized `?fsmc` children export hidden per-value enable families for composition use, and composition tops now synthesize aggregate-enable and conflict helper wires from those exports.
 - Shared-datapath lifting now has its first actual ownership/runtime slice on top of that helper HDL:

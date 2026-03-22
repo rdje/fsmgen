@@ -732,6 +732,14 @@ Done:
   - `composition_generated_child_count`, `composition_generated_fsm_child_count`, and `composition_generated_dt_child_count`,
   - preservation of child `intent_hir` and `lowered_rtl_ir` through top-level `composition_generated_children`,
   - and the matching non-quiet CLI generated-child summary lines.
+- The next forward-IR widening step through the shared-datapath candidate surface is now also shipped:
+  - shared-datapath candidate contributors now preserve each realized child's serialized `intent_hir` and serialized `lowered_rtl_ir`,
+  - those contributor entries now also preserve stable generated-child identity through `kind` and `source_name`,
+  - and non-quiet `bin/fsmgen` runs now print one concise contributor-context line from that surface before the existing drive-intent details.
+- [t/159-composition-shared-datapath-forward-ir-exports.t](/Users/richarddje/Documents/github/fsmgen/t/159-composition-shared-datapath-forward-ir-exports.t) now locks:
+  - preservation of child `intent_hir` and `lowered_rtl_ir` through shared-datapath candidate contributors,
+  - preservation of contributor `kind` and `source_name`,
+  - and the matching non-quiet CLI contributor-context lines.
 - The first shared-datapath candidate-discovery slice is now also shipped:
   - composition-top `module_info` now reports `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates`,
   - those candidate families are currently bounded to same-name output families across multiple realized `?fsmc` children that agree on width and interface type,
@@ -1003,8 +1011,8 @@ Left:
   - keep that explicit override layer elegant and expressive rather than verbose duplicate configuration,
   - and keep any such convention top-boundary-oriented rather than turning child-to-child wiring into hidden inference everywhere.
 - Track and later retire the current architectural hotspot set deliberately instead of letting it stay ambient debt:
-  - widen the now-shipped first `Intent HIR` extraction slice beyond direct generated roots, realized generated children, the standalone-DT composition-export surface, and the broader generated-child composition-export surface into the rest of the forward pipeline,
-  - widen the now-shipped first explicit `Lowered RTL IR` extraction slice beyond generated output-drive families, standalone-DT grouped multi-drive targets, the standalone-DT composition-export surface, and the broader generated-child composition-export surface into the rest of the forward pipeline,
+  - widen the now-shipped first `Intent HIR` extraction slice beyond direct generated roots, realized generated children, the standalone-DT composition-export surface, the broader generated-child composition-export surface, and the shared-datapath candidate contributor surface into the rest of the forward pipeline,
+  - widen the now-shipped first explicit `Lowered RTL IR` extraction slice beyond generated output-drive families, standalone-DT grouped multi-drive targets, the standalone-DT composition-export surface, the broader generated-child composition-export surface, and the shared-datapath candidate contributor surface into the rest of the forward pipeline,
   - keep those forward IR layers aligned with the future shared-middle/import architecture instead of allowing a second incompatible semantic stack to form,
   - split composition policy, interface inference, and top emission back out of `FSM::Pipeline::HDLGenerator`,
   - shrink `FSM::Synthesis::EnableGraph` toward a clearer synthesis boundary,

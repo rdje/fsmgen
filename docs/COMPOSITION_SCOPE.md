@@ -179,6 +179,7 @@ Current shipped runtime subset:
 - realized generated children now also preserve `output_drive_family_count` and `output_drive_families` in their `module_info` surface,
 - realized `?fsmc` children now also preserve hidden shared-datapath source-export metadata for per-value enable families used only inside generated composition tops,
 - and those shared-datapath candidate contributors now also carry one bounded `drive_intent` summary derived from generated assignment analysis,
+- and those same shared-datapath contributors now also preserve each realized child's forward `intent_hir` and `lowered_rtl_ir` summaries together with stable generated-child identity fields,
 - and those shared-datapath candidate families now also expose one deterministic whole-target aggregate enable plus per-value aggregate enable families derived from the child-local `P_Q` families,
 - and generated composition tops now also synthesize the first real shared-datapath helper HDL from that metadata: hidden child source-enable export bindings, per-value aggregate enable wires, per-value conflict wires, whole-target aggregate enable wires, and whole-target multi-value conflict wires,
 - and those shared-datapath candidate families now also expose deterministic per-child shared-datapath source-enable aliases plus onehot0-style assertion metadata for same-value source overlap and whole-target multi-value overlap,

@@ -3005,17 +3005,21 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
 
             my $drive_family = $drive_family_by_signal{$port->name} || {};
             push @{$candidate_groups{$key}{contributors}}, {
+                kind => $instance->kind,
                 instance_name => $instance->instance_name,
                 module_name => $instance->module_name,
+                source_name => $instance->source_name,
                 endpoint => ($instance->instance_name // 'unknown').'.'.($port->name // 'unknown'),
                 bound_signal => $bindings{$port->name},
-                        drive_intent => {
-                            multiplexer_type => ($drive_family->{multiplexer_type} // 'unknown'),
-                            default_value => $drive_family->{default_value},
-                            reset_value => $drive_family->{reset_value},
-                            driver_count => ($drive_family->{driver_count} || 0),
-                            driver_blocks => [@{$drive_family->{driver_blocks} || []}],
-                            rhs_values => [@{$drive_family->{rhs_values} || []}],
+                intent_hir => $self->module_intent_hir($instance->module_info),
+                lowered_rtl_ir => $self->module_lowered_rtl_ir($instance->module_info),
+                drive_intent => {
+                    multiplexer_type => ($drive_family->{multiplexer_type} // 'unknown'),
+                    default_value => $drive_family->{default_value},
+                    reset_value => $drive_family->{reset_value},
+                    driver_count => ($drive_family->{driver_count} || 0),
+                    driver_blocks => [@{$drive_family->{driver_blocks} || []}],
+                    rhs_values => [@{$drive_family->{rhs_values} || []}],
                     driver_enable_signals => [@{$drive_family->{driver_enable_signals} || []}],
                     family_enable_signals => [@{$drive_family->{family_enable_signals} || []}],
                     rhs_enable_families => [
