@@ -4533,6 +4533,11 @@ This is the persistent technical change history for FSMGen.
   - override and block events now preserve structured top-port / child-endpoint context instead of only flat signal names,
   - generated-child endpoint contexts there now also preserve bounded `intent_hir` / `lowered_rtl_ir` child summaries,
   - and non-quiet `bin/fsmgen` runs now print richer link/endpoint examples in those sections instead of count-plus-name examples only.
+- Started the first active forward structural/connectivity extraction slice under `R11`:
+  - added `FSM::IR::StructuralRTLIR` as the first explicit AST/netlist-like connectivity layer,
+  - direct `?top` composition results now expose serialized `structural_rtl_ir`,
+  - composition-top `module_info` now mirrors that same structural surface,
+  - and composition-top HDL emission now walks the extracted structural layer for explicit ports, nets, instances, pin bindings, and auxiliary assignments instead of re-reading only plan state during top-module dumping.
 - Logged the next forward-IR architecture refinement for future implementation:
   - the current extracted `Lowered RTL IR` is now explicitly treated as a lowered summary layer rather than the final full connectivity graph,
   - the forward compiler is now steered toward `Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend`,

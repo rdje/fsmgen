@@ -5,6 +5,7 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
+use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
@@ -27,6 +28,7 @@ use FSM::Extension::Loader;
 use FSM::Extension::Registry;
 use FSM::IR::IntentHIR;
 use FSM::IR::LoweredRTLIR;
+use FSM::IR::StructuralRTLIR;
 use FSM::SourceClassifier;
 use FSM::SourcePathResolver;
 use Lispish;
@@ -250,7 +252,6 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
 
     my $composition_plan = $self->build_composition_plan($composition_spec, $fsm_file, $header);
     my $composition_report = $self->build_composition_provenance_report($composition_plan);
-    my $hdl_code = $self->generate_composition_hdl_code($composition_plan);
     my $generated_child_exports = $self->build_composition_generated_child_exports($composition_plan);
     my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
     my $intent_hir = $self->build_composition_intent_hir(
@@ -259,12 +260,15 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
         $standalone_dt_child_exports,
     );
     my $lowered_rtl_ir = $self->build_composition_lowered_rtl_ir($composition_plan);
+    my $structural_rtl_ir = $self->build_composition_structural_rtl_ir($composition_plan);
+    my $hdl_code = $self->generate_composition_hdl_code($composition_plan, $structural_rtl_ir);
     my $module_info = $self->build_composition_module_info(
         $composition_plan,
         $composition_report,
         $generated_child_exports,
         $intent_hir,
         $lowered_rtl_ir,
+        $structural_rtl_ir,
     );
     my $statistics = $self->build_composition_statistics($composition_plan, $composition_report, $lowered_rtl_ir);
 
@@ -275,6 +279,7 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
         composition_report => $composition_report,
         intent_hir => $intent_hir->as_hashref,
         lowered_rtl_ir => $lowered_rtl_ir->as_hashref,
+        structural_rtl_ir => $structural_rtl_ir->as_hashref,
         module_info => $module_info,
         hdl_code => $hdl_code,
         statistics => $statistics,
@@ -2796,37 +2801,42 @@ sub allocate_composition_net_name ($self, $source, $top_ports_by_name, $existing
     return $candidate;
 }
 
-sub generate_composition_hdl_code ($self, $composition_plan) {
+sub generate_composition_hdl_code ($self, $composition_plan, $structural_rtl_ir = undef) {
     my @segments = map { $_->hdl_code } @{$composition_plan->instances};
-    push @segments, $self->emit_composition_top_module($composition_plan);
+    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    push @segments, $self->emit_composition_top_module($structural_rtl_ir);
     return join("\n\n", grep { defined && length } @segments) . "\n";
 }
 
-sub emit_composition_top_module ($self, $composition_plan) {
-    my $top_name = $composition_plan->top_name;
-    my @ports = @{$composition_plan->ports};
-    my @nets = @{$composition_plan->nets || []};
-    my @instances = @{$composition_plan->instances || []};
-    my @auxiliary_assignments = @{$composition_plan->auxiliary_assignments || []};
+sub emit_composition_top_module ($self, $structural_rtl_ir) {
+    my $structural = blessed($structural_rtl_ir) && $structural_rtl_ir->can('as_hashref')
+        ? $structural_rtl_ir->as_hashref
+        : $structural_rtl_ir;
+
+    my $top_name = $structural->{module_name};
+    my @ports = @{$structural->{ports} || []};
+    my @nets = @{$structural->{nets} || []};
+    my @instances = @{$structural->{instances} || []};
+    my @auxiliary_assignments = @{$structural->{auxiliary_assignments} || []};
 
     my @port_lines = map {
-        my $width = $_->width > 1 ? sprintf("[%d:0] ", $_->width - 1) : '';
-        sprintf("    %s %s%s", $_->direction, $width, $_->name);
+        my $width = ($_->{width} || 1) > 1 ? sprintf("[%d:0] ", $_->{width} - 1) : '';
+        sprintf("    %s %s%s", $_->{direction}, $width, $_->{name});
     } @ports;
 
     my @net_lines = map {
-        my $width = $_->width > 1 ? sprintf("[%d:0] ", $_->width - 1) : '';
-        sprintf("    wire %s%s;", $width, $_->name)
+        my $width = ($_->{width} || 1) > 1 ? sprintf("[%d:0] ", $_->{width} - 1) : '';
+        sprintf("    wire %s%s;", $width, $_->{name})
     } @nets;
 
     my @instance_blocks = map {
         my $instance = $_;
         my @connection_lines = map {
             sprintf("        .%s(%s)", $_->{port_name}, $_->{signal_name})
-        } @{$instance->port_bindings || []};
+        } @{$instance->{port_bindings} || []};
 
         join("\n",
-            "    ".$instance->module_name." ".$instance->instance_name." (",
+            "    ".$instance->{module_name}." ".$instance->{instance_name}." (",
             join(",\n", @connection_lines),
             "    );",
         );
@@ -2844,6 +2854,65 @@ sub emit_composition_top_module ($self, $composition_plan) {
     push @body_lines, "endmodule";
 
     return join("\n", @body_lines);
+}
+
+sub build_composition_structural_rtl_ir ($self, $composition_plan) {
+    return FSM::IR::StructuralRTLIR->new(
+        module_name => ($composition_plan->top_name // ''),
+        source_root_kind => 'top',
+        target_language => ($self->{target_language} // 'systemverilog'),
+        ports => [
+            map {
+                +{
+                    name => $_->name,
+                    direction => $_->direction,
+                    width => $_->width,
+                    type => $_->type,
+                    binding_mode => $_->binding_mode,
+                    origin_kind => $_->origin_kind,
+                }
+            } @{$composition_plan->ports || []}
+        ],
+        nets => [
+            map {
+                +{
+                    name => $_->name,
+                    width => $_->width,
+                    source => $_->source,
+                    targets => [@{$_->targets || []}],
+                }
+            } @{$composition_plan->nets || []}
+        ],
+        instances => [
+            map {
+                +{
+                    kind => $_->kind,
+                    instance_name => $_->instance_name,
+                    module_name => $_->module_name,
+                    source_name => $_->source_name,
+                    interface_ports => [
+                        map {
+                            +{
+                                name => $_->name,
+                                direction => $_->direction,
+                                width => $_->width,
+                                type => $_->type,
+                            }
+                        } @{$_->interface_ports || []}
+                    ],
+                    port_bindings => [
+                        map {
+                            +{
+                                port_name => $_->{port_name},
+                                signal_name => $_->{signal_name},
+                            }
+                        } @{$_->port_bindings || []}
+                    ],
+                }
+            } @{$composition_plan->instances || []}
+        ],
+        auxiliary_assignments => [@{$composition_plan->auxiliary_assignments || []}],
+    );
 }
 
 sub build_composition_port_metadata ($self, $composition_plan) {
@@ -2949,6 +3018,7 @@ sub build_composition_module_info (
     $generated_child_exports = undef,
     $intent_hir = undef,
     $lowered_rtl_ir = undef,
+    $structural_rtl_ir = undef,
 ) {
     $generated_child_exports //= $self->build_composition_generated_child_exports($composition_plan);
     my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
@@ -2958,9 +3028,11 @@ sub build_composition_module_info (
         $standalone_dt_child_exports,
     );
     $lowered_rtl_ir //= $self->build_composition_lowered_rtl_ir($composition_plan);
+    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
     my $port_metadata = $self->build_composition_port_metadata($composition_plan);
     my $intent_hir_hash = $intent_hir->as_hashref;
     my $lowered_rtl_ir_hash = $lowered_rtl_ir->as_hashref;
+    my $structural_rtl_ir_hash = $structural_rtl_ir->as_hashref;
 
     return {
         module_name => $intent_hir_hash->{module_name},
@@ -2982,6 +3054,7 @@ sub build_composition_module_info (
         parameter_names => $intent_hir_hash->{parameter_names},
         intent_hir => $intent_hir_hash,
         lowered_rtl_ir => $lowered_rtl_ir_hash,
+        structural_rtl_ir => $structural_rtl_ir_hash,
         output_drive_family_count => $lowered_rtl_ir_hash->{output_drive_family_count},
         output_drive_families => $lowered_rtl_ir_hash->{output_drive_families},
         standalone_dt_multi_drive_target_count => $lowered_rtl_ir_hash->{standalone_dt_multi_drive_target_count},

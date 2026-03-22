@@ -759,6 +759,17 @@ Done:
   - preservation of the reusable standalone-DT child export through composition-top `intent_hir`,
   - preservation of the broader generated-child export through composition-top `intent_hir`,
   - and the initial bounded composition-top fields for top-port analysis, child counts, lane, internal nets, instances, auxiliary assignments, and shared-datapath candidates.
+- The first bounded `Structural RTL IR` extraction slice is now also shipped:
+  - new `FSM::IR::StructuralRTLIR` now captures one explicit AST/netlist-like connectivity surface for composition tops,
+  - direct `?top` generation results now expose serialized `structural_rtl_ir`,
+  - composition-top `module_info` now mirrors that same serialized structural surface,
+  - the shipped slice currently covers explicit top ports, internal nets, realized instances, pin bindings, and auxiliary assignments,
+  - and the active composition-top emitter now walks that structural layer instead of re-reading only plan state directly during top-module dumping.
+- [t/162-composition-top-structural-rtl-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/162-composition-top-structural-rtl-ir-surface.t) now locks:
+  - direct-result `structural_rtl_ir` surfacing for `?top` composition roots,
+  - preservation of that same serialized structural surface through composition-top `module_info`,
+  - stable top-port / net / instance / pin-binding connectivity details in the first bounded structural slice,
+  - and that the active composition-top emitter can render the top module by walking the serialized structural layer.
 - The next forward-IR widening step through the composition provenance/reporting surface is now also shipped:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
   - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,

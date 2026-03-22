@@ -5803,3 +5803,20 @@ It is an exact-delay pulse request:
   - those report events now preserve structured top-port / child-endpoint context,
   - generated-child endpoint contexts there now also carry bounded forward child summaries from `intent_hir` and `lowered_rtl_ir`,
   - and non-quiet override/block reporting now prints richer link/endpoint examples instead of count-plus-name examples only.
+
+## 2026-03-22: the first forward structural `.fsm` compiler IR slice is now active and shipped under `R11`
+- Promoted the first bounded structural/connectivity extraction seam from roadmap intent into live compiler behavior.
+- The shipped slice is intentionally bounded to composition tops:
+  - new `FSM::IR::StructuralRTLIR` now captures one explicit AST/netlist-like connectivity summary,
+  - direct `?top` generation results now expose a serialized `structural_rtl_ir` hash,
+  - composition-top `module_info` now mirrors that same structural surface for compatibility/embedding use,
+  - and the active composition-top emitter now renders the top module by walking that structural layer instead of re-reading only mixed `Composition::Plan` state.
+- What this slice covers today:
+  - explicit top ports,
+  - explicit internal nets,
+  - realized instances,
+  - per-instance pin bindings,
+  - and auxiliary assignments.
+- Design note from this slice:
+  - this is the first structural slice, not the whole universal connectivity story yet,
+  - but it establishes the right boundary between `Lowered RTL IR` as lowered semantic summary and `Structural RTL IR` as the first extracted wiring/netlist layer.

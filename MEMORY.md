@@ -4426,6 +4426,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - direct `?top` results also expose serialized top-level `lowered_rtl_ir`,
   - that same composition-top `intent_hir` now also carries the broader generated-child export instead of leaving it only as a separate top-level compatibility summary,
   - and composition `module_info` mirrors those same serialized forward layers with bounded top-port, lane, internal-net, instance, auxiliary-assignment, and shared-datapath-candidate summaries.
+- The first structural/connectivity extraction slice is now also live:
+  - `FSM::IR::StructuralRTLIR` exists as the first explicit AST/netlist-like connectivity summary,
+  - direct `?top` results now expose `structural_rtl_ir`,
+  - composition-top `module_info` mirrors the same structural surface,
+  - and the active composition-top emitter now walks that structural layer for top-module dumping.
 - The composition provenance/reporting surface now preserves that same forward context too:
   - resolved-link entries keep source/target endpoint context,
   - generated-child endpoint contexts keep `intent_hir`,
