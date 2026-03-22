@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-22
+### standalone-dt multi-drive targets now emit guard assertions
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so grouped standalone-DT multi-drive targets now carry onehot0-style assertion metadata over the DT-specific driver-enable signals, and SystemVerilog direct `?dt` roots plus realized `?dtc` children now emit bounded non-synthesis guard assertions from that metadata.
+- The same update keeps the backend boundary honest by leaving standalone-DT assertion emission disabled for the Verilog target.
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet composition runs now print one concise reusable standalone-DT child assertion summary for grouped shared targets.
+- Updated [t/137-standalone-dt-multi-drive-family-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/137-standalone-dt-multi-drive-family-metadata.t) and [t/138-composition-standalone-dt-export-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/138-composition-standalone-dt-export-metadata.t) to lock the widened metadata/export surface, and added [t/154-standalone-dt-assertion-runtime-hdl.t](/Users/richarddje/Documents/github/fsmgen/t/154-standalone-dt-assertion-runtime-hdl.t) to lock the emitted HDL behavior.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next reusable-module `R11` feature slice is tracked honestly.
+
 ### combinational shared-datapath lifting now covers the public-only fanout sibling
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so bounded combinational shared-datapath families can now lift even when they are only preserved as multiple public top outputs and have no peer-read child inputs. Those families now emit one shared top-facing combinational carrier, rebind contributor outputs to private raw nets, and fan that lifted carrier back out to the preserved public top outputs.
 - Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet composition runs now report that sibling runtime as `combinational shared public fanout active`.

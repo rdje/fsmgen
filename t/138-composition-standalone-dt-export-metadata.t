@@ -103,6 +103,12 @@ FSM
                         rhs_values => ['a', 'b'],
                         dt_enable_signals => ['from_a_out_a_en', 'from_b_out_b_en'],
                         lhs_enable_signals => ['out_a_en', 'out_b_en'],
+                        multi_drive_assertion => {
+                            kind => 'onehot0',
+                            target_signal => 'out',
+                            input_count => 2,
+                            input_enable_signals => ['from_a_out_a_en', 'from_b_out_b_en'],
+                        },
                     },
                 ],
             },
@@ -197,6 +203,7 @@ FSM
     like($combined_output, qr/Standalone-DT blocks:\s+3/s, 'CLI reports aggregated dt block count');
     like($combined_output, qr/Grouped shared targets:\s+1/s, 'CLI reports aggregated grouped shared-target count');
     like($combined_output, qr/router_a => route_a \(source: route_a, blocks: 2, grouped shared targets: 1\)/s, 'CLI prints first reusable dt child summary');
+    like($combined_output, qr/\* out onehot0 over from_a_out_a_en, from_b_out_b_en/s, 'CLI prints the reusable dt child assertion summary for the grouped shared target');
     like($combined_output, qr/router_b => route_b \(source: route_b, blocks: 1, grouped shared targets: 0\)/s, 'CLI prints second reusable dt child summary');
 };
 

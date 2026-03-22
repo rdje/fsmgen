@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-22: standalone-dt multi-drive targets now emit guard assertions
+- Continued the active `R11` lane by turning the reusable standalone-DT arbitration metadata into real emitted behavior instead of leaving it at reporting/export only.
+- Landed behavior:
+  - grouped standalone-DT multi-drive targets now carry onehot0-style assertion metadata over the DT-specific driver-enable signals,
+  - direct SystemVerilog standalone-DT roots now emit bounded non-synthesis guard assertions from that metadata,
+  - realized `?dtc` children now emit those same grouped-target guard assertions inside generated composition HDL,
+  - and Verilog output keeps that assertion emission disabled.
+- Why this is worth shipping:
+  - it makes the reusable-module lane honor the earlier “generated enable families should support explicit mutual-exclusion assertions” goal,
+  - it upgrades the standalone-DT multi-drive surface from metadata into executable guard behavior,
+  - and it leaves the next seam where it belongs: a fuller reusable-module/interface/export contract rather than more passive metadata only.
+
 ## 2026-03-22: combinational shared-datapath lifting now covers the public-only fanout sibling
 - Continued the active `R11` lane by widening the combinational shared-carrier runtime beyond peer-read families instead of leaving public-only duplicated outputs permanently child-owned.
 - Landed behavior:

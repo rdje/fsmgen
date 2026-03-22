@@ -688,6 +688,15 @@ Done:
 - [t/138-composition-standalone-dt-export-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/138-composition-standalone-dt-export-metadata.t) now locks:
   - composition-top aggregation of reusable standalone-DT child export metadata,
   - and the non-quiet CLI summary for that same composition-facing export surface.
+- The next reusable standalone-DT assertion slice is now also shipped:
+  - grouped standalone-DT multi-drive target families now also surface onehot0-style assertion metadata over their DT-specific driver-enable signals,
+  - direct SystemVerilog standalone-DT roots now emit bounded non-synthesis guard assertions from that metadata,
+  - realized `?dtc` children now also emit those same grouped-target guard assertions inside generated composition HDL,
+  - and Verilog output keeps that standalone-DT assertion emission disabled.
+- [t/154-standalone-dt-assertion-runtime-hdl.t](/Users/richarddje/Documents/github/fsmgen/t/154-standalone-dt-assertion-runtime-hdl.t) now locks:
+  - SystemVerilog onehot0 assertion emission for direct standalone-DT grouped multi-drive targets,
+  - absence of that assertion emission on the Verilog target,
+  - and preservation of that assertion emission inside realized `?dtc` child modules in generated composition HDL.
 - The first shared-datapath candidate-discovery slice is now also shipped:
   - composition-top `module_info` now reports `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates`,
   - those candidate families are currently bounded to same-name output families across multiple realized `?fsmc` children that agree on width and interface type,
@@ -939,7 +948,7 @@ Left:
   - and realized combinational behavior beyond the now-shipped bounded peer-read public-preserving, internal-only, and public-fanout slices.
 - Turn the reusable standalone-DT/module-library direction into a real contract:
   - decide whether unnamed reusable DT roots such as `?dt:` exist at all,
-  - extend the current shipped `?dt:name` interface rule into a fuller reusable-module contract beyond the now-shipped multi-block enable, grouped shared-target, and composition-facing child-export metadata surfaces,
+  - extend the current shipped `?dt:name` interface rule into a fuller reusable-module contract beyond the now-shipped multi-block enable, grouped shared-target, assertion, and composition-facing child-export metadata surfaces,
   - define how multi-`(-foo ...)` standalone DT modules expose block-level and module-level enable families beyond those current metadata/export summaries,
   - extend the now-shipped implicit-system rule split between `?fsm:name` and `?dt:name` into the broader reuse/composition contract,
   - extend the now-shipped generated-child contract beyond the current `?fsmc` / `?dtc` `C1` / `C2` / `C3` plus generated-only and mixed-lane `C4` slices into reusable-module interface/export rules,

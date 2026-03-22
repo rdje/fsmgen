@@ -171,6 +171,7 @@ Current shipped runtime subset:
 - realized `?dtc` children now preserve standalone-DT block-enable family metadata in their `module_info` result surface,
 - realized `?dtc` children now also preserve grouped standalone-DT multi-drive target metadata in that same `module_info` surface,
 - parent composition tops now also aggregate those realized `?dtc` child exports through `composition_standalone_dt_child_count`, `composition_standalone_dt_block_count`, `composition_standalone_dt_multi_drive_target_count`, and `composition_standalone_dt_children` in top-level `module_info`,
+- those grouped standalone-DT multi-drive target families now also surface onehot0-style assertion metadata over their DT-specific driver-enable signals, and SystemVerilog direct `?dt` roots plus realized `?dtc` children now emit bounded non-synthesis guard assertions from that metadata while Verilog keeps those assertions disabled,
 - parent composition tops with multiple `?fsmc` children now also surface first shared-datapath candidate families through `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates` in top-level `module_info`,
 - realized generated children now also preserve `output_drive_family_count` and `output_drive_families` in their `module_info` surface,
 - realized `?fsmc` children now also preserve hidden shared-datapath source-export metadata for per-value enable families used only inside generated composition tops,

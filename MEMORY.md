@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-22: standalone-dt multi-drive targets now emit guard assertions
+- Saved shipped behavior:
+  - grouped standalone-DT multi-drive targets now carry onehot0 assertion metadata over the DT-specific driver-enable signals,
+  - direct SystemVerilog `?dt` roots now emit bounded non-synthesis guard assertions from that metadata,
+  - realized `?dtc` children now emit those same grouped-target guard assertions inside generated composition HDL,
+  - and Verilog output keeps that assertion emission disabled.
+- Important continuity note:
+  - this turns the reusable standalone-DT arbitration lane into real emitted behavior instead of metadata only,
+  - it keeps the backend boundary honest by not leaking SystemVerilog assertion syntax into Verilog output,
+  - and the next likely seam is a fuller reusable-module/interface/export contract rather than more passive standalone-DT metadata.
+
 ## 2026-03-22: combinational shared-datapath lifting now covers the public-only fanout sibling
 - Saved shipped behavior:
   - bounded combinational shared families can now lift even when they have no peer-read child inputs,

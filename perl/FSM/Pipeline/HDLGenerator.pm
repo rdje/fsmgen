@@ -141,6 +141,7 @@ sub generate_hdl_from_file ($self, $fsm_file) {
     # Step 4: Generate HDL code
     my $hdl_code = $self->generate_hdl_code($fsm_module);
     $self->enrich_module_info_from_generated_analysis($module_info, $fsm_module);
+    $hdl_code = $self->augment_generated_hdl_with_standalone_dt_assertions($hdl_code, $module_info);
     
     # Step 5: Gather statistics
     my $statistics = $self->gather_statistics($fsm_module);
@@ -493,6 +494,7 @@ sub realize_fsmc_child_instance ($self, $instance, $composition_spec, $fsm_file,
     my $child_module_info = $self->analyze_fsm_module($child_module);
     my $child_hdl_code = $self->generate_hdl_code($child_module);
     $self->enrich_module_info_from_generated_analysis($child_module_info, $child_module);
+    $child_hdl_code = $self->augment_generated_hdl_with_standalone_dt_assertions($child_hdl_code, $child_module_info);
     my $shared_datapath_source_exports = $self->build_shared_datapath_source_export_metadata($child_module_info);
     $child_module_info->{shared_datapath_source_export_count} = scalar(@$shared_datapath_source_exports);
     $child_module_info->{shared_datapath_source_exports} = $shared_datapath_source_exports;
@@ -525,6 +527,7 @@ sub realize_dtc_child_instance ($self, $instance, $composition_spec, $fsm_file, 
     my $child_module_info = $self->analyze_fsm_module($child_module);
     my $child_hdl_code = $self->generate_hdl_code($child_module);
     $self->enrich_module_info_from_generated_analysis($child_module_info, $child_module);
+    $child_hdl_code = $self->augment_generated_hdl_with_standalone_dt_assertions($child_hdl_code, $child_module_info);
     my $child_interface_ports = $self->build_realized_child_interface_ports($child_module_info);
 
     return FSM::Composition::RealizedInstance->new(
@@ -836,6 +839,63 @@ sub shared_datapath_assertion_runtime_lines ($self, $candidate) {
         "    end",
         "    `endif",
     );
+}
+
+sub standalone_dt_assertion_metadata ($self, $signal_name, $input_enable_signals) {
+    my @inputs = grep {
+        defined($_) && length($_)
+    } @{$input_enable_signals || []};
+
+    return {
+        kind => 'onehot0',
+        target_signal => $signal_name,
+        input_count => scalar(@inputs),
+        input_enable_signals => \@inputs,
+    };
+}
+
+sub standalone_dt_assertion_runtime_lines ($self, $module_info) {
+    return () unless ($self->{target_language} || '') =~ /^(?:systemverilog|sv)$/;
+    return () unless ref($module_info) eq 'HASH';
+
+    my @assertion_lines;
+    for my $target (@{$module_info->{standalone_dt_multi_drive_targets} || []}) {
+        next unless ref($target) eq 'HASH';
+        my $assertion = $target->{multi_drive_assertion} || {};
+        next unless ($assertion->{input_count} || 0) > 1;
+
+        my @inputs = @{$assertion->{input_enable_signals} || []};
+        next unless @inputs;
+
+        my $target_signal = $target->{signal_name} || $assertion->{target_signal} || 'unknown_signal';
+        push @assertion_lines,
+            "    assert (\$onehot0({" . join(', ', @inputs) . "}))"
+                . qq{ else \$error("standalone-dt multi-drive conflict: $target_signal");};
+    }
+
+    return () unless @assertion_lines;
+
+    return (
+        "  `ifndef SYNTHESIS",
+        "  always_comb begin",
+        @assertion_lines,
+        "  end",
+        "  `endif",
+    );
+}
+
+sub augment_generated_hdl_with_standalone_dt_assertions ($self, $hdl_code, $module_info) {
+    return $hdl_code unless defined($hdl_code) && length($hdl_code);
+
+    my @assertion_lines = $self->standalone_dt_assertion_runtime_lines($module_info);
+    return $hdl_code unless @assertion_lines;
+
+    my $assertion_block = join("\n", '', @assertion_lines);
+    if ($hdl_code =~ s/\nendmodule\s*\z/\n$assertion_block\nendmodule/s) {
+        return $hdl_code;
+    }
+
+    return $hdl_code . "\n$assertion_block\n";
 }
 
 sub shared_datapath_or_expression ($self, $input_enable_signals) {
@@ -2814,6 +2874,7 @@ sub build_composition_standalone_dt_child_exports ($self, $composition_plan) {
 
         my $module_enable_family = $child_info->{standalone_dt_module_enable_family} || {};
         my @multi_drive_targets = map {
+            my $assertion = $_->{multi_drive_assertion} || {};
             +{
                 signal_name => $_->{signal_name},
                 multiplexer_type => $_->{multiplexer_type},
@@ -2821,6 +2882,10 @@ sub build_composition_standalone_dt_child_exports ($self, $composition_plan) {
                 rhs_values => [@{$_->{rhs_values} || []}],
                 dt_enable_signals => [@{$_->{dt_enable_signals} || []}],
                 lhs_enable_signals => [@{$_->{lhs_enable_signals} || []}],
+                multi_drive_assertion => {
+                    %{$assertion},
+                    input_enable_signals => [@{$assertion->{input_enable_signals} || []}],
+                },
             }
         } @{$child_info->{standalone_dt_multi_drive_targets} || []};
 
@@ -3901,6 +3966,10 @@ sub enrich_module_info_from_generated_analysis ($self, $module_info, $fsm_module
             rhs_values => [@{$_->{rhs_values} || []}],
             dt_enable_signals => [@{$_->{driver_enable_signals} || []}],
             lhs_enable_signals => [@{$_->{family_enable_signals} || []}],
+            multi_drive_assertion => $self->standalone_dt_assertion_metadata(
+                $_->{signal_name},
+                $_->{driver_enable_signals},
+            ),
         }
     } grep {
         ($_->{driver_count} || 0) > 1
