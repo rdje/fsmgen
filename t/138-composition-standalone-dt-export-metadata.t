@@ -72,64 +72,93 @@ FSM
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $module_info = $result->{module_info};
+    my $children = $module_info->{composition_standalone_dt_children};
+    my ($router_a, $router_b) = @$children;
 
     is($result->{composition_plan}->lane, 'C2', 'two generated dt children use the explicit-link C2 lane');
     is($module_info->{composition_standalone_dt_child_count}, 2, 'top module_info counts realized dt children');
     is($module_info->{composition_standalone_dt_block_count}, 3, 'top module_info sums standalone-DT blocks across realized dt children');
     is($module_info->{composition_standalone_dt_multi_drive_target_count}, 1, 'top module_info sums grouped shared targets across realized dt children');
     is_deeply(
-        $module_info->{composition_standalone_dt_children},
-        [
-            {
-                instance_name => 'router_a',
-                module_name => 'route_a',
-                source_name => 'route_a',
-                standalone_dt_count => 2,
-                standalone_dt_names => ['-from_a', '-from_b'],
-                standalone_dt_enable_families => [
-                    { dt_name => '-from_a', enable_signal => 'from_a_en' },
-                    { dt_name => '-from_b', enable_signal => 'from_b_en' },
-                ],
-                standalone_dt_module_enable_family => {
+        [map { $_->{instance_name} } @$children],
+        ['router_a', 'router_b'],
+        'top module_info keeps reusable dt children in stable instance order',
+    );
+    is_deeply(
+        {
+            instance_name => $router_a->{instance_name},
+            module_name => $router_a->{module_name},
+            source_name => $router_a->{source_name},
+            standalone_dt_count => $router_a->{standalone_dt_count},
+            standalone_dt_names => $router_a->{standalone_dt_names},
+            standalone_dt_enable_families => $router_a->{standalone_dt_enable_families},
+            standalone_dt_module_enable_family => $router_a->{standalone_dt_module_enable_family},
+            standalone_dt_multi_drive_target_count => $router_a->{standalone_dt_multi_drive_target_count},
+            standalone_dt_multi_drive_targets => $router_a->{standalone_dt_multi_drive_targets},
+        },
+        {
+            instance_name => 'router_a',
+            module_name => 'route_a',
+            source_name => 'route_a',
+            standalone_dt_count => 2,
+            standalone_dt_names => ['-from_a', '-from_b'],
+            standalone_dt_enable_families => [
+                { dt_name => '-from_a', enable_signal => 'from_a_en' },
+                { dt_name => '-from_b', enable_signal => 'from_b_en' },
+            ],
+            standalone_dt_module_enable_family => {
+                dt_names => ['-from_a', '-from_b'],
+                enable_signals => ['from_a_en', 'from_b_en'],
+            },
+            standalone_dt_multi_drive_target_count => 1,
+            standalone_dt_multi_drive_targets => [
+                {
+                    signal_name => 'out',
+                    multiplexer_type => 'comb',
                     dt_names => ['-from_a', '-from_b'],
-                    enable_signals => ['from_a_en', 'from_b_en'],
-                },
-                standalone_dt_multi_drive_target_count => 1,
-                standalone_dt_multi_drive_targets => [
-                    {
-                        signal_name => 'out',
-                        multiplexer_type => 'comb',
-                        dt_names => ['-from_a', '-from_b'],
-                        rhs_values => ['a', 'b'],
-                        dt_enable_signals => ['from_a_out_a_en', 'from_b_out_b_en'],
-                        lhs_enable_signals => ['out_a_en', 'out_b_en'],
-                        multi_drive_assertion => {
-                            kind => 'onehot0',
-                            target_signal => 'out',
-                            input_count => 2,
-                            input_enable_signals => ['from_a_out_a_en', 'from_b_out_b_en'],
-                        },
+                    rhs_values => ['a', 'b'],
+                    dt_enable_signals => ['from_a_out_a_en', 'from_b_out_b_en'],
+                    lhs_enable_signals => ['out_a_en', 'out_b_en'],
+                    multi_drive_assertion => {
+                        kind => 'onehot0',
+                        target_signal => 'out',
+                        input_count => 2,
+                        input_enable_signals => ['from_a_out_a_en', 'from_b_out_b_en'],
                     },
-                ],
-            },
-            {
-                instance_name => 'router_b',
-                module_name => 'route_b',
-                source_name => 'route_b',
-                standalone_dt_count => 1,
-                standalone_dt_names => ['-route'],
-                standalone_dt_enable_families => [
-                    { dt_name => '-route', enable_signal => 'route_en' },
-                ],
-                standalone_dt_module_enable_family => {
-                    dt_names => ['-route'],
-                    enable_signals => ['route_en'],
                 },
-                standalone_dt_multi_drive_target_count => 0,
-                standalone_dt_multi_drive_targets => [],
+            ],
+        },
+        'top module_info exposes reusable dt child export metadata for the first child while allowing additional exported forward IR fields',
+    );
+    is_deeply(
+        {
+            instance_name => $router_b->{instance_name},
+            module_name => $router_b->{module_name},
+            source_name => $router_b->{source_name},
+            standalone_dt_count => $router_b->{standalone_dt_count},
+            standalone_dt_names => $router_b->{standalone_dt_names},
+            standalone_dt_enable_families => $router_b->{standalone_dt_enable_families},
+            standalone_dt_module_enable_family => $router_b->{standalone_dt_module_enable_family},
+            standalone_dt_multi_drive_target_count => $router_b->{standalone_dt_multi_drive_target_count},
+            standalone_dt_multi_drive_targets => $router_b->{standalone_dt_multi_drive_targets},
+        },
+        {
+            instance_name => 'router_b',
+            module_name => 'route_b',
+            source_name => 'route_b',
+            standalone_dt_count => 1,
+            standalone_dt_names => ['-route'],
+            standalone_dt_enable_families => [
+                { dt_name => '-route', enable_signal => 'route_en' },
+            ],
+            standalone_dt_module_enable_family => {
+                dt_names => ['-route'],
+                enable_signals => ['route_en'],
             },
-        ],
-        'top module_info exposes reusable dt child exports with enable-family and grouped shared-target metadata',
+            standalone_dt_multi_drive_target_count => 0,
+            standalone_dt_multi_drive_targets => [],
+        },
+        'top module_info exposes reusable dt child export metadata for the second child while allowing additional exported forward IR fields',
     );
 };
 

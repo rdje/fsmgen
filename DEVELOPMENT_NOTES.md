@@ -5760,3 +5760,7 @@ It is an exact-delay pulse request:
   - this is the first extracted lowered layer, not the whole backend-independent RTL story,
   - but a few downstream composition/export consumers now already prefer the extracted `lowered_rtl_ir` surface when present,
   - so the compiler is beginning to consume one explicit lowered layer instead of only rediscovering normalized structure from mixed pipeline residue inside `HDLGenerator`.
+- The next widening step is now also shipped:
+  - the existing top-level reusable `?dtc` export surface in `composition_standalone_dt_children` now preserves each realized child's `intent_hir`,
+  - that same export surface now also preserves each realized child's `lowered_rtl_ir`,
+  - so embedders no longer need to reach back through composition-plan internals just to recover the explicit forward IR layers for reusable standalone-DT children.

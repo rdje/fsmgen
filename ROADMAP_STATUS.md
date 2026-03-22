@@ -717,6 +717,13 @@ Done:
 - [t/156-forward-lowered-rtl-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/156-forward-lowered-rtl-ir-surface.t) now locks:
   - direct-result `lowered_rtl_ir` surfacing for standalone-DT generated roots,
   - and preservation of the same lowered summary through realized generated-child `module_info` for both `?fsmc` and `?dtc` paths.
+- The first forward-IR widening step into a top-level composition export surface is now also shipped:
+  - aggregated `composition_standalone_dt_children` entries now preserve each realized `?dtc` child's serialized `intent_hir` summary,
+  - those same exports now also preserve each realized child's serialized `lowered_rtl_ir` summary,
+  - and the reusable standalone-DT export surface no longer drops the new explicit forward IR layers at the composition-top boundary.
+- [t/157-composition-standalone-dt-forward-ir-exports.t](/Users/richarddje/Documents/github/fsmgen/t/157-composition-standalone-dt-forward-ir-exports.t) now locks:
+  - preservation of child `intent_hir` through aggregated `composition_standalone_dt_children`,
+  - and preservation of child `lowered_rtl_ir` through that same top-level composition export surface.
 - The first shared-datapath candidate-discovery slice is now also shipped:
   - composition-top `module_info` now reports `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates`,
   - those candidate families are currently bounded to same-name output families across multiple realized `?fsmc` children that agree on width and interface type,
@@ -988,8 +995,8 @@ Left:
   - keep that explicit override layer elegant and expressive rather than verbose duplicate configuration,
   - and keep any such convention top-boundary-oriented rather than turning child-to-child wiring into hidden inference everywhere.
 - Track and later retire the current architectural hotspot set deliberately instead of letting it stay ambient debt:
-  - widen the now-shipped first `Intent HIR` extraction slice beyond direct generated roots and realized generated children into the broader forward pipeline and composition-export surfaces,
-  - widen the now-shipped first explicit `Lowered RTL IR` extraction slice beyond generated output-drive families and standalone-DT grouped multi-drive targets into the broader forward pipeline and composition-export surfaces,
+  - widen the now-shipped first `Intent HIR` extraction slice beyond direct generated roots, realized generated children, and the newly shipped standalone-DT composition-export surface into the broader forward pipeline,
+  - widen the now-shipped first explicit `Lowered RTL IR` extraction slice beyond generated output-drive families, standalone-DT grouped multi-drive targets, and the newly shipped standalone-DT composition-export surface into the broader forward pipeline,
   - keep those forward IR layers aligned with the future shared-middle/import architecture instead of allowing a second incompatible semantic stack to form,
   - split composition policy, interface inference, and top emission back out of `FSM::Pipeline::HDLGenerator`,
   - shrink `FSM::Synthesis::EnableGraph` toward a clearer synthesis boundary,

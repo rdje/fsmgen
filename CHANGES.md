@@ -4506,6 +4506,9 @@ This is the persistent technical change history for FSMGen.
   - direct generated roots now expose serialized `lowered_rtl_ir` in pipeline results,
   - realized generated children now preserve that same serialized lowered summary through `module_info`,
   - and selected composition/export consumers now prefer the extracted lowered surface when present so HDL emission and composition planning no longer rely only on ad hoc legacy fields for those normalized families.
+- Widened those explicit forward IR layers one step further into a top-level composition export:
+  - aggregated `composition_standalone_dt_children` entries now preserve each realized `?dtc` child's serialized `intent_hir`,
+  - and those same reusable-child exports now also preserve each child's serialized `lowered_rtl_ir` instead of stripping the forward IR layers back off at the composition-top boundary.
 - Shared-datapath candidate metadata now also makes the bounded combinational peer-read rule explicit: peer-read combinational families stay top-output-only, surface a block reason, and no longer look loopback-eligible in non-quiet `bin/fsmgen` summaries.
 - Shared-datapath runtime behavior now exists in generated composition HDL, not just metadata: realized `?fsmc` children export hidden per-value enable families for composition use, and composition tops now synthesize aggregate-enable and conflict helper wires from those exports.
 - Shared-datapath lifting now has its first actual ownership/runtime slice on top of that helper HDL:

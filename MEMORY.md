@@ -4401,3 +4401,6 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - direct generation results now expose `lowered_rtl_ir`,
   - realized generated children now preserve that same lowered summary through `module_info`,
   - and some composition/export consumers now prefer `lowered_rtl_ir` when present instead of only rereading legacy module-info fields.
+- The first composition-export widening step is now also live:
+  - aggregated `composition_standalone_dt_children` entries preserve child `intent_hir`,
+  - and those same exports now also preserve child `lowered_rtl_ir`.

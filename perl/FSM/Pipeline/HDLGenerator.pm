@@ -2903,6 +2903,8 @@ sub build_composition_standalone_dt_child_exports ($self, $composition_plan) {
             instance_name => $instance->instance_name,
             module_name => $instance->module_name,
             source_name => $instance->source_name,
+            intent_hir => $self->module_intent_hir($child_info),
+            lowered_rtl_ir => $self->module_lowered_rtl_ir($child_info),
             standalone_dt_count => $standalone_dt_count,
             standalone_dt_names => [@{$child_info->{standalone_dt_names} || []}],
             standalone_dt_enable_families => \@enable_families,
@@ -4021,6 +4023,16 @@ sub module_output_drive_families ($self, $module_info) {
     return $module_info->{output_drive_families} || [];
 }
 
+sub module_intent_hir ($self, $module_info) {
+    return {} unless ref($module_info) eq 'HASH';
+    return _clone_structured_value($module_info->{intent_hir} || {});
+}
+
+sub module_lowered_rtl_ir ($self, $module_info) {
+    return {} unless ref($module_info) eq 'HASH';
+    return _clone_structured_value($module_info->{lowered_rtl_ir} || {});
+}
+
 sub module_standalone_dt_multi_drive_targets ($self, $module_info) {
     return [] unless ref($module_info) eq 'HASH';
 
@@ -4081,6 +4093,22 @@ sub enrich_module_info_from_generated_analysis ($self, $module_info, $fsm_module
     $module_info->{standalone_dt_multi_drive_targets} = $lowered_rtl_ir_hash->{standalone_dt_multi_drive_targets};
     $module_info->{lowered_rtl_ir} = $lowered_rtl_ir_hash;
     return $module_info;
+}
+
+sub _clone_structured_value ($value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone_structured_value($value->{$_}) } sort keys %$value
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone_structured_value($_) } @$value ];
+    }
+
+    return $value;
 }
 
 sub analyze_signals ($self, $signals) {
