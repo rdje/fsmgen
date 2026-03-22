@@ -25,6 +25,7 @@ use FSM::Composition::RTLInterfaceLoader;
 use FSM::Extension::Context;
 use FSM::Extension::Loader;
 use FSM::Extension::Registry;
+use FSM::IR::IntentHIR;
 use FSM::SourceClassifier;
 use FSM::SourcePathResolver;
 use Lispish;
@@ -135,8 +136,9 @@ sub generate_hdl_from_file ($self, $fsm_file) {
     # Step 2: Convert raw AST to semantic FSM module
     my $fsm_module = $self->create_fsm_module($raw_ast);
     
-    # Step 3: Analyze FSM module
-    my $module_info = $self->analyze_fsm_module($fsm_module);
+    # Step 3: Extract forward semantic intent and analyze from that IR
+    my $intent_hir = $self->build_intent_hir($fsm_module);
+    my $module_info = $self->analyze_fsm_module($fsm_module, $intent_hir);
     
     # Step 4: Generate HDL code
     my $hdl_code = $self->generate_hdl_code($fsm_module);
@@ -150,6 +152,7 @@ sub generate_hdl_from_file ($self, $fsm_file) {
     
     my $result = {
         fsm_module => $fsm_module,
+        intent_hir => $intent_hir->as_hashref,
         module_info => $module_info,
         hdl_code => $hdl_code,
         statistics => $statistics,
@@ -491,7 +494,8 @@ sub realize_fsmc_child_instance ($self, $instance, $composition_spec, $fsm_file,
     }
 
     my $child_module = $self->create_fsm_module($child_ast);
-    my $child_module_info = $self->analyze_fsm_module($child_module);
+    my $child_intent_hir = $self->build_intent_hir($child_module);
+    my $child_module_info = $self->analyze_fsm_module($child_module, $child_intent_hir);
     my $child_hdl_code = $self->generate_hdl_code($child_module);
     $self->enrich_module_info_from_generated_analysis($child_module_info, $child_module);
     $child_hdl_code = $self->augment_generated_hdl_with_standalone_dt_assertions($child_hdl_code, $child_module_info);
@@ -524,7 +528,8 @@ sub realize_dtc_child_instance ($self, $instance, $composition_spec, $fsm_file, 
     }
 
     my $child_module = $self->create_fsm_module($child_ast);
-    my $child_module_info = $self->analyze_fsm_module($child_module);
+    my $child_intent_hir = $self->build_intent_hir($child_module);
+    my $child_module_info = $self->analyze_fsm_module($child_module, $child_intent_hir);
     my $child_hdl_code = $self->generate_hdl_code($child_module);
     $self->enrich_module_info_from_generated_analysis($child_module_info, $child_module);
     $child_hdl_code = $self->augment_generated_hdl_with_standalone_dt_assertions($child_hdl_code, $child_module_info);
@@ -3772,7 +3777,7 @@ sub composition_failure_context_excerpt ($self, $summary_text) {
     return undef;
 }
 
-sub analyze_fsm_module ($self, $fsm_module) {
+sub build_intent_hir ($self, $fsm_module) {
     fsm_trace_enter('Analyze FSM module structure and signals', 2);
     fsm_debug("Analyzing FSM module structure", 1);
     
@@ -3797,13 +3802,24 @@ sub analyze_fsm_module ($self, $fsm_module) {
     # Analyze signals in detail
     my %signal_analysis = $self->analyze_signals(\%all_signals);
     my $standalone_dt_enable_metadata = $self->build_standalone_dt_enable_metadata(\@all_states);
+    my @parameter_names = sort keys %{ $fsm_module->parameters || {} };
 
-    my $result = {
+    my $intent_hir = FSM::IR::IntentHIR->new(
         module_name => $module_name,
-        regular_states => \@regular_states,
-        standalone_dts => \@standalone_dts,
-        signals => \%all_signals,
+        source_root_kind => (
+            $fsm_module->can('source_root_kind')
+                ? $fsm_module->source_root_kind
+                : 'fsm'
+        ),
+        regular_state_names => [ map { $_->name } @regular_states ],
+        standalone_dt_names => $standalone_dt_enable_metadata->{standalone_dt_names},
+        signal_names => [ sort keys %all_signals ],
         signal_analysis => \%signal_analysis,
+        explicit_system_contract => (
+            $fsm_module->can('explicit_system_contract')
+                ? $fsm_module->explicit_system_contract
+                : undef
+        ),
         system_contract => (
             $fsm_module->can('effective_system_contract')
                 ? $fsm_module->effective_system_contract
@@ -3814,15 +3830,57 @@ sub analyze_fsm_module ($self, $fsm_module) {
                     implicit => 1,
                 }
         ),
-        state_count => scalar(@regular_states),
-        signal_count => scalar(keys %all_signals),
-        standalone_dt_count => $standalone_dt_enable_metadata->{standalone_dt_count},
-        standalone_dt_names => $standalone_dt_enable_metadata->{standalone_dt_names},
+        requires_implicit_system_ports => (
+            $fsm_module->can('requires_implicit_system_ports')
+                ? $fsm_module->requires_implicit_system_ports
+                : 1
+        ),
         standalone_dt_enable_families => $standalone_dt_enable_metadata->{standalone_dt_enable_families},
         standalone_dt_module_enable_family => $standalone_dt_enable_metadata->{standalone_dt_module_enable_family},
-    };
+        parameter_names => \@parameter_names,
+    );
     fsm_trace_exit('FSM module analysis complete', 2);
-    return $result;
+    return $intent_hir;
+}
+
+sub analyze_fsm_module ($self, $fsm_module, $intent_hir = undef) {
+    $intent_hir //= $self->build_intent_hir($fsm_module);
+
+    my @all_states = @{$fsm_module->states};
+    my %all_signals = %{$fsm_module->signals};
+
+    my @regular_states = grep {
+        $_->can('is_regular_state') ? $_->is_regular_state : $_->name !~ /^-/
+    } @all_states;
+    my @standalone_dts = grep {
+        $_->can('is_regular_state') ? !$_->is_regular_state : $_->name =~ /^-/
+    } @all_states;
+
+    my $intent_hir_hash = $intent_hir->as_hashref;
+
+    return {
+        module_name => $intent_hir_hash->{module_name},
+        source_root_kind => $intent_hir_hash->{source_root_kind},
+        regular_states => \@regular_states,
+        regular_state_count => $intent_hir_hash->{regular_state_count},
+        regular_state_names => $intent_hir_hash->{regular_state_names},
+        state_count => $intent_hir_hash->{state_count},
+        standalone_dts => \@standalone_dts,
+        standalone_dt_count => $intent_hir_hash->{standalone_dt_count},
+        standalone_dt_names => $intent_hir_hash->{standalone_dt_names},
+        signals => \%all_signals,
+        signal_count => $intent_hir_hash->{signal_count},
+        signal_names => $intent_hir_hash->{signal_names},
+        signal_analysis => $intent_hir_hash->{signal_analysis},
+        explicit_system_contract => $intent_hir_hash->{explicit_system_contract},
+        system_contract => $intent_hir_hash->{system_contract},
+        requires_implicit_system_ports => $intent_hir_hash->{requires_implicit_system_ports},
+        standalone_dt_enable_families => $intent_hir_hash->{standalone_dt_enable_families},
+        standalone_dt_module_enable_family => $intent_hir_hash->{standalone_dt_module_enable_family},
+        parameter_count => $intent_hir_hash->{parameter_count},
+        parameter_names => $intent_hir_hash->{parameter_names},
+        intent_hir => $intent_hir_hash,
+    };
 }
 
 sub build_standalone_dt_enable_metadata ($self, $all_states) {
@@ -4199,6 +4257,7 @@ Processes an FSM file through the complete pipeline and returns results.
 
 Returns a hashref with:
 - fsm_module: The parsed FSM module object
+- intent_hir: The extracted forward semantic intent IR summary for direct generated roots
 - module_info: Analysis of the FSM structure
 - hdl_code: Generated HDL code
 - statistics: Generation statistics

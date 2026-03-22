@@ -588,6 +588,10 @@ Deliverables:
   - bits / bit-vectors, enums, records / packed-struct-like aggregates, fixed-size arrays, arrays of records, and named aliases / subtypes should become a deliberate frontend type core,
   - that type core should stay portable across SystemVerilog and future VHDL instead of promising backend-specific conveniences such as free aggregate-to-vector casting,
   - and type inference should be the default path for most signal and port declarations, with explicit type declarations mainly acting as overrides, disambiguation anchors, and interface-stability controls.
+- Start extracting explicit forward compiler IR layers out of the active `.fsm` to HDL path instead of leaving proto-HIR/proto-lowered semantics implicit:
+  - first one bounded `Intent HIR` slice for direct generated roots and realized generated children,
+  - then one bounded `Lowered RTL IR` slice once that first forward semantic surface is stable,
+  - while keeping those forward IR shapes aligned with the future shared-middle/import architecture rather than growing a separate forward-only semantic stack.
 - Harden mixed generated-child / `?rtl` flows before broader composition syntax is considered.
 Status: `in progress`
 Done:
@@ -697,6 +701,14 @@ Done:
   - SystemVerilog onehot0 assertion emission for direct standalone-DT grouped multi-drive targets,
   - absence of that assertion emission on the Verilog target,
   - and preservation of that assertion emission inside realized `?dtc` child modules in generated composition HDL.
+- The first explicit forward-compiler IR extraction slice is now also shipped:
+  - direct generated roots now build one explicit `FSM::IR::IntentHIR` summary before `module_info` is derived,
+  - direct generation results now expose that serialized `intent_hir` summary,
+  - realized generated children now also preserve that same serialized forward intent summary through their `module_info`,
+  - and the shipped slice currently covers root identity, system contract, regular-state versus standalone-DT families, stable signal-analysis summaries, and standalone-DT enable families without yet claiming that lowered RTL structure has been extracted too.
+- [t/155-forward-intent-hir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/155-forward-intent-hir-surface.t) now locks:
+  - direct-result `intent_hir` surfacing for generated roots,
+  - and preservation of that same forward intent summary through realized generated-child `module_info`.
 - The first shared-datapath candidate-discovery slice is now also shipped:
   - composition-top `module_info` now reports `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates`,
   - those candidate families are currently bounded to same-name output families across multiple realized `?fsmc` children that agree on width and interface type,
@@ -968,6 +980,9 @@ Left:
   - keep that explicit override layer elegant and expressive rather than verbose duplicate configuration,
   - and keep any such convention top-boundary-oriented rather than turning child-to-child wiring into hidden inference everywhere.
 - Track and later retire the current architectural hotspot set deliberately instead of letting it stay ambient debt:
+  - widen the now-shipped first `Intent HIR` extraction slice beyond direct generated roots and realized generated children into the broader forward pipeline and composition-export surfaces,
+  - start the first explicit `Lowered RTL IR` extraction slice so HDL emission stops owning semantic normalization implicitly,
+  - keep those forward IR layers aligned with the future shared-middle/import architecture instead of allowing a second incompatible semantic stack to form,
   - split composition policy, interface inference, and top emission back out of `FSM::Pipeline::HDLGenerator`,
   - shrink `FSM::Synthesis::EnableGraph` toward a clearer synthesis boundary,
   - move planning/normalization residue out of `FSM::HDL::FlattenedDT::Backend::SystemVerilog` so backend responsibilities are more honest,

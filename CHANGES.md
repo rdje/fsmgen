@@ -4496,6 +4496,11 @@ This is the persistent technical change history for FSMGen.
   - reverse recovery is now explicitly framed as `HDL CST/AST -> semantic HDL HIR -> elaborated RTL IR -> Flat IR -> recovered Intent IR -> .fsm + recovery report`,
   - the note now explicitly rejects the phrase “non-semantic HIR” for the reverse path because the non-semantic layer is just the parsed HDL tree,
   - and the saved architecture direction is now to share the semantic middle (`Intent HIR`, `Lowered RTL IR`, maybe `Flat IR`/provenance later) rather than building two unrelated semantic stacks.
+- Started the first active forward IR extraction slice under `R11` instead of leaving forward IR work as horizon-only guidance:
+  - added `FSM::IR::IntentHIR` as the first explicit forward semantic summary layer,
+  - direct generated roots now expose serialized `intent_hir` in pipeline results,
+  - realized generated children now preserve that same serialized intent summary through `module_info`,
+  - and `HDLGenerator` now derives the compatible `module_info` semantic core from that extracted intent layer before later generated-analysis enrichment.
 - Shared-datapath candidate metadata now also makes the bounded combinational peer-read rule explicit: peer-read combinational families stay top-output-only, surface a block reason, and no longer look loopback-eligible in non-quiet `bin/fsmgen` summaries.
 - Shared-datapath runtime behavior now exists in generated composition HDL, not just metadata: realized `?fsmc` children export hidden per-value enable families for composition use, and composition tops now synthesize aggregate-enable and conflict helper wires from those exports.
 - Shared-datapath lifting now has its first actual ownership/runtime slice on top of that helper HDL:

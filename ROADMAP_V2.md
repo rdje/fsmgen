@@ -100,6 +100,10 @@ Deliverable themes:
 - decide whether a stronger interface-source contract should later replace or sit above `.rtlif`,
 - record and later deliberately reduce the current architectural hotspot set instead of letting those seams stay as unnamed background debt:
   - split composition policy, interface inference, and top-emission planning back out of `FSM::Pipeline::HDLGenerator`,
+  - start extracting explicit forward compiler IR layers out of the currently mixed pipeline instead of leaving proto-HIR/proto-lowered semantics implicit:
+    - first one bounded `Intent HIR` slice for direct generated roots and realized generated children,
+    - then one bounded `Lowered RTL IR` slice once that first forward semantic surface is stable,
+    - while keeping those forward IR shapes aligned with the future shared-middle/import architecture rather than growing a separate forward-only semantic stack,
   - shrink `FSM::Synthesis::EnableGraph` toward a clearer synthesis ownership boundary instead of one ever-growing semantic gravity well,
   - move planning/normalization residue out of `FSM::HDL::FlattenedDT::Backend::SystemVerilog` so the backend boundary becomes more honestly rendering-oriented,
   - make the bridge between `FSM::CoreAST::*` and `FSM::AST::*` more explicit so future work is not forced to rediscover that seam inside `EnableGraph`,
@@ -254,6 +258,11 @@ First shipped `R11` slice now in tree:
   - broader implicit parent-interface inference for undeclared top ports beyond the bounded single-child `C1` passthrough slice and bounded `C2` / `C3` undeclared top-input/top-output/internal-carrier slices,
   - broader reusable-module interface/export rules beyond the now-shipped module-info-level standalone-DT enable-family, grouped multi-drive-family, and composition-facing child-export surfacing slices,
   - or unnamed-root questions.
+- The first explicit forward-compiler IR extraction slice is now also shipped:
+  - direct generated roots now build one explicit `FSM::IR::IntentHIR` summary before `module_info` is derived,
+  - that serialized `intent_hir` summary now flows back in direct generation results,
+  - realized generated children (`?fsmc` / `?dtc`) now also preserve that same serialized forward intent summary through their `module_info`,
+  - and the shipped slice is intentionally narrow: root identity, system contract, regular-state versus standalone-DT families, stable signal-analysis summaries, and standalone-DT enable families are now explicit without yet claiming that lowered RTL structure has been extracted too.
 
 Expected result:
 - composition remains explicit and serious instead of drifting back toward legacy implicit behavior.

@@ -4385,3 +4385,14 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - keep surface trees separate,
   - keep early HDL-specific semantic work separate,
   - but share the semantic middle where possible through `Intent HIR`, `Lowered RTL IR`, and maybe a shared `Flat IR`/provenance model later.
+
+## 2026-03-22: started the first active forward IR extraction slice under `R11`
+- The first live forward `.fsm -> HDL` IR extraction is now in tree:
+  - `FSM::IR::IntentHIR` exists as an explicit forward semantic summary,
+  - direct generation results now expose `intent_hir`,
+  - realized generated children now preserve that same summary through `module_info`,
+  - and the active compiler now derives `module_info` from that extracted intent layer instead of only from ad hoc raw-module inspection.
+- This is intentionally the first bounded slice only:
+  - `Intent HIR` is started,
+  - `Lowered RTL IR` is still left for later extraction,
+  - and the forward IR work is now an active `R11` implementation seam rather than just an `H3` horizon note.

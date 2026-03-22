@@ -5724,3 +5724,22 @@ It is an exact-delay pulse request:
 - Design note from this refinement:
   - the current Perl runtime already has proto-HIR/proto-lowered-IR behavior spread across `HDLGenerator`, `FSMGenFull`, composition planning, and `FlattenedDT`,
   - so the future task is to make those layers explicit and shareable rather than keep discovering them ad hoc inside generation code.
+
+## 2026-03-22: the first forward `.fsm` compiler IR slice is now active and shipped under `R11`
+- Promoted the forward IR work from “horizon only” into the active roadmap by landing the first bounded extraction slice in the live compiler.
+- The shipped slice is intentionally narrow:
+  - new `FSM::IR::IntentHIR` now captures one explicit forward semantic summary for direct generated roots,
+  - `HDLGenerator` now builds that `IntentHIR` before `module_info` is derived instead of treating root identity/system contract/state-family analysis as purely ad hoc pipeline residue,
+  - direct generation results now expose a serialized `intent_hir` hash,
+  - and realized generated children (`?fsmc` / `?dtc`) now preserve that same serialized intent summary through their `module_info`.
+- What this slice covers today:
+  - module/root identity,
+  - effective and explicit system-contract shape,
+  - regular-state versus standalone-DT family summaries,
+  - stable signal-analysis/signal-name summaries,
+  - standalone-DT enable-family metadata,
+  - and parameter-name/count surfacing.
+- Design note from this slice:
+  - this is a true start, not the whole IR program,
+  - because `Lowered RTL IR` still remains future work,
+  - but it moves the forward path from “proto-HIR hidden inside `HDLGenerator`” toward an explicit semantic middle that later HDL import/recovery work can target instead of inventing a parallel intent world.
