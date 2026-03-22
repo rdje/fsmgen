@@ -2440,6 +2440,10 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
                 && %preserved_top_outputs
                     ? 'combinational_shared_reexport'
             : (($candidate->{storage_class} || '') eq 'combinational')
+                && !($candidate->{peer_input_count} || 0)
+                && scalar(keys %preserved_top_outputs) > 1
+                    ? 'combinational_shared_public_fanout'
+            : (($candidate->{storage_class} || '') eq 'combinational')
                 && (($candidate->{peer_read_policy} || '') eq 'top_local_only')
                     ? 'combinational_shared_internal'
                     : ''
@@ -2457,7 +2461,10 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
 
         $candidate->{lifted_runtime_kind} = $runtime_mode;
         my @runtime_lines;
-        if ($runtime_mode eq 'combinational_shared_reexport' || $runtime_mode eq 'combinational_shared_internal') {
+        if ($runtime_mode eq 'combinational_shared_reexport'
+            || $runtime_mode eq 'combinational_shared_internal'
+            || $runtime_mode eq 'combinational_shared_public_fanout')
+        {
             $candidate->{lifted_runtime_signal} = $lifted_comb_signal;
             @runtime_lines = (
                 "    logic ${width_decl}${lifted_comb_signal};",
@@ -2528,7 +2535,8 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
             next unless defined($instance_name) && defined($port_name);
             my $instance = $instances_by_name{$instance_name} || next;
             my $lifted_signal = ($runtime_mode eq 'combinational_shared_reexport'
-                || $runtime_mode eq 'combinational_shared_internal')
+                || $runtime_mode eq 'combinational_shared_internal'
+                || $runtime_mode eq 'combinational_shared_public_fanout')
                 ? $lifted_comb_signal
                 : $lifted_register_signal;
             $self->set_instance_port_binding($instance, $port_name, $lifted_signal);
@@ -2546,7 +2554,9 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
             }
         }
 
-        if ($runtime_mode eq 'combinational_shared_reexport') {
+        if ($runtime_mode eq 'combinational_shared_reexport'
+            || $runtime_mode eq 'combinational_shared_public_fanout')
+        {
             for my $top_output_signal (sort keys %preserved_top_outputs) {
                 push @runtime_lines, "    assign $top_output_signal = $lifted_comb_signal;";
             }

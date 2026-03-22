@@ -545,6 +545,7 @@ unless ($quiet) {
                         registered_shared_internal => 'registered shared internal lift active',
                         registered_shared_public_fanout => 'registered shared public fanout active',
                         combinational_shared_reexport => 'combinational shared top-facing carrier active',
+                        combinational_shared_public_fanout => 'combinational shared public fanout active',
                         combinational_shared_internal => 'combinational shared top-local carrier active',
                     );
                     print "    * lifted runtime: "

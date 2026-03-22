@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-22: combinational shared-datapath lifting now covers the public-only fanout sibling
+- Saved shipped behavior:
+  - bounded combinational shared families can now lift even when they have no peer-read child inputs,
+  - generated tops now emit one shared top-facing combinational carrier for that public-only sibling,
+  - contributor outputs are rebound to private raw nets,
+  - and preserved public top outputs are fanned back out from the lifted carrier.
+- Important continuity note:
+  - this widens the combinational shared-target ownership lane beyond the earlier peer-read-only slices,
+  - it makes the combinational public-output contract more concrete instead of leaving it as roadmap prose,
+  - and the next likely seam is broader automatic-lift/default-visibility policy rather than another missing combinational sibling.
+
 ## 2026-03-22: registered shared-datapath lifting now covers the public-only fanout sibling
 - Saved shipped behavior:
   - bounded registered shared families can now lift even when they have no peer-read child inputs,

@@ -702,6 +702,7 @@ Done:
   - and those candidate families now also carry explicit peer-read policy metadata for bounded combinational peer-read cases, distinguishing public-preserving top-output-only families from internal-only top-local carrier families instead of making them look loopback-eligible,
   - and the bounded combinational peer-read public-preserving case now also realizes a first top-facing shared-carrier runtime through one emitted shared combinational carrier plus peer-input rebinding and preserved top-output re-export assignments,
   - and the sibling bounded combinational peer-read internal-only case now also realizes a first top-local shared-carrier runtime through one emitted shared combinational carrier plus peer-input rebinding without invented public top re-export assignments,
+  - and the sibling bounded combinational public-only fanout case now also realizes that shared-carrier runtime through the same emitted shared combinational carrier plus preserved public top-output fanout without requiring peer-read child inputs,
   - and the bounded registered peer-read public-preserving case now also realizes the first actual lifted shared-target behavior through one emitted shared top-level register plus peer-input rebinding and preserved top-output re-export assignments, including mixed public/internal carrier families,
   - and the sibling bounded registered peer-read internal-only case now also realizes that lifted shared-target behavior through the same emitted shared register plus peer-input rebinding without inventing public top re-export assignments,
   - and the sibling bounded registered public-only fanout case now also realizes that lifted shared-target behavior through the same emitted shared register plus preserved public top-output fanout without requiring peer-read child inputs,
@@ -747,6 +748,11 @@ Done:
   - peer-read child-input rebinding to that shared combinational carrier across multiple consumers,
   - absence of invented public top re-export assignments for that internal-only runtime,
   - and the matching non-quiet CLI lifted-runtime summary lines.
+- [t/153-composition-shared-datapath-combinational-public-fanout-runtime.t](/Users/richarddje/Documents/github/fsmgen/t/153-composition-shared-datapath-combinational-public-fanout-runtime.t) now locks:
+  - lifted-runtime metadata for the bounded combinational public-only fanout case,
+  - the emitted lifted shared combinational carrier runtime for that no-peer-read sibling case,
+  - preserved public top-output fanout assignments from the lifted carrier,
+  - and the matching non-quiet CLI summary lines.
 - [t/145-composition-shared-datapath-runtime-hdl.t](/Users/richarddje/Documents/github/fsmgen/t/145-composition-shared-datapath-runtime-hdl.t) now locks:
   - hidden realized-`?fsmc` source-enable export metadata for shared-datapath per-value families,
   - hidden child export-port injection in generated child HDL,
@@ -929,8 +935,8 @@ Left:
 - Turn the new shared-datapath extraction direction into a real contract:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets beyond the now-shipped discovery/metadata/helper/runtime/assertion slices,
   - lifted shared-target mux/register ownership beyond the now-shipped registered peer-read public-preserving, mixed-boundary, internal-only, and public-fanout slices,
-  - public re-export/default-visibility policy beyond the now-shipped bounded registered peer-read and public-fanout cases,
-  - and realized combinational behavior beyond the now-shipped bounded public-preserving and internal-only slices.
+  - public re-export/default-visibility policy beyond the now-shipped bounded registered peer-read/public-fanout cases and combinational peer-read/public-fanout cases,
+  - and realized combinational behavior beyond the now-shipped bounded peer-read public-preserving, internal-only, and public-fanout slices.
 - Turn the reusable standalone-DT/module-library direction into a real contract:
   - decide whether unnamed reusable DT roots such as `?dt:` exist at all,
   - extend the current shipped `?dt:name` interface rule into a fuller reusable-module contract beyond the now-shipped multi-block enable, grouped shared-target, and composition-facing child-export metadata surfaces,

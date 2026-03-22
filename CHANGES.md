@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-22
+### combinational shared-datapath lifting now covers the public-only fanout sibling
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so bounded combinational shared-datapath families can now lift even when they are only preserved as multiple public top outputs and have no peer-read child inputs. Those families now emit one shared top-facing combinational carrier, rebind contributor outputs to private raw nets, and fan that lifted carrier back out to the preserved public top outputs.
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet composition runs now report that sibling runtime as `combinational shared public fanout active`.
+- Added [t/153-composition-shared-datapath-combinational-public-fanout-runtime.t](/Users/richarddje/Documents/github/fsmgen/t/153-composition-shared-datapath-combinational-public-fanout-runtime.t) to lock the new metadata, emitted HDL, and CLI summary for the public-only combinational fanout slice.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next `R11` shared-datapath feature slice is tracked honestly.
+
 ### registered shared-datapath lifting now covers the public-only fanout sibling
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so bounded registered shared-datapath families can now lift even when they are only preserved as multiple public top outputs and have no peer-read child inputs. Those families now emit one shared top-level register plus next-value logic, rebind contributor outputs to private raw nets, and fan the lifted register back out to the preserved public top outputs.
 - Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet composition runs now report that sibling runtime as `registered shared public fanout active`.
