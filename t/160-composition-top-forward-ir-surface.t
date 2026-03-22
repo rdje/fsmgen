@@ -120,6 +120,12 @@ FSM
     is($lowered_rtl_ir->{target_language}, 'systemverilog', 'composition lowered_rtl_ir preserves the target language');
     is($lowered_rtl_ir->{output_drive_family_count}, 0, 'composition lowered_rtl_ir keeps grouped child output-drive families separate at this slice');
     is($lowered_rtl_ir->{standalone_dt_multi_drive_target_count}, 0, 'composition lowered_rtl_ir keeps grouped child standalone-DT shared targets separate at this slice');
+    is($lowered_rtl_ir->{composition_shared_datapath_candidate_count}, 0, 'composition lowered_rtl_ir reports zero shared-datapath candidates when no bounded multi-fsm family exists');
+    is_deeply(
+        $lowered_rtl_ir->{composition_shared_datapath_candidates},
+        [],
+        'composition lowered_rtl_ir preserves an explicit empty shared-datapath candidate list in that case',
+    );
     is($lowered_rtl_ir->{internal_net_count}, 1, 'composition lowered_rtl_ir reports internal composition net count');
     is_deeply(
         $lowered_rtl_ir->{internal_net_names},

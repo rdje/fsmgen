@@ -261,7 +261,7 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
         $intent_hir,
         $lowered_rtl_ir,
     );
-    my $statistics = $self->build_composition_statistics($composition_plan, $composition_report);
+    my $statistics = $self->build_composition_statistics($composition_plan, $composition_report, $lowered_rtl_ir);
 
     return {
         fsm_module => undef,
@@ -2911,12 +2911,15 @@ sub build_composition_intent_hir ($self, $composition_plan, $generated_child_exp
 }
 
 sub build_composition_lowered_rtl_ir ($self, $composition_plan) {
+    my $shared_datapath_candidates = $self->composition_shared_datapath_candidates_for_plan($composition_plan);
+
     return FSM::IR::LoweredRTLIR->new(
         module_name => ($composition_plan->top_name // ''),
         source_root_kind => 'top',
         target_language => ($self->{target_language} // 'systemverilog'),
         output_drive_families => [],
         standalone_dt_multi_drive_targets => [],
+        composition_shared_datapath_candidates => $shared_datapath_candidates,
         internal_net_names => [ map { $_->name } @{$composition_plan->nets || []} ],
         instance_names => [ map { $_->instance_name } @{$composition_plan->instances || []} ],
         auxiliary_assignment_count => scalar(@{$composition_plan->auxiliary_assignments || []}),
@@ -2936,7 +2939,6 @@ sub build_composition_module_info (
     $lowered_rtl_ir //= $self->build_composition_lowered_rtl_ir($composition_plan);
 
     my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
-    my $shared_datapath_candidates = $self->composition_shared_datapath_candidates_for_plan($composition_plan);
     my $port_metadata = $self->build_composition_port_metadata($composition_plan);
     my $intent_hir_hash = $intent_hir->as_hashref;
     my $lowered_rtl_ir_hash = $lowered_rtl_ir->as_hashref;
@@ -3008,8 +3010,14 @@ sub build_composition_module_info (
         composition_standalone_dt_block_count => $standalone_dt_child_exports->{block_count},
         composition_standalone_dt_multi_drive_target_count => $standalone_dt_child_exports->{multi_drive_target_count},
         composition_standalone_dt_children => $standalone_dt_child_exports->{children},
-        composition_shared_datapath_candidate_count => scalar(@$shared_datapath_candidates),
-        composition_shared_datapath_candidates => $shared_datapath_candidates,
+        composition_shared_datapath_candidate_count => (
+            exists $lowered_rtl_ir_hash->{composition_shared_datapath_candidate_count}
+                ? $lowered_rtl_ir_hash->{composition_shared_datapath_candidate_count}
+                : 0
+        ),
+        composition_shared_datapath_candidates => (
+            $lowered_rtl_ir_hash->{composition_shared_datapath_candidates} || []
+        ),
         composition_lane => $composition_plan->lane,
         composition_provenance => $composition_report,
     };
@@ -3334,9 +3342,9 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
     return \@candidates;
 }
 
-sub build_composition_statistics ($self, $composition_plan, $composition_report = undef) {
+sub build_composition_statistics ($self, $composition_plan, $composition_report = undef, $lowered_rtl_ir = undef) {
     my $stats = $self->gather_statistics(undef);
-    my $shared_datapath_candidates = $self->composition_shared_datapath_candidates_for_plan($composition_plan);
+    my $lowered_rtl_ir_hash = ref($lowered_rtl_ir) ? $lowered_rtl_ir->as_hashref : {};
     $stats->{composition_child_count} = scalar(@{$composition_plan->instances});
     $stats->{composition_top_port_count} = scalar(@{$composition_plan->ports});
     $stats->{composition_net_count} = scalar(@{$composition_plan->nets || []});
@@ -3349,8 +3357,11 @@ sub build_composition_statistics ($self, $composition_plan, $composition_report 
     $stats->{composition_block_count} = $composition_report
         ? $composition_report->{block_count}
         : 0;
-    $stats->{composition_shared_datapath_candidate_count} =
-        scalar(@{$shared_datapath_candidates || []});
+    $stats->{composition_shared_datapath_candidate_count} = (
+        exists $lowered_rtl_ir_hash->{composition_shared_datapath_candidate_count}
+            ? $lowered_rtl_ir_hash->{composition_shared_datapath_candidate_count}
+            : scalar(@{$self->composition_shared_datapath_candidates_for_plan($composition_plan) || []})
+    );
     $stats->{composition_lane} = $composition_plan->lane;
     $stats->{composition_provenance} = $composition_report if $composition_report;
     return $stats;

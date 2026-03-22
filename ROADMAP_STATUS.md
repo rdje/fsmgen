@@ -746,13 +746,13 @@ Done:
 - The next forward-IR widening step through composition tops themselves is now also shipped:
   - direct `?top` generation results now expose serialized top-level `intent_hir` and serialized top-level `lowered_rtl_ir`,
   - those composition-top forward layers now carry stable top-port analysis plus composition child-count / lane metadata on the intent side,
-  - those same composition-top forward layers now also carry stable internal-net / instance / auxiliary-assignment summaries on the lowered side,
+  - those same composition-top forward layers now also carry stable internal-net / instance / auxiliary-assignment summaries plus the bounded shared-datapath candidate surface on the lowered side,
   - and `module_info` now mirrors those same serialized composition-top forward IR layers instead of leaving composition tops as the remaining explicit forward-IR gap.
 - [t/160-composition-top-forward-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/160-composition-top-forward-ir-surface.t) now locks:
   - direct-result `intent_hir` surfacing for `?top` composition roots,
   - direct-result `lowered_rtl_ir` surfacing for `?top` composition roots,
   - preservation of those same serialized forward IR layers through composition-top `module_info`,
-  - and the initial bounded composition-top fields for top-port analysis, child counts, lane, internal nets, instances, and auxiliary assignments.
+  - and the initial bounded composition-top fields for top-port analysis, child counts, lane, internal nets, instances, auxiliary assignments, and shared-datapath candidates.
 - The next forward-IR widening step through the composition provenance/reporting surface is now also shipped:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
   - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,

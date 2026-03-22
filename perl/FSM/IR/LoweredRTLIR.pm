@@ -17,6 +17,7 @@ sub new ($class, %args) {
         target_language => $args{target_language} // 'systemverilog',
         output_drive_families => _clone($args{output_drive_families} || []),
         standalone_dt_multi_drive_targets => _clone($args{standalone_dt_multi_drive_targets} || []),
+        composition_shared_datapath_candidates => _clone($args{composition_shared_datapath_candidates}),
         internal_net_names => _clone($args{internal_net_names}),
         instance_names => _clone($args{instance_names}),
         auxiliary_assignment_count => $args{auxiliary_assignment_count},
@@ -28,6 +29,7 @@ sub source_root_kind ($self) { return $self->{source_root_kind} }
 sub target_language ($self) { return $self->{target_language} }
 sub output_drive_families ($self) { return $self->{output_drive_families} }
 sub standalone_dt_multi_drive_targets ($self) { return $self->{standalone_dt_multi_drive_targets} }
+sub composition_shared_datapath_candidates ($self) { return $self->{composition_shared_datapath_candidates} }
 sub internal_net_names ($self) { return $self->{internal_net_names} }
 sub instance_names ($self) { return $self->{instance_names} }
 sub auxiliary_assignment_count ($self) { return $self->{auxiliary_assignment_count} }
@@ -35,6 +37,7 @@ sub auxiliary_assignment_count ($self) { return $self->{auxiliary_assignment_cou
 sub as_hashref ($self) {
     my $output_drive_families = _clone($self->output_drive_families || []);
     my $standalone_dt_multi_drive_targets = _clone($self->standalone_dt_multi_drive_targets || []);
+    my $composition_shared_datapath_candidates = _clone($self->composition_shared_datapath_candidates);
     my $internal_net_names = _clone($self->internal_net_names);
     my $instance_names = _clone($self->instance_names);
 
@@ -47,6 +50,13 @@ sub as_hashref ($self) {
         standalone_dt_multi_drive_target_count => scalar(@$standalone_dt_multi_drive_targets),
         standalone_dt_multi_drive_targets => $standalone_dt_multi_drive_targets,
     };
+
+    if (defined $composition_shared_datapath_candidates) {
+        $result->{composition_shared_datapath_candidate_count}
+            = scalar(@{$composition_shared_datapath_candidates || []});
+        $result->{composition_shared_datapath_candidates}
+            = $composition_shared_datapath_candidates;
+    }
 
     if (defined $internal_net_names) {
         $result->{internal_net_count} = scalar(@{$internal_net_names || []});
@@ -92,8 +102,9 @@ FSM::IR::LoweredRTLIR - Explicit forward lowered RTL summary for `.fsm` generati
 
 This module provides the first extracted forward lowered-RTL summary surface used by
 the active `.fsm` to HDL pipeline. It currently captures generated output-drive
-families and standalone-DT grouped multi-drive targets so later lowering and
-recovery-oriented work can consume one explicit normalized layer instead of
-re-deriving that structure from mixed pipeline state.
+families, standalone-DT grouped multi-drive targets, and the bounded composition
+shared-datapath candidate surface so later lowering and recovery-oriented work can
+consume one explicit normalized layer instead of re-deriving that structure from
+mixed pipeline state.
 
 =cut

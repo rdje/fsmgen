@@ -66,8 +66,16 @@ FSM
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my ($left_instance, $right_instance) = @{$result->{composition_plan}->instances};
+    my $lowered_rtl_ir = $result->{lowered_rtl_ir};
     my $candidate = $result->{module_info}{composition_shared_datapath_candidates}[0];
     my ($left_contributor, $right_contributor) = @{$candidate->{contributors}};
+
+    is($lowered_rtl_ir->{composition_shared_datapath_candidate_count}, 1, 'composition top lowered_rtl_ir reports one shared-datapath candidate family');
+    is_deeply(
+        $lowered_rtl_ir->{composition_shared_datapath_candidates},
+        $result->{module_info}{composition_shared_datapath_candidates},
+        'composition top lowered_rtl_ir preserves the same shared-datapath candidate surface as module_info',
+    );
 
     is($left_contributor->{kind}, 'fsmc', 'first contributor preserves generated child kind');
     is($left_contributor->{source_name}, 'left_src', 'first contributor preserves generated child source name');
