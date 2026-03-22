@@ -697,6 +697,7 @@ Done:
   - each shared-datapath candidate now also carries one deterministic whole-target aggregate enable plus per-value aggregate enable families built from the child-local `P_Q` families,
   - realized `?fsmc` children now also carry hidden shared-datapath source-export metadata for those per-value enable families,
   - and generated composition tops now also synthesize the first actual shared-datapath helper HDL from that surface through hidden child source-enable export bindings plus per-value/whole-target aggregate and conflict wires,
+  - and SystemVerilog composition tops now also emit the first actual shared-datapath assertion HDL from that surface through non-synthesis same-value and whole-target conflict guards while Verilog stays free of emitted assertion syntax,
   - and those candidate families now also carry first lifted-ownership planning metadata through storage-class, peer-read endpoint, default lifted visibility, planned top re-export, and loopback-policy fields,
   - and those candidate families now also carry explicit peer-read policy metadata for bounded combinational peer-read cases, distinguishing public-preserving top-output-only families from internal-only top-local carrier families instead of making them look loopback-eligible,
   - and the bounded combinational peer-read public-preserving case now also realizes a first top-facing shared-carrier runtime through one emitted shared combinational carrier plus peer-input rebinding and preserved top-output re-export assignments,
@@ -750,6 +751,9 @@ Done:
   - hidden child export-port injection in generated child HDL,
   - top-level binding of those hidden exports into deterministic per-child source-enable alias nets,
   - and generated composition-top aggregate/conflict helper HDL for shared-datapath families.
+- [t/151-composition-shared-datapath-assertion-runtime-hdl.t](/Users/richarddje/Documents/github/fsmgen/t/151-composition-shared-datapath-assertion-runtime-hdl.t) now locks:
+  - emitted SystemVerilog same-value and whole-target shared-datapath guard assertions in generated composition tops,
+  - and absence of that assertion emission on the Verilog target.
 - [t/146-composition-shared-datapath-lifted-register-runtime.t](/Users/richarddje/Documents/github/fsmgen/t/146-composition-shared-datapath-lifted-register-runtime.t) now locks:
   - reset-aware shared-datapath candidate metadata for the bounded registered peer-read public-preserving case,
   - the emitted shared top-level register and next-value logic for that case,
@@ -917,7 +921,7 @@ Done:
 Left:
 - Decide whether later work should keep the now-formalized `.rtlif` interface-source family as embedded-root plus sidecar metadata, or place a stronger interface-source contract above it.
 - Turn the new shared-datapath extraction direction into a real contract:
-  - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets beyond the now-shipped discovery/metadata/helper/runtime slices,
+  - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets beyond the now-shipped discovery/metadata/helper/runtime/assertion slices,
   - lifted shared-target mux/register ownership beyond the now-shipped registered peer-read public-preserving, mixed-boundary, and internal-only slices,
   - public re-export/default-visibility policy beyond the now-shipped bounded registered peer-read cases,
   - and realized combinational behavior beyond the now-shipped bounded public-preserving and internal-only slices.

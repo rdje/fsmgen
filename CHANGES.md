@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-22
+### systemverilog composition tops now emit shared-datapath guard assertions
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the existing shared-datapath onehot0 assertion metadata now becomes real emitted guard logic on SystemVerilog composition tops. Same-value `P_Q_multi_src_conflict` signals and whole-target `P_multi_value_conflict` signals now drive non-synthesis immediate `assert` checks in the generated top.
+- The same update keeps the backend boundary honest by leaving assertion emission disabled for the Verilog target.
+- Added [t/151-composition-shared-datapath-assertion-runtime-hdl.t](/Users/richarddje/Documents/github/fsmgen/t/151-composition-shared-datapath-assertion-runtime-hdl.t) to lock both the emitted SystemVerilog assertion shape and the absence of that emission on Verilog.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next `R11` shared-datapath feature slice is tracked honestly.
+
 ### combinational shared-datapath peer-read families now also cover the internal-only top-local sibling
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so bounded combinational peer-read shared families can now lift even when no public top output from that family is being preserved. Those families now advertise a distinct `top_local_only` policy, use `top_local` as their lifted-visibility surface, and emit one shared top-local combinational carrier in the generated top instead of stopping at metadata only.
 - The same update also fixes peer-read child-input rebinding for the new internal-only combinational runtime so those inputs now bind to the emitted shared combinational carrier rather than falling through the registered-lift path.

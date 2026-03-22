@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-22: systemverilog composition tops now emit shared-datapath guard assertions
+- Saved shipped behavior:
+  - SystemVerilog composition tops now emit non-synthesis same-value and whole-target shared-datapath guard assertions in the generated top,
+  - those assertions are driven from the already-shipped deterministic conflict wires and onehot0 metadata,
+  - and Verilog targets keep that assertion emission disabled.
+- Important continuity note:
+  - this turns the shared-datapath assertion lane into real emitted HDL instead of planning/reporting only,
+  - it keeps the backend boundary honest by not leaking SystemVerilog assertion syntax into Verilog output,
+  - and the next likely seam is still broader lifted shared-target ownership/visibility behavior rather than more assertion naming work.
+
 ## 2026-03-22: combinational shared-datapath peer-read families now also cover the internal-only top-local sibling
 - Saved shipped behavior:
   - bounded combinational peer-read shared families can now lift even when no public top output from that family is preserved,

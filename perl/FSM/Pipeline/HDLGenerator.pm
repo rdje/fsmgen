@@ -798,6 +798,46 @@ sub shared_datapath_assertion_metadata ($self, $result_signal, $input_enable_sig
     };
 }
 
+sub shared_datapath_assertion_runtime_lines ($self, $candidate) {
+    return () unless ($self->{target_language} || '') =~ /^(?:systemverilog|sv)$/;
+    return () unless ref($candidate) eq 'HASH';
+
+    my @assertion_lines;
+    my $signal_name = $candidate->{signal_name} || 'unknown_signal';
+
+    for my $family (@{$candidate->{aggregate_enable_families} || []}) {
+        next unless ref($family) eq 'HASH';
+        my $assertion = $family->{same_value_assertion} || {};
+        next unless ($assertion->{input_count} || 0) > 1;
+        my $result_signal = $assertion->{result_signal} || next;
+        my $rhs_value = $family->{rhs_value} // 'unknown_value';
+
+        push @assertion_lines,
+            "      assert (!$result_signal)"
+                . qq{ else \$error("shared-datapath same-value conflict: $signal_name $rhs_value");};
+    }
+
+    my $multi_value_assertion = $candidate->{multi_value_assertion} || {};
+    if (($multi_value_assertion->{input_count} || 0) > 1) {
+        my $result_signal = $multi_value_assertion->{result_signal} || '';
+        if (length $result_signal) {
+            push @assertion_lines,
+                "      assert (!$result_signal)"
+                    . qq{ else \$error("shared-datapath multi-value conflict: $signal_name");};
+        }
+    }
+
+    return () unless @assertion_lines;
+
+    return (
+        "    `ifndef SYNTHESIS",
+        "    always_comb begin",
+        @assertion_lines,
+        "    end",
+        "    `endif",
+    );
+}
+
 sub shared_datapath_or_expression ($self, $input_enable_signals) {
     my @inputs = grep {
         defined($_) && length($_)
@@ -2329,6 +2369,7 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
     }
 
     my @helper_assignments;
+    my @assertion_sections;
     my @lifted_runtime_sections;
     my ($clock_name, $reset_name) = $self->composition_system_signal_names($composition_plan);
     my %instances_by_name = map {
@@ -2367,6 +2408,9 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
                 . $self->shared_datapath_or_expression(\@aggregate_value_enables) . ";",
             "  assign $candidate->{multi_value_conflict_signal} = "
                 . $self->shared_datapath_conflict_expression(\@aggregate_value_enables) . ";";
+
+        my @candidate_assertion_lines = $self->shared_datapath_assertion_runtime_lines($candidate);
+        push @assertion_sections, @candidate_assertion_lines if @candidate_assertion_lines;
 
         my %planned_reexports = map {
             ($_ => 1)
@@ -2500,6 +2544,10 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
 
     my @auxiliary_lines;
     push @auxiliary_lines, @helper_assignments if @helper_assignments;
+    if (@assertion_sections) {
+        push @auxiliary_lines, "" if @auxiliary_lines;
+        push @auxiliary_lines, @assertion_sections;
+    }
     if (@lifted_runtime_sections) {
         push @auxiliary_lines, "" if @auxiliary_lines;
         push @auxiliary_lines, @lifted_runtime_sections;

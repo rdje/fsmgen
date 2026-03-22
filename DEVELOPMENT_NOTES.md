@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-22: systemverilog composition tops now emit shared-datapath guard assertions
+- Continued the active `R11` lane by turning the already-shipped shared-datapath assertion metadata into actual emitted HDL instead of leaving it at reporting/planning only.
+- Landed behavior:
+  - SystemVerilog composition tops now emit non-synthesis immediate assertions for same-value multi-source conflicts and whole-target multi-value conflicts,
+  - those assertions are derived directly from the existing deterministic shared-datapath conflict wires and onehot0 metadata,
+  - and Verilog targets keep that assertion emission disabled so the backend boundary stays honest.
+- Why this is worth shipping:
+  - it upgrades the shared-datapath lane from conflict naming into executable guard behavior,
+  - it reuses the already-shipped metadata instead of inventing a second assertion model,
+  - and it leaves the next seam where it belongs: broader ownership/default-visibility and further widening of the lifted shared-target behavior itself.
+
 ## 2026-03-22: combinational shared-datapath peer-read families now also cover the internal-only top-local sibling
 - Continued the active `R11` lane by widening the first shipped combinational shared-carrier runtime instead of leaving the sibling internal-only case behind as policy-only metadata.
 - Landed behavior:
