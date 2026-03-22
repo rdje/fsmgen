@@ -4515,6 +4515,8 @@ This is the persistent technical change history for FSMGen.
   - and non-quiet `bin/fsmgen` runs now print one concise generated-child summary from that broader exported surface.
 - Widened the same forward IR story into the shared-datapath candidate surface:
   - shared-datapath contributor entries now preserve both serialized `intent_hir` and serialized `lowered_rtl_ir`,
+  - those same contributor entries now also preserve the exact selected `output_drive_family` from child `lowered_rtl_ir`,
+  - and the existing bounded `drive_intent` summary is now derived from that extracted family instead of standing alone,
   - those contributor entries now also preserve stable generated-child identity through `kind` and `source_name`,
   - and non-quiet `bin/fsmgen` runs now print one concise contributor-context line before the existing shared-datapath drive-intent summary.
 - Widened the same forward IR story through composition tops themselves:

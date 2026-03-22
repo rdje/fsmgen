@@ -88,6 +88,26 @@ FSM
                         source_name => 'left_src',
                         endpoint => 'left.status_bus',
                         bound_signal => 'left_status',
+                        output_drive_family => {
+                            signal_name => 'status_bus',
+                            width => 8,
+                            multiplexer_type => 'flop',
+                            default_value => 'status_bus',
+                            reset_value => "8'h00",
+                            driver_count => 1,
+                            driver_blocks => ['-state0'],
+                            rhs_values => ["8'd1"],
+                            driver_enable_signals => ['state0_status_bus__8_d1_en'],
+                            family_enable_signals => ['status_bus__8_d1_en'],
+                            rhs_enable_families => [
+                                {
+                                    rhs_value => "8'd1",
+                                    family_enable_signal => 'status_bus__8_d1_en',
+                                    driver_blocks => ['-state0'],
+                                    driver_enable_signals => ['state0_status_bus__8_d1_en'],
+                                },
+                            ],
+                        },
                         drive_intent => {
                             multiplexer_type => 'flop',
                             default_value => 'status_bus',
@@ -114,6 +134,26 @@ FSM
                         source_name => 'right_src',
                         endpoint => 'right.status_bus',
                         bound_signal => 'right_status',
+                        output_drive_family => {
+                            signal_name => 'status_bus',
+                            width => 8,
+                            multiplexer_type => 'flop',
+                            default_value => 'status_bus',
+                            reset_value => "8'h00",
+                            driver_count => 1,
+                            driver_blocks => ['-state0'],
+                            rhs_values => ["8'd2"],
+                            driver_enable_signals => ['state0_status_bus__8_d2_en'],
+                            family_enable_signals => ['status_bus__8_d2_en'],
+                            rhs_enable_families => [
+                                {
+                                    rhs_value => "8'd2",
+                                    family_enable_signal => 'status_bus__8_d2_en',
+                                    driver_blocks => ['-state0'],
+                                    driver_enable_signals => ['state0_status_bus__8_d2_en'],
+                                },
+                            ],
+                        },
                         drive_intent => {
                             multiplexer_type => 'flop',
                             default_value => 'status_bus',

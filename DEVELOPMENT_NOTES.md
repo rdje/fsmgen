@@ -5770,6 +5770,8 @@ It is an exact-delay pulse request:
   - and `bin/fsmgen` now prints one concise generated-child section so that broader export surface is visible without embedding code.
 - The shared-datapath candidate surface is now widened in the same direction:
   - each shared-datapath contributor now preserves the realized child's `intent_hir` and `lowered_rtl_ir`,
+  - each shared-datapath contributor now also preserves the exact selected `output_drive_family` from that child's lowered forward layer,
+  - and the existing bounded `drive_intent` summary is now derived from that extracted family instead of standing alone,
   - those contributor entries now also preserve stable generated-child identity through `kind` and `source_name`,
   - and `bin/fsmgen` now prints one small contributor-context line before the existing drive-intent line so that self-contained forward child context is visible in the shared-datapath summary too.
 - The next widening step is now also shipped through composition tops themselves:

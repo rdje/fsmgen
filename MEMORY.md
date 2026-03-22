@@ -4410,6 +4410,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - The shared-datapath candidate surface now preserves that same forward child context too:
   - candidate contributors keep `intent_hir`,
   - keep `lowered_rtl_ir`,
+  - now also keep the exact selected contributor `output_drive_family` from child `lowered_rtl_ir`,
+  - and keep the bounded `drive_intent` summary as a derived compatibility shape from that extracted family,
   - and also keep stable generated-child identity through `kind` and `source_name`.
 - Composition tops themselves now preserve the same forward-IR story too:
   - direct `?top` results expose serialized top-level `intent_hir`,

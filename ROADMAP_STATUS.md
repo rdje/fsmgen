@@ -734,10 +734,13 @@ Done:
   - and the matching non-quiet CLI generated-child summary lines.
 - The next forward-IR widening step through the shared-datapath candidate surface is now also shipped:
   - shared-datapath candidate contributors now preserve each realized child's serialized `intent_hir` and serialized `lowered_rtl_ir`,
+  - those same contributor entries now also preserve the exact selected `output_drive_family` from that child's serialized `lowered_rtl_ir`,
+  - and the existing bounded `drive_intent` summary is now derived from that extracted family instead of standing alone,
   - those contributor entries now also preserve stable generated-child identity through `kind` and `source_name`,
   - and non-quiet `bin/fsmgen` runs now print one concise contributor-context line from that surface before the existing drive-intent details.
 - [t/159-composition-shared-datapath-forward-ir-exports.t](/Users/richarddje/Documents/github/fsmgen/t/159-composition-shared-datapath-forward-ir-exports.t) now locks:
   - preservation of child `intent_hir` and `lowered_rtl_ir` through shared-datapath candidate contributors,
+  - preservation of the exact selected contributor `output_drive_family` from child `lowered_rtl_ir`,
   - preservation of contributor `kind` and `source_name`,
   - and the matching non-quiet CLI contributor-context lines.
 - The next forward-IR widening step through composition tops themselves is now also shipped:

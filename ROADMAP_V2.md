@@ -275,6 +275,8 @@ First shipped `R11` slice now in tree:
   - and non-quiet `bin/fsmgen` runs now print one concise generated-child summary derived from that broader export instead of requiring plan-internal inspection.
 - The next widening step is now also shipped through the shared-datapath candidate surface:
   - shared-datapath candidate contributors now preserve their realized child's serialized `intent_hir` and serialized `lowered_rtl_ir`,
+  - those same contributor entries now also preserve the exact selected `output_drive_family` from that child's serialized `lowered_rtl_ir`,
+  - and the existing bounded `drive_intent` summary is now derived from that extracted family instead of standing alone,
   - those contributor entries now also preserve stable generated-child identity through `kind` and `source_name`,
   - and non-quiet `bin/fsmgen` runs now print one concise contributor-context line from that forward child IR surface before the existing drive-intent summary.
 - The next widening step is now also shipped through composition tops themselves:

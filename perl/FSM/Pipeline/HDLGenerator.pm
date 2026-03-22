@@ -1006,7 +1006,8 @@ sub augment_generated_child_hdl_with_shared_datapath_exports ($self, $hdl_code, 
 
 sub shared_datapath_storage_class ($self, $contributors) {
     my %types = map {
-        my $type = $_->{drive_intent}{multiplexer_type} // 'unknown';
+        my $output_drive_family = $self->shared_datapath_contributor_output_drive_family($_);
+        my $type = $output_drive_family->{multiplexer_type} // 'unknown';
         ($type => 1);
     } @{$contributors || []};
 
@@ -1036,6 +1037,38 @@ sub shared_datapath_peer_read_policy ($self, $storage_class, $peer_input_endpoin
     } if ($storage_class || '') eq 'combinational';
 
     return undef;
+}
+
+sub shared_datapath_contributor_output_drive_family ($self, $contributor) {
+    return {} unless ref($contributor) eq 'HASH';
+    return $contributor->{output_drive_family} if ref($contributor->{output_drive_family}) eq 'HASH';
+    return $contributor->{drive_intent} if ref($contributor->{drive_intent}) eq 'HASH';
+    return {};
+}
+
+sub shared_datapath_drive_intent_from_output_drive_family ($self, $output_drive_family) {
+    return {} unless ref($output_drive_family) eq 'HASH';
+
+    return {
+        multiplexer_type => ($output_drive_family->{multiplexer_type} // 'unknown'),
+        default_value => $output_drive_family->{default_value},
+        reset_value => $output_drive_family->{reset_value},
+        driver_count => ($output_drive_family->{driver_count} || 0),
+        driver_blocks => [@{$output_drive_family->{driver_blocks} || []}],
+        rhs_values => [@{$output_drive_family->{rhs_values} || []}],
+        driver_enable_signals => [@{$output_drive_family->{driver_enable_signals} || []}],
+        family_enable_signals => [@{$output_drive_family->{family_enable_signals} || []}],
+        rhs_enable_families => [
+            map {
+                +{
+                    rhs_value => $_->{rhs_value},
+                    family_enable_signal => $_->{family_enable_signal},
+                    driver_blocks => [@{$_->{driver_blocks} || []}],
+                    driver_enable_signals => [@{$_->{driver_enable_signals} || []}],
+                }
+            } @{$output_drive_family->{rhs_enable_families} || []}
+        ],
+    };
 }
 
 sub is_generated_child_kind ($self, $kind) {
@@ -3118,6 +3151,9 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
                 $normalized_type;
 
             my $drive_family = $drive_family_by_signal{$port->name} || {};
+            my $output_drive_family = ref($drive_family) eq 'HASH'
+                ? _clone_structured_value($drive_family)
+                : {};
             push @{$candidate_groups{$key}{contributors}}, {
                 kind => $instance->kind,
                 instance_name => $instance->instance_name,
@@ -3127,26 +3163,8 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
                 bound_signal => $bindings{$port->name},
                 intent_hir => $self->module_intent_hir($instance->module_info),
                 lowered_rtl_ir => $self->module_lowered_rtl_ir($instance->module_info),
-                drive_intent => {
-                    multiplexer_type => ($drive_family->{multiplexer_type} // 'unknown'),
-                    default_value => $drive_family->{default_value},
-                    reset_value => $drive_family->{reset_value},
-                    driver_count => ($drive_family->{driver_count} || 0),
-                    driver_blocks => [@{$drive_family->{driver_blocks} || []}],
-                    rhs_values => [@{$drive_family->{rhs_values} || []}],
-                    driver_enable_signals => [@{$drive_family->{driver_enable_signals} || []}],
-                    family_enable_signals => [@{$drive_family->{family_enable_signals} || []}],
-                    rhs_enable_families => [
-                        map {
-                            +{
-                                rhs_value => $_->{rhs_value},
-                                family_enable_signal => $_->{family_enable_signal},
-                                driver_blocks => [@{$_->{driver_blocks} || []}],
-                                driver_enable_signals => [@{$_->{driver_enable_signals} || []}],
-                            }
-                        } @{$drive_family->{rhs_enable_families} || []}
-                    ],
-                },
+                output_drive_family => $output_drive_family,
+                drive_intent => $self->shared_datapath_drive_intent_from_output_drive_family($output_drive_family),
             };
             $candidate_groups{$key}{signal_name} = $port->name;
             $candidate_groups{$key}{width} = $port->width || 1;
@@ -3207,7 +3225,8 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
         } @{$peer_input_groups{$key} || []};
         my $storage_class = $self->shared_datapath_storage_class(\@contributors);
         my %reset_values = map {
-            my $reset_value = $_->{drive_intent}{reset_value};
+            my $output_drive_family = $self->shared_datapath_contributor_output_drive_family($_);
+            my $reset_value = $output_drive_family->{reset_value};
             defined($reset_value) && length($reset_value)
                 ? ($reset_value => 1)
                 : ();
@@ -3231,8 +3250,8 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
 
         my %aggregate_families_by_rhs;
         for my $contributor (@contributors) {
-            my $drive_intent = $contributor->{drive_intent} || {};
-            for my $rhs_family (@{$drive_intent->{rhs_enable_families} || []}) {
+            my $output_drive_family = $self->shared_datapath_contributor_output_drive_family($contributor);
+            for my $rhs_family (@{$output_drive_family->{rhs_enable_families} || []}) {
                 next unless ref($rhs_family) eq 'HASH';
                 my $rhs_value = $rhs_family->{rhs_value};
                 next unless defined $rhs_value;
