@@ -740,6 +740,16 @@ Done:
   - preservation of child `intent_hir` and `lowered_rtl_ir` through shared-datapath candidate contributors,
   - preservation of contributor `kind` and `source_name`,
   - and the matching non-quiet CLI contributor-context lines.
+- The next forward-IR widening step through composition tops themselves is now also shipped:
+  - direct `?top` generation results now expose serialized top-level `intent_hir` and serialized top-level `lowered_rtl_ir`,
+  - those composition-top forward layers now carry stable top-port analysis plus composition child-count / lane metadata on the intent side,
+  - those same composition-top forward layers now also carry stable internal-net / instance / auxiliary-assignment summaries on the lowered side,
+  - and `module_info` now mirrors those same serialized composition-top forward IR layers instead of leaving composition tops as the remaining explicit forward-IR gap.
+- [t/160-composition-top-forward-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/160-composition-top-forward-ir-surface.t) now locks:
+  - direct-result `intent_hir` surfacing for `?top` composition roots,
+  - direct-result `lowered_rtl_ir` surfacing for `?top` composition roots,
+  - preservation of those same serialized forward IR layers through composition-top `module_info`,
+  - and the initial bounded composition-top fields for top-port analysis, child counts, lane, internal nets, instances, and auxiliary assignments.
 - The first shared-datapath candidate-discovery slice is now also shipped:
   - composition-top `module_info` now reports `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates`,
   - those candidate families are currently bounded to same-name output families across multiple realized `?fsmc` children that agree on width and interface type,

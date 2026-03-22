@@ -24,6 +24,11 @@ sub new ($class, %args) {
         standalone_dt_enable_families => _clone($args{standalone_dt_enable_families} || []),
         standalone_dt_module_enable_family => _clone($args{standalone_dt_module_enable_family} || {}),
         parameter_names => [@{$args{parameter_names} || []}],
+        composition_child_count => $args{composition_child_count},
+        composition_generated_child_count => $args{composition_generated_child_count},
+        composition_generated_fsm_child_count => $args{composition_generated_fsm_child_count},
+        composition_generated_dt_child_count => $args{composition_generated_dt_child_count},
+        composition_lane => $args{composition_lane},
     }, $class;
 }
 
@@ -39,6 +44,11 @@ sub requires_implicit_system_ports ($self) { return $self->{requires_implicit_sy
 sub standalone_dt_enable_families ($self) { return $self->{standalone_dt_enable_families} }
 sub standalone_dt_module_enable_family ($self) { return $self->{standalone_dt_module_enable_family} }
 sub parameter_names ($self) { return $self->{parameter_names} }
+sub composition_child_count ($self) { return $self->{composition_child_count} }
+sub composition_generated_child_count ($self) { return $self->{composition_generated_child_count} }
+sub composition_generated_fsm_child_count ($self) { return $self->{composition_generated_fsm_child_count} }
+sub composition_generated_dt_child_count ($self) { return $self->{composition_generated_dt_child_count} }
+sub composition_lane ($self) { return $self->{composition_lane} }
 
 sub as_hashref ($self) {
     my $regular_state_names = [@{$self->regular_state_names || []}];
@@ -46,7 +56,7 @@ sub as_hashref ($self) {
     my $signal_names = [@{$self->signal_names || []}];
     my $parameter_names = [@{$self->parameter_names || []}];
 
-    return {
+    my $result = {
         module_name => $self->module_name,
         source_root_kind => $self->source_root_kind,
         regular_state_count => scalar(@$regular_state_names),
@@ -65,6 +75,19 @@ sub as_hashref ($self) {
         parameter_count => scalar(@$parameter_names),
         parameter_names => $parameter_names,
     };
+
+    $result->{composition_child_count} = $self->composition_child_count
+        if defined $self->composition_child_count;
+    $result->{composition_generated_child_count} = $self->composition_generated_child_count
+        if defined $self->composition_generated_child_count;
+    $result->{composition_generated_fsm_child_count} = $self->composition_generated_fsm_child_count
+        if defined $self->composition_generated_fsm_child_count;
+    $result->{composition_generated_dt_child_count} = $self->composition_generated_dt_child_count
+        if defined $self->composition_generated_dt_child_count;
+    $result->{composition_lane} = $self->composition_lane
+        if defined $self->composition_lane;
+
+    return $result;
 }
 
 sub _clone ($value) {

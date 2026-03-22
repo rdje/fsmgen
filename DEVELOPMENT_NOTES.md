@@ -5772,3 +5772,8 @@ It is an exact-delay pulse request:
   - each shared-datapath contributor now preserves the realized child's `intent_hir` and `lowered_rtl_ir`,
   - those contributor entries now also preserve stable generated-child identity through `kind` and `source_name`,
   - and `bin/fsmgen` now prints one small contributor-context line before the existing drive-intent line so that self-contained forward child context is visible in the shared-datapath summary too.
+- The next widening step is now also shipped through composition tops themselves:
+  - direct `?top` generation results now expose serialized top-level `intent_hir` and serialized top-level `lowered_rtl_ir`,
+  - the composition-top `intent_hir` slice is intentionally bounded to top-port analysis plus composition child-count / lane metadata,
+  - the composition-top `lowered_rtl_ir` slice is intentionally bounded to internal-net / instance / auxiliary-assignment summaries,
+  - and composition `module_info` now mirrors those same serialized forward layers instead of leaving `?top` as the remaining forward-IR hole.

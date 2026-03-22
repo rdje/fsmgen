@@ -251,7 +251,16 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
     my $composition_plan = $self->build_composition_plan($composition_spec, $fsm_file, $header);
     my $composition_report = $self->build_composition_provenance_report($composition_plan);
     my $hdl_code = $self->generate_composition_hdl_code($composition_plan);
-    my $module_info = $self->build_composition_module_info($composition_plan, $composition_report);
+    my $generated_child_exports = $self->build_composition_generated_child_exports($composition_plan);
+    my $intent_hir = $self->build_composition_intent_hir($composition_plan, $generated_child_exports);
+    my $lowered_rtl_ir = $self->build_composition_lowered_rtl_ir($composition_plan);
+    my $module_info = $self->build_composition_module_info(
+        $composition_plan,
+        $composition_report,
+        $generated_child_exports,
+        $intent_hir,
+        $lowered_rtl_ir,
+    );
     my $statistics = $self->build_composition_statistics($composition_plan, $composition_report);
 
     return {
@@ -259,6 +268,8 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
         composition_spec => $composition_spec,
         composition_plan => $composition_plan,
         composition_report => $composition_report,
+        intent_hir => $intent_hir->as_hashref,
+        lowered_rtl_ir => $lowered_rtl_ir->as_hashref,
         module_info => $module_info,
         hdl_code => $hdl_code,
         statistics => $statistics,
@@ -2797,12 +2808,10 @@ sub emit_composition_top_module ($self, $composition_plan) {
     return join("\n", @body_lines);
 }
 
-sub build_composition_module_info ($self, $composition_plan, $composition_report = undef) {
+sub build_composition_port_metadata ($self, $composition_plan) {
     my (@inputs, @outputs, @multi_bit, @single_bit);
     my %signals;
-    my $generated_child_exports = $self->build_composition_generated_child_exports($composition_plan);
-    my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
-    my $shared_datapath_candidates = $self->composition_shared_datapath_candidates_for_plan($composition_plan);
+    my @signal_names;
 
     for my $port (@{$composition_plan->ports}) {
         my $entry = {
@@ -2810,6 +2819,8 @@ sub build_composition_module_info ($self, $composition_plan, $composition_report
             width => $port->width,
             direction => $port->direction,
         };
+
+        push @signal_names, $port->name;
 
         if ($port->direction eq 'output') {
             push @outputs, $entry;
@@ -2830,18 +2841,121 @@ sub build_composition_module_info ($self, $composition_plan, $composition_report
     }
 
     return {
-        module_name => $composition_plan->top_name,
-        regular_states => [],
-        standalone_dts => [],
         signals => \%signals,
+        signal_names => \@signal_names,
         signal_analysis => {
             inputs => \@inputs,
             outputs => \@outputs,
             multi_bit => \@multi_bit,
             single_bit => \@single_bit,
         },
-        state_count => 0,
-        signal_count => scalar(@{$composition_plan->ports}),
+    };
+}
+
+sub build_composition_intent_hir ($self, $composition_plan, $generated_child_exports = undef) {
+    $generated_child_exports //= $self->build_composition_generated_child_exports($composition_plan);
+    my $port_metadata = $self->build_composition_port_metadata($composition_plan);
+
+    return FSM::IR::IntentHIR->new(
+        module_name => ($composition_plan->top_name // ''),
+        source_root_kind => 'top',
+        regular_state_names => [],
+        standalone_dt_names => [],
+        signal_names => $port_metadata->{signal_names},
+        signal_analysis => $port_metadata->{signal_analysis},
+        explicit_system_contract => undef,
+        system_contract => {},
+        requires_implicit_system_ports => 0,
+        standalone_dt_enable_families => [],
+        standalone_dt_module_enable_family => {},
+        parameter_names => [],
+        composition_child_count => scalar(@{$composition_plan->instances || []}),
+        composition_generated_child_count => $generated_child_exports->{child_count},
+        composition_generated_fsm_child_count => $generated_child_exports->{fsm_child_count},
+        composition_generated_dt_child_count => $generated_child_exports->{dt_child_count},
+        composition_lane => $composition_plan->lane,
+    );
+}
+
+sub build_composition_lowered_rtl_ir ($self, $composition_plan) {
+    return FSM::IR::LoweredRTLIR->new(
+        module_name => ($composition_plan->top_name // ''),
+        source_root_kind => 'top',
+        target_language => ($self->{target_language} // 'systemverilog'),
+        output_drive_families => [],
+        standalone_dt_multi_drive_targets => [],
+        internal_net_names => [ map { $_->name } @{$composition_plan->nets || []} ],
+        instance_names => [ map { $_->instance_name } @{$composition_plan->instances || []} ],
+        auxiliary_assignment_count => scalar(@{$composition_plan->auxiliary_assignments || []}),
+    );
+}
+
+sub build_composition_module_info (
+    $self,
+    $composition_plan,
+    $composition_report = undef,
+    $generated_child_exports = undef,
+    $intent_hir = undef,
+    $lowered_rtl_ir = undef,
+) {
+    $generated_child_exports //= $self->build_composition_generated_child_exports($composition_plan);
+    $intent_hir //= $self->build_composition_intent_hir($composition_plan, $generated_child_exports);
+    $lowered_rtl_ir //= $self->build_composition_lowered_rtl_ir($composition_plan);
+
+    my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
+    my $shared_datapath_candidates = $self->composition_shared_datapath_candidates_for_plan($composition_plan);
+    my $port_metadata = $self->build_composition_port_metadata($composition_plan);
+    my $intent_hir_hash = $intent_hir->as_hashref;
+    my $lowered_rtl_ir_hash = $lowered_rtl_ir->as_hashref;
+
+    return {
+        module_name => $intent_hir_hash->{module_name},
+        source_root_kind => $intent_hir_hash->{source_root_kind},
+        regular_states => [],
+        regular_state_count => $intent_hir_hash->{regular_state_count},
+        regular_state_names => $intent_hir_hash->{regular_state_names},
+        standalone_dts => [],
+        standalone_dt_count => $intent_hir_hash->{standalone_dt_count},
+        standalone_dt_names => $intent_hir_hash->{standalone_dt_names},
+        signals => $port_metadata->{signals},
+        signal_count => $intent_hir_hash->{signal_count},
+        signal_names => $intent_hir_hash->{signal_names},
+        signal_analysis => $intent_hir_hash->{signal_analysis},
+        explicit_system_contract => $intent_hir_hash->{explicit_system_contract},
+        system_contract => $intent_hir_hash->{system_contract},
+        requires_implicit_system_ports => $intent_hir_hash->{requires_implicit_system_ports},
+        parameter_count => $intent_hir_hash->{parameter_count},
+        parameter_names => $intent_hir_hash->{parameter_names},
+        intent_hir => $intent_hir_hash,
+        lowered_rtl_ir => $lowered_rtl_ir_hash,
+        output_drive_family_count => $lowered_rtl_ir_hash->{output_drive_family_count},
+        output_drive_families => $lowered_rtl_ir_hash->{output_drive_families},
+        standalone_dt_multi_drive_target_count => $lowered_rtl_ir_hash->{standalone_dt_multi_drive_target_count},
+        standalone_dt_multi_drive_targets => $lowered_rtl_ir_hash->{standalone_dt_multi_drive_targets},
+        internal_net_count => (
+            exists $lowered_rtl_ir_hash->{internal_net_count}
+                ? $lowered_rtl_ir_hash->{internal_net_count}
+                : scalar(@{$composition_plan->nets || []})
+        ),
+        internal_net_names => (
+            $lowered_rtl_ir_hash->{internal_net_names}
+                || [ map { $_->name } @{$composition_plan->nets || []} ]
+        ),
+        instance_count => (
+            exists $lowered_rtl_ir_hash->{instance_count}
+                ? $lowered_rtl_ir_hash->{instance_count}
+                : scalar(@{$composition_plan->instances || []})
+        ),
+        instance_names => (
+            $lowered_rtl_ir_hash->{instance_names}
+                || [ map { $_->instance_name } @{$composition_plan->instances || []} ]
+        ),
+        auxiliary_assignment_count => (
+            exists $lowered_rtl_ir_hash->{auxiliary_assignment_count}
+                ? $lowered_rtl_ir_hash->{auxiliary_assignment_count}
+                : scalar(@{$composition_plan->auxiliary_assignments || []})
+        ),
+        state_count => $intent_hir_hash->{state_count},
         composition_child_count => scalar(@{$composition_plan->instances}),
         composition_net_count => scalar(@{$composition_plan->nets || []}),
         composition_resolved_link_count => $composition_report

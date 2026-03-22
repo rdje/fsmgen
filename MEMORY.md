@@ -4411,3 +4411,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - candidate contributors keep `intent_hir`,
   - keep `lowered_rtl_ir`,
   - and also keep stable generated-child identity through `kind` and `source_name`.
+- Composition tops themselves now preserve the same forward-IR story too:
+  - direct `?top` results expose serialized top-level `intent_hir`,
+  - direct `?top` results also expose serialized top-level `lowered_rtl_ir`,
+  - and composition `module_info` mirrors those same serialized forward layers with bounded top-port, lane, internal-net, instance, and auxiliary-assignment summaries.
