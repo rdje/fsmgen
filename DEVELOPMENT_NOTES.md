@@ -5730,10 +5730,12 @@ It is an exact-delay pulse request:
 - The saved forward-path guidance now explicitly says:
   - current composition connectivity still manifests more concretely in structures like ports, nets, instances, bindings, and auxiliary assignments than in the extracted `LoweredRTLIR` hash itself,
   - so the long-term forward path likely needs a distinct `Structural RTL IR` / connectivity layer between `Lowered RTL IR` and final HDL text emission,
+  - that structural layer is best thought of as an AST-like netlist over explicit ports, nets, instances, pin bindings, assignments, and other backend-facing connectivity objects,
   - and the eventual backend boundary should mostly walk that structural layer rather than rediscovering connectivity ad hoc during HDL dumping.
 - Design note from this refinement:
   - `Lowered RTL IR` and `Structural RTL IR` are related but not the same abstraction,
-  - so the healthier direction is probably to keep `Lowered RTL IR` focused on normalized semantic/lowered facts and let `Structural RTL IR` own explicit connectivity.
+  - so the healthier direction is probably to keep `Lowered RTL IR` focused on normalized semantic/lowered facts and let `Structural RTL IR` own explicit connectivity,
+  - including the precise wiring between top-level ports/nets and child-instance pins rather than leaving that truth visible only in the dumped HDL or plan internals.
 
 ## 2026-03-22: the first forward `.fsm` compiler IR slice is now active and shipped under `R11`
 - Promoted the forward IR work from “horizon only” into the active roadmap by landing the first bounded extraction slice in the live compiler.

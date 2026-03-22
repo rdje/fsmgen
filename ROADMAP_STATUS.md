@@ -1049,7 +1049,7 @@ Left:
 - Track and later retire the current architectural hotspot set deliberately instead of letting it stay ambient debt:
   - widen the now-shipped first `Intent HIR` extraction slice beyond direct generated roots, realized generated children, the standalone-DT composition-export surface, the broader generated-child composition-export surface, and the shared-datapath candidate contributor surface into the rest of the forward pipeline,
   - widen the now-shipped first explicit `Lowered RTL IR` extraction slice beyond generated output-drive families, standalone-DT grouped multi-drive targets, the standalone-DT composition-export surface, the broader generated-child composition-export surface, and the shared-datapath candidate contributor surface into the rest of the forward pipeline,
-  - start one bounded `Structural RTL IR` / connectivity extraction so explicit ports, nets, instances, bindings, and auxiliary connectivity stop living only in composition plans and backend-adjacent emitter code,
+  - start one bounded `Structural RTL IR` / connectivity extraction so explicit ports, nets, instances, pin bindings, and full top/child wiring stop living only in composition plans and backend-adjacent emitter code,
   - keep those forward IR layers aligned with the future shared-middle/import architecture instead of allowing a second incompatible semantic stack to form,
   - split composition policy, interface inference, and top emission back out of `FSM::Pipeline::HDLGenerator`,
   - shrink `FSM::Synthesis::EnableGraph` toward a clearer synthesis boundary,

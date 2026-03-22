@@ -4391,7 +4391,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Saved direction:
   - keep pushing on `Intent HIR`,
   - keep pushing on `Lowered RTL IR`,
-  - and plan for one explicit `Structural RTL IR` / connectivity layer that carries ports, nets, instances, bindings, and auxiliary connectivity for backend walking.
+  - and plan for one explicit `Structural RTL IR` / connectivity layer that behaves like an AST/netlist for ports, nets, instances, pin bindings, and auxiliary connectivity so the backend can walk full top/child wiring directly.
 
 ## 2026-03-22: started the first active forward IR extraction slice under `R11`
 - The first live forward `.fsm -> HDL` IR extraction is now in tree:
