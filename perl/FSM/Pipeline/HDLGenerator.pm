@@ -691,6 +691,7 @@ sub realize_rtl_child_instance ($self, $instance, $composition_spec, $fsm_file, 
 
 sub build_realized_child_interface_ports ($self, $module_info) {
     my %ports;
+    my $structural_rtl_ir = $self->module_structural_rtl_ir($module_info);
     my $system_contract = $module_info->{system_contract} || {
         clock => 'clk',
         reset => 'rst_n',
@@ -702,20 +703,40 @@ sub build_realized_child_interface_ports ($self, $module_info) {
         ($system_contract->{reset} => 'reset'),
     );
 
-    for my $direction (qw(input output)) {
-        my $list = $direction eq 'input'
-            ? ($module_info->{signal_analysis}{inputs} || [])
-            : ($module_info->{signal_analysis}{outputs} || []);
+    if (ref($structural_rtl_ir->{ports}) eq 'ARRAY' && @{$structural_rtl_ir->{ports}}) {
+        for my $entry (@{$structural_rtl_ir->{ports}}) {
+            next unless defined($entry->{name}) && length($entry->{name});
+            my $type = $entry->{type};
+            $type = $system_port_type{$entry->{name}}
+                if !defined($type) || $type eq '';
+            $type = undef
+                if defined($type) && ($type eq 'wire' || $type eq 'logic');
 
-        for my $entry (@$list) {
             $ports{$entry->{name}} = FSM::Composition::Port->new(
                 name => $entry->{name},
-                direction => $direction,
+                direction => ($entry->{direction} || 'input'),
                 width => $entry->{width} || 1,
-                type => $system_port_type{$entry->{name}},
+                type => $type,
                 raw_token => undef,
                 origin_kind => 'realized_child_interface_port',
             );
+        }
+    } else {
+        for my $direction (qw(input output)) {
+            my $list = $direction eq 'input'
+                ? ($module_info->{signal_analysis}{inputs} || [])
+                : ($module_info->{signal_analysis}{outputs} || []);
+
+            for my $entry (@$list) {
+                $ports{$entry->{name}} = FSM::Composition::Port->new(
+                    name => $entry->{name},
+                    direction => $direction,
+                    width => $entry->{width} || 1,
+                    type => $system_port_type{$entry->{name}},
+                    raw_token => undef,
+                    origin_kind => 'realized_child_interface_port',
+                );
+            }
         }
     }
 

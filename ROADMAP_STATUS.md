@@ -778,6 +778,13 @@ Done:
   - direct-result `structural_rtl_ir` surfacing for generated `?fsm` roots,
   - stable direct-module boundary port metadata in that bounded structural slice,
   - and the effective system boundary (`clock` / `reset`) being preserved there when those ports are really part of the generated module contract.
+- The next structural-consumption step is now also shipped:
+  - realized generated-child interface planning now consumes `structural_rtl_ir` as its first boundary source of truth instead of rebuilding child ports only from signal analysis,
+  - and that handoff explicitly normalizes low-level declaration types like `wire` / `logic` back into plain semantic data ports so composition type-matching does not accidentally tighten.
+- [t/164-realized-child-interface-ports-from-structural-rtl-ir.t](/Users/richarddje/Documents/github/fsmgen/t/164-realized-child-interface-ports-from-structural-rtl-ir.t) now locks:
+  - realized `?fsmc` child interface ports mirroring the child structural boundary summary,
+  - realized `?dtc` child interface ports mirroring the child structural boundary summary,
+  - and the structural-to-interface normalization boundary for generic `wire`-typed data ports.
 - The next forward-IR widening step through the composition provenance/reporting surface is now also shipped:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
   - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,

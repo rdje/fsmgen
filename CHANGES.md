@@ -4541,6 +4541,9 @@ This is the persistent technical change history for FSMGen.
 - Widened that structural extraction slice into direct generated roots and child exports:
   - direct generated `?fsm` / `?dt` results now expose a bounded structural module-interface slice through `structural_rtl_ir`,
   - and realized generated-child export surfaces now preserve that same child `structural_rtl_ir` beside `intent_hir` and `lowered_rtl_ir`.
+- Started consuming that structural layer in realized-child planning too:
+  - generated-child interface ports are now derived from `structural_rtl_ir` first instead of rebuilding only from signal analysis,
+  - and the structural-to-interface handoff now normalizes low-level declaration types like `wire` / `logic` back to plain semantic data ports while preserving `clock` / `reset`.
 - Logged the next forward-IR architecture refinement for future implementation:
   - the current extracted `Lowered RTL IR` is now explicitly treated as a lowered summary layer rather than the final full connectivity graph,
   - the forward compiler is now steered toward `Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend`,

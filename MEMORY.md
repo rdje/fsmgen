@@ -4434,6 +4434,9 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - The next structural widening step is also live:
   - direct generated `?fsm` / `?dt` results now expose a bounded structural module-interface slice through `structural_rtl_ir`,
   - and realized generated-child export surfaces now preserve that same child `structural_rtl_ir` beside `intent_hir` and `lowered_rtl_ir`.
+- The next structural-consumption step is also live:
+  - realized generated-child interface planning now consumes `structural_rtl_ir` as its first boundary source of truth,
+  - with low-level declaration types like `wire` / `logic` normalized back to plain semantic data ports on the way into composition interface planning.
 - The composition provenance/reporting surface now preserves that same forward context too:
   - resolved-link entries keep source/target endpoint context,
   - generated-child endpoint contexts keep `intent_hir`,

@@ -297,6 +297,9 @@ First shipped `R11` slice now in tree:
   - direct generated `?fsm` / `?dt` results now expose a bounded structural module-interface slice through `structural_rtl_ir`,
   - that direct-root structural slice currently covers explicit module ports plus empty nets/instances/auxiliary structure,
   - and realized generated-child export surfaces now preserve that same child `structural_rtl_ir` beside `intent_hir` and `lowered_rtl_ir`.
+- The next structural-consumption step is now also shipped:
+  - realized generated-child interface planning now consumes `structural_rtl_ir` as its first boundary source of truth instead of rebuilding child ports only from signal analysis,
+  - and that handoff explicitly normalizes low-level declaration types like `wire`/`logic` back into plain semantic data ports so composition type-matching does not accidentally tighten.
 - The next widening step is now also shipped through the composition provenance/reporting surface:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
   - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,
