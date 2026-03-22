@@ -2428,6 +2428,13 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
                 ? (%planned_reexports
                     ? 'registered_shared_reexport'
                     : 'registered_shared_internal')
+            : (($candidate->{storage_class} || '') eq 'registered')
+                && !($candidate->{peer_input_count} || 0)
+                && scalar(keys %preserved_top_outputs) > 1
+                && defined($candidate->{reset_value}) && length($candidate->{reset_value})
+                && defined($clock_name) && length($clock_name)
+                && defined($reset_name) && length($reset_name)
+                    ? 'registered_shared_public_fanout'
             : (($candidate->{storage_class} || '') eq 'combinational')
                 && (($candidate->{peer_read_policy} || '') eq 'top_output_only')
                 && %preserved_top_outputs
@@ -2529,6 +2536,12 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
 
         if ($runtime_mode eq 'registered_shared_reexport') {
             for my $top_output_signal (sort keys %planned_reexports) {
+                push @runtime_lines, "    assign $top_output_signal = $lifted_register_signal;";
+            }
+        }
+
+        if ($runtime_mode eq 'registered_shared_public_fanout') {
+            for my $top_output_signal (sort keys %preserved_top_outputs) {
                 push @runtime_lines, "    assign $top_output_signal = $lifted_register_signal;";
             }
         }

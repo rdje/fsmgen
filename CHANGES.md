@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-22
+### registered shared-datapath lifting now covers the public-only fanout sibling
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so bounded registered shared-datapath families can now lift even when they are only preserved as multiple public top outputs and have no peer-read child inputs. Those families now emit one shared top-level register plus next-value logic, rebind contributor outputs to private raw nets, and fan the lifted register back out to the preserved public top outputs.
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet composition runs now report that sibling runtime as `registered shared public fanout active`.
+- Added [t/152-composition-shared-datapath-public-fanout-register-runtime.t](/Users/richarddje/Documents/github/fsmgen/t/152-composition-shared-datapath-public-fanout-register-runtime.t) to lock the new metadata, emitted HDL, and CLI summary for the public-only registered fanout slice.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next `R11` shared-datapath feature slice is tracked honestly.
+
 ### systemverilog composition tops now emit shared-datapath guard assertions
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the existing shared-datapath onehot0 assertion metadata now becomes real emitted guard logic on SystemVerilog composition tops. Same-value `P_Q_multi_src_conflict` signals and whole-target `P_multi_value_conflict` signals now drive non-synthesis immediate `assert` checks in the generated top.
 - The same update keeps the backend boundary honest by leaving assertion emission disabled for the Verilog target.

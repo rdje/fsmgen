@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-22: registered shared-datapath lifting now covers the public-only fanout sibling
+- Saved shipped behavior:
+  - bounded registered shared families can now lift even when they have no peer-read child inputs,
+  - generated tops now emit one shared top-level register plus next-value logic for that public-only sibling,
+  - contributor outputs are rebound to private raw nets,
+  - and preserved public top outputs are fanned back out from the lifted register.
+- Important continuity note:
+  - this widens the registered shared-target ownership lane beyond the earlier peer-read-only slices,
+  - it starts making the public re-export/default-visibility contract concrete instead of purely roadmap prose,
+  - and the next likely seam is broader automatic-lift policy for registered families or further widening of the combinational sibling lane.
+
 ## 2026-03-22: systemverilog composition tops now emit shared-datapath guard assertions
 - Saved shipped behavior:
   - SystemVerilog composition tops now emit non-synthesis same-value and whole-target shared-datapath guard assertions in the generated top,

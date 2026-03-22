@@ -704,6 +704,7 @@ Done:
   - and the sibling bounded combinational peer-read internal-only case now also realizes a first top-local shared-carrier runtime through one emitted shared combinational carrier plus peer-input rebinding without invented public top re-export assignments,
   - and the bounded registered peer-read public-preserving case now also realizes the first actual lifted shared-target behavior through one emitted shared top-level register plus peer-input rebinding and preserved top-output re-export assignments, including mixed public/internal carrier families,
   - and the sibling bounded registered peer-read internal-only case now also realizes that lifted shared-target behavior through the same emitted shared register plus peer-input rebinding without inventing public top re-export assignments,
+  - and the sibling bounded registered public-only fanout case now also realizes that lifted shared-target behavior through the same emitted shared register plus preserved public top-output fanout without requiring peer-read child inputs,
   - and non-quiet `bin/fsmgen` composition runs now print one concise `Shared-Datapath Candidates` summary section from that metadata surface.
 - [t/139-composition-shared-datapath-candidate-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/139-composition-shared-datapath-candidate-metadata.t) now locks:
   - composition-top shared-datapath candidate metadata for multi-`?fsmc` tops,
@@ -771,6 +772,11 @@ Done:
   - peer-read endpoint filtering down to only inputs actually bound to contributor carriers,
   - the emitted lifted shared-register runtime for one-public-one-internal contributor families,
   - preserved public top re-exports without invented internal-carrier re-export assignments,
+  - and the matching non-quiet CLI summary lines.
+- [t/152-composition-shared-datapath-public-fanout-register-runtime.t](/Users/richarddje/Documents/github/fsmgen/t/152-composition-shared-datapath-public-fanout-register-runtime.t) now locks:
+  - lifted-runtime metadata for the bounded registered public-only fanout case,
+  - the emitted lifted shared-register runtime for that no-peer-read sibling case,
+  - preserved public top-output fanout assignments from the lifted register,
   - and the matching non-quiet CLI summary lines.
 - The first `R11` connect-by-name broadening slice beyond the original multi-child success case is now also shipped:
   - declared `=name` connect-by-name now works for a single generated child (`?fsmc` or `?dtc`) instead of starting only beyond the single-child passthrough case,
@@ -922,8 +928,8 @@ Left:
 - Decide whether later work should keep the now-formalized `.rtlif` interface-source family as embedded-root plus sidecar metadata, or place a stronger interface-source contract above it.
 - Turn the new shared-datapath extraction direction into a real contract:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets beyond the now-shipped discovery/metadata/helper/runtime/assertion slices,
-  - lifted shared-target mux/register ownership beyond the now-shipped registered peer-read public-preserving, mixed-boundary, and internal-only slices,
-  - public re-export/default-visibility policy beyond the now-shipped bounded registered peer-read cases,
+  - lifted shared-target mux/register ownership beyond the now-shipped registered peer-read public-preserving, mixed-boundary, internal-only, and public-fanout slices,
+  - public re-export/default-visibility policy beyond the now-shipped bounded registered peer-read and public-fanout cases,
   - and realized combinational behavior beyond the now-shipped bounded public-preserving and internal-only slices.
 - Turn the reusable standalone-DT/module-library direction into a real contract:
   - decide whether unnamed reusable DT roots such as `?dt:` exist at all,

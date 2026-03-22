@@ -217,6 +217,10 @@ FSM
                 default_lifted_visibility => 'top_output',
                 planned_reexport_top_output_signals => [],
                 loopback_allowed => 0,
+                lifted_runtime_kind => 'registered_shared_public_fanout',
+                lifted_runtime_signal => 'status_bus_shared_q',
+                lifted_runtime_next_signal => 'status_bus_shared_next',
+                lifted_runtime_reset_value => "8'h00",
                 aggregate_target_enable_signal => 'status_bus_shared_en',
                 multi_value_conflict_signal => 'status_bus_multi_value_conflict',
                 multi_value_assertion => {
@@ -405,6 +409,8 @@ FSM
     like($combined_output, qr/status_bus \[width=8, type=data\] from left\.status_bus, right\.status_bus \(top outputs: left_status, right_status\)/s, 'CLI still prints the grouped shared-datapath family');
     like($combined_output, qr/\* storage class: registered/s, 'CLI prints the shared-datapath storage class for the candidate');
     like($combined_output, qr/\* default lifted visibility: top_output/s, 'CLI prints the default lifted visibility when no peer-read inputs exist');
+    like($combined_output, qr/\* lifted runtime: registered shared public fanout active/s, 'CLI prints the public-fanout lifted runtime label');
+    like($combined_output, qr/\* lifted signal: status_bus_shared_q/s, 'CLI prints the lifted shared register name for the public-fanout case');
     like($combined_output, qr/\* loopback allowed: no/s, 'CLI prints that loopback is not currently planned without peer-read inputs');
     like($combined_output, qr/\* aggregate target enable: status_bus_shared_en/s, 'CLI prints the whole-target aggregate enable for the candidate');
     like($combined_output, qr/\* multi-value conflict: status_bus_multi_value_conflict/s, 'CLI prints the whole-target multi-value conflict name');

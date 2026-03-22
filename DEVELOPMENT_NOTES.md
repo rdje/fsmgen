@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-22: registered shared-datapath lifting now covers the public-only fanout sibling
+- Continued the active `R11` lane by widening lifted shared-register behavior beyond peer-read families instead of keeping public-only duplicates child-owned by default forever.
+- Landed behavior:
+  - bounded registered shared families can now lift even when they have no peer-read child inputs,
+  - the public-only sibling now emits one shared top-level register plus next-value logic in the generated top,
+  - contributor outputs are rebound to private raw nets,
+  - and preserved public top outputs are fanned back out from that lifted register instead of staying bound directly to separate child-owned carriers.
+- Why this is worth shipping:
+  - it widens the registered ownership/runtime lane in a real user-visible way instead of another planning-only slice,
+  - it starts addressing public re-export/default-visibility policy beyond the earlier peer-read-only cases,
+  - and it leaves the next seam where it belongs: which broader registered outputs should still lift automatically, and how far the combinational sibling lane should widen.
+
 ## 2026-03-22: systemverilog composition tops now emit shared-datapath guard assertions
 - Continued the active `R11` lane by turning the already-shipped shared-datapath assertion metadata into actual emitted HDL instead of leaving it at reporting/planning only.
 - Landed behavior:
