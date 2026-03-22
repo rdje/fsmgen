@@ -273,7 +273,12 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
         $lowered_rtl_ir,
         $structural_rtl_ir,
     );
-    my $statistics = $self->build_composition_statistics($composition_plan, $composition_report, $lowered_rtl_ir);
+    my $statistics = $self->build_composition_statistics(
+        $composition_plan,
+        $composition_report,
+        $lowered_rtl_ir,
+        $structural_rtl_ir,
+    );
 
     return {
         fsm_module => undef,
@@ -3121,8 +3126,16 @@ sub build_composition_module_info (
                 : scalar(@{$composition_plan->auxiliary_assignments || []})
         ),
         state_count => $intent_hir_hash->{state_count},
-        composition_child_count => scalar(@{$composition_plan->instances}),
-        composition_net_count => scalar(@{$composition_plan->nets || []}),
+        composition_child_count => (
+            exists $structural_rtl_ir_hash->{instance_count}
+                ? $structural_rtl_ir_hash->{instance_count}
+                : scalar(@{$composition_plan->instances})
+        ),
+        composition_net_count => (
+            exists $structural_rtl_ir_hash->{net_count}
+                ? $structural_rtl_ir_hash->{net_count}
+                : scalar(@{$composition_plan->nets || []})
+        ),
         composition_resolved_link_count => $composition_report
             ? $composition_report->{resolved_link_count}
             : scalar(@{$composition_plan->resolved_links || []}),
@@ -3505,12 +3518,19 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
     return \@candidates;
 }
 
-sub build_composition_statistics ($self, $composition_plan, $composition_report = undef, $lowered_rtl_ir = undef) {
+sub build_composition_statistics ($self, $composition_plan, $composition_report = undef, $lowered_rtl_ir = undef, $structural_rtl_ir = undef) {
     my $stats = $self->gather_statistics(undef);
     my $lowered_rtl_ir_hash = ref($lowered_rtl_ir) ? $lowered_rtl_ir->as_hashref : {};
-    $stats->{composition_child_count} = scalar(@{$composition_plan->instances});
-    $stats->{composition_top_port_count} = scalar(@{$composition_plan->ports});
-    $stats->{composition_net_count} = scalar(@{$composition_plan->nets || []});
+    my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
+    $stats->{composition_child_count} = exists $structural_rtl_ir_hash->{instance_count}
+        ? $structural_rtl_ir_hash->{instance_count}
+        : scalar(@{$composition_plan->instances});
+    $stats->{composition_top_port_count} = exists $structural_rtl_ir_hash->{port_count}
+        ? $structural_rtl_ir_hash->{port_count}
+        : scalar(@{$composition_plan->ports});
+    $stats->{composition_net_count} = exists $structural_rtl_ir_hash->{net_count}
+        ? $structural_rtl_ir_hash->{net_count}
+        : scalar(@{$composition_plan->nets || []});
     $stats->{composition_resolved_link_count} = $composition_report
         ? $composition_report->{resolved_link_count}
         : scalar(@{$composition_plan->resolved_links || []});

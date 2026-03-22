@@ -84,6 +84,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $structural_rtl_ir = $result->{structural_rtl_ir};
     my $module_info = $result->{module_info};
+    my $statistics = $result->{statistics};
 
     ok($structural_rtl_ir, 'composition top now exposes a top-level structural_rtl_ir summary');
     is_deeply(
@@ -193,6 +194,31 @@ FSM
     );
     is($structural_rtl_ir->{auxiliary_assignment_count}, 0, 'structural_rtl_ir reports auxiliary assignment count');
     is_deeply($structural_rtl_ir->{auxiliary_assignments}, [], 'structural_rtl_ir preserves explicit empty auxiliary assignments');
+    is(
+        $module_info->{composition_child_count},
+        $structural_rtl_ir->{instance_count},
+        'composition module_info now derives child count from structural_rtl_ir',
+    );
+    is(
+        $module_info->{composition_net_count},
+        $structural_rtl_ir->{net_count},
+        'composition module_info now derives net count from structural_rtl_ir',
+    );
+    is(
+        $statistics->{composition_child_count},
+        $structural_rtl_ir->{instance_count},
+        'composition statistics now derive child count from structural_rtl_ir',
+    );
+    is(
+        $statistics->{composition_top_port_count},
+        $structural_rtl_ir->{port_count},
+        'composition statistics now derive top-port count from structural_rtl_ir',
+    );
+    is(
+        $statistics->{composition_net_count},
+        $structural_rtl_ir->{net_count},
+        'composition statistics now derive net count from structural_rtl_ir',
+    );
 
     my $rendered_top = $pipeline->emit_composition_top_module($structural_rtl_ir);
     like(

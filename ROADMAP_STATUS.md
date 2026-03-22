@@ -791,6 +791,11 @@ Done:
   - composition-top `lowered_rtl_ir` internal-net counts/names mirroring `structural_rtl_ir`,
   - composition-top `lowered_rtl_ir` realized-instance counts/names mirroring `structural_rtl_ir`,
   - and composition-top `lowered_rtl_ir` auxiliary-assignment counts mirroring `structural_rtl_ir`.
+- The next structural-consumption step is now also shipped:
+  - composition-top `module_info` and `statistics` now consume `structural_rtl_ir` for child, top-port, and internal-net counts instead of rereading those bounded accounting fields directly from plan internals.
+- [t/162-composition-top-structural-rtl-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/162-composition-top-structural-rtl-ir-surface.t) now also locks:
+  - composition-top `module_info` child/net counts mirroring `structural_rtl_ir`,
+  - and composition statistics child/top-port/net counts mirroring `structural_rtl_ir`.
 - The next forward-IR widening step through the composition provenance/reporting surface is now also shipped:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
   - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,

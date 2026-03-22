@@ -5827,6 +5827,9 @@ It is an exact-delay pulse request:
 - The next IR-to-IR handoff step is now also live:
   - composition-top `lowered_rtl_ir` now consumes `structural_rtl_ir` for internal-net names, realized-instance names, and auxiliary-assignment counts,
   - so that bounded lowered summary no longer rebuilds the same connectivity slice directly from plan internals.
+- The next structural-consumption step is now also live:
+  - composition-top `module_info` and `statistics` now consume `structural_rtl_ir` for child, top-port, and internal-net counts,
+  - so that bounded top-level accounting no longer rereads those fields directly from plan internals either.
 - Design note from this slice:
   - this is the first structural slice, not the whole universal connectivity story yet,
   - but it establishes the right boundary between `Lowered RTL IR` as lowered semantic summary and `Structural RTL IR` as the first extracted wiring/netlist layer.

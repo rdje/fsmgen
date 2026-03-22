@@ -4439,6 +4439,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - with low-level declaration types like `wire` / `logic` normalized back to plain semantic data ports on the way into composition interface planning.
 - The next IR-to-IR handoff step is also live:
   - composition-top `lowered_rtl_ir` now consumes `structural_rtl_ir` for internal-net names, realized-instance names, and auxiliary-assignment counts instead of rebuilding that bounded connectivity slice directly from the plan.
+- The next structural-consumption step is also live:
+  - composition-top `module_info` and `statistics` now consume `structural_rtl_ir` for child, top-port, and internal-net counts instead of rereading those bounded accounting fields directly from plan internals.
 - The composition provenance/reporting surface now preserves that same forward context too:
   - resolved-link entries keep source/target endpoint context,
   - generated-child endpoint contexts keep `intent_hir`,
