@@ -4533,6 +4533,10 @@ This is the persistent technical change history for FSMGen.
   - override and block events now preserve structured top-port / child-endpoint context instead of only flat signal names,
   - generated-child endpoint contexts there now also preserve bounded `intent_hir` / `lowered_rtl_ir` child summaries,
   - and non-quiet `bin/fsmgen` runs now print richer link/endpoint examples in those sections instead of count-plus-name examples only.
+- Logged the next forward-IR architecture refinement for future implementation:
+  - the current extracted `Lowered RTL IR` is now explicitly treated as a lowered summary layer rather than the final full connectivity graph,
+  - the forward compiler is now steered toward `Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend`,
+  - and the eventual HDL backend boundary is expected to mostly walk that structural connectivity layer instead of rediscovering ports/nets/instances/bindings ad hoc during emission.
 - Shared-datapath candidate metadata now also makes the bounded combinational peer-read rule explicit: peer-read combinational families stay top-output-only, surface a block reason, and no longer look loopback-eligible in non-quiet `bin/fsmgen` summaries.
 - Shared-datapath runtime behavior now exists in generated composition HDL, not just metadata: realized `?fsmc` children export hidden per-value enable families for composition use, and composition tops now synthesize aggregate-enable and conflict helper wires from those exports.
 - Shared-datapath lifting now has its first actual ownership/runtime slice on top of that helper HDL:

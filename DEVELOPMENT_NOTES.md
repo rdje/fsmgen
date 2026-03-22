@@ -5714,16 +5714,26 @@ It is an exact-delay pulse request:
   - the truly non-semantic layer is the parsed HDL CST/AST,
   - and honest HDL recovery actually needs more semantic structure, not less.
 - The planned directional stacks are now captured as:
-  - forward compilation: `parsed .fsm AST -> semantic Intent HIR -> elaborated/lowered RTL IR -> backend emission`,
+  - forward compilation: `parsed .fsm AST -> semantic Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend emission`,
   - reverse recovery: `parsed HDL CST/AST -> semantic HDL HIR -> elaborated RTL IR -> Flat IR -> recovered Intent IR -> .fsm output + recovery report`.
 - The saved sharing rule is also explicit now:
   - keep `.fsm` AST and HDL CST/AST separate,
   - keep the early HDL-specific semantic layer separate where the source languages genuinely differ,
-  - but aim to share the semantic middle through one backend-independent `Intent HIR`, one backend-independent `Lowered RTL IR`, and possibly one shared `Flat IR` plus one general provenance model if those prove broad enough,
+  - but aim to share the semantic middle through one backend-independent `Intent HIR`, one backend-independent `Lowered RTL IR`, one backend-independent `Structural RTL IR` / connectivity layer, and possibly one shared `Flat IR` plus one general provenance model if those prove broad enough,
   - while leaving recovery-specific confidence/residue reporting separate from authored-source semantics.
 - Design note from this refinement:
   - the current Perl runtime already has proto-HIR/proto-lowered-IR behavior spread across `HDLGenerator`, `FSMGenFull`, composition planning, and `FlattenedDT`,
   - so the future task is to make those layers explicit and shareable rather than keep discovering them ad hoc inside generation code.
+
+## 2026-03-22: forward IR plan now explicitly calls out a structural connectivity layer
+- Logged the follow-up refinement that the current extracted `Lowered RTL IR` is still a lowered summary surface, not the full connectivity graph of the emitted HDL.
+- The saved forward-path guidance now explicitly says:
+  - current composition connectivity still manifests more concretely in structures like ports, nets, instances, bindings, and auxiliary assignments than in the extracted `LoweredRTLIR` hash itself,
+  - so the long-term forward path likely needs a distinct `Structural RTL IR` / connectivity layer between `Lowered RTL IR` and final HDL text emission,
+  - and the eventual backend boundary should mostly walk that structural layer rather than rediscovering connectivity ad hoc during HDL dumping.
+- Design note from this refinement:
+  - `Lowered RTL IR` and `Structural RTL IR` are related but not the same abstraction,
+  - so the healthier direction is probably to keep `Lowered RTL IR` focused on normalized semantic/lowered facts and let `Structural RTL IR` own explicit connectivity.
 
 ## 2026-03-22: the first forward `.fsm` compiler IR slice is now active and shipped under `R11`
 - Promoted the forward IR work from “horizon only” into the active roadmap by landing the first bounded extraction slice in the live compiler.

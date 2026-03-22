@@ -591,6 +591,7 @@ Deliverables:
 - Start extracting explicit forward compiler IR layers out of the active `.fsm` to HDL path instead of leaving proto-HIR/proto-lowered semantics implicit:
   - first one bounded `Intent HIR` slice for direct generated roots and realized generated children,
   - then one bounded `Lowered RTL IR` slice once that first forward semantic surface is stable,
+  - then one bounded `Structural RTL IR` / connectivity slice once the lowered layer no longer has to stand in for emitted wiring structure,
   - while keeping those forward IR shapes aligned with the future shared-middle/import architecture rather than growing a separate forward-only semantic stack.
 - Harden mixed generated-child / `?rtl` flows before broader composition syntax is considered.
 Status: `in progress`
@@ -1048,6 +1049,7 @@ Left:
 - Track and later retire the current architectural hotspot set deliberately instead of letting it stay ambient debt:
   - widen the now-shipped first `Intent HIR` extraction slice beyond direct generated roots, realized generated children, the standalone-DT composition-export surface, the broader generated-child composition-export surface, and the shared-datapath candidate contributor surface into the rest of the forward pipeline,
   - widen the now-shipped first explicit `Lowered RTL IR` extraction slice beyond generated output-drive families, standalone-DT grouped multi-drive targets, the standalone-DT composition-export surface, the broader generated-child composition-export surface, and the shared-datapath candidate contributor surface into the rest of the forward pipeline,
+  - start one bounded `Structural RTL IR` / connectivity extraction so explicit ports, nets, instances, bindings, and auxiliary connectivity stop living only in composition plans and backend-adjacent emitter code,
   - keep those forward IR layers aligned with the future shared-middle/import architecture instead of allowing a second incompatible semantic stack to form,
   - split composition policy, interface inference, and top emission back out of `FSM::Pipeline::HDLGenerator`,
   - shrink `FSM::Synthesis::EnableGraph` toward a clearer synthesis boundary,

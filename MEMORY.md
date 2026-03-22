@@ -4378,13 +4378,20 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 
 ## 2026-03-22: logged the planned shared IR architecture for forward compilation and HDL recovery
 - The saved long-term HDL-import note now also records the IR split more explicitly:
-  - forward `.fsm -> HDL` should converge toward `AST -> semantic Intent HIR -> lowered RTL IR -> backend`,
+  - forward `.fsm -> HDL` should converge toward `AST -> semantic Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend`,
   - reverse `HDL -> .fsm` should converge toward `HDL CST/AST -> semantic HDL HIR -> elaborated RTL IR -> Flat IR -> recovered Intent IR -> .fsm + recovery report`,
   - and the reverse path should not call its early layer a “non-semantic HIR” because the non-semantic layer is just the parsed HDL tree.
 - The saved architecture rule is now:
   - keep surface trees separate,
   - keep early HDL-specific semantic work separate,
-  - but share the semantic middle where possible through `Intent HIR`, `Lowered RTL IR`, and maybe a shared `Flat IR`/provenance model later.
+  - but share the semantic middle where possible through `Intent HIR`, `Lowered RTL IR`, one future `Structural RTL IR` / connectivity layer, and maybe a shared `Flat IR`/provenance model later.
+
+## 2026-03-22: forward IR focus now explicitly includes a structural connectivity layer
+- We clarified that the current extracted `Lowered RTL IR` is still a lowered summary layer, not yet the full explicit connectivity graph of the emitted HDL.
+- Saved direction:
+  - keep pushing on `Intent HIR`,
+  - keep pushing on `Lowered RTL IR`,
+  - and plan for one explicit `Structural RTL IR` / connectivity layer that carries ports, nets, instances, bindings, and auxiliary connectivity for backend walking.
 
 ## 2026-03-22: started the first active forward IR extraction slice under `R11`
 - The first live forward `.fsm -> HDL` IR extraction is now in tree:

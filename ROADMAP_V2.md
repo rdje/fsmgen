@@ -103,6 +103,7 @@ Deliverable themes:
   - start extracting explicit forward compiler IR layers out of the currently mixed pipeline instead of leaving proto-HIR/proto-lowered semantics implicit:
     - first one bounded `Intent HIR` slice for direct generated roots and realized generated children,
     - then one bounded `Lowered RTL IR` slice once that first forward semantic surface is stable,
+    - then one bounded `Structural RTL IR` / connectivity slice once the lowered summary stops being asked to stand in for the full emitted wiring shape,
     - while keeping those forward IR shapes aligned with the future shared-middle/import architecture rather than growing a separate forward-only semantic stack,
   - shrink `FSM::Synthesis::EnableGraph` toward a clearer synthesis ownership boundary instead of one ever-growing semantic gravity well,
   - move planning/normalization residue out of `FSM::HDL::FlattenedDT::Backend::SystemVerilog` so the backend boundary becomes more honestly rendering-oriented,
@@ -521,8 +522,10 @@ Expected technical pipeline:
 
 Planned IR layering:
 - do not describe the reverse-path early layer as a “non-semantic HIR”; the non-semantic layer is the parsed HDL CST/AST, and honest recovery actually needs more semantic structure rather than less,
-- the forward `.fsm` to HDL compiler should converge toward `parsed .fsm AST -> semantic Intent HIR -> elaborated/lowered RTL IR -> backend emission`,
+- the forward `.fsm` to HDL compiler should now be treated as likely converging toward `parsed .fsm AST -> semantic Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend emission`,
 - the reverse HDL-import path should converge toward `parsed HDL CST/AST -> semantic HDL HIR -> elaborated RTL IR -> Flat IR -> recovered Intent IR -> .fsm output + recovery report`,
+- the important refinement is that the current `Lowered RTL IR` should not be expected to double as the full connectivity graph forever: it can carry normalized lowering summaries and backend-relevant analysis without being the final structural object that the emitter walks,
+- the planned `Structural RTL IR` / connectivity layer should eventually carry explicit ports, nets, instances, bindings, and backend-facing auxiliary structure so HDL emission becomes primarily a rendering walk instead of a place where connectivity is rediscovered ad hoc,
 - `Flat IR` is likely optional in the forward path at first but valuable later for deeper optimization/analysis, while it is much more likely to be necessary in the reverse path because many hardware facts only become obvious after elaboration/flattening,
 - and the reverse path therefore needs one extra semantic stage beyond the forward path: a recovered-intent layer that can preserve confidence, ambiguity, and residue instead of pretending that inference is the same thing as authored intent.
 
@@ -532,7 +535,8 @@ Shared-middle rule:
 - keep the early HDL-specific semantic layer separate where the source languages genuinely differ,
 - but aim to share the semantic middle:
   - one backend-independent `Intent HIR` that represents `.fsm`-level design intent,
-  - one backend-independent `Lowered RTL IR` for normalized registers/drivers/wiring/shared-datapath structure,
+  - one backend-independent `Lowered RTL IR` for normalized registers/drivers/shared-datapath structure and other lowered semantic facts,
+  - one backend-independent `Structural RTL IR` / connectivity layer for explicit ports/nets/instances/bindings once that layer is extracted,
   - and possibly one shared `Flat IR` plus one general provenance model if they prove broad enough,
 - while keeping recovery-specific residue/confidence reporting separate from authored-source semantics.
 
