@@ -262,7 +262,12 @@ First shipped `R11` slice now in tree:
   - direct generated roots now build one explicit `FSM::IR::IntentHIR` summary before `module_info` is derived,
   - that serialized `intent_hir` summary now flows back in direct generation results,
   - realized generated children (`?fsmc` / `?dtc`) now also preserve that same serialized forward intent summary through their `module_info`,
-  - and the shipped slice is intentionally narrow: root identity, system contract, regular-state versus standalone-DT families, stable signal-analysis summaries, and standalone-DT enable families are now explicit without yet claiming that lowered RTL structure has been extracted too.
+  - and the shipped slice is intentionally narrow: root identity, system contract, regular-state versus standalone-DT families, stable signal-analysis summaries, and standalone-DT enable families are now explicit.
+- The first explicit forward `Lowered RTL IR` extraction slice is now also shipped:
+  - new `FSM::IR::LoweredRTLIR` now captures one explicit lowered forward summary for generated output-drive families and standalone-DT grouped multi-drive targets,
+  - direct generated roots now expose that serialized `lowered_rtl_ir` summary in generation results,
+  - realized generated children (`?fsmc` / `?dtc`) now also preserve that same serialized lowered summary through their `module_info`,
+  - and selected downstream composition/export consumers now prefer the extracted `lowered_rtl_ir` surface when present instead of re-reading only ad hoc legacy fields.
 
 Expected result:
 - composition remains explicit and serious instead of drifting back toward legacy implicit behavior.

@@ -5741,5 +5741,22 @@ It is an exact-delay pulse request:
   - and parameter-name/count surfacing.
 - Design note from this slice:
   - this is a true start, not the whole IR program,
-  - because `Lowered RTL IR` still remains future work,
+  - because `Lowered RTL IR` still remained future work at this point,
   - but it moves the forward path from “proto-HIR hidden inside `HDLGenerator`” toward an explicit semantic middle that later HDL import/recovery work can target instead of inventing a parallel intent world.
+
+## 2026-03-22: the first forward lowered `.fsm` compiler IR slice is now active and shipped under `R11`
+- Promoted the next forward IR seam from roadmap intent into live compiler behavior by landing the first bounded lowered extraction slice.
+- The shipped slice is intentionally narrow:
+  - new `FSM::IR::LoweredRTLIR` now captures one explicit lowered forward summary,
+  - `HDLGenerator` now builds that lowered summary from generated output-drive-family analysis and standalone-DT grouped multi-drive-target analysis,
+  - direct generation results now expose a serialized `lowered_rtl_ir` hash,
+  - and realized generated children (`?fsmc` / `?dtc`) now preserve that same serialized lowered summary through their `module_info`.
+- What this slice covers today:
+  - output-drive families for generated FSM/DT roots,
+  - standalone-DT grouped multi-drive targets,
+  - root/module identity and target language on the lowered surface,
+  - and compatibility mirroring back into the older `module_info` count/detail fields.
+- Design note from this slice:
+  - this is the first extracted lowered layer, not the whole backend-independent RTL story,
+  - but a few downstream composition/export consumers now already prefer the extracted `lowered_rtl_ir` surface when present,
+  - so the compiler is beginning to consume one explicit lowered layer instead of only rediscovering normalized structure from mixed pipeline residue inside `HDLGenerator`.

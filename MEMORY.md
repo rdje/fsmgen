@@ -4394,5 +4394,10 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - and the active compiler now derives `module_info` from that extracted intent layer instead of only from ad hoc raw-module inspection.
 - This is intentionally the first bounded slice only:
   - `Intent HIR` is started,
-  - `Lowered RTL IR` is still left for later extraction,
+  - `Lowered RTL IR` was still left for later extraction at that point,
   - and the forward IR work is now an active `R11` implementation seam rather than just an `H3` horizon note.
+- The next forward IR seam is now also live:
+  - `FSM::IR::LoweredRTLIR` exists as the first explicit forward lowered summary,
+  - direct generation results now expose `lowered_rtl_ir`,
+  - realized generated children now preserve that same lowered summary through `module_info`,
+  - and some composition/export consumers now prefer `lowered_rtl_ir` when present instead of only rereading legacy module-info fields.

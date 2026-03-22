@@ -705,10 +705,18 @@ Done:
   - direct generated roots now build one explicit `FSM::IR::IntentHIR` summary before `module_info` is derived,
   - direct generation results now expose that serialized `intent_hir` summary,
   - realized generated children now also preserve that same serialized forward intent summary through their `module_info`,
-  - and the shipped slice currently covers root identity, system contract, regular-state versus standalone-DT families, stable signal-analysis summaries, and standalone-DT enable families without yet claiming that lowered RTL structure has been extracted too.
+  - and the shipped slice currently covers root identity, system contract, regular-state versus standalone-DT families, stable signal-analysis summaries, and standalone-DT enable families.
 - [t/155-forward-intent-hir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/155-forward-intent-hir-surface.t) now locks:
   - direct-result `intent_hir` surfacing for generated roots,
   - and preservation of that same forward intent summary through realized generated-child `module_info`.
+- The first explicit forward `Lowered RTL IR` extraction slice is now also shipped:
+  - new `FSM::IR::LoweredRTLIR` now captures one explicit lowered forward summary for generated output-drive families and standalone-DT grouped multi-drive targets,
+  - direct generated roots now expose that serialized `lowered_rtl_ir` summary,
+  - realized generated children now also preserve that same serialized lowered summary through their `module_info`,
+  - and selected downstream composition/export consumers now prefer the extracted `lowered_rtl_ir` surface when present instead of re-reading only the legacy module-info fields.
+- [t/156-forward-lowered-rtl-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/156-forward-lowered-rtl-ir-surface.t) now locks:
+  - direct-result `lowered_rtl_ir` surfacing for standalone-DT generated roots,
+  - and preservation of the same lowered summary through realized generated-child `module_info` for both `?fsmc` and `?dtc` paths.
 - The first shared-datapath candidate-discovery slice is now also shipped:
   - composition-top `module_info` now reports `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates`,
   - those candidate families are currently bounded to same-name output families across multiple realized `?fsmc` children that agree on width and interface type,
@@ -981,7 +989,7 @@ Left:
   - and keep any such convention top-boundary-oriented rather than turning child-to-child wiring into hidden inference everywhere.
 - Track and later retire the current architectural hotspot set deliberately instead of letting it stay ambient debt:
   - widen the now-shipped first `Intent HIR` extraction slice beyond direct generated roots and realized generated children into the broader forward pipeline and composition-export surfaces,
-  - start the first explicit `Lowered RTL IR` extraction slice so HDL emission stops owning semantic normalization implicitly,
+  - widen the now-shipped first explicit `Lowered RTL IR` extraction slice beyond generated output-drive families and standalone-DT grouped multi-drive targets into the broader forward pipeline and composition-export surfaces,
   - keep those forward IR layers aligned with the future shared-middle/import architecture instead of allowing a second incompatible semantic stack to form,
   - split composition policy, interface inference, and top emission back out of `FSM::Pipeline::HDLGenerator`,
   - shrink `FSM::Synthesis::EnableGraph` toward a clearer synthesis boundary,

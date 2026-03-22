@@ -26,6 +26,7 @@ use FSM::Extension::Context;
 use FSM::Extension::Loader;
 use FSM::Extension::Registry;
 use FSM::IR::IntentHIR;
+use FSM::IR::LoweredRTLIR;
 use FSM::SourceClassifier;
 use FSM::SourcePathResolver;
 use Lispish;
@@ -153,6 +154,7 @@ sub generate_hdl_from_file ($self, $fsm_file) {
     my $result = {
         fsm_module => $fsm_module,
         intent_hir => $intent_hir->as_hashref,
+        lowered_rtl_ir => $module_info->{lowered_rtl_ir},
         module_info => $module_info,
         hdl_code => $hdl_code,
         statistics => $statistics,
@@ -934,7 +936,7 @@ sub build_shared_datapath_source_export_metadata ($self, $module_info) {
     my %seen;
     my @exports;
 
-    for my $drive_family (@{$module_info->{output_drive_families} || []}) {
+    for my $drive_family (@{$self->module_output_drive_families($module_info)}) {
         next unless ref($drive_family) eq 'HASH';
         my $signal_name = $drive_family->{signal_name} || next;
 
@@ -2892,7 +2894,7 @@ sub build_composition_standalone_dt_child_exports ($self, $composition_plan) {
                     input_enable_signals => [@{$assertion->{input_enable_signals} || []}],
                 },
             }
-        } @{$child_info->{standalone_dt_multi_drive_targets} || []};
+        } @{$self->module_standalone_dt_multi_drive_targets($child_info)};
 
         my $standalone_dt_count = $child_info->{standalone_dt_count} || 0;
         my $child_multi_drive_target_count = $child_info->{standalone_dt_multi_drive_target_count} || 0;
@@ -2941,7 +2943,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
         } @{$instance->port_bindings || []};
         my %drive_family_by_signal = map {
             (($_->{signal_name} || '') => $_)
-        } @{$instance->module_info->{output_drive_families} || []};
+        } @{$self->module_output_drive_families($instance->module_info)};
 
         for my $port (@{$instance->interface_ports || []}) {
             next unless ($port->direction || '') eq 'output';
@@ -4008,15 +4010,34 @@ sub build_output_drive_family_metadata ($self, $module_info) {
     return \@drive_families;
 }
 
-sub enrich_module_info_from_generated_analysis ($self, $module_info, $fsm_module) {
-    return $module_info unless ref($module_info) eq 'HASH';
+sub module_output_drive_families ($self, $module_info) {
+    return [] unless ref($module_info) eq 'HASH';
+
+    my $lowered_rtl_ir = $module_info->{lowered_rtl_ir};
+    if (ref($lowered_rtl_ir) eq 'HASH' && ref($lowered_rtl_ir->{output_drive_families}) eq 'ARRAY') {
+        return $lowered_rtl_ir->{output_drive_families};
+    }
+
+    return $module_info->{output_drive_families} || [];
+}
+
+sub module_standalone_dt_multi_drive_targets ($self, $module_info) {
+    return [] unless ref($module_info) eq 'HASH';
+
+    my $lowered_rtl_ir = $module_info->{lowered_rtl_ir};
+    if (ref($lowered_rtl_ir) eq 'HASH' && ref($lowered_rtl_ir->{standalone_dt_multi_drive_targets}) eq 'ARRAY') {
+        return $lowered_rtl_ir->{standalone_dt_multi_drive_targets};
+    }
+
+    return $module_info->{standalone_dt_multi_drive_targets} || [];
+}
+
+sub build_lowered_rtl_ir ($self, $module_info, $fsm_module) {
+    return unless ref($module_info) eq 'HASH';
+
     my $output_drive_families = $self->build_output_drive_family_metadata($module_info);
-    $module_info->{output_drive_family_count} = scalar(@$output_drive_families);
-    $module_info->{output_drive_families} = $output_drive_families;
 
-    return $module_info unless $fsm_module && $fsm_module->can('is_dt_root') && $fsm_module->is_dt_root;
-
-    my @multi_drive_targets = map {
+    my @standalone_dt_multi_drive_targets = map {
         +{
             signal_name => $_->{signal_name},
             multiplexer_type => $_->{multiplexer_type},
@@ -4033,8 +4054,32 @@ sub enrich_module_info_from_generated_analysis ($self, $module_info, $fsm_module
         ($_->{driver_count} || 0) > 1
     } @$output_drive_families;
 
-    $module_info->{standalone_dt_multi_drive_target_count} = scalar(@multi_drive_targets);
-    $module_info->{standalone_dt_multi_drive_targets} = \@multi_drive_targets;
+    return FSM::IR::LoweredRTLIR->new(
+        module_name => ($module_info->{module_name} // ''),
+        source_root_kind => (
+            $module_info->{source_root_kind}
+                // ($fsm_module && $fsm_module->can('source_root_kind') ? $fsm_module->source_root_kind : 'fsm')
+        ),
+        target_language => ($self->{target_language} // 'systemverilog'),
+        output_drive_families => $output_drive_families,
+        standalone_dt_multi_drive_targets => (
+            $fsm_module && $fsm_module->can('is_dt_root') && $fsm_module->is_dt_root
+                ? \@standalone_dt_multi_drive_targets
+                : []
+        ),
+    );
+}
+
+sub enrich_module_info_from_generated_analysis ($self, $module_info, $fsm_module) {
+    return $module_info unless ref($module_info) eq 'HASH';
+    my $lowered_rtl_ir = $self->build_lowered_rtl_ir($module_info, $fsm_module);
+    my $lowered_rtl_ir_hash = $lowered_rtl_ir->as_hashref;
+
+    $module_info->{output_drive_family_count} = $lowered_rtl_ir_hash->{output_drive_family_count};
+    $module_info->{output_drive_families} = $lowered_rtl_ir_hash->{output_drive_families};
+    $module_info->{standalone_dt_multi_drive_target_count} = $lowered_rtl_ir_hash->{standalone_dt_multi_drive_target_count};
+    $module_info->{standalone_dt_multi_drive_targets} = $lowered_rtl_ir_hash->{standalone_dt_multi_drive_targets};
+    $module_info->{lowered_rtl_ir} = $lowered_rtl_ir_hash;
     return $module_info;
 }
 
