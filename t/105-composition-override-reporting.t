@@ -65,6 +65,12 @@ FSM
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $report = $result->{composition_report};
+    my ($input_override) = grep {
+        ($_->{kind} || '') eq 'explicit_toplink_overrides_same_name_top_input_convention'
+    } @{$report->{override_events} || []};
+    my ($output_override) = grep {
+        ($_->{kind} || '') eq 'explicit_toplink_overrides_same_name_top_output_convention'
+    } @{$report->{override_events} || []};
 
     is($report->{lane}, 'C3', 'report records the active mixed explicit-link lane');
     is($report->{override_count}, 2, 'report counts same-name convention overrides');
@@ -75,8 +81,8 @@ FSM
     );
     is(
         $report->{override_kind_examples}{explicit_toplink_overrides_same_name_top_input_convention},
-        "Top port 'trigger'",
-        'report keeps one example top port for the same-name top-input override family',
+        'trigger -> producer.trigger (?dt, blocks: 1, output drive families: 1)',
+        'report keeps one forward-context example for the same-name top-input override family',
     );
     is(
         $report->{override_kind_counts}{explicit_toplink_overrides_same_name_top_output_convention},
@@ -85,9 +91,15 @@ FSM
     );
     is(
         $report->{override_kind_examples}{explicit_toplink_overrides_same_name_top_output_convention},
-        "Top port 'serial_out'",
-        'report keeps one example top port for the same-name top-output override family',
+        'uart_tx.serial_out (?rtl) -> serial_out',
+        'report keeps one forward-context example for the same-name top-output override family',
     );
+    is($input_override->{source_context}{kind}, 'top_port', 'top-input override event preserves top-port source context');
+    is($input_override->{target_context}{kind}, 'child_endpoint', 'top-input override event preserves child-endpoint target context');
+    is($input_override->{target_context}{source_root_kind}, 'dt', 'top-input override event preserves child root kind in target context');
+    is($output_override->{source_context}{kind}, 'child_endpoint', 'top-output override event preserves child-endpoint source context');
+    is($output_override->{source_context}{source_root_kind}, 'rtl', 'top-output override event preserves rtl child root kind in source context');
+    is($output_override->{target_context}{kind}, 'top_port', 'top-output override event preserves top-port target context');
     is(
         $result->{module_info}{composition_override_count},
         2,
@@ -161,6 +173,9 @@ FSM
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $report = $result->{composition_report};
+    my ($reexport_override) = grep {
+        ($_->{kind} || '') eq 'explicit_top_output_reexports_internal_carrier'
+    } @{$report->{override_events} || []};
 
     is($report->{lane}, 'C2', 'report records the active generated explicit-link lane');
     is($report->{override_count}, 2, 'report counts both the explicit input override and the internal-carrier re-export override');
@@ -176,9 +191,12 @@ FSM
     );
     is(
         $report->{override_kind_examples}{explicit_top_output_reexports_internal_carrier},
-        "Top port 'payload'",
-        'report keeps one example top port for the internal-carrier re-export override family',
+        'producer.payload (?dt, blocks: 1, output drive families: 1) -> payload',
+        'report keeps one forward-context example for the internal-carrier re-export override family',
     );
+    is($reexport_override->{source_context}{kind}, 'child_endpoint', 'internal-carrier re-export override preserves child source context');
+    is($reexport_override->{source_context}{source_root_kind}, 'dt', 'internal-carrier re-export override preserves dt child root kind');
+    is($reexport_override->{top_port_context}{kind}, 'top_port', 'internal-carrier re-export override preserves top-port context');
 };
 
 subtest 'CLI prints convention override summary for non-quiet composition runs' => sub {
@@ -245,13 +263,13 @@ FSM
     like($combined_output, qr/Convention Overrides:/s, 'CLI prints the convention override section');
     like(
         $combined_output,
-        qr/explicit toplink overrides same-name top-input convention:\s+1 \(example: Top port 'trigger'\)/s,
-        'CLI reports the top-input override kind with one example top port',
+        qr/explicit toplink overrides same-name top-input convention:\s+1 \(example: trigger -> producer\.trigger \(\?dt, blocks: 1, output drive families: 1\)\)/s,
+        'CLI reports the top-input override kind with one forward-context example',
     );
     like(
         $combined_output,
-        qr/explicit toplink overrides same-name top-output convention:\s+1 \(example: Top port 'serial_out'\)/s,
-        'CLI reports the top-output override kind with one example top port',
+        qr/explicit toplink overrides same-name top-output convention:\s+1 \(example: uart_tx\.serial_out \(\?rtl\) -> serial_out\)/s,
+        'CLI reports the top-output override kind with one forward-context example',
     );
 };
 

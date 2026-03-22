@@ -3560,6 +3560,32 @@ sub composition_link_example_summary ($self, $entry) {
     return $source . ' -> ' . $target;
 }
 
+sub composition_signal_family_contexts ($self, $composition_plan, $signal_name, $direction = undef) {
+    return [] unless defined $signal_name && length $signal_name;
+
+    my @contexts;
+    for my $instance (@{$composition_plan->instances || []}) {
+        for my $port (@{$instance->interface_ports || []}) {
+            next unless ($port->name || '') eq $signal_name;
+            next if defined $direction && length $direction && (($port->direction || '') ne $direction);
+
+            my $context = $self->composition_provenance_endpoint_context(
+                $composition_plan,
+                ($instance->instance_name || 'unknown') . '.' . ($port->name || 'unknown'),
+            );
+            push @contexts, $context if $context;
+        }
+    }
+
+    @contexts = sort {
+        ($a->{endpoint} || '') cmp ($b->{endpoint} || '')
+            ||
+        ($a->{instance_name} || '') cmp ($b->{instance_name} || '')
+    } @contexts;
+
+    return \@contexts;
+}
+
 sub build_composition_override_events ($self, $composition_plan) {
     my @events;
     my @resolved_links = @{$composition_plan->resolved_links || []};
@@ -3590,6 +3616,9 @@ sub build_composition_override_events ($self, $composition_plan) {
             )
         } @resolved_links;
         next unless @touching_explicit_toplinks;
+        my $example_link = $touching_explicit_toplinks[0];
+        my $source_context = $self->composition_provenance_endpoint_context($composition_plan, $example_link->source);
+        my $target_context = $self->composition_provenance_endpoint_context($composition_plan, $example_link->target);
 
         if (($top_port->direction || '') eq 'input') {
             my @compatible = grep {
@@ -3605,6 +3634,9 @@ sub build_composition_override_events ($self, $composition_plan) {
                 kind => 'explicit_toplink_overrides_same_name_top_input_convention',
                 top_port_name => $top_port->name,
                 lane => $composition_plan->lane,
+                top_port_context => $self->composition_provenance_endpoint_context($composition_plan, $top_port->name),
+                source_context => $source_context,
+                target_context => $target_context,
             };
             next;
         }
@@ -3628,6 +3660,9 @@ sub build_composition_override_events ($self, $composition_plan) {
             kind => 'explicit_toplink_overrides_same_name_top_output_convention',
             top_port_name => $top_port->name,
             lane => $composition_plan->lane,
+            top_port_context => $self->composition_provenance_endpoint_context($composition_plan, $top_port->name),
+            source_context => $source_context,
+            target_context => $target_context,
         };
     }
 
@@ -3642,6 +3677,8 @@ sub build_composition_override_events ($self, $composition_plan) {
             top_port_name => $top_port_name,
             source => $resolved_link->source,
             lane => $composition_plan->lane,
+            top_port_context => $self->composition_provenance_endpoint_context($composition_plan, $top_port_name),
+            source_context => ($self->composition_signal_family_contexts($composition_plan, $top_port_name, 'output')->[0]),
         };
     }
 
@@ -3699,6 +3736,7 @@ sub build_composition_block_events ($self, $composition_plan) {
                     kind => 'explicit_child_links_block_undeclared_top_input_inference',
                     signal_name => $port_name,
                     lane => $composition_plan->lane,
+                    candidate_contexts => $self->composition_signal_family_contexts($composition_plan, $port_name, 'input'),
                 };
             }
             next;
@@ -3712,6 +3750,7 @@ sub build_composition_block_events ($self, $composition_plan) {
                     kind => 'explicit_child_links_block_undeclared_top_output_inference',
                     signal_name => $port_name,
                     lane => $composition_plan->lane,
+                    candidate_contexts => $self->composition_signal_family_contexts($composition_plan, $port_name, 'output'),
                 };
                 next;
             }
@@ -3738,6 +3777,11 @@ sub build_composition_block_events ($self, $composition_plan) {
             kind => 'inferred_internal_carrier_kept_internal_by_default',
             signal_name => $family_name,
             lane => $composition_plan->lane,
+            candidate_contexts => (
+                @{$self->composition_signal_family_contexts($composition_plan, $family_name, 'output')}
+                    ? $self->composition_signal_family_contexts($composition_plan, $family_name, 'output')
+                    : $self->composition_signal_family_contexts($composition_plan, $family_name)
+            ),
         };
     }
 
@@ -3810,6 +3854,15 @@ sub composition_override_label ($self, $kind) {
 sub composition_override_example_summary ($self, $event) {
     return '' unless $event && ref($event) eq 'HASH';
 
+    if ($event->{source_context} || $event->{target_context}) {
+        return $self->composition_link_example_summary({
+            source => $event->{source},
+            target => $event->{top_port_name},
+            source_context => $event->{source_context},
+            target_context => $event->{target_context} || $event->{top_port_context},
+        });
+    }
+
     if (defined $event->{top_port_name} && length $event->{top_port_name}) {
         return "Top port '$event->{top_port_name}'";
     }
@@ -3836,6 +3889,10 @@ sub composition_block_label ($self, $kind) {
 
 sub composition_block_example_summary ($self, $event) {
     return '' unless $event && ref($event) eq 'HASH';
+
+    if (ref($event->{candidate_contexts}) eq 'ARRAY' && @{$event->{candidate_contexts}}) {
+        return $self->composition_provenance_endpoint_example_label($event->{candidate_contexts}[0]);
+    }
 
     if (defined $event->{signal_name} && length $event->{signal_name}) {
         return "Signal name '$event->{signal_name}'";

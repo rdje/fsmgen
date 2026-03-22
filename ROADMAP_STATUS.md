@@ -759,6 +759,14 @@ Done:
   - preservation of child `intent_hir` and `lowered_rtl_ir` through those generated-child endpoint contexts,
   - preservation of `port_origin_examples` and `resolved_link_origin_examples`,
   - and the matching non-quiet CLI provenance example lines.
+- The next forward-IR widening step through the composition override/block reporting surface is now also shipped:
+  - override and block events now preserve structured top-port / child-endpoint context instead of only flat signal names,
+  - those generated-child endpoint contexts now carry bounded `intent_hir` / `lowered_rtl_ir` child summaries,
+  - and non-quiet CLI override/block sections now print richer link/endpoint examples instead of count-plus-name examples only.
+- [t/105-composition-override-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/105-composition-override-reporting.t) and [t/106-composition-blocked-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/106-composition-blocked-reporting.t) now also lock:
+  - preservation of structured source/target / candidate endpoint context in override/block events,
+  - preservation of child `intent_hir` and `lowered_rtl_ir` through generated-child endpoint examples,
+  - and the matching richer non-quiet CLI override/block example lines.
 - The first shared-datapath candidate-discovery slice is now also shipped:
   - composition-top `module_info` now reports `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates`,
   - those candidate families are currently bounded to same-name output families across multiple realized `?fsmc` children that agree on width and interface type,

@@ -4420,3 +4420,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - generated-child endpoint contexts keep `intent_hir`,
   - generated-child endpoint contexts keep `lowered_rtl_ir`,
   - and top-port / resolved-link provenance kinds now keep one stable example subject for non-quiet CLI reporting.
+- The composition override/block reporting surface now preserves that same forward context too:
+  - override and block events keep structured top-port / child-endpoint context,
+  - generated-child endpoint contexts keep `intent_hir`,
+  - generated-child endpoint contexts keep `lowered_rtl_ir`,
+  - and override/block example lines now use richer link/endpoint subjects instead of plain count-plus-name examples.

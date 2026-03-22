@@ -69,6 +69,12 @@ FSM
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $report = $result->{composition_report};
+    my ($blocked_input) = grep {
+        ($_->{kind} || '') eq 'explicit_child_links_block_undeclared_top_input_inference'
+    } @{$report->{block_events} || []};
+    my ($blocked_output) = grep {
+        ($_->{kind} || '') eq 'explicit_child_links_block_undeclared_top_output_inference'
+    } @{$report->{block_events} || []};
 
     is($report->{lane}, 'C2', 'report records the generated explicit-link lane');
     is($report->{block_count}, 2, 'report counts both blocked undeclared top-interface families');
@@ -79,8 +85,8 @@ FSM
     );
     is(
         $report->{block_kind_examples}{explicit_child_links_block_undeclared_top_input_inference},
-        "Signal name 'payload_in'",
-        'report keeps one example signal name for blocked undeclared top-input inference',
+        'consumer0.payload_in (?dt, blocks: 1, output drive families: 1)',
+        'report keeps one forward-context example for blocked undeclared top-input inference',
     );
     is(
         $report->{block_kind_counts}{explicit_child_links_block_undeclared_top_output_inference},
@@ -89,9 +95,13 @@ FSM
     );
     is(
         $report->{block_kind_examples}{explicit_child_links_block_undeclared_top_output_inference},
-        "Signal name 'payload_bus'",
-        'report keeps one example signal name for blocked undeclared top-output inference',
+        'producer.payload_bus (?dt, blocks: 1, output drive families: 1)',
+        'report keeps one forward-context example for blocked undeclared top-output inference',
     );
+    is($blocked_input->{candidate_contexts}[0]{kind}, 'child_endpoint', 'blocked top-input inference event preserves child endpoint context');
+    is($blocked_input->{candidate_contexts}[0]{source_root_kind}, 'dt', 'blocked top-input inference event preserves child root kind');
+    is($blocked_output->{candidate_contexts}[0]{kind}, 'child_endpoint', 'blocked top-output inference event preserves child endpoint context');
+    is($blocked_output->{candidate_contexts}[0]{source_root_kind}, 'dt', 'blocked top-output inference event preserves child root kind');
     is(
         $result->{module_info}{composition_block_count},
         2,
@@ -162,6 +172,9 @@ FSM
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $report = $result->{composition_report};
+    my ($internal_block) = grep {
+        ($_->{kind} || '') eq 'inferred_internal_carrier_kept_internal_by_default'
+    } @{$report->{block_events} || []};
 
     is($report->{lane}, 'C2', 'report records the generated explicit-link lane');
     is($report->{block_count}, 1, 'report counts one internal carrier kept internal by default');
@@ -172,9 +185,11 @@ FSM
     );
     is(
         $report->{block_kind_examples}{inferred_internal_carrier_kept_internal_by_default},
-        "Signal name 'payload'",
-        'report keeps one example signal name for the kept-internal internal-carrier family',
+        'producer.payload (?dt, blocks: 1, output drive families: 1)',
+        'report keeps one forward-context example for the kept-internal internal-carrier family',
     );
+    is($internal_block->{candidate_contexts}[0]{kind}, 'child_endpoint', 'kept-internal carrier event preserves child endpoint context');
+    is($internal_block->{candidate_contexts}[0]{source_root_kind}, 'dt', 'kept-internal carrier event preserves dt child root kind');
 };
 
 subtest 'CLI prints convention block summary for non-quiet composition runs' => sub {
@@ -245,13 +260,13 @@ FSM
     like($combined_output, qr/Convention Blocks:/s, 'CLI prints the convention block section');
     like(
         $combined_output,
-        qr/explicit child links block undeclared top-input inference:\s+1 \(example: Signal name 'payload_in'\)/s,
-        'CLI reports the blocked top-input inference kind with one example signal name',
+        qr/explicit child links block undeclared top-input inference:\s+1 \(example: consumer0\.payload_in \(\?dt, blocks: 1, output drive families: 1\)\)/s,
+        'CLI reports the blocked top-input inference kind with one forward-context example',
     );
     like(
         $combined_output,
-        qr/explicit child links block undeclared top-output inference:\s+1 \(example: Signal name 'payload_bus'\)/s,
-        'CLI reports the blocked top-output inference kind with one example signal name',
+        qr/explicit child links block undeclared top-output inference:\s+1 \(example: producer\.payload_bus \(\?dt, blocks: 1, output drive families: 1\)\)/s,
+        'CLI reports the blocked top-output inference kind with one forward-context example',
     );
 };
 

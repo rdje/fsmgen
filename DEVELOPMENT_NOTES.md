@@ -5782,3 +5782,8 @@ It is an exact-delay pulse request:
   - each resolved-link entry now preserves source/target endpoint context,
   - generated-child endpoint contexts now carry bounded forward child summaries from `intent_hir` and `lowered_rtl_ir`,
   - and non-quiet provenance reporting now keeps one stable example subject per top-port and resolved-link provenance kind instead of counts only.
+- The next widening step is now also shipped through the composition override/block reporting surface:
+  - convention override and convention block events no longer stop at flat signal-name examples only,
+  - those report events now preserve structured top-port / child-endpoint context,
+  - generated-child endpoint contexts there now also carry bounded forward child summaries from `intent_hir` and `lowered_rtl_ir`,
+  - and non-quiet override/block reporting now prints richer link/endpoint examples instead of count-plus-name examples only.

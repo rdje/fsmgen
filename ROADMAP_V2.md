@@ -286,6 +286,10 @@ First shipped `R11` slice now in tree:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
   - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,
   - and top-port / resolved-link provenance kinds now each preserve one stable example subject so non-quiet CLI summaries are no longer counts-only in that area.
+- The next widening step is now also shipped through the composition override/block reporting surface:
+  - override and block events now preserve structured top-port / child-endpoint context instead of only flat signal names,
+  - those generated-child endpoint contexts now carry bounded forward child summaries from `intent_hir` and `lowered_rtl_ir`,
+  - and non-quiet CLI override/block sections now print richer link/endpoint examples instead of count-plus-name examples only.
 
 Expected result:
 - composition remains explicit and serious instead of drifting back toward legacy implicit behavior.
