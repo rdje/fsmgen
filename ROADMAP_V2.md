@@ -268,7 +268,11 @@ First shipped `R11` slice now in tree:
   - direct generated roots now expose that serialized `lowered_rtl_ir` summary in generation results,
   - realized generated children (`?fsmc` / `?dtc`) now also preserve that same serialized lowered summary through their `module_info`,
   - and selected downstream composition/export consumers now prefer the extracted `lowered_rtl_ir` surface when present instead of re-reading only ad hoc legacy fields.
-  - That same first widening step is now also shipped through one top-level composition export surface: aggregated `composition_standalone_dt_children` entries now preserve each realized `?dtc` child's serialized `intent_hir` and `lowered_rtl_ir` summaries instead of stripping those explicit forward layers back off at the top boundary.
+- That same first widening step is now also shipped through one top-level composition export surface: aggregated `composition_standalone_dt_children` entries now preserve each realized `?dtc` child's serialized `intent_hir` and `lowered_rtl_ir` summaries instead of stripping those explicit forward layers back off at the top boundary.
+- The next widening step is now also shipped through one broader generated-child composition export surface:
+  - top-level `composition_generated_children` now covers realized `?fsmc` and `?dtc` children together instead of only the reusable standalone-DT subset,
+  - those exported generated-child entries preserve both serialized `intent_hir` and serialized `lowered_rtl_ir`,
+  - and non-quiet `bin/fsmgen` runs now print one concise generated-child summary derived from that broader export instead of requiring plan-internal inspection.
 
 Expected result:
 - composition remains explicit and serious instead of drifting back toward legacy implicit behavior.

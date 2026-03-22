@@ -4404,3 +4404,6 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - The first composition-export widening step is now also live:
   - aggregated `composition_standalone_dt_children` entries preserve child `intent_hir`,
   - and those same exports now also preserve child `lowered_rtl_ir`.
+- The broader generated-child composition export is now also live:
+  - top-level `composition_generated_children` covers realized `?fsmc` and `?dtc` children together,
+  - and those exported child summaries preserve both `intent_hir` and `lowered_rtl_ir`.

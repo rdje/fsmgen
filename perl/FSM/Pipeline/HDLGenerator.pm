@@ -2800,6 +2800,7 @@ sub emit_composition_top_module ($self, $composition_plan) {
 sub build_composition_module_info ($self, $composition_plan, $composition_report = undef) {
     my (@inputs, @outputs, @multi_bit, @single_bit);
     my %signals;
+    my $generated_child_exports = $self->build_composition_generated_child_exports($composition_plan);
     my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
     my $shared_datapath_candidates = $self->composition_shared_datapath_candidates_for_plan($composition_plan);
 
@@ -2852,6 +2853,10 @@ sub build_composition_module_info ($self, $composition_plan, $composition_report
         composition_block_count => $composition_report
             ? $composition_report->{block_count}
             : 0,
+        composition_generated_child_count => $generated_child_exports->{child_count},
+        composition_generated_fsm_child_count => $generated_child_exports->{fsm_child_count},
+        composition_generated_dt_child_count => $generated_child_exports->{dt_child_count},
+        composition_generated_children => $generated_child_exports->{children},
         composition_standalone_dt_child_count => $standalone_dt_child_exports->{child_count},
         composition_standalone_dt_block_count => $standalone_dt_child_exports->{block_count},
         composition_standalone_dt_multi_drive_target_count => $standalone_dt_child_exports->{multi_drive_target_count},
@@ -2860,6 +2865,48 @@ sub build_composition_module_info ($self, $composition_plan, $composition_report
         composition_shared_datapath_candidates => $shared_datapath_candidates,
         composition_lane => $composition_plan->lane,
         composition_provenance => $composition_report,
+    };
+}
+
+sub build_composition_generated_child_exports ($self, $composition_plan) {
+    my @children;
+    my $fsm_child_count = 0;
+    my $dt_child_count = 0;
+
+    for my $instance (@{$composition_plan->instances || []}) {
+        next unless ($instance->kind || '') eq 'fsmc' || ($instance->kind || '') eq 'dtc';
+
+        my $child_info = $instance->module_info || {};
+        my $intent_hir = $self->module_intent_hir($child_info);
+        my $lowered_rtl_ir = $self->module_lowered_rtl_ir($child_info);
+
+        push @children, {
+            kind => $instance->kind,
+            instance_name => $instance->instance_name,
+            module_name => $instance->module_name,
+            source_name => $instance->source_name,
+            source_root_kind => (
+                $intent_hir->{source_root_kind}
+                    // $child_info->{source_root_kind}
+                    // (($instance->kind || '') eq 'dtc' ? 'dt' : 'fsm')
+            ),
+            regular_state_count => ($intent_hir->{regular_state_count} || 0),
+            standalone_dt_count => ($intent_hir->{standalone_dt_count} || 0),
+            output_drive_family_count => ($lowered_rtl_ir->{output_drive_family_count} || 0),
+            standalone_dt_multi_drive_target_count => ($lowered_rtl_ir->{standalone_dt_multi_drive_target_count} || 0),
+            intent_hir => $intent_hir,
+            lowered_rtl_ir => $lowered_rtl_ir,
+        };
+
+        $fsm_child_count++ if ($instance->kind || '') eq 'fsmc';
+        $dt_child_count++ if ($instance->kind || '') eq 'dtc';
+    }
+
+    return {
+        child_count => scalar(@children),
+        fsm_child_count => $fsm_child_count,
+        dt_child_count => $dt_child_count,
+        children => \@children,
     };
 }
 

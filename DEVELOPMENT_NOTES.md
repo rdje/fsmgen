@@ -5764,3 +5764,7 @@ It is an exact-delay pulse request:
   - the existing top-level reusable `?dtc` export surface in `composition_standalone_dt_children` now preserves each realized child's `intent_hir`,
   - that same export surface now also preserves each realized child's `lowered_rtl_ir`,
   - so embedders no longer need to reach back through composition-plan internals just to recover the explicit forward IR layers for reusable standalone-DT children.
+- The broader generated-child export seam is now also shipped:
+  - top-level composition `module_info` now exposes `composition_generated_children` for realized `?fsmc` and `?dtc` children together,
+  - those exported generated-child summaries preserve both `intent_hir` and `lowered_rtl_ir`,
+  - and `bin/fsmgen` now prints one concise generated-child section so that broader export surface is visible without embedding code.

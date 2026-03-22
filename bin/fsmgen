@@ -482,6 +482,36 @@ unless ($quiet) {
             }
         }
 
+        if (($module_info->{composition_generated_child_count} || 0) > 0) {
+            print "\nGenerated Children:\n";
+            print "  - Count: " . ($module_info->{composition_generated_child_count} || 0) . "\n";
+            print "  - FSM children: " . ($module_info->{composition_generated_fsm_child_count} || 0) . "\n";
+            print "  - Standalone-DT children: " . ($module_info->{composition_generated_dt_child_count} || 0) . "\n";
+
+            for my $child (@{$module_info->{composition_generated_children} || []}) {
+                my $kind = $child->{kind} || 'unknown_kind';
+                my $source_root_kind = $child->{source_root_kind} || 'unknown_root';
+                my $detail_label = $kind eq 'dtc' ? 'blocks' : 'states';
+                my $detail_count = $kind eq 'dtc'
+                    ? ($child->{standalone_dt_count} || 0)
+                    : ($child->{regular_state_count} || 0);
+
+                print "  - " . ($child->{instance_name} || 'unknown_instance')
+                    . " => " . ($child->{module_name} || 'unknown_module')
+                    . " (kind: ?" . $kind
+                    . ", root: ?" . $source_root_kind
+                    . ", source: " . ($child->{source_name} || 'unknown_source')
+                    . ", " . $detail_label . ": " . $detail_count
+                    . ", output drive families: " . ($child->{output_drive_family_count} || 0);
+
+                if ($kind eq 'dtc') {
+                    print ", grouped shared targets: " . ($child->{standalone_dt_multi_drive_target_count} || 0);
+                }
+
+                print ")\n";
+            }
+        }
+
         if (($module_info->{composition_standalone_dt_child_count} || 0) > 0) {
             print "\nReusable Standalone-DT Children:\n";
             print "  - Count: " . ($module_info->{composition_standalone_dt_child_count} || 0) . "\n";
