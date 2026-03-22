@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-22: combinational shared-datapath peer-read families now also cover the internal-only top-local sibling
+- Saved shipped behavior:
+  - bounded combinational peer-read shared families can now lift even when no public top output from that family is preserved,
+  - generated tops now emit one shared top-local combinational carrier for that internal-only case,
+  - peer-read child inputs are rebound to that carrier, contributor outputs are rebound to private raw nets, and no public top re-export assignments are invented,
+  - and the peer-read policy surface now distinguishes `top_output_only` from the new `top_local_only` sibling.
+- Important continuity note:
+  - this closes the most obvious missing sibling in the combinational shared-carrier lane,
+  - it also makes the combinational ownership/runtime surface more honest for internal-only peer-read families,
+  - and the next likely seam is broader combinational widening or default-visibility policy beyond the now-shipped public-preserving/internal-only pair.
+
 ## 2026-03-22: combinational shared-datapath peer-read families now have a first top-facing runtime slice
 - Saved shipped behavior:
   - the bounded combinational peer-read public-preserving case now emits one shared top-facing combinational carrier in the generated top,

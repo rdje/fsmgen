@@ -898,7 +898,7 @@ sub shared_datapath_storage_class ($self, $contributors) {
     return 'mixed';
 }
 
-sub shared_datapath_peer_read_policy ($self, $storage_class, $peer_input_endpoints) {
+sub shared_datapath_peer_read_policy ($self, $storage_class, $peer_input_endpoints, $top_output_signals = undef) {
     return undef unless @{$peer_input_endpoints || []};
 
     return {
@@ -909,6 +909,12 @@ sub shared_datapath_peer_read_policy ($self, $storage_class, $peer_input_endpoin
         peer_read_policy => 'top_output_only',
         peer_read_block_reason =>
             'combinational shared families must stay top-facing and are not internalized into lifted state',
+    } if ($storage_class || '') eq 'combinational' && @{$top_output_signals || []};
+
+    return {
+        peer_read_policy => 'top_local_only',
+        peer_read_block_reason =>
+            'combinational shared families may lift only into top-local combinational carriers and are not internalized into lifted state',
     } if ($storage_class || '') eq 'combinational';
 
     return undef;
@@ -2382,6 +2388,9 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
                 && (($candidate->{peer_read_policy} || '') eq 'top_output_only')
                 && %preserved_top_outputs
                     ? 'combinational_shared_reexport'
+            : (($candidate->{storage_class} || '') eq 'combinational')
+                && (($candidate->{peer_read_policy} || '') eq 'top_local_only')
+                    ? 'combinational_shared_internal'
                     : ''
                 ;
         my $can_lift_runtime = length($runtime_mode) ? 1 : 0;
@@ -2397,7 +2406,7 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
 
         $candidate->{lifted_runtime_kind} = $runtime_mode;
         my @runtime_lines;
-        if ($runtime_mode eq 'combinational_shared_reexport') {
+        if ($runtime_mode eq 'combinational_shared_reexport' || $runtime_mode eq 'combinational_shared_internal') {
             $candidate->{lifted_runtime_signal} = $lifted_comb_signal;
             @runtime_lines = (
                 "    logic ${width_decl}${lifted_comb_signal};",
@@ -2467,7 +2476,8 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
             my ($instance_name, $port_name) = ($peer_input->{endpoint} || '') =~ /^(\w+)\.(\w+)$/;
             next unless defined($instance_name) && defined($port_name);
             my $instance = $instances_by_name{$instance_name} || next;
-            my $lifted_signal = $runtime_mode eq 'combinational_shared_reexport'
+            my $lifted_signal = ($runtime_mode eq 'combinational_shared_reexport'
+                || $runtime_mode eq 'combinational_shared_internal')
                 ? $lifted_comb_signal
                 : $lifted_register_signal;
             $self->set_instance_port_binding($instance, $port_name, $lifted_signal);
@@ -2897,13 +2907,16 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
             : undef;
         my $default_lifted_visibility = (@peer_input_endpoints && $storage_class eq 'registered')
             ? 'internal'
-            : 'top_output';
+            : (@peer_input_endpoints && $storage_class eq 'combinational' && !keys(%top_output_signals))
+                ? 'top_local'
+                : 'top_output';
         my @planned_reexport_top_output_signals = $default_lifted_visibility eq 'internal'
             ? sort keys %top_output_signals
             : ();
         my $peer_read_policy = $self->shared_datapath_peer_read_policy(
             $storage_class,
             \@peer_input_endpoints,
+            [sort keys %top_output_signals],
         );
 
         my %aggregate_families_by_rhs;

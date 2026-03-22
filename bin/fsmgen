@@ -527,6 +527,7 @@ unless ($quiet) {
                     my %policy_label = (
                         registered_loopback => 'registered loopback eligible',
                         top_output_only => 'top-output-only',
+                        top_local_only => 'top-local-combinational-only',
                     );
                     print "    * peer-read policy: "
                         . ($policy_label{$peer_read_policy} || $peer_read_policy) . "\n";
@@ -543,6 +544,7 @@ unless ($quiet) {
                         registered_shared_reexport => 'registered shared re-export active',
                         registered_shared_internal => 'registered shared internal lift active',
                         combinational_shared_reexport => 'combinational shared top-facing carrier active',
+                        combinational_shared_internal => 'combinational shared top-local carrier active',
                     );
                     print "    * lifted runtime: "
                         . ($runtime_label{$lifted_runtime_kind} || $lifted_runtime_kind) . "\n";

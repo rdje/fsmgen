@@ -698,8 +698,9 @@ Done:
   - realized `?fsmc` children now also carry hidden shared-datapath source-export metadata for those per-value enable families,
   - and generated composition tops now also synthesize the first actual shared-datapath helper HDL from that surface through hidden child source-enable export bindings plus per-value/whole-target aggregate and conflict wires,
   - and those candidate families now also carry first lifted-ownership planning metadata through storage-class, peer-read endpoint, default lifted visibility, planned top re-export, and loopback-policy fields,
-  - and those candidate families now also carry explicit peer-read policy metadata for bounded combinational peer-read cases, keeping those families top-output-only with a surfaced block reason instead of making them look loopback-eligible,
+  - and those candidate families now also carry explicit peer-read policy metadata for bounded combinational peer-read cases, distinguishing public-preserving top-output-only families from internal-only top-local carrier families instead of making them look loopback-eligible,
   - and the bounded combinational peer-read public-preserving case now also realizes a first top-facing shared-carrier runtime through one emitted shared combinational carrier plus peer-input rebinding and preserved top-output re-export assignments,
+  - and the sibling bounded combinational peer-read internal-only case now also realizes a first top-local shared-carrier runtime through one emitted shared combinational carrier plus peer-input rebinding without invented public top re-export assignments,
   - and the bounded registered peer-read public-preserving case now also realizes the first actual lifted shared-target behavior through one emitted shared top-level register plus peer-input rebinding and preserved top-output re-export assignments, including mixed public/internal carrier families,
   - and the sibling bounded registered peer-read internal-only case now also realizes that lifted shared-target behavior through the same emitted shared register plus peer-input rebinding without inventing public top re-export assignments,
   - and non-quiet `bin/fsmgen` composition runs now print one concise `Shared-Datapath Candidates` summary section from that metadata surface.
@@ -729,7 +730,7 @@ Done:
   - registered loopback-eligible peer-read policy metadata for that bounded case,
   - and the matching non-quiet CLI visibility-planning summary lines.
 - [t/144-composition-shared-datapath-combinational-peer-read-policy.t](/Users/richarddje/Documents/github/fsmgen/t/144-composition-shared-datapath-combinational-peer-read-policy.t) now locks:
-  - top-output-only peer-read policy metadata for shared combinational output families,
+  - public-preserving top-output-only peer-read policy metadata for shared combinational output families,
   - the surfaced top-facing combinational peer-read constraint,
   - and the matching non-quiet CLI peer-read-policy summary lines.
 - [t/149-composition-shared-datapath-combinational-runtime.t](/Users/richarddje/Documents/github/fsmgen/t/149-composition-shared-datapath-combinational-runtime.t) now locks:
@@ -737,6 +738,12 @@ Done:
   - the emitted shared top-facing combinational carrier and value-family mux logic for that case,
   - peer-read child-input rebinding to that shared combinational carrier,
   - preserved top-output re-export assignments from that carrier,
+  - and the matching non-quiet CLI lifted-runtime summary lines.
+- [t/150-composition-shared-datapath-combinational-internal-runtime.t](/Users/richarddje/Documents/github/fsmgen/t/150-composition-shared-datapath-combinational-internal-runtime.t) now locks:
+  - top-local peer-read policy metadata for the bounded internal-only combinational shared family,
+  - the emitted shared top-local combinational carrier and value-family mux logic for that case,
+  - peer-read child-input rebinding to that shared combinational carrier across multiple consumers,
+  - absence of invented public top re-export assignments for that internal-only runtime,
   - and the matching non-quiet CLI lifted-runtime summary lines.
 - [t/145-composition-shared-datapath-runtime-hdl.t](/Users/richarddje/Documents/github/fsmgen/t/145-composition-shared-datapath-runtime-hdl.t) now locks:
   - hidden realized-`?fsmc` source-enable export metadata for shared-datapath per-value families,
@@ -913,7 +920,7 @@ Left:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets beyond the now-shipped discovery/metadata/helper/runtime slices,
   - lifted shared-target mux/register ownership beyond the now-shipped registered peer-read public-preserving, mixed-boundary, and internal-only slices,
   - public re-export/default-visibility policy beyond the now-shipped bounded registered peer-read cases,
-  - and realized combinational behavior beyond the now-shipped bounded top-facing public-preserving slice.
+  - and realized combinational behavior beyond the now-shipped bounded public-preserving and internal-only slices.
 - Turn the reusable standalone-DT/module-library direction into a real contract:
   - decide whether unnamed reusable DT roots such as `?dt:` exist at all,
   - extend the current shipped `?dt:name` interface rule into a fuller reusable-module contract beyond the now-shipped multi-block enable, grouped shared-target, and composition-facing child-export metadata surfaces,

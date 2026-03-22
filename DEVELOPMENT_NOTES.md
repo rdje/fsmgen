@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-22: combinational shared-datapath peer-read families now also cover the internal-only top-local sibling
+- Continued the active `R11` lane by widening the first shipped combinational shared-carrier runtime instead of leaving the sibling internal-only case behind as policy-only metadata.
+- Landed behavior:
+  - combinational peer-read shared families no longer require preserved public top outputs before the shared-carrier runtime activates,
+  - internal-only families now emit one shared top-local combinational carrier in the generated top,
+  - peer-read child inputs are rebound to that carrier, contributor outputs are rebound to private raw nets, and no public top re-export assignments are invented when no such outputs exist,
+  - and the peer-read policy surface now distinguishes the earlier public-preserving `top_output_only` case from the new internal-only `top_local_only` case.
+- Why this is worth shipping:
+  - it widens the combinational lane with real behavior instead of another metadata-only slice,
+  - it makes the ownership surface more honest for internal-only peer-read families,
+  - and it leaves the next seam where it belongs: broader combinational widening and ownership defaults beyond the now-shipped bounded sibling pair.
+
 ## 2026-03-22: combinational shared-datapath peer-read families now have a first top-facing runtime slice
 - Continued the active `R11` lane by turning the bounded combinational peer-read policy into actual emitted behavior instead of leaving it as metadata/reporting only.
 - Landed behavior:
