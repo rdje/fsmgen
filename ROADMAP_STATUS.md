@@ -750,6 +750,15 @@ Done:
   - direct-result `lowered_rtl_ir` surfacing for `?top` composition roots,
   - preservation of those same serialized forward IR layers through composition-top `module_info`,
   - and the initial bounded composition-top fields for top-port analysis, child counts, lane, internal nets, instances, and auxiliary assignments.
+- The next forward-IR widening step through the composition provenance/reporting surface is now also shipped:
+  - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
+  - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,
+  - and top-port / resolved-link provenance kinds now each preserve one stable example subject so non-quiet CLI composition summaries are no longer counts-only in that area.
+- [t/161-composition-provenance-origin-examples.t](/Users/richarddje/Documents/github/fsmgen/t/161-composition-provenance-origin-examples.t) now locks:
+  - preservation of resolved-link source/target endpoint context in `composition_report`,
+  - preservation of child `intent_hir` and `lowered_rtl_ir` through those generated-child endpoint contexts,
+  - preservation of `port_origin_examples` and `resolved_link_origin_examples`,
+  - and the matching non-quiet CLI provenance example lines.
 - The first shared-datapath candidate-discovery slice is now also shipped:
   - composition-top `module_info` now reports `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates`,
   - those candidate families are currently bounded to same-name output families across multiple realized `?fsmc` children that agree on width and interface type,

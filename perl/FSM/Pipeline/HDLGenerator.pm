@@ -3353,27 +3353,35 @@ sub build_composition_provenance_report ($self, $composition_plan) {
 
     my @resolved_links = map {
         my $origin_kind = $_->origin_kind || 'unknown_link_origin';
+        my $source_context = $self->composition_provenance_endpoint_context($composition_plan, $_->source);
+        my $target_context = $self->composition_provenance_endpoint_context($composition_plan, $_->target);
         +{
             source => $_->source,
             target => $_->target,
             origin_kind => $origin_kind,
             origin_category => $self->composition_provenance_category($origin_kind),
             origin_label => $self->composition_provenance_label($origin_kind),
+            source_context => $source_context,
+            target_context => $target_context,
         }
     } @{$composition_plan->resolved_links || []};
 
     my %port_origin_counts;
     my %port_category_counts;
+    my %port_origin_examples;
     for my $entry (@ports) {
         $port_origin_counts{$entry->{origin_kind}}++;
         $port_category_counts{$entry->{origin_category}}++;
+        $port_origin_examples{$entry->{origin_kind}} //= $self->composition_port_example_summary($entry);
     }
 
     my %resolved_link_origin_counts;
     my %resolved_link_category_counts;
+    my %resolved_link_origin_examples;
     for my $entry (@resolved_links) {
         $resolved_link_origin_counts{$entry->{origin_kind}}++;
         $resolved_link_category_counts{$entry->{origin_category}}++;
+        $resolved_link_origin_examples{$entry->{origin_kind}} //= $self->composition_link_example_summary($entry);
     }
 
     my @override_events = @{$self->build_composition_override_events($composition_plan)};
@@ -3404,8 +3412,10 @@ sub build_composition_provenance_report ($self, $composition_plan) {
         block_events => \@block_events,
         port_origin_counts => \%port_origin_counts,
         port_category_counts => \%port_category_counts,
+        port_origin_examples => \%port_origin_examples,
         resolved_link_origin_counts => \%resolved_link_origin_counts,
         resolved_link_category_counts => \%resolved_link_category_counts,
+        resolved_link_origin_examples => \%resolved_link_origin_examples,
         override_kind_counts => \%override_kind_counts,
         block_kind_counts => \%block_kind_counts,
         override_kind_examples => \%override_kind_examples,
@@ -3433,6 +3443,121 @@ sub build_composition_provenance_report ($self, $composition_plan) {
             keys %block_kind_counts
         ],
     };
+}
+
+sub composition_provenance_endpoint_context ($self, $composition_plan, $endpoint) {
+    return undef unless defined $endpoint && length $endpoint;
+
+    my %top_port_by_name = map {
+        (($_->name || '') => $_)
+    } @{$composition_plan->ports || []};
+
+    if (my $top_port = $top_port_by_name{$endpoint}) {
+        return {
+            kind => 'top_port',
+            name => $top_port->name,
+            endpoint => $top_port->name,
+            direction => $top_port->direction,
+            width => $top_port->width,
+            type => $top_port->type,
+        };
+    }
+
+    my ($instance_name, $port_name) = $endpoint =~ /^(\w+)\.(\w+)$/;
+    return {
+        kind => 'raw_endpoint',
+        endpoint => $endpoint,
+    } unless defined $port_name;
+
+    my ($instance) = grep {
+        (($_->instance_name || '') eq $instance_name)
+    } @{$composition_plan->instances || []};
+
+    return {
+        kind => 'raw_endpoint',
+        endpoint => $endpoint,
+    } unless $instance;
+
+    my ($port) = grep {
+        (($_->name || '') eq $port_name)
+    } @{$instance->interface_ports || []};
+
+    my $module_info = $instance->module_info || {};
+    my $intent_hir = $self->module_intent_hir($module_info);
+    my $lowered_rtl_ir = $self->module_lowered_rtl_ir($module_info);
+    my $source_root_kind = $intent_hir->{source_root_kind}
+        // $module_info->{source_root_kind}
+        // (($instance->kind || '') eq 'dtc' ? 'dt'
+            : (($instance->kind || '') eq 'fsmc' ? 'fsm'
+                : (($instance->kind || '') eq 'rtl' ? 'rtl' : 'unknown_root')));
+
+    return {
+        kind => 'child_endpoint',
+        endpoint => $endpoint,
+        instance_name => $instance->instance_name,
+        instance_kind => $instance->kind,
+        module_name => $instance->module_name,
+        source_name => $instance->source_name,
+        port_name => $port_name,
+        direction => $port ? $port->direction : undef,
+        width => $port ? $port->width : undef,
+        type => $port ? $port->type : undef,
+        source_root_kind => $source_root_kind,
+        regular_state_count => ($intent_hir->{regular_state_count} || 0),
+        standalone_dt_count => ($intent_hir->{standalone_dt_count} || 0),
+        output_drive_family_count => ($lowered_rtl_ir->{output_drive_family_count} || 0),
+        intent_hir => $intent_hir,
+        lowered_rtl_ir => $lowered_rtl_ir,
+    };
+}
+
+sub composition_provenance_endpoint_example_label ($self, $context, $fallback = undef) {
+    return $fallback // '' unless ref($context) eq 'HASH';
+
+    if (($context->{kind} || '') eq 'top_port') {
+        return $context->{name} || $context->{endpoint} || ($fallback // '');
+    }
+
+    if (($context->{kind} || '') eq 'child_endpoint') {
+        my $root_kind = $context->{source_root_kind} || 'unknown_root';
+        my @details = ('?' . $root_kind);
+
+        if ($root_kind eq 'fsm') {
+            push @details, 'states: ' . ($context->{regular_state_count} || 0);
+        } elsif ($root_kind eq 'dt') {
+            push @details, 'blocks: ' . ($context->{standalone_dt_count} || 0);
+        }
+
+        if ($root_kind eq 'fsm' || $root_kind eq 'dt') {
+            push @details, 'output drive families: ' . ($context->{output_drive_family_count} || 0);
+        }
+
+        return ($context->{endpoint} || $fallback || 'unknown_endpoint')
+            . ' (' . join(', ', @details) . ')';
+    }
+
+    return $context->{endpoint} || $fallback || '';
+}
+
+sub composition_port_example_summary ($self, $entry) {
+    return '' unless ref($entry) eq 'HASH';
+    return $entry->{name} // '';
+}
+
+sub composition_link_example_summary ($self, $entry) {
+    return '' unless ref($entry) eq 'HASH';
+
+    my $source = $self->composition_provenance_endpoint_example_label(
+        $entry->{source_context},
+        $entry->{source},
+    );
+    my $target = $self->composition_provenance_endpoint_example_label(
+        $entry->{target_context},
+        $entry->{target},
+    );
+
+    return '' unless length($source) || length($target);
+    return $source . ' -> ' . $target;
 }
 
 sub build_composition_override_events ($self, $composition_plan) {

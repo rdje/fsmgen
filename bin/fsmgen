@@ -445,7 +445,10 @@ unless ($quiet) {
             for my $origin_kind (@{$composition_report->{ordered_port_origins}}) {
                 my $label = $pipeline->composition_provenance_label($origin_kind);
                 my $count = $composition_report->{port_origin_counts}{$origin_kind} || 0;
-                print "  - $label: $count\n";
+                my $example = $composition_report->{port_origin_examples}{$origin_kind} || '';
+                print "  - $label: $count";
+                print " (example: $example)" if length $example;
+                print "\n";
             }
         }
 
@@ -454,7 +457,10 @@ unless ($quiet) {
             for my $origin_kind (@{$composition_report->{ordered_resolved_link_origins}}) {
                 my $label = $pipeline->composition_provenance_label($origin_kind);
                 my $count = $composition_report->{resolved_link_origin_counts}{$origin_kind} || 0;
-                print "  - $label: $count\n";
+                my $example = $composition_report->{resolved_link_origin_examples}{$origin_kind} || '';
+                print "  - $label: $count";
+                print " (example: $example)" if length $example;
+                print "\n";
             }
         }
 

@@ -4521,6 +4521,10 @@ This is the persistent technical change history for FSMGen.
   - direct `?top` generation results now expose serialized top-level `intent_hir` and serialized top-level `lowered_rtl_ir`,
   - those composition-top forward layers now carry bounded top-port / child-count / lane summaries on the intent side plus bounded internal-net / instance / auxiliary-assignment summaries on the lowered side,
   - and composition `module_info` now mirrors those same serialized forward IR layers instead of leaving composition tops as the remaining explicit forward-IR gap.
+- Widened the same forward IR story through the composition provenance/reporting surface:
+  - `composition_report` resolved-link entries now preserve source/target endpoint context instead of only raw endpoint strings,
+  - generated-child endpoint contexts now preserve bounded `intent_hir` / `lowered_rtl_ir` child summaries,
+  - and top-port / resolved-link provenance kinds now keep one stable example subject so non-quiet CLI composition summaries are no longer counts-only in that area.
 - Shared-datapath candidate metadata now also makes the bounded combinational peer-read rule explicit: peer-read combinational families stay top-output-only, surface a block reason, and no longer look loopback-eligible in non-quiet `bin/fsmgen` summaries.
 - Shared-datapath runtime behavior now exists in generated composition HDL, not just metadata: realized `?fsmc` children export hidden per-value enable families for composition use, and composition tops now synthesize aggregate-enable and conflict helper wires from those exports.
 - Shared-datapath lifting now has its first actual ownership/runtime slice on top of that helper HDL:

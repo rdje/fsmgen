@@ -282,6 +282,10 @@ First shipped `R11` slice now in tree:
   - those composition-top forward layers now carry stable top-port analysis plus composition child-count / lane metadata on the intent side,
   - those same composition-top forward layers now also carry stable internal-net / instance / auxiliary-assignment summaries on the lowered side,
   - and `module_info` now mirrors those same serialized composition-top forward IR layers instead of leaving composition tops as the remaining forward-IR gap.
+- The next widening step is now also shipped through the composition provenance/reporting surface:
+  - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
+  - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,
+  - and top-port / resolved-link provenance kinds now each preserve one stable example subject so non-quiet CLI summaries are no longer counts-only in that area.
 
 Expected result:
 - composition remains explicit and serious instead of drifting back toward legacy implicit behavior.

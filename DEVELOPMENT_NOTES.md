@@ -5777,3 +5777,8 @@ It is an exact-delay pulse request:
   - the composition-top `intent_hir` slice is intentionally bounded to top-port analysis plus composition child-count / lane metadata,
   - the composition-top `lowered_rtl_ir` slice is intentionally bounded to internal-net / instance / auxiliary-assignment summaries,
   - and composition `module_info` now mirrors those same serialized forward layers instead of leaving `?top` as the remaining forward-IR hole.
+- The next widening step is now also shipped through the composition provenance/reporting surface:
+  - `composition_report` no longer leaves resolved-link entries as raw endpoint strings only,
+  - each resolved-link entry now preserves source/target endpoint context,
+  - generated-child endpoint contexts now carry bounded forward child summaries from `intent_hir` and `lowered_rtl_ir`,
+  - and non-quiet provenance reporting now keeps one stable example subject per top-port and resolved-link provenance kind instead of counts only.
