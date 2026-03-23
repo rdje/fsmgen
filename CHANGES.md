@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### unified composition child exports now derive from the structural child layer
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `composition_children` now derives child identity and order from `structural_rtl_ir->{instances}` instead of rereading realized child identity directly from `composition_plan->instances`.
+- The same update now reuses that same computed unified child surface in the top-generation path for the narrower `composition_generated_children` and `composition_standalone_dt_children` sibling exports instead of rebuilding it again.
+- Updated [t/165-composition-child-forward-ir-exports.t](/Users/richarddje/Documents/github/fsmgen/t/165-composition-child-forward-ir-exports.t) so it now locks `composition_children` identity/order against `structural_rtl_ir->{instances}` while keeping the existing mixed child-kind and forward-IR export surface stable.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next structural-consumption cleanup slice is tracked honestly.
+
 ### reusable standalone-DT child exports now derive from the unified composition child semantic layer
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `composition_standalone_dt_children` now derives from the broader `composition_children` semantic export instead of rebuilding `?dtc` child identity separately from `composition_plan->instances`.
 - The same update now sources standalone-DT names and enable families from each child's `intent_hir`, and grouped standalone-DT multi-drive targets from each child's `lowered_rtl_ir`, while keeping the existing reusable standalone-DT export shape stable.

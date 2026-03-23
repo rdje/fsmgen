@@ -854,6 +854,12 @@ Done:
   - preservation of mixed generated-child plus RTL child order/kind/root identity through `composition_children`,
   - preservation of child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` through that unified child export when present,
   - and reuse of that same unified child semantic surface in override/reporting endpoint context.
+- The next structural-consumption step is now also shipped through the unified composition child export itself:
+  - `composition_children` now derives child identity and order from `structural_rtl_ir->{instances}` instead of rereading realized child identity directly from `composition_plan->instances`,
+  - and the narrower generated-child and reusable standalone-DT export builders now reuse that same computed child surface in the top-generation path instead of each rebuilding it again.
+- [t/165-composition-child-forward-ir-exports.t](/Users/richarddje/Documents/github/fsmgen/t/165-composition-child-forward-ir-exports.t) now also locks:
+  - unified child identity and order aligned with `structural_rtl_ir->{instances}`,
+  - while keeping the existing mixed child-kind/root and forward-IR export surface stable.
 - The next narrowing step is now also shipped through the generated-child export path:
   - the narrower `composition_generated_children` export now derives from the broader semantic `composition_children` layer,
   - so generated-child export identity no longer gets reconstructed separately from plan instances,

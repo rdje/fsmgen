@@ -255,9 +255,15 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
 
     my $composition_plan = $self->build_composition_plan($composition_spec, $fsm_file, $header);
     my $structural_rtl_ir = $self->build_composition_structural_rtl_ir($composition_plan);
-    my $composition_child_exports = $self->build_composition_child_exports($composition_plan);
-    my $generated_child_exports = $self->build_composition_generated_child_exports($composition_plan);
-    my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
+    my $composition_child_exports = $self->build_composition_child_exports($composition_plan, $structural_rtl_ir);
+    my $generated_child_exports = $self->build_composition_generated_child_exports(
+        $composition_plan,
+        $composition_child_exports,
+    );
+    my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports(
+        $composition_plan,
+        $composition_child_exports,
+    );
     my $intent_hir = $self->build_composition_intent_hir(
         $composition_plan,
         $composition_child_exports,
@@ -3257,21 +3263,27 @@ sub build_composition_module_info (
     };
 }
 
-sub build_composition_child_exports ($self, $composition_plan) {
+sub build_composition_child_exports ($self, $composition_plan, $structural_rtl_ir = undef) {
+    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
+    my %instances_by_name = map {
+        (($_->instance_name // '') => $_)
+    } @{$composition_plan->instances || []};
     my @children;
 
-    for my $instance (@{$composition_plan->instances || []}) {
-        my $child_info = $instance->module_info || {};
+    for my $instance (@{$structural_rtl_ir_hash->{instances} || []}) {
+        my $planned_instance = $instances_by_name{$instance->{instance_name} // ''};
+        my $child_info = $planned_instance ? ($planned_instance->module_info || {}) : {};
         my $intent_hir = $self->module_intent_hir($child_info);
         my $lowered_rtl_ir = $self->module_lowered_rtl_ir($child_info);
-        my $structural_rtl_ir = $self->module_structural_rtl_ir($child_info);
-        my $kind = $instance->kind || '';
+        my $child_structural_rtl_ir = $self->module_structural_rtl_ir($child_info);
+        my $kind = $instance->{kind} || ($planned_instance ? ($planned_instance->kind || '') : '');
 
         push @children, {
             kind => $kind,
-            instance_name => $instance->instance_name,
-            module_name => $instance->module_name,
-            source_name => ($instance->source_name // $instance->module_name),
+            instance_name => ($instance->{instance_name} // ''),
+            module_name => ($instance->{module_name} // ''),
+            source_name => ($instance->{source_name} // $instance->{module_name} // ''),
             source_root_kind => (
                 $intent_hir->{source_root_kind}
                     // $child_info->{source_root_kind}
@@ -3285,7 +3297,7 @@ sub build_composition_child_exports ($self, $composition_plan) {
             standalone_dt_multi_drive_target_count => ($lowered_rtl_ir->{standalone_dt_multi_drive_target_count} || 0),
             intent_hir => $intent_hir,
             lowered_rtl_ir => $lowered_rtl_ir,
-            structural_rtl_ir => $structural_rtl_ir,
+            structural_rtl_ir => $child_structural_rtl_ir,
         };
     }
 

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: unified composition child exports now derive from the structural child layer
+- Continued the active `R11` forward-IR cleanup lane by making the broader semantic child export consume the explicit structural layer instead of leaving child identity/order tied directly to plan-instance traversal.
+- Landed behavior:
+  - `composition_children` now derives child identity and order from `structural_rtl_ir->{instances}` instead of rereading realized child identity directly from `composition_plan->instances`,
+  - the narrower `composition_generated_children` and `composition_standalone_dt_children` sibling exports now reuse that same computed child surface in the top-generation path instead of rebuilding it again,
+  - and the existing unified child export shape remains stable while depending more directly on the explicit structural layer.
+- Why this is worth shipping:
+  - it makes the semantic child export line up with the structural source of truth it already feeds,
+  - it removes another duplicated plan walk from `HDLGenerator` without widening the public contract unexpectedly,
+  - and it leaves the next seam where it belongs: the remaining helpers that still rebuild bounded composition state instead of consuming `IntentHIR`, `LoweredRTLIR`, or `StructuralRTLIR` first.
+
 ## 2026-03-23: reusable standalone-DT child exports now derive from the unified composition child semantic layer
 - Continued the active `R11` forward-IR cleanup lane by retiring the sibling ad hoc export path beside the already-shipped generated-child narrowing step.
 - Landed behavior:

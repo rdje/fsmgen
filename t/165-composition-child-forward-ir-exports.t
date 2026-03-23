@@ -61,6 +61,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $intent_hir = $result->{intent_hir};
     my $module_info = $result->{module_info};
+    my $structural_rtl_ir = $result->{structural_rtl_ir};
     my $report = $result->{composition_report};
     my ($producer_instance, $uart_tx_instance) = @{$result->{composition_plan}->instances};
     my ($producer_export, $uart_tx_export) = @{$module_info->{composition_children}};
@@ -92,6 +93,29 @@ FSM
         $intent_hir->{composition_children},
         $module_info->{composition_children},
         'top module_info mirrors the unified realized child export from intent_hir',
+    );
+    is_deeply(
+        [
+            map {
+                +{
+                    kind => $_->{kind},
+                    instance_name => $_->{instance_name},
+                    module_name => $_->{module_name},
+                    source_name => $_->{source_name},
+                }
+            } @{$module_info->{composition_children}}
+        ],
+        [
+            map {
+                +{
+                    kind => $_->{kind},
+                    instance_name => $_->{instance_name},
+                    module_name => $_->{module_name},
+                    source_name => ($_->{source_name} // $_->{module_name}),
+                }
+            } @{$structural_rtl_ir->{instances}}
+        ],
+        'unified child export now derives child identity and order from structural_rtl_ir instances',
     );
 
     is($producer_export->{kind}, 'dtc', 'generated dt child keeps its composition kind in the unified export');

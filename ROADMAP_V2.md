@@ -332,6 +332,9 @@ First shipped `R11` slice now in tree:
   - compatible top-level `module_info` now mirrors that same unified child export instead of leaving child identity split across narrower side channels only,
   - those unified child entries preserve stable child identity together with each realized child's `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` summaries when present,
   - and composition provenance / override / block endpoint context lookup now consumes that unified semantic child export instead of rereading realized child identity only from plan instances.
+- The next structural-consumption step is now also shipped through the unified composition child export itself:
+  - `composition_children` now derives child identity and order from `structural_rtl_ir->{instances}` instead of rereading realized child identity directly from `composition_plan->instances`,
+  - and the narrower generated-child and reusable standalone-DT export builders now reuse that same computed child surface in the top-generation path instead of each rebuilding it again.
 - The next narrowing step is now also shipped through the generated-child export path:
   - the narrower `composition_generated_children` export now derives from the broader semantic `composition_children` layer,
   - so generated-child export identity no longer gets reconstructed separately from plan instances,

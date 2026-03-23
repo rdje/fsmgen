@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: unified composition child exports now derive from the structural child layer
+- Saved shipped behavior:
+  - `composition_children` now derives child identity and order from `structural_rtl_ir->{instances}` instead of rereading realized child identity directly from plan instances,
+  - the narrower `composition_generated_children` and `composition_standalone_dt_children` sibling exports now reuse that same computed child surface in the top-generation path instead of rebuilding it again,
+  - and the existing unified child export shape stays stable.
+- Important continuity note:
+  - this makes the semantic child export line up more honestly with the structural source of truth it already feeds,
+  - it removes another duplicated plan walk from `HDLGenerator`,
+  - and the next likely seam is another bounded helper that still rebuilds composition state instead of consuming `IntentHIR`, `LoweredRTLIR`, or `StructuralRTLIR` first.
+
 ## 2026-03-23: reusable standalone-DT child exports now derive from the unified composition child semantic layer
 - Saved shipped behavior:
   - `composition_standalone_dt_children` now derives from the broader semantic `composition_children` export instead of rebuilding `?dtc` child identity separately from plan instances,
