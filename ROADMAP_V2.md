@@ -648,3 +648,7 @@ The first honest `R11` slices are now:
   bounded literal family, because real top/child connectivity eventually needs
   honest constant actuals and tie-offs without collapsing back into raw
   backend-specific syntax strings.
+- Forward-IR note: the structural connection-expression layer now also needs an
+  explicit `open` actual form, because “leave this formal unconnected” is real
+  structural semantics and should not be represented as a backend-specific text
+  escape hatch.

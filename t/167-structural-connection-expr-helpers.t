@@ -11,6 +11,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::IR::StructuralRTLIR;
 use FSM::Pipeline::HDLGenerator;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
+    open_expr
     signal_ref_expr
     bit_select_expr
     slice_expr
@@ -29,6 +30,84 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     render_expr
     binding_expr_text
 );
+
+subtest 'backend-neutral open connection expressions render without inventing fake signal dependencies' => sub {
+    is_deeply(
+        open_expr(),
+        {
+            kind => 'open',
+        },
+        'open helper builds the explicit unconnected actual-binding node',
+    );
+
+    is(
+        render_expr(open_expr()),
+        '',
+        'open expressions render as an empty actual connection for the current verilog-family backend',
+    );
+
+    is(
+        render_expr(open_expr(), 'unused', 'vhdl'),
+        'open',
+        'open expressions already render to the portable VHDL open keyword',
+    );
+
+    is_deeply(
+        expr_signal_names(open_expr()),
+        [],
+        'open expressions do not report fake signal dependencies',
+    );
+
+    is(
+        binding_expr_text({
+            port_name => 'unused',
+            connection_expr => open_expr(),
+        }),
+        '',
+        'binding text rendering preserves an explicit open connection as an empty current-language actual',
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug_level => 0,
+        quiet => 1,
+    );
+
+    my $structural_rtl_ir = FSM::IR::StructuralRTLIR->new(
+        module_name => 'structural_open_top',
+        source_root_kind => 'top',
+        target_language => 'systemverilog',
+        ports => [],
+        nets => [],
+        instances => [
+            {
+                kind => 'fsmc',
+                instance_name => 'u_child',
+                module_name => 'child_mod',
+                source_name => 'child_src',
+                interface_ports => [
+                    { name => 'unused', direction => 'input', width => 1, type => undef },
+                ],
+                port_bindings => [
+                    {
+                        port_name => 'unused',
+                        connection_expr => open_expr(),
+                    },
+                ],
+            },
+        ],
+        declared_links => [],
+        resolved_links => [],
+        auxiliary_assignments => [],
+    );
+
+    my $rendered = $pipeline->emit_composition_top_module($structural_rtl_ir);
+    like(
+        $rendered,
+        qr/\.unused\(\)/,
+        'composition structural emitter walks explicit open connection expressions directly',
+    );
+};
 
 subtest 'signal_ref helper builds the first bounded structural connection node' => sub {
     is_deeply(

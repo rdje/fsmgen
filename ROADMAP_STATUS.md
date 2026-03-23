@@ -1257,3 +1257,6 @@ Exit criteria:
 - `R11`: `StructuralRTLIR` connection expressions now also cover bounded
   bit-vector literal actuals, so the structural connection AST can represent
   simple constant tie-offs without falling back to raw HDL strings.
+- `R11`: `StructuralRTLIR` connection expressions now also cover explicit
+  backend-neutral `open` actuals, so the structural connection AST can model
+  intentionally unconnected child formals without using raw backend syntax.

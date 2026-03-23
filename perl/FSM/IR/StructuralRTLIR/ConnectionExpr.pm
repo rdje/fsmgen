@@ -9,6 +9,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 our @EXPORT_OK = qw(
+    open_expr
     signal_ref_expr
     bit_select_expr
     slice_expr
@@ -27,6 +28,12 @@ our @EXPORT_OK = qw(
     render_expr
     binding_expr_text
 );
+
+sub open_expr () {
+    return {
+        kind => 'open',
+    };
+}
 
 sub signal_ref_expr ($signal_name) {
     return undef unless defined($signal_name) && length($signal_name);
@@ -177,6 +184,10 @@ sub expr_signal_names ($expr) {
         return length($signal_name) ? [$signal_name] : [];
     }
 
+    if ($kind eq 'open') {
+        return [];
+    }
+
     if ($kind eq 'bit_vector_literal') {
         return [];
     }
@@ -209,6 +220,12 @@ sub render_expr ($expr, $port_name = undef, $target_language = 'systemverilog') 
     return '' unless ref($expr) eq 'HASH';
 
     my $kind = $expr->{kind} || '';
+    if ($kind eq 'open') {
+        return '' if _is_verilog_family($target_language);
+        return 'open' if defined($target_language) && lc($target_language) eq 'vhdl';
+        _confess_unsupported_target_language($target_language, $port_name, $kind);
+    }
+
     return $expr->{signal_name}
         if $kind eq 'signal_ref' && defined($expr->{signal_name}) && length($expr->{signal_name});
 
@@ -326,9 +343,9 @@ FSM::IR::StructuralRTLIR::ConnectionExpr - Backend-neutral structural binding ex
 
 This helper owns the first bounded typed actual-connection node family used by
 the extracted Structural RTL IR layer. The current shipped shape is
-intentionally small: backend-neutral `signal_ref` plus portable indexed/sliced
-signal forms, along with helpers for signal-name recovery and current
-Verilog-family text rendering while the emitter still supports only those
-bounded structural binding forms.
+intentionally small: backend-neutral `open`, `signal_ref`, bounded portable
+indexed/sliced/concat forms, and a first bounded bit-vector literal family,
+along with helpers for signal-name recovery and current backend text rendering
+while the emitter still supports only those bounded structural binding forms.
 
 =cut

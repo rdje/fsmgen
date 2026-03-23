@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural connection expressions now cover explicit open actuals
+- Continued the active `R11` structural-IR widening lane by adding the first explicit “leave this formal unconnected” actual-binding node instead of forcing that case to stay implicit or backend-specific.
+- Landed behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns a backend-neutral `open` actual-connection node,
+  - the current helper renderer maps that node to an empty named actual for the Verilog family and to the `open` keyword for VHDL helper rendering,
+  - and the composition structural emitter now walks that typed node directly instead of needing a raw HDL string escape hatch.
+- Why this is worth shipping:
+  - it makes the structural AST more honest for real top/child pin connectivity,
+  - it widens expressiveness in a portable semantic way instead of a syntax-specific one,
+  - and it keeps the next seam where it belongs: other bounded portable `connection_expr` forms or more consumers moving off flat compatibility mirrors.
+
 ## 2026-03-23: structural binding-list mutation now lives in the structural helper module too
 - Continued the active `R11` structural-IR cleanup lane by moving the remaining bounded port-binding list mutation rules out of `HDLGenerator`.
 - Landed behavior:

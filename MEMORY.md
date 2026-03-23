@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural connection expressions now cover explicit open actuals
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns an explicit backend-neutral `open` actual-connection node,
+  - helper rendering already maps that node to Verilog-family empty actuals and to the VHDL `open` keyword,
+  - and the composition structural emitter now walks that typed node directly.
+- Important continuity note:
+  - this keeps “intentionally unconnected formal” as real structural semantics instead of a backend-specific text trick,
+  - it makes the structural binding AST more honest for richer top/child connectivity,
+  - and the next likely seam is still either one bounded `connection_expr` widening or another consumer moving further off compatibility mirrors.
+
 ## 2026-03-23: structural binding-list mutation now lives in the structural helper module too
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns the first bounded signal-ref binding-list ensure/set operations,
@@ -4597,3 +4607,6 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   beside the older scalar compatibility field.
 - StructuralRTLIR `connection_expr` now also supports bounded bit-vector
   literal actuals, rendered through the current Verilog-family backend only.
+- StructuralRTLIR `connection_expr` now also supports explicit backend-neutral
+  `open` actuals, rendered as empty named actuals for the Verilog family and
+  as `open` through the current VHDL helper-rendering path.
