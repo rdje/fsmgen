@@ -11,6 +11,7 @@ no warnings 'experimental::signatures';
 our @EXPORT_OK = qw(
     open_expr
     signal_ref_expr
+    member_access_expr
     bit_select_expr
     slice_expr
     concat_expr
@@ -40,6 +41,18 @@ sub signal_ref_expr ($signal_name) {
     return {
         kind => 'signal_ref',
         signal_name => $signal_name,
+    };
+}
+
+sub member_access_expr ($source, $member_name) {
+    confess "StructuralRTLIR member-access expressions require an identifier-like member name"
+        unless defined($member_name) && !ref($member_name) && $member_name =~ /\A[A-Za-z_][A-Za-z0-9_]*\z/;
+
+    my $source_expr = _coerce_source_expr($source);
+    return {
+        kind => 'member_access',
+        source_expr => $source_expr,
+        member_name => $member_name,
     };
 }
 
@@ -192,6 +205,10 @@ sub expr_signal_names ($expr) {
         return [];
     }
 
+    if ($kind eq 'member_access') {
+        return expr_signal_names($expr->{source_expr});
+    }
+
     if ($kind eq 'bit_select' || $kind eq 'slice') {
         return expr_signal_names($expr->{source_expr});
     }
@@ -224,6 +241,17 @@ sub render_expr ($expr, $port_name = undef, $target_language = 'systemverilog') 
         return '' if _is_verilog_family($target_language);
         return 'open' if defined($target_language) && lc($target_language) eq 'vhdl';
         _confess_unsupported_target_language($target_language, $port_name, $kind);
+    }
+
+    if ($kind eq 'member_access') {
+        my $language = defined($target_language) ? lc($target_language) : '';
+        _confess_unsupported_target_language($target_language, $port_name, $kind)
+            unless $language eq 'systemverilog' || $language eq 'vhdl';
+        my $source_text = render_expr($expr->{source_expr}, $port_name, $target_language);
+        my $member_name = $expr->{member_name} // '';
+        confess "StructuralRTLIR member-access expressions must preserve an identifier-like member name.\n"
+            unless $member_name =~ /\A[A-Za-z_][A-Za-z0-9_]*\z/;
+        return sprintf('%s.%s', $source_text, $member_name);
     }
 
     return $expr->{signal_name}
@@ -343,9 +371,10 @@ FSM::IR::StructuralRTLIR::ConnectionExpr - Backend-neutral structural binding ex
 
 This helper owns the first bounded typed actual-connection node family used by
 the extracted Structural RTL IR layer. The current shipped shape is
-intentionally small: backend-neutral `open`, `signal_ref`, bounded portable
-indexed/sliced/concat forms, and a first bounded bit-vector literal family,
-along with helpers for signal-name recovery and current backend text rendering
-while the emitter still supports only those bounded structural binding forms.
+intentionally small: backend-neutral `open`, `signal_ref`, a first bounded
+member-access form, bounded portable indexed/sliced/concat forms, and a first
+bounded bit-vector literal family, along with helpers for signal-name recovery
+and current backend text rendering while the emitter still supports only those
+bounded structural binding forms.
 
 =cut

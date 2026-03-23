@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural connection expressions now cover bounded member access
+- Continued the active `R11` structural-IR widening lane by adding the first explicit aggregate/member actual-connection form instead of leaving that roadmap item as a pure future note.
+- Landed behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns a bounded `member_access` node over a source expression and one identifier-like member name,
+  - helper rendering now supports that node for SystemVerilog and VHDL while failing explicitly for plain Verilog,
+  - recursive dependency discovery now follows the member-access source expression without pretending the whole access path is one flat wire name,
+  - and the composition structural emitter now walks that typed node directly.
+- Why this is worth shipping:
+  - it turns the structural connection AST into a more realistic model of rich top/child wiring,
+  - it starts the member/field-access side of the roadmap without overcommitting to full aggregate literals or broader backend semantics,
+  - and it keeps the next seam where it belongs: another bounded portable connection form or more consumers moving onto typed structural dependency queries.
+
 ## 2026-03-23: structural connection expressions now cover explicit open actuals
 - Continued the active `R11` structural-IR widening lane by adding the first explicit “leave this formal unconnected” actual-binding node instead of forcing that case to stay implicit or backend-specific.
 - Landed behavior:
@@ -6004,3 +6016,6 @@ It is an exact-delay pulse request:
   literal family through backend-neutral bit-vector literal nodes, which is a
   useful step toward honest tie-off/default actual connections in the
   structural layer.
+- StructuralRTLIR connection expressions now also include a bounded
+  `member_access` node, which is the first shipped aggregate/member actual
+  form in the structural connectivity AST.

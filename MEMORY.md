@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural connection expressions now cover bounded member access
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns a bounded `member_access` actual-connection node,
+  - helper rendering supports that node for SystemVerilog and VHDL while failing explicitly for plain Verilog,
+  - recursive dependency discovery now follows the base source signal through that node,
+  - and the composition structural emitter now walks the typed member-access node directly.
+- Important continuity note:
+  - this starts the roadmap’s member/field-access lane in the structural AST without collapsing into raw HDL strings,
+  - it keeps aggregate/member connectivity as real typed structure rather than a flat compatibility mirror,
+  - and the next likely seam is still either one bounded `connection_expr` widening or another consumer moving further off compatibility mirrors.
+
 ## 2026-03-23: structural connection expressions now cover explicit open actuals
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns an explicit backend-neutral `open` actual-connection node,
@@ -4610,3 +4621,6 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - StructuralRTLIR `connection_expr` now also supports explicit backend-neutral
   `open` actuals, rendered as empty named actuals for the Verilog family and
   as `open` through the current VHDL helper-rendering path.
+- StructuralRTLIR `connection_expr` now also supports bounded `member_access`
+  actuals, rendered through the current SystemVerilog and VHDL helper paths
+  while failing explicitly for plain Verilog.

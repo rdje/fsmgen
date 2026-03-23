@@ -13,6 +13,7 @@ use FSM::Pipeline::HDLGenerator;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     open_expr
     signal_ref_expr
+    member_access_expr
     bit_select_expr
     slice_expr
     concat_expr
@@ -136,6 +137,109 @@ subtest 'signal_ref helper builds the first bounded structural connection node' 
             },
         },
         'signal_ref binding helper builds the bounded binding payload with both compatibility and typed fields',
+    );
+};
+
+subtest 'bounded member-access connection expressions render through the helper and the structural emitter' => sub {
+    is_deeply(
+        member_access_expr('cfg_bus', 'mode'),
+        {
+            kind => 'member_access',
+            source_expr => {
+                kind => 'signal_ref',
+                signal_name => 'cfg_bus',
+            },
+            member_name => 'mode',
+        },
+        'member-access helper builds a nested structural connection expression',
+    );
+
+    is(
+        render_expr(member_access_expr('cfg_bus', 'mode')),
+        'cfg_bus.mode',
+        'member-access expressions render through the current systemverilog helper path',
+    );
+
+    is(
+        render_expr(member_access_expr('cfg_bus', 'mode'), 'cfg', 'vhdl'),
+        'cfg_bus.mode',
+        'member-access expressions also render through the current VHDL helper path',
+    );
+
+    is_deeply(
+        expr_signal_names(member_access_expr('cfg_bus', 'mode')),
+        ['cfg_bus'],
+        'member-access signal discovery preserves the referenced base signal',
+    );
+
+    is(
+        binding_signal_name({
+            port_name => 'cfg',
+            connection_expr => member_access_expr('cfg_bus', 'mode'),
+        }),
+        '',
+        'member-access expressions do not pretend to be one flat bound signal name',
+    );
+
+    is(
+        binding_expr_text({
+            port_name => 'cfg',
+            connection_expr => member_access_expr('cfg_bus', 'mode'),
+        }),
+        'cfg_bus.mode',
+        'binding text rendering walks member-access expressions',
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug_level => 0,
+        quiet => 1,
+    );
+
+    my $structural_rtl_ir = FSM::IR::StructuralRTLIR->new(
+        module_name => 'structural_member_top',
+        source_root_kind => 'top',
+        target_language => 'systemverilog',
+        ports => [],
+        nets => [],
+        instances => [
+            {
+                kind => 'fsmc',
+                instance_name => 'u_child',
+                module_name => 'child_mod',
+                source_name => 'child_src',
+                interface_ports => [
+                    { name => 'cfg', direction => 'input', width => 1, type => undef },
+                ],
+                port_bindings => [
+                    {
+                        port_name => 'cfg',
+                        connection_expr => member_access_expr('cfg_bus', 'mode'),
+                    },
+                ],
+            },
+        ],
+        declared_links => [],
+        resolved_links => [],
+        auxiliary_assignments => [],
+    );
+
+    my $rendered = $pipeline->emit_composition_top_module($structural_rtl_ir);
+    like(
+        $rendered,
+        qr/\.cfg\(cfg_bus\.mode\)/,
+        'composition structural emitter walks member-access connection expressions directly',
+    );
+
+    my $error = eval {
+        render_expr(member_access_expr('cfg_bus', 'mode'), 'cfg', 'verilog');
+        undef;
+    };
+
+    like(
+        $@,
+        qr/unsupported target_language 'verilog'/,
+        'member-access rendering fails explicitly for backends that do not support the bounded helper form yet',
     );
 };
 
@@ -656,7 +760,7 @@ subtest 'unsupported structural connection kinds fail explicitly' => sub {
         binding_expr_text({
             port_name => 'data_in',
             connection_expr => {
-                kind => 'member_access',
+                kind => 'mystery_expr',
             },
         });
         undef;
@@ -664,7 +768,7 @@ subtest 'unsupported structural connection kinds fail explicitly' => sub {
 
     like(
         $@,
-        qr/unsupported connection_expr kind 'member_access'/,
+        qr/unsupported connection_expr kind 'mystery_expr'/,
         'unsupported structural connection kinds fail with clear bounded wording',
     );
 };

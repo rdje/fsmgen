@@ -1260,3 +1260,7 @@ Exit criteria:
 - `R11`: `StructuralRTLIR` connection expressions now also cover explicit
   backend-neutral `open` actuals, so the structural connection AST can model
   intentionally unconnected child formals without using raw backend syntax.
+- `R11`: `StructuralRTLIR` connection expressions now also cover bounded
+  `member_access` actuals, so the structural connection AST has started the
+  richer aggregate/member connectivity lane without falling back to raw HDL
+  strings.

@@ -652,3 +652,8 @@ The first honest `R11` slices are now:
   explicit `open` actual form, because “leave this formal unconnected” is real
   structural semantics and should not be represented as a backend-specific text
   escape hatch.
+- Forward-IR note: the structural connection-expression layer has now started
+  the bounded member/field-access lane too, with a first `member_access` node
+  over one source expression plus one identifier-like member name, rendered
+  through the current SystemVerilog/VHDL helper path while the broader
+  aggregate/backend story stays deliberately bounded.
