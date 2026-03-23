@@ -13,6 +13,7 @@ our @EXPORT_OK = qw(
     bit_select_expr
     slice_expr
     concat_expr
+    bit_vector_literal_expr
     signal_ref_binding
     update_binding_signal_ref
     ensure_signal_ref_binding
@@ -67,6 +68,17 @@ sub concat_expr (@operands) {
     return {
         kind => 'concat',
         operands => [ map { _coerce_source_expr($_) } @operands ],
+    };
+}
+
+sub bit_vector_literal_expr ($bits) {
+    confess "StructuralRTLIR bit-vector literal expressions require a non-empty binary string"
+        unless defined($bits) && !ref($bits) && $bits =~ /\A[01]+\z/;
+
+    return {
+        kind => 'bit_vector_literal',
+        bits => $bits,
+        width => length($bits),
     };
 }
 
@@ -165,6 +177,10 @@ sub expr_signal_names ($expr) {
         return length($signal_name) ? [$signal_name] : [];
     }
 
+    if ($kind eq 'bit_vector_literal') {
+        return [];
+    }
+
     if ($kind eq 'bit_select' || $kind eq 'slice') {
         return expr_signal_names($expr->{source_expr});
     }
@@ -219,6 +235,16 @@ sub render_expr ($expr, $port_name = undef, $target_language = 'systemverilog') 
         confess "StructuralRTLIR concat expressions must preserve at least one operand.\n"
             unless @operand_text;
         return '{' . join(', ', @operand_text) . '}';
+    }
+
+    if ($kind eq 'bit_vector_literal') {
+        _confess_unsupported_target_language($target_language, $port_name, $kind)
+            unless _is_verilog_family($target_language);
+        my $bits = $expr->{bits} // '';
+        my $width = $expr->{width};
+        confess "StructuralRTLIR bit-vector literals must preserve non-empty binary payload.\n"
+            unless defined($width) && $width =~ /^\d+$/ && $width > 0 && $bits =~ /\A[01]+\z/;
+        return sprintf("%d'b%s", $width, $bits);
     }
 
     my $binding_label = defined($port_name) && length($port_name)

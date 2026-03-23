@@ -644,3 +644,7 @@ The first honest `R11` slices are now:
   recursive dependency view, because once bindings can be slices or concats the
   rest of the pipeline can no longer safely ask only for one flat bound signal
   name.
+- Forward-IR note: the structural connection-expression layer now also needs a
+  bounded literal family, because real top/child connectivity eventually needs
+  honest constant actuals and tie-offs without collapsing back into raw
+  backend-specific syntax strings.

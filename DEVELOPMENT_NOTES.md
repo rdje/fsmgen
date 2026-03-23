@@ -5989,3 +5989,7 @@ It is an exact-delay pulse request:
 - StructuralRTLIR connection expressions now also expose recursive signal
   discovery, which lets consumers ask “which real signals does this binding
   depend on?” without pretending every binding is still a flat wire name.
+- StructuralRTLIR connection expressions now also include a first bounded
+  literal family through backend-neutral bit-vector literal nodes, which is a
+  useful step toward honest tie-off/default actual connections in the
+  structural layer.

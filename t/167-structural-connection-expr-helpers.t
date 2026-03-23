@@ -15,6 +15,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     bit_select_expr
     slice_expr
     concat_expr
+    bit_vector_literal_expr
     signal_ref_binding
     update_binding_signal_ref
     ensure_signal_ref_binding
@@ -337,6 +338,91 @@ subtest 'bounded concat connection expressions render through the helper and the
         $@,
         qr/unsupported target_language 'vhdl'/,
         'concat rendering also fails explicitly for backends the current bounded renderer does not support yet',
+    );
+};
+
+subtest 'bounded bit-vector literal connection expressions render through the helper and the structural emitter' => sub {
+    is_deeply(
+        bit_vector_literal_expr('10100101'),
+        {
+            kind => 'bit_vector_literal',
+            bits => '10100101',
+            width => 8,
+        },
+        'bit-vector literal helper builds a backend-neutral literal node',
+    );
+
+    is(
+        render_expr(bit_vector_literal_expr('10100101')),
+        "8'b10100101",
+        'bit-vector literal expressions render through the current verilog-family backend',
+    );
+
+    is_deeply(
+        expr_signal_names(bit_vector_literal_expr('10100101')),
+        [],
+        'literal expressions do not report fake signal dependencies',
+    );
+
+    is(
+        binding_expr_text({
+            port_name => 'mask',
+            connection_expr => bit_vector_literal_expr('10100101'),
+        }),
+        "8'b10100101",
+        'binding text rendering walks bit-vector literal expressions',
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug_level => 0,
+        quiet => 1,
+    );
+
+    my $structural_rtl_ir = FSM::IR::StructuralRTLIR->new(
+        module_name => 'structural_literal_top',
+        source_root_kind => 'top',
+        target_language => 'systemverilog',
+        ports => [],
+        nets => [],
+        instances => [
+            {
+                kind => 'fsmc',
+                instance_name => 'u_child',
+                module_name => 'child_mod',
+                source_name => 'child_src',
+                interface_ports => [
+                    { name => 'mask', direction => 'input', width => 8, type => undef },
+                ],
+                port_bindings => [
+                    {
+                        port_name => 'mask',
+                        connection_expr => bit_vector_literal_expr('10100101'),
+                    },
+                ],
+            },
+        ],
+        declared_links => [],
+        resolved_links => [],
+        auxiliary_assignments => [],
+    );
+
+    my $rendered = $pipeline->emit_composition_top_module($structural_rtl_ir);
+    like(
+        $rendered,
+        qr/\.mask\(8'b10100101\)/,
+        'composition structural emitter walks literal connection expressions directly',
+    );
+
+    my $error = eval {
+        render_expr(bit_vector_literal_expr('10100101'), 'mask', 'vhdl');
+        undef;
+    };
+
+    like(
+        $@,
+        qr/unsupported target_language 'vhdl'/,
+        'literal rendering fails explicitly for backends the current bounded renderer does not support yet',
     );
 };
 

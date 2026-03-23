@@ -4595,3 +4595,5 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - StructuralRTLIR `connection_expr` now also exposes recursive referenced-signal
   discovery, and shared-datapath contributor metadata preserves `bound_signals`
   beside the older scalar compatibility field.
+- StructuralRTLIR `connection_expr` now also supports bounded bit-vector
+  literal actuals, rendered through the current Verilog-family backend only.

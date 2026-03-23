@@ -4674,3 +4674,7 @@ This is the persistent technical change history for FSMGen.
   expressions, and moved composition system-signal detection plus
   shared-datapath contributor binding metadata onto that richer structural
   dependency surface instead of a flat mirrored signal-name assumption.
+- Added bounded backend-neutral bit-vector literal actual-connection nodes to
+  `FSM::IR::StructuralRTLIR::ConnectionExpr`, and locked that the composition
+  structural emitter now walks those literal bindings directly through the
+  current Verilog-family backend.

@@ -1254,3 +1254,6 @@ Exit criteria:
   referenced-signal discovery, and composition consumers are starting to use
   that richer dependency surface instead of assuming every binding is one flat
   signal name.
+- `R11`: `StructuralRTLIR` connection expressions now also cover bounded
+  bit-vector literal actuals, so the structural connection AST can represent
+  simple constant tie-offs without falling back to raw HDL strings.
