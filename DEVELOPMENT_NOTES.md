@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: composition bookkeeping now mirrors the explicit ir layers more directly
+- Continued the active `R11` forward-IR cleanup lane by tightening the last-mile bookkeeping handoff between the extracted IRs and the compatible top-level result surfaces.
+- Landed behavior:
+  - composition-top `module_info` now derives internal-net names/counts, instance names/counts, auxiliary-assignment count, and composition lane from `lowered_rtl_ir` / `intent_hir` instead of falling back straight to raw plan bookkeeping,
+  - composition `statistics` now also derives composition lane and shared-datapath candidate count from `intent_hir` / `lowered_rtl_ir`,
+  - and the existing public bookkeeping surface remains stable while depending more directly on the explicit IR layers.
+- Why this is worth shipping:
+  - it keeps the compatible top-level result surfaces aligned with the extracted forward IRs instead of letting those mirrors drift back toward plan-shaped residue,
+  - it removes another small but real class of raw bookkeeping fallback from `HDLGenerator`,
+  - and it leaves the next seam where it belongs: other helpers that still rebuild bounded composition state instead of consuming `IntentHIR`, `LoweredRTLIR`, or `StructuralRTLIR` first.
+
 ## 2026-03-23: structural rtl ir now carries declared toplinks too
 - Continued the active `R11` forward-IR cleanup lane by widening the structural layer so it owns both declared and resolved connectivity instead of only the post-resolution side.
 - Landed behavior:

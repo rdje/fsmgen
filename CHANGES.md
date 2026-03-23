@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### composition bookkeeping now mirrors the explicit ir layers more directly
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition-top `module_info` now derives internal-net names/counts, instance names/counts, auxiliary-assignment count, and composition lane from `lowered_rtl_ir` / `intent_hir` instead of falling back straight to raw plan bookkeeping.
+- The same update now makes composition `statistics` derive composition lane and shared-datapath candidate count from `intent_hir` / `lowered_rtl_ir` instead of only carrying those fields straight from plan/runtime state.
+- Updated [t/160-composition-top-forward-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/160-composition-top-forward-ir-surface.t) to lock the tighter bookkeeping alignment between `module_info`, `statistics`, and the explicit forward IR layers.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next forward-IR handoff slice is tracked honestly.
+
 ### structural rtl ir now carries declared toplinks too
 - Updated [perl/FSM/IR/StructuralRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR.pm) and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition-top `structural_rtl_ir` now preserves declared explicit-toplink connectivity separately through `declared_links` instead of only carrying the resolved link graph.
 - The same update now makes blocked undeclared-top inference reasoning consume `structural_rtl_ir->{declared_links}` instead of rereading declared toplinks directly from `composition_plan`.

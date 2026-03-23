@@ -796,6 +796,13 @@ Done:
 - [t/162-composition-top-structural-rtl-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/162-composition-top-structural-rtl-ir-surface.t) now also locks:
   - composition-top `module_info` child/net counts mirroring `structural_rtl_ir`,
   - and composition statistics child/top-port/net counts mirroring `structural_rtl_ir`.
+- The next IR-to-IR handoff step is now also shipped through top-level bookkeeping:
+  - `module_info` now derives internal-net names/counts, instance names/counts, auxiliary-assignment count, and composition lane from `lowered_rtl_ir` / `intent_hir` instead of falling back straight to raw plan bookkeeping,
+  - and `statistics` now derives composition lane and shared-datapath candidate count from `intent_hir` / `lowered_rtl_ir` instead of only carrying those fields straight from plan/runtime state.
+- [t/160-composition-top-forward-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/160-composition-top-forward-ir-surface.t) now also locks:
+  - `module_info` internal-net names/counts, instance names/counts, and auxiliary-assignment count mirroring `lowered_rtl_ir`,
+  - `module_info` composition lane mirroring `intent_hir`,
+  - and composition statistics lane/shared-datapath candidate count mirroring `intent_hir` / `lowered_rtl_ir`.
 - The next structural-consumption step is now also shipped through composition provenance:
   - `composition_report` now consumes `structural_rtl_ir` for top-port metadata and resolved-link endpoint lookup instead of rereading those bounded boundary/interface details directly from plan internals.
 - [t/161-composition-provenance-origin-examples.t](/Users/richarddje/Documents/github/fsmgen/t/161-composition-provenance-origin-examples.t) now also locks:

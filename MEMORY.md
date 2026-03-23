@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: composition bookkeeping now mirrors the explicit ir layers more directly
+- Saved shipped behavior:
+  - composition-top `module_info` now derives internal-net names/counts, instance names/counts, auxiliary-assignment count, and composition lane from `lowered_rtl_ir` / `intent_hir`,
+  - composition `statistics` now also derives composition lane and shared-datapath candidate count from `intent_hir` / `lowered_rtl_ir`,
+  - and the compatible bookkeeping surface stays stable.
+- Important continuity note:
+  - this keeps the top-level result mirrors aligned with the extracted forward IRs,
+  - it removes another small class of raw bookkeeping fallback from `HDLGenerator`,
+  - and the next likely seam is another bounded helper that still rebuilds composition state instead of consuming `IntentHIR`, `LoweredRTLIR`, or `StructuralRTLIR` first.
+
 ## 2026-03-23: structural rtl ir now carries declared toplinks too
 - Saved shipped behavior:
   - composition-top `structural_rtl_ir` now preserves declared explicit-toplink connectivity separately through `declared_links`,

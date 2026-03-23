@@ -185,6 +185,11 @@ FSM
         'composition module_info mirrors the reusable standalone-DT child export from intent_hir',
     );
     is($intent_hir->{composition_lane}, 'C2', 'composition intent_hir preserves the composition lane');
+    is(
+        $module_info->{composition_lane},
+        $intent_hir->{composition_lane},
+        'composition module_info now derives the composition lane from intent_hir',
+    );
     is($intent_hir->{regular_state_count}, 0, 'composition intent_hir keeps top roots separate from regular FSM state counts');
     is($intent_hir->{standalone_dt_count}, 0, 'composition intent_hir keeps top roots separate from standalone-DT counts');
     is(
@@ -241,6 +246,41 @@ FSM
         $lowered_rtl_ir->{auxiliary_assignment_count},
         $structural_rtl_ir->{auxiliary_assignment_count},
         'composition lowered_rtl_ir now derives auxiliary assignment count from structural_rtl_ir',
+    );
+    is(
+        $module_info->{internal_net_count},
+        $lowered_rtl_ir->{internal_net_count},
+        'composition module_info now derives internal net count from lowered_rtl_ir',
+    );
+    is_deeply(
+        $module_info->{internal_net_names},
+        $lowered_rtl_ir->{internal_net_names},
+        'composition module_info now derives internal net names from lowered_rtl_ir',
+    );
+    is(
+        $module_info->{instance_count},
+        $lowered_rtl_ir->{instance_count},
+        'composition module_info now derives instance count from lowered_rtl_ir',
+    );
+    is_deeply(
+        $module_info->{instance_names},
+        $lowered_rtl_ir->{instance_names},
+        'composition module_info now derives instance names from lowered_rtl_ir',
+    );
+    is(
+        $module_info->{auxiliary_assignment_count},
+        $lowered_rtl_ir->{auxiliary_assignment_count},
+        'composition module_info now derives auxiliary assignment count from lowered_rtl_ir',
+    );
+    is(
+        $result->{statistics}{composition_lane},
+        $intent_hir->{composition_lane},
+        'composition statistics now derive the composition lane from intent_hir',
+    );
+    is(
+        $result->{statistics}{composition_shared_datapath_candidate_count},
+        $lowered_rtl_ir->{composition_shared_datapath_candidate_count},
+        'composition statistics now derive shared-datapath candidate count from lowered_rtl_ir',
     );
 };
 

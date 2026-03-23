@@ -305,6 +305,9 @@ First shipped `R11` slice now in tree:
   - and that keeps the lowered/structural boundary explicit: `StructuralRTLIR` owns the concrete wiring shape while `LoweredRTLIR` mirrors only the lowered summary it actually needs.
 - The next structural-consumption step is now also shipped:
   - composition-top `module_info` and `statistics` now consume `structural_rtl_ir` for child, top-port, and internal-net counts instead of rereading those bounded accounting fields directly from plan internals.
+- The next IR-to-IR handoff step is now also shipped through top-level bookkeeping:
+  - `module_info` now derives internal-net names/counts, instance names/counts, auxiliary-assignment count, and composition lane from `lowered_rtl_ir` / `intent_hir` instead of falling back straight to raw plan bookkeeping,
+  - and `statistics` now derives composition lane and shared-datapath candidate count from `intent_hir` / `lowered_rtl_ir` instead of only carrying those fields straight from plan/runtime state.
 - The next structural-consumption step is now also shipped through composition provenance:
   - `composition_report` now consumes `structural_rtl_ir` for top-port metadata and resolved-link endpoint lookup, so that bounded reporting surface no longer rereads those explicit boundary/interface details directly from plan internals.
 - The next structural-consumption step is now also shipped through override/block reporting:

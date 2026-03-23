@@ -290,6 +290,7 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
     my $statistics = $self->build_composition_statistics(
         $composition_plan,
         $composition_report,
+        $intent_hir,
         $lowered_rtl_ir,
         $structural_rtl_ir,
     );
@@ -3171,25 +3172,39 @@ sub build_composition_module_info (
         internal_net_count => (
             exists $lowered_rtl_ir_hash->{internal_net_count}
                 ? $lowered_rtl_ir_hash->{internal_net_count}
-                : scalar(@{$composition_plan->nets || []})
+                : (
+                    exists $structural_rtl_ir_hash->{net_count}
+                        ? $structural_rtl_ir_hash->{net_count}
+                        : scalar(@{$composition_plan->nets || []})
+                )
         ),
         internal_net_names => (
             $lowered_rtl_ir_hash->{internal_net_names}
+                || [ map { $_->{name} } @{$structural_rtl_ir_hash->{nets} || []} ]
                 || [ map { $_->name } @{$composition_plan->nets || []} ]
         ),
         instance_count => (
             exists $lowered_rtl_ir_hash->{instance_count}
                 ? $lowered_rtl_ir_hash->{instance_count}
-                : scalar(@{$composition_plan->instances || []})
+                : (
+                    exists $structural_rtl_ir_hash->{instance_count}
+                        ? $structural_rtl_ir_hash->{instance_count}
+                        : scalar(@{$composition_plan->instances || []})
+                )
         ),
         instance_names => (
             $lowered_rtl_ir_hash->{instance_names}
+                || [ map { $_->{instance_name} } @{$structural_rtl_ir_hash->{instances} || []} ]
                 || [ map { $_->instance_name } @{$composition_plan->instances || []} ]
         ),
         auxiliary_assignment_count => (
             exists $lowered_rtl_ir_hash->{auxiliary_assignment_count}
                 ? $lowered_rtl_ir_hash->{auxiliary_assignment_count}
-                : scalar(@{$composition_plan->auxiliary_assignments || []})
+                : (
+                    exists $structural_rtl_ir_hash->{auxiliary_assignment_count}
+                        ? $structural_rtl_ir_hash->{auxiliary_assignment_count}
+                        : scalar(@{$composition_plan->auxiliary_assignments || []})
+                )
         ),
         state_count => $intent_hir_hash->{state_count},
         composition_child_count => (
@@ -3268,7 +3283,10 @@ sub build_composition_module_info (
         composition_shared_datapath_candidates => (
             $lowered_rtl_ir_hash->{composition_shared_datapath_candidates} || []
         ),
-        composition_lane => $composition_plan->lane,
+        composition_lane => (
+            $intent_hir_hash->{composition_lane}
+                // $composition_plan->lane
+        ),
         composition_provenance => $composition_report,
     };
 }
@@ -3641,8 +3659,9 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
     return \@candidates;
 }
 
-sub build_composition_statistics ($self, $composition_plan, $composition_report = undef, $lowered_rtl_ir = undef, $structural_rtl_ir = undef) {
+sub build_composition_statistics ($self, $composition_plan, $composition_report = undef, $intent_hir = undef, $lowered_rtl_ir = undef, $structural_rtl_ir = undef) {
     my $stats = $self->gather_statistics(undef);
+    my $intent_hir_hash = ref($intent_hir) ? $intent_hir->as_hashref : {};
     my $lowered_rtl_ir_hash = ref($lowered_rtl_ir) ? $lowered_rtl_ir->as_hashref : {};
     my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
     $stats->{composition_child_count} = exists $structural_rtl_ir_hash->{instance_count}
@@ -3672,7 +3691,7 @@ sub build_composition_statistics ($self, $composition_plan, $composition_report 
             ? $lowered_rtl_ir_hash->{composition_shared_datapath_candidate_count}
             : scalar(@{$self->composition_shared_datapath_candidates_for_plan($composition_plan) || []})
     );
-    $stats->{composition_lane} = $composition_plan->lane;
+    $stats->{composition_lane} = $intent_hir_hash->{composition_lane} // $composition_plan->lane;
     $stats->{composition_provenance} = $composition_report if $composition_report;
     return $stats;
 }
