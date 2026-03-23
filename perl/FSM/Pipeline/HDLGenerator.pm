@@ -2401,7 +2401,7 @@ sub clone_realized_instance_with_bindings ($self, $instance, $port_bindings) {
         module_name => $instance->module_name,
         source_name => $instance->source_name,
         interface_ports => $instance->interface_ports,
-        port_bindings => $self->normalize_instance_port_bindings($port_bindings || []),
+        port_bindings => $port_bindings || [],
         module_info => $instance->module_info,
         hdl_code => $instance->hdl_code,
     );
@@ -2462,39 +2462,6 @@ sub structural_signal_ref_expr ($self, $signal_name) {
         kind => 'signal_ref',
         signal_name => $signal_name,
     };
-}
-
-sub normalize_instance_port_bindings ($self, $port_bindings) {
-    my @normalized;
-
-    for my $binding (@{$port_bindings || []}) {
-        next unless ref($binding) eq 'HASH';
-
-        my $port_name = $binding->{port_name};
-        my $expr = _clone_structured_value($binding->{connection_expr});
-        my $signal_name = $binding->{signal_name};
-
-        if ((!defined($signal_name) || !length($signal_name))
-            && ref($expr) eq 'HASH'
-            && (($expr->{kind} || '') eq 'signal_ref'))
-        {
-            $signal_name = $expr->{signal_name};
-        }
-
-        if ((!ref($expr) || ref($expr) ne 'HASH')
-            && defined($signal_name) && length($signal_name))
-        {
-            $expr = $self->structural_signal_ref_expr($signal_name);
-        }
-
-        push @normalized, {
-            port_name => $port_name,
-            signal_name => $signal_name,
-            connection_expr => $expr,
-        };
-    }
-
-    return \@normalized;
 }
 
 sub structural_binding_signal_name ($self, $binding) {

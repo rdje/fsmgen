@@ -5896,6 +5896,7 @@ It is an exact-delay pulse request:
   - composition-top `structural_rtl_ir` instance pin bindings now preserve a backend-neutral `connection_expr` node beside the compatibility `signal_name` mirror,
   - that first actual-connection shape is intentionally bounded to `signal_ref`,
   - realized composition-plan instances now also preserve that same typed `signal_ref` node before structural serialization,
+  - and that earlier binding normalization now lives in `FSM::Composition::RealizedInstance` itself so the runtime child-binding carrier owns the `signal_name` / `connection_expr` alignment contract directly,
   - the active composition-top emitter now walks that typed node when rendering instance actual connections,
   - and shared-datapath candidate discovery now also reads structural binding signal names through that same typed node instead of depending only on a flat binding string.
 - The next structural-consumption step is now also live through override/block resolved-link handling:
