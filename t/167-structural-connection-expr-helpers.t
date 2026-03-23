@@ -22,7 +22,9 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     normalized_binding
     binding_expr
     expr_signal_name
+    expr_signal_names
     binding_signal_name
+    binding_signal_names
     render_expr
     binding_expr_text
 );
@@ -90,6 +92,50 @@ subtest 'binding signal-name lookup prefers the typed connection expression when
             signal_name => 'fallback_name',
         },
         'binding expression recovery synthesizes the bounded signal_ref node from the compatibility mirror when needed',
+    );
+};
+
+subtest 'recursive signal discovery follows richer typed connection expressions without flattening them into fake plain-wire names' => sub {
+    is_deeply(
+        expr_signal_names(slice_expr('shared_bus', 7, 4)),
+        ['shared_bus'],
+        'slice expressions still report their referenced source signal',
+    );
+
+    is_deeply(
+        expr_signal_names(
+            concat_expr(
+                bit_select_expr('ctrl', 0),
+                slice_expr('payload', 6, 0),
+                'payload',
+            )
+        ),
+        ['ctrl', 'payload'],
+        'concat signal discovery preserves referenced signal order while deduplicating repeats',
+    );
+
+    is_deeply(
+        binding_signal_names({
+            port_name => 'combined',
+            connection_expr => concat_expr(
+                bit_select_expr('ctrl', 0),
+                slice_expr('payload', 6, 0),
+            ),
+        }),
+        ['ctrl', 'payload'],
+        'binding signal discovery follows the typed connection expression recursively',
+    );
+
+    is(
+        binding_signal_name({
+            port_name => 'combined',
+            connection_expr => concat_expr(
+                bit_select_expr('ctrl', 0),
+                slice_expr('payload', 6, 0),
+            ),
+        }),
+        '',
+        'plain binding signal-name lookup still refuses to mislabel a non-leaf connection as one flat wire',
     );
 };
 

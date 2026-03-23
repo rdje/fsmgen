@@ -640,3 +640,7 @@ The first honest `R11` slices are now:
   also includes concatenation over nested operands, so the structural emitter
   is beginning to walk a richer backend-neutral binding AST instead of only
   leaf-like reference nodes.
+- Forward-IR note: the structural connection-expression layer now also needs a
+  recursive dependency view, because once bindings can be slices or concats the
+  rest of the pipeline can no longer safely ask only for one flat bound signal
+  name.

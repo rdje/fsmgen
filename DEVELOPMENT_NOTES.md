@@ -5986,3 +5986,6 @@ It is an exact-delay pulse request:
   concatenation over nested structural operands, and the composition-top
   emitter now walks those concat nodes directly instead of treating them as an
   unsupported future-only shape.
+- StructuralRTLIR connection expressions now also expose recursive signal
+  discovery, which lets consumers ask “which real signals does this binding
+  depend on?” without pretending every binding is still a flat wire name.

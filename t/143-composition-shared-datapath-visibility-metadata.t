@@ -106,6 +106,7 @@ FSM
                 module_name => 'consumer_src',
                 endpoint => 'consumer.status_bus',
                 bound_signal => 'left_status',
+                bound_signals => ['left_status'],
             },
         ],
         'shared candidate surfaces peer-read input endpoint identity and current bound signal',

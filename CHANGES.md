@@ -4670,3 +4670,7 @@ This is the persistent technical change history for FSMGen.
   concatenation support over nested structural operands, and locked that the
   composition-top structural emitter now walks those typed concat expressions
   directly through the current Verilog-family backend.
+- Added recursive signal-discovery helpers for typed structural connection
+  expressions, and moved composition system-signal detection plus
+  shared-datapath contributor binding metadata onto that richer structural
+  dependency surface instead of a flat mirrored signal-name assumption.

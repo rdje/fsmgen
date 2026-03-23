@@ -1250,3 +1250,7 @@ Exit criteria:
 - `R11`: `StructuralRTLIR` connection expressions now also cover bounded concat
   forms over nested operands, with the composition emitter walking those typed
   actual-connection nodes directly through the current Verilog-family backend.
+- `R11`: `StructuralRTLIR` connection expressions now also expose recursive
+  referenced-signal discovery, and composition consumers are starting to use
+  that richer dependency surface instead of assuming every binding is one flat
+  signal name.

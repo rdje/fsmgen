@@ -20,7 +20,9 @@ our @EXPORT_OK = qw(
     normalized_binding
     binding_expr
     expr_signal_name
+    expr_signal_names
     binding_signal_name
+    binding_signal_names
     render_expr
     binding_expr_text
 );
@@ -154,6 +156,35 @@ sub expr_signal_name ($expr) {
     return $expr->{signal_name} || '';
 }
 
+sub expr_signal_names ($expr) {
+    return [] unless ref($expr) eq 'HASH';
+
+    my $kind = $expr->{kind} || '';
+    if ($kind eq 'signal_ref') {
+        my $signal_name = $expr->{signal_name} || '';
+        return length($signal_name) ? [$signal_name] : [];
+    }
+
+    if ($kind eq 'bit_select' || $kind eq 'slice') {
+        return expr_signal_names($expr->{source_expr});
+    }
+
+    if ($kind eq 'concat') {
+        my @signal_names;
+        for my $operand (@{$expr->{operands} || []}) {
+            _push_unique_signal_names(\@signal_names, @{expr_signal_names($operand)});
+        }
+        return \@signal_names;
+    }
+
+    confess "StructuralRTLIR connection_expr kind '$kind' has no recursive signal-name recovery rule.\n";
+}
+
+sub binding_signal_names ($binding) {
+    return [] unless ref($binding) eq 'HASH';
+    return expr_signal_names(binding_expr($binding));
+}
+
 sub binding_signal_name ($binding) {
     return expr_signal_name(binding_expr($binding));
 }
@@ -230,6 +261,15 @@ sub _confess_unsupported_target_language ($target_language, $port_name, $kind) {
         : 'unknown';
 
     confess "StructuralRTLIR port binding$binding_label uses connection_expr kind '$kind' with unsupported target_language '$language'.\n";
+}
+
+sub _push_unique_signal_names ($signal_names, @names) {
+    my %seen = map { $_ => 1 } @$signal_names;
+    for my $name (@names) {
+        next unless defined($name) && length($name);
+        next if $seen{$name}++;
+        push @$signal_names, $name;
+    }
 }
 
 sub _clone ($value) {
