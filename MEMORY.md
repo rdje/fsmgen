@@ -4589,3 +4589,6 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - The current renderer is still intentionally narrow: those richer forms render
   through the current Verilog-family backend only, and fail explicitly for
   backends like VHDL until that emitter surface is implemented deliberately.
+- StructuralRTLIR `connection_expr` now also supports bounded concat nodes over
+  nested operands, with the same deliberate renderer boundary: current
+  Verilog-family backend only, explicit failure elsewhere.

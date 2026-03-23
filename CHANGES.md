@@ -4666,3 +4666,7 @@ This is the persistent technical change history for FSMGen.
   composition-top structural emitter to render those typed forms through the
   current Verilog-family backend instead of limiting the structural binding
   surface to unsliced signal references only.
+- Widened `FSM::IR::StructuralRTLIR::ConnectionExpr` again with bounded
+  concatenation support over nested structural operands, and locked that the
+  composition-top structural emitter now walks those typed concat expressions
+  directly through the current Verilog-family backend.

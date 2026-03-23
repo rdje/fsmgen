@@ -5982,3 +5982,7 @@ It is an exact-delay pulse request:
 - This keeps the structural layer backend-neutral at the AST level while still
   letting the emitter walk a richer typed binding surface instead of falling
   back to raw HDL strings or plain signal-name mirrors.
+- StructuralRTLIR connection expressions now also support bounded
+  concatenation over nested structural operands, and the composition-top
+  emitter now walks those concat nodes directly instead of treating them as an
+  unsupported future-only shape.

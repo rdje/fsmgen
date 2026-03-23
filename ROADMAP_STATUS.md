@@ -1247,3 +1247,6 @@ Exit criteria:
 - `R11`: `StructuralRTLIR` connection expressions now cover bounded indexed and
   sliced signal forms in addition to plain `signal_ref`, with the composition
   emitter walking those typed forms through the current Verilog-family backend.
+- `R11`: `StructuralRTLIR` connection expressions now also cover bounded concat
+  forms over nested operands, with the composition emitter walking those typed
+  actual-connection nodes directly through the current Verilog-family backend.

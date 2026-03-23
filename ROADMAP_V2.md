@@ -636,3 +636,7 @@ The first honest `R11` slices are now:
   plain signal references; the current bounded family includes indexed and
   sliced signal forms, while keeping rendering deliberately scoped to the
   current Verilog-family backend until broader backend support is designed.
+- Forward-IR note: that bounded `StructuralRTLIR` actual-connection family now
+  also includes concatenation over nested operands, so the structural emitter
+  is beginning to walk a richer backend-neutral binding AST instead of only
+  leaf-like reference nodes.

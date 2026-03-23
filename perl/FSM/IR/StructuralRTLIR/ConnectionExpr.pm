@@ -12,6 +12,7 @@ our @EXPORT_OK = qw(
     signal_ref_expr
     bit_select_expr
     slice_expr
+    concat_expr
     signal_ref_binding
     update_binding_signal_ref
     ensure_signal_ref_binding
@@ -54,6 +55,16 @@ sub slice_expr ($source, $msb, $lsb) {
         source_expr => $source_expr,
         msb => 0 + $msb,
         lsb => 0 + $lsb,
+    };
+}
+
+sub concat_expr (@operands) {
+    confess "StructuralRTLIR concat expressions require at least one operand"
+        unless @operands;
+
+    return {
+        kind => 'concat',
+        operands => [ map { _coerce_source_expr($_) } @operands ],
     };
 }
 
@@ -166,6 +177,17 @@ sub render_expr ($expr, $port_name = undef, $target_language = 'systemverilog') 
             unless _is_verilog_family($target_language);
         my $source_text = render_expr($expr->{source_expr}, $port_name, $target_language);
         return sprintf('%s[%d:%d]', $source_text, $expr->{msb}, $expr->{lsb});
+    }
+
+    if ($kind eq 'concat') {
+        _confess_unsupported_target_language($target_language, $port_name, $kind)
+            unless _is_verilog_family($target_language);
+        my @operand_text = map {
+            render_expr($_, $port_name, $target_language)
+        } @{ $expr->{operands} || [] };
+        confess "StructuralRTLIR concat expressions must preserve at least one operand.\n"
+            unless @operand_text;
+        return '{' . join(', ', @operand_text) . '}';
     }
 
     my $binding_label = defined($port_name) && length($port_name)

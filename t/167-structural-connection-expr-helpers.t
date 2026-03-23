@@ -8,10 +8,13 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::IR::StructuralRTLIR;
+use FSM::Pipeline::HDLGenerator;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     signal_ref_expr
     bit_select_expr
     slice_expr
+    concat_expr
     signal_ref_binding
     update_binding_signal_ref
     ensure_signal_ref_binding
@@ -183,6 +186,114 @@ subtest 'bounded indexed and sliced connection expressions render through the cu
     );
 };
 
+subtest 'bounded concat connection expressions render through the helper and the structural emitter' => sub {
+    is_deeply(
+        concat_expr(
+            bit_select_expr('ctrl', 0),
+            slice_expr('payload', 6, 0),
+        ),
+        {
+            kind => 'concat',
+            operands => [
+                {
+                    kind => 'bit_select',
+                    source_expr => {
+                        kind => 'signal_ref',
+                        signal_name => 'ctrl',
+                    },
+                    index => 0,
+                },
+                {
+                    kind => 'slice',
+                    source_expr => {
+                        kind => 'signal_ref',
+                        signal_name => 'payload',
+                    },
+                    msb => 6,
+                    lsb => 0,
+                },
+            ],
+        },
+        'concat helper preserves nested structural operand expressions',
+    );
+
+    is(
+        render_expr(concat_expr('upper_nibble', slice_expr('payload', 3, 0))),
+        '{upper_nibble, payload[3:0]}',
+        'concat expressions render through the current verilog-family backend',
+    );
+
+    is(
+        binding_expr_text({
+            port_name => 'combined',
+            connection_expr => concat_expr(
+                bit_select_expr('ctrl', 0),
+                slice_expr('payload', 6, 0),
+            ),
+        }),
+        '{ctrl[0], payload[6:0]}',
+        'binding text rendering walks nested concat expressions',
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug_level => 0,
+        quiet => 1,
+    );
+
+    my $structural_rtl_ir = FSM::IR::StructuralRTLIR->new(
+        module_name => 'structural_concat_top',
+        source_root_kind => 'top',
+        target_language => 'systemverilog',
+        ports => [
+            { name => 'ctrl', direction => 'input', width => 1, type => 'wire' },
+            { name => 'payload', direction => 'input', width => 7, type => 'wire' },
+        ],
+        nets => [],
+        instances => [
+            {
+                kind => 'fsmc',
+                instance_name => 'u_child',
+                module_name => 'child_mod',
+                source_name => 'child_src',
+                interface_ports => [
+                    { name => 'combined', direction => 'input', width => 8, type => undef },
+                ],
+                port_bindings => [
+                    {
+                        port_name => 'combined',
+                        connection_expr => concat_expr(
+                            bit_select_expr('ctrl', 0),
+                            slice_expr('payload', 6, 0),
+                        ),
+                    },
+                ],
+            },
+        ],
+        declared_links => [],
+        resolved_links => [],
+        auxiliary_assignments => [],
+    );
+
+    my $rendered = $pipeline->emit_composition_top_module($structural_rtl_ir);
+    like(
+        $rendered,
+        qr/\.combined\(\{ctrl\[0\], payload\[6:0\]\}\)/,
+        'composition structural emitter walks concat connection expressions directly',
+    );
+
+    my $error = eval {
+        render_expr(concat_expr('upper_nibble', 'lower_nibble'), 'combined', 'vhdl');
+        undef;
+    };
+
+    like(
+        $@,
+        qr/unsupported target_language 'vhdl'/,
+        'concat rendering also fails explicitly for backends the current bounded renderer does not support yet',
+    );
+};
+
 subtest 'signal_ref binding updates keep compatibility and typed fields aligned' => sub {
     my $binding = signal_ref_binding('data_in', 'old_data');
 
@@ -334,7 +445,7 @@ subtest 'unsupported structural connection kinds fail explicitly' => sub {
         binding_expr_text({
             port_name => 'data_in',
             connection_expr => {
-                kind => 'concat',
+                kind => 'member_access',
             },
         });
         undef;
@@ -342,7 +453,7 @@ subtest 'unsupported structural connection kinds fail explicitly' => sub {
 
     like(
         $@,
-        qr/unsupported connection_expr kind 'concat'/,
+        qr/unsupported connection_expr kind 'member_access'/,
         'unsupported structural connection kinds fail with clear bounded wording',
     );
 };
