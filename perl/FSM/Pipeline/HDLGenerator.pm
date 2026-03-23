@@ -2450,6 +2450,42 @@ sub set_instance_port_binding ($self, $instance, $port_name, $signal_name) {
     };
 }
 
+sub structural_signal_ref_expr ($self, $signal_name) {
+    return undef unless defined($signal_name) && length($signal_name);
+    return {
+        kind => 'signal_ref',
+        signal_name => $signal_name,
+    };
+}
+
+sub structural_binding_signal_name ($self, $binding) {
+    return '' unless ref($binding) eq 'HASH';
+
+    my $expr = $binding->{connection_expr};
+    if (ref($expr) eq 'HASH' && (($expr->{kind} || '') eq 'signal_ref')) {
+        return $expr->{signal_name} || '';
+    }
+
+    return $binding->{signal_name} || '';
+}
+
+sub emit_structural_connection_expr ($self, $binding) {
+    return '' unless ref($binding) eq 'HASH';
+
+    my $expr = $binding->{connection_expr};
+    if (ref($expr) eq 'HASH') {
+        my $kind = $expr->{kind} || '';
+        return $expr->{signal_name}
+            if $kind eq 'signal_ref' && defined($expr->{signal_name}) && length($expr->{signal_name});
+
+        Carp::confess(
+            "StructuralRTLIR port binding for '$binding->{port_name}' uses unsupported connection_expr kind '$kind'.\n"
+        );
+    }
+
+    return $binding->{signal_name} || '';
+}
+
 sub composition_system_signal_names ($self, $composition_plan) {
     my ($clock_name, $reset_name);
     for my $port (@{$composition_plan->ports || []}) {
@@ -2884,7 +2920,7 @@ sub emit_composition_top_module ($self, $structural_rtl_ir) {
     my @instance_blocks = map {
         my $instance = $_;
         my @connection_lines = map {
-            sprintf("        .%s(%s)", $_->{port_name}, $_->{signal_name})
+            sprintf("        .%s(%s)", $_->{port_name}, $self->emit_structural_connection_expr($_))
         } @{$instance->{port_bindings} || []};
 
         join("\n",
@@ -2957,6 +2993,7 @@ sub build_composition_structural_rtl_ir ($self, $composition_plan) {
                             +{
                                 port_name => $_->{port_name},
                                 signal_name => $_->{signal_name},
+                                connection_expr => $self->structural_signal_ref_expr($_->{signal_name}),
                             }
                         } @{$_->port_bindings || []}
                     ],
@@ -3458,7 +3495,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
         next unless (($instance->{kind} || '') eq 'fsmc');
 
         my %bindings = map {
-            (($_->{port_name} || '') => ($_->{signal_name} || ''))
+            (($_->{port_name} || '') => $self->structural_binding_signal_name($_))
         } @{$instance->{port_bindings} || []};
         my $child = $child_by_instance{$instance->{instance_name}} || {};
         my %drive_family_by_signal = map {

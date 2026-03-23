@@ -764,11 +764,13 @@ Done:
   - direct `?top` generation results now expose serialized `structural_rtl_ir`,
   - composition-top `module_info` now mirrors that same serialized structural surface,
   - the shipped slice currently covers explicit top ports, internal nets, realized instances, pin bindings, and auxiliary assignments,
+  - those structural instance pin bindings now also preserve a first typed `connection_expr` node, currently bounded to backend-neutral `signal_ref`,
   - and the active composition-top emitter now walks that structural layer instead of re-reading only plan state directly during top-module dumping.
 - [t/162-composition-top-structural-rtl-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/162-composition-top-structural-rtl-ir-surface.t) now locks:
   - direct-result `structural_rtl_ir` surfacing for `?top` composition roots,
   - preservation of that same serialized structural surface through composition-top `module_info`,
   - stable top-port / net / instance / pin-binding connectivity details in the first bounded structural slice,
+  - stable typed `connection_expr` nodes on those instance pin bindings,
   - and that the active composition-top emitter can render the top module by walking the serialized structural layer.
 - The next structural widening step is now also shipped:
   - direct generated `?fsm` / `?dt` results now expose a bounded structural module-interface slice through `structural_rtl_ir`,

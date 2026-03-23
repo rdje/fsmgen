@@ -92,7 +92,9 @@ used by the active `.fsm` to HDL pipeline. It currently has two bounded shapes:
 composition tops carry explicit ports, nets, instances, pin bindings, resolved
 links, declared links, and auxiliary assignments; direct generated roots carry an explicit
 module-interface boundary slice with ports plus empty nets/instances/resolved
-links/declared-links/auxiliary structure. That lets backend and export work begin walking one
+links/declared-links/auxiliary structure. Pin bindings now also preserve a first
+typed `connection_expr` node for the actual connection expression, currently
+bounded to `signal_ref`. That lets backend and export work begin walking one
 explicit structural graph instead of rediscovering wiring shape ad hoc from mixed
 plan/emitter state.
 

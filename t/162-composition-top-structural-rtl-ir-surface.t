@@ -163,6 +163,16 @@ FSM
         },
         'structural_rtl_ir preserves the first instance pin bindings',
     );
+    is_deeply(
+        { map { $_->{port_name} => $_->{connection_expr} } @{$producer->{port_bindings}} },
+        {
+            clk => { kind => 'signal_ref', signal_name => 'clk' },
+            rstn => { kind => 'signal_ref', signal_name => 'rstn' },
+            select => { kind => 'signal_ref', signal_name => 'select' },
+            output_data => { kind => 'signal_ref', signal_name => 'comp_link_producer_output_data' },
+        },
+        'structural_rtl_ir preserves the first instance connection expressions',
+    );
 
     is($router->{kind}, 'dtc', 'structural_rtl_ir preserves the second instance kind');
     is($router->{module_name}, 'route_src', 'structural_rtl_ir preserves the second instance module name');
@@ -191,6 +201,16 @@ FSM
             OUT => 'result_data',
         },
         'structural_rtl_ir preserves the second instance pin bindings',
+    );
+    is_deeply(
+        { map { $_->{port_name} => $_->{connection_expr} } @{$router->{port_bindings}} },
+        {
+            IN_A => { kind => 'signal_ref', signal_name => 'comp_link_producer_output_data' },
+            A => { kind => 'signal_ref', signal_name => 'data_a' },
+            B => { kind => 'signal_ref', signal_name => 'data_b' },
+            OUT => { kind => 'signal_ref', signal_name => 'result_data' },
+        },
+        'structural_rtl_ir preserves the second instance connection expressions',
     );
     is($structural_rtl_ir->{declared_link_count}, 5, 'structural_rtl_ir reports declared toplink count');
     is_deeply(
