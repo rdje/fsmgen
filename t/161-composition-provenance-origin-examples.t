@@ -130,6 +130,24 @@ FSM
         ],
         'provenance report now mirrors structural_rtl_ir top-port metadata',
     );
+    is(
+        $report->{resolved_link_count},
+        $structural_rtl_ir->{resolved_link_count},
+        'provenance report now derives resolved-link count from structural_rtl_ir',
+    );
+    is_deeply(
+        [
+            sort map {
+                join(' -> ', $_->{source}, $_->{target}, ($_->{origin_kind} || ''))
+            } @{$report->{resolved_links} || []}
+        ],
+        [
+            sort map {
+                join(' -> ', $_->{source}, $_->{target}, ($_->{origin_kind} || ''))
+            } @{$structural_rtl_ir->{resolved_links} || []}
+        ],
+        'provenance report now mirrors structural_rtl_ir resolved-link identity and origin metadata',
+    );
 
     is($producer_to_router->{source_context}{kind}, 'child_endpoint', 'resolved-link provenance tags child source endpoints explicitly');
     is($producer_to_router->{source_context}{instance_name}, 'producer', 'resolved-link provenance keeps source instance name');

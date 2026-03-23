@@ -4555,6 +4555,10 @@ This is the persistent technical change history for FSMGen.
 - Started consuming that structural layer in composition-top semantic summaries too:
   - composition-top `intent_hir` now derives top-port names, counts, and grouped input/output signal-analysis families from `structural_rtl_ir`,
   - and compatible top-level `module_info` signal metadata now mirrors that same structural top-port boundary instead of rebuilding it separately from the plan.
+- Widened that structural layer through explicit resolved connectivity too:
+  - composition-top `structural_rtl_ir` now preserves resolved links as first-class structural connectivity entries,
+  - `composition_report` now derives its resolved-link identity/origin list from that structural layer instead of rereading plan-only link state,
+  - and compatible top-level resolved-link counts now stay aligned with `structural_rtl_ir`.
 - Logged the next forward-IR architecture refinement for future implementation:
   - the current extracted `Lowered RTL IR` is now explicitly treated as a lowered summary layer rather than the final full connectivity graph,
   - the forward compiler is now steered toward `Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend`,

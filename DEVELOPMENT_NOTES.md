@@ -5839,6 +5839,10 @@ It is an exact-delay pulse request:
 - The next IR-to-IR handoff step is now also live through composition-top semantic summaries:
   - composition-top `intent_hir` now consumes `structural_rtl_ir` for top-port names, counts, and grouped input/output signal-analysis families,
   - and compatible top-level `module_info` signal metadata now mirrors that same structural top-port boundary instead of rebuilding it separately from plan internals.
+- The next structural widening step is now also live through explicit resolved connectivity:
+  - composition-top `structural_rtl_ir` now preserves resolved links as first-class structural connectivity entries,
+  - `composition_report` now derives its resolved-link identity/origin list from that structural layer instead of rereading plan-only link state,
+  - and compatible top-level resolved-link counts now stay aligned with `structural_rtl_ir`.
 - Design note from this slice:
   - this is the first structural slice, not the whole universal connectivity story yet,
   - but it establishes the right boundary between `Lowered RTL IR` as lowered semantic summary and `Structural RTL IR` as the first extracted wiring/netlist layer.

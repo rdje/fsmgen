@@ -187,6 +187,11 @@ FSM
     is($intent_hir->{composition_lane}, 'C2', 'composition intent_hir preserves the composition lane');
     is($intent_hir->{regular_state_count}, 0, 'composition intent_hir keeps top roots separate from regular FSM state counts');
     is($intent_hir->{standalone_dt_count}, 0, 'composition intent_hir keeps top roots separate from standalone-DT counts');
+    is(
+        $module_info->{composition_resolved_link_count},
+        $structural_rtl_ir->{resolved_link_count},
+        'composition module_info keeps resolved-link counts aligned with structural_rtl_ir',
+    );
 
     is($lowered_rtl_ir->{module_name}, 'composition_top_forward_ir_surface', 'composition lowered_rtl_ir preserves the top module name');
     is($lowered_rtl_ir->{source_root_kind}, 'top', 'composition lowered_rtl_ir reports the top root kind');

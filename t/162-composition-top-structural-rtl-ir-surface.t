@@ -192,6 +192,25 @@ FSM
         },
         'structural_rtl_ir preserves the second instance pin bindings',
     );
+    is($structural_rtl_ir->{resolved_link_count}, 7, 'structural_rtl_ir reports resolved connectivity link count');
+    is_deeply(
+        [
+            sort map { join(' -> ', $_->{source}, $_->{target}, ($_->{origin_kind} // '')) }
+            @{$structural_rtl_ir->{resolved_links}}
+        ],
+        [
+            sort { $a cmp $b } (
+                'clk -> producer.clk -> auto_system_port_link',
+                'data_a -> router.A -> declared_explicit_toplink',
+                'data_b -> router.B -> declared_explicit_toplink',
+                'producer.output_data -> router.IN_A -> declared_explicit_toplink',
+                'router.OUT -> result_data -> declared_explicit_toplink',
+                'rstn -> producer.rstn -> auto_system_port_link',
+                'select -> producer.select -> declared_explicit_toplink',
+            )
+        ],
+        'structural_rtl_ir preserves explicit resolved-link connectivity',
+    );
     is($structural_rtl_ir->{auxiliary_assignment_count}, 0, 'structural_rtl_ir reports auxiliary assignment count');
     is_deeply($structural_rtl_ir->{auxiliary_assignments}, [], 'structural_rtl_ir preserves explicit empty auxiliary assignments');
     is(
@@ -218,6 +237,16 @@ FSM
         $statistics->{composition_net_count},
         $structural_rtl_ir->{net_count},
         'composition statistics now derive net count from structural_rtl_ir',
+    );
+    is(
+        $module_info->{composition_resolved_link_count},
+        $structural_rtl_ir->{resolved_link_count},
+        'composition module_info now derives resolved-link count from structural_rtl_ir via the report handoff',
+    );
+    is(
+        $statistics->{composition_resolved_link_count},
+        $structural_rtl_ir->{resolved_link_count},
+        'composition statistics now derive resolved-link count from structural_rtl_ir via the report handoff',
     );
 
     my $rendered_top = $pipeline->emit_composition_top_module($structural_rtl_ir);

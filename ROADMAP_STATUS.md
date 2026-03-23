@@ -813,6 +813,14 @@ Done:
   - composition-top `intent_hir` signal names/counts mirroring `structural_rtl_ir`,
   - composition-top `intent_hir` grouped input/output signal-analysis families mirroring `structural_rtl_ir`,
   - and compatible `module_info` signal metadata mirroring the same structural top-port boundary.
+- The next structural widening step is now also shipped through explicit resolved connectivity:
+  - composition-top `structural_rtl_ir` now preserves resolved links as first-class structural connectivity entries alongside ports/nets/instances/bindings,
+  - `composition_report` now derives its resolved-link identity/origin list from that structural layer instead of rereading plan-only link state,
+  - and compatible top-level accounting now keeps resolved-link counts aligned with `structural_rtl_ir`.
+- [t/162-composition-top-structural-rtl-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/162-composition-top-structural-rtl-ir-surface.t) and [t/161-composition-provenance-origin-examples.t](/Users/richarddje/Documents/github/fsmgen/t/161-composition-provenance-origin-examples.t) now also lock:
+  - structural resolved-link count and explicit source/target/origin connectivity,
+  - provenance resolved-link identity/origin mirroring `structural_rtl_ir`,
+  - and compatible module/statistics resolved-link counts aligned with that same structural layer.
 - The next forward-IR widening step through the composition provenance/reporting surface is now also shipped:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
   - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,

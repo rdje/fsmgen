@@ -2944,6 +2944,16 @@ sub build_composition_structural_rtl_ir ($self, $composition_plan) {
                 }
             } @{$composition_plan->instances || []}
         ],
+        resolved_links => [
+            map {
+                +{
+                    source => $_->source,
+                    target => $_->target,
+                    origin_kind => $_->origin_kind,
+                    raw_token => $_->raw_token,
+                }
+            } @{$composition_plan->resolved_links || []}
+        ],
         auxiliary_assignments => [@{$composition_plan->auxiliary_assignments || []}],
     );
 }
@@ -3144,7 +3154,11 @@ sub build_composition_module_info (
         ),
         composition_resolved_link_count => $composition_report
             ? $composition_report->{resolved_link_count}
-            : scalar(@{$composition_plan->resolved_links || []}),
+            : (
+                exists $structural_rtl_ir_hash->{resolved_link_count}
+                    ? $structural_rtl_ir_hash->{resolved_link_count}
+                    : scalar(@{$composition_plan->resolved_links || []})
+            ),
         composition_override_count => $composition_report
             ? $composition_report->{override_count}
             : 0,
@@ -3539,7 +3553,11 @@ sub build_composition_statistics ($self, $composition_plan, $composition_report 
         : scalar(@{$composition_plan->nets || []});
     $stats->{composition_resolved_link_count} = $composition_report
         ? $composition_report->{resolved_link_count}
-        : scalar(@{$composition_plan->resolved_links || []});
+        : (
+            exists $structural_rtl_ir_hash->{resolved_link_count}
+                ? $structural_rtl_ir_hash->{resolved_link_count}
+                : scalar(@{$composition_plan->resolved_links || []})
+        );
     $stats->{composition_override_count} = $composition_report
         ? $composition_report->{override_count}
         : 0;
@@ -3574,19 +3592,19 @@ sub build_composition_provenance_report ($self, $composition_plan, $structural_r
     } @{$structural_rtl_ir_hash->{ports} || []};
 
     my @resolved_links = map {
-        my $origin_kind = $_->origin_kind || 'unknown_link_origin';
-        my $source_context = $self->composition_provenance_endpoint_context($composition_plan, $_->source, $structural_rtl_ir);
-        my $target_context = $self->composition_provenance_endpoint_context($composition_plan, $_->target, $structural_rtl_ir);
+        my $origin_kind = $_->{origin_kind} || 'unknown_link_origin';
+        my $source_context = $self->composition_provenance_endpoint_context($composition_plan, $_->{source}, $structural_rtl_ir);
+        my $target_context = $self->composition_provenance_endpoint_context($composition_plan, $_->{target}, $structural_rtl_ir);
         +{
-            source => $_->source,
-            target => $_->target,
+            source => $_->{source},
+            target => $_->{target},
             origin_kind => $origin_kind,
             origin_category => $self->composition_provenance_category($origin_kind),
             origin_label => $self->composition_provenance_label($origin_kind),
             source_context => $source_context,
             target_context => $target_context,
         }
-    } @{$composition_plan->resolved_links || []};
+    } @{$structural_rtl_ir_hash->{resolved_links} || []};
 
     my %port_origin_counts;
     my %port_category_counts;

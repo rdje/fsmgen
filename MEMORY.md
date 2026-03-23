@@ -4448,6 +4448,10 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - The next IR-to-IR handoff step is also live through composition-top semantic summaries:
   - composition-top `intent_hir` now consumes `structural_rtl_ir` for top-port names, counts, and grouped input/output signal-analysis families,
   - and compatible top-level `module_info` signal metadata now mirrors that same structural top-port boundary instead of rebuilding it separately from plan internals.
+- The next structural widening step is also live through explicit resolved connectivity:
+  - composition-top `structural_rtl_ir` now preserves resolved links as first-class structural connectivity entries,
+  - `composition_report` now derives its resolved-link identity/origin list from that structural layer instead of rereading plan-only link state,
+  - and compatible top-level resolved-link counts now stay aligned with `structural_rtl_ir`.
 - The composition provenance/reporting surface now preserves that same forward context too:
   - resolved-link entries keep source/target endpoint context,
   - generated-child endpoint contexts keep `intent_hir`,

@@ -18,6 +18,7 @@ sub new ($class, %args) {
         ports => _clone($args{ports} || []),
         nets => _clone($args{nets} || []),
         instances => _clone($args{instances} || []),
+        resolved_links => _clone($args{resolved_links} || []),
         auxiliary_assignments => _clone($args{auxiliary_assignments} || []),
     }, $class;
 }
@@ -28,12 +29,14 @@ sub target_language ($self) { return $self->{target_language} }
 sub ports ($self) { return $self->{ports} }
 sub nets ($self) { return $self->{nets} }
 sub instances ($self) { return $self->{instances} }
+sub resolved_links ($self) { return $self->{resolved_links} }
 sub auxiliary_assignments ($self) { return $self->{auxiliary_assignments} }
 
 sub as_hashref ($self) {
     my $ports = _clone($self->ports || []);
     my $nets = _clone($self->nets || []);
     my $instances = _clone($self->instances || []);
+    my $resolved_links = _clone($self->resolved_links || []);
     my $auxiliary_assignments = _clone($self->auxiliary_assignments || []);
 
     return {
@@ -46,6 +49,8 @@ sub as_hashref ($self) {
         nets => $nets,
         instance_count => scalar(@$instances),
         instances => $instances,
+        resolved_link_count => scalar(@$resolved_links),
+        resolved_links => $resolved_links,
         auxiliary_assignment_count => scalar(@$auxiliary_assignments),
         auxiliary_assignments => $auxiliary_assignments,
     };
@@ -79,10 +84,11 @@ FSM::IR::StructuralRTLIR - Explicit forward structural RTL connectivity summary
 
 This module provides the first extracted forward structural RTL/connectivity layer
 used by the active `.fsm` to HDL pipeline. It currently has two bounded shapes:
-composition tops carry explicit ports, nets, instances, pin bindings, and
-auxiliary assignments; direct generated roots carry an explicit module-interface
-boundary slice with ports plus empty nets/instances/auxiliary structure. That
-lets backend and export work begin walking one explicit structural graph instead
-of rediscovering wiring shape ad hoc from mixed plan/emitter state.
+composition tops carry explicit ports, nets, instances, pin bindings, resolved
+links, and auxiliary assignments; direct generated roots carry an explicit
+module-interface boundary slice with ports plus empty nets/instances/resolved
+links/auxiliary structure. That lets backend and export work begin walking one
+explicit structural graph instead of rediscovering wiring shape ad hoc from mixed
+plan/emitter state.
 
 =cut
