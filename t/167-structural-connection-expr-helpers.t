@@ -10,6 +10,8 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     signal_ref_expr
+    bit_select_expr
+    slice_expr
     signal_ref_binding
     update_binding_signal_ref
     ensure_signal_ref_binding
@@ -18,6 +20,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     binding_expr
     expr_signal_name
     binding_signal_name
+    render_expr
     binding_expr_text
 );
 
@@ -107,6 +110,76 @@ subtest 'binding expression text rendering stays backend-neutral for the bounded
         }),
         'fallback_name',
         'binding text rendering still supports the mirrored signal_name fallback path',
+    );
+};
+
+subtest 'bounded indexed and sliced connection expressions render through the current verilog-family backend' => sub {
+    is_deeply(
+        bit_select_expr('shared_bus', 3),
+        {
+            kind => 'bit_select',
+            source_expr => {
+                kind => 'signal_ref',
+                signal_name => 'shared_bus',
+            },
+            index => 3,
+        },
+        'bit-select helper builds a nested structural connection expression',
+    );
+
+    is_deeply(
+        slice_expr('shared_bus', 7, 4),
+        {
+            kind => 'slice',
+            source_expr => {
+                kind => 'signal_ref',
+                signal_name => 'shared_bus',
+            },
+            msb => 7,
+            lsb => 4,
+        },
+        'slice helper builds a nested structural connection expression',
+    );
+
+    is(
+        render_expr(bit_select_expr('shared_bus', 3)),
+        'shared_bus[3]',
+        'bit-select expressions render through the current verilog-family backend',
+    );
+
+    is(
+        render_expr(slice_expr('shared_bus', 7, 4)),
+        'shared_bus[7:4]',
+        'slice expressions render through the current verilog-family backend',
+    );
+
+    is(
+        binding_expr_text({
+            port_name => 'data_window',
+            connection_expr => slice_expr('shared_bus', 7, 4),
+        }),
+        'shared_bus[7:4]',
+        'binding text rendering walks a sliced connection expression',
+    );
+
+    is(
+        binding_signal_name({
+            port_name => 'data_window',
+            connection_expr => slice_expr('shared_bus', 7, 4),
+        }),
+        '',
+        'non-signal-ref connection expressions do not pretend to be a plain bound signal name',
+    );
+
+    my $error = eval {
+        render_expr(slice_expr('shared_bus', 7, 4), 'data_window', 'vhdl');
+        undef;
+    };
+
+    like(
+        $@,
+        qr/unsupported target_language 'vhdl'/,
+        'slice rendering fails explicitly for backends the current bounded renderer does not support yet',
     );
 };
 

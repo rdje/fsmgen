@@ -10,6 +10,8 @@ no warnings 'experimental::signatures';
 
 our @EXPORT_OK = qw(
     signal_ref_expr
+    bit_select_expr
+    slice_expr
     signal_ref_binding
     update_binding_signal_ref
     ensure_signal_ref_binding
@@ -27,6 +29,31 @@ sub signal_ref_expr ($signal_name) {
     return {
         kind => 'signal_ref',
         signal_name => $signal_name,
+    };
+}
+
+sub bit_select_expr ($source, $index) {
+    confess "StructuralRTLIR bit_select expressions require a numeric index"
+        unless defined($index) && $index =~ /^\d+$/;
+
+    my $source_expr = _coerce_source_expr($source);
+    return {
+        kind => 'bit_select',
+        source_expr => $source_expr,
+        index => 0 + $index,
+    };
+}
+
+sub slice_expr ($source, $msb, $lsb) {
+    confess "StructuralRTLIR slice expressions require numeric msb/lsb bounds"
+        unless defined($msb) && defined($lsb) && $msb =~ /^\d+$/ && $lsb =~ /^\d+$/;
+
+    my $source_expr = _coerce_source_expr($source);
+    return {
+        kind => 'slice',
+        source_expr => $source_expr,
+        msb => 0 + $msb,
+        lsb => 0 + $lsb,
     };
 }
 
@@ -120,12 +147,26 @@ sub binding_signal_name ($binding) {
     return expr_signal_name(binding_expr($binding));
 }
 
-sub render_expr ($expr, $port_name = undef) {
+sub render_expr ($expr, $port_name = undef, $target_language = 'systemverilog') {
     return '' unless ref($expr) eq 'HASH';
 
     my $kind = $expr->{kind} || '';
     return $expr->{signal_name}
         if $kind eq 'signal_ref' && defined($expr->{signal_name}) && length($expr->{signal_name});
+
+    if ($kind eq 'bit_select') {
+        _confess_unsupported_target_language($target_language, $port_name, $kind)
+            unless _is_verilog_family($target_language);
+        my $source_text = render_expr($expr->{source_expr}, $port_name, $target_language);
+        return sprintf('%s[%d]', $source_text, $expr->{index});
+    }
+
+    if ($kind eq 'slice') {
+        _confess_unsupported_target_language($target_language, $port_name, $kind)
+            unless _is_verilog_family($target_language);
+        my $source_text = render_expr($expr->{source_expr}, $port_name, $target_language);
+        return sprintf('%s[%d:%d]', $source_text, $expr->{msb}, $expr->{lsb});
+    }
 
     my $binding_label = defined($port_name) && length($port_name)
         ? " for '$port_name'"
@@ -134,12 +175,39 @@ sub render_expr ($expr, $port_name = undef) {
     confess "StructuralRTLIR port binding$binding_label uses unsupported connection_expr kind '$kind'.\n";
 }
 
-sub binding_expr_text ($binding) {
+sub binding_expr_text ($binding, $target_language = 'systemverilog') {
     return '' unless ref($binding) eq 'HASH';
 
     my $expr = binding_expr($binding);
-    return render_expr($expr, $binding->{port_name}) if ref($expr) eq 'HASH';
+    return render_expr($expr, $binding->{port_name}, $target_language) if ref($expr) eq 'HASH';
     return '';
+}
+
+sub _coerce_source_expr ($source) {
+    if (ref($source) eq 'HASH') {
+        return _clone($source);
+    }
+
+    return signal_ref_expr($source)
+        if defined($source) && !ref($source) && length($source);
+
+    confess "StructuralRTLIR connection expressions require a source signal name or nested expression";
+}
+
+sub _is_verilog_family ($target_language) {
+    my $language = defined($target_language) ? lc($target_language) : '';
+    return $language eq 'systemverilog' || $language eq 'verilog';
+}
+
+sub _confess_unsupported_target_language ($target_language, $port_name, $kind) {
+    my $binding_label = defined($port_name) && length($port_name)
+        ? " for '$port_name'"
+        : '';
+    my $language = defined($target_language) && length($target_language)
+        ? $target_language
+        : 'unknown';
+
+    confess "StructuralRTLIR port binding$binding_label uses connection_expr kind '$kind' with unsupported target_language '$language'.\n";
 }
 
 sub _clone ($value) {
@@ -170,8 +238,9 @@ FSM::IR::StructuralRTLIR::ConnectionExpr - Backend-neutral structural binding ex
 
 This helper owns the first bounded typed actual-connection node family used by
 the extracted Structural RTL IR layer. The current shipped shape is
-intentionally small: backend-neutral `signal_ref` expressions plus helpers for
-signal-name recovery and text rendering while the emitter still supports only
-that portable structural binding form.
+intentionally small: backend-neutral `signal_ref` plus portable indexed/sliced
+signal forms, along with helpers for signal-name recovery and current
+Verilog-family text rendering while the emitter still supports only those
+bounded structural binding forms.
 
 =cut

@@ -4583,3 +4583,9 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - generated-child endpoint contexts keep `intent_hir`,
   - generated-child endpoint contexts keep `lowered_rtl_ir`,
   - and override/block example lines now use richer link/endpoint subjects instead of plain count-plus-name examples.
+2026-03-23
+- StructuralRTLIR `connection_expr` now supports bounded indexed and sliced
+  signal forms in addition to plain `signal_ref`.
+- The current renderer is still intentionally narrow: those richer forms render
+  through the current Verilog-family backend only, and fail explicitly for
+  backends like VHDL until that emitter surface is implemented deliberately.

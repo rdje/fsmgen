@@ -4659,3 +4659,10 @@ This is the persistent technical change history for FSMGen.
   - peer-read child inputs are rebound to that lifted shared register,
   - explicit top outputs are re-exported from that lifted shared register instead of binding directly to one child output,
   - and non-quiet `bin/fsmgen` runs now print the active lifted-runtime signal/reset summary for that bounded case.
+# 2026-03-23
+
+- Widened `FSM::IR::StructuralRTLIR::ConnectionExpr` beyond plain `signal_ref`
+  with bounded indexed and sliced connection-expression nodes, and taught the
+  composition-top structural emitter to render those typed forms through the
+  current Verilog-family backend instead of limiting the structural binding
+  surface to unsliced signal references only.

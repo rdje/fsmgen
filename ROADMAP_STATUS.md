@@ -1244,3 +1244,6 @@ Left:
 - Open the real backend scope, then implement and test it deliberately.
 Exit criteria:
 - VHDL is a real, tested backend for the agreed scope rather than a recognized-but-unimplemented target.
+- `R11`: `StructuralRTLIR` connection expressions now cover bounded indexed and
+  sliced signal forms in addition to plain `signal_ref`, with the composition
+  emitter walking those typed forms through the current Verilog-family backend.

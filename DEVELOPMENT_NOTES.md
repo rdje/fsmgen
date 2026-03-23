@@ -5975,3 +5975,10 @@ It is an exact-delay pulse request:
 - Design note from this slice:
   - this is the first structural slice, not the whole universal connectivity story yet,
   - but it establishes the right boundary between `Lowered RTL IR` as lowered semantic summary and `Structural RTL IR` as the first extracted wiring/netlist layer.
+2026-03-23
+- StructuralRTLIR connection-expression work moved one bounded step past plain
+  `signal_ref`: the helper layer now owns typed indexed and sliced actual
+  connection nodes plus current Verilog-family rendering for those shapes.
+- This keeps the structural layer backend-neutral at the AST level while still
+  letting the emitter walk a richer typed binding surface instead of falling
+  back to raw HDL strings or plain signal-name mirrors.

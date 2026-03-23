@@ -2874,7 +2874,7 @@ sub emit_composition_top_module ($self, $structural_rtl_ir) {
     my @instance_blocks = map {
         my $instance = $_;
         my @connection_lines = map {
-            sprintf("        .%s(%s)", $_->{port_name}, binding_expr_text($_))
+            sprintf("        .%s(%s)", $_->{port_name}, binding_expr_text($_, $structural->{target_language}))
         } @{$instance->{port_bindings} || []};
 
         join("\n",

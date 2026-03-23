@@ -632,3 +632,7 @@ The first honest `R11` slices are now:
 2. let explicit local overrides stay precise without forcing whole-interface restatement,
 3. keep pushing shared-datapath and reusable-module feature slices before returning to contract-hardening-only work,
 4. keep `R8` paused except when a feature slice necessarily touches a still-unlocked boundary.
+- Forward-IR note: `StructuralRTLIR` actual-connection nodes are now wider than
+  plain signal references; the current bounded family includes indexed and
+  sliced signal forms, while keeping rendering deliberately scoped to the
+  current Verilog-family backend until broader backend support is designed.
