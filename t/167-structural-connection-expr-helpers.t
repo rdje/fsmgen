@@ -14,6 +14,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     open_expr
     signal_ref_expr
     member_access_expr
+    index_access_expr
     bit_select_expr
     slice_expr
     concat_expr
@@ -137,6 +138,98 @@ subtest 'signal_ref helper builds the first bounded structural connection node' 
             },
         },
         'signal_ref binding helper builds the bounded binding payload with both compatibility and typed fields',
+    );
+};
+
+subtest 'bounded fixed-size index-access connection expressions render through the helper and the structural emitter' => sub {
+    is_deeply(
+        index_access_expr('lane_bus', 2),
+        {
+            kind => 'index_access',
+            source_expr => {
+                kind => 'signal_ref',
+                signal_name => 'lane_bus',
+            },
+            index => 2,
+        },
+        'index-access helper builds a nested structural connection expression',
+    );
+
+    is(
+        render_expr(index_access_expr('lane_bus', 2)),
+        'lane_bus[2]',
+        'index-access expressions render through the current verilog-family helper path',
+    );
+
+    is(
+        render_expr(index_access_expr('lane_bus', 2), 'lane', 'vhdl'),
+        'lane_bus(2)',
+        'index-access expressions also render through the current VHDL helper path',
+    );
+
+    is_deeply(
+        expr_signal_names(index_access_expr('lane_bus', 2)),
+        ['lane_bus'],
+        'index-access signal discovery preserves the referenced base signal',
+    );
+
+    is(
+        binding_signal_name({
+            port_name => 'lane',
+            connection_expr => index_access_expr('lane_bus', 2),
+        }),
+        '',
+        'index-access expressions do not pretend to be one flat bound signal name',
+    );
+
+    is(
+        binding_expr_text({
+            port_name => 'lane',
+            connection_expr => index_access_expr('lane_bus', 2),
+        }),
+        'lane_bus[2]',
+        'binding text rendering walks index-access expressions',
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug_level => 0,
+        quiet => 1,
+    );
+
+    my $structural_rtl_ir = FSM::IR::StructuralRTLIR->new(
+        module_name => 'structural_index_top',
+        source_root_kind => 'top',
+        target_language => 'systemverilog',
+        ports => [],
+        nets => [],
+        instances => [
+            {
+                kind => 'fsmc',
+                instance_name => 'u_child',
+                module_name => 'child_mod',
+                source_name => 'child_src',
+                interface_ports => [
+                    { name => 'lane', direction => 'input', width => 1, type => undef },
+                ],
+                port_bindings => [
+                    {
+                        port_name => 'lane',
+                        connection_expr => index_access_expr('lane_bus', 2),
+                    },
+                ],
+            },
+        ],
+        declared_links => [],
+        resolved_links => [],
+        auxiliary_assignments => [],
+    );
+
+    my $rendered = $pipeline->emit_composition_top_module($structural_rtl_ir);
+    like(
+        $rendered,
+        qr/\.lane\(lane_bus\[2\]\)/,
+        'composition structural emitter walks fixed-size index-access expressions directly',
     );
 };
 

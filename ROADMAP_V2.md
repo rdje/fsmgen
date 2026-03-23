@@ -657,3 +657,8 @@ The first honest `R11` slices are now:
   over one source expression plus one identifier-like member name, rendered
   through the current SystemVerilog/VHDL helper path while the broader
   aggregate/backend story stays deliberately bounded.
+- Forward-IR note: the structural connection-expression layer has now also
+  started the fixed-size array/index-access lane, with a first `index_access`
+  node over one source expression plus one numeric index, rendered through the
+  current SystemVerilog/Verilog/VHDL helper path while the broader aggregate
+  and type story stays deliberately bounded.

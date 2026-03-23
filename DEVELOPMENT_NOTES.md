@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural connection expressions now cover bounded fixed-size index access
+- Continued the active `R11` structural-IR widening lane by adding the first explicit fixed-size array/index actual-connection form instead of leaving that roadmap item as a future note only.
+- Landed behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns a bounded `index_access` node over a source expression and one numeric index,
+  - helper rendering now supports that node for SystemVerilog, Verilog, and VHDL, with VHDL using parenthesized index syntax,
+  - recursive dependency discovery now follows the indexed source expression without pretending the whole access path is one flat wire name,
+  - and the composition structural emitter now walks that typed node directly.
+- Why this is worth shipping:
+  - it starts the roadmap’s fixed-size-array/index-access lane in the structural AST,
+  - it complements the newly shipped `member_access` node without forcing a broader aggregate-type commitment,
+  - and it keeps the next seam where it belongs: another bounded portable connection form or more consumers moving onto typed structural dependency queries.
+
 ## 2026-03-23: structural connection expressions now cover bounded member access
 - Continued the active `R11` structural-IR widening lane by adding the first explicit aggregate/member actual-connection form instead of leaving that roadmap item as a pure future note.
 - Landed behavior:
@@ -6019,3 +6031,6 @@ It is an exact-delay pulse request:
 - StructuralRTLIR connection expressions now also include a bounded
   `member_access` node, which is the first shipped aggregate/member actual
   form in the structural connectivity AST.
+- StructuralRTLIR connection expressions now also include a bounded
+  `index_access` node, which is the first shipped fixed-size array/index
+  actual form in the structural connectivity AST.

@@ -1264,3 +1264,6 @@ Exit criteria:
   `member_access` actuals, so the structural connection AST has started the
   richer aggregate/member connectivity lane without falling back to raw HDL
   strings.
+- `R11`: `StructuralRTLIR` connection expressions now also cover bounded
+  `index_access` actuals, so the structural connection AST has started the
+  fixed-size array/index connectivity lane too.
