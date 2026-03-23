@@ -845,6 +845,15 @@ Done:
   - preservation of structured source/target / candidate endpoint context in override/block events,
   - preservation of child `intent_hir` and `lowered_rtl_ir` through generated-child endpoint examples,
   - and the matching richer non-quiet CLI override/block example lines.
+- The next forward-IR widening step through the broader composition child semantic surface is now also shipped:
+  - composition-top `intent_hir` now carries one unified `composition_child_count` / `composition_children` export across all realized child kinds (`?fsmc`, `?dtc`, and `?rtl`),
+  - compatible top-level `module_info` now mirrors that same unified child export instead of leaving child identity split across narrower side channels only,
+  - those unified child entries preserve stable child identity together with each realized child's `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` summaries when present,
+  - and composition provenance / override / block endpoint context lookup now consumes that unified semantic child export instead of rereading realized child identity only from plan instances.
+- [t/165-composition-child-forward-ir-exports.t](/Users/richarddje/Documents/github/fsmgen/t/165-composition-child-forward-ir-exports.t) now locks:
+  - preservation of mixed generated-child plus RTL child order/kind/root identity through `composition_children`,
+  - preservation of child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` through that unified child export when present,
+  - and reuse of that same unified child semantic surface in override/reporting endpoint context.
 - The first shared-datapath candidate-discovery slice is now also shipped:
   - composition-top `module_info` now reports `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates`,
   - those candidate families are currently bounded to same-name output families across multiple realized `?fsmc` children that agree on width and interface type,

@@ -25,6 +25,7 @@ sub new ($class, %args) {
         standalone_dt_module_enable_family => _clone($args{standalone_dt_module_enable_family} || {}),
         parameter_names => [@{$args{parameter_names} || []}],
         composition_child_count => $args{composition_child_count},
+        composition_children => _clone($args{composition_children}),
         composition_generated_child_count => $args{composition_generated_child_count},
         composition_generated_fsm_child_count => $args{composition_generated_fsm_child_count},
         composition_generated_dt_child_count => $args{composition_generated_dt_child_count},
@@ -50,6 +51,7 @@ sub standalone_dt_enable_families ($self) { return $self->{standalone_dt_enable_
 sub standalone_dt_module_enable_family ($self) { return $self->{standalone_dt_module_enable_family} }
 sub parameter_names ($self) { return $self->{parameter_names} }
 sub composition_child_count ($self) { return $self->{composition_child_count} }
+sub composition_children ($self) { return $self->{composition_children} }
 sub composition_generated_child_count ($self) { return $self->{composition_generated_child_count} }
 sub composition_generated_fsm_child_count ($self) { return $self->{composition_generated_fsm_child_count} }
 sub composition_generated_dt_child_count ($self) { return $self->{composition_generated_dt_child_count} }
@@ -88,6 +90,8 @@ sub as_hashref ($self) {
 
     $result->{composition_child_count} = $self->composition_child_count
         if defined $self->composition_child_count;
+    $result->{composition_children} = _clone($self->composition_children)
+        if defined $self->composition_children;
     $result->{composition_generated_child_count} = $self->composition_generated_child_count
         if defined $self->composition_generated_child_count;
     $result->{composition_generated_fsm_child_count} = $self->composition_generated_fsm_child_count
@@ -139,8 +143,8 @@ FSM::IR::IntentHIR - Explicit forward semantic intent summary for `.fsm` generat
 This module provides the first extracted forward-compiler semantic IR surface used by
 the active `.fsm` to HDL pipeline. It is intentionally narrow: root identity, system
 contract, state/DT families, signal/interface analysis, and bounded composition
-hierarchy summaries such as generated-child and reusable standalone-DT child exports
-are captured explicitly so later lowering work can stop rediscovering them ad hoc
-inside generation code.
+hierarchy summaries such as unified realized-child exports, generated-child exports,
+and reusable standalone-DT child exports are captured explicitly so later lowering
+work can stop rediscovering them ad hoc inside generation code.
 
 =cut

@@ -327,6 +327,11 @@ First shipped `R11` slice now in tree:
   - override and block events now preserve structured top-port / child-endpoint context instead of only flat signal names,
   - those generated-child endpoint contexts now carry bounded forward child summaries from `intent_hir` and `lowered_rtl_ir`,
   - and non-quiet CLI override/block sections now print richer link/endpoint examples instead of count-plus-name examples only.
+- The next widening step is now also shipped through the broader composition child semantic surface:
+  - composition-top `intent_hir` now carries one unified `composition_child_count` / `composition_children` export across all realized child kinds (`?fsmc`, `?dtc`, and `?rtl`),
+  - compatible top-level `module_info` now mirrors that same unified child export instead of leaving child identity split across narrower side channels only,
+  - those unified child entries preserve stable child identity together with each realized child's `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` summaries when present,
+  - and composition provenance / override / block endpoint context lookup now consumes that unified semantic child export instead of rereading realized child identity only from plan instances.
 
 Expected result:
 - composition remains explicit and serious instead of drifting back toward legacy implicit behavior.

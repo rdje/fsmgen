@@ -4562,6 +4562,11 @@ This is the persistent technical change history for FSMGen.
 - Started consuming that structural resolved-link layer in override/block reporting too:
   - override events now take explicit-toplink and inferred-reexport connectivity from `structural_rtl_ir->{resolved_links}`,
   - and kept-internal carrier block detection now also derives its family token from that same structural resolved-link surface instead of rereading resolved links directly from the plan.
+- Widened the forward semantic layer through one unified composition child export:
+  - composition-top `intent_hir` now carries `composition_child_count` plus `composition_children` across realized `?fsmc`, `?dtc`, and `?rtl` children,
+  - compatible top-level `module_info` now mirrors that same unified child surface,
+  - those child entries preserve stable identity plus child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` summaries when present,
+  - and composition provenance / override / block endpoint lookup now consumes that unified child semantic surface instead of rereading realized child identity only from plan instances.
 - Logged the next forward-IR architecture refinement for future implementation:
   - the current extracted `Lowered RTL IR` is now explicitly treated as a lowered summary layer rather than the final full connectivity graph,
   - the forward compiler is now steered toward `Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend`,

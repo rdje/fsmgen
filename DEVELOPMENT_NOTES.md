@@ -5846,6 +5846,11 @@ It is an exact-delay pulse request:
 - The next structural-consumption step is now also live through override/block resolved-link handling:
   - composition override events now take their explicit-toplink and inferred-reexport connectivity from `structural_rtl_ir->{resolved_links}`,
   - and the kept-internal internal-carrier block path now also derives its family detection from that same structural resolved-link surface instead of rereading resolved links from the plan.
+- The next forward semantic widening step is now also live through one unified composition child export:
+  - composition-top `intent_hir` now carries `composition_child_count` plus one ordered `composition_children` export across realized `?fsmc`, `?dtc`, and `?rtl` children,
+  - compatible top-level `module_info` now mirrors that same unified child semantic surface back out for embedding/reporting use,
+  - those child entries preserve stable identity plus child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` summaries when present,
+  - and composition provenance / override / block endpoint lookup now consumes that same unified child semantic surface instead of rereading realized child identity only from plan instances.
 - Design note from this slice:
   - this is the first structural slice, not the whole universal connectivity story yet,
   - but it establishes the right boundary between `Lowered RTL IR` as lowered semantic summary and `Structural RTL IR` as the first extracted wiring/netlist layer.

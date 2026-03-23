@@ -4455,6 +4455,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - The next structural-consumption step is also live through override/block resolved-link handling:
   - composition override events now take their explicit-toplink and inferred-reexport connectivity from `structural_rtl_ir->{resolved_links}`,
   - and the kept-internal internal-carrier block path now also derives its family detection from that same structural resolved-link surface instead of rereading resolved links from the plan.
+- The next forward semantic widening step is also live through one unified composition child export:
+  - composition-top `intent_hir` now carries `composition_child_count` plus one ordered `composition_children` export across realized `?fsmc`, `?dtc`, and `?rtl` children,
+  - compatible top-level `module_info` now mirrors that same unified child semantic surface,
+  - those child entries preserve stable identity plus child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` summaries when present,
+  - and composition provenance / override / block endpoint lookup now consumes that same unified child semantic surface instead of rereading realized child identity only from plan instances.
 - The composition provenance/reporting surface now preserves that same forward context too:
   - resolved-link entries keep source/target endpoint context,
   - generated-child endpoint contexts keep `intent_hir`,
