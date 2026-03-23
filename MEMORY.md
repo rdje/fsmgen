@@ -4445,6 +4445,9 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - `composition_report` now consumes `structural_rtl_ir` for top-port metadata and resolved-link endpoint lookup instead of rereading those bounded boundary/interface details directly from plan internals.
 - The next structural-consumption step is also live through override/block reporting:
   - composition override/block event grouping and candidate-context lookup now consume `structural_rtl_ir` for top-port and child-interface metadata instead of rereading those same interface families directly from plan internals.
+- The next IR-to-IR handoff step is also live through composition-top semantic summaries:
+  - composition-top `intent_hir` now consumes `structural_rtl_ir` for top-port names, counts, and grouped input/output signal-analysis families,
+  - and compatible top-level `module_info` signal metadata now mirrors that same structural top-port boundary instead of rebuilding it separately from plan internals.
 - The composition provenance/reporting surface now preserves that same forward context too:
   - resolved-link entries keep source/target endpoint context,
   - generated-child endpoint contexts keep `intent_hir`,

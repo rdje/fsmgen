@@ -806,6 +806,13 @@ Done:
 - [t/105-composition-override-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/105-composition-override-reporting.t) and [t/106-composition-blocked-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/106-composition-blocked-reporting.t) now also lock:
   - override/block event top-port and child-endpoint direction/width/type metadata mirroring `structural_rtl_ir`,
   - and internal-carrier re-export / kept-internal candidate contexts using the same structural interface metadata surface.
+- The next IR-to-IR handoff step is now also shipped through composition-top semantic summaries:
+  - composition-top `intent_hir` now consumes `structural_rtl_ir` for top-port names, counts, and grouped signal-analysis families,
+  - and compatible top-level `module_info` signal metadata now mirrors that same structural top-port boundary instead of rebuilding it separately from plan internals.
+- [t/160-composition-top-forward-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/160-composition-top-forward-ir-surface.t) now also locks:
+  - composition-top `intent_hir` signal names/counts mirroring `structural_rtl_ir`,
+  - composition-top `intent_hir` grouped input/output signal-analysis families mirroring `structural_rtl_ir`,
+  - and compatible `module_info` signal metadata mirroring the same structural top-port boundary.
 - The next forward-IR widening step through the composition provenance/reporting surface is now also shipped:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
   - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,

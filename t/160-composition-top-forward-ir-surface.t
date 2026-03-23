@@ -108,7 +108,55 @@ FSM
         ['clk', 'rstn', 'select', 'data_a', 'data_b', 'result_data'],
         'composition intent_hir preserves top-port signal names',
     );
+    is_deeply(
+        $intent_hir->{signal_names},
+        [map { $_->{name} } @{$structural_rtl_ir->{ports}}],
+        'composition intent_hir now derives top-port signal names from structural_rtl_ir',
+    );
     is($intent_hir->{signal_count}, 6, 'composition intent_hir reports top-port count');
+    is(
+        $intent_hir->{signal_count},
+        $structural_rtl_ir->{port_count},
+        'composition intent_hir now derives top-port count from structural_rtl_ir',
+    );
+    is_deeply(
+        $intent_hir->{signal_analysis}{inputs},
+        [
+            map {
+                +{
+                    name => $_->{name},
+                    width => $_->{width},
+                    direction => $_->{direction},
+                }
+            } grep { ($_->{direction} || '') eq 'input' } @{$structural_rtl_ir->{ports}}
+        ],
+        'composition intent_hir now derives input signal analysis from structural_rtl_ir',
+    );
+    is_deeply(
+        $intent_hir->{signal_analysis}{outputs},
+        [
+            map {
+                +{
+                    name => $_->{name},
+                    width => $_->{width},
+                    direction => $_->{direction},
+                }
+            } grep { ($_->{direction} || '') eq 'output' } @{$structural_rtl_ir->{ports}}
+        ],
+        'composition intent_hir now derives output signal analysis from structural_rtl_ir',
+    );
+    is_deeply(
+        $module_info->{signals},
+        {
+            map {
+                ($_->{name} => {
+                    width => $_->{width},
+                    direction => $_->{direction},
+                })
+            } @{$structural_rtl_ir->{ports}}
+        },
+        'composition module_info now derives compatible signal metadata from structural_rtl_ir',
+    );
     is($intent_hir->{composition_child_count}, 2, 'composition intent_hir reports realized child count');
     is($intent_hir->{composition_generated_child_count}, 2, 'composition intent_hir reports realized generated child count');
     is($intent_hir->{composition_generated_fsm_child_count}, 1, 'composition intent_hir reports realized generated fsm child count');

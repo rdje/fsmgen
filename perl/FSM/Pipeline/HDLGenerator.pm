@@ -2948,35 +2948,37 @@ sub build_composition_structural_rtl_ir ($self, $composition_plan) {
     );
 }
 
-sub build_composition_port_metadata ($self, $composition_plan) {
+sub build_composition_port_metadata ($self, $composition_plan, $structural_rtl_ir = undef) {
+    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
     my (@inputs, @outputs, @multi_bit, @single_bit);
     my %signals;
     my @signal_names;
 
-    for my $port (@{$composition_plan->ports}) {
+    for my $port (@{$structural_rtl_ir_hash->{ports} || []}) {
         my $entry = {
-            name => $port->name,
-            width => $port->width,
-            direction => $port->direction,
+            name => $port->{name},
+            width => $port->{width},
+            direction => $port->{direction},
         };
 
-        push @signal_names, $port->name;
+        push @signal_names, $port->{name};
 
-        if ($port->direction eq 'output') {
+        if (($port->{direction} || '') eq 'output') {
             push @outputs, $entry;
         } else {
             push @inputs, $entry;
         }
 
-        if ($port->width > 1) {
+        if (($port->{width} || 0) > 1) {
             push @multi_bit, $entry;
         } else {
             push @single_bit, $entry;
         }
 
-        $signals{$port->name} = {
-            width => $port->width,
-            direction => $port->direction,
+        $signals{$port->{name}} = {
+            width => $port->{width},
+            direction => $port->{direction},
         };
     }
 
@@ -2997,13 +2999,16 @@ sub build_composition_intent_hir (
     $composition_plan,
     $generated_child_exports = undef,
     $standalone_dt_child_exports = undef,
+    $structural_rtl_ir = undef,
 ) {
     $generated_child_exports //= $self->build_composition_generated_child_exports($composition_plan);
     $standalone_dt_child_exports //= $self->build_composition_standalone_dt_child_exports($composition_plan);
-    my $port_metadata = $self->build_composition_port_metadata($composition_plan);
+    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    my $port_metadata = $self->build_composition_port_metadata($composition_plan, $structural_rtl_ir);
+    my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
 
     return FSM::IR::IntentHIR->new(
-        module_name => ($composition_plan->top_name // ''),
+        module_name => ($structural_rtl_ir_hash->{module_name} // $composition_plan->top_name // ''),
         source_root_kind => 'top',
         regular_state_names => [],
         standalone_dt_names => [],
@@ -3065,14 +3070,15 @@ sub build_composition_module_info (
 ) {
     $generated_child_exports //= $self->build_composition_generated_child_exports($composition_plan);
     my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
+    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
     $intent_hir //= $self->build_composition_intent_hir(
         $composition_plan,
         $generated_child_exports,
         $standalone_dt_child_exports,
+        $structural_rtl_ir,
     );
-    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
     $lowered_rtl_ir //= $self->build_composition_lowered_rtl_ir($composition_plan, $structural_rtl_ir);
-    my $port_metadata = $self->build_composition_port_metadata($composition_plan);
+    my $port_metadata = $self->build_composition_port_metadata($composition_plan, $structural_rtl_ir);
     my $intent_hir_hash = $intent_hir->as_hashref;
     my $lowered_rtl_ir_hash = $lowered_rtl_ir->as_hashref;
     my $structural_rtl_ir_hash = $structural_rtl_ir->as_hashref;

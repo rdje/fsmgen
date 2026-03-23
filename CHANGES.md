@@ -4552,6 +4552,9 @@ This is the persistent technical change history for FSMGen.
   - `composition_report` now derives top-port metadata and resolved-link endpoint lookup from `structural_rtl_ir` instead of rereading those bounded boundary/interface details directly from the plan.
 - Started consuming that structural layer in override/block reporting too:
   - composition override/block event grouping and candidate-context lookup now derive top-port and child-interface metadata from `structural_rtl_ir` instead of rereading those same interface families directly from the plan.
+- Started consuming that structural layer in composition-top semantic summaries too:
+  - composition-top `intent_hir` now derives top-port names, counts, and grouped input/output signal-analysis families from `structural_rtl_ir`,
+  - and compatible top-level `module_info` signal metadata now mirrors that same structural top-port boundary instead of rebuilding it separately from the plan.
 - Logged the next forward-IR architecture refinement for future implementation:
   - the current extracted `Lowered RTL IR` is now explicitly treated as a lowered summary layer rather than the final full connectivity graph,
   - the forward compiler is now steered toward `Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend`,
