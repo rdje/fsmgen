@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### structural connection-expression helpers now live in the structural ir layer
+- Added [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) as the first dedicated helper module for bounded structural actual-connection nodes.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the pipeline now consumes that module for `signal_ref` construction, structural binding signal-name recovery, and backend-neutral connection-expression text rendering instead of keeping those helpers locally.
+- Updated [perl/FSM/Composition/RealizedInstance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RealizedInstance.pm) so plan-side child-binding normalization now uses that same structural helper module when backfilling `signal_name` / `connection_expr`.
+- Added [t/167-structural-connection-expr-helpers.t](/Users/richarddje/Documents/github/fsmgen/t/167-structural-connection-expr-helpers.t) to lock the current bounded `signal_ref` helper surface directly, including fallback and unsupported-kind behavior.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), and [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) so this next structural-IR extraction slice is tracked honestly.
+
 ### structural rtl ir instance bindings now preserve typed connection expressions
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition-top `structural_rtl_ir` instance pin bindings now preserve a backend-neutral `connection_expr` node beside the compatibility `signal_name` mirror.
 - That first actual-connection node is intentionally bounded to `signal_ref`, but the composition-top emitter now already walks that node when rendering instance actual connections instead of trusting only the mirrored string field.

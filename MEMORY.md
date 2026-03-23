@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural connection-expression helpers now live in the structural ir layer
+- Saved shipped behavior:
+  - new `FSM::IR::StructuralRTLIR::ConnectionExpr` now owns the current bounded `signal_ref` constructor plus signal-name recovery and backend-neutral text rendering for structural binding expressions,
+  - `HDLGenerator` now consumes those structural helpers instead of keeping local connection-expression helper subs,
+  - `RealizedInstance` now uses that same structural helper module while normalizing plan-side child bindings,
+  - and the existing bounded `signal_ref` structural behavior stays stable.
+- Important continuity note:
+  - this moves the first actual-connection helper semantics onto the structural layer that owns them,
+  - it gives later `connection_expr` widening one cleaner place to extend,
+  - and the next likely seam is either another structural consumer moving fully onto `connection_expr` or one bounded portable widening beyond plain `signal_ref`.
+
 ## 2026-03-23: composition bookkeeping now mirrors the explicit ir layers more directly
 - Saved shipped behavior:
   - composition-top `module_info` now derives internal-net names/counts, instance names/counts, auxiliary-assignment count, and composition lane from `lowered_rtl_ir` / `intent_hir`,

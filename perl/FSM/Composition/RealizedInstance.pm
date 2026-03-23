@@ -6,6 +6,7 @@ use warnings;
 use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
+use FSM::IR::StructuralRTLIR::ConnectionExpr qw(signal_ref_expr expr_signal_name);
 
 sub new ($class, %args) {
     return bless {
@@ -42,31 +43,20 @@ sub _normalize_port_binding ($binding) {
     my $signal_name = $binding->{signal_name};
     my $connection_expr = _clone($binding->{connection_expr});
 
-    if ((!defined($signal_name) || !length($signal_name))
-        && ref($connection_expr) eq 'HASH'
-        && (($connection_expr->{kind} || '') eq 'signal_ref'))
-    {
-        $signal_name = $connection_expr->{signal_name};
+    if (!defined($signal_name) || !length($signal_name)) {
+        $signal_name = expr_signal_name($connection_expr);
     }
 
     if ((!ref($connection_expr) || ref($connection_expr) ne 'HASH')
         && defined($signal_name) && length($signal_name))
     {
-        $connection_expr = _signal_ref_expr($signal_name);
+        $connection_expr = signal_ref_expr($signal_name);
     }
 
     return {
         port_name => $port_name,
         signal_name => $signal_name,
         connection_expr => $connection_expr,
-    };
-}
-
-sub _signal_ref_expr ($signal_name) {
-    return undef unless defined($signal_name) && length($signal_name);
-    return {
-        kind => 'signal_ref',
-        signal_name => $signal_name,
     };
 }
 

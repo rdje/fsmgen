@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural connection-expression helpers now live in the structural ir layer
+- Continued the active `R11` forward-IR cleanup lane by moving the first bounded actual-connection helper semantics out of pipeline glue and into the structural layer itself.
+- Landed behavior:
+  - new `FSM::IR::StructuralRTLIR::ConnectionExpr` now owns the current bounded `signal_ref` construction helpers plus signal-name recovery and backend-neutral text rendering for structural binding expressions,
+  - `FSM::Pipeline::HDLGenerator` now consumes those structural helpers instead of keeping local `connection_expr` helper subs,
+  - `FSM::Composition::RealizedInstance` now uses that same structural helper module when normalizing plan-side child bindings,
+  - and the active emitter/runtime path still preserves the existing bounded `signal_ref` behavior while depending less on ad hoc pipeline-only conventions.
+- Why this is worth shipping:
+  - it moves the `connection_expr` contract to the layer that actually owns that abstraction,
+  - it gives later `StructuralRTLIR` expression widening one cleaner place to grow from,
+  - and it removes another small but real semantic island from `HDLGenerator`.
+
 ## 2026-03-23: composition bookkeeping now mirrors the explicit ir layers more directly
 - Continued the active `R11` forward-IR cleanup lane by tightening the last-mile bookkeeping handoff between the extracted IRs and the compatible top-level result surfaces.
 - Landed behavior:

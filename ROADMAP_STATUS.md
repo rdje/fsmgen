@@ -767,6 +767,7 @@ Done:
   - those structural instance pin bindings now also preserve a first typed `connection_expr` node, currently bounded to backend-neutral `signal_ref`,
   - and realized composition-plan instances now also preserve that same typed `signal_ref` node before structural serialization instead of forcing the structural layer to synthesize it late,
   - with that earlier binding normalization now owned by `FSM::Composition::RealizedInstance` itself instead of only by `HDLGenerator`,
+  - and the current bounded `signal_ref` construction, signal-name recovery, and backend-neutral text rendering for those actual-connection nodes now also live in dedicated `FSM::IR::StructuralRTLIR::ConnectionExpr` helpers instead of staying split across pipeline glue,
   - and the active composition-top emitter now walks that structural layer instead of re-reading only plan state directly during top-module dumping.
 - [t/162-composition-top-structural-rtl-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/162-composition-top-structural-rtl-ir-surface.t) now locks:
   - direct-result `structural_rtl_ir` surfacing for `?top` composition roots,
