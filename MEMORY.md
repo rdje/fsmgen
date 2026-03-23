@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural signal-ref binding construction now lives in the structural helper module too
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns the first bounded `signal_ref` binding constructor and in-place rebinding helpers,
+  - `HDLGenerator` now uses those helpers when building `C1` passthrough bindings, broader composition planned child bindings, and structural rebinding paths,
+  - and the existing bounded `signal_ref` structural surface stays stable.
+- Important continuity note:
+  - this removes another repeated `signal_name` / `connection_expr` pairing rule from the pipeline,
+  - it keeps the first bounded actual-connection family together in one helper surface,
+  - and the next likely seam is still either one bounded `connection_expr` widening or another consumer moving fully off the compatibility mirror.
+
 ## 2026-03-23: structural binding-expression fallback now lives in the structural helper module too
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns the effective binding-expression fallback for bindings that only still carry the compatibility `signal_name` mirror,

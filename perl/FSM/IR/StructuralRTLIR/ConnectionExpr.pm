@@ -10,6 +10,8 @@ no warnings 'experimental::signatures';
 
 our @EXPORT_OK = qw(
     signal_ref_expr
+    signal_ref_binding
+    update_binding_signal_ref
     binding_expr
     expr_signal_name
     binding_signal_name
@@ -23,6 +25,23 @@ sub signal_ref_expr ($signal_name) {
         kind => 'signal_ref',
         signal_name => $signal_name,
     };
+}
+
+sub signal_ref_binding ($port_name, $signal_name) {
+    return {
+        port_name => $port_name,
+        signal_name => $signal_name,
+        connection_expr => signal_ref_expr($signal_name),
+    };
+}
+
+sub update_binding_signal_ref ($binding, $signal_name) {
+    confess "StructuralRTLIR bindings must be hash entries"
+        unless ref($binding) eq 'HASH';
+
+    $binding->{signal_name} = $signal_name;
+    $binding->{connection_expr} = signal_ref_expr($signal_name);
+    return $binding;
 }
 
 sub binding_expr ($binding) {

@@ -31,6 +31,8 @@ use FSM::IR::LoweredRTLIR;
 use FSM::IR::StructuralRTLIR;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     signal_ref_expr
+    signal_ref_binding
+    update_binding_signal_ref
     binding_expr
     binding_signal_name
     binding_expr_text
@@ -1195,10 +1197,7 @@ sub build_c1_composition_plan ($self, $composition_spec, $ports_block, $ports, $
     }
 
     my @port_bindings = map {
-        {
-            port_name => $_->name,
-            signal_name => $_->name,
-        }
+        signal_ref_binding($_->name, $_->name)
     } @effective_ports;
     my @resolved_links = map {
         my $port = $_;
@@ -2040,10 +2039,7 @@ sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                 unless defined $signal_name;
 
-            push @port_bindings, {
-                port_name => $port->name,
-                signal_name => $signal_name,
-            };
+            push @port_bindings, signal_ref_binding($port->name, $signal_name);
         }
 
         push @planned_instances, $self->clone_realized_instance_with_bindings($instance, \@port_bindings);
@@ -2431,17 +2427,13 @@ sub ensure_instance_port_binding ($self, $instance, $port_name, $signal_name) {
 
     for my $binding (@{$instance->{port_bindings} || []}) {
         next unless ($binding->{port_name} || '') eq $port_name;
-        if (($binding->{signal_name} || '') eq $signal_name) {
+        if (binding_signal_name($binding) eq $signal_name) {
             $binding->{connection_expr} ||= signal_ref_expr($signal_name);
             return;
         }
     }
 
-    push @{$instance->{port_bindings}}, {
-        port_name => $port_name,
-        signal_name => $signal_name,
-        connection_expr => signal_ref_expr($signal_name),
-    };
+    push @{$instance->{port_bindings}}, signal_ref_binding($port_name, $signal_name);
 }
 
 sub set_instance_port_binding ($self, $instance, $port_name, $signal_name) {
@@ -2450,16 +2442,11 @@ sub set_instance_port_binding ($self, $instance, $port_name, $signal_name) {
 
     for my $binding (@{$instance->{port_bindings} || []}) {
         next unless ($binding->{port_name} || '') eq $port_name;
-        $binding->{signal_name} = $signal_name;
-        $binding->{connection_expr} = signal_ref_expr($signal_name);
+        update_binding_signal_ref($binding, $signal_name);
         return;
     }
 
-    push @{$instance->{port_bindings}}, {
-        port_name => $port_name,
-        signal_name => $signal_name,
-        connection_expr => signal_ref_expr($signal_name),
-    };
+    push @{$instance->{port_bindings}}, signal_ref_binding($port_name, $signal_name);
 }
 
 sub composition_system_signal_names ($self, $composition_plan) {

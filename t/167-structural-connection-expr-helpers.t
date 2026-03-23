@@ -10,6 +10,8 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     signal_ref_expr
+    signal_ref_binding
+    update_binding_signal_ref
     binding_expr
     expr_signal_name
     binding_signal_name
@@ -30,6 +32,19 @@ subtest 'signal_ref helper builds the first bounded structural connection node' 
         expr_signal_name(signal_ref_expr('top_data')),
         'top_data',
         'expr signal-name recovery understands the bounded signal_ref form',
+    );
+
+    is_deeply(
+        signal_ref_binding('data_in', 'top_data'),
+        {
+            port_name => 'data_in',
+            signal_name => 'top_data',
+            connection_expr => {
+                kind => 'signal_ref',
+                signal_name => 'top_data',
+            },
+        },
+        'signal_ref binding helper builds the bounded binding payload with both compatibility and typed fields',
     );
 };
 
@@ -89,6 +104,29 @@ subtest 'binding expression text rendering stays backend-neutral for the bounded
         }),
         'fallback_name',
         'binding text rendering still supports the mirrored signal_name fallback path',
+    );
+};
+
+subtest 'signal_ref binding updates keep compatibility and typed fields aligned' => sub {
+    my $binding = signal_ref_binding('data_in', 'old_data');
+
+    is(
+        update_binding_signal_ref($binding, 'new_data'),
+        $binding,
+        'signal_ref binding update returns the same binding reference for in-place callers',
+    );
+
+    is_deeply(
+        $binding,
+        {
+            port_name => 'data_in',
+            signal_name => 'new_data',
+            connection_expr => {
+                kind => 'signal_ref',
+                signal_name => 'new_data',
+            },
+        },
+        'signal_ref binding update keeps the compatibility and typed fields aligned',
     );
 };
 
