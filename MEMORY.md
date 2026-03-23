@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural rtl ir now carries declared toplinks too
+- Saved shipped behavior:
+  - composition-top `structural_rtl_ir` now preserves declared explicit-toplink connectivity separately through `declared_links`,
+  - block-event reasoning for explicit child links now consumes that structural declared-link surface instead of rereading declared toplinks directly from plan internals,
+  - and the existing resolved-link structural surface stays intact.
+- Important continuity note:
+  - this makes the structural layer a more honest source of truth for explicit top/child wiring intent,
+  - it removes another plan-only connectivity read from `HDLGenerator`,
+  - and the next likely seam is another bounded helper that still rebuilds composition state instead of consuming `IntentHIR`, `LoweredRTLIR`, or `StructuralRTLIR` first.
+
 ## 2026-03-23: unified composition child exports now derive from the structural child layer
 - Saved shipped behavior:
   - `composition_children` now derives child identity and order from `structural_rtl_ir->{instances}` instead of rereading realized child identity directly from plan instances,

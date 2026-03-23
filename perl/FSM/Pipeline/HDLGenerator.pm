@@ -2962,6 +2962,16 @@ sub build_composition_structural_rtl_ir ($self, $composition_plan) {
                 }
             } @{$composition_plan->instances || []}
         ],
+        declared_links => [
+            map {
+                +{
+                    source => $_->source,
+                    target => $_->target,
+                    origin_kind => $_->origin_kind,
+                    raw_token => $_->raw_token,
+                }
+            } @{$composition_plan->links || []}
+        ],
         resolved_links => [
             map {
                 +{
@@ -4049,7 +4059,7 @@ sub build_composition_block_events ($self, $composition_plan, $structural_rtl_ir
     $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
     my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
     my %declared_top_ports = map { (($_->{name} || '') => $_) } @{$structural_rtl_ir_hash->{ports} || []};
-    my @declared_links = @{$composition_plan->links || []};
+    my @declared_links = @{$structural_rtl_ir_hash->{declared_links} || []};
     my @resolved_links = @{$structural_rtl_ir_hash->{resolved_links} || []};
     my %port_groups;
 
@@ -4065,8 +4075,8 @@ sub build_composition_block_events ($self, $composition_plan, $structural_rtl_ir
     my %explicitly_linked_child_input_names;
     my %explicitly_linked_child_output_endpoints;
     for my $link (@declared_links) {
-        my $source = $link->source || '';
-        my $target = $link->target || '';
+        my $source = $link->{source} || '';
+        my $target = $link->{target} || '';
 
         my ($target_instance, $target_port_name) = $target =~ /^(\w+)\.(\w+)$/;
         if (defined $target_port_name) {

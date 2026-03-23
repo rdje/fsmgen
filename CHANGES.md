@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### structural rtl ir now carries declared toplinks too
+- Updated [perl/FSM/IR/StructuralRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR.pm) and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition-top `structural_rtl_ir` now preserves declared explicit-toplink connectivity separately through `declared_links` instead of only carrying the resolved link graph.
+- The same update now makes blocked undeclared-top inference reasoning consume `structural_rtl_ir->{declared_links}` instead of rereading declared toplinks directly from `composition_plan`.
+- Updated [t/162-composition-top-structural-rtl-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/162-composition-top-structural-rtl-ir-surface.t) and [t/106-composition-blocked-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/106-composition-blocked-reporting.t) to lock both the new structural declared-link surface and the matching structural-consumption handoff in block reporting.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next structural-layer widening/consumption slice is tracked honestly.
+
 ### structural rtl ir architecture now explicitly requires typed connection expressions
 - Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) to record that the planned `Structural RTL IR` / connectivity layer should stay backend-neutral and extensible rather than collapsing into raw SystemVerilog/VHDL syntax.
 - The same architecture note now says child actual-pin connections should eventually be modeled through typed structural connection expressions / actual-connection AST nodes, with richer portable forms such as references, literals, slices/part-selects, concatenations, member/index access, and bounded open/default associations added deliberately over time.

@@ -109,6 +109,20 @@ FSM
     is($blocked_output->{candidate_contexts}[0]{direction}, 'output', 'blocked top-output inference candidate direction now comes from structural child interface metadata');
     is($blocked_output->{candidate_contexts}[0]{width}, 8, 'blocked top-output inference candidate width now comes from structural child interface metadata');
     is($blocked_output->{candidate_contexts}[0]{type}, undef, 'blocked top-output inference candidate type now comes from structural child interface metadata');
+    is($structural_rtl_ir->{declared_link_count}, 2, 'structural_rtl_ir keeps explicit child-link count for blocked-inference reasoning');
+    is_deeply(
+        [
+            sort map { join(' -> ', $_->{source}, $_->{target}, ($_->{origin_kind} // '')) }
+            @{$structural_rtl_ir->{declared_links} || []}
+        ],
+        [
+            sort { $a cmp $b } (
+                'producer.payload_bus -> consumer0.payload_in -> declared_explicit_toplink',
+                'producer.payload_bus -> consumer1.payload_in -> declared_explicit_toplink',
+            )
+        ],
+        'structural_rtl_ir preserves the explicit child-link family that blocks undeclared top inference',
+    );
     is(
         $result->{module_info}{composition_block_count},
         2,

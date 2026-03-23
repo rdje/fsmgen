@@ -192,6 +192,23 @@ FSM
         },
         'structural_rtl_ir preserves the second instance pin bindings',
     );
+    is($structural_rtl_ir->{declared_link_count}, 5, 'structural_rtl_ir reports declared toplink count');
+    is_deeply(
+        [
+            sort map { join(' -> ', $_->{source}, $_->{target}, ($_->{origin_kind} // '')) }
+            @{$structural_rtl_ir->{declared_links}}
+        ],
+        [
+            sort { $a cmp $b } (
+                'data_a -> router.A -> declared_explicit_toplink',
+                'data_b -> router.B -> declared_explicit_toplink',
+                'producer.output_data -> router.IN_A -> declared_explicit_toplink',
+                'router.OUT -> result_data -> declared_explicit_toplink',
+                'select -> producer.select -> declared_explicit_toplink',
+            )
+        ],
+        'structural_rtl_ir preserves declared explicit-link connectivity separately from resolved links',
+    );
     is($structural_rtl_ir->{resolved_link_count}, 7, 'structural_rtl_ir reports resolved connectivity link count');
     is_deeply(
         [

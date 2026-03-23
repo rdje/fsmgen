@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural rtl ir now carries declared toplinks too
+- Continued the active `R11` forward-IR cleanup lane by widening the structural layer so it owns both declared and resolved connectivity instead of only the post-resolution side.
+- Landed behavior:
+  - composition-top `structural_rtl_ir` now preserves declared explicit-toplink connectivity separately through `declared_links`,
+  - block-event reasoning for explicit child links now consumes that structural declared-link surface instead of rereading declared toplinks directly from `composition_plan`,
+  - and the existing resolved-link structural surface remains unchanged.
+- Why this is worth shipping:
+  - it makes the structural layer a more honest source of truth for explicit top/child wiring intent,
+  - it removes another plan-only connectivity read from `HDLGenerator`,
+  - and it leaves the next seam where it belongs: other helpers that still rebuild bounded composition state instead of consuming `IntentHIR`, `LoweredRTLIR`, or `StructuralRTLIR` first.
+
 ## 2026-03-23: unified composition child exports now derive from the structural child layer
 - Continued the active `R11` forward-IR cleanup lane by making the broader semantic child export consume the explicit structural layer instead of leaving child identity/order tied directly to plan-instance traversal.
 - Landed behavior:

@@ -801,6 +801,12 @@ Done:
 - [t/161-composition-provenance-origin-examples.t](/Users/richarddje/Documents/github/fsmgen/t/161-composition-provenance-origin-examples.t) now also locks:
   - provenance report top-port metadata mirroring `structural_rtl_ir`,
   - and resolved-link endpoint direction/width/type metadata mirroring child structural interface ports.
+- The next structural widening step is now also shipped through declared connectivity:
+  - composition-top `structural_rtl_ir` now preserves declared explicit-toplink connectivity separately through `declared_links` instead of only carrying the post-resolution link graph,
+  - and block-event reasoning for explicit child links now consumes that structural declared-link surface instead of rereading declared toplinks directly from plan internals.
+- [t/162-composition-top-structural-rtl-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/162-composition-top-structural-rtl-ir-surface.t) and [t/106-composition-blocked-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/106-composition-blocked-reporting.t) now also lock:
+  - structural declared-link identity/origin summaries,
+  - and blocked undeclared-top inference reasoning aligned with `structural_rtl_ir->{declared_links}`.
 - The next structural-consumption step is now also shipped through override/block reporting:
   - composition override/block event grouping and candidate-context lookup now consume `structural_rtl_ir` for top-port and child-interface metadata instead of rereading those same interface families directly from plan internals.
 - [t/105-composition-override-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/105-composition-override-reporting.t) and [t/106-composition-blocked-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/106-composition-blocked-reporting.t) now also lock:
