@@ -4413,6 +4413,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - keep pushing on `Intent HIR`,
   - keep pushing on `Lowered RTL IR`,
   - and plan for one explicit `Structural RTL IR` / connectivity layer that behaves like an AST/netlist for ports, nets, instances, pin bindings, and auxiliary connectivity so the backend can walk full top/child wiring directly.
+- Structural-layer refinement now also saved:
+  - `Structural RTL IR` should stay backend-neutral and extensible rather than becoming a raw SystemVerilog/VHDL syntax dump,
+  - child actual-pin bindings should eventually be represented through typed structural connection expressions / actual-connection AST nodes,
+  - those connection expressions should be able to grow toward durable connectivity forms such as references, literals, slices/part-selects, concatenations, member/index access, and bounded open/default associations,
+  - and backend-specific or inelegant connection shapes should instead normalize earlier into helper nets or auxiliary assignments before the structural binding boundary.
 
 ## 2026-03-22: started the first active forward IR extraction slice under `R11`
 - The first live forward `.fsm -> HDL` IR extraction is now in tree:

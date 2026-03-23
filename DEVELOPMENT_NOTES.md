@@ -5754,6 +5754,10 @@ It is an exact-delay pulse request:
   - current composition connectivity still manifests more concretely in structures like ports, nets, instances, bindings, and auxiliary assignments than in the extracted `LoweredRTLIR` hash itself,
   - so the long-term forward path likely needs a distinct `Structural RTL IR` / connectivity layer between `Lowered RTL IR` and final HDL text emission,
   - that structural layer is best thought of as an AST-like netlist over explicit ports, nets, instances, pin bindings, assignments, and other backend-facing connectivity objects,
+  - that same structural layer should stay backend-neutral and extensible rather than becoming a raw SystemVerilog/VHDL syntax dump,
+  - child actual-pin bindings should eventually be represented through typed structural connection expressions / actual-connection AST nodes rather than opaque HDL strings,
+  - those connection expressions should be allowed to grow toward durable connectivity forms such as references, literals, slices/part-selects, concatenations, member/index access, and bounded open/default associations where those remain portable,
+  - and whenever a connection gets too backend-specific or too awkward to keep elegant there, the healthier boundary is to normalize it earlier into helper nets or auxiliary assignments and then bind the pin to that normalized structural value,
   - and the eventual backend boundary should mostly walk that structural layer rather than rediscovering connectivity ad hoc during HDL dumping.
 - Design note from this refinement:
   - `Lowered RTL IR` and `Structural RTL IR` are related but not the same abstraction,

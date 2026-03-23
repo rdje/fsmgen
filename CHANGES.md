@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### structural rtl ir architecture now explicitly requires typed connection expressions
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md) to record that the planned `Structural RTL IR` / connectivity layer should stay backend-neutral and extensible rather than collapsing into raw SystemVerilog/VHDL syntax.
+- The same architecture note now says child actual-pin connections should eventually be modeled through typed structural connection expressions / actual-connection AST nodes, with richer portable forms such as references, literals, slices/part-selects, concatenations, member/index access, and bounded open/default associations added deliberately over time.
+- It also records the normalization rule that backend-specific or inelegant connection shapes should be lowered earlier into helper nets or auxiliary assignments before they reach the structural binding boundary.
+- Mirrored that design constraint into [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the forward-IR implementation has one stable reference point.
+
 ### unified composition child exports now derive from the structural child layer
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `composition_children` now derives child identity and order from `structural_rtl_ir->{instances}` instead of rereading realized child identity directly from `composition_plan->instances`.
 - The same update now reuses that same computed unified child surface in the top-generation path for the narrower `composition_generated_children` and `composition_standalone_dt_children` sibling exports instead of rebuilding it again.
