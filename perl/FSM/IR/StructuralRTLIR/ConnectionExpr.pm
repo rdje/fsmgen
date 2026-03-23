@@ -12,6 +12,7 @@ our @EXPORT_OK = qw(
     signal_ref_expr
     signal_ref_binding
     update_binding_signal_ref
+    normalized_binding
     binding_expr
     expr_signal_name
     binding_signal_name
@@ -42,6 +43,31 @@ sub update_binding_signal_ref ($binding, $signal_name) {
     $binding->{signal_name} = $signal_name;
     $binding->{connection_expr} = signal_ref_expr($signal_name);
     return $binding;
+}
+
+sub normalized_binding ($binding) {
+    confess "StructuralRTLIR bindings must be hash entries"
+        unless ref($binding) eq 'HASH';
+
+    my $port_name = $binding->{port_name};
+    my $signal_name = $binding->{signal_name};
+    my $connection_expr = _clone($binding->{connection_expr});
+
+    if (!defined($signal_name) || !length($signal_name)) {
+        $signal_name = expr_signal_name($connection_expr);
+    }
+
+    if ((!ref($connection_expr) || ref($connection_expr) ne 'HASH')
+        && defined($signal_name) && length($signal_name))
+    {
+        $connection_expr = signal_ref_expr($signal_name);
+    }
+
+    return {
+        port_name => $port_name,
+        signal_name => $signal_name,
+        connection_expr => $connection_expr,
+    };
 }
 
 sub binding_expr ($binding) {
@@ -81,6 +107,22 @@ sub binding_expr_text ($binding) {
     my $expr = binding_expr($binding);
     return render_expr($expr, $binding->{port_name}) if ref($expr) eq 'HASH';
     return '';
+}
+
+sub _clone ($value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone($value->{$_}) } sort keys %$value
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone($_) } @$value ];
+    }
+
+    return $value;
 }
 
 1;

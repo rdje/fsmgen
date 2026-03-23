@@ -33,6 +33,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     signal_ref_expr
     signal_ref_binding
     update_binding_signal_ref
+    normalized_binding
     binding_expr
     binding_signal_name
     binding_expr_text
@@ -2952,13 +2953,7 @@ sub build_composition_structural_rtl_ir ($self, $composition_plan) {
                         } @{$_->interface_ports || []}
                     ],
                     port_bindings => [
-                        map {
-                            +{
-                                port_name => $_->{port_name},
-                                signal_name => binding_signal_name($_),
-                                connection_expr => _clone_structured_value(binding_expr($_)),
-                            }
-                        } @{$_->port_bindings || []}
+                        map { normalized_binding($_) } @{$_->port_bindings || []}
                     ],
                 }
             } @{$composition_plan->instances || []}

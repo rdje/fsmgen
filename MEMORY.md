@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural binding normalization now lives in the structural helper module too
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns normalized binding cloning/backfilling for the current bounded binding contract,
+  - `RealizedInstance` now uses that helper instead of carrying its own private binding-normalization logic,
+  - `HDLGenerator` now also uses the same helper while serializing structural instance bindings,
+  - and the current `signal_ref` structural behavior stays stable.
+- Important continuity note:
+  - this removes another duplicated binding-semantics pocket from the runtime/pipeline boundary,
+  - it makes the structural helper module the clearer owner of the first bounded binding contract,
+  - and the next likely seam is still either one bounded `connection_expr` widening or another consumer moving further off compatibility mirrors.
+
 ## 2026-03-23: structural signal-ref binding construction now lives in the structural helper module too
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns the first bounded `signal_ref` binding constructor and in-place rebinding helpers,

@@ -12,6 +12,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     signal_ref_expr
     signal_ref_binding
     update_binding_signal_ref
+    normalized_binding
     binding_expr
     expr_signal_name
     binding_signal_name
@@ -127,6 +128,76 @@ subtest 'signal_ref binding updates keep compatibility and typed fields aligned'
             },
         },
         'signal_ref binding update keeps the compatibility and typed fields aligned',
+    );
+};
+
+subtest 'normalized binding cloning and backfilling now live in the structural helper module' => sub {
+    my $expr = {
+        kind => 'signal_ref',
+        signal_name => 'shared_bus',
+    };
+
+    is_deeply(
+        normalized_binding({
+            port_name => 'rx',
+            connection_expr => $expr,
+        }),
+        {
+            port_name => 'rx',
+            signal_name => 'shared_bus',
+            connection_expr => {
+                kind => 'signal_ref',
+                signal_name => 'shared_bus',
+            },
+        },
+        'normalized binding backfills the compatibility mirror from the typed signal_ref expression',
+    );
+
+    my $normalized = normalized_binding({
+        port_name => 'data_in',
+        signal_name => 'top_data',
+    });
+    $expr->{signal_name} = 'mutated_after_normalization';
+
+    is_deeply(
+        $normalized,
+        {
+            port_name => 'data_in',
+            signal_name => 'top_data',
+            connection_expr => {
+                kind => 'signal_ref',
+                signal_name => 'top_data',
+            },
+        },
+        'normalized binding synthesizes the bounded signal_ref node from the compatibility mirror',
+    );
+
+    my $cloned = normalized_binding({
+        port_name => 'shared',
+        connection_expr => {
+            kind => 'signal_ref',
+            signal_name => 'orig_bus',
+        },
+    });
+    $cloned->{connection_expr}{signal_name} = 'mutated_clone';
+
+    is_deeply(
+        normalized_binding({
+            port_name => 'shared',
+            connection_expr => {
+                kind => 'signal_ref',
+                signal_name => 'orig_bus',
+            },
+        }),
+        {
+            port_name => 'shared',
+            signal_name => 'orig_bus',
+            connection_expr => {
+                kind => 'signal_ref',
+                signal_name => 'orig_bus',
+            },
+        },
+        'normalized binding returns its own cloned payload instead of aliasing caller-owned hashes',
     );
 };
 

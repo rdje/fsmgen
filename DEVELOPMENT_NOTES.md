@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural binding normalization now lives in the structural helper module too
+- Continued the active `R11` structural-IR cleanup lane by moving the remaining bounded binding normalization logic out of `RealizedInstance` and structural-serialization glue.
+- Landed behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns normalized binding cloning/backfilling for the current bounded binding contract,
+  - `FSM::Composition::RealizedInstance` now uses that helper instead of carrying its own private binding-normalization logic,
+  - `HDLGenerator` now also uses the same helper while serializing structural instance bindings,
+  - and the current `signal_ref` binding behavior stays unchanged while depending on one shared normalization path.
+- Why this is worth shipping:
+  - it removes another duplicated piece of binding semantics from the pipeline/runtime boundary,
+  - it makes the structural layer a clearer owner of the first bounded binding contract,
+  - and it leaves the next seam where it belongs: either one bounded `connection_expr` widening or another remaining consumer moving further away from compatibility mirrors.
+
 ## 2026-03-23: structural signal-ref binding construction now lives in the structural helper module too
 - Continued the active `R11` structural-IR cleanup lane by moving the first bounded binding-construction/update rules out of `HDLGenerator`.
 - Landed behavior:
