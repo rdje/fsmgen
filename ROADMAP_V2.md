@@ -316,6 +316,9 @@ First shipped `R11` slice now in tree:
   - composition-top `structural_rtl_ir` now preserves resolved links as first-class structural connectivity entries alongside ports/nets/instances/bindings,
   - `composition_report` now derives its resolved-link identity/origin list from that structural layer instead of rereading plan-only link state,
   - and compatible top-level accounting now keeps resolved-link counts aligned with `structural_rtl_ir`.
+- The next structural-consumption step is now also shipped through override/block resolved-link handling:
+  - composition override events now take their explicit-toplink and inferred-reexport connectivity from `structural_rtl_ir->{resolved_links}`,
+  - and the kept-internal internal-carrier block path now also derives its family detection from that same structural resolved-link surface instead of rereading resolved links from the plan.
 - The next widening step is now also shipped through the composition provenance/reporting surface:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
   - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,

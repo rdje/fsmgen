@@ -821,6 +821,13 @@ Done:
   - structural resolved-link count and explicit source/target/origin connectivity,
   - provenance resolved-link identity/origin mirroring `structural_rtl_ir`,
   - and compatible module/statistics resolved-link counts aligned with that same structural layer.
+- The next structural-consumption step is now also shipped through override/block resolved-link handling:
+  - composition override events now take their explicit-toplink and inferred-reexport connectivity from `structural_rtl_ir->{resolved_links}`,
+  - and the kept-internal internal-carrier block path now also derives its family detection from that same structural resolved-link surface instead of rereading resolved links from the plan.
+- [t/105-composition-override-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/105-composition-override-reporting.t) and [t/106-composition-blocked-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/106-composition-blocked-reporting.t) now also lock:
+  - override event source/target endpoints aligned with structural resolved-link entries,
+  - re-export override source/top-port endpoints aligned with structural resolved-link entries,
+  - and kept-internal carrier family detection aligned with structural resolved-link raw tokens.
 - The next forward-IR widening step through the composition provenance/reporting surface is now also shipped:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
   - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,

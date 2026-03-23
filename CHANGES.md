@@ -4559,6 +4559,9 @@ This is the persistent technical change history for FSMGen.
   - composition-top `structural_rtl_ir` now preserves resolved links as first-class structural connectivity entries,
   - `composition_report` now derives its resolved-link identity/origin list from that structural layer instead of rereading plan-only link state,
   - and compatible top-level resolved-link counts now stay aligned with `structural_rtl_ir`.
+- Started consuming that structural resolved-link layer in override/block reporting too:
+  - override events now take explicit-toplink and inferred-reexport connectivity from `structural_rtl_ir->{resolved_links}`,
+  - and kept-internal carrier block detection now also derives its family token from that same structural resolved-link surface instead of rereading resolved links directly from the plan.
 - Logged the next forward-IR architecture refinement for future implementation:
   - the current extracted `Lowered RTL IR` is now explicitly treated as a lowered summary layer rather than the final full connectivity graph,
   - the forward compiler is now steered toward `Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend`,

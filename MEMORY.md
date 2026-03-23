@@ -4452,6 +4452,9 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - composition-top `structural_rtl_ir` now preserves resolved links as first-class structural connectivity entries,
   - `composition_report` now derives its resolved-link identity/origin list from that structural layer instead of rereading plan-only link state,
   - and compatible top-level resolved-link counts now stay aligned with `structural_rtl_ir`.
+- The next structural-consumption step is also live through override/block resolved-link handling:
+  - composition override events now take their explicit-toplink and inferred-reexport connectivity from `structural_rtl_ir->{resolved_links}`,
+  - and the kept-internal internal-carrier block path now also derives its family detection from that same structural resolved-link surface instead of rereading resolved links from the plan.
 - The composition provenance/reporting surface now preserves that same forward context too:
   - resolved-link entries keep source/target endpoint context,
   - generated-child endpoint contexts keep `intent_hir`,

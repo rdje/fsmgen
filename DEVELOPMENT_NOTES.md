@@ -5843,6 +5843,9 @@ It is an exact-delay pulse request:
   - composition-top `structural_rtl_ir` now preserves resolved links as first-class structural connectivity entries,
   - `composition_report` now derives its resolved-link identity/origin list from that structural layer instead of rereading plan-only link state,
   - and compatible top-level resolved-link counts now stay aligned with `structural_rtl_ir`.
+- The next structural-consumption step is now also live through override/block resolved-link handling:
+  - composition override events now take their explicit-toplink and inferred-reexport connectivity from `structural_rtl_ir->{resolved_links}`,
+  - and the kept-internal internal-carrier block path now also derives its family detection from that same structural resolved-link surface instead of rereading resolved links from the plan.
 - Design note from this slice:
   - this is the first structural slice, not the whole universal connectivity story yet,
   - but it establishes the right boundary between `Lowered RTL IR` as lowered semantic summary and `Structural RTL IR` as the first extracted wiring/netlist layer.

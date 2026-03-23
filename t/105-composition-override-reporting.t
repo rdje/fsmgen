@@ -65,12 +65,23 @@ FSM
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $report = $result->{composition_report};
+    my $structural_rtl_ir = $result->{structural_rtl_ir};
     my ($input_override) = grep {
         ($_->{kind} || '') eq 'explicit_toplink_overrides_same_name_top_input_convention'
     } @{$report->{override_events} || []};
     my ($output_override) = grep {
         ($_->{kind} || '') eq 'explicit_toplink_overrides_same_name_top_output_convention'
     } @{$report->{override_events} || []};
+    my ($input_override_link) = grep {
+        (($_->{origin_kind} || '') eq 'declared_explicit_toplink')
+            && (($_->{source} || '') eq 'trigger')
+            && (($_->{target} || '') eq 'producer.trigger')
+    } @{$structural_rtl_ir->{resolved_links} || []};
+    my ($output_override_link) = grep {
+        (($_->{origin_kind} || '') eq 'declared_explicit_toplink')
+            && (($_->{source} || '') eq 'uart_tx.serial_out')
+            && (($_->{target} || '') eq 'serial_out')
+    } @{$structural_rtl_ir->{resolved_links} || []};
 
     is($report->{lane}, 'C3', 'report records the active mixed explicit-link lane');
     is($report->{override_count}, 2, 'report counts same-name convention overrides');
@@ -95,20 +106,24 @@ FSM
         'report keeps one forward-context example for the same-name top-output override family',
     );
     is($input_override->{source_context}{kind}, 'top_port', 'top-input override event preserves top-port source context');
+    is($input_override->{source_context}{endpoint}, $input_override_link->{source}, 'top-input override event now takes the top-port source endpoint from structural resolved links');
     is($input_override->{source_context}{direction}, 'input', 'top-input override event source direction now comes from structural top-port metadata');
     is($input_override->{source_context}{width}, 1, 'top-input override event source width now comes from structural top-port metadata');
     is($input_override->{source_context}{type}, undef, 'top-input override event source type now comes from structural top-port metadata');
     is($input_override->{target_context}{kind}, 'child_endpoint', 'top-input override event preserves child-endpoint target context');
+    is($input_override->{target_context}{endpoint}, $input_override_link->{target}, 'top-input override event now takes the child target endpoint from structural resolved links');
     is($input_override->{target_context}{source_root_kind}, 'dt', 'top-input override event preserves child root kind in target context');
     is($input_override->{target_context}{direction}, 'input', 'top-input override event target direction now comes from structural child interface metadata');
     is($input_override->{target_context}{width}, 1, 'top-input override event target width now comes from structural child interface metadata');
     is($input_override->{target_context}{type}, undef, 'top-input override event target type now comes from structural child interface metadata');
     is($output_override->{source_context}{kind}, 'child_endpoint', 'top-output override event preserves child-endpoint source context');
+    is($output_override->{source_context}{endpoint}, $output_override_link->{source}, 'top-output override event now takes the child source endpoint from structural resolved links');
     is($output_override->{source_context}{source_root_kind}, 'rtl', 'top-output override event preserves rtl child root kind in source context');
     is($output_override->{source_context}{direction}, 'output', 'top-output override event source direction now comes from structural child interface metadata');
     is($output_override->{source_context}{width}, 1, 'top-output override event source width now comes from structural child interface metadata');
     is($output_override->{source_context}{type}, 'data', 'top-output override event source type now comes from structural child interface metadata');
     is($output_override->{target_context}{kind}, 'top_port', 'top-output override event preserves top-port target context');
+    is($output_override->{target_context}{endpoint}, $output_override_link->{target}, 'top-output override event now takes the top-port target endpoint from structural resolved links');
     is($output_override->{target_context}{direction}, 'output', 'top-output override event target direction now comes from structural top-port metadata');
     is($output_override->{target_context}{width}, 1, 'top-output override event target width now comes from structural top-port metadata');
     is($output_override->{target_context}{type}, undef, 'top-output override event target type now comes from structural top-port metadata');
@@ -185,9 +200,14 @@ FSM
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $report = $result->{composition_report};
+    my $structural_rtl_ir = $result->{structural_rtl_ir};
     my ($reexport_override) = grep {
         ($_->{kind} || '') eq 'explicit_top_output_reexports_internal_carrier'
     } @{$report->{override_events} || []};
+    my ($reexport_link) = grep {
+        (($_->{origin_kind} || '') eq 'inferred_internal_carrier_reexport_link')
+            && (($_->{target} || '') eq 'payload')
+    } @{$structural_rtl_ir->{resolved_links} || []};
 
     is($report->{lane}, 'C2', 'report records the active generated explicit-link lane');
     is($report->{override_count}, 2, 'report counts both the explicit input override and the internal-carrier re-export override');
@@ -207,11 +227,14 @@ FSM
         'report keeps one forward-context example for the internal-carrier re-export override family',
     );
     is($reexport_override->{source_context}{kind}, 'child_endpoint', 'internal-carrier re-export override preserves child source context');
+    is($reexport_override->{source}, $reexport_link->{source}, 'internal-carrier re-export override now takes its source from structural resolved links');
+    is($reexport_override->{source_context}{endpoint}, $reexport_link->{source}, 'internal-carrier re-export override source context now mirrors structural resolved links');
     is($reexport_override->{source_context}{source_root_kind}, 'dt', 'internal-carrier re-export override preserves dt child root kind');
     is($reexport_override->{source_context}{direction}, 'output', 'internal-carrier re-export override source direction now comes from structural child interface metadata');
     is($reexport_override->{source_context}{width}, 8, 'internal-carrier re-export override source width now comes from structural child interface metadata');
     is($reexport_override->{source_context}{type}, undef, 'internal-carrier re-export override source type now comes from structural child interface metadata');
     is($reexport_override->{top_port_context}{kind}, 'top_port', 'internal-carrier re-export override preserves top-port context');
+    is($reexport_override->{top_port_context}{endpoint}, $reexport_link->{target}, 'internal-carrier re-export override top-port context now mirrors structural resolved links');
     is($reexport_override->{top_port_context}{direction}, 'output', 'internal-carrier re-export override top-port direction now comes from structural top-port metadata');
     is($reexport_override->{top_port_context}{width}, 8, 'internal-carrier re-export override top-port width now comes from structural top-port metadata');
     is($reexport_override->{top_port_context}{type}, undef, 'internal-carrier re-export override top-port type now comes from structural top-port metadata');

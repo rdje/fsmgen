@@ -69,6 +69,7 @@ FSM
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $report = $result->{composition_report};
+    my $structural_rtl_ir = $result->{structural_rtl_ir};
     my ($blocked_input) = grep {
         ($_->{kind} || '') eq 'explicit_child_links_block_undeclared_top_input_inference'
     } @{$report->{block_events} || []};
@@ -178,9 +179,13 @@ FSM
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $report = $result->{composition_report};
+    my $structural_rtl_ir = $result->{structural_rtl_ir};
     my ($internal_block) = grep {
         ($_->{kind} || '') eq 'inferred_internal_carrier_kept_internal_by_default'
     } @{$report->{block_events} || []};
+    my ($internal_carrier_link) = grep {
+        (($_->{origin_kind} || '') eq 'inferred_internal_carrier_link')
+    } @{$structural_rtl_ir->{resolved_links} || []};
 
     is($report->{lane}, 'C2', 'report records the generated explicit-link lane');
     is($report->{block_count}, 1, 'report counts one internal carrier kept internal by default');
@@ -194,6 +199,8 @@ FSM
         'producer.payload (?dt, blocks: 1, output drive families: 1)',
         'report keeps one forward-context example for the kept-internal internal-carrier family',
     );
+    is($internal_block->{signal_name}, 'payload', 'kept-internal carrier event keeps the inferred internal family name');
+    like($internal_carrier_link->{raw_token}, qr/^=implicit-internal:payload$/, 'structural resolved links preserve the kept-internal family token');
     is($internal_block->{candidate_contexts}[0]{kind}, 'child_endpoint', 'kept-internal carrier event preserves child endpoint context');
     is($internal_block->{candidate_contexts}[0]{source_root_kind}, 'dt', 'kept-internal carrier event preserves dt child root kind');
     is($internal_block->{candidate_contexts}[0]{direction}, 'output', 'kept-internal carrier candidate direction now comes from structural child interface metadata');
