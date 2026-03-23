@@ -3029,7 +3029,10 @@ sub build_composition_intent_hir (
         $composition_plan,
         $composition_child_exports,
     );
-    $standalone_dt_child_exports //= $self->build_composition_standalone_dt_child_exports($composition_plan);
+    $standalone_dt_child_exports //= $self->build_composition_standalone_dt_child_exports(
+        $composition_plan,
+        $composition_child_exports,
+    );
     $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
     my $port_metadata = $self->build_composition_port_metadata($composition_plan, $structural_rtl_ir);
     my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
@@ -3106,7 +3109,10 @@ sub build_composition_module_info (
         $composition_plan,
         $composition_child_exports,
     );
-    my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
+    my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports(
+        $composition_plan,
+        $composition_child_exports,
+    );
     $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
     $intent_hir //= $self->build_composition_intent_hir(
         $composition_plan,
@@ -3326,23 +3332,25 @@ sub build_composition_generated_child_exports ($self, $composition_plan, $compos
     };
 }
 
-sub build_composition_standalone_dt_child_exports ($self, $composition_plan) {
+sub build_composition_standalone_dt_child_exports ($self, $composition_plan, $composition_child_exports = undef) {
+    $composition_child_exports //= $self->build_composition_child_exports($composition_plan);
     my @children;
     my $block_count = 0;
     my $multi_drive_target_count = 0;
 
-    for my $instance (@{$composition_plan->instances || []}) {
-        next unless ($instance->kind || '') eq 'dtc';
+    for my $child (@{$composition_child_exports->{children} || []}) {
+        next unless (($child->{kind} || '') eq 'dtc');
 
-        my $child_info = $instance->module_info || {};
+        my $intent_hir = $child->{intent_hir} || {};
+        my $lowered_rtl_ir = $child->{lowered_rtl_ir} || {};
         my @enable_families = map {
             +{
                 dt_name => $_->{dt_name},
                 enable_signal => $_->{enable_signal},
             }
-        } @{$child_info->{standalone_dt_enable_families} || []};
+        } @{$intent_hir->{standalone_dt_enable_families} || []};
 
-        my $module_enable_family = $child_info->{standalone_dt_module_enable_family} || {};
+        my $module_enable_family = $intent_hir->{standalone_dt_module_enable_family} || {};
         my @multi_drive_targets = map {
             my $assertion = $_->{multi_drive_assertion} || {};
             +{
@@ -3357,20 +3365,20 @@ sub build_composition_standalone_dt_child_exports ($self, $composition_plan) {
                     input_enable_signals => [@{$assertion->{input_enable_signals} || []}],
                 },
             }
-        } @{$self->module_standalone_dt_multi_drive_targets($child_info)};
+        } @{$lowered_rtl_ir->{standalone_dt_multi_drive_targets} || []};
 
-        my $standalone_dt_count = $child_info->{standalone_dt_count} || 0;
-        my $child_multi_drive_target_count = $child_info->{standalone_dt_multi_drive_target_count} || 0;
+        my $standalone_dt_count = $child->{standalone_dt_count} || 0;
+        my $child_multi_drive_target_count = $child->{standalone_dt_multi_drive_target_count} || 0;
 
         push @children, {
-            instance_name => $instance->instance_name,
-            module_name => $instance->module_name,
-            source_name => $instance->source_name,
-            intent_hir => $self->module_intent_hir($child_info),
-            lowered_rtl_ir => $self->module_lowered_rtl_ir($child_info),
-            structural_rtl_ir => $self->module_structural_rtl_ir($child_info),
+            instance_name => $child->{instance_name},
+            module_name => $child->{module_name},
+            source_name => $child->{source_name},
+            intent_hir => _clone_structured_value($intent_hir),
+            lowered_rtl_ir => _clone_structured_value($lowered_rtl_ir),
+            structural_rtl_ir => _clone_structured_value($child->{structural_rtl_ir} || {}),
             standalone_dt_count => $standalone_dt_count,
-            standalone_dt_names => [@{$child_info->{standalone_dt_names} || []}],
+            standalone_dt_names => [@{$intent_hir->{standalone_dt_names} || []}],
             standalone_dt_enable_families => \@enable_families,
             standalone_dt_module_enable_family => {
                 dt_names => [@{$module_enable_family->{dt_names} || []}],

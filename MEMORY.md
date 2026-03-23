@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: reusable standalone-DT child exports now derive from the unified composition child semantic layer
+- Saved shipped behavior:
+  - `composition_standalone_dt_children` now derives from the broader semantic `composition_children` export instead of rebuilding `?dtc` child identity separately from plan instances,
+  - child standalone-DT names and enable-family summaries now come from each child `intent_hir`,
+  - grouped standalone-DT multi-drive targets now come from each child `lowered_rtl_ir`,
+  - and the existing reusable standalone-DT export shape stays stable.
+- Important continuity note:
+  - this keeps the reusable standalone-DT sibling aligned with the already-shipped generated-child narrowing step,
+  - it removes one more ad hoc plan-instance walk from `HDLGenerator`,
+  - and the next likely seam is another remaining plan-shaped export/report helper that should consume `IntentHIR`, `LoweredRTLIR`, or `StructuralRTLIR` first.
+
 ## 2026-03-22: standalone-dt multi-drive targets now emit guard assertions
 - Saved shipped behavior:
   - grouped standalone-DT multi-drive targets now carry onehot0 assertion metadata over the DT-specific driver-enable signals,

@@ -71,12 +71,40 @@ FSM
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $intent_hir = $result->{intent_hir};
+    my $composition_children = $result->{module_info}{composition_children};
     my ($router_a, $router_b) = @{$result->{module_info}{composition_standalone_dt_children}};
 
     is_deeply(
         $intent_hir->{composition_standalone_dt_children},
         $result->{module_info}{composition_standalone_dt_children},
         'composition module_info mirrors reusable standalone-DT child exports from intent_hir',
+    );
+    is_deeply(
+        $result->{module_info}{composition_standalone_dt_children},
+        [
+            map {
+                +{
+                    instance_name => $_->{instance_name},
+                    module_name => $_->{module_name},
+                    source_name => $_->{source_name},
+                    intent_hir => $_->{intent_hir},
+                    lowered_rtl_ir => $_->{lowered_rtl_ir},
+                    structural_rtl_ir => $_->{structural_rtl_ir},
+                    standalone_dt_count => $_->{standalone_dt_count},
+                    standalone_dt_names => [@{$_->{intent_hir}{standalone_dt_names} || []}],
+                    standalone_dt_enable_families => [@{$_->{intent_hir}{standalone_dt_enable_families} || []}],
+                    standalone_dt_module_enable_family => {
+                        dt_names => [@{$_->{intent_hir}{standalone_dt_module_enable_family}{dt_names} || []}],
+                        enable_signals => [@{$_->{intent_hir}{standalone_dt_module_enable_family}{enable_signals} || []}],
+                    },
+                    standalone_dt_multi_drive_target_count => $_->{standalone_dt_multi_drive_target_count},
+                    standalone_dt_multi_drive_targets => [@{$_->{lowered_rtl_ir}{standalone_dt_multi_drive_targets} || []}],
+                }
+            } grep {
+                (($_->{kind} || '') eq 'dtc')
+            } @{$composition_children || []}
+        ],
+        'reusable standalone-DT export is now the filtered semantic view over unified composition_children',
     );
 
     is($router_a->{intent_hir}{module_name}, 'route_a', 'first exported dt child preserves module name in intent_hir');

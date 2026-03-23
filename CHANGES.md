@@ -1,5 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-23
+### reusable standalone-DT child exports now derive from the unified composition child semantic layer
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `composition_standalone_dt_children` now derives from the broader `composition_children` semantic export instead of rebuilding `?dtc` child identity separately from `composition_plan->instances`.
+- The same update now sources standalone-DT names and enable families from each child's `intent_hir`, and grouped standalone-DT multi-drive targets from each child's `lowered_rtl_ir`, while keeping the existing reusable standalone-DT export shape stable.
+- Updated [t/157-composition-standalone-dt-forward-ir-exports.t](/Users/richarddje/Documents/github/fsmgen/t/157-composition-standalone-dt-forward-ir-exports.t) so it now locks `composition_standalone_dt_children` as the filtered reusable standalone-DT view over `composition_children`.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next forward-IR cleanup slice is tracked honestly.
+
 ## 2026-03-22
 ### standalone-dt multi-drive targets now emit guard assertions
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so grouped standalone-DT multi-drive targets now carry onehot0-style assertion metadata over the DT-specific driver-enable signals, and SystemVerilog direct `?dt` roots plus realized `?dtc` children now emit bounded non-synthesis guard assertions from that metadata.

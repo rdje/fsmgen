@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: reusable standalone-DT child exports now derive from the unified composition child semantic layer
+- Continued the active `R11` forward-IR cleanup lane by retiring the sibling ad hoc export path beside the already-shipped generated-child narrowing step.
+- Landed behavior:
+  - `composition_standalone_dt_children` now derives from the broader semantic `composition_children` export instead of rebuilding `?dtc` child identity separately from `composition_plan->instances`,
+  - child standalone-DT names and enable-family summaries now come from each child's `intent_hir`,
+  - grouped standalone-DT multi-drive targets now come from each child's `lowered_rtl_ir`,
+  - and the existing reusable standalone-DT export shape remains stable while depending more directly on the explicit forward semantic and lowered layers.
+- Why this is worth shipping:
+  - it keeps the reusable standalone-DT export story aligned with the generated-child sibling path instead of letting two nearly identical composition child exports drift apart,
+  - it removes one more place where `HDLGenerator` was reconstructing child identity from plan instances instead of consuming the explicit IR layers first,
+  - and it leaves the next seam where it belongs: the remaining plan-shaped reporting/export helpers that still need to consume `IntentHIR`, `LoweredRTLIR`, or `StructuralRTLIR` directly.
+
 ## 2026-03-22: standalone-dt multi-drive targets now emit guard assertions
 - Continued the active `R11` lane by turning the reusable standalone-DT arbitration metadata into real emitted behavior instead of leaving it at reporting/export only.
 - Landed behavior:

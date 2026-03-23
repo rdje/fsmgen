@@ -336,6 +336,11 @@ First shipped `R11` slice now in tree:
   - the narrower `composition_generated_children` export now derives from the broader semantic `composition_children` layer,
   - so generated-child export identity no longer gets reconstructed separately from plan instances,
   - and the existing generated-child surface stays stable while depending more directly on the explicit forward semantic layer.
+- The sibling narrowing step is now also shipped through the reusable standalone-DT export path:
+  - the narrower `composition_standalone_dt_children` export now derives from the broader semantic `composition_children` layer,
+  - so reusable standalone-DT child export identity no longer gets reconstructed separately from plan instances,
+  - child standalone-DT names and enable families now come from child `intent_hir`, grouped multi-drive targets now come from child `lowered_rtl_ir`,
+  - and the existing reusable standalone-DT export surface stays stable while depending more directly on the explicit forward semantic and lowered layers.
 - The next lowering step is now also shipped through shared-datapath candidate discovery:
   - shared-datapath candidate discovery now consumes `structural_rtl_ir` for top-output / child-interface connectivity instead of rereading those bounded families directly from plan ports/instances,
   - contributor identity and lowered contributor context now come from the unified semantic `composition_children` export,
