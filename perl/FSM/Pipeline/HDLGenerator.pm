@@ -3025,7 +3025,10 @@ sub build_composition_intent_hir (
     $structural_rtl_ir = undef,
 ) {
     $composition_child_exports //= $self->build_composition_child_exports($composition_plan);
-    $generated_child_exports //= $self->build_composition_generated_child_exports($composition_plan);
+    $generated_child_exports //= $self->build_composition_generated_child_exports(
+        $composition_plan,
+        $composition_child_exports,
+    );
     $standalone_dt_child_exports //= $self->build_composition_standalone_dt_child_exports($composition_plan);
     $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
     my $port_metadata = $self->build_composition_port_metadata($composition_plan, $structural_rtl_ir);
@@ -3099,7 +3102,10 @@ sub build_composition_module_info (
     $structural_rtl_ir = undef,
 ) {
     $composition_child_exports //= $self->build_composition_child_exports($composition_plan);
-    $generated_child_exports //= $self->build_composition_generated_child_exports($composition_plan);
+    $generated_child_exports //= $self->build_composition_generated_child_exports(
+        $composition_plan,
+        $composition_child_exports,
+    );
     my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
     $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
     $intent_hir //= $self->build_composition_intent_hir(
@@ -3283,40 +3289,33 @@ sub build_composition_child_exports ($self, $composition_plan) {
     };
 }
 
-sub build_composition_generated_child_exports ($self, $composition_plan) {
+sub build_composition_generated_child_exports ($self, $composition_plan, $composition_child_exports = undef) {
+    $composition_child_exports //= $self->build_composition_child_exports($composition_plan);
     my @children;
     my $fsm_child_count = 0;
     my $dt_child_count = 0;
 
-    for my $instance (@{$composition_plan->instances || []}) {
-        next unless ($instance->kind || '') eq 'fsmc' || ($instance->kind || '') eq 'dtc';
-
-        my $child_info = $instance->module_info || {};
-        my $intent_hir = $self->module_intent_hir($child_info);
-        my $lowered_rtl_ir = $self->module_lowered_rtl_ir($child_info);
-        my $structural_rtl_ir = $self->module_structural_rtl_ir($child_info);
+    for my $child (@{$composition_child_exports->{children} || []}) {
+        my $kind = $child->{kind} || '';
+        next unless $kind eq 'fsmc' || $kind eq 'dtc';
 
         push @children, {
-            kind => $instance->kind,
-            instance_name => $instance->instance_name,
-            module_name => $instance->module_name,
-            source_name => $instance->source_name,
-            source_root_kind => (
-                $intent_hir->{source_root_kind}
-                    // $child_info->{source_root_kind}
-                    // (($instance->kind || '') eq 'dtc' ? 'dt' : 'fsm')
-            ),
-            regular_state_count => ($intent_hir->{regular_state_count} || 0),
-            standalone_dt_count => ($intent_hir->{standalone_dt_count} || 0),
-            output_drive_family_count => ($lowered_rtl_ir->{output_drive_family_count} || 0),
-            standalone_dt_multi_drive_target_count => ($lowered_rtl_ir->{standalone_dt_multi_drive_target_count} || 0),
-            intent_hir => $intent_hir,
-            lowered_rtl_ir => $lowered_rtl_ir,
-            structural_rtl_ir => $structural_rtl_ir,
+            kind => $kind,
+            instance_name => $child->{instance_name},
+            module_name => $child->{module_name},
+            source_name => $child->{source_name},
+            source_root_kind => $child->{source_root_kind},
+            regular_state_count => ($child->{regular_state_count} || 0),
+            standalone_dt_count => ($child->{standalone_dt_count} || 0),
+            output_drive_family_count => ($child->{output_drive_family_count} || 0),
+            standalone_dt_multi_drive_target_count => ($child->{standalone_dt_multi_drive_target_count} || 0),
+            intent_hir => _clone_structured_value($child->{intent_hir} || {}),
+            lowered_rtl_ir => _clone_structured_value($child->{lowered_rtl_ir} || {}),
+            structural_rtl_ir => _clone_structured_value($child->{structural_rtl_ir} || {}),
         };
 
-        $fsm_child_count++ if ($instance->kind || '') eq 'fsmc';
-        $dt_child_count++ if ($instance->kind || '') eq 'dtc';
+        $fsm_child_count++ if $kind eq 'fsmc';
+        $dt_child_count++ if $kind eq 'dtc';
     }
 
     return {

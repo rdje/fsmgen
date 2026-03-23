@@ -85,6 +85,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $intent_hir = $result->{intent_hir};
     my $module_info = $result->{module_info};
+    my $composition_children = $module_info->{composition_children};
     my ($producer_instance, $router_instance) = @{$result->{composition_plan}->instances};
     my ($producer_export, $router_export) = @{$module_info->{composition_generated_children}};
 
@@ -108,6 +109,30 @@ FSM
         $intent_hir->{composition_generated_children},
         $module_info->{composition_generated_children},
         'top module_info mirrors the broader generated-child export from intent_hir',
+    );
+    is_deeply(
+        $module_info->{composition_generated_children},
+        [
+            map {
+                +{
+                    kind => $_->{kind},
+                    instance_name => $_->{instance_name},
+                    module_name => $_->{module_name},
+                    source_name => $_->{source_name},
+                    source_root_kind => $_->{source_root_kind},
+                    regular_state_count => $_->{regular_state_count},
+                    standalone_dt_count => $_->{standalone_dt_count},
+                    output_drive_family_count => $_->{output_drive_family_count},
+                    standalone_dt_multi_drive_target_count => $_->{standalone_dt_multi_drive_target_count},
+                    intent_hir => $_->{intent_hir},
+                    lowered_rtl_ir => $_->{lowered_rtl_ir},
+                    structural_rtl_ir => $_->{structural_rtl_ir},
+                }
+            } grep {
+                (($_->{kind} || '') eq 'fsmc') || (($_->{kind} || '') eq 'dtc')
+            } @{$composition_children || []}
+        ],
+        'generated-child export is now the filtered semantic view over unified composition_children',
     );
 
     is($producer_export->{kind}, 'fsmc', 'first exported generated child keeps its composition kind');
