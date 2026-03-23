@@ -85,6 +85,7 @@ FSM
     my $structural_rtl_ir = $result->{structural_rtl_ir};
     my $module_info = $result->{module_info};
     my $statistics = $result->{statistics};
+    my $composition_plan = $result->{composition_plan};
 
     ok($structural_rtl_ir, 'composition top now exposes a top-level structural_rtl_ir summary');
     is_deeply(
@@ -135,6 +136,8 @@ FSM
     );
     my $producer = $structural_rtl_ir->{instances}[0];
     my $router = $structural_rtl_ir->{instances}[1];
+    my $planned_producer = $composition_plan->instances->[0];
+    my $planned_router = $composition_plan->instances->[1];
     is($producer->{kind}, 'fsmc', 'structural_rtl_ir preserves the first instance kind');
     is($producer->{module_name}, 'producer_src', 'structural_rtl_ir preserves the first instance module name');
     is($producer->{source_name}, 'producer_src', 'structural_rtl_ir preserves the first instance source name');
@@ -172,6 +175,16 @@ FSM
             output_data => { kind => 'signal_ref', signal_name => 'comp_link_producer_output_data' },
         },
         'structural_rtl_ir preserves the first instance connection expressions',
+    );
+    is_deeply(
+        { map { $_->{port_name} => $_->{connection_expr} } @{$planned_producer->port_bindings} },
+        {
+            clk => { kind => 'signal_ref', signal_name => 'clk' },
+            rstn => { kind => 'signal_ref', signal_name => 'rstn' },
+            select => { kind => 'signal_ref', signal_name => 'select' },
+            output_data => { kind => 'signal_ref', signal_name => 'comp_link_producer_output_data' },
+        },
+        'composition_plan now preserves the first instance connection expressions before structural serialization',
     );
 
     is($router->{kind}, 'dtc', 'structural_rtl_ir preserves the second instance kind');
@@ -211,6 +224,16 @@ FSM
             OUT => { kind => 'signal_ref', signal_name => 'result_data' },
         },
         'structural_rtl_ir preserves the second instance connection expressions',
+    );
+    is_deeply(
+        { map { $_->{port_name} => $_->{connection_expr} } @{$planned_router->port_bindings} },
+        {
+            IN_A => { kind => 'signal_ref', signal_name => 'comp_link_producer_output_data' },
+            A => { kind => 'signal_ref', signal_name => 'data_a' },
+            B => { kind => 'signal_ref', signal_name => 'data_b' },
+            OUT => { kind => 'signal_ref', signal_name => 'result_data' },
+        },
+        'composition_plan now preserves the second instance connection expressions before structural serialization',
     );
     is($structural_rtl_ir->{declared_link_count}, 5, 'structural_rtl_ir reports declared toplink count');
     is_deeply(

@@ -4501,6 +4501,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - The next structural widening step is also live through typed actual-connection nodes:
   - composition-top `structural_rtl_ir` instance pin bindings now preserve a backend-neutral `connection_expr` node beside the compatibility `signal_name` mirror,
   - that first actual-connection shape is intentionally bounded to `signal_ref`,
+  - realized composition-plan instances now also preserve that same typed `signal_ref` node before structural serialization,
   - the active composition-top emitter now walks that typed node when rendering instance actual connections,
   - and shared-datapath candidate discovery now also reads structural binding signal names through that same typed node instead of depending only on a flat binding string.
 - The next structural-consumption step is also live through override/block resolved-link handling:

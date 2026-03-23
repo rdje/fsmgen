@@ -2401,7 +2401,7 @@ sub clone_realized_instance_with_bindings ($self, $instance, $port_bindings) {
         module_name => $instance->module_name,
         source_name => $instance->source_name,
         interface_ports => $instance->interface_ports,
-        port_bindings => $port_bindings || [],
+        port_bindings => $self->normalize_instance_port_bindings($port_bindings || []),
         module_info => $instance->module_info,
         hdl_code => $instance->hdl_code,
     );
@@ -2425,12 +2425,16 @@ sub ensure_instance_port_binding ($self, $instance, $port_name, $signal_name) {
 
     for my $binding (@{$instance->{port_bindings} || []}) {
         next unless ($binding->{port_name} || '') eq $port_name;
-        return if ($binding->{signal_name} || '') eq $signal_name;
+        if (($binding->{signal_name} || '') eq $signal_name) {
+            $binding->{connection_expr} ||= $self->structural_signal_ref_expr($signal_name);
+            return;
+        }
     }
 
     push @{$instance->{port_bindings}}, {
         port_name => $port_name,
         signal_name => $signal_name,
+        connection_expr => $self->structural_signal_ref_expr($signal_name),
     };
 }
 
@@ -2441,12 +2445,14 @@ sub set_instance_port_binding ($self, $instance, $port_name, $signal_name) {
     for my $binding (@{$instance->{port_bindings} || []}) {
         next unless ($binding->{port_name} || '') eq $port_name;
         $binding->{signal_name} = $signal_name;
+        $binding->{connection_expr} = $self->structural_signal_ref_expr($signal_name);
         return;
     }
 
     push @{$instance->{port_bindings}}, {
         port_name => $port_name,
         signal_name => $signal_name,
+        connection_expr => $self->structural_signal_ref_expr($signal_name),
     };
 }
 
@@ -2456,6 +2462,39 @@ sub structural_signal_ref_expr ($self, $signal_name) {
         kind => 'signal_ref',
         signal_name => $signal_name,
     };
+}
+
+sub normalize_instance_port_bindings ($self, $port_bindings) {
+    my @normalized;
+
+    for my $binding (@{$port_bindings || []}) {
+        next unless ref($binding) eq 'HASH';
+
+        my $port_name = $binding->{port_name};
+        my $expr = _clone_structured_value($binding->{connection_expr});
+        my $signal_name = $binding->{signal_name};
+
+        if ((!defined($signal_name) || !length($signal_name))
+            && ref($expr) eq 'HASH'
+            && (($expr->{kind} || '') eq 'signal_ref'))
+        {
+            $signal_name = $expr->{signal_name};
+        }
+
+        if ((!ref($expr) || ref($expr) ne 'HASH')
+            && defined($signal_name) && length($signal_name))
+        {
+            $expr = $self->structural_signal_ref_expr($signal_name);
+        }
+
+        push @normalized, {
+            port_name => $port_name,
+            signal_name => $signal_name,
+            connection_expr => $expr,
+        };
+    }
+
+    return \@normalized;
 }
 
 sub structural_binding_signal_name ($self, $binding) {
@@ -2497,7 +2536,7 @@ sub composition_system_signal_names ($self, $composition_plan) {
     if ((!defined($clock_name) || !length($clock_name)) || (!defined($reset_name) || !length($reset_name))) {
         for my $instance (@{$composition_plan->instances || []}) {
             my %bindings = map {
-                (($_->{port_name} || '') => ($_->{signal_name} || ''))
+                (($_->{port_name} || '') => $self->structural_binding_signal_name($_))
             } @{$instance->port_bindings || []};
 
             for my $port (@{$instance->interface_ports || []}) {
@@ -2992,8 +3031,9 @@ sub build_composition_structural_rtl_ir ($self, $composition_plan) {
                         map {
                             +{
                                 port_name => $_->{port_name},
-                                signal_name => $_->{signal_name},
-                                connection_expr => $self->structural_signal_ref_expr($_->{signal_name}),
+                                signal_name => $self->structural_binding_signal_name($_),
+                                connection_expr => _clone_structured_value($_->{connection_expr})
+                                    || $self->structural_signal_ref_expr($self->structural_binding_signal_name($_)),
                             }
                         } @{$_->port_bindings || []}
                     ],
