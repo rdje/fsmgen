@@ -66,10 +66,20 @@ FSM
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $module_info = $result->{module_info};
+    my $structural_rtl_ir = $result->{structural_rtl_ir};
 
     is($result->{composition_plan}->lane, 'C2', 'two fsm children with explicit top wiring stay in C2');
     is($module_info->{composition_shared_datapath_candidate_count}, 1, 'top module_info reports one shared-datapath candidate family');
     is($result->{statistics}{composition_shared_datapath_candidate_count}, 1, 'statistics report one shared-datapath candidate family');
+    is_deeply(
+        $module_info->{composition_shared_datapath_candidates}[0]{top_output_signals},
+        [
+            map { $_->{name} }
+            grep { (($_->{direction} || '') eq 'output') }
+            @{$structural_rtl_ir->{ports} || []}
+        ],
+        'shared-datapath candidate top-output bindings now stay aligned with structural_rtl_ir output ports',
+    );
     is_deeply(
         clone_without_forward_ir($module_info->{composition_shared_datapath_candidates}),
         [

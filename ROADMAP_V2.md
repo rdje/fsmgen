@@ -332,6 +332,10 @@ First shipped `R11` slice now in tree:
   - compatible top-level `module_info` now mirrors that same unified child export instead of leaving child identity split across narrower side channels only,
   - those unified child entries preserve stable child identity together with each realized child's `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` summaries when present,
   - and composition provenance / override / block endpoint context lookup now consumes that unified semantic child export instead of rereading realized child identity only from plan instances.
+- The next lowering step is now also shipped through shared-datapath candidate discovery:
+  - shared-datapath candidate discovery now consumes `structural_rtl_ir` for top-output / child-interface connectivity instead of rereading those bounded families directly from plan ports/instances,
+  - contributor identity and lowered contributor context now come from the unified semantic `composition_children` export,
+  - and the existing candidate surface stays behaviorally the same while depending less on ad hoc plan crawling inside `HDLGenerator`.
 
 Expected result:
 - composition remains explicit and serious instead of drifting back toward legacy implicit behavior.

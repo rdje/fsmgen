@@ -4460,6 +4460,10 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - compatible top-level `module_info` now mirrors that same unified child semantic surface,
   - those child entries preserve stable identity plus child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` summaries when present,
   - and composition provenance / override / block endpoint lookup now consumes that same unified child semantic surface instead of rereading realized child identity only from plan instances.
+- The next lowering step is also live through shared-datapath candidate discovery:
+  - shared-datapath candidate discovery now consumes `structural_rtl_ir` for top-output / child-interface connectivity,
+  - contributor identity and lowered contributor context now come from the unified semantic `composition_children` export,
+  - and the existing candidate surface remains stable while depending less on ad hoc plan crawling inside `HDLGenerator`.
 - The composition provenance/reporting surface now preserves that same forward context too:
   - resolved-link entries keep source/target endpoint context,
   - generated-child endpoint contexts keep `intent_hir`,

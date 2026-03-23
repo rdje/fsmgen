@@ -66,6 +66,9 @@ FSM
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my ($left_instance, $right_instance) = @{$result->{composition_plan}->instances};
+    my %children_by_instance = map {
+        (($_->{instance_name}) => $_)
+    } @{$result->{intent_hir}{composition_children} || []};
     my $lowered_rtl_ir = $result->{lowered_rtl_ir};
     my $candidate = $result->{module_info}{composition_shared_datapath_candidates}[0];
     my ($left_contributor, $right_contributor) = @{$candidate->{contributors}};
@@ -99,6 +102,21 @@ FSM
         $left_instance->module_info->{lowered_rtl_ir}{output_drive_families}[0],
         'first contributor preserves the exact selected output_drive_family from its child lowered_rtl_ir',
     );
+    is_deeply(
+        $left_contributor->{intent_hir},
+        $children_by_instance{left}{intent_hir},
+        'first contributor now also matches the unified composition_children intent_hir export',
+    );
+    is_deeply(
+        $left_contributor->{lowered_rtl_ir},
+        $children_by_instance{left}{lowered_rtl_ir},
+        'first contributor now also matches the unified composition_children lowered_rtl_ir export',
+    );
+    is_deeply(
+        $left_contributor->{structural_rtl_ir},
+        $children_by_instance{left}{structural_rtl_ir},
+        'first contributor now also matches the unified composition_children structural_rtl_ir export',
+    );
 
     is($right_contributor->{kind}, 'fsmc', 'second contributor preserves generated child kind');
     is($right_contributor->{source_name}, 'right_src', 'second contributor preserves generated child source name');
@@ -121,6 +139,21 @@ FSM
         $right_contributor->{output_drive_family},
         $right_instance->module_info->{lowered_rtl_ir}{output_drive_families}[0],
         'second contributor preserves the exact selected output_drive_family from its child lowered_rtl_ir',
+    );
+    is_deeply(
+        $right_contributor->{intent_hir},
+        $children_by_instance{right}{intent_hir},
+        'second contributor now also matches the unified composition_children intent_hir export',
+    );
+    is_deeply(
+        $right_contributor->{lowered_rtl_ir},
+        $children_by_instance{right}{lowered_rtl_ir},
+        'second contributor now also matches the unified composition_children lowered_rtl_ir export',
+    );
+    is_deeply(
+        $right_contributor->{structural_rtl_ir},
+        $children_by_instance{right}{structural_rtl_ir},
+        'second contributor now also matches the unified composition_children structural_rtl_ir export',
     );
 };
 

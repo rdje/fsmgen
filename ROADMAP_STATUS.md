@@ -854,6 +854,13 @@ Done:
   - preservation of mixed generated-child plus RTL child order/kind/root identity through `composition_children`,
   - preservation of child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` through that unified child export when present,
   - and reuse of that same unified child semantic surface in override/reporting endpoint context.
+- The next lowering step is now also shipped through shared-datapath candidate discovery:
+  - shared-datapath candidate discovery now consumes `structural_rtl_ir` for top-output / child-interface connectivity instead of rereading those bounded families directly from plan ports/instances,
+  - contributor identity and lowered contributor context now come from the unified semantic `composition_children` export,
+  - and the existing candidate surface stays behaviorally the same while depending less on ad hoc plan crawling inside `HDLGenerator`.
+- [t/139-composition-shared-datapath-candidate-metadata.t](/Users/richarddje/Documents/github/fsmgen/t/139-composition-shared-datapath-candidate-metadata.t) and [t/159-composition-shared-datapath-forward-ir-exports.t](/Users/richarddje/Documents/github/fsmgen/t/159-composition-shared-datapath-forward-ir-exports.t) now also lock:
+  - shared-datapath candidate top-output bindings aligned with structural output-port metadata,
+  - and contributor `intent_hir` / `lowered_rtl_ir` / `structural_rtl_ir` aligned with the unified `composition_children` export.
 - The first shared-datapath candidate-discovery slice is now also shipped:
   - composition-top `module_info` now reports `composition_shared_datapath_candidate_count` and `composition_shared_datapath_candidates`,
   - those candidate families are currently bounded to same-name output families across multiple realized `?fsmc` children that agree on width and interface type,

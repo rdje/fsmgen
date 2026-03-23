@@ -4567,6 +4567,10 @@ This is the persistent technical change history for FSMGen.
   - compatible top-level `module_info` now mirrors that same unified child surface,
   - those child entries preserve stable identity plus child `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` summaries when present,
   - and composition provenance / override / block endpoint lookup now consumes that unified child semantic surface instead of rereading realized child identity only from plan instances.
+- Lowered one more composition seam onto the explicit IR layers through shared-datapath candidate discovery:
+  - shared-datapath candidate discovery now consumes `structural_rtl_ir` for top-output / child-interface connectivity,
+  - contributor identity and lowered contributor context now come from the unified semantic `composition_children` export,
+  - and the existing shared-datapath candidate surface remains stable while depending less on ad hoc plan crawling inside `HDLGenerator`.
 - Logged the next forward-IR architecture refinement for future implementation:
   - the current extracted `Lowered RTL IR` is now explicitly treated as a lowered summary layer rather than the final full connectivity graph,
   - the forward compiler is now steered toward `Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend`,

@@ -270,7 +270,7 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
         $structural_rtl_ir,
         $intent_hir,
     );
-    my $lowered_rtl_ir = $self->build_composition_lowered_rtl_ir($composition_plan, $structural_rtl_ir);
+    my $lowered_rtl_ir = $self->build_composition_lowered_rtl_ir($composition_plan, $structural_rtl_ir, $intent_hir);
     my $hdl_code = $self->generate_composition_hdl_code($composition_plan, $structural_rtl_ir);
     my $module_info = $self->build_composition_module_info(
         $composition_plan,
@@ -2469,7 +2469,7 @@ sub composition_system_signal_names ($self, $composition_plan) {
     return ($clock_name, $reset_name);
 }
 
-sub composition_shared_datapath_candidates_for_plan ($self, $composition_plan) {
+sub composition_shared_datapath_candidates_for_plan ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
     return [] unless $composition_plan;
 
     if ($composition_plan->can('shared_datapath_candidates')
@@ -2479,7 +2479,11 @@ sub composition_shared_datapath_candidates_for_plan ($self, $composition_plan) {
         return $composition_plan->shared_datapath_candidates;
     }
 
-    my $shared_datapath_candidates = $self->build_composition_shared_datapath_candidates($composition_plan);
+    my $shared_datapath_candidates = $self->build_composition_shared_datapath_candidates(
+        $composition_plan,
+        $structural_rtl_ir,
+        $intent_hir,
+    );
     $composition_plan->{shared_datapath_candidates} = $shared_datapath_candidates;
     return $shared_datapath_candidates;
 }
@@ -3054,9 +3058,13 @@ sub build_composition_intent_hir (
     );
 }
 
-sub build_composition_lowered_rtl_ir ($self, $composition_plan, $structural_rtl_ir = undef) {
-    my $shared_datapath_candidates = $self->composition_shared_datapath_candidates_for_plan($composition_plan);
+sub build_composition_lowered_rtl_ir ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
     $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    my $shared_datapath_candidates = $self->composition_shared_datapath_candidates_for_plan(
+        $composition_plan,
+        $structural_rtl_ir,
+        $intent_hir,
+    );
     my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
     my $internal_net_names = [
         map { $_->{name} }
@@ -3101,7 +3109,7 @@ sub build_composition_module_info (
         $standalone_dt_child_exports,
         $structural_rtl_ir,
     );
-    $lowered_rtl_ir //= $self->build_composition_lowered_rtl_ir($composition_plan, $structural_rtl_ir);
+    $lowered_rtl_ir //= $self->build_composition_lowered_rtl_ir($composition_plan, $structural_rtl_ir, $intent_hir);
     my $port_metadata = $self->build_composition_port_metadata($composition_plan, $structural_rtl_ir);
     my $intent_hir_hash = $intent_hir->as_hashref;
     my $lowered_rtl_ir_hash = $lowered_rtl_ir->as_hashref;
@@ -3385,70 +3393,76 @@ sub build_composition_standalone_dt_child_exports ($self, $composition_plan) {
     };
 }
 
-sub build_composition_shared_datapath_candidates ($self, $composition_plan) {
+sub build_composition_shared_datapath_candidates ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
+    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
     my %top_output_by_name = map {
-        (($_->name || '') => $_)
+        ((($_->{name}) || '') => $_)
     } grep {
-        (($_->direction || '') eq 'output')
-    } @{$composition_plan->ports || []};
+        ((($_->{direction}) || '') eq 'output')
+    } @{$structural_rtl_ir_hash->{ports} || []};
+    my %child_by_instance = map {
+        ((($_->{instance_name}) || '') => $_)
+    } @{$self->composition_child_exports_for_context($composition_plan, $intent_hir)};
 
     my %candidate_groups;
     my %peer_input_groups;
-    for my $instance (@{$composition_plan->instances || []}) {
-        next unless ($instance->kind || '') eq 'fsmc';
+    for my $instance (@{$structural_rtl_ir_hash->{instances} || []}) {
+        next unless (($instance->{kind} || '') eq 'fsmc');
 
         my %bindings = map {
             (($_->{port_name} || '') => ($_->{signal_name} || ''))
-        } @{$instance->port_bindings || []};
+        } @{$instance->{port_bindings} || []};
+        my $child = $child_by_instance{$instance->{instance_name}} || {};
         my %drive_family_by_signal = map {
             (($_->{signal_name} || '') => $_)
-        } @{$self->module_output_drive_families($instance->module_info)};
+        } @{$child->{lowered_rtl_ir}{output_drive_families} || []};
 
-        for my $port (@{$instance->interface_ports || []}) {
-            next unless ($port->direction || '') eq 'output';
+        for my $port (@{$instance->{interface_ports} || []}) {
+            next unless (($port->{direction} || '') eq 'output');
 
-            my $normalized_type = $self->normalized_interface_type($port->type);
+            my $normalized_type = $self->normalized_interface_type($port->{type});
             my $key = join "\x1E",
-                ($port->name // ''),
-                ($port->width // 1),
+                ($port->{name} // ''),
+                ($port->{width} // 1),
                 $normalized_type;
 
-            my $drive_family = $drive_family_by_signal{$port->name} || {};
+            my $drive_family = $drive_family_by_signal{$port->{name}} || {};
             my $output_drive_family = ref($drive_family) eq 'HASH'
                 ? _clone_structured_value($drive_family)
                 : {};
             push @{$candidate_groups{$key}{contributors}}, {
-                kind => $instance->kind,
-                instance_name => $instance->instance_name,
-                module_name => $instance->module_name,
-                source_name => $instance->source_name,
-                endpoint => ($instance->instance_name // 'unknown').'.'.($port->name // 'unknown'),
-                bound_signal => $bindings{$port->name},
-                intent_hir => $self->module_intent_hir($instance->module_info),
-                lowered_rtl_ir => $self->module_lowered_rtl_ir($instance->module_info),
-                structural_rtl_ir => $self->module_structural_rtl_ir($instance->module_info),
+                kind => ($child->{kind} // $instance->{kind}),
+                instance_name => ($child->{instance_name} // $instance->{instance_name}),
+                module_name => ($child->{module_name} // $instance->{module_name}),
+                source_name => ($child->{source_name} // $instance->{source_name}),
+                endpoint => (($instance->{instance_name} // 'unknown').'.'.($port->{name} // 'unknown')),
+                bound_signal => $bindings{$port->{name}},
+                intent_hir => ($child->{intent_hir} || {}),
+                lowered_rtl_ir => ($child->{lowered_rtl_ir} || {}),
+                structural_rtl_ir => ($child->{structural_rtl_ir} || {}),
                 output_drive_family => $output_drive_family,
                 drive_intent => $self->shared_datapath_drive_intent_from_output_drive_family($output_drive_family),
             };
-            $candidate_groups{$key}{signal_name} = $port->name;
-            $candidate_groups{$key}{width} = $port->width || 1;
+            $candidate_groups{$key}{signal_name} = $port->{name};
+            $candidate_groups{$key}{width} = $port->{width} || 1;
             $candidate_groups{$key}{interface_type} = $normalized_type;
         }
 
-        for my $port (@{$instance->interface_ports || []}) {
-            next unless ($port->direction || '') eq 'input';
+        for my $port (@{$instance->{interface_ports} || []}) {
+            next unless (($port->{direction} || '') eq 'input');
 
-            my $normalized_type = $self->normalized_interface_type($port->type);
+            my $normalized_type = $self->normalized_interface_type($port->{type});
             my $key = join "\x1E",
-                ($port->name // ''),
-                ($port->width // 1),
+                ($port->{name} // ''),
+                ($port->{width} // 1),
                 $normalized_type;
 
             push @{$peer_input_groups{$key}}, {
-                instance_name => $instance->instance_name,
-                module_name => $instance->module_name,
-                endpoint => ($instance->instance_name // 'unknown').'.'.($port->name // 'unknown'),
-                bound_signal => $bindings{$port->name},
+                instance_name => ($child->{instance_name} // $instance->{instance_name}),
+                module_name => ($child->{module_name} // $instance->{module_name}),
+                endpoint => (($instance->{instance_name} // 'unknown').'.'.($port->{name} // 'unknown')),
+                bound_signal => $bindings{$port->{name}},
             };
         }
     }
