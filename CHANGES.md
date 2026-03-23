@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### structural binding-list mutation now lives in the structural helper module too
+- Updated [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) so the structural helper layer now also owns the first bounded signal-ref binding-list ensure/set operations.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so structural port-binding reuse/append/rebind paths now consume those helpers instead of keeping low-level list mutation rules locally.
+- Updated [t/167-structural-connection-expr-helpers.t](/Users/richarddje/Documents/github/fsmgen/t/167-structural-connection-expr-helpers.t) to lock the new binding-list helper surface directly.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next structural-helper ownership slice is tracked honestly.
+
 ### structural binding normalization now lives in the structural helper module too
 - Updated [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) so the structural helper layer now also owns normalized binding cloning/backfilling for the current bounded binding contract.
 - Updated [perl/FSM/Composition/RealizedInstance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RealizedInstance.pm) so realized child-binding normalization now consumes that shared structural helper instead of carrying its own private normalization logic.

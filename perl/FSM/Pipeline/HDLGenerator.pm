@@ -33,6 +33,8 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     signal_ref_expr
     signal_ref_binding
     update_binding_signal_ref
+    ensure_signal_ref_binding
+    set_signal_ref_binding
     normalized_binding
     binding_expr
     binding_signal_name
@@ -2426,28 +2428,16 @@ sub ensure_instance_port_binding ($self, $instance, $port_name, $signal_name) {
     return unless $instance && defined($port_name) && length($port_name);
     return unless defined($signal_name) && length($signal_name);
 
-    for my $binding (@{$instance->{port_bindings} || []}) {
-        next unless ($binding->{port_name} || '') eq $port_name;
-        if (binding_signal_name($binding) eq $signal_name) {
-            $binding->{connection_expr} ||= signal_ref_expr($signal_name);
-            return;
-        }
-    }
-
-    push @{$instance->{port_bindings}}, signal_ref_binding($port_name, $signal_name);
+    $instance->{port_bindings} ||= [];
+    ensure_signal_ref_binding($instance->{port_bindings}, $port_name, $signal_name);
 }
 
 sub set_instance_port_binding ($self, $instance, $port_name, $signal_name) {
     return unless $instance && defined($port_name) && length($port_name);
     return unless defined($signal_name) && length($signal_name);
 
-    for my $binding (@{$instance->{port_bindings} || []}) {
-        next unless ($binding->{port_name} || '') eq $port_name;
-        update_binding_signal_ref($binding, $signal_name);
-        return;
-    }
-
-    push @{$instance->{port_bindings}}, signal_ref_binding($port_name, $signal_name);
+    $instance->{port_bindings} ||= [];
+    set_signal_ref_binding($instance->{port_bindings}, $port_name, $signal_name);
 }
 
 sub composition_system_signal_names ($self, $composition_plan) {

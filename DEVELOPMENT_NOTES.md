@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural binding-list mutation now lives in the structural helper module too
+- Continued the active `R11` structural-IR cleanup lane by moving the remaining bounded port-binding list mutation rules out of `HDLGenerator`.
+- Landed behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns the first bounded signal-ref binding-list ensure/set operations,
+  - `HDLGenerator` now consumes those helpers when deciding whether to reuse, append, or rebind structural instance port bindings,
+  - and the current bounded signal-ref binding behavior stays unchanged while depending even less on pipeline-local list mutation rules.
+- Why this is worth shipping:
+  - it removes another low-level binding-ownership pocket from `HDLGenerator`,
+  - it makes the structural helper module a more complete owner of the first bounded binding family,
+  - and it leaves the next seam where it belongs: either widen `connection_expr` in one bounded portable form or keep peeling higher-level wiring consumers off compatibility mirrors.
+
 ## 2026-03-23: structural binding normalization now lives in the structural helper module too
 - Continued the active `R11` structural-IR cleanup lane by moving the remaining bounded binding normalization logic out of `RealizedInstance` and structural-serialization glue.
 - Landed behavior:

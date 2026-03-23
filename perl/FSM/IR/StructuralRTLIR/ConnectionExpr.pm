@@ -12,6 +12,8 @@ our @EXPORT_OK = qw(
     signal_ref_expr
     signal_ref_binding
     update_binding_signal_ref
+    ensure_signal_ref_binding
+    set_signal_ref_binding
     normalized_binding
     binding_expr
     expr_signal_name
@@ -42,6 +44,37 @@ sub update_binding_signal_ref ($binding, $signal_name) {
 
     $binding->{signal_name} = $signal_name;
     $binding->{connection_expr} = signal_ref_expr($signal_name);
+    return $binding;
+}
+
+sub ensure_signal_ref_binding ($bindings, $port_name, $signal_name) {
+    confess "StructuralRTLIR binding lists must be array entries"
+        unless ref($bindings) eq 'ARRAY';
+
+    for my $binding (@$bindings) {
+        next unless (($binding->{port_name} || '') eq ($port_name || ''));
+        if (binding_signal_name($binding) eq ($signal_name || '')) {
+            $binding->{connection_expr} ||= signal_ref_expr($signal_name);
+            return $binding;
+        }
+    }
+
+    my $binding = signal_ref_binding($port_name, $signal_name);
+    push @$bindings, $binding;
+    return $binding;
+}
+
+sub set_signal_ref_binding ($bindings, $port_name, $signal_name) {
+    confess "StructuralRTLIR binding lists must be array entries"
+        unless ref($bindings) eq 'ARRAY';
+
+    for my $binding (@$bindings) {
+        next unless (($binding->{port_name} || '') eq ($port_name || ''));
+        return update_binding_signal_ref($binding, $signal_name);
+    }
+
+    my $binding = signal_ref_binding($port_name, $signal_name);
+    push @$bindings, $binding;
     return $binding;
 }
 

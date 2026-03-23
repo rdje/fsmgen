@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural binding-list mutation now lives in the structural helper module too
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns the first bounded signal-ref binding-list ensure/set operations,
+  - `HDLGenerator` now uses those helpers when deciding whether to reuse, append, or rebind structural instance port bindings,
+  - and the current bounded signal-ref binding behavior stays stable.
+- Important continuity note:
+  - this removes another low-level binding-ownership pocket from `HDLGenerator`,
+  - it makes the structural helper module a more complete owner of the first bounded binding family,
+  - and the next likely seam is still either one bounded `connection_expr` widening or another higher-level wiring consumer moving further off compatibility mirrors.
+
 ## 2026-03-23: structural binding normalization now lives in the structural helper module too
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns normalized binding cloning/backfilling for the current bounded binding contract,

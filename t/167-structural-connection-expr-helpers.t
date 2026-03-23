@@ -12,6 +12,8 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     signal_ref_expr
     signal_ref_binding
     update_binding_signal_ref
+    ensure_signal_ref_binding
+    set_signal_ref_binding
     normalized_binding
     binding_expr
     expr_signal_name
@@ -129,6 +131,59 @@ subtest 'signal_ref binding updates keep compatibility and typed fields aligned'
         },
         'signal_ref binding update keeps the compatibility and typed fields aligned',
     );
+};
+
+subtest 'binding-list ensure and set helpers now own bounded signal-ref port-binding updates' => sub {
+    my $bindings = [
+        signal_ref_binding('data_in', 'top_data'),
+    ];
+
+    my $ensured = ensure_signal_ref_binding($bindings, 'data_in', 'top_data');
+    is($ensured, $bindings->[0], 'ensure helper reuses an existing matching binding');
+    is(scalar(@$bindings), 1, 'ensure helper does not duplicate an existing matching binding');
+
+    my $added = ensure_signal_ref_binding($bindings, 'clk', 'clk');
+    is($added, $bindings->[1], 'ensure helper returns the appended binding for a new port');
+    is_deeply(
+        $bindings,
+        [
+            {
+                port_name => 'data_in',
+                signal_name => 'top_data',
+                connection_expr => {
+                    kind => 'signal_ref',
+                    signal_name => 'top_data',
+                },
+            },
+            {
+                port_name => 'clk',
+                signal_name => 'clk',
+                connection_expr => {
+                    kind => 'signal_ref',
+                    signal_name => 'clk',
+                },
+            },
+        ],
+        'ensure helper appends a bounded signal-ref binding when the port is new',
+    );
+
+    my $rebound = set_signal_ref_binding($bindings, 'data_in', 'shared_bus');
+    is($rebound, $bindings->[0], 'set helper updates the existing binding in place');
+    is_deeply(
+        $bindings->[0],
+        {
+            port_name => 'data_in',
+            signal_name => 'shared_bus',
+            connection_expr => {
+                kind => 'signal_ref',
+                signal_name => 'shared_bus',
+            },
+        },
+        'set helper keeps the compatibility and typed fields aligned on existing bindings',
+    );
+
+    my $set_added = set_signal_ref_binding($bindings, 'rstn', 'rstn');
+    is($set_added, $bindings->[2], 'set helper appends a new binding when the port is missing');
 };
 
 subtest 'normalized binding cloning and backfilling now live in the structural helper module' => sub {
