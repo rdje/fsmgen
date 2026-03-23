@@ -84,6 +84,7 @@ FSM
 
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $report = $result->{composition_report};
+    my $structural_rtl_ir = $result->{structural_rtl_ir};
     my ($producer_instance, $router_instance) = @{$result->{composition_plan}->instances};
     my ($producer_to_router) = grep {
         ($_->{source} || '') eq 'producer.output_data'
@@ -106,12 +107,38 @@ FSM
         'clk -> producer.clk (?fsm, states: 2, output drive families: 1)',
         'provenance report keeps one stable forward-context example for auto system-port provenance',
     );
+    is_deeply(
+        [
+            map {
+                +{
+                    name => $_->{name},
+                    direction => $_->{direction},
+                    width => $_->{width},
+                    type => $_->{type},
+                }
+            } @{$report->{ports} || []}
+        ],
+        [
+            map {
+                +{
+                    name => $_->{name},
+                    direction => $_->{direction},
+                    width => $_->{width},
+                    type => $_->{type},
+                }
+            } @{$structural_rtl_ir->{ports} || []}
+        ],
+        'provenance report now mirrors structural_rtl_ir top-port metadata',
+    );
 
     is($producer_to_router->{source_context}{kind}, 'child_endpoint', 'resolved-link provenance tags child source endpoints explicitly');
     is($producer_to_router->{source_context}{instance_name}, 'producer', 'resolved-link provenance keeps source instance name');
     is($producer_to_router->{source_context}{source_root_kind}, 'fsm', 'resolved-link provenance keeps source root kind');
     is($producer_to_router->{source_context}{regular_state_count}, 2, 'resolved-link provenance keeps source state count');
     is($producer_to_router->{source_context}{output_drive_family_count}, 1, 'resolved-link provenance keeps source output-drive-family count');
+    is($producer_to_router->{source_context}{direction}, 'output', 'resolved-link provenance source direction now comes from structural child interface metadata');
+    is($producer_to_router->{source_context}{width}, 8, 'resolved-link provenance source width now comes from structural child interface metadata');
+    is($producer_to_router->{source_context}{type}, undef, 'resolved-link provenance source type now comes from structural child interface metadata');
     is_deeply(
         $producer_to_router->{source_context}{intent_hir},
         $producer_instance->module_info->{intent_hir},
@@ -128,6 +155,9 @@ FSM
     is($producer_to_router->{target_context}{source_root_kind}, 'dt', 'resolved-link provenance keeps target root kind');
     is($producer_to_router->{target_context}{standalone_dt_count}, 3, 'resolved-link provenance keeps target standalone-DT block count');
     is($producer_to_router->{target_context}{output_drive_family_count}, 1, 'resolved-link provenance keeps target output-drive-family count');
+    is($producer_to_router->{target_context}{direction}, 'input', 'resolved-link provenance target direction now comes from structural child interface metadata');
+    is($producer_to_router->{target_context}{width}, 8, 'resolved-link provenance target width now comes from structural child interface metadata');
+    is($producer_to_router->{target_context}{type}, undef, 'resolved-link provenance target type now comes from structural child interface metadata');
     is_deeply(
         $producer_to_router->{target_context}{intent_hir},
         $router_instance->module_info->{intent_hir},

@@ -796,6 +796,11 @@ Done:
 - [t/162-composition-top-structural-rtl-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/162-composition-top-structural-rtl-ir-surface.t) now also locks:
   - composition-top `module_info` child/net counts mirroring `structural_rtl_ir`,
   - and composition statistics child/top-port/net counts mirroring `structural_rtl_ir`.
+- The next structural-consumption step is now also shipped through composition provenance:
+  - `composition_report` now consumes `structural_rtl_ir` for top-port metadata and resolved-link endpoint lookup instead of rereading those bounded boundary/interface details directly from plan internals.
+- [t/161-composition-provenance-origin-examples.t](/Users/richarddje/Documents/github/fsmgen/t/161-composition-provenance-origin-examples.t) now also locks:
+  - provenance report top-port metadata mirroring `structural_rtl_ir`,
+  - and resolved-link endpoint direction/width/type metadata mirroring child structural interface ports.
 - The next forward-IR widening step through the composition provenance/reporting surface is now also shipped:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
   - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,

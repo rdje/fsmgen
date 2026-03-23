@@ -4548,6 +4548,8 @@ This is the persistent technical change history for FSMGen.
   - composition-top `lowered_rtl_ir` now derives internal-net names, realized-instance names, and auxiliary-assignment counts from `structural_rtl_ir` instead of rebuilding that bounded connectivity slice directly from the plan.
 - Started consuming that structural layer in top-level composition accounting too:
   - composition-top `module_info` and `statistics` now derive child, top-port, and internal-net counts from `structural_rtl_ir` instead of rereading those bounded accounting fields directly from the plan.
+- Started consuming that structural layer in composition provenance too:
+  - `composition_report` now derives top-port metadata and resolved-link endpoint lookup from `structural_rtl_ir` instead of rereading those bounded boundary/interface details directly from the plan.
 - Logged the next forward-IR architecture refinement for future implementation:
   - the current extracted `Lowered RTL IR` is now explicitly treated as a lowered summary layer rather than the final full connectivity graph,
   - the forward compiler is now steered toward `Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend`,

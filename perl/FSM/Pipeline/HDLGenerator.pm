@@ -254,7 +254,8 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
         || $self->parse_composition_source($raw_ast);
 
     my $composition_plan = $self->build_composition_plan($composition_spec, $fsm_file, $header);
-    my $composition_report = $self->build_composition_provenance_report($composition_plan);
+    my $structural_rtl_ir = $self->build_composition_structural_rtl_ir($composition_plan);
+    my $composition_report = $self->build_composition_provenance_report($composition_plan, $structural_rtl_ir);
     my $generated_child_exports = $self->build_composition_generated_child_exports($composition_plan);
     my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports($composition_plan);
     my $intent_hir = $self->build_composition_intent_hir(
@@ -262,7 +263,6 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
         $generated_child_exports,
         $standalone_dt_child_exports,
     );
-    my $structural_rtl_ir = $self->build_composition_structural_rtl_ir($composition_plan);
     my $lowered_rtl_ir = $self->build_composition_lowered_rtl_ir($composition_plan, $structural_rtl_ir);
     my $hdl_code = $self->generate_composition_hdl_code($composition_plan, $structural_rtl_ir);
     my $module_info = $self->build_composition_module_info(
@@ -696,7 +696,7 @@ sub realize_rtl_child_instance ($self, $instance, $composition_spec, $fsm_file, 
 
 sub build_realized_child_interface_ports ($self, $module_info) {
     my %ports;
-    my $structural_rtl_ir = $self->module_structural_rtl_ir($module_info);
+    my $child_structural_rtl_ir = $self->module_structural_rtl_ir($module_info);
     my $system_contract = $module_info->{system_contract} || {
         clock => 'clk',
         reset => 'rst_n',
@@ -708,8 +708,8 @@ sub build_realized_child_interface_ports ($self, $module_info) {
         ($system_contract->{reset} => 'reset'),
     );
 
-    if (ref($structural_rtl_ir->{ports}) eq 'ARRAY' && @{$structural_rtl_ir->{ports}}) {
-        for my $entry (@{$structural_rtl_ir->{ports}}) {
+    if (ref($child_structural_rtl_ir->{ports}) eq 'ARRAY' && @{$child_structural_rtl_ir->{ports}}) {
+        for my $entry (@{$child_structural_rtl_ir->{ports}}) {
             next unless defined($entry->{name}) && length($entry->{name});
             my $type = $entry->{type};
             $type = $system_port_type{$entry->{name}}
@@ -3550,24 +3550,27 @@ sub build_composition_statistics ($self, $composition_plan, $composition_report 
     return $stats;
 }
 
-sub build_composition_provenance_report ($self, $composition_plan) {
+sub build_composition_provenance_report ($self, $composition_plan, $structural_rtl_ir = undef) {
+    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
+
     my @ports = map {
-        my $origin_kind = $_->origin_kind || 'unknown_port_origin';
+        my $origin_kind = $_->{origin_kind} || 'unknown_port_origin';
         +{
-            name => $_->name,
-            direction => $_->direction,
-            width => $_->width,
-            type => $_->type,
+            name => $_->{name},
+            direction => $_->{direction},
+            width => $_->{width},
+            type => $_->{type},
             origin_kind => $origin_kind,
             origin_category => $self->composition_provenance_category($origin_kind),
             origin_label => $self->composition_provenance_label($origin_kind),
         }
-    } @{$composition_plan->ports || []};
+    } @{$structural_rtl_ir_hash->{ports} || []};
 
     my @resolved_links = map {
         my $origin_kind = $_->origin_kind || 'unknown_link_origin';
-        my $source_context = $self->composition_provenance_endpoint_context($composition_plan, $_->source);
-        my $target_context = $self->composition_provenance_endpoint_context($composition_plan, $_->target);
+        my $source_context = $self->composition_provenance_endpoint_context($composition_plan, $_->source, $structural_rtl_ir);
+        my $target_context = $self->composition_provenance_endpoint_context($composition_plan, $_->target, $structural_rtl_ir);
         +{
             source => $_->source,
             target => $_->target,
@@ -3658,21 +3661,23 @@ sub build_composition_provenance_report ($self, $composition_plan) {
     };
 }
 
-sub composition_provenance_endpoint_context ($self, $composition_plan, $endpoint) {
+sub composition_provenance_endpoint_context ($self, $composition_plan, $endpoint, $structural_rtl_ir = undef) {
     return undef unless defined $endpoint && length $endpoint;
 
+    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
     my %top_port_by_name = map {
-        (($_->name || '') => $_)
-    } @{$composition_plan->ports || []};
+        ((($_->{name}) || '') => $_)
+    } @{$structural_rtl_ir_hash->{ports} || []};
 
     if (my $top_port = $top_port_by_name{$endpoint}) {
         return {
             kind => 'top_port',
-            name => $top_port->name,
-            endpoint => $top_port->name,
-            direction => $top_port->direction,
-            width => $top_port->width,
-            type => $top_port->type,
+            name => $top_port->{name},
+            endpoint => $top_port->{name},
+            direction => $top_port->{direction},
+            width => $top_port->{width},
+            type => $top_port->{type},
         };
     }
 
@@ -3691,14 +3696,17 @@ sub composition_provenance_endpoint_context ($self, $composition_plan, $endpoint
         endpoint => $endpoint,
     } unless $instance;
 
+    my ($structural_instance) = grep {
+        ((($_->{instance_name}) || '') eq $instance_name)
+    } @{$structural_rtl_ir_hash->{instances} || []};
     my ($port) = grep {
-        (($_->name || '') eq $port_name)
-    } @{$instance->interface_ports || []};
+        ((($_->{name}) || '') eq $port_name)
+    } @{($structural_instance || {})->{interface_ports} || []};
 
     my $module_info = $instance->module_info || {};
     my $intent_hir = $self->module_intent_hir($module_info);
     my $lowered_rtl_ir = $self->module_lowered_rtl_ir($module_info);
-    my $structural_rtl_ir = $self->module_structural_rtl_ir($module_info);
+    my $child_structural_rtl_ir = $self->module_structural_rtl_ir($module_info);
     my $source_root_kind = $intent_hir->{source_root_kind}
         // $module_info->{source_root_kind}
         // (($instance->kind || '') eq 'dtc' ? 'dt'
@@ -3713,16 +3721,16 @@ sub composition_provenance_endpoint_context ($self, $composition_plan, $endpoint
         module_name => $instance->module_name,
         source_name => $instance->source_name,
         port_name => $port_name,
-        direction => $port ? $port->direction : undef,
-        width => $port ? $port->width : undef,
-        type => $port ? $port->type : undef,
+        direction => $port ? $port->{direction} : undef,
+        width => $port ? $port->{width} : undef,
+        type => $port ? $port->{type} : undef,
         source_root_kind => $source_root_kind,
         regular_state_count => ($intent_hir->{regular_state_count} || 0),
         standalone_dt_count => ($intent_hir->{standalone_dt_count} || 0),
         output_drive_family_count => ($lowered_rtl_ir->{output_drive_family_count} || 0),
         intent_hir => $intent_hir,
         lowered_rtl_ir => $lowered_rtl_ir,
-        structural_rtl_ir => $structural_rtl_ir,
+        structural_rtl_ir => $child_structural_rtl_ir,
     };
 }
 
