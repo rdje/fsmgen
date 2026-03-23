@@ -5833,6 +5833,9 @@ It is an exact-delay pulse request:
 - The next structural-consumption step is now also live through composition provenance:
   - `composition_report` now consumes `structural_rtl_ir` for top-port metadata and resolved-link endpoint lookup,
   - so that bounded provenance/reporting no longer rereads those explicit boundary/interface details directly from plan internals either.
+- The next structural-consumption step is now also live through override/block reporting:
+  - composition override/block event grouping and candidate-context lookup now consume `structural_rtl_ir` for top-port and child-interface metadata,
+  - so those bounded same-name/interface-family reporting helpers no longer reread the same metadata directly from plan internals either.
 - Design note from this slice:
   - this is the first structural slice, not the whole universal connectivity story yet,
   - but it establishes the right boundary between `Lowered RTL IR` as lowered semantic summary and `Structural RTL IR` as the first extracted wiring/netlist layer.

@@ -95,11 +95,23 @@ FSM
         'report keeps one forward-context example for the same-name top-output override family',
     );
     is($input_override->{source_context}{kind}, 'top_port', 'top-input override event preserves top-port source context');
+    is($input_override->{source_context}{direction}, 'input', 'top-input override event source direction now comes from structural top-port metadata');
+    is($input_override->{source_context}{width}, 1, 'top-input override event source width now comes from structural top-port metadata');
+    is($input_override->{source_context}{type}, undef, 'top-input override event source type now comes from structural top-port metadata');
     is($input_override->{target_context}{kind}, 'child_endpoint', 'top-input override event preserves child-endpoint target context');
     is($input_override->{target_context}{source_root_kind}, 'dt', 'top-input override event preserves child root kind in target context');
+    is($input_override->{target_context}{direction}, 'input', 'top-input override event target direction now comes from structural child interface metadata');
+    is($input_override->{target_context}{width}, 1, 'top-input override event target width now comes from structural child interface metadata');
+    is($input_override->{target_context}{type}, undef, 'top-input override event target type now comes from structural child interface metadata');
     is($output_override->{source_context}{kind}, 'child_endpoint', 'top-output override event preserves child-endpoint source context');
     is($output_override->{source_context}{source_root_kind}, 'rtl', 'top-output override event preserves rtl child root kind in source context');
+    is($output_override->{source_context}{direction}, 'output', 'top-output override event source direction now comes from structural child interface metadata');
+    is($output_override->{source_context}{width}, 1, 'top-output override event source width now comes from structural child interface metadata');
+    is($output_override->{source_context}{type}, 'data', 'top-output override event source type now comes from structural child interface metadata');
     is($output_override->{target_context}{kind}, 'top_port', 'top-output override event preserves top-port target context');
+    is($output_override->{target_context}{direction}, 'output', 'top-output override event target direction now comes from structural top-port metadata');
+    is($output_override->{target_context}{width}, 1, 'top-output override event target width now comes from structural top-port metadata');
+    is($output_override->{target_context}{type}, undef, 'top-output override event target type now comes from structural top-port metadata');
     is(
         $result->{module_info}{composition_override_count},
         2,
@@ -196,7 +208,13 @@ FSM
     );
     is($reexport_override->{source_context}{kind}, 'child_endpoint', 'internal-carrier re-export override preserves child source context');
     is($reexport_override->{source_context}{source_root_kind}, 'dt', 'internal-carrier re-export override preserves dt child root kind');
+    is($reexport_override->{source_context}{direction}, 'output', 'internal-carrier re-export override source direction now comes from structural child interface metadata');
+    is($reexport_override->{source_context}{width}, 8, 'internal-carrier re-export override source width now comes from structural child interface metadata');
+    is($reexport_override->{source_context}{type}, undef, 'internal-carrier re-export override source type now comes from structural child interface metadata');
     is($reexport_override->{top_port_context}{kind}, 'top_port', 'internal-carrier re-export override preserves top-port context');
+    is($reexport_override->{top_port_context}{direction}, 'output', 'internal-carrier re-export override top-port direction now comes from structural top-port metadata');
+    is($reexport_override->{top_port_context}{width}, 8, 'internal-carrier re-export override top-port width now comes from structural top-port metadata');
+    is($reexport_override->{top_port_context}{type}, undef, 'internal-carrier re-export override top-port type now comes from structural top-port metadata');
 };
 
 subtest 'CLI prints convention override summary for non-quiet composition runs' => sub {

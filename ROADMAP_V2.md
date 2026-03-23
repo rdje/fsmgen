@@ -307,6 +307,8 @@ First shipped `R11` slice now in tree:
   - composition-top `module_info` and `statistics` now consume `structural_rtl_ir` for child, top-port, and internal-net counts instead of rereading those bounded accounting fields directly from plan internals.
 - The next structural-consumption step is now also shipped through composition provenance:
   - `composition_report` now consumes `structural_rtl_ir` for top-port metadata and resolved-link endpoint lookup, so that bounded reporting surface no longer rereads those explicit boundary/interface details directly from plan internals.
+- The next structural-consumption step is now also shipped through override/block reporting:
+  - composition override/block event grouping and candidate-context lookup now consume `structural_rtl_ir` for top-port and child-interface metadata, so that bounded reporting surface no longer rereads those same interface families directly from plan internals.
 - The next widening step is now also shipped through the composition provenance/reporting surface:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
   - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,

@@ -801,6 +801,11 @@ Done:
 - [t/161-composition-provenance-origin-examples.t](/Users/richarddje/Documents/github/fsmgen/t/161-composition-provenance-origin-examples.t) now also locks:
   - provenance report top-port metadata mirroring `structural_rtl_ir`,
   - and resolved-link endpoint direction/width/type metadata mirroring child structural interface ports.
+- The next structural-consumption step is now also shipped through override/block reporting:
+  - composition override/block event grouping and candidate-context lookup now consume `structural_rtl_ir` for top-port and child-interface metadata instead of rereading those same interface families directly from plan internals.
+- [t/105-composition-override-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/105-composition-override-reporting.t) and [t/106-composition-blocked-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/106-composition-blocked-reporting.t) now also lock:
+  - override/block event top-port and child-endpoint direction/width/type metadata mirroring `structural_rtl_ir`,
+  - and internal-carrier re-export / kept-internal candidate contexts using the same structural interface metadata surface.
 - The next forward-IR widening step through the composition provenance/reporting surface is now also shipped:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
   - those endpoint contexts now carry bounded forward child summaries when a resolved link touches a realized generated child endpoint,

@@ -100,8 +100,14 @@ FSM
     );
     is($blocked_input->{candidate_contexts}[0]{kind}, 'child_endpoint', 'blocked top-input inference event preserves child endpoint context');
     is($blocked_input->{candidate_contexts}[0]{source_root_kind}, 'dt', 'blocked top-input inference event preserves child root kind');
+    is($blocked_input->{candidate_contexts}[0]{direction}, 'input', 'blocked top-input inference candidate direction now comes from structural child interface metadata');
+    is($blocked_input->{candidate_contexts}[0]{width}, 8, 'blocked top-input inference candidate width now comes from structural child interface metadata');
+    is($blocked_input->{candidate_contexts}[0]{type}, undef, 'blocked top-input inference candidate type now comes from structural child interface metadata');
     is($blocked_output->{candidate_contexts}[0]{kind}, 'child_endpoint', 'blocked top-output inference event preserves child endpoint context');
     is($blocked_output->{candidate_contexts}[0]{source_root_kind}, 'dt', 'blocked top-output inference event preserves child root kind');
+    is($blocked_output->{candidate_contexts}[0]{direction}, 'output', 'blocked top-output inference candidate direction now comes from structural child interface metadata');
+    is($blocked_output->{candidate_contexts}[0]{width}, 8, 'blocked top-output inference candidate width now comes from structural child interface metadata');
+    is($blocked_output->{candidate_contexts}[0]{type}, undef, 'blocked top-output inference candidate type now comes from structural child interface metadata');
     is(
         $result->{module_info}{composition_block_count},
         2,
@@ -190,6 +196,9 @@ FSM
     );
     is($internal_block->{candidate_contexts}[0]{kind}, 'child_endpoint', 'kept-internal carrier event preserves child endpoint context');
     is($internal_block->{candidate_contexts}[0]{source_root_kind}, 'dt', 'kept-internal carrier event preserves dt child root kind');
+    is($internal_block->{candidate_contexts}[0]{direction}, 'output', 'kept-internal carrier candidate direction now comes from structural child interface metadata');
+    is($internal_block->{candidate_contexts}[0]{width}, 8, 'kept-internal carrier candidate width now comes from structural child interface metadata');
+    is($internal_block->{candidate_contexts}[0]{type}, undef, 'kept-internal carrier candidate type now comes from structural child interface metadata');
 };
 
 subtest 'CLI prints convention block summary for non-quiet composition runs' => sub {
