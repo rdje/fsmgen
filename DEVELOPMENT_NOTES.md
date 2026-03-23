@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural binding-expression fallback now lives in the structural helper module too
+- Continued the active `R11` structural-IR cleanup lane by moving one more last-mile fallback rule out of `HDLGenerator`.
+- Landed behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns the effective binding-expression fallback for bindings that only still carry the compatibility `signal_name` mirror,
+  - `HDLGenerator` now uses that structural helper when serializing composition-top structural instance bindings instead of re-synthesizing `signal_ref` nodes locally,
+  - and the current bounded `signal_ref` surface remains unchanged while depending less on pipeline-only fallback logic.
+- Why this is worth shipping:
+  - it keeps the actual-connection contract together in one place,
+  - it makes structural serialization a cleaner consumer of the structural layer instead of a partial rebuilder,
+  - and it leaves the next seam where it belongs: either widen `connection_expr` in one bounded portable form or move another consumer fully off the compatibility mirror.
+
 ## 2026-03-23: structural connection-expression helpers now live in the structural ir layer
 - Continued the active `R11` forward-IR cleanup lane by moving the first bounded actual-connection helper semantics out of pipeline glue and into the structural layer itself.
 - Landed behavior:

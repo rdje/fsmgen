@@ -10,6 +10,7 @@ no warnings 'experimental::signatures';
 
 our @EXPORT_OK = qw(
     signal_ref_expr
+    binding_expr
     expr_signal_name
     binding_signal_name
     render_expr
@@ -24,6 +25,12 @@ sub signal_ref_expr ($signal_name) {
     };
 }
 
+sub binding_expr ($binding) {
+    return undef unless ref($binding) eq 'HASH';
+    return $binding->{connection_expr} if ref($binding->{connection_expr}) eq 'HASH';
+    return signal_ref_expr($binding->{signal_name});
+}
+
 sub expr_signal_name ($expr) {
     return '' unless ref($expr) eq 'HASH';
     my $kind = $expr->{kind} || '';
@@ -32,8 +39,7 @@ sub expr_signal_name ($expr) {
 }
 
 sub binding_signal_name ($binding) {
-    return '' unless ref($binding) eq 'HASH';
-    return expr_signal_name($binding->{connection_expr}) || ($binding->{signal_name} || '');
+    return expr_signal_name(binding_expr($binding));
 }
 
 sub render_expr ($expr, $port_name = undef) {
@@ -53,10 +59,9 @@ sub render_expr ($expr, $port_name = undef) {
 sub binding_expr_text ($binding) {
     return '' unless ref($binding) eq 'HASH';
 
-    my $expr = $binding->{connection_expr};
+    my $expr = binding_expr($binding);
     return render_expr($expr, $binding->{port_name}) if ref($expr) eq 'HASH';
-
-    return $binding->{signal_name} || '';
+    return '';
 }
 
 1;

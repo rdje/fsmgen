@@ -10,6 +10,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     signal_ref_expr
+    binding_expr
     expr_signal_name
     binding_signal_name
     binding_expr_text
@@ -53,6 +54,18 @@ subtest 'binding signal-name lookup prefers the typed connection expression when
         }),
         'fallback_name',
         'binding signal-name recovery still falls back to the mirrored signal_name field',
+    );
+
+    is_deeply(
+        binding_expr({
+            port_name => 'data_in',
+            signal_name => 'fallback_name',
+        }),
+        {
+            kind => 'signal_ref',
+            signal_name => 'fallback_name',
+        },
+        'binding expression recovery synthesizes the bounded signal_ref node from the compatibility mirror when needed',
     );
 };
 
