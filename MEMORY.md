@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-24: realized-child interface port planning now lives in a composition builder package
+- Saved shipped behavior:
+  - `FSM::Composition::InterfacePortBuilder` now owns realized generated-child interface port construction from `module_info`,
+  - that same package now also owns the shared interface-type normalization and system-port ordering rules used by composition planning,
+  - and the direct interface helper tests now call that package directly instead of asking `HDLGenerator` to build realized-child boundary ports.
+- Important continuity note:
+  - this removes another real builder/planning pocket from the pipeline monolith,
+  - it gives the future composition-plan split a cleaner seam because child-interface projection now has an explicit owner,
+  - and the next likely seam is another composition builder extraction or a deeper orchestrator breakdown step.
+
 ## 2026-03-24: composition-top StructuralRTLIR building now lives in a builder package
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIRBuilder` now owns composition-top structural IR construction from `FSM::Composition::Plan`,

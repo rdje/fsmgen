@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-24: realized-child interface port planning now lives in a composition builder package
+- Continued the active `R11` package-breakdown lane by pulling one composition-planning helper cluster out of `HDLGenerator` instead of waiting for the full composition-plan builder split.
+- Landed behavior:
+  - added `FSM::Composition::InterfacePortBuilder` as the owner of realized generated-child interface port construction from `module_info`,
+  - that same package now also owns the shared interface-type normalization and system-port ordering rules used by composition planning,
+  - and the direct interface helper tests now point at that package instead of treating `HDLGenerator` as the owner of realized-child boundary projection.
+- Why this is worth shipping:
+  - it removes another real builder/planning responsibility from the pipeline monolith,
+  - it gives the future composition-plan split a cleaner seam because child-interface projection is no longer tangled with the main coordinator,
+  - and it leaves the next seam where it belongs: another composition builder extraction or a deeper direct-root/orchestrator split.
+
 ## 2026-03-24: composition-top StructuralRTLIR building now lives in a builder package
 - Continued the active `R11` package-breakdown lane by moving the matching structural-assembly slice out of `HDLGenerator` after the first backend-emitter extraction landed.
 - Landed behavior:

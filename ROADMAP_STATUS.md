@@ -1366,6 +1366,11 @@ Exit criteria:
   `StructuralRTLIR` construction and hash/object coercion now live in
   `FSM::IR::StructuralRTLIRBuilder`, so `HDLGenerator` no longer owns that
   structural assembly/coercion code directly either.
+- `R11`: another composition-side builder split is now active too: realized
+  generated-child interface port construction plus the shared interface-type
+  normalization and system-port ordering rules now live in
+  `FSM::Composition::InterfacePortBuilder`, so `HDLGenerator` no longer owns
+  that child-boundary projection logic directly either.
 - `R11`: `StructuralRTLIR` now also owns composition-top port metadata
   projection through `port_metadata` and `port_metadata_from_input`, so
   composition-top `signals` / `signal_names` / grouped input-output signal

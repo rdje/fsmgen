@@ -16,6 +16,7 @@ use FSM::Debug;
 use FSM::HDL::FlattenedDT;
 use FSM::Adapter::FSMGenFull;
 use FSM::Composition::Parser;
+use FSM::Composition::InterfacePortBuilder;
 use FSM::Composition::Net;
 use FSM::Composition::Port;
 use FSM::Composition::Plan;
@@ -570,7 +571,7 @@ sub realize_fsmc_child_instance ($self, $instance, $composition_spec, $fsm_file,
         $child_hdl_code,
         $shared_datapath_source_exports,
     );
-    my $child_interface_ports = $self->build_realized_child_interface_ports($child_module_info);
+    my $child_interface_ports = FSM::Composition::InterfacePortBuilder->build_realized_child_interface_ports($child_module_info);
 
     return FSM::Composition::RealizedInstance->new(
         kind => 'fsmc',
@@ -599,7 +600,7 @@ sub realize_dtc_child_instance ($self, $instance, $composition_spec, $fsm_file, 
     my $child_structural_rtl_ir = $self->build_structural_rtl_ir($child_module_info, $child_module);
     $child_module_info->{structural_rtl_ir} = $child_structural_rtl_ir->as_hashref;
     $child_hdl_code = $self->augment_generated_hdl_with_standalone_dt_assertions($child_hdl_code, $child_module_info);
-    my $child_interface_ports = $self->build_realized_child_interface_ports($child_module_info);
+    my $child_interface_ports = FSM::Composition::InterfacePortBuilder->build_realized_child_interface_ports($child_module_info);
 
     return FSM::Composition::RealizedInstance->new(
         kind => 'dtc',
@@ -723,97 +724,6 @@ sub realize_rtl_child_instance ($self, $instance, $composition_spec, $fsm_file, 
         },
         hdl_code => undef,
     );
-}
-
-sub build_realized_child_interface_ports ($self, $module_info) {
-    my %ports;
-    my $child_structural_rtl_ir = $self->module_structural_rtl_ir($module_info);
-    my $intent_hir = $self->module_intent_hir($module_info);
-    my $system_contract = FSM::IR::IntentHIR->system_contract_from_input(
-        $intent_hir,
-        $module_info->{system_contract} || {
-            clock => 'clk',
-            reset => 'rst_n',
-            reset_keyword => 'asreset',
-            implicit => 1,
-        },
-    );
-    my %system_port_type = (
-        ($system_contract->{clock} => 'clock'),
-        ($system_contract->{reset} => 'reset'),
-    );
-
-    if (ref($child_structural_rtl_ir->{ports}) eq 'ARRAY' && @{$child_structural_rtl_ir->{ports}}) {
-        for my $entry (@{$child_structural_rtl_ir->{ports}}) {
-            next unless defined($entry->{name}) && length($entry->{name});
-            my $type = $entry->{type};
-            $type = $system_port_type{$entry->{name}}
-                if !defined($type) || $type eq '';
-            $type = undef
-                if defined($type) && ($type eq 'wire' || $type eq 'logic');
-
-            $ports{$entry->{name}} = FSM::Composition::Port->new(
-                name => $entry->{name},
-                direction => ($entry->{direction} || 'input'),
-                width => $entry->{width} || 1,
-                type => $type,
-                raw_token => undef,
-                origin_kind => 'realized_child_interface_port',
-            );
-        }
-    } else {
-        for my $direction (qw(input output)) {
-            my $list = $direction eq 'input'
-                ? FSM::IR::IntentHIR->signal_analysis_entries_from_input($intent_hir, 'inputs')
-                : FSM::IR::IntentHIR->signal_analysis_entries_from_input($intent_hir, 'outputs');
-            $list = $direction eq 'input'
-                ? ($module_info->{signal_analysis}{inputs} || [])
-                : ($module_info->{signal_analysis}{outputs} || [])
-                unless @$list;
-
-            for my $entry (@$list) {
-                $ports{$entry->{name}} = FSM::Composition::Port->new(
-                    name => $entry->{name},
-                    direction => $direction,
-                    width => $entry->{width} || 1,
-                    type => $system_port_type{$entry->{name}},
-                    raw_token => undef,
-                    origin_kind => 'realized_child_interface_port',
-                );
-            }
-        }
-    }
-
-    if ($system_contract->{declare_ports}) {
-        for my $system_name (keys %system_port_type) {
-            $ports{$system_name} //= FSM::Composition::Port->new(
-                name => $system_name,
-                direction => 'input',
-                width => 1,
-                type => $system_port_type{$system_name},
-                raw_token => undef,
-                origin_kind => 'realized_child_interface_port',
-            );
-        }
-    }
-
-    my @ordered_names = sort {
-        $self->system_port_sort_key($ports{$a}) <=> $self->system_port_sort_key($ports{$b})
-        ||
-        $a cmp $b
-    } keys %ports;
-
-    return [map { $ports{$_} } @ordered_names];
-}
-
-sub system_port_sort_key ($self, $port) {
-    return 0 if ($port->type || '') eq 'clock';
-    return 1 if ($port->type || '') eq 'reset';
-    return 2;
-}
-
-sub normalized_interface_type ($self, $type) {
-    return defined($type) && length($type) ? $type : 'data';
 }
 
 sub clean_enable_name_token ($self, $name) {
@@ -1342,7 +1252,7 @@ sub augment_with_inferred_top_ports_from_explicit_links ($self, $ports, $toplink
     } values %inferred_specs;
 
     @inferred_ports = sort {
-        $self->system_port_sort_key($a) <=> $self->system_port_sort_key($b)
+        FSM::Composition::InterfacePortBuilder->system_port_sort_key($a) <=> FSM::Composition::InterfacePortBuilder->system_port_sort_key($b)
         ||
         $a->name cmp $b->name
     } @inferred_ports;
@@ -1352,7 +1262,7 @@ sub augment_with_inferred_top_ports_from_explicit_links ($self, $ports, $toplink
 
 sub record_inferred_top_port_from_explicit_link ($self, $inferred_specs, $top_name, $direction, $child_endpoint, $evidence, $fsm_file, $header) {
     my $width = $child_endpoint->{port}->width;
-    my $type = $self->normalized_interface_type($child_endpoint->{port}->type);
+    my $type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($child_endpoint->{port}->type);
     my $existing = $inferred_specs->{$top_name};
 
     if ($existing) {
@@ -1457,11 +1367,11 @@ sub augment_with_inferred_undeclared_top_inputs ($self, $ports, $realized_instan
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
-        my %types = map { $self->normalized_interface_type($_->{port}->type) => 1 } @input_candidates;
+        my %types = map { FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}->type) => 1 } @input_candidates;
         if (keys(%types) > 1) {
             my $candidates = join(', ', map {
                 $_->{instance_name}.'.'.$_->{port}->name.
-                '['.$_->{port}->direction.', width='.$_->{port}->width.', type='.$self->normalized_interface_type($_->{port}->type).']'
+                '['.$_->{port}->direction.', width='.$_->{port}->width.', type='.FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}->type).']'
             } @input_candidates);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' omits top port '$port_name', ".
@@ -1476,7 +1386,7 @@ sub augment_with_inferred_undeclared_top_inputs ($self, $ports, $realized_instan
             name => $template->name,
             direction => 'input',
             width => $template->width,
-            type => $self->normalized_interface_type($template->type),
+            type => FSM::Composition::InterfacePortBuilder->normalized_interface_type($template->type),
             raw_token => undef,
             binding_mode => $same_name_undeclared_top_input_links{$template->name}
                 ? 'explicit'
@@ -1486,7 +1396,7 @@ sub augment_with_inferred_undeclared_top_inputs ($self, $ports, $realized_instan
     }
 
     @inferred_ports = sort {
-        $self->system_port_sort_key($a) <=> $self->system_port_sort_key($b)
+        FSM::Composition::InterfacePortBuilder->system_port_sort_key($a) <=> FSM::Composition::InterfacePortBuilder->system_port_sort_key($b)
         ||
         $a->name cmp $b->name
     } @inferred_ports;
@@ -1550,7 +1460,7 @@ sub augment_with_inferred_undeclared_top_outputs ($self, $ports, $realized_insta
             name => $template->name,
             direction => 'output',
             width => $template->width,
-            type => $self->normalized_interface_type($template->type),
+            type => FSM::Composition::InterfacePortBuilder->normalized_interface_type($template->type),
             raw_token => $source_endpoint,
             binding_mode => 'implicit_unique_output',
             origin_kind => 'inferred_undeclared_top_output_port',
@@ -1558,7 +1468,7 @@ sub augment_with_inferred_undeclared_top_outputs ($self, $ports, $realized_insta
     }
 
     @inferred_ports = sort {
-        $self->system_port_sort_key($a) <=> $self->system_port_sort_key($b)
+        FSM::Composition::InterfacePortBuilder->system_port_sort_key($a) <=> FSM::Composition::InterfacePortBuilder->system_port_sort_key($b)
         ||
         $a->name cmp $b->name
     } @inferred_ports;
@@ -2141,14 +2051,14 @@ sub build_implicit_top_input_links ($self, $ports, $explicit_links, $realized_in
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
             }
 
-            my $declared_type = $self->normalized_interface_type($top_port->type);
+            my $declared_type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($top_port->type);
             my @type_incompatible_candidates = grep {
-                $self->normalized_interface_type($_->{port}->type) ne $declared_type
+                FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}->type) ne $declared_type
             } @same_name_candidates;
             if (@type_incompatible_candidates) {
                 my $candidates = join(', ', map {
                     $_->{instance_name}.'.'.$_->{port}->name.
-                    '['.$_->{port}->direction.', width='.$_->{port}->width.', type='.$self->normalized_interface_type($_->{port}->type).']'
+                    '['.$_->{port}->direction.', width='.$_->{port}->width.', type='.FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}->type).']'
                 } @same_name_candidates);
                 Carp::confess
                     "Composition source '$header' in '$fsm_file' declares top input '".$top_port->name."' with interface type '$declared_type', ".
@@ -2164,8 +2074,8 @@ sub build_implicit_top_input_links ($self, $ports, $explicit_links, $realized_in
         for my $candidate (@same_name_candidates) {
             next unless ($candidate->{port}->direction || '') eq 'input';
             next unless $candidate->{port}->width == $top_port->width;
-            next unless $self->normalized_interface_type($candidate->{port}->type)
-                eq $self->normalized_interface_type($top_port->type);
+            next unless FSM::Composition::InterfacePortBuilder->normalized_interface_type($candidate->{port}->type)
+                eq FSM::Composition::InterfacePortBuilder->normalized_interface_type($top_port->type);
 
             my $target_endpoint = $candidate->{instance_name}.'.'.$candidate->{port}->name;
             next if $binding_mode eq 'explicit' && $explicit_targets{$target_endpoint};
@@ -2230,8 +2140,8 @@ sub build_implicit_top_output_links ($self, $ports, $explicit_links, $realized_i
 
             if (@top_facing_output_candidates == 1) {
                 my $candidate = $top_facing_output_candidates[0];
-                my $candidate_type = $self->normalized_interface_type($candidate->{port}->type);
-                my $declared_type = $self->normalized_interface_type($top_port->type);
+                my $candidate_type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($candidate->{port}->type);
+                my $declared_type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($top_port->type);
 
                 Carp::confess
                     "Composition source '$header' in '$fsm_file' declares top output '".$top_port->name."' with width ".$top_port->width.", ".
@@ -2343,11 +2253,11 @@ sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $re
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
-        my %types = map { $self->normalized_interface_type($_->{port}->type) => 1 } @candidates;
+        my %types = map { FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}->type) => 1 } @candidates;
         if (keys(%types) > 1) {
             my $seen = join(', ', map {
                 $_->{instance_name}.'.'.$_->{port}->name.
-                '['.$_->{port}->direction.', width='.$_->{port}->width.', type='.$self->normalized_interface_type($_->{port}->type).']'
+                '['.$_->{port}->direction.', width='.$_->{port}->width.', type='.FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}->type).']'
             } @candidates);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' omits explicit same-name internal wiring for '$port_name', ".
@@ -2358,7 +2268,7 @@ sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $re
         }
 
         my $resolved_width = $candidates[0]{port}->width;
-        my $resolved_type = $self->normalized_interface_type($candidates[0]{port}->type);
+        my $resolved_type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($candidates[0]{port}->type);
         if ($declared_top_port) {
             Carp::confess
                 "Composition source '$header' in '$fsm_file' declares top output '$port_name' with width ".$declared_top_port->width.", ".
@@ -2367,7 +2277,7 @@ sub build_implicit_internal_same_name_links ($self, $ports, $explicit_links, $re
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                 unless $declared_top_port->width == $resolved_width;
 
-            my $declared_top_type = $self->normalized_interface_type($declared_top_port->type);
+            my $declared_top_type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($declared_top_port->type);
             Carp::confess
                 "Composition source '$header' in '$fsm_file' declares top output '$port_name' with interface type '$declared_top_type', ".
                 "but explicit top-output re-export is blocked because the same-name internal-carrier family resolves to interface type '$resolved_type'. ".
@@ -3319,7 +3229,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
         for my $port (@{$instance->{interface_ports} || []}) {
             next unless (($port->{direction} || '') eq 'output');
 
-            my $normalized_type = $self->normalized_interface_type($port->{type});
+            my $normalized_type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($port->{type});
             my $key = join "\x1E",
                 ($port->{name} // ''),
                 ($port->{width} // 1),
@@ -3353,7 +3263,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
         for my $port (@{$instance->{interface_ports} || []}) {
             next unless (($port->{direction} || '') eq 'input');
 
-            my $normalized_type = $self->normalized_interface_type($port->{type});
+            my $normalized_type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($port->{type});
             my $key = join "\x1E",
                 ($port->{name} // ''),
                 ($port->{width} // 1),
@@ -3867,8 +3777,8 @@ sub build_composition_override_events ($self, $composition_plan, $structural_rtl
             my @compatible = grep {
                 (($_->{port}{direction} || '') eq 'input')
                 && $_->{port}{width} == $top_port->{width}
-                && $self->normalized_interface_type($_->{port}{type})
-                    eq $self->normalized_interface_type($top_port->{type})
+                && FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}{type})
+                    eq FSM::Composition::InterfacePortBuilder->normalized_interface_type($top_port->{type})
             } @same_name_candidates;
 
             next unless @compatible == @same_name_candidates;
@@ -3892,8 +3802,8 @@ sub build_composition_override_events ($self, $composition_plan, $structural_rtl
         my @compatible_output_candidates = grep {
             (($_->{port}{direction} || '') eq 'output')
             && $_->{port}{width} == $top_port->{width}
-            && $self->normalized_interface_type($_->{port}{type})
-                eq $self->normalized_interface_type($top_port->{type})
+            && FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}{type})
+                eq FSM::Composition::InterfacePortBuilder->normalized_interface_type($top_port->{type})
         } @same_name_candidates;
 
         next unless @compatible_output_candidates == @same_name_candidates;
@@ -3973,7 +3883,7 @@ sub build_composition_block_events ($self, $composition_plan, $structural_rtl_ir
         my @input_candidates = grep { (($_->{port}{direction} || '') eq 'input') } @candidates;
         if (@input_candidates && @input_candidates == @candidates && $explicitly_linked_child_input_names{$port_name}) {
             my %widths = map { $_->{port}{width} => 1 } @input_candidates;
-            my %types = map { $self->normalized_interface_type($_->{port}{type}) => 1 } @input_candidates;
+            my %types = map { FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}{type}) => 1 } @input_candidates;
             if (keys(%widths) == 1 && keys(%types) == 1) {
                 push @events, {
                     kind => 'explicit_child_links_block_undeclared_top_input_inference',

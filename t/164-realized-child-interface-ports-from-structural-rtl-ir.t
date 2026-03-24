@@ -9,6 +9,7 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::Composition::InterfacePortBuilder;
 use FSM::Pipeline::HDLGenerator;
 
 my $tempdir = tempdir(CLEANUP => 1);
@@ -90,9 +91,23 @@ FSM
         'realized fsm child interface ports mirror structural_rtl_ir boundary ports',
     );
     is_deeply(
+        normalize_interface_ports(
+            FSM::Composition::InterfacePortBuilder->build_realized_child_interface_ports($producer->module_info)
+        ),
+        normalize_interface_ports($producer->interface_ports),
+        'realized fsm child interface ports come from the extracted composition interface-port builder',
+    );
+    is_deeply(
         normalize_interface_ports($router->interface_ports),
         normalize_structural_ports($router->module_info->{structural_rtl_ir}),
         'realized dt child interface ports mirror structural_rtl_ir boundary ports',
+    );
+    is_deeply(
+        normalize_interface_ports(
+            FSM::Composition::InterfacePortBuilder->build_realized_child_interface_ports($router->module_info)
+        ),
+        normalize_interface_ports($router->interface_ports),
+        'realized dt child interface ports come from the extracted composition interface-port builder',
     );
 };
 

@@ -8,6 +8,7 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::Composition::InterfacePortBuilder;
 use FSM::IR::IntentHIR;
 use FSM::Pipeline::HDLGenerator;
 
@@ -66,12 +67,6 @@ subtest 'IntentHIR boundary helpers provide cloned system-contract and signal-an
 };
 
 subtest 'realized child interface fallback now prefers IntentHIR boundary metadata when structural ports are absent' => sub {
-    my $pipeline = FSM::Pipeline::HDLGenerator->new(
-        target_language => 'systemverilog',
-        debug_level => 0,
-        quiet => 1,
-    );
-
     my $module_info = {
         intent_hir => {
             module_name => 'child_from_intent_hir_fallback',
@@ -108,7 +103,7 @@ subtest 'realized child interface fallback now prefers IntentHIR boundary metada
         structural_rtl_ir => {},
     };
 
-    my $ports = $pipeline->build_realized_child_interface_ports($module_info);
+    my $ports = FSM::Composition::InterfacePortBuilder->build_realized_child_interface_ports($module_info);
 
     is_deeply(
         normalize_ports($ports),
