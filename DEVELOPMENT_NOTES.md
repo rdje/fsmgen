@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-24: forward-ir layering keeps StructuralRTLIR as the last emitter-facing IR
+- Clarified the intended end-state for the active forward-IR extraction lane so we do not confuse the current implementation shortcut with the desired architecture.
+- Landed decision:
+  - the target forward spine remains `IntentHIR -> LoweredRTLIR -> StructuralRTLIR -> backend emission`,
+  - `StructuralRTLIR` is still the intended last IR before HDL text,
+  - and the current direct `IntentHIR` / `LoweredRTLIR` lookups inside `FSM::Pipeline::HDLGenerator` are a transitional coordinator concern, not the final emitter boundary.
+- Why this matters:
+  - today `HDLGenerator` is still wearing three hats at once: compiler driver, lowering coordinator, and emitter,
+  - that means it can still legitimately query the owning semantic/lowered layers while we are extracting responsibility out of ad hoc local code,
+  - but the long-term plan is to split that combined module so the pure backend-emitter path mostly walks `StructuralRTLIR` and earlier layers stop leaking into the last text-rendering stage.
+
 ## 2026-03-23: structural top-port and resolved-link queries now live in StructuralRTLIR
 - Continued the active `R11` structural-IR ownership cleanup lane by moving two more obvious structural queries into `StructuralRTLIR` instead of leaving them as pipeline-local array scans.
 - Landed behavior:

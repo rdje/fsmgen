@@ -1185,6 +1185,7 @@ Left:
   - keep that `Structural RTL IR` backend-neutral, expressive, and extensible enough for rich top/child wiring, with child actual-pin connections growing as typed structural connection expressions / actual-connection AST nodes instead of raw HDL strings,
   - normalize any backend-specific or inelegant connection shape into helper nets / auxiliary assignments before it reaches the structural binding boundary,
   - keep those forward IR layers aligned with the future shared-middle/import architecture instead of allowing a second incompatible semantic stack to form,
+  - clarify and then realize the intended `HDLGenerator` breakdown so orchestration/lowering may still see `IntentHIR` and `LoweredRTLIR` while the pure backend-emitter boundary converges toward `StructuralRTLIR` as the last IR before HDL text,
   - split composition policy, interface inference, and top emission back out of `FSM::Pipeline::HDLGenerator`,
   - shrink `FSM::Synthesis::EnableGraph` toward a clearer synthesis boundary,
   - move planning/normalization residue out of `FSM::HDL::FlattenedDT::Backend::SystemVerilog` so backend responsibilities are more honest,
@@ -1346,3 +1347,9 @@ Exit criteria:
   `signal_analysis_entries_from_input`, so realized-child interface fallback
   no longer needs to reread that same semantic boundary data directly from raw
   `module_info` fields in `HDLGenerator`.
+- `R11`: the saved forward-IR convergence target remains `IntentHIR ->
+  LoweredRTLIR -> StructuralRTLIR -> backend emission`, but the current
+  `HDLGenerator` is still a combined driver/lowering/emitter module, so direct
+  semantic/lowered IR queries there are currently treated as transitional
+  coordinator cleanup while the longer-term split should leave the pure HDL
+  emitter mostly walking `StructuralRTLIR`.

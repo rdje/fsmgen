@@ -596,6 +596,8 @@ Planned IR layering:
 - that `Structural RTL IR` should stay backend-neutral and extensible rather than collapsing into raw SystemVerilog/VHDL syntax, so child actual-pin connections should eventually be represented through typed structural connection expressions / actual-connection AST nodes instead of opaque HDL strings,
 - those structural connection expressions should be allowed to grow toward durable connectivity forms such as references, literals, slices/part-selects, concatenations, member/index access, and bounded open/default associations where those remain portable across supported backends,
 - and when a connection gets too backend-specific or too awkward to keep elegant there, the healthier rule is to normalize it earlier into helper nets or auxiliary assignments and then bind the child pin to that normalized structural value,
+- one important implementation distinction is that the current `FSM::Pipeline::HDLGenerator` is still a combined compiler driver, lowering coordinator, and emitter, so any direct `Intent HIR` or `Lowered RTL IR` queries there should be treated as transitional coordinator cleanup rather than the desired final backend boundary,
+- and the convergence target is to split that combined role so orchestration may still see all three forward IRs while the pure HDL backend/emitter mostly walks `Structural RTL IR` as the last IR before HDL text,
 - `Flat IR` is likely optional in the forward path at first but valuable later for deeper optimization/analysis, while it is much more likely to be necessary in the reverse path because many hardware facts only become obvious after elaboration/flattening,
 - and the reverse path therefore needs one extra semantic stage beyond the forward path: a recovered-intent layer that can preserve confidence, ambiguity, and residue instead of pretending that inference is the same thing as authored intent.
 
@@ -742,3 +744,9 @@ The first honest `R11` slices are now:
   `signal_analysis_entries_from_input`, so realized-child interface fallback
   no longer needs to reread that same semantic boundary data directly from raw
   `module_info` fields in `HDLGenerator`.
+- Forward-IR note: the saved convergence target is still `IntentHIR ->
+  LoweredRTLIR -> StructuralRTLIR -> backend emission`, but the current
+  `HDLGenerator` remains a combined driver/lowering/emitter module, so direct
+  semantic or lowered IR queries there are still acceptable as transitional
+  coordinator cleanup while the longer-term split should leave pure HDL
+  emission mostly walking `StructuralRTLIR`.

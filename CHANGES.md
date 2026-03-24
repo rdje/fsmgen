@@ -1,5 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-24
+### clarified the intended HDLGenerator breakdown in the forward-ir plan
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the saved architecture now distinguishes the current implementation reality from the target layering more explicitly.
+- The logged clarification is:
+  - the target forward spine remains `IntentHIR -> LoweredRTLIR -> StructuralRTLIR -> backend emission`,
+  - `StructuralRTLIR` is still the intended last IR before HDL text,
+  - the current [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) still acts as a combined compiler driver, lowering coordinator, and emitter,
+  - and direct `IntentHIR` / `LoweredRTLIR` lookups there are therefore treated as transitional coordinator cleanup rather than as the desired final backend boundary.
+- The planned convergence stays the same:
+  - orchestration may still see all three forward IR layers,
+  - but the pure HDL-emitter path should converge toward mostly walking `StructuralRTLIR`.
+
 ## 2026-03-23
 ### semantic interface-boundary lookup now lives in IntentHIR
 - Updated [perl/FSM/IR/IntentHIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIR.pm) so the semantic layer now owns `system_contract_from_input`, `signal_analysis_entries`, and `signal_analysis_entries_from_input` for normalized system-contract and signal-analysis boundary lookup.

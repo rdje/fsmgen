@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-24: keep the forward-ir target separate from the current HDLGenerator reality
+- Saved architecture clarification:
+  - the intended forward spine is still `IntentHIR -> LoweredRTLIR -> StructuralRTLIR -> backend emission`,
+  - `StructuralRTLIR` remains the intended last IR before HDL text,
+  - and the current direct `IntentHIR` / `LoweredRTLIR` queries in `FSM::Pipeline::HDLGenerator` are transitional coordinator cleanup, not the desired long-term emitter boundary.
+- Important continuity note:
+  - `HDLGenerator` still currently acts as compiler driver, lowering coordinator, and emitter at the same time,
+  - so it is acceptable for that combined module to touch earlier IR owners while we keep extracting responsibilities out of local ad hoc code,
+  - but the future breakdown should leave orchestration free to see all three forward IR layers while the pure HDL emitter mostly walks `StructuralRTLIR`.
+
 ## 2026-03-23: structural top-port and resolved-link queries now live in StructuralRTLIR
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR` now owns `top_port` and `resolved_links_touching`,
