@@ -38,7 +38,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     normalized_binding
     binding_expr
     expr_signal_name
-    binding_signal_summary
+    binding_signal_summaries_by_port
     binding_signal_summary_metadata
     binding_signal_summary_leaf_signal
     binding_expr_text
@@ -2453,12 +2453,10 @@ sub composition_system_signal_names ($self, $composition_plan) {
 
     if ((!defined($clock_name) || !length($clock_name)) || (!defined($reset_name) || !length($reset_name))) {
         for my $instance (@{$composition_plan->instances || []}) {
-            my %bindings = map {
-                (($_->{port_name} || '') => binding_signal_summary($_))
-            } @{$instance->port_bindings || []};
+            my $bindings = binding_signal_summaries_by_port($instance->port_bindings);
 
             for my $port (@{$instance->interface_ports || []}) {
-                my $binding = $bindings{$port->name} || next;
+                my $binding = $bindings->{$port->name} || next;
                 my $bound_signal = $binding->{bound_signal} || next;
                 next unless length($bound_signal);
                 my $type = $port->type || '';
@@ -3447,9 +3445,9 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
     for my $instance (@{$structural_rtl_ir_hash->{instances} || []}) {
         next unless (($instance->{kind} || '') eq 'fsmc');
 
-        my %binding_signals_by_port = map {
-            (($_->{port_name} || '') => binding_signal_summary($_))
-        } @{$instance->{port_bindings} || []};
+        my $binding_signals_by_port = binding_signal_summaries_by_port(
+            $instance->{port_bindings}
+        );
         my $child = $child_by_instance{$instance->{instance_name}} || {};
         my %drive_family_by_signal = map {
             (($_->{signal_name} || '') => $_)
@@ -3469,7 +3467,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
                 ? _clone_structured_value($drive_family)
                 : {};
             my $binding_metadata = binding_signal_summary_metadata(
-                $binding_signals_by_port{$port->{name}}
+                $binding_signals_by_port->{$port->{name}}
             );
             push @{$candidate_groups{$key}{contributors}}, {
                 kind => ($child->{kind} // $instance->{kind}),
@@ -3498,7 +3496,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
                 ($port->{width} // 1),
                 $normalized_type;
             my $binding_metadata = binding_signal_summary_metadata(
-                $binding_signals_by_port{$port->{name}}
+                $binding_signals_by_port->{$port->{name}}
             );
 
             push @{$peer_input_groups{$key}}, {

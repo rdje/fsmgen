@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural binding-summary indexing now lives in the structural helper layer
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now owns `binding_signal_summaries_by_port`, the reusable rule for turning one binding list into a normalized per-port summary index,
+  - composition system-signal inference now consumes that helper instead of rebuilding a local per-port summary map,
+  - and shared-datapath candidate assembly now consumes that same helper instead of rebuilding the same map again in a second pipeline seam.
+- Important continuity note:
+  - this removes another small but real binding-list indexing pocket from `HDLGenerator`,
+  - it keeps binding-list to summary-index semantics together with the structural helper layer that already owns summary construction and export rules,
+  - and the next likely seam is still either another real consumer handoff or one more bounded `connection_expr` widening.
+
 ## 2026-03-23: structural summary metadata export now lives in the structural helper layer
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR::ConnectionExpr` now owns `binding_signal_summary_metadata`, the reusable rule for normalized cloned summary-export payloads,

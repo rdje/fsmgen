@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural binding-summary indexing now lives in the structural helper layer
+- Continued the active `R11` structural-IR ownership cleanup lane by moving the repeated “binding list to per-port summary index” rule into the same helper layer that already owns structural summary-entry semantics.
+- Landed behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now exports `binding_signal_summaries_by_port`,
+  - composition system-signal inference now consumes that helper instead of rebuilding a local per-port summary map,
+  - and shared-datapath candidate assembly now consumes that same helper instead of rebuilding the same map a second time.
+- Why this is worth shipping:
+  - it removes another repeated structural-binding indexing rule from `HDLGenerator`,
+  - it keeps binding-list to summary-index semantics together with the helper layer that already owns summary construction, metadata export, leaf selection, and text rendering,
+  - and it leaves the next seam where it belongs: another real structural consumer handoff or one more bounded portable `connection_expr` form.
+
 ## 2026-03-23: structural summary metadata export now lives in the structural helper layer
 - Continued the active `R11` structural-IR ownership cleanup lane by moving the normalized cloned summary-export payload into the same helper layer that already owns structural summary-entry semantics.
 - Landed behavior:

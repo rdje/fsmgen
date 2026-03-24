@@ -1312,3 +1312,8 @@ Exit criteria:
   shared-datapath contributor and peer-read metadata no longer need to
   hand-copy `bound_signal`, `bound_signals`, and `bound_connection_expr` in
   `HDLGenerator`.
+- `R11`: that same structural helper layer now also owns the reusable
+  “binding list to per-port summary index” rule through
+  `binding_signal_summaries_by_port`, so composition system-signal inference
+  and shared-datapath candidate assembly no longer need to rebuild that same
+  local summary map in `HDLGenerator`.

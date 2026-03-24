@@ -26,6 +26,7 @@ our @EXPORT_OK = qw(
     expr_signal_name
     expr_signal_names
     binding_signal_summary
+    binding_signal_summaries_by_port
     binding_signal_summary_metadata
     binding_signal_summary_leaf_signal
     binding_signal_summary_text
@@ -262,6 +263,20 @@ sub binding_signal_summary ($binding) {
         bound_signals => [ @{binding_signal_names($binding)} ],
         bound_connection_expr => _clone(binding_expr($binding)),
     };
+}
+
+sub binding_signal_summaries_by_port ($bindings) {
+    my %summaries_by_port;
+    return \%summaries_by_port unless ref($bindings) eq 'ARRAY';
+
+    for my $binding (@$bindings) {
+        next unless ref($binding) eq 'HASH';
+        my $port_name = $binding->{port_name} || '';
+        next unless length $port_name;
+        $summaries_by_port{$port_name} = binding_signal_summary_metadata($binding);
+    }
+
+    return \%summaries_by_port;
 }
 
 sub binding_signal_summary_metadata ($value) {

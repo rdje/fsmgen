@@ -28,6 +28,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     expr_signal_name
     expr_signal_names
     binding_signal_summary
+    binding_signal_summaries_by_port
     binding_signal_summary_metadata
     binding_signal_summary_leaf_signal
     binding_signal_summary_text
@@ -245,6 +246,53 @@ subtest 'binding signal summary metadata centralizes normalized cloned export pa
             },
         },
         'binding signal summary metadata clones precomputed summary payloads instead of aliasing caller-owned state',
+    );
+};
+
+subtest 'binding signal summaries by port centralize binding-list indexing through normalized summary payloads' => sub {
+    my $bindings = [
+        {
+            port_name => 'mode_in',
+            connection_expr => member_access_expr('cfg_bus', 'mode'),
+        },
+        {
+            port_name => 'data_in',
+            connection_expr => signal_ref_expr('top_data'),
+        },
+        {
+            connection_expr => signal_ref_expr('ignored_without_port_name'),
+        },
+    ];
+
+    my $summaries = binding_signal_summaries_by_port($bindings);
+    $bindings->[0]{connection_expr}{member_name} = 'mutated_after_indexing';
+    $bindings->[1]{connection_expr}{signal_name} = 'mutated_after_indexing';
+
+    is_deeply(
+        $summaries,
+        {
+            data_in => {
+                bound_signal => 'top_data',
+                bound_signals => ['top_data'],
+                bound_connection_expr => {
+                    kind => 'signal_ref',
+                    signal_name => 'top_data',
+                },
+            },
+            mode_in => {
+                bound_signal => '',
+                bound_signals => ['cfg_bus'],
+                bound_connection_expr => {
+                    kind => 'member_access',
+                    member_name => 'mode',
+                    source_expr => {
+                        kind => 'signal_ref',
+                        signal_name => 'cfg_bus',
+                    },
+                },
+            },
+        },
+        'binding signal summaries by port skip unnamed entries and keep cloned normalized summary payloads per formal port',
     );
 };
 
