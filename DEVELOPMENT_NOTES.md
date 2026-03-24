@@ -6022,6 +6022,12 @@ It is an exact-delay pulse request:
   - this is the first structural slice, not the whole universal connectivity story yet,
   - but it establishes the right boundary between `Lowered RTL IR` as lowered semantic summary and `Structural RTL IR` as the first extracted wiring/netlist layer.
 2026-03-23
+- Shared-datapath carrier/top-output/peer-input planning now also prefers the
+  typed `bound_connection_expr` path for flat leaf-carrier lookup, with the
+  older `bound_signal` field retained only as a compatibility fallback.
+- That keeps stale mirrors from outranking the structural AST and moves one
+  more real planning decision onto the extracted structural layer instead of
+  leaving it name-driven.
 - Shared-datapath planning metadata now also preserves the typed structural
   binding expression itself through `bound_connection_expr`, not just the
   older `bound_signal` leaf name and `bound_signals` dependency list.

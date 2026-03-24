@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: shared-datapath planning now prefers typed binding expressions
+- Saved shipped behavior:
+  - shared-datapath planning now derives flat carrier names from `bound_connection_expr` first,
+  - the older `bound_signal` field is now only a compatibility fallback for that specific leaf-carrier decision,
+  - and stale mirrors no longer win over the typed structural binding AST when the two disagree.
+- Important continuity note:
+  - this is a real consumer handoff onto the structural layer rather than just more metadata,
+  - it makes carrier/top-output/peer-input planning depend less on compatibility mirrors,
+  - and the next likely seam is still either another consumer moving onto typed binding expressions or one more bounded `connection_expr` widening.
+
 ## 2026-03-23: shared-datapath metadata now preserves typed binding expressions
 - Saved shipped behavior:
   - shared-datapath contributor metadata now preserves `bound_connection_expr` beside `bound_signal` and `bound_signals`,

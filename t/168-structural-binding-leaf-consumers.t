@@ -89,6 +89,40 @@ subtest 'composition system-signal inference only accepts flat leaf bindings' =>
     is($leaf_reset, 'core_rstn', 'flat reset bindings still infer the system reset name');
 };
 
+subtest 'shared-datapath leaf-carrier helpers prefer typed structural expressions over stale mirrors' => sub {
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug_level => 0,
+        quiet => 1,
+    );
+
+    is(
+        $pipeline->shared_datapath_entry_leaf_binding_signal({
+            bound_signal => 'stale_status',
+            bound_connection_expr => signal_ref_expr('typed_status'),
+        }),
+        'typed_status',
+        'shared-datapath leaf binding lookup follows the typed signal-ref expression before the compatibility mirror',
+    );
+
+    is(
+        $pipeline->shared_datapath_entry_leaf_binding_signal({
+            bound_signal => 'stale_status',
+            bound_connection_expr => member_access_expr('status_bundle', 'right'),
+        }),
+        '',
+        'shared-datapath leaf binding lookup refuses to misclassify non-leaf typed expressions as flat carriers',
+    );
+
+    is(
+        $pipeline->shared_datapath_entry_leaf_binding_signal({
+            bound_signal => 'fallback_status',
+        }),
+        'fallback_status',
+        'shared-datapath leaf binding lookup still falls back to the compatibility mirror when no typed expression is present',
+    );
+};
+
 subtest 'shared-datapath candidate metadata distinguishes leaf carriers from richer dependency expressions' => sub {
     my $pipeline = FSM::Pipeline::HDLGenerator->new(
         target_language => 'systemverilog',

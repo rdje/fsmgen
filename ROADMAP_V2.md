@@ -675,3 +675,7 @@ The first honest `R11` slices are now:
   also preserve the actual typed binding expression through
   `bound_connection_expr`, so later consumers can reuse real structural AST
   nodes instead of reconstructing binding shape from names-only summaries.
+- Forward-IR note: shared-datapath planning itself now also prefers that typed
+  `bound_connection_expr` surface when it needs a true flat leaf-carrier name,
+  so compatibility mirrors no longer outrank the structural AST in those
+  carrier/top-output/peer-input decisions.
