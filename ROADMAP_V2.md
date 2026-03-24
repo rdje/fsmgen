@@ -686,3 +686,7 @@ The first honest `R11` slices are now:
 - Forward-IR note: non-quiet CLI shared-datapath summaries now also consume
   `bound_connection_expr` for peer-read binding display, so that structural
   AST surface is no longer trapped purely inside planning metadata.
+- Forward-IR note: that same non-quiet CLI shared-datapath section now also
+  consumes `bound_connection_expr` for the main contributor summary line, so
+  the first candidate line itself no longer collapses typed contributor
+  bindings back to endpoint-only text.

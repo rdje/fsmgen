@@ -1290,3 +1290,7 @@ Exit criteria:
 - `R11`: non-quiet CLI shared-datapath summaries now also consume
   `bound_connection_expr` for peer-read binding display, so that structural
   AST surface is no longer trapped purely inside planning metadata.
+- `R11`: that same non-quiet CLI shared-datapath section now also consumes
+  `bound_connection_expr` for the main contributor summary line, so the first
+  candidate line itself no longer collapses typed contributor bindings back to
+  endpoint-only text.

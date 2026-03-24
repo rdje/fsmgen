@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: shared-datapath cli summaries now render typed contributor bindings too
+- Continued the active `R11` structural-consumer cleanup lane by moving the first summary line of the shared-datapath CLI section onto the typed structural binding surface instead of leaving it as endpoint-only text.
+- Landed behavior:
+  - non-quiet `bin/fsmgen` candidate summary lines now render contributor binding text from `bound_connection_expr`,
+  - flat `signal_ref` contributor bindings now show up as lines like `left.status_bus <= left_status`,
+  - and the contributor-line rendering now stays aligned with the same structural expression surface already used by the richer peer-read summary lines.
+- Why this is worth shipping:
+  - it makes the primary shared-datapath candidate line itself a real structural-AST consumer instead of just the indented detail lines,
+  - it keeps the highest-visibility CLI summary from flattening typed contributor bindings back into names-only output,
+  - and it leaves the next seam where it belongs: another real consumer handoff or one more bounded portable `connection_expr` form.
+
 ## 2026-03-23: structural leaf-signal consumers now distinguish flat carriers from richer dependencies
 - Continued the active `R11` structural-consumer cleanup lane by fixing the first downstream places where richer `connection_expr` dependency lists were being mistaken for flat leaf bindings.
 - Landed behavior:

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: shared-datapath cli summaries now render typed contributor bindings too
+- Saved shipped behavior:
+  - non-quiet `bin/fsmgen` shared-datapath candidate summary lines now also render contributor binding text from `bound_connection_expr`,
+  - flat `signal_ref` contributor bindings now print as lines like `left.status_bus <= left_status`,
+  - and the CLI keeps the richer contributor line aligned with the same structural AST surface already used for peer-read summaries.
+- Important continuity note:
+  - this makes the top candidate line itself a real structural-expression consumer instead of leaving typed bindings only in detail lines,
+  - it keeps contributor summaries from collapsing back to endpoint-only reporting at the first line of the shared-datapath section,
+  - and the next likely seam is still either another real consumer handoff or one more bounded `connection_expr` widening.
+
 ## 2026-03-23: shared-datapath cli summaries now render typed peer-read bindings
 - Saved shipped behavior:
   - non-quiet `bin/fsmgen` shared-datapath summaries now render peer-read binding text from `bound_connection_expr`,

@@ -217,6 +217,11 @@ FSM
     );
 
     like($combined_output, qr/Shared-Datapath Candidates:/s, 'CLI prints shared-datapath candidate summary header');
+    like(
+        $combined_output,
+        qr/status_bus \[width=8, type=data\] from left\.status_bus <= left_status, right\.status_bus <= right_status/s,
+        'CLI prints contributor bindings from the typed structural binding surface',
+    );
     like($combined_output, qr/\* contributor context: left\.status_bus => \?fsm \(states: 1, output drive families: 1, source: left_src\)/s, 'CLI prints first contributor forward-IR context');
     like($combined_output, qr/\* contributor context: right\.status_bus => \?fsm \(states: 1, output drive families: 1, source: right_src\)/s, 'CLI prints second contributor forward-IR context');
 };

@@ -484,7 +484,11 @@ FSM
     );
 
     like($combined_output, qr/Shared-Datapath Candidates:/s, 'CLI prints shared-datapath candidate summary header');
-    like($combined_output, qr/status_bus \[width=8, type=data\] from left\.status_bus, right\.status_bus \(top outputs: left_status, right_status\)/s, 'CLI still prints the grouped shared-datapath family');
+    like(
+        $combined_output,
+        qr/status_bus \[width=8, type=data\] from left\.status_bus <= left_status, right\.status_bus <= right_status \(top outputs: left_status, right_status\)/s,
+        'CLI still prints the grouped shared-datapath family together with contributor bindings',
+    );
     like($combined_output, qr/\* storage class: registered/s, 'CLI prints the shared-datapath storage class for the candidate');
     like($combined_output, qr/\* default lifted visibility: top_output/s, 'CLI prints the default lifted visibility when no peer-read inputs exist');
     like($combined_output, qr/\* lifted runtime: registered shared public fanout active/s, 'CLI prints the public-fanout lifted runtime label');

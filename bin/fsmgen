@@ -589,7 +589,9 @@ unless ($quiet) {
             print "  - Count: " . ($module_info->{composition_shared_datapath_candidate_count} || 0) . "\n";
 
             for my $candidate (@{$module_info->{composition_shared_datapath_candidates} || []}) {
-                my $contributors = join(', ', map { $_->{endpoint} } @{$candidate->{contributors} || []});
+                my $contributors = join(', ', map {
+                    shared_endpoint_binding_summary($_, $target_language)
+                } @{$candidate->{contributors} || []});
                 my $top_outputs = join(', ', @{$candidate->{top_output_signals} || []});
                 print "  - " . ($candidate->{signal_name} || 'unknown_signal')
                     . " [width=" . ($candidate->{width} || 1)
