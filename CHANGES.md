@@ -4823,6 +4823,11 @@ This is the persistent technical change history for FSMGen.
   - the current extracted `Lowered RTL IR` is now explicitly treated as a lowered summary layer rather than the final full connectivity graph,
   - the forward compiler is now steered toward `Intent HIR -> Lowered RTL IR -> Structural RTL IR / Connectivity IR -> backend`,
   - and the eventual HDL backend boundary is expected to mostly walk that AST-like structural connectivity layer, with explicit ports/nets/instances/pin bindings and top/child wiring, instead of rediscovering that graph ad hoc during emission.
+- Extracted another real composition-planning family out of `HDLGenerator`:
+  - generic explicit-link linked-plan assembly for the active `C2`/`C3`/`C4`
+    lanes now lives in `FSM::Composition::LinkedPlanBuilder`,
+  - including system auto-wiring, endpoint resolution, role/width validation,
+    deterministic carrier-net allocation, and realized-child rebinding.
 - Shared-datapath candidate metadata now also makes the bounded combinational peer-read rule explicit: peer-read combinational families stay top-output-only, surface a block reason, and no longer look loopback-eligible in non-quiet `bin/fsmgen` summaries.
 - Shared-datapath runtime behavior now exists in generated composition HDL, not just metadata: realized `?fsmc` children export hidden per-value enable families for composition use, and composition tops now synthesize aggregate-enable and conflict helper wires from those exports.
 - Shared-datapath lifting now has its first actual ownership/runtime slice on top of that helper HDL:

@@ -19,6 +19,7 @@ use FSM::Composition::Parser;
 use FSM::Composition::C1PlanBuilder;
 use FSM::Composition::DeclaredByNameLinkBuilder;
 use FSM::Composition::InterfacePortBuilder;
+use FSM::Composition::LinkedPlanBuilder;
 use FSM::Composition::SameNameLinkBuilder;
 use FSM::Composition::Net;
 use FSM::Composition::Port;
@@ -1070,40 +1071,6 @@ sub is_generated_child_kind ($self, $kind) {
     return $kind eq 'fsmc' || $kind eq 'dtc';
 }
 
-sub system_interface_ports ($self, $ports) {
-    return [
-        grep {
-            my $type = $_->type || '';
-            $type eq 'clock' || $type eq 'reset';
-        } @{$ports || []}
-    ];
-}
-
-sub index_ports_by_name ($self, $ports) {
-    my %ports;
-
-    for my $port (@{$ports || []}) {
-        $ports{$port->name} = $port;
-    }
-
-    return \%ports;
-}
-
-sub assert_unique_top_ports ($self, $ports_block, $fsm_file, $header) {
-    my %top_ports_by_name;
-    for my $port (@{$ports_block->ports}) {
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' declares duplicate top port '".$port->name."' in '?ports', ".
-            "but composition shape is blocked because the active composition lanes require each top port name to be unique. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            if $top_ports_by_name{$port->name};
-
-        $top_ports_by_name{$port->name} = $port;
-    }
-
-    return \%top_ports_by_name;
-}
-
 sub augment_with_inferred_top_ports_from_explicit_links ($self, $ports, $toplinks, $realized_instances, $fsm_file, $header) {
     my @ports = @{$ports || []};
     my %declared_by_name = map { $_->name => $_ } @ports;
@@ -1113,7 +1080,7 @@ sub augment_with_inferred_top_ports_from_explicit_links ($self, $ports, $toplink
 
     for my $instance (@{$realized_instances || []}) {
         $instances_by_name{$instance->instance_name} = $instance;
-        $child_ports_by_instance{$instance->instance_name} = $self->index_ports_by_name($instance->interface_ports);
+        $child_ports_by_instance{$instance->instance_name} = FSM::Composition::LinkedPlanBuilder->index_ports_by_name($instance->interface_ports);
     }
 
     for my $toplink (@{$toplinks || []}) {
@@ -1127,7 +1094,7 @@ sub augment_with_inferred_top_ports_from_explicit_links ($self, $ports, $toplink
             my $target_is_top = defined $target_top_name;
 
             if ($source_is_top && !$declared_by_name{$source_top_name} && $target =~ /^\w+\.\w+$/) {
-                my $child_endpoint = $self->resolve_composition_endpoint(
+                my $child_endpoint = FSM::Composition::LinkedPlanBuilder->resolve_endpoint(
                     $target,
                     {},
                     \%instances_by_name,
@@ -1147,7 +1114,7 @@ sub augment_with_inferred_top_ports_from_explicit_links ($self, $ports, $toplink
             }
 
             if ($target_is_top && !$declared_by_name{$target_top_name} && $source =~ /^\w+\.\w+$/) {
-                my $child_endpoint = $self->resolve_composition_endpoint(
+                my $child_endpoint = FSM::Composition::LinkedPlanBuilder->resolve_endpoint(
                     $source,
                     {},
                     \%instances_by_name,
@@ -1418,17 +1385,18 @@ sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $po
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         if grep { !$self->is_generated_child_kind($_->kind) } @{$realized_instances || []};
 
-    return $self->build_explicit_link_composition_plan(
-        'C2',
-        $composition_spec,
-        $top,
-        $ports_block,
-        $ports,
-        $toplinks,
-        $realized_instances,
-        $fsm_file,
-        $header,
+    my $composition_plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        lane => 'C2',
+        composition_spec => $composition_spec,
+        top => $top,
+        ports_block => $ports_block,
+        ports => $ports,
+        toplinks => $toplinks,
+        realized_instances => $realized_instances,
+        fsm_file => $fsm_file,
+        header => $header,
     );
+    return $self->augment_with_shared_datapath_runtime_support($composition_plan);
 }
 
 sub build_c3_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $generated_instance_count, $fsmc_instance_count, $dtc_instance_count, $rtl_instance_count, $fsm_file, $header) {
@@ -1438,17 +1406,18 @@ sub build_c3_composition_plan ($self, $composition_spec, $top, $ports_block, $po
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless $rtl_instance_count >= 1;
 
-    return $self->build_explicit_link_composition_plan(
-        'C3',
-        $composition_spec,
-        $top,
-        $ports_block,
-        $ports,
-        $toplinks,
-        $realized_instances,
-        $fsm_file,
-        $header,
+    my $composition_plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        lane => 'C3',
+        composition_spec => $composition_spec,
+        top => $top,
+        ports_block => $ports_block,
+        ports => $ports,
+        toplinks => $toplinks,
+        realized_instances => $realized_instances,
+        fsm_file => $fsm_file,
+        header => $header,
     );
+    return $self->augment_with_shared_datapath_runtime_support($composition_plan);
 }
 
 sub build_c4_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $generated_instance_count, $fsmc_instance_count, $dtc_instance_count, $rtl_instance_count, $fsm_file, $header) {
@@ -1481,313 +1450,18 @@ sub build_c4_composition_plan ($self, $composition_spec, $top, $ports_block, $po
         header => $header,
     )};
 
-    return $self->build_linked_composition_plan(
-        'C4',
-        $composition_spec,
-        $top,
-        $ports_block,
-        $ports,
-        \@links,
-        $realized_instances,
-        $fsm_file,
-        $header,
-    );
-}
-
-sub build_explicit_link_composition_plan ($self, $lane, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $fsm_file, $header) {
-    my @links = map { @{$_->links || []} } @{$toplinks || []};
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but explicit-link lane entry is blocked because the current active $lane lane requires explicit '?toplink' wiring. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless @links;
-
-    return $self->build_linked_composition_plan(
-        $lane,
-        $composition_spec,
-        $top,
-        $ports_block,
-        $ports,
-        \@links,
-        $realized_instances,
-        $fsm_file,
-        $header,
-    );
-}
-
-sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports_block, $ports, $links, $realized_instances, $fsm_file, $header) {
-    my $top_ports_by_name = $self->assert_unique_top_ports($ports_block, $fsm_file, $header);
-    my %instances_by_name;
-    my %child_ports_by_instance;
-    my %bindings_by_instance;
-    my %reserved_targets;
-    my %system_top_ports;
-    my @system_auto_links;
-
-    for my $instance (@{$realized_instances || []}) {
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' declares duplicate child instance name '".$instance->instance_name."', ".
-            "but composition shape is blocked because the active composition lanes require each realized child instance name to be unique. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            if $instances_by_name{$instance->instance_name};
-
-        $instances_by_name{$instance->instance_name} = $instance;
-        $child_ports_by_instance{$instance->instance_name} = $self->index_ports_by_name($instance->interface_ports);
-        $bindings_by_instance{$instance->instance_name} = {
-            map { $_->name => undef } @{$instance->interface_ports}
-        };
-    }
-
-    my @resolved_links_input = @{$links || []};
-    if ($lane eq 'C2' || $lane eq 'C3') {
-        push @resolved_links_input, @{
-            FSM::Composition::SameNameLinkBuilder->build_top_input_links(
-                ports => $ports,
-                explicit_links => $links,
-                realized_instances => $realized_instances,
-                fsm_file => $fsm_file,
-                header => $header,
-            )
-        };
-        push @resolved_links_input, @{
-            FSM::Composition::SameNameLinkBuilder->build_top_output_links(
-                ports => $ports,
-                explicit_links => $links,
-                realized_instances => $realized_instances,
-                fsm_file => $fsm_file,
-                header => $header,
-            )
-        };
-        push @resolved_links_input, @{
-            FSM::Composition::SameNameLinkBuilder->build_internal_same_name_links(
-                ports => $ports,
-                explicit_links => $links,
-                realized_instances => $realized_instances,
-                fsm_file => $fsm_file,
-                header => $header,
-            )
-        };
-    }
-
-    for my $instance (@{$realized_instances || []}) {
-        for my $system_port ($self->system_interface_ports($instance->interface_ports)->@*) {
-            my $system_port_name = $system_port->name;
-            my $top_port = $top_ports_by_name->{$system_port_name} or next;
-            my $child_port = $child_ports_by_instance{$instance->instance_name}{$system_port_name} or next;
-
-            Carp::confess
-                "Composition source '$header' in '$fsm_file' declares top port '$system_port_name' as ".$top_port->direction.", ".
-                "but the current active $lane lane requires '$system_port_name' to be an input when auto-wiring child system ports. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-                unless $top_port->direction eq 'input';
-
-            Carp::confess
-                "Composition source '$header' in '$fsm_file' realizes child port '".$instance->instance_name.".$system_port_name' as ".$child_port->direction.", ".
-                "but the current active $lane lane expects child system ports to be inputs. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-                unless $child_port->direction eq 'input';
-
-            $bindings_by_instance{$instance->instance_name}{$system_port_name} = $system_port_name;
-            $reserved_targets{"child:".$instance->instance_name.".$system_port_name"} = "auto top input '$system_port_name'";
-            $system_top_ports{$system_port_name} = 1;
-            push @system_auto_links, FSM::Composition::Link->new(
-                source => $system_port_name,
-                target => $instance->instance_name.'.'.$system_port_name,
-                raw_token => undef,
-                origin_kind => 'auto_system_port_link',
-            );
-        }
-    }
-
-    my @resolved_links;
-    my %links_by_source;
-    my %source_endpoint_by_key;
-
-    for my $link (@resolved_links_input) {
-        my $source = $self->resolve_composition_endpoint(
-            $link->source,
-            $top_ports_by_name,
-            \%instances_by_name,
-            \%child_ports_by_instance,
-            $fsm_file,
-            $header,
-        );
-        my $target = $self->resolve_composition_endpoint(
-            $link->target,
-            $top_ports_by_name,
-            \%instances_by_name,
-            \%child_ports_by_instance,
-            $fsm_file,
-            $header,
-        );
-
-        $self->assert_explicit_link_roles($source, $target, $fsm_file, $header);
-
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' links '".$source->{raw}."' (width ".$source->{port}->width.") to '".$target->{raw}."' (width ".$target->{port}->width."), ".
-            "but explicit link is blocked because the current active composition lanes require exact width agreement. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $source->{port}->width == $target->{port}->width;
-
-        my $target_key = $target->{key};
-        if ($reserved_targets{$target_key}) {
-            Carp::confess
-                "Composition source '$header' in '$fsm_file' assigns explicit link driver '".$source->{raw}."' to target '".$target->{raw}."', ".
-                "but explicit link is blocked because that target is already driven by ".$reserved_targets{$target_key}.". ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-        }
-        $reserved_targets{$target_key} = "explicit link '".$source->{raw}."'";
-
-        my $source_key = $source->{key};
-        $source_endpoint_by_key{$source_key} = $source;
-        push @{$links_by_source{$source_key}}, {
-            link => $link,
-            source => $source,
-            target => $target,
-        };
-        push @resolved_links, {
-            link => $link,
-            source => $source,
-            target => $target,
-        };
-    }
-
-    my @nets;
-    my %carrier_signal_by_source;
-
-    for my $source_key (sort keys %links_by_source) {
-        my $source = $source_endpoint_by_key{$source_key};
-        my @group = @{$links_by_source{$source_key}};
-
-        if ($source->{kind} eq 'top_port') {
-            for my $resolved_link (@group) {
-                Carp::confess
-                    "Composition source '$header' in '$fsm_file' links top input '".$source->{raw}."' directly to top output '".$resolved_link->{target}{raw}."', ".
-                    "but explicit-link topology is blocked because the current active $lane lane only supports top inputs driving child inputs. ".
-                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-                    if $resolved_link->{target}{kind} eq 'top_port';
-            }
-            $carrier_signal_by_source{$source_key} = $source->{port}->name;
-            next;
-        }
-
-        my @top_output_targets = grep { $_->{target}{kind} eq 'top_port' } @group;
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' drives multiple top outputs from '".$source->{raw}."', ".
-            "but explicit-link topology is blocked because the current active $lane lane supports at most one top-output target per resolved source. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            if @top_output_targets > 1;
-
-        my $carrier_signal_name;
-        if (@top_output_targets == 1) {
-            $carrier_signal_name = $top_output_targets[0]{target}{port}->name;
-        } else {
-            my $preferred_net_name;
-            if (@group) {
-                my @implicit_internal_names = map {
-                    $_->{link}->raw_token =~ /^=implicit-internal:(\w+)$/ ? $1 : ()
-                } @group;
-                if (@implicit_internal_names == @group) {
-                    my %names = map { $_ => 1 } @implicit_internal_names;
-                    $preferred_net_name = $implicit_internal_names[0] if keys(%names) == 1;
-                }
-            }
-
-            my $net_name = $self->allocate_composition_net_name($source, $top_ports_by_name, \@nets, $preferred_net_name);
-            push @nets, FSM::Composition::Net->new(
-                name => $net_name,
-                width => $source->{port}->width,
-                source => $source->{raw},
-                targets => [map { $_->{target}{raw} } @group],
-            );
-            $carrier_signal_name = $net_name;
-        }
-        $carrier_signal_by_source{$source_key} = $carrier_signal_name;
-        $bindings_by_instance{$source->{instance_name}}{$source->{port}->name} = $carrier_signal_name;
-    }
-
-    my %top_port_usage;
-    for my $resolved_link (@resolved_links) {
-        my $source = $resolved_link->{source};
-        my $target = $resolved_link->{target};
-        my $carrier_signal_name = $carrier_signal_by_source{$source->{key}};
-
-        if ($source->{kind} eq 'top_port') {
-            $top_port_usage{$source->{port}->name}{source} = 1;
-        }
-
-        if ($target->{kind} eq 'top_port') {
-            $top_port_usage{$target->{port}->name}{target} = 1;
-            next;
-        }
-
-        $bindings_by_instance{$target->{instance_name}}{$target->{port}->name} = $carrier_signal_name;
-    }
-
-    for my $top_port_name (sort keys %{$top_ports_by_name || {}}) {
-        my $top_port = $top_ports_by_name->{$top_port_name};
-        next if $system_top_ports{$top_port_name};
-
-        if ($top_port->direction eq 'input') {
-            Carp::confess
-                "Composition source '$header' in '$fsm_file' declares top input '$top_port_name', ".
-                "but explicit-link top wiring is blocked because the current active $lane lane requires explicit '?toplink' usage for every non-system top input. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-                unless $top_port_usage{$top_port_name}{source};
-        } else {
-            Carp::confess
-                "Composition source '$header' in '$fsm_file' declares top output '$top_port_name', ".
-                "but explicit-link top wiring is blocked because the current active $lane lane requires explicit '?toplink' usage for every top output. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-                unless $top_port_usage{$top_port_name}{target};
-        }
-    }
-
-    my @planned_instances;
-    for my $instance (@{$realized_instances || []}) {
-        my @port_bindings;
-        for my $port (@{$instance->interface_ports}) {
-            my $signal_name = $bindings_by_instance{$instance->instance_name}{$port->name};
-
-            Carp::confess
-                "Composition source '$header' in '$fsm_file' leaves child port '".$instance->instance_name.".".$port->name."' unconnected, ".
-                "but realized child wiring is blocked because the current active $lane lane requires every realized child port to be wired explicitly, through declared connect-by-name, or through the shared system-input contract. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-                unless defined $signal_name;
-
-            push @port_bindings, signal_ref_binding($port->name, $signal_name);
-        }
-
-        push @planned_instances, $self->clone_realized_instance_with_bindings($instance, \@port_bindings);
-    }
-
-    my $composition_plan = FSM::Composition::Plan->new(
-        lane => $lane,
-        top_name => $top->name,
+    my $composition_plan = FSM::Composition::LinkedPlanBuilder->build_plan(
+        lane => 'C4',
+        composition_spec => $composition_spec,
+        top => $top,
+        ports_block => $ports_block,
         ports => $ports,
-        links => $links,
-        resolved_links => [@system_auto_links, @resolved_links_input],
-        nets => \@nets,
-        instances => \@planned_instances,
-        auxiliary_assignments => [],
-        shared_datapath_candidates => [],
-        raw_spec => $composition_spec,
+        links => \@links,
+        realized_instances => $realized_instances,
+        fsm_file => $fsm_file,
+        header => $header,
     );
-
     return $self->augment_with_shared_datapath_runtime_support($composition_plan);
-}
-
-sub clone_realized_instance_with_bindings ($self, $instance, $port_bindings) {
-    return FSM::Composition::RealizedInstance->new(
-        kind => $instance->kind,
-        instance_name => $instance->instance_name,
-        module_name => $instance->module_name,
-        source_name => $instance->source_name,
-        interface_ports => $instance->interface_ports,
-        port_bindings => $port_bindings || [],
-        module_info => $instance->module_info,
-        hdl_code => $instance->hdl_code,
-    );
 }
 
 sub ensure_composition_net ($self, $nets, $name, $width = 1) {
@@ -2120,105 +1794,6 @@ sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
     $composition_plan->{auxiliary_assignments} = \@auxiliary_lines;
     $composition_plan->{shared_datapath_candidates} = $shared_datapath_candidates;
     return $composition_plan;
-}
-
-sub resolve_composition_endpoint ($self, $endpoint, $top_ports_by_name, $instances_by_name, $child_ports_by_instance, $fsm_file, $header) {
-    if ($endpoint =~ /^(\w+)\.(\w+)$/) {
-        my ($instance_name, $port_name) = ($1, $2);
-        my $instance = $instances_by_name->{$instance_name};
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' references child endpoint '$endpoint', ".
-            "but explicit link endpoint resolution is blocked because no realized child instance named '$instance_name' exists. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $instance;
-
-        my $port = $child_ports_by_instance->{$instance_name}{$port_name};
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' references child endpoint '$endpoint', ".
-            "but explicit link endpoint resolution is blocked because instance '$instance_name' has no port named '$port_name'. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $port;
-
-        return {
-            raw => $endpoint,
-            key => "child:$instance_name.$port_name",
-            kind => 'child_port',
-            instance_name => $instance_name,
-            instance => $instance,
-            port_name => $port_name,
-            port => $port,
-        };
-    }
-
-    if ($endpoint =~ /^(\w+)$/) {
-        my $port_name = $1;
-        my $port = $top_ports_by_name->{$port_name};
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' references top-level endpoint '$endpoint', ".
-            "but explicit link endpoint resolution is blocked because '?ports' declares no top port with that name. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $port;
-
-        return {
-            raw => $endpoint,
-            key => "top:$port_name",
-            kind => 'top_port',
-            port_name => $port_name,
-            port => $port,
-        };
-    }
-
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' uses explicit endpoint '$endpoint', ".
-        "but explicit link endpoint resolution is blocked because that syntax is unsupported. ".
-        "The current active composition lanes accept only top-port names or 'instance.port' child endpoints. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-}
-
-sub assert_explicit_link_roles ($self, $source, $target, $fsm_file, $header) {
-    if ($source->{kind} eq 'top_port') {
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' uses top port '".$source->{raw}."' as an explicit link source, ".
-            "but explicit link is blocked because that top port is declared as ".$source->{port}->direction." instead of input. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $source->{port}->direction eq 'input';
-    } else {
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' uses child endpoint '".$source->{raw}."' as an explicit link source, ".
-            "but explicit link is blocked because that child port is ".$source->{port}->direction." instead of output. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $source->{port}->direction eq 'output';
-    }
-
-    if ($target->{kind} eq 'top_port') {
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' uses top port '".$target->{raw}."' as an explicit link target, ".
-            "but explicit link is blocked because that top port is declared as ".$target->{port}->direction." instead of output. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $target->{port}->direction eq 'output';
-    } else {
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' uses child endpoint '".$target->{raw}."' as an explicit link target, ".
-            "but explicit link is blocked because that child port is ".$target->{port}->direction." instead of input. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $target->{port}->direction eq 'input';
-    }
-}
-
-sub allocate_composition_net_name ($self, $source, $top_ports_by_name, $existing_nets, $preferred_name = undef) {
-    my $base_name = $preferred_name // ("comp_link_" . $source->{instance_name} . "_" . $source->{port_name});
-    $base_name =~ s/\W+/_/g;
-    my %reserved = map { $_ => 1 } keys %{$top_ports_by_name || {}};
-    $reserved{$_->name} = 1 for @{$existing_nets || []};
-
-    my $candidate = $base_name;
-    my $suffix = 0;
-    while ($reserved{$candidate}) {
-        $suffix++;
-        $candidate = $base_name . "_" . $suffix;
-    }
-
-    return $candidate;
 }
 
 sub generate_composition_hdl_code ($self, $composition_plan, $structural_rtl_ir = undef) {

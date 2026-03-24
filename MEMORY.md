@@ -4910,3 +4910,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `signal_analysis_entries_from_input`, so realized-child interface fallback
   no longer needs to reread that same semantic boundary data directly from raw
   `module_info` fields in `HDLGenerator`.
+- Generic explicit-link linked-plan assembly for the active `C2`/`C3`/`C4`
+  lanes now also lives in `FSM::Composition::LinkedPlanBuilder`, so
+  `HDLGenerator` no longer owns that family’s system auto-wiring, endpoint
+  resolution, role/width validation, deterministic carrier-net allocation, or
+  realized-child rebinding logic directly.

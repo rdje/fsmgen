@@ -6307,3 +6307,10 @@ It is an exact-delay pulse request:
   `signal_analysis_entries_from_input`, so realized-child interface fallback
   no longer needs to reread that same semantic boundary data directly from raw
   `module_info` fields in `HDLGenerator`.
+- Generic explicit-link linked-plan assembly for the active `C2`/`C3`/`C4`
+  lanes now lives in `FSM::Composition::LinkedPlanBuilder` instead of in
+  `HDLGenerator`.
+- That builder now owns the bounded explicit-link assembly family end-to-end:
+  system auto-wiring, endpoint resolution, role/width validation,
+  deterministic carrier-net allocation, and realized-child rebinding onto the
+  resulting carrier/top signals.

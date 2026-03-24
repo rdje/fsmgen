@@ -1380,6 +1380,12 @@ Exit criteria:
   `HDLGenerator` no longer owns that inferred top-input fanout, inferred
   top-output selection, or inferred internal same-name carrier family
   directly.
+- `R11`: another real composition-planning family split is now active too:
+  generic explicit-link linked-plan assembly for the active `C2`, `C3`, and
+  `C4` lanes now lives in `FSM::Composition::LinkedPlanBuilder`, so
+  `HDLGenerator` no longer owns that family’s system auto-wiring, endpoint
+  resolution, role/width validation, deterministic carrier-net allocation, or
+  realized-child rebinding logic directly.
 - `R11`: another composition-side builder split is now active too: realized
   generated-child interface port construction plus the shared interface-type
   normalization and system-port ordering rules now live in

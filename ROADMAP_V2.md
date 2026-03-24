@@ -798,3 +798,9 @@ The first honest `R11` slices are now:
   `FSM::Composition::SameNameLinkBuilder`, so `HDLGenerator` no longer owns
   that family’s inferred top-input fanout, inferred top-output selection, or
   inferred internal same-name carrier rules directly.
+- Forward-IR note: another real composition-planning family split is now
+  active too: generic explicit-link linked-plan assembly for the active
+  `C2`/`C3`/`C4` lanes now lives in `FSM::Composition::LinkedPlanBuilder`, so
+  `HDLGenerator` no longer owns that family’s system auto-wiring, endpoint
+  resolution, role/width validation, deterministic carrier-net allocation, or
+  realized-child rebinding logic directly.
