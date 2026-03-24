@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural slice and concat expressions now render honestly for vhdl too
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now renders bounded `bit_select`, `slice`, and `concat` nodes through the current VHDL helper path,
+  - descending and ascending slice bounds now preserve `downto` versus `to` direction honestly,
+  - and nested concatenations now render as VHDL `&` chains instead of failing as unsupported.
+- Important continuity note:
+  - this strengthens the existing structural AST without inventing another node family,
+  - it makes the current bounded connectivity shapes more honestly cross-backend,
+  - and the next likely seam is still either one more bounded `connection_expr` widening or another consumer moving further off compatibility mirrors.
+
 ## 2026-03-23: structural leaf-signal consumers now distinguish flat carriers from richer dependencies
 - Saved shipped behavior:
   - composition system-signal inference now requires a true flat leaf binding before it accepts a clock/reset carrier name,

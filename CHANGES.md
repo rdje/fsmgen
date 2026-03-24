@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### structural slice and concat expressions now render honestly for vhdl too
+- Updated [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) so the existing bounded `bit_select`, `slice`, and `concat` connection-expression families now also render through the current VHDL helper path instead of staying Verilog-only.
+- Updated [t/167-structural-connection-expr-helpers.t](/Users/richarddje/Documents/github/fsmgen/t/167-structural-connection-expr-helpers.t) to lock VHDL rendering for fixed-bit selects, descending and ascending slices, and nested concatenations.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this structural actual-connection portability slice is tracked honestly.
+
 ### structural leaf-signal consumers now distinguish flat carriers from richer dependencies
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition system-signal inference and shared-datapath candidate bookkeeping now treat `bound_signal` as a true flat leaf binding only, while `bound_signals` continues to carry the broader dependency list for richer structural expressions.
 - Added [t/168-structural-binding-leaf-consumers.t](/Users/richarddje/Documents/github/fsmgen/t/168-structural-binding-leaf-consumers.t) to lock that distinction for both system-signal inference and shared-datapath contributor metadata.

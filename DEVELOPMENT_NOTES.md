@@ -6022,6 +6022,13 @@ It is an exact-delay pulse request:
   - this is the first structural slice, not the whole universal connectivity story yet,
   - but it establishes the right boundary between `Lowered RTL IR` as lowered semantic summary and `Structural RTL IR` as the first extracted wiring/netlist layer.
 2026-03-23
+- StructuralRTLIR connection expressions now also render the existing bounded
+  `bit_select`, `slice`, and `concat` families through the current VHDL helper
+  path instead of treating them as Verilog-only even though the AST forms were
+  already intended to stay backend-neutral.
+- Descending and ascending slice bounds now preserve `downto` versus `to`
+  direction honestly, and nested structural concatenations now render as VHDL
+  `&` chains through the same helper layer.
 - StructuralRTLIR connection-expression work moved one bounded step past plain
   `signal_ref`: the helper layer now owns typed indexed and sliced actual
   connection nodes plus current Verilog-family rendering for those shapes.

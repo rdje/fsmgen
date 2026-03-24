@@ -288,27 +288,37 @@ sub render_expr ($expr, $port_name = undef, $target_language = 'systemverilog') 
         if $kind eq 'signal_ref' && defined($expr->{signal_name}) && length($expr->{signal_name});
 
     if ($kind eq 'bit_select') {
+        my $language = defined($target_language) ? lc($target_language) : '';
         _confess_unsupported_target_language($target_language, $port_name, $kind)
-            unless _is_verilog_family($target_language);
+            unless _is_verilog_family($target_language) || $language eq 'vhdl';
         my $source_text = render_expr($expr->{source_expr}, $port_name, $target_language);
-        return sprintf('%s[%d]', $source_text, $expr->{index});
+        return $language eq 'vhdl'
+            ? sprintf('%s(%d)', $source_text, $expr->{index})
+            : sprintf('%s[%d]', $source_text, $expr->{index});
     }
 
     if ($kind eq 'slice') {
+        my $language = defined($target_language) ? lc($target_language) : '';
         _confess_unsupported_target_language($target_language, $port_name, $kind)
-            unless _is_verilog_family($target_language);
+            unless _is_verilog_family($target_language) || $language eq 'vhdl';
         my $source_text = render_expr($expr->{source_expr}, $port_name, $target_language);
-        return sprintf('%s[%d:%d]', $source_text, $expr->{msb}, $expr->{lsb});
+        return sprintf('%s[%d:%d]', $source_text, $expr->{msb}, $expr->{lsb})
+            if _is_verilog_family($target_language);
+
+        my $direction = $expr->{msb} >= $expr->{lsb} ? 'downto' : 'to';
+        return sprintf('%s(%d %s %d)', $source_text, $expr->{msb}, $direction, $expr->{lsb});
     }
 
     if ($kind eq 'concat') {
+        my $language = defined($target_language) ? lc($target_language) : '';
         _confess_unsupported_target_language($target_language, $port_name, $kind)
-            unless _is_verilog_family($target_language);
+            unless _is_verilog_family($target_language) || $language eq 'vhdl';
         my @operand_text = map {
             render_expr($_, $port_name, $target_language)
         } @{ $expr->{operands} || [] };
         confess "StructuralRTLIR concat expressions must preserve at least one operand.\n"
             unless @operand_text;
+        return join(' & ', @operand_text) if $language eq 'vhdl';
         return '{' . join(', ', @operand_text) . '}';
     }
 
@@ -406,6 +416,8 @@ member-access form, a first bounded fixed-size `index_access` form, bounded
 portable indexed/sliced/concat forms, and a first bounded bit-vector literal
 family, along with helpers for signal-name recovery and current backend text
 rendering while the emitter still supports only those bounded structural
-binding forms.
+binding forms. The current bounded renderers now cover the current Verilog
+family plus VHDL where the structural form already has one honest portable
+syntax path.
 
 =cut

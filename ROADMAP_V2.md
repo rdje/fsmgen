@@ -640,6 +640,11 @@ The first honest `R11` slices are now:
   also includes concatenation over nested operands, so the structural emitter
   is beginning to walk a richer backend-neutral binding AST instead of only
   leaf-like reference nodes.
+- Forward-IR note: those already-shipped bounded `bit_select`, `slice`, and
+  `concat` nodes now also render honestly through the current VHDL helper path,
+  including `downto`/`to` slice direction and `&` concatenation, so the
+  structural AST is a bit more genuinely cross-backend instead of only looking
+  portable on paper.
 - Forward-IR note: the structural connection-expression layer now also needs a
   recursive dependency view, because once bindings can be slices or concats the
   rest of the pipeline can no longer safely ask only for one flat bound signal

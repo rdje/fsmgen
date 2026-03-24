@@ -1250,6 +1250,11 @@ Exit criteria:
 - `R11`: `StructuralRTLIR` connection expressions now also cover bounded concat
   forms over nested operands, with the composition emitter walking those typed
   actual-connection nodes directly through the current Verilog-family backend.
+- `R11`: those already-shipped bounded `bit_select`, `slice`, and `concat`
+  forms now also render honestly through the current VHDL helper path,
+  including `downto`/`to` slice direction and VHDL `&` concatenation, so the
+  structural AST is a bit more genuinely cross-backend instead of only looking
+  portable on paper.
 - `R11`: `StructuralRTLIR` connection expressions now also expose recursive
   referenced-signal discovery, and composition consumers are starting to use
   that richer dependency surface instead of assuming every binding is one flat

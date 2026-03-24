@@ -439,7 +439,7 @@ subtest 'binding expression text rendering stays backend-neutral for the bounded
     );
 };
 
-subtest 'bounded indexed and sliced connection expressions render through the current verilog-family backend' => sub {
+subtest 'bounded indexed and sliced connection expressions render through the current verilog-family and vhdl helper paths' => sub {
     is_deeply(
         bit_select_expr('shared_bus', 3),
         {
@@ -474,9 +474,27 @@ subtest 'bounded indexed and sliced connection expressions render through the cu
     );
 
     is(
+        render_expr(bit_select_expr('shared_bus', 3), 'data_bit', 'vhdl'),
+        'shared_bus(3)',
+        'bit-select expressions also render through the current VHDL helper path',
+    );
+
+    is(
         render_expr(slice_expr('shared_bus', 7, 4)),
         'shared_bus[7:4]',
         'slice expressions render through the current verilog-family backend',
+    );
+
+    is(
+        render_expr(slice_expr('shared_bus', 7, 4), 'data_window', 'vhdl'),
+        'shared_bus(7 downto 4)',
+        'slice expressions also render through the current VHDL helper path with downto semantics',
+    );
+
+    is(
+        render_expr(slice_expr('shared_bus', 0, 3), 'data_window', 'vhdl'),
+        'shared_bus(0 to 3)',
+        'slice expressions preserve ascending VHDL direction when the bounds are declared low-to-high',
     );
 
     is(
@@ -495,17 +513,6 @@ subtest 'bounded indexed and sliced connection expressions render through the cu
         }),
         '',
         'non-signal-ref connection expressions do not pretend to be a plain bound signal name',
-    );
-
-    my $error = eval {
-        render_expr(slice_expr('shared_bus', 7, 4), 'data_window', 'vhdl');
-        undef;
-    };
-
-    like(
-        $@,
-        qr/unsupported target_language 'vhdl'/,
-        'slice rendering fails explicitly for backends the current bounded renderer does not support yet',
     );
 };
 
@@ -547,6 +554,12 @@ subtest 'bounded concat connection expressions render through the helper and the
     );
 
     is(
+        render_expr(concat_expr('upper_nibble', slice_expr('payload', 3, 0)), 'combined', 'vhdl'),
+        'upper_nibble & payload(3 downto 0)',
+        'concat expressions also render through the current VHDL helper path',
+    );
+
+    is(
         binding_expr_text({
             port_name => 'combined',
             connection_expr => concat_expr(
@@ -556,6 +569,18 @@ subtest 'bounded concat connection expressions render through the helper and the
         }),
         '{ctrl[0], payload[6:0]}',
         'binding text rendering walks nested concat expressions',
+    );
+
+    is(
+        binding_expr_text({
+            port_name => 'combined',
+            connection_expr => concat_expr(
+                bit_select_expr('ctrl', 0),
+                slice_expr('payload', 6, 0),
+            ),
+        }, 'vhdl'),
+        'ctrl(0) & payload(6 downto 0)',
+        'binding text rendering walks nested concat expressions through the current VHDL helper path too',
     );
 
     my $pipeline = FSM::Pipeline::HDLGenerator->new(
@@ -605,16 +630,6 @@ subtest 'bounded concat connection expressions render through the helper and the
         'composition structural emitter walks concat connection expressions directly',
     );
 
-    my $error = eval {
-        render_expr(concat_expr('upper_nibble', 'lower_nibble'), 'combined', 'vhdl');
-        undef;
-    };
-
-    like(
-        $@,
-        qr/unsupported target_language 'vhdl'/,
-        'concat rendering also fails explicitly for backends the current bounded renderer does not support yet',
-    );
 };
 
 subtest 'bounded bit-vector literal connection expressions render through the helper and the structural emitter' => sub {
