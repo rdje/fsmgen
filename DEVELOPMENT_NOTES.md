@@ -6167,3 +6167,7 @@ It is an exact-delay pulse request:
 - Structural consumers that still need one flat carrier name now also
   distinguish that leaf-only case from the broader `bound_signals`
   dependency list exposed by richer structural expressions.
+- IntentHIR now also owns semantic composition-child lookup by instance
+  through `composition_children_by_instance` and `composition_child`, so
+  provenance/shared-datapath consumers no longer need to rebuild that same
+  semantic child index locally in `HDLGenerator`.

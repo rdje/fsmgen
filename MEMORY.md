@@ -4781,3 +4781,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Downstream structural consumers now also distinguish flat leaf carriers from
   broader dependency lists, so `bound_signal` stays leaf-only while
   `bound_signals` stays dependency-oriented.
+- IntentHIR now also owns semantic composition-child lookup by instance
+  through `composition_children_by_instance` and `composition_child`, so
+  provenance/shared-datapath consumers no longer need to rebuild that same
+  semantic child index locally in `HDLGenerator`.

@@ -1326,3 +1326,7 @@ Exit criteria:
   and “resolved links touching endpoint X” queries through `top_port` and
   `resolved_links_touching`, so provenance/override consumers no longer need
   to rebuild those small structural queries in `HDLGenerator`.
+- `R11`: `IntentHIR` now also owns semantic composition-child lookup by
+  instance through `composition_children_by_instance` and
+  `composition_child`, so provenance/shared-datapath consumers no longer need
+  to rebuild that same semantic child index locally in `HDLGenerator`.

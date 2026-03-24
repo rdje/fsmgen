@@ -4,6 +4,7 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
+use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
@@ -61,6 +62,57 @@ sub composition_standalone_dt_block_count ($self) { return $self->{composition_s
 sub composition_standalone_dt_multi_drive_target_count ($self) { return $self->{composition_standalone_dt_multi_drive_target_count} }
 sub composition_standalone_dt_children ($self) { return $self->{composition_standalone_dt_children} }
 sub composition_lane ($self) { return $self->{composition_lane} }
+
+sub composition_children_from_input ($class, $intent_hir) {
+    my $children = (
+        blessed($intent_hir) && $intent_hir->can('composition_children')
+            ? $intent_hir->composition_children
+            : ref($intent_hir) eq 'HASH'
+                ? $intent_hir->{composition_children}
+                : undef
+    );
+
+    return undef unless ref($children) eq 'ARRAY';
+    return _clone($children);
+}
+
+sub composition_children_by_instance ($self) {
+    my %children_by_instance;
+
+    for my $child (@{$self->composition_children || []}) {
+        next unless ref($child) eq 'HASH';
+        my $instance_name = $child->{instance_name} || next;
+        $children_by_instance{$instance_name} = _clone($child);
+    }
+
+    return \%children_by_instance;
+}
+
+sub composition_children_by_instance_from_input ($class, $intent_hir) {
+    my $children = $class->composition_children_from_input($intent_hir);
+    return undef unless ref($children) eq 'ARRAY';
+
+    my %children_by_instance;
+    for my $child (@$children) {
+        next unless ref($child) eq 'HASH';
+        my $instance_name = $child->{instance_name} || next;
+        $children_by_instance{$instance_name} = _clone($child);
+    }
+
+    return \%children_by_instance;
+}
+
+sub composition_child ($self, $instance_name) {
+    return undef unless defined($instance_name) && length($instance_name);
+    return _clone($self->composition_children_by_instance->{$instance_name});
+}
+
+sub composition_child_from_input ($class, $intent_hir, $instance_name) {
+    return undef unless defined($instance_name) && length($instance_name);
+    my $children_by_instance = $class->composition_children_by_instance_from_input($intent_hir);
+    return undef unless ref($children_by_instance) eq 'HASH';
+    return _clone($children_by_instance->{$instance_name});
+}
 
 sub as_hashref ($self) {
     my $regular_state_names = [@{$self->regular_state_names || []}];

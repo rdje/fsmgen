@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### semantic composition-child lookup now lives in IntentHIR
+- Updated [perl/FSM/IR/IntentHIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIR.pm) so the forward semantic layer now owns `composition_children_by_instance` and `composition_child`, the reusable rule for “instance name to semantic child export” lookup over `composition_children`.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition child export access, provenance endpoint context lookup, and shared-datapath candidate assembly now consume that `IntentHIR` lookup surface instead of rebuilding the same semantic child map locally.
+- Added [t/169-intent-hir-composition-child-helpers.t](/Users/richarddje/Documents/github/fsmgen/t/169-intent-hir-composition-child-helpers.t) to lock the new semantic-owner boundary directly, and synced [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next forward-IR ownership slice is tracked honestly.
+
 ### structural top-port and resolved-link queries now live in StructuralRTLIR
 - Updated [perl/FSM/IR/StructuralRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR.pm) so the structural layer now also owns `top_port` and `resolved_links_touching` for explicit top-port lookup and “which resolved links touch endpoint X?” queries.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition provenance endpoint resolution and explicit-toplink override reporting now consume those structural queries instead of rebuilding the same lookups locally.

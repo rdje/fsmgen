@@ -3457,9 +3457,12 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
     } grep {
         ((($_->{direction}) || '') eq 'output')
     } @{$structural_rtl_ir_hash->{ports} || []};
-    my %child_by_instance = map {
-        ((($_->{instance_name}) || '') => $_)
-    } @{$self->composition_child_exports_for_context($composition_plan, $intent_hir)};
+    my $children_by_instance = FSM::IR::IntentHIR->composition_children_by_instance_from_input($intent_hir);
+    my %child_by_instance = $children_by_instance
+        ? %$children_by_instance
+        : map {
+            ((($_->{instance_name}) || '') => $_)
+        } @{$self->composition_child_exports_for_context($composition_plan, $intent_hir)};
 
     my %candidate_groups;
     my %peer_input_groups;
@@ -3823,14 +3826,10 @@ sub build_composition_provenance_report ($self, $composition_plan, $structural_r
 }
 
 sub composition_child_exports_for_context ($self, $composition_plan, $intent_hir = undef) {
-    my $intent_hir_hash = ref($intent_hir) eq 'HASH'
-        ? $intent_hir
-        : (ref($intent_hir) && $intent_hir->can('as_hashref')
-            ? $intent_hir->as_hashref
-            : {});
+    my $composition_children = FSM::IR::IntentHIR->composition_children_from_input($intent_hir);
 
-    if (ref($intent_hir_hash->{composition_children}) eq 'ARRAY') {
-        return _clone_structured_value($intent_hir_hash->{composition_children});
+    if (ref($composition_children) eq 'ARRAY') {
+        return $composition_children;
     }
 
     return $self->build_composition_child_exports($composition_plan)->{children} || [];
@@ -3841,9 +3840,6 @@ sub composition_provenance_endpoint_context ($self, $composition_plan, $endpoint
 
     $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
     my $structural_rtl_ir_obj = $self->structural_rtl_ir_object($structural_rtl_ir);
-    my %child_by_instance = map {
-        ((($_->{instance_name}) || '') => $_)
-    } @{$self->composition_child_exports_for_context($composition_plan, $intent_hir)};
 
     if (my $top_port = $structural_rtl_ir_obj->top_port($endpoint)) {
         return {
@@ -3863,7 +3859,15 @@ sub composition_provenance_endpoint_context ($self, $composition_plan, $endpoint
     } unless defined $port_name;
 
     my $endpoint_entry = $structural_rtl_ir_obj->interface_endpoint($endpoint);
-    my $child = $child_by_instance{$instance_name};
+    my $child = FSM::IR::IntentHIR->composition_child_from_input($intent_hir, $instance_name);
+    $child = defined($child)
+        ? $child
+        : do {
+            my %child_by_instance = map {
+                ((($_->{instance_name}) || '') => $_)
+            } @{$self->composition_child_exports_for_context($composition_plan, $intent_hir)};
+            $child_by_instance{$instance_name};
+        };
 
     return {
         kind => 'raw_endpoint',
