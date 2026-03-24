@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### semantic interface-boundary lookup now lives in IntentHIR
+- Updated [perl/FSM/IR/IntentHIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIR.pm) so the semantic layer now owns `system_contract_from_input`, `signal_analysis_entries`, and `signal_analysis_entries_from_input` for normalized system-contract and signal-analysis boundary lookup.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so realized-child interface fallback now consumes that semantic helper surface instead of rereading system-contract and signal-analysis boundary data directly from raw `module_info` fields.
+- Added [t/172-intent-hir-interface-boundary-helpers.t](/Users/richarddje/Documents/github/fsmgen/t/172-intent-hir-interface-boundary-helpers.t) to lock both the new `IntentHIR` helper surface and the realized-child interface fallback handoff, and synced [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next forward-IR ownership slice is tracked honestly.
+
 ### lowered standalone-dt target lookup now lives in LoweredRTLIR
 - Updated [perl/FSM/IR/LoweredRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIR.pm) so the lowered layer now owns `standalone_dt_multi_drive_targets_from_input`, `standalone_dt_multi_drive_targets_by_signal`, `standalone_dt_multi_drive_targets_by_signal_from_input`, `standalone_dt_multi_drive_target`, and `standalone_dt_multi_drive_target_from_input` for normalized grouped standalone-DT target lookup.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so standalone-DT assertion emission, reusable standalone-DT child export assembly, and module standalone-DT target access now consume that lowered helper surface instead of rereading the same lowered arrays directly.

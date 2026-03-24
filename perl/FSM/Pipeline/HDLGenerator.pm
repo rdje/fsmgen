@@ -726,12 +726,16 @@ sub realize_rtl_child_instance ($self, $instance, $composition_spec, $fsm_file, 
 sub build_realized_child_interface_ports ($self, $module_info) {
     my %ports;
     my $child_structural_rtl_ir = $self->module_structural_rtl_ir($module_info);
-    my $system_contract = $module_info->{system_contract} || {
-        clock => 'clk',
-        reset => 'rst_n',
-        reset_keyword => 'asreset',
-        implicit => 1,
-    };
+    my $intent_hir = $self->module_intent_hir($module_info);
+    my $system_contract = FSM::IR::IntentHIR->system_contract_from_input(
+        $intent_hir,
+        $module_info->{system_contract} || {
+            clock => 'clk',
+            reset => 'rst_n',
+            reset_keyword => 'asreset',
+            implicit => 1,
+        },
+    );
     my %system_port_type = (
         ($system_contract->{clock} => 'clock'),
         ($system_contract->{reset} => 'reset'),
@@ -758,8 +762,12 @@ sub build_realized_child_interface_ports ($self, $module_info) {
     } else {
         for my $direction (qw(input output)) {
             my $list = $direction eq 'input'
+                ? FSM::IR::IntentHIR->signal_analysis_entries_from_input($intent_hir, 'inputs')
+                : FSM::IR::IntentHIR->signal_analysis_entries_from_input($intent_hir, 'outputs');
+            $list = $direction eq 'input'
                 ? ($module_info->{signal_analysis}{inputs} || [])
-                : ($module_info->{signal_analysis}{outputs} || []);
+                : ($module_info->{signal_analysis}{outputs} || [])
+                unless @$list;
 
             for my $entry (@$list) {
                 $ports{$entry->{name}} = FSM::Composition::Port->new(

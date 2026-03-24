@@ -6182,3 +6182,8 @@ It is an exact-delay pulse request:
   `standalone_dt_multi_drive_target`, so standalone-DT assertion/export
   consumers no longer need to reread that same lowered target surface locally
   in `HDLGenerator`.
+- IntentHIR now also owns semantic system-contract and signal-analysis
+  boundary lookup through `system_contract_from_input` and
+  `signal_analysis_entries_from_input`, so realized-child interface fallback
+  no longer needs to reread that same semantic boundary data directly from raw
+  `module_info` fields in `HDLGenerator`.

@@ -63,6 +63,46 @@ sub composition_standalone_dt_multi_drive_target_count ($self) { return $self->{
 sub composition_standalone_dt_children ($self) { return $self->{composition_standalone_dt_children} }
 sub composition_lane ($self) { return $self->{composition_lane} }
 
+sub system_contract_from_input ($class, $intent_hir, $default = undef) {
+    my $system_contract = (
+        blessed($intent_hir) && $intent_hir->can('system_contract')
+            ? $intent_hir->system_contract
+            : ref($intent_hir) eq 'HASH'
+                ? $intent_hir->{system_contract}
+                : undef
+    );
+
+    return _clone($system_contract)
+        if ref($system_contract) eq 'HASH';
+
+    return _clone($default)
+        if ref($default) eq 'HASH';
+
+    return {};
+}
+
+sub signal_analysis_entries ($self, $direction) {
+    return [] unless defined($direction) && length($direction);
+    my $signal_analysis = $self->signal_analysis;
+    return [] unless ref($signal_analysis) eq 'HASH';
+    return _clone($signal_analysis->{$direction} || []);
+}
+
+sub signal_analysis_entries_from_input ($class, $intent_hir, $direction) {
+    return [] unless defined($direction) && length($direction);
+
+    my $entries = (
+        blessed($intent_hir) && $intent_hir->can('signal_analysis_entries')
+            ? $intent_hir->signal_analysis_entries($direction)
+            : ref($intent_hir) eq 'HASH' && ref($intent_hir->{signal_analysis}) eq 'HASH'
+                ? $intent_hir->{signal_analysis}{$direction}
+                : undef
+    );
+
+    return [] unless ref($entries) eq 'ARRAY';
+    return _clone($entries);
+}
+
 sub composition_children_from_input ($class, $intent_hir) {
     my $children = (
         blessed($intent_hir) && $intent_hir->can('composition_children')
