@@ -787,3 +787,8 @@ The first honest `R11` slices are now:
   standard: package-level POD near the top of the file plus routine-level POD
   for owned functions, so the package split remains reviewable while
   `HDLGenerator` is still being decomposed.
+- Forward-IR note: the saved naming direction is now also explicit: keep
+  `fsmgen` as the product/tool identity for historical reasons, but treat the
+  internal `FSM::...` umbrella namespace as a deferred late-roadmap cleanup
+  candidate once the package split is much closer to stable. That rename is not
+  urgent and should wait until the roadmap is nearly complete.

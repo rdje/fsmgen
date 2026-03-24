@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-24
+### keep the product name, defer the internal namespace rename
+- Logged the saved naming direction that `fsmgen` remains the product/repository/tool identity for historical reasons, while the broader internal `FSM::...` umbrella namespace is treated as a likely late-roadmap cleanup target rather than an urgent rename.
+- Synced [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so that deferred naming policy is saved for the end-of-roadmap cleanup phase.
+
 ### active forward-ir packages now carry explicit pod contracts
 - Added package-level POD near the top of the active forward-IR packages and newly extracted builder/emitter packages, so the currently active architecture layers have an immediate package contract instead of staying documentation-thin while the split is still underway.
 - Added routine-level POD for the functions owned by those same active forward-IR packages, builders, and the first structural backend emitter, so the new package boundaries describe what they do as they land instead of waiting for a later documentation sweep.

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-24: keep the product name, defer the internal namespace rename
+- Saved architecture direction:
+  - `fsmgen` should stay the product/repository/tool identity for historical reasons,
+  - but the internal `FSM::...` umbrella namespace is now recognized as a likely late-roadmap cleanup target because the codebase now reaches well beyond narrow FSM generation,
+  - and that rename is explicitly deferred until the roadmap is much closer to complete so we do not churn package names while the split is still moving.
+- Why this is the right sequencing:
+  - it keeps the external identity stable while preserving the option to make internal names more honest later,
+  - it avoids spending package-breakdown energy on namespace churn too early,
+  - and it lets the final rename follow the real settled architecture rather than guessing it halfway through the split.
+
 ## 2026-03-24: active forward-ir packages now carry explicit pod contracts
 - Continued the active `R11` package-breakdown lane by making POD part of the package split instead of treating it as optional cleanup.
 - Landed behavior:

@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-24: keep the product name, defer the internal namespace rename
+- Saved direction:
+  - keep `fsmgen` as the product/tool identity for historical reasons,
+  - treat the internal `FSM::...` umbrella namespace as a likely late-roadmap cleanup target instead,
+  - and do not spend current roadmap energy on that rename while package boundaries are still moving.
+- Important continuity note:
+  - this is a deferred naming cleanup, not an active implementation task,
+  - the rename should be revisited only when the roadmap is much closer to complete and the package split is largely settled.
+
 ## 2026-03-24: active forward-ir packages now carry explicit pod contracts
 - Saved shipped behavior:
   - active forward-IR packages, builders, and the first structural backend emitter now carry package-level POD near the top of the file,
