@@ -3473,9 +3473,9 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
             $instance->{port_bindings}
         );
         my $child = $child_by_instance{$instance->{instance_name}} || {};
-        my %drive_family_by_signal = map {
-            (($_->{signal_name} || '') => $_)
-        } @{$child->{lowered_rtl_ir}{output_drive_families} || []};
+        my $drive_family_by_signal = FSM::IR::LoweredRTLIR->output_drive_families_by_signal_from_input(
+            $child->{lowered_rtl_ir}
+        );
 
         for my $port (@{$instance->{interface_ports} || []}) {
             next unless (($port->{direction} || '') eq 'output');
@@ -3486,7 +3486,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
                 ($port->{width} // 1),
                 $normalized_type;
 
-            my $drive_family = $drive_family_by_signal{$port->{name}} || {};
+            my $drive_family = $drive_family_by_signal->{$port->{name}} || {};
             my $output_drive_family = ref($drive_family) eq 'HASH'
                 ? _clone_structured_value($drive_family)
                 : {};
@@ -4739,9 +4739,11 @@ sub build_output_drive_family_metadata ($self, $module_info) {
 sub module_output_drive_families ($self, $module_info) {
     return [] unless ref($module_info) eq 'HASH';
 
-    my $lowered_rtl_ir = $module_info->{lowered_rtl_ir};
-    if (ref($lowered_rtl_ir) eq 'HASH' && ref($lowered_rtl_ir->{output_drive_families}) eq 'ARRAY') {
-        return $lowered_rtl_ir->{output_drive_families};
+    my $output_drive_families = FSM::IR::LoweredRTLIR->output_drive_families_from_input(
+        $module_info->{lowered_rtl_ir}
+    );
+    if (@$output_drive_families) {
+        return $output_drive_families;
     }
 
     return $module_info->{output_drive_families} || [];

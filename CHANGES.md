@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### lowered output-drive-family lookup now lives in LoweredRTLIR
+- Updated [perl/FSM/IR/LoweredRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIR.pm) so the lowered layer now owns `output_drive_families_from_input`, `output_drive_families_by_signal`, `output_drive_families_by_signal_from_input`, `output_drive_family`, and `output_drive_family_from_input` for normalized per-signal output-drive-family lookup.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so module output-drive-family access and composition shared-datapath contributor drive-family lookup now consume that lowered helper surface instead of rebuilding the same lowered signal map locally.
+- Added [t/170-forward-lowered-rtl-ir-output-drive-helpers.t](/Users/richarddje/Documents/github/fsmgen/t/170-forward-lowered-rtl-ir-output-drive-helpers.t) to lock both full `LoweredRTLIR` objects and the existing partial lowered-hash callers, and synced [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next forward-IR ownership slice is tracked honestly.
+
 ### semantic composition-child lookup now lives in IntentHIR
 - Updated [perl/FSM/IR/IntentHIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIR.pm) so the forward semantic layer now owns `composition_children_by_instance` and `composition_child`, the reusable rule for “instance name to semantic child export” lookup over `composition_children`.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition child export access, provenance endpoint context lookup, and shared-datapath candidate assembly now consume that `IntentHIR` lookup surface instead of rebuilding the same semantic child map locally.

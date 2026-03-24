@@ -1330,3 +1330,8 @@ Exit criteria:
   instance through `composition_children_by_instance` and
   `composition_child`, so provenance/shared-datapath consumers no longer need
   to rebuild that same semantic child index locally in `HDLGenerator`.
+- `R11`: `LoweredRTLIR` now also owns normalized output-drive-family lookup
+  by signal through `output_drive_families_from_input`,
+  `output_drive_families_by_signal`, and `output_drive_family`, so shared
+  datapath and module-output-drive consumers no longer need to rebuild that
+  same lowered signal map locally in `HDLGenerator`.

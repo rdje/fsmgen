@@ -4,6 +4,7 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
+use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
@@ -33,6 +34,55 @@ sub composition_shared_datapath_candidates ($self) { return $self->{composition_
 sub internal_net_names ($self) { return $self->{internal_net_names} }
 sub instance_names ($self) { return $self->{instance_names} }
 sub auxiliary_assignment_count ($self) { return $self->{auxiliary_assignment_count} }
+
+sub output_drive_families_from_input ($class, $lowered_rtl_ir) {
+    my $output_drive_families = (
+        blessed($lowered_rtl_ir) && $lowered_rtl_ir->can('output_drive_families')
+            ? $lowered_rtl_ir->output_drive_families
+            : ref($lowered_rtl_ir) eq 'HASH'
+                ? $lowered_rtl_ir->{output_drive_families}
+                : undef
+    );
+
+    return [] unless ref($output_drive_families) eq 'ARRAY';
+    return _clone($output_drive_families);
+}
+
+sub output_drive_families_by_signal ($self) {
+    my %families_by_signal;
+
+    for my $family (@{$self->output_drive_families || []}) {
+        next unless ref($family) eq 'HASH';
+        my $signal_name = $family->{signal_name} || next;
+        $families_by_signal{$signal_name} = _clone($family);
+    }
+
+    return \%families_by_signal;
+}
+
+sub output_drive_families_by_signal_from_input ($class, $lowered_rtl_ir) {
+    my $output_drive_families = $class->output_drive_families_from_input($lowered_rtl_ir);
+    my %families_by_signal;
+
+    for my $family (@$output_drive_families) {
+        next unless ref($family) eq 'HASH';
+        my $signal_name = $family->{signal_name} || next;
+        $families_by_signal{$signal_name} = _clone($family);
+    }
+
+    return \%families_by_signal;
+}
+
+sub output_drive_family ($self, $signal_name) {
+    return undef unless defined($signal_name) && length($signal_name);
+    return _clone($self->output_drive_families_by_signal->{$signal_name});
+}
+
+sub output_drive_family_from_input ($class, $lowered_rtl_ir, $signal_name) {
+    return undef unless defined($signal_name) && length($signal_name);
+    my $families_by_signal = $class->output_drive_families_by_signal_from_input($lowered_rtl_ir);
+    return _clone($families_by_signal->{$signal_name});
+}
 
 sub as_hashref ($self) {
     my $output_drive_families = _clone($self->output_drive_families || []);
