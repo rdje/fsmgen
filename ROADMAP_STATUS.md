@@ -1186,6 +1186,7 @@ Left:
   - normalize any backend-specific or inelegant connection shape into helper nets / auxiliary assignments before it reaches the structural binding boundary,
   - keep those forward IR layers aligned with the future shared-middle/import architecture instead of allowing a second incompatible semantic stack to form,
   - clarify and then realize the intended `HDLGenerator` breakdown so orchestration/lowering may still see `IntentHIR` and `LoweredRTLIR` while the pure backend-emitter boundary converges toward `StructuralRTLIR` as the last IR before HDL text,
+  - do not let unpublished “compatibility” concerns preserve the current monolith; use temporary migration shims only when they are clearly moving toward the orchestrator plus backend-emitter split,
   - split composition policy, interface inference, and top emission back out of `FSM::Pipeline::HDLGenerator`,
   - shrink `FSM::Synthesis::EnableGraph` toward a clearer synthesis boundary,
   - move planning/normalization residue out of `FSM::HDL::FlattenedDT::Backend::SystemVerilog` so backend responsibilities are more honest,
@@ -1353,6 +1354,10 @@ Exit criteria:
   semantic/lowered IR queries there are currently treated as transitional
   coordinator cleanup while the longer-term split should leave the pure HDL
   emitter mostly walking `StructuralRTLIR`.
+- `R11`: the saved policy is now also explicit that unpublished “compatibility”
+  is not a reason to keep `HDLGenerator` monolithic; any internal shim is only
+  acceptable as a clearly transitional migration aid toward a split
+  orchestrator/compiler layer plus backend emitter.
 - `R11`: `StructuralRTLIR` now also owns composition-top port metadata
   projection through `port_metadata` and `port_metadata_from_input`, so
   composition-top `signals` / `signal_names` / grouped input-output signal

@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-24
+### clarified that no compatibility pretext should preserve the HDLGenerator monolith
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the saved breakdown policy is now stronger and more explicit.
+- The logged clarification is:
+  - FSMGen does not yet have a published public compatibility contract worth preserving,
+  - the strongest architecture therefore matters more than preserving the current `HDLGenerator` monolith,
+  - the target split remains “compiler/orchestrator builds IRs, backend emitter walks `StructuralRTLIR` and emits HDL text,”
+  - and any internal shim is acceptable only as a clearly transitional migration aid toward that split.
+
 ### composition-top port metadata now lives in StructuralRTLIR
 - Updated [perl/FSM/IR/StructuralRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR.pm) so the structural layer now also owns `port_metadata` and `port_metadata_from_input`, the reusable rule for projecting explicit top ports into compatible `signals`, `signal_names`, and grouped input/output/multi-bit/single-bit signal-analysis metadata.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition-top `IntentHIR` construction and compatible `module_info` signal metadata now consume that structural helper surface instead of rebuilding the same top-port projection locally.

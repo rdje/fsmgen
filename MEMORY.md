@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-24: no compatibility excuse should preserve the current HDLGenerator shape
+- Saved architecture clarification:
+  - FSMGen does not yet have a published public compatibility contract that would justify preserving `HDLGenerator` as a monolith,
+  - the target remains a split orchestrator/compiler side that builds `IntentHIR`, `LoweredRTLIR`, and `StructuralRTLIR`,
+  - and a separate backend-emitter side that mostly walks `StructuralRTLIR` to emit HDL text.
+- Important continuity note:
+  - internal shims are acceptable only when they are clearly temporary migration aids,
+  - they are not a reason to keep accidental monolithic ownership alive,
+  - and future extraction choices should optimize for the strongest architecture rather than for compatibility theater.
+
 ## 2026-03-24: composition-top port metadata now lives in StructuralRTLIR
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR` now owns `port_metadata` and `port_metadata_from_input`,

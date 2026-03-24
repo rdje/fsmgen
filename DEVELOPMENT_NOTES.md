@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-24: no compatibility pretext should preserve the HDLGenerator monolith
+- Clarified the policy behind the active forward-IR and package-breakdown work so future extraction decisions are judged against architecture quality rather than against a non-existent public compatibility contract.
+- Landed decision:
+  - FSMGen is not yet a published public contract, so there is no public-compatibility obligation to preserve the current `HDLGenerator` shape,
+  - the target remains a split where orchestration/compiler work builds `IntentHIR`, `LoweredRTLIR`, and `StructuralRTLIR`,
+  - and a separate backend emitter then walks `StructuralRTLIR` to produce HDL text.
+- Why this matters:
+  - the current monolith should not survive because it is familiar,
+  - temporary internal shims are acceptable only when they are clearly transitional and help us reach the stronger design faster,
+  - and the standard going forward is the strongest architecture, not compatibility theater around accidental current structure.
+
 ## 2026-03-24: composition-top port metadata now lives in StructuralRTLIR
 - Continued the active `R11` structural-IR ownership cleanup lane by moving the remaining “structural top ports to compatible signal metadata” projection into the structural layer instead of keeping it as a pipeline-local helper.
 - Landed behavior:
