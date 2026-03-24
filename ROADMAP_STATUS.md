@@ -1287,3 +1287,6 @@ Exit criteria:
   `bound_connection_expr` surface when it needs a true flat leaf-carrier name,
   so compatibility mirrors no longer outrank the structural AST in those
   carrier/top-output/peer-input decisions.
+- `R11`: non-quiet CLI shared-datapath summaries now also consume
+  `bound_connection_expr` for peer-read binding display, so that structural
+  AST surface is no longer trapped purely inside planning metadata.

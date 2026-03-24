@@ -215,7 +215,7 @@ FSM
 
     like($combined_output, qr/\* storage class: registered/s, 'CLI prints the registered storage class');
     like($combined_output, qr/\* default lifted visibility: internal/s, 'CLI prints the internal-by-default lifted visibility');
-    like($combined_output, qr/\* peer-read inputs: consumer\.status_bus/s, 'CLI prints the peer-read input endpoint');
+    like($combined_output, qr/\* peer-read inputs: consumer\.status_bus <= left_status/s, 'CLI prints the peer-read input endpoint together with its structural binding expression');
     like($combined_output, qr/\* peer-read policy: registered loopback eligible/s, 'CLI prints the registered peer-read policy');
     like($combined_output, qr/\* planned top re-exports: left_status, right_status/s, 'CLI prints the planned top re-export list');
     like($combined_output, qr/\* loopback allowed: yes/s, 'CLI prints the positive loopback planning decision');

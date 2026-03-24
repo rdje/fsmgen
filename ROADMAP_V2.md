@@ -683,3 +683,6 @@ The first honest `R11` slices are now:
   `bound_connection_expr` surface when it needs a true flat leaf-carrier name,
   so compatibility mirrors no longer outrank the structural AST in those
   carrier/top-output/peer-input decisions.
+- Forward-IR note: non-quiet CLI shared-datapath summaries now also consume
+  `bound_connection_expr` for peer-read binding display, so that structural
+  AST surface is no longer trapped purely inside planning metadata.

@@ -203,7 +203,7 @@ FSM
 
     like($combined_output, qr/\* storage class: combinational/s, 'CLI prints the combinational storage class');
     like($combined_output, qr/\* default lifted visibility: top_output/s, 'CLI prints the top-output-only default visibility');
-    like($combined_output, qr/\* peer-read inputs: consumer\.status_bus/s, 'CLI prints the peer-read input endpoint');
+    like($combined_output, qr/\* peer-read inputs: consumer\.status_bus <= left_status/s, 'CLI prints the peer-read input endpoint together with its structural binding expression');
     like($combined_output, qr/\* peer-read policy: top-output-only/s, 'CLI prints the top-output-only peer-read policy');
     like(
         $combined_output,

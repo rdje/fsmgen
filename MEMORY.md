@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: shared-datapath cli summaries now render typed peer-read bindings
+- Saved shipped behavior:
+  - non-quiet `bin/fsmgen` shared-datapath summaries now render peer-read binding text from `bound_connection_expr`,
+  - flat `signal_ref` peer-read bindings now print as lines like `consumer.status_bus <= left_status`,
+  - and the CLI falls back to older summary fields only when no typed binding expression is available.
+- Important continuity note:
+  - this is a real downstream consumer of the structural AST rather than passive metadata carriage,
+  - it keeps the CLI from collapsing back to endpoint-only summaries at the reporting boundary,
+  - and the next likely seam is still either another real consumer handoff or one more bounded `connection_expr` widening.
+
 ## 2026-03-23: structural bit-vector literals now render honestly for vhdl too
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR::ConnectionExpr` now renders bounded `bit_vector_literal` nodes through the current VHDL helper path too,

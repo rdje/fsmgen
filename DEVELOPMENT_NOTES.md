@@ -6022,6 +6022,12 @@ It is an exact-delay pulse request:
   - this is the first structural slice, not the whole universal connectivity story yet,
   - but it establishes the right boundary between `Lowered RTL IR` as lowered semantic summary and `Structural RTL IR` as the first extracted wiring/netlist layer.
 2026-03-23
+- Non-quiet `bin/fsmgen` shared-datapath summaries now also render peer-read
+  binding text from the typed `bound_connection_expr` surface instead of
+  printing only endpoint names.
+- That gives the structural AST one more honest downstream consumer and keeps
+  the CLI from collapsing richer binding information back into endpoint-only
+  summaries at the reporting boundary.
 - StructuralRTLIR `bit_vector_literal` nodes now also render through the
   current VHDL helper path, with vector literals using `"1010"`-style text and
   single-bit literals using character-literal text like `'1'`.
