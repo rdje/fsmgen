@@ -783,3 +783,7 @@ The first honest `R11` slices are now:
   so top-level `signals` / `signal_names` / grouped input-output signal
   analysis no longer need one more pipeline-local reconstruction helper in
   `HDLGenerator`.
+- Forward-IR note: active forward-IR packages now also carry an explicit POD
+  standard: package-level POD near the top of the file plus routine-level POD
+  for owned functions, so the package split remains reviewable while
+  `HDLGenerator` is still being decomposed.

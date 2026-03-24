@@ -1,5 +1,18 @@
 package FSM::Composition::RealizedInstance;
 
+=head1 NAME
+
+FSM::Composition::RealizedInstance - Runtime carrier for one realized composition child
+
+=head1 DESCRIPTION
+
+Represents one realized composition child together with its interface metadata,
+bindings, generated module information, and HDL payload. The constructor also
+normalizes stored structural bindings so later planning and emission code sees a
+stable binding shape.
+
+=cut
+
 use v5.20;
 use strict;
 use warnings;
@@ -35,3 +48,52 @@ sub _normalize_port_bindings ($bindings) {
 }
 
 1;
+
+__END__
+
+=head1 METHODS
+
+=head2 new
+
+Constructs a realized child instance record and normalizes any supplied
+structural port bindings.
+
+=head2 kind
+
+Returns the realized child kind, such as C<?fsmc>, C<?dtc>, or C<?rtl>.
+
+=head2 instance_name
+
+Returns the realized instance name used inside the composition plan.
+
+=head2 module_name
+
+Returns the generated or imported module name for the realized child.
+
+=head2 source_name
+
+Returns the source-level child name or external source reference.
+
+=head2 interface_ports
+
+Returns the normalized realized child interface port list.
+
+=head2 port_bindings
+
+Returns the normalized structural binding list currently attached to the child.
+
+=head2 module_info
+
+Returns the generated child module metadata hash, when one exists.
+
+=head2 hdl_code
+
+Returns the realized HDL text payload associated with the child, when one
+exists.
+
+=head2 _normalize_port_bindings
+
+Clones and normalizes an array of structural bindings into the stored runtime
+shape used by realized children.
+
+=cut

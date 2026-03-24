@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-24
+### active forward-ir packages now carry explicit pod contracts
+- Added package-level POD near the top of the active forward-IR packages and newly extracted builder/emitter packages, so the currently active architecture layers have an immediate package contract instead of staying documentation-thin while the split is still underway.
+- Added routine-level POD for the functions owned by those same active forward-IR packages, builders, and the first structural backend emitter, so the new package boundaries describe what they do as they land instead of waiting for a later documentation sweep.
+- Synced [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this POD standard is part of the saved forward-IR implementation guidance.
+
 ### declared connect-by-name link planning now lives in a composition builder package
 - Added [perl/FSM/Composition/DeclaredByNameLinkBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/DeclaredByNameLinkBuilder.pm) as the owner of bounded `C4` declared connect-by-name link construction, including system-port exclusion, same-name endpoint matching, input fanout, unique-output selection, and direction/width validation for `=port` top declarations.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `C4` lane setup now runs through that composition-side builder package instead of keeping the declared connect-by-name link planner inside the pipeline monolith.

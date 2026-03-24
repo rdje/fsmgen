@@ -1,5 +1,18 @@
 package FSM::IR::StructuralRTLIRBuilder;
 
+=head1 NAME
+
+FSM::IR::StructuralRTLIRBuilder - Builder and coercion helpers for forward StructuralRTLIR
+
+=head1 DESCRIPTION
+
+Builds and coerces the extracted forward C<StructuralRTLIR> layer. The current
+shipped scope covers composition-top structural construction from
+C<FSM::Composition::Plan> and object/hash coercion for downstream pipeline and
+backend consumers.
+
+=cut
+
 use v5.20;
 use strict;
 use warnings;
@@ -113,16 +126,16 @@ sub coerce ($class, $structural_rtl_ir, $default_target_language = 'systemverilo
 
 __END__
 
-=head1 NAME
+=head1 METHODS
 
-FSM::IR::StructuralRTLIRBuilder - Builder/coercion helpers for forward StructuralRTLIR
+=head2 build_from_composition_plan
 
-=head1 DESCRIPTION
+Builds a structural RTL IR object from a realized composition plan, preserving
+top ports, nets, instances, links, bindings, and auxiliary assignments.
 
-This module owns the active construction and coercion helpers for the extracted
-forward C<StructuralRTLIR> layer. It currently covers composition-top
-construction from C<FSM::Composition::Plan> plus object/hash coercion for later
-pipeline and backend consumers, so the pipeline coordinator no longer owns that
-structural assembly code directly.
+=head2 coerce
+
+Coerces a structural hash payload or existing structural object into a
+C<FSM::IR::StructuralRTLIR> instance.
 
 =cut

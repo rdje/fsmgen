@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-24: active forward-ir packages now carry explicit pod contracts
+- Continued the active `R11` package-breakdown lane by making POD part of the package split instead of treating it as optional cleanup.
+- Landed behavior:
+  - active forward-IR packages, builders, and the first structural backend emitter now carry package-level POD near the top of the file,
+  - those same packages now also carry routine-level POD for the functions they own,
+  - and the saved rule is now explicit: new extracted packages in this lane should ship with POD rather than waiting for a later documentation pass.
+- Why this is worth shipping:
+  - it keeps the three-layer forward-IR architecture reviewable while package boundaries are still moving,
+  - it makes ownership more explicit at the exact moment responsibilities are leaving `HDLGenerator`,
+  - and it avoids the common failure mode where the new architecture exists in code but not in readable package contracts.
+
 ## 2026-03-24: declared connect-by-name link planning now lives in a composition builder package
 - Continued the active `R11` package-breakdown lane by moving the bounded declared connect-by-name link planner out of `HDLGenerator` instead of leaving `C4` endpoint matching and link assembly in the coordinator.
 - Landed behavior:

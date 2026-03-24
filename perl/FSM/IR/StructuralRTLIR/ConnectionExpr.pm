@@ -1,5 +1,18 @@
 package FSM::IR::StructuralRTLIR::ConnectionExpr;
 
+=head1 NAME
+
+FSM::IR::StructuralRTLIR::ConnectionExpr - Backend-neutral structural binding expression helpers
+
+=head1 DESCRIPTION
+
+Owns the typed actual-connection expression family used by the structural RTL
+IR layer. This package defines portable connection nodes, binding
+normalization, signal-dependency recovery, summary projection, and the current
+backend rendering helpers for those structural expressions.
+
+=cut
+
 use v5.20;
 use strict;
 use warnings;
@@ -504,21 +517,146 @@ sub _clone ($value) {
 
 __END__
 
-=head1 NAME
+=head1 METHODS
 
-FSM::IR::StructuralRTLIR::ConnectionExpr - Backend-neutral structural binding expression helpers
+=head2 open_expr
 
-=head1 DESCRIPTION
+Builds the backend-neutral C<open> connection expression.
 
-This helper owns the first bounded typed actual-connection node family used by
-the extracted Structural RTL IR layer. The current shipped shape is
-intentionally small: backend-neutral `open`, `signal_ref`, a first bounded
-member-access form, a first bounded fixed-size `index_access` form, bounded
-portable indexed/sliced/concat forms, and a first bounded bit-vector literal
-family, along with helpers for signal-name recovery and current backend text
-rendering while the emitter still supports only those bounded structural
-binding forms. The current bounded renderers now cover the current Verilog
-family plus VHDL where the structural form already has one honest portable
-syntax path.
+=head2 signal_ref_expr
+
+Builds a C<signal_ref> connection expression for one named signal.
+
+=head2 member_access_expr
+
+Builds a bounded member-access connection expression over one source
+expression.
+
+=head2 index_access_expr
+
+Builds a bounded index-access connection expression over one source
+expression.
+
+=head2 bit_select_expr
+
+Builds a bounded bit-select connection expression over one source expression.
+
+=head2 slice_expr
+
+Builds a bounded slice connection expression over one source expression.
+
+=head2 concat_expr
+
+Builds a bounded concatenation connection expression over one or more operand
+expressions.
+
+=head2 bit_vector_literal_expr
+
+Builds a bounded bit-vector literal connection expression from a binary string.
+
+=head2 signal_ref_binding
+
+Builds a structural binding entry whose connection expression is a simple
+C<signal_ref>.
+
+=head2 update_binding_signal_ref
+
+Mutates one binding entry so its effective connection expression becomes a
+simple C<signal_ref>.
+
+=head2 ensure_signal_ref_binding
+
+Returns an existing binding with the requested port and flat signal when it is
+already present, or appends one if it is missing.
+
+=head2 set_signal_ref_binding
+
+Updates an existing binding for one port to a new flat signal, or appends a new
+binding if none exists.
+
+=head2 normalized_binding
+
+Returns the normalized structural binding shape with C<signal_name> and
+C<connection_expr> kept in sync for the currently supported bounded cases.
+
+=head2 binding_expr
+
+Returns the effective typed connection expression carried by one binding entry.
+
+=head2 expr_signal_name
+
+Returns the one flat leaf signal name for an expression when the expression is
+still a simple leaf carrier.
+
+=head2 expr_signal_names
+
+Returns the flattened dependency signal list for a connection expression.
+
+=head2 binding_signal_name
+
+Returns the one flat leaf signal name for a binding when its typed expression
+still resolves to a single carrier.
+
+=head2 binding_signal_names
+
+Returns the flattened dependency signal list for a binding.
+
+=head2 binding_signal_summary
+
+Projects one binding into the normalized summary structure used by planning and
+reporting surfaces.
+
+=head2 binding_signal_summaries_by_port
+
+Builds a normalized per-port summary index from a binding list.
+
+=head2 binding_signal_summary_metadata
+
+Projects one normalized binding summary into the cloned metadata shape used by
+export surfaces.
+
+=head2 binding_signal_summary_leaf_signal
+
+Returns the true flat carrier name from a normalized binding summary when the
+summary still represents a leaf signal.
+
+=head2 binding_signal_summary_text
+
+Renders a normalized binding summary into concise backend-facing text.
+
+=head2 render_expr
+
+Renders one typed connection expression into the requested backend syntax.
+
+=head2 binding_expr_text
+
+Renders the effective typed connection expression carried by a binding entry.
+
+=head2 _coerce_source_expr
+
+Normalizes a nested source expression or flat signal name into the internal
+expression form.
+
+=head2 _is_verilog_family
+
+Returns whether a target-language token belongs to the current Verilog family.
+
+=head2 _normalize_target_language_alias
+
+Normalizes short target-language aliases such as C<sv> and C<v>.
+
+=head2 _confess_unsupported_target_language
+
+Raises the standardized backend-boundary diagnostic for an unsupported
+expression kind and target language.
+
+=head2 _push_unique_signal_names
+
+Appends signal names to a dependency list while preserving uniqueness.
+
+=head2 _clone
+
+Recursively clones nested hashes and arrays used by expression and binding
+payloads.
 
 =cut

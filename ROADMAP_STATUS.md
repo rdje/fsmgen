@@ -1366,6 +1366,10 @@ Exit criteria:
   `StructuralRTLIR` construction and hash/object coercion now live in
   `FSM::IR::StructuralRTLIRBuilder`, so `HDLGenerator` no longer owns that
   structural assembly/coercion code directly either.
+- `R11`: active forward-IR packages now also carry an explicit POD standard:
+  package-level documentation near the top of the file plus routine-level POD
+  for owned functions, so the package split stays reviewable while
+  `HDLGenerator` is still being decomposed.
 - `R11`: another composition-side builder split is now active too: realized
   generated-child interface port construction plus the shared interface-type
   normalization and system-port ordering rules now live in

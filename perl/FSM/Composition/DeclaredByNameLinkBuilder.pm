@@ -1,5 +1,18 @@
 package FSM::Composition::DeclaredByNameLinkBuilder;
 
+=head1 NAME
+
+FSM::Composition::DeclaredByNameLinkBuilder - Builder for C4 declared connect-by-name links
+
+=head1 DESCRIPTION
+
+Builds the bounded C4 declared connect-by-name links used by the current
+composition implementation. This package owns same-name endpoint discovery,
+system-port exclusion, direction and width validation, input fanout, and
+single-output selection for declared C<=port> top ports.
+
+=cut
+
 use v5.20;
 use strict;
 use warnings;
@@ -140,15 +153,16 @@ sub _system_port_names_from_endpoints ($candidate_endpoints) {
 
 __END__
 
-=head1 NAME
+=head1 METHODS
 
-FSM::Composition::DeclaredByNameLinkBuilder - Builder for C4 declared connect-by-name links
+=head2 build_links
 
-=head1 DESCRIPTION
+Builds the declared connect-by-name links for the active C4 lane and raises the
+current lane diagnostics when the by-name rules do not resolve cleanly.
 
-This module owns the extracted declared connect-by-name link-construction rules
-used by the bounded `C4` composition lane. It currently covers same-name child
-endpoint matching, system-port exclusion, direction/width validation, input
-fanout, and unique-output selection for `=port` top declarations.
+=head2 _system_port_names_from_endpoints
+
+Extracts the reserved shared system port names from candidate child endpoints
+so declared by-name matching can reject clock and reset collisions.
 
 =cut

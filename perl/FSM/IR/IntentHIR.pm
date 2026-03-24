@@ -1,5 +1,18 @@
 package FSM::IR::IntentHIR;
 
+=head1 NAME
+
+FSM::IR::IntentHIR - Explicit forward semantic intent summary for C<.fsm> generation
+
+=head1 DESCRIPTION
+
+Represents the semantic intent layer in the forward compiler. This package owns
+the root identity, system contract, state and standalone-DT families,
+signal-boundary summaries, and bounded composition child summaries that later
+lowering steps consume.
+
+=cut
+
 use v5.20;
 use strict;
 use warnings;
@@ -226,17 +239,149 @@ sub _clone ($value) {
 
 __END__
 
-=head1 NAME
+=head1 METHODS
 
-FSM::IR::IntentHIR - Explicit forward semantic intent summary for `.fsm` generation
+=head2 new
 
-=head1 DESCRIPTION
+Constructs a new intent HIR object and clones the supplied semantic payload.
 
-This module provides the first extracted forward-compiler semantic IR surface used by
-the active `.fsm` to HDL pipeline. It is intentionally narrow: root identity, system
-contract, state/DT families, signal/interface analysis, and bounded composition
-hierarchy summaries such as unified realized-child exports, generated-child exports,
-and reusable standalone-DT child exports are captured explicitly so later lowering
-work can stop rediscovering them ad hoc inside generation code.
+=head2 module_name
+
+Returns the logical module name represented by this intent layer.
+
+=head2 source_root_kind
+
+Returns the authored root kind, such as C<fsm>, C<dt>, or C<top>.
+
+=head2 regular_state_names
+
+Returns the authored regular-state names carried by the semantic layer.
+
+=head2 standalone_dt_names
+
+Returns the standalone decision-tree names carried by the semantic layer.
+
+=head2 signal_names
+
+Returns the authored or inferred top-boundary signal names.
+
+=head2 signal_analysis
+
+Returns the grouped input and output boundary analysis structure.
+
+=head2 explicit_system_contract
+
+Returns the explicitly authored system contract, if one exists.
+
+=head2 system_contract
+
+Returns the effective system contract after semantic defaulting.
+
+=head2 requires_implicit_system_ports
+
+Returns whether implicit shared system ports are still required for this root.
+
+=head2 standalone_dt_enable_families
+
+Returns the semantic standalone-DT enable family summaries.
+
+=head2 standalone_dt_module_enable_family
+
+Returns the module-level standalone-DT enable family summary.
+
+=head2 parameter_names
+
+Returns the semantic parameter-name list carried by the intent layer.
+
+=head2 composition_child_count
+
+Returns the bounded composition child count, when the root is a composition top.
+
+=head2 composition_children
+
+Returns the unified semantic composition child export list.
+
+=head2 composition_generated_child_count
+
+Returns the generated-child count summary for composition tops.
+
+=head2 composition_generated_fsm_child_count
+
+Returns the generated FSM child count summary for composition tops.
+
+=head2 composition_generated_dt_child_count
+
+Returns the generated standalone-DT child count summary for composition tops.
+
+=head2 composition_generated_children
+
+Returns the generated-child semantic export subset.
+
+=head2 composition_standalone_dt_child_count
+
+Returns the reusable standalone-DT child count summary for composition tops.
+
+=head2 composition_standalone_dt_block_count
+
+Returns the bounded standalone-DT block count summary for reusable children.
+
+=head2 composition_standalone_dt_multi_drive_target_count
+
+Returns the standalone-DT grouped multi-drive target count summary for reusable
+children.
+
+=head2 composition_standalone_dt_children
+
+Returns the reusable standalone-DT child semantic export subset.
+
+=head2 composition_lane
+
+Returns the active composition lane label for composition tops.
+
+=head2 system_contract_from_input
+
+Extracts a cloned system-contract hash from either an intent object or an
+intent-style hash payload, with an optional default fallback.
+
+=head2 signal_analysis_entries
+
+Returns the grouped signal-analysis entries for one boundary direction.
+
+=head2 signal_analysis_entries_from_input
+
+Extracts cloned grouped signal-analysis entries from either an intent object or
+an intent-style hash payload.
+
+=head2 composition_children_from_input
+
+Extracts the unified composition child export list from either an intent object
+or an intent-style hash payload.
+
+=head2 composition_children_by_instance
+
+Returns the unified composition child export list indexed by instance name.
+
+=head2 composition_children_by_instance_from_input
+
+Extracts a unified composition child export index from either an intent object
+or an intent-style hash payload.
+
+=head2 composition_child
+
+Returns one unified composition child export entry by instance name.
+
+=head2 composition_child_from_input
+
+Extracts one unified composition child export entry by instance name from an
+intent object or intent-style hash payload.
+
+=head2 as_hashref
+
+Serializes the intent layer into the exported hash shape used by downstream
+pipeline and embedding surfaces.
+
+=head2 _clone
+
+Recursively clones nested hashes and arrays used by the intent layer.
 
 =cut

@@ -1,5 +1,18 @@
 package FSM::IR::LoweredRTLIR;
 
+=head1 NAME
+
+FSM::IR::LoweredRTLIR - Explicit forward lowered RTL summary for C<.fsm> generation
+
+=head1 DESCRIPTION
+
+Represents the normalized lowered RTL layer in the forward compiler. This
+package owns generated output-drive families, standalone-DT grouped multi-drive
+targets, bounded composition shared-datapath summaries, and a few structural
+accounting facts that later structural lowering and reporting consume.
+
+=cut
+
 use v5.20;
 use strict;
 use warnings;
@@ -193,17 +206,103 @@ sub _clone ($value) {
 
 __END__
 
-=head1 NAME
+=head1 METHODS
 
-FSM::IR::LoweredRTLIR - Explicit forward lowered RTL summary for `.fsm` generation
+=head2 new
 
-=head1 DESCRIPTION
+Constructs a new lowered RTL IR object and clones the supplied lowered payload.
 
-This module provides the first extracted forward lowered-RTL summary surface used by
-the active `.fsm` to HDL pipeline. It currently captures generated output-drive
-families, standalone-DT grouped multi-drive targets, and the bounded composition
-shared-datapath candidate surface so later lowering and recovery-oriented work can
-consume one explicit normalized layer instead of re-deriving that structure from
-mixed pipeline state.
+=head2 module_name
+
+Returns the logical module name represented by this lowered layer.
+
+=head2 source_root_kind
+
+Returns the authored root kind that produced this lowered layer.
+
+=head2 target_language
+
+Returns the active backend target language attached to the lowered layer.
+
+=head2 output_drive_families
+
+Returns the normalized generated output-drive family list.
+
+=head2 standalone_dt_multi_drive_targets
+
+Returns the normalized standalone-DT grouped multi-drive target list.
+
+=head2 composition_shared_datapath_candidates
+
+Returns the bounded lowered shared-datapath candidate list for composition
+tops.
+
+=head2 internal_net_names
+
+Returns the bounded internal net-name list exported by the lowered layer.
+
+=head2 instance_names
+
+Returns the bounded realized instance-name list exported by the lowered layer.
+
+=head2 auxiliary_assignment_count
+
+Returns the bounded auxiliary assignment count exported by the lowered layer.
+
+=head2 output_drive_families_from_input
+
+Extracts the output-drive family list from a lowered object or lowered-style
+hash payload.
+
+=head2 output_drive_families_by_signal
+
+Returns the output-drive family list indexed by signal name.
+
+=head2 output_drive_families_by_signal_from_input
+
+Extracts a signal-indexed output-drive family map from a lowered object or
+lowered-style hash payload.
+
+=head2 output_drive_family
+
+Returns one output-drive family entry by signal name.
+
+=head2 output_drive_family_from_input
+
+Extracts one output-drive family entry by signal name from a lowered object or
+lowered-style hash payload.
+
+=head2 standalone_dt_multi_drive_targets_from_input
+
+Extracts the standalone-DT grouped multi-drive target list from a lowered
+object or lowered-style hash payload.
+
+=head2 standalone_dt_multi_drive_targets_by_signal
+
+Returns the standalone-DT grouped multi-drive target list indexed by signal
+name.
+
+=head2 standalone_dt_multi_drive_targets_by_signal_from_input
+
+Extracts a signal-indexed standalone-DT grouped multi-drive target map from a
+lowered object or lowered-style hash payload.
+
+=head2 standalone_dt_multi_drive_target
+
+Returns one standalone-DT grouped multi-drive target entry by signal name.
+
+=head2 standalone_dt_multi_drive_target_from_input
+
+Extracts one standalone-DT grouped multi-drive target entry by signal name from
+a lowered object or lowered-style hash payload.
+
+=head2 as_hashref
+
+Serializes the lowered layer into the exported hash shape used by downstream
+pipeline and embedding surfaces.
+
+=head2 _clone
+
+Recursively clones nested hashes and arrays used by the lowered layer.
 
 =cut

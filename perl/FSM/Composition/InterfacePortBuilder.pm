@@ -1,5 +1,17 @@
 package FSM::Composition::InterfacePortBuilder;
 
+=head1 NAME
+
+FSM::Composition::InterfacePortBuilder - Composition-side interface port helpers
+
+=head1 DESCRIPTION
+
+Builds realized child interface port objects from generated module metadata and
+owns the shared interface-type and system-port ordering rules used while
+planning compositions.
+
+=cut
+
 use v5.20;
 use strict;
 use warnings;
@@ -120,16 +132,26 @@ sub _port_type ($port) {
 
 __END__
 
-=head1 NAME
+=head1 METHODS
 
-FSM::Composition::InterfacePortBuilder - Composition-side interface port helpers
+=head2 build_realized_child_interface_ports
 
-=head1 DESCRIPTION
+Builds the realized child interface-port list from structural IR first, then
+falls back to intent and signal-analysis metadata when structural boundary data
+is absent.
 
-This module owns the extracted composition interface-port projection rules used
-while realizing generated children and normalizing interface metadata during
-composition planning. It currently covers realized-child interface port
-construction from generated-module metadata plus the shared interface-type and
-system-port ordering helpers that composition planning still needs.
+=head2 system_port_sort_key
+
+Returns the stable sort key that keeps shared system ports ordered ahead of data
+ports.
+
+=head2 normalized_interface_type
+
+Normalizes a missing or empty interface type into the default semantic C<data>
+type.
+
+=head2 _port_type
+
+Extracts the type field from a hash-backed or object-backed port entry.
 
 =cut

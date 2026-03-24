@@ -1,5 +1,18 @@
 package FSM::IR::StructuralRTLIR;
 
+=head1 NAME
+
+FSM::IR::StructuralRTLIR - Explicit forward structural RTL connectivity summary
+
+=head1 DESCRIPTION
+
+Represents the netlist-like structural layer in the forward compiler. This
+package owns explicit ports, nets, instances, declared links, resolved links,
+auxiliary assignments, and the current typed actual-connection summaries that
+the backend emitter and composition reporting surfaces consume.
+
+=cut
+
 use v5.20;
 use strict;
 use warnings;
@@ -235,21 +248,90 @@ sub _clone ($value) {
 
 __END__
 
-=head1 NAME
+=head1 METHODS
 
-FSM::IR::StructuralRTLIR - Explicit forward structural RTL connectivity summary
+=head2 new
 
-=head1 DESCRIPTION
+Constructs a new structural RTL IR object and clones the supplied structural
+payload.
 
-This module provides the first extracted forward structural RTL/connectivity layer
-used by the active `.fsm` to HDL pipeline. It currently has two bounded shapes:
-composition tops carry explicit ports, nets, instances, pin bindings, resolved
-links, declared links, and auxiliary assignments; direct generated roots carry an explicit
-module-interface boundary slice with ports plus empty nets/instances/resolved
-links/declared-links/auxiliary structure. Pin bindings now also preserve a first
-typed `connection_expr` node for the actual connection expression, currently
-bounded to `signal_ref`. That lets backend and export work begin walking one
-explicit structural graph instead of rediscovering wiring shape ad hoc from mixed
-plan/emitter state.
+=head2 module_name
+
+Returns the structural module name.
+
+=head2 source_root_kind
+
+Returns the authored root kind that produced this structural layer.
+
+=head2 target_language
+
+Returns the active backend target language attached to the structural layer.
+
+=head2 ports
+
+Returns the explicit structural top-port list.
+
+=head2 nets
+
+Returns the explicit structural internal net list.
+
+=head2 instances
+
+Returns the explicit structural realized instance list.
+
+=head2 declared_links
+
+Returns the explicit structural declared top-link list.
+
+=head2 resolved_links
+
+Returns the explicit structural resolved connectivity list.
+
+=head2 auxiliary_assignments
+
+Returns the explicit structural auxiliary assignment list.
+
+=head2 port_metadata
+
+Builds the normalized top-port metadata projection used by intent, module-info,
+and reporting surfaces.
+
+=head2 port_metadata_from_input
+
+Extracts normalized top-port metadata from a structural object or
+structural-style hash payload.
+
+=head2 top_port
+
+Returns one structural top-port entry by name.
+
+=head2 interface_endpoint
+
+Returns the structural child-interface endpoint metadata for one
+C<instance.port> endpoint string.
+
+=head2 interface_signal_endpoint_groups
+
+Returns structural child-interface endpoints grouped by signal name, optionally
+filtered by direction.
+
+=head2 interface_signal_endpoints
+
+Returns structural child-interface endpoints for one signal name, optionally
+filtered by direction.
+
+=head2 resolved_links_touching
+
+Returns the structural resolved links that touch one endpoint, optionally
+filtered by origin kind.
+
+=head2 as_hashref
+
+Serializes the structural layer into the exported hash shape used by the
+backend emitter, pipeline, and embedding surfaces.
+
+=head2 _clone
+
+Recursively clones nested hashes and arrays used by the structural layer.
 
 =cut

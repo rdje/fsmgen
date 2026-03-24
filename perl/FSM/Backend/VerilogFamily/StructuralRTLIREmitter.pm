@@ -1,5 +1,18 @@
 package FSM::Backend::VerilogFamily::StructuralRTLIREmitter;
 
+=head1 NAME
+
+FSM::Backend::VerilogFamily::StructuralRTLIREmitter - Verilog-family structural RTL IR emitter
+
+=head1 DESCRIPTION
+
+Emits Verilog-family HDL text by walking the extracted forward
+C<StructuralRTLIR> layer. This package is the beginning of the planned split
+where backend text generation consumes structural connectivity rather than
+re-deriving structure inside the pipeline coordinator.
+
+=cut
+
 use v5.20;
 use strict;
 use warnings;
@@ -69,17 +82,12 @@ sub emit_module ($class, $structural_rtl_ir) {
 
 __END__
 
-=head1 NAME
+=head1 METHODS
 
-FSM::Backend::VerilogFamily::StructuralRTLIREmitter - Verilog-family structural RTL IR emitter
+=head2 emit_module
 
-=head1 DESCRIPTION
-
-This module owns the active Verilog-family text emission step for the extracted
-forward C<StructuralRTLIR> layer. It currently emits composition-top modules by
-walking explicit structural ports, nets, instances, bindings, and auxiliary
-assignments, while keeping the backend boundary honest: the emitter renders
-already-lowered structure instead of rediscovering connectivity inside the
-pipeline coordinator.
+Renders one structural RTL IR module into SystemVerilog or Verilog-family text
+using the explicit structural ports, nets, instances, bindings, and auxiliary
+assignments already present in the IR.
 
 =cut

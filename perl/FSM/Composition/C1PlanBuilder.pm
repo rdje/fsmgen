@@ -1,5 +1,17 @@
 package FSM::Composition::C1PlanBuilder;
 
+=head1 NAME
+
+FSM::Composition::C1PlanBuilder - Builder for the bounded single-child C1 composition lane
+
+=head1 DESCRIPTION
+
+Builds the bounded C1 single-child passthrough composition plan. This package
+owns the child-interface passthrough exposure checks, the fallback inferred
+top-port projection, and the final one-child plan assembly for that lane.
+
+=cut
+
 use v5.20;
 use strict;
 use warnings;
@@ -182,16 +194,35 @@ sub _clone_realized_instance_with_bindings ($instance, $port_bindings) {
 
 __END__
 
-=head1 NAME
+=head1 METHODS
 
-FSM::Composition::C1PlanBuilder - Builder for the bounded single-child C1 composition lane
+=head2 build_plan
 
-=head1 DESCRIPTION
+Constructs the full bounded C1 composition plan from one realized child,
+including effective top ports, passthrough bindings, and resolved links.
 
-This module owns the extracted plan-construction logic for the single-child
-passthrough C1 composition lane. It currently covers explicit passthrough
-exposure validation, implicit top-port inference from one realized child
-interface, and the final C1 plan assembly with direct passthrough links and
-bindings.
+=head2 infer_ports_from_child_interface
+
+Builds the implicit passthrough top-port list from the realized child
+interface when the source omitted an explicit C<?ports> block.
+
+=head2 assert_port_exposure_matches_child
+
+Checks that an explicit C<?ports> block is an exact C1 passthrough exposure of
+the realized child interface.
+
+=head2 _index_ports_by_name
+
+Returns a hash index of child ports keyed by name for C1 validation.
+
+=head2 _assert_unique_top_ports
+
+Validates that the declared top-port block does not reuse a name and returns a
+name-indexed hash.
+
+=head2 _clone_realized_instance_with_bindings
+
+Clones a realized child instance while replacing its port-binding list with the
+planned C1 passthrough bindings.
 
 =cut

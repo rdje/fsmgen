@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-24: active forward-ir packages now carry explicit pod contracts
+- Saved shipped behavior:
+  - active forward-IR packages, builders, and the first structural backend emitter now carry package-level POD near the top of the file,
+  - those same packages now also carry routine-level POD for the functions they own,
+  - and the saved rule is that new extracted packages in this lane should ship with POD instead of waiting for a later cleanup pass.
+- Important continuity note:
+  - this is an architecture-clarity move, not just cosmetic editing,
+  - it keeps the active three-layer forward-IR plan reviewable while the package split is still in motion,
+  - and the monolith split should inherit the same documentation standard as more responsibilities leave `HDLGenerator`.
+
 ## 2026-03-24: declared connect-by-name link planning now lives in a composition builder package
 - Saved shipped behavior:
   - `FSM::Composition::DeclaredByNameLinkBuilder` now owns the bounded `C4` declared connect-by-name link family,
