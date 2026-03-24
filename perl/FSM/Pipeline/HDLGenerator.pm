@@ -17,6 +17,7 @@ use FSM::HDL::FlattenedDT;
 use FSM::Adapter::FSMGenFull;
 use FSM::Composition::Parser;
 use FSM::Composition::C1PlanBuilder;
+use FSM::Composition::DeclaredByNameLinkBuilder;
 use FSM::Composition::InterfacePortBuilder;
 use FSM::Composition::Net;
 use FSM::Composition::Port;
@@ -1483,7 +1484,12 @@ sub build_c4_composition_plan ($self, $composition_spec, $top, $ports_block, $po
             || ($rtl_instance_count >= 1);
 
     my @links = map { @{$_->links || []} } @{$toplinks || []};
-    push @links, @{$self->build_declared_by_name_links($ports, $realized_instances, $fsm_file, $header)};
+    push @links, @{FSM::Composition::DeclaredByNameLinkBuilder->build_links(
+        ports => $ports,
+        realized_instances => $realized_instances,
+        fsm_file => $fsm_file,
+        header => $header,
+    )};
 
     return $self->build_linked_composition_plan(
         'C4',
@@ -1517,116 +1523,6 @@ sub build_explicit_link_composition_plan ($self, $lane, $composition_spec, $top,
         $fsm_file,
         $header,
     );
-}
-
-sub build_declared_by_name_links ($self, $ports, $realized_instances, $fsm_file, $header) {
-    my @links;
-    my @candidate_endpoints;
-    for my $instance (@{$realized_instances || []}) {
-        for my $port (@{$instance->interface_ports || []}) {
-            push @candidate_endpoints, {
-                instance_name => $instance->instance_name,
-                port => $port,
-            };
-        }
-    }
-    my @system_port_names = $self->system_port_names_from_endpoints(\@candidate_endpoints);
-    my %system_port_names = map { $_ => 1 } @system_port_names;
-
-    for my $top_port (@{$ports || []}) {
-        next unless ($top_port->binding_mode || 'explicit') eq 'connect_by_name';
-
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
-            "but declared connect-by-name is blocked because the shared system ports '".join("' and '", @system_port_names)."' already use the dedicated system-input contract and must not be declared with '=port' connect-by-name syntax. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            if $system_port_names{$top_port->name};
-
-        my @same_name_candidates = grep { $_->{port}->name eq $top_port->name } @candidate_endpoints;
-        my @direction_incompatible_candidates = grep {
-            $_->{port}->direction ne $top_port->direction
-        } @same_name_candidates;
-        if (@direction_incompatible_candidates) {
-            my $candidates = join(', ', map {
-                $_->{instance_name}.'.'.$_->{port}->name.
-                '['.$_->{port}->direction.', width='.$_->{port}->width.']'
-            } @same_name_candidates);
-            Carp::confess
-                "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
-                "but declared connect-by-name is blocked because same-name child endpoints include incompatible directions for a top ".$top_port->direction." port. ".
-                "Seen same-name child endpoints: $candidates. ".
-                "The active C4 lane currently keeps top-boundary connect-by-name direction-strict even when several same-name child ports exist. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-        }
-
-        my @width_incompatible_candidates = grep {
-            $_->{port}->width != $top_port->width
-        } @same_name_candidates;
-        if (@width_incompatible_candidates) {
-            my $candidates = join(', ', map {
-                $_->{instance_name}.'.'.$_->{port}->name.
-                '['.$_->{port}->direction.', width='.$_->{port}->width.']'
-            } @same_name_candidates);
-            Carp::confess
-                "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
-                "but declared connect-by-name is blocked because same-name child endpoints do not all match the declared width ".$top_port->width.". ".
-                "Seen same-name child endpoints: $candidates. ".
-                "The current active composition lanes require exact width agreement. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-        }
-
-        if ($top_port->direction eq 'input') {
-            push @links, map {
-                FSM::Composition::Link->new(
-                    source => $top_port->name,
-                    target => $_->{instance_name}.'.'.$_->{port}->name,
-                    raw_token => '=byname:'.$top_port->name,
-                    origin_kind => 'declared_connect_by_name_link',
-                )
-            } @same_name_candidates;
-            next;
-        }
-
-        if (@same_name_candidates > 1) {
-            my $candidates = join(', ', map { $_->{instance_name}.'.'.$_->{port}->name } @same_name_candidates);
-            Carp::confess
-                "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
-                "but declared connect-by-name is blocked because that name resolves ambiguously to multiple compatible child endpoints: $candidates. ".
-                "The current active C4 lane requires exactly one compatible child output for each '=port' top output declaration. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-        }
-
-        if (@same_name_candidates == 1) {
-            my $match = $same_name_candidates[0];
-            push @links, FSM::Composition::Link->new(
-                source => $match->{instance_name}.'.'.$match->{port}->name,
-                target => $top_port->name,
-                raw_token => '=byname:'.$top_port->name,
-                origin_kind => 'declared_connect_by_name_link',
-            );
-            next;
-        }
-
-        if (@same_name_candidates) {
-            my $candidates = join(', ', map {
-                $_->{instance_name}.'.'.$_->{port}->name.
-                '['.$_->{port}->direction.', width='.$_->{port}->width.']'
-            } @same_name_candidates);
-            Carp::confess
-                "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
-                "but declared connect-by-name is blocked because no compatible child endpoint matches its declared direction/width (".$top_port->direction.", width=".$top_port->width."). ".
-                "Seen same-name child endpoints: $candidates. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-        }
-
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' marks top port '".$top_port->name."' for declared connect-by-name, ".
-            "but declared connect-by-name is blocked because no realized child endpoint with that name exists. ".
-            "The current active C4 lane requires each '=port' declaration to match one or more child inputs for top inputs, or exactly one child output for top outputs. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-    }
-
-    return \@links;
 }
 
 sub build_linked_composition_plan ($self, $lane, $composition_spec, $top, $ports_block, $ports, $links, $realized_instances, $fsm_file, $header) {

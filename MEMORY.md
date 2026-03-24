@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-24: declared connect-by-name link planning now lives in a composition builder package
+- Saved shipped behavior:
+  - `FSM::Composition::DeclaredByNameLinkBuilder` now owns the bounded `C4` declared connect-by-name link family,
+  - that package now handles system-port exclusion, same-name endpoint matching, input fanout, unique-output selection, and direction/width validation for `=port` top declarations,
+  - and the extracted builder now has a direct contract test beside the existing end-to-end connect-by-name coverage.
+- Important continuity note:
+  - this removes another real composition-planning family from `HDLGenerator`,
+  - it gives the future linked-plan split a cleaner separation between lane-specific declared-by-name logic and generic linked-plan assembly,
+  - and the next likely seam is another bounded lane/inference builder or one of the remaining implicit-link helpers.
+
 ## 2026-03-24: c1 passthrough plan building now lives in a composition builder package
 - Saved shipped behavior:
   - `FSM::Composition::C1PlanBuilder` now owns the bounded single-child passthrough `C1` lane,

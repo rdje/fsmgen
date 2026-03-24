@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-24: declared connect-by-name link planning now lives in a composition builder package
+- Continued the active `R11` package-breakdown lane by moving the bounded declared connect-by-name link planner out of `HDLGenerator` instead of leaving `C4` endpoint matching and link assembly in the coordinator.
+- Landed behavior:
+  - added `FSM::Composition::DeclaredByNameLinkBuilder` as the owner of the bounded `C4` declared connect-by-name link family,
+  - that package now owns system-port exclusion, same-name endpoint matching, input fanout, unique-output selection, and direction/width validation for `=port` top declarations,
+  - and the extracted builder now has its own direct contract lock beside the existing end-to-end connect-by-name coverage.
+- Why this is worth shipping:
+  - it removes another real composition-planning family from `HDLGenerator`, not just a small lookup helper,
+  - it gives the future linked-plan split a clearer separation between lane-specific link construction and the later generic linked-plan assembly,
+  - and it leaves the next seam where it belongs: another bounded lane/inference builder instead of piling more connect-by-name policy back into the monolith.
+
 ## 2026-03-24: c1 passthrough plan building now lives in a composition builder package
 - Continued the active `R11` package-breakdown lane by moving the first bounded composition-lane planner out of `HDLGenerator` instead of leaving single-child passthrough assembly in the pipeline monolith.
 - Landed behavior:

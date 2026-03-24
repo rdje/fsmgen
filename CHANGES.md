@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-24
+### declared connect-by-name link planning now lives in a composition builder package
+- Added [perl/FSM/Composition/DeclaredByNameLinkBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/DeclaredByNameLinkBuilder.pm) as the owner of bounded `C4` declared connect-by-name link construction, including system-port exclusion, same-name endpoint matching, input fanout, unique-output selection, and direction/width validation for `=port` top declarations.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `C4` lane setup now runs through that composition-side builder package instead of keeping the declared connect-by-name link planner inside the pipeline monolith.
+- Added [t/174-composition-declared-by-name-link-builder.t](/Users/richarddje/Documents/github/fsmgen/t/174-composition-declared-by-name-link-builder.t) to lock the extracted builder directly, and synced [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next composition-plan split slice is tracked honestly.
+
 ### c1 passthrough plan building now lives in a composition builder package
 - Added [perl/FSM/Composition/C1PlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/C1PlanBuilder.pm) as the owner of bounded single-child passthrough `C1` plan construction, including explicit passthrough exposure validation, implicit top-port inference from one realized child interface, and direct passthrough link/binding assembly.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `C1` lane selection now runs through that composition-side builder package instead of keeping the single-child passthrough planner inside the pipeline monolith.

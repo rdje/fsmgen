@@ -773,6 +773,11 @@ The first honest `R11` slices are now:
   `FSM::Composition::C1PlanBuilder`, so `HDLGenerator` no longer owns that
   lane’s explicit passthrough validation, implicit top-port inference, or
   direct passthrough link/binding assembly.
+- Forward-IR note: another real composition-plan family split is now active
+  too: bounded declared connect-by-name `C4` link construction now lives in
+  `FSM::Composition::DeclaredByNameLinkBuilder`, so `HDLGenerator` no longer
+  owns that family’s system-port exclusion, same-name endpoint matching,
+  input fanout, unique-output selection, or direction/width validation.
 - Forward-IR note: `StructuralRTLIR` now also owns composition-top port
   metadata projection through `port_metadata` and `port_metadata_from_input`,
   so top-level `signals` / `signal_names` / grouped input-output signal
