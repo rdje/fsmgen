@@ -6314,3 +6314,8 @@ It is an exact-delay pulse request:
   system auto-wiring, endpoint resolution, role/width validation,
   deterministic carrier-net allocation, and realized-child rebinding onto the
   resulting carrier/top signals.
+- Inferred multi-child top-port projection now also lives in
+  `FSM::Composition::TopPortInferenceBuilder` instead of in `HDLGenerator`.
+- That builder now owns the bounded top-port inference family end-to-end:
+  explicit-toplink top-port inference plus undeclared same-name top-input and
+  top-output inference.

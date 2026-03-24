@@ -4915,3 +4915,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `HDLGenerator` no longer owns that family’s system auto-wiring, endpoint
   resolution, role/width validation, deterministic carrier-net allocation, or
   realized-child rebinding logic directly.
+- Inferred multi-child top-port projection now also lives in
+  `FSM::Composition::TopPortInferenceBuilder`, so `HDLGenerator` no longer
+  owns explicit-toplink top-port inference or undeclared same-name top-input
+  and top-output inference directly.

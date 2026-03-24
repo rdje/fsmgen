@@ -1386,6 +1386,11 @@ Exit criteria:
   `HDLGenerator` no longer owns that family’s system auto-wiring, endpoint
   resolution, role/width validation, deterministic carrier-net allocation, or
   realized-child rebinding logic directly.
+- `R11`: another real composition-planning family split is now active too:
+  inferred multi-child top-port projection now lives in
+  `FSM::Composition::TopPortInferenceBuilder`, so `HDLGenerator` no longer
+  owns explicit-toplink top-port inference or undeclared same-name top-input
+  and top-output inference directly.
 - `R11`: another composition-side builder split is now active too: realized
   generated-child interface port construction plus the shared interface-type
   normalization and system-port ordering rules now live in
