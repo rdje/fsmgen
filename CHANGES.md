@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-24
+### inferred same-name composition link planning now lives in a composition builder package
+- Added [perl/FSM/Composition/SameNameLinkBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SameNameLinkBuilder.pm) as the owner of the bounded inferred same-name convention link family used by the active `C2` and `C3` lanes, including inferred top-input fanout, inferred top-output selection, and inferred internal same-name carrier links.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so those same-name convention links now come from that composition-side builder package instead of keeping the whole implicit-link family inside the pipeline monolith.
+- Added [t/175-composition-same-name-link-builder.t](/Users/richarddje/Documents/github/fsmgen/t/175-composition-same-name-link-builder.t) to lock the extracted builder directly, and synced [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next composition-planner split is tracked honestly.
+
 ### keep the product name, defer the internal namespace rename
 - Logged the saved naming direction that `fsmgen` remains the product/repository/tool identity for historical reasons, while the broader internal `FSM::...` umbrella namespace is treated as a likely late-roadmap cleanup target rather than an urgent rename.
 - Synced [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so that deferred naming policy is saved for the end-of-roadmap cleanup phase.

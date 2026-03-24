@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-24: inferred same-name composition link planning now lives in a composition builder package
+- Continued the active `R11` package-breakdown lane by moving the bounded inferred same-name convention link family out of `HDLGenerator` instead of leaving the C2/C3 implicit-link rules in the coordinator.
+- Landed behavior:
+  - added `FSM::Composition::SameNameLinkBuilder` as the owner of inferred top-input fanout, inferred top-output selection, and inferred internal same-name carrier links,
+  - that package now owns the shared same-name candidate grouping and explicit-child-endpoint exclusion rules for that bounded convention family,
+  - and the extracted builder now has its own direct contract lock beside the existing end-to-end C2/C3 convention coverage.
+- Why this is worth shipping:
+  - it removes another real composition-planning family from `HDLGenerator`, not just another lookup helper,
+  - it gives the future linked-plan split a cleaner separation between generic linked-plan assembly and bounded convention-driven link inference,
+  - and it leaves the next seam where it belongs: another lane/planner extraction instead of piling more inference policy back into the monolith.
+
 ## 2026-03-24: keep the product name, defer the internal namespace rename
 - Saved architecture direction:
   - `fsmgen` should stay the product/repository/tool identity for historical reasons,

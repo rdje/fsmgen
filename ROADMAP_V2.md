@@ -792,3 +792,9 @@ The first honest `R11` slices are now:
   internal `FSM::...` umbrella namespace as a deferred late-roadmap cleanup
   candidate once the package split is much closer to stable. That rename is not
   urgent and should wait until the roadmap is nearly complete.
+- Forward-IR note: another real composition-planning family split is now
+  active too: the bounded inferred same-name convention links used by the
+  active `C2`/`C3` lanes now live in
+  `FSM::Composition::SameNameLinkBuilder`, so `HDLGenerator` no longer owns
+  that family’s inferred top-input fanout, inferred top-output selection, or
+  inferred internal same-name carrier rules directly.

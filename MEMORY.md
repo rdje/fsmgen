@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-24: inferred same-name composition link planning now lives in a composition builder package
+- Saved shipped behavior:
+  - `FSM::Composition::SameNameLinkBuilder` now owns the bounded inferred same-name convention link family used by the active `C2` and `C3` lanes,
+  - that package now handles inferred top-input fanout, inferred top-output selection, inferred internal same-name carrier links, and the shared candidate-grouping / explicit-child-endpoint exclusion rules behind those bounded conventions,
+  - and the extracted builder now has a direct contract test beside the existing end-to-end same-name convention coverage.
+- Important continuity note:
+  - this removes another real composition-planning family from `HDLGenerator`,
+  - it gives the future linked-plan split a cleaner separation between generic linked-plan assembly and bounded same-name convention inference,
+  - and the next likely seam is another bounded lane/inference builder or a broader linked-plan extraction step.
+
 ## 2026-03-24: keep the product name, defer the internal namespace rename
 - Saved direction:
   - keep `fsmgen` as the product/tool identity for historical reasons,

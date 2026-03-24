@@ -1374,6 +1374,12 @@ Exit criteria:
   product identity, but revisit the internal `FSM::...` umbrella namespace as a
   deferred late-roadmap cleanup only after the package split is much closer to
   stable. That rename is intentionally not urgent.
+- `R11`: another real composition-planning family split is now active too:
+  the bounded inferred same-name convention links used by the active `C2` and
+  `C3` lanes now live in `FSM::Composition::SameNameLinkBuilder`, so
+  `HDLGenerator` no longer owns that inferred top-input fanout, inferred
+  top-output selection, or inferred internal same-name carrier family
+  directly.
 - `R11`: another composition-side builder split is now active too: realized
   generated-child interface port construction plus the shared interface-type
   normalization and system-port ordering rules now live in
