@@ -146,6 +146,10 @@ FSM
                         endpoint => 'left.status_bus',
                         bound_signal => 'left_status',
                         bound_signals => ['left_status'],
+                        bound_connection_expr => {
+                            kind => 'signal_ref',
+                            signal_name => 'left_status',
+                        },
                         output_drive_family => {
                             signal_name => 'status_bus',
                             width => 8,
@@ -217,6 +221,10 @@ FSM
                         endpoint => 'right.status_bus',
                         bound_signal => 'right_status',
                         bound_signals => ['right_status'],
+                        bound_connection_expr => {
+                            kind => 'signal_ref',
+                            signal_name => 'right_status',
+                        },
                         output_drive_family => {
                             signal_name => 'status_bus',
                             width => 8,

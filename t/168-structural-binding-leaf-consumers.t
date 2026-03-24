@@ -212,6 +212,10 @@ subtest 'shared-datapath candidate metadata distinguishes leaf carriers from ric
                 endpoint => 'u_left.status',
                 bound_signal => 'status_top',
                 bound_signals => ['status_top'],
+                bound_connection_expr => {
+                    kind => 'signal_ref',
+                    signal_name => 'status_top',
+                },
                 intent_hir => {},
                 lowered_rtl_ir => {
                     output_drive_families => [
@@ -250,6 +254,14 @@ subtest 'shared-datapath candidate metadata distinguishes leaf carriers from ric
                 endpoint => 'u_right.status',
                 bound_signal => '',
                 bound_signals => ['status_bundle'],
+                bound_connection_expr => {
+                    kind => 'member_access',
+                    member_name => 'right',
+                    source_expr => {
+                        kind => 'signal_ref',
+                        signal_name => 'status_bundle',
+                    },
+                },
                 intent_hir => {},
                 lowered_rtl_ir => {
                     output_drive_families => [
@@ -281,7 +293,7 @@ subtest 'shared-datapath candidate metadata distinguishes leaf carriers from ric
                 },
             },
         ],
-        'shared-datapath contributor metadata now keeps dependency lists without mislabeling non-leaf bindings as flat carriers',
+        'shared-datapath contributor metadata now keeps the typed binding expression alongside dependency lists without mislabeling non-leaf bindings as flat carriers',
     );
 };
 

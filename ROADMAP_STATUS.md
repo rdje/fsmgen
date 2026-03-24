@@ -1275,3 +1275,7 @@ Exit criteria:
 - `R11`: structural consumers that still need one flat carrier name now also
   distinguish that leaf-only case from the broader dependency lists exposed by
   richer structural connection expressions.
+- `R11`: shared-datapath contributor and peer-input metadata now also preserve
+  the actual typed binding expression through `bound_connection_expr`, so later
+  consumers can reuse real structural AST nodes instead of reconstructing
+  binding shape from names-only summaries.

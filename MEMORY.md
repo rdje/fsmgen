@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: shared-datapath metadata now preserves typed binding expressions
+- Saved shipped behavior:
+  - shared-datapath contributor metadata now preserves `bound_connection_expr` beside `bound_signal` and `bound_signals`,
+  - peer-read endpoint metadata now preserves that same typed binding expression too,
+  - and richer bindings such as `member_access` now stay visible as actual structural AST nodes instead of collapsing to names-only summaries.
+- Important continuity note:
+  - this is a real structural handoff, not just more reporting,
+  - it gives later planning/reporting consumers the actual bound expression without having to reconstruct it from the plan again,
+  - and the next likely seam is still either another consumer moving onto those typed binding expressions or one more bounded `connection_expr` widening.
+
 ## 2026-03-23: structural slice and concat expressions now render honestly for vhdl too
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR::ConnectionExpr` now renders bounded `bit_select`, `slice`, and `concat` nodes through the current VHDL helper path,

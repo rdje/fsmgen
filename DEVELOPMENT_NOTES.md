@@ -6022,6 +6022,12 @@ It is an exact-delay pulse request:
   - this is the first structural slice, not the whole universal connectivity story yet,
   - but it establishes the right boundary between `Lowered RTL IR` as lowered semantic summary and `Structural RTL IR` as the first extracted wiring/netlist layer.
 2026-03-23
+- Shared-datapath planning metadata now also preserves the typed structural
+  binding expression itself through `bound_connection_expr`, not just the
+  older `bound_signal` leaf name and `bound_signals` dependency list.
+- That same typed expression now also survives on peer-read endpoint metadata,
+  which gives later planning and reporting consumers a real structural handoff
+  instead of forcing them to reconstruct binding shape from plan state again.
 - StructuralRTLIR connection expressions now also render the existing bounded
   `bit_select`, `slice`, and `concat` families through the current VHDL helper
   path instead of treating them as Verilog-only even though the AST forms were

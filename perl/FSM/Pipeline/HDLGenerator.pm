@@ -3454,6 +3454,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
             (($_->{port_name} || '') => {
                 bound_signal => binding_signal_name($_),
                 bound_signals => [ @{binding_signal_names($_)} ],
+                bound_connection_expr => _clone_structured_value(binding_expr($_)),
             })
         } @{$instance->{port_bindings} || []};
         my $child = $child_by_instance{$instance->{instance_name}} || {};
@@ -3485,6 +3486,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
                 endpoint => (($instance->{instance_name} // 'unknown').'.'.($port->{name} // 'unknown')),
                 bound_signal => $bound_signal,
                 bound_signals => [@$bound_signals],
+                bound_connection_expr => _clone_structured_value($binding->{bound_connection_expr}),
                 intent_hir => ($child->{intent_hir} || {}),
                 lowered_rtl_ir => ($child->{lowered_rtl_ir} || {}),
                 structural_rtl_ir => ($child->{structural_rtl_ir} || {}),
@@ -3511,6 +3513,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
                 endpoint => (($instance->{instance_name} // 'unknown').'.'.($port->{name} // 'unknown')),
                 bound_signal => (($binding_signals_by_port{$port->{name}} || {})->{bound_signal} || ''),
                 bound_signals => [@{(($binding_signals_by_port{$port->{name}} || {})->{bound_signals} || [])}],
+                bound_connection_expr => _clone_structured_value(($binding_signals_by_port{$port->{name}} || {})->{bound_connection_expr}),
             };
         }
     }

@@ -671,3 +671,7 @@ The first honest `R11` slices are now:
   split “true flat leaf carrier” from “broader dependency set,” so compatibility
   fields like `bound_signal` do not silently misclassify richer expressions such
   as `member_access` or `index_access`.
+- Forward-IR note: shared-datapath contributor and peer-input metadata now
+  also preserve the actual typed binding expression through
+  `bound_connection_expr`, so later consumers can reuse real structural AST
+  nodes instead of reconstructing binding shape from names-only summaries.

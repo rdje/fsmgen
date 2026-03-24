@@ -131,6 +131,10 @@ FSM
                 endpoint => 'consumer_left.status_bus',
                 bound_signal => 'left_status',
                 bound_signals => ['left_status'],
+                bound_connection_expr => {
+                    kind => 'signal_ref',
+                    signal_name => 'left_status',
+                },
             },
             {
                 instance_name => 'consumer_right',
@@ -138,6 +142,10 @@ FSM
                 endpoint => 'consumer_right.status_bus',
                 bound_signal => 'comp_link_right_status_bus',
                 bound_signals => ['comp_link_right_status_bus'],
+                bound_connection_expr => {
+                    kind => 'signal_ref',
+                    signal_name => 'comp_link_right_status_bus',
+                },
             },
         ],
         'shared candidate keeps only peer inputs actually bound to contributor carriers',
