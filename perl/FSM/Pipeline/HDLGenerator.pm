@@ -3004,52 +3004,6 @@ sub structural_rtl_ir_object ($self, $structural_rtl_ir) {
     );
 }
 
-sub build_composition_port_metadata ($self, $composition_plan, $structural_rtl_ir = undef) {
-    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
-    my $structural_rtl_ir_hash = $self->structural_rtl_ir_object($structural_rtl_ir)->as_hashref;
-    my (@inputs, @outputs, @multi_bit, @single_bit);
-    my %signals;
-    my @signal_names;
-
-    for my $port (@{$structural_rtl_ir_hash->{ports} || []}) {
-        my $entry = {
-            name => $port->{name},
-            width => $port->{width},
-            direction => $port->{direction},
-        };
-
-        push @signal_names, $port->{name};
-
-        if (($port->{direction} || '') eq 'output') {
-            push @outputs, $entry;
-        } else {
-            push @inputs, $entry;
-        }
-
-        if (($port->{width} || 0) > 1) {
-            push @multi_bit, $entry;
-        } else {
-            push @single_bit, $entry;
-        }
-
-        $signals{$port->{name}} = {
-            width => $port->{width},
-            direction => $port->{direction},
-        };
-    }
-
-    return {
-        signals => \%signals,
-        signal_names => \@signal_names,
-        signal_analysis => {
-            inputs => \@inputs,
-            outputs => \@outputs,
-            multi_bit => \@multi_bit,
-            single_bit => \@single_bit,
-        },
-    };
-}
-
 sub build_composition_intent_hir (
     $self,
     $composition_plan,
@@ -3068,7 +3022,7 @@ sub build_composition_intent_hir (
         $composition_child_exports,
     );
     $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
-    my $port_metadata = $self->build_composition_port_metadata($composition_plan, $structural_rtl_ir);
+    my $port_metadata = FSM::IR::StructuralRTLIR->port_metadata_from_input($structural_rtl_ir);
     my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
 
     return FSM::IR::IntentHIR->new(
@@ -3156,7 +3110,7 @@ sub build_composition_module_info (
         $structural_rtl_ir,
     );
     $lowered_rtl_ir //= $self->build_composition_lowered_rtl_ir($composition_plan, $structural_rtl_ir, $intent_hir);
-    my $port_metadata = $self->build_composition_port_metadata($composition_plan, $structural_rtl_ir);
+    my $port_metadata = FSM::IR::StructuralRTLIR->port_metadata_from_input($structural_rtl_ir);
     my $intent_hir_hash = $intent_hir->as_hashref;
     my $lowered_rtl_ir_hash = $lowered_rtl_ir->as_hashref;
     my $structural_rtl_ir_hash = $structural_rtl_ir->as_hashref;

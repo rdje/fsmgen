@@ -10,6 +10,7 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Pipeline::HDLGenerator;
+use FSM::IR::StructuralRTLIR;
 
 my $tempdir = tempdir(CLEANUP => 1);
 
@@ -355,6 +356,48 @@ FSM
             },
         ],
         'structural_rtl_ir resolved-link lookup can answer which explicit toplinks touch a given endpoint',
+    );
+
+    my $port_metadata = $structural_rtl_ir_obj->port_metadata;
+    is_deeply(
+        $port_metadata,
+        FSM::IR::StructuralRTLIR->port_metadata_from_input($structural_rtl_ir),
+        'structural_rtl_ir port metadata helper works for both objects and serialized hashes',
+    );
+    is_deeply(
+        $port_metadata->{signal_names},
+        ['clk', 'rstn', 'select', 'data_a', 'data_b', 'result_data'],
+        'structural_rtl_ir port metadata preserves top-port signal names',
+    );
+    is_deeply(
+        $port_metadata->{signal_analysis}{inputs},
+        [
+            { name => 'clk', width => 1, direction => 'input' },
+            { name => 'rstn', width => 1, direction => 'input' },
+            { name => 'select', width => 1, direction => 'input' },
+            { name => 'data_a', width => 8, direction => 'input' },
+            { name => 'data_b', width => 8, direction => 'input' },
+        ],
+        'structural_rtl_ir port metadata groups input ports',
+    );
+    is_deeply(
+        $port_metadata->{signal_analysis}{outputs},
+        [
+            { name => 'result_data', width => 8, direction => 'output' },
+        ],
+        'structural_rtl_ir port metadata groups output ports',
+    );
+    is_deeply(
+        $port_metadata->{signals},
+        {
+            clk => { width => 1, direction => 'input' },
+            rstn => { width => 1, direction => 'input' },
+            select => { width => 1, direction => 'input' },
+            data_a => { width => 8, direction => 'input' },
+            data_b => { width => 8, direction => 'input' },
+            result_data => { width => 8, direction => 'output' },
+        },
+        'structural_rtl_ir port metadata preserves the compatible signals map',
     );
 
     my $rendered_top = $pipeline->emit_composition_top_module($structural_rtl_ir);

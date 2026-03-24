@@ -1353,3 +1353,8 @@ Exit criteria:
   semantic/lowered IR queries there are currently treated as transitional
   coordinator cleanup while the longer-term split should leave the pure HDL
   emitter mostly walking `StructuralRTLIR`.
+- `R11`: `StructuralRTLIR` now also owns composition-top port metadata
+  projection through `port_metadata` and `port_metadata_from_input`, so
+  composition-top `signals` / `signal_names` / grouped input-output signal
+  analysis no longer need another pipeline-local reconstruction helper inside
+  `HDLGenerator`.

@@ -750,3 +750,8 @@ The first honest `R11` slices are now:
   semantic or lowered IR queries there are still acceptable as transitional
   coordinator cleanup while the longer-term split should leave pure HDL
   emission mostly walking `StructuralRTLIR`.
+- Forward-IR note: `StructuralRTLIR` now also owns composition-top port
+  metadata projection through `port_metadata` and `port_metadata_from_input`,
+  so top-level `signals` / `signal_names` / grouped input-output signal
+  analysis no longer need one more pipeline-local reconstruction helper in
+  `HDLGenerator`.

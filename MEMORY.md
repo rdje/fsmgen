@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-24: composition-top port metadata now lives in StructuralRTLIR
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIR` now owns `port_metadata` and `port_metadata_from_input`,
+  - composition-top `IntentHIR` now consumes that helper for `signal_names` and grouped port signal-analysis summaries,
+  - and composition-top `module_info->{signals}` now consumes that same helper instead of rebuilding a local top-port summary map.
+- Important continuity note:
+  - this removes another small structural-boundary projection from `HDLGenerator`,
+  - it keeps top-level boundary metadata closer to the IR layer that already owns explicit ports and top-port lookups,
+  - and the next likely seam is still another structural owner handoff or a real module breakdown step for the combined pipeline/emitter layer.
+
 ## 2026-03-24: keep the forward-ir target separate from the current HDLGenerator reality
 - Saved architecture clarification:
   - the intended forward spine is still `IntentHIR -> LoweredRTLIR -> StructuralRTLIR -> backend emission`,

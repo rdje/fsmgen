@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-24: composition-top port metadata now lives in StructuralRTLIR
+- Continued the active `R11` structural-IR ownership cleanup lane by moving the remaining “structural top ports to compatible signal metadata” projection into the structural layer instead of keeping it as a pipeline-local helper.
+- Landed behavior:
+  - `FSM::IR::StructuralRTLIR` now exports `port_metadata` plus `port_metadata_from_input`,
+  - composition-top `IntentHIR` construction now consumes that structural helper for `signal_names`, grouped input/output signal analysis, and the compatible `signals` map,
+  - and composition-top `module_info` now consumes that same structural helper instead of rebuilding those top-port summaries locally.
+- Why this is worth shipping:
+  - it removes another small but real structural-boundary projection from `HDLGenerator`,
+  - it keeps top-port boundary metadata with the same IR layer that already owns explicit ports and top-port lookup,
+  - and it leaves the next seam where it belongs: another structural query/helper ownership move or the next real breakdown step out of the combined pipeline/emitter module.
+
 ## 2026-03-24: forward-ir layering keeps StructuralRTLIR as the last emitter-facing IR
 - Clarified the intended end-state for the active forward-IR extraction lane so we do not confuse the current implementation shortcut with the desired architecture.
 - Landed decision:

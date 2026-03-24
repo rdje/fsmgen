@@ -4,6 +4,7 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
+use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
@@ -33,6 +34,82 @@ sub instances ($self) { return $self->{instances} }
 sub declared_links ($self) { return $self->{declared_links} }
 sub resolved_links ($self) { return $self->{resolved_links} }
 sub auxiliary_assignments ($self) { return $self->{auxiliary_assignments} }
+
+sub port_metadata ($self) {
+    my (@inputs, @outputs, @multi_bit, @single_bit);
+    my %signals;
+    my @signal_names;
+
+    for my $port (@{$self->ports || []}) {
+        next unless ref($port) eq 'HASH';
+
+        my $entry = {
+            name => $port->{name},
+            width => $port->{width},
+            direction => $port->{direction},
+        };
+
+        push @signal_names, $port->{name};
+        $signals{$port->{name}} = {
+            width => $port->{width},
+            direction => $port->{direction},
+        };
+
+        if (($port->{direction} || '') eq 'output') {
+            push @outputs, _clone($entry);
+        } else {
+            push @inputs, _clone($entry);
+        }
+
+        if (($port->{width} || 0) > 1) {
+            push @multi_bit, _clone($entry);
+        } else {
+            push @single_bit, _clone($entry);
+        }
+    }
+
+    return {
+        signals => \%signals,
+        signal_names => \@signal_names,
+        signal_analysis => {
+            inputs => \@inputs,
+            outputs => \@outputs,
+            multi_bit => \@multi_bit,
+            single_bit => \@single_bit,
+        },
+    };
+}
+
+sub port_metadata_from_input ($class, $structural_rtl_ir) {
+    my $port_metadata = (
+        blessed($structural_rtl_ir) && $structural_rtl_ir->can('port_metadata')
+            ? $structural_rtl_ir->port_metadata
+            : ref($structural_rtl_ir) eq 'HASH' && ref($structural_rtl_ir->{ports}) eq 'ARRAY'
+                ? do {
+                    my $object = $class->new(
+                        module_name => ($structural_rtl_ir->{module_name} // '__anonymous__'),
+                        source_root_kind => ($structural_rtl_ir->{source_root_kind} // 'fsm'),
+                        target_language => ($structural_rtl_ir->{target_language} // 'systemverilog'),
+                        ports => $structural_rtl_ir->{ports},
+                    );
+                    $object->port_metadata;
+                }
+                : undef
+    );
+
+    return {
+        signals => {},
+        signal_names => [],
+        signal_analysis => {
+            inputs => [],
+            outputs => [],
+            multi_bit => [],
+            single_bit => [],
+        },
+    } unless ref($port_metadata) eq 'HASH';
+
+    return _clone($port_metadata);
+}
 
 sub top_port ($self, $port_name) {
     return undef unless defined($port_name) && length($port_name);
