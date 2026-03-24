@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-24: composition-top structural text emission now lives in a backend emitter
+- Saved shipped behavior:
+  - `FSM::Backend::VerilogFamily::StructuralRTLIREmitter` now owns composition-top structural HDL text emission for the current Verilog-family lane,
+  - `HDLGenerator` now assembles composition results around that backend package instead of owning the direct top-module text-rendering method itself,
+  - and the structural emitter tests now call the backend package directly.
+- Important continuity note:
+  - this is the first concrete backend-emitter split slice, not just another helper extraction,
+  - it moves one real text-rendering responsibility out of the pipeline coordinator,
+  - and the next likely seam is another backend-emitter ownership move or the matching orchestrator/builder extraction on the pipeline side.
+
 ## 2026-03-24: no compatibility excuse should preserve the current HDLGenerator shape
 - Saved architecture clarification:
   - FSMGen does not yet have a published public compatibility contract that would justify preserving `HDLGenerator` as a monolith,

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-24: composition-top structural text emission now lives in a backend emitter
+- Continued the active `R11` package-breakdown lane by moving the first real HDL text-rendering slice out of `HDLGenerator` and into a backend-owned package.
+- Landed behavior:
+  - added `FSM::Backend::VerilogFamily::StructuralRTLIREmitter` as the first dedicated backend emitter package for extracted `StructuralRTLIR`,
+  - composition-top structural text emission now runs through that backend package,
+  - and the structural emitter tests now point at the backend package directly instead of treating `HDLGenerator` as the owner of top-module rendering.
+- Why this is worth shipping:
+  - it is the first concrete move from “the pipeline still emits text itself” toward “the backend emitter owns text rendering,”
+  - it keeps the package names more honest by separating structural text emission from pipeline coordination,
+  - and it leaves the next seam where it belongs: more builder/orchestrator extraction on one side and more backend-emitter ownership on the other.
+
 ## 2026-03-24: no compatibility pretext should preserve the HDLGenerator monolith
 - Clarified the policy behind the active forward-IR and package-breakdown work so future extraction decisions are judged against architecture quality rather than against a non-existent public compatibility contract.
 - Landed decision:

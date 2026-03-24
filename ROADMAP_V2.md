@@ -755,6 +755,10 @@ The first honest `R11` slices are now:
   “compatibility” concern should preserve the current monolith; any internal
   shim is acceptable only as a clearly transitional migration aid toward a
   split compiler/orchestrator plus backend-emitter architecture.
+- Forward-IR note: the first real backend-emitter extraction slice is now
+  active too: composition-top structural HDL text emission now lives in
+  `FSM::Backend::VerilogFamily::StructuralRTLIREmitter`, so
+  `HDLGenerator` no longer owns that direct structural text-rendering step.
 - Forward-IR note: `StructuralRTLIR` now also owns composition-top port
   metadata projection through `port_metadata` and `port_metadata_from_input`,
   so top-level `signals` / `signal_names` / grouped input-output signal

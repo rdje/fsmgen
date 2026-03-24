@@ -23,6 +23,7 @@ use FSM::Composition::Plan;
 use FSM::Composition::PortsBlock;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::RTLInterfaceLoader;
+use FSM::Backend::VerilogFamily::StructuralRTLIREmitter;
 use FSM::Extension::Context;
 use FSM::Extension::Loader;
 use FSM::Extension::Registry;
@@ -41,7 +42,6 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     binding_signal_summaries_by_port
     binding_signal_summary_metadata
     binding_signal_summary_leaf_signal
-    binding_expr_text
 );
 use FSM::SourceClassifier;
 use FSM::SourcePathResolver;
@@ -2857,56 +2857,8 @@ sub allocate_composition_net_name ($self, $source, $top_ports_by_name, $existing
 sub generate_composition_hdl_code ($self, $composition_plan, $structural_rtl_ir = undef) {
     my @segments = map { $_->hdl_code } @{$composition_plan->instances};
     $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
-    push @segments, $self->emit_composition_top_module($structural_rtl_ir);
+    push @segments, FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
     return join("\n\n", grep { defined && length } @segments) . "\n";
-}
-
-sub emit_composition_top_module ($self, $structural_rtl_ir) {
-    my $structural = blessed($structural_rtl_ir) && $structural_rtl_ir->can('as_hashref')
-        ? $structural_rtl_ir->as_hashref
-        : $structural_rtl_ir;
-
-    my $top_name = $structural->{module_name};
-    my @ports = @{$structural->{ports} || []};
-    my @nets = @{$structural->{nets} || []};
-    my @instances = @{$structural->{instances} || []};
-    my @auxiliary_assignments = @{$structural->{auxiliary_assignments} || []};
-
-    my @port_lines = map {
-        my $width = ($_->{width} || 1) > 1 ? sprintf("[%d:0] ", $_->{width} - 1) : '';
-        sprintf("    %s %s%s", $_->{direction}, $width, $_->{name});
-    } @ports;
-
-    my @net_lines = map {
-        my $width = ($_->{width} || 1) > 1 ? sprintf("[%d:0] ", $_->{width} - 1) : '';
-        sprintf("    wire %s%s;", $width, $_->{name})
-    } @nets;
-
-    my @instance_blocks = map {
-        my $instance = $_;
-        my @connection_lines = map {
-            sprintf("        .%s(%s)", $_->{port_name}, binding_expr_text($_, $structural->{target_language}))
-        } @{$instance->{port_bindings} || []};
-
-        join("\n",
-            "    ".$instance->{module_name}." ".$instance->{instance_name}." (",
-            join(",\n", @connection_lines),
-            "    );",
-        );
-    } @instances;
-
-    my @body_lines = (
-        "module $top_name (",
-        join(",\n", @port_lines),
-        ");",
-    );
-
-    push @body_lines, "", @net_lines if @net_lines;
-    push @body_lines, "", @auxiliary_assignments if @auxiliary_assignments;
-    push @body_lines, "", join("\n\n", @instance_blocks), "" if @instance_blocks;
-    push @body_lines, "endmodule";
-
-    return join("\n", @body_lines);
 }
 
 sub build_composition_structural_rtl_ir ($self, $composition_plan) {

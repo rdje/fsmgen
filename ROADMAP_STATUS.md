@@ -1358,6 +1358,10 @@ Exit criteria:
   is not a reason to keep `HDLGenerator` monolithic; any internal shim is only
   acceptable as a clearly transitional migration aid toward a split
   orchestrator/compiler layer plus backend emitter.
+- `R11`: the first real backend-emitter split slice is now active too:
+  composition-top structural HDL text emission now lives in
+  `FSM::Backend::VerilogFamily::StructuralRTLIREmitter`, so `HDLGenerator`
+  no longer owns that direct structural text-rendering step.
 - `R11`: `StructuralRTLIR` now also owns composition-top port metadata
   projection through `port_metadata` and `port_metadata_from_input`, so
   composition-top `signals` / `signal_names` / grouped input-output signal

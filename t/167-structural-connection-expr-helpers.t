@@ -8,8 +8,8 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::Backend::VerilogFamily::StructuralRTLIREmitter;
 use FSM::IR::StructuralRTLIR;
-use FSM::Pipeline::HDLGenerator;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     open_expr
     signal_ref_expr
@@ -74,12 +74,6 @@ subtest 'backend-neutral open connection expressions render without inventing fa
         'binding text rendering preserves an explicit open connection as an empty current-language actual',
     );
 
-    my $pipeline = FSM::Pipeline::HDLGenerator->new(
-        target_language => 'systemverilog',
-        debug_level => 0,
-        quiet => 1,
-    );
-
     my $structural_rtl_ir = FSM::IR::StructuralRTLIR->new(
         module_name => 'structural_open_top',
         source_root_kind => 'top',
@@ -108,11 +102,11 @@ subtest 'backend-neutral open connection expressions render without inventing fa
         auxiliary_assignments => [],
     );
 
-    my $rendered = $pipeline->emit_composition_top_module($structural_rtl_ir);
+    my $rendered = FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
     like(
         $rendered,
         qr/\.unused\(\)/,
-        'composition structural emitter walks explicit open connection expressions directly',
+        'structural backend emitter walks explicit open connection expressions directly',
     );
 };
 
@@ -402,12 +396,6 @@ subtest 'bounded fixed-size index-access connection expressions render through t
         'binding text rendering walks index-access expressions',
     );
 
-    my $pipeline = FSM::Pipeline::HDLGenerator->new(
-        target_language => 'systemverilog',
-        debug_level => 0,
-        quiet => 1,
-    );
-
     my $structural_rtl_ir = FSM::IR::StructuralRTLIR->new(
         module_name => 'structural_index_top',
         source_root_kind => 'top',
@@ -436,11 +424,11 @@ subtest 'bounded fixed-size index-access connection expressions render through t
         auxiliary_assignments => [],
     );
 
-    my $rendered = $pipeline->emit_composition_top_module($structural_rtl_ir);
+    my $rendered = FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
     like(
         $rendered,
         qr/\.lane\(lane_bus\[2\]\)/,
-        'composition structural emitter walks fixed-size index-access expressions directly',
+        'structural backend emitter walks fixed-size index-access expressions directly',
     );
 };
 
@@ -494,12 +482,6 @@ subtest 'bounded member-access connection expressions render through the helper 
         'binding text rendering walks member-access expressions',
     );
 
-    my $pipeline = FSM::Pipeline::HDLGenerator->new(
-        target_language => 'systemverilog',
-        debug_level => 0,
-        quiet => 1,
-    );
-
     my $structural_rtl_ir = FSM::IR::StructuralRTLIR->new(
         module_name => 'structural_member_top',
         source_root_kind => 'top',
@@ -528,11 +510,11 @@ subtest 'bounded member-access connection expressions render through the helper 
         auxiliary_assignments => [],
     );
 
-    my $rendered = $pipeline->emit_composition_top_module($structural_rtl_ir);
+    my $rendered = FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
     like(
         $rendered,
         qr/\.cfg\(cfg_bus\.mode\)/,
-        'composition structural emitter walks member-access connection expressions directly',
+        'structural backend emitter walks member-access connection expressions directly',
     );
 
     my $error = eval {
@@ -794,12 +776,6 @@ subtest 'bounded concat connection expressions render through the helper and the
         'binding text rendering walks nested concat expressions through the current VHDL helper path too',
     );
 
-    my $pipeline = FSM::Pipeline::HDLGenerator->new(
-        target_language => 'systemverilog',
-        debug_level => 0,
-        quiet => 1,
-    );
-
     my $structural_rtl_ir = FSM::IR::StructuralRTLIR->new(
         module_name => 'structural_concat_top',
         source_root_kind => 'top',
@@ -834,11 +810,11 @@ subtest 'bounded concat connection expressions render through the helper and the
         auxiliary_assignments => [],
     );
 
-    my $rendered = $pipeline->emit_composition_top_module($structural_rtl_ir);
+    my $rendered = FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
     like(
         $rendered,
         qr/\.combined\(\{ctrl\[0\], payload\[6:0\]\}\)/,
-        'composition structural emitter walks concat connection expressions directly',
+        'structural backend emitter walks concat connection expressions directly',
     );
 
 };
@@ -896,12 +872,6 @@ subtest 'bounded bit-vector literal connection expressions render through the he
         'binding text rendering walks bit-vector literals through the current VHDL helper path too',
     );
 
-    my $pipeline = FSM::Pipeline::HDLGenerator->new(
-        target_language => 'systemverilog',
-        debug_level => 0,
-        quiet => 1,
-    );
-
     my $structural_rtl_ir = FSM::IR::StructuralRTLIR->new(
         module_name => 'structural_literal_top',
         source_root_kind => 'top',
@@ -930,13 +900,39 @@ subtest 'bounded bit-vector literal connection expressions render through the he
         auxiliary_assignments => [],
     );
 
-    my $rendered = $pipeline->emit_composition_top_module($structural_rtl_ir);
+    my $rendered = FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
     like(
         $rendered,
         qr/\.mask\(8'b10100101\)/,
-        'composition structural emitter walks literal connection expressions directly',
+        'structural backend emitter walks literal connection expressions directly',
     );
 
+};
+
+subtest 'verilog-family structural emitter rejects unsupported target-language values directly' => sub {
+    my $structural_rtl_ir = FSM::IR::StructuralRTLIR->new(
+        module_name => 'structural_vhdl_top',
+        source_root_kind => 'top',
+        target_language => 'vhdl',
+        ports => [],
+        nets => [],
+        instances => [],
+        declared_links => [],
+        resolved_links => [],
+        auxiliary_assignments => [],
+    );
+
+    my $error = eval {
+        FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
+        return '';
+    };
+    $error = $@ unless length($error || '');
+
+    like(
+        $error,
+        qr/verilog-family emitter only supports systemverilog\/verilog target_language values/,
+        'structural backend emitter fails explicitly outside the current Verilog-family boundary',
+    );
 };
 
 subtest 'signal_ref binding updates keep compatibility and typed fields aligned' => sub {

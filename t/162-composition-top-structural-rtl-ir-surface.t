@@ -9,6 +9,7 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::Backend::VerilogFamily::StructuralRTLIREmitter;
 use FSM::Pipeline::HDLGenerator;
 use FSM::IR::StructuralRTLIR;
 
@@ -400,11 +401,11 @@ FSM
         'structural_rtl_ir port metadata preserves the compatible signals map',
     );
 
-    my $rendered_top = $pipeline->emit_composition_top_module($structural_rtl_ir);
+    my $rendered_top = FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
     like(
         $result->{hdl_code},
         qr/\Q$rendered_top\E/s,
-        'composition HDL contains the top module rendered directly from structural_rtl_ir',
+        'composition HDL contains the top module rendered directly by the structural backend emitter',
     );
 };
 
