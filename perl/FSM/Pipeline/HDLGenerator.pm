@@ -16,6 +16,7 @@ use FSM::Debug;
 use FSM::HDL::FlattenedDT;
 use FSM::Adapter::FSMGenFull;
 use FSM::Composition::Parser;
+use FSM::Composition::C1PlanBuilder;
 use FSM::Composition::InterfacePortBuilder;
 use FSM::Composition::Net;
 use FSM::Composition::Port;
@@ -496,13 +497,13 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
     }
 
     if (@realized_instances == 1 && !@toplinks) {
-        return $self->build_c1_composition_plan(
-            $composition_spec,
-            $ports_block,
-            \@ports,
-            $realized_instances[0],
-            $fsm_file,
-            $header,
+        return FSM::Composition::C1PlanBuilder->build_plan(
+            composition_spec => $composition_spec,
+            ports_block => $ports_block,
+            ports => \@ports,
+            realized_instance => $realized_instances[0],
+            fsm_file => $fsm_file,
+            header => $header,
         );
     }
 
@@ -1112,69 +1113,6 @@ sub assert_unique_top_ports ($self, $ports_block, $fsm_file, $header) {
     return \%top_ports_by_name;
 }
 
-sub build_c1_composition_plan ($self, $composition_spec, $ports_block, $ports, $realized_instance, $fsm_file, $header) {
-    my $child_port_info = $self->index_ports_by_name($realized_instance->interface_ports);
-    my @effective_ports = @{$ports || []};
-
-    if (@effective_ports) {
-        $self->assert_c1_port_exposure_matches_child($ports_block, $realized_instance, $child_port_info, $fsm_file, $header);
-    } else {
-        @effective_ports = @{$self->infer_c1_ports_from_child_interface($realized_instance, $fsm_file, $header)};
-    }
-
-    my @port_bindings = map {
-        signal_ref_binding($_->name, $_->name)
-    } @effective_ports;
-    my @resolved_links = map {
-        my $port = $_;
-        FSM::Composition::Link->new(
-            source => ($port->direction eq 'input' ? $port->name : $realized_instance->instance_name.'.'.$port->name),
-            target => ($port->direction eq 'input' ? $realized_instance->instance_name.'.'.$port->name : $port->name),
-            raw_token => undef,
-            origin_kind => ($port->binding_mode || 'explicit') eq 'implicit_passthrough'
-                ? 'inferred_c1_passthrough_link'
-                : 'declared_c1_passthrough_link',
-        );
-    } @effective_ports;
-
-    my $planned_instance = $self->clone_realized_instance_with_bindings($realized_instance, \@port_bindings);
-
-    return FSM::Composition::Plan->new(
-        lane => 'C1',
-        top_name => $composition_spec->top->name,
-        ports => \@effective_ports,
-        links => [],
-        resolved_links => \@resolved_links,
-        nets => [],
-        instances => [$planned_instance],
-        raw_spec => $composition_spec,
-    );
-}
-
-sub infer_c1_ports_from_child_interface ($self, $realized_instance, $fsm_file, $header) {
-    my @child_ports = @{$realized_instance->interface_ports || []};
-
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' omits explicit top-port declarations in the single-child passthrough C1 lane, ".
-        "but realized child instance '".$realized_instance->instance_name."' exposes no ports to infer. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless @child_ports;
-
-    return [
-        map {
-            FSM::Composition::Port->new(
-                name => $_->name,
-                direction => $_->direction,
-                width => $_->width,
-                type => $_->type,
-                raw_token => undef,
-                binding_mode => 'implicit_passthrough',
-                origin_kind => 'inferred_c1_passthrough_port',
-            )
-        } @child_ports
-    ];
-}
-
 sub augment_with_inferred_top_ports_from_explicit_links ($self, $ports, $toplinks, $realized_instances, $fsm_file, $header) {
     my @ports = @{$ports || []};
     my %declared_by_name = map { $_->name => $_ } @ports;
@@ -1474,40 +1412,6 @@ sub augment_with_inferred_undeclared_top_outputs ($self, $ports, $realized_insta
     } @inferred_ports;
 
     return [@ports, @inferred_ports];
-}
-
-sub assert_c1_port_exposure_matches_child ($self, $ports_block, $realized_instance, $child_port_info, $fsm_file, $header) {
-    my $top_ports_by_name = $self->assert_unique_top_ports($ports_block, $fsm_file, $header);
-
-    for my $child_port_name (sort keys %$child_port_info) {
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-            "but C1 passthrough exposure is blocked because the current active C1 lane requires every child port to be explicitly exposed in '?ports'. ".
-            "Missing top exposure for child port '$child_port_name' on instance '".$realized_instance->instance_name."'. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $top_ports_by_name->{$child_port_name};
-    }
-
-    for my $port (@{$ports_block->ports}) {
-        my $child_port = $child_port_info->{$port->name};
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' declares top port '".$port->name."', ".
-            "but C1 passthrough exposure is blocked because the realized child interface has no port with that name. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $child_port;
-
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' declares top port '".$port->name."' with width ".$port->width.", ".
-            "but C1 passthrough exposure is blocked because child port '".$port->name."' has width ".$child_port->width.".".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $port->width == $child_port->width;
-
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' declares top port '".$port->name."' as ".$port->direction.", ".
-            "but C1 passthrough exposure is blocked because child port '".$port->name."' is ".$child_port->direction.".".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $port->direction eq $child_port->direction;
-    }
 }
 
 sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $fsm_file, $header) {

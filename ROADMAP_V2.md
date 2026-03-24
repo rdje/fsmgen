@@ -768,6 +768,11 @@ The first honest `R11` slices are now:
   interface-type normalization and system-port ordering rules now live in
   `FSM::Composition::InterfacePortBuilder`, so `HDLGenerator` no longer owns
   that child-boundary projection logic directly either.
+- Forward-IR note: the first real composition-lane plan split is now active
+  too: bounded single-child passthrough `C1` planning now lives in
+  `FSM::Composition::C1PlanBuilder`, so `HDLGenerator` no longer owns that
+  lane’s explicit passthrough validation, implicit top-port inference, or
+  direct passthrough link/binding assembly.
 - Forward-IR note: `StructuralRTLIR` now also owns composition-top port
   metadata projection through `port_metadata` and `port_metadata_from_input`,
   so top-level `signals` / `signal_names` / grouped input-output signal

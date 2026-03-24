@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-24: c1 passthrough plan building now lives in a composition builder package
+- Saved shipped behavior:
+  - `FSM::Composition::C1PlanBuilder` now owns the bounded single-child passthrough `C1` lane,
+  - that package now handles explicit passthrough exposure validation, implicit top-port inference from one realized child interface, and direct passthrough link/binding assembly,
+  - and the extracted builder now has a direct contract test beside the existing end-to-end `C1` coverage.
+- Important continuity note:
+  - this is the first real composition-lane planner split, not just another helper move,
+  - it gives the future composition-plan breakdown a concrete lane package to grow from,
+  - and the next likely seam is another bounded composition-lane extraction or one of the remaining top-port/link inference helpers.
+
 ## 2026-03-24: realized-child interface port planning now lives in a composition builder package
 - Saved shipped behavior:
   - `FSM::Composition::InterfacePortBuilder` now owns realized generated-child interface port construction from `module_info`,

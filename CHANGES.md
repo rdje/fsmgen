@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-24
+### c1 passthrough plan building now lives in a composition builder package
+- Added [perl/FSM/Composition/C1PlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/C1PlanBuilder.pm) as the owner of bounded single-child passthrough `C1` plan construction, including explicit passthrough exposure validation, implicit top-port inference from one realized child interface, and direct passthrough link/binding assembly.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so `C1` lane selection now runs through that composition-side builder package instead of keeping the single-child passthrough planner inside the pipeline monolith.
+- Added [t/173-composition-c1-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/173-composition-c1-plan-builder.t) to lock the extracted builder directly, and synced [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next composition-plan split slice is tracked honestly.
+
 ### realized-child interface port planning now lives in a composition builder package
 - Added [perl/FSM/Composition/InterfacePortBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/InterfacePortBuilder.pm) as the owner of realized generated-child interface port construction from `module_info`, along with the shared interface-type normalization and system-port ordering rules used by composition planning.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so realized child construction and the remaining composition interface/type consumers now call that composition-side builder package instead of keeping those rules inside the pipeline monolith.

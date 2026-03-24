@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-24: c1 passthrough plan building now lives in a composition builder package
+- Continued the active `R11` package-breakdown lane by moving the first bounded composition-lane planner out of `HDLGenerator` instead of leaving single-child passthrough assembly in the pipeline monolith.
+- Landed behavior:
+  - added `FSM::Composition::C1PlanBuilder` as the owner of the bounded single-child passthrough `C1` lane,
+  - that package now owns explicit passthrough exposure validation, implicit top-port inference from one realized child interface, and direct passthrough link/binding assembly,
+  - and the extracted builder now has its own direct contract lock beside the existing end-to-end `C1` coverage.
+- Why this is worth shipping:
+  - it moves one real composition-plan lane out of `HDLGenerator`, not just another lookup helper,
+  - it gives the future composition-plan split a concrete first lane to grow from,
+  - and it leaves the next seam where it belongs: another bounded composition-lane or top-port/link inference extraction instead of another monolithic helper pileup.
+
 ## 2026-03-24: realized-child interface port planning now lives in a composition builder package
 - Continued the active `R11` package-breakdown lane by pulling one composition-planning helper cluster out of `HDLGenerator` instead of waiting for the full composition-plan builder split.
 - Landed behavior:

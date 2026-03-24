@@ -1371,6 +1371,11 @@ Exit criteria:
   normalization and system-port ordering rules now live in
   `FSM::Composition::InterfacePortBuilder`, so `HDLGenerator` no longer owns
   that child-boundary projection logic directly either.
+- `R11`: the first real composition-lane planner split is now active too:
+  bounded single-child passthrough `C1` planning now lives in
+  `FSM::Composition::C1PlanBuilder`, so `HDLGenerator` no longer owns that
+  lane’s explicit passthrough validation, implicit top-port inference, or
+  direct passthrough link/binding assembly.
 - `R11`: `StructuralRTLIR` now also owns composition-top port metadata
   projection through `port_metadata` and `port_metadata_from_input`, so
   composition-top `signals` / `signal_names` / grouped input-output signal
