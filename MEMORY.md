@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural top-port and resolved-link queries now live in StructuralRTLIR
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIR` now owns `top_port` and `resolved_links_touching`,
+  - composition provenance endpoint resolution now consumes `top_port` instead of rebuilding a local top-port lookup table,
+  - and explicit-toplink override reporting now consumes `resolved_links_touching` instead of grepping resolved links locally for each top port.
+- Important continuity note:
+  - this removes another pair of small but real structural-query pockets from `HDLGenerator`,
+  - it keeps more top/child connectivity lookup behavior with the structural layer that owns the ports and links,
+  - and the next likely seam is still another structural query/helper ownership move or the next bounded structural-AST widening.
+
 ## 2026-03-23: structural endpoint-query helpers now live in StructuralRTLIR
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR` now owns `interface_endpoint`, `interface_signal_endpoints`, and `interface_signal_endpoint_groups`,

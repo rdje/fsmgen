@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural top-port and resolved-link queries now live in StructuralRTLIR
+- Continued the active `R11` structural-IR ownership cleanup lane by moving two more obvious structural queries into `StructuralRTLIR` instead of leaving them as pipeline-local array scans.
+- Landed behavior:
+  - `FSM::IR::StructuralRTLIR` now exports `top_port` and `resolved_links_touching`,
+  - composition provenance endpoint resolution now uses `top_port` instead of rebuilding a top-port lookup table locally,
+  - and explicit-toplink override reporting now uses `resolved_links_touching` instead of hand-grepping resolved links for each top port.
+- Why this is worth shipping:
+  - it removes another pair of small but repeated structural queries from `HDLGenerator`,
+  - it keeps more of the explicit composition-query surface with the structural layer that actually owns the ports and links,
+  - and it leaves the next seam where it belongs: either another structural query/helper ownership move or the next bounded structural-AST widening.
+
 ## 2026-03-23: structural endpoint-query helpers now live in StructuralRTLIR
 - Continued the active `R11` structural-IR ownership cleanup lane by moving child-interface endpoint lookup and signal-family grouping into the structural layer instead of leaving those nested instance/port walks inside reporting consumers.
 - Landed behavior:

@@ -718,3 +718,7 @@ The first honest `R11` slices are now:
   `interface_signal_endpoints`, and `interface_signal_endpoint_groups`, so
   provenance/reporting consumers no longer need to hand-walk nested
   `instances` / `interface_ports` arrays for those endpoint-family queries.
+- Forward-IR note: that same `StructuralRTLIR` surface now also owns top-port
+  lookup and “resolved links touching endpoint X” queries through `top_port`
+  and `resolved_links_touching`, so provenance/override consumers no longer
+  need to rebuild those small structural queries in `HDLGenerator`.

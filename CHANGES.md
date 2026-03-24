@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### structural top-port and resolved-link queries now live in StructuralRTLIR
+- Updated [perl/FSM/IR/StructuralRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR.pm) so the structural layer now also owns `top_port` and `resolved_links_touching` for explicit top-port lookup and “which resolved links touch endpoint X?” queries.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition provenance endpoint resolution and explicit-toplink override reporting now consume those structural queries instead of rebuilding the same lookups locally.
+- Updated [t/162-composition-top-structural-rtl-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/162-composition-top-structural-rtl-ir-surface.t) to lock the new structural query surface directly, and synced [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next structural ownership slice is tracked honestly.
+
 ### structural endpoint-query helpers now live in StructuralRTLIR
 - Updated [perl/FSM/IR/StructuralRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR.pm) so the structural layer now owns `interface_endpoint`, `interface_signal_endpoints`, and `interface_signal_endpoint_groups` for explicit child-interface endpoint lookup and signal-family grouping.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition provenance, override reporting, block reporting, and signal-family context discovery now consume that structural endpoint-query API instead of hand-walking nested `instances` / `interface_ports` loops locally.

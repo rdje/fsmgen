@@ -331,6 +331,32 @@ FSM
         'structural_rtl_ir signal-family grouping indexes child endpoints by interface signal name',
     );
 
+    is_deeply(
+        $structural_rtl_ir_obj->top_port('result_data'),
+        {
+            binding_mode => 'explicit',
+            direction => 'output',
+            name => 'result_data',
+            origin_kind => 'declared_explicit_port',
+            type => undef,
+            width => 8,
+        },
+        'structural_rtl_ir top-port lookup preserves cloned top-port metadata',
+    );
+
+    is_deeply(
+        $structural_rtl_ir_obj->resolved_links_touching('select', 'declared_explicit_toplink'),
+        [
+            {
+                origin_kind => 'declared_explicit_toplink',
+                raw_token => '/select/producer.select/',
+                source => 'select',
+                target => 'producer.select',
+            },
+        ],
+        'structural_rtl_ir resolved-link lookup can answer which explicit toplinks touch a given endpoint',
+    );
+
     my $rendered_top = $pipeline->emit_composition_top_module($structural_rtl_ir);
     like(
         $result->{hdl_code},

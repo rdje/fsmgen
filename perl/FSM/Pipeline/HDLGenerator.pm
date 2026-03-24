@@ -3841,15 +3841,11 @@ sub composition_provenance_endpoint_context ($self, $composition_plan, $endpoint
 
     $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
     my $structural_rtl_ir_obj = $self->structural_rtl_ir_object($structural_rtl_ir);
-    my $structural_rtl_ir_hash = $structural_rtl_ir_obj->as_hashref;
-    my %top_port_by_name = map {
-        ((($_->{name}) || '') => $_)
-    } @{$structural_rtl_ir_hash->{ports} || []};
     my %child_by_instance = map {
         ((($_->{instance_name}) || '') => $_)
     } @{$self->composition_child_exports_for_context($composition_plan, $intent_hir)};
 
-    if (my $top_port = $top_port_by_name{$endpoint}) {
+    if (my $top_port = $structural_rtl_ir_obj->top_port($endpoint)) {
         return {
             kind => 'top_port',
             name => $top_port->{name},
@@ -3985,7 +3981,6 @@ sub build_composition_override_events ($self, $composition_plan, $structural_rtl
     my $structural_rtl_ir_obj = $self->structural_rtl_ir_object($structural_rtl_ir);
     my $structural_rtl_ir_hash = $structural_rtl_ir_obj->as_hashref;
     my $same_name_endpoints = $structural_rtl_ir_obj->interface_signal_endpoint_groups;
-    my @resolved_links = @{$structural_rtl_ir_hash->{resolved_links} || []};
 
     for my $top_port (@{$structural_rtl_ir_hash->{ports} || []}) {
         next unless (($top_port->{binding_mode} || 'explicit') eq 'explicit');
@@ -3995,13 +3990,10 @@ sub build_composition_override_events ($self, $composition_plan, $structural_rtl
         my @same_name_candidates = @{$same_name_endpoints->{$top_port->{name}} || []};
         next unless @same_name_candidates;
 
-        my @touching_explicit_toplinks = grep {
-            ((($_->{origin_kind}) || '') eq 'declared_explicit_toplink')
-            && (
-                ((($_->{source}) || '') eq $top_port->{name})
-                || ((($_->{target}) || '') eq $top_port->{name})
-            )
-        } @resolved_links;
+        my @touching_explicit_toplinks = @{$structural_rtl_ir_obj->resolved_links_touching(
+            $top_port->{name},
+            'declared_explicit_toplink',
+        )};
         next unless @touching_explicit_toplinks;
         my $example_link = $touching_explicit_toplinks[0];
         my $source_context = $self->composition_provenance_endpoint_context($composition_plan, $example_link->{source}, $structural_rtl_ir_obj, $intent_hir);
@@ -4054,7 +4046,7 @@ sub build_composition_override_events ($self, $composition_plan, $structural_rtl
     }
 
     my %seen_reexports;
-    for my $resolved_link (@resolved_links) {
+    for my $resolved_link (@{$structural_rtl_ir_hash->{resolved_links} || []}) {
         next unless (($resolved_link->{origin_kind} || '') eq 'inferred_internal_carrier_reexport_link');
         my $top_port_name = $resolved_link->{target};
         next if $seen_reexports{$top_port_name}++;

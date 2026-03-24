@@ -34,6 +34,16 @@ sub declared_links ($self) { return $self->{declared_links} }
 sub resolved_links ($self) { return $self->{resolved_links} }
 sub auxiliary_assignments ($self) { return $self->{auxiliary_assignments} }
 
+sub top_port ($self, $port_name) {
+    return undef unless defined($port_name) && length($port_name);
+
+    my ($port) = grep {
+        ((($_->{name}) || '') eq $port_name)
+    } @{$self->ports || []};
+
+    return _clone($port);
+}
+
 sub interface_endpoint ($self, $endpoint) {
     return undef unless defined($endpoint) && length($endpoint);
 
@@ -83,6 +93,22 @@ sub interface_signal_endpoints ($self, $signal_name, $direction = undef) {
     return [] unless defined($signal_name) && length($signal_name);
     my $groups = $self->interface_signal_endpoint_groups($direction);
     return _clone($groups->{$signal_name} || []);
+}
+
+sub resolved_links_touching ($self, $endpoint, $origin_kind = undef) {
+    return [] unless defined($endpoint) && length($endpoint);
+
+    my @links = grep {
+        my $origin_matches = !defined($origin_kind) || !length($origin_kind)
+            || ((($_->{origin_kind}) || '') eq $origin_kind);
+        $origin_matches
+            && (
+                ((($_->{source}) || '') eq $endpoint)
+                || ((($_->{target}) || '') eq $endpoint)
+            )
+    } @{$self->resolved_links || []};
+
+    return _clone(\@links);
 }
 
 sub as_hashref ($self) {
