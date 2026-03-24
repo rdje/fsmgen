@@ -6022,6 +6022,12 @@ It is an exact-delay pulse request:
   - this is the first structural slice, not the whole universal connectivity story yet,
   - but it establishes the right boundary between `Lowered RTL IR` as lowered semantic summary and `Structural RTL IR` as the first extracted wiring/netlist layer.
 2026-03-23
+- StructuralRTLIR `bit_vector_literal` nodes now also render through the
+  current VHDL helper path, with vector literals using `"1010"`-style text and
+  single-bit literals using character-literal text like `'1'`.
+- That closes another small portability gap in the bounded structural
+  actual-connection family without inventing a second literal AST just for
+  VHDL.
 - Shared-datapath carrier/top-output/peer-input planning now also prefers the
   typed `bound_connection_expr` path for flat leaf-carrier lookup, with the
   older `bound_signal` field retained only as a compatibility fallback.

@@ -1262,6 +1262,10 @@ Exit criteria:
 - `R11`: `StructuralRTLIR` connection expressions now also cover bounded
   bit-vector literal actuals, so the structural connection AST can represent
   simple constant tie-offs without falling back to raw HDL strings.
+- `R11`: those bounded `bit_vector_literal` actuals now also render honestly
+  through the current VHDL helper path, so constant/tie-off structural actuals
+  are a bit more genuinely cross-backend instead of only rendering for the
+  Verilog family.
 - `R11`: `StructuralRTLIR` connection expressions now also cover explicit
   backend-neutral `open` actuals, so the structural connection AST can model
   intentionally unconnected child formals without using raw backend syntax.

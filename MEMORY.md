@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural bit-vector literals now render honestly for vhdl too
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now renders bounded `bit_vector_literal` nodes through the current VHDL helper path too,
+  - multi-bit literals now render as VHDL bit-string style `"1010"` forms,
+  - and single-bit literals now render as VHDL character literals like `'1'`.
+- Important continuity note:
+  - this closes another obvious “portable on paper but not in rendering” gap in the structural AST,
+  - it keeps constant actual connections backend-neutral without forcing a separate VHDL-only literal family,
+  - and the next likely seam is still either one more bounded `connection_expr` widening or another consumer moving further off compatibility mirrors.
+
 ## 2026-03-23: shared-datapath planning now prefers typed binding expressions
 - Saved shipped behavior:
   - shared-datapath planning now derives flat carrier names from `bound_connection_expr` first,

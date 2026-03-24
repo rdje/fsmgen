@@ -323,12 +323,17 @@ sub render_expr ($expr, $port_name = undef, $target_language = 'systemverilog') 
     }
 
     if ($kind eq 'bit_vector_literal') {
+        my $language = defined($target_language) ? lc($target_language) : '';
         _confess_unsupported_target_language($target_language, $port_name, $kind)
-            unless _is_verilog_family($target_language);
+            unless _is_verilog_family($target_language) || $language eq 'vhdl';
         my $bits = $expr->{bits} // '';
         my $width = $expr->{width};
         confess "StructuralRTLIR bit-vector literals must preserve non-empty binary payload.\n"
             unless defined($width) && $width =~ /^\d+$/ && $width > 0 && $bits =~ /\A[01]+\z/;
+        if ($language eq 'vhdl') {
+            return sprintf("'%s'", $bits) if $width == 1;
+            return sprintf('"%s"', $bits);
+        }
         return sprintf("%d'b%s", $width, $bits);
     }
 

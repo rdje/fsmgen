@@ -664,6 +664,27 @@ subtest 'bounded bit-vector literal connection expressions render through the he
         'binding text rendering walks bit-vector literal expressions',
     );
 
+    is(
+        render_expr(bit_vector_literal_expr('10100101'), 'mask', 'vhdl'),
+        '"10100101"',
+        'bit-vector literal expressions also render through the current VHDL helper path',
+    );
+
+    is(
+        render_expr(bit_vector_literal_expr('1'), 'flag', 'vhdl'),
+        "'1'",
+        'single-bit literal expressions render as VHDL character literals',
+    );
+
+    is(
+        binding_expr_text({
+            port_name => 'mask',
+            connection_expr => bit_vector_literal_expr('10100101'),
+        }, 'vhdl'),
+        '"10100101"',
+        'binding text rendering walks bit-vector literals through the current VHDL helper path too',
+    );
+
     my $pipeline = FSM::Pipeline::HDLGenerator->new(
         target_language => 'systemverilog',
         debug_level => 0,
@@ -705,16 +726,6 @@ subtest 'bounded bit-vector literal connection expressions render through the he
         'composition structural emitter walks literal connection expressions directly',
     );
 
-    my $error = eval {
-        render_expr(bit_vector_literal_expr('10100101'), 'mask', 'vhdl');
-        undef;
-    };
-
-    like(
-        $@,
-        qr/unsupported target_language 'vhdl'/,
-        'literal rendering fails explicitly for backends the current bounded renderer does not support yet',
-    );
 };
 
 subtest 'signal_ref binding updates keep compatibility and typed fields aligned' => sub {

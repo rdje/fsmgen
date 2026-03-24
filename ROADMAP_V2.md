@@ -653,6 +653,10 @@ The first honest `R11` slices are now:
   bounded literal family, because real top/child connectivity eventually needs
   honest constant actuals and tie-offs without collapsing back into raw
   backend-specific syntax strings.
+- Forward-IR note: that bounded literal family now also renders honestly
+  through the current VHDL helper path, so the structural AST is a bit more
+  genuinely cross-backend for constant/tie-off actuals instead of only being
+  rendered for the Verilog family.
 - Forward-IR note: the structural connection-expression layer now also needs an
   explicit `open` actual form, because “leave this formal unconnected” is real
   structural semantics and should not be represented as a backend-specific text

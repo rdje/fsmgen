@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### structural bit-vector literals now render honestly for vhdl too
+- Updated [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) so the existing bounded `bit_vector_literal` connection-expression node now also renders through the current VHDL helper path instead of staying Verilog-only.
+- Updated [t/167-structural-connection-expr-helpers.t](/Users/richarddje/Documents/github/fsmgen/t/167-structural-connection-expr-helpers.t) to lock both vector and single-bit VHDL literal rendering.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this structural actual-connection portability slice is tracked honestly.
+
 ### shared-datapath planning now prefers typed binding expressions
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so shared-datapath carrier/top-output/peer-input planning now derives flat leaf carrier names from `bound_connection_expr` first, with `bound_signal` only as a compatibility fallback.
 - Updated [t/168-structural-binding-leaf-consumers.t](/Users/richarddje/Documents/github/fsmgen/t/168-structural-binding-leaf-consumers.t) to lock that helper boundary directly, including the stale-mirror and non-leaf-expression cases.
