@@ -86,6 +86,7 @@ FSM
     my $module_info = $result->{module_info};
     my $statistics = $result->{statistics};
     my $composition_plan = $result->{composition_plan};
+    my $structural_rtl_ir_obj = $pipeline->build_composition_structural_rtl_ir($composition_plan);
 
     ok($structural_rtl_ir, 'composition top now exposes a top-level structural_rtl_ir summary');
     is_deeply(
@@ -307,6 +308,27 @@ FSM
         $statistics->{composition_resolved_link_count},
         $structural_rtl_ir->{resolved_link_count},
         'composition statistics now derive resolved-link count from structural_rtl_ir via the report handoff',
+    );
+
+    my $router_out = $structural_rtl_ir_obj->interface_endpoint('router.OUT');
+    is($router_out->{endpoint}, 'router.OUT', 'structural_rtl_ir endpoint lookup preserves the full endpoint token');
+    is($router_out->{instance_name}, 'router', 'structural_rtl_ir endpoint lookup preserves the instance name');
+    is($router_out->{port_name}, 'OUT', 'structural_rtl_ir endpoint lookup preserves the formal port name');
+    is_deeply(
+        $router_out->{port},
+        { direction => 'output', name => 'OUT', type => undef, width => 8 },
+        'structural_rtl_ir endpoint lookup preserves the interface port metadata',
+    );
+
+    my $select_inputs = $structural_rtl_ir_obj->interface_signal_endpoints('select', 'input');
+    is(scalar(@$select_inputs), 1, 'structural_rtl_ir signal-family lookup finds the matching input endpoint');
+    is($select_inputs->[0]{endpoint}, 'producer.select', 'signal-family lookup preserves the matching child endpoint token');
+
+    my $signal_groups = $structural_rtl_ir_obj->interface_signal_endpoint_groups;
+    is_deeply(
+        [map { $_->{endpoint} } @{$signal_groups->{output_data} || []}],
+        ['producer.output_data'],
+        'structural_rtl_ir signal-family grouping indexes child endpoints by interface signal name',
     );
 
     my $rendered_top = $pipeline->emit_composition_top_module($structural_rtl_ir);

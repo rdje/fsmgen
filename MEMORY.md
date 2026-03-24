@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural endpoint-query helpers now live in StructuralRTLIR
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIR` now owns `interface_endpoint`, `interface_signal_endpoints`, and `interface_signal_endpoint_groups`,
+  - composition provenance endpoint resolution now consumes those structural queries instead of grepping structural instances/ports locally,
+  - and override/block reporting plus signal-family context discovery now consume that same structural endpoint-query surface instead of rebuilding nested-loop endpoint groups.
+- Important continuity note:
+  - this removes another real connectivity-query pocket from `HDLGenerator`,
+  - it makes `StructuralRTLIR` a clearer owner of explicit child-interface endpoint lookup instead of leaving that logic spread across reporting consumers,
+  - and the next likely seam is still another structural query/helper ownership move or the next bounded structural-AST widening.
+
 ## 2026-03-23: structural binding-summary indexing now lives in the structural helper layer
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR::ConnectionExpr` now owns `binding_signal_summaries_by_port`, the reusable rule for turning one binding list into a normalized per-port summary index,

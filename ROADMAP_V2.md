@@ -713,3 +713,8 @@ The first honest `R11` slices are now:
   `binding_signal_summaries_by_port`, so composition system-signal inference
   and shared-datapath candidate assembly no longer need to rebuild that same
   local summary map inside `HDLGenerator`.
+- Forward-IR note: `StructuralRTLIR` itself now also owns explicit child
+  endpoint-query helpers through `interface_endpoint`,
+  `interface_signal_endpoints`, and `interface_signal_endpoint_groups`, so
+  provenance/reporting consumers no longer need to hand-walk nested
+  `instances` / `interface_ports` arrays for those endpoint-family queries.

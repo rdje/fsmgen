@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural endpoint-query helpers now live in StructuralRTLIR
+- Continued the active `R11` structural-IR ownership cleanup lane by moving child-interface endpoint lookup and signal-family grouping into the structural layer instead of leaving those nested instance/port walks inside reporting consumers.
+- Landed behavior:
+  - `FSM::IR::StructuralRTLIR` now exports `interface_endpoint`, `interface_signal_endpoints`, and `interface_signal_endpoint_groups`,
+  - composition provenance endpoint resolution now consumes that structural endpoint-query API instead of grepping structural instances and ports locally,
+  - and override/block reporting plus signal-family context discovery now consume the same structural endpoint-query API instead of rebuilding their own nested-loop endpoint grouping.
+- Why this is worth shipping:
+  - it removes another real chunk of connectivity-query logic from `HDLGenerator`,
+  - it makes `StructuralRTLIR` a clearer owner of explicit child/top connectivity queries instead of just carrying raw arrays,
+  - and it leaves the next seam where it belongs: either another structural query/helper ownership move or the next bounded widening of the structural AST itself.
+
 ## 2026-03-23: structural binding-summary indexing now lives in the structural helper layer
 - Continued the active `R11` structural-IR ownership cleanup lane by moving the repeated “binding list to per-port summary index” rule into the same helper layer that already owns structural summary-entry semantics.
 - Landed behavior:

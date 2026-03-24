@@ -34,6 +34,57 @@ sub declared_links ($self) { return $self->{declared_links} }
 sub resolved_links ($self) { return $self->{resolved_links} }
 sub auxiliary_assignments ($self) { return $self->{auxiliary_assignments} }
 
+sub interface_endpoint ($self, $endpoint) {
+    return undef unless defined($endpoint) && length($endpoint);
+
+    my ($instance_name, $port_name) = $endpoint =~ /^(\w+)\.(\w+)$/;
+    return undef unless defined $port_name;
+
+    for my $instance (@{$self->instances || []}) {
+        next unless (($instance->{instance_name} || '') eq $instance_name);
+
+        my ($port) = grep {
+            ((($_->{name}) || '') eq $port_name)
+        } @{$instance->{interface_ports} || []};
+
+        return {
+            endpoint => $endpoint,
+            instance_name => $instance_name,
+            port_name => $port_name,
+            instance => _clone($instance),
+            port => _clone($port),
+        };
+    }
+
+    return undef;
+}
+
+sub interface_signal_endpoint_groups ($self, $direction = undef) {
+    my %groups;
+
+    for my $instance (@{$self->instances || []}) {
+        for my $port (@{$instance->{interface_ports} || []}) {
+            next if defined($direction) && length($direction) && (($port->{direction} || '') ne $direction);
+            my $signal_name = $port->{name} || next;
+            push @{$groups{$signal_name}}, {
+                endpoint => (($instance->{instance_name} || 'unknown') . '.' . $signal_name),
+                instance_name => $instance->{instance_name},
+                port_name => $signal_name,
+                instance => _clone($instance),
+                port => _clone($port),
+            };
+        }
+    }
+
+    return _clone(\%groups);
+}
+
+sub interface_signal_endpoints ($self, $signal_name, $direction = undef) {
+    return [] unless defined($signal_name) && length($signal_name);
+    my $groups = $self->interface_signal_endpoint_groups($direction);
+    return _clone($groups->{$signal_name} || []);
+}
+
 sub as_hashref ($self) {
     my $ports = _clone($self->ports || []);
     my $nets = _clone($self->nets || []);
