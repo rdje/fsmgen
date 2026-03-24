@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-24
+### composition-top StructuralRTLIR building now lives in a builder package
+- Added [perl/FSM/IR/StructuralRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIRBuilder.pm) as the first dedicated builder package for extracted composition-top `StructuralRTLIR` construction and structural object/hash coercion.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition-top structural IR construction/coercion now runs through that builder package instead of pipeline-owned helper methods.
+- Updated [t/162-composition-top-structural-rtl-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/162-composition-top-structural-rtl-ir-surface.t) so the structural object used in the contract test now comes from the builder package directly, and added a direct coercion lock for the serialized structural graph.
+- Synced [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this matching pipeline-side split is tracked honestly.
+
 ### composition-top structural text emission now lives in a backend emitter package
 - Added [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm) as the first dedicated backend emitter package for extracted `StructuralRTLIR` in the current Verilog-family composition lane.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition-top structural text emission now runs through that backend package instead of a pipeline-owned `emit_composition_top_module` method.

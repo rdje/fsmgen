@@ -5,7 +5,6 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
-use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
@@ -30,13 +29,13 @@ use FSM::Extension::Registry;
 use FSM::IR::IntentHIR;
 use FSM::IR::LoweredRTLIR;
 use FSM::IR::StructuralRTLIR;
+use FSM::IR::StructuralRTLIRBuilder;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     signal_ref_expr
     signal_ref_binding
     update_binding_signal_ref
     ensure_signal_ref_binding
     set_signal_ref_binding
-    normalized_binding
     binding_expr
     expr_signal_name
     binding_signal_summaries_by_port
@@ -268,7 +267,10 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
         || $self->parse_composition_source($raw_ast);
 
     my $composition_plan = $self->build_composition_plan($composition_spec, $fsm_file, $header);
-    my $structural_rtl_ir = $self->build_composition_structural_rtl_ir($composition_plan);
+    my $structural_rtl_ir = FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
+        $composition_plan,
+        ($self->{target_language} // 'systemverilog'),
+    );
     my $composition_child_exports = $self->build_composition_child_exports($composition_plan, $structural_rtl_ir);
     my $generated_child_exports = $self->build_composition_generated_child_exports(
         $composition_plan,
@@ -2856,104 +2858,12 @@ sub allocate_composition_net_name ($self, $source, $top_ports_by_name, $existing
 
 sub generate_composition_hdl_code ($self, $composition_plan, $structural_rtl_ir = undef) {
     my @segments = map { $_->hdl_code } @{$composition_plan->instances};
-    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
+        $composition_plan,
+        ($self->{target_language} // 'systemverilog'),
+    );
     push @segments, FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
     return join("\n\n", grep { defined && length } @segments) . "\n";
-}
-
-sub build_composition_structural_rtl_ir ($self, $composition_plan) {
-    return FSM::IR::StructuralRTLIR->new(
-        module_name => ($composition_plan->top_name // ''),
-        source_root_kind => 'top',
-        target_language => ($self->{target_language} // 'systemverilog'),
-        ports => [
-            map {
-                +{
-                    name => $_->name,
-                    direction => $_->direction,
-                    width => $_->width,
-                    type => $_->type,
-                    binding_mode => $_->binding_mode,
-                    origin_kind => $_->origin_kind,
-                }
-            } @{$composition_plan->ports || []}
-        ],
-        nets => [
-            map {
-                +{
-                    name => $_->name,
-                    width => $_->width,
-                    source => $_->source,
-                    targets => [@{$_->targets || []}],
-                }
-            } @{$composition_plan->nets || []}
-        ],
-        instances => [
-            map {
-                +{
-                    kind => $_->kind,
-                    instance_name => $_->instance_name,
-                    module_name => $_->module_name,
-                    source_name => $_->source_name,
-                    interface_ports => [
-                        map {
-                            +{
-                                name => $_->name,
-                                direction => $_->direction,
-                                width => $_->width,
-                                type => $_->type,
-                            }
-                        } @{$_->interface_ports || []}
-                    ],
-                    port_bindings => [
-                        map { normalized_binding($_) } @{$_->port_bindings || []}
-                    ],
-                }
-            } @{$composition_plan->instances || []}
-        ],
-        declared_links => [
-            map {
-                +{
-                    source => $_->source,
-                    target => $_->target,
-                    origin_kind => $_->origin_kind,
-                    raw_token => $_->raw_token,
-                }
-            } @{$composition_plan->links || []}
-        ],
-        resolved_links => [
-            map {
-                +{
-                    source => $_->source,
-                    target => $_->target,
-                    origin_kind => $_->origin_kind,
-                    raw_token => $_->raw_token,
-                }
-            } @{$composition_plan->resolved_links || []}
-        ],
-        auxiliary_assignments => [@{$composition_plan->auxiliary_assignments || []}],
-    );
-}
-
-sub structural_rtl_ir_object ($self, $structural_rtl_ir) {
-    return $structural_rtl_ir
-        if blessed($structural_rtl_ir) && $structural_rtl_ir->can('as_hashref');
-
-    my $structural_rtl_ir_hash = ref($structural_rtl_ir) eq 'HASH'
-        ? $structural_rtl_ir
-        : {};
-
-    return FSM::IR::StructuralRTLIR->new(
-        module_name => ($structural_rtl_ir_hash->{module_name} // ''),
-        source_root_kind => ($structural_rtl_ir_hash->{source_root_kind} // 'fsm'),
-        target_language => ($structural_rtl_ir_hash->{target_language} // ($self->{target_language} // 'systemverilog')),
-        ports => ($structural_rtl_ir_hash->{ports} || []),
-        nets => ($structural_rtl_ir_hash->{nets} || []),
-        instances => ($structural_rtl_ir_hash->{instances} || []),
-        declared_links => ($structural_rtl_ir_hash->{declared_links} || []),
-        resolved_links => ($structural_rtl_ir_hash->{resolved_links} || []),
-        auxiliary_assignments => ($structural_rtl_ir_hash->{auxiliary_assignments} || []),
-    );
 }
 
 sub build_composition_intent_hir (
@@ -2973,7 +2883,10 @@ sub build_composition_intent_hir (
         $composition_plan,
         $composition_child_exports,
     );
-    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
+        $composition_plan,
+        ($self->{target_language} // 'systemverilog'),
+    );
     my $port_metadata = FSM::IR::StructuralRTLIR->port_metadata_from_input($structural_rtl_ir);
     my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
 
@@ -3005,7 +2918,10 @@ sub build_composition_intent_hir (
 }
 
 sub build_composition_lowered_rtl_ir ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
-    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
+        $composition_plan,
+        ($self->{target_language} // 'systemverilog'),
+    );
     my $shared_datapath_candidates = $self->composition_shared_datapath_candidates_for_plan(
         $composition_plan,
         $structural_rtl_ir,
@@ -3053,7 +2969,10 @@ sub build_composition_module_info (
         $composition_plan,
         $composition_child_exports,
     );
-    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
+        $composition_plan,
+        ($self->{target_language} // 'systemverilog'),
+    );
     $intent_hir //= $self->build_composition_intent_hir(
         $composition_plan,
         $composition_child_exports,
@@ -3215,7 +3134,10 @@ sub build_composition_module_info (
 }
 
 sub build_composition_child_exports ($self, $composition_plan, $structural_rtl_ir = undef) {
-    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
+        $composition_plan,
+        ($self->{target_language} // 'systemverilog'),
+    );
     my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
     my %instances_by_name = map {
         (($_->instance_name // '') => $_)
@@ -3364,7 +3286,10 @@ sub build_composition_standalone_dt_child_exports ($self, $composition_plan, $co
 }
 
 sub build_composition_shared_datapath_candidates ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
-    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
+        $composition_plan,
+        ($self->{target_language} // 'systemverilog'),
+    );
     my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
     my %top_output_by_name = map {
         ((($_->{name}) || '') => $_)
@@ -3629,7 +3554,10 @@ sub build_composition_statistics ($self, $composition_plan, $composition_report 
 }
 
 sub build_composition_provenance_report ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
-    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
+    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
+        $composition_plan,
+        ($self->{target_language} // 'systemverilog'),
+    );
     my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
 
     my @ports = map {
@@ -3752,8 +3680,14 @@ sub composition_child_exports_for_context ($self, $composition_plan, $intent_hir
 sub composition_provenance_endpoint_context ($self, $composition_plan, $endpoint, $structural_rtl_ir = undef, $intent_hir = undef) {
     return undef unless defined $endpoint && length $endpoint;
 
-    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
-    my $structural_rtl_ir_obj = $self->structural_rtl_ir_object($structural_rtl_ir);
+    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
+        $composition_plan,
+        ($self->{target_language} // 'systemverilog'),
+    );
+    my $structural_rtl_ir_obj = FSM::IR::StructuralRTLIRBuilder->coerce(
+        $structural_rtl_ir,
+        ($self->{target_language} // 'systemverilog'),
+    );
 
     if (my $top_port = $structural_rtl_ir_obj->top_port($endpoint)) {
         return {
@@ -3871,8 +3805,14 @@ sub composition_link_example_summary ($self, $entry) {
 sub composition_signal_family_contexts ($self, $composition_plan, $signal_name, $direction = undef, $structural_rtl_ir = undef, $intent_hir = undef) {
     return [] unless defined $signal_name && length $signal_name;
 
-    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
-    my $structural_rtl_ir_obj = $self->structural_rtl_ir_object($structural_rtl_ir);
+    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
+        $composition_plan,
+        ($self->{target_language} // 'systemverilog'),
+    );
+    my $structural_rtl_ir_obj = FSM::IR::StructuralRTLIRBuilder->coerce(
+        $structural_rtl_ir,
+        ($self->{target_language} // 'systemverilog'),
+    );
     my @contexts;
     for my $endpoint (@{$structural_rtl_ir_obj->interface_signal_endpoints($signal_name, $direction)}) {
         my $context = $self->composition_provenance_endpoint_context(
@@ -3895,8 +3835,14 @@ sub composition_signal_family_contexts ($self, $composition_plan, $signal_name, 
 
 sub build_composition_override_events ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
     my @events;
-    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
-    my $structural_rtl_ir_obj = $self->structural_rtl_ir_object($structural_rtl_ir);
+    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
+        $composition_plan,
+        ($self->{target_language} // 'systemverilog'),
+    );
+    my $structural_rtl_ir_obj = FSM::IR::StructuralRTLIRBuilder->coerce(
+        $structural_rtl_ir,
+        ($self->{target_language} // 'systemverilog'),
+    );
     my $structural_rtl_ir_hash = $structural_rtl_ir_obj->as_hashref;
     my $same_name_endpoints = $structural_rtl_ir_obj->interface_signal_endpoint_groups;
 
@@ -3984,8 +3930,14 @@ sub build_composition_override_events ($self, $composition_plan, $structural_rtl
 
 sub build_composition_block_events ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
     my @events;
-    $structural_rtl_ir //= $self->build_composition_structural_rtl_ir($composition_plan);
-    my $structural_rtl_ir_obj = $self->structural_rtl_ir_object($structural_rtl_ir);
+    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
+        $composition_plan,
+        ($self->{target_language} // 'systemverilog'),
+    );
+    my $structural_rtl_ir_obj = FSM::IR::StructuralRTLIRBuilder->coerce(
+        $structural_rtl_ir,
+        ($self->{target_language} // 'systemverilog'),
+    );
     my $structural_rtl_ir_hash = $structural_rtl_ir_obj->as_hashref;
     my %declared_top_ports = map { (($_->{name} || '') => $_) } @{$structural_rtl_ir_hash->{ports} || []};
     my @declared_links = @{$structural_rtl_ir_hash->{declared_links} || []};

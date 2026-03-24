@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-24: composition-top StructuralRTLIR building now lives in a builder package
+- Continued the active `R11` package-breakdown lane by moving the matching structural-assembly slice out of `HDLGenerator` after the first backend-emitter extraction landed.
+- Landed behavior:
+  - added `FSM::IR::StructuralRTLIRBuilder` as the owner of composition-top structural IR construction from `FSM::Composition::Plan`,
+  - that same builder now also owns object/hash coercion for later structural consumers,
+  - and the pipeline plus structural tests now call the builder package directly instead of treating `HDLGenerator` as the owner of that assembly path.
+- Why this is worth shipping:
+  - it removes the composition-top structural builder code from the same monolith that used to emit the text too,
+  - it gives the forward path a cleaner package split of builder responsibilities versus emitter responsibilities,
+  - and it leaves the next seam where it belongs: more direct-root builder extraction on one side, or more backend-emitter extraction on the other.
+
 ## 2026-03-24: composition-top structural text emission now lives in a backend emitter
 - Continued the active `R11` package-breakdown lane by moving the first real HDL text-rendering slice out of `HDLGenerator` and into a backend-owned package.
 - Landed behavior:

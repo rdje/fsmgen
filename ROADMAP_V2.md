@@ -759,6 +759,10 @@ The first honest `R11` slices are now:
   active too: composition-top structural HDL text emission now lives in
   `FSM::Backend::VerilogFamily::StructuralRTLIREmitter`, so
   `HDLGenerator` no longer owns that direct structural text-rendering step.
+- Forward-IR note: the matching pipeline-side split is now active too:
+  composition-top `StructuralRTLIR` construction and hash/object coercion now
+  live in `FSM::IR::StructuralRTLIRBuilder`, so `HDLGenerator` no longer owns
+  that structural assembly/coercion code directly either.
 - Forward-IR note: `StructuralRTLIR` now also owns composition-top port
   metadata projection through `port_metadata` and `port_metadata_from_input`,
   so top-level `signals` / `signal_names` / grouped input-output signal

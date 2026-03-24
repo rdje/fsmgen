@@ -10,6 +10,7 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Backend::VerilogFamily::StructuralRTLIREmitter;
+use FSM::IR::StructuralRTLIRBuilder;
 use FSM::Pipeline::HDLGenerator;
 use FSM::IR::StructuralRTLIR;
 
@@ -88,7 +89,10 @@ FSM
     my $module_info = $result->{module_info};
     my $statistics = $result->{statistics};
     my $composition_plan = $result->{composition_plan};
-    my $structural_rtl_ir_obj = $pipeline->build_composition_structural_rtl_ir($composition_plan);
+    my $structural_rtl_ir_obj = FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
+        $composition_plan,
+        'systemverilog',
+    );
 
     ok($structural_rtl_ir, 'composition top now exposes a top-level structural_rtl_ir summary');
     is_deeply(
@@ -364,6 +368,11 @@ FSM
         $port_metadata,
         FSM::IR::StructuralRTLIR->port_metadata_from_input($structural_rtl_ir),
         'structural_rtl_ir port metadata helper works for both objects and serialized hashes',
+    );
+    is_deeply(
+        FSM::IR::StructuralRTLIRBuilder->coerce($structural_rtl_ir, 'systemverilog')->as_hashref,
+        $structural_rtl_ir,
+        'structural_rtl_ir builder coercion preserves the serialized structural graph',
     );
     is_deeply(
         $port_metadata->{signal_names},

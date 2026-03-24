@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-24: composition-top StructuralRTLIR building now lives in a builder package
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIRBuilder` now owns composition-top structural IR construction from `FSM::Composition::Plan`,
+  - that same package now also owns structural hash/object coercion for later pipeline/reporting consumers,
+  - and structural tests now call the builder package directly instead of asking `HDLGenerator` to manufacture the structural object.
+- Important continuity note:
+  - this is the matching pipeline-side split to the new backend-emitter extraction,
+  - it removes one real structural assembly pocket from the coordinator monolith,
+  - and the next likely seam is another builder extraction, especially on the direct-root side, or another backend-emitter ownership move.
+
 ## 2026-03-24: composition-top structural text emission now lives in a backend emitter
 - Saved shipped behavior:
   - `FSM::Backend::VerilogFamily::StructuralRTLIREmitter` now owns composition-top structural HDL text emission for the current Verilog-family lane,
