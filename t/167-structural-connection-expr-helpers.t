@@ -28,6 +28,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     expr_signal_name
     expr_signal_names
     binding_signal_summary
+    binding_signal_summary_leaf_signal
     binding_signal_name
     binding_signal_names
     render_expr
@@ -197,6 +198,34 @@ subtest 'binding signal summary centralizes leaf, dependency, and typed-expressi
             },
         },
         'binding signal summary clones the typed expression payload instead of aliasing caller-owned hashes',
+    );
+};
+
+subtest 'binding signal summary leaf helper prefers typed signal refs over stale mirrors' => sub {
+    is(
+        binding_signal_summary_leaf_signal({
+            bound_signal => 'stale_status',
+            bound_connection_expr => signal_ref_expr('typed_status'),
+        }),
+        'typed_status',
+        'leaf helper follows the typed signal-ref expression before the compatibility mirror',
+    );
+
+    is(
+        binding_signal_summary_leaf_signal({
+            bound_signal => 'stale_status',
+            bound_connection_expr => member_access_expr('status_bundle', 'right'),
+        }),
+        '',
+        'leaf helper refuses to misclassify non-leaf typed expressions as flat carriers',
+    );
+
+    is(
+        binding_signal_summary_leaf_signal({
+            bound_signal => 'fallback_status',
+        }),
+        'fallback_status',
+        'leaf helper still falls back to the compatibility mirror when no typed expression is present',
     );
 };
 

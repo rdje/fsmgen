@@ -1299,3 +1299,7 @@ Exit criteria:
   dependency names, and cloned typed binding expression payload, so those
   structural-summary consumers no longer need to rebuild it ad hoc in
   `HDLGenerator`.
+- `R11`: that same structural helper layer now also owns the reusable
+  “summary entry to true flat leaf carrier” rule through
+  `binding_signal_summary_leaf_signal`, so shared-datapath planning no longer
+  needs a pipeline-local copy of that typed-summary leaf-selection logic.

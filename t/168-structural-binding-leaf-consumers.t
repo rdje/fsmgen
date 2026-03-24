@@ -17,6 +17,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     signal_ref_expr
     member_access_expr
     index_access_expr
+    binding_signal_summary_leaf_signal
 );
 
 subtest 'composition system-signal inference only accepts flat leaf bindings' => sub {
@@ -90,14 +91,8 @@ subtest 'composition system-signal inference only accepts flat leaf bindings' =>
 };
 
 subtest 'shared-datapath leaf-carrier helpers prefer typed structural expressions over stale mirrors' => sub {
-    my $pipeline = FSM::Pipeline::HDLGenerator->new(
-        target_language => 'systemverilog',
-        debug_level => 0,
-        quiet => 1,
-    );
-
     is(
-        $pipeline->shared_datapath_entry_leaf_binding_signal({
+        binding_signal_summary_leaf_signal({
             bound_signal => 'stale_status',
             bound_connection_expr => signal_ref_expr('typed_status'),
         }),
@@ -106,7 +101,7 @@ subtest 'shared-datapath leaf-carrier helpers prefer typed structural expression
     );
 
     is(
-        $pipeline->shared_datapath_entry_leaf_binding_signal({
+        binding_signal_summary_leaf_signal({
             bound_signal => 'stale_status',
             bound_connection_expr => member_access_expr('status_bundle', 'right'),
         }),
@@ -115,7 +110,7 @@ subtest 'shared-datapath leaf-carrier helpers prefer typed structural expression
     );
 
     is(
-        $pipeline->shared_datapath_entry_leaf_binding_signal({
+        binding_signal_summary_leaf_signal({
             bound_signal => 'fallback_status',
         }),
         'fallback_status',

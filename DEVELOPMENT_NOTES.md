@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural summary leaf-carrier lookup now lives in the structural helper layer
+- Continued the active `R11` structural-IR ownership cleanup lane by moving the “typed summary entry to true flat leaf carrier” rule into the same helper layer that already owns structural binding summaries.
+- Landed behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now exports `binding_signal_summary_leaf_signal`,
+  - shared-datapath candidate planning now consumes that structural helper instead of keeping a pipeline-local `shared_datapath_entry_leaf_binding_signal` copy,
+  - and the structural tests now lock that owner boundary directly.
+- Why this is worth shipping:
+  - it removes another small but repeated structural rule from `HDLGenerator`,
+  - it keeps summary-entry semantics together with the helper layer that produces those entries in the first place,
+  - and it leaves the next seam where it belongs: another real consumer handoff or one more bounded portable `connection_expr` form.
+
 ## 2026-03-23: structural binding signal summaries now live in the structural helper layer
 - Continued the active `R11` structural-IR ownership cleanup lane by moving the repeated “flat carrier plus dependency names plus typed expression payload” projection into the layer that actually owns structural binding semantics.
 - Landed behavior:

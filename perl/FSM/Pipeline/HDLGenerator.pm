@@ -39,6 +39,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     binding_expr
     expr_signal_name
     binding_signal_summary
+    binding_signal_summary_leaf_signal
     binding_expr_text
 );
 use FSM::SourceClassifier;
@@ -1114,20 +1115,6 @@ sub shared_datapath_contributor_output_drive_family ($self, $contributor) {
     return $contributor->{output_drive_family} if ref($contributor->{output_drive_family}) eq 'HASH';
     return $contributor->{drive_intent} if ref($contributor->{drive_intent}) eq 'HASH';
     return {};
-}
-
-sub shared_datapath_entry_leaf_binding_signal ($self, $entry) {
-    return '' unless ref($entry) eq 'HASH';
-
-    my $bound_connection_expr = $entry->{bound_connection_expr};
-    if (ref($bound_connection_expr) eq 'HASH') {
-        my $leaf_signal = expr_signal_name($bound_connection_expr);
-        return $leaf_signal if defined($leaf_signal) && length($leaf_signal);
-        return '';
-    }
-
-    my $bound_signal = $entry->{bound_signal} || '';
-    return $bound_signal;
 }
 
 sub shared_datapath_drive_intent_from_output_drive_family ($self, $output_drive_family) {
@@ -3537,13 +3524,13 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
 
         my %top_output_signals;
         for my $contributor (@contributors) {
-            my $bound_signal = $self->shared_datapath_entry_leaf_binding_signal($contributor);
+            my $bound_signal = binding_signal_summary_leaf_signal($contributor);
             next unless length $bound_signal;
             $top_output_signals{$bound_signal} = 1 if exists $top_output_by_name{$bound_signal};
         }
 
         my %candidate_carriers = map {
-            my $bound_signal = $self->shared_datapath_entry_leaf_binding_signal($_);
+            my $bound_signal = binding_signal_summary_leaf_signal($_);
             length($bound_signal) ? ($bound_signal => 1) : ();
         } @contributors;
 
@@ -3554,7 +3541,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
                 ||
             ($a->{endpoint} // '') cmp ($b->{endpoint} // '')
         } grep {
-            my $bound_signal = $self->shared_datapath_entry_leaf_binding_signal($_);
+            my $bound_signal = binding_signal_summary_leaf_signal($_);
             length($bound_signal) && $candidate_carriers{$bound_signal}
         } @{$peer_input_groups{$key} || []};
         my $storage_class = $self->shared_datapath_storage_class(\@contributors);

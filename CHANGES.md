@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### structural summary leaf-carrier lookup now lives in the structural helper layer
+- Updated [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) so the structural layer now owns `binding_signal_summary_leaf_signal`, the reusable rule for “typed summary entry to true flat leaf carrier.”
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so shared-datapath candidate planning now consumes that structural helper instead of keeping a pipeline-local `shared_datapath_entry_leaf_binding_signal` copy.
+- Updated [t/167-structural-connection-expr-helpers.t](/Users/richarddje/Documents/github/fsmgen/t/167-structural-connection-expr-helpers.t) and [t/168-structural-binding-leaf-consumers.t](/Users/richarddje/Documents/github/fsmgen/t/168-structural-binding-leaf-consumers.t) to lock the new structural-owner boundary directly, and synced [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next ownership slice is tracked honestly.
+
 ### structural binding signal summaries now live in the structural helper layer
 - Updated [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) so the structural layer now owns one `binding_signal_summary` projection over flat leaf carrier name, broader dependency names, and cloned typed binding expression payload.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition system-signal inference and shared-datapath candidate metadata now consume that structural summary helper instead of rebuilding the same projection locally.

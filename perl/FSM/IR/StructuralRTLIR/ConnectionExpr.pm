@@ -26,6 +26,7 @@ our @EXPORT_OK = qw(
     expr_signal_name
     expr_signal_names
     binding_signal_summary
+    binding_signal_summary_leaf_signal
     binding_signal_name
     binding_signal_names
     render_expr
@@ -259,6 +260,20 @@ sub binding_signal_summary ($binding) {
         bound_signals => [ @{binding_signal_names($binding)} ],
         bound_connection_expr => _clone(binding_expr($binding)),
     };
+}
+
+sub binding_signal_summary_leaf_signal ($summary) {
+    return '' unless ref($summary) eq 'HASH';
+
+    my $bound_connection_expr = $summary->{bound_connection_expr};
+    if (ref($bound_connection_expr) eq 'HASH') {
+        my $leaf_signal = expr_signal_name($bound_connection_expr);
+        return $leaf_signal if defined($leaf_signal) && length($leaf_signal);
+        return '';
+    }
+
+    my $bound_signal = $summary->{bound_signal} || '';
+    return $bound_signal;
 }
 
 sub binding_signal_name ($binding) {

@@ -695,3 +695,7 @@ The first honest `R11` slices are now:
   dependency names, and cloned typed binding expression payload, so
   `HDLGenerator` consumers no longer need to rebuild that structural summary
   ad hoc.
+- Forward-IR note: that same structural helper layer now also owns the
+  reusable “summary entry to true flat leaf carrier” rule through
+  `binding_signal_summary_leaf_signal`, so shared-datapath planning no longer
+  needs a pipeline-local copy of that typed-summary leaf-selection logic.

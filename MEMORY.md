@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural summary leaf-carrier lookup now lives in the structural helper layer
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now owns `binding_signal_summary_leaf_signal`, the reusable rule for “typed summary entry to true flat leaf carrier,”
+  - shared-datapath planning now consumes that structural helper instead of keeping the same leaf-carrier rule as a pipeline-local method,
+  - and the shared-datapath leaf-binding tests now point at the structural owner directly.
+- Important continuity note:
+  - this removes another small but real binding-semantics pocket from `HDLGenerator`,
+  - it keeps typed-summary leaf-carrier rules together with the structural summary helpers that produce those entries,
+  - and the next likely seam is still either another real consumer handoff or one more bounded `connection_expr` widening.
+
 ## 2026-03-23: structural binding signal summaries now live in the structural helper layer
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR::ConnectionExpr` now owns one `binding_signal_summary` helper over flat leaf carrier name, broader dependency names, and cloned typed binding expression payload,
