@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### lowered standalone-dt target lookup now lives in LoweredRTLIR
+- Updated [perl/FSM/IR/LoweredRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIR.pm) so the lowered layer now owns `standalone_dt_multi_drive_targets_from_input`, `standalone_dt_multi_drive_targets_by_signal`, `standalone_dt_multi_drive_targets_by_signal_from_input`, `standalone_dt_multi_drive_target`, and `standalone_dt_multi_drive_target_from_input` for normalized grouped standalone-DT target lookup.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so standalone-DT assertion emission, reusable standalone-DT child export assembly, and module standalone-DT target access now consume that lowered helper surface instead of rereading the same lowered arrays directly.
+- Added [t/171-forward-lowered-rtl-ir-standalone-dt-target-helpers.t](/Users/richarddje/Documents/github/fsmgen/t/171-forward-lowered-rtl-ir-standalone-dt-target-helpers.t) to lock both full `LoweredRTLIR` objects and the existing partial lowered-hash callers, and synced [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next forward-IR ownership slice is tracked honestly.
+
 ### lowered output-drive-family lookup now lives in LoweredRTLIR
 - Updated [perl/FSM/IR/LoweredRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIR.pm) so the lowered layer now owns `output_drive_families_from_input`, `output_drive_families_by_signal`, `output_drive_families_by_signal_from_input`, `output_drive_family`, and `output_drive_family_from_input` for normalized per-signal output-drive-family lookup.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so module output-drive-family access and composition shared-datapath contributor drive-family lookup now consume that lowered helper surface instead of rebuilding the same lowered signal map locally.

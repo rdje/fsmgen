@@ -1335,3 +1335,9 @@ Exit criteria:
   `output_drive_families_by_signal`, and `output_drive_family`, so shared
   datapath and module-output-drive consumers no longer need to rebuild that
   same lowered signal map locally in `HDLGenerator`.
+- `R11`: `LoweredRTLIR` now also owns grouped standalone-DT multi-drive
+  target lookup through `standalone_dt_multi_drive_targets_from_input`,
+  `standalone_dt_multi_drive_targets_by_signal`, and
+  `standalone_dt_multi_drive_target`, so standalone-DT assertion/export
+  consumers no longer need to reread that same lowered target surface locally
+  in `HDLGenerator`.

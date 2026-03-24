@@ -84,6 +84,55 @@ sub output_drive_family_from_input ($class, $lowered_rtl_ir, $signal_name) {
     return _clone($families_by_signal->{$signal_name});
 }
 
+sub standalone_dt_multi_drive_targets_from_input ($class, $lowered_rtl_ir) {
+    my $targets = (
+        blessed($lowered_rtl_ir) && $lowered_rtl_ir->can('standalone_dt_multi_drive_targets')
+            ? $lowered_rtl_ir->standalone_dt_multi_drive_targets
+            : ref($lowered_rtl_ir) eq 'HASH'
+                ? $lowered_rtl_ir->{standalone_dt_multi_drive_targets}
+                : undef
+    );
+
+    return [] unless ref($targets) eq 'ARRAY';
+    return _clone($targets);
+}
+
+sub standalone_dt_multi_drive_targets_by_signal ($self) {
+    my %targets_by_signal;
+
+    for my $target (@{$self->standalone_dt_multi_drive_targets || []}) {
+        next unless ref($target) eq 'HASH';
+        my $signal_name = $target->{signal_name} || next;
+        $targets_by_signal{$signal_name} = _clone($target);
+    }
+
+    return \%targets_by_signal;
+}
+
+sub standalone_dt_multi_drive_targets_by_signal_from_input ($class, $lowered_rtl_ir) {
+    my $targets = $class->standalone_dt_multi_drive_targets_from_input($lowered_rtl_ir);
+    my %targets_by_signal;
+
+    for my $target (@$targets) {
+        next unless ref($target) eq 'HASH';
+        my $signal_name = $target->{signal_name} || next;
+        $targets_by_signal{$signal_name} = _clone($target);
+    }
+
+    return \%targets_by_signal;
+}
+
+sub standalone_dt_multi_drive_target ($self, $signal_name) {
+    return undef unless defined($signal_name) && length($signal_name);
+    return _clone($self->standalone_dt_multi_drive_targets_by_signal->{$signal_name});
+}
+
+sub standalone_dt_multi_drive_target_from_input ($class, $lowered_rtl_ir, $signal_name) {
+    return undef unless defined($signal_name) && length($signal_name);
+    my $targets_by_signal = $class->standalone_dt_multi_drive_targets_by_signal_from_input($lowered_rtl_ir);
+    return _clone($targets_by_signal->{$signal_name});
+}
+
 sub as_hashref ($self) {
     my $output_drive_families = _clone($self->output_drive_families || []);
     my $standalone_dt_multi_drive_targets = _clone($self->standalone_dt_multi_drive_targets || []);

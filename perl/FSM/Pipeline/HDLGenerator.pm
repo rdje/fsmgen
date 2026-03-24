@@ -949,7 +949,7 @@ sub standalone_dt_assertion_runtime_lines ($self, $module_info) {
     return () unless ref($module_info) eq 'HASH';
 
     my @assertion_lines;
-    for my $target (@{$module_info->{standalone_dt_multi_drive_targets} || []}) {
+    for my $target (@{$self->module_standalone_dt_multi_drive_targets($module_info)}) {
         next unless ref($target) eq 'HASH';
         my $assertion = $target->{multi_drive_assertion} || {};
         next unless ($assertion->{input_count} || 0) > 1;
@@ -3414,7 +3414,7 @@ sub build_composition_standalone_dt_child_exports ($self, $composition_plan, $co
                     input_enable_signals => [@{$assertion->{input_enable_signals} || []}],
                 },
             }
-        } @{$lowered_rtl_ir->{standalone_dt_multi_drive_targets} || []};
+        } @{FSM::IR::LoweredRTLIR->standalone_dt_multi_drive_targets_from_input($lowered_rtl_ir)};
 
         my $standalone_dt_count = $child->{standalone_dt_count} || 0;
         my $child_multi_drive_target_count = $child->{standalone_dt_multi_drive_target_count} || 0;
@@ -4767,9 +4767,11 @@ sub module_structural_rtl_ir ($self, $module_info) {
 sub module_standalone_dt_multi_drive_targets ($self, $module_info) {
     return [] unless ref($module_info) eq 'HASH';
 
-    my $lowered_rtl_ir = $module_info->{lowered_rtl_ir};
-    if (ref($lowered_rtl_ir) eq 'HASH' && ref($lowered_rtl_ir->{standalone_dt_multi_drive_targets}) eq 'ARRAY') {
-        return $lowered_rtl_ir->{standalone_dt_multi_drive_targets};
+    my $standalone_dt_multi_drive_targets = FSM::IR::LoweredRTLIR->standalone_dt_multi_drive_targets_from_input(
+        $module_info->{lowered_rtl_ir}
+    );
+    if (@$standalone_dt_multi_drive_targets) {
+        return $standalone_dt_multi_drive_targets;
     }
 
     return $module_info->{standalone_dt_multi_drive_targets} || [];
