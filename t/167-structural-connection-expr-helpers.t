@@ -29,6 +29,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     expr_signal_names
     binding_signal_summary
     binding_signal_summary_leaf_signal
+    binding_signal_summary_text
     binding_signal_name
     binding_signal_names
     render_expr
@@ -226,6 +227,34 @@ subtest 'binding signal summary leaf helper prefers typed signal refs over stale
         }),
         'fallback_status',
         'leaf helper still falls back to the compatibility mirror when no typed expression is present',
+    );
+};
+
+subtest 'binding signal summary text centralizes rendered summary fallback rules' => sub {
+    is(
+        binding_signal_summary_text({
+            bound_connection_expr => signal_ref_expr('top_data'),
+        }, 'sv'),
+        'top_data',
+        'summary text rendering accepts the short sv alias and renders typed signal-ref payloads',
+    );
+
+    is(
+        binding_signal_summary_text({
+            bound_signal => '',
+            bound_signals => ['cfg_bus'],
+            bound_connection_expr => member_access_expr('cfg_bus', 'mode'),
+        }, 'verilog'),
+        'cfg_bus',
+        'summary text rendering falls back to dependency names when a typed expression is unsupported for the target backend',
+    );
+
+    is(
+        binding_signal_summary_text({
+            bound_signals => ['left_status', 'right_status'],
+        }),
+        'left_status, right_status',
+        'summary text rendering still joins dependency names when no typed payload or flat carrier mirror is present',
     );
 };
 

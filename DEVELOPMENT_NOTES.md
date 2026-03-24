@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural summary text rendering now lives in the structural helper layer
+- Continued the active `R11` structural-IR ownership cleanup lane by moving the reusable “summary entry to rendered binding text” rule into the same helper layer that already owns structural summary-entry semantics.
+- Landed behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now exports `binding_signal_summary_text`,
+  - `bin/fsmgen` now consumes that helper for shared-datapath summary rendering instead of keeping its own local summary-rendering logic,
+  - and the helper now also covers the current short CLI target-language aliases such as `sv` and `v`.
+- Why this is worth shipping:
+  - it removes another small structural rule from the CLI edge,
+  - it keeps summary-entry rendering semantics together with the helper layer that already owns the summary-entry contract itself,
+  - and it leaves the next seam where it belongs: another real consumer handoff or one more bounded portable `connection_expr` form.
+
 ## 2026-03-23: structural summary leaf-carrier lookup now lives in the structural helper layer
 - Continued the active `R11` structural-IR ownership cleanup lane by moving the “typed summary entry to true flat leaf carrier” rule into the same helper layer that already owns structural binding summaries.
 - Landed behavior:

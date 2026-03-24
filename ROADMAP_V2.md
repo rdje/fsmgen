@@ -699,3 +699,7 @@ The first honest `R11` slices are now:
   reusable “summary entry to true flat leaf carrier” rule through
   `binding_signal_summary_leaf_signal`, so shared-datapath planning no longer
   needs a pipeline-local copy of that typed-summary leaf-selection logic.
+- Forward-IR note: that same structural helper layer now also owns the
+  reusable “summary entry to rendered binding text” rule through
+  `binding_signal_summary_text`, so CLI/reporting consumers no longer need to
+  keep their own local `bound_connection_expr`-first rendering copy.

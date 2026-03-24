@@ -27,6 +27,7 @@ our @EXPORT_OK = qw(
     expr_signal_names
     binding_signal_summary
     binding_signal_summary_leaf_signal
+    binding_signal_summary_text
     binding_signal_name
     binding_signal_names
     render_expr
@@ -276,6 +277,26 @@ sub binding_signal_summary_leaf_signal ($summary) {
     return $bound_signal;
 }
 
+sub binding_signal_summary_text ($summary, $target_language = 'systemverilog') {
+    return '' unless ref($summary) eq 'HASH';
+
+    my $expr = $summary->{bound_connection_expr};
+    if (ref($expr) eq 'HASH') {
+        my $rendered = eval {
+            render_expr($expr, undef, _normalize_target_language_alias($target_language));
+        };
+        return $rendered if defined($rendered) && length($rendered);
+    }
+
+    my $bound_signal = $summary->{bound_signal} || '';
+    return $bound_signal if length $bound_signal;
+
+    my @bound_signals = grep { defined($_) && length($_) } @{$summary->{bound_signals} || []};
+    return join(', ', @bound_signals) if @bound_signals;
+
+    return '';
+}
+
 sub binding_signal_name ($binding) {
     return expr_signal_name(binding_expr($binding));
 }
@@ -396,6 +417,13 @@ sub _coerce_source_expr ($source) {
 sub _is_verilog_family ($target_language) {
     my $language = defined($target_language) ? lc($target_language) : '';
     return $language eq 'systemverilog' || $language eq 'verilog';
+}
+
+sub _normalize_target_language_alias ($target_language) {
+    my $language = defined($target_language) ? lc($target_language) : 'systemverilog';
+    return 'systemverilog' if $language eq 'sv';
+    return 'verilog' if $language eq 'v';
+    return $language;
 }
 
 sub _confess_unsupported_target_language ($target_language, $port_name, $kind) {

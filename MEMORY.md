@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural summary text rendering now lives in the structural helper layer
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now owns `binding_signal_summary_text`, the reusable rule for rendering summary entries from typed binding expressions first and then falling back to flat/dependency mirrors,
+  - `bin/fsmgen` now consumes that helper for shared-datapath summary rendering instead of keeping its own local summary-rendering copy,
+  - and the helper now also normalizes the current short CLI target-language aliases such as `sv` and `v`.
+- Important continuity note:
+  - this removes another small but real structural-summary rule from the CLI edge,
+  - it keeps summary-entry rendering semantics together with the structural summary helpers that already own the underlying data contract,
+  - and the next likely seam is still either another real consumer handoff or one more bounded `connection_expr` widening.
+
 ## 2026-03-23: structural summary leaf-carrier lookup now lives in the structural helper layer
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR::ConnectionExpr` now owns `binding_signal_summary_leaf_signal`, the reusable rule for “typed summary entry to true flat leaf carrier,”

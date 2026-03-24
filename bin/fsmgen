@@ -13,7 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 # Load required modules
 use FSM::Debug;  # Global debug system
-use FSM::IR::StructuralRTLIR::ConnectionExpr qw(render_expr);
+use FSM::IR::StructuralRTLIR::ConnectionExpr qw(binding_signal_summary_text);
 use FSM::Pipeline::HDLGenerator;
 use FSM::SourcePathResolver;
 
@@ -105,41 +105,12 @@ sub resolve_fsm_file {
     die $error_msg;
 }
 
-sub structural_summary_target_language {
-    my ($target_language) = @_;
-    my $language = defined($target_language) ? lc($target_language) : 'systemverilog';
-    return 'systemverilog' if $language eq 'sv';
-    return 'verilog' if $language eq 'v';
-    return $language;
-}
-
-sub shared_binding_summary {
-    my ($entry, $target_language) = @_;
-    return '' unless ref($entry) eq 'HASH';
-
-    my $expr = $entry->{bound_connection_expr};
-    if (ref($expr) eq 'HASH') {
-        my $rendered = eval {
-            render_expr($expr, undef, structural_summary_target_language($target_language));
-        };
-        return $rendered if defined($rendered) && length($rendered);
-    }
-
-    my $bound_signal = $entry->{bound_signal} || '';
-    return $bound_signal if length $bound_signal;
-
-    my @bound_signals = grep { defined($_) && length($_) } @{$entry->{bound_signals} || []};
-    return join(', ', @bound_signals) if @bound_signals;
-
-    return '';
-}
-
 sub shared_endpoint_binding_summary {
     my ($entry, $target_language) = @_;
     return 'unknown_endpoint' unless ref($entry) eq 'HASH';
 
     my $endpoint = $entry->{endpoint} || 'unknown_endpoint';
-    my $binding = shared_binding_summary($entry, $target_language);
+    my $binding = binding_signal_summary_text($entry, $target_language);
     return $endpoint unless length $binding;
     return $endpoint . ' <= ' . $binding;
 }
