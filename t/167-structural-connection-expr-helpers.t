@@ -28,6 +28,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     expr_signal_name
     expr_signal_names
     binding_signal_summary
+    binding_signal_summary_metadata
     binding_signal_summary_leaf_signal
     binding_signal_summary_text
     binding_signal_name
@@ -199,6 +200,51 @@ subtest 'binding signal summary centralizes leaf, dependency, and typed-expressi
             },
         },
         'binding signal summary clones the typed expression payload instead of aliasing caller-owned hashes',
+    );
+};
+
+subtest 'binding signal summary metadata centralizes normalized cloned export payloads' => sub {
+    is_deeply(
+        binding_signal_summary_metadata({
+            port_name => 'mode_in',
+            connection_expr => member_access_expr('cfg_bus', 'mode'),
+        }),
+        {
+            bound_signal => '',
+            bound_signals => ['cfg_bus'],
+            bound_connection_expr => {
+                kind => 'member_access',
+                member_name => 'mode',
+                source_expr => {
+                    kind => 'signal_ref',
+                    signal_name => 'cfg_bus',
+                },
+            },
+        },
+        'binding signal summary metadata accepts raw bindings and returns the normalized cloned export payload',
+    );
+
+    my $summary = {
+        bound_signal => 'top_data',
+        bound_signals => ['top_data'],
+        bound_connection_expr => signal_ref_expr('top_data'),
+    };
+    my $metadata = binding_signal_summary_metadata($summary);
+    $summary->{bound_signal} = 'mutated_after_metadata';
+    $summary->{bound_signals}[0] = 'mutated_after_metadata';
+    $summary->{bound_connection_expr}{signal_name} = 'mutated_after_metadata';
+
+    is_deeply(
+        $metadata,
+        {
+            bound_signal => 'top_data',
+            bound_signals => ['top_data'],
+            bound_connection_expr => {
+                kind => 'signal_ref',
+                signal_name => 'top_data',
+            },
+        },
+        'binding signal summary metadata clones precomputed summary payloads instead of aliasing caller-owned state',
     );
 };
 

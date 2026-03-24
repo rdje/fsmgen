@@ -39,6 +39,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     binding_expr
     expr_signal_name
     binding_signal_summary
+    binding_signal_summary_metadata
     binding_signal_summary_leaf_signal
     binding_expr_text
 );
@@ -3467,18 +3468,16 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
             my $output_drive_family = ref($drive_family) eq 'HASH'
                 ? _clone_structured_value($drive_family)
                 : {};
-            my $binding = $binding_signals_by_port{$port->{name}} || {};
-            my $bound_signals = $binding->{bound_signals} || [];
-            my $bound_signal = $binding->{bound_signal} || '';
+            my $binding_metadata = binding_signal_summary_metadata(
+                $binding_signals_by_port{$port->{name}}
+            );
             push @{$candidate_groups{$key}{contributors}}, {
                 kind => ($child->{kind} // $instance->{kind}),
                 instance_name => ($child->{instance_name} // $instance->{instance_name}),
                 module_name => ($child->{module_name} // $instance->{module_name}),
                 source_name => ($child->{source_name} // $instance->{source_name}),
                 endpoint => (($instance->{instance_name} // 'unknown').'.'.($port->{name} // 'unknown')),
-                bound_signal => $bound_signal,
-                bound_signals => [@$bound_signals],
-                bound_connection_expr => _clone_structured_value($binding->{bound_connection_expr}),
+                %$binding_metadata,
                 intent_hir => ($child->{intent_hir} || {}),
                 lowered_rtl_ir => ($child->{lowered_rtl_ir} || {}),
                 structural_rtl_ir => ($child->{structural_rtl_ir} || {}),
@@ -3498,14 +3497,15 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
                 ($port->{name} // ''),
                 ($port->{width} // 1),
                 $normalized_type;
+            my $binding_metadata = binding_signal_summary_metadata(
+                $binding_signals_by_port{$port->{name}}
+            );
 
             push @{$peer_input_groups{$key}}, {
                 instance_name => ($child->{instance_name} // $instance->{instance_name}),
                 module_name => ($child->{module_name} // $instance->{module_name}),
                 endpoint => (($instance->{instance_name} // 'unknown').'.'.($port->{name} // 'unknown')),
-                bound_signal => (($binding_signals_by_port{$port->{name}} || {})->{bound_signal} || ''),
-                bound_signals => [@{(($binding_signals_by_port{$port->{name}} || {})->{bound_signals} || [])}],
-                bound_connection_expr => _clone_structured_value(($binding_signals_by_port{$port->{name}} || {})->{bound_connection_expr}),
+                %$binding_metadata,
             };
         }
     }

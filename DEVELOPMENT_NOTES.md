@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural summary metadata export now lives in the structural helper layer
+- Continued the active `R11` structural-IR ownership cleanup lane by moving the normalized cloned summary-export payload into the same helper layer that already owns structural summary-entry semantics.
+- Landed behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now exports `binding_signal_summary_metadata`,
+  - shared-datapath contributor and peer-read endpoint metadata now consume that structural helper instead of hand-copying `bound_signal` / `bound_signals` / `bound_connection_expr` locally,
+  - and the structural helper tests now lock both raw-binding input and precomputed-summary input against cloned export payload behavior.
+- Why this is worth shipping:
+  - it removes another small but repeated structural-summary data-shape rule from `HDLGenerator`,
+  - it keeps normalized exported summary payload semantics together with the helper layer that already owns summary-entry construction and rendering,
+  - and it leaves the next seam where it belongs: another real structural consumer handoff or one more bounded portable `connection_expr` form.
+
 ## 2026-03-23: structural summary text rendering now lives in the structural helper layer
 - Continued the active `R11` structural-IR ownership cleanup lane by moving the reusable “summary entry to rendered binding text” rule into the same helper layer that already owns structural summary-entry semantics.
 - Landed behavior:

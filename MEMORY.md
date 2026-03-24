@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural summary metadata export now lives in the structural helper layer
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now owns `binding_signal_summary_metadata`, the reusable rule for normalized cloned summary-export payloads,
+  - shared-datapath contributor metadata now consumes that helper instead of hand-copying `bound_signal` / `bound_signals` / `bound_connection_expr`,
+  - and shared peer-read endpoint metadata now consumes that same helper instead of keeping a second local copy of the same projection.
+- Important continuity note:
+  - this removes another small but real summary-payload ownership pocket from `HDLGenerator`,
+  - it keeps exported summary payload semantics together with the structural helper layer that already owns summary construction, leaf selection, and rendering,
+  - and the next likely seam is still either another real consumer handoff or one more bounded `connection_expr` widening.
+
 ## 2026-03-23: structural summary text rendering now lives in the structural helper layer
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR::ConnectionExpr` now owns `binding_signal_summary_text`, the reusable rule for rendering summary entries from typed binding expressions first and then falling back to flat/dependency mirrors,

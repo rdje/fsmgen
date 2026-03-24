@@ -26,6 +26,7 @@ our @EXPORT_OK = qw(
     expr_signal_name
     expr_signal_names
     binding_signal_summary
+    binding_signal_summary_metadata
     binding_signal_summary_leaf_signal
     binding_signal_summary_text
     binding_signal_name
@@ -260,6 +261,28 @@ sub binding_signal_summary ($binding) {
         bound_signal => binding_signal_name($binding),
         bound_signals => [ @{binding_signal_names($binding)} ],
         bound_connection_expr => _clone(binding_expr($binding)),
+    };
+}
+
+sub binding_signal_summary_metadata ($value) {
+    return {
+        bound_signal => '',
+        bound_signals => [],
+        bound_connection_expr => undef,
+    } unless ref($value) eq 'HASH';
+
+    my $summary = (
+        exists($value->{bound_signal})
+            || exists($value->{bound_signals})
+            || exists($value->{bound_connection_expr})
+    )
+        ? $value
+        : binding_signal_summary($value);
+
+    return {
+        bound_signal => $summary->{bound_signal} || '',
+        bound_signals => [@{$summary->{bound_signals} || []}],
+        bound_connection_expr => _clone($summary->{bound_connection_expr}),
     };
 }
 

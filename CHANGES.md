@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### structural summary metadata export now lives in the structural helper layer
+- Updated [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) so the structural layer now also owns `binding_signal_summary_metadata`, the reusable rule for normalized cloned `bound_signal` / `bound_signals` / `bound_connection_expr` payload export.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so shared-datapath contributor and peer-read endpoint metadata now consume that structural helper instead of hand-copying the same summary fields locally.
+- Updated [t/167-structural-connection-expr-helpers.t](/Users/richarddje/Documents/github/fsmgen/t/167-structural-connection-expr-helpers.t) to lock the new helper directly, and synced [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next structural ownership slice is tracked honestly.
+
 ### structural summary text rendering now lives in the structural helper layer
 - Updated [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) so the structural layer now owns `binding_signal_summary_text`, the reusable rule for rendering a summary entry from `bound_connection_expr` first and then falling back to flat/dependency mirrors.
 - Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet shared-datapath summary rendering now consumes that structural helper instead of keeping its own local `shared_binding_summary` logic.

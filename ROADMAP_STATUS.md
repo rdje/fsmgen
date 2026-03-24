@@ -1307,3 +1307,8 @@ Exit criteria:
   “summary entry to rendered binding text” rule through
   `binding_signal_summary_text`, so CLI/reporting consumers no longer need to
   keep their own local `bound_connection_expr`-first rendering copy.
+- `R11`: that same structural helper layer now also owns the normalized
+  cloned summary-export payload through `binding_signal_summary_metadata`, so
+  shared-datapath contributor and peer-read metadata no longer need to
+  hand-copy `bound_signal`, `bound_signals`, and `bound_connection_expr` in
+  `HDLGenerator`.
