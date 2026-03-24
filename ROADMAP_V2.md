@@ -809,3 +809,8 @@ The first honest `R11` slices are now:
   `FSM::Composition::TopPortInferenceBuilder`, so `HDLGenerator` no longer
   owns explicit-toplink top-port inference or undeclared same-name top-input
   and top-output inference directly.
+- Forward-IR note: another real composition-support family split is now
+  active too: shared-datapath naming, generated-child source-export metadata,
+  assertion metadata/rendering, and runtime plan augmentation now live in
+  `FSM::Composition::SharedDatapathSupport`, so `HDLGenerator` no longer owns
+  that shared-datapath support family directly.

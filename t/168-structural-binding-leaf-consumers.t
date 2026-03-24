@@ -12,6 +12,7 @@ use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Plan;
 use FSM::Composition::Port;
 use FSM::Composition::RealizedInstance;
+use FSM::Composition::SharedDatapathSupport;
 use FSM::IR::StructuralRTLIR;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     signal_ref_expr
@@ -54,7 +55,7 @@ subtest 'composition system-signal inference only accepts flat leaf bindings' =>
         ],
     );
 
-    my ($nonleaf_clock, $nonleaf_reset) = $pipeline->composition_system_signal_names($nonleaf_plan);
+    my ($nonleaf_clock, $nonleaf_reset) = FSM::Composition::SharedDatapathSupport->system_signal_names($nonleaf_plan);
     is($nonleaf_clock // '', '', 'non-leaf clock bindings do not get misclassified as flat system carriers');
     is($nonleaf_reset // '', '', 'non-leaf reset bindings do not get misclassified as flat system carriers');
 
@@ -85,7 +86,7 @@ subtest 'composition system-signal inference only accepts flat leaf bindings' =>
         ],
     );
 
-    my ($leaf_clock, $leaf_reset) = $pipeline->composition_system_signal_names($leaf_plan);
+    my ($leaf_clock, $leaf_reset) = FSM::Composition::SharedDatapathSupport->system_signal_names($leaf_plan);
     is($leaf_clock, 'core_clk', 'flat clock bindings still infer the system clock name');
     is($leaf_reset, 'core_rstn', 'flat reset bindings still infer the system reset name');
 };

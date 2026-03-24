@@ -21,6 +21,7 @@ use FSM::Composition::DeclaredByNameLinkBuilder;
 use FSM::Composition::InterfacePortBuilder;
 use FSM::Composition::LinkedPlanBuilder;
 use FSM::Composition::SameNameLinkBuilder;
+use FSM::Composition::SharedDatapathSupport;
 use FSM::Composition::TopPortInferenceBuilder;
 use FSM::Composition::Net;
 use FSM::Composition::Port;
@@ -40,8 +41,6 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     signal_ref_expr
     signal_ref_binding
     update_binding_signal_ref
-    ensure_signal_ref_binding
-    set_signal_ref_binding
     binding_expr
     expr_signal_name
     binding_signal_summaries_by_port
@@ -549,7 +548,9 @@ sub realize_fsmc_child_instance ($self, $instance, $composition_spec, $fsm_file,
     my $child_structural_rtl_ir = $self->build_structural_rtl_ir($child_module_info, $child_module);
     $child_module_info->{structural_rtl_ir} = $child_structural_rtl_ir->as_hashref;
     $child_hdl_code = $self->augment_generated_hdl_with_standalone_dt_assertions($child_hdl_code, $child_module_info);
-    my $shared_datapath_source_exports = $self->build_shared_datapath_source_export_metadata($child_module_info);
+    my $shared_datapath_source_exports = FSM::Composition::SharedDatapathSupport->build_source_export_metadata(
+        $self->module_output_drive_families($child_module_info),
+    );
     $child_module_info->{shared_datapath_source_export_count} = scalar(@$shared_datapath_source_exports);
     $child_module_info->{shared_datapath_source_exports} = $shared_datapath_source_exports;
     $child_hdl_code = $self->augment_generated_child_hdl_with_shared_datapath_exports(
@@ -711,131 +712,6 @@ sub realize_rtl_child_instance ($self, $instance, $composition_spec, $fsm_file, 
     );
 }
 
-sub clean_enable_name_token ($self, $name) {
-    $name = lc($name // '');
-    $name =~ s/[^a-zA-Z0-9_]/_/g;
-    $name =~ s/__+/_/g;
-    $name =~ s/^_+//;
-    $name =~ s/_+$//;
-
-    if ($name eq '0') {
-        return '0';
-    } elsif ($name eq '1') {
-        return '1';
-    }
-
-    $name =~ s/^(\d)/_$1/;
-    return $name;
-}
-
-sub shared_datapath_value_enable_name ($self, $signal_name, $rhs_value) {
-    my $clean_signal = $self->clean_enable_name_token($signal_name);
-    my $clean_rhs = $self->clean_enable_name_token($rhs_value);
-    return "${clean_signal}_${clean_rhs}_shared_en";
-}
-
-sub shared_datapath_export_port_name ($self, $family_enable_signal) {
-    my $clean_signal = $self->clean_enable_name_token($family_enable_signal);
-    return "shared_dp_export_${clean_signal}";
-}
-
-sub shared_datapath_source_value_enable_name ($self, $instance_name, $signal_name, $rhs_value) {
-    my $clean_instance = $self->clean_enable_name_token($instance_name || 'child');
-    my $clean_signal = $self->clean_enable_name_token($signal_name);
-    my $clean_rhs = $self->clean_enable_name_token($rhs_value);
-    return "${clean_instance}_${clean_signal}_${clean_rhs}_src_en";
-}
-
-sub shared_datapath_target_enable_name ($self, $signal_name) {
-    my $clean_signal = $self->clean_enable_name_token($signal_name);
-    return "${clean_signal}_shared_en";
-}
-
-sub shared_datapath_lifted_next_name ($self, $signal_name) {
-    my $clean_signal = $self->clean_enable_name_token($signal_name);
-    return "${clean_signal}_shared_next";
-}
-
-sub shared_datapath_lifted_register_name ($self, $signal_name) {
-    my $clean_signal = $self->clean_enable_name_token($signal_name);
-    return "${clean_signal}_shared_q";
-}
-
-sub shared_datapath_lifted_comb_name ($self, $signal_name) {
-    my $clean_signal = $self->clean_enable_name_token($signal_name);
-    return "${clean_signal}_shared_comb";
-}
-
-sub shared_datapath_raw_source_name ($self, $instance_name, $signal_name) {
-    my $clean_instance = $self->clean_enable_name_token($instance_name || 'child');
-    my $clean_signal = $self->clean_enable_name_token($signal_name);
-    return "shared_dp_raw_${clean_instance}_${clean_signal}";
-}
-
-sub shared_datapath_same_value_conflict_name ($self, $signal_name, $rhs_value) {
-    my $clean_signal = $self->clean_enable_name_token($signal_name);
-    my $clean_rhs = $self->clean_enable_name_token($rhs_value);
-    return "${clean_signal}_${clean_rhs}_multi_src_conflict";
-}
-
-sub shared_datapath_multi_value_conflict_name ($self, $signal_name) {
-    my $clean_signal = $self->clean_enable_name_token($signal_name);
-    return "${clean_signal}_multi_value_conflict";
-}
-
-sub shared_datapath_assertion_metadata ($self, $result_signal, $input_enable_signals) {
-    my @inputs = grep {
-        defined($_) && length($_)
-    } @{$input_enable_signals || []};
-
-    return {
-        kind => 'onehot0',
-        result_signal => $result_signal,
-        input_count => scalar(@inputs),
-        input_enable_signals => \@inputs,
-    };
-}
-
-sub shared_datapath_assertion_runtime_lines ($self, $candidate) {
-    return () unless ($self->{target_language} || '') =~ /^(?:systemverilog|sv)$/;
-    return () unless ref($candidate) eq 'HASH';
-
-    my @assertion_lines;
-    my $signal_name = $candidate->{signal_name} || 'unknown_signal';
-
-    for my $family (@{$candidate->{aggregate_enable_families} || []}) {
-        next unless ref($family) eq 'HASH';
-        my $assertion = $family->{same_value_assertion} || {};
-        next unless ($assertion->{input_count} || 0) > 1;
-        my $result_signal = $assertion->{result_signal} || next;
-        my $rhs_value = $family->{rhs_value} // 'unknown_value';
-
-        push @assertion_lines,
-            "      assert (!$result_signal)"
-                . qq{ else \$error("shared-datapath same-value conflict: $signal_name $rhs_value");};
-    }
-
-    my $multi_value_assertion = $candidate->{multi_value_assertion} || {};
-    if (($multi_value_assertion->{input_count} || 0) > 1) {
-        my $result_signal = $multi_value_assertion->{result_signal} || '';
-        if (length $result_signal) {
-            push @assertion_lines,
-                "      assert (!$result_signal)"
-                    . qq{ else \$error("shared-datapath multi-value conflict: $signal_name");};
-        }
-    }
-
-    return () unless @assertion_lines;
-
-    return (
-        "    `ifndef SYNTHESIS",
-        "    always_comb begin",
-        @assertion_lines,
-        "    end",
-        "    `endif",
-    );
-}
-
 sub standalone_dt_assertion_metadata ($self, $signal_name, $input_enable_signals) {
     my @inputs = grep {
         defined($_) && length($_)
@@ -918,41 +794,6 @@ sub shared_datapath_conflict_expression ($self, $input_enable_signals) {
     }
 
     return join(' | ', @pairs);
-}
-
-sub build_shared_datapath_source_export_metadata ($self, $module_info) {
-    my %seen;
-    my @exports;
-
-    for my $drive_family (@{$self->module_output_drive_families($module_info)}) {
-        next unless ref($drive_family) eq 'HASH';
-        my $signal_name = $drive_family->{signal_name} || next;
-
-        for my $rhs_family (@{$drive_family->{rhs_enable_families} || []}) {
-            next unless ref($rhs_family) eq 'HASH';
-            my $family_enable_signal = $rhs_family->{family_enable_signal} || next;
-            my $rhs_value = $rhs_family->{rhs_value};
-            my $key = join "\x1E", $signal_name, ($rhs_value // ''), $family_enable_signal;
-            next if $seen{$key}++;
-
-            push @exports, {
-                signal_name => $signal_name,
-                rhs_value => $rhs_value,
-                source_signal => $family_enable_signal,
-                port_name => $self->shared_datapath_export_port_name($family_enable_signal),
-            };
-        }
-    }
-
-    @exports = sort {
-        ($a->{signal_name} // '') cmp ($b->{signal_name} // '')
-            ||
-        (($a->{rhs_value} // '') cmp ($b->{rhs_value} // ''))
-            ||
-        (($a->{port_name} // '') cmp ($b->{port_name} // ''))
-    } @exports;
-
-    return \@exports;
 }
 
 sub augment_generated_child_hdl_with_shared_datapath_exports ($self, $hdl_code, $exports) {
@@ -1076,7 +917,11 @@ sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $po
         fsm_file => $fsm_file,
         header => $header,
     );
-    return $self->augment_with_shared_datapath_runtime_support($composition_plan);
+    return FSM::Composition::SharedDatapathSupport->augment_plan(
+        composition_plan => $composition_plan,
+        shared_datapath_candidates => $self->composition_shared_datapath_candidates_for_plan($composition_plan),
+        target_language => ($self->{target_language} // 'systemverilog'),
+    );
 }
 
 sub build_c3_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $generated_instance_count, $fsmc_instance_count, $dtc_instance_count, $rtl_instance_count, $fsm_file, $header) {
@@ -1097,7 +942,11 @@ sub build_c3_composition_plan ($self, $composition_spec, $top, $ports_block, $po
         fsm_file => $fsm_file,
         header => $header,
     );
-    return $self->augment_with_shared_datapath_runtime_support($composition_plan);
+    return FSM::Composition::SharedDatapathSupport->augment_plan(
+        composition_plan => $composition_plan,
+        shared_datapath_candidates => $self->composition_shared_datapath_candidates_for_plan($composition_plan),
+        target_language => ($self->{target_language} // 'systemverilog'),
+    );
 }
 
 sub build_c4_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $generated_instance_count, $fsmc_instance_count, $dtc_instance_count, $rtl_instance_count, $fsm_file, $header) {
@@ -1141,61 +990,11 @@ sub build_c4_composition_plan ($self, $composition_spec, $top, $ports_block, $po
         fsm_file => $fsm_file,
         header => $header,
     );
-    return $self->augment_with_shared_datapath_runtime_support($composition_plan);
-}
-
-sub ensure_composition_net ($self, $nets, $name, $width = 1) {
-    return unless defined($name) && length($name);
-    return if grep { ($_->name || '') eq $name } @{$nets || []};
-
-    push @{$nets || []}, FSM::Composition::Net->new(
-        name => $name,
-        width => $width,
-        source => undef,
-        targets => [],
+    return FSM::Composition::SharedDatapathSupport->augment_plan(
+        composition_plan => $composition_plan,
+        shared_datapath_candidates => $self->composition_shared_datapath_candidates_for_plan($composition_plan),
+        target_language => ($self->{target_language} // 'systemverilog'),
     );
-}
-
-sub ensure_instance_port_binding ($self, $instance, $port_name, $signal_name) {
-    return unless $instance && defined($port_name) && length($port_name);
-    return unless defined($signal_name) && length($signal_name);
-
-    $instance->{port_bindings} ||= [];
-    ensure_signal_ref_binding($instance->{port_bindings}, $port_name, $signal_name);
-}
-
-sub set_instance_port_binding ($self, $instance, $port_name, $signal_name) {
-    return unless $instance && defined($port_name) && length($port_name);
-    return unless defined($signal_name) && length($signal_name);
-
-    $instance->{port_bindings} ||= [];
-    set_signal_ref_binding($instance->{port_bindings}, $port_name, $signal_name);
-}
-
-sub composition_system_signal_names ($self, $composition_plan) {
-    my ($clock_name, $reset_name);
-    for my $port (@{$composition_plan->ports || []}) {
-        my $type = $port->type || '';
-        $clock_name ||= $port->name if $type eq 'clock';
-        $reset_name ||= $port->name if $type eq 'reset';
-    }
-
-    if ((!defined($clock_name) || !length($clock_name)) || (!defined($reset_name) || !length($reset_name))) {
-        for my $instance (@{$composition_plan->instances || []}) {
-            my $bindings = binding_signal_summaries_by_port($instance->port_bindings);
-
-            for my $port (@{$instance->interface_ports || []}) {
-                my $binding = $bindings->{$port->name} || next;
-                my $bound_signal = $binding->{bound_signal} || next;
-                next unless length($bound_signal);
-                my $type = $port->type || '';
-                $clock_name ||= $bound_signal if $type eq 'clock';
-                $reset_name ||= $bound_signal if $type eq 'reset';
-            }
-        }
-    }
-
-    return ($clock_name, $reset_name);
 }
 
 sub composition_shared_datapath_candidates_for_plan ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
@@ -1215,265 +1014,6 @@ sub composition_shared_datapath_candidates_for_plan ($self, $composition_plan, $
     );
     $composition_plan->{shared_datapath_candidates} = $shared_datapath_candidates;
     return $shared_datapath_candidates;
-}
-
-sub augment_with_shared_datapath_runtime_support ($self, $composition_plan) {
-    return $composition_plan unless $composition_plan;
-
-    my $nets = $composition_plan->{nets} ||= [];
-    $composition_plan->{auxiliary_assignments} ||= [];
-    my $shared_datapath_candidates = $self->composition_shared_datapath_candidates_for_plan($composition_plan);
-    return $composition_plan unless @{$shared_datapath_candidates || []};
-
-    my %needed_exports;
-    for my $candidate (@{$shared_datapath_candidates || []}) {
-        next unless ref($candidate) eq 'HASH';
-        my $signal_name = $candidate->{signal_name} || next;
-
-        for my $family (@{$candidate->{aggregate_enable_families} || []}) {
-            next unless ref($family) eq 'HASH';
-            my $rhs_value = $family->{rhs_value};
-
-            for my $contributor (@{$family->{contributors} || []}) {
-                next unless ref($contributor) eq 'HASH';
-                my $endpoint = $contributor->{endpoint} || '';
-                my ($instance_name) = $endpoint =~ /^(\w+)\./;
-                next unless defined $instance_name;
-                $needed_exports{join "\x1E", $instance_name, $signal_name, ($rhs_value // '')} = 1;
-            }
-        }
-    }
-
-    for my $instance (@{$composition_plan->{instances} || []}) {
-        next unless ($instance->kind || '') eq 'fsmc';
-
-        for my $export (@{$instance->module_info->{shared_datapath_source_exports} || []}) {
-            next unless ref($export) eq 'HASH';
-            my $signal_name = $export->{signal_name} || next;
-            my $rhs_value = $export->{rhs_value};
-            next unless $needed_exports{join "\x1E", $instance->instance_name, $signal_name, ($rhs_value // '')};
-            my $source_enable_signal = $self->shared_datapath_source_value_enable_name(
-                $instance->instance_name,
-                $signal_name,
-                $rhs_value,
-            );
-
-            $self->ensure_composition_net($nets, $source_enable_signal, 1);
-            $self->ensure_instance_port_binding($instance, $export->{port_name}, $source_enable_signal);
-        }
-    }
-
-    my @helper_assignments;
-    my @assertion_sections;
-    my @lifted_runtime_sections;
-    my ($clock_name, $reset_name) = $self->composition_system_signal_names($composition_plan);
-    my %instances_by_name = map {
-        (($_->instance_name || '') => $_)
-    } @{$composition_plan->{instances} || []};
-
-    for my $candidate (@{$shared_datapath_candidates || []}) {
-        next unless ref($candidate) eq 'HASH';
-
-        $self->ensure_composition_net($nets, $candidate->{aggregate_target_enable_signal}, 1);
-        $self->ensure_composition_net($nets, $candidate->{multi_value_conflict_signal}, 1);
-
-        my @aggregate_value_enables;
-        for my $family (@{$candidate->{aggregate_enable_families} || []}) {
-            next unless ref($family) eq 'HASH';
-            my $aggregate_enable_signal = $family->{aggregate_enable_signal} || next;
-            my @source_enable_signals = map {
-                $_->{source_enable_signal}
-            } grep {
-                ref($_) eq 'HASH'
-            } @{$family->{contributors} || []};
-
-            $self->ensure_composition_net($nets, $aggregate_enable_signal, 1);
-            $self->ensure_composition_net($nets, $family->{same_value_conflict_signal}, 1);
-
-            push @aggregate_value_enables, $aggregate_enable_signal;
-            push @helper_assignments,
-                "  assign $aggregate_enable_signal = "
-                    . $self->shared_datapath_or_expression(\@source_enable_signals) . ";",
-                "  assign $family->{same_value_conflict_signal} = "
-                    . $self->shared_datapath_conflict_expression(\@source_enable_signals) . ";";
-        }
-
-        push @helper_assignments,
-            "  assign $candidate->{aggregate_target_enable_signal} = "
-                . $self->shared_datapath_or_expression(\@aggregate_value_enables) . ";",
-            "  assign $candidate->{multi_value_conflict_signal} = "
-                . $self->shared_datapath_conflict_expression(\@aggregate_value_enables) . ";";
-
-        my @candidate_assertion_lines = $self->shared_datapath_assertion_runtime_lines($candidate);
-        push @assertion_sections, @candidate_assertion_lines if @candidate_assertion_lines;
-
-        my %planned_reexports = map {
-            ($_ => 1)
-        } @{$candidate->{planned_reexport_top_output_signals} || []};
-        my %preserved_top_outputs = map {
-            ($_ => 1)
-        } @{$candidate->{top_output_signals} || []};
-        my $runtime_mode =
-            (($candidate->{storage_class} || '') eq 'registered')
-            && (($candidate->{peer_read_policy} || '') eq 'registered_loopback')
-            && ($candidate->{loopback_allowed} || 0)
-            && defined($candidate->{reset_value}) && length($candidate->{reset_value})
-            && defined($clock_name) && length($clock_name)
-            && defined($reset_name) && length($reset_name)
-                ? (%planned_reexports
-                    ? 'registered_shared_reexport'
-                    : 'registered_shared_internal')
-            : (($candidate->{storage_class} || '') eq 'registered')
-                && !($candidate->{peer_input_count} || 0)
-                && scalar(keys %preserved_top_outputs) > 1
-                && defined($candidate->{reset_value}) && length($candidate->{reset_value})
-                && defined($clock_name) && length($clock_name)
-                && defined($reset_name) && length($reset_name)
-                    ? 'registered_shared_public_fanout'
-            : (($candidate->{storage_class} || '') eq 'combinational')
-                && (($candidate->{peer_read_policy} || '') eq 'top_output_only')
-                && %preserved_top_outputs
-                    ? 'combinational_shared_reexport'
-            : (($candidate->{storage_class} || '') eq 'combinational')
-                && !($candidate->{peer_input_count} || 0)
-                && scalar(keys %preserved_top_outputs) > 1
-                    ? 'combinational_shared_public_fanout'
-            : (($candidate->{storage_class} || '') eq 'combinational')
-                && (($candidate->{peer_read_policy} || '') eq 'top_local_only')
-                    ? 'combinational_shared_internal'
-                    : ''
-                ;
-        my $can_lift_runtime = length($runtime_mode) ? 1 : 0;
-
-        next unless $can_lift_runtime;
-
-        my $signal_name = $candidate->{signal_name} || next;
-        my $width = $candidate->{width} || 1;
-        my $lifted_next_signal = $self->shared_datapath_lifted_next_name($signal_name);
-        my $lifted_register_signal = $self->shared_datapath_lifted_register_name($signal_name);
-        my $lifted_comb_signal = $self->shared_datapath_lifted_comb_name($signal_name);
-        my $width_decl = $width > 1 ? sprintf("[%d:0] ", $width - 1) : '';
-
-        $candidate->{lifted_runtime_kind} = $runtime_mode;
-        my @runtime_lines;
-        if ($runtime_mode eq 'combinational_shared_reexport'
-            || $runtime_mode eq 'combinational_shared_internal'
-            || $runtime_mode eq 'combinational_shared_public_fanout')
-        {
-            $candidate->{lifted_runtime_signal} = $lifted_comb_signal;
-            @runtime_lines = (
-                "    logic ${width_decl}${lifted_comb_signal};",
-                "",
-                "    always_comb begin",
-                "      ${lifted_comb_signal} = 1'b0;",
-            );
-
-            for my $family (@{$candidate->{aggregate_enable_families} || []}) {
-                next unless ref($family) eq 'HASH';
-                my $aggregate_enable_signal = $family->{aggregate_enable_signal} || next;
-                my $rhs_value = $family->{rhs_value} // next;
-                push @runtime_lines,
-                    "      if ($aggregate_enable_signal) begin",
-                    "        ${lifted_comb_signal} = $rhs_value;",
-                    "      end";
-            }
-
-            push @runtime_lines, "    end";
-        } else {
-            $candidate->{lifted_runtime_next_signal} = $lifted_next_signal;
-            $candidate->{lifted_runtime_signal} = $lifted_register_signal;
-            $candidate->{lifted_runtime_reset_value} = $candidate->{reset_value};
-
-            @runtime_lines = (
-                "    logic ${width_decl}${lifted_next_signal};",
-                "    logic ${width_decl}${lifted_register_signal};",
-                "",
-                "    always_comb begin",
-                "      ${lifted_next_signal} = ${lifted_register_signal};",
-            );
-
-            for my $family (@{$candidate->{aggregate_enable_families} || []}) {
-                next unless ref($family) eq 'HASH';
-                my $aggregate_enable_signal = $family->{aggregate_enable_signal} || next;
-                my $rhs_value = $family->{rhs_value} // next;
-                push @runtime_lines,
-                    "      if ($aggregate_enable_signal) begin",
-                    "        ${lifted_next_signal} = $rhs_value;",
-                    "      end";
-            }
-
-            push @runtime_lines,
-                "    end",
-                "",
-                "    always_ff @(posedge $clock_name or negedge $reset_name) begin",
-                "      if (!$reset_name) begin",
-                "        ${lifted_register_signal} <= $candidate->{reset_value};",
-                "      end else begin",
-                "        ${lifted_register_signal} <= ${lifted_next_signal};",
-                "      end",
-                "    end";
-        }
-
-        for my $contributor (@{$candidate->{contributors} || []}) {
-            next unless ref($contributor) eq 'HASH';
-            my ($instance_name, $port_name) = ($contributor->{endpoint} || '') =~ /^(\w+)\.(\w+)$/;
-            next unless defined($instance_name) && defined($port_name);
-            my $instance = $instances_by_name{$instance_name} || next;
-            my $raw_signal = $self->shared_datapath_raw_source_name($instance_name, $signal_name);
-            $self->ensure_composition_net($nets, $raw_signal, $width);
-            $self->set_instance_port_binding($instance, $port_name, $raw_signal);
-        }
-
-        for my $peer_input (@{$candidate->{peer_input_endpoints} || []}) {
-            next unless ref($peer_input) eq 'HASH';
-            my ($instance_name, $port_name) = ($peer_input->{endpoint} || '') =~ /^(\w+)\.(\w+)$/;
-            next unless defined($instance_name) && defined($port_name);
-            my $instance = $instances_by_name{$instance_name} || next;
-            my $lifted_signal = ($runtime_mode eq 'combinational_shared_reexport'
-                || $runtime_mode eq 'combinational_shared_internal'
-                || $runtime_mode eq 'combinational_shared_public_fanout')
-                ? $lifted_comb_signal
-                : $lifted_register_signal;
-            $self->set_instance_port_binding($instance, $port_name, $lifted_signal);
-        }
-
-        if ($runtime_mode eq 'registered_shared_reexport') {
-            for my $top_output_signal (sort keys %planned_reexports) {
-                push @runtime_lines, "    assign $top_output_signal = $lifted_register_signal;";
-            }
-        }
-
-        if ($runtime_mode eq 'registered_shared_public_fanout') {
-            for my $top_output_signal (sort keys %preserved_top_outputs) {
-                push @runtime_lines, "    assign $top_output_signal = $lifted_register_signal;";
-            }
-        }
-
-        if ($runtime_mode eq 'combinational_shared_reexport'
-            || $runtime_mode eq 'combinational_shared_public_fanout')
-        {
-            for my $top_output_signal (sort keys %preserved_top_outputs) {
-                push @runtime_lines, "    assign $top_output_signal = $lifted_comb_signal;";
-            }
-        }
-
-        push @lifted_runtime_sections, @runtime_lines;
-    }
-
-    my @auxiliary_lines;
-    push @auxiliary_lines, @helper_assignments if @helper_assignments;
-    if (@assertion_sections) {
-        push @auxiliary_lines, "" if @auxiliary_lines;
-        push @auxiliary_lines, @assertion_sections;
-    }
-    if (@lifted_runtime_sections) {
-        push @auxiliary_lines, "" if @auxiliary_lines;
-        push @auxiliary_lines, @lifted_runtime_sections;
-    }
-
-    $composition_plan->{auxiliary_assignments} = \@auxiliary_lines;
-    $composition_plan->{shared_datapath_candidates} = $shared_datapath_candidates;
-    return $composition_plan;
 }
 
 sub generate_composition_hdl_code ($self, $composition_plan, $structural_rtl_ir = undef) {
@@ -2060,14 +1600,14 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
 
                 my $aggregate = ($aggregate_families_by_rhs{$rhs_value} ||= {
                     rhs_value => $rhs_value,
-                    aggregate_enable_signal => $self->shared_datapath_value_enable_name($group->{signal_name}, $rhs_value),
+                    aggregate_enable_signal => FSM::Composition::SharedDatapathSupport->value_enable_name($group->{signal_name}, $rhs_value),
                     contributors => [],
                 });
 
                 push @{$aggregate->{contributors}}, {
                     endpoint => $contributor->{endpoint},
                     family_enable_signal => $rhs_family->{family_enable_signal},
-                    source_enable_signal => $self->shared_datapath_source_value_enable_name(
+                    source_enable_signal => FSM::Composition::SharedDatapathSupport->source_value_enable_name(
                         $contributor->{instance_name},
                         $group->{signal_name},
                         $rhs_value,
@@ -2080,7 +1620,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
 
         my @aggregate_enable_families = map {
             my $family = $aggregate_families_by_rhs{$_};
-            my $same_value_conflict_signal = $self->shared_datapath_same_value_conflict_name(
+            my $same_value_conflict_signal = FSM::Composition::SharedDatapathSupport->same_value_conflict_name(
                 $group->{signal_name},
                 $family->{rhs_value},
             );
@@ -2088,7 +1628,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
                 rhs_value => $family->{rhs_value},
                 aggregate_enable_signal => $family->{aggregate_enable_signal},
                 same_value_conflict_signal => $same_value_conflict_signal,
-                same_value_assertion => $self->shared_datapath_assertion_metadata(
+                same_value_assertion => FSM::Composition::SharedDatapathSupport->assertion_metadata(
                     $same_value_conflict_signal,
                     [
                         map {
@@ -2101,7 +1641,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
             }
         } sort keys %aggregate_families_by_rhs;
 
-        my $multi_value_conflict_signal = $self->shared_datapath_multi_value_conflict_name($group->{signal_name});
+        my $multi_value_conflict_signal = FSM::Composition::SharedDatapathSupport->multi_value_conflict_name($group->{signal_name});
 
         push @candidates, {
             signal_name => $group->{signal_name},
@@ -2118,9 +1658,9 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
             planned_reexport_top_output_signals => \@planned_reexport_top_output_signals,
             loopback_allowed => (@peer_input_endpoints && $storage_class eq 'registered') ? 1 : 0,
             (%{$peer_read_policy || {}}),
-            aggregate_target_enable_signal => $self->shared_datapath_target_enable_name($group->{signal_name}),
+            aggregate_target_enable_signal => FSM::Composition::SharedDatapathSupport->target_enable_name($group->{signal_name}),
             multi_value_conflict_signal => $multi_value_conflict_signal,
-            multi_value_assertion => $self->shared_datapath_assertion_metadata(
+            multi_value_assertion => FSM::Composition::SharedDatapathSupport->assertion_metadata(
                 $multi_value_conflict_signal,
                 [
                     map {

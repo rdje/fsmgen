@@ -6319,3 +6319,9 @@ It is an exact-delay pulse request:
 - That builder now owns the bounded top-port inference family end-to-end:
   explicit-toplink top-port inference plus undeclared same-name top-input and
   top-output inference.
+- Shared-datapath support now also lives in
+  `FSM::Composition::SharedDatapathSupport` instead of in `HDLGenerator`.
+- That package now owns the bounded shared-datapath support family end-to-end:
+  helper-signal naming, generated-child source-export metadata, assertion
+  metadata/rendering, and runtime plan augmentation once candidates already
+  exist.

@@ -4919,3 +4919,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `FSM::Composition::TopPortInferenceBuilder`, so `HDLGenerator` no longer
   owns explicit-toplink top-port inference or undeclared same-name top-input
   and top-output inference directly.
+- Shared-datapath support now also lives in
+  `FSM::Composition::SharedDatapathSupport`, so `HDLGenerator` no longer owns
+  shared-datapath helper-signal naming, generated-child source-export
+  metadata, assertion metadata/rendering, or runtime plan augmentation
+  directly.
