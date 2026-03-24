@@ -27,6 +27,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     binding_expr
     expr_signal_name
     expr_signal_names
+    binding_signal_summary
     binding_signal_name
     binding_signal_names
     render_expr
@@ -138,6 +139,64 @@ subtest 'signal_ref helper builds the first bounded structural connection node' 
             },
         },
         'signal_ref binding helper builds the bounded binding payload with both compatibility and typed fields',
+    );
+};
+
+subtest 'binding signal summary centralizes leaf, dependency, and typed-expression projection' => sub {
+    is_deeply(
+        binding_signal_summary({
+            port_name => 'data_in',
+            connection_expr => signal_ref_expr('top_data'),
+        }),
+        {
+            bound_signal => 'top_data',
+            bound_signals => ['top_data'],
+            bound_connection_expr => {
+                kind => 'signal_ref',
+                signal_name => 'top_data',
+            },
+        },
+        'binding signal summary keeps flat signal-ref bindings as one leaf carrier plus one dependency',
+    );
+
+    is_deeply(
+        binding_signal_summary({
+            port_name => 'mode_in',
+            connection_expr => member_access_expr('cfg_bus', 'mode'),
+        }),
+        {
+            bound_signal => '',
+            bound_signals => ['cfg_bus'],
+            bound_connection_expr => {
+                kind => 'member_access',
+                member_name => 'mode',
+                source_expr => {
+                    kind => 'signal_ref',
+                    signal_name => 'cfg_bus',
+                },
+            },
+        },
+        'binding signal summary keeps non-leaf bindings honest by separating flat carriers from broader dependencies',
+    );
+
+    my $expr = signal_ref_expr('shared_bus');
+    my $summary = binding_signal_summary({
+        port_name => 'data_in',
+        connection_expr => $expr,
+    });
+    $expr->{signal_name} = 'mutated_after_summary';
+
+    is_deeply(
+        $summary,
+        {
+            bound_signal => 'shared_bus',
+            bound_signals => ['shared_bus'],
+            bound_connection_expr => {
+                kind => 'signal_ref',
+                signal_name => 'shared_bus',
+            },
+        },
+        'binding signal summary clones the typed expression payload instead of aliasing caller-owned hashes',
     );
 };
 

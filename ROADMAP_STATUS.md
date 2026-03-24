@@ -1294,3 +1294,8 @@ Exit criteria:
   `bound_connection_expr` for the main contributor summary line, so the first
   candidate line itself no longer collapses typed contributor bindings back to
   endpoint-only text.
+- `R11`: the structural helper layer now also owns one reusable
+  `binding_signal_summary` projection over flat leaf carrier name, broader
+  dependency names, and cloned typed binding expression payload, so those
+  structural-summary consumers no longer need to rebuild it ad hoc in
+  `HDLGenerator`.

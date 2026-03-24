@@ -690,3 +690,8 @@ The first honest `R11` slices are now:
   consumes `bound_connection_expr` for the main contributor summary line, so
   the first candidate line itself no longer collapses typed contributor
   bindings back to endpoint-only text.
+- Forward-IR note: the structural helper layer now also owns one reusable
+  `binding_signal_summary` projection over flat leaf carrier name, broader
+  dependency names, and cloned typed binding expression payload, so
+  `HDLGenerator` consumers no longer need to rebuild that structural summary
+  ad hoc.

@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-23
+### structural binding signal summaries now live in the structural helper layer
+- Updated [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) so the structural layer now owns one `binding_signal_summary` projection over flat leaf carrier name, broader dependency names, and cloned typed binding expression payload.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition system-signal inference and shared-datapath candidate metadata now consume that structural summary helper instead of rebuilding the same projection locally.
+- Updated [t/167-structural-connection-expr-helpers.t](/Users/richarddje/Documents/github/fsmgen/t/167-structural-connection-expr-helpers.t) to lock the new helper surface directly, and synced [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this structural ownership slice is tracked honestly.
+
 ### shared-datapath cli summaries now render typed contributor bindings too
 - Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so non-quiet shared-datapath candidate summary lines now render contributor binding text from `bound_connection_expr` instead of printing only contributor endpoints.
 - Updated [t/159-composition-shared-datapath-forward-ir-exports.t](/Users/richarddje/Documents/github/fsmgen/t/159-composition-shared-datapath-forward-ir-exports.t) to lock the richer contributor-line shape.

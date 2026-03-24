@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural binding signal summaries now live in the structural helper layer
+- Continued the active `R11` structural-IR ownership cleanup lane by moving the repeated “flat carrier plus dependency names plus typed expression payload” projection into the layer that actually owns structural binding semantics.
+- Landed behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now exports one `binding_signal_summary` helper,
+  - composition system-signal inference now consumes that structural summary instead of rebuilding its own local binding projection,
+  - and shared-datapath candidate metadata now consumes that same helper instead of carrying another pipeline-local copy of the rule.
+- Why this is worth shipping:
+  - it removes another repeated structural-binding rule from `HDLGenerator`,
+  - it makes the structural helper layer a more complete owner of the binding-summary contract that later consumers actually use,
+  - and it leaves the next seam where it belongs: another real consumer handoff or one more bounded portable `connection_expr` form.
+
 ## 2026-03-23: shared-datapath cli summaries now render typed contributor bindings too
 - Continued the active `R11` structural-consumer cleanup lane by moving the first summary line of the shared-datapath CLI section onto the typed structural binding surface instead of leaving it as endpoint-only text.
 - Landed behavior:

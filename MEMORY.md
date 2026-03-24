@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural binding signal summaries now live in the structural helper layer
+- Saved shipped behavior:
+  - `FSM::IR::StructuralRTLIR::ConnectionExpr` now owns one `binding_signal_summary` helper over flat leaf carrier name, broader dependency names, and cloned typed binding expression payload,
+  - composition system-signal inference now consumes that structural summary instead of rebuilding the same projection locally,
+  - and shared-datapath candidate metadata now consumes that same structural summary instead of carrying another pipeline-local copy of the rule.
+- Important continuity note:
+  - this is another ownership move toward the structural layer rather than a new syntax feature,
+  - it gives later structural consumers one stable signal-summary contract instead of repeating `bound_signal` / `bound_signals` / cloned-expression assembly in `HDLGenerator`,
+  - and the next likely seam is still either another real consumer handoff or one more bounded `connection_expr` widening.
+
 ## 2026-03-23: shared-datapath cli summaries now render typed contributor bindings too
 - Saved shipped behavior:
   - non-quiet `bin/fsmgen` shared-datapath candidate summary lines now also render contributor binding text from `bound_connection_expr`,

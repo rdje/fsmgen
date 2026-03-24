@@ -25,6 +25,7 @@ our @EXPORT_OK = qw(
     binding_expr
     expr_signal_name
     expr_signal_names
+    binding_signal_summary
     binding_signal_name
     binding_signal_names
     render_expr
@@ -244,6 +245,20 @@ sub expr_signal_names ($expr) {
 sub binding_signal_names ($binding) {
     return [] unless ref($binding) eq 'HASH';
     return expr_signal_names(binding_expr($binding));
+}
+
+sub binding_signal_summary ($binding) {
+    return {
+        bound_signal => '',
+        bound_signals => [],
+        bound_connection_expr => undef,
+    } unless ref($binding) eq 'HASH';
+
+    return {
+        bound_signal => binding_signal_name($binding),
+        bound_signals => [ @{binding_signal_names($binding)} ],
+        bound_connection_expr => _clone(binding_expr($binding)),
+    };
 }
 
 sub binding_signal_name ($binding) {

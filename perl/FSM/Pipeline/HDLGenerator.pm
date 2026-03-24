@@ -38,8 +38,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     normalized_binding
     binding_expr
     expr_signal_name
-    binding_signal_name
-    binding_signal_names
+    binding_signal_summary
     binding_expr_text
 );
 use FSM::SourceClassifier;
@@ -2467,18 +2466,13 @@ sub composition_system_signal_names ($self, $composition_plan) {
     if ((!defined($clock_name) || !length($clock_name)) || (!defined($reset_name) || !length($reset_name))) {
         for my $instance (@{$composition_plan->instances || []}) {
             my %bindings = map {
-                (($_->{port_name} || '') => {
-                    bound_signal => binding_signal_name($_),
-                    bound_signals => [ @{binding_signal_names($_)} ],
-                })
+                (($_->{port_name} || '') => binding_signal_summary($_))
             } @{$instance->port_bindings || []};
 
             for my $port (@{$instance->interface_ports || []}) {
                 my $binding = $bindings{$port->name} || next;
                 my $bound_signal = $binding->{bound_signal} || next;
                 next unless length($bound_signal);
-                my $bound_signals = $binding->{bound_signals} || [];
-                next unless ref($bound_signals) eq 'ARRAY' && @$bound_signals == 1;
                 my $type = $port->type || '';
                 $clock_name ||= $bound_signal if $type eq 'clock';
                 $reset_name ||= $bound_signal if $type eq 'reset';
@@ -3466,11 +3460,7 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
         next unless (($instance->{kind} || '') eq 'fsmc');
 
         my %binding_signals_by_port = map {
-            (($_->{port_name} || '') => {
-                bound_signal => binding_signal_name($_),
-                bound_signals => [ @{binding_signal_names($_)} ],
-                bound_connection_expr => _clone_structured_value(binding_expr($_)),
-            })
+            (($_->{port_name} || '') => binding_signal_summary($_))
         } @{$instance->{port_bindings} || []};
         my $child = $child_by_instance{$instance->{instance_name}} || {};
         my %drive_family_by_signal = map {
