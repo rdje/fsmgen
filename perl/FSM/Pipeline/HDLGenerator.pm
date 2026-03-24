@@ -2452,13 +2452,18 @@ sub composition_system_signal_names ($self, $composition_plan) {
     if ((!defined($clock_name) || !length($clock_name)) || (!defined($reset_name) || !length($reset_name))) {
         for my $instance (@{$composition_plan->instances || []}) {
             my %bindings = map {
-                (($_->{port_name} || '') => [ @{binding_signal_names($_)} ])
+                (($_->{port_name} || '') => {
+                    bound_signal => binding_signal_name($_),
+                    bound_signals => [ @{binding_signal_names($_)} ],
+                })
             } @{$instance->port_bindings || []};
 
             for my $port (@{$instance->interface_ports || []}) {
-                my $bound_signals = $bindings{$port->name} || next;
+                my $binding = $bindings{$port->name} || next;
+                my $bound_signal = $binding->{bound_signal} || next;
+                next unless length($bound_signal);
+                my $bound_signals = $binding->{bound_signals} || [];
                 next unless ref($bound_signals) eq 'ARRAY' && @$bound_signals == 1;
-                my $bound_signal = $bound_signals->[0] || next;
                 my $type = $port->type || '';
                 $clock_name ||= $bound_signal if $type eq 'clock';
                 $reset_name ||= $bound_signal if $type eq 'reset';
@@ -3445,8 +3450,11 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
     for my $instance (@{$structural_rtl_ir_hash->{instances} || []}) {
         next unless (($instance->{kind} || '') eq 'fsmc');
 
-        my %binding_signal_sets = map {
-            (($_->{port_name} || '') => [ @{binding_signal_names($_)} ])
+        my %binding_signals_by_port = map {
+            (($_->{port_name} || '') => {
+                bound_signal => binding_signal_name($_),
+                bound_signals => [ @{binding_signal_names($_)} ],
+            })
         } @{$instance->{port_bindings} || []};
         my $child = $child_by_instance{$instance->{instance_name}} || {};
         my %drive_family_by_signal = map {
@@ -3466,8 +3474,9 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
             my $output_drive_family = ref($drive_family) eq 'HASH'
                 ? _clone_structured_value($drive_family)
                 : {};
-            my $bound_signals = $binding_signal_sets{$port->{name}} || [];
-            my $bound_signal = @$bound_signals == 1 ? $bound_signals->[0] : '';
+            my $binding = $binding_signals_by_port{$port->{name}} || {};
+            my $bound_signals = $binding->{bound_signals} || [];
+            my $bound_signal = $binding->{bound_signal} || '';
             push @{$candidate_groups{$key}{contributors}}, {
                 kind => ($child->{kind} // $instance->{kind}),
                 instance_name => ($child->{instance_name} // $instance->{instance_name}),
@@ -3500,10 +3509,8 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
                 instance_name => ($child->{instance_name} // $instance->{instance_name}),
                 module_name => ($child->{module_name} // $instance->{module_name}),
                 endpoint => (($instance->{instance_name} // 'unknown').'.'.($port->{name} // 'unknown')),
-                bound_signal => (@{$binding_signal_sets{$port->{name}} || []} == 1)
-                    ? ($binding_signal_sets{$port->{name}} || [])->[0]
-                    : '',
-                bound_signals => [@{$binding_signal_sets{$port->{name}} || []}],
+                bound_signal => (($binding_signals_by_port{$port->{name}} || {})->{bound_signal} || ''),
+                bound_signals => [@{(($binding_signals_by_port{$port->{name}} || {})->{bound_signals} || [])}],
             };
         }
     }

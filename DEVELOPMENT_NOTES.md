@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-23: structural leaf-signal consumers now distinguish flat carriers from richer dependencies
+- Continued the active `R11` structural-consumer cleanup lane by fixing the first downstream places where richer `connection_expr` dependency lists were being mistaken for flat leaf bindings.
+- Landed behavior:
+  - composition system-signal inference now requires a true flat leaf binding before it accepts a clock/reset carrier name,
+  - shared-datapath candidate bookkeeping now keeps `bound_signal` reserved for real flat carriers while leaving richer base-signal dependency recovery in `bound_signals`,
+  - and richer expressions such as `member_access` / `index_access` no longer get mislabeled as if they were direct one-wire carrier bindings.
+- Why this is worth shipping:
+  - it keeps the new structural expression forms honest in real pipeline consumers,
+  - it sharpens the meaning of the old compatibility `bound_signal` field instead of letting it drift into “some base dependency” ambiguity,
+  - and it leaves the next seam where it belongs: more consumers moving onto the typed leaf-vs-dependency distinction, or another bounded portable connection form.
+
 ## 2026-03-23: structural connection expressions now cover bounded fixed-size index access
 - Continued the active `R11` structural-IR widening lane by adding the first explicit fixed-size array/index actual-connection form instead of leaving that roadmap item as a future note only.
 - Landed behavior:
@@ -6034,3 +6045,6 @@ It is an exact-delay pulse request:
 - StructuralRTLIR connection expressions now also include a bounded
   `index_access` node, which is the first shipped fixed-size array/index
   actual form in the structural connectivity AST.
+- Structural consumers that still need one flat carrier name now also
+  distinguish that leaf-only case from the broader `bound_signals`
+  dependency list exposed by richer structural expressions.

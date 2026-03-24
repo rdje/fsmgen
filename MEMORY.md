@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-23: structural leaf-signal consumers now distinguish flat carriers from richer dependencies
+- Saved shipped behavior:
+  - composition system-signal inference now requires a true flat leaf binding before it accepts a clock/reset carrier name,
+  - shared-datapath contributor and peer-input metadata now keep `bound_signal` reserved for that true flat leaf case,
+  - and `bound_signals` continues to carry the broader dependency list for richer expressions such as `member_access` and `index_access`.
+- Important continuity note:
+  - this keeps the new structural expression forms honest in real downstream consumers,
+  - it prevents “depends on one base signal” from being silently misread as “is bound directly to one flat carrier,”
+  - and the next likely seam is still either another structural consumer moving onto the typed distinction or one more bounded `connection_expr` widening.
+
 ## 2026-03-23: structural connection expressions now cover bounded fixed-size index access
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR::ConnectionExpr` now also owns a bounded `index_access` actual-connection node,
@@ -4638,3 +4648,6 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - StructuralRTLIR `connection_expr` now also supports bounded `index_access`
   actuals, rendered through the current SystemVerilog, Verilog, and VHDL
   helper paths.
+- Downstream structural consumers now also distinguish flat leaf carriers from
+  broader dependency lists, so `bound_signal` stays leaf-only while
+  `bound_signals` stays dependency-oriented.

@@ -1267,3 +1267,6 @@ Exit criteria:
 - `R11`: `StructuralRTLIR` connection expressions now also cover bounded
   `index_access` actuals, so the structural connection AST has started the
   fixed-size array/index connectivity lane too.
+- `R11`: structural consumers that still need one flat carrier name now also
+  distinguish that leaf-only case from the broader dependency lists exposed by
+  richer structural connection expressions.

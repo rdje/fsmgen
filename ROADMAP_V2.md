@@ -662,3 +662,7 @@ The first honest `R11` slices are now:
   node over one source expression plus one numeric index, rendered through the
   current SystemVerilog/Verilog/VHDL helper path while the broader aggregate
   and type story stays deliberately bounded.
+- Forward-IR note: downstream structural consumers are now also starting to
+  split “true flat leaf carrier” from “broader dependency set,” so compatibility
+  fields like `bound_signal` do not silently misclassify richer expressions such
+  as `member_access` or `index_access`.
