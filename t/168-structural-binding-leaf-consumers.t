@@ -8,10 +8,10 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
-use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Plan;
 use FSM::Composition::Port;
 use FSM::Composition::RealizedInstance;
+use FSM::Composition::SharedDatapathCandidateBuilder;
 use FSM::Composition::SharedDatapathSupport;
 use FSM::IR::StructuralRTLIR;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
@@ -22,12 +22,6 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
 );
 
 subtest 'composition system-signal inference only accepts flat leaf bindings' => sub {
-    my $pipeline = FSM::Pipeline::HDLGenerator->new(
-        target_language => 'systemverilog',
-        debug_level => 0,
-        quiet => 1,
-    );
-
     my $nonleaf_plan = FSM::Composition::Plan->new(
         top_name => 'nonleaf_system_top',
         ports => [],
@@ -120,12 +114,6 @@ subtest 'shared-datapath leaf-carrier helpers prefer typed structural expression
 };
 
 subtest 'shared-datapath candidate metadata distinguishes leaf carriers from richer dependency expressions' => sub {
-    my $pipeline = FSM::Pipeline::HDLGenerator->new(
-        target_language => 'systemverilog',
-        debug_level => 0,
-        quiet => 1,
-    );
-
     my $plan = FSM::Composition::Plan->new(
         top_name => 'shared_leaf_vs_dependency_top',
     );
@@ -216,10 +204,11 @@ subtest 'shared-datapath candidate metadata distinguishes leaf carriers from ric
         ],
     };
 
-    my $candidates = $pipeline->build_composition_shared_datapath_candidates(
-        $plan,
-        $structural_rtl_ir,
-        $intent_hir,
+    my $candidates = FSM::Composition::SharedDatapathCandidateBuilder->build_candidates(
+        composition_plan => $plan,
+        structural_rtl_ir => $structural_rtl_ir,
+        intent_hir => $intent_hir,
+        target_language => 'systemverilog',
     );
 
     is(scalar(@$candidates), 1, 'one shared-datapath candidate is still discovered');

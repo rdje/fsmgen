@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-25: shared-datapath candidate assembly now lives in a dedicated builder package
+- Continued the active `R11` package-breakdown lane by moving the shared-datapath candidate family out of `HDLGenerator` instead of leaving candidate discovery and contributor/peer-read metadata assembly as another pipeline-owned composition pocket.
+- Landed behavior:
+  - added [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathCandidateBuilder.pm) as the owner of shared-datapath candidate discovery,
+  - that package now owns the normalized contributor, drive-intent, peer-read, and aggregate-enable family metadata derived from structural bindings and lowered child drive families,
+  - and the direct shared-datapath leaf/nonleaf binding contract plus a new builder-specific lock now point at that package instead of the pipeline coordinator.
+- Why this is worth shipping:
+  - it removes another real composition metadata family from `HDLGenerator`,
+  - it gives the shared-datapath lane a cleaner split between candidate discovery and the later runtime augmentation that still belongs in `SharedDatapathSupport`,
+  - and it leaves the next seam where it belongs: another remaining composition-side owner such as generated-child realization/source-loading.
+
 ## 2026-03-25: composition result metadata now lives in a dedicated builder package
 - Continued the active `R11` package-breakdown lane by moving the success-path composition result-metadata family out of `HDLGenerator` instead of leaving `module_info` and `statistics` assembly as another coordinator-owned pocket.
 - Landed behavior:

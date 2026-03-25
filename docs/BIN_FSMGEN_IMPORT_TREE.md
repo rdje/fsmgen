@@ -123,6 +123,7 @@ It is one of the cleaner parts of the tree.
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
 - [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm)
 - [perl/FSM/Composition/InterfacePortBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/InterfacePortBuilder.pm)
+- [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathCandidateBuilder.pm)
 - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm)
 - [perl/FSM/Composition/SharedDatapathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathSupport.pm)
 - [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm)
@@ -134,6 +135,10 @@ These packages mostly have narrow, believable ownership boundaries.
 `ChildExportBuilder` now also owns the unified realized-child export surface plus
 the narrower generated-child and standalone-DT child views that later
 intent/module-info/reporting consumers reuse.
+`SharedDatapathCandidateBuilder` now also owns shared-datapath candidate
+discovery and normalized contributor/peer-read/aggregate-family metadata,
+leaving [SharedDatapathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathSupport.pm)
+focused on naming and runtime augmentation once candidates already exist.
 `FailureReportBuilder` now also owns the bounded failed-run composition summary
 family, so blocked-boundary, construct, artifact, context, and concise-reason
 extraction no longer live inline in the pipeline coordinator.

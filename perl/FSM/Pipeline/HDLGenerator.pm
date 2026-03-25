@@ -25,6 +25,7 @@ use FSM::Composition::LinkedPlanBuilder;
 use FSM::Composition::ProvenanceReportBuilder;
 use FSM::Composition::ResultMetadataBuilder;
 use FSM::Composition::SameNameLinkBuilder;
+use FSM::Composition::SharedDatapathCandidateBuilder;
 use FSM::Composition::SharedDatapathSupport;
 use FSM::Composition::TopPortInferenceBuilder;
 use FSM::Composition::Net;
@@ -47,9 +48,6 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     update_binding_signal_ref
     binding_expr
     expr_signal_name
-    binding_signal_summaries_by_port
-    binding_signal_summary_metadata
-    binding_signal_summary_leaf_signal
 );
 use FSM::SourceClassifier;
 use FSM::SourcePathResolver;
@@ -828,73 +826,6 @@ sub augment_generated_child_hdl_with_shared_datapath_exports ($self, $hdl_code, 
     return $patched;
 }
 
-sub shared_datapath_storage_class ($self, $contributors) {
-    my %types = map {
-        my $output_drive_family = $self->shared_datapath_contributor_output_drive_family($_);
-        my $type = $output_drive_family->{multiplexer_type} // 'unknown';
-        ($type => 1);
-    } @{$contributors || []};
-
-    return 'registered' if keys(%types) == 1 && $types{flop};
-    return 'combinational' if keys(%types) == 1 && $types{comb};
-    return 'unknown' if !keys(%types) || (keys(%types) == 1 && $types{unknown});
-    return 'mixed';
-}
-
-sub shared_datapath_peer_read_policy ($self, $storage_class, $peer_input_endpoints, $top_output_signals = undef) {
-    return undef unless @{$peer_input_endpoints || []};
-
-    return {
-        peer_read_policy => 'registered_loopback',
-    } if ($storage_class || '') eq 'registered';
-
-    return {
-        peer_read_policy => 'top_output_only',
-        peer_read_block_reason =>
-            'combinational shared families must stay top-facing and are not internalized into lifted state',
-    } if ($storage_class || '') eq 'combinational' && @{$top_output_signals || []};
-
-    return {
-        peer_read_policy => 'top_local_only',
-        peer_read_block_reason =>
-            'combinational shared families may lift only into top-local combinational carriers and are not internalized into lifted state',
-    } if ($storage_class || '') eq 'combinational';
-
-    return undef;
-}
-
-sub shared_datapath_contributor_output_drive_family ($self, $contributor) {
-    return {} unless ref($contributor) eq 'HASH';
-    return $contributor->{output_drive_family} if ref($contributor->{output_drive_family}) eq 'HASH';
-    return $contributor->{drive_intent} if ref($contributor->{drive_intent}) eq 'HASH';
-    return {};
-}
-
-sub shared_datapath_drive_intent_from_output_drive_family ($self, $output_drive_family) {
-    return {} unless ref($output_drive_family) eq 'HASH';
-
-    return {
-        multiplexer_type => ($output_drive_family->{multiplexer_type} // 'unknown'),
-        default_value => $output_drive_family->{default_value},
-        reset_value => $output_drive_family->{reset_value},
-        driver_count => ($output_drive_family->{driver_count} || 0),
-        driver_blocks => [@{$output_drive_family->{driver_blocks} || []}],
-        rhs_values => [@{$output_drive_family->{rhs_values} || []}],
-        driver_enable_signals => [@{$output_drive_family->{driver_enable_signals} || []}],
-        family_enable_signals => [@{$output_drive_family->{family_enable_signals} || []}],
-        rhs_enable_families => [
-            map {
-                +{
-                    rhs_value => $_->{rhs_value},
-                    family_enable_signal => $_->{family_enable_signal},
-                    driver_blocks => [@{$_->{driver_blocks} || []}],
-                    driver_enable_signals => [@{$_->{driver_enable_signals} || []}],
-                }
-            } @{$output_drive_family->{rhs_enable_families} || []}
-        ],
-    };
-}
-
 sub is_generated_child_kind ($self, $kind) {
     return $kind eq 'fsmc' || $kind eq 'dtc';
 }
@@ -925,7 +856,10 @@ sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $po
     );
     return FSM::Composition::SharedDatapathSupport->augment_plan(
         composition_plan => $composition_plan,
-        shared_datapath_candidates => $self->composition_shared_datapath_candidates_for_plan($composition_plan),
+        shared_datapath_candidates => FSM::Composition::SharedDatapathCandidateBuilder->candidates_for_plan(
+            composition_plan => $composition_plan,
+            target_language => ($self->{target_language} // 'systemverilog'),
+        ),
         target_language => ($self->{target_language} // 'systemverilog'),
     );
 }
@@ -950,7 +884,10 @@ sub build_c3_composition_plan ($self, $composition_spec, $top, $ports_block, $po
     );
     return FSM::Composition::SharedDatapathSupport->augment_plan(
         composition_plan => $composition_plan,
-        shared_datapath_candidates => $self->composition_shared_datapath_candidates_for_plan($composition_plan),
+        shared_datapath_candidates => FSM::Composition::SharedDatapathCandidateBuilder->candidates_for_plan(
+            composition_plan => $composition_plan,
+            target_language => ($self->{target_language} // 'systemverilog'),
+        ),
         target_language => ($self->{target_language} // 'systemverilog'),
     );
 }
@@ -998,28 +935,21 @@ sub build_c4_composition_plan ($self, $composition_spec, $top, $ports_block, $po
     );
     return FSM::Composition::SharedDatapathSupport->augment_plan(
         composition_plan => $composition_plan,
-        shared_datapath_candidates => $self->composition_shared_datapath_candidates_for_plan($composition_plan),
+        shared_datapath_candidates => FSM::Composition::SharedDatapathCandidateBuilder->candidates_for_plan(
+            composition_plan => $composition_plan,
+            target_language => ($self->{target_language} // 'systemverilog'),
+        ),
         target_language => ($self->{target_language} // 'systemverilog'),
     );
 }
 
 sub composition_shared_datapath_candidates_for_plan ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
-    return [] unless $composition_plan;
-
-    if ($composition_plan->can('shared_datapath_candidates')
-        && ref($composition_plan->shared_datapath_candidates) eq 'ARRAY'
-        && @{$composition_plan->shared_datapath_candidates})
-    {
-        return $composition_plan->shared_datapath_candidates;
-    }
-
-    my $shared_datapath_candidates = $self->build_composition_shared_datapath_candidates(
-        $composition_plan,
-        $structural_rtl_ir,
-        $intent_hir,
+    return FSM::Composition::SharedDatapathCandidateBuilder->candidates_for_plan(
+        composition_plan => $composition_plan,
+        structural_rtl_ir => $structural_rtl_ir,
+        intent_hir => $intent_hir,
+        target_language => ($self->{target_language} // 'systemverilog'),
     );
-    $composition_plan->{shared_datapath_candidates} = $shared_datapath_candidates;
-    return $shared_datapath_candidates;
 }
 
 sub generate_composition_hdl_code ($self, $composition_plan, $structural_rtl_ir = undef) {
@@ -1162,238 +1092,12 @@ sub build_composition_module_info (
 }
 
 sub build_composition_shared_datapath_candidates ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
-    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
-        $composition_plan,
-        ($self->{target_language} // 'systemverilog'),
+    return FSM::Composition::SharedDatapathCandidateBuilder->build_candidates(
+        composition_plan => $composition_plan,
+        structural_rtl_ir => $structural_rtl_ir,
+        intent_hir => $intent_hir,
+        target_language => ($self->{target_language} // 'systemverilog'),
     );
-    my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
-    my %top_output_by_name = map {
-        ((($_->{name}) || '') => $_)
-    } grep {
-        ((($_->{direction}) || '') eq 'output')
-    } @{$structural_rtl_ir_hash->{ports} || []};
-    my $children_by_instance = FSM::IR::IntentHIR->composition_children_by_instance_from_input($intent_hir);
-    my %child_by_instance = $children_by_instance
-        ? %$children_by_instance
-        : map {
-            ((($_->{instance_name}) || '') => $_)
-        } @{FSM::Composition::ChildExportBuilder->build_child_exports(
-            composition_plan => $composition_plan,
-            structural_rtl_ir => $structural_rtl_ir,
-            target_language => ($self->{target_language} // 'systemverilog'),
-        )->{children} || []};
-
-    my %candidate_groups;
-    my %peer_input_groups;
-    for my $instance (@{$structural_rtl_ir_hash->{instances} || []}) {
-        next unless (($instance->{kind} || '') eq 'fsmc');
-
-        my $binding_signals_by_port = binding_signal_summaries_by_port(
-            $instance->{port_bindings}
-        );
-        my $child = $child_by_instance{$instance->{instance_name}} || {};
-        my $drive_family_by_signal = FSM::IR::LoweredRTLIR->output_drive_families_by_signal_from_input(
-            $child->{lowered_rtl_ir}
-        );
-
-        for my $port (@{$instance->{interface_ports} || []}) {
-            next unless (($port->{direction} || '') eq 'output');
-
-            my $normalized_type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($port->{type});
-            my $key = join "\x1E",
-                ($port->{name} // ''),
-                ($port->{width} // 1),
-                $normalized_type;
-
-            my $drive_family = $drive_family_by_signal->{$port->{name}} || {};
-            my $output_drive_family = ref($drive_family) eq 'HASH'
-                ? _clone_structured_value($drive_family)
-                : {};
-            my $binding_metadata = binding_signal_summary_metadata(
-                $binding_signals_by_port->{$port->{name}}
-            );
-            push @{$candidate_groups{$key}{contributors}}, {
-                kind => ($child->{kind} // $instance->{kind}),
-                instance_name => ($child->{instance_name} // $instance->{instance_name}),
-                module_name => ($child->{module_name} // $instance->{module_name}),
-                source_name => ($child->{source_name} // $instance->{source_name}),
-                endpoint => (($instance->{instance_name} // 'unknown').'.'.($port->{name} // 'unknown')),
-                %$binding_metadata,
-                intent_hir => ($child->{intent_hir} || {}),
-                lowered_rtl_ir => ($child->{lowered_rtl_ir} || {}),
-                structural_rtl_ir => ($child->{structural_rtl_ir} || {}),
-                output_drive_family => $output_drive_family,
-                drive_intent => $self->shared_datapath_drive_intent_from_output_drive_family($output_drive_family),
-            };
-            $candidate_groups{$key}{signal_name} = $port->{name};
-            $candidate_groups{$key}{width} = $port->{width} || 1;
-            $candidate_groups{$key}{interface_type} = $normalized_type;
-        }
-
-        for my $port (@{$instance->{interface_ports} || []}) {
-            next unless (($port->{direction} || '') eq 'input');
-
-            my $normalized_type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($port->{type});
-            my $key = join "\x1E",
-                ($port->{name} // ''),
-                ($port->{width} // 1),
-                $normalized_type;
-            my $binding_metadata = binding_signal_summary_metadata(
-                $binding_signals_by_port->{$port->{name}}
-            );
-
-            push @{$peer_input_groups{$key}}, {
-                instance_name => ($child->{instance_name} // $instance->{instance_name}),
-                module_name => ($child->{module_name} // $instance->{module_name}),
-                endpoint => (($instance->{instance_name} // 'unknown').'.'.($port->{name} // 'unknown')),
-                %$binding_metadata,
-            };
-        }
-    }
-
-    my @candidates;
-    for my $key (sort keys %candidate_groups) {
-        my $group = $candidate_groups{$key};
-        my @contributors = sort {
-            ($a->{instance_name} // '') cmp ($b->{instance_name} // '')
-                ||
-            ($a->{module_name} // '') cmp ($b->{module_name} // '')
-                ||
-            ($a->{endpoint} // '') cmp ($b->{endpoint} // '')
-        } @{$group->{contributors} || []};
-        next unless @contributors >= 2;
-
-        my %top_output_signals;
-        for my $contributor (@contributors) {
-            my $bound_signal = binding_signal_summary_leaf_signal($contributor);
-            next unless length $bound_signal;
-            $top_output_signals{$bound_signal} = 1 if exists $top_output_by_name{$bound_signal};
-        }
-
-        my %candidate_carriers = map {
-            my $bound_signal = binding_signal_summary_leaf_signal($_);
-            length($bound_signal) ? ($bound_signal => 1) : ();
-        } @contributors;
-
-        my @peer_input_endpoints = sort {
-            ($a->{instance_name} // '') cmp ($b->{instance_name} // '')
-                ||
-            ($a->{module_name} // '') cmp ($b->{module_name} // '')
-                ||
-            ($a->{endpoint} // '') cmp ($b->{endpoint} // '')
-        } grep {
-            my $bound_signal = binding_signal_summary_leaf_signal($_);
-            length($bound_signal) && $candidate_carriers{$bound_signal}
-        } @{$peer_input_groups{$key} || []};
-        my $storage_class = $self->shared_datapath_storage_class(\@contributors);
-        my %reset_values = map {
-            my $output_drive_family = $self->shared_datapath_contributor_output_drive_family($_);
-            my $reset_value = $output_drive_family->{reset_value};
-            defined($reset_value) && length($reset_value)
-                ? ($reset_value => 1)
-                : ();
-        } @contributors;
-        my $reset_value = keys(%reset_values) == 1
-            ? (sort keys %reset_values)[0]
-            : undef;
-        my $default_lifted_visibility = (@peer_input_endpoints && $storage_class eq 'registered')
-            ? 'internal'
-            : (@peer_input_endpoints && $storage_class eq 'combinational' && !keys(%top_output_signals))
-                ? 'top_local'
-                : 'top_output';
-        my @planned_reexport_top_output_signals = $default_lifted_visibility eq 'internal'
-            ? sort keys %top_output_signals
-            : ();
-        my $peer_read_policy = $self->shared_datapath_peer_read_policy(
-            $storage_class,
-            \@peer_input_endpoints,
-            [sort keys %top_output_signals],
-        );
-
-        my %aggregate_families_by_rhs;
-        for my $contributor (@contributors) {
-            my $output_drive_family = $self->shared_datapath_contributor_output_drive_family($contributor);
-            for my $rhs_family (@{$output_drive_family->{rhs_enable_families} || []}) {
-                next unless ref($rhs_family) eq 'HASH';
-                my $rhs_value = $rhs_family->{rhs_value};
-                next unless defined $rhs_value;
-
-                my $aggregate = ($aggregate_families_by_rhs{$rhs_value} ||= {
-                    rhs_value => $rhs_value,
-                    aggregate_enable_signal => FSM::Composition::SharedDatapathSupport->value_enable_name($group->{signal_name}, $rhs_value),
-                    contributors => [],
-                });
-
-                push @{$aggregate->{contributors}}, {
-                    endpoint => $contributor->{endpoint},
-                    family_enable_signal => $rhs_family->{family_enable_signal},
-                    source_enable_signal => FSM::Composition::SharedDatapathSupport->source_value_enable_name(
-                        $contributor->{instance_name},
-                        $group->{signal_name},
-                        $rhs_value,
-                    ),
-                    driver_blocks => [@{$rhs_family->{driver_blocks} || []}],
-                    driver_enable_signals => [@{$rhs_family->{driver_enable_signals} || []}],
-                };
-            }
-        }
-
-        my @aggregate_enable_families = map {
-            my $family = $aggregate_families_by_rhs{$_};
-            my $same_value_conflict_signal = FSM::Composition::SharedDatapathSupport->same_value_conflict_name(
-                $group->{signal_name},
-                $family->{rhs_value},
-            );
-            +{
-                rhs_value => $family->{rhs_value},
-                aggregate_enable_signal => $family->{aggregate_enable_signal},
-                same_value_conflict_signal => $same_value_conflict_signal,
-                same_value_assertion => FSM::Composition::SharedDatapathSupport->assertion_metadata(
-                    $same_value_conflict_signal,
-                    [
-                        map {
-                            $_->{source_enable_signal}
-                        } @{$family->{contributors} || []}
-                    ],
-                ),
-                contributor_count => scalar(@{$family->{contributors} || []}),
-                contributors => $family->{contributors},
-            }
-        } sort keys %aggregate_families_by_rhs;
-
-        my $multi_value_conflict_signal = FSM::Composition::SharedDatapathSupport->multi_value_conflict_name($group->{signal_name});
-
-        push @candidates, {
-            signal_name => $group->{signal_name},
-            width => $group->{width},
-            interface_type => $group->{interface_type},
-            storage_class => $storage_class,
-            reset_value => $reset_value,
-            contributor_count => scalar(@contributors),
-            contributors => \@contributors,
-            top_output_signals => [ sort keys %top_output_signals ],
-            peer_input_count => scalar(@peer_input_endpoints),
-            peer_input_endpoints => \@peer_input_endpoints,
-            default_lifted_visibility => $default_lifted_visibility,
-            planned_reexport_top_output_signals => \@planned_reexport_top_output_signals,
-            loopback_allowed => (@peer_input_endpoints && $storage_class eq 'registered') ? 1 : 0,
-            (%{$peer_read_policy || {}}),
-            aggregate_target_enable_signal => FSM::Composition::SharedDatapathSupport->target_enable_name($group->{signal_name}),
-            multi_value_conflict_signal => $multi_value_conflict_signal,
-            multi_value_assertion => FSM::Composition::SharedDatapathSupport->assertion_metadata(
-                $multi_value_conflict_signal,
-                [
-                    map {
-                        $_->{aggregate_enable_signal}
-                    } @aggregate_enable_families
-                ],
-            ),
-            aggregate_enable_family_count => scalar(@aggregate_enable_families),
-            aggregate_enable_families => \@aggregate_enable_families,
-        };
-    }
-
-    return \@candidates;
 }
 
 sub build_composition_statistics ($self, $composition_plan, $composition_report = undef, $intent_hir = undef, $lowered_rtl_ir = undef, $structural_rtl_ir = undef) {

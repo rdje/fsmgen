@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-25: shared-datapath candidate assembly now lives in a dedicated builder package
+- Saved shipped behavior:
+  - [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathCandidateBuilder.pm) now owns the shared-datapath candidate family,
+  - that package now builds candidate discovery plus normalized contributor, peer-read, drive-intent, and aggregate-enable metadata from structural bindings and lowered child drive families,
+  - and [t/183-composition-shared-datapath-candidate-builder.t](/Users/richarddje/Documents/github/fsmgen/t/183-composition-shared-datapath-candidate-builder.t) now locks the new owner directly while [t/168-structural-binding-leaf-consumers.t](/Users/richarddje/Documents/github/fsmgen/t/168-structural-binding-leaf-consumers.t) points its direct leaf-binding contract at that builder.
+- Important continuity note:
+  - this removes another real composition metadata family from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm),
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes this package in the composition-builder layer,
+  - and the next likely seam is another monolith-breakdown slice such as generated-child realization/source-loading.
+
 ## 2026-03-25: composition result metadata now lives in a dedicated builder package
 - Saved shipped behavior:
   - [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm) now owns the success-path composition result-metadata family,
