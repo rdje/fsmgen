@@ -23,6 +23,7 @@ use FSM::Composition::FailureReportBuilder;
 use FSM::Composition::InterfacePortBuilder;
 use FSM::Composition::LinkedPlanBuilder;
 use FSM::Composition::ProvenanceReportBuilder;
+use FSM::Composition::ResultMetadataBuilder;
 use FSM::Composition::SameNameLinkBuilder;
 use FSM::Composition::SharedDatapathSupport;
 use FSM::Composition::TopPortInferenceBuilder;
@@ -1148,156 +1149,16 @@ sub build_composition_module_info (
         $structural_rtl_ir,
     );
     $lowered_rtl_ir //= $self->build_composition_lowered_rtl_ir($composition_plan, $structural_rtl_ir, $intent_hir);
-    my $port_metadata = FSM::IR::StructuralRTLIR->port_metadata_from_input($structural_rtl_ir);
-    my $intent_hir_hash = $intent_hir->as_hashref;
-    my $lowered_rtl_ir_hash = $lowered_rtl_ir->as_hashref;
-    my $structural_rtl_ir_hash = $structural_rtl_ir->as_hashref;
-
-    return {
-        module_name => $intent_hir_hash->{module_name},
-        source_root_kind => $intent_hir_hash->{source_root_kind},
-        regular_states => [],
-        regular_state_count => $intent_hir_hash->{regular_state_count},
-        regular_state_names => $intent_hir_hash->{regular_state_names},
-        standalone_dts => [],
-        standalone_dt_count => $intent_hir_hash->{standalone_dt_count},
-        standalone_dt_names => $intent_hir_hash->{standalone_dt_names},
-        signals => $port_metadata->{signals},
-        signal_count => $intent_hir_hash->{signal_count},
-        signal_names => $intent_hir_hash->{signal_names},
-        signal_analysis => $intent_hir_hash->{signal_analysis},
-        explicit_system_contract => $intent_hir_hash->{explicit_system_contract},
-        system_contract => $intent_hir_hash->{system_contract},
-        requires_implicit_system_ports => $intent_hir_hash->{requires_implicit_system_ports},
-        parameter_count => $intent_hir_hash->{parameter_count},
-        parameter_names => $intent_hir_hash->{parameter_names},
-        intent_hir => $intent_hir_hash,
-        lowered_rtl_ir => $lowered_rtl_ir_hash,
-        structural_rtl_ir => $structural_rtl_ir_hash,
-        output_drive_family_count => $lowered_rtl_ir_hash->{output_drive_family_count},
-        output_drive_families => $lowered_rtl_ir_hash->{output_drive_families},
-        standalone_dt_multi_drive_target_count => $lowered_rtl_ir_hash->{standalone_dt_multi_drive_target_count},
-        standalone_dt_multi_drive_targets => $lowered_rtl_ir_hash->{standalone_dt_multi_drive_targets},
-        internal_net_count => (
-            exists $lowered_rtl_ir_hash->{internal_net_count}
-                ? $lowered_rtl_ir_hash->{internal_net_count}
-                : (
-                    exists $structural_rtl_ir_hash->{net_count}
-                        ? $structural_rtl_ir_hash->{net_count}
-                        : scalar(@{$composition_plan->nets || []})
-                )
-        ),
-        internal_net_names => (
-            $lowered_rtl_ir_hash->{internal_net_names}
-                || [ map { $_->{name} } @{$structural_rtl_ir_hash->{nets} || []} ]
-                || [ map { $_->name } @{$composition_plan->nets || []} ]
-        ),
-        instance_count => (
-            exists $lowered_rtl_ir_hash->{instance_count}
-                ? $lowered_rtl_ir_hash->{instance_count}
-                : (
-                    exists $structural_rtl_ir_hash->{instance_count}
-                        ? $structural_rtl_ir_hash->{instance_count}
-                        : scalar(@{$composition_plan->instances || []})
-                )
-        ),
-        instance_names => (
-            $lowered_rtl_ir_hash->{instance_names}
-                || [ map { $_->{instance_name} } @{$structural_rtl_ir_hash->{instances} || []} ]
-                || [ map { $_->instance_name } @{$composition_plan->instances || []} ]
-        ),
-        auxiliary_assignment_count => (
-            exists $lowered_rtl_ir_hash->{auxiliary_assignment_count}
-                ? $lowered_rtl_ir_hash->{auxiliary_assignment_count}
-                : (
-                    exists $structural_rtl_ir_hash->{auxiliary_assignment_count}
-                        ? $structural_rtl_ir_hash->{auxiliary_assignment_count}
-                        : scalar(@{$composition_plan->auxiliary_assignments || []})
-                )
-        ),
-        state_count => $intent_hir_hash->{state_count},
-        composition_child_count => (
-            exists $intent_hir_hash->{composition_child_count}
-                ? $intent_hir_hash->{composition_child_count}
-                : (
-                    exists $structural_rtl_ir_hash->{instance_count}
-                        ? $structural_rtl_ir_hash->{instance_count}
-                        : scalar(@{$composition_plan->instances})
-                )
-        ),
-        composition_children => (
-            $intent_hir_hash->{composition_children}
-                || $composition_child_exports->{children}
-        ),
-        composition_net_count => (
-            exists $structural_rtl_ir_hash->{net_count}
-                ? $structural_rtl_ir_hash->{net_count}
-                : scalar(@{$composition_plan->nets || []})
-        ),
-        composition_resolved_link_count => $composition_report
-            ? $composition_report->{resolved_link_count}
-            : (
-                exists $structural_rtl_ir_hash->{resolved_link_count}
-                    ? $structural_rtl_ir_hash->{resolved_link_count}
-                    : scalar(@{$composition_plan->resolved_links || []})
-            ),
-        composition_override_count => $composition_report
-            ? $composition_report->{override_count}
-            : 0,
-        composition_block_count => $composition_report
-            ? $composition_report->{block_count}
-            : 0,
-        composition_generated_child_count => (
-            exists $intent_hir_hash->{composition_generated_child_count}
-                ? $intent_hir_hash->{composition_generated_child_count}
-                : 0
-        ),
-        composition_generated_fsm_child_count => (
-            exists $intent_hir_hash->{composition_generated_fsm_child_count}
-                ? $intent_hir_hash->{composition_generated_fsm_child_count}
-                : 0
-        ),
-        composition_generated_dt_child_count => (
-            exists $intent_hir_hash->{composition_generated_dt_child_count}
-                ? $intent_hir_hash->{composition_generated_dt_child_count}
-                : 0
-        ),
-        composition_generated_children => (
-            $intent_hir_hash->{composition_generated_children} || []
-        ),
-        composition_standalone_dt_child_count => (
-            exists $intent_hir_hash->{composition_standalone_dt_child_count}
-                ? $intent_hir_hash->{composition_standalone_dt_child_count}
-                : $standalone_dt_child_exports->{child_count}
-        ),
-        composition_standalone_dt_block_count => (
-            exists $intent_hir_hash->{composition_standalone_dt_block_count}
-                ? $intent_hir_hash->{composition_standalone_dt_block_count}
-                : $standalone_dt_child_exports->{block_count}
-        ),
-        composition_standalone_dt_multi_drive_target_count => (
-            exists $intent_hir_hash->{composition_standalone_dt_multi_drive_target_count}
-                ? $intent_hir_hash->{composition_standalone_dt_multi_drive_target_count}
-                : $standalone_dt_child_exports->{multi_drive_target_count}
-        ),
-        composition_standalone_dt_children => (
-            $intent_hir_hash->{composition_standalone_dt_children}
-                || $standalone_dt_child_exports->{children}
-        ),
-        composition_shared_datapath_candidate_count => (
-            exists $lowered_rtl_ir_hash->{composition_shared_datapath_candidate_count}
-                ? $lowered_rtl_ir_hash->{composition_shared_datapath_candidate_count}
-                : 0
-        ),
-        composition_shared_datapath_candidates => (
-            $lowered_rtl_ir_hash->{composition_shared_datapath_candidates} || []
-        ),
-        composition_lane => (
-            $intent_hir_hash->{composition_lane}
-                // $composition_plan->lane
-        ),
-        composition_provenance => $composition_report,
-    };
+    return FSM::Composition::ResultMetadataBuilder->build_module_info(
+        composition_plan => $composition_plan,
+        composition_report => $composition_report,
+        composition_child_exports => $composition_child_exports,
+        generated_child_exports => $generated_child_exports,
+        standalone_dt_child_exports => $standalone_dt_child_exports,
+        intent_hir => $intent_hir,
+        lowered_rtl_ir => $lowered_rtl_ir,
+        structural_rtl_ir => $structural_rtl_ir,
+    );
 }
 
 sub build_composition_shared_datapath_candidates ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
@@ -1536,40 +1397,14 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
 }
 
 sub build_composition_statistics ($self, $composition_plan, $composition_report = undef, $intent_hir = undef, $lowered_rtl_ir = undef, $structural_rtl_ir = undef) {
-    my $stats = $self->gather_statistics(undef);
-    my $intent_hir_hash = ref($intent_hir) ? $intent_hir->as_hashref : {};
-    my $lowered_rtl_ir_hash = ref($lowered_rtl_ir) ? $lowered_rtl_ir->as_hashref : {};
-    my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
-    $stats->{composition_child_count} = exists $structural_rtl_ir_hash->{instance_count}
-        ? $structural_rtl_ir_hash->{instance_count}
-        : scalar(@{$composition_plan->instances});
-    $stats->{composition_top_port_count} = exists $structural_rtl_ir_hash->{port_count}
-        ? $structural_rtl_ir_hash->{port_count}
-        : scalar(@{$composition_plan->ports});
-    $stats->{composition_net_count} = exists $structural_rtl_ir_hash->{net_count}
-        ? $structural_rtl_ir_hash->{net_count}
-        : scalar(@{$composition_plan->nets || []});
-    $stats->{composition_resolved_link_count} = $composition_report
-        ? $composition_report->{resolved_link_count}
-        : (
-            exists $structural_rtl_ir_hash->{resolved_link_count}
-                ? $structural_rtl_ir_hash->{resolved_link_count}
-                : scalar(@{$composition_plan->resolved_links || []})
-        );
-    $stats->{composition_override_count} = $composition_report
-        ? $composition_report->{override_count}
-        : 0;
-    $stats->{composition_block_count} = $composition_report
-        ? $composition_report->{block_count}
-        : 0;
-    $stats->{composition_shared_datapath_candidate_count} = (
-        exists $lowered_rtl_ir_hash->{composition_shared_datapath_candidate_count}
-            ? $lowered_rtl_ir_hash->{composition_shared_datapath_candidate_count}
-            : scalar(@{$self->composition_shared_datapath_candidates_for_plan($composition_plan) || []})
+    return FSM::Composition::ResultMetadataBuilder->build_statistics(
+        composition_plan => $composition_plan,
+        composition_report => $composition_report,
+        intent_hir => $intent_hir,
+        lowered_rtl_ir => $lowered_rtl_ir,
+        structural_rtl_ir => $structural_rtl_ir,
+        statistics_seed => $self->gather_statistics(undef),
     );
-    $stats->{composition_lane} = $intent_hir_hash->{composition_lane} // $composition_plan->lane;
-    $stats->{composition_provenance} = $composition_report if $composition_report;
-    return $stats;
 }
 
 sub build_composition_provenance_report ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {

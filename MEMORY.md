@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-25: composition result metadata now lives in a dedicated builder package
+- Saved shipped behavior:
+  - [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm) now owns the success-path composition result-metadata family,
+  - that package now builds `module_info` and `statistics` once composition planning, provenance, child exports, and forward IR layers already exist,
+  - and [t/182-composition-result-metadata-builder.t](/Users/richarddje/Documents/github/fsmgen/t/182-composition-result-metadata-builder.t) now locks the new owner directly.
+- Important continuity note:
+  - this removes another real result-assembly family from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm),
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes this package in the composition-builder layer,
+  - and the next likely seam is another monolith-breakdown slice such as shared-datapath candidate assembly or the generated-child realization/source-loading family.
+
 ## 2026-03-25: composition failure summaries now live in a dedicated builder package
 - Saved shipped behavior:
   - [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) now owns the bounded failed-run composition summary family,

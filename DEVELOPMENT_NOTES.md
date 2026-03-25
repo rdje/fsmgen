@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-25: composition result metadata now lives in a dedicated builder package
+- Continued the active `R11` package-breakdown lane by moving the success-path composition result-metadata family out of `HDLGenerator` instead of leaving `module_info` and `statistics` assembly as another coordinator-owned pocket.
+- Landed behavior:
+  - added [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm) as the owner of composition `module_info` and `statistics` assembly,
+  - that package now consumes already-built composition provenance, child exports, and forward IR inputs rather than rebuilding earlier layers itself,
+  - and the new direct contract lock in [t/182-composition-result-metadata-builder.t](/Users/richarddje/Documents/github/fsmgen/t/182-composition-result-metadata-builder.t) keeps the extracted builder aligned with the pipeline result surfaces.
+- Why this is worth shipping:
+  - it removes another real result-assembly family from `HDLGenerator`,
+  - it gives the success-path result metadata the same explicit owner treatment we already gave child exports, provenance reporting, and failure summaries,
+  - and it leaves the next seam where it belongs: another remaining composition-side owner such as shared-datapath candidate assembly or the generated-child realization/source-loading family.
+
 ## 2026-03-25: composition failure summaries now live in a dedicated builder package
 - Continued the active `R11` package-breakdown lane by moving the bounded failed-run composition summary family out of `HDLGenerator` instead of leaving blocked-boundary and concise-reason extraction as another coordinator-owned result-assembly pocket.
 - Landed behavior:
