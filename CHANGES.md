@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-25
+### generated-child realization now lives in a dedicated composition package
+- Added [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) as the owner of the `?fsmc` / `?dtc` realization family, including embedded/external generated-child source loading, wrong-kind source validation, child compilation, shared-datapath export augmentation for realized `?fsmc` children, and normalized `FSM::Composition::RealizedInstance` construction.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the pipeline now delegates generated-child realization and generated-child source loading to that package instead of keeping the family inline.
+- Added [t/184-composition-generated-child-realizer.t](/Users/richarddje/Documents/github/fsmgen/t/184-composition-generated-child-realizer.t) to lock the extracted owner directly, and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the live package map reflects the new owner.
+
 ### shared-datapath candidate assembly now lives in a dedicated builder package
 - Added [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathCandidateBuilder.pm) as the owner of the shared-datapath candidate family, including candidate discovery plus normalized contributor, peer-read, drive-intent, and aggregate-enable metadata derived from structural bindings and lowered child drive families.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the pipeline now delegates shared-datapath candidate assembly and per-plan candidate caching to that builder instead of keeping the family inline.

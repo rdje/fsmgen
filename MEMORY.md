@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-25: generated-child realization now lives in a dedicated composition package
+- Saved shipped behavior:
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now owns the `?fsmc` / `?dtc` realization family,
+  - that package now covers embedded/external generated-child source loading, wrong-kind source validation, child compilation, shared-datapath export augmentation for realized `?fsmc` children, and normalized realized-child construction,
+  - and [t/184-composition-generated-child-realizer.t](/Users/richarddje/Documents/github/fsmgen/t/184-composition-generated-child-realizer.t) now locks the new owner directly while the older child-source/default-source/shared-datapath tests keep the surrounding contract honest.
+- Important continuity note:
+  - this removes another real child/source-orchestration pocket from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm),
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes this package in the composition-builder layer,
+  - and the next likely seam is another remaining child/source owner such as the `?rtl` realization pocket or the next composition-shape coordination cluster.
+
 ## 2026-03-25: shared-datapath candidate assembly now lives in a dedicated builder package
 - Saved shipped behavior:
   - [perl/FSM/Composition/SharedDatapathCandidateBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathCandidateBuilder.pm) now owns the shared-datapath candidate family,

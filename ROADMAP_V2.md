@@ -820,3 +820,24 @@ The first honest `R11` slices are now:
   detection and endpoint-context labeling now live in
   `FSM::Composition::ProvenanceReportBuilder`, so `HDLGenerator` no longer
   owns that reporting family’s structural/intent projection logic directly.
+- Forward-IR note: another real composition result-surface split is now
+  active too: unified realized-child exports plus the narrower generated-child
+  and standalone-DT export views now live in
+  `FSM::Composition::ChildExportBuilder`, so `HDLGenerator` no longer owns
+  that child-export/result-assembly family directly.
+- Forward-IR note: another real composition failure/result split is now
+  active too: blocked composition summary extraction now lives in
+  `FSM::Composition::FailureReportBuilder` and success-path composition
+  `module_info` / `statistics` assembly now lives in
+  `FSM::Composition::ResultMetadataBuilder`, so `HDLGenerator` no longer owns
+  those result-shaping families directly either.
+- Forward-IR note: another real composition shared-datapath split is now
+  active too: candidate discovery plus normalized contributor/peer-read/
+  drive-intent/aggregate-family metadata now live in
+  `FSM::Composition::SharedDatapathCandidateBuilder`, so `HDLGenerator` no
+  longer owns that shared-datapath candidate assembly family directly.
+- Forward-IR note: another real child/source-orchestration split is now
+  active too: `?fsmc` / `?dtc` realization plus embedded/external
+  generated-child source loading now live in
+  `FSM::Composition::GeneratedChildRealizer`, so `HDLGenerator` no longer owns
+  that generated-child realization/source-loading pocket directly.

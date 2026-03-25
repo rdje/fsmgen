@@ -9,8 +9,6 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 use FindBin;
-use File::Basename qw(dirname);
-use File::Spec;
 use lib "$FindBin::Bin";
 use FSM::Debug;
 use FSM::HDL::FlattenedDT;
@@ -20,7 +18,7 @@ use FSM::Composition::Parser;
 use FSM::Composition::C1PlanBuilder;
 use FSM::Composition::DeclaredByNameLinkBuilder;
 use FSM::Composition::FailureReportBuilder;
-use FSM::Composition::InterfacePortBuilder;
+use FSM::Composition::GeneratedChildRealizer;
 use FSM::Composition::LinkedPlanBuilder;
 use FSM::Composition::ProvenanceReportBuilder;
 use FSM::Composition::ResultMetadataBuilder;
@@ -32,7 +30,6 @@ use FSM::Composition::Net;
 use FSM::Composition::Port;
 use FSM::Composition::Plan;
 use FSM::Composition::PortsBlock;
-use FSM::Composition::RealizedInstance;
 use FSM::Composition::RTLInterfaceLoader;
 use FSM::Backend::VerilogFamily::StructuralRTLIREmitter;
 use FSM::Extension::Context;
@@ -383,12 +380,26 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
     my @realized_instances;
     for my $instance (@instances) {
         if ($instance->kind eq 'fsmc') {
-            push @realized_instances, $self->realize_fsmc_child_instance($instance, $composition_spec, $fsm_file, $header);
+            push @realized_instances, FSM::Composition::GeneratedChildRealizer->realize_fsmc_child_instance(
+                pipeline => $self,
+                instance => $instance,
+                composition_spec => $composition_spec,
+                fsm_file => $fsm_file,
+                header => $header,
+                source_path_resolver => $self->{source_path_resolver},
+            );
             next;
         }
 
         if ($instance->kind eq 'dtc') {
-            push @realized_instances, $self->realize_dtc_child_instance($instance, $composition_spec, $fsm_file, $header);
+            push @realized_instances, FSM::Composition::GeneratedChildRealizer->realize_dtc_child_instance(
+                pipeline => $self,
+                instance => $instance,
+                composition_spec => $composition_spec,
+                fsm_file => $fsm_file,
+                header => $header,
+                source_path_resolver => $self->{source_path_resolver},
+            );
             next;
         }
 
@@ -533,166 +544,6 @@ sub assert_supported_composition_target ($self, $fsm_file, $header) {
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
-sub realize_fsmc_child_instance ($self, $instance, $composition_spec, $fsm_file, $header) {
-    my $source_name = $instance->source_name;
-    my $child_ast = $composition_spec->embedded_fsm_sources->{$source_name};
-    my $child_source_path;
-    my $child_source_info;
-
-    unless ($child_ast) {
-        ($child_ast, $child_source_path, $child_source_info) =
-            $self->load_external_fsmc_child_source($source_name, $fsm_file, $header);
-    }
-
-    my $child_module = $self->create_fsm_module($child_ast);
-    my $child_intent_hir = $self->build_intent_hir($child_module);
-    my $child_module_info = $self->analyze_fsm_module($child_module, $child_intent_hir);
-    my $child_hdl_code = $self->generate_hdl_code($child_module);
-    $self->enrich_module_info_from_generated_analysis($child_module_info, $child_module);
-    my $child_structural_rtl_ir = $self->build_structural_rtl_ir($child_module_info, $child_module);
-    $child_module_info->{structural_rtl_ir} = $child_structural_rtl_ir->as_hashref;
-    $child_hdl_code = $self->augment_generated_hdl_with_standalone_dt_assertions($child_hdl_code, $child_module_info);
-    my $shared_datapath_source_exports = FSM::Composition::SharedDatapathSupport->build_source_export_metadata(
-        $self->module_output_drive_families($child_module_info),
-    );
-    $child_module_info->{shared_datapath_source_export_count} = scalar(@$shared_datapath_source_exports);
-    $child_module_info->{shared_datapath_source_exports} = $shared_datapath_source_exports;
-    $child_hdl_code = $self->augment_generated_child_hdl_with_shared_datapath_exports(
-        $child_hdl_code,
-        $shared_datapath_source_exports,
-    );
-    my $child_interface_ports = FSM::Composition::InterfacePortBuilder->build_realized_child_interface_ports($child_module_info);
-
-    return FSM::Composition::RealizedInstance->new(
-        kind => 'fsmc',
-        instance_name => ($instance->name // $child_module->name),
-        module_name => $child_module->name,
-        source_name => $source_name,
-        interface_ports => $child_interface_ports,
-        module_info => $child_module_info,
-        hdl_code => $child_hdl_code,
-    );
-}
-
-sub realize_dtc_child_instance ($self, $instance, $composition_spec, $fsm_file, $header) {
-    my $source_name = $instance->source_name;
-    my $child_ast = $composition_spec->embedded_dt_sources->{$source_name};
-
-    unless ($child_ast) {
-        ($child_ast) = $self->load_external_dtc_child_source($source_name, $fsm_file, $header);
-    }
-
-    my $child_module = $self->create_fsm_module($child_ast);
-    my $child_intent_hir = $self->build_intent_hir($child_module);
-    my $child_module_info = $self->analyze_fsm_module($child_module, $child_intent_hir);
-    my $child_hdl_code = $self->generate_hdl_code($child_module);
-    $self->enrich_module_info_from_generated_analysis($child_module_info, $child_module);
-    my $child_structural_rtl_ir = $self->build_structural_rtl_ir($child_module_info, $child_module);
-    $child_module_info->{structural_rtl_ir} = $child_structural_rtl_ir->as_hashref;
-    $child_hdl_code = $self->augment_generated_hdl_with_standalone_dt_assertions($child_hdl_code, $child_module_info);
-    my $child_interface_ports = FSM::Composition::InterfacePortBuilder->build_realized_child_interface_ports($child_module_info);
-
-    return FSM::Composition::RealizedInstance->new(
-        kind => 'dtc',
-        instance_name => ($instance->name // $child_module->name),
-        module_name => $child_module->name,
-        source_name => $source_name,
-        interface_ports => $child_interface_ports,
-        module_info => $child_module_info,
-        hdl_code => $child_hdl_code,
-    );
-}
-
-sub load_external_fsmc_child_source ($self, $source_name, $fsm_file, $header) {
-    my ($child_source_path) =
-        $self->resolve_external_fsmc_child_source_path($source_name, $fsm_file, $header);
-
-    my $child_ast = $self->parse_fsm_file($child_source_path);
-    my $child_source_info = $self->classify_source_ast($child_ast);
-    my $child_kind = $child_source_info->{kind} // 'unknown';
-    return ($child_ast, $child_source_path, $child_source_info) if $child_kind eq 'fsm';
-
-    my $child_header = $child_source_info->{header} // 'unknown root';
-    my $kind_note = $child_kind eq 'dt'
-        ? "Standalone '?dt:name' roots are shipped as composition children, but '?fsmc' specifically requires an FSM child source. Use '?dtc' for standalone-DT children instead."
-        : "The active composition child-FSM contract expects embedded or external child sources rooted at '?fsm:name' or legacy '+fsm' only.";
-
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' resolves '?fsmc' child '$source_name' to '$child_source_path', ".
-        "but child-source realization is blocked because that resolved file is not an active FSM child source (detected root '$child_header'). ".
-        $kind_note." ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-}
-
-sub load_external_dtc_child_source ($self, $source_name, $fsm_file, $header) {
-    my ($child_source_path) =
-        $self->resolve_external_generated_child_source_path($source_name, $fsm_file, $header, '?dtc');
-
-    my $child_ast = $self->parse_fsm_file($child_source_path);
-    my $child_source_info = $self->classify_source_ast($child_ast);
-    my $child_kind = $child_source_info->{kind} // 'unknown';
-    return ($child_ast, $child_source_path, $child_source_info) if $child_kind eq 'dt';
-
-    my $child_header = $child_source_info->{header} // 'unknown root';
-    my $kind_note = $child_kind eq 'fsm'
-        ? "FSM child roots are shipped as composition children, but '?dtc' specifically requires a standalone-DT child source. Use '?fsmc' for FSM children instead."
-        : "The active standalone-DT composition contract currently expects '?dt:name', '?mod:name', or '?module:name' child roots for '?dtc'.";
-
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' resolves '?dtc' child '$source_name' to '$child_source_path', ".
-        "but child-source realization is blocked because that resolved file is not an active standalone-DT child source (detected root '$child_header'). ".
-        $kind_note." ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-}
-
-sub resolve_external_fsmc_child_source_path ($self, $source_name, $fsm_file, $header) {
-    return $self->resolve_external_generated_child_source_path($source_name, $fsm_file, $header, '?fsmc');
-}
-
-sub resolve_external_generated_child_source_path ($self, $source_name, $fsm_file, $header, $child_kind) {
-    my @preferred_dirs;
-    push @preferred_dirs, dirname($fsm_file) if defined($fsm_file) && $fsm_file =~ m{/};
-
-    my @search_dirs = @{
-        $self->{source_path_resolver}->normalized_search_paths(
-            preferred_dirs => \@preferred_dirs,
-            include_cwd => 1,
-        )
-    };
-
-    my @candidates;
-    if (File::Spec->file_name_is_absolute($source_name)) {
-        push @candidates, $source_name;
-        push @candidates, "$source_name.fsm" unless $source_name =~ /\.fsm$/i;
-    } elsif ($source_name =~ m{/}) {
-        for my $dir (@search_dirs) {
-            push @candidates, File::Spec->catfile($dir, $source_name);
-            push @candidates, File::Spec->catfile($dir, "$source_name.fsm")
-                unless $source_name =~ /\.fsm$/i;
-        }
-    } else {
-        my $target_filename = $source_name =~ /\.fsm$/i ? $source_name : "$source_name.fsm";
-        push @candidates, map { File::Spec->catfile($_, $target_filename) } @search_dirs;
-    }
-
-    my %seen;
-    my @searched_paths = grep { !$seen{$_}++ } @candidates;
-    for my $candidate (@searched_paths) {
-        return ($candidate, \@search_dirs, \@searched_paths) if -f $candidate;
-    }
-
-    my $family_label = $child_kind eq '?dtc'
-        ? "standalone-DT child source"
-        : "child FSM source";
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' declares '$child_kind' child '$source_name', ".
-        "but child-source resolution is blocked because no active $family_label was found either embedded in the same file or in an external '.fsm' file. ".
-        "Search roots: ".join(', ', @search_dirs).". ".
-        "Searched locations: ".join(', ', @searched_paths).". ".
-        "The active composition contract currently allows generated child instances to realize embedded sources or external '.fsm' module files found beside the composition source, through repeated '--path DIR' roots, through 'FSMLIB', or in the current directory. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-}
-
 sub realize_rtl_child_instance ($self, $instance, $composition_spec, $fsm_file, $header) {
     my $module_name = $instance->module_name;
     my $loaded = $self->{rtl_interface_loader}->load_interface(
@@ -798,32 +649,6 @@ sub shared_datapath_conflict_expression ($self, $input_enable_signals) {
     }
 
     return join(' | ', @pairs);
-}
-
-sub augment_generated_child_hdl_with_shared_datapath_exports ($self, $hdl_code, $exports) {
-    return $hdl_code unless defined($hdl_code) && length($hdl_code);
-    return $hdl_code unless @{$exports || []};
-
-    my @port_lines = map {
-        "  output  wire " . $_->{port_name}
-    } @{$exports || []};
-
-    my $patched = $hdl_code;
-    my $port_block = join(",\n", @port_lines);
-    my $header_replaced = ($patched =~ s/\n\);\n\n/\n,\n$port_block\n\);\n\n/s);
-    Carp::confess("Failed to inject shared-datapath export ports into generated child HDL\n")
-        unless $header_replaced;
-
-    my $assign_block = "\n  // Shared-datapath source-enable exports\n"
-        . join('', map {
-            "  assign " . $_->{port_name} . " = " . $_->{source_signal} . ";\n"
-        } @{$exports || []});
-
-    my $endmodule_replaced = ($patched =~ s/\nendmodule\s*\z/$assign_block . "endmodule\n"/se);
-    Carp::confess("Failed to inject shared-datapath export assignments into generated child HDL\n")
-        unless $endmodule_replaced;
-
-    return $patched;
 }
 
 sub is_generated_child_kind ($self, $kind) {

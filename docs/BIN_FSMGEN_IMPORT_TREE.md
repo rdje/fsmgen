@@ -68,7 +68,7 @@ bin/fsmgen
         -> StructuralRTLIR
      -> composition path
         -> FSM::Composition::Parser
-        -> child realization / interface loading
+        -> generated-child realization / RTL interface loading
         -> composition builders
         -> StructuralRTLIRBuilder
         -> StructuralRTLIREmitter
@@ -119,6 +119,7 @@ It is one of the cleaner parts of the tree.
 - [perl/FSM/Composition/C1PlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/C1PlanBuilder.pm)
 - [perl/FSM/Composition/ChildExportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ChildExportBuilder.pm)
 - [perl/FSM/Composition/DeclaredByNameLinkBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/DeclaredByNameLinkBuilder.pm)
+- [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm)
 - [perl/FSM/Composition/SameNameLinkBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SameNameLinkBuilder.pm)
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
 - [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm)
@@ -145,6 +146,9 @@ extraction no longer live inline in the pipeline coordinator.
 `ResultMetadataBuilder` now also owns the success-path `module_info` and
 `statistics` assembly family once composition planning, provenance, child
 exports, and the forward IR layers already exist.
+`GeneratedChildRealizer` now also owns `?fsmc` / `?dtc` realization plus the
+external generated-child source-loading contract, leaving the pipeline
+coordinator with less child-family-specific source and realization residue.
 
 ### Forward IR layer
 - [perl/FSM/IR/IntentHIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIR.pm)

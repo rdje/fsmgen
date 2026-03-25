@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-25: generated-child realization now lives in a dedicated composition package
+- Continued the active `R11` package-breakdown lane by moving the `?fsmc` / `?dtc` realization and external generated-child source-loading family out of `HDLGenerator` instead of leaving those child-specific orchestration rules inline in the pipeline coordinator.
+- Landed behavior:
+  - added [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) as the owner of embedded/external generated-child loading, wrong-kind source validation, child compilation, shared-datapath export augmentation for realized `?fsmc` children, and `FSM::Composition::RealizedInstance` construction,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now delegates `?fsmc` / `?dtc` realization to that package instead of keeping the whole family inline,
+  - and the new direct owner lock in [t/184-composition-generated-child-realizer.t](/Users/richarddje/Documents/github/fsmgen/t/184-composition-generated-child-realizer.t) now covers both embedded `?fsmc` and external `?dtc` realization paths while the older child-source/default-source/shared-datapath tests keep the failure and runtime contracts honest.
+- Why this is worth shipping:
+  - it removes another real child/source-orchestration pocket from `HDLGenerator`,
+  - it gives generated-child source resolution and realization one explicit owner instead of splitting that responsibility between inline helpers and later composition consumers,
+  - and it leaves the next seam where it belongs: another remaining child/source pocket such as `?rtl` realization or the next composition-shape coordination cluster.
+
 ## 2026-03-25: shared-datapath candidate assembly now lives in a dedicated builder package
 - Continued the active `R11` package-breakdown lane by moving the shared-datapath candidate family out of `HDLGenerator` instead of leaving candidate discovery and contributor/peer-read metadata assembly as another pipeline-owned composition pocket.
 - Landed behavior:
