@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-25: composition failure summaries now live in a dedicated builder package
+- Saved shipped behavior:
+  - [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) now owns the bounded failed-run composition summary family,
+  - that package now builds blocked-boundary, construct, artifact, context, and concise-reason summary data from raised composition diagnostics,
+  - and [t/181-composition-failure-report-builder.t](/Users/richarddje/Documents/github/fsmgen/t/181-composition-failure-report-builder.t) now locks the new owner directly.
+- Important continuity note:
+  - this removes another real reporting/result-assembly family from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm),
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes this package in the composition-builder layer,
+  - and the next likely seam is another monolith-breakdown slice such as another remaining result-assembly or reporting pocket.
+
 ## 2026-03-25: composition child exports now live in a dedicated builder package
 - Saved shipped behavior:
   - [perl/FSM/Composition/ChildExportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ChildExportBuilder.pm) now owns the composition child-export family,

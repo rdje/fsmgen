@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-25
+### composition failure summaries now live in a dedicated builder package
+- Added [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) as the owner of the bounded failed-run composition summary family, including blocked-boundary, construct, artifact, context, and concise-reason extraction from raised composition diagnostics.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the pipeline now delegates composition failure-report construction to that builder instead of keeping the whole summary extractor inline.
+- Added [t/181-composition-failure-report-builder.t](/Users/richarddje/Documents/github/fsmgen/t/181-composition-failure-report-builder.t) to lock the extracted builder directly, and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the live package map reflects the new owner.
+
 ### composition child exports now live in a dedicated builder package
 - Added [perl/FSM/Composition/ChildExportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ChildExportBuilder.pm) as the owner of the composition child-export family, including the unified realized-child export surface plus the narrower generated-child and standalone-DT child export views.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition intent/module-info/shared-datapath consumers now use that builder instead of keeping child export assembly inside the pipeline monolith.

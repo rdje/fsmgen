@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-25: composition failure summaries now live in a dedicated builder package
+- Continued the active `R11` package-breakdown lane by moving the bounded failed-run composition summary family out of `HDLGenerator` instead of leaving blocked-boundary and concise-reason extraction as another coordinator-owned result-assembly pocket.
+- Landed behavior:
+  - added [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) as the owner of composition failure-summary construction,
+  - that package now owns blocked-boundary, construct, artifact, context, and concise-reason extraction from raised composition diagnostics,
+  - and the new direct contract lock in [t/181-composition-failure-report-builder.t](/Users/richarddje/Documents/github/fsmgen/t/181-composition-failure-report-builder.t) keeps the extracted builder aligned with the pipeline failure-report surface.
+- Why this is worth shipping:
+  - it removes another real composition reporting/result-assembly family from `HDLGenerator`,
+  - it gives successful-run provenance reporting and failed-run summary extraction separate honest owners instead of keeping both families tangled in the coordinator,
+  - and it leaves the next seam where it belongs: another remaining result-assembly or reporting pocket rather than more inline summary logic.
+
 ## 2026-03-25: composition child exports now live in a dedicated builder package
 - Continued the active `R11` package-breakdown lane by moving the composition child-export family out of `HDLGenerator` instead of leaving those semantic result-assembly surfaces as another coordinator-owned helper cluster.
 - Landed behavior:

@@ -126,12 +126,16 @@ It is one of the cleaner parts of the tree.
 - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm)
 - [perl/FSM/Composition/SharedDatapathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathSupport.pm)
 - [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm)
+- [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm)
 
 This layer is the clearest evidence that the monolith breakdown is real.
 These packages mostly have narrow, believable ownership boundaries.
 `ChildExportBuilder` now also owns the unified realized-child export surface plus
 the narrower generated-child and standalone-DT child views that later
 intent/module-info/reporting consumers reuse.
+`FailureReportBuilder` now also owns the bounded failed-run composition summary
+family, so blocked-boundary, construct, artifact, context, and concise-reason
+extraction no longer live inline in the pipeline coordinator.
 
 ### Forward IR layer
 - [perl/FSM/IR/IntentHIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIR.pm)
