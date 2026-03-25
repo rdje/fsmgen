@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-25: keep a dedicated live note for the `bin/fsmgen` import tree and runtime spine
+- Saved documentation rule:
+  - the deep analysis of [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) and its transitive project-owned import tree now lives in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md),
+  - that file is intentionally a live architecture note, not a one-off snapshot,
+  - and it should be refreshed at the start of a later session whenever the effective entrypoint/runtime spine or package-hotspot picture has changed enough that the saved analysis is no longer honest.
+- Why this is worth saving:
+  - the active `R11` work is changing package ownership and the runtime spine quickly enough that keeping the analysis only in conversational history would be brittle,
+  - the project benefits from one stable place that explains the real current CLI-to-backend package map,
+  - and future implementation/refactoring decisions now have a dedicated architecture note to steer from instead of reconstructing the import tree ad hoc each time.
+
 ## 2026-03-24: inferred same-name composition link planning now lives in a composition builder package
 - Continued the active `R11` package-breakdown lane by moving the bounded inferred same-name convention link family out of `HDLGenerator` instead of leaving the C2/C3 implicit-link rules in the coordinator.
 - Landed behavior:

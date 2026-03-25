@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-25: the `bin/fsmgen` import-tree analysis now lives in its own dedicated architecture note
+- Saved continuity rule:
+  - the current deep analysis of [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) and its transitive project-owned import tree now lives in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md),
+  - that file is intentionally a live document and should be updated at the start of a later session when the entrypoint/runtime spine or hotspot picture has materially changed,
+  - and future sessions should treat it as the current architecture map for the CLI entrypoint rather than trying to reconstruct the tree from scattered conversation history.
+- Important continuity note:
+  - this is especially relevant while `R11` keeps changing package ownership under [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm),
+  - the document is meant to stay honest about which layers are clean, which are transitional, and where the current hotspots still are.
+
 ## 2026-03-24: inferred same-name composition link planning now lives in a composition builder package
 - Saved shipped behavior:
   - `FSM::Composition::SameNameLinkBuilder` now owns the bounded inferred same-name convention link family used by the active `C2` and `C3` lanes,

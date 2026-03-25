@@ -1,5 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-25
+### added a dedicated live architecture note for `bin/fsmgen` and its transitive import tree
+- Added [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) as a dedicated live architecture note for the [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) entrypoint, its project-owned transitive import tree, the real runtime spine, and the current package-hotspot assessment.
+- Saved the maintenance rule inside that note itself: it is intended to be refreshed at the start of a later session whenever the effective entrypoint/runtime spine or ownership picture has changed enough that the note is no longer honest.
+- Synced [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the project now has an explicit breadcrumb that this architecture note exists and should be maintained across sessions.
+
 ## 2026-03-24
 ### inferred same-name composition link planning now lives in a composition builder package
 - Added [perl/FSM/Composition/SameNameLinkBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SameNameLinkBuilder.pm) as the owner of the bounded inferred same-name convention link family used by the active `C2` and `C3` lanes, including inferred top-input fanout, inferred top-output selection, and inferred internal same-name carrier links.

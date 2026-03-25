@@ -98,8 +98,9 @@ Goal:
 Deliverable themes:
 - formalize the `.rtlif` mini-contract,
 - decide whether a stronger interface-source contract should later replace or sit above `.rtlif`,
-- record and later deliberately reduce the current architectural hotspot set instead of letting those seams stay as unnamed background debt:
+  - record and later deliberately reduce the current architectural hotspot set instead of letting those seams stay as unnamed background debt:
   - split composition policy, interface inference, and top-emission planning back out of `FSM::Pipeline::HDLGenerator`,
+  - keep one dedicated live architecture note for the CLI entrypoint/import-tree shape in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md), and refresh it when the effective spine or package ownership picture changes enough that the saved analysis is no longer honest,
   - start extracting explicit forward compiler IR layers out of the currently mixed pipeline instead of leaving proto-HIR/proto-lowered semantics implicit:
     - first one bounded `Intent HIR` slice for direct generated roots and realized generated children,
     - then one bounded `Lowered RTL IR` slice once that first forward semantic surface is stable,
