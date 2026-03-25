@@ -68,7 +68,7 @@ bin/fsmgen
         -> StructuralRTLIR
      -> composition path
         -> FSM::Composition::Parser
-        -> generated-child realization / RTL interface loading
+        -> generated-child realization / external RTL child realization / RTL interface loading
         -> composition builders
         -> StructuralRTLIRBuilder
         -> StructuralRTLIREmitter
@@ -120,6 +120,7 @@ It is one of the cleaner parts of the tree.
 - [perl/FSM/Composition/ChildExportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ChildExportBuilder.pm)
 - [perl/FSM/Composition/DeclaredByNameLinkBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/DeclaredByNameLinkBuilder.pm)
 - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm)
+- [perl/FSM/Composition/RTLChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLChildRealizer.pm)
 - [perl/FSM/Composition/SameNameLinkBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SameNameLinkBuilder.pm)
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
 - [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm)
@@ -149,6 +150,10 @@ exports, and the forward IR layers already exist.
 `GeneratedChildRealizer` now also owns `?fsmc` / `?dtc` realization plus the
 external generated-child source-loading contract, leaving the pipeline
 coordinator with less child-family-specific source and realization residue.
+`RTLChildRealizer` now also owns `?rtl` child realization into normalized
+`RealizedInstance` carriers, while
+[RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm)
+stays the narrower owner of `.rtlif` metadata loading and validation.
 
 ### Forward IR layer
 - [perl/FSM/IR/IntentHIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIR.pm)

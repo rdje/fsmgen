@@ -841,3 +841,9 @@ The first honest `R11` slices are now:
   generated-child source loading now live in
   `FSM::Composition::GeneratedChildRealizer`, so `HDLGenerator` no longer owns
   that generated-child realization/source-loading pocket directly.
+- Forward-IR note: another real external-RTL child split is now active too:
+  `?rtl` child realization into normalized `RealizedInstance` carriers now
+  lives in `FSM::Composition::RTLChildRealizer`, while
+  `FSM::Composition::RTLInterfaceLoader` stays the narrower owner of `.rtlif`
+  metadata loading and validation, so `HDLGenerator` no longer owns that
+  external-RTL child realization pocket directly either.

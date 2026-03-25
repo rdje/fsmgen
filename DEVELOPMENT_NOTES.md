@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-25: rtl child realization now lives in a dedicated composition package
+- Continued the active `R11` package-breakdown lane by moving the bounded `?rtl` child realization pocket out of `HDLGenerator` instead of leaving external-RTL child projection as another inline coordinator-owned family.
+- Landed behavior:
+  - added [perl/FSM/Composition/RTLChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLChildRealizer.pm) as the owner of `?rtl` child realization into normalized `FSM::Composition::RealizedInstance` carriers,
+  - that package now consumes already-loaded `.rtlif` metadata from [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) instead of mixing metadata loading, validation, and realized-child projection back together inside the pipeline coordinator,
+  - and the new direct owner lock in [t/185-composition-rtl-child-realizer.t](/Users/richarddje/Documents/github/fsmgen/t/185-composition-rtl-child-realizer.t) now covers both embedded `?rtlif` and sidecar `.rtlif` realization paths while the older embedded-root and external-RTL composition tests keep the broader contract honest.
+- Why this is worth shipping:
+  - it removes another real child/source-orchestration pocket from `HDLGenerator`,
+  - it makes the ownership split between `.rtlif` metadata loading and runtime child realization explicit instead of implicit,
+  - and it leaves the next seam where it belongs: another remaining composition-shape coordination cluster or result/orchestration pocket rather than more child-family-specific inline code.
+
 ## 2026-03-25: generated-child realization now lives in a dedicated composition package
 - Continued the active `R11` package-breakdown lane by moving the `?fsmc` / `?dtc` realization and external generated-child source-loading family out of `HDLGenerator` instead of leaving those child-specific orchestration rules inline in the pipeline coordinator.
 - Landed behavior:

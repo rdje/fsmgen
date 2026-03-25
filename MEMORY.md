@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-25: rtl child realization now lives in a dedicated composition package
+- Saved shipped behavior:
+  - [perl/FSM/Composition/RTLChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLChildRealizer.pm) now owns the bounded `?rtl` child realization family,
+  - that package now turns already-loaded embedded or sidecar `.rtlif` metadata into normalized realized-child carriers,
+  - and [t/185-composition-rtl-child-realizer.t](/Users/richarddje/Documents/github/fsmgen/t/185-composition-rtl-child-realizer.t) now locks the new owner directly across both embedded-root and sidecar metadata paths.
+- Important continuity note:
+  - this removes another real child/source-orchestration pocket from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm),
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) still owns `.rtlif` metadata loading and validation while `RTLChildRealizer` owns projection into `FSM::Composition::RealizedInstance`,
+  - and the next likely seam is another remaining composition-shape coordination cluster or result/orchestration pocket.
+
 ## 2026-03-25: generated-child realization now lives in a dedicated composition package
 - Saved shipped behavior:
   - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now owns the `?fsmc` / `?dtc` realization family,

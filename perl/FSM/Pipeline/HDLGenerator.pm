@@ -22,6 +22,7 @@ use FSM::Composition::GeneratedChildRealizer;
 use FSM::Composition::LinkedPlanBuilder;
 use FSM::Composition::ProvenanceReportBuilder;
 use FSM::Composition::ResultMetadataBuilder;
+use FSM::Composition::RTLChildRealizer;
 use FSM::Composition::SameNameLinkBuilder;
 use FSM::Composition::SharedDatapathCandidateBuilder;
 use FSM::Composition::SharedDatapathSupport;
@@ -404,7 +405,12 @@ sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
         }
 
         if ($instance->kind eq 'rtl') {
-            push @realized_instances, $self->realize_rtl_child_instance($instance, $composition_spec, $fsm_file, $header);
+            push @realized_instances, FSM::Composition::RTLChildRealizer->realize_rtl_child_instance(
+                rtl_interface_loader => $self->{rtl_interface_loader},
+                instance => $instance,
+                composition_spec => $composition_spec,
+                fsm_file => $fsm_file,
+            );
             next;
         }
 
@@ -542,29 +548,6 @@ sub assert_supported_composition_target ($self, $fsm_file, $header) {
         "but composition target support is blocked because the current active composition lanes only emit SystemVerilog/Verilog tops. ".
         "Target language '$self->{target_language}' is not implemented for composition yet. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-}
-
-sub realize_rtl_child_instance ($self, $instance, $composition_spec, $fsm_file, $header) {
-    my $module_name = $instance->module_name;
-    my $loaded = $self->{rtl_interface_loader}->load_interface(
-        module_name => $module_name,
-        source_file => $fsm_file,
-        embedded_raw_ast => $composition_spec ? $composition_spec->raw_ast : undef,
-    );
-
-    return FSM::Composition::RealizedInstance->new(
-        kind => 'rtl',
-        instance_name => ($instance->name // $module_name),
-        module_name => $module_name,
-        source_name => undef,
-        interface_ports => $loaded->{interface_ports},
-        module_info => {
-            module_name => $module_name,
-            metadata_path => $loaded->{metadata_path},
-            interface_kind => 'rtl_external',
-        },
-        hdl_code => undef,
-    );
 }
 
 sub standalone_dt_assertion_metadata ($self, $signal_name, $input_enable_signals) {
