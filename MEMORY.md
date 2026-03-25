@@ -4924,3 +4924,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   shared-datapath helper-signal naming, generated-child source-export
   metadata, assertion metadata/rendering, or runtime plan augmentation
   directly.
+- Composition provenance reporting now also lives in
+  `FSM::Composition::ProvenanceReportBuilder`, so `HDLGenerator` no longer
+  owns the bounded provenance report / override event / block event /
+  endpoint-context projection family directly.

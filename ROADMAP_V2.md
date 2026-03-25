@@ -814,3 +814,8 @@ The first honest `R11` slices are now:
   assertion metadata/rendering, and runtime plan augmentation now live in
   `FSM::Composition::SharedDatapathSupport`, so `HDLGenerator` no longer owns
   that shared-datapath support family directly.
+- Forward-IR note: another real composition-reporting family split is now
+  active too: composition provenance report assembly plus override/block event
+  detection and endpoint-context labeling now live in
+  `FSM::Composition::ProvenanceReportBuilder`, so `HDLGenerator` no longer
+  owns that reporting family’s structural/intent projection logic directly.

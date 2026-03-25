@@ -1416,3 +1416,8 @@ Exit criteria:
   composition-top `signals` / `signal_names` / grouped input-output signal
   analysis no longer need another pipeline-local reconstruction helper inside
   `HDLGenerator`.
+- `R11`: another real composition-reporting family split is now active too:
+  composition provenance report assembly plus override/block event detection
+  and endpoint-context labeling now live in
+  `FSM::Composition::ProvenanceReportBuilder`, so `HDLGenerator` no longer
+  owns that reporting family’s structural/intent projection logic directly.

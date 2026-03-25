@@ -6325,3 +6325,9 @@ It is an exact-delay pulse request:
   helper-signal naming, generated-child source-export metadata, assertion
   metadata/rendering, and runtime plan augmentation once candidates already
   exist.
+- Composition provenance reporting now also lives in
+  `FSM::Composition::ProvenanceReportBuilder` instead of in `HDLGenerator`.
+- That package now owns the bounded provenance-report family end-to-end:
+  full report assembly, override/block event detection, endpoint-context
+  projection, and provenance label/example helpers consumed by the pipeline
+  and CLI summary surfaces.
