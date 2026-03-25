@@ -69,7 +69,7 @@ bin/fsmgen
      -> composition path
         -> FSM::Composition::Parser
         -> generated-child realization / external RTL child realization / RTL interface loading
-        -> composition builders
+        -> composition plan building / composition builders
         -> StructuralRTLIRBuilder
         -> StructuralRTLIREmitter
         -> IntentHIR / LoweredRTLIR
@@ -92,12 +92,11 @@ Important distinction:
 
 This is still the architectural hub. It currently coordinates:
 - source parsing and dispatch
-- child realization
-- composition lane selection
 - forward IR construction
 - module-info/statistics assembly
 - failure summarization
 - backend coordination
+- extension callbacks
 
 ### Single-module semantic frontend
 - [perl/FSM/Adapter/FSMGenFull.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull.pm)
@@ -120,6 +119,7 @@ It is one of the cleaner parts of the tree.
 - [perl/FSM/Composition/ChildExportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ChildExportBuilder.pm)
 - [perl/FSM/Composition/DeclaredByNameLinkBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/DeclaredByNameLinkBuilder.pm)
 - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm)
+- [perl/FSM/Composition/PlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PlanBuilder.pm)
 - [perl/FSM/Composition/RTLChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLChildRealizer.pm)
 - [perl/FSM/Composition/SameNameLinkBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SameNameLinkBuilder.pm)
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
@@ -150,6 +150,9 @@ exports, and the forward IR layers already exist.
 `GeneratedChildRealizer` now also owns `?fsmc` / `?dtc` realization plus the
 external generated-child source-loading contract, leaving the pipeline
 coordinator with less child-family-specific source and realization residue.
+`PlanBuilder` now also owns the bounded composition-plan orchestration family:
+child realization dispatch, `?ports` shape gating, top-port inference handoff,
+lane selection, and shared-datapath plan augmentation.
 `RTLChildRealizer` now also owns `?rtl` child realization into normalized
 `RealizedInstance` carriers, while
 [RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm)

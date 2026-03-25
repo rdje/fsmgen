@@ -14,23 +14,12 @@ use FSM::Debug;
 use FSM::HDL::FlattenedDT;
 use FSM::Adapter::FSMGenFull;
 use FSM::Composition::ChildExportBuilder;
-use FSM::Composition::Parser;
-use FSM::Composition::C1PlanBuilder;
-use FSM::Composition::DeclaredByNameLinkBuilder;
 use FSM::Composition::FailureReportBuilder;
-use FSM::Composition::GeneratedChildRealizer;
-use FSM::Composition::LinkedPlanBuilder;
+use FSM::Composition::Parser;
+use FSM::Composition::PlanBuilder;
 use FSM::Composition::ProvenanceReportBuilder;
 use FSM::Composition::ResultMetadataBuilder;
-use FSM::Composition::RTLChildRealizer;
-use FSM::Composition::SameNameLinkBuilder;
 use FSM::Composition::SharedDatapathCandidateBuilder;
-use FSM::Composition::SharedDatapathSupport;
-use FSM::Composition::TopPortInferenceBuilder;
-use FSM::Composition::Net;
-use FSM::Composition::Port;
-use FSM::Composition::Plan;
-use FSM::Composition::PortsBlock;
 use FSM::Composition::RTLInterfaceLoader;
 use FSM::Backend::VerilogFamily::StructuralRTLIREmitter;
 use FSM::Extension::Context;
@@ -271,7 +260,15 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
     my $composition_spec = $source_info->{composition_spec}
         || $self->parse_composition_source($raw_ast);
 
-    my $composition_plan = $self->build_composition_plan($composition_spec, $fsm_file, $header);
+    my $composition_plan = FSM::Composition::PlanBuilder->build_plan(
+        pipeline => $self,
+        composition_spec => $composition_spec,
+        fsm_file => $fsm_file,
+        header => $header,
+        target_language => ($self->{target_language} // 'systemverilog'),
+        source_path_resolver => $self->{source_path_resolver},
+        rtl_interface_loader => $self->{rtl_interface_loader},
+    );
     my $structural_rtl_ir = FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
         $composition_plan,
         ($self->{target_language} // 'systemverilog'),
@@ -364,192 +361,6 @@ sub finalize_generation_result ($self, $fsm_file, $source_info, $result) {
     return $result;
 }
 
-sub build_composition_plan ($self, $composition_spec, $fsm_file, $header) {
-    $self->assert_supported_composition_target($fsm_file, $header);
-
-    my $top = $composition_spec->top;
-    my @instances = @{$top->instances || []};
-    my @ports_blocks = @{$top->ports_blocks || []};
-    my @toplinks = @{$top->toplinks || []};
-
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but composition lane entry is blocked because the current active composition lanes require at least one child instance such as '?fsmc', '?dtc', or '?rtl'. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless @instances;
-
-    my @realized_instances;
-    for my $instance (@instances) {
-        if ($instance->kind eq 'fsmc') {
-            push @realized_instances, FSM::Composition::GeneratedChildRealizer->realize_fsmc_child_instance(
-                pipeline => $self,
-                instance => $instance,
-                composition_spec => $composition_spec,
-                fsm_file => $fsm_file,
-                header => $header,
-                source_path_resolver => $self->{source_path_resolver},
-            );
-            next;
-        }
-
-        if ($instance->kind eq 'dtc') {
-            push @realized_instances, FSM::Composition::GeneratedChildRealizer->realize_dtc_child_instance(
-                pipeline => $self,
-                instance => $instance,
-                composition_spec => $composition_spec,
-                fsm_file => $fsm_file,
-                header => $header,
-                source_path_resolver => $self->{source_path_resolver},
-            );
-            next;
-        }
-
-        if ($instance->kind eq 'rtl') {
-            push @realized_instances, FSM::Composition::RTLChildRealizer->realize_rtl_child_instance(
-                rtl_interface_loader => $self->{rtl_interface_loader},
-                instance => $instance,
-                composition_spec => $composition_spec,
-                fsm_file => $fsm_file,
-            );
-            next;
-        }
-
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' uses unsupported child kind '".$instance->kind."'. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-    }
-
-    my $is_single_child_passthrough = @realized_instances == 1 && !@toplinks;
-    my $allows_implicit_explicit_link_ports =
-        !$is_single_child_passthrough
-        && @toplinks
-        && (
-            @ports_blocks == 0
-            || (@ports_blocks == 1 && !(scalar(@{$ports_blocks[0]->ports || []})))
-        );
-    my $allows_implicit_c1_ports =
-        $is_single_child_passthrough
-        && (
-            @ports_blocks == 0
-            || (@ports_blocks == 1 && !(scalar(@{$ports_blocks[0]->ports || []})))
-        );
-
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but composition shape is blocked because the current active composition lanes require exactly one explicit '?ports' block, ".
-        "except that the single-child passthrough C1 lane and the explicit-link C2/C3 lanes may now infer the top interface when '?ports' is omitted or empty. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless @ports_blocks <= 1;
-
-    my $ports_block = $ports_blocks[0];
-    my @ports = $ports_block ? @{$ports_block->ports || []} : ();
-
-    if (!$allows_implicit_c1_ports && !$allows_implicit_explicit_link_ports) {
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-            "but composition shape is blocked because the current active composition lanes require exactly one explicit '?ports' block. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless @ports_blocks == 1;
-
-        Carp::confess
-            "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-            "but composition shape is blocked because the current active composition lanes require '?ports' to declare at least one explicit top port, ".
-            "except that the single-child passthrough C1 lane and the explicit-link C2/C3 lanes may now infer the top interface when '?ports' is omitted or empty. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless @ports;
-    }
-
-    my $rtl_instance_count = scalar(grep { $_->kind eq 'rtl' } @realized_instances);
-    my $fsmc_instance_count = scalar(grep { $_->kind eq 'fsmc' } @realized_instances);
-    my $dtc_instance_count = scalar(grep { $_->kind eq 'dtc' } @realized_instances);
-    my $generated_instance_count = scalar(grep { $self->is_generated_child_kind($_->kind) } @realized_instances);
-    my $declared_by_name_port_count = scalar(grep { ($_->binding_mode || 'explicit') eq 'connect_by_name' } @ports);
-
-    if (!$declared_by_name_port_count && !$is_single_child_passthrough) {
-        @ports = @{FSM::Composition::TopPortInferenceBuilder->augment_ports(
-            ports => \@ports,
-            toplinks => \@toplinks,
-            realized_instances => \@realized_instances,
-            fsm_file => $fsm_file,
-            header => $header,
-        )};
-    }
-
-    if (@ports && (!$ports_block || scalar(@{$ports_block->ports || []}) != scalar(@ports))) {
-        $ports_block = FSM::Composition::PortsBlock->new(
-            name => ($ports_block ? $ports_block->name : undef),
-            ports => \@ports,
-            raw_ast => ($ports_block ? $ports_block->raw_ast : undef),
-        );
-    }
-
-    if ($declared_by_name_port_count > 0) {
-        return $self->build_c4_composition_plan(
-            $composition_spec,
-            $top,
-            $ports_block,
-            \@ports,
-            \@toplinks,
-            \@realized_instances,
-            $generated_instance_count,
-            $fsmc_instance_count,
-            $dtc_instance_count,
-            $rtl_instance_count,
-            $fsm_file,
-            $header,
-        );
-    }
-
-    if (@realized_instances == 1 && !@toplinks) {
-        return FSM::Composition::C1PlanBuilder->build_plan(
-            composition_spec => $composition_spec,
-            ports_block => $ports_block,
-            ports => \@ports,
-            realized_instance => $realized_instances[0],
-            fsm_file => $fsm_file,
-            header => $header,
-        );
-    }
-
-    if ($rtl_instance_count > 0) {
-        return $self->build_c3_composition_plan(
-            $composition_spec,
-            $top,
-            $ports_block,
-            \@ports,
-            \@toplinks,
-            \@realized_instances,
-            $generated_instance_count,
-            $fsmc_instance_count,
-            $dtc_instance_count,
-            $rtl_instance_count,
-            $fsm_file,
-            $header,
-        );
-    }
-
-    return $self->build_c2_composition_plan(
-        $composition_spec,
-        $top,
-        $ports_block,
-        \@ports,
-        \@toplinks,
-        \@realized_instances,
-        $fsm_file,
-        $header,
-    );
-}
-
-sub assert_supported_composition_target ($self, $fsm_file, $header) {
-    return if $self->{target_language} =~ /^(?:systemverilog|sv|verilog|v)$/;
-
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but composition target support is blocked because the current active composition lanes only emit SystemVerilog/Verilog tops. ".
-        "Target language '$self->{target_language}' is not implemented for composition yet. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-}
-
 sub standalone_dt_assertion_metadata ($self, $signal_name, $input_enable_signals) {
     my @inputs = grep {
         defined($_) && length($_)
@@ -632,123 +443,6 @@ sub shared_datapath_conflict_expression ($self, $input_enable_signals) {
     }
 
     return join(' | ', @pairs);
-}
-
-sub is_generated_child_kind ($self, $kind) {
-    return $kind eq 'fsmc' || $kind eq 'dtc';
-}
-
-sub build_c2_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $fsm_file, $header) {
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but C2 lane selection is blocked because the current active C2 lane requires at least two generated child instances such as '?fsmc' or '?dtc'. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless @{$realized_instances || []} >= 2;
-
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' mixes '?rtl' children into the generated-child-only C2 lane. ".
-        "The active mixed external-RTL lane is C3 instead. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        if grep { !$self->is_generated_child_kind($_->kind) } @{$realized_instances || []};
-
-    my $composition_plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
-        lane => 'C2',
-        composition_spec => $composition_spec,
-        top => $top,
-        ports_block => $ports_block,
-        ports => $ports,
-        toplinks => $toplinks,
-        realized_instances => $realized_instances,
-        fsm_file => $fsm_file,
-        header => $header,
-    );
-    return FSM::Composition::SharedDatapathSupport->augment_plan(
-        composition_plan => $composition_plan,
-        shared_datapath_candidates => FSM::Composition::SharedDatapathCandidateBuilder->candidates_for_plan(
-            composition_plan => $composition_plan,
-            target_language => ($self->{target_language} // 'systemverilog'),
-        ),
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-}
-
-sub build_c3_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $generated_instance_count, $fsmc_instance_count, $dtc_instance_count, $rtl_instance_count, $fsm_file, $header) {
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but the current active C3 lane requires at least one '?rtl' child and otherwise allows any number of generated children ('?fsmc' or '?dtc') beside those external RTL children. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless $rtl_instance_count >= 1;
-
-    my $composition_plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
-        lane => 'C3',
-        composition_spec => $composition_spec,
-        top => $top,
-        ports_block => $ports_block,
-        ports => $ports,
-        toplinks => $toplinks,
-        realized_instances => $realized_instances,
-        fsm_file => $fsm_file,
-        header => $header,
-    );
-    return FSM::Composition::SharedDatapathSupport->augment_plan(
-        composition_plan => $composition_plan,
-        shared_datapath_candidates => FSM::Composition::SharedDatapathCandidateBuilder->candidates_for_plan(
-            composition_plan => $composition_plan,
-            target_language => ($self->{target_language} // 'systemverilog'),
-        ),
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-}
-
-sub build_c4_composition_plan ($self, $composition_spec, $top, $ports_block, $ports, $toplinks, $realized_instances, $generated_instance_count, $fsmc_instance_count, $dtc_instance_count, $rtl_instance_count, $fsm_file, $header) {
-    my $declared_by_name_port_count = scalar(grep { ($_->binding_mode || 'explicit') eq 'connect_by_name' } @{$ports || []});
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' requests declared connect-by-name, ".
-        "but the current active C4 lane requires at least one '=port' declaration inside '?ports'. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless $declared_by_name_port_count;
-
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' requests declared connect-by-name, ".
-        "but the current active C4 lane requires at least one realized child instance. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless @{$realized_instances || []} >= 1;
-
-    Carp::confess
-        "Composition source '$header' in '$fsm_file' requests declared connect-by-name, ".
-        "but the current active C4 lane only extends the already shipped child-realization sets: ".
-        "one or more generated children ('?fsmc' / '?dtc'), one or more '?rtl' children, or any mixture of those generated and external RTL children. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless ($generated_instance_count >= 1)
-            || ($rtl_instance_count >= 1);
-
-    my @links = map { @{$_->links || []} } @{$toplinks || []};
-    push @links, @{FSM::Composition::DeclaredByNameLinkBuilder->build_links(
-        ports => $ports,
-        realized_instances => $realized_instances,
-        fsm_file => $fsm_file,
-        header => $header,
-    )};
-
-    my $composition_plan = FSM::Composition::LinkedPlanBuilder->build_plan(
-        lane => 'C4',
-        composition_spec => $composition_spec,
-        top => $top,
-        ports_block => $ports_block,
-        ports => $ports,
-        links => \@links,
-        realized_instances => $realized_instances,
-        fsm_file => $fsm_file,
-        header => $header,
-    );
-    return FSM::Composition::SharedDatapathSupport->augment_plan(
-        composition_plan => $composition_plan,
-        shared_datapath_candidates => FSM::Composition::SharedDatapathCandidateBuilder->candidates_for_plan(
-            composition_plan => $composition_plan,
-            target_language => ($self->{target_language} // 'systemverilog'),
-        ),
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
 }
 
 sub composition_shared_datapath_candidates_for_plan ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {

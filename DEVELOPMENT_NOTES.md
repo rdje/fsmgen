@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-25: composition plan orchestration now lives in a dedicated builder package
+- Continued the active `R11` package-breakdown lane by moving the bounded composition-plan orchestration cluster out of `HDLGenerator` instead of leaving lane selection and plan augmentation as another inline coordinator-owned family.
+- Landed behavior:
+  - added [perl/FSM/Composition/PlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PlanBuilder.pm) as the owner of child realization dispatch, `?ports` shape gating, top-port inference handoff, lane selection, and shared-datapath plan augmentation,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now delegates full composition-plan construction to that package instead of keeping the orchestration cluster inline,
+  - and the new direct owner lock in [t/186-composition-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/186-composition-plan-builder.t) now covers bounded `C1`, `C3`, and `C4` rebuilds while the earlier builder/realizer tests keep the narrower helper owners honest.
+- Why this is worth shipping:
+  - it removes one of the last obvious composition-shape coordination clusters from `HDLGenerator`,
+  - it makes the split between narrow lane helpers and the higher-level plan orchestrator explicit instead of conversational,
+  - and it leaves the next seam where it belongs: another remaining result/orchestration pocket or a direct-root/orchestrator split rather than more composition-plan residue in the pipeline coordinator.
+
 ## 2026-03-25: rtl child realization now lives in a dedicated composition package
 - Continued the active `R11` package-breakdown lane by moving the bounded `?rtl` child realization pocket out of `HDLGenerator` instead of leaving external-RTL child projection as another inline coordinator-owned family.
 - Landed behavior:

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-25: composition plan orchestration now lives in a dedicated builder package
+- Saved shipped behavior:
+  - [perl/FSM/Composition/PlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PlanBuilder.pm) now owns the bounded composition-plan orchestration family,
+  - that package now handles child realization dispatch, `?ports` shape gating, top-port inference handoff, lane selection, and shared-datapath plan augmentation,
+  - and [t/186-composition-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/186-composition-plan-builder.t) now locks the new owner directly across bounded `C1`, `C3`, and `C4` rebuilds.
+- Important continuity note:
+  - this removes one of the last obvious composition-shape coordination clusters from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm),
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes `PlanBuilder` in the composition-builder layer,
+  - and the next likely seam is another remaining result/orchestration pocket or a direct-root/orchestrator split.
+
 ## 2026-03-25: rtl child realization now lives in a dedicated composition package
 - Saved shipped behavior:
   - [perl/FSM/Composition/RTLChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLChildRealizer.pm) now owns the bounded `?rtl` child realization family,

@@ -847,3 +847,8 @@ The first honest `R11` slices are now:
   `FSM::Composition::RTLInterfaceLoader` stays the narrower owner of `.rtlif`
   metadata loading and validation, so `HDLGenerator` no longer owns that
   external-RTL child realization pocket directly either.
+- Forward-IR note: another real composition-plan split is now active too:
+  child realization dispatch, `?ports` shape gating, top-port inference
+  handoff, lane selection, and shared-datapath plan augmentation now live in
+  `FSM::Composition::PlanBuilder`, so `HDLGenerator` no longer owns that
+  composition-plan orchestration cluster directly either.
