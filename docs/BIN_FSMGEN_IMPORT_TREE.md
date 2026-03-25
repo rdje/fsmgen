@@ -21,6 +21,7 @@ The real center of gravity is still [perl/FSM/Pipeline/HDLGenerator.pm](/Users/r
 
 The best current architecture in the tree is the newer composition/forward-IR/backend-emitter slice:
 - [perl/FSM/IR/IntentHIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIR.pm)
+- [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm)
 - [perl/FSM/IR/LoweredRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIR.pm)
 - [perl/FSM/IR/StructuralRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR.pm)
 - [perl/FSM/IR/StructuralRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIRBuilder.pm)
@@ -160,6 +161,7 @@ stays the narrower owner of `.rtlif` metadata loading and validation.
 
 ### Forward IR layer
 - [perl/FSM/IR/IntentHIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIR.pm)
+- [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm)
 - [perl/FSM/IR/LoweredRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIR.pm)
 - [perl/FSM/IR/StructuralRTLIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR.pm)
 - [perl/FSM/IR/StructuralRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIRBuilder.pm)
@@ -167,6 +169,8 @@ stays the narrower owner of `.rtlif` metadata loading and validation.
 
 Current layer meaning:
 - `IntentHIR`: semantic forward intent
+- `IntentHIRBuilder`: bounded composition-top semantic-HIR construction from an
+  already-built composition plan plus structural/child-export inputs
 - `LoweredRTLIR`: normalized lowered facts and grouped lowered families
 - `StructuralRTLIR`: netlist-like structure plus typed connectivity
 - `ConnectionExpr`: typed actual-connection AST and binding-summary/query helpers

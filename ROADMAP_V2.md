@@ -764,6 +764,11 @@ The first honest `R11` slices are now:
   composition-top `StructuralRTLIR` construction and hash/object coercion now
   live in `FSM::IR::StructuralRTLIRBuilder`, so `HDLGenerator` no longer owns
   that structural assembly/coercion code directly either.
+- Forward-IR note: the next composition-top semantic-builder split is now
+  active too: bounded composition-top `IntentHIR` construction now lives in
+  `FSM::IR::IntentHIRBuilder`, so `HDLGenerator` no longer owns that semantic
+  assembly path directly either; the next matching forward-IR seam is now the
+  lowered-builder split rather than one more inline composition-top HIR helper.
 - Forward-IR note: a new composition-side builder extraction is now active
   too: realized generated-child interface port construction plus the shared
   interface-type normalization and system-port ordering rules now live in

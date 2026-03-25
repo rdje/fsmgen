@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-25: composition-top IntentHIR construction now lives in a dedicated IR builder package
+- Saved shipped behavior:
+  - [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm) now owns bounded composition-top `IntentHIR` construction,
+  - that package now builds the semantic top surface from an already-built composition plan plus structural and child-export inputs,
+  - and [t/187-composition-intent-hir-builder.t](/Users/richarddje/Documents/github/fsmgen/t/187-composition-intent-hir-builder.t) now locks the new owner directly against the pipeline result surface.
+- Important continuity note:
+  - this removes another real forward-IR assembly seam from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm),
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes `IntentHIRBuilder` in the forward-IR layer,
+  - and the next likely seam is the matching lowered-IR builder split or a broader direct-root/orchestrator split.
+
 ## 2026-03-25: composition plan orchestration now lives in a dedicated builder package
 - Saved shipped behavior:
   - [perl/FSM/Composition/PlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PlanBuilder.pm) now owns the bounded composition-plan orchestration family,

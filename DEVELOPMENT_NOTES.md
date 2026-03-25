@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-25: composition-top IntentHIR construction now lives in a dedicated IR builder package
+- Continued the active `R11` package-breakdown lane by moving bounded composition-top semantic-HIR construction out of `HDLGenerator` instead of leaving one more forward-IR assembly family inline in the pipeline coordinator.
+- Landed behavior:
+  - added [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm) as the owner of composition-top `IntentHIR` construction from an already-built composition plan plus surrounding structural and child-export inputs,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now delegates that bounded composition-top semantic assembly to the IR-layer builder instead of keeping the object construction inline,
+  - and the new direct owner lock in [t/187-composition-intent-hir-builder.t](/Users/richarddje/Documents/github/fsmgen/t/187-composition-intent-hir-builder.t) now rebuilds the same bounded top-level `intent_hir` surface from explicit inputs and checks it against the pipeline result.
+- Why this is worth shipping:
+  - it removes another real forward-IR assembly seam from `HDLGenerator`,
+  - it makes the composition-top semantic-builder role explicit beside the already-extracted structural builder/emitter split,
+  - and it leaves the next matching seam where it belongs: a lowered-IR builder split or a broader direct-root/orchestrator split, not one more inline composition-top HIR helper.
+
 ## 2026-03-25: composition plan orchestration now lives in a dedicated builder package
 - Continued the active `R11` package-breakdown lane by moving the bounded composition-plan orchestration cluster out of `HDLGenerator` instead of leaving lane selection and plan augmentation as another inline coordinator-owned family.
 - Landed behavior:
