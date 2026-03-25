@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-25
+### composition child exports now live in a dedicated builder package
+- Added [perl/FSM/Composition/ChildExportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ChildExportBuilder.pm) as the owner of the composition child-export family, including the unified realized-child export surface plus the narrower generated-child and standalone-DT child export views.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so composition intent/module-info/shared-datapath consumers now use that builder instead of keeping child export assembly inside the pipeline monolith.
+- Added [t/180-composition-child-export-builder.t](/Users/richarddje/Documents/github/fsmgen/t/180-composition-child-export-builder.t) to lock the extracted builder directly, and synced [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the live package map reflects the new owner.
+
 ### added a dedicated live architecture note for `bin/fsmgen` and its transitive import tree
 - Added [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) as a dedicated live architecture note for the [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) entrypoint, its project-owned transitive import tree, the real runtime spine, and the current package-hotspot assessment.
 - Saved the maintenance rule inside that note itself: it is intended to be refreshed at the start of a later session whenever the effective entrypoint/runtime spine or ownership picture has changed enough that the note is no longer honest.

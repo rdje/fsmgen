@@ -15,6 +15,7 @@ use lib "$FindBin::Bin";
 use FSM::Debug;
 use FSM::HDL::FlattenedDT;
 use FSM::Adapter::FSMGenFull;
+use FSM::Composition::ChildExportBuilder;
 use FSM::Composition::Parser;
 use FSM::Composition::C1PlanBuilder;
 use FSM::Composition::DeclaredByNameLinkBuilder;
@@ -277,14 +278,16 @@ sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) 
         $composition_plan,
         ($self->{target_language} // 'systemverilog'),
     );
-    my $composition_child_exports = $self->build_composition_child_exports($composition_plan, $structural_rtl_ir);
-    my $generated_child_exports = $self->build_composition_generated_child_exports(
-        $composition_plan,
-        $composition_child_exports,
+    my $composition_child_exports = FSM::Composition::ChildExportBuilder->build_child_exports(
+        composition_plan => $composition_plan,
+        structural_rtl_ir => $structural_rtl_ir,
+        target_language => ($self->{target_language} // 'systemverilog'),
     );
-    my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports(
-        $composition_plan,
-        $composition_child_exports,
+    my $generated_child_exports = FSM::Composition::ChildExportBuilder->build_generated_child_exports(
+        composition_child_exports => $composition_child_exports,
+    );
+    my $standalone_dt_child_exports = FSM::Composition::ChildExportBuilder->build_standalone_dt_child_exports(
+        composition_child_exports => $composition_child_exports,
     );
     my $intent_hir = $self->build_composition_intent_hir(
         $composition_plan,
@@ -1035,14 +1038,15 @@ sub build_composition_intent_hir (
     $standalone_dt_child_exports = undef,
     $structural_rtl_ir = undef,
 ) {
-    $composition_child_exports //= $self->build_composition_child_exports($composition_plan);
-    $generated_child_exports //= $self->build_composition_generated_child_exports(
-        $composition_plan,
-        $composition_child_exports,
+    $composition_child_exports //= FSM::Composition::ChildExportBuilder->build_child_exports(
+        composition_plan => $composition_plan,
+        target_language => ($self->{target_language} // 'systemverilog'),
     );
-    $standalone_dt_child_exports //= $self->build_composition_standalone_dt_child_exports(
-        $composition_plan,
-        $composition_child_exports,
+    $generated_child_exports //= FSM::Composition::ChildExportBuilder->build_generated_child_exports(
+        composition_child_exports => $composition_child_exports,
+    );
+    $standalone_dt_child_exports //= FSM::Composition::ChildExportBuilder->build_standalone_dt_child_exports(
+        composition_child_exports => $composition_child_exports,
     );
     $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
         $composition_plan,
@@ -1121,14 +1125,15 @@ sub build_composition_module_info (
     $lowered_rtl_ir = undef,
     $structural_rtl_ir = undef,
 ) {
-    $composition_child_exports //= $self->build_composition_child_exports($composition_plan);
-    $generated_child_exports //= $self->build_composition_generated_child_exports(
-        $composition_plan,
-        $composition_child_exports,
+    $composition_child_exports //= FSM::Composition::ChildExportBuilder->build_child_exports(
+        composition_plan => $composition_plan,
+        target_language => ($self->{target_language} // 'systemverilog'),
     );
-    my $standalone_dt_child_exports = $self->build_composition_standalone_dt_child_exports(
-        $composition_plan,
-        $composition_child_exports,
+    $generated_child_exports //= FSM::Composition::ChildExportBuilder->build_generated_child_exports(
+        composition_child_exports => $composition_child_exports,
+    );
+    my $standalone_dt_child_exports = FSM::Composition::ChildExportBuilder->build_standalone_dt_child_exports(
+        composition_child_exports => $composition_child_exports,
     );
     $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
         $composition_plan,
@@ -1294,158 +1299,6 @@ sub build_composition_module_info (
     };
 }
 
-sub build_composition_child_exports ($self, $composition_plan, $structural_rtl_ir = undef) {
-    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
-        $composition_plan,
-        ($self->{target_language} // 'systemverilog'),
-    );
-    my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
-    my %instances_by_name = map {
-        (($_->instance_name // '') => $_)
-    } @{$composition_plan->instances || []};
-    my @children;
-
-    for my $instance (@{$structural_rtl_ir_hash->{instances} || []}) {
-        my $planned_instance = $instances_by_name{$instance->{instance_name} // ''};
-        my $child_info = $planned_instance ? ($planned_instance->module_info || {}) : {};
-        my $intent_hir = $self->module_intent_hir($child_info);
-        my $lowered_rtl_ir = $self->module_lowered_rtl_ir($child_info);
-        my $child_structural_rtl_ir = $self->module_structural_rtl_ir($child_info);
-        my $kind = $instance->{kind} || ($planned_instance ? ($planned_instance->kind || '') : '');
-
-        push @children, {
-            kind => $kind,
-            instance_name => ($instance->{instance_name} // ''),
-            module_name => ($instance->{module_name} // ''),
-            source_name => ($instance->{source_name} // $instance->{module_name} // ''),
-            source_root_kind => (
-                $intent_hir->{source_root_kind}
-                    // $child_info->{source_root_kind}
-                    // ($kind eq 'dtc' ? 'dt'
-                        : ($kind eq 'fsmc' ? 'fsm'
-                            : ($kind eq 'rtl' ? 'rtl' : 'unknown_root')))
-            ),
-            regular_state_count => ($intent_hir->{regular_state_count} || 0),
-            standalone_dt_count => ($intent_hir->{standalone_dt_count} || 0),
-            output_drive_family_count => ($lowered_rtl_ir->{output_drive_family_count} || 0),
-            standalone_dt_multi_drive_target_count => ($lowered_rtl_ir->{standalone_dt_multi_drive_target_count} || 0),
-            intent_hir => $intent_hir,
-            lowered_rtl_ir => $lowered_rtl_ir,
-            structural_rtl_ir => $child_structural_rtl_ir,
-        };
-    }
-
-    return {
-        child_count => scalar(@children),
-        children => \@children,
-    };
-}
-
-sub build_composition_generated_child_exports ($self, $composition_plan, $composition_child_exports = undef) {
-    $composition_child_exports //= $self->build_composition_child_exports($composition_plan);
-    my @children;
-    my $fsm_child_count = 0;
-    my $dt_child_count = 0;
-
-    for my $child (@{$composition_child_exports->{children} || []}) {
-        my $kind = $child->{kind} || '';
-        next unless $kind eq 'fsmc' || $kind eq 'dtc';
-
-        push @children, {
-            kind => $kind,
-            instance_name => $child->{instance_name},
-            module_name => $child->{module_name},
-            source_name => $child->{source_name},
-            source_root_kind => $child->{source_root_kind},
-            regular_state_count => ($child->{regular_state_count} || 0),
-            standalone_dt_count => ($child->{standalone_dt_count} || 0),
-            output_drive_family_count => ($child->{output_drive_family_count} || 0),
-            standalone_dt_multi_drive_target_count => ($child->{standalone_dt_multi_drive_target_count} || 0),
-            intent_hir => _clone_structured_value($child->{intent_hir} || {}),
-            lowered_rtl_ir => _clone_structured_value($child->{lowered_rtl_ir} || {}),
-            structural_rtl_ir => _clone_structured_value($child->{structural_rtl_ir} || {}),
-        };
-
-        $fsm_child_count++ if $kind eq 'fsmc';
-        $dt_child_count++ if $kind eq 'dtc';
-    }
-
-    return {
-        child_count => scalar(@children),
-        fsm_child_count => $fsm_child_count,
-        dt_child_count => $dt_child_count,
-        children => \@children,
-    };
-}
-
-sub build_composition_standalone_dt_child_exports ($self, $composition_plan, $composition_child_exports = undef) {
-    $composition_child_exports //= $self->build_composition_child_exports($composition_plan);
-    my @children;
-    my $block_count = 0;
-    my $multi_drive_target_count = 0;
-
-    for my $child (@{$composition_child_exports->{children} || []}) {
-        next unless (($child->{kind} || '') eq 'dtc');
-
-        my $intent_hir = $child->{intent_hir} || {};
-        my $lowered_rtl_ir = $child->{lowered_rtl_ir} || {};
-        my @enable_families = map {
-            +{
-                dt_name => $_->{dt_name},
-                enable_signal => $_->{enable_signal},
-            }
-        } @{$intent_hir->{standalone_dt_enable_families} || []};
-
-        my $module_enable_family = $intent_hir->{standalone_dt_module_enable_family} || {};
-        my @multi_drive_targets = map {
-            my $assertion = $_->{multi_drive_assertion} || {};
-            +{
-                signal_name => $_->{signal_name},
-                multiplexer_type => $_->{multiplexer_type},
-                dt_names => [@{$_->{dt_names} || []}],
-                rhs_values => [@{$_->{rhs_values} || []}],
-                dt_enable_signals => [@{$_->{dt_enable_signals} || []}],
-                lhs_enable_signals => [@{$_->{lhs_enable_signals} || []}],
-                multi_drive_assertion => {
-                    %{$assertion},
-                    input_enable_signals => [@{$assertion->{input_enable_signals} || []}],
-                },
-            }
-        } @{FSM::IR::LoweredRTLIR->standalone_dt_multi_drive_targets_from_input($lowered_rtl_ir)};
-
-        my $standalone_dt_count = $child->{standalone_dt_count} || 0;
-        my $child_multi_drive_target_count = $child->{standalone_dt_multi_drive_target_count} || 0;
-
-        push @children, {
-            instance_name => $child->{instance_name},
-            module_name => $child->{module_name},
-            source_name => $child->{source_name},
-            intent_hir => _clone_structured_value($intent_hir),
-            lowered_rtl_ir => _clone_structured_value($lowered_rtl_ir),
-            structural_rtl_ir => _clone_structured_value($child->{structural_rtl_ir} || {}),
-            standalone_dt_count => $standalone_dt_count,
-            standalone_dt_names => [@{$intent_hir->{standalone_dt_names} || []}],
-            standalone_dt_enable_families => \@enable_families,
-            standalone_dt_module_enable_family => {
-                dt_names => [@{$module_enable_family->{dt_names} || []}],
-                enable_signals => [@{$module_enable_family->{enable_signals} || []}],
-            },
-            standalone_dt_multi_drive_target_count => $child_multi_drive_target_count,
-            standalone_dt_multi_drive_targets => \@multi_drive_targets,
-        };
-
-        $block_count += $standalone_dt_count;
-        $multi_drive_target_count += $child_multi_drive_target_count;
-    }
-
-    return {
-        child_count => scalar(@children),
-        block_count => $block_count,
-        multi_drive_target_count => $multi_drive_target_count,
-        children => \@children,
-    };
-}
-
 sub build_composition_shared_datapath_candidates ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
     $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
         $composition_plan,
@@ -1462,7 +1315,11 @@ sub build_composition_shared_datapath_candidates ($self, $composition_plan, $str
         ? %$children_by_instance
         : map {
             ((($_->{instance_name}) || '') => $_)
-        } @{$self->build_composition_child_exports($composition_plan, $structural_rtl_ir)->{children} || []};
+        } @{FSM::Composition::ChildExportBuilder->build_child_exports(
+            composition_plan => $composition_plan,
+            structural_rtl_ir => $structural_rtl_ir,
+            target_language => ($self->{target_language} // 'systemverilog'),
+        )->{children} || []};
 
     my %candidate_groups;
     my %peer_input_groups;

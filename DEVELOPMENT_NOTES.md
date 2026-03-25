@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-25: composition child exports now live in a dedicated builder package
+- Continued the active `R11` package-breakdown lane by moving the composition child-export family out of `HDLGenerator` instead of leaving those semantic result-assembly surfaces as another coordinator-owned helper cluster.
+- Landed behavior:
+  - added [perl/FSM/Composition/ChildExportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ChildExportBuilder.pm) as the owner of the unified realized-child export surface,
+  - that same package now also owns the narrower generated-child and standalone-DT child export views,
+  - and the new direct contract lock in [t/180-composition-child-export-builder.t](/Users/richarddje/Documents/github/fsmgen/t/180-composition-child-export-builder.t) keeps those builder outputs aligned with the pipeline/module-info surfaces.
+- Why this is worth shipping:
+  - it removes another real composition result-assembly family from `HDLGenerator`,
+  - it gives the forward-IR/export story a clearer composition-side owner instead of leaving child export projection spread across the coordinator,
+  - and it leaves the next seam where it belongs: another real owner move such as the failure-summary family or another remaining result-assembly pocket.
+
 ## 2026-03-25: keep a dedicated live note for the `bin/fsmgen` import tree and runtime spine
 - Saved documentation rule:
   - the deep analysis of [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) and its transitive project-owned import tree now lives in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md),

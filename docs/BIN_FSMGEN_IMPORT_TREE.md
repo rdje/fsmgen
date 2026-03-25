@@ -117,6 +117,7 @@ It is one of the cleaner parts of the tree.
 
 ### Composition builders and support owners
 - [perl/FSM/Composition/C1PlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/C1PlanBuilder.pm)
+- [perl/FSM/Composition/ChildExportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ChildExportBuilder.pm)
 - [perl/FSM/Composition/DeclaredByNameLinkBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/DeclaredByNameLinkBuilder.pm)
 - [perl/FSM/Composition/SameNameLinkBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SameNameLinkBuilder.pm)
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
@@ -128,6 +129,9 @@ It is one of the cleaner parts of the tree.
 
 This layer is the clearest evidence that the monolith breakdown is real.
 These packages mostly have narrow, believable ownership boundaries.
+`ChildExportBuilder` now also owns the unified realized-child export surface plus
+the narrower generated-child and standalone-DT child views that later
+intent/module-info/reporting consumers reuse.
 
 ### Forward IR layer
 - [perl/FSM/IR/IntentHIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIR.pm)

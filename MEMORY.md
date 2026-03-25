@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-25: composition child exports now live in a dedicated builder package
+- Saved shipped behavior:
+  - [perl/FSM/Composition/ChildExportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ChildExportBuilder.pm) now owns the composition child-export family,
+  - that package now builds the unified realized-child export surface plus the narrower generated-child and standalone-DT child export views,
+  - and [t/180-composition-child-export-builder.t](/Users/richarddje/Documents/github/fsmgen/t/180-composition-child-export-builder.t) now locks the new owner directly.
+- Important continuity note:
+  - this removes another real result-assembly family from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm),
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now also includes this package in the composition-builder layer,
+  - and the next likely seam is another monolith-breakdown slice such as the failure-summary family or another remaining result-assembly pocket.
+
 ## 2026-03-25: the `bin/fsmgen` import-tree analysis now lives in its own dedicated architecture note
 - Saved continuity rule:
   - the current deep analysis of [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) and its transitive project-owned import tree now lives in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md),
