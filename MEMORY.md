@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-26: bounded source parsing and semantic-module creation now live in a dedicated frontend package
+- Saved shipped behavior:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now owns bounded source parsing, source-kind classification, typed composition parsing, and semantic FSM/DT module creation,
+  - the top-level source orchestrator, direct-root orchestrator, composition generation orchestrator, and generated-child realizer now call that owner directly,
+  - and [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t) now locks the extracted owner directly against the pipeline facade surface.
+- Important continuity note:
+  - `HDLGenerator` no longer keeps that frontend family inline,
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes `SourceFrontend` explicitly in the pipeline/frontend layer,
+  - and the next likely seam is now the thinner remaining `HDLGenerator` facade/helper residue or deeper cleanup under the older direct generated-module backend family.
+
 ## 2026-03-26: bounded generated-module module_info construction now lives in a dedicated pipeline builder
 - Saved shipped behavior:
   - [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm) now owns bounded generated-module `module_info` construction from semantic FSM/DT modules plus their intent HIR,

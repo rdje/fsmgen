@@ -12,9 +12,7 @@ use FindBin;
 use lib "$FindBin::Bin";
 use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Debug;
-use FSM::Adapter::FSMGenFull;
 use FSM::Composition::FailureReportBuilder;
-use FSM::Composition::Parser;
 use FSM::Composition::ProvenanceReportBuilder;
 use FSM::Composition::SharedDatapathCandidateBuilder;
 use FSM::Composition::RTLInterfaceLoader;
@@ -35,10 +33,8 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
 );
 use FSM::Pipeline::SourceGenerationOrchestrator;
 use FSM::Pipeline::GeneratedModuleInfoBuilder;
-use FSM::SourceClassifier;
+use FSM::Pipeline::SourceFrontend;
 use FSM::SourcePathResolver;
-use Lispish;
-use Data::Dumper;
 
 =head1 NAME
 
@@ -127,82 +123,28 @@ sub generate_hdl_from_file ($self, $fsm_file) {
 }
 
 sub parse_fsm_file ($self, $fsm_file) {
-    fsm_trace_enter('Parse FSM file with Lispish', 2);
-    fsm_debug("Parsing FSM file with Lispish parser", 1);
-    
-    my $raw_ast = Lispish::multi($fsm_file);
-    
-    unless ($raw_ast) {
-        fsm_trace_decision(0, "Lispish parser returned undefined AST for '$fsm_file'", 1);
-        Carp::confess "Error: Failed to parse FSM file with Lispish\n";
-    }
-    
-    # Debug: Dump the raw AST if debug mode is enabled
-    if ($self->{debug_level} > 0) {
-        fsm_debug("Raw AST structure:", 2);
-        if ($self->{debug_level} >= 3) {
-            # Only dump full AST at very detailed level to avoid overwhelming output
-            $Data::Dumper::Maxdepth = 0;
-            $Data::Dumper::Indent = 1;
-            my $dumped = Dumper($raw_ast);
-            fsm_debug("Full raw AST dump:\n$dumped", 3);
-        }
-    }
-    
-    fsm_debug("FSM file parsed successfully", 1);
-    fsm_trace_exit('FSM file parsed', 2);
-    return $raw_ast;
+    return FSM::Pipeline::SourceFrontend->parse_fsm_file(
+        fsm_file => $fsm_file,
+        debug_level => ($self->{debug_level} // 0),
+    );
 }
 
 sub classify_source_ast ($self, $raw_ast) {
-    return FSM::SourceClassifier::classify_source_ast($raw_ast);
+    return FSM::Pipeline::SourceFrontend->classify_source_ast($raw_ast);
 }
 
 sub parse_composition_source ($self, $raw_ast) {
-    my $parser = FSM::Composition::Parser->new(
-        debug => ($self->{debug_level} > 0),
+    return FSM::Pipeline::SourceFrontend->parse_composition_source(
+        raw_ast => $raw_ast,
+        debug_level => ($self->{debug_level} // 0),
     );
-    return $parser->parse_source($raw_ast);
 }
 
 sub create_fsm_module ($self, $raw_ast) {
-    fsm_trace_enter('Build semantic FSM module from raw AST', 2);
-    fsm_debug("Creating semantic FSM module from raw AST", 1);
-    
-    # Create FSMGen adapter to convert to semantic AST
-    my $adapter = FSM::Adapter::FSMGenFull->new(debug => ($self->{debug_level} > 0));
-    
-    # Parse the raw AST
-    my $fsm_module;
-    eval {
-        $fsm_module = $adapter->parse_fsm($raw_ast);
-    };
-    
-    if ($@) {
-        fsm_trace_decision(0, 'Adapter parse_fsm() raised exception', 1);
-        Carp::confess "Error parsing FSM with adapter: $@\n";
-    }
-    
-    unless ($fsm_module) {
-        fsm_trace_decision(0, 'Adapter parse_fsm() returned undefined module', 1);
-        Carp::confess "Error: Failed to create FSM module\n";
-    }
-    
-    # Debug: Dump the parsed FSM module structure if debug mode is enabled
-    if ($self->{debug_level} > 1 && $fsm_module) {
-        fsm_debug("Semantic FSM module created successfully", 1);
-        if ($self->{debug_level} >= 3) {
-            # Only dump full module at very detailed level
-            $Data::Dumper::Maxdepth = 0;
-            $Data::Dumper::Indent = 1;
-            my $dumped = Dumper($fsm_module);
-            fsm_debug("Full FSM module AST dump:\n$dumped", 3);
-        }
-    }
-    
-    fsm_debug("FSM module created successfully", 1);
-    fsm_trace_exit('Semantic FSM module created', 2);
-    return $fsm_module;
+    return FSM::Pipeline::SourceFrontend->create_fsm_module(
+        raw_ast => $raw_ast,
+        debug_level => ($self->{debug_level} // 0),
+    );
 }
 
 sub standalone_dt_assertion_runtime_lines ($self, $module_info) {

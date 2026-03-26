@@ -28,6 +28,7 @@ use FSM::Composition::InterfacePortBuilder;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::SharedDatapathSupport;
 use FSM::Pipeline::GeneratedModuleInfoBuilder;
+use FSM::Pipeline::SourceFrontend;
 
 sub realize_fsmc_child_instance ($class, %args) {
     my $pipeline = $args{pipeline}
@@ -213,7 +214,10 @@ sub _realize_generated_child ($class, %args) {
     my $child_kind = $args{child_kind}
         or confess "GeneratedChildRealizer requires a child_kind";
 
-    my $child_module = $pipeline->create_fsm_module($child_ast);
+    my $child_module = FSM::Pipeline::SourceFrontend->create_fsm_module(
+        raw_ast => $child_ast,
+        debug_level => ($pipeline->{debug_level} // 0),
+    );
     my $child_intent_hir = $pipeline->build_intent_hir($child_module);
     my $child_module_info = FSM::Pipeline::GeneratedModuleInfoBuilder->build_from_fsm_module(
         fsm_module => $child_module,
@@ -279,8 +283,11 @@ sub _load_external_generated_child_source ($class, %args) {
         or confess "GeneratedChildRealizer requires an expected_root_kind";
 
     my ($child_source_path) = $class->resolve_external_generated_child_source_path(%args);
-    my $child_ast = $pipeline->parse_fsm_file($child_source_path);
-    my $child_source_info = $pipeline->classify_source_ast($child_ast);
+    my $child_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
+        fsm_file => $child_source_path,
+        debug_level => ($pipeline->{debug_level} // 0),
+    );
+    my $child_source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($child_ast);
     my $child_root_kind = $child_source_info->{kind} // 'unknown';
     return ($child_ast, $child_source_path, $child_source_info) if $child_root_kind eq $expected_root_kind;
 

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-26: bounded source parsing and semantic-module creation now live in a dedicated frontend package
+- Continued the active `R11` package-breakdown lane by moving the bounded source-frontend family out of `HDLGenerator` instead of leaving file parsing, source-kind classification, composition parsing, and semantic FSM/DT module creation as one more mixed coordinator-owned pocket.
+- Landed behavior:
+  - added [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) as the owner of Lispish file parsing, top-level source-kind classification, typed composition parsing, and semantic FSM/DT module creation,
+  - updated [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm), [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm), [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm), and [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so they now call that owner directly,
+  - reduced [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) to thin delegations for the same frontend family,
+  - and added [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t) as the direct owner lock.
+- Why this is worth shipping:
+  - it removes another real frontend ownership cluster from `HDLGenerator`,
+  - it gives the source/discovery layer one honest owner instead of scattering it across the facade plus multiple orchestrators,
+  - and it sharpens the next seam correctly: thinner `HDLGenerator` facade/helper cleanup or deeper direct-backend cleanup, not more inline frontend logic.
+
 ## 2026-03-26: bounded generated-module module_info construction now lives in a dedicated pipeline builder
 - Continued the active `R11` package-breakdown lane by moving the generated-module `module_info` family out of `HDLGenerator` instead of leaving semantic summary build, lowered enrichment, and query helpers as one more mixed compatibility cluster in the pipeline facade.
 - Landed behavior:

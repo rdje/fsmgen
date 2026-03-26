@@ -23,6 +23,7 @@ no warnings 'experimental::signatures';
 
 use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Pipeline::GeneratedModuleInfoBuilder;
+use FSM::Pipeline::SourceFrontend;
 
 sub generate_from_source ($class, %args) {
     my $pipeline = $args{pipeline}
@@ -30,9 +31,12 @@ sub generate_from_source ($class, %args) {
     my $raw_ast = $args{raw_ast}
         or confess "DirectGenerationOrchestrator requires a raw_ast";
     my $source_info = $args{source_info}
-        || $pipeline->classify_source_ast($raw_ast);
+        || FSM::Pipeline::SourceFrontend->classify_source_ast($raw_ast);
 
-    my $fsm_module = $pipeline->create_fsm_module($raw_ast);
+    my $fsm_module = FSM::Pipeline::SourceFrontend->create_fsm_module(
+        raw_ast => $raw_ast,
+        debug_level => ($pipeline->{debug_level} // 0),
+    );
     my $intent_hir = $pipeline->build_intent_hir($fsm_module);
     my $module_info = FSM::Pipeline::GeneratedModuleInfoBuilder->build_from_fsm_module(
         fsm_module => $fsm_module,

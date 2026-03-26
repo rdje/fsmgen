@@ -25,6 +25,7 @@ use FSM::Composition::GenerationOrchestrator;
 use FSM::Debug;
 use FSM::Extension::Context;
 use FSM::Pipeline::DirectGenerationOrchestrator;
+use FSM::Pipeline::SourceFrontend;
 
 sub generate_from_file ($class, %args) {
     my $pipeline = $args{pipeline}
@@ -35,8 +36,11 @@ sub generate_from_file ($class, %args) {
     fsm_trace_enter("Generate HDL from file '$fsm_file'", 1);
     fsm_debug("Starting HDL generation pipeline for: $fsm_file", 1);
 
-    my $raw_ast = $pipeline->parse_fsm_file($fsm_file);
-    my $source_info = $pipeline->classify_source_ast($raw_ast);
+    my $raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
+        fsm_file => $fsm_file,
+        debug_level => ($pipeline->{debug_level} // 0),
+    );
+    my $source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($raw_ast);
 
     if (($source_info->{kind} // 'unknown') eq 'unknown'
         && defined($source_info->{header})
@@ -50,7 +54,10 @@ sub generate_from_file ($class, %args) {
     }
 
     if ($source_info->{kind} && $source_info->{kind} eq 'composition') {
-        $source_info->{composition_spec} = $pipeline->parse_composition_source($raw_ast);
+        $source_info->{composition_spec} = FSM::Pipeline::SourceFrontend->parse_composition_source(
+            raw_ast => $raw_ast,
+            debug_level => ($pipeline->{debug_level} // 0),
+        );
     }
 
     my $parse_context = FSM::Extension::Context->new(

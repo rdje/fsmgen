@@ -58,10 +58,12 @@ bin/fsmgen
   -> FSM::SourcePathResolver
   -> FSM::Pipeline::HDLGenerator->generate_hdl_from_file
      -> FSM::Pipeline::SourceGenerationOrchestrator
+        -> FSM::Pipeline::SourceFrontend
         -> parse_fsm_file
         -> classify_source_ast
         -> direct single-module path
         -> FSM::Pipeline::DirectGenerationOrchestrator
+        -> FSM::Pipeline::SourceFrontend
         -> FSM::Adapter::FSMGenFull
         -> IntentHIR
         -> FSM::Pipeline::GeneratedModuleInfoBuilder
@@ -100,7 +102,7 @@ Important distinction:
 - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm)
 
 This is still the architectural hub family. It currently coordinates:
-- source parsing and dispatch
+- source dispatch
 - direct-root orchestration
 - forward IR construction
 - module-info/statistics assembly
@@ -117,6 +119,21 @@ surrounding extension-hook/finalization flow.
 also no longer owns the full direct-root result-assembly cluster inline:
 [DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
 now owns that bounded non-composition source-to-result path.
+
+### Source frontend owner
+- [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
+
+This package now owns the bounded source-frontend family that was still inline
+in `HDLGenerator`. It handles:
+- Lispish file parsing into raw AST
+- top-level source-kind classification
+- typed composition-spec parsing
+- semantic FSM/DT module creation through `FSMGenFull`
+
+`SourceGenerationOrchestrator`, `DirectGenerationOrchestrator`,
+`GenerationOrchestrator`, and `GeneratedChildRealizer` now depend on this
+owner directly instead of asking the `HDLGenerator` facade to keep those
+frontend details inline.
 
 ### Direct generated-module backend owner
 - [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
@@ -299,6 +316,9 @@ It behaves like a hook system, not a competing architecture.
   enrichment, and output-drive-family / grouped-target queries split between
   `HDLGenerator`, `DirectGenerationOrchestrator`, and generated-child
   realization.
+- `SourceFrontend` now also owns the bounded source-frontend family rather
+  than leaving file parsing, source-kind classification, composition parsing,
+  and semantic-module creation inline in `HDLGenerator`.
 - The forward IR layer now looks real enough to steer architecture, not just document aspiration.
 - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) has become a meaningful structural API, not just formatting glue.
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm) is the right directional move for backend emission.

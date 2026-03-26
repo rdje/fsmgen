@@ -29,6 +29,7 @@ use FSM::Composition::ResultMetadataBuilder;
 use FSM::IR::IntentHIRBuilder;
 use FSM::IR::LoweredRTLIRBuilder;
 use FSM::IR::StructuralRTLIRBuilder;
+use FSM::Pipeline::SourceFrontend;
 
 sub generate_from_source ($class, %args) {
     my $pipeline = $args{pipeline}
@@ -41,7 +42,10 @@ sub generate_from_source ($class, %args) {
     my $header = $args{header} // ($source_info->{header} // '?top:name');
     my $composition_spec = $args{composition_spec}
         || $source_info->{composition_spec}
-        || $pipeline->parse_composition_source($raw_ast);
+        || FSM::Pipeline::SourceFrontend->parse_composition_source(
+            raw_ast => $raw_ast,
+            debug_level => ($pipeline->{debug_level} // 0),
+        );
     my $source_path_resolver = $args{source_path_resolver} // $pipeline->{source_path_resolver};
     my $rtl_interface_loader = $args{rtl_interface_loader} // $pipeline->{rtl_interface_loader};
     my $statistics_seed = $args{statistics_seed}
