@@ -13,6 +13,7 @@ use FSM::Debug;  # Global debug system
 use FSM::ExpressionNamer;
 use FSM::Synthesis::EnableGraph;
 use FSM::HDL::FlattenedDT::Orchestrator;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog;
 use FSM::HDL::FlattenedDT::Backend::Verilog;
 
@@ -78,6 +79,7 @@ sub new ($class, %args) {
     # Initial extraction slice: dedicated enable synthesis/orchestration layer.
     $self->{enable_graph} = FSM::Synthesis::EnableGraph->new(flattened_dt => $self);
     $self->{orchestrator} = FSM::HDL::FlattenedDT::Orchestrator->new(flattened_dt => $self);
+    $self->{backend_sv_scaffold} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter->new(flattened_dt => $self);
     $self->{backend_sv} = FSM::HDL::FlattenedDT::Backend::SystemVerilog->new(flattened_dt => $self);
     $self->{backend_verilog} = FSM::HDL::FlattenedDT::Backend::Verilog->new(flattened_dt => $self);
     

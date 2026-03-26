@@ -39,6 +39,7 @@ The best current architecture in the tree is the newer composition/forward-IR/ba
 The heaviest remaining complexity is still the direct single-module HDL backend path centered on:
 - [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
 - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm)
+- [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm)
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm)
 
 ## What `bin/fsmgen` actually owns
@@ -81,6 +82,7 @@ bin/fsmgen
         -> FSM::HDL::FlattenedDT
            -> FlattenedDT::Orchestrator
            -> Synthesis::EnableGraph
+           -> FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter
            -> FlattenedDT::Backend::SystemVerilog or Verilog
         -> LoweredRTLIR
         -> StructuralRTLIR
@@ -285,6 +287,7 @@ Right now it is composition-top focused and Verilog-family focused.
 - [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
 - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm)
 - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
+- [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm)
 - `FSM::HDL::FlattenedDT::Backend::Verilog`
 - `FSM::HDL::Factorization::Fixpoint`
@@ -297,7 +300,10 @@ This stack, now fronted by
 [GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm),
 still owns the direct generated HDL path for single-module FSM/DT roots and
 realized generated children. It remains the densest and least fully split part
-of the tree.
+of the tree, but the first bounded SystemVerilog scaffold family now has a
+real owner in
+[ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm)
+instead of living inline in the broader backend renderer.
 
 ### Extension surface
 - [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)

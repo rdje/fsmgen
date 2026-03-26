@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-26: direct SystemVerilog scaffold rendering now has a dedicated backend owner
+- Continued the active `R11` backend-breakdown lane by pulling the bounded direct SystemVerilog scaffold family out of the larger renderer instead of leaving header/module/state rendering mixed together with intermediate-signal and factorization logic.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm) as the owner of direct generated-module header rendering, module declaration rendering, state encoding rendering, and state register rendering,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so the older direct backend path now asks the scaffold owner directly for those top-of-module sections,
+  - reduced [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) by removing that scaffold family from the broader renderer,
+  - and added [t/198-systemverilog-scaffold-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/198-systemverilog-scaffold-emitter.t) to lock the new owner directly against the emitted direct-backend prefix for both regular-state and standalone-DT roots.
+- Why this is worth shipping:
+  - it starts turning the older direct backend into named owner slices instead of one undifferentiated SystemVerilog renderer,
+  - it makes the backend scaffold boundary explicit without pretending the harder intermediate-signal/factorization core is solved already,
+  - and it sharpens the next seam honestly: deeper cleanup inside the remaining SystemVerilog/EnableGraph backend core, not more pipeline facade work.
+
 ## 2026-03-26: old source-frontend wrapper residue is now gone from the pipeline facade
 - Continued the active `R11` package-breakdown lane by removing the last frontend pass-through residue from `HDLGenerator` instead of leaving parse/classify/composition-parse/semantic-module helpers there after [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) was already the real owner.
 - Landed behavior:

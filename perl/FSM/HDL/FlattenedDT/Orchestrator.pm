@@ -231,10 +231,10 @@ sub generate_systemverilog ($self, $fsm_module) {
     fsm_debug("Step 1 - Decision trees flattened", 3);
     
     # Step 2: Generate SystemVerilog with enable-based methodology
-    my $hdl = $ctx->{backend_sv}->generate_header($fsm_module);
-    $hdl .= $ctx->{backend_sv}->generate_module_declaration($fsm_module);
-    $hdl .= $ctx->{backend_sv}->generate_state_encoding($fsm_module);
-    $hdl .= $ctx->{backend_sv}->generate_state_register($fsm_module);
+    my $hdl = $ctx->{backend_sv_scaffold}->generate_header($fsm_module);
+    $hdl .= $ctx->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
+    $hdl .= $ctx->{backend_sv_scaffold}->generate_state_encoding($fsm_module);
+    $hdl .= $ctx->{backend_sv_scaffold}->generate_state_register($fsm_module);
     $hdl .= $ctx->{backend_sv}->generate_internal_signal_declarations($fsm_module);
     fsm_debug("Step 2 - Basic HDL structure generated", 3);
     
