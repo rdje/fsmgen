@@ -13,15 +13,12 @@ use lib "$FindBin::Bin";
 use FSM::Debug;
 use FSM::HDL::FlattenedDT;
 use FSM::Adapter::FSMGenFull;
-use FSM::Composition::ChildExportBuilder;
 use FSM::Composition::FailureReportBuilder;
+use FSM::Composition::GenerationOrchestrator;
 use FSM::Composition::Parser;
-use FSM::Composition::PlanBuilder;
 use FSM::Composition::ProvenanceReportBuilder;
-use FSM::Composition::ResultMetadataBuilder;
 use FSM::Composition::SharedDatapathCandidateBuilder;
 use FSM::Composition::RTLInterfaceLoader;
-use FSM::Backend::VerilogFamily::StructuralRTLIREmitter;
 use FSM::Extension::Context;
 use FSM::Extension::Loader;
 use FSM::Extension::Registry;
@@ -258,80 +255,16 @@ sub create_fsm_module ($self, $raw_ast) {
 }
 
 sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) {
-    my $header = $source_info->{header} // '?top:name';
-    my $composition_spec = $source_info->{composition_spec}
-        || $self->parse_composition_source($raw_ast);
-
-    my $composition_plan = FSM::Composition::PlanBuilder->build_plan(
+    return FSM::Composition::GenerationOrchestrator->generate_from_source(
         pipeline => $self,
-        composition_spec => $composition_spec,
+        source_info => $source_info,
+        raw_ast => $raw_ast,
         fsm_file => $fsm_file,
-        header => $header,
         target_language => ($self->{target_language} // 'systemverilog'),
         source_path_resolver => $self->{source_path_resolver},
         rtl_interface_loader => $self->{rtl_interface_loader},
+        statistics_seed => $self->gather_statistics(undef),
     );
-    my $structural_rtl_ir = FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
-        $composition_plan,
-        ($self->{target_language} // 'systemverilog'),
-    );
-    my $composition_child_exports = FSM::Composition::ChildExportBuilder->build_child_exports(
-        composition_plan => $composition_plan,
-        structural_rtl_ir => $structural_rtl_ir,
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-    my $generated_child_exports = FSM::Composition::ChildExportBuilder->build_generated_child_exports(
-        composition_child_exports => $composition_child_exports,
-    );
-    my $standalone_dt_child_exports = FSM::Composition::ChildExportBuilder->build_standalone_dt_child_exports(
-        composition_child_exports => $composition_child_exports,
-    );
-    my $intent_hir = FSM::IR::IntentHIRBuilder->build_from_composition_plan(
-        composition_plan => $composition_plan,
-        composition_child_exports => $composition_child_exports,
-        generated_child_exports => $generated_child_exports,
-        standalone_dt_child_exports => $standalone_dt_child_exports,
-        structural_rtl_ir => $structural_rtl_ir,
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-    my $composition_report = $self->build_composition_provenance_report(
-        $composition_plan,
-        $structural_rtl_ir,
-        $intent_hir,
-    );
-    my $lowered_rtl_ir = $self->build_composition_lowered_rtl_ir($composition_plan, $structural_rtl_ir, $intent_hir);
-    my $hdl_code = $self->generate_composition_hdl_code($composition_plan, $structural_rtl_ir);
-    my $module_info = $self->build_composition_module_info(
-        $composition_plan,
-        $composition_report,
-        $composition_child_exports,
-        $generated_child_exports,
-        $intent_hir,
-        $lowered_rtl_ir,
-        $structural_rtl_ir,
-    );
-    my $statistics = $self->build_composition_statistics(
-        $composition_plan,
-        $composition_report,
-        $intent_hir,
-        $lowered_rtl_ir,
-        $structural_rtl_ir,
-    );
-
-    return {
-        fsm_module => undef,
-        composition_spec => $composition_spec,
-        composition_plan => $composition_plan,
-        composition_report => $composition_report,
-        intent_hir => $intent_hir->as_hashref,
-        lowered_rtl_ir => $lowered_rtl_ir->as_hashref,
-        structural_rtl_ir => $structural_rtl_ir->as_hashref,
-        module_info => $module_info,
-        hdl_code => $hdl_code,
-        statistics => $statistics,
-        raw_ast => $raw_ast,
-        source_info => $source_info,
-    };
 }
 
 sub dispatch_after_parse_source ($self, $fsm_file, $raw_ast, $source_info) {
@@ -457,16 +390,6 @@ sub composition_shared_datapath_candidates_for_plan ($self, $composition_plan, $
     );
 }
 
-sub generate_composition_hdl_code ($self, $composition_plan, $structural_rtl_ir = undef) {
-    my @segments = map { $_->hdl_code } @{$composition_plan->instances};
-    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
-        $composition_plan,
-        ($self->{target_language} // 'systemverilog'),
-    );
-    push @segments, FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
-    return join("\n\n", grep { defined && length } @segments) . "\n";
-}
-
 sub build_composition_intent_hir (
     $self,
     $composition_plan,
@@ -487,90 +410,6 @@ sub build_composition_intent_hir (
 
 sub build_composition_lowered_rtl_ir ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
     return FSM::IR::LoweredRTLIRBuilder->build_from_composition_plan(
-        composition_plan => $composition_plan,
-        structural_rtl_ir => $structural_rtl_ir,
-        intent_hir => $intent_hir,
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-}
-
-sub build_composition_module_info (
-    $self,
-    $composition_plan,
-    $composition_report = undef,
-    $composition_child_exports = undef,
-    $generated_child_exports = undef,
-    $intent_hir = undef,
-    $lowered_rtl_ir = undef,
-    $structural_rtl_ir = undef,
-) {
-    $composition_child_exports //= FSM::Composition::ChildExportBuilder->build_child_exports(
-        composition_plan => $composition_plan,
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-    $generated_child_exports //= FSM::Composition::ChildExportBuilder->build_generated_child_exports(
-        composition_child_exports => $composition_child_exports,
-    );
-    my $standalone_dt_child_exports = FSM::Composition::ChildExportBuilder->build_standalone_dt_child_exports(
-        composition_child_exports => $composition_child_exports,
-    );
-    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
-        $composition_plan,
-        ($self->{target_language} // 'systemverilog'),
-    );
-    $intent_hir //= $self->build_composition_intent_hir(
-        $composition_plan,
-        $composition_child_exports,
-        $generated_child_exports,
-        $standalone_dt_child_exports,
-        $structural_rtl_ir,
-    );
-    $lowered_rtl_ir //= $self->build_composition_lowered_rtl_ir($composition_plan, $structural_rtl_ir, $intent_hir);
-    return FSM::Composition::ResultMetadataBuilder->build_module_info(
-        composition_plan => $composition_plan,
-        composition_report => $composition_report,
-        composition_child_exports => $composition_child_exports,
-        generated_child_exports => $generated_child_exports,
-        standalone_dt_child_exports => $standalone_dt_child_exports,
-        intent_hir => $intent_hir,
-        lowered_rtl_ir => $lowered_rtl_ir,
-        structural_rtl_ir => $structural_rtl_ir,
-    );
-}
-
-sub build_composition_shared_datapath_candidates ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
-    return FSM::Composition::SharedDatapathCandidateBuilder->build_candidates(
-        composition_plan => $composition_plan,
-        structural_rtl_ir => $structural_rtl_ir,
-        intent_hir => $intent_hir,
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-}
-
-sub build_composition_statistics ($self, $composition_plan, $composition_report = undef, $intent_hir = undef, $lowered_rtl_ir = undef, $structural_rtl_ir = undef) {
-    return FSM::Composition::ResultMetadataBuilder->build_statistics(
-        composition_plan => $composition_plan,
-        composition_report => $composition_report,
-        intent_hir => $intent_hir,
-        lowered_rtl_ir => $lowered_rtl_ir,
-        structural_rtl_ir => $structural_rtl_ir,
-        statistics_seed => $self->gather_statistics(undef),
-    );
-}
-
-sub build_composition_provenance_report ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
-    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
-        $composition_plan,
-        ($self->{target_language} // 'systemverilog'),
-    );
-    $intent_hir //= $self->build_composition_intent_hir(
-        $composition_plan,
-        undef,
-        undef,
-        undef,
-        $structural_rtl_ir,
-    );
-    return FSM::Composition::ProvenanceReportBuilder->build_report(
         composition_plan => $composition_plan,
         structural_rtl_ir => $structural_rtl_ir,
         intent_hir => $intent_hir,

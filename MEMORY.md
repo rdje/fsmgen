@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-26: composition generation orchestration now lives in a dedicated composition package
+- Saved shipped behavior:
+  - [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm) now owns bounded composition source-to-result orchestration,
+  - that package now coordinates plan construction, child-export projection, composition-top forward-IR assembly, structural top emission, and result-metadata/statistics assembly,
+  - and [t/189-composition-generation-orchestrator.t](/Users/richarddje/Documents/github/fsmgen/t/189-composition-generation-orchestrator.t) now locks the new owner directly against the pipeline result surface.
+- Important continuity note:
+  - this removes the last obvious composition-top result-assembly cluster from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm),
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes `GenerationOrchestrator` in the composition layer,
+  - and the next likely seam is now the broader non-composition/direct-root coordinator path rather than one more composition-top helper extraction.
+
 ## 2026-03-26: composition-top LoweredRTLIR construction now lives in a dedicated IR builder package
 - Saved shipped behavior:
   - [perl/FSM/IR/LoweredRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIRBuilder.pm) now owns bounded composition-top `LoweredRTLIR` construction,

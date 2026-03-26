@@ -775,6 +775,12 @@ The first honest `R11` slices are now:
   lowered assembly path directly either; the next honest seam is now a broader
   coordinator/direct-root split rather than another inline composition-top IR
   builder.
+- Package-breakdown note: the remaining bounded composition generation
+  orchestration is now active in its own package too:
+  `FSM::Composition::GenerationOrchestrator` now owns composition plan-to-result
+  assembly, so `HDLGenerator` no longer keeps the whole composition-top result
+  cluster inline; the next honest breakdown seam is now on the broader
+  non-composition/direct-root coordinator path.
 - Forward-IR note: a new composition-side builder extraction is now active
   too: realized generated-child interface port construction plus the shared
   interface-type normalization and system-port ordering rules now live in

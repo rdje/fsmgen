@@ -64,6 +64,7 @@ FSM
         quiet => 1,
     );
 
+    my $statistics_seed = $pipeline->gather_statistics(undef);
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $composition_child_exports = FSM::Composition::ChildExportBuilder->build_child_exports(
         composition_plan => $result->{composition_plan},
@@ -84,7 +85,7 @@ FSM
         intent_hir => $result->{intent_hir},
         lowered_rtl_ir => $result->{lowered_rtl_ir},
         structural_rtl_ir => $result->{structural_rtl_ir},
-        statistics_seed => $pipeline->gather_statistics(undef),
+        statistics_seed => $statistics_seed,
     );
 
     is_deeply(

@@ -11,7 +11,7 @@ Use it to keep one current, high-signal picture of:
 Refresh this document at the start of a later session whenever the effective entrypoint/import-tree architecture has moved enough that this note is no longer honest.
 
 Current baseline:
-- Reviewed on `2026-03-25`.
+- Reviewed on `2026-03-26`.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
 
@@ -69,6 +69,7 @@ bin/fsmgen
         -> LoweredRTLIR
         -> StructuralRTLIR
      -> composition path
+        -> FSM::Composition::GenerationOrchestrator
         -> FSM::Composition::Parser
         -> generated-child realization / external RTL child realization / RTL interface loading
         -> composition plan building / composition builders
@@ -132,6 +133,7 @@ It is one of the cleaner parts of the tree.
 - [perl/FSM/Composition/SharedDatapathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathSupport.pm)
 - [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm)
 - [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm)
+- [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)
 - [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm)
 
 This layer is the clearest evidence that the monolith breakdown is real.
@@ -149,6 +151,10 @@ extraction no longer live inline in the pipeline coordinator.
 `ResultMetadataBuilder` now also owns the success-path `module_info` and
 `statistics` assembly family once composition planning, provenance, child
 exports, and the forward IR layers already exist.
+`GenerationOrchestrator` now also owns the remaining bounded composition
+result-assembly cluster from parsed source to returned result surface, so plan
+construction, forward-IR assembly, structural top emission, and result-hash
+assembly no longer sit inline in `HDLGenerator`.
 `GeneratedChildRealizer` now also owns `?fsmc` / `?dtc` realization plus the
 external generated-child source-loading contract, leaving the pipeline
 coordinator with less child-family-specific source and realization residue.
@@ -211,6 +217,8 @@ It behaves like a hook system, not a competing architecture.
 ### Healthy or improving areas
 - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is thin and reasonably honest.
 - The composition frontend and builder packages are much better factored than the older backend path.
+- The composition path now also has a dedicated generation orchestrator instead
+  of leaving the whole result-assembly cluster inline in `HDLGenerator`.
 - The forward IR layer now looks real enough to steer architecture, not just document aspiration.
 - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) has become a meaningful structural API, not just formatting glue.
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm) is the right directional move for backend emission.

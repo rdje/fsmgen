@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-26: composition generation orchestration now lives in a dedicated composition package
+- Continued the active `R11` package-breakdown lane by moving the remaining bounded composition generation/result-assembly cluster out of `HDLGenerator` instead of leaving the whole composition-top path inline after the narrower builder splits were already in place.
+- Landed behavior:
+  - added [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm) as the owner of parsed composition source to bounded result-surface orchestration,
+  - that package now coordinates plan construction, child-export projection, composition-top forward-IR assembly, structural top emission, and result-metadata/statistics assembly through the already-extracted narrower builders,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now delegates the composition path there instead of keeping the cluster inline,
+  - and the new direct owner lock in [t/189-composition-generation-orchestrator.t](/Users/richarddje/Documents/github/fsmgen/t/189-composition-generation-orchestrator.t) now rebuilds the same bounded composition generation surface from parsed inputs and checks it against the pipeline result.
+- Why this is worth shipping:
+  - it removes the last obvious composition-top result-assembly cluster from `HDLGenerator`,
+  - it makes the composition side look much more like a real orchestrator-over-builders architecture instead of one big pipeline method with extracted helpers around it,
+  - and it leaves the next seam where it belongs: the broader non-composition/direct-root coordinator path rather than one more composition-top helper extraction.
+
 ## 2026-03-26: composition-top LoweredRTLIR construction now lives in a dedicated IR builder package
 - Continued the active `R11` package-breakdown lane by moving bounded composition-top lowered-IR construction out of `HDLGenerator` instead of leaving one more forward-IR assembly family inline in the pipeline coordinator.
 - Landed behavior:
