@@ -29,6 +29,7 @@ The best current architecture in the tree is the newer composition/forward-IR/ba
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)
 
 The heaviest remaining complexity is still the direct single-module HDL backend path centered on:
+- [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
 - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm)
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm)
 
@@ -63,6 +64,7 @@ bin/fsmgen
         -> FSM::Adapter::FSMGenFull
         -> IntentHIR
         -> module analysis / module_info
+        -> FSM::Backend::GeneratedModuleEmitter
         -> FSM::HDL::FlattenedDT
            -> FlattenedDT::Orchestrator
            -> Synthesis::EnableGraph
@@ -108,6 +110,21 @@ The important improvement is that [HDLGenerator.pm](/Users/richarddje/Documents/
 no longer owns the full direct-root result-assembly cluster inline:
 [DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
 now owns that bounded non-composition source-to-result path.
+
+### Direct generated-module backend owner
+- [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
+
+This is the new bounded direct backend owner for generated FSM/DT modules.
+It now owns:
+- backend-method selection
+- direct HDL emission through the older `FlattenedDT` family
+- backend statistics collection
+- standalone-DT assertion postprocessing
+
+It serves both direct roots and realized generated children.
+It is a real extraction, but not the final backend end-state yet:
+underneath it, the older `FlattenedDT` / `EnableGraph` backend family still
+remains the deeper complexity hotspot.
 
 ### Single-module semantic frontend
 - [perl/FSM/Adapter/FSMGenFull.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull.pm)
@@ -206,6 +223,7 @@ This is the first real backend package that emits HDL by walking structural IR.
 Right now it is composition-top focused and Verilog-family focused.
 
 ### Older direct HDL synthesis/backend path
+- [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
 - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm)
 - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm)
@@ -216,8 +234,11 @@ Right now it is composition-top focused and Verilog-family focused.
 - `FSM::ExpressionNamer`
 - `FSM::AST::Node`
 
-This stack still owns the direct generated HDL path for single-module FSM/DT roots.
-It remains the densest and least fully split part of the tree.
+This stack, now fronted by
+[GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm),
+still owns the direct generated HDL path for single-module FSM/DT roots and
+realized generated children. It remains the densest and least fully split part
+of the tree.
 
 ### Extension surface
 - [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
@@ -244,6 +265,11 @@ It behaves like a hook system, not a competing architecture.
 - `StructuralRTLIRBuilder` now also owns the direct-root structural summary
   rather than leaving module-boundary and implicit-system-port structural
   assembly inline in `HDLGenerator`.
+- `GeneratedModuleEmitter` now also owns the bounded direct generated-module
+  backend family rather than leaving backend-method selection, direct HDL
+  emission, backend statistics, and standalone-DT assertion postprocessing
+  spread across `HDLGenerator`, `DirectGenerationOrchestrator`, and realized
+  generated-child handling.
 - The forward IR layer now looks real enough to steer architecture, not just document aspiration.
 - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) has become a meaningful structural API, not just formatting glue.
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm) is the right directional move for backend emission.
@@ -251,7 +277,7 @@ It behaves like a hook system, not a competing architecture.
 ### Current hotspots
 - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) is still too broad.
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) is still a very large semantic/synthesis gravity well.
-- The direct single-module generation path still has not converged on the same clean `StructuralRTLIR -> backend emitter` shape that the composition path is starting to use, even though it now has its own direct-root orchestrator boundary.
+- The direct single-module generation path still has not converged on the same clean `StructuralRTLIR -> backend emitter` shape that the composition path is starting to use, even though it now has its own direct-root orchestrator boundary and a dedicated generated-module backend owner.
 - `module_info` and reporting/statistics surfaces still create pressure for the coordinator to know too much.
 
 ## Important implications for future implementation
@@ -311,6 +337,7 @@ The project already has:
 But it also still has:
 - one oversized pipeline coordinator
 - one oversized synthesis owner
-- and a direct single-module backend path that has not fully caught up with the composition-side architectural cleanup
+- and a direct single-module backend family that is better fronted than before,
+  but still has not fully caught up with the composition-side architectural cleanup
 
 That is the honest current state this document should keep tracking.

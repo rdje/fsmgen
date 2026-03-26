@@ -807,6 +807,14 @@ The first honest `R11` slices are now:
   inline either; the next honest seam is now the remaining direct-path backend
   residue or a broader facade split rather than one more direct structural
   helper.
+- Forward-IR note: that next direct-path backend-owner split is now active
+  too: bounded direct generated-module backend execution, backend statistics,
+  and standalone-DT assertion postprocessing now live in
+  `FSM::Backend::GeneratedModuleEmitter`, so `HDLGenerator`,
+  `DirectGenerationOrchestrator`, and `GeneratedChildRealizer` no longer keep
+  that backend family inline either; the next honest seam is now a broader
+  `HDLGenerator` facade/coordinator split or deeper cleanup under the older
+  `FlattenedDT` / `EnableGraph` backend family.
 - Forward-IR note: a new composition-side builder extraction is now active
   too: realized generated-child interface port construction plus the shared
   interface-type normalization and system-port ordering rules now live in

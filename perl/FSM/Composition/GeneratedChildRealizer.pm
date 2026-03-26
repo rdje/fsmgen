@@ -23,6 +23,7 @@ no warnings 'experimental::signatures';
 
 use File::Basename qw(dirname);
 use File::Spec;
+use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Composition::InterfacePortBuilder;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::SharedDatapathSupport;
@@ -214,11 +215,20 @@ sub _realize_generated_child ($class, %args) {
     my $child_module = $pipeline->create_fsm_module($child_ast);
     my $child_intent_hir = $pipeline->build_intent_hir($child_module);
     my $child_module_info = $pipeline->analyze_fsm_module($child_module, $child_intent_hir);
-    my $child_hdl_code = $pipeline->generate_hdl_code($child_module);
+    my $backend_result = FSM::Backend::GeneratedModuleEmitter->emit_from_fsm_module(
+        fsm_module => $child_module,
+        target_language => ($pipeline->{target_language} // 'systemverilog'),
+        debug_level => ($pipeline->{debug_level} // 0),
+    );
+    $pipeline->{hdl_generator} = $backend_result->{hdl_generator};
     $pipeline->enrich_module_info_from_generated_analysis($child_module_info, $child_module);
     my $child_structural_rtl_ir = $pipeline->build_structural_rtl_ir($child_module_info, $child_module);
     $child_module_info->{structural_rtl_ir} = $child_structural_rtl_ir->as_hashref;
-    $child_hdl_code = $pipeline->augment_generated_hdl_with_standalone_dt_assertions($child_hdl_code, $child_module_info);
+    my $child_hdl_code = FSM::Backend::GeneratedModuleEmitter->augment_with_standalone_dt_assertions(
+        hdl_code => $backend_result->{hdl_code},
+        module_info => $child_module_info,
+        target_language => ($pipeline->{target_language} // 'systemverilog'),
+    );
 
     if ($args{add_shared_datapath_source_exports}) {
         my $shared_datapath_source_exports = FSM::Composition::SharedDatapathSupport->build_source_export_metadata(

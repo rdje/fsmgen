@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-26: bounded direct generated-module backend execution now lives in a dedicated backend package
+- Continued the active `R11` package-breakdown lane by moving the remaining bounded direct generated-module backend family out of `HDLGenerator` and its immediate callers instead of leaving backend-method selection, statistics, and standalone-DT assertion postprocessing spread across the pipeline/orchestrator layer.
+- Landed behavior:
+  - added [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm) as the owner of bounded direct generated-module backend execution for direct roots and realized generated children,
+  - moved backend-method selection, direct HDL emission through the older `FlattenedDT` family, backend statistics collection, and standalone-DT assertion postprocessing under that package,
+  - updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm), [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm), and [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so they now delegate that bounded backend family there,
+  - and added [t/194-generated-module-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/194-generated-module-emitter.t) to rebuild the same emitted HDL and backend statistics from explicit inputs and lock them against the full pipeline result surface.
+- Why this is worth shipping:
+  - it removes one more real backend-oriented family from `HDLGenerator` instead of only moving builders and reporting helpers,
+  - it gives the still-older `FlattenedDT` / `EnableGraph` backend path one honest entrypoint package instead of several coordinator-owned fragments,
+  - and it sharpens the next seam correctly: broader `HDLGenerator` facade/coordinator cleanup or deeper backend-family cleanup, not one more inline direct backend helper.
+
 ## 2026-03-26: direct-root StructuralRTLIR construction now lives in the IR builder package
 - Continued the active `R11` package-breakdown lane by moving bounded direct-root structural-IR construction out of `HDLGenerator` instead of leaving the direct path with a composition-only structural builder and an inline direct-root structural helper family.
 - Landed behavior:

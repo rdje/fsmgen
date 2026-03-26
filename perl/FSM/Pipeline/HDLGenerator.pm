@@ -10,8 +10,8 @@ no warnings 'experimental::signatures';
 
 use FindBin;
 use lib "$FindBin::Bin";
+use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Debug;
-use FSM::HDL::FlattenedDT;
 use FSM::Adapter::FSMGenFull;
 use FSM::Pipeline::DirectGenerationOrchestrator;
 use FSM::Composition::FailureReportBuilder;
@@ -276,47 +276,18 @@ sub finalize_generation_result ($self, $fsm_file, $source_info, $result) {
 }
 
 sub standalone_dt_assertion_runtime_lines ($self, $module_info) {
-    return () unless ($self->{target_language} || '') =~ /^(?:systemverilog|sv)$/;
-    return () unless ref($module_info) eq 'HASH';
-
-    my @assertion_lines;
-    for my $target (@{$self->module_standalone_dt_multi_drive_targets($module_info)}) {
-        next unless ref($target) eq 'HASH';
-        my $assertion = $target->{multi_drive_assertion} || {};
-        next unless ($assertion->{input_count} || 0) > 1;
-
-        my @inputs = @{$assertion->{input_enable_signals} || []};
-        next unless @inputs;
-
-        my $target_signal = $target->{signal_name} || $assertion->{target_signal} || 'unknown_signal';
-        push @assertion_lines,
-            "    assert (\$onehot0({" . join(', ', @inputs) . "}))"
-                . qq{ else \$error("standalone-dt multi-drive conflict: $target_signal");};
-    }
-
-    return () unless @assertion_lines;
-
-    return (
-        "  `ifndef SYNTHESIS",
-        "  always_comb begin",
-        @assertion_lines,
-        "  end",
-        "  `endif",
+    return FSM::Backend::GeneratedModuleEmitter->standalone_dt_assertion_runtime_lines(
+        module_info => $module_info,
+        target_language => ($self->{target_language} // 'systemverilog'),
     );
 }
 
 sub augment_generated_hdl_with_standalone_dt_assertions ($self, $hdl_code, $module_info) {
-    return $hdl_code unless defined($hdl_code) && length($hdl_code);
-
-    my @assertion_lines = $self->standalone_dt_assertion_runtime_lines($module_info);
-    return $hdl_code unless @assertion_lines;
-
-    my $assertion_block = join("\n", '', @assertion_lines);
-    if ($hdl_code =~ s/\nendmodule\s*\z/\n$assertion_block\nendmodule/s) {
-        return $hdl_code;
-    }
-
-    return $hdl_code . "\n$assertion_block\n";
+    return FSM::Backend::GeneratedModuleEmitter->augment_with_standalone_dt_assertions(
+        hdl_code => $hdl_code,
+        module_info => $module_info,
+        target_language => ($self->{target_language} // 'systemverilog'),
+    );
 }
 
 sub shared_datapath_or_expression ($self, $input_enable_signals) {
@@ -627,99 +598,25 @@ sub _clone_structured_value ($value) {
 }
 
 sub generate_hdl_code ($self, $fsm_module) {
-    fsm_trace_enter('Generate HDL code from semantic FSM module', 2);
-    fsm_debug("Generating HDL code", 1);
-    
-    # Create HDL generator
-    my $hdl_gen = FSM::HDL::FlattenedDT->new(debug => ($self->{debug_level} > 0));
-    
-    # Determine generator method based on target language
-    my $generator_method = $self->get_generator_method();
-    
-    fsm_debug("Using generator method: $generator_method", 1);
-    
-    # Generate HDL code
-    my $hdl_code;
-    eval {
-        $hdl_code = $hdl_gen->$generator_method($fsm_module);
-    };
-    
-    if ($@) {
-        fsm_trace_decision(0, "HDL backend method '$generator_method' raised exception", 1);
-        Carp::confess "Error generating HDL: $@\n";
-    }
-    
-    fsm_debug("HDL code generation completed", 1);
-    
-    # Store generator for statistics gathering
-    $self->{hdl_generator} = $hdl_gen;
-    
-    fsm_trace_exit("HDL generation complete via '$generator_method'", 2);
-    return $hdl_code;
+    my $backend_result = FSM::Backend::GeneratedModuleEmitter->emit_from_fsm_module(
+        fsm_module => $fsm_module,
+        target_language => ($self->{target_language} // 'systemverilog'),
+        debug_level => ($self->{debug_level} // 0),
+    );
+    $self->{hdl_generator} = $backend_result->{hdl_generator};
+    return $backend_result->{hdl_code};
 }
 
 sub get_generator_method ($self) {
-    fsm_trace_enter('Resolve backend generator method for target language', 4);
-    my %language_methods = (
-        'vhdl' => 'generate_vhdl',
-        'verilog' => 'generate_verilog',
-        'v' => 'generate_verilog',
-        'systemverilog' => 'generate_systemverilog',
-        'sv' => 'generate_systemverilog',
+    return FSM::Backend::GeneratedModuleEmitter->generator_method_for_target(
+        $self->{target_language},
     );
-    
-    my $method = $language_methods{$self->{target_language}} || 'generate_systemverilog';
-    fsm_trace_exit("Generator method resolved => $method", 4);
-    return $method;
 }
 
 sub gather_statistics ($self, $fsm_module) {
-    fsm_trace_enter('Gather pipeline generation statistics', 2);
-    fsm_debug("Gathering generation statistics", 1);
-    
-    my $stats = {
-        intermediate_signals => 0,
-        global_expressions => 0,
-        reused_expressions => [],
-        factoring_enabled => 0,
-    };
-    
-    # Get statistics from HDL generator if available
-    if ($self->{hdl_generator}) {
-        my $hdl_gen = $self->{hdl_generator};
-        my $intermediate_signals = $hdl_gen->{intermediate_signals} || {};
-        my $global_expressions = $hdl_gen->{global_expressions} || {};
-        my $expression_usage = $hdl_gen->{expression_usage} || {};
-        
-        $stats->{intermediate_signals} = scalar(keys %$intermediate_signals);
-        $stats->{global_expressions} = scalar(keys %$global_expressions);
-        $stats->{factoring_enabled} = (%$intermediate_signals || %$global_expressions) ? 1 : 0;
-        
-        # Find reused expressions
-        my @reused = grep { $expression_usage->{$_} > 1 } keys %$expression_usage;
-        for my $signal_name (sort { $expression_usage->{$b} <=> $expression_usage->{$a} } @reused) {
-            my $usage = $expression_usage->{$signal_name};
-            my $expression = $intermediate_signals->{$signal_name};
-            push @{$stats->{reused_expressions}}, {
-                signal => $signal_name,
-                expression => $expression,
-                usage_count => $usage
-            };
-        }
-        
-        # Store raw data for detailed analysis
-        $stats->{raw_intermediate_signals} = $intermediate_signals;
-        $stats->{raw_global_expressions} = $global_expressions;
-        $stats->{raw_expression_usage} = $expression_usage;
-    }
-    
-    fsm_debug("Statistics gathering complete", 1);
-    fsm_debug("  Intermediate signals: $stats->{intermediate_signals}", 1);
-    fsm_debug("  Global expressions: $stats->{global_expressions}", 1);
-    fsm_debug("  Reused expressions: " . scalar(@{$stats->{reused_expressions}}), 1);
-    
-    fsm_trace_exit('Statistics gathering complete', 2);
-    return $stats;
+    return FSM::Backend::GeneratedModuleEmitter->statistics_from_generator(
+        $self->{hdl_generator},
+    );
 }
 
 1;

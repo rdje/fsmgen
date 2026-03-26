@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-26: bounded direct generated-module backend execution now lives in a dedicated backend package
+- Saved shipped behavior:
+  - [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm) now owns bounded direct generated-module backend execution for direct FSM/DT roots and realized generated children,
+  - that package now also owns backend-method selection, backend statistics collection, and standalone-DT assertion postprocessing around the existing `FlattenedDT` backend family,
+  - and [t/194-generated-module-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/194-generated-module-emitter.t) now locks the extracted backend owner directly against the full pipeline result surface.
+- Important continuity note:
+  - `HDLGenerator`, `DirectGenerationOrchestrator`, and `GeneratedChildRealizer` no longer keep that bounded direct backend family inline,
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes `GeneratedModuleEmitter` explicitly in the direct single-module backend family,
+  - and the next likely seam is now broader `HDLGenerator` facade/coordinator cleanup or deeper cleanup under the older `FlattenedDT` / `EnableGraph` backend family.
+
 ## 2026-03-26: direct-root StructuralRTLIR construction now lives in the IR builder package
 - Saved shipped behavior:
   - [perl/FSM/IR/StructuralRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIRBuilder.pm) now owns bounded direct-root structural-IR construction from generated-module analysis,

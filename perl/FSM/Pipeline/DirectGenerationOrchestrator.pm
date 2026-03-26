@@ -21,6 +21,8 @@ use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Backend::GeneratedModuleEmitter;
+
 sub generate_from_source ($class, %args) {
     my $pipeline = $args{pipeline}
         or confess "DirectGenerationOrchestrator requires a pipeline";
@@ -33,13 +35,22 @@ sub generate_from_source ($class, %args) {
     my $intent_hir = $pipeline->build_intent_hir($fsm_module);
     my $module_info = $pipeline->analyze_fsm_module($fsm_module, $intent_hir);
 
-    my $hdl_code = $pipeline->generate_hdl_code($fsm_module);
+    my $backend_result = FSM::Backend::GeneratedModuleEmitter->emit_from_fsm_module(
+        fsm_module => $fsm_module,
+        target_language => ($pipeline->{target_language} // 'systemverilog'),
+        debug_level => ($pipeline->{debug_level} // 0),
+    );
+    $pipeline->{hdl_generator} = $backend_result->{hdl_generator};
+
     $pipeline->enrich_module_info_from_generated_analysis($module_info, $fsm_module);
     my $structural_rtl_ir = $pipeline->build_structural_rtl_ir($module_info, $fsm_module);
     $module_info->{structural_rtl_ir} = $structural_rtl_ir->as_hashref;
-    $hdl_code = $pipeline->augment_generated_hdl_with_standalone_dt_assertions($hdl_code, $module_info);
-
-    my $statistics = $pipeline->gather_statistics($fsm_module);
+    my $hdl_code = FSM::Backend::GeneratedModuleEmitter->augment_with_standalone_dt_assertions(
+        hdl_code => $backend_result->{hdl_code},
+        module_info => $module_info,
+        target_language => ($pipeline->{target_language} // 'systemverilog'),
+    );
+    my $statistics = $backend_result->{statistics};
 
     return {
         fsm_module => $fsm_module,
