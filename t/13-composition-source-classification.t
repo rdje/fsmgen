@@ -11,6 +11,7 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Pipeline::HDLGenerator;
+use FSM::Pipeline::SourceFrontend;
 use FSM::Adapter::FSMGenFull;
 use Lispish;
 
@@ -52,12 +53,12 @@ my $pipeline = FSM::Pipeline::HDLGenerator->new(
 );
 
 my $fsm_ast = Lispish::multi($fsm_path);
-my $fsm_source_info = $pipeline->classify_source_ast($fsm_ast);
+my $fsm_source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($fsm_ast);
 is($fsm_source_info->{kind}, 'fsm', 'FSM root is classified as fsm');
 is($fsm_source_info->{header}, '?fsm:classifier_smoke', 'FSM classifier preserves the source header');
 
 my $composition_ast = Lispish::multi($top_path);
-my $composition_source_info = $pipeline->classify_source_ast($composition_ast);
+my $composition_source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($composition_ast);
 is($composition_source_info->{kind}, 'composition', 'top root is classified as composition');
 is($composition_source_info->{header}, '?top:composition_smoke', 'composition classifier preserves the source header');
 

@@ -34,30 +34,32 @@ subtest 'source frontend rebuilds the bounded direct-root parsing and semantic-m
 FSM
     );
 
-    my $pipeline = new_pipeline();
     my $frontend_raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
         fsm_file => $fsm_path,
         debug_level => 0,
     );
-    my $pipeline_raw_ast = $pipeline->parse_fsm_file($fsm_path);
-
-    is_deeply($frontend_raw_ast, $pipeline_raw_ast, 'source frontend parses the same raw AST as the pipeline facade');
-
     my $frontend_source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($frontend_raw_ast);
-    my $pipeline_source_info = $pipeline->classify_source_ast($pipeline_raw_ast);
-
-    is_deeply($frontend_source_info, $pipeline_source_info, 'source frontend classifies the same direct-root source shape as the pipeline facade');
-
     my $frontend_module = FSM::Pipeline::SourceFrontend->create_fsm_module(
         raw_ast => $frontend_raw_ast,
         debug_level => 0,
     );
-    my $pipeline_module = $pipeline->create_fsm_module($pipeline_raw_ast);
+    my $pipeline = new_pipeline();
+    my $pipeline_result = $pipeline->generate_hdl_from_file($fsm_path);
 
     is_deeply(
+        $frontend_raw_ast,
+        $pipeline_result->{raw_ast},
+        'source frontend parses the same raw AST surface the pipeline later carries',
+    );
+    is_deeply(
+        $frontend_source_info,
+        $pipeline_result->{source_info},
+        'source frontend classifies the same direct-root source shape the pipeline later carries',
+    );
+    is_deeply(
         fsm_module_snapshot($frontend_module),
-        fsm_module_snapshot($pipeline_module),
-        'source frontend builds the same bounded semantic module surface as the pipeline facade',
+        fsm_module_snapshot($pipeline_result->{fsm_module}),
+        'source frontend builds the same bounded semantic module surface the pipeline later carries',
     );
 };
 
@@ -106,30 +108,32 @@ subtest 'source frontend rebuilds the bounded composition parsing surface' => su
 FSM
     );
 
-    my $pipeline = new_pipeline();
     my $frontend_raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
         fsm_file => $composition_path,
         debug_level => 0,
     );
-    my $pipeline_raw_ast = $pipeline->parse_fsm_file($composition_path);
-
-    is_deeply($frontend_raw_ast, $pipeline_raw_ast, 'source frontend parses the same composition raw AST as the pipeline facade');
-
     my $frontend_source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($frontend_raw_ast);
-    my $pipeline_source_info = $pipeline->classify_source_ast($pipeline_raw_ast);
-
-    is_deeply($frontend_source_info, $pipeline_source_info, 'source frontend classifies the same composition source shape as the pipeline facade');
-
     my $frontend_spec = FSM::Pipeline::SourceFrontend->parse_composition_source(
         raw_ast => $frontend_raw_ast,
         debug_level => 0,
     );
-    my $pipeline_spec = $pipeline->parse_composition_source($pipeline_raw_ast);
+    my $pipeline = new_pipeline();
+    my $pipeline_result = $pipeline->generate_hdl_from_file($composition_path);
 
     is_deeply(
+        $frontend_raw_ast,
+        $pipeline_result->{raw_ast},
+        'source frontend parses the same composition raw AST surface the pipeline later carries',
+    );
+    is_deeply(
+        source_info_snapshot($frontend_source_info),
+        source_info_snapshot($pipeline_result->{source_info}),
+        'source frontend classifies the same composition source shape the pipeline later carries',
+    );
+    is_deeply(
         composition_spec_snapshot($frontend_spec),
-        composition_spec_snapshot($pipeline_spec),
-        'source frontend builds the same bounded composition spec surface as the pipeline facade',
+        composition_spec_snapshot($pipeline_result->{composition_spec}),
+        'source frontend builds the same bounded composition spec surface the pipeline later carries',
     );
 };
 
@@ -167,6 +171,16 @@ sub composition_spec_snapshot {
         ports_per_block => [map { scalar(@{$_->ports || []}) } @{$top->ports_blocks || []}],
         embedded_fsm_sources => [sort keys %{$composition_spec->embedded_fsm_sources || {}}],
         embedded_dt_sources => [sort keys %{$composition_spec->embedded_dt_sources || {}}],
+    };
+}
+
+sub source_info_snapshot {
+    my ($source_info) = @_;
+    return {
+        kind => $source_info->{kind},
+        header => $source_info->{header},
+        root_index => $source_info->{root_index},
+        composition_root_count => $source_info->{composition_root_count},
     };
 }
 

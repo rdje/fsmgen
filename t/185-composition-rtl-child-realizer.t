@@ -12,6 +12,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Composition::RTLChildRealizer;
 use FSM::Composition::RealizedInstance;
 use FSM::Pipeline::HDLGenerator;
+use FSM::Pipeline::SourceFrontend;
 
 subtest 'rtl child realizer owns embedded ?rtlif realization' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
@@ -45,8 +46,14 @@ FSM
         quiet => 1,
     );
 
-    my $raw_ast = $pipeline->parse_fsm_file($composition_path);
-    my $composition_spec = $pipeline->parse_composition_source($raw_ast);
+    my $raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
+        fsm_file => $composition_path,
+        debug_level => 0,
+    );
+    my $composition_spec = FSM::Pipeline::SourceFrontend->parse_composition_source(
+        raw_ast => $raw_ast,
+        debug_level => 0,
+    );
     my $instance = $composition_spec->top->instances->[0];
     my $realized = FSM::Composition::RTLChildRealizer->realize_rtl_child_instance(
         rtl_interface_loader => $pipeline->{rtl_interface_loader},
@@ -106,8 +113,14 @@ RTLIF
         quiet => 1,
     );
 
-    my $raw_ast = $pipeline->parse_fsm_file($composition_path);
-    my $composition_spec = $pipeline->parse_composition_source($raw_ast);
+    my $raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
+        fsm_file => $composition_path,
+        debug_level => 0,
+    );
+    my $composition_spec = FSM::Pipeline::SourceFrontend->parse_composition_source(
+        raw_ast => $raw_ast,
+        debug_level => 0,
+    );
     my $instance = $composition_spec->top->instances->[0];
     my $realized = FSM::Composition::RTLChildRealizer->realize_rtl_child_instance(
         rtl_interface_loader => $pipeline->{rtl_interface_loader},

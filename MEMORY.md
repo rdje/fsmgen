@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-26: old source-frontend wrapper residue is now gone from the pipeline facade
+- Saved shipped behavior:
+  - the remaining regression callers now ask [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) directly for parse/classify/composition-parse/semantic-module creation,
+  - [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t) now locks `SourceFrontend` against the real pipeline result surface rather than the removed facade wrappers,
+  - and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) no longer carries any frontend pass-through methods.
+- Important continuity note:
+  - `HDLGenerator` is now effectively the public entry facade plus shared config only,
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) should now be read as “orchestrators plus explicit owners do the work; `HDLGenerator` just starts it,”
+  - and the next likely seam is now deeper cleanup under the older direct backend family rather than more facade trimming.
+
 ## 2026-03-26: old direct generated-module helper residue is now gone from the pipeline facade
 - Saved shipped behavior:
   - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm), [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm), and [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm) now ask the explicit direct-root/generated-module owner packages directly instead of routing through `HDLGenerator` wrappers,

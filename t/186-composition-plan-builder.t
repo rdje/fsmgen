@@ -11,6 +11,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Composition::PlanBuilder;
 use FSM::Pipeline::HDLGenerator;
+use FSM::Pipeline::SourceFrontend;
 
 subtest 'plan builder rebuilds the bounded C1 rtl passthrough lane' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
@@ -149,9 +150,15 @@ sub new_pipeline {
 
 sub rebuild_plan {
     my ($pipeline, $composition_path) = @_;
-    my $raw_ast = $pipeline->parse_fsm_file($composition_path);
-    my $source_info = $pipeline->classify_source_ast($raw_ast);
-    my $composition_spec = $pipeline->parse_composition_source($raw_ast);
+    my $raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
+        fsm_file => $composition_path,
+        debug_level => 0,
+    );
+    my $source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($raw_ast);
+    my $composition_spec = FSM::Pipeline::SourceFrontend->parse_composition_source(
+        raw_ast => $raw_ast,
+        debug_level => 0,
+    );
 
     return FSM::Composition::PlanBuilder->build_plan(
         pipeline => $pipeline,

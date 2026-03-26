@@ -11,6 +11,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Pipeline::DirectGenerationOrchestrator;
 use FSM::Pipeline::HDLGenerator;
+use FSM::Pipeline::SourceFrontend;
 
 subtest 'direct generation orchestrator rebuilds the bounded direct-root result surface from parsed inputs' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
@@ -32,8 +33,11 @@ FSM
     );
 
     my $pipeline_for_direct = new_pipeline();
-    my $raw_ast = $pipeline_for_direct->parse_fsm_file($fsm_path);
-    my $source_info = $pipeline_for_direct->classify_source_ast($raw_ast);
+    my $raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
+        fsm_file => $fsm_path,
+        debug_level => 0,
+    );
+    my $source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($raw_ast);
     my $direct_result = FSM::Pipeline::DirectGenerationOrchestrator->generate_from_source(
         pipeline => $pipeline_for_direct,
         raw_ast => $raw_ast,

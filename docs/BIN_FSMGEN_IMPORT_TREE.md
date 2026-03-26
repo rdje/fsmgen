@@ -18,8 +18,9 @@ Current baseline:
 ## Executive read
 [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is a thin CLI/reporting shell.
 [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
-is now much closer to the honest facade role we wanted: shared pipeline
-configuration plus a small public frontend surface.
+is now down to the honest facade role we wanted: shared pipeline
+configuration plus the single top-level `generate_hdl_from_file(...)`
+entrypoint.
 
 The real coordinator gravity is now the orchestrator family beneath it:
 - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm)
@@ -135,11 +136,10 @@ residue that the CLI can ask the dedicated builder packages for directly.
 It also no longer owns the old direct generated-module helper residue for
 direct-root intent/lowered/structural builders, generated-module metadata
 helpers, direct backend glue, or statistics seed access. Those callers now ask
-the explicit owner packages directly, leaving `HDLGenerator` with just:
+the explicit owner packages directly. The remaining frontend wrapper residue is
+gone too, leaving `HDLGenerator` with just:
 - shared pipeline configuration/state
 - `generate_hdl_from_file(...)`
-- the small public source-frontend facade (`parse_fsm_file`, classification,
-  composition parse, semantic module creation)
 
 ### Source frontend owner
 - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)

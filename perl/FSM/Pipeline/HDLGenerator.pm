@@ -4,7 +4,7 @@ package FSM::Pipeline::HDLGenerator;
 use v5.20;
 use strict;
 use warnings;
-use feature qw(signatures postderef);
+use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FindBin;
@@ -14,7 +14,6 @@ use FSM::Composition::RTLInterfaceLoader;
 use FSM::Extension::Loader;
 use FSM::Extension::Registry;
 use FSM::Pipeline::SourceGenerationOrchestrator;
-use FSM::Pipeline::SourceFrontend;
 use FSM::SourcePathResolver;
 
 =head1 NAME
@@ -24,9 +23,9 @@ FSM::Pipeline::HDLGenerator - Complete FSM to HDL generation pipeline
 =head1 DESCRIPTION
 
 This module is the thin public facade for the active FSMGen generation
-pipeline. It owns shared pipeline configuration plus a small compatibility
-surface, while the real work lives in explicit frontend, orchestrator,
-builder, and backend-owner packages.
+pipeline. It owns shared pipeline configuration plus the public
+C<generate_hdl_from_file(...)> entrypoint, while the real work lives in
+explicit frontend, orchestrator, builder, and backend-owner packages.
 
 =head1 SYNOPSIS
 
@@ -104,31 +103,6 @@ sub generate_hdl_from_file ($self, $fsm_file) {
     );
 }
 
-sub parse_fsm_file ($self, $fsm_file) {
-    return FSM::Pipeline::SourceFrontend->parse_fsm_file(
-        fsm_file => $fsm_file,
-        debug_level => ($self->{debug_level} // 0),
-    );
-}
-
-sub classify_source_ast ($self, $raw_ast) {
-    return FSM::Pipeline::SourceFrontend->classify_source_ast($raw_ast);
-}
-
-sub parse_composition_source ($self, $raw_ast) {
-    return FSM::Pipeline::SourceFrontend->parse_composition_source(
-        raw_ast => $raw_ast,
-        debug_level => ($self->{debug_level} // 0),
-    );
-}
-
-sub create_fsm_module ($self, $raw_ast) {
-    return FSM::Pipeline::SourceFrontend->create_fsm_module(
-        raw_ast => $raw_ast,
-        debug_level => ($self->{debug_level} // 0),
-    );
-}
-
 1;
 
 __END__
@@ -166,7 +140,8 @@ The active runtime path now goes through explicit owner packages:
 4. generated-module or structural backend emitters,
 5. result metadata helpers.
 
-C<FSM::Pipeline::HDLGenerator> remains as the public facade that wires those
-owners together through shared pipeline configuration.
+C<FSM::Pipeline::HDLGenerator> now remains as the public facade that wires
+those owners together through shared pipeline configuration and the top-level
+C<generate_hdl_from_file(...)> entrypoint.
 
 =cut

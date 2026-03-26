@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-26: old source-frontend wrapper residue is now gone from the pipeline facade
+- Continued the active `R11` package-breakdown lane by removing the last frontend pass-through residue from `HDLGenerator` instead of leaving parse/classify/composition-parse/semantic-module helpers there after [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) was already the real owner.
+- Landed behavior:
+  - updated the remaining regression callers in [t/13-composition-source-classification.t](/Users/richarddje/Documents/github/fsmgen/t/13-composition-source-classification.t), [t/184-composition-generated-child-realizer.t](/Users/richarddje/Documents/github/fsmgen/t/184-composition-generated-child-realizer.t), [t/185-composition-rtl-child-realizer.t](/Users/richarddje/Documents/github/fsmgen/t/185-composition-rtl-child-realizer.t), [t/186-composition-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/186-composition-plan-builder.t), [t/190-pipeline-direct-generation-orchestrator.t](/Users/richarddje/Documents/github/fsmgen/t/190-pipeline-direct-generation-orchestrator.t), and [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t) so they now ask [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) directly,
+  - repurposed the source-frontend owner test so it now checks `SourceFrontend` against the real pipeline result surface instead of comparing it to facade wrappers,
+  - and removed the final source-frontend wrapper methods from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm), leaving that package with shared configuration plus the top-level `generate_hdl_from_file(...)` entrypoint.
+- Why this is worth shipping:
+  - it finishes the honest facade cleanup instead of leaving one last fake ownership pocket in `HDLGenerator`,
+  - it makes the frontend owner boundary real in both code and tests,
+  - and it sharpens the next seam correctly: deeper cleanup under the older direct backend family, not more facade trimming.
+
 ## 2026-03-26: old direct generated-module helper residue is now gone from the pipeline facade
 - Continued the active `R11` package-breakdown lane by removing the remaining direct generated-module helper pocket from `HDLGenerator` instead of leaving direct-root/generated-child callers and direct-owner tests to route through facade wrappers after the explicit owner packages already existed.
 - Landed behavior:
