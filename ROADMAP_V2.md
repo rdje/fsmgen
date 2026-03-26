@@ -800,6 +800,13 @@ The first honest `R11` slices are now:
   output-drive-family or standalone-DT lowered-target assembly inline either;
   the next honest seam is now the remaining direct-path structural builder
   residue or a broader facade split rather than one more direct lowered helper.
+- Forward-IR note: the matching direct-root structural-builder counterpart is
+  now active too: bounded direct-root `StructuralRTLIR` construction now also
+  lives in `FSM::IR::StructuralRTLIRBuilder`, so `HDLGenerator` no longer owns
+  direct-root module-boundary and implicit-system-port structural assembly
+  inline either; the next honest seam is now the remaining direct-path backend
+  residue or a broader facade split rather than one more direct structural
+  helper.
 - Forward-IR note: a new composition-side builder extraction is now active
   too: realized generated-child interface port construction plus the shared
   interface-type normalization and system-port ordering rules now live in

@@ -590,68 +590,10 @@ sub build_lowered_rtl_ir ($self, $module_info, $fsm_module) {
 }
 
 sub build_structural_rtl_ir ($self, $module_info, $fsm_module = undef) {
-    return unless ref($module_info) eq 'HASH';
-
-    my @ports;
-    my %seen_ports;
-    for my $bucket (
-        [ inputs => 'input' ],
-        [ outputs => 'output' ],
-    ) {
-        my ($analysis_key, $direction) = @$bucket;
-        for my $entry (@{$module_info->{signal_analysis}{$analysis_key} || []}) {
-            my $signal_name = $entry->{name};
-            my $signal = ref($module_info->{signals}) eq 'HASH'
-                ? $module_info->{signals}{$signal_name}
-                : undef;
-            my $type = (ref($signal) && $signal->can('type')) ? $signal->type : undef;
-
-            push @ports, {
-                name => $signal_name,
-                direction => $direction,
-                width => ($entry->{width} || 1),
-                type => $type,
-            };
-            $seen_ports{$signal_name} = 1;
-        }
-    }
-
-    my $system_contract = $module_info->{system_contract} || {};
-    if (($module_info->{requires_implicit_system_ports} || $module_info->{explicit_system_contract})
-        && defined($system_contract->{clock}) && length($system_contract->{clock})
-        && !$seen_ports{$system_contract->{clock}}) {
-        push @ports, {
-            name => $system_contract->{clock},
-            direction => 'input',
-            width => 1,
-            type => 'clock',
-        };
-        $seen_ports{$system_contract->{clock}} = 1;
-    }
-
-    if (($module_info->{requires_implicit_system_ports} || $module_info->{explicit_system_contract})
-        && defined($system_contract->{reset}) && length($system_contract->{reset})
-        && !$seen_ports{$system_contract->{reset}}) {
-        push @ports, {
-            name => $system_contract->{reset},
-            direction => 'input',
-            width => 1,
-            type => 'reset',
-        };
-        $seen_ports{$system_contract->{reset}} = 1;
-    }
-
-    return FSM::IR::StructuralRTLIR->new(
-        module_name => ($module_info->{module_name} // ''),
-        source_root_kind => (
-            $module_info->{source_root_kind}
-                // ($fsm_module && $fsm_module->can('source_root_kind') ? $fsm_module->source_root_kind : 'fsm')
-        ),
+    return FSM::IR::StructuralRTLIRBuilder->build_from_generated_module_info(
+        module_info => $module_info,
+        fsm_module => $fsm_module,
         target_language => ($self->{target_language} // 'systemverilog'),
-        ports => \@ports,
-        nets => [],
-        instances => [],
-        auxiliary_assignments => [],
     );
 }
 

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-26: direct-root StructuralRTLIR construction now lives in the IR builder package
+- Continued the active `R11` package-breakdown lane by moving bounded direct-root structural-IR construction out of `HDLGenerator` instead of leaving the direct path with a composition-only structural builder and an inline direct-root structural helper family.
+- Landed behavior:
+  - widened [perl/FSM/IR/StructuralRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIRBuilder.pm) so it now owns direct-root `StructuralRTLIR` construction from generated-module analysis,
+  - moved direct-root module-boundary port assembly and implicit-system-port structural projection under that IR-layer builder,
+  - updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so its direct-root `build_structural_rtl_ir` path is now just a thin delegation to the builder,
+  - and added [t/193-forward-structural-rtl-ir-builder-direct-root.t](/Users/richarddje/Documents/github/fsmgen/t/193-forward-structural-rtl-ir-builder-direct-root.t) to lock the extracted direct-root owner against the pipeline result surface.
+- Why this is worth shipping:
+  - it makes `StructuralRTLIRBuilder` honest on both the composition and direct-root sides,
+  - it removes another real forward-IR builder pocket from `HDLGenerator`,
+  - and it sharpens the next seam correctly: direct-path backend residue or a broader facade split, not more inline direct-root structural helpers.
+
 ## 2026-03-26: direct-root LoweredRTLIR construction now lives in the IR builder package
 - Continued the active `R11` package-breakdown lane by moving bounded direct-root lowered-IR construction out of `HDLGenerator` instead of leaving the direct path with a composition-only lowered builder and an inline direct-root lowered helper family.
 - Landed behavior:

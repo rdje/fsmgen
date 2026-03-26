@@ -8,7 +8,8 @@ FSM::IR::StructuralRTLIRBuilder - Builder and coercion helpers for forward Struc
 
 Builds and coerces the extracted forward C<StructuralRTLIR> layer. The current
 shipped scope covers composition-top structural construction from
-C<FSM::Composition::Plan> and object/hash coercion for downstream pipeline and
+C<FSM::Composition::Plan>, bounded direct-root structural construction from
+generated module analysis, and object/hash coercion for downstream pipeline and
 backend consumers.
 
 =cut
@@ -23,6 +24,75 @@ no warnings 'experimental::signatures';
 
 use FSM::IR::StructuralRTLIR;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(normalized_binding);
+
+sub build_from_generated_module_info ($class, %args) {
+    my $module_info = $args{module_info}
+        or confess "StructuralRTLIRBuilder requires a module_info";
+    my $target_language = $args{target_language} // 'systemverilog';
+    my $fsm_module = $args{fsm_module};
+
+    my @ports;
+    my %seen_ports;
+    for my $bucket (
+        [ inputs => 'input' ],
+        [ outputs => 'output' ],
+    ) {
+        my ($analysis_key, $direction) = @$bucket;
+        for my $entry (@{$module_info->{signal_analysis}{$analysis_key} || []}) {
+            my $signal_name = $entry->{name};
+            my $signal = ref($module_info->{signals}) eq 'HASH'
+                ? $module_info->{signals}{$signal_name}
+                : undef;
+            my $type = (ref($signal) && $signal->can('type')) ? $signal->type : undef;
+
+            push @ports, {
+                name => $signal_name,
+                direction => $direction,
+                width => ($entry->{width} || 1),
+                type => $type,
+            };
+            $seen_ports{$signal_name} = 1;
+        }
+    }
+
+    my $system_contract = $module_info->{system_contract} || {};
+    if (($module_info->{requires_implicit_system_ports} || $module_info->{explicit_system_contract})
+        && defined($system_contract->{clock}) && length($system_contract->{clock})
+        && !$seen_ports{$system_contract->{clock}}) {
+        push @ports, {
+            name => $system_contract->{clock},
+            direction => 'input',
+            width => 1,
+            type => 'clock',
+        };
+        $seen_ports{$system_contract->{clock}} = 1;
+    }
+
+    if (($module_info->{requires_implicit_system_ports} || $module_info->{explicit_system_contract})
+        && defined($system_contract->{reset}) && length($system_contract->{reset})
+        && !$seen_ports{$system_contract->{reset}}) {
+        push @ports, {
+            name => $system_contract->{reset},
+            direction => 'input',
+            width => 1,
+            type => 'reset',
+        };
+        $seen_ports{$system_contract->{reset}} = 1;
+    }
+
+    return FSM::IR::StructuralRTLIR->new(
+        module_name => ($module_info->{module_name} // ''),
+        source_root_kind => (
+            $module_info->{source_root_kind}
+                // ($fsm_module && $fsm_module->can('source_root_kind') ? $fsm_module->source_root_kind : 'fsm')
+        ),
+        target_language => $target_language,
+        ports => \@ports,
+        nets => [],
+        instances => [],
+        auxiliary_assignments => [],
+    );
+}
 
 sub build_from_composition_plan ($class, $composition_plan, $target_language = 'systemverilog') {
     confess "StructuralRTLIRBuilder requires a composition plan"
@@ -127,6 +197,12 @@ sub coerce ($class, $structural_rtl_ir, $default_target_language = 'systemverilo
 __END__
 
 =head1 METHODS
+
+=head2 build_from_generated_module_info
+
+Builds a structural RTL IR object from generated direct-root module analysis,
+preserving the module boundary ports and system-interface ports currently
+materialized in the bounded direct structural slice.
 
 =head2 build_from_composition_plan
 
