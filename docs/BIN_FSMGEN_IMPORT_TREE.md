@@ -185,8 +185,9 @@ stays the narrower owner of `.rtlif` metadata loading and validation.
 
 Current layer meaning:
 - `IntentHIR`: semantic forward intent
-- `IntentHIRBuilder`: bounded composition-top semantic-HIR construction from an
-  already-built composition plan plus structural/child-export inputs
+- `IntentHIRBuilder`: bounded semantic-HIR construction for both direct-root
+  semantic modules and composition tops, from either a semantic FSM/DT module
+  or an already-built composition plan plus structural/child-export inputs
 - `LoweredRTLIR`: normalized lowered facts and grouped lowered families
 - `LoweredRTLIRBuilder`: bounded composition-top lowered-IR construction from
   an already-built composition plan plus structural/semantic/shared-datapath inputs
@@ -229,6 +230,9 @@ It behaves like a hook system, not a competing architecture.
   of leaving the whole result-assembly cluster inline in `HDLGenerator`.
 - The direct-root path now also has a dedicated pipeline orchestrator instead of
   leaving the whole non-composition result-assembly cluster inline there too.
+- `IntentHIRBuilder` now also owns the direct-root semantic summary rather than
+  leaving signal-analysis grouping, direction inference, and standalone-DT
+  enable-family assembly inline in `HDLGenerator`.
 - The forward IR layer now looks real enough to steer architecture, not just document aspiration.
 - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) has become a meaningful structural API, not just formatting glue.
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm) is the right directional move for backend emission.

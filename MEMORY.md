@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-26: direct-root IntentHIR construction now lives in the IR builder package
+- Saved shipped behavior:
+  - [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm) now owns bounded direct-root semantic-HIR construction from a semantic FSM/DT module,
+  - that package now also owns direct-root signal-analysis grouping, direction inference, and standalone-DT enable-family assembly,
+  - and [t/191-forward-intent-hir-builder-direct-root.t](/Users/richarddje/Documents/github/fsmgen/t/191-forward-intent-hir-builder-direct-root.t) now locks the extracted direct-root owner directly against the pipeline result surface.
+- Important continuity note:
+  - `HDLGenerator` no longer owns those direct-root semantic helper families inline,
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now describes `IntentHIRBuilder` as a direct-root plus composition-top semantic builder,
+  - and the next likely seam is now the remaining direct-path lowered/structural builder residue or a broader `HDLGenerator` facade split.
+
 ## 2026-03-26: direct-root generation orchestration now lives in a dedicated pipeline package
 - Saved shipped behavior:
   - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm) now owns bounded non-composition source-to-result orchestration,

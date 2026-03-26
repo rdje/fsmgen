@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-26: direct-root IntentHIR construction now lives in the IR builder package
+- Continued the active `R11` package-breakdown lane by moving bounded direct-root semantic-HIR construction out of `HDLGenerator` instead of leaving the direct path with a composition-only builder and an inline direct-root semantic helper family.
+- Landed behavior:
+  - widened [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm) so it now owns direct-root `IntentHIR` construction from a semantic FSM/DT module,
+  - moved direct-root signal-analysis grouping, signal-direction inference, and standalone-DT enable-family assembly under that IR-layer builder,
+  - updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so its direct-root `build_intent_hir` path is now just a thin delegation to the builder,
+  - and added [t/191-forward-intent-hir-builder-direct-root.t](/Users/richarddje/Documents/github/fsmgen/t/191-forward-intent-hir-builder-direct-root.t) to lock the extracted direct-root owner against the pipeline result surface.
+- Why this is worth shipping:
+  - it makes `IntentHIRBuilder` honest on both the composition and direct-root sides,
+  - it removes another real semantic-builder pocket from `HDLGenerator`,
+  - and it sharpens the next seam correctly: remaining direct-path lowered/structural builder residue or a broader facade split, not more inline direct-root semantic helpers.
+
 ## 2026-03-26: direct-root generation orchestration now lives in a dedicated pipeline package
 - Continued the active `R11` package-breakdown lane by moving the bounded non-composition generation/result-assembly cluster out of `HDLGenerator` instead of leaving the direct-root path inline after the composition-side orchestrator split was already in place.
 - Landed behavior:

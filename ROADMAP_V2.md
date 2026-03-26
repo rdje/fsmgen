@@ -787,6 +787,13 @@ The first honest `R11` slices are now:
   whole direct-root result-assembly cluster inline either; the next honest
   seam is now the direct-path builder/backend residue or a broader facade split
   for `HDLGenerator`.
+- Forward-IR note: the direct-root semantic-builder counterpart is now active
+  too: bounded direct-root `IntentHIR` construction now also lives in
+  `FSM::IR::IntentHIRBuilder`, so `HDLGenerator` no longer owns direct-root
+  signal-analysis grouping, direction inference, or standalone-DT enable-family
+  assembly inline either; the next honest seam is now the remaining direct-path
+  lowered/structural builder residue or a broader facade split rather than one
+  more direct semantic helper.
 - Forward-IR note: a new composition-side builder extraction is now active
   too: realized generated-child interface port construction plus the shared
   interface-type normalization and system-port ordering rules now live in
