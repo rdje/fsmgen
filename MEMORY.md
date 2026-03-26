@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-26: old direct generated-module helper residue is now gone from the pipeline facade
+- Saved shipped behavior:
+  - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm), [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm), and [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm) now ask the explicit direct-root/generated-module owner packages directly instead of routing through `HDLGenerator` wrappers,
+  - the direct-owner coverage in [t/191-forward-intent-hir-builder-direct-root.t](/Users/richarddje/Documents/github/fsmgen/t/191-forward-intent-hir-builder-direct-root.t), [t/192-forward-lowered-rtl-ir-builder-direct-root.t](/Users/richarddje/Documents/github/fsmgen/t/192-forward-lowered-rtl-ir-builder-direct-root.t), [t/193-forward-structural-rtl-ir-builder-direct-root.t](/Users/richarddje/Documents/github/fsmgen/t/193-forward-structural-rtl-ir-builder-direct-root.t), [t/194-generated-module-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/194-generated-module-emitter.t), [t/196-generated-module-info-builder.t](/Users/richarddje/Documents/github/fsmgen/t/196-generated-module-info-builder.t), [t/182-composition-result-metadata-builder.t](/Users/richarddje/Documents/github/fsmgen/t/182-composition-result-metadata-builder.t), and [t/189-composition-generation-orchestrator.t](/Users/richarddje/Documents/github/fsmgen/t/189-composition-generation-orchestrator.t) now points at those real owners too,
+  - and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) no longer carries the old direct helper family for direct-root IR building, generated-module metadata helpers, backend glue, or statistics seed access.
+- Important continuity note:
+  - `HDLGenerator` is now much closer to the intended thin facade shape,
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) should now be read as “orchestrator family is the hub, `HDLGenerator` is the public facade” rather than the older monolith reading,
+  - and the next likely seam is now the small remaining public source-frontend facade or deeper cleanup under the older direct backend family.
+
 ## 2026-03-26: old composition reporting helper residue is now gone from the pipeline facade
 - Saved shipped behavior:
   - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) no longer owns the old composition failure-summary and provenance/override/block label helper family,

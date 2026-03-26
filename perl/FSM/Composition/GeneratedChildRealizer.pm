@@ -27,6 +27,8 @@ use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Composition::InterfacePortBuilder;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::SharedDatapathSupport;
+use FSM::IR::IntentHIRBuilder;
+use FSM::IR::StructuralRTLIRBuilder;
 use FSM::Pipeline::GeneratedModuleInfoBuilder;
 use FSM::Pipeline::SourceFrontend;
 
@@ -218,7 +220,9 @@ sub _realize_generated_child ($class, %args) {
         raw_ast => $child_ast,
         debug_level => ($pipeline->{debug_level} // 0),
     );
-    my $child_intent_hir = $pipeline->build_intent_hir($child_module);
+    my $child_intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
+        fsm_module => $child_module,
+    );
     my $child_module_info = FSM::Pipeline::GeneratedModuleInfoBuilder->build_from_fsm_module(
         fsm_module => $child_module,
         intent_hir => $child_intent_hir,
@@ -235,7 +239,11 @@ sub _realize_generated_child ($class, %args) {
         target_language => ($pipeline->{target_language} // 'systemverilog'),
         hdl_generator => $pipeline->{hdl_generator},
     );
-    my $child_structural_rtl_ir = $pipeline->build_structural_rtl_ir($child_module_info, $child_module);
+    my $child_structural_rtl_ir = FSM::IR::StructuralRTLIRBuilder->build_from_generated_module_info(
+        module_info => $child_module_info,
+        fsm_module => $child_module,
+        target_language => ($pipeline->{target_language} // 'systemverilog'),
+    );
     $child_module_info->{structural_rtl_ir} = $child_structural_rtl_ir->as_hashref;
     my $child_hdl_code = FSM::Backend::GeneratedModuleEmitter->augment_with_standalone_dt_assertions(
         hdl_code => $backend_result->{hdl_code},

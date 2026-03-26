@@ -17,7 +17,14 @@ Current baseline:
 
 ## Executive read
 [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is a thin CLI/reporting shell.
-The real center of gravity is still [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm).
+[perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+is now much closer to the honest facade role we wanted: shared pipeline
+configuration plus a small public frontend surface.
+
+The real coordinator gravity is now the orchestrator family beneath it:
+- [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm)
+- [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
+- [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm)
 
 The best current architecture in the tree is the newer composition/forward-IR/backend-emitter slice:
 - [perl/FSM/IR/IntentHIR.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIR.pm)
@@ -103,12 +110,14 @@ Important distinction:
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
 - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm)
 
-This is still the architectural hub family. It currently coordinates:
+This is still the architectural hub family, but it is no longer fair to say
+that `HDLGenerator` itself owns the center of that logic.
+The orchestrator family currently coordinates:
 - source dispatch
 - direct-root orchestration
+- composition orchestration
 - forward IR construction
 - module-info/statistics assembly
-- failure summarization
 - backend coordination
 - extension callbacks
 
@@ -123,6 +132,14 @@ also no longer owns the full direct-root result-assembly cluster inline:
 now owns that bounded non-composition source-to-result path.
 It also no longer owns the old composition failure/provenance label helper
 residue that the CLI can ask the dedicated builder packages for directly.
+It also no longer owns the old direct generated-module helper residue for
+direct-root intent/lowered/structural builders, generated-module metadata
+helpers, direct backend glue, or statistics seed access. Those callers now ask
+the explicit owner packages directly, leaving `HDLGenerator` with just:
+- shared pipeline configuration/state
+- `generate_hdl_from_file(...)`
+- the small public source-frontend facade (`parse_fsm_file`, classification,
+  composition parse, semantic module creation)
 
 ### Source frontend owner
 - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)

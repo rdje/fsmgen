@@ -22,6 +22,8 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::Backend::GeneratedModuleEmitter;
+use FSM::IR::IntentHIRBuilder;
+use FSM::IR::StructuralRTLIRBuilder;
 use FSM::Pipeline::GeneratedModuleInfoBuilder;
 use FSM::Pipeline::SourceFrontend;
 
@@ -37,7 +39,9 @@ sub generate_from_source ($class, %args) {
         raw_ast => $raw_ast,
         debug_level => ($pipeline->{debug_level} // 0),
     );
-    my $intent_hir = $pipeline->build_intent_hir($fsm_module);
+    my $intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
+        fsm_module => $fsm_module,
+    );
     my $module_info = FSM::Pipeline::GeneratedModuleInfoBuilder->build_from_fsm_module(
         fsm_module => $fsm_module,
         intent_hir => $intent_hir,
@@ -56,7 +60,11 @@ sub generate_from_source ($class, %args) {
         target_language => ($pipeline->{target_language} // 'systemverilog'),
         hdl_generator => $pipeline->{hdl_generator},
     );
-    my $structural_rtl_ir = $pipeline->build_structural_rtl_ir($module_info, $fsm_module);
+    my $structural_rtl_ir = FSM::IR::StructuralRTLIRBuilder->build_from_generated_module_info(
+        module_info => $module_info,
+        fsm_module => $fsm_module,
+        target_language => ($pipeline->{target_language} // 'systemverilog'),
+    );
     $module_info->{structural_rtl_ir} = $structural_rtl_ir->as_hashref;
     my $hdl_code = FSM::Backend::GeneratedModuleEmitter->augment_with_standalone_dt_assertions(
         hdl_code => $backend_result->{hdl_code},

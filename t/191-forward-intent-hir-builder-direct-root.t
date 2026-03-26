@@ -10,6 +10,7 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::IR::IntentHIRBuilder;
+use FSM::Pipeline::SourceFrontend;
 use FSM::Pipeline::HDLGenerator;
 
 subtest 'intent hir builder rebuilds the bounded direct-root semantic surface from a semantic module' => sub {
@@ -36,9 +37,14 @@ subtest 'intent hir builder rebuilds the bounded direct-root semantic surface fr
 FSM
     );
 
-    my $pipeline_for_builder = new_pipeline();
-    my $raw_ast = $pipeline_for_builder->parse_fsm_file($fsm_path);
-    my $fsm_module = $pipeline_for_builder->create_fsm_module($raw_ast);
+    my $raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
+        fsm_file => $fsm_path,
+        debug_level => 0,
+    );
+    my $fsm_module = FSM::Pipeline::SourceFrontend->create_fsm_module(
+        raw_ast => $raw_ast,
+        debug_level => 0,
+    );
     my $rebuilt_intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
         fsm_module => $fsm_module,
     );

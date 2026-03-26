@@ -10,7 +10,10 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Backend::GeneratedModuleEmitter;
+use FSM::IR::IntentHIRBuilder;
+use FSM::IR::StructuralRTLIRBuilder;
 use FSM::Pipeline::GeneratedModuleInfoBuilder;
+use FSM::Pipeline::SourceFrontend;
 use FSM::Pipeline::HDLGenerator;
 
 subtest 'generated module-info builder rebuilds the bounded direct-root module_info surface from semantic inputs' => sub {
@@ -39,10 +42,17 @@ subtest 'generated module-info builder rebuilds the bounded direct-root module_i
 FSM
     );
 
-    my $pipeline_for_builder = new_pipeline();
-    my $raw_ast = $pipeline_for_builder->parse_fsm_file($fsm_path);
-    my $fsm_module = $pipeline_for_builder->create_fsm_module($raw_ast);
-    my $intent_hir = $pipeline_for_builder->build_intent_hir($fsm_module);
+    my $raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
+        fsm_file => $fsm_path,
+        debug_level => 0,
+    );
+    my $fsm_module = FSM::Pipeline::SourceFrontend->create_fsm_module(
+        raw_ast => $raw_ast,
+        debug_level => 0,
+    );
+    my $intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
+        fsm_module => $fsm_module,
+    );
     my $module_info = FSM::Pipeline::GeneratedModuleInfoBuilder->build_from_fsm_module(
         fsm_module => $fsm_module,
         intent_hir => $intent_hir,
@@ -58,7 +68,11 @@ FSM
         target_language => 'systemverilog',
         hdl_generator => $backend_result->{hdl_generator},
     );
-    my $structural_rtl_ir = $pipeline_for_builder->build_structural_rtl_ir($module_info, $fsm_module);
+    my $structural_rtl_ir = FSM::IR::StructuralRTLIRBuilder->build_from_generated_module_info(
+        module_info => $module_info,
+        fsm_module => $fsm_module,
+        target_language => 'systemverilog',
+    );
     $module_info->{structural_rtl_ir} = $structural_rtl_ir->as_hashref;
 
     my $pipeline_for_full = new_pipeline();

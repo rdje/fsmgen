@@ -9,7 +9,10 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::IR::IntentHIRBuilder;
 use FSM::IR::StructuralRTLIRBuilder;
+use FSM::Pipeline::GeneratedModuleInfoBuilder;
+use FSM::Pipeline::SourceFrontend;
 use FSM::Pipeline::HDLGenerator;
 
 subtest 'structural rtl ir builder rebuilds the bounded direct-root structural surface from generated analysis inputs' => sub {
@@ -35,11 +38,21 @@ subtest 'structural rtl ir builder rebuilds the bounded direct-root structural s
 FSM
     );
 
-    my $pipeline_for_builder = new_pipeline();
-    my $raw_ast = $pipeline_for_builder->parse_fsm_file($fsm_path);
-    my $fsm_module = $pipeline_for_builder->create_fsm_module($raw_ast);
-    my $intent_hir = $pipeline_for_builder->build_intent_hir($fsm_module);
-    my $module_info = $pipeline_for_builder->analyze_fsm_module($fsm_module, $intent_hir);
+    my $raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
+        fsm_file => $fsm_path,
+        debug_level => 0,
+    );
+    my $fsm_module = FSM::Pipeline::SourceFrontend->create_fsm_module(
+        raw_ast => $raw_ast,
+        debug_level => 0,
+    );
+    my $intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
+        fsm_module => $fsm_module,
+    );
+    my $module_info = FSM::Pipeline::GeneratedModuleInfoBuilder->build_from_fsm_module(
+        fsm_module => $fsm_module,
+        intent_hir => $intent_hir,
+    );
     my $rebuilt_structural_rtl_ir = FSM::IR::StructuralRTLIRBuilder->build_from_generated_module_info(
         module_info => $module_info,
         fsm_module => $fsm_module,

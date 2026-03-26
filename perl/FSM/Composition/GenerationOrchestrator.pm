@@ -21,6 +21,7 @@ use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Backend::VerilogFamily::StructuralRTLIREmitter;
 use FSM::Composition::ChildExportBuilder;
 use FSM::Composition::PlanBuilder;
@@ -49,7 +50,7 @@ sub generate_from_source ($class, %args) {
     my $source_path_resolver = $args{source_path_resolver} // $pipeline->{source_path_resolver};
     my $rtl_interface_loader = $args{rtl_interface_loader} // $pipeline->{rtl_interface_loader};
     my $statistics_seed = $args{statistics_seed}
-        // $pipeline->gather_statistics(undef);
+        // FSM::Backend::GeneratedModuleEmitter->statistics_from_generator(undef);
 
     $source_info->{composition_spec} //= $composition_spec;
 

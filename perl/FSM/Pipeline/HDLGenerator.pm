@@ -4,22 +4,16 @@ package FSM::Pipeline::HDLGenerator;
 use v5.20;
 use strict;
 use warnings;
-use Carp qw(confess);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 use FindBin;
 use lib "$FindBin::Bin";
-use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Debug;
 use FSM::Composition::RTLInterfaceLoader;
 use FSM::Extension::Loader;
 use FSM::Extension::Registry;
-use FSM::IR::IntentHIRBuilder;
-use FSM::IR::LoweredRTLIRBuilder;
-use FSM::IR::StructuralRTLIRBuilder;
 use FSM::Pipeline::SourceGenerationOrchestrator;
-use FSM::Pipeline::GeneratedModuleInfoBuilder;
 use FSM::Pipeline::SourceFrontend;
 use FSM::SourcePathResolver;
 
@@ -132,88 +126,6 @@ sub create_fsm_module ($self, $raw_ast) {
     return FSM::Pipeline::SourceFrontend->create_fsm_module(
         raw_ast => $raw_ast,
         debug_level => ($self->{debug_level} // 0),
-    );
-}
-
-sub build_intent_hir ($self, $fsm_module) {
-    return FSM::IR::IntentHIRBuilder->build_from_fsm_module(
-        fsm_module => $fsm_module,
-    );
-}
-
-sub analyze_fsm_module ($self, $fsm_module, $intent_hir = undef) {
-    $intent_hir //= $self->build_intent_hir($fsm_module);
-    return FSM::Pipeline::GeneratedModuleInfoBuilder->build_from_fsm_module(
-        fsm_module => $fsm_module,
-        intent_hir => $intent_hir,
-    );
-}
-
-sub module_output_drive_families ($self, $module_info) {
-    return FSM::Pipeline::GeneratedModuleInfoBuilder->output_drive_families_from_module_info($module_info);
-}
-
-sub module_intent_hir ($self, $module_info) {
-    return FSM::Pipeline::GeneratedModuleInfoBuilder->intent_hir_from_module_info($module_info);
-}
-
-sub module_lowered_rtl_ir ($self, $module_info) {
-    return FSM::Pipeline::GeneratedModuleInfoBuilder->lowered_rtl_ir_from_module_info($module_info);
-}
-
-sub module_structural_rtl_ir ($self, $module_info) {
-    return FSM::Pipeline::GeneratedModuleInfoBuilder->structural_rtl_ir_from_module_info($module_info);
-}
-
-sub module_standalone_dt_multi_drive_targets ($self, $module_info) {
-    return FSM::Pipeline::GeneratedModuleInfoBuilder->standalone_dt_multi_drive_targets_from_module_info($module_info);
-}
-
-sub build_lowered_rtl_ir ($self, $module_info, $fsm_module) {
-    return FSM::IR::LoweredRTLIRBuilder->build_from_generated_module_info(
-        module_info => $module_info,
-        fsm_module => $fsm_module,
-        target_language => ($self->{target_language} // 'systemverilog'),
-        hdl_generator => $self->{hdl_generator},
-    );
-}
-
-sub build_structural_rtl_ir ($self, $module_info, $fsm_module = undef) {
-    return FSM::IR::StructuralRTLIRBuilder->build_from_generated_module_info(
-        module_info => $module_info,
-        fsm_module => $fsm_module,
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-}
-
-sub enrich_module_info_from_generated_analysis ($self, $module_info, $fsm_module) {
-    return FSM::Pipeline::GeneratedModuleInfoBuilder->enrich_with_generated_analysis(
-        module_info => $module_info,
-        fsm_module => $fsm_module,
-        target_language => ($self->{target_language} // 'systemverilog'),
-        hdl_generator => $self->{hdl_generator},
-    );
-}
-
-sub generate_hdl_code ($self, $fsm_module) {
-    my $backend_result = FSM::Backend::GeneratedModuleEmitter->emit_from_fsm_module(
-        fsm_module => $fsm_module,
-        target_language => ($self->{target_language} // 'systemverilog'),
-        debug_level => ($self->{debug_level} // 0),
-    );
-    $self->{hdl_generator} = $backend_result->{hdl_generator};
-    return $backend_result->{hdl_code};
-}
-
-sub get_generator_method ($self) {
-    return FSM::Backend::GeneratedModuleEmitter->generator_method_for_target(
-        $self->{target_language},
-    );
-}
-
-sub gather_statistics ($self, $fsm_module) {
-    return FSM::Backend::GeneratedModuleEmitter->statistics_from_generator(
-        $self->{hdl_generator},
     );
 }
 

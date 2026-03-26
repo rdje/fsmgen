@@ -9,6 +9,7 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Composition::ChildExportBuilder;
 use FSM::Composition::ResultMetadataBuilder;
 use FSM::Pipeline::HDLGenerator;
@@ -64,7 +65,7 @@ FSM
         quiet => 1,
     );
 
-    my $statistics_seed = $pipeline->gather_statistics(undef);
+    my $statistics_seed = FSM::Backend::GeneratedModuleEmitter->statistics_from_generator(undef);
     my $result = $pipeline->generate_hdl_from_file($composition_path);
     my $composition_child_exports = FSM::Composition::ChildExportBuilder->build_child_exports(
         composition_plan => $result->{composition_plan},

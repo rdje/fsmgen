@@ -9,7 +9,9 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Composition::GenerationOrchestrator;
+use FSM::Pipeline::SourceFrontend;
 use FSM::Pipeline::HDLGenerator;
 
 subtest 'composition generation orchestrator rebuilds the bounded result surface from parsed inputs' => sub {
@@ -63,11 +65,17 @@ FSM
         quiet => 1,
     );
 
-    my $statistics_seed = $pipeline->gather_statistics(undef);
+    my $statistics_seed = FSM::Backend::GeneratedModuleEmitter->statistics_from_generator(undef);
     my $pipeline_result = $pipeline->generate_hdl_from_file($composition_path);
-    my $raw_ast = $pipeline->parse_fsm_file($composition_path);
-    my $source_info = $pipeline->classify_source_ast($raw_ast);
-    $source_info->{composition_spec} = $pipeline->parse_composition_source($raw_ast);
+    my $raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
+        fsm_file => $composition_path,
+        debug_level => 0,
+    );
+    my $source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($raw_ast);
+    $source_info->{composition_spec} = FSM::Pipeline::SourceFrontend->parse_composition_source(
+        raw_ast => $raw_ast,
+        debug_level => 0,
+    );
 
     my $orchestrated_result = FSM::Composition::GenerationOrchestrator->generate_from_source(
         pipeline => $pipeline,
