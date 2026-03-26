@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-26: old composition reporting helper residue is now gone from the pipeline facade
+- Continued the active `R11` package-breakdown lane by removing one more stale wrapper pocket from `HDLGenerator` instead of leaving composition failure-summary and provenance/override/block label helpers there after the builder owners already existed.
+- Landed behavior:
+  - removed those old wrapper methods from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm),
+  - updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so the CLI now asks [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) and [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm) for those reporting surfaces directly,
+  - updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so direct failure-summary coverage now points at the real owner too,
+  - and tightened the package-level POD in [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so it describes the thinner facade role honestly.
+- Why this is worth shipping:
+  - it removes another pocket of fake ownership from `HDLGenerator`,
+  - it makes the CLI/reporting edge talk to the real builder owners instead of routing through stale facade glue,
+  - and it sharpens the next seam correctly: thinner remaining facade residue or deeper backend cleanup, not more report-helper drift.
+
 ## 2026-03-26: bounded source parsing and semantic-module creation now live in a dedicated frontend package
 - Continued the active `R11` package-breakdown lane by moving the bounded source-frontend family out of `HDLGenerator` instead of leaving file parsing, source-kind classification, composition parsing, and semantic FSM/DT module creation as one more mixed coordinator-owned pocket.
 - Landed behavior:

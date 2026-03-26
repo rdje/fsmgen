@@ -10,6 +10,7 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::Composition::FailureReportBuilder;
 use FSM::Pipeline::HDLGenerator;
 
 subtest 'pipeline derives blocked composition failure summaries from top-scoped failures' => sub {
@@ -37,7 +38,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked unsupported-child failures');
     is($report->{top_name}, 'unsupported_child_failure_summary_top', 'failure report preserves the composition top name');
@@ -77,7 +78,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked no-child composition failures');
     is($report->{top_name}, 'no_child_lane_entry_failure_summary_top', 'failure report preserves the top name for blocked no-child composition failures');
@@ -136,7 +137,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked multi-?ports composition shape failures');
     is($report->{top_name}, 'multi_ports_blocks_failure_summary_top', 'failure report preserves the top name for blocked multi-?ports composition shape failures');
@@ -203,7 +204,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked omitted-?ports composition shape failures');
     is($report->{top_name}, 'missing_ports_failure_summary_top', 'failure report preserves the top name for blocked omitted-?ports composition shape failures');
@@ -271,7 +272,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked empty-?ports composition shape failures');
     is($report->{top_name}, 'empty_ports_failure_summary_top', 'failure report preserves the top name for blocked empty-?ports composition shape failures');
@@ -311,7 +312,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked empty child entries');
     is($report->{top_name}, 'empty_child_entry_failure_summary_top', 'failure report preserves the top name for blocked empty child entries');
@@ -353,7 +354,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked non-string child headers');
     is($report->{top_name}, 'nonstring_child_header_failure_summary_top', 'failure report preserves the top name for blocked non-string child headers');
@@ -412,7 +413,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked ?ports mapping failures');
     is($report->{top_name}, 'ports_mapping_failure_summary_top', 'failure report preserves the top name for blocked ?ports mapping failures');
@@ -470,7 +471,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked nested ?ports items');
     is($report->{top_name}, 'nested_ports_item_failure_summary_top', 'failure report preserves the top name for blocked nested ?ports items');
@@ -528,7 +529,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked invalid ?ports token failures');
     is($report->{top_name}, 'invalid_ports_token_failure_summary_top', 'failure report preserves the top name for blocked invalid ?ports token failures');
@@ -586,7 +587,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked non-positive ?ports width failures');
     is($report->{top_name}, 'nonpositive_ports_width_failure_summary_top', 'failure report preserves the top name for blocked non-positive ?ports width failures');
@@ -649,7 +650,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked ?toplink token-shape failures');
     is($report->{top_name}, 'unsupported_toplink_token_failure_summary_top', 'failure report preserves the top name for blocked ?toplink token-shape failures');
@@ -711,7 +712,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked nested ?toplink items');
     is($report->{top_name}, 'nested_toplink_item_failure_summary_top', 'failure report preserves the top name for blocked nested ?toplink items');
@@ -755,7 +756,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked ?fsmc source-shape failures');
     is($report->{top_name}, 'nested_fsm_source_failure_summary_top', 'failure report preserves the top name for blocked ?fsmc source-shape failures');
@@ -797,7 +798,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked unnamed ?fsmc source-count failures');
     is($report->{top_name}, 'unnamed_missing_fsm_source_failure_summary_top', 'failure report preserves the top name for blocked unnamed ?fsmc source-count failures');
@@ -841,7 +842,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked unnamed ?fsmc source-shape failures');
     is($report->{top_name}, 'unnamed_nested_fsm_source_failure_summary_top', 'failure report preserves the top name for blocked unnamed ?fsmc source-shape failures');
@@ -885,7 +886,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked ?dtc source-shape failures');
     is($report->{top_name}, 'nested_dt_source_failure_summary_top', 'failure report preserves the top name for blocked ?dtc source-shape failures');
@@ -927,7 +928,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked unnamed ?dtc source-count failures');
     is($report->{top_name}, 'unnamed_missing_dt_source_failure_summary_top', 'failure report preserves the top name for blocked unnamed ?dtc source-count failures');
@@ -971,7 +972,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked unnamed ?dtc source-shape failures');
     is($report->{top_name}, 'unnamed_nested_dt_source_failure_summary_top', 'failure report preserves the top name for blocked unnamed ?dtc source-shape failures');
@@ -1013,7 +1014,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked child item-list shape failures');
     is($report->{top_name}, 'dotted_pair_child_failure_summary_top', 'failure report preserves the top name for blocked child item-list shape failures');
@@ -1055,7 +1056,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked ?toplink child item-list shape failures');
     is($report->{top_name}, 'dotted_pair_toplink_child_failure_summary_top', 'failure report preserves the top name for blocked ?toplink child item-list shape failures');
@@ -1097,7 +1098,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked ?ports child item-list shape failures');
     is($report->{top_name}, 'dotted_pair_ports_child_failure_summary_top', 'failure report preserves the top name for blocked ?ports child item-list shape failures');
@@ -1139,7 +1140,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked ?dtc child item-list shape failures');
     is($report->{top_name}, 'dotted_pair_dtc_child_failure_summary_top', 'failure report preserves the top name for blocked ?dtc child item-list shape failures');
@@ -1181,7 +1182,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked ?rtl child item-list shape failures');
     is($report->{top_name}, 'dotted_pair_rtl_child_failure_summary_top', 'failure report preserves the top name for blocked ?rtl child item-list shape failures');
@@ -1242,7 +1243,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked duplicate top-port declarations');
     is($report->{top_name}, 'duplicate_top_port_failure_summary_top', 'failure report preserves the top name for blocked duplicate top-port declarations');
@@ -1322,7 +1323,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked duplicate child-instance declarations');
     is($report->{top_name}, 'duplicate_child_instance_failure_summary_top', 'failure report preserves the top name for blocked duplicate child-instance declarations');
@@ -1377,7 +1378,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked top-port failures');
     is($report->{top_name}, 'c1_width_mismatch_failure_summary_top', 'failure report preserves the top name for top-port failures');
@@ -1432,7 +1433,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked lane-visible failures');
     is($report->{top_name}, 'c1_missing_exposure_failure_summary_top', 'failure report preserves the top name for lane-visible failures');
@@ -1499,7 +1500,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link lane-entry failures');
     is($report->{top_name}, 'missing_toplink_failure_summary_top', 'failure report preserves the top name for blocked explicit-link lane-entry failures');
@@ -1558,7 +1559,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked rtlif failures');
     is($report->{rtl_module_name}, 'uart_tx', 'failure report preserves the external RTL module name');
@@ -1633,7 +1634,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked rtl metadata-structure failures');
     is($report->{rtl_module_name}, 'uart_tx', 'failure report preserves the external RTL module name for metadata-structure failures');
@@ -1703,7 +1704,7 @@ RTLIF
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked empty-port rtlif failures');
     is($report->{rtl_module_name}, 'uart_tx', 'failure report preserves the external RTL module name for empty-port failures');
@@ -1779,7 +1780,7 @@ RTLIF
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked rtlif flatness failures');
     is($report->{rtl_module_name}, 'uart_tx', 'failure report preserves the external RTL module name for flatness failures');
@@ -1853,7 +1854,7 @@ RTLIF
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked rtlif token failures');
     is($report->{rtl_module_name}, 'uart_tx', 'failure report preserves the external RTL module name for token failures');
@@ -1927,7 +1928,7 @@ RTLIF
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked rtlif width failures');
     is($report->{rtl_module_name}, 'uart_tx', 'failure report preserves the external RTL module name for width failures');
@@ -2001,7 +2002,7 @@ RTLIF
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked rtlif type failures');
     is($report->{rtl_module_name}, 'uart_tx', 'failure report preserves the external RTL module name for type failures');
@@ -2076,7 +2077,7 @@ RTLIF
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked duplicate-port rtlif failures');
     is($report->{rtl_module_name}, 'uart_tx', 'failure report preserves the external RTL module name for duplicate-port failures');
@@ -2147,7 +2148,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked embedded rtlif duplicate-root failures');
     is($report->{construct}, '?rtl', 'failure report preserves the external RTL construct for embedded duplicate-root failures');
@@ -2207,7 +2208,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked generated-child realization failures');
     is($report->{top_name}, 'wrong_fsmc_kind_failure_summary_top', 'failure report preserves the top name for blocked generated-child realization failures');
@@ -2270,7 +2271,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked wrong-kind ?dtc realization failures');
     is($report->{top_name}, 'wrong_dtc_kind_failure_summary_top', 'failure report preserves the top name for blocked wrong-kind ?dtc realization failures');
@@ -2318,7 +2319,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked missing ?fsmc child-source resolution failures');
     is($report->{top_name}, 'missing_fsmc_child_failure_summary_top', 'failure report preserves the top name for blocked missing ?fsmc child-source resolution failures');
@@ -2365,7 +2366,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked missing ?dtc child-source resolution failures');
     is($report->{top_name}, 'missing_dtc_child_failure_summary_top', 'failure report preserves the top name for blocked missing ?dtc child-source resolution failures');
@@ -2439,7 +2440,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked missing-child-endpoint failures');
     is($report->{top_name}, 'missing_child_endpoint_failure_summary_top', 'failure report preserves the top name for blocked missing-child-endpoint failures');
@@ -2512,7 +2513,7 @@ RTLIF
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked existing-instance missing-port failures');
     is($report->{top_name}, 'missing_child_port_failure_summary_top', 'failure report preserves the top name for blocked existing-instance missing-port failures');
@@ -2583,7 +2584,7 @@ RTLIF
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link direction-mismatch failures');
     is($report->{top_name}, 'direction_mismatch_failure_summary_top', 'failure report preserves the top name for blocked explicit-link direction-mismatch failures');
@@ -2655,7 +2656,7 @@ RTLIF
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link top-port role mismatches');
     is($report->{top_name}, 'top_port_direction_mismatch_failure_summary_top', 'failure report preserves the top name for blocked explicit-link top-port role mismatches');
@@ -2728,7 +2729,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link child-source role mismatches');
     is($report->{top_name}, 'child_source_direction_mismatch_failure_summary_top', 'failure report preserves the top name for blocked explicit-link child-source role mismatches');
@@ -2794,7 +2795,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link top-target role mismatches');
     is($report->{top_name}, 'top_target_direction_mismatch_failure_summary_top', 'failure report preserves the top name for blocked explicit-link top-target role mismatches');
@@ -2867,7 +2868,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link duplicate-driver failures');
     is($report->{top_name}, 'duplicate_driver_failure_summary_top', 'failure report preserves the top name for blocked explicit-link duplicate-driver failures');
@@ -2956,7 +2957,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link duplicate-driver child-target failures');
     is($report->{top_name}, 'duplicate_driver_failure_summary_child', 'failure report preserves the top name for blocked explicit-link duplicate-driver child-target failures');
@@ -3030,7 +3031,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link width-mismatch failures');
     is($report->{top_name}, 'width_mismatch_failure_summary_child', 'failure report preserves the top name for blocked explicit-link width-mismatch failures');
@@ -3104,7 +3105,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link top-port width-mismatch failures');
     is($report->{top_name}, 'width_mismatch_failure_summary_top', 'failure report preserves the top name for blocked explicit-link top-port width-mismatch failures');
@@ -3180,7 +3181,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link multi-top-output topology failures');
     is($report->{top_name}, 'multi_top_output_topology_failure_summary_top', 'failure report preserves the top name for blocked explicit-link multi-top-output topology failures');
@@ -3254,7 +3255,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link top-to-top topology failures');
     is($report->{top_name}, 'top_to_top_topology_failure_summary_top', 'failure report preserves the top name for blocked explicit-link top-to-top topology failures');
@@ -3324,7 +3325,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked unsupported-endpoint failures');
     is($report->{top_name}, 'unsupported_endpoint_failure_summary_top', 'failure report preserves the top name for blocked unsupported-endpoint failures');
@@ -3393,7 +3394,7 @@ FSM
     };
     $exception = $@;
 
-    my $report = $pipeline->build_composition_failure_report($exception);
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked missing-top-endpoint failures');
     is($report->{top_name}, 'missing_top_endpoint_failure_summary_top', 'failure report preserves the top name for blocked missing-top-endpoint failures');

@@ -12,6 +12,8 @@ use File::Spec;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 # Load required modules
+use FSM::Composition::FailureReportBuilder;
+use FSM::Composition::ProvenanceReportBuilder;
 use FSM::Debug;  # Global debug system
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(binding_signal_summary_text);
 use FSM::Pipeline::HDLGenerator;
@@ -382,7 +384,7 @@ my $result = eval {
 
 if ($@) {
     my $error = $@;
-    my $failure_report = $pipeline->build_composition_failure_report($error);
+    my $failure_report = FSM::Composition::FailureReportBuilder->build_report($error);
 
     unless ($quiet || !$failure_report) {
         print "\n=== Composition Failure Summary ===\n";
@@ -454,7 +456,7 @@ unless ($quiet) {
         if (@{$composition_report->{ordered_port_origins} || []}) {
             print "\nTop Port Provenance:\n";
             for my $origin_kind (@{$composition_report->{ordered_port_origins}}) {
-                my $label = $pipeline->composition_provenance_label($origin_kind);
+                my $label = FSM::Composition::ProvenanceReportBuilder->provenance_label($origin_kind);
                 my $count = $composition_report->{port_origin_counts}{$origin_kind} || 0;
                 my $example = $composition_report->{port_origin_examples}{$origin_kind} || '';
                 print "  - $label: $count";
@@ -466,7 +468,7 @@ unless ($quiet) {
         if (@{$composition_report->{ordered_resolved_link_origins} || []}) {
             print "\nResolved Link Provenance:\n";
             for my $origin_kind (@{$composition_report->{ordered_resolved_link_origins}}) {
-                my $label = $pipeline->composition_provenance_label($origin_kind);
+                my $label = FSM::Composition::ProvenanceReportBuilder->provenance_label($origin_kind);
                 my $count = $composition_report->{resolved_link_origin_counts}{$origin_kind} || 0;
                 my $example = $composition_report->{resolved_link_origin_examples}{$origin_kind} || '';
                 print "  - $label: $count";
@@ -478,7 +480,7 @@ unless ($quiet) {
         if (@{$composition_report->{ordered_override_kinds} || []}) {
             print "\nConvention Overrides:\n";
             for my $kind (@{$composition_report->{ordered_override_kinds}}) {
-                my $label = $pipeline->composition_override_label($kind);
+                my $label = FSM::Composition::ProvenanceReportBuilder->override_label($kind);
                 my $count = $composition_report->{override_kind_counts}{$kind} || 0;
                 my $example = $composition_report->{override_kind_examples}{$kind} || '';
                 print "  - $label: $count";
@@ -490,7 +492,7 @@ unless ($quiet) {
         if (@{$composition_report->{ordered_block_kinds} || []}) {
             print "\nConvention Blocks:\n";
             for my $kind (@{$composition_report->{ordered_block_kinds}}) {
-                my $label = $pipeline->composition_block_label($kind);
+                my $label = FSM::Composition::ProvenanceReportBuilder->block_label($kind);
                 my $count = $composition_report->{block_kind_counts}{$kind} || 0;
                 my $example = $composition_report->{block_kind_examples}{$kind} || '';
                 print "  - $label: $count";

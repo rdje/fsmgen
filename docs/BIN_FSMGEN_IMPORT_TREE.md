@@ -35,6 +35,8 @@ The heaviest remaining complexity is still the direct single-module HDL backend 
 
 ## What `bin/fsmgen` actually owns
 [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) directly imports:
+- [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm)
+- [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm)
 - [perl/FSM/Debug.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Debug.pm)
 - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm)
 - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
@@ -45,7 +47,7 @@ It mainly owns:
 - source-file lookup
 - debug/trace routing
 - output-file writing
-- user-facing summaries for composition provenance, override/block events, generated children, and shared-datapath metadata
+- user-facing summaries for composition provenance, override/block events, failure summaries, generated children, and shared-datapath metadata
 
 It does not own the compiler architecture.
 Its only non-trivial local logic is presentation/reporting glue.
@@ -119,6 +121,8 @@ surrounding extension-hook/finalization flow.
 also no longer owns the full direct-root result-assembly cluster inline:
 [DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
 now owns that bounded non-composition source-to-result path.
+It also no longer owns the old composition failure/provenance label helper
+residue that the CLI can ask the dedicated builder packages for directly.
 
 ### Source frontend owner
 - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
@@ -319,6 +323,9 @@ It behaves like a hook system, not a competing architecture.
 - `SourceFrontend` now also owns the bounded source-frontend family rather
   than leaving file parsing, source-kind classification, composition parsing,
   and semantic-module creation inline in `HDLGenerator`.
+- `bin/fsmgen` now also reads composition failure summaries plus provenance /
+  override / block labels directly from the dedicated builder packages instead
+  of asking `HDLGenerator` to keep those reporting helpers as facade residue.
 - The forward IR layer now looks real enough to steer architecture, not just document aspiration.
 - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) has become a meaningful structural API, not just formatting glue.
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm) is the right directional move for backend emission.

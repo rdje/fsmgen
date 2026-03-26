@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-26: old composition reporting helper residue is now gone from the pipeline facade
+- Saved shipped behavior:
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) no longer owns the old composition failure-summary and provenance/override/block label helper family,
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now asks [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) and [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm) for those reporting surfaces directly,
+  - and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now anchors direct failure-summary coverage to the failure-report builder owner instead of the pipeline facade.
+- Important continuity note:
+  - this is another real `HDLGenerator` thinning step, not just a docs rename,
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now reflects that `bin/fsmgen` directly imports those builder owners,
+  - and the next likely seam remains the thinner remaining `HDLGenerator` facade/helper residue or deeper cleanup under the older direct generated-module backend family.
+
 ## 2026-03-26: bounded source parsing and semantic-module creation now live in a dedicated frontend package
 - Saved shipped behavior:
   - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now owns bounded source parsing, source-kind classification, typed composition parsing, and semantic FSM/DT module creation,

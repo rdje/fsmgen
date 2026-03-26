@@ -12,25 +12,12 @@ use FindBin;
 use lib "$FindBin::Bin";
 use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Debug;
-use FSM::Composition::FailureReportBuilder;
-use FSM::Composition::ProvenanceReportBuilder;
-use FSM::Composition::SharedDatapathCandidateBuilder;
 use FSM::Composition::RTLInterfaceLoader;
 use FSM::Extension::Loader;
 use FSM::Extension::Registry;
-use FSM::IR::IntentHIR;
 use FSM::IR::IntentHIRBuilder;
-use FSM::IR::LoweredRTLIR;
 use FSM::IR::LoweredRTLIRBuilder;
-use FSM::IR::StructuralRTLIR;
 use FSM::IR::StructuralRTLIRBuilder;
-use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
-    signal_ref_expr
-    signal_ref_binding
-    update_binding_signal_ref
-    binding_expr
-    expr_signal_name
-);
 use FSM::Pipeline::SourceGenerationOrchestrator;
 use FSM::Pipeline::GeneratedModuleInfoBuilder;
 use FSM::Pipeline::SourceFrontend;
@@ -42,9 +29,10 @@ FSM::Pipeline::HDLGenerator - Complete FSM to HDL generation pipeline
 
 =head1 DESCRIPTION
 
-This module encapsulates the entire FSM processing pipeline from parsing
-the FSM file through generating HDL code. It provides a clean interface
-that separates the processing logic from the command line interface.
+This module is the thin public facade for the active FSMGen generation
+pipeline. It owns shared pipeline configuration plus a small compatibility
+surface, while the real work lives in explicit frontend, orchestrator,
+builder, and backend-owner packages.
 
 =head1 SYNOPSIS
 
@@ -145,195 +133,6 @@ sub create_fsm_module ($self, $raw_ast) {
         raw_ast => $raw_ast,
         debug_level => ($self->{debug_level} // 0),
     );
-}
-
-sub standalone_dt_assertion_runtime_lines ($self, $module_info) {
-    return FSM::Backend::GeneratedModuleEmitter->standalone_dt_assertion_runtime_lines(
-        module_info => $module_info,
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-}
-
-sub augment_generated_hdl_with_standalone_dt_assertions ($self, $hdl_code, $module_info) {
-    return FSM::Backend::GeneratedModuleEmitter->augment_with_standalone_dt_assertions(
-        hdl_code => $hdl_code,
-        module_info => $module_info,
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-}
-
-sub shared_datapath_or_expression ($self, $input_enable_signals) {
-    my @inputs = grep {
-        defined($_) && length($_)
-    } @{$input_enable_signals || []};
-
-    return "1'b0" unless @inputs;
-    return $inputs[0] if @inputs == 1;
-    return join(' | ', @inputs);
-}
-
-sub shared_datapath_conflict_expression ($self, $input_enable_signals) {
-    my @inputs = grep {
-        defined($_) && length($_)
-    } @{$input_enable_signals || []};
-
-    return "1'b0" if @inputs < 2;
-
-    my @pairs;
-    for my $i (0 .. $#inputs - 1) {
-        for my $j ($i + 1 .. $#inputs) {
-            push @pairs, "($inputs[$i] & $inputs[$j])";
-        }
-    }
-
-    return join(' | ', @pairs);
-}
-
-sub composition_shared_datapath_candidates_for_plan ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
-    return FSM::Composition::SharedDatapathCandidateBuilder->candidates_for_plan(
-        composition_plan => $composition_plan,
-        structural_rtl_ir => $structural_rtl_ir,
-        intent_hir => $intent_hir,
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-}
-
-sub build_composition_intent_hir (
-    $self,
-    $composition_plan,
-    $composition_child_exports = undef,
-    $generated_child_exports = undef,
-    $standalone_dt_child_exports = undef,
-    $structural_rtl_ir = undef,
-) {
-    return FSM::IR::IntentHIRBuilder->build_from_composition_plan(
-        composition_plan => $composition_plan,
-        composition_child_exports => $composition_child_exports,
-        generated_child_exports => $generated_child_exports,
-        standalone_dt_child_exports => $standalone_dt_child_exports,
-        structural_rtl_ir => $structural_rtl_ir,
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-}
-
-sub build_composition_lowered_rtl_ir ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
-    return FSM::IR::LoweredRTLIRBuilder->build_from_composition_plan(
-        composition_plan => $composition_plan,
-        structural_rtl_ir => $structural_rtl_ir,
-        intent_hir => $intent_hir,
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-}
-
-sub composition_provenance_endpoint_context ($self, $composition_plan, $endpoint, $structural_rtl_ir = undef, $intent_hir = undef) {
-    $intent_hir //= $self->build_composition_intent_hir(
-        $composition_plan,
-        undef,
-        undef,
-        undef,
-        $structural_rtl_ir,
-    );
-    return FSM::Composition::ProvenanceReportBuilder->endpoint_context(
-        composition_plan => $composition_plan,
-        endpoint => $endpoint,
-        structural_rtl_ir => $structural_rtl_ir,
-        intent_hir => $intent_hir,
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-}
-
-sub composition_provenance_endpoint_example_label ($self, $context, $fallback = undef) {
-    return FSM::Composition::ProvenanceReportBuilder->endpoint_example_label($context, $fallback);
-}
-
-sub composition_port_example_summary ($self, $entry) {
-    return FSM::Composition::ProvenanceReportBuilder->port_example_summary($entry);
-}
-
-sub composition_link_example_summary ($self, $entry) {
-    return FSM::Composition::ProvenanceReportBuilder->link_example_summary($entry);
-}
-
-sub composition_signal_family_contexts ($self, $composition_plan, $signal_name, $direction = undef, $structural_rtl_ir = undef, $intent_hir = undef) {
-    $intent_hir //= $self->build_composition_intent_hir(
-        $composition_plan,
-        undef,
-        undef,
-        undef,
-        $structural_rtl_ir,
-    );
-    return FSM::Composition::ProvenanceReportBuilder->signal_family_contexts(
-        composition_plan => $composition_plan,
-        signal_name => $signal_name,
-        direction => $direction,
-        structural_rtl_ir => $structural_rtl_ir,
-        intent_hir => $intent_hir,
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-}
-
-sub build_composition_override_events ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
-    $intent_hir //= $self->build_composition_intent_hir(
-        $composition_plan,
-        undef,
-        undef,
-        undef,
-        $structural_rtl_ir,
-    );
-    return FSM::Composition::ProvenanceReportBuilder->build_override_events(
-        composition_plan => $composition_plan,
-        structural_rtl_ir => $structural_rtl_ir,
-        intent_hir => $intent_hir,
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-}
-
-sub build_composition_block_events ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
-    $intent_hir //= $self->build_composition_intent_hir(
-        $composition_plan,
-        undef,
-        undef,
-        undef,
-        $structural_rtl_ir,
-    );
-    return FSM::Composition::ProvenanceReportBuilder->build_block_events(
-        composition_plan => $composition_plan,
-        structural_rtl_ir => $structural_rtl_ir,
-        intent_hir => $intent_hir,
-        target_language => ($self->{target_language} // 'systemverilog'),
-    );
-}
-
-sub composition_provenance_category ($self, $origin_kind) {
-    return FSM::Composition::ProvenanceReportBuilder->provenance_category($origin_kind);
-}
-
-sub composition_provenance_sort_key ($self, $origin_kind) {
-    return FSM::Composition::ProvenanceReportBuilder->provenance_sort_key($origin_kind);
-}
-
-sub composition_provenance_label ($self, $origin_kind) {
-    return FSM::Composition::ProvenanceReportBuilder->provenance_label($origin_kind);
-}
-
-sub composition_override_label ($self, $kind) {
-    return FSM::Composition::ProvenanceReportBuilder->override_label($kind);
-}
-
-sub composition_override_example_summary ($self, $event) {
-    return FSM::Composition::ProvenanceReportBuilder->override_example_summary($event);
-}
-
-sub composition_block_label ($self, $kind) {
-    return FSM::Composition::ProvenanceReportBuilder->block_label($kind);
-}
-
-sub composition_block_example_summary ($self, $event) {
-    return FSM::Composition::ProvenanceReportBuilder->block_example_summary($event);
-}
-
-sub build_composition_failure_report ($self, $error_text) {
-    return FSM::Composition::FailureReportBuilder->build_report($error_text);
 }
 
 sub build_intent_hir ($self, $fsm_module) {
@@ -445,14 +244,17 @@ Returns a hashref with:
 - statistics: Generation statistics
 - raw_ast: Original parsed AST
 
-=head1 PIPELINE STAGES
+=head1 ARCHITECTURE NOTE
 
-The pipeline consists of these stages:
+The active runtime path now goes through explicit owner packages:
 
-1. **Parse FSM File** - Uses Lispish to parse the .fsm file
-2. **Create FSM Module** - Uses FSMGenFull adapter to create semantic AST
-3. **Analyze FSM Module** - Analyzes states, signals, and structure
-4. **Generate HDL Code** - Uses appropriate HDL generator
-5. **Gather Statistics** - Collects generation metrics
+1. source frontend,
+2. source/direct/composition orchestrators,
+3. forward-IR builders,
+4. generated-module or structural backend emitters,
+5. result metadata helpers.
+
+C<FSM::Pipeline::HDLGenerator> remains as the public facade that wires those
+owners together through shared pipeline configuration.
 
 =cut
