@@ -34,6 +34,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     expr_signal_name
 );
 use FSM::Pipeline::SourceGenerationOrchestrator;
+use FSM::Pipeline::GeneratedModuleInfoBuilder;
 use FSM::SourceClassifier;
 use FSM::SourcePathResolver;
 use Lispish;
@@ -401,83 +402,30 @@ sub build_intent_hir ($self, $fsm_module) {
 
 sub analyze_fsm_module ($self, $fsm_module, $intent_hir = undef) {
     $intent_hir //= $self->build_intent_hir($fsm_module);
-
-    my @all_states = @{$fsm_module->states};
-    my %all_signals = %{$fsm_module->signals};
-
-    my @regular_states = grep {
-        $_->can('is_regular_state') ? $_->is_regular_state : $_->name !~ /^-/
-    } @all_states;
-    my @standalone_dts = grep {
-        $_->can('is_regular_state') ? !$_->is_regular_state : $_->name =~ /^-/
-    } @all_states;
-
-    my $intent_hir_hash = $intent_hir->as_hashref;
-
-    return {
-        module_name => $intent_hir_hash->{module_name},
-        source_root_kind => $intent_hir_hash->{source_root_kind},
-        regular_states => \@regular_states,
-        regular_state_count => $intent_hir_hash->{regular_state_count},
-        regular_state_names => $intent_hir_hash->{regular_state_names},
-        state_count => $intent_hir_hash->{state_count},
-        standalone_dts => \@standalone_dts,
-        standalone_dt_count => $intent_hir_hash->{standalone_dt_count},
-        standalone_dt_names => $intent_hir_hash->{standalone_dt_names},
-        signals => \%all_signals,
-        signal_count => $intent_hir_hash->{signal_count},
-        signal_names => $intent_hir_hash->{signal_names},
-        signal_analysis => $intent_hir_hash->{signal_analysis},
-        explicit_system_contract => $intent_hir_hash->{explicit_system_contract},
-        system_contract => $intent_hir_hash->{system_contract},
-        requires_implicit_system_ports => $intent_hir_hash->{requires_implicit_system_ports},
-        standalone_dt_enable_families => $intent_hir_hash->{standalone_dt_enable_families},
-        standalone_dt_module_enable_family => $intent_hir_hash->{standalone_dt_module_enable_family},
-        parameter_count => $intent_hir_hash->{parameter_count},
-        parameter_names => $intent_hir_hash->{parameter_names},
-        intent_hir => $intent_hir_hash,
-    };
+    return FSM::Pipeline::GeneratedModuleInfoBuilder->build_from_fsm_module(
+        fsm_module => $fsm_module,
+        intent_hir => $intent_hir,
+    );
 }
 
 sub module_output_drive_families ($self, $module_info) {
-    return [] unless ref($module_info) eq 'HASH';
-
-    my $output_drive_families = FSM::IR::LoweredRTLIR->output_drive_families_from_input(
-        $module_info->{lowered_rtl_ir}
-    );
-    if (@$output_drive_families) {
-        return $output_drive_families;
-    }
-
-    return $module_info->{output_drive_families} || [];
+    return FSM::Pipeline::GeneratedModuleInfoBuilder->output_drive_families_from_module_info($module_info);
 }
 
 sub module_intent_hir ($self, $module_info) {
-    return {} unless ref($module_info) eq 'HASH';
-    return _clone_structured_value($module_info->{intent_hir} || {});
+    return FSM::Pipeline::GeneratedModuleInfoBuilder->intent_hir_from_module_info($module_info);
 }
 
 sub module_lowered_rtl_ir ($self, $module_info) {
-    return {} unless ref($module_info) eq 'HASH';
-    return _clone_structured_value($module_info->{lowered_rtl_ir} || {});
+    return FSM::Pipeline::GeneratedModuleInfoBuilder->lowered_rtl_ir_from_module_info($module_info);
 }
 
 sub module_structural_rtl_ir ($self, $module_info) {
-    return {} unless ref($module_info) eq 'HASH';
-    return _clone_structured_value($module_info->{structural_rtl_ir} || {});
+    return FSM::Pipeline::GeneratedModuleInfoBuilder->structural_rtl_ir_from_module_info($module_info);
 }
 
 sub module_standalone_dt_multi_drive_targets ($self, $module_info) {
-    return [] unless ref($module_info) eq 'HASH';
-
-    my $standalone_dt_multi_drive_targets = FSM::IR::LoweredRTLIR->standalone_dt_multi_drive_targets_from_input(
-        $module_info->{lowered_rtl_ir}
-    );
-    if (@$standalone_dt_multi_drive_targets) {
-        return $standalone_dt_multi_drive_targets;
-    }
-
-    return $module_info->{standalone_dt_multi_drive_targets} || [];
+    return FSM::Pipeline::GeneratedModuleInfoBuilder->standalone_dt_multi_drive_targets_from_module_info($module_info);
 }
 
 sub build_lowered_rtl_ir ($self, $module_info, $fsm_module) {
@@ -498,32 +446,12 @@ sub build_structural_rtl_ir ($self, $module_info, $fsm_module = undef) {
 }
 
 sub enrich_module_info_from_generated_analysis ($self, $module_info, $fsm_module) {
-    return $module_info unless ref($module_info) eq 'HASH';
-    my $lowered_rtl_ir = $self->build_lowered_rtl_ir($module_info, $fsm_module);
-    my $lowered_rtl_ir_hash = $lowered_rtl_ir->as_hashref;
-
-    $module_info->{output_drive_family_count} = $lowered_rtl_ir_hash->{output_drive_family_count};
-    $module_info->{output_drive_families} = $lowered_rtl_ir_hash->{output_drive_families};
-    $module_info->{standalone_dt_multi_drive_target_count} = $lowered_rtl_ir_hash->{standalone_dt_multi_drive_target_count};
-    $module_info->{standalone_dt_multi_drive_targets} = $lowered_rtl_ir_hash->{standalone_dt_multi_drive_targets};
-    $module_info->{lowered_rtl_ir} = $lowered_rtl_ir_hash;
-    return $module_info;
-}
-
-sub _clone_structured_value ($value) {
-    return undef unless defined $value;
-
-    if (ref($value) eq 'HASH') {
-        return {
-            map { $_ => _clone_structured_value($value->{$_}) } sort keys %$value
-        };
-    }
-
-    if (ref($value) eq 'ARRAY') {
-        return [ map { _clone_structured_value($_) } @$value ];
-    }
-
-    return $value;
+    return FSM::Pipeline::GeneratedModuleInfoBuilder->enrich_with_generated_analysis(
+        module_info => $module_info,
+        fsm_module => $fsm_module,
+        target_language => ($self->{target_language} // 'systemverilog'),
+        hdl_generator => $self->{hdl_generator},
+    );
 }
 
 sub generate_hdl_code ($self, $fsm_module) {

@@ -794,6 +794,14 @@ The first honest `R11` slices are now:
   whole source-level coordinator inline either; the next honest seam is now
   the thinner remaining `HDLGenerator` facade residue or deeper cleanup under
   the older backend family.
+- Package-breakdown note: the next generated-module metadata-owner split is
+  now active too: `FSM::Pipeline::GeneratedModuleInfoBuilder` now owns the
+  bounded generated-module `module_info` family, including lowered enrichment
+  and normalized output-drive-family / grouped-target queries, so
+  `HDLGenerator`, `DirectGenerationOrchestrator`, and
+  `GeneratedChildRealizer` no longer keep that metadata family inline either;
+  the next honest seam is now the thinner remaining `HDLGenerator`
+  facade/helper residue or deeper cleanup under the older backend family.
 - Forward-IR note: the direct-root semantic-builder counterpart is now active
   too: bounded direct-root `IntentHIR` construction now also lives in
   `FSM::IR::IntentHIRBuilder`, so `HDLGenerator` no longer owns direct-root

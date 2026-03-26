@@ -94,6 +94,15 @@ sub normalized_hdl_code {
     return '' unless defined $hdl_code && length $hdl_code;
 
     $hdl_code =~ s{// Date: .*}{// Date: <normalized>}g;
+    $hdl_code =~ s{
+        (//\s+Consolidated\ intermediate\ signals.*?\n)
+        (.*?)
+        (\n\s*//\s+Unified\ WEN/EN\ Signal\ Generation\ from\ Phase\ 1\ Analysis)
+    }{
+        my ($header, $body, $footer) = ($1, $2, $3);
+        my @body_lines = grep { length($_) } split /\n/, $body;
+        $header . join("\n", sort @body_lines) . $footer;
+    }gsex;
     return $hdl_code;
 }
 

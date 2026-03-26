@@ -27,6 +27,7 @@ use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Composition::InterfacePortBuilder;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::SharedDatapathSupport;
+use FSM::Pipeline::GeneratedModuleInfoBuilder;
 
 sub realize_fsmc_child_instance ($class, %args) {
     my $pipeline = $args{pipeline}
@@ -214,14 +215,22 @@ sub _realize_generated_child ($class, %args) {
 
     my $child_module = $pipeline->create_fsm_module($child_ast);
     my $child_intent_hir = $pipeline->build_intent_hir($child_module);
-    my $child_module_info = $pipeline->analyze_fsm_module($child_module, $child_intent_hir);
+    my $child_module_info = FSM::Pipeline::GeneratedModuleInfoBuilder->build_from_fsm_module(
+        fsm_module => $child_module,
+        intent_hir => $child_intent_hir,
+    );
     my $backend_result = FSM::Backend::GeneratedModuleEmitter->emit_from_fsm_module(
         fsm_module => $child_module,
         target_language => ($pipeline->{target_language} // 'systemverilog'),
         debug_level => ($pipeline->{debug_level} // 0),
     );
     $pipeline->{hdl_generator} = $backend_result->{hdl_generator};
-    $pipeline->enrich_module_info_from_generated_analysis($child_module_info, $child_module);
+    FSM::Pipeline::GeneratedModuleInfoBuilder->enrich_with_generated_analysis(
+        module_info => $child_module_info,
+        fsm_module => $child_module,
+        target_language => ($pipeline->{target_language} // 'systemverilog'),
+        hdl_generator => $pipeline->{hdl_generator},
+    );
     my $child_structural_rtl_ir = $pipeline->build_structural_rtl_ir($child_module_info, $child_module);
     $child_module_info->{structural_rtl_ir} = $child_structural_rtl_ir->as_hashref;
     my $child_hdl_code = FSM::Backend::GeneratedModuleEmitter->augment_with_standalone_dt_assertions(
@@ -232,7 +241,7 @@ sub _realize_generated_child ($class, %args) {
 
     if ($args{add_shared_datapath_source_exports}) {
         my $shared_datapath_source_exports = FSM::Composition::SharedDatapathSupport->build_source_export_metadata(
-            $pipeline->module_output_drive_families($child_module_info),
+            FSM::Pipeline::GeneratedModuleInfoBuilder->output_drive_families_from_module_info($child_module_info),
         );
         $child_module_info->{shared_datapath_source_export_count} = scalar(@$shared_datapath_source_exports);
         $child_module_info->{shared_datapath_source_exports} = $shared_datapath_source_exports;

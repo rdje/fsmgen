@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-26: bounded generated-module module_info construction now lives in a dedicated pipeline builder
+- Continued the active `R11` package-breakdown lane by moving the generated-module `module_info` family out of `HDLGenerator` instead of leaving semantic summary build, lowered enrichment, and query helpers as one more mixed compatibility cluster in the pipeline facade.
+- Landed behavior:
+  - added [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm) as the owner of bounded generated-module `module_info` construction from one semantic FSM/DT module plus its intent HIR,
+  - that package now also owns lowered generated-analysis enrichment plus normalized output-drive-family and grouped standalone-DT target queries,
+  - updated [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm) and [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so they now call that owner directly,
+  - reduced [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) to thin delegations for the same metadata family,
+  - added [t/196-generated-module-info-builder.t](/Users/richarddje/Documents/github/fsmgen/t/196-generated-module-info-builder.t) as the direct owner lock,
+  - and tightened [t/194-generated-module-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/194-generated-module-emitter.t) so it normalizes non-semantic intermediate declaration ordering instead of treating backend line order as part of the contract.
+- Why this is worth shipping:
+  - it removes another real generated-module compatibility/result family from `HDLGenerator`,
+  - it gives both the direct-root and realized generated-child paths one honest metadata owner instead of rebuilding that family through pipeline-local helpers,
+  - and it sharpens the next seam correctly: thinner facade/helper cleanup in `HDLGenerator` or deeper backend cleanup, not one more inline metadata pocket.
+
 ## 2026-03-26: top-level source/file dispatch now lives in a dedicated pipeline orchestrator
 - Continued the active `R11` package-breakdown lane by moving the top-level file/source dispatch cluster out of `HDLGenerator` instead of leaving parse/classify/dispatch plus extension-hook/finalization flow as one more coordinator-owned pocket.
 - Landed behavior:

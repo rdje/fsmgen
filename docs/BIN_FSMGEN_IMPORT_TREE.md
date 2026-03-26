@@ -64,7 +64,7 @@ bin/fsmgen
         -> FSM::Pipeline::DirectGenerationOrchestrator
         -> FSM::Adapter::FSMGenFull
         -> IntentHIR
-        -> module analysis / module_info
+        -> FSM::Pipeline::GeneratedModuleInfoBuilder
         -> FSM::Backend::GeneratedModuleEmitter
         -> FSM::HDL::FlattenedDT
            -> FlattenedDT::Orchestrator
@@ -132,6 +132,20 @@ It serves both direct roots and realized generated children.
 It is a real extraction, but not the final backend end-state yet:
 underneath it, the older `FlattenedDT` / `EnableGraph` backend family still
 remains the deeper complexity hotspot.
+
+### Generated module module_info owner
+- [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm)
+
+This package now owns the bounded generated-module compatibility
+`module_info` family used by direct roots and realized generated children. It
+handles:
+- semantic-module compatibility summary building from one intent HIR
+- lowered generated-analysis enrichment
+- normalized query helpers over output-drive families and grouped standalone-DT targets
+
+This is still a compatibility/result surface, not one of the three forward IR
+layers, but it is now an explicit owner instead of one more inline cluster in
+`HDLGenerator`.
 
 ### Single-module semantic frontend
 - [perl/FSM/Adapter/FSMGenFull.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull.pm)
@@ -280,6 +294,11 @@ It behaves like a hook system, not a competing architecture.
   emission, backend statistics, and standalone-DT assertion postprocessing
   spread across `HDLGenerator`, `DirectGenerationOrchestrator`, and realized
   generated-child handling.
+- `GeneratedModuleInfoBuilder` now also owns the bounded generated-module
+  `module_info` family rather than leaving semantic summary build, lowered
+  enrichment, and output-drive-family / grouped-target queries split between
+  `HDLGenerator`, `DirectGenerationOrchestrator`, and generated-child
+  realization.
 - The forward IR layer now looks real enough to steer architecture, not just document aspiration.
 - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) has become a meaningful structural API, not just formatting glue.
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm) is the right directional move for backend emission.
@@ -288,7 +307,7 @@ It behaves like a hook system, not a competing architecture.
 - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) is still too broad.
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) is still a very large semantic/synthesis gravity well.
 - The direct single-module generation path still has not converged on the same clean `StructuralRTLIR -> backend emitter` shape that the composition path is starting to use, even though it now has its own direct-root orchestrator boundary and a dedicated generated-module backend owner.
-- `module_info` and reporting/statistics surfaces still create pressure for the coordinator to know too much.
+- `module_info` and reporting/statistics surfaces still create pressure for the coordinator to know too much, even though the generated-module `module_info` family now has its own explicit owner.
 
 ## Important implications for future implementation
 ### 1. The composition path is the cleanest forward-looking model

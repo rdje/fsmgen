@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-26: bounded generated-module module_info construction now lives in a dedicated pipeline builder
+- Saved shipped behavior:
+  - [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm) now owns bounded generated-module `module_info` construction from semantic FSM/DT modules plus their intent HIR,
+  - that package now also owns lowered generated-analysis enrichment and the normalized query surface over output-drive families and grouped standalone-DT multi-drive targets,
+  - and [t/196-generated-module-info-builder.t](/Users/richarddje/Documents/github/fsmgen/t/196-generated-module-info-builder.t) now locks the extracted owner directly against the pipeline result surface.
+- Important continuity note:
+  - `DirectGenerationOrchestrator` and `GeneratedChildRealizer` no longer keep that generated-module metadata family inline,
+  - `HDLGenerator` now only keeps thin delegations for the same family,
+  - [t/194-generated-module-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/194-generated-module-emitter.t) was also tightened to ignore non-semantic intermediate declaration ordering,
+  - and the next likely seam is now the thinner remaining `HDLGenerator` facade/helper residue or deeper cleanup under the older `FlattenedDT` / `EnableGraph` backend family.
+
 ## 2026-03-26: top-level source/file dispatch now lives in a dedicated pipeline orchestrator
 - Saved shipped behavior:
   - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now owns top-level source-file orchestration,
