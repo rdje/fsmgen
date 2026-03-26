@@ -39,6 +39,7 @@ The best current architecture in the tree is the newer composition/forward-IR/ba
 The heaviest remaining complexity is still the direct single-module HDL backend path centered on:
 - [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
 - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm)
+- [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm)
@@ -86,6 +87,7 @@ bin/fsmgen
            -> Synthesis::EnableGraph
            -> FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter
            -> FlattenedDT::Backend::SystemVerilog::InternalDeclarationEmitter
+           -> FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter
            -> FlattenedDT::Backend::SystemVerilog::IntermediateSignalSupport
            -> FlattenedDT::Backend::SystemVerilog or Verilog
         -> LoweredRTLIR
@@ -291,6 +293,7 @@ Right now it is composition-top focused and Verilog-family focused.
 - [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
 - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm)
 - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
+- [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm)
@@ -311,10 +314,12 @@ real owner in
 [ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm),
 the internal declaration family now has a second owner in
 [InternalDeclarationEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm),
-and the runtime-AST/intermediate-signal support family now has a third owner
+the consolidated intermediate-signal emission family now has a third owner in
+[ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm),
+and the runtime-AST/intermediate-signal support family now has a fourth owner
 in
 [IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm)
-instead of all three pockets living inline in the broader backend renderer.
+instead of all four pockets living inline in the broader backend renderer.
 
 ### Extension surface
 - [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm)
@@ -365,9 +370,9 @@ It behaves like a hook system, not a competing architecture.
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm) is the right directional move for backend emission.
 
 ### Current hotspots
-- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) is still too broad.
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) is still a very large semantic/synthesis gravity well.
 - The direct single-module generation path still has not converged on the same clean `StructuralRTLIR -> backend emitter` shape that the composition path is starting to use, even though it now has its own direct-root orchestrator boundary and a dedicated generated-module backend owner.
+- [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) still keeps the deeper AST-factorization and substitution core for the direct backend, even though scaffold rendering, internal declarations, consolidated intermediate-signal emission, and runtime-AST/intermediate-signal support now each have explicit owners.
 - `module_info` and reporting/statistics surfaces still create pressure for the coordinator to know too much, even though the generated-module `module_info` family now has its own explicit owner.
 
 ## Important implications for future implementation
@@ -380,14 +385,11 @@ If the project needs a template for “how the final architecture should feel,�
 
 than to the older direct `FlattenedDT` path.
 
-### 2. `HDLGenerator` is still a coordinator plus residue owner
-The file name says “generator,” but in practice it is still:
-- compiler driver
-- source dispatcher
-- composition orchestrator
-- IR assembler
-- report assembler
-- and partial backend coordinator
+### 2. `HDLGenerator` is now close to an honest facade, but the older direct backend is still the deeper hotspot
+The main remaining architectural pressure is no longer the top-level pipeline
+facade. It is the older direct backend family under `FlattenedDT`,
+`SystemVerilog.pm`, and `EnableGraph`, where the remaining AST-factorization
+and planning gravity still lives.
 
 That means the long-term split is still warranted.
 

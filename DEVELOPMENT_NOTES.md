@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-27: direct SystemVerilog consolidated intermediate emission now has a dedicated backend owner
+- Continued the active `R11` backend-breakdown lane by pulling the consolidated intermediate-signal emission family out of the larger SystemVerilog renderer instead of leaving AST-factorized plus pre-scanned intermediate merging, dependency-aware filtering, and final wire/assign emission mixed into the same backend package as factorization support.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) as the owner of the direct consolidated intermediate-signal emission block,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so the direct backend path now asks that owner directly for the consolidated intermediate block,
+  - reduced [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) by removing the inline consolidated emitter and its topological-sort helper,
+  - and added [t/200-systemverilog-consolidated-intermediate-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/200-systemverilog-consolidated-intermediate-emitter.t) to lock the extracted owner directly against the emitted backend prefix for a realistic shared-expression direct-root fixture.
+- Why this is worth shipping:
+  - it turns another real slice of the older direct backend into a named owner instead of one broad renderer,
+  - it leaves `SystemVerilog.pm` closer to the narrower AST-factorization/substitution role that is actually still concentrated there,
+  - and it sharpens the next seam honestly: deeper factorization cleanup in `SystemVerilog.pm` or planning cleanup in `EnableGraph.pm`, not more facade trimming.
+
 ## 2026-03-27: direct SystemVerilog intermediate-signal support now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling the runtime-AST/intermediate-signal support family out of the larger SystemVerilog renderer instead of leaving AST recovery, dependency recovery, width inference, and AST-aware filtering mixed into the consolidated emitter path.
 - Landed behavior:

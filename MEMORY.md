@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-27: direct SystemVerilog consolidated intermediate emission now has a dedicated backend owner
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) now owns direct generated-module consolidated intermediate-signal emission from the prepared AST-factorization plus pre-scan context,
+  - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) now asks that owner directly for the consolidated wire/assign block before unified WEN/EN generation,
+  - and [t/200-systemverilog-consolidated-intermediate-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/200-systemverilog-consolidated-intermediate-emitter.t) now locks the extracted owner directly against the emitted backend prefix for a realistic shared-expression direct-root fixture.
+- Important continuity note:
+  - this is another real backend split under the older direct generated-module path, not more pipeline work,
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes the new consolidated-intermediate owner explicitly,
+  - and the next likely seam is deeper cleanup inside the remaining AST-factorization/substitution side of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) or the planning surface in [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm).
+
 ## 2026-03-27: direct SystemVerilog intermediate-signal support now has a dedicated backend owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) now owns direct generated-module runtime AST recovery, rendered-expression caching, dependency recovery, width inference, and AST-aware filtering for consolidated intermediate signals,

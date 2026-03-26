@@ -13,6 +13,7 @@ use FSM::Debug;  # Global debug system
 use FSM::ExpressionNamer;
 use FSM::Synthesis::EnableGraph;
 use FSM::HDL::FlattenedDT::Orchestrator;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::InternalDeclarationEmitter;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter;
@@ -84,6 +85,7 @@ sub new ($class, %args) {
     $self->{backend_sv_scaffold} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter->new(flattened_dt => $self);
     $self->{backend_sv_internal_decl} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::InternalDeclarationEmitter->new(flattened_dt => $self);
     $self->{backend_sv_intermediate_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalSupport->new(flattened_dt => $self);
+    $self->{backend_sv_consolidated_intermediate} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter->new(flattened_dt => $self);
     $self->{backend_sv} = FSM::HDL::FlattenedDT::Backend::SystemVerilog->new(flattened_dt => $self);
     $self->{backend_verilog} = FSM::HDL::FlattenedDT::Backend::Verilog->new(flattened_dt => $self);
     
