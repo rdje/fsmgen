@@ -275,19 +275,6 @@ sub finalize_generation_result ($self, $fsm_file, $source_info, $result) {
     return $result;
 }
 
-sub standalone_dt_assertion_metadata ($self, $signal_name, $input_enable_signals) {
-    my @inputs = grep {
-        defined($_) && length($_)
-    } @{$input_enable_signals || []};
-
-    return {
-        kind => 'onehot0',
-        target_signal => $signal_name,
-        input_count => scalar(@inputs),
-        input_enable_signals => \@inputs,
-    };
-}
-
 sub standalone_dt_assertion_runtime_lines ($self, $module_info) {
     return () unless ($self->{target_language} || '') =~ /^(?:systemverilog|sv)$/;
     return () unless ref($module_info) eq 'HASH';
@@ -552,98 +539,6 @@ sub analyze_fsm_module ($self, $fsm_module, $intent_hir = undef) {
     };
 }
 
-sub build_output_drive_family_metadata ($self, $module_info) {
-    return [] unless ref($module_info) eq 'HASH';
-
-    my %output_widths = map {
-        (($_->{name} // '') => ($_->{width} || 1))
-    } @{$module_info->{signal_analysis}{outputs} || []};
-
-    return [] unless %output_widths;
-
-    my $hdl_gen = $self->{hdl_generator};
-    my $assignment_analysis = $hdl_gen ? ($hdl_gen->{assignment_analysis} || {}) : {};
-    my @drive_families;
-
-    for my $lhs (sort keys %$assignment_analysis) {
-        next unless exists $output_widths{$lhs};
-
-        my $lhs_analysis = $assignment_analysis->{$lhs};
-        next unless ref($lhs_analysis) eq 'HASH';
-
-        my %driver_blocks;
-        my %rhs_values;
-        my %driver_enable_signals;
-        my %family_enable_signals;
-        my %rhs_enable_families;
-
-        for my $rhs (sort keys %{ $lhs_analysis->{rhs_groups} || {} }) {
-            my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
-            next unless ref($rhs_group) eq 'HASH';
-
-            $rhs_values{$rhs} = 1;
-            $rhs_enable_families{$rhs} ||= {
-                rhs_value => $rhs,
-                family_enable_signal => undef,
-                driver_blocks => {},
-                driver_enable_signals => {},
-            };
-
-            my $lhs_level_enable = $rhs_group->{lhs_level_enable};
-            if (ref($lhs_level_enable) eq 'HASH' && defined $lhs_level_enable->{name}) {
-                $family_enable_signals{$lhs_level_enable->{name}} = 1;
-                $rhs_enable_families{$rhs}{family_enable_signal} = $lhs_level_enable->{name};
-            }
-
-            for my $dt_enable_info (@{ $rhs_group->{dt_specific_enables} || [] }) {
-                next unless ref($dt_enable_info) eq 'HASH';
-                $driver_blocks{$dt_enable_info->{dt}} = 1 if defined $dt_enable_info->{dt};
-                $driver_enable_signals{$dt_enable_info->{enable_name}} = 1
-                    if defined $dt_enable_info->{enable_name};
-                $rhs_enable_families{$rhs}{driver_blocks}{$dt_enable_info->{dt}} = 1
-                    if defined $dt_enable_info->{dt};
-                $rhs_enable_families{$rhs}{driver_enable_signals}{$dt_enable_info->{enable_name}} = 1
-                    if defined $dt_enable_info->{enable_name};
-            }
-        }
-
-        my @driver_blocks = sort keys %driver_blocks;
-        my @rhs_values = sort keys %rhs_values;
-        next unless @driver_blocks || @rhs_values;
-
-        my $reset_value = $hdl_gen
-            ? $hdl_gen->{enable_graph}->get_reset_value_from_ast($lhs_analysis->{lhs_ast})
-            : undef;
-
-        push @drive_families, {
-            signal_name => $lhs,
-            width => $output_widths{$lhs},
-            multiplexer_type => ($lhs_analysis->{multiplexer}{type} // 'unknown'),
-            default_value => $lhs_analysis->{multiplexer}{default_value},
-            reset_value => $reset_value,
-            driver_count => scalar(@driver_blocks),
-            driver_blocks => \@driver_blocks,
-            rhs_values => \@rhs_values,
-            driver_enable_signals => [ sort keys %driver_enable_signals ],
-            family_enable_signals => [ sort keys %family_enable_signals ],
-            rhs_enable_families => [
-                map {
-                    +{
-                        rhs_value => $_->{rhs_value},
-                        family_enable_signal => $_->{family_enable_signal},
-                        driver_blocks => [ sort keys %{$_->{driver_blocks} || {}} ],
-                        driver_enable_signals => [ sort keys %{$_->{driver_enable_signals} || {}} ],
-                    }
-                } map {
-                    $rhs_enable_families{$_}
-                } sort keys %rhs_enable_families
-            ],
-        };
-    }
-
-    return \@drive_families;
-}
-
 sub module_output_drive_families ($self, $module_info) {
     return [] unless ref($module_info) eq 'HASH';
 
@@ -686,40 +581,11 @@ sub module_standalone_dt_multi_drive_targets ($self, $module_info) {
 }
 
 sub build_lowered_rtl_ir ($self, $module_info, $fsm_module) {
-    return unless ref($module_info) eq 'HASH';
-
-    my $output_drive_families = $self->build_output_drive_family_metadata($module_info);
-
-    my @standalone_dt_multi_drive_targets = map {
-        +{
-            signal_name => $_->{signal_name},
-            multiplexer_type => $_->{multiplexer_type},
-            dt_names => [@{$_->{driver_blocks} || []}],
-            rhs_values => [@{$_->{rhs_values} || []}],
-            dt_enable_signals => [@{$_->{driver_enable_signals} || []}],
-            lhs_enable_signals => [@{$_->{family_enable_signals} || []}],
-            multi_drive_assertion => $self->standalone_dt_assertion_metadata(
-                $_->{signal_name},
-                $_->{driver_enable_signals},
-            ),
-        }
-    } grep {
-        ($_->{driver_count} || 0) > 1
-    } @$output_drive_families;
-
-    return FSM::IR::LoweredRTLIR->new(
-        module_name => ($module_info->{module_name} // ''),
-        source_root_kind => (
-            $module_info->{source_root_kind}
-                // ($fsm_module && $fsm_module->can('source_root_kind') ? $fsm_module->source_root_kind : 'fsm')
-        ),
+    return FSM::IR::LoweredRTLIRBuilder->build_from_generated_module_info(
+        module_info => $module_info,
+        fsm_module => $fsm_module,
         target_language => ($self->{target_language} // 'systemverilog'),
-        output_drive_families => $output_drive_families,
-        standalone_dt_multi_drive_targets => (
-            $fsm_module && $fsm_module->can('is_dt_root') && $fsm_module->is_dt_root
-                ? \@standalone_dt_multi_drive_targets
-                : []
-        ),
+        hdl_generator => $self->{hdl_generator},
     );
 }
 

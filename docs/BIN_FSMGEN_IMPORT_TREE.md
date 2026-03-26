@@ -189,8 +189,10 @@ Current layer meaning:
   semantic modules and composition tops, from either a semantic FSM/DT module
   or an already-built composition plan plus structural/child-export inputs
 - `LoweredRTLIR`: normalized lowered facts and grouped lowered families
-- `LoweredRTLIRBuilder`: bounded composition-top lowered-IR construction from
-  an already-built composition plan plus structural/semantic/shared-datapath inputs
+- `LoweredRTLIRBuilder`: bounded lowered-IR construction for both direct-root
+  generated modules and composition tops, from either generated-module
+  analysis/backend state or an already-built composition plan plus
+  structural/semantic/shared-datapath inputs
 - `StructuralRTLIR`: netlist-like structure plus typed connectivity
 - `ConnectionExpr`: typed actual-connection AST and binding-summary/query helpers
 
@@ -233,6 +235,9 @@ It behaves like a hook system, not a competing architecture.
 - `IntentHIRBuilder` now also owns the direct-root semantic summary rather than
   leaving signal-analysis grouping, direction inference, and standalone-DT
   enable-family assembly inline in `HDLGenerator`.
+- `LoweredRTLIRBuilder` now also owns the direct-root lowered summary rather
+  than leaving output-drive-family and standalone-DT lowered-target assembly
+  inline in `HDLGenerator`.
 - The forward IR layer now looks real enough to steer architecture, not just document aspiration.
 - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) has become a meaningful structural API, not just formatting glue.
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm) is the right directional move for backend emission.

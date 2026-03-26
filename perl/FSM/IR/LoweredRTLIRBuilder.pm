@@ -9,7 +9,9 @@ FSM::IR::LoweredRTLIRBuilder - Builder for bounded forward LoweredRTLIR surfaces
 Owns the bounded forward Lowered RTL IR construction paths that have been
 extracted out of the mixed pipeline coordinator. Right now this package builds
 the composition-top lowered summary from an already-built composition plan plus
-the surrounding structural, semantic, and shared-datapath inputs.
+the surrounding structural, semantic, and shared-datapath inputs, and it also
+owns the bounded direct-root lowered summary extracted from the direct
+generation path.
 
 =cut
 
@@ -23,6 +25,50 @@ no warnings 'experimental::signatures';
 use FSM::Composition::SharedDatapathCandidateBuilder;
 use FSM::IR::LoweredRTLIR;
 use FSM::IR::StructuralRTLIRBuilder;
+
+sub build_from_generated_module_info ($class, %args) {
+    my $module_info = $args{module_info}
+        or confess "LoweredRTLIRBuilder requires a module_info";
+    my $target_language = $args{target_language} // 'systemverilog';
+    my $fsm_module = $args{fsm_module};
+
+    my $output_drive_families = $class->build_output_drive_family_metadata(
+        module_info => $module_info,
+        hdl_generator => $args{hdl_generator},
+    );
+
+    my @standalone_dt_multi_drive_targets = map {
+        +{
+            signal_name => $_->{signal_name},
+            multiplexer_type => $_->{multiplexer_type},
+            dt_names => [@{$_->{driver_blocks} || []}],
+            rhs_values => [@{$_->{rhs_values} || []}],
+            dt_enable_signals => [@{$_->{driver_enable_signals} || []}],
+            lhs_enable_signals => [@{$_->{family_enable_signals} || []}],
+            multi_drive_assertion => $class->standalone_dt_assertion_metadata(
+                $_->{signal_name},
+                $_->{driver_enable_signals},
+            ),
+        }
+    } grep {
+        ($_->{driver_count} || 0) > 1
+    } @$output_drive_families;
+
+    return FSM::IR::LoweredRTLIR->new(
+        module_name => ($module_info->{module_name} // ''),
+        source_root_kind => (
+            $module_info->{source_root_kind}
+                // ($fsm_module && $fsm_module->can('source_root_kind') ? $fsm_module->source_root_kind : 'fsm')
+        ),
+        target_language => $target_language,
+        output_drive_families => $output_drive_families,
+        standalone_dt_multi_drive_targets => (
+            $fsm_module && $fsm_module->can('is_dt_root') && $fsm_module->is_dt_root
+                ? \@standalone_dt_multi_drive_targets
+                : []
+        ),
+    );
+}
 
 sub build_from_composition_plan ($class, %args) {
     my $composition_plan = $args{composition_plan}
@@ -67,16 +113,137 @@ sub build_from_composition_plan ($class, %args) {
     );
 }
 
+sub build_output_drive_family_metadata ($class, %args) {
+    my $module_info = $args{module_info};
+    return [] unless ref($module_info) eq 'HASH';
+
+    my %output_widths = map {
+        (($_->{name} // '') => ($_->{width} || 1))
+    } @{$module_info->{signal_analysis}{outputs} || []};
+
+    return [] unless %output_widths;
+
+    my $hdl_generator = $args{hdl_generator};
+    my $assignment_analysis = $hdl_generator ? ($hdl_generator->{assignment_analysis} || {}) : {};
+    my @drive_families;
+
+    for my $lhs (sort keys %$assignment_analysis) {
+        next unless exists $output_widths{$lhs};
+
+        my $lhs_analysis = $assignment_analysis->{$lhs};
+        next unless ref($lhs_analysis) eq 'HASH';
+
+        my %driver_blocks;
+        my %rhs_values;
+        my %driver_enable_signals;
+        my %family_enable_signals;
+        my %rhs_enable_families;
+
+        for my $rhs (sort keys %{ $lhs_analysis->{rhs_groups} || {} }) {
+            my $rhs_group = $lhs_analysis->{rhs_groups}{$rhs};
+            next unless ref($rhs_group) eq 'HASH';
+
+            $rhs_values{$rhs} = 1;
+            $rhs_enable_families{$rhs} ||= {
+                rhs_value => $rhs,
+                family_enable_signal => undef,
+                driver_blocks => {},
+                driver_enable_signals => {},
+            };
+
+            my $lhs_level_enable = $rhs_group->{lhs_level_enable};
+            if (ref($lhs_level_enable) eq 'HASH' && defined $lhs_level_enable->{name}) {
+                $family_enable_signals{$lhs_level_enable->{name}} = 1;
+                $rhs_enable_families{$rhs}{family_enable_signal} = $lhs_level_enable->{name};
+            }
+
+            for my $dt_enable_info (@{ $rhs_group->{dt_specific_enables} || [] }) {
+                next unless ref($dt_enable_info) eq 'HASH';
+                $driver_blocks{$dt_enable_info->{dt}} = 1 if defined $dt_enable_info->{dt};
+                $driver_enable_signals{$dt_enable_info->{enable_name}} = 1
+                    if defined $dt_enable_info->{enable_name};
+                $rhs_enable_families{$rhs}{driver_blocks}{$dt_enable_info->{dt}} = 1
+                    if defined $dt_enable_info->{dt};
+                $rhs_enable_families{$rhs}{driver_enable_signals}{$dt_enable_info->{enable_name}} = 1
+                    if defined $dt_enable_info->{enable_name};
+            }
+        }
+
+        my @driver_blocks = sort keys %driver_blocks;
+        my @rhs_values = sort keys %rhs_values;
+        next unless @driver_blocks || @rhs_values;
+
+        my $reset_value = $hdl_generator
+            ? $hdl_generator->{enable_graph}->get_reset_value_from_ast($lhs_analysis->{lhs_ast})
+            : undef;
+
+        push @drive_families, {
+            signal_name => $lhs,
+            width => $output_widths{$lhs},
+            multiplexer_type => ($lhs_analysis->{multiplexer}{type} // 'unknown'),
+            default_value => $lhs_analysis->{multiplexer}{default_value},
+            reset_value => $reset_value,
+            driver_count => scalar(@driver_blocks),
+            driver_blocks => \@driver_blocks,
+            rhs_values => \@rhs_values,
+            driver_enable_signals => [ sort keys %driver_enable_signals ],
+            family_enable_signals => [ sort keys %family_enable_signals ],
+            rhs_enable_families => [
+                map {
+                    +{
+                        rhs_value => $_->{rhs_value},
+                        family_enable_signal => $_->{family_enable_signal},
+                        driver_blocks => [ sort keys %{$_->{driver_blocks} || {}} ],
+                        driver_enable_signals => [ sort keys %{$_->{driver_enable_signals} || {}} ],
+                    }
+                } map {
+                    $rhs_enable_families{$_}
+                } sort keys %rhs_enable_families
+            ],
+        };
+    }
+
+    return \@drive_families;
+}
+
+sub standalone_dt_assertion_metadata ($class, $signal_name, $input_enable_signals) {
+    my @inputs = grep {
+        defined($_) && length($_)
+    } @{$input_enable_signals || []};
+
+    return {
+        kind => 'onehot0',
+        target_signal => $signal_name,
+        input_count => scalar(@inputs),
+        input_enable_signals => \@inputs,
+    };
+}
+
 1;
 
 __END__
 
 =head1 METHODS
 
+=head2 build_from_generated_module_info
+
+Builds the bounded direct-root L<FSM::IR::LoweredRTLIR> object from generated
+module analysis plus the direct HDL backend analysis state.
+
 =head2 build_from_composition_plan
 
 Builds the bounded composition-top L<FSM::IR::LoweredRTLIR> object from an
 already-built composition plan plus optional explicit structural, semantic,
 and shared-datapath inputs.
+
+=head2 build_output_drive_family_metadata
+
+Builds the direct-root output-drive family summary from generated-module
+analysis plus the active direct HDL backend analysis state.
+
+=head2 standalone_dt_assertion_metadata
+
+Builds the bounded onehot-style multi-drive assertion metadata attached to
+direct-root standalone-DT lowered targets.
 
 =cut

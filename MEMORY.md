@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-26: direct-root LoweredRTLIR construction now lives in the IR builder package
+- Saved shipped behavior:
+  - [perl/FSM/IR/LoweredRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIRBuilder.pm) now owns bounded direct-root lowered-IR construction from generated-module analysis plus direct backend analysis state,
+  - that package now also owns direct-root output-drive-family analysis, standalone-DT lowered-target assembly, and onehot-style multi-drive assertion metadata,
+  - and [t/192-forward-lowered-rtl-ir-builder-direct-root.t](/Users/richarddje/Documents/github/fsmgen/t/192-forward-lowered-rtl-ir-builder-direct-root.t) now locks the extracted direct-root owner directly against the pipeline result surface.
+- Important continuity note:
+  - `HDLGenerator` no longer owns those direct-root lowered helper families inline,
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now describes `LoweredRTLIRBuilder` as a direct-root plus composition-top lowered builder,
+  - and the next likely seam is now the remaining direct-path structural builder residue or a broader `HDLGenerator` facade split.
+
 ## 2026-03-26: direct-root IntentHIR construction now lives in the IR builder package
 - Saved shipped behavior:
   - [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm) now owns bounded direct-root semantic-HIR construction from a semantic FSM/DT module,

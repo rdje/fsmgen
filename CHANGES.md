@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-26
+### direct-root LoweredRTLIR construction now lives in the IR builder package
+- Widened [perl/FSM/IR/LoweredRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIRBuilder.pm) so it now owns bounded direct-root `LoweredRTLIR` construction from generated-module analysis plus direct backend analysis state, including output-drive-family analysis, standalone-DT lowered-target assembly, and onehot-style multi-drive assertion metadata.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so its direct-root `build_lowered_rtl_ir` path now delegates to the IR-layer builder instead of keeping that lowered helper family inline.
+- Added [t/192-forward-lowered-rtl-ir-builder-direct-root.t](/Users/richarddje/Documents/github/fsmgen/t/192-forward-lowered-rtl-ir-builder-direct-root.t) to lock the widened builder directly, and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the live package map reflects the new direct-root lowered builder boundary.
+
 ### direct-root IntentHIR construction now lives in the IR builder package
 - Widened [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm) so it now owns bounded direct-root `IntentHIR` construction from a semantic FSM/DT module, including direct-root signal-analysis grouping, signal-direction inference, and standalone-DT enable-family assembly.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so its direct-root `build_intent_hir` path now delegates to the IR-layer builder instead of keeping that semantic helper family inline.

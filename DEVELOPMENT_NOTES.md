@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-26: direct-root LoweredRTLIR construction now lives in the IR builder package
+- Continued the active `R11` package-breakdown lane by moving bounded direct-root lowered-IR construction out of `HDLGenerator` instead of leaving the direct path with a composition-only lowered builder and an inline direct-root lowered helper family.
+- Landed behavior:
+  - widened [perl/FSM/IR/LoweredRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIRBuilder.pm) so it now owns direct-root `LoweredRTLIR` construction from generated-module analysis plus direct backend analysis state,
+  - moved direct-root output-drive-family analysis, standalone-DT lowered-target assembly, and onehot-style multi-drive assertion metadata under that IR-layer builder,
+  - updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so its direct-root `build_lowered_rtl_ir` path is now just a thin delegation to the builder,
+  - and added [t/192-forward-lowered-rtl-ir-builder-direct-root.t](/Users/richarddje/Documents/github/fsmgen/t/192-forward-lowered-rtl-ir-builder-direct-root.t) to lock the extracted direct-root owner against the pipeline result surface.
+- Why this is worth shipping:
+  - it makes `LoweredRTLIRBuilder` honest on both the composition and direct-root sides,
+  - it removes another real lowered-builder pocket from `HDLGenerator`,
+  - and it sharpens the next seam correctly: remaining direct-path structural builder residue or a broader facade split, not more inline direct-root lowered helpers.
+
 ## 2026-03-26: direct-root IntentHIR construction now lives in the IR builder package
 - Continued the active `R11` package-breakdown lane by moving bounded direct-root semantic-HIR construction out of `HDLGenerator` instead of leaving the direct path with a composition-only builder and an inline direct-root semantic helper family.
 - Landed behavior:
