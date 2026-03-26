@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-27: direct SystemVerilog internal declaration rendering now has a dedicated backend owner
+- Continued the active `R11` backend-breakdown lane by pulling the bounded internal declaration family out of the larger SystemVerilog renderer instead of leaving declaration rendering mixed together with intermediate-signal and factorization logic.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm) as the owner of internal storage declaration rendering and auxiliary helper-register declaration rendering from the enable-graph plan,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so the direct backend path now asks that owner directly for the declaration block,
+  - reduced [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) by removing the inline declaration renderer,
+  - and added [t/199-systemverilog-internal-declaration-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/199-systemverilog-internal-declaration-emitter.t) to lock the new owner directly against the emitted direct-backend prefix for a realistic internal/helper-register fixture.
+- Why this is worth shipping:
+  - it keeps turning the older direct backend into named owner slices instead of a single broad renderer,
+  - it gives the enable-graph declaration plan a dedicated rendering boundary,
+  - and it sharpens the next seam honestly: intermediate-signal/consolidation cleanup in the remaining SystemVerilog/EnableGraph core.
+
 ## 2026-03-26: direct SystemVerilog scaffold rendering now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling the bounded direct SystemVerilog scaffold family out of the larger renderer instead of leaving header/module/state rendering mixed together with intermediate-signal and factorization logic.
 - Landed behavior:

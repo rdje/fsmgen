@@ -1427,35 +1427,5 @@ sub get_substituted_ast_for_signal ($self, $signal_name, $signal_info) {
     # If no substituted version found, return nil to indicate original should be used
     return undef;
 }
-sub generate_internal_signal_declarations ($self, $fsm_module) {
-    my $ctx = $self->{flattened_dt};
-    my $declaration_plan = $ctx->{enable_graph}->build_internal_signal_declaration_plan(
-        $fsm_module,
-        $ctx->{declared_port_signals},
-    );
-    my %signal_decls = %{$declaration_plan->{signal_decls} || {}};
-    my %aux_decls = %{$declaration_plan->{aux_decls} || {}};
-    
-    return "" unless (%signal_decls || %aux_decls);
-    
-    my $hdl = "  // Internal signal declarations\n";
-    for my $signal_name (sort keys %signal_decls) {
-        my $width = $signal_decls{$signal_name} || 1;
-        my $width_str = ($width > 1) ? "[" . ($width - 1) . ":0] " : "";
-        $hdl .= "  reg ${width_str}${signal_name};\n";
-    }
-    
-    if (%aux_decls) {
-        $hdl .= "  // Internal mux helper registers\n";
-        for my $signal_name (sort keys %aux_decls) {
-            my $width = $aux_decls{$signal_name} || 1;
-            my $width_str = ($width > 1) ? "[" . ($width - 1) . ":0] " : "";
-            $hdl .= "  reg ${width_str}${signal_name};\n";
-        }
-    }
-    $hdl .= "\n";
-    
-    return $hdl;
-}
 
 1;

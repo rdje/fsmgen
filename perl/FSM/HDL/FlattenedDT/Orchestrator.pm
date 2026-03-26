@@ -235,7 +235,7 @@ sub generate_systemverilog ($self, $fsm_module) {
     $hdl .= $ctx->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
     $hdl .= $ctx->{backend_sv_scaffold}->generate_state_encoding($fsm_module);
     $hdl .= $ctx->{backend_sv_scaffold}->generate_state_register($fsm_module);
-    $hdl .= $ctx->{backend_sv}->generate_internal_signal_declarations($fsm_module);
+    $hdl .= $ctx->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
     fsm_debug("Step 2 - Basic HDL structure generated", 3);
     
     # Step 3: Generate enable conditions FIRST (this will track intermediate signal requirements)

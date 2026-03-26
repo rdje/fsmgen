@@ -1,5 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-27
+### direct SystemVerilog internal declaration rendering now has a dedicated backend owner
+- Added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm) as the owner of the bounded direct generated-module internal declaration family: internal storage `reg` declarations and auxiliary helper-register declarations rendered from the enable-graph declaration plan.
+- Updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) and [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so the older direct backend path now instantiates and uses that owner directly instead of keeping the declaration renderer inline in the broader SystemVerilog backend.
+- Reduced [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) by removing the inline declaration-rendering pocket, added [t/199-systemverilog-internal-declaration-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/199-systemverilog-internal-declaration-emitter.t) as the direct owner lock, and refreshed the live architecture/roadmap notes.
+
 ## 2026-03-26
 ### direct SystemVerilog scaffold rendering now has a dedicated backend owner
 - Added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm) as the owner of the bounded direct generated-module scaffold family: header rendering, module declaration rendering, state encoding rendering, and state register rendering.

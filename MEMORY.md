@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-27: direct SystemVerilog internal declaration rendering now has a dedicated backend owner
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm) now owns direct generated-module internal storage and helper-register declaration rendering,
+  - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) now asks that owner directly for the declaration block after scaffold rendering,
+  - and [t/199-systemverilog-internal-declaration-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/199-systemverilog-internal-declaration-emitter.t) now locks the extracted owner against the emitted backend prefix for a realistic declaration-heavy direct-root fixture.
+- Important continuity note:
+  - this is another real backend split under the older direct generated-module path, not pipeline work,
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes the new declaration owner explicitly,
+  - and the next likely seam is deeper cleanup inside the remaining [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) intermediate-signal/consolidation core or the planning surface in [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm).
+
 ## 2026-03-26: direct SystemVerilog scaffold rendering now has a dedicated backend owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm) now owns direct generated-module header, module declaration, state encoding, and state register rendering,
