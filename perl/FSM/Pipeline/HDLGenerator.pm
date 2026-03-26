@@ -13,14 +13,11 @@ use lib "$FindBin::Bin";
 use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Debug;
 use FSM::Adapter::FSMGenFull;
-use FSM::Pipeline::DirectGenerationOrchestrator;
 use FSM::Composition::FailureReportBuilder;
-use FSM::Composition::GenerationOrchestrator;
 use FSM::Composition::Parser;
 use FSM::Composition::ProvenanceReportBuilder;
 use FSM::Composition::SharedDatapathCandidateBuilder;
 use FSM::Composition::RTLInterfaceLoader;
-use FSM::Extension::Context;
 use FSM::Extension::Loader;
 use FSM::Extension::Registry;
 use FSM::IR::IntentHIR;
@@ -36,6 +33,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     binding_expr
     expr_signal_name
 );
+use FSM::Pipeline::SourceGenerationOrchestrator;
 use FSM::SourceClassifier;
 use FSM::SourcePathResolver;
 use Lispish;
@@ -121,36 +119,10 @@ sub new ($class, %args) {
 }
 
 sub generate_hdl_from_file ($self, $fsm_file) {
-    fsm_trace_enter("Generate HDL from file '$fsm_file'", 1);
-    fsm_debug("Starting HDL generation pipeline for: $fsm_file", 1);
-    
-    # Step 1: Parse the FSM file
-    my $raw_ast = $self->parse_fsm_file($fsm_file);
-    my $source_info = $self->classify_source_ast($raw_ast);
-    if (($source_info->{kind} // 'unknown') eq 'unknown' && defined($source_info->{header}) && $source_info->{header} =~ /^\?[A-Za-z_][\w-]*:/) {
-        my $header = $source_info->{header};
-        Carp::confess
-            "Unsupported top-level source '$header'. ".
-            "The active pipeline supports '?fsm:name', '?dt:name', '?mod:name', '?module:name', '+fsm', and '?top:name'. ".
-            "Other tagged source kinds such as '?define:' are out of active support. ".
-            "See docs/USER_GUIDE.md for the current supported boundary.\n";
-    }
-    if ($source_info && $source_info->{kind} eq 'composition') {
-        $source_info->{composition_spec} = $self->parse_composition_source($raw_ast);
-        $self->dispatch_after_parse_source($fsm_file, $raw_ast, $source_info);
-        my $result = $self->generate_composition_from_source($source_info, $raw_ast, $fsm_file);
-        return $self->finalize_generation_result($fsm_file, $source_info, $result);
-    }
-    $self->dispatch_after_parse_source($fsm_file, $raw_ast, $source_info);
-
-    my $result = FSM::Pipeline::DirectGenerationOrchestrator->generate_from_source(
+    return FSM::Pipeline::SourceGenerationOrchestrator->generate_from_file(
         pipeline => $self,
-        raw_ast => $raw_ast,
-        source_info => $source_info,
+        fsm_file => $fsm_file,
     );
-
-    fsm_debug("HDL generation pipeline completed successfully", 1);
-    return $self->finalize_generation_result($fsm_file, $source_info, $result);
 }
 
 sub parse_fsm_file ($self, $fsm_file) {
@@ -230,49 +202,6 @@ sub create_fsm_module ($self, $raw_ast) {
     fsm_debug("FSM module created successfully", 1);
     fsm_trace_exit('Semantic FSM module created', 2);
     return $fsm_module;
-}
-
-sub generate_composition_from_source ($self, $source_info, $raw_ast, $fsm_file) {
-    return FSM::Composition::GenerationOrchestrator->generate_from_source(
-        pipeline => $self,
-        source_info => $source_info,
-        raw_ast => $raw_ast,
-        fsm_file => $fsm_file,
-        target_language => ($self->{target_language} // 'systemverilog'),
-        source_path_resolver => $self->{source_path_resolver},
-        rtl_interface_loader => $self->{rtl_interface_loader},
-        statistics_seed => $self->gather_statistics(undef),
-    );
-}
-
-sub dispatch_after_parse_source ($self, $fsm_file, $raw_ast, $source_info) {
-    my $context = FSM::Extension::Context->new(
-        stage => 'after_parse_source',
-        pipeline => $self,
-        source_path => $fsm_file,
-        target_language => $self->{target_language},
-        source_info => $source_info,
-        raw_ast => $raw_ast,
-    );
-
-    $self->{extension_registry}->after_parse_source($context);
-    return $context;
-}
-
-sub finalize_generation_result ($self, $fsm_file, $source_info, $result) {
-    my $context = FSM::Extension::Context->new(
-        stage => 'after_generate_result',
-        pipeline => $self,
-        source_path => $fsm_file,
-        target_language => $self->{target_language},
-        source_info => $source_info,
-        result => $result,
-    );
-
-    $self->{extension_registry}->after_generate_result($context);
-
-    fsm_trace_exit("HDL generation complete for '$fsm_file'", 1);
-    return $result;
 }
 
 sub standalone_dt_assertion_runtime_lines ($self, $module_info) {

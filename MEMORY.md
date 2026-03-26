@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-26: top-level source/file dispatch now lives in a dedicated pipeline orchestrator
+- Saved shipped behavior:
+  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now owns top-level source-file orchestration,
+  - that package now parses one source file, classifies the root kind, dispatches into the direct-root or composition orchestrator, and drives the surrounding extension-hook/final-result boundary,
+  - and [t/195-pipeline-source-generation-orchestrator.t](/Users/richarddje/Documents/github/fsmgen/t/195-pipeline-source-generation-orchestrator.t) now locks the extracted owner directly across direct-root, composition, and extension-hook paths.
+- Important continuity note:
+  - `HDLGenerator` no longer keeps the top-level parse/classify/dispatch/finalization cluster inline,
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes `SourceGenerationOrchestrator` explicitly in the pipeline hub family,
+  - and the next likely seam is now the thinner remaining `HDLGenerator` facade residue or deeper cleanup under the older `FlattenedDT` / `EnableGraph` backend family.
+
 ## 2026-03-26: bounded direct generated-module backend execution now lives in a dedicated backend package
 - Saved shipped behavior:
   - [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm) now owns bounded direct generated-module backend execution for direct FSM/DT roots and realized generated children,

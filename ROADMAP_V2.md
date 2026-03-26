@@ -787,6 +787,13 @@ The first honest `R11` slices are now:
   whole direct-root result-assembly cluster inline either; the next honest
   seam is now the direct-path builder/backend residue or a broader facade split
   for `HDLGenerator`.
+- Package-breakdown note: the broader source/file dispatch counterpart is now
+  active too: `FSM::Pipeline::SourceGenerationOrchestrator` now owns top-level
+  parse/classify/dispatch orchestration plus the surrounding extension-hook
+  and final-result finalization flow, so `HDLGenerator` no longer keeps the
+  whole source-level coordinator inline either; the next honest seam is now
+  the thinner remaining `HDLGenerator` facade residue or deeper cleanup under
+  the older backend family.
 - Forward-IR note: the direct-root semantic-builder counterpart is now active
   too: bounded direct-root `IntentHIR` construction now also lives in
   `FSM::IR::IntentHIRBuilder`, so `HDLGenerator` no longer owns direct-root

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-26: top-level source/file dispatch now lives in a dedicated pipeline orchestrator
+- Continued the active `R11` package-breakdown lane by moving the top-level file/source dispatch cluster out of `HDLGenerator` instead of leaving parse/classify/dispatch plus extension-hook/finalization flow as one more coordinator-owned pocket.
+- Landed behavior:
+  - added [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) as the owner of top-level source-file orchestration,
+  - that package now parses one file, classifies the source root, dispatches into the direct-root or composition orchestrator, and drives the surrounding extension-hook/final-result boundary,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now delegates `generate_hdl_from_file(...)` there instead of keeping that source-level flow inline,
+  - and [t/195-pipeline-source-generation-orchestrator.t](/Users/richarddje/Documents/github/fsmgen/t/195-pipeline-source-generation-orchestrator.t) now locks the extracted owner directly across direct-root, composition, and extension-hook paths.
+- Why this is worth shipping:
+  - it makes `HDLGenerator` more honestly facade-like instead of leaving one more whole coordinator stage inline,
+  - it gives the top-level entrypoint flow the same kind of explicit owner that composition and direct-root generation already have underneath it,
+  - and it sharpens the next seam correctly: the thinner remaining `HDLGenerator` facade residue or deeper backend-family cleanup, not more inline source dispatch.
+
 ## 2026-03-26: bounded direct generated-module backend execution now lives in a dedicated backend package
 - Continued the active `R11` package-breakdown lane by moving the remaining bounded direct generated-module backend family out of `HDLGenerator` and its immediate callers instead of leaving backend-method selection, statistics, and standalone-DT assertion postprocessing spread across the pipeline/orchestrator layer.
 - Landed behavior:

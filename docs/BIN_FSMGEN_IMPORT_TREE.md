@@ -57,9 +57,10 @@ Normal execution is best understood like this:
 bin/fsmgen
   -> FSM::SourcePathResolver
   -> FSM::Pipeline::HDLGenerator->generate_hdl_from_file
-     -> parse_fsm_file
-     -> classify_source_ast
-     -> direct single-module path
+     -> FSM::Pipeline::SourceGenerationOrchestrator
+        -> parse_fsm_file
+        -> classify_source_ast
+        -> direct single-module path
         -> FSM::Pipeline::DirectGenerationOrchestrator
         -> FSM::Adapter::FSMGenFull
         -> IntentHIR
@@ -71,7 +72,7 @@ bin/fsmgen
            -> FlattenedDT::Backend::SystemVerilog or Verilog
         -> LoweredRTLIR
         -> StructuralRTLIR
-     -> composition path
+        -> composition path
         -> FSM::Composition::GenerationOrchestrator
         -> FSM::Composition::Parser
         -> generated-child realization / external RTL child realization / RTL interface loading
@@ -96,6 +97,7 @@ Important distinction:
 ### Main orchestration hub
 - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
+- [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm)
 
 This is still the architectural hub family. It currently coordinates:
 - source parsing and dispatch
@@ -107,7 +109,12 @@ This is still the architectural hub family. It currently coordinates:
 - extension callbacks
 
 The important improvement is that [HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
-no longer owns the full direct-root result-assembly cluster inline:
+no longer owns the top-level file/source dispatch cluster inline:
+[SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm)
+now owns parsed file dispatch into the direct-root or composition path plus the
+surrounding extension-hook/finalization flow.
+[HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+also no longer owns the full direct-root result-assembly cluster inline:
 [DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
 now owns that bounded non-composition source-to-result path.
 
@@ -254,6 +261,9 @@ It behaves like a hook system, not a competing architecture.
 - The composition frontend and builder packages are much better factored than the older backend path.
 - The composition path now also has a dedicated generation orchestrator instead
   of leaving the whole result-assembly cluster inline in `HDLGenerator`.
+- The top-level file/source dispatch path now also has a dedicated pipeline
+  orchestrator instead of leaving parse/classify/dispatch/finalization inline
+  in `HDLGenerator`.
 - The direct-root path now also has a dedicated pipeline orchestrator instead of
   leaving the whole non-composition result-assembly cluster inline there too.
 - `IntentHIRBuilder` now also owns the direct-root semantic summary rather than
@@ -335,7 +345,7 @@ The project already has:
 - and a cleaner composition architecture than it used to
 
 But it also still has:
-- one oversized pipeline coordinator
+- one still-too-wide pipeline facade/coordinator
 - one oversized synthesis owner
 - and a direct single-module backend family that is better fronted than before,
   but still has not fully caught up with the composition-side architectural cleanup
