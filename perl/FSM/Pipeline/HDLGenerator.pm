@@ -28,6 +28,7 @@ use FSM::Extension::Registry;
 use FSM::IR::IntentHIR;
 use FSM::IR::IntentHIRBuilder;
 use FSM::IR::LoweredRTLIR;
+use FSM::IR::LoweredRTLIRBuilder;
 use FSM::IR::StructuralRTLIR;
 use FSM::IR::StructuralRTLIRBuilder;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
@@ -485,35 +486,11 @@ sub build_composition_intent_hir (
 }
 
 sub build_composition_lowered_rtl_ir ($self, $composition_plan, $structural_rtl_ir = undef, $intent_hir = undef) {
-    $structural_rtl_ir //= FSM::IR::StructuralRTLIRBuilder->build_from_composition_plan(
-        $composition_plan,
-        ($self->{target_language} // 'systemverilog'),
-    );
-    my $shared_datapath_candidates = $self->composition_shared_datapath_candidates_for_plan(
-        $composition_plan,
-        $structural_rtl_ir,
-        $intent_hir,
-    );
-    my $structural_rtl_ir_hash = ref($structural_rtl_ir) ? $structural_rtl_ir->as_hashref : {};
-    my $internal_net_names = [
-        map { $_->{name} }
-        @{$structural_rtl_ir_hash->{nets} || []}
-    ];
-    my $instance_names = [
-        map { $_->{instance_name} }
-        @{$structural_rtl_ir_hash->{instances} || []}
-    ];
-
-    return FSM::IR::LoweredRTLIR->new(
-        module_name => ($composition_plan->top_name // ''),
-        source_root_kind => 'top',
+    return FSM::IR::LoweredRTLIRBuilder->build_from_composition_plan(
+        composition_plan => $composition_plan,
+        structural_rtl_ir => $structural_rtl_ir,
+        intent_hir => $intent_hir,
         target_language => ($self->{target_language} // 'systemverilog'),
-        output_drive_families => [],
-        standalone_dt_multi_drive_targets => [],
-        composition_shared_datapath_candidates => $shared_datapath_candidates,
-        internal_net_names => $internal_net_names,
-        instance_names => $instance_names,
-        auxiliary_assignment_count => scalar(@{$structural_rtl_ir_hash->{auxiliary_assignments} || []}),
     );
 }
 

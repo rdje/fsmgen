@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-26: composition-top LoweredRTLIR construction now lives in a dedicated IR builder package
+- Continued the active `R11` package-breakdown lane by moving bounded composition-top lowered-IR construction out of `HDLGenerator` instead of leaving one more forward-IR assembly family inline in the pipeline coordinator.
+- Landed behavior:
+  - added [perl/FSM/IR/LoweredRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIRBuilder.pm) as the owner of composition-top `LoweredRTLIR` construction from an already-built composition plan plus surrounding structural, semantic, and shared-datapath inputs,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now delegates that bounded composition-top lowered assembly to the IR-layer builder instead of keeping the object construction inline,
+  - and the new direct owner lock in [t/188-composition-lowered-rtl-ir-builder.t](/Users/richarddje/Documents/github/fsmgen/t/188-composition-lowered-rtl-ir-builder.t) now rebuilds the same bounded top-level `lowered_rtl_ir` surface from explicit inputs and checks it against the pipeline result.
+- Why this is worth shipping:
+  - it removes another real forward-IR assembly seam from `HDLGenerator`,
+  - it completes the composition-top builder trio beside the already-extracted semantic and structural builder/emitter split,
+  - and it leaves the next seam where it belongs: a broader direct-root/orchestrator split or another remaining coordinator pocket, not one more inline composition-top IR helper.
+
 ## 2026-03-25: composition-top IntentHIR construction now lives in a dedicated IR builder package
 - Continued the active `R11` package-breakdown lane by moving bounded composition-top semantic-HIR construction out of `HDLGenerator` instead of leaving one more forward-IR assembly family inline in the pipeline coordinator.
 - Landed behavior:

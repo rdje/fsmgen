@@ -769,6 +769,12 @@ The first honest `R11` slices are now:
   `FSM::IR::IntentHIRBuilder`, so `HDLGenerator` no longer owns that semantic
   assembly path directly either; the next matching forward-IR seam is now the
   lowered-builder split rather than one more inline composition-top HIR helper.
+- Forward-IR note: that matching lowered-builder split is now active too:
+  bounded composition-top `LoweredRTLIR` construction now lives in
+  `FSM::IR::LoweredRTLIRBuilder`, so `HDLGenerator` no longer owns that
+  lowered assembly path directly either; the next honest seam is now a broader
+  coordinator/direct-root split rather than another inline composition-top IR
+  builder.
 - Forward-IR note: a new composition-side builder extraction is now active
   too: realized generated-child interface port construction plus the shared
   interface-type normalization and system-port ordering rules now live in

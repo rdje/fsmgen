@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-26: composition-top LoweredRTLIR construction now lives in a dedicated IR builder package
+- Saved shipped behavior:
+  - [perl/FSM/IR/LoweredRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/LoweredRTLIRBuilder.pm) now owns bounded composition-top `LoweredRTLIR` construction,
+  - that package now builds the lowered top surface from an already-built composition plan plus structural, semantic, and shared-datapath inputs,
+  - and [t/188-composition-lowered-rtl-ir-builder.t](/Users/richarddje/Documents/github/fsmgen/t/188-composition-lowered-rtl-ir-builder.t) now locks the new owner directly against the pipeline result surface.
+- Important continuity note:
+  - this removes another real forward-IR assembly seam from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm),
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes `LoweredRTLIRBuilder` in the forward-IR layer,
+  - and the next likely seam is now a broader direct-root/orchestrator split or another remaining coordinator pocket rather than one more inline composition-top IR builder.
+
 ## 2026-03-25: composition-top IntentHIR construction now lives in a dedicated IR builder package
 - Saved shipped behavior:
   - [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm) now owns bounded composition-top `IntentHIR` construction,
