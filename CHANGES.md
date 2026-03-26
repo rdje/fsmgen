@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-26
+### direct-root generation orchestration now lives in a dedicated pipeline package
+- Added [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm) as the owner of bounded non-composition source-to-result orchestration, including semantic module creation, forward-IR extraction, direct HDL generation, module-info enrichment, structural IR export, and statistics collection.
+- Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the pipeline now delegates the direct-root generation/result path there instead of keeping the whole cluster inline.
+- Added [t/190-pipeline-direct-generation-orchestrator.t](/Users/richarddje/Documents/github/fsmgen/t/190-pipeline-direct-generation-orchestrator.t) to lock the extracted owner directly, and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the live package map reflects the new direct-root orchestrator boundary.
+
 ### composition generation orchestration now lives in a dedicated composition package
 - Added [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm) as the owner of bounded composition source-to-result orchestration, including plan construction, child-export projection, composition-top forward-IR assembly, structural top emission, and result-metadata/statistics assembly.
 - Updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the pipeline now delegates the composition-top generation/result path there instead of keeping the whole cluster inline, and removed the dead inline composition result-assembly wrappers that no longer had honest callers.

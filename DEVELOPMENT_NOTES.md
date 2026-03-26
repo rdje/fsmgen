@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-26: direct-root generation orchestration now lives in a dedicated pipeline package
+- Continued the active `R11` package-breakdown lane by moving the bounded non-composition generation/result-assembly cluster out of `HDLGenerator` instead of leaving the direct-root path inline after the composition-side orchestrator split was already in place.
+- Landed behavior:
+  - added [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm) as the owner of parsed direct-root source to bounded result-surface orchestration,
+  - that package now coordinates semantic module creation, forward-IR extraction, direct HDL generation, module-info enrichment, structural IR export, and statistics collection through the existing direct-path helpers,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now delegates the direct path there instead of keeping the cluster inline,
+  - and the new direct owner lock in [t/190-pipeline-direct-generation-orchestrator.t](/Users/richarddje/Documents/github/fsmgen/t/190-pipeline-direct-generation-orchestrator.t) now rebuilds the same bounded direct-root generation surface from parsed inputs and checks it against the full pipeline result.
+- Why this is worth shipping:
+  - it gives the non-composition path the same honest orchestrator boundary the composition path already has,
+  - it leaves `HDLGenerator` looking more like a dispatch/facade coordinator and less like the only place where full generation results are assembled,
+  - and it sharpens the next seam correctly: direct-path builder/backend residue or a broader facade split, not another result-assembly extraction.
+
 ## 2026-03-26: composition generation orchestration now lives in a dedicated composition package
 - Continued the active `R11` package-breakdown lane by moving the remaining bounded composition generation/result-assembly cluster out of `HDLGenerator` instead of leaving the whole composition-top path inline after the narrower builder splits were already in place.
 - Landed behavior:

@@ -13,6 +13,7 @@ use lib "$FindBin::Bin";
 use FSM::Debug;
 use FSM::HDL::FlattenedDT;
 use FSM::Adapter::FSMGenFull;
+use FSM::Pipeline::DirectGenerationOrchestrator;
 use FSM::Composition::FailureReportBuilder;
 use FSM::Composition::GenerationOrchestrator;
 use FSM::Composition::Parser;
@@ -141,37 +142,14 @@ sub generate_hdl_from_file ($self, $fsm_file) {
         return $self->finalize_generation_result($fsm_file, $source_info, $result);
     }
     $self->dispatch_after_parse_source($fsm_file, $raw_ast, $source_info);
-    
-    # Step 2: Convert raw AST to semantic FSM module
-    my $fsm_module = $self->create_fsm_module($raw_ast);
-    
-    # Step 3: Extract forward semantic intent and analyze from that IR
-    my $intent_hir = $self->build_intent_hir($fsm_module);
-    my $module_info = $self->analyze_fsm_module($fsm_module, $intent_hir);
-    
-    # Step 4: Generate HDL code
-    my $hdl_code = $self->generate_hdl_code($fsm_module);
-    $self->enrich_module_info_from_generated_analysis($module_info, $fsm_module);
-    my $structural_rtl_ir = $self->build_structural_rtl_ir($module_info, $fsm_module);
-    $module_info->{structural_rtl_ir} = $structural_rtl_ir->as_hashref;
-    $hdl_code = $self->augment_generated_hdl_with_standalone_dt_assertions($hdl_code, $module_info);
-    
-    # Step 5: Gather statistics
-    my $statistics = $self->gather_statistics($fsm_module);
-    
-    fsm_debug("HDL generation pipeline completed successfully", 1);
-    
-    my $result = {
-        fsm_module => $fsm_module,
-        intent_hir => $intent_hir->as_hashref,
-        lowered_rtl_ir => $module_info->{lowered_rtl_ir},
-        structural_rtl_ir => $module_info->{structural_rtl_ir},
-        module_info => $module_info,
-        hdl_code => $hdl_code,
-        statistics => $statistics,
+
+    my $result = FSM::Pipeline::DirectGenerationOrchestrator->generate_from_source(
+        pipeline => $self,
         raw_ast => $raw_ast,
         source_info => $source_info,
-    };
+    );
+
+    fsm_debug("HDL generation pipeline completed successfully", 1);
     return $self->finalize_generation_result($fsm_file, $source_info, $result);
 }
 

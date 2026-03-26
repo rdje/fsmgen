@@ -781,6 +781,12 @@ The first honest `R11` slices are now:
   assembly, so `HDLGenerator` no longer keeps the whole composition-top result
   cluster inline; the next honest breakdown seam is now on the broader
   non-composition/direct-root coordinator path.
+- Package-breakdown note: that direct-root counterpart is now active too:
+  `FSM::Pipeline::DirectGenerationOrchestrator` now owns the bounded
+  non-composition source-to-result path, so `HDLGenerator` no longer keeps the
+  whole direct-root result-assembly cluster inline either; the next honest
+  seam is now the direct-path builder/backend residue or a broader facade split
+  for `HDLGenerator`.
 - Forward-IR note: a new composition-side builder extraction is now active
   too: realized generated-child interface port construction plus the shared
   interface-type normalization and system-port ordering rules now live in

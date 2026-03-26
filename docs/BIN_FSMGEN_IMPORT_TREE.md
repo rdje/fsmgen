@@ -59,6 +59,7 @@ bin/fsmgen
      -> parse_fsm_file
      -> classify_source_ast
      -> direct single-module path
+        -> FSM::Pipeline::DirectGenerationOrchestrator
         -> FSM::Adapter::FSMGenFull
         -> IntentHIR
         -> module analysis / module_info
@@ -92,14 +93,21 @@ Important distinction:
 
 ### Main orchestration hub
 - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+- [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
 
-This is still the architectural hub. It currently coordinates:
+This is still the architectural hub family. It currently coordinates:
 - source parsing and dispatch
+- direct-root orchestration
 - forward IR construction
 - module-info/statistics assembly
 - failure summarization
 - backend coordination
 - extension callbacks
+
+The important improvement is that [HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm)
+no longer owns the full direct-root result-assembly cluster inline:
+[DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm)
+now owns that bounded non-composition source-to-result path.
 
 ### Single-module semantic frontend
 - [perl/FSM/Adapter/FSMGenFull.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull.pm)
@@ -219,6 +227,8 @@ It behaves like a hook system, not a competing architecture.
 - The composition frontend and builder packages are much better factored than the older backend path.
 - The composition path now also has a dedicated generation orchestrator instead
   of leaving the whole result-assembly cluster inline in `HDLGenerator`.
+- The direct-root path now also has a dedicated pipeline orchestrator instead of
+  leaving the whole non-composition result-assembly cluster inline there too.
 - The forward IR layer now looks real enough to steer architecture, not just document aspiration.
 - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) has become a meaningful structural API, not just formatting glue.
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm) is the right directional move for backend emission.
@@ -226,7 +236,7 @@ It behaves like a hook system, not a competing architecture.
 ### Current hotspots
 - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) is still too broad.
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) is still a very large semantic/synthesis gravity well.
-- The direct single-module generation path has not yet converged on the same clean `StructuralRTLIR -> backend emitter` shape that the composition path is starting to use.
+- The direct single-module generation path still has not converged on the same clean `StructuralRTLIR -> backend emitter` shape that the composition path is starting to use, even though it now has its own direct-root orchestrator boundary.
 - `module_info` and reporting/statistics surfaces still create pressure for the coordinator to know too much.
 
 ## Important implications for future implementation

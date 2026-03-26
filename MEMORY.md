@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-26: direct-root generation orchestration now lives in a dedicated pipeline package
+- Saved shipped behavior:
+  - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm) now owns bounded non-composition source-to-result orchestration,
+  - that package now coordinates semantic module creation, forward-IR extraction, direct HDL generation, module-info enrichment, structural IR export, and statistics collection,
+  - and [t/190-pipeline-direct-generation-orchestrator.t](/Users/richarddje/Documents/github/fsmgen/t/190-pipeline-direct-generation-orchestrator.t) now locks the new owner directly against the pipeline result surface.
+- Important continuity note:
+  - this removes the last obvious direct-root result-assembly cluster from [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm),
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes `DirectGenerationOrchestrator` in the pipeline/orchestration layer,
+  - and the next likely seam is now direct-path builder/backend residue or a broader `HDLGenerator` facade split rather than one more result-assembly extraction.
+
 ## 2026-03-26: composition generation orchestration now lives in a dedicated composition package
 - Saved shipped behavior:
   - [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm) now owns bounded composition source-to-result orchestration,
