@@ -33,7 +33,7 @@ use FSM::HDL::FlattenedDT;
 }
 
 my $hdl = FSM::HDL::FlattenedDT->new(debug => 0);
-my $backend = $hdl->{backend_sv};
+my $backend = $hdl->{backend_sv_intermediate_support};
 
 $hdl->{intermediate_signals}{mid} = {
     name => 'mid',

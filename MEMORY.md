@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-27: direct SystemVerilog intermediate-signal support now has a dedicated backend owner
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) now owns direct generated-module runtime AST recovery, rendered-expression caching, dependency recovery, width inference, and AST-aware filtering for consolidated intermediate signals,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) now asks that owner directly during consolidated intermediate-signal generation,
+  - and [t/07-runtime-ast-miss-dependency-recovery.t](/Users/richarddje/Documents/github/fsmgen/t/07-runtime-ast-miss-dependency-recovery.t) plus [t/08-driving-ast-canonicalization.t](/Users/richarddje/Documents/github/fsmgen/t/08-driving-ast-canonicalization.t) now lock the extracted owner directly.
+- Important continuity note:
+  - this is another real backend split under the older direct generated-module path, not pipeline work,
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes the new intermediate-signal support owner explicitly,
+  - and the next likely seam is deeper cleanup inside the remaining consolidated intermediate-signal emission/factorization core in [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) or the planning surface in [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm).
+
 ## 2026-03-27: direct SystemVerilog internal declaration rendering now has a dedicated backend owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm) now owns direct generated-module internal storage and helper-register declaration rendering,

@@ -70,7 +70,7 @@ my $hdl = FSM::HDL::FlattenedDT->new(debug => 0);
 $hdl->{fsm_module} = $fsm_module;
 
 my %signal_info;
-my $runtime_ast = $hdl->{backend_sv}->resolve_intermediate_signal_runtime_ast($intermediate_signal->name, \%signal_info);
+my $runtime_ast = $hdl->{backend_sv_intermediate_support}->resolve_intermediate_signal_runtime_ast($intermediate_signal->name, \%signal_info);
 
 ok(
     blessed($runtime_ast),

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-27: direct SystemVerilog intermediate-signal support now has a dedicated backend owner
+- Continued the active `R11` backend-breakdown lane by pulling the runtime-AST/intermediate-signal support family out of the larger SystemVerilog renderer instead of leaving AST recovery, dependency recovery, width inference, and AST-aware filtering mixed into the consolidated emitter path.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) as the owner of runtime AST recovery, rendered-expression caching, dependency recovery, width inference, and AST-aware filtering for the direct consolidated intermediate-signal path,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - reduced [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) so the consolidated emitter now asks that owner for the support family instead of carrying it inline,
+  - and updated [t/07-runtime-ast-miss-dependency-recovery.t](/Users/richarddje/Documents/github/fsmgen/t/07-runtime-ast-miss-dependency-recovery.t) plus [t/08-driving-ast-canonicalization.t](/Users/richarddje/Documents/github/fsmgen/t/08-driving-ast-canonicalization.t) so those runtime-AST regression locks now point at the new owner directly.
+- Why this is worth shipping:
+  - it turns another real slice of the older direct backend into an explicit package boundary instead of one broad renderer,
+  - it makes the runtime-AST/intermediate-signal support family testable as its own owner without inventing throwaway wrapper tests,
+  - and it sharpens the next seam honestly: the still-inline consolidated intermediate-signal emission/factorization path in `SystemVerilog.pm` or the deeper planning gravity in `EnableGraph.pm`.
+
 ## 2026-03-27: direct SystemVerilog internal declaration rendering now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling the bounded internal declaration family out of the larger SystemVerilog renderer instead of leaving declaration rendering mixed together with intermediate-signal and factorization logic.
 - Landed behavior:
