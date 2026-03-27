@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-27: EnableGraph intermediate-signal support now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling the intermediate-signal registry and dependency-recovery family out of the broader synthesis owner instead of leaving defining-AST recovery, compatibility-expression parsing, signal-name dependency AST recovery, and referenced-intermediate tracking mixed into [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm).
+- Landed behavior:
+  - added [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm) as the owner of normalized intermediate-signal registry access, native defining-AST lookup, compatibility-expression parsing, rendered-expression recovery, signal-name dependency AST recovery, and referenced-intermediate declaration tracking,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - updated [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm), and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so the live backend and synthesis callers now ask that owner directly,
+  - removed the extracted family from [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm),
+  - and added [t/202-enable-graph-intermediate-signal-support.t](/Users/richarddje/Documents/github/fsmgen/t/202-enable-graph-intermediate-signal-support.t) plus refreshed [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) to lock the new owner directly.
+- Why this is worth shipping:
+  - it makes the synthesis/backend boundary more honest by pulling one coherent support family out of the broader `EnableGraph` gravity well,
+  - it aligns the synthesis side with the explicit-owner pattern we already applied under the direct SystemVerilog backend,
+  - and it sharpens the next seam correctly: the remaining real pressure is now in broader `EnableGraph` planning plus iterative factorization support around `Fixpoint`, not in the intermediate-signal support pocket we just extracted.
+
 ## 2026-03-27: direct SystemVerilog AST factorization support now has a dedicated backend owner and the old backend package is retired
 - Continued the active `R11` backend-breakdown lane by pulling the remaining AST-factorization/substitution family out of the older direct SystemVerilog backend package instead of leaving one last misnamed package as a grab bag around the real owner seams.
 - Landed behavior:

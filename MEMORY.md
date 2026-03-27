@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-27: EnableGraph intermediate-signal support now has a dedicated owner
+- Saved shipped behavior:
+  - [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm) now owns normalized intermediate-signal registry access, native defining-AST lookup, compatibility-expression parsing, rendered-expression recovery, signal-name dependency AST recovery, and referenced-intermediate declaration tracking for the synthesis side,
+  - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm), and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) now ask that owner directly,
+  - and [t/202-enable-graph-intermediate-signal-support.t](/Users/richarddje/Documents/github/fsmgen/t/202-enable-graph-intermediate-signal-support.t) plus [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) now lock the extracted owner boundary.
+- Important continuity note:
+  - this is the first real owner pulled out of the larger `EnableGraph` synthesis gravity well, not another direct SystemVerilog package split,
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) should now be read as “remaining backend pressure is broader `EnableGraph` planning plus `Fixpoint`, with intermediate-signal support already separated,”
+  - and the next likely seam is deeper cleanup in [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) or [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm), not another intermediate-signal extraction.
+
 ## 2026-03-27: direct SystemVerilog AST factorization support now has a dedicated backend owner and the old backend package is retired
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm) now owns direct generated-module AST factorization, post-substitution fixpoint delegation, substituted-AST lookup, and the legacy direct intermediate-signal rendering helper,

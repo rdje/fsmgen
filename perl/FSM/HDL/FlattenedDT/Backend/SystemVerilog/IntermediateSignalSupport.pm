@@ -77,7 +77,7 @@ sub resolve_intermediate_signal_defining_ast ($self, $signal_name, $signal_info)
         return $signal_info->{ast};
     }
 
-    my $resolved_ast = $ctx->{enable_graph}->get_intermediate_signal_ast($signal_name);
+    my $resolved_ast = $ctx->{enable_graph_intermediate_support}->get_intermediate_signal_ast($signal_name);
     if ($resolved_ast && blessed($resolved_ast)) {
         if ($signal_info && ref($signal_info) eq 'HASH') {
             $signal_info->{defining_ast} //= $resolved_ast;
@@ -199,7 +199,7 @@ sub render_intermediate_signal_expression ($self, $signal_name, $signal_info) {
         return $signal_info->{expression};
     }
 
-    my $expression = $ctx->{enable_graph}->get_intermediate_signal_expression($signal_name);
+    my $expression = $ctx->{enable_graph_intermediate_support}->get_intermediate_signal_expression($signal_name);
     if (defined($expression) && $expression ne '' && $signal_info && ref($signal_info) eq 'HASH') {
         $signal_info->{expression} //= $expression;
         $signal_info->{rendered_expression} = $expression;
@@ -276,7 +276,7 @@ sub extract_intermediate_signals_from_runtime_ast_miss ($self, $signal_name, $si
     my @candidate_expressions = ([ $expression, 'rendered_expression' ]);
 
     if (defined($signal_name) && $signal_name ne '') {
-        my $enable_graph_expression = $ctx->{enable_graph}->get_intermediate_signal_expression($signal_name);
+        my $enable_graph_expression = $ctx->{enable_graph_intermediate_support}->get_intermediate_signal_expression($signal_name);
         if (defined($enable_graph_expression) && $enable_graph_expression ne '') {
             push @candidate_expressions, [ $enable_graph_expression, 'enable_graph_expression' ];
         }
@@ -327,7 +327,7 @@ sub extract_intermediate_signals_from_runtime_ast_miss ($self, $signal_name, $si
     }
 
     if (defined($signal_name) && $signal_name ne '') {
-        my $signal_name_ast = $ctx->{enable_graph}->build_dependency_recovery_ast_from_signal_name($signal_name);
+        my $signal_name_ast = $ctx->{enable_graph_intermediate_support}->build_dependency_recovery_ast_from_signal_name($signal_name);
         if ($signal_name_ast && blessed($signal_name_ast)) {
             my @dependencies = $ctx->{enable_graph}->extract_intermediate_signals_from_ast($signal_name_ast);
             if ($signal_info && ref($signal_info) eq 'HASH') {

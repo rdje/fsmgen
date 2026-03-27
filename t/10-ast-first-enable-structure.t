@@ -339,16 +339,39 @@ ok(
     $hdl->{enable_graph}->can('build_state_register_plan'),
     'live EnableGraph owns state register planning',
 );
+ok(
+    $hdl->{enable_graph_intermediate_support}->can('get_intermediate_signal_ast'),
+    'live EnableGraph intermediate-signal support owns defining-AST recovery',
+);
+ok(
+    $hdl->{enable_graph_intermediate_support}->can('get_intermediate_signal_expression'),
+    'live EnableGraph intermediate-signal support owns intermediate expression rendering',
+);
+ok(
+    $hdl->{enable_graph_intermediate_support}->can('build_dependency_recovery_ast_from_signal_name'),
+    'live EnableGraph intermediate-signal support owns signal-name dependency AST recovery',
+);
+ok(
+    $hdl->{enable_graph_intermediate_support}->can('track_ast_intermediate_signals'),
+    'live EnableGraph intermediate-signal support owns referenced-intermediate tracking',
+);
 
 for my $dead_enable_graph_helper (
     qw(
         analyze_ast_complexity
         canonicalize_expression
+        get_intermediate_signal_ast
+        get_intermediate_signal_expression
+        build_dependency_recovery_ast_from_signal_name
+        track_ast_intermediate_signals
         create_condition_expression_signal_name
         get_or_create_ast_signal_name
         get_or_create_global_expression
         is_complex_ast
         needs_parentheses
+        _get_intermediate_signal_registry_entry
+        _register_intermediate_signal_registry_entry
+        _get_native_intermediate_signal_ast
         should_factor_ast
         should_factor_condition
         signal_uses_register_assignment

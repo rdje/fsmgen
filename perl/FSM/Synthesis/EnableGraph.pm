@@ -189,65 +189,6 @@ sub capture_transition_from_ast($self, $dt_name, $transition_node, $condition_st
 
     return $state_value;
 }
-sub _get_intermediate_signal_registry_entry($self, $signal_name) {
-    my $ctx = $self->{flattened_dt};
-    return undef unless defined($signal_name) && $signal_name ne '';
-    return undef unless exists $ctx->{intermediate_signals}->{$signal_name};
-
-    my $entry = $ctx->{intermediate_signals}->{$signal_name};
-    if (ref($entry) eq 'HASH') {
-        $entry->{name} //= $signal_name;
-        return $entry;
-    }
-
-    return {
-        name => $signal_name,
-        expression => $entry,
-        source => 'legacy_string_registry',
-    };
-}
-sub _register_intermediate_signal_registry_entry($self, $signal_name, %updates) {
-    my $ctx = $self->{flattened_dt};
-    my $existing = $self->_get_intermediate_signal_registry_entry($signal_name) || {};
-    my %merged = (
-        %$existing,
-        %updates,
-        name => $signal_name,
-    );
-    $ctx->{intermediate_signals}->{$signal_name} = \%merged;
-    return $ctx->{intermediate_signals}->{$signal_name};
-}
-sub _get_native_intermediate_signal_ast($self, $signal_name) {
-    my $ctx = $self->{flattened_dt};
-    return undef unless defined($signal_name) && $signal_name ne '';
-
-    if ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{intermediate_signals}) {
-        my $signal_info = $ctx->{ast_factorizer}->{intermediate_signals}->{$signal_name};
-        if ($signal_info && $signal_info->{ast} && blessed($signal_info->{ast})) {
-            fsm_debug("[EnableGraph.pm][_get_native_intermediate_signal_ast()] Resolved '$signal_name' from AST factorizer", 3);
-            return $signal_info->{ast};
-        }
-    }
-
-    my $registry_entry = $self->_get_intermediate_signal_registry_entry($signal_name);
-    if ($registry_entry && $registry_entry->{ast} && blessed($registry_entry->{ast})) {
-        fsm_debug("[EnableGraph.pm][_get_native_intermediate_signal_ast()] Resolved '$signal_name' from intermediate registry", 3);
-        return $registry_entry->{ast};
-    }
-
-    if ($ctx->{fsm_module} && $ctx->{fsm_module}->can('signals') && $ctx->{fsm_module}->signals) {
-        my $signal = $ctx->{fsm_module}->signals->{$signal_name};
-        if ($signal && blessed($signal) && $signal->can('driving_ast')) {
-            my $driving_ast = $signal->driving_ast;
-            if ($driving_ast && blessed($driving_ast)) {
-                fsm_debug("[EnableGraph.pm][_get_native_intermediate_signal_ast()] Resolved '$signal_name' from FSM module driving_ast", 3);
-                return $driving_ast;
-            }
-        }
-    }
-
-    return undef;
-}
 sub generate_ast_based_signal_name($self, $ast) {
     # Generate a systematic signal name based on AST structure with PROPER INTERMEDIATE SIGNAL NAMING
     # This follows the specified naming rules:
@@ -609,7 +550,7 @@ sub prescan_wen_en_for_intermediate_signals($self) {
                 next unless $enable_ast && blessed($enable_ast);
 
                 fsm_debug("  PRE-SCAN: Scanning DT-specific enable: $dt_enable_info->{enable_name}", 3);
-                $self->track_ast_intermediate_signals($enable_ast);
+                $ctx->{enable_graph_intermediate_support}->track_ast_intermediate_signals($enable_ast);
             }
 
             if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}->{ast}) {
@@ -618,7 +559,7 @@ sub prescan_wen_en_for_intermediate_signals($self) {
                 next unless $enable_ast && blessed($enable_ast);
 
                 fsm_debug("  PRE-SCAN: Scanning LHS-level enable: $lhs_enable->{name}", 3);
-                $self->track_ast_intermediate_signals($enable_ast);
+                $ctx->{enable_graph_intermediate_support}->track_ast_intermediate_signals($enable_ast);
             }
         }
     }
@@ -659,7 +600,7 @@ sub count_binary_logical_operation_occurrences($self) {
     }
 
     for my $signal_name (keys %{$ctx->{intermediate_signals} || {}}) {
-        my $ast = $self->_get_native_intermediate_signal_ast($signal_name);
+        my $ast = $ctx->{enable_graph_intermediate_support}->_get_native_intermediate_signal_ast($signal_name);
         if ($ast && blessed($ast)) {
             $self->_count_logical_ops_in_ast($ast, \%logical_op_counts);
         } else {
@@ -1575,7 +1516,7 @@ for my $lhs (sort keys %{$ctx->{assignment_analysis}}) {
                 
                 # Track intermediate signals in this AST
                 fsm_debug("GENERATE_DT_ENABLES: [TRACK_INTERMEDIATE] Tracking intermediate signals for '$enable_name'", 3);
-                $self->track_ast_intermediate_signals($enable_ast);
+                $ctx->{enable_graph_intermediate_support}->track_ast_intermediate_signals($enable_ast);
 
                 
                 # Group by DT first
@@ -1641,7 +1582,7 @@ sub generate_lhs_enables_from_analysis($self) {
                 my $enable_ast = $lhs_enable->{ast};
                 
                 # Track intermediate signals in this AST
-                $self->track_ast_intermediate_signals($enable_ast);
+                $ctx->{enable_graph_intermediate_support}->track_ast_intermediate_signals($enable_ast);
                 
                 # Convert AST to SystemVerilog for output (without outer parentheses)
                 my $enable_expr = $self->ast_to_systemverilog($enable_ast);
@@ -2755,7 +2696,7 @@ sub is_signal_ast_based_intermediate($self, $signal_name) {
     }
     
     # METHOD 2: Check native AST-backed registry/module sources
-    my $native_ast = $self->_get_native_intermediate_signal_ast($signal_name);
+    my $native_ast = $ctx->{enable_graph_intermediate_support}->_get_native_intermediate_signal_ast($signal_name);
     if ($native_ast && blessed($native_ast)) {
         my $contains_operators = $self->_ast_contains_factorizable_operators($native_ast);
         if ($contains_operators) {
@@ -3493,7 +3434,7 @@ sub _ast_contains_frequently_used_logical_operation($self, $ast, $visited_signal
             fsm_debug("[EnableGraph.pm][_ast_contains_frequently_used_logical_operation()] Skipping already-visited intermediate '$signal_name' to avoid recursion", 3);
         } else {
             $visited_signal_names->{$signal_name} = 1;
-            my $intermediate_ast = $self->get_intermediate_signal_ast($signal_name);
+            my $intermediate_ast = $self->{flattened_dt}->{enable_graph_intermediate_support}->get_intermediate_signal_ast($signal_name);
             if ($intermediate_ast && blessed($intermediate_ast)) {
                 fsm_debug("[EnableGraph.pm][_ast_contains_frequently_used_logical_operation()] Descending into intermediate '$signal_name' AST", 3);
                 if ($self->_ast_contains_frequently_used_logical_operation($intermediate_ast, $visited_signal_names)) {
@@ -3523,324 +3464,6 @@ sub _ast_contains_frequently_used_logical_operation($self, $ast, $visited_signal
     }
 
     return 0;
-}
-sub get_intermediate_signal_ast($self, $signal_name) {
-    # Resolve an intermediate signal back to its defining AST, preferring native AST sources.
-    my $ctx = $self->{flattened_dt};
-    return undef unless defined($signal_name) && $signal_name ne '';
-    my $native_ast = $self->_get_native_intermediate_signal_ast($signal_name);
-    if ($native_ast && blessed($native_ast)) {
-        return $native_ast;
-    }
-
-    my $registry_entry = $self->_get_intermediate_signal_registry_entry($signal_name);
-    if ($registry_entry && defined($registry_entry->{expression}) && $registry_entry->{expression} ne '') {
-        my $ast = $self->_parse_intermediate_expression_to_ast(
-            $registry_entry->{expression},
-            $signal_name,
-            $registry_entry->{source} || 'intermediate_signals',
-        );
-        return $ast if $ast;
-    }
-
-    if ($ctx->{global_expressions}) {
-        for my $expr (keys %{$ctx->{global_expressions}}) {
-            next unless $ctx->{global_expressions}->{$expr} eq $signal_name;
-            my $ast = $self->_parse_intermediate_expression_to_ast($expr, $signal_name, 'global_expressions');
-            return $ast if $ast;
-            last;
-        }
-    }
-
-    fsm_debug("[EnableGraph.pm][get_intermediate_signal_ast()] No defining AST found for '$signal_name'", 3);
-    return undef;
-}
-sub _parse_intermediate_expression_to_ast($self, $expression, $signal_name, $source_name) {
-    my $ctx = $self->{flattened_dt};
-    return undef unless defined($expression) && $expression ne '';
-
-    unless ($ctx->{expr_namer} && $ctx->{expr_namer}->can('parse_expression')) {
-        fsm_debug("[EnableGraph.pm][_parse_intermediate_expression_to_ast()] No expr_namer parser available for '$signal_name' from $source_name", 3);
-        return undef;
-    }
-
-    my $ast = eval { $ctx->{expr_namer}->parse_expression($expression) };
-    if ($ast && blessed($ast)) {
-        $self->_register_intermediate_signal_registry_entry(
-            $signal_name,
-            ast => $ast,
-            expression => $expression,
-            source => $source_name,
-        );
-        fsm_debug("[EnableGraph.pm][_parse_intermediate_expression_to_ast()] Parsed compatibility expression for '$signal_name' from $source_name", 3);
-        return $ast;
-    }
-
-    my $error = $@;
-    chomp $error if defined $error;
-    fsm_debug("[EnableGraph.pm][_parse_intermediate_expression_to_ast()] Failed to parse compatibility expression for '$signal_name' from $source_name: " . ($error || 'unknown parse failure'), 3);
-    return undef;
-}
-sub get_intermediate_signal_expression($self, $signal_name) {
-    # Get the expression for an intermediate signal from various sources
-    my $ctx = $self->{flattened_dt};
-
-    my $ast = $self->get_intermediate_signal_ast($signal_name);
-    if ($ast && blessed($ast)) {
-        my $expression = $self->ast_to_systemverilog($ast);
-        fsm_debug("[EnableGraph.pm][get_intermediate_signal_expression()] Rendering '$signal_name' from defining AST", 3);
-        return $expression;
-    }
-    
-    # Check the intermediate_signals registry
-    my $registry_entry = $self->_get_intermediate_signal_registry_entry($signal_name);
-    if ($registry_entry && defined($registry_entry->{expression}) && $registry_entry->{expression} ne '') {
-        return $registry_entry->{expression};
-    }
-    
-    # Check global expressions registry
-    for my $expr (keys %{$ctx->{global_expressions}}) {
-        if ($ctx->{global_expressions}->{$expr} eq $signal_name) {
-            return $expr;
-        }
-    }
-    
-    fsm_debug("[EnableGraph.pm][get_intermediate_signal_expression()] No AST-backed or registered expression found for '$signal_name'", 3);
-    return undef;
-}
-sub _signal_name_supports_dependency_ast_recovery($self, $signal_name) {
-    my $ctx = $self->{flattened_dt};
-    return 0 unless defined($signal_name) && $signal_name ne '';
-
-    if ($ctx->{ast_factorizer}
-        && $ctx->{ast_factorizer}->{intermediate_signals}
-        && exists $ctx->{ast_factorizer}->{intermediate_signals}->{$signal_name})
-    {
-        fsm_debug("[EnableGraph.pm][_signal_name_supports_dependency_ast_recovery()] '$signal_name' is tracked by AST factorization", 3);
-        return 1;
-    }
-
-    my $registry_entry = $self->_get_intermediate_signal_registry_entry($signal_name);
-    if ($registry_entry) {
-        my $source = $registry_entry->{source} || 'unknown';
-        if ($source eq 'ast_signal_name' || $source eq 'global_expression') {
-            fsm_debug("[EnableGraph.pm][_signal_name_supports_dependency_ast_recovery()] '$signal_name' is AST-named via $source", 3);
-            return 1;
-        }
-        if ($source eq 'legacy_string_registry') {
-            fsm_debug("[EnableGraph.pm][_signal_name_supports_dependency_ast_recovery()] '$signal_name' is a legacy registry signal eligible for conservative signal-name AST recovery", 3);
-            return 1;
-        }
-    }
-
-    fsm_debug("[EnableGraph.pm][_signal_name_supports_dependency_ast_recovery()] '$signal_name' has no AST-name metadata for dependency recovery", 3);
-    return 0;
-}
-sub _map_signal_name_operator_to_ast_symbol($self, $operator_name) {
-    my %operator_map = (
-        and   => '&&',
-        or    => '||',
-        eq    => '==',
-        ne    => '!=',
-        lt    => '<',
-        gt    => '>',
-        le    => '<=',
-        ge    => '>=',
-        plus  => '+',
-        minus => '-',
-        mult  => '*',
-        div   => '/',
-    );
-
-    return $operator_map{$operator_name};
-}
-sub _find_dependency_recovery_signal_name_split($self, $signal_name) {
-    return unless defined($signal_name) && $signal_name ne '';
-
-    my @operator_names = qw(and or eq ne le ge lt gt plus minus mult div);
-    my $best_candidate;
-
-    for my $operator_name (@operator_names) {
-        my $needle = '_' . $operator_name . '_';
-        my $offset = -1;
-        while (1) {
-            $offset = index($signal_name, $needle, $offset + 1);
-            last if $offset < 0;
-
-            my $left_name = substr($signal_name, 0, $offset);
-            my $right_name = substr($signal_name, $offset + length($needle));
-            next if $left_name eq '' || $right_name eq '';
-
-            my $left_is_intermediate = $self->is_intermediate_signal($left_name) ? 1 : 0;
-            my $right_is_intermediate = $self->is_intermediate_signal($right_name) ? 1 : 0;
-            my $score = $left_is_intermediate + $right_is_intermediate;
-            next unless $score > 0;
-
-            my $known_length = 0;
-            $known_length += length($left_name) if $left_is_intermediate;
-            $known_length += length($right_name) if $right_is_intermediate;
-
-            my $candidate = {
-                operator_name => $operator_name,
-                left_name => $left_name,
-                right_name => $right_name,
-                score => $score,
-                known_length => $known_length,
-            };
-
-            if (!$best_candidate
-                || $candidate->{score} > $best_candidate->{score}
-                || ($candidate->{score} == $best_candidate->{score}
-                    && $candidate->{known_length} > $best_candidate->{known_length}))
-            {
-                $best_candidate = $candidate;
-            }
-        }
-    }
-
-    if ($best_candidate) {
-        fsm_debug(
-            "[EnableGraph.pm][_find_dependency_recovery_signal_name_split()] '$signal_name' split as "
-            . "$best_candidate->{left_name} _$best_candidate->{operator_name}_ $best_candidate->{right_name}",
-            3,
-        );
-        return @{$best_candidate}{qw(operator_name left_name right_name)};
-    }
-
-    fsm_debug("[EnableGraph.pm][_find_dependency_recovery_signal_name_split()] No dependency-oriented split found for '$signal_name'", 3);
-    return;
-}
-sub _build_dependency_recovery_operand_ast($self, $signal_name, $seen_signal_names) {
-    return undef unless defined($signal_name) && $signal_name ne '';
-
-    if ($self->is_intermediate_signal($signal_name)) {
-        fsm_debug("[EnableGraph.pm][_build_dependency_recovery_operand_ast()] Preserving direct intermediate dependency '$signal_name'", 3);
-        return FSM::AST::SignalRef->new($signal_name);
-    }
-
-    my $nested_ast = $self->build_dependency_recovery_ast_from_signal_name($signal_name, $seen_signal_names, 0);
-    if ($nested_ast && blessed($nested_ast)) {
-        fsm_debug("[EnableGraph.pm][_build_dependency_recovery_operand_ast()] Built nested dependency AST for '$signal_name'", 3);
-        return $nested_ast;
-    }
-
-    fsm_debug("[EnableGraph.pm][_build_dependency_recovery_operand_ast()] Treating '$signal_name' as opaque leaf during dependency recovery", 3);
-    return FSM::AST::SignalRef->new($signal_name);
-}
-sub build_dependency_recovery_ast_from_signal_name($self, $signal_name, $seen_signal_names = undef, $is_root = 1) {
-    return undef unless defined($signal_name) && $signal_name ne '';
-
-    $seen_signal_names //= {};
-    if ($seen_signal_names->{$signal_name}++) {
-        fsm_debug("[EnableGraph.pm][build_dependency_recovery_ast_from_signal_name()] Skipping recursive signal-name recovery for '$signal_name'", 3);
-        return undef;
-    }
-
-    if ($is_root && !$self->_signal_name_supports_dependency_ast_recovery($signal_name)) {
-        delete $seen_signal_names->{$signal_name};
-        return undef;
-    }
-
-    my $candidate_ast;
-    if ($signal_name eq 'const_1') {
-        $candidate_ast = FSM::AST::Literal->new("1'b1");
-    } elsif ($signal_name eq 'const_0') {
-        $candidate_ast = FSM::AST::Literal->new("1'b0");
-    } elsif ($signal_name =~ /^not_(.+)$/) {
-        my $operand_name = $1;
-        my $operand_ast = $self->_build_dependency_recovery_operand_ast($operand_name, $seen_signal_names);
-        if ($operand_ast && blessed($operand_ast)) {
-            $candidate_ast = FSM::AST::UnaryOp->new('!', $operand_ast);
-        }
-    } else {
-        my ($operator_name, $left_name, $right_name) = $self->_find_dependency_recovery_signal_name_split($signal_name);
-        if (defined($operator_name) && defined($left_name) && defined($right_name)) {
-            my $left_ast = $self->_build_dependency_recovery_operand_ast($left_name, $seen_signal_names);
-            my $right_ast = $self->_build_dependency_recovery_operand_ast($right_name, $seen_signal_names);
-            my $operator_symbol = $self->_map_signal_name_operator_to_ast_symbol($operator_name);
-            if ($left_ast && blessed($left_ast)
-                && $right_ast && blessed($right_ast)
-                && defined($operator_symbol) && $operator_symbol ne '')
-            {
-                $candidate_ast = FSM::AST::BinaryOp->new($operator_symbol, $left_ast, $right_ast);
-            }
-        }
-    }
-
-    delete $seen_signal_names->{$signal_name};
-    return undef unless $candidate_ast && blessed($candidate_ast);
-
-    my @dependencies = $self->extract_intermediate_signals_from_ast($candidate_ast);
-    unless (@dependencies) {
-        fsm_debug("[EnableGraph.pm][build_dependency_recovery_ast_from_signal_name()] '$signal_name' produced no direct intermediate dependencies", 3);
-        return undef;
-    }
-
-    my $summary = join(', ', @dependencies);
-    fsm_debug("[EnableGraph.pm][build_dependency_recovery_ast_from_signal_name()] '$signal_name' recovered direct dependencies via signal-name AST: $summary", 3);
-    return $candidate_ast;
-}
-sub track_ast_intermediate_signals($self, $ast) {
-    # Recursively traverse an AST and track all intermediate signals that need to be declared
-    my $ctx = $self->{flattened_dt};
-    return unless $ast && blessed($ast);
-    
-    fsm_debug("TRACK_INTERMEDIATE: Traversing AST: " . ref($ast));
-    
-    # If this is a signal reference, check if it's an intermediate signal
-    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
-        my $signal_name;
-        
-        # Handle different signal reference structures - try multiple approaches
-        if ($ast->can('name') && defined($ast->name)) {
-            $signal_name = $ast->name;
-        } elsif ($ast->can('signal_name') && defined($ast->signal_name)) {
-            $signal_name = $ast->signal_name;
-        } elsif ($ast->can('signal') && $ast->signal && $ast->signal->can('name')) {
-            $signal_name = $ast->signal->name;
-        } else {
-            # Try to extract from string representation as fallback
-            my $ast_str = eval { $ast->to_systemverilog() };
-            if ($ast_str && $ast_str =~ /^([a-zA-Z_][a-zA-Z0-9_]*)$/) {
-                $signal_name = $1;
-                fsm_debug("TRACK_INTERMEDIATE: Extracted signal name from string: $signal_name", 3);
-            } else {
-                fsm_debug("TRACK_INTERMEDIATE: WARNING - Could not extract signal name from " . ref($ast) .
-                            " (available methods: " . join(", ", grep { $ast->can($_) } qw(name signal_name signal to_systemverilog)) . ")");
-                return;
-            }
-        }
-        
-        # Check if this is an intermediate signal that needs to be declared
-        if ($self->is_intermediate_signal($signal_name)) {
-            my $existing = $ctx->{referenced_intermediate_signals}->{$signal_name} || {};
-            my $defining_ast = $existing->{defining_ast};
-            if ((!$defining_ast || !blessed($defining_ast))) {
-                $defining_ast = $self->_get_native_intermediate_signal_ast($signal_name);
-            }
-
-            $ctx->{referenced_intermediate_signals}->{$signal_name} = {
-                %$existing,
-                name => $signal_name,
-                reference_ast => $ast,
-                ($defining_ast && blessed($defining_ast) ? (defining_ast => $defining_ast) : ()),
-                needs_declaration => 1
-            };
-            if ($defining_ast && blessed($defining_ast)) {
-                fsm_debug("TRACK_INTERMEDIATE: Found intermediate signal with native defining AST: $signal_name", 3);
-            } else {
-                fsm_debug("TRACK_INTERMEDIATE: Found intermediate signal without native defining AST yet: $signal_name", 3);
-            }
-        }
-    }
-    # Recursively traverse operands
-    elsif ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
-        $self->track_ast_intermediate_signals($ast->left) if $ast->can('left');
-        $self->track_ast_intermediate_signals($ast->right) if $ast->can('right');
-    }
-    elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
-        $self->track_ast_intermediate_signals($ast->operand) if $ast->can('operand');
-    }
 }
 sub group_assignments_by_rhs($self, $lhs) {
     my $ctx = $self->{flattened_dt};

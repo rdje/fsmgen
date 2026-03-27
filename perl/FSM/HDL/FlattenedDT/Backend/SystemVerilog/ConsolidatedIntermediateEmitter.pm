@@ -159,7 +159,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
                 my $referenced_signal_info = $ctx->{referenced_intermediate_signals}->{$signal_name} || {};
                 my $runtime_ast = $signal_support->resolve_intermediate_signal_runtime_ast($signal_name, $referenced_signal_info);
                 my $expression = (!$runtime_ast || !blessed($runtime_ast))
-                    ? $ctx->{enable_graph}->get_intermediate_signal_expression($signal_name)
+                    ? $ctx->{enable_graph_intermediate_support}->get_intermediate_signal_expression($signal_name)
                     : undef;
                 if (($runtime_ast && blessed($runtime_ast)) || $expression) {
                     $all_intermediate_signals{$signal_name} = {
