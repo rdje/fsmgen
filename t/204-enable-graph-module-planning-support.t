@@ -103,7 +103,7 @@ sub prepare_flattened_backend {
     $hdl_generator->{orchestrator}->reset_generation_state();
     $hdl_generator->{enable_graph}->set_fsm_module_reference($fsm_module);
     $hdl_generator->{orchestrator}->flatten_all_decision_trees($fsm_module);
-    $hdl_generator->{enable_graph}->generate_enable_conditions($fsm_module);
+    $hdl_generator->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
     return $hdl_generator;
 }
 

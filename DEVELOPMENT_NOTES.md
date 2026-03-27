@@ -6688,3 +6688,10 @@ It is an exact-delay pulse request:
   construction, driven-signal discovery, reset/default/width recovery, and
   delayed-pulse / flop / combinational assignment emission consumed by the
   direct SystemVerilog backend.
+- EnableGraph top-level enable initialization and WEN/EN support now also
+  live in `FSM::Synthesis::EnableGraph::EnableSupport` instead of in
+  `EnableGraph`.
+- That package now owns the bounded enable family end-to-end: top-level
+  state/DT enable initialization, top-level enable emission, WEN/EN prescan
+  tracking, and unified DT/LHS WEN/EN emission consumed by the direct
+  SystemVerilog backend.

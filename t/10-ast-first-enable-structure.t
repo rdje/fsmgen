@@ -272,16 +272,36 @@ for my $dead_backend_helper (
 }
 
 ok(
-    $hdl->{enable_graph}->can('generate_enable_conditions'),
-    'live EnableGraph owns top-level state/DT enable emission',
+    $hdl->{enable_graph_enable_support}->can('generate_enable_conditions'),
+    'live EnableGraph enable support owns top-level state/DT enable emission',
 );
 ok(
-    $hdl->{enable_graph}->can('generate_unified_wen_en_signals'),
-    'live EnableGraph owns unified WEN/EN emission',
+    $hdl->{enable_graph_enable_support}->can('generate_unified_wen_en_signals'),
+    'live EnableGraph enable support owns unified WEN/EN emission',
 );
 ok(
-    $hdl->{enable_graph}->can('prescan_wen_en_for_intermediate_signals'),
-    'live EnableGraph owns WEN/EN intermediate-signal prescan',
+    $hdl->{enable_graph_enable_support}->can('prescan_wen_en_for_intermediate_signals'),
+    'live EnableGraph enable support owns WEN/EN intermediate-signal prescan',
+);
+ok(
+    $hdl->{enable_graph_enable_support}->can('generate_dt_enables_from_analysis'),
+    'live EnableGraph enable support owns DT-specific WEN/EN emission',
+);
+ok(
+    $hdl->{enable_graph_enable_support}->can('generate_lhs_enables_from_analysis'),
+    'live EnableGraph enable support owns grouped LHS-level WEN/EN emission',
+);
+ok(
+    $hdl->{enable_graph_enable_support}->can('build_state_enable_condition_ast'),
+    'live EnableGraph enable support owns regular-state enable AST construction',
+);
+ok(
+    $hdl->{enable_graph_enable_support}->can('build_dt_enable_condition_ast'),
+    'live EnableGraph enable support owns standalone-DT enable AST construction',
+);
+ok(
+    $hdl->{enable_graph_enable_support}->can('initialize_state_and_dt_enable_conditions'),
+    'live EnableGraph enable support owns top-level state/DT enable registry initialization',
 );
 ok(
     $hdl->{enable_graph_factorization_support}->can('count_binary_logical_operation_occurrences'),
@@ -493,6 +513,14 @@ for my $dead_enable_graph_helper (
         build_internal_signal_declaration_plan
         build_module_declaration_plan
         build_state_register_plan
+        generate_enable_conditions
+        generate_unified_wen_en_signals
+        prescan_wen_en_for_intermediate_signals
+        generate_dt_enables_from_analysis
+        generate_lhs_enables_from_analysis
+        build_state_enable_condition_ast
+        build_dt_enable_condition_ast
+        initialize_state_and_dt_enable_conditions
         build_unified_assignment_analysis
         group_assignments_by_rhs
         generate_complete_enable_structure
@@ -537,6 +565,52 @@ for my $dead_enable_graph_helper (
     ok(
         !$hdl->{enable_graph}->can($dead_enable_graph_helper),
         "live EnableGraph no longer exposes dead helper '$dead_enable_graph_helper'",
+    );
+}
+
+for my $dead_enable_graph_enable_helper (
+    qw(
+        count_binary_logical_operation_occurrences
+        collect_all_wen_en_ast_expressions
+        effective_system_contract
+        effective_clock_name
+        effective_reset_name
+        build_internal_signal_declaration_plan
+        build_module_declaration_plan
+        build_state_register_plan
+        build_unified_assignment_analysis
+        group_assignments_by_rhs
+        generate_complete_enable_structure
+        build_multiplexer_config
+        generate_signal_assignments
+        generate_unified_flop_mux
+        generate_unified_pulse_delay_logic
+        generate_unified_comb_mux
+        get_signal_assignment_type
+        get_driven_signals
+        get_pulse_active_level_for_lhs
+        get_pulse_delay_cycles_for_lhs
+        normalize_rhs_logic_level
+        get_signal_info
+        get_lhs_width_from_analysis
+        get_reset_value
+        get_default_value
+        get_fsm_reset_state
+        get_explicit_reset_value
+        is_register
+        fallback_register_analysis_from_assignments
+        get_intermediate_signal_ast
+        get_intermediate_signal_expression
+        build_dependency_recovery_ast_from_signal_name
+        track_ast_intermediate_signals
+        contains_frequently_used_operations
+        update_original_asts_with_substituted_versions
+        update_original_asts_with_second_pass_substitutions
+    )
+) {
+    ok(
+        !$hdl->{enable_graph_enable_support}->can($dead_enable_graph_enable_helper),
+        "live EnableGraph enable support no longer exposes unrelated helper '$dead_enable_graph_enable_helper'",
     );
 }
 

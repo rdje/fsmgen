@@ -43,7 +43,7 @@ sub flatten_all_decision_trees ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
 
     fsm_debug("Flattening all decision trees", 3);
-    $ctx->{enable_graph}->initialize_state_and_dt_enable_conditions($fsm_module);
+    $ctx->{enable_graph_enable_support}->initialize_state_and_dt_enable_conditions($fsm_module);
     
     # Process regular states
     for my $state (@{$fsm_module->states}) {
@@ -239,7 +239,7 @@ sub generate_systemverilog ($self, $fsm_module) {
     fsm_debug("Step 2 - Basic HDL structure generated", 3);
     
     # Step 3: Generate enable conditions FIRST (this will track intermediate signal requirements)
-    $hdl .= $ctx->{enable_graph}->generate_enable_conditions($fsm_module);
+    $hdl .= $ctx->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
     fsm_debug("Step 3 - Enable conditions generated", 3);
     
     # TIMING FIX: Count logical operations BEFORE any intermediate signal creation!
@@ -248,7 +248,7 @@ sub generate_systemverilog ($self, $fsm_module) {
     fsm_debug("Step 4 - Logical operation counting completed (BEFORE pre-scan!)", 3);
     
     # Step 5: PRE-SCAN all WEN/EN expressions to identify needed intermediate signals (now with counts available)
-    $ctx->{enable_graph}->prescan_wen_en_for_intermediate_signals();
+    $ctx->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
     fsm_debug("Step 5 - PRE-SCAN completed (AFTER logical operation counting!)", 3);
     
     # Step 6: Generate consolidated intermediate signals (combining AST factorization + pre-scan)
@@ -256,7 +256,7 @@ sub generate_systemverilog ($self, $fsm_module) {
     fsm_debug("Step 6 - Consolidated intermediate signals generated", 3);
     
     # Step 7: Generate WEN/EN signals (using pre-declared intermediate signals)
-    $hdl .= $ctx->{enable_graph}->generate_unified_wen_en_signals($fsm_module);
+    $hdl .= $ctx->{enable_graph_enable_support}->generate_unified_wen_en_signals($fsm_module);
     fsm_debug("Step 7 - WEN/EN signals generated", 3);
     
     $hdl .= $ctx->{enable_graph_assignment_support}->generate_signal_assignments($fsm_module);

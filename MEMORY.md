@@ -5228,3 +5228,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   longer owns unified assignment analysis, RHS grouping, mux-plan
   construction, driven-signal discovery, reset/default/width recovery, or
   delayed-pulse / flop / combinational assignment emission directly.
+- EnableGraph top-level enable initialization and WEN/EN support now also
+  live in `FSM::Synthesis::EnableGraph::EnableSupport`, so `EnableGraph` no
+  longer owns top-level state/DT enable initialization, WEN/EN prescan
+  tracking, top-level enable emission, or unified DT/LHS WEN/EN emission
+  directly.

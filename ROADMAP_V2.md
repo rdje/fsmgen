@@ -946,3 +946,8 @@ The first honest `R11` slices are now:
   recovery, and delayed-pulse / flop / combinational assignment emission now
   live in `FSM::Synthesis::EnableGraph::AssignmentSupport`, so `EnableGraph`
   no longer owns that bounded assignment/mux family directly either.
+- Forward-IR note: the matching enable-family support split is now active
+  too: top-level state/DT enable initialization, WEN/EN prescan tracking,
+  top-level enable emission, and unified DT/LHS WEN/EN emission now live in
+  `FSM::Synthesis::EnableGraph::EnableSupport`, so `EnableGraph` no longer
+  owns that bounded enable family directly either.

@@ -122,9 +122,9 @@ sub rebuild_prefix_with_consolidated_intermediates {
         . $scaffold_emitter->generate_state_register($fsm_module)
         . $declaration_emitter->generate_internal_signal_declarations($fsm_module);
 
-    $prefix .= $hdl_generator->{enable_graph}->generate_enable_conditions($fsm_module);
+    $prefix .= $hdl_generator->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
     $hdl_generator->{enable_graph_factorization_support}->count_binary_logical_operation_occurrences();
-    $hdl_generator->{enable_graph}->prescan_wen_en_for_intermediate_signals();
+    $hdl_generator->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
 
     my $consolidated_block = $consolidated_emitter->generate_consolidated_intermediate_signals($fsm_module);
 
