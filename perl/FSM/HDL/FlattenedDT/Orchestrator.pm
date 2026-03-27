@@ -82,7 +82,7 @@ sub flatten_all_decision_trees ($self, $fsm_module) {
     }
     
     # UNIFIED PHASE 1: Build complete assignment analysis structure
-    $ctx->{enable_graph}->build_unified_assignment_analysis($fsm_module);
+    $ctx->{enable_graph_assignment_support}->build_unified_assignment_analysis($fsm_module);
 }
 sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
     my $ctx = $self->{flattened_dt};
@@ -259,7 +259,7 @@ sub generate_systemverilog ($self, $fsm_module) {
     $hdl .= $ctx->{enable_graph}->generate_unified_wen_en_signals($fsm_module);
     fsm_debug("Step 7 - WEN/EN signals generated", 3);
     
-    $hdl .= $ctx->{enable_graph}->generate_signal_assignments($fsm_module);
+    $hdl .= $ctx->{enable_graph_assignment_support}->generate_signal_assignments($fsm_module);
     $hdl .= "endmodule\n";
     fsm_debug("*** PIPELINE TIMING DEBUG: HDL Generation Pipeline Complete ***\n", 3);
     

@@ -6680,3 +6680,11 @@ It is an exact-delay pulse request:
   system-contract lookup, effective clock/reset lookup, state-register
   planning, module-boundary port planning, and internal signal declaration
   planning consumed by the direct SystemVerilog backend.
+- EnableGraph assignment analysis and assignment emission now also live in
+  `FSM::Synthesis::EnableGraph::AssignmentSupport` instead of in
+  `EnableGraph`.
+- That package now owns the bounded assignment/mux family end-to-end:
+  unified assignment-analysis construction, RHS grouping, mux-plan
+  construction, driven-signal discovery, reset/default/width recovery, and
+  delayed-pulse / flop / combinational assignment emission consumed by the
+  direct SystemVerilog backend.

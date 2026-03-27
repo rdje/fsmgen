@@ -5223,3 +5223,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   longer owns effective system-contract lookup, effective clock/reset lookup,
   state-register planning, module-boundary port planning, or internal signal
   declaration planning directly.
+- EnableGraph assignment analysis and assignment emission now also live in
+  `FSM::Synthesis::EnableGraph::AssignmentSupport`, so `EnableGraph` no
+  longer owns unified assignment analysis, RHS grouping, mux-plan
+  construction, driven-signal discovery, reset/default/width recovery, or
+  delayed-pulse / flop / combinational assignment emission directly.

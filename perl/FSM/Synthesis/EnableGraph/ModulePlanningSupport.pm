@@ -166,8 +166,8 @@ sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports 
         my $lhs_analysis = $ctx->{assignment_analysis}{$lhs};
         next unless $lhs_analysis;
 
-        my $width = $ctx->{enable_graph}->get_lhs_width_from_analysis($lhs_analysis);
-        my $assignment_type = $ctx->{enable_graph}->get_signal_assignment_type($lhs, $lhs_analysis);
+        my $width = $ctx->{enable_graph_assignment_support}->get_lhs_width_from_analysis($lhs_analysis);
+        my $assignment_type = $ctx->{enable_graph_assignment_support}->get_signal_assignment_type($lhs, $lhs_analysis);
         my $multiplexer_type = $lhs_analysis->{multiplexer}->{type} || 'comb';
 
         unless ($declared_ports{$lhs}) {
@@ -181,7 +181,7 @@ sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports 
             my $q_name = "${lhs}_q";
             $aux_decls{$q_name} = $width unless $declared_ports{$q_name};
         } elsif ($assignment_type eq 'pulse_delayed') {
-            my $delay_cycles = $ctx->{enable_graph}->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
+            my $delay_cycles = $ctx->{enable_graph_assignment_support}->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
             if ($delay_cycles > 0) {
                 my $pipe_name = "${lhs}_pulse_delay_pipe";
                 $aux_decls{$pipe_name} = $delay_cycles unless $declared_ports{$pipe_name};
@@ -238,7 +238,7 @@ sub build_module_declaration_plan ($self, $fsm_module) {
         %seen_signals = ($clock_name => 1, $reset_name => 1);
         %port_directions = ($clock_name => 'input', $reset_name => 'input');
     }
-    my %driven_signals = $ctx->{enable_graph}->get_driven_signals();
+    my %driven_signals = $ctx->{enable_graph_assignment_support}->get_driven_signals();
 
     for my $sig_name (sort keys %$signals) {
         if ($seen_signals{$sig_name}) {

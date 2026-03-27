@@ -12,6 +12,7 @@ use lib "$FindBin::Bin";
 use FSM::Debug;  # Global debug system
 use FSM::ExpressionNamer;
 use FSM::Synthesis::EnableGraph;
+use FSM::Synthesis::EnableGraph::AssignmentSupport;
 use FSM::Synthesis::EnableGraph::FactorizationSupport;
 use FSM::Synthesis::EnableGraph::IntermediateSignalSupport;
 use FSM::Synthesis::EnableGraph::ModulePlanningSupport;
@@ -84,6 +85,7 @@ sub new ($class, %args) {
     
     # Initial extraction slice: dedicated enable synthesis/orchestration layer.
     $self->{enable_graph} = FSM::Synthesis::EnableGraph->new(flattened_dt => $self);
+    $self->{enable_graph_assignment_support} = FSM::Synthesis::EnableGraph::AssignmentSupport->new(flattened_dt => $self);
     $self->{enable_graph_factorization_support} = FSM::Synthesis::EnableGraph::FactorizationSupport->new(flattened_dt => $self);
     $self->{enable_graph_intermediate_support} = FSM::Synthesis::EnableGraph::IntermediateSignalSupport->new(flattened_dt => $self);
     $self->{enable_graph_module_planning_support} = FSM::Synthesis::EnableGraph::ModulePlanningSupport->new(flattened_dt => $self);
@@ -116,7 +118,7 @@ sub generate_vhdl ($self, $fsm_module) {
 }
 
 sub get_signal_assignment_type ($self, $lhs, $lhs_analysis) {
-    return $self->{enable_graph}->get_signal_assignment_type($lhs, $lhs_analysis);
+    return $self->{enable_graph_assignment_support}->get_signal_assignment_type($lhs, $lhs_analysis);
 }
 
 1;

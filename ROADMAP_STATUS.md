@@ -1489,3 +1489,9 @@ Exit criteria:
   register planning, and effective system-contract lookup now live in
   `FSM::Synthesis::EnableGraph::ModulePlanningSupport`, so `EnableGraph` no
   longer owns that module/state/declaration planning family directly.
+- `R11`: the matching assignment-analysis/backend-emission owner split is now
+  active too: unified assignment analysis, RHS grouping, mux-plan
+  construction, driven-signal discovery, reset/default/width recovery, and
+  delayed-pulse / flop / combinational assignment emission now live in
+  `FSM::Synthesis::EnableGraph::AssignmentSupport`, so `EnableGraph` no
+  longer owns that bounded assignment/mux family directly either.

@@ -401,7 +401,7 @@ sub resolve_intermediate_signal_width ($self, $signal_name, $signal_info, $signa
     my $resolved_width;
     my $width_source = 'default_1bit';
 
-    my $native_signal_info = $ctx->{enable_graph}->get_signal_info($signal_name);
+    my $native_signal_info = $ctx->{enable_graph_assignment_support}->get_signal_info($signal_name);
     if ($native_signal_info && $native_signal_info->{width} && $native_signal_info->{width} > 0) {
         $resolved_width = $native_signal_info->{width};
         $width_source = 'native_signal_metadata';

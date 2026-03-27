@@ -364,6 +364,90 @@ ok(
     'live EnableGraph module-planning support owns state register planning',
 );
 ok(
+    $hdl->{enable_graph_assignment_support}->can('build_unified_assignment_analysis'),
+    'live EnableGraph assignment support owns assignment-analysis construction',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('group_assignments_by_rhs'),
+    'live EnableGraph assignment support owns RHS grouping',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('generate_complete_enable_structure'),
+    'live EnableGraph assignment support owns DT/LHS enable-family shaping',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('build_multiplexer_config'),
+    'live EnableGraph assignment support owns mux-plan construction',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('generate_signal_assignments'),
+    'live EnableGraph assignment support owns unified assignment HDL emission',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('generate_unified_flop_mux'),
+    'live EnableGraph assignment support owns flop-backed mux emission',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('generate_unified_pulse_delay_logic'),
+    'live EnableGraph assignment support owns delayed-pulse emission',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('generate_unified_comb_mux'),
+    'live EnableGraph assignment support owns combinational mux emission',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('get_signal_assignment_type'),
+    'live EnableGraph assignment support owns normalized assignment-family classification',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('get_driven_signals'),
+    'live EnableGraph assignment support owns driven-signal discovery',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('get_pulse_active_level_for_lhs'),
+    'live EnableGraph assignment support owns pulse active-level recovery',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('get_pulse_delay_cycles_for_lhs'),
+    'live EnableGraph assignment support owns pulse delay-cycle recovery',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('normalize_rhs_logic_level'),
+    'live EnableGraph assignment support owns pulse RHS logic normalization',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('get_signal_info'),
+    'live EnableGraph assignment support owns signal metadata lookup for assignment planning',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('get_lhs_width_from_analysis'),
+    'live EnableGraph assignment support owns width recovery for assignment planning',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('get_reset_value'),
+    'live EnableGraph assignment support owns reset-value recovery for assignment planning',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('get_default_value'),
+    'live EnableGraph assignment support owns default-value recovery for assignment planning',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('get_fsm_reset_state'),
+    'live EnableGraph assignment support owns FSM reset-state recovery for assignment planning',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('get_explicit_reset_value'),
+    'live EnableGraph assignment support owns explicit reset-value lookup',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('is_register'),
+    'live EnableGraph assignment support owns register-versus-combinational classification',
+);
+ok(
+    $hdl->{enable_graph_assignment_support}->can('fallback_register_analysis_from_assignments'),
+    'live EnableGraph assignment support owns fallback assignment-operator register analysis',
+);
+ok(
     $hdl->{enable_graph_intermediate_support}->can('get_intermediate_signal_ast'),
     'live EnableGraph intermediate-signal support owns defining-AST recovery',
 );
@@ -409,6 +493,27 @@ for my $dead_enable_graph_helper (
         build_internal_signal_declaration_plan
         build_module_declaration_plan
         build_state_register_plan
+        build_unified_assignment_analysis
+        group_assignments_by_rhs
+        generate_complete_enable_structure
+        build_multiplexer_config
+        generate_signal_assignments
+        generate_unified_flop_mux
+        generate_unified_pulse_delay_logic
+        generate_unified_comb_mux
+        get_signal_assignment_type
+        get_driven_signals
+        get_pulse_active_level_for_lhs
+        get_pulse_delay_cycles_for_lhs
+        normalize_rhs_logic_level
+        get_signal_info
+        get_lhs_width_from_analysis
+        get_reset_value
+        get_default_value
+        get_fsm_reset_state
+        get_explicit_reset_value
+        is_register
+        fallback_register_analysis_from_assignments
         update_original_asts_with_substituted_versions
         update_original_asts_with_second_pass_substitutions
         contains_frequently_used_operations
@@ -432,6 +537,31 @@ for my $dead_enable_graph_helper (
     ok(
         !$hdl->{enable_graph}->can($dead_enable_graph_helper),
         "live EnableGraph no longer exposes dead helper '$dead_enable_graph_helper'",
+    );
+}
+
+for my $dead_enable_graph_assignment_helper (
+    qw(
+        count_binary_logical_operation_occurrences
+        collect_all_wen_en_ast_expressions
+        effective_system_contract
+        effective_clock_name
+        effective_reset_name
+        build_internal_signal_declaration_plan
+        build_module_declaration_plan
+        build_state_register_plan
+        get_intermediate_signal_ast
+        get_intermediate_signal_expression
+        build_dependency_recovery_ast_from_signal_name
+        track_ast_intermediate_signals
+        contains_frequently_used_operations
+        update_original_asts_with_substituted_versions
+        update_original_asts_with_second_pass_substitutions
+    )
+) {
+    ok(
+        !$hdl->{enable_graph_assignment_support}->can($dead_enable_graph_assignment_helper),
+        "live EnableGraph assignment support no longer exposes unrelated helper '$dead_enable_graph_assignment_helper'",
     );
 }
 

@@ -14,6 +14,7 @@ Current baseline:
 - Reviewed on `2026-03-27`.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
+- Static trace from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) currently reaches `72` project files total, `71` `.pm` packages.
 
 ## Executive read
 [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is a thin CLI/reporting shell.
@@ -39,14 +40,17 @@ The best current architecture in the tree is the newer composition/forward-IR/ba
 The heaviest remaining complexity is still the direct single-module HDL backend path centered on:
 - [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
 - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm)
+- [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm)
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm)
+- [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm)
+- [perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm)
 
 ## What `bin/fsmgen` actually owns
 [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) directly imports:
@@ -64,49 +68,64 @@ It mainly owns:
 - output-file writing
 - user-facing summaries for composition provenance, override/block events, failure summaries, generated children, and shared-datapath metadata
 
+[bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is `740` lines today, so it is not tiny, but most of that weight is presentation/reporting rather than semantic compiler ownership.
+
 It does not own the compiler architecture.
 Its only non-trivial local logic is presentation/reporting glue.
 
 ## Runtime spine
-Normal execution is best understood like this:
+Normal execution is best understood as two sibling spines under the same CLI and top-level facade.
 
 ```text
+Direct-root spine
 bin/fsmgen
   -> FSM::SourcePathResolver
   -> FSM::Pipeline::HDLGenerator->generate_hdl_from_file
-     -> FSM::Pipeline::SourceGenerationOrchestrator
-        -> FSM::Pipeline::SourceFrontend
-        -> parse_fsm_file
-        -> classify_source_ast
-        -> direct single-module path
-        -> FSM::Pipeline::DirectGenerationOrchestrator
-        -> FSM::Pipeline::SourceFrontend
-        -> FSM::Adapter::FSMGenFull
-        -> IntentHIR
-        -> FSM::Pipeline::GeneratedModuleInfoBuilder
-        -> FSM::Backend::GeneratedModuleEmitter
-        -> FSM::HDL::FlattenedDT
-           -> FlattenedDT::Orchestrator
-           -> Synthesis::EnableGraph
-           -> Synthesis::EnableGraph::FactorizationSupport
-           -> Synthesis::EnableGraph::IntermediateSignalSupport
-           -> FlattenedDT::Backend::SystemVerilog::ASTFactorizationSupport
-           -> FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter
-           -> FlattenedDT::Backend::SystemVerilog::InternalDeclarationEmitter
-           -> FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter
-           -> FlattenedDT::Backend::SystemVerilog::IntermediateSignalSupport
-           -> FlattenedDT::Backend::Verilog
-        -> LoweredRTLIR
-        -> StructuralRTLIR
-        -> composition path
-        -> FSM::Composition::GenerationOrchestrator
-        -> FSM::Composition::Parser
-        -> generated-child realization / external RTL child realization / RTL interface loading
-        -> composition plan building / composition builders
-        -> StructuralRTLIRBuilder
-        -> StructuralRTLIREmitter
-        -> IntentHIR / LoweredRTLIR
-        -> provenance + shared-datapath reporting
+  -> FSM::Pipeline::SourceGenerationOrchestrator
+     -> FSM::Pipeline::SourceFrontend
+     -> parse_fsm_file
+     -> classify_source_ast
+     -> FSM::Pipeline::DirectGenerationOrchestrator
+     -> FSM::Pipeline::SourceFrontend
+     -> FSM::Adapter::FSMGenFull
+     -> FSM::IR::IntentHIRBuilder
+     -> FSM::Pipeline::GeneratedModuleInfoBuilder
+     -> FSM::Backend::GeneratedModuleEmitter
+     -> FSM::HDL::FlattenedDT
+        -> FlattenedDT::Orchestrator
+        -> Synthesis::EnableGraph
+        -> Synthesis::EnableGraph::AssignmentSupport
+        -> Synthesis::EnableGraph::FactorizationSupport
+        -> Synthesis::EnableGraph::IntermediateSignalSupport
+        -> Synthesis::EnableGraph::ModulePlanningSupport
+        -> FlattenedDT::Backend::SystemVerilog::ASTFactorizationSupport
+        -> FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter
+        -> FlattenedDT::Backend::SystemVerilog::InternalDeclarationEmitter
+        -> FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter
+        -> FlattenedDT::Backend::SystemVerilog::IntermediateSignalSupport
+        -> FlattenedDT::Backend::Verilog
+     -> FSM::IR::StructuralRTLIRBuilder
+
+Composition spine
+bin/fsmgen
+  -> FSM::SourcePathResolver
+  -> FSM::Pipeline::HDLGenerator->generate_hdl_from_file
+  -> FSM::Pipeline::SourceGenerationOrchestrator
+     -> FSM::Pipeline::SourceFrontend
+     -> parse_fsm_file
+     -> classify_source_ast
+     -> parse_composition_source
+     -> FSM::Composition::GenerationOrchestrator
+     -> FSM::Composition::PlanBuilder
+     -> generated-child realization / external RTL child realization / RTL interface loading
+     -> composition plan building / composition builders
+     -> FSM::IR::StructuralRTLIRBuilder
+     -> FSM::Composition::ChildExportBuilder
+     -> FSM::IR::IntentHIRBuilder
+     -> FSM::Composition::ProvenanceReportBuilder
+     -> FSM::IR::LoweredRTLIRBuilder
+     -> FSM::Backend::VerilogFamily::StructuralRTLIREmitter
+     -> FSM::Composition::ResultMetadataBuilder
 ```
 
 Important distinction:
@@ -310,6 +329,7 @@ Right now it is composition-top focused and Verilog-family focused.
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm)
 - [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm)
+- [perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm)
 - `FSM::ExpressionNamer`
 - `FSM::AST::Node`
 
@@ -387,18 +407,21 @@ It behaves like a hook system, not a competing architecture.
   module/state/declaration planning family rather than leaving effective
   system-contract lookup, state-register planning, module-boundary port
   planning, and internal declaration planning inside `EnableGraph`.
+- `FSM::Synthesis::EnableGraph::AssignmentSupport` now also owns the bounded
+  assignment-analysis / RHS-grouping / mux-plan / assignment-emission family
+  rather than leaving unified assignment analysis, driven-signal discovery,
+  reset/default/width recovery, and delayed-pulse / flop / combinational mux
+  emission inline inside `EnableGraph`.
 - The forward IR layer now looks real enough to steer architecture, not just document aspiration.
 - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) has become a meaningful structural API, not just formatting glue.
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm) is the right directional move for backend emission.
 
 ### Current hotspots
-- [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) is still a very large semantic/synthesis gravity well.
+- [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) is still a large semantic/synthesis gravity well at `1758` lines.
 - The direct single-module generation path still has not converged on the same clean `StructuralRTLIR -> backend emitter` shape that the composition path is starting to use, even though it now has its own direct-root orchestrator boundary and a dedicated generated-module backend owner.
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm), [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm), and [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) now carry more of the remaining backend gravity than any single SystemVerilog package.
-- The remaining `EnableGraph` gravity is now narrower than before: the direct
-  backend planning split means the next honest seams are broader assignment /
-  mux planning and factorization-policy cleanup, not module-boundary or
-  state-register planning anymore.
+- The remaining `EnableGraph` gravity is now narrower than before: module/state/declaration planning and assignment-analysis / mux-emission support both have dedicated owners now, so the next honest seams are WEN/EN generation and factorization-policy cleanup, not the old direct assignment or module-boundary clusters.
+- [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) is still a meaningful sequencing hotspot even though the old SystemVerilog backend shell has been retired.
 - `module_info` and reporting/statistics surfaces still create pressure for the coordinator to know too much, even though the generated-module `module_info` family now has its own explicit owner.
 
 ## Important implications for future implementation
@@ -411,11 +434,11 @@ If the project needs a template for â€œhow the final architecture should feel,â€
 
 than to the older direct `FlattenedDT` path.
 
-### 2. `HDLGenerator` is now close to an honest facade, but the older direct backend is still the deeper hotspot
+### 2. `HDLGenerator` is now an honest facade, but the older direct backend is still the deeper hotspot
 The main remaining architectural pressure is no longer the top-level pipeline
 facade. It is the older direct backend family under `FlattenedDT`,
-`SystemVerilog.pm`, and `EnableGraph`, where the remaining AST-factorization
-and planning gravity still lives.
+`FlattenedDT::Orchestrator`, `EnableGraph`, its support owners, and `Fixpoint`, where the
+remaining AST-factorization, sequencing, and planning gravity still lives.
 
 That means the long-term split is still warranted.
 
@@ -453,7 +476,7 @@ The project already has:
 - and a cleaner composition architecture than it used to
 
 But it also still has:
-- one still-too-wide pipeline facade/coordinator
+- one orchestrator family that is now the real coordination hub
 - one oversized synthesis owner
 - and a direct single-module backend family that is better fronted than before,
   but still has not fully caught up with the composition-side architectural cleanup
