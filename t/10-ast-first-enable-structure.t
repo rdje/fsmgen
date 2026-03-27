@@ -266,8 +266,8 @@ for my $dead_backend_helper (
     )
 ) {
     ok(
-        !$hdl->{backend_sv}->can($dead_backend_helper),
-        "live SystemVerilog backend no longer exposes dead helper '$dead_backend_helper'",
+        !$hdl->{backend_sv_ast_factorization}->can($dead_backend_helper),
+        "live SystemVerilog AST-factorization owner no longer exposes dead helper '$dead_backend_helper'",
     );
 }
 

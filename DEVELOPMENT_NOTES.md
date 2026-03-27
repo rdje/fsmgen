@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-27: direct SystemVerilog AST factorization support now has a dedicated backend owner and the old backend package is retired
+- Continued the active `R11` backend-breakdown lane by pulling the remaining AST-factorization/substitution family out of the older direct SystemVerilog backend package instead of leaving one last misnamed package as a grab bag around the real owner seams.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm) as the owner of global AST factorization, iterative post-substitution factorization, substituted-AST lookup, and the legacy direct intermediate-signal rendering helper,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm), and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) so the live direct backend path now asks that owner directly,
+  - removed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) from the live backend path entirely,
+  - and added [t/201-systemverilog-ast-factorization-support.t](/Users/richarddje/Documents/github/fsmgen/t/201-systemverilog-ast-factorization-support.t) to lock the extracted owner directly against a realistic shared-expression factorization fixture.
+- Why this is worth shipping:
+  - it retires the last misleading direct SystemVerilog monolith instead of preserving it as a compatibility shell,
+  - it makes the remaining backend gravity more honest: the deeper pressure is now in `EnableGraph` plus the fixpoint/factorization machinery, not in one misnamed backend package,
+  - and it sharpens the next seam correctly: deeper planning or fixpoint cleanup, not more package-boundary theater.
+
 ## 2026-03-27: direct SystemVerilog consolidated intermediate emission now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling the consolidated intermediate-signal emission family out of the larger SystemVerilog renderer instead of leaving AST-factorized plus pre-scanned intermediate merging, dependency-aware filtering, and final wire/assign emission mixed into the same backend package as factorization support.
 - Landed behavior:

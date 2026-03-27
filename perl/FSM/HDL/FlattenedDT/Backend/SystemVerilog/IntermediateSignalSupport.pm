@@ -118,7 +118,7 @@ sub resolve_intermediate_signal_runtime_ast ($self, $signal_name, $signal_info) 
         && $ctx->{ast_factorizer}->{intermediate_signals}
         && exists $ctx->{ast_factorizer}->{intermediate_signals}->{$signal_name})
     {
-        my $substituted_ast = $ctx->{backend_sv}->get_substituted_ast_for_signal($signal_name, $signal_info);
+        my $substituted_ast = $ctx->{backend_sv_ast_factorization}->get_substituted_ast_for_signal($signal_name, $signal_info);
         if ($substituted_ast && blessed($substituted_ast)) {
             $runtime_ast = $substituted_ast;
             $runtime_ast_source = 'substituted_ast';

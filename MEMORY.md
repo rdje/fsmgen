@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-27: direct SystemVerilog AST factorization support now has a dedicated backend owner and the old backend package is retired
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm) now owns direct generated-module AST factorization, post-substitution fixpoint delegation, substituted-AST lookup, and the legacy direct intermediate-signal rendering helper,
+  - the live direct backend owners now ask that package directly instead of routing through [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm),
+  - and [t/201-systemverilog-ast-factorization-support.t](/Users/richarddje/Documents/github/fsmgen/t/201-systemverilog-ast-factorization-support.t) now locks the extracted owner directly against a realistic shared-expression factorization fixture.
+- Important continuity note:
+  - this retires the last live direct SystemVerilog monolith instead of keeping a fake compatibility shell,
+  - the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) should now be read as “direct backend gravity lives in explicit owners plus `EnableGraph` / fixpoint support,”
+  - and the next likely seam is deeper cleanup in [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) or [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm), not more SystemVerilog package splitting.
+
 ## 2026-03-27: direct SystemVerilog consolidated intermediate emission now has a dedicated backend owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) now owns direct generated-module consolidated intermediate-signal emission from the prepared AST-factorization plus pre-scan context,

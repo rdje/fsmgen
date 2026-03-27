@@ -136,7 +136,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
     my $hdl = "";
 
     # Step 1: Run AST factorization to identify common sub-expressions
-    my $ast_intermediate_signals = $ctx->{backend_sv}->run_global_ast_factorization();
+    my $ast_intermediate_signals = $ctx->{backend_sv_ast_factorization}->run_global_ast_factorization();
 
     # Step 2: Merge with pre-scan results to get comprehensive list
     my %all_intermediate_signals;
