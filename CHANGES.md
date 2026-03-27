@@ -1,5 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-03-28
+### direct SystemVerilog global factorization now has a dedicated backend owner
+- Added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm) as the owner of the live direct first-pass AST-factorization pipeline: factorizer construction, substitution, original-AST refresh, fixpoint delegation, and factorizer persistence.
+- Updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so the live direct backend now instantiates and uses that owner directly.
+- Narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm) to substituted-AST lookup plus the legacy direct intermediate-signal rendering helper, added [t/211-systemverilog-global-factorization-support.t](/Users/richarddje/Documents/github/fsmgen/t/211-systemverilog-global-factorization-support.t), tightened [t/201-systemverilog-ast-factorization-support.t](/Users/richarddje/Documents/github/fsmgen/t/201-systemverilog-ast-factorization-support.t) and [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t), and refreshed the live architecture/roadmap notes.
+
 ## 2026-03-27
 ### EnableGraph factorization policy now has a dedicated owner
 - Added [perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm) as the owner of the synthesis-side factorization-policy family: logical-operation counting, first-pass AST collection and factorizer feed preparation, second-pass AST feed eligibility, and high-count logical-operation policy.

@@ -258,6 +258,8 @@ for my $dead_backend_helper (
         is_signal_referenced_in_substitutions
         is_signal_actually_used_in_final_expressions
         resolve_intermediate_signal_live_usage
+        run_global_ast_factorization
+        run_second_pass_factorization
         update_original_asts_with_substituted_versions
         update_original_asts_with_second_pass_substitutions
         _count_logical_ops_in_ast
@@ -270,6 +272,19 @@ for my $dead_backend_helper (
         "live SystemVerilog AST-factorization owner no longer exposes dead helper '$dead_backend_helper'",
     );
 }
+
+ok(
+    $hdl->{backend_sv_global_factorization}->can('run_global_ast_factorization'),
+    'live SystemVerilog global factorization support owns the first-pass AST factorization pipeline',
+);
+ok(
+    $hdl->{backend_sv_global_factorization}->can('run_second_pass_factorization'),
+    'live SystemVerilog global factorization support owns fixpoint delegation for post-substitution factorization',
+);
+ok(
+    $hdl->{backend_sv_ast_factorization}->can('get_substituted_ast_for_signal'),
+    'live SystemVerilog AST-factorization support keeps substituted-AST lookup for downstream owners',
+);
 
 ok(
     $hdl->{enable_graph_capture_support}->can('create_condition_expression'),

@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: direct SystemVerilog global factorization now has a dedicated backend owner
+- Continued the active `R11` backend-breakdown lane by pulling the live first-pass AST-factorization pipeline out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm) instead of leaving factorizer construction, substitution, original-AST refresh, fixpoint delegation, and factorizer persistence mixed together with the downstream substituted-AST lookup surface.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm) as the owner of the live direct first-pass factorization pipeline,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so the live direct backend path now asks that owner directly for first-pass factorization,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm) to substituted-AST lookup plus the legacy direct intermediate-signal rendering helper,
+  - added [t/211-systemverilog-global-factorization-support.t](/Users/richarddje/Documents/github/fsmgen/t/211-systemverilog-global-factorization-support.t),
+  - and tightened [t/201-systemverilog-ast-factorization-support.t](/Users/richarddje/Documents/github/fsmgen/t/201-systemverilog-ast-factorization-support.t) plus [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) so the owner boundary is locked honestly.
+- Why this is worth shipping:
+  - it turns the first-pass factorization pipeline into a real owner instead of leaving it buried in a downstream lookup package,
+  - it sharpens the direct backend picture so “first-pass factorization” and “post-factorization runtime lookup” are no longer the same package responsibility,
+  - and it narrows the next honest seam correctly to the remaining post-factorization/fixpoint gravity rather than more first-pass owner splitting.
+
 ## 2026-03-27: EnableGraph factorization support now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the synthesis-side factorization-analysis and substitution/live-usage evidence family out of the broader `EnableGraph` owner instead of leaving AST-factorization bookkeeping, substitution synchronization, and live-usage derivation mixed into the same package as broader synthesis planning.
 - Landed behavior:

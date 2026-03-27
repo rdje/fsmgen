@@ -10,15 +10,14 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ASTFactorizationSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GlobalFactorizationSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'ast factorization support rebuilds the substituted-ast lookup contract from a prepared backend context' => sub {
+subtest 'global factorization support rebuilds the direct first-pass factorization contract from a prepared backend context' => sub {
     my $fsm_module = parse_fsm_module(
-        'sv_factorization_contract',
+        'sv_global_factorization_contract',
         <<'FSM'
-(?fsm:sv_factorization_contract
+(?fsm:sv_global_factorization_contract
   (+system
     (clock clk)
     (sreset rstn)
@@ -44,21 +43,21 @@ FSM
     );
 
     my $prepared_backend = prepare_flattened_backend($fsm_module);
-    my $factorization_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ASTFactorizationSupport->new(
-        flattened_dt => $prepared_backend,
-    );
-    my $global_factorization_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GlobalFactorizationSupport->new(
+    my $support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GlobalFactorizationSupport->new(
         flattened_dt => $prepared_backend,
     );
 
-    my $intermediate_signals = $global_factorization_support->run_global_ast_factorization();
+    my $intermediate_signals = $support->run_global_ast_factorization();
     my $signal_info = $intermediate_signals->{A_or_B};
-    my $substituted_ast = $factorization_support->get_substituted_ast_for_signal('A_or_B', $signal_info) || $signal_info->{ast};
-    my $rendered_expression = $prepared_backend->{enable_graph_ast_support}->ast_to_systemverilog($substituted_ast);
 
-    ok($signal_info, 'ast factorization support can look up one shared intermediate signal after global factorization has already run');
-    is($rendered_expression, 'A | B', 'ast factorization support recovers the substituted AST for the shared expression');
-    ok($prepared_backend->{ast_factorizer}, 'ast factorization support reads from the stored factorizer context that downstream owners consume');
+    ok($signal_info, 'global factorization support keeps the shared A_or_B intermediate signal');
+    is($signal_info->{usage_count}, 2, 'global factorization support keeps the shared-expression usage count');
+    ok($prepared_backend->{ast_factorizer}, 'global factorization support stores the factorizer on the backend context for downstream owners');
+    is(
+        $prepared_backend->{enable_graph_ast_support}->ast_to_systemverilog($prepared_backend->{ast_factorizer}{intermediate_signals}{A_or_B}{ast}),
+        'A | B',
+        'global factorization support persists the substituted AST form for downstream lookup',
+    );
 };
 
 done_testing();
