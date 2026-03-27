@@ -5233,3 +5233,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   longer owns top-level state/DT enable initialization, WEN/EN prescan
   tracking, top-level enable emission, or unified DT/LHS WEN/EN emission
   directly.
+- EnableGraph AST capture and condition/test conversion now also live in
+  `FSM::Synthesis::EnableGraph::CaptureSupport`, so `EnableGraph` no longer
+  owns condition-stack normalization, assignment/transition capture,
+  test-selector conversion, capture-time RHS rendering, or AST signal-name
+  extraction directly.

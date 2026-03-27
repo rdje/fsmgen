@@ -5005,6 +5005,11 @@ This is the persistent technical change history for FSMGen.
   - top-level state/DT enable initialization, WEN/EN prescan tracking,
     top-level enable emission, and unified DT/LHS WEN/EN emission now live
     in `FSM::Synthesis::EnableGraph::EnableSupport`.
+- Extracted the matching AST capture/conversion support out of `EnableGraph`:
+  - condition-stack normalization, assignment/transition capture,
+    test-selector conversion, capture-time RHS rendering, and AST
+    signal-name extraction now live in
+    `FSM::Synthesis::EnableGraph::CaptureSupport`.
 - Shared-datapath candidate metadata now also makes the bounded combinational peer-read rule explicit: peer-read combinational families stay top-output-only, surface a block reason, and no longer look loopback-eligible in non-quiet `bin/fsmgen` summaries.
 - Shared-datapath runtime behavior now exists in generated composition HDL, not just metadata: realized `?fsmc` children export hidden per-value enable families for composition use, and composition tops now synthesize aggregate-enable and conflict helper wires from those exports.
 - Shared-datapath lifting now has its first actual ownership/runtime slice on top of that helper HDL:

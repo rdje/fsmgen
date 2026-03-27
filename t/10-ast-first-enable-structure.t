@@ -272,8 +272,56 @@ for my $dead_backend_helper (
 }
 
 ok(
+    $hdl->{enable_graph_capture_support}->can('create_condition_expression'),
+    'live EnableGraph capture support owns condition-stack AST normalization',
+);
+ok(
+    $hdl->{enable_graph_capture_support}->can('register_assignment_capture'),
+    'live EnableGraph capture support owns captured assignment registry writes',
+);
+ok(
+    $hdl->{enable_graph_capture_support}->can('register_transition_capture'),
+    'live EnableGraph capture support owns captured transition registry writes',
+);
+ok(
+    $hdl->{enable_graph_capture_support}->can('extract_assignment_capture_metadata'),
+    'live EnableGraph capture support owns assignment operator/intent normalization',
+);
+ok(
+    $hdl->{enable_graph_capture_support}->can('capture_assignment_from_ast'),
+    'live EnableGraph capture support owns AST assignment capture',
+);
+ok(
+    $hdl->{enable_graph_capture_support}->can('capture_transition_from_ast'),
+    'live EnableGraph capture support owns AST transition capture',
+);
+ok(
+    $hdl->{enable_graph_capture_support}->can('convert_condition_to_ast'),
+    'live EnableGraph capture support owns parsed-condition conversion to backend AST',
+);
+ok(
+    $hdl->{enable_graph_capture_support}->can('convert_test_value_to_ast'),
+    'live EnableGraph capture support owns parsed test-value conversion to backend AST',
+);
+ok(
+    $hdl->{enable_graph_capture_support}->can('parse_test_value_selector'),
+    'live EnableGraph capture support owns explicit test-selector parsing',
+);
+ok(
+    $hdl->{enable_graph_capture_support}->can('build_test_condition_ast'),
+    'live EnableGraph capture support owns test-node condition AST construction',
+);
+ok(
+    $hdl->{enable_graph_capture_support}->can('extract_rhs_capture_value'),
+    'live EnableGraph capture support owns capture-time RHS rendering',
+);
+ok(
     $hdl->{enable_graph_enable_support}->can('generate_enable_conditions'),
     'live EnableGraph enable support owns top-level state/DT enable emission',
+);
+ok(
+    $hdl->{enable_graph_capture_support}->can('extract_signal_name_from_ast'),
+    'live EnableGraph capture support owns AST signal-name extraction',
 );
 ok(
     $hdl->{enable_graph_enable_support}->can('generate_unified_wen_en_signals'),
@@ -513,6 +561,15 @@ for my $dead_enable_graph_helper (
         build_internal_signal_declaration_plan
         build_module_declaration_plan
         build_state_register_plan
+        create_condition_expression
+        register_assignment_capture
+        register_transition_capture
+        extract_assignment_capture_metadata
+        capture_assignment_from_ast
+        capture_transition_from_ast
+        parse_test_value_selector
+        build_test_condition_ast
+        extract_rhs_capture_value
         generate_enable_conditions
         generate_unified_wen_en_signals
         prescan_wen_en_for_intermediate_signals
@@ -565,6 +622,60 @@ for my $dead_enable_graph_helper (
     ok(
         !$hdl->{enable_graph}->can($dead_enable_graph_helper),
         "live EnableGraph no longer exposes dead helper '$dead_enable_graph_helper'",
+    );
+}
+
+for my $dead_enable_graph_capture_helper (
+    qw(
+        count_binary_logical_operation_occurrences
+        collect_all_wen_en_ast_expressions
+        effective_system_contract
+        effective_clock_name
+        effective_reset_name
+        build_internal_signal_declaration_plan
+        build_module_declaration_plan
+        build_state_register_plan
+        build_unified_assignment_analysis
+        group_assignments_by_rhs
+        generate_complete_enable_structure
+        build_multiplexer_config
+        generate_signal_assignments
+        generate_unified_flop_mux
+        generate_unified_pulse_delay_logic
+        generate_unified_comb_mux
+        get_signal_assignment_type
+        get_driven_signals
+        get_pulse_active_level_for_lhs
+        get_pulse_delay_cycles_for_lhs
+        normalize_rhs_logic_level
+        get_signal_info
+        get_lhs_width_from_analysis
+        get_reset_value
+        get_default_value
+        get_fsm_reset_state
+        get_explicit_reset_value
+        is_register
+        fallback_register_analysis_from_assignments
+        get_intermediate_signal_ast
+        get_intermediate_signal_expression
+        build_dependency_recovery_ast_from_signal_name
+        track_ast_intermediate_signals
+        contains_frequently_used_operations
+        update_original_asts_with_substituted_versions
+        update_original_asts_with_second_pass_substitutions
+        generate_enable_conditions
+        generate_unified_wen_en_signals
+        prescan_wen_en_for_intermediate_signals
+        generate_dt_enables_from_analysis
+        generate_lhs_enables_from_analysis
+        build_state_enable_condition_ast
+        build_dt_enable_condition_ast
+        initialize_state_and_dt_enable_conditions
+    )
+) {
+    ok(
+        !$hdl->{enable_graph_capture_support}->can($dead_enable_graph_capture_helper),
+        "live EnableGraph capture support no longer exposes unrelated helper '$dead_enable_graph_capture_helper'",
     );
 }
 

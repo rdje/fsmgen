@@ -6695,3 +6695,9 @@ It is an exact-delay pulse request:
   state/DT enable initialization, top-level enable emission, WEN/EN prescan
   tracking, and unified DT/LHS WEN/EN emission consumed by the direct
   SystemVerilog backend.
+- EnableGraph AST capture and condition/test conversion now also live in
+  `FSM::Synthesis::EnableGraph::CaptureSupport` instead of in `EnableGraph`.
+- That package now owns the bounded capture/conversion family end-to-end:
+  condition-stack normalization, assignment/transition capture, test-selector
+  conversion, capture-time RHS rendering, and AST signal-name extraction
+  consumed by the direct backend orchestrator plus factorization support.

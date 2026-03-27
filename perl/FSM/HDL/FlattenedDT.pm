@@ -13,6 +13,7 @@ use FSM::Debug;  # Global debug system
 use FSM::ExpressionNamer;
 use FSM::Synthesis::EnableGraph;
 use FSM::Synthesis::EnableGraph::AssignmentSupport;
+use FSM::Synthesis::EnableGraph::CaptureSupport;
 use FSM::Synthesis::EnableGraph::EnableSupport;
 use FSM::Synthesis::EnableGraph::FactorizationSupport;
 use FSM::Synthesis::EnableGraph::IntermediateSignalSupport;
@@ -87,6 +88,7 @@ sub new ($class, %args) {
     # Initial extraction slice: dedicated enable synthesis/orchestration layer.
     $self->{enable_graph} = FSM::Synthesis::EnableGraph->new(flattened_dt => $self);
     $self->{enable_graph_assignment_support} = FSM::Synthesis::EnableGraph::AssignmentSupport->new(flattened_dt => $self);
+    $self->{enable_graph_capture_support} = FSM::Synthesis::EnableGraph::CaptureSupport->new(flattened_dt => $self);
     $self->{enable_graph_enable_support} = FSM::Synthesis::EnableGraph::EnableSupport->new(flattened_dt => $self);
     $self->{enable_graph_factorization_support} = FSM::Synthesis::EnableGraph::FactorizationSupport->new(flattened_dt => $self);
     $self->{enable_graph_intermediate_support} = FSM::Synthesis::EnableGraph::IntermediateSignalSupport->new(flattened_dt => $self);

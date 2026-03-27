@@ -14,7 +14,7 @@ Current baseline:
 - Reviewed on `2026-03-27`.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
-- Static trace from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) currently reaches `73` project files total, `72` `.pm` packages.
+- Static trace from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) currently reaches `74` project files total, `73` `.pm` packages.
 
 ## Executive read
 [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is a thin CLI/reporting shell.
@@ -48,6 +48,7 @@ The heaviest remaining complexity is still the direct single-module HDL backend 
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm)
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm)
 - [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm)
+- [perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/EnableSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/EnableSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm)
@@ -96,6 +97,7 @@ bin/fsmgen
         -> FlattenedDT::Orchestrator
         -> Synthesis::EnableGraph
         -> Synthesis::EnableGraph::AssignmentSupport
+        -> Synthesis::EnableGraph::CaptureSupport
         -> Synthesis::EnableGraph::EnableSupport
         -> Synthesis::EnableGraph::FactorizationSupport
         -> Synthesis::EnableGraph::IntermediateSignalSupport
@@ -414,6 +416,10 @@ It behaves like a hook system, not a competing architecture.
   rather than leaving unified assignment analysis, driven-signal discovery,
   reset/default/width recovery, and delayed-pulse / flop / combinational mux
   emission inline inside `EnableGraph`.
+- `FSM::Synthesis::EnableGraph::CaptureSupport` now also owns the bounded AST
+  capture/conversion family rather than leaving condition-stack
+  normalization, assignment/transition capture, test-selector conversion, and
+  AST signal-name extraction inline inside `EnableGraph`.
 - `FSM::Synthesis::EnableGraph::EnableSupport` now also owns the bounded
   enable-family support rather than leaving top-level state/DT enable
   initialization, WEN/EN prescan tracking, and unified DT/LHS WEN/EN
@@ -423,10 +429,10 @@ It behaves like a hook system, not a competing architecture.
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm) is the right directional move for backend emission.
 
 ### Current hotspots
-- [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) is still a large semantic/synthesis gravity well at `1535` lines.
+- [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) is still a large semantic/synthesis gravity well at `1134` lines.
 - The direct single-module generation path still has not converged on the same clean `StructuralRTLIR -> backend emitter` shape that the composition path is starting to use, even though it now has its own direct-root orchestrator boundary and a dedicated generated-module backend owner.
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm), [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm), and [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) now carry more of the remaining backend gravity than any single SystemVerilog package.
-- The remaining `EnableGraph` gravity is now narrower than before: module/state/declaration planning, assignment-analysis / mux-emission support, and enable-family support all have dedicated owners now, so the next honest seams are AST rendering / capture helpers and factorization-policy cleanup, not the old direct planning or WEN/EN clusters.
+- The remaining `EnableGraph` gravity is now narrower than before: module/state/declaration planning, assignment-analysis / mux-emission support, enable-family support, and AST capture/conversion support all have dedicated owners now, so the next honest seams are AST rendering / classification helpers and factorization-policy cleanup, not the old direct planning, capture, or WEN/EN clusters.
 - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) is still a meaningful sequencing hotspot even though the old SystemVerilog backend shell has been retired.
 - `module_info` and reporting/statistics surfaces still create pressure for the coordinator to know too much, even though the generated-module `module_info` family now has its own explicit owner.
 

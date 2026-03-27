@@ -86,6 +86,7 @@ sub flatten_all_decision_trees ($self, $fsm_module) {
 }
 sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
     my $ctx = $self->{flattened_dt};
+    my $capture_support = $ctx->{enable_graph_capture_support};
     return unless $dt_node;
     
     fsm_debug("=== FLATTEN_DT_NODE ====", 3);
@@ -115,7 +116,7 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
         for my $branch (@$branches) {
             if ($branch->{condition}) {
                 # Convert condition to AST node and create isolated stack copy
-                my $condition_ast = $ctx->{enable_graph}->convert_condition_to_ast($branch->{condition});
+                my $condition_ast = $capture_support->convert_condition_to_ast($branch->{condition});
                 my @new_stack = (@$condition_stack);  # Create isolated copy
                 push @new_stack, $condition_ast;      # Add condition to isolated copy
                 
@@ -151,7 +152,7 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
         # Process each test branch - test_branches() returns an array reference
         my $test_branches = $dt_node->test_branches;
         for my $branch (@$test_branches) {
-            my $test_condition_ast = $ctx->{enable_graph}->build_test_condition_ast(
+            my $test_condition_ast = $capture_support->build_test_condition_ast(
                 $dt_node->test_signal,
                 $branch->{value},
             );
@@ -179,17 +180,17 @@ sub flatten_decision_tree ($self, $dt_name, $dt_node, $condition_stack) {
         }
         
     } elsif ($dt_node->isa('FSM::CoreAST::Assignment') || $dt_node->isa('FSM::CoreAST::RegisterAssignment')) {
-        my $assignment_target_name = $ctx->{enable_graph}->extract_signal_name_from_ast($dt_node->target) // 'unknown_lhs';
+        my $assignment_target_name = $capture_support->extract_signal_name_from_ast($dt_node->target) // 'unknown_lhs';
         fsm_debug("  Assignment: " . $assignment_target_name . " <- " . ref($dt_node->source), 3);
         
         # Record this assignment with current condition stack (now AST nodes)
-        $ctx->{enable_graph}->capture_assignment_from_ast($dt_name, $dt_node, $condition_stack);
+        $capture_support->capture_assignment_from_ast($dt_name, $dt_node, $condition_stack);
         
     } elsif ($dt_node->isa('FSM::CoreAST::StateTransition')) {
         fsm_debug("  Transition: -> " . $dt_node->target_state, 3);
         
         # Treat state transition as special assignment to next_state
-        $ctx->{enable_graph}->capture_transition_from_ast($dt_name, $dt_node, $condition_stack);
+        $capture_support->capture_transition_from_ast($dt_name, $dt_node, $condition_stack);
         
     } elsif (ref($dt_node) eq 'ARRAY') {
         # Handle arrays of nodes

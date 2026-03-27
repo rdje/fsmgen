@@ -1500,3 +1500,8 @@ Exit criteria:
   emission, and unified DT/LHS WEN/EN emission now live in
   `FSM::Synthesis::EnableGraph::EnableSupport`, so `EnableGraph` no longer
   owns that bounded enable family directly either.
+- `R11`: the matching AST capture/conversion owner split is now active too:
+  condition-stack normalization, assignment/transition capture,
+  test-selector conversion, and AST signal-name extraction now live in
+  `FSM::Synthesis::EnableGraph::CaptureSupport`, so `EnableGraph` no longer
+  owns that bounded capture/conversion family directly either.

@@ -951,3 +951,8 @@ The first honest `R11` slices are now:
   top-level enable emission, and unified DT/LHS WEN/EN emission now live in
   `FSM::Synthesis::EnableGraph::EnableSupport`, so `EnableGraph` no longer
   owns that bounded enable family directly either.
+- Forward-IR note: the matching AST capture/conversion support split is now
+  active too: condition-stack normalization, assignment/transition capture,
+  test-selector conversion, and AST signal-name extraction now live in
+  `FSM::Synthesis::EnableGraph::CaptureSupport`, so `EnableGraph` no longer
+  owns that bounded capture/conversion family directly either.
