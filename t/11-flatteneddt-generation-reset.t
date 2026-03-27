@@ -37,7 +37,7 @@ FSM
 );
 
 my $hdl_one = $hdl_gen->generate_systemverilog($fsm_one);
-my $state_plan_one = $hdl_gen->{enable_graph}->build_state_register_plan($fsm_one);
+my $state_plan_one = $hdl_gen->{enable_graph_module_planning_support}->build_state_register_plan($fsm_one);
 
 like(
     $hdl_one,
@@ -96,7 +96,7 @@ FSM
 );
 
 my $hdl_two = $hdl_gen->generate_systemverilog($fsm_two);
-my $state_plan_two = $hdl_gen->{enable_graph}->build_state_register_plan($fsm_two);
+my $state_plan_two = $hdl_gen->{enable_graph_module_planning_support}->build_state_register_plan($fsm_two);
 
 ok(
     !exists $hdl_gen->{dt_enables}->{'-alpha_dt'},

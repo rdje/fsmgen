@@ -748,215 +748,6 @@ sub generate_signal_assignments($self, $fsm_module) {
     
     return $hdl;
 }
-sub build_state_register_plan($self, $fsm_module = undef) {
-    my $ctx = $self->{flattened_dt};
-    $fsm_module //= $ctx->{fsm_module};
-
-    my @regular_states = $fsm_module
-        ? grep { $_->can('is_regular_state') ? $_->is_regular_state : $_->name !~ /^-/ } @{$fsm_module->states}
-        : ();
-    my $state_count = scalar(@regular_states);
-    my $state_bits = $state_count > 1 ? int(log($state_count) / log(2)) + 1 : 1;
-    my @encodings;
-
-    for my $i (0 .. $#regular_states) {
-        push @encodings, {
-            state_name => $regular_states[$i]->name,
-            localparam_name => uc($regular_states[$i]->name),
-            encoded_value => $i,
-        };
-    }
-
-    return {
-        has_state_registers => $state_count > 0 ? 1 : 0,
-        state_count => $state_count,
-        state_bits => $state_bits,
-        reset_state_name => @encodings ? $encodings[0]{localparam_name} : 'IDLE',
-        encodings => \@encodings,
-    };
-}
-sub effective_system_contract($self, $fsm_module = undef) {
-    my $ctx = $self->{flattened_dt};
-    $fsm_module //= $ctx->{fsm_module};
-
-    if ($fsm_module && $fsm_module->can('effective_system_contract')) {
-        return $fsm_module->effective_system_contract;
-    }
-
-    return {
-        clock => 'clk',
-        reset => 'rst_n',
-        reset_keyword => 'asreset',
-        implicit => 1,
-    };
-}
-sub effective_clock_name($self, $fsm_module = undef) {
-    return $self->effective_system_contract($fsm_module)->{clock};
-}
-sub effective_reset_name($self, $fsm_module = undef) {
-    return $self->effective_system_contract($fsm_module)->{reset};
-}
-sub build_internal_signal_declaration_plan($self, $fsm_module, $declared_ports = undef) {
-    my $ctx = $self->{flattened_dt};
-    my %declared_ports = ();
-    if (ref($declared_ports) eq 'HASH') {
-        %declared_ports = %{$declared_ports};
-    } elsif ($ctx->{declared_port_signals}) {
-        %declared_ports = %{$ctx->{declared_port_signals}};
-    }
-
-    my %signal_decls;
-    my %aux_decls;
-
-    my $state_plan = $self->build_state_register_plan($fsm_module);
-    if ($state_plan->{has_state_registers}) {
-        $declared_ports{current_state} = 1;
-        $declared_ports{next_state} = 1;
-    }
-
-    for my $lhs (sort keys %{$ctx->{assignment_analysis} || {}}) {
-        my $lhs_analysis = $ctx->{assignment_analysis}{$lhs};
-        next unless $lhs_analysis;
-
-        my $width = $self->get_lhs_width_from_analysis($lhs_analysis);
-        my $assignment_type = $self->get_signal_assignment_type($lhs, $lhs_analysis);
-        my $multiplexer_type = $lhs_analysis->{multiplexer}->{type} || 'comb';
-
-        unless ($declared_ports{$lhs}) {
-            $signal_decls{$lhs} = $width;
-        }
-
-        if ($multiplexer_type eq 'flop' && ($assignment_type eq 'register_out' || $assignment_type eq 'register_out_dual')) {
-            my $next_name = "${lhs}_next";
-            $aux_decls{$next_name} = $width unless $declared_ports{$next_name};
-        } elsif ($multiplexer_type eq 'flop' && ($assignment_type eq 'register_in' || $assignment_type eq 'register_in_dual')) {
-            my $q_name = "${lhs}_q";
-            $aux_decls{$q_name} = $width unless $declared_ports{$q_name};
-        } elsif ($assignment_type eq 'pulse_delayed') {
-            my $delay_cycles = $self->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
-            if ($delay_cycles > 0) {
-                my $pipe_name = "${lhs}_pulse_delay_pipe";
-                $aux_decls{$pipe_name} = $delay_cycles unless $declared_ports{$pipe_name};
-            }
-        }
-    }
-
-    return {
-        signal_decls => \%signal_decls,
-        aux_decls => \%aux_decls,
-    };
-}
-sub build_module_declaration_plan($self, $fsm_module) {
-    my $system_contract = $self->effective_system_contract($fsm_module);
-    my $clock_name = $system_contract->{clock};
-    my $reset_name = $system_contract->{reset};
-    my @base_ports;
-    if ($system_contract->{declare_ports} // 1) {
-        @base_ports = (
-            {
-                direction => 'input',
-                storage => 'wire',
-                name => $clock_name,
-                width => 1,
-            },
-            {
-                direction => 'input',
-                storage => 'wire',
-                name => $reset_name,
-                width => 1,
-            },
-        );
-    }
-
-    my $signals = $fsm_module->signals;
-    my @inputs;
-    my @outputs;
-
-    fsm_debug("HDL Generation: Processing " . scalar(keys %$signals) . " signals for module declaration", 3);
-
-    my %seen_signals;
-    my %port_directions;
-    if ($system_contract->{declare_ports} // 1) {
-        %seen_signals = ($clock_name => 1, $reset_name => 1);
-        %port_directions = ($clock_name => 'input', $reset_name => 'input');
-    }
-    my %driven_signals = $self->get_driven_signals();
-
-    for my $sig_name (sort keys %$signals) {
-        if ($seen_signals{$sig_name}) {
-            fsm_debug("HDL Signal Processing: SKIPPING duplicate signal '$sig_name'", 3);
-            next;
-        }
-        $seen_signals{$sig_name} = 1;
-
-        my $signal = $signals->{$sig_name};
-
-        my $is_intermediate = 0;
-        if ($signal->can('get_attribute')) {
-            my $signal_role = $signal->get_attribute('signal_role');
-            $is_intermediate = ($signal_role && $signal_role eq 'INTERNAL_INTERMEDIATE');
-        } elsif ($signal->can('attributes') && $signal->attributes) {
-            $is_intermediate = $signal->attributes->{is_intermediate} || 0;
-        }
-
-        if ($is_intermediate) {
-            fsm_debug("HDL Signal Processing: SKIPPING intermediate signal '$sig_name' from interface", 3);
-            next;
-        }
-
-        fsm_debug("HDL Signal Processing: $sig_name", 3);
-        fsm_debug("  Signal object type: " . ref($signal), 3);
-        fsm_debug("  Signal dump: " . Dumper($signal), 3);
-
-        my $signal_width = 1;
-        if ($signal->can('width')) {
-            $signal_width = $signal->width;
-            $signal_width = 1 unless ($signal_width && $signal_width > 0);
-            fsm_debug("  Signal width from ->width(): $signal_width", 3);
-        } else {
-            fsm_debug("  Signal does not have width() method", 3);
-        }
-
-        my $is_output = 0;
-        if ($driven_signals{$sig_name}) {
-            $is_output = 1;
-            fsm_debug("  Signal '$sig_name' is DRIVEN by FSM -> OUTPUT", 3);
-        } else {
-            if ($signal->can('is_output')) {
-                $is_output = $signal->is_output;
-            } elsif ($signal->can('attributes') && $signal->attributes && $signal->attributes->{is_output}) {
-                $is_output = $signal->attributes->{is_output};
-            } elsif ($sig_name =~ />$/) {
-                $is_output = 1;
-            }
-
-            fsm_debug("  Signal '$sig_name' direction: " . ($is_output ? "OUTPUT" : "INPUT"), 3);
-        }
-
-        my $port_plan = {
-            direction => $is_output ? 'output' : 'input',
-            storage => $is_output ? 'reg' : 'wire',
-            name => $sig_name,
-            width => $signal_width,
-        };
-
-        if ($is_output) {
-            push @outputs, $port_plan;
-            $port_directions{$sig_name} = 'output';
-        } else {
-            push @inputs, $port_plan;
-            $port_directions{$sig_name} = 'input';
-        }
-    }
-
-    return {
-        base_ports => \@base_ports,
-        inputs => \@inputs,
-        outputs => \@outputs,
-        declared_port_signals => \%seen_signals,
-        port_directions => \%port_directions,
-    };
-}
 sub generate_unified_pulse_delay_logic($self, $lhs, $lhs_analysis) {
     my $ctx = $self->{flattened_dt};
     my $lhs_ast = $lhs_analysis->{lhs_ast};
@@ -973,8 +764,8 @@ sub generate_unified_pulse_delay_logic($self, $lhs, $lhs_analysis) {
     
     my @request_signals = map { $_->{enable_signal} } @{$lhs_analysis->{multiplexer}->{enables} || []};
     my $request_expr = @request_signals ? join(' | ', @request_signals) : "1'b0";
-    my $clock_name = $self->effective_clock_name();
-    my $reset_name = $self->effective_reset_name();
+    my $clock_name = $ctx->{enable_graph_module_planning_support}->effective_clock_name();
+    my $reset_name = $ctx->{enable_graph_module_planning_support}->effective_reset_name();
     
     my $hdl = "  // Delayed pulse logic for: $lhs_name (<$delay_cycles, exact Q+$delay_cycles)\n";
     
@@ -1071,8 +862,8 @@ sub generate_unified_flop_mux($self, $lhs, $lhs_analysis) {
     
     # AST WEB: Get signal name for debugging and HDL generation
     my $lhs_name = blessed($lhs_ast) && $lhs_ast->can('name') ? $lhs_ast->name() : 'UNKNOWN';
-    my $clock_name = $self->effective_clock_name();
-    my $reset_name = $self->effective_reset_name();
+    my $clock_name = $ctx->{enable_graph_module_planning_support}->effective_clock_name();
+    my $reset_name = $ctx->{enable_graph_module_planning_support}->effective_reset_name();
     
     # Determine the assignment type by examining the operators used
     my $assignment_type = $self->get_signal_assignment_type($lhs, $lhs_analysis);
@@ -1372,7 +1163,7 @@ sub get_fsm_reset_state($self) {
     
     # If we have access to the FSM module, get the first regular state
     if ($ctx->{fsm_module}) {
-        my $state_plan = $self->build_state_register_plan($ctx->{fsm_module});
+        my $state_plan = $ctx->{enable_graph_module_planning_support}->build_state_register_plan($ctx->{fsm_module});
         if ($state_plan->{has_state_registers}) {
             my $reset_state = $state_plan->{reset_state_name};
             fsm_debug("FSM_RESET_STATE: Using first state as reset: '$reset_state'", 3);

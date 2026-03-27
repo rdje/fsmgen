@@ -340,16 +340,28 @@ ok(
     'live EnableGraph factorization support owns high-count logical-operation discovery for factorization policy',
 );
 ok(
-    $hdl->{enable_graph}->can('build_internal_signal_declaration_plan'),
-    'live EnableGraph owns internal declaration planning',
+    $hdl->{enable_graph_module_planning_support}->can('effective_system_contract'),
+    'live EnableGraph module-planning support owns effective system-contract resolution',
 );
 ok(
-    $hdl->{enable_graph}->can('build_module_declaration_plan'),
-    'live EnableGraph owns module declaration planning',
+    $hdl->{enable_graph_module_planning_support}->can('effective_clock_name'),
+    'live EnableGraph module-planning support owns effective clock-name resolution',
 );
 ok(
-    $hdl->{enable_graph}->can('build_state_register_plan'),
-    'live EnableGraph owns state register planning',
+    $hdl->{enable_graph_module_planning_support}->can('effective_reset_name'),
+    'live EnableGraph module-planning support owns effective reset-name resolution',
+);
+ok(
+    $hdl->{enable_graph_module_planning_support}->can('build_internal_signal_declaration_plan'),
+    'live EnableGraph module-planning support owns internal declaration planning',
+);
+ok(
+    $hdl->{enable_graph_module_planning_support}->can('build_module_declaration_plan'),
+    'live EnableGraph module-planning support owns module declaration planning',
+);
+ok(
+    $hdl->{enable_graph_module_planning_support}->can('build_state_register_plan'),
+    'live EnableGraph module-planning support owns state register planning',
 );
 ok(
     $hdl->{enable_graph_intermediate_support}->can('get_intermediate_signal_ast'),
@@ -391,6 +403,12 @@ for my $dead_enable_graph_helper (
         is_signal_referenced_in_substitutions
         is_signal_actually_used_in_final_expressions
         resolve_intermediate_signal_live_usage
+        effective_system_contract
+        effective_clock_name
+        effective_reset_name
+        build_internal_signal_declaration_plan
+        build_module_declaration_plan
+        build_state_register_plan
         update_original_asts_with_substituted_versions
         update_original_asts_with_second_pass_substitutions
         contains_frequently_used_operations
@@ -438,6 +456,40 @@ for my $dead_enable_graph_factorization_helper (
     ok(
         !$hdl->{enable_graph_factorization_support}->can($dead_enable_graph_factorization_helper),
         "live EnableGraph factorization support no longer exposes dead helper '$dead_enable_graph_factorization_helper'",
+    );
+}
+
+for my $dead_enable_graph_module_planning_helper (
+    qw(
+        analyze_ast_complexity
+        canonicalize_expression
+        count_binary_logical_operation_occurrences
+        collect_all_wen_en_ast_expressions
+        get_intermediate_signal_ast
+        get_intermediate_signal_expression
+        build_dependency_recovery_ast_from_signal_name
+        track_ast_intermediate_signals
+        feed_asts_to_factorizer
+        feed_current_asts_to_second_pass
+        ast_contains_intermediate_signals
+        ast_has_intermediate_signals_recursive
+        ast_contains_signal
+        count_unary_negations_in_original_expressions
+        is_signal_referenced_in_substitutions
+        is_signal_actually_used_in_final_expressions
+        resolve_intermediate_signal_live_usage
+        update_original_asts_with_substituted_versions
+        update_original_asts_with_second_pass_substitutions
+        contains_frequently_used_operations
+        get_signal_assignment_type
+        get_lhs_width_from_analysis
+        get_pulse_delay_cycles_for_lhs
+        get_driven_signals
+    )
+) {
+    ok(
+        !$hdl->{enable_graph_module_planning_support}->can($dead_enable_graph_module_planning_helper),
+        "live EnableGraph module-planning support no longer exposes unrelated helper '$dead_enable_graph_module_planning_helper'",
     );
 }
 

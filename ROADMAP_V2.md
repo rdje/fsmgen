@@ -935,3 +935,8 @@ The first honest `R11` slices are now:
   handoff, lane selection, and shared-datapath plan augmentation now live in
   `FSM::Composition::PlanBuilder`, so `HDLGenerator` no longer owns that
   composition-plan orchestration cluster directly either.
+- Forward-IR note: another real synthesis/backend split is now active too:
+  module declaration planning, internal signal declaration planning, state
+  register planning, and effective system-contract lookup now live in
+  `FSM::Synthesis::EnableGraph::ModulePlanningSupport`, so `EnableGraph` no
+  longer owns that module/state/declaration planning family directly.

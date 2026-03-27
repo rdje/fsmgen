@@ -31,7 +31,7 @@ sub new ($class, %args) {
 
 sub generate_internal_signal_declarations ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
-    my $declaration_plan = $ctx->{enable_graph}->build_internal_signal_declaration_plan(
+    my $declaration_plan = $ctx->{enable_graph_module_planning_support}->build_internal_signal_declaration_plan(
         $fsm_module,
         $ctx->{declared_port_signals},
     );

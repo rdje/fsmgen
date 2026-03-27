@@ -93,7 +93,7 @@ FSM
 
     my $hdl_gen = FSM::HDL::FlattenedDT->new(debug => 0);
     my $hdl = $hdl_gen->generate_systemverilog($fsm_module);
-    my $state_plan = $hdl_gen->{enable_graph}->build_state_register_plan($fsm_module);
+    my $state_plan = $hdl_gen->{enable_graph_module_planning_support}->build_state_register_plan($fsm_module);
 
     ok($state_plan->{has_state_registers}, 'regular state plan stays enabled when a regular state exists');
     is($state_plan->{state_count}, 1, 'reset blocks do not count as encoded states');

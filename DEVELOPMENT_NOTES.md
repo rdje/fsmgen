@@ -6673,3 +6673,10 @@ It is an exact-delay pulse request:
   full report assembly, override/block event detection, endpoint-context
   projection, and provenance label/example helpers consumed by the pipeline
   and CLI summary surfaces.
+- EnableGraph module/state/declaration planning now also lives in
+  `FSM::Synthesis::EnableGraph::ModulePlanningSupport` instead of in
+  `EnableGraph`.
+- That package now owns the bounded planning family end-to-end: effective
+  system-contract lookup, effective clock/reset lookup, state-register
+  planning, module-boundary port planning, and internal signal declaration
+  planning consumed by the direct SystemVerilog backend.

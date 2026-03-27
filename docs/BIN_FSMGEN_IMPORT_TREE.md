@@ -383,6 +383,10 @@ It behaves like a hook system, not a competing architecture.
 - `bin/fsmgen` now also reads composition failure summaries plus provenance /
   override / block labels directly from the dedicated builder packages instead
   of asking `HDLGenerator` to keep those reporting helpers as facade residue.
+- `FSM::Synthesis::EnableGraph::ModulePlanningSupport` now also owns the
+  module/state/declaration planning family rather than leaving effective
+  system-contract lookup, state-register planning, module-boundary port
+  planning, and internal declaration planning inside `EnableGraph`.
 - The forward IR layer now looks real enough to steer architecture, not just document aspiration.
 - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) has become a meaningful structural API, not just formatting glue.
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm) is the right directional move for backend emission.
@@ -391,6 +395,10 @@ It behaves like a hook system, not a competing architecture.
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) is still a very large semantic/synthesis gravity well.
 - The direct single-module generation path still has not converged on the same clean `StructuralRTLIR -> backend emitter` shape that the composition path is starting to use, even though it now has its own direct-root orchestrator boundary and a dedicated generated-module backend owner.
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm), [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm), and [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) now carry more of the remaining backend gravity than any single SystemVerilog package.
+- The remaining `EnableGraph` gravity is now narrower than before: the direct
+  backend planning split means the next honest seams are broader assignment /
+  mux planning and factorization-policy cleanup, not module-boundary or
+  state-register planning anymore.
 - `module_info` and reporting/statistics surfaces still create pressure for the coordinator to know too much, even though the generated-module `module_info` family now has its own explicit owner.
 
 ## Important implications for future implementation

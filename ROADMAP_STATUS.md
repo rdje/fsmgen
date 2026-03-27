@@ -1484,3 +1484,8 @@ Exit criteria:
   and endpoint-context labeling now live in
   `FSM::Composition::ProvenanceReportBuilder`, so `HDLGenerator` no longer
   owns that reporting family’s structural/intent projection logic directly.
+- `R11`: another real synthesis/backend owner split is now active too:
+  module declaration planning, internal signal declaration planning, state
+  register planning, and effective system-contract lookup now live in
+  `FSM::Synthesis::EnableGraph::ModulePlanningSupport`, so `EnableGraph` no
+  longer owns that module/state/declaration planning family directly.

@@ -4990,6 +4990,11 @@ This is the persistent technical change history for FSMGen.
   - composition provenance report assembly, override/block event detection,
     endpoint-context projection, and provenance label/example helpers now
     live in `FSM::Composition::ProvenanceReportBuilder`.
+- Extracted another real synthesis/backend family out of `EnableGraph`:
+  - effective system-contract lookup, effective clock/reset lookup,
+    state-register planning, module-boundary port planning, and internal
+    signal declaration planning now live in
+    `FSM::Synthesis::EnableGraph::ModulePlanningSupport`.
 - Shared-datapath candidate metadata now also makes the bounded combinational peer-read rule explicit: peer-read combinational families stay top-output-only, surface a block reason, and no longer look loopback-eligible in non-quiet `bin/fsmgen` summaries.
 - Shared-datapath runtime behavior now exists in generated composition HDL, not just metadata: realized `?fsmc` children export hidden per-value enable families for composition use, and composition tops now synthesize aggregate-enable and conflict helper wires from those exports.
 - Shared-datapath lifting now has its first actual ownership/runtime slice on top of that helper HDL:

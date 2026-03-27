@@ -175,8 +175,8 @@ my $captured_a = $hdl_gen->{lhs_assignments}{A}[0];
 my $captured_g = $hdl_gen->{lhs_assignments}{G}[0];
 my $captured_i = $hdl_gen->{lhs_assignments}{I}[0];
 my $captured_p1 = $hdl_gen->{lhs_assignments}{P1}[0];
-my $module_plan = $hdl_gen->{enable_graph}->build_module_declaration_plan($fsm_module);
-my $decl_plan = $hdl_gen->{enable_graph}->build_internal_signal_declaration_plan(
+my $module_plan = $hdl_gen->{enable_graph_module_planning_support}->build_module_declaration_plan($fsm_module);
+my $decl_plan = $hdl_gen->{enable_graph_module_planning_support}->build_internal_signal_declaration_plan(
     $fsm_module,
     $hdl_gen->{declared_port_signals},
 );

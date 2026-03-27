@@ -5218,3 +5218,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `FSM::Composition::ProvenanceReportBuilder`, so `HDLGenerator` no longer
   owns the bounded provenance report / override event / block event /
   endpoint-context projection family directly.
+- EnableGraph module/state/declaration planning now also lives in
+  `FSM::Synthesis::EnableGraph::ModulePlanningSupport`, so `EnableGraph` no
+  longer owns effective system-contract lookup, effective clock/reset lookup,
+  state-register planning, module-boundary port planning, or internal signal
+  declaration planning directly.

@@ -49,7 +49,7 @@ sub generate_header ($self, $fsm_module) {
 sub generate_module_declaration ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
     my $hdl = "module " . $fsm_module->name . " (\n";
-    my $module_plan = $ctx->{enable_graph}->build_module_declaration_plan($fsm_module);
+    my $module_plan = $ctx->{enable_graph_module_planning_support}->build_module_declaration_plan($fsm_module);
     my @base_ports = map { _render_module_port_plan($_) } @{$module_plan->{base_ports} || []};
     my @inputs = map { _render_module_port_plan($_) } @{$module_plan->{inputs} || []};
     my @outputs = map { _render_module_port_plan($_) } @{$module_plan->{outputs} || []};
@@ -82,7 +82,7 @@ sub _render_module_port_plan ($port_plan) {
 }
 
 sub generate_state_encoding ($self, $fsm_module) {
-    my $state_plan = $self->{flattened_dt}->{enable_graph}->build_state_register_plan($fsm_module);
+    my $state_plan = $self->{flattened_dt}->{enable_graph_module_planning_support}->build_state_register_plan($fsm_module);
     my $hdl = "  // State encoding\n";
     for my $encoding (@{$state_plan->{encodings} || []}) {
         $hdl .= "  localparam $encoding->{localparam_name} = $state_plan->{state_bits}'d$encoding->{encoded_value};\n";
@@ -93,9 +93,9 @@ sub generate_state_encoding ($self, $fsm_module) {
 }
 
 sub generate_state_register ($self, $fsm_module) {
-    my $state_plan = $self->{flattened_dt}->{enable_graph}->build_state_register_plan($fsm_module);
-    my $clock_name = $self->{flattened_dt}->{enable_graph}->effective_clock_name($fsm_module);
-    my $reset_name = $self->{flattened_dt}->{enable_graph}->effective_reset_name($fsm_module);
+    my $state_plan = $self->{flattened_dt}->{enable_graph_module_planning_support}->build_state_register_plan($fsm_module);
+    my $clock_name = $self->{flattened_dt}->{enable_graph_module_planning_support}->effective_clock_name($fsm_module);
+    my $reset_name = $self->{flattened_dt}->{enable_graph_module_planning_support}->effective_reset_name($fsm_module);
 
     if (!$state_plan->{has_state_registers}) {
         fsm_debug("FSM has no regular states - only standalone decision trees. Skipping state register generation.", 3);
