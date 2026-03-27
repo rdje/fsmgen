@@ -225,7 +225,7 @@ sub resolve_intermediate_signal_dependencies ($self, $signal_name, $signal_info)
     my $expression = $self->render_intermediate_signal_expression($signal_name, $signal_info);
     my $runtime_ast = $self->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
     if ($runtime_ast && blessed($runtime_ast)) {
-        @dependencies = $self->{flattened_dt}->{enable_graph}->extract_intermediate_signals_from_ast($runtime_ast);
+        @dependencies = $self->{flattened_dt}->{enable_graph_signal_support}->extract_intermediate_signals_from_ast($runtime_ast);
         $dependency_source = $signal_info->{runtime_ast_source} || 'runtime_ast';
         delete $signal_info->{dependency_fallback_source} if $signal_info && ref($signal_info) eq 'HASH';
     } else {
@@ -303,11 +303,11 @@ sub extract_intermediate_signals_from_runtime_ast_miss ($self, $signal_name, $si
                 $candidate_source,
                 0,
             );
-            return $ctx->{enable_graph}->extract_intermediate_signals_from_ast($parsed_ast)
+            return $ctx->{enable_graph_signal_support}->extract_intermediate_signals_from_ast($parsed_ast)
                 if $parsed_ast && blessed($parsed_ast);
         }
 
-        my $cleaned_expression = $ctx->{enable_graph}->clean_intermediate_expression($candidate_expression);
+        my $cleaned_expression = $ctx->{enable_graph_signal_support}->clean_intermediate_expression($candidate_expression);
         if (defined($cleaned_expression)
             && $cleaned_expression ne ''
             && $cleaned_expression ne $candidate_expression
@@ -321,7 +321,7 @@ sub extract_intermediate_signals_from_runtime_ast_miss ($self, $signal_name, $si
                 $cleaned_source,
                 1,
             );
-            return $ctx->{enable_graph}->extract_intermediate_signals_from_ast($parsed_ast)
+            return $ctx->{enable_graph_signal_support}->extract_intermediate_signals_from_ast($parsed_ast)
                 if $parsed_ast && blessed($parsed_ast);
         }
     }
@@ -329,7 +329,7 @@ sub extract_intermediate_signals_from_runtime_ast_miss ($self, $signal_name, $si
     if (defined($signal_name) && $signal_name ne '') {
         my $signal_name_ast = $ctx->{enable_graph_intermediate_support}->build_dependency_recovery_ast_from_signal_name($signal_name);
         if ($signal_name_ast && blessed($signal_name_ast)) {
-            my @dependencies = $ctx->{enable_graph}->extract_intermediate_signals_from_ast($signal_name_ast);
+            my @dependencies = $ctx->{enable_graph_signal_support}->extract_intermediate_signals_from_ast($signal_name_ast);
             if ($signal_info && ref($signal_info) eq 'HASH') {
                 $signal_info->{dependency_fallback_source} = 'runtime_ast_miss_signal_name_ast';
             }

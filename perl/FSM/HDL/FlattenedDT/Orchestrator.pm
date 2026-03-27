@@ -224,7 +224,7 @@ sub generate_systemverilog ($self, $fsm_module) {
     $self->reset_generation_state();
     
     # Step 0: Store FSM module reference for proper signal and reset value analysis
-    $ctx->{enable_graph}->set_fsm_module_reference($fsm_module);
+    $ctx->{enable_graph_signal_support}->set_fsm_module_reference($fsm_module);
     fsm_debug("Step 0 - FSM module reference stored", 3);
     
     # Step 1: Analyze and flatten all decision trees

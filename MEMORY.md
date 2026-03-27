@@ -5243,3 +5243,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   AST-to-SystemVerilog rendering, operand-width-aware logical-versus-bitwise
   operator selection, factorizable-operator discovery, or
   arithmetic/logical/factorization classification directly.
+- EnableGraph signal/intermediate support now also lives in
+  `FSM::Synthesis::EnableGraph::SignalSupport`, so `EnableGraph` no longer
+  owns AST-based intermediate naming, reset/default lookup, direct
+  intermediate-dependency extraction, signal/intermediate classification,
+  backend-safe signal-name cleanup, or RHS-based enable naming directly.

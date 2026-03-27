@@ -428,6 +428,50 @@ ok(
     'live EnableGraph AST support owns logical factorization policy checks',
 );
 ok(
+    $hdl->{enable_graph_signal_support}->can('set_fsm_module_reference'),
+    'live EnableGraph signal support owns FSM-module reference attachment',
+);
+ok(
+    $hdl->{enable_graph_signal_support}->can('extract_intermediate_signals_from_ast'),
+    'live EnableGraph signal support owns direct intermediate-signal extraction from ASTs',
+);
+ok(
+    $hdl->{enable_graph_signal_support}->can('get_reset_value_from_ast'),
+    'live EnableGraph signal support owns AST-first reset-value lookup',
+);
+ok(
+    $hdl->{enable_graph_signal_support}->can('get_default_value_from_ast'),
+    'live EnableGraph signal support owns AST-first default-value lookup',
+);
+ok(
+    $hdl->{enable_graph_signal_support}->can('is_intermediate_signal'),
+    'live EnableGraph signal support owns intermediate-signal classification',
+);
+ok(
+    $hdl->{enable_graph_signal_support}->can('clean_intermediate_expression'),
+    'live EnableGraph signal support owns compatibility intermediate-expression cleanup',
+);
+ok(
+    $hdl->{enable_graph_signal_support}->can('clean_signal_name'),
+    'live EnableGraph signal support owns backend-safe signal-name cleanup',
+);
+ok(
+    $hdl->{enable_graph_signal_support}->can('generate_rhs_based_enable_name'),
+    'live EnableGraph signal support owns RHS-based enable naming',
+);
+ok(
+    !$hdl->{enable_graph}->can('set_fsm_module_reference'),
+    'live EnableGraph shell no longer owns FSM-module reference attachment directly',
+);
+ok(
+    !$hdl->{enable_graph}->can('is_intermediate_signal'),
+    'live EnableGraph shell no longer owns intermediate-signal classification directly',
+);
+ok(
+    !$hdl->{enable_graph}->can('extract_intermediate_signals_from_ast'),
+    'live EnableGraph shell no longer owns AST intermediate-dependency extraction directly',
+);
+ok(
     $hdl->{enable_graph_module_planning_support}->can('effective_system_contract'),
     'live EnableGraph module-planning support owns effective system-contract resolution',
 );

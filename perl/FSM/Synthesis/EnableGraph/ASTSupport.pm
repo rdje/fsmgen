@@ -450,7 +450,7 @@ sub _signal_is_single_bit ($self, $name) {
         }
     }
 
-    if ($ctx->{enable_graph}->is_intermediate_signal($name)) {
+    if ($ctx->{enable_graph_signal_support}->is_intermediate_signal($name)) {
         fsm_debug("      PATH: Intermediate signal (assuming 1-bit)", 3);
         fsm_debug("      RESULT: single-bit (intermediate signals are boolean)", 3);
         return 1;

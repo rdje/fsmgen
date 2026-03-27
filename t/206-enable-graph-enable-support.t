@@ -121,7 +121,7 @@ sub prepare_flattened_backend {
     my ($fsm_module) = @_;
     my $hdl_generator = FSM::HDL::FlattenedDT->new(debug => 0);
     $hdl_generator->{orchestrator}->reset_generation_state();
-    $hdl_generator->{enable_graph}->set_fsm_module_reference($fsm_module);
+    $hdl_generator->{enable_graph_signal_support}->set_fsm_module_reference($fsm_module);
     $hdl_generator->{orchestrator}->flatten_all_decision_trees($fsm_module);
     return $hdl_generator;
 }

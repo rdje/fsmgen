@@ -539,7 +539,7 @@ sub ast_has_intermediate_signals_recursive ($self, $ast) {
 
     if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
         my $signal_name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
-        if ($signal_name && $ctx->{enable_graph}->is_intermediate_signal($signal_name)) {
+        if ($signal_name && $ctx->{enable_graph_signal_support}->is_intermediate_signal($signal_name)) {
             return 1;
         }
     }
@@ -1123,7 +1123,7 @@ sub _ast_contains_frequently_used_logical_operation ($self, $ast, $visited_signa
         $signal_name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
     }
 
-    if (defined $signal_name && $signal_name ne '' && $ctx->{enable_graph}->is_intermediate_signal($signal_name)) {
+    if (defined $signal_name && $signal_name ne '' && $ctx->{enable_graph_signal_support}->is_intermediate_signal($signal_name)) {
         if ($visited_signal_names->{$signal_name}) {
             fsm_debug("[FactorizationSupport.pm][_ast_contains_frequently_used_logical_operation()] Skipping already-visited intermediate '$signal_name' to avoid recursion", 3);
         } else {

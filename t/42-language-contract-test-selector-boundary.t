@@ -91,7 +91,7 @@ FSM
     ok($fsm_module, 'operator-prefixed symbolic equality selector parses successfully');
 
     my $phase1_gen = FSM::HDL::FlattenedDT->new(debug => 0);
-    $phase1_gen->{enable_graph}->set_fsm_module_reference($fsm_module);
+    $phase1_gen->{enable_graph_signal_support}->set_fsm_module_reference($fsm_module);
     $phase1_gen->{orchestrator}->flatten_all_decision_trees($fsm_module);
 
     my ($assignment) = grep { $_->{dt} eq 's0' && $_->{rhs} eq '1' } @{$phase1_gen->{lhs_assignments}->{A} || []};

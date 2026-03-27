@@ -72,7 +72,7 @@ ok(
     'intermediate-signal support rebuilds dependency ASTs from legacy systematic signal names',
 );
 is_deeply(
-    [$hdl->{enable_graph}->extract_intermediate_signals_from_ast($dependency_ast)],
+    [$hdl->{enable_graph_signal_support}->extract_intermediate_signals_from_ast($dependency_ast)],
     ['mid_and_aux_legacy'],
     'dependency recovery preserves the direct intermediate dependency instead of expanding transitively',
 );

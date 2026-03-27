@@ -47,7 +47,7 @@ my $raw_ast = Lispish::multi($fsm_path);
 my $adapter = FSM::Adapter::FSMGenFull->new(debug => 0);
 my $fsm_module = $adapter->parse_fsm($raw_ast);
 my $phase1_gen = FSM::HDL::FlattenedDT->new(debug => 0);
-$phase1_gen->{enable_graph}->set_fsm_module_reference($fsm_module);
+$phase1_gen->{enable_graph_signal_support}->set_fsm_module_reference($fsm_module);
 $phase1_gen->{orchestrator}->flatten_all_decision_trees($fsm_module);
 my $state_plan = $phase1_gen->{enable_graph_module_planning_support}->build_state_register_plan($fsm_module);
 

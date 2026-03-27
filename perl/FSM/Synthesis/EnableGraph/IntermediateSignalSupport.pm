@@ -340,8 +340,8 @@ sub _find_dependency_recovery_signal_name_split ($self, $signal_name) {
             my $right_name = substr($signal_name, $offset + length($needle));
             next if $left_name eq '' || $right_name eq '';
 
-            my $left_is_intermediate = $ctx->{enable_graph}->is_intermediate_signal($left_name) ? 1 : 0;
-            my $right_is_intermediate = $ctx->{enable_graph}->is_intermediate_signal($right_name) ? 1 : 0;
+            my $left_is_intermediate = $ctx->{enable_graph_signal_support}->is_intermediate_signal($left_name) ? 1 : 0;
+            my $right_is_intermediate = $ctx->{enable_graph_signal_support}->is_intermediate_signal($right_name) ? 1 : 0;
             my $score = $left_is_intermediate + $right_is_intermediate;
             next unless $score > 0;
 
@@ -391,7 +391,7 @@ sub _build_dependency_recovery_operand_ast ($self, $signal_name, $seen_signal_na
     my $ctx = $self->{flattened_dt};
     return undef unless defined($signal_name) && $signal_name ne '';
 
-    if ($ctx->{enable_graph}->is_intermediate_signal($signal_name)) {
+    if ($ctx->{enable_graph_signal_support}->is_intermediate_signal($signal_name)) {
         fsm_debug("[IntermediateSignalSupport.pm][_build_dependency_recovery_operand_ast()] Preserving direct intermediate dependency '$signal_name'", 3);
         return FSM::AST::SignalRef->new($signal_name);
     }
@@ -457,7 +457,7 @@ sub build_dependency_recovery_ast_from_signal_name ($self, $signal_name, $seen_s
     delete $seen_signal_names->{$signal_name};
     return undef unless $candidate_ast && blessed($candidate_ast);
 
-    my @dependencies = $ctx->{enable_graph}->extract_intermediate_signals_from_ast($candidate_ast);
+    my @dependencies = $ctx->{enable_graph_signal_support}->extract_intermediate_signals_from_ast($candidate_ast);
     unless (@dependencies) {
         fsm_debug("[IntermediateSignalSupport.pm][build_dependency_recovery_ast_from_signal_name()] '$signal_name' produced no direct intermediate dependencies", 3);
         return undef;
@@ -502,7 +502,7 @@ sub track_ast_intermediate_signals ($self, $ast) {
             }
         }
 
-        if ($ctx->{enable_graph}->is_intermediate_signal($signal_name)) {
+        if ($ctx->{enable_graph_signal_support}->is_intermediate_signal($signal_name)) {
             my $existing = $ctx->{referenced_intermediate_signals}->{$signal_name} || {};
             my $defining_ast = $existing->{defining_ast};
             if ((!$defining_ast || !blessed($defining_ast))) {

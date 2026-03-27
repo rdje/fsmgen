@@ -191,7 +191,7 @@ sub run_global_ast_factorization ($self) {
                 fsm_debug("  SUBSTITUTED_BY: FSM::HDL::ASTFactorization->substitute_expressions_with_intermediate_signals()", 3);
 
                 # Try to identify which intermediate signals are referenced
-                my @referenced_intermediates = $ctx->{enable_graph}->extract_intermediate_signals_from_ast($expr_info->{ast});
+                my @referenced_intermediates = $ctx->{enable_graph_signal_support}->extract_intermediate_signals_from_ast($expr_info->{ast});
                 if (@referenced_intermediates) {
                     fsm_debug("  REFERENCES_INTERMEDIATES: " . join(", ", @referenced_intermediates), 3);
                 }

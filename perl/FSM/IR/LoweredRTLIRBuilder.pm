@@ -174,7 +174,7 @@ sub build_output_drive_family_metadata ($class, %args) {
         next unless @driver_blocks || @rhs_values;
 
         my $reset_value = $hdl_generator
-            ? $hdl_generator->{enable_graph}->get_reset_value_from_ast($lhs_analysis->{lhs_ast})
+            ? $hdl_generator->{enable_graph_signal_support}->get_reset_value_from_ast($lhs_analysis->{lhs_ast})
             : undef;
 
         push @drive_families, {

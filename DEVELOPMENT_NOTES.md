@@ -6708,3 +6708,11 @@ It is an exact-delay pulse request:
   bitwise operator selection, factorizable-operator discovery, and
   arithmetic/logical/factorization classification consumed by the direct
   backend, factorization support, and fixpoint loop.
+- EnableGraph signal/intermediate support now also lives in
+  `FSM::Synthesis::EnableGraph::SignalSupport` instead of in `EnableGraph`.
+- That package now owns the bounded signal/intermediate family end to end:
+  AST-based intermediate naming, intermediate-expression cleanup,
+  FSM-module reference attachment, AST-first reset/default lookup, direct
+  intermediate dependency extraction, signal/intermediate classification,
+  backend-safe signal-name cleanup, and RHS-based enable naming consumed by
+  the direct backend and lowered-IR builder callers.

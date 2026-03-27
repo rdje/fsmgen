@@ -1511,3 +1511,10 @@ Exit criteria:
   arithmetic/logical/factorization classification now live in
   `FSM::Synthesis::EnableGraph::ASTSupport`, so `EnableGraph` no longer owns
   that bounded rendering/classification family directly either.
+- `R11`: the matching signal/intermediate owner split is now active too:
+  AST-based intermediate naming, reset/default lookup, direct intermediate
+  dependency extraction, signal/intermediate classification, backend-safe
+  signal-name cleanup, and RHS-based enable naming now live in
+  `FSM::Synthesis::EnableGraph::SignalSupport`, so `EnableGraph` no longer
+  owns that remaining signal/intermediate family directly either and is now a
+  thin synthesis-context shell.

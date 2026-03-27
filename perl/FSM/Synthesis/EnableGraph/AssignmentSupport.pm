@@ -151,7 +151,7 @@ LHS signal.
 
 sub generate_complete_enable_structure ($self, $lhs) {
     my $ctx = $self->{flattened_dt};
-    my $enable_graph = $ctx->{enable_graph};
+    my $signal_support = $ctx->{enable_graph_signal_support};
     my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
 
     fsm_debug("  [AssignmentSupport.pm][generate_complete_enable_structure()] Generating complete enable structure:", 3);
@@ -199,8 +199,8 @@ sub generate_complete_enable_structure ($self, $lhs) {
             my $dt_enable_ast = FSM::AST::Utils::signal_ref($dt_enable);
             my $complete_enable_ast = FSM::AST::Utils::and_op($dt_enable_ast, $or_tree_of_conditions_ast);
 
-            my $clean_rhs = $enable_graph->clean_signal_name($rhs);
-            my $clean_lhs = $enable_graph->clean_signal_name($lhs);
+            my $clean_rhs = $signal_support->clean_signal_name($rhs);
+            my $clean_lhs = $signal_support->clean_signal_name($lhs);
             my $dt_enable_name = "${clean_dt_name}_${clean_lhs}_${clean_rhs}_en";
 
             my $dt_enable_info = {
@@ -232,7 +232,7 @@ sub generate_complete_enable_structure ($self, $lhs) {
             $lhs_enable_ast = FSM::AST::Utils::or_tree(@dt_enable_asts);
         }
 
-        my $lhs_enable_name = $enable_graph->generate_rhs_based_enable_name($lhs, $rhs);
+        my $lhs_enable_name = $signal_support->generate_rhs_based_enable_name($lhs, $rhs);
 
         $rhs_group->{lhs_level_enable} = {
             name => $lhs_enable_name,
@@ -255,7 +255,7 @@ Build the normalized mux configuration for one analyzed LHS signal.
 
 sub build_multiplexer_config ($self, $lhs) {
     my $ctx = $self->{flattened_dt};
-    my $enable_graph = $ctx->{enable_graph};
+    my $signal_support = $ctx->{enable_graph_signal_support};
     my $lhs_analysis = $ctx->{assignment_analysis}->{$lhs};
     my $lhs_ast = $lhs_analysis->{lhs_ast};
     my $lhs_name = blessed($lhs_ast) && $lhs_ast->can('name') ? $lhs_ast->name() : 'UNKNOWN';
@@ -278,7 +278,7 @@ sub build_multiplexer_config ($self, $lhs) {
 
     my $is_register = $self->is_register($lhs_ast, $lhs_name);
     my $mux_type = $is_register ? 'flop' : 'comb';
-    my $default_value = $enable_graph->get_default_value_from_ast($lhs_ast);
+    my $default_value = $signal_support->get_default_value_from_ast($lhs_ast);
 
     $lhs_analysis->{multiplexer} = {
         type => $mux_type,
@@ -469,6 +469,7 @@ Emit the sequential mux/runtime block for one analyzed flop-backed LHS family.
 
 sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
     my $ctx = $self->{flattened_dt};
+    my $signal_support = $ctx->{enable_graph_signal_support};
     my $lhs_ast = $lhs_analysis->{lhs_ast};
     my $lhs_name = blessed($lhs_ast) && $lhs_ast->can('name') ? $lhs_ast->name() : 'UNKNOWN';
     my $clock_name = $ctx->{enable_graph_module_planning_support}->effective_clock_name();
@@ -503,7 +504,7 @@ sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
 
         $hdl .= "  end\n";
 
-        my $reset_value = $enable_graph->get_reset_value_from_ast($lhs_ast);
+        my $reset_value = $signal_support->get_reset_value_from_ast($lhs_ast);
 
         $hdl .= "  always_ff @(posedge $clock_name or negedge $reset_name) begin\n";
         $hdl .= "    if (!$reset_name) begin\n";
@@ -536,7 +537,7 @@ sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
 
         $hdl .= "  end\n";
 
-        my $reset_value = $enable_graph->get_reset_value_from_ast($lhs_ast);
+        my $reset_value = $signal_support->get_reset_value_from_ast($lhs_ast);
 
         $hdl .= "  always_ff @(posedge $clock_name or negedge $reset_name) begin\n";
         $hdl .= "    if (!$reset_name) begin\n";
