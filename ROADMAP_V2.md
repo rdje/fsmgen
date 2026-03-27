@@ -969,3 +969,10 @@ The first honest `R11` slices are now:
   `FSM::Synthesis::EnableGraph::SignalSupport`, so `EnableGraph` no longer
   owns that remaining signal/intermediate family directly either and is now a
   thin synthesis-context shell.
+- Forward-IR note: the matching factorization-policy support split is now
+  active too: logical-operation counting, first-pass AST feed preparation,
+  second-pass AST feed eligibility, and high-count logical-operation policy
+  now live in `FSM::Synthesis::EnableGraph::FactorizationPolicySupport`, so
+  `FSM::Synthesis::EnableGraph::FactorizationSupport` now narrows to
+  substitution synchronization and live-usage evidence instead of owning the
+  whole factorization family.

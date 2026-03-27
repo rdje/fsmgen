@@ -51,6 +51,7 @@ The heaviest remaining complexity is still the direct single-module HDL backend 
 - [perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ASTSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/EnableSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/EnableSupport.pm)
+- [perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm)
@@ -102,6 +103,7 @@ bin/fsmgen
         -> Synthesis::EnableGraph::ASTSupport
         -> Synthesis::EnableGraph::CaptureSupport
         -> Synthesis::EnableGraph::EnableSupport
+        -> Synthesis::EnableGraph::FactorizationPolicySupport
         -> Synthesis::EnableGraph::FactorizationSupport
         -> Synthesis::EnableGraph::IntermediateSignalSupport
         -> Synthesis::EnableGraph::ModulePlanningSupport
@@ -335,6 +337,7 @@ Right now it is composition-top focused and Verilog-family focused.
 - `FSM::HDL::Factorization::Fixpoint`
 - `FSM::HDL::ASTFactorization`
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm)
+- [perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm)
@@ -429,6 +432,11 @@ It behaves like a hook system, not a competing architecture.
   enable-family support rather than leaving top-level state/DT enable
   initialization, WEN/EN prescan tracking, and unified DT/LHS WEN/EN
   emission inline inside `EnableGraph`.
+- `FSM::Synthesis::EnableGraph::FactorizationPolicySupport` now also owns the
+  bounded factorization-policy family rather than leaving logical-operation
+  counting, first-pass AST feed preparation, second-pass AST feed
+  eligibility, and high-count logical-operation policy inline inside
+  `FactorizationSupport`.
 - `FSM::Synthesis::EnableGraph::SignalSupport` now also owns the bounded
   signal/intermediate support family rather than leaving AST-based
   intermediate naming, reset/default lookup, direct intermediate dependency
@@ -441,14 +449,15 @@ It behaves like a hook system, not a competing architecture.
 ### Current hotspots
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) is now a thin synthesis-context shell at `75` lines, so the remaining backend gravity lives in the broader `EnableGraph::*` owner family rather than the shell package itself.
 - The direct single-module generation path still has not converged on the same clean `StructuralRTLIR -> backend emitter` shape that the composition path is starting to use, even though it now has its own direct-root orchestrator boundary and a dedicated generated-module backend owner.
-- [perl/FSM/Synthesis/EnableGraph/SignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/SignalSupport.pm), [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm), [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm), and [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) now carry more of the remaining backend gravity than any single SystemVerilog package.
-- The remaining `EnableGraph`-family gravity is now narrower than before: module/state/declaration planning, assignment-analysis / mux-emission support, enable-family support, AST capture/conversion support, AST rendering/classification, and signal/intermediate support all have dedicated owners now, so the next honest seams are factorization-policy cleanup and deeper direct-backend convergence rather than the old direct planning, capture, or WEN/EN clusters.
+- [perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm), [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm), [perl/FSM/Synthesis/EnableGraph/SignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/SignalSupport.pm), [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm), and [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) now carry more of the remaining backend gravity than any single SystemVerilog package.
+- The remaining `EnableGraph`-family gravity is now narrower than before: module/state/declaration planning, assignment-analysis / mux-emission support, enable-family support, AST capture/conversion support, AST rendering/classification, signal/intermediate support, and factorization policy all have dedicated owners now, so the next honest seams are deeper factorization-loop cleanup and broader direct-backend convergence rather than the old direct planning, capture, or WEN/EN clusters.
 - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) is still a meaningful sequencing hotspot even though the old SystemVerilog backend shell has been retired.
 - `module_info` and reporting/statistics surfaces still create pressure for the coordinator to know too much, even though the generated-module `module_info` family now has its own explicit owner.
 - `EnableGraph` no longer owns AST rendering/operator-classification directly,
-  but the direct backend still depends on that support family deeply through
-  `ASTSupport`, `FactorizationSupport`, `IntermediateSignalSupport`, and the
-  older `Fixpoint` loop.
+  but the direct backend still depends on the broader factorization family
+  deeply through `ASTSupport`, `FactorizationPolicySupport`,
+  `FactorizationSupport`, `IntermediateSignalSupport`, and the older
+  `Fixpoint` loop.
 
 ## Important implications for future implementation
 ### 1. The composition path is the cleanest forward-looking model
@@ -493,6 +502,8 @@ operator-classification family now lives in
 [perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ASTSupport.pm)
 and the remaining signal/intermediate family now lives in
 [perl/FSM/Synthesis/EnableGraph/SignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/SignalSupport.pm)
+and the factorization-policy family now lives in
+[perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm)
 instead of inside `EnableGraph` itself, which is a real reduction in owner
 gravity even if it does not finish the backend cleanup by itself.
 

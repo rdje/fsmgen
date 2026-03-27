@@ -6716,3 +6716,15 @@ It is an exact-delay pulse request:
   intermediate dependency extraction, signal/intermediate classification,
   backend-safe signal-name cleanup, and RHS-based enable naming consumed by
   the direct backend and lowered-IR builder callers.
+- EnableGraph factorization policy now also lives in
+  `FSM::Synthesis::EnableGraph::FactorizationPolicySupport` instead of in
+  `FSM::Synthesis::EnableGraph::FactorizationSupport`.
+- That package now owns the bounded factorization-policy family end to end:
+  logical-operation counting, first-pass AST collection and factorizer feed
+  preparation, second-pass AST feed eligibility, and high-count
+  logical-operation policy consumed by the direct backend, AST support, and
+  the fixpoint runner.
+- `FSM::Synthesis::EnableGraph::FactorizationSupport` now narrows to the
+  substitution/live-usage side: substitution synchronization into owner-side
+  AST structures, substituted signal-reference checks, and cached live-usage
+  evidence derivation.

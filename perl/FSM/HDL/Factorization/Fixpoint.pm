@@ -49,7 +49,7 @@ sub run_post_substitution_factorization ($self, %args) {
             debug_level => 3,
         );
         
-        my $fed_count = $ctx->{enable_graph_factorization_support}->feed_current_asts_to_second_pass($pass_factorizer);
+        my $fed_count = $ctx->{enable_graph_factorization_policy_support}->feed_current_asts_to_second_pass($pass_factorizer);
         fsm_debug("[Fixpoint.pm][run_post_substitution_factorization()] Pass $pass_number fed $fed_count expression(s)", 3);
         if ($fed_count == 0) {
             $termination_reason = 'no_factorizable_post_substitution_expressions';

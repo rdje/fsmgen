@@ -245,7 +245,7 @@ sub generate_systemverilog ($self, $fsm_module) {
     
     # TIMING FIX: Count logical operations BEFORE any intermediate signal creation!
     fsm_debug("\n*** TIMING FIX: Running logical operation counting BEFORE pre-scan ***", 3);
-    $ctx->{enable_graph_factorization_support}->count_binary_logical_operation_occurrences();
+    $ctx->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
     fsm_debug("Step 4 - Logical operation counting completed (BEFORE pre-scan!)", 3);
     
     # Step 5: PRE-SCAN all WEN/EN expressions to identify needed intermediate signals (now with counts available)

@@ -16,6 +16,7 @@ use FSM::Synthesis::EnableGraph::AssignmentSupport;
 use FSM::Synthesis::EnableGraph::ASTSupport;
 use FSM::Synthesis::EnableGraph::CaptureSupport;
 use FSM::Synthesis::EnableGraph::EnableSupport;
+use FSM::Synthesis::EnableGraph::FactorizationPolicySupport;
 use FSM::Synthesis::EnableGraph::FactorizationSupport;
 use FSM::Synthesis::EnableGraph::IntermediateSignalSupport;
 use FSM::Synthesis::EnableGraph::ModulePlanningSupport;
@@ -93,6 +94,7 @@ sub new ($class, %args) {
     $self->{enable_graph_ast_support} = FSM::Synthesis::EnableGraph::ASTSupport->new(flattened_dt => $self);
     $self->{enable_graph_capture_support} = FSM::Synthesis::EnableGraph::CaptureSupport->new(flattened_dt => $self);
     $self->{enable_graph_enable_support} = FSM::Synthesis::EnableGraph::EnableSupport->new(flattened_dt => $self);
+    $self->{enable_graph_factorization_policy_support} = FSM::Synthesis::EnableGraph::FactorizationPolicySupport->new(flattened_dt => $self);
     $self->{enable_graph_factorization_support} = FSM::Synthesis::EnableGraph::FactorizationSupport->new(flattened_dt => $self);
     $self->{enable_graph_intermediate_support} = FSM::Synthesis::EnableGraph::IntermediateSignalSupport->new(flattened_dt => $self);
     $self->{enable_graph_module_planning_support} = FSM::Synthesis::EnableGraph::ModulePlanningSupport->new(flattened_dt => $self);

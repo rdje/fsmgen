@@ -5248,3 +5248,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   owns AST-based intermediate naming, reset/default lookup, direct
   intermediate-dependency extraction, signal/intermediate classification,
   backend-safe signal-name cleanup, or RHS-based enable naming directly.
+- EnableGraph factorization policy now also lives in
+  `FSM::Synthesis::EnableGraph::FactorizationPolicySupport`, so
+  `FSM::Synthesis::EnableGraph::FactorizationSupport` no longer owns
+  logical-operation counting, first-pass AST feed preparation, second-pass
+  AST feed eligibility, or high-count logical-operation policy directly.

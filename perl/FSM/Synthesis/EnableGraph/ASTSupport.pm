@@ -172,7 +172,7 @@ factorized.
 
 sub should_factor_logical_operation ($self, $ast) {
     return 0 unless $self->is_logical_operation($ast);
-    return $self->{flattened_dt}->{enable_graph_factorization_support}->contains_frequently_used_operations($ast);
+    return $self->{flattened_dt}->{enable_graph_factorization_policy_support}->contains_frequently_used_operations($ast);
 }
 
 =head2 _ast_to_systemverilog_internal

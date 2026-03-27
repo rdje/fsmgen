@@ -100,7 +100,7 @@ sub run_global_ast_factorization ($self) {
     } else {
         fsm_debug("GLOBAL_AST_FACT: [NOT_EXISTS] binary_logical_op_counts NOT found - running count now", 3);
         fsm_debug("*** WARNING: No logical operation counts available - this shouldn't happen! ***", 3);
-        $ctx->{enable_graph_factorization_support}->count_binary_logical_operation_occurrences();
+        $ctx->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
     }
 
     # Load the generic AST factorization system
@@ -115,7 +115,7 @@ sub run_global_ast_factorization ($self) {
 
     # STEP 1: Collect and add all AST expressions to factorizer
     fsm_debug("*** STEP 1: FEEDING ASTs TO FACTORIZER ***", 3);
-    my $ast_count = $ctx->{enable_graph_factorization_support}->feed_asts_to_factorizer($factorizer);
+    my $ast_count = $ctx->{enable_graph_factorization_policy_support}->feed_asts_to_factorizer($factorizer);
     fsm_debug("Fed $ast_count AST expressions to factorizer", 3);
 
     # Show what ASTs we have in the factorizer

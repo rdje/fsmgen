@@ -9,15 +9,16 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::AST::Node;
 use FSM::HDL::ASTFactorization;
 use FSM::HDL::FlattenedDT;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'enable-graph factorization support rebuilds the substitution and live-usage contract from a prepared backend context' => sub {
+subtest 'enable-graph factorization policy support rebuilds the factorization-policy and AST-feed contract from a prepared backend context' => sub {
     my $fsm_module = parse_fsm_module(
-        'enable_graph_factorization_contract',
+        'enable_graph_factorization_policy_contract',
         <<'FSM'
-(?fsm:enable_graph_factorization_contract
+(?fsm:enable_graph_factorization_policy_contract
   (+system
     (clock clk)
     (sreset rstn)
@@ -43,11 +44,21 @@ FSM
     );
 
     my $prepared_backend = prepare_flattened_backend($fsm_module);
-    my $policy_support = $prepared_backend->{enable_graph_factorization_policy_support};
-    my $support = $prepared_backend->{enable_graph_factorization_support};
+    my $support = $prepared_backend->{enable_graph_factorization_policy_support};
 
-    my $counts = $policy_support->count_binary_logical_operation_occurrences();
+    my $counts = $support->count_binary_logical_operation_occurrences();
     is(ref($counts), 'HASH', 'factorization policy support returns a logical-operation count map for the prepared backend context');
+
+    my @ast_expressions = $support->collect_all_wen_en_ast_expressions();
+    cmp_ok(scalar(@ast_expressions), '>', 0, 'factorization policy support collects the prepared enable and assignment AST expressions');
+
+    my ($intermediate_backed_expression) = grep {
+        my $sv = eval { $_->{ast}->to_systemverilog() } || '';
+        $sv =~ /intermediate_or_A_B_/;
+    } @ast_expressions;
+    ok($intermediate_backed_expression, 'factorization policy support exposes the prepared AST set through its current intermediate-backed owner expressions');
+    ok($support->ast_contains_intermediate_signals($intermediate_backed_expression->{ast}), 'factorization policy support recognizes intermediate-backed expressions in the prepared AST set');
+    ok($support->ast_has_intermediate_signals_recursive($intermediate_backed_expression->{ast}), 'factorization policy support recognizes intermediate-backed subtrees recursively');
 
     my $factorizer = FSM::HDL::ASTFactorization->new(
         min_usage_count => 2,
@@ -55,48 +66,34 @@ FSM
         debug_level => 0,
     );
 
-    my $fed_count = $policy_support->feed_asts_to_factorizer($factorizer);
+    my $fed_count = $support->feed_asts_to_factorizer($factorizer);
     cmp_ok($fed_count, '>', 0, 'factorization policy support feeds the prepared AST set into a generic factorizer');
 
     my $factorization_result = $factorizer->analyze_and_factorize();
     my $signal_info = $factorization_result->{intermediate_signals}{A_or_B};
-    ok($signal_info, 'factorization support preserves the shared A_or_B candidate through generic factorization analysis');
-    is($signal_info->{usage_count}, 2, 'factorization support preserves the shared-expression usage count');
+    ok($signal_info, 'factorization policy support preserves the shared A_or_B candidate through generic factorization analysis');
+    is($signal_info->{usage_count}, 2, 'factorization policy support preserves the shared-expression usage count');
+
+    my $logical_ast = FSM::AST::BinaryOp->new(
+        '|',
+        FSM::AST::SignalRef->new('A'),
+        FSM::AST::SignalRef->new('B'),
+    );
+    my $logical_signature = $prepared_backend->{enable_graph_ast_support}->ast_to_systemverilog($logical_ast);
+    $prepared_backend->{binary_logical_op_counts} = {
+        $logical_signature => 2,
+    };
+    ok($support->contains_frequently_used_operations($logical_ast), 'factorization policy support recognizes a seeded high-count logical expression as worth factoring');
 
     my $substitution_count = $factorizer->substitute_expressions_with_intermediate_signals($factorizer->{ast_expressions});
-    cmp_ok($substitution_count, '>', 0, 'factorization support can drive substituted AST generation through the generic factorizer');
-
-    $prepared_backend->{ast_factorizer} = $factorizer;
-
-    my ($substituted_expression) = grep {
-        $support->ast_contains_signal($_->{ast}, 'A_or_B');
-    } @{$factorizer->{ast_expressions}};
-    ok($substituted_expression, 'factorization support can detect the shared intermediate inside substituted factorizer expressions');
-
-    my $update_count = $support->update_original_asts_with_substituted_versions($factorizer);
-    cmp_ok($update_count, '>', 0, 'factorization support synchronizes substituted ASTs back into the prepared backend structures');
-
-    ok($support->is_signal_referenced_in_substitutions('A_or_B'), 'factorization support sees the shared intermediate in substituted expressions');
-    ok(!$support->is_signal_actually_used_in_final_expressions('A_or_B'), 'factorization support keeps the distinction between substituted-factorizer evidence and final owner-side expressions');
-
-    my $live_usage = $support->resolve_intermediate_signal_live_usage('A_or_B', $signal_info);
-    is_deeply(
-        $live_usage,
-        {
-            referenced_in_substitutions => 1,
-            used_in_final_expressions => 0,
-            evidence_state => 'substitutions',
-            source => 'ast_live_usage_metadata',
-        },
-        'factorization support derives the expected live-usage evidence for the shared intermediate',
-    );
+    cmp_ok($substitution_count, '>', 0, 'generic factorizer can substitute the shared candidate into the collected AST set');
 
     my $second_pass_factorizer = FSM::HDL::ASTFactorization->new(
         min_usage_count => 2,
         debug => 0,
         debug_level => 0,
     );
-    my $second_pass_fed_count = $policy_support->feed_current_asts_to_second_pass($second_pass_factorizer);
+    my $second_pass_fed_count = $support->feed_current_asts_to_second_pass($second_pass_factorizer);
     cmp_ok($second_pass_fed_count, '>', 0, 'factorization policy support exposes post-substitution ASTs that still depend on intermediates to the second-pass factorizer');
 };
 
