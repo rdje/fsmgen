@@ -6701,3 +6701,10 @@ It is an exact-delay pulse request:
   condition-stack normalization, assignment/transition capture, test-selector
   conversion, capture-time RHS rendering, and AST signal-name extraction
   consumed by the direct backend orchestrator plus factorization support.
+- EnableGraph AST rendering and operator classification now also live in
+  `FSM::Synthesis::EnableGraph::ASTSupport` instead of in `EnableGraph`.
+- That package now owns the bounded rendering/classification family end to
+  end: AST-to-SystemVerilog rendering, operand-width-aware logical-versus-
+  bitwise operator selection, factorizable-operator discovery, and
+  arithmetic/logical/factorization classification consumed by the direct
+  backend, factorization support, and fixpoint loop.

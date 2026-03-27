@@ -271,7 +271,7 @@ sub get_substituted_ast_for_signal ($self, $signal_name, $signal_info) {
 
         if ($factorizer_signal_info && $factorizer_signal_info->{ast}) {
             my $substituted_ast = $factorizer_signal_info->{ast};
-            my $substituted_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+            my $substituted_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
 
             fsm_debug("  FOUND substituted AST from factorizer: '$substituted_sv'", 3);
             return $substituted_ast;

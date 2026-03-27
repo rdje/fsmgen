@@ -233,7 +233,7 @@ sub get_intermediate_signal_expression ($self, $signal_name) {
 
     my $ast = $self->get_intermediate_signal_ast($signal_name);
     if ($ast && blessed($ast)) {
-        my $expression = $ctx->{enable_graph}->ast_to_systemverilog($ast);
+        my $expression = $ctx->{enable_graph_ast_support}->ast_to_systemverilog($ast);
         fsm_debug("[IntermediateSignalSupport.pm][get_intermediate_signal_expression()] Rendering '$signal_name' from defining AST", 3);
         return $expression;
     }

@@ -186,7 +186,7 @@ structure.
 
 sub generate_dt_enables_from_analysis ($self) {
     my $ctx = $self->{flattened_dt};
-    my $enable_graph = $ctx->{enable_graph};
+    my $enable_graph_ast_support = $ctx->{enable_graph_ast_support};
 
     fsm_debug("GENERATE_DT_ENABLES: [ENTRY] Starting DT-specific enable generation from analysis", 3);
     my $hdl = "  // DT-Specific Enable Signals from Unified Analysis\n";
@@ -246,7 +246,7 @@ sub generate_dt_enables_from_analysis ($self) {
                 my $enable_ast = $enable_info->{enable_ast};
                 my $rhs = $enable_info->{rhs};
 
-                my $enable_expr = $enable_graph->ast_to_systemverilog($enable_ast);
+                my $enable_expr = $enable_graph_ast_support->ast_to_systemverilog($enable_ast);
                 $hdl .= "  assign $enable_name = $enable_expr;  // $lhs <- $rhs\n";
 
                 fsm_debug("  Generated DT-specific enable: $enable_name = $enable_expr", 3);
@@ -266,7 +266,7 @@ structure.
 
 sub generate_lhs_enables_from_analysis ($self) {
     my $ctx = $self->{flattened_dt};
-    my $enable_graph = $ctx->{enable_graph};
+    my $enable_graph_ast_support = $ctx->{enable_graph_ast_support};
     my $hdl = "\n  // LHS-Level Enable Signals from Unified Analysis\n";
 
     for my $lhs (sort keys %{$ctx->{assignment_analysis}}) {
@@ -284,7 +284,7 @@ sub generate_lhs_enables_from_analysis ($self) {
 
                 $ctx->{enable_graph_intermediate_support}->track_ast_intermediate_signals($enable_ast);
 
-                my $enable_expr = $enable_graph->ast_to_systemverilog($enable_ast);
+                my $enable_expr = $enable_graph_ast_support->ast_to_systemverilog($enable_ast);
 
                 $hdl .= "  assign $enable_name = $enable_expr;\n";
 

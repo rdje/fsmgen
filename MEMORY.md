@@ -5238,3 +5238,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   owns condition-stack normalization, assignment/transition capture,
   test-selector conversion, capture-time RHS rendering, or AST signal-name
   extraction directly.
+- EnableGraph AST rendering and operator classification now also live in
+  `FSM::Synthesis::EnableGraph::ASTSupport`, so `EnableGraph` no longer owns
+  AST-to-SystemVerilog rendering, operand-width-aware logical-versus-bitwise
+  operator selection, factorizable-operator discovery, or
+  arithmetic/logical/factorization classification directly.

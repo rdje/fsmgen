@@ -50,7 +50,7 @@ FSM
     my $intermediate_signals = $factorization_support->run_global_ast_factorization();
     my $signal_info = $intermediate_signals->{A_or_B};
     my $substituted_ast = $factorization_support->get_substituted_ast_for_signal('A_or_B', $signal_info) || $signal_info->{ast};
-    my $rendered_expression = $prepared_backend->{enable_graph}->ast_to_systemverilog($substituted_ast);
+    my $rendered_expression = $prepared_backend->{enable_graph_ast_support}->ast_to_systemverilog($substituted_ast);
 
     ok($signal_info, 'factorization support keeps the shared A_or_B intermediate signal');
     is($signal_info->{usage_count}, 2, 'factorization support keeps the shared-expression usage count');

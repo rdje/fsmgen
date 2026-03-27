@@ -48,6 +48,7 @@ The heaviest remaining complexity is still the direct single-module HDL backend 
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm)
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm)
 - [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm)
+- [perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ASTSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/CaptureSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/EnableSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/EnableSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm)
@@ -97,6 +98,7 @@ bin/fsmgen
         -> FlattenedDT::Orchestrator
         -> Synthesis::EnableGraph
         -> Synthesis::EnableGraph::AssignmentSupport
+        -> Synthesis::EnableGraph::ASTSupport
         -> Synthesis::EnableGraph::CaptureSupport
         -> Synthesis::EnableGraph::EnableSupport
         -> Synthesis::EnableGraph::FactorizationSupport
@@ -435,6 +437,10 @@ It behaves like a hook system, not a competing architecture.
 - The remaining `EnableGraph` gravity is now narrower than before: module/state/declaration planning, assignment-analysis / mux-emission support, enable-family support, and AST capture/conversion support all have dedicated owners now, so the next honest seams are AST rendering / classification helpers and factorization-policy cleanup, not the old direct planning, capture, or WEN/EN clusters.
 - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) is still a meaningful sequencing hotspot even though the old SystemVerilog backend shell has been retired.
 - `module_info` and reporting/statistics surfaces still create pressure for the coordinator to know too much, even though the generated-module `module_info` family now has its own explicit owner.
+- `EnableGraph` no longer owns AST rendering/operator-classification directly,
+  but the direct backend still depends on that support family deeply through
+  `ASTSupport`, `FactorizationSupport`, `IntermediateSignalSupport`, and the
+  older `Fixpoint` loop.
 
 ## Important implications for future implementation
 ### 1. The composition path is the cleanest forward-looking model
@@ -472,6 +478,11 @@ That makes it a believable last-IR-before-emission target.
 The composition-side package breakdown is moving well.
 The older synthesis/backend side is still much more concentrated.
 If there is one place likely to dominate future backend cleanup cost, it is [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm).
+The newer owner set is helping though: the direct backend’s AST rendering and
+operator-classification family now lives in
+[perl/FSM/Synthesis/EnableGraph/ASTSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ASTSupport.pm)
+instead of inside `EnableGraph` itself, which is a real reduction in owner
+gravity even if it does not finish the backend cleanup by itself.
 
 ### 5. The extension system is not the architectural problem
 It is small and bounded.

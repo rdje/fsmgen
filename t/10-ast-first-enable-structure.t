@@ -408,6 +408,26 @@ ok(
     'live EnableGraph factorization support owns high-count logical-operation discovery for factorization policy',
 );
 ok(
+    $hdl->{enable_graph_ast_support}->can('ast_to_systemverilog'),
+    'live EnableGraph AST support owns AST-to-SystemVerilog rendering',
+);
+ok(
+    $hdl->{enable_graph_ast_support}->can('ast_contains_factorizable_operators'),
+    'live EnableGraph AST support owns factorizable-operator discovery',
+);
+ok(
+    $hdl->{enable_graph_ast_support}->can('is_arithmetic_operation'),
+    'live EnableGraph AST support owns arithmetic-operation classification',
+);
+ok(
+    $hdl->{enable_graph_ast_support}->can('is_logical_operation'),
+    'live EnableGraph AST support owns logical-operation classification',
+);
+ok(
+    $hdl->{enable_graph_ast_support}->can('should_factor_logical_operation'),
+    'live EnableGraph AST support owns logical factorization policy checks',
+);
+ok(
     $hdl->{enable_graph_module_planning_support}->can('effective_system_contract'),
     'live EnableGraph module-planning support owns effective system-contract resolution',
 );

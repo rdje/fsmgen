@@ -370,12 +370,12 @@ sub _is_factorizable_sub_expression ($self, $ast) {
     }
 
     if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
-        if ($ctx->{enable_graph}->is_arithmetic_operation($ast)) {
+        if ($ctx->{enable_graph_ast_support}->is_arithmetic_operation($ast)) {
             fsm_debug("FACTORIZABLE: Arithmetic operation - ALWAYS FACTOR", 3);
             return 1;
         }
 
-        if ($ctx->{enable_graph}->is_logical_operation($ast)) {
+        if ($ctx->{enable_graph_ast_support}->is_logical_operation($ast)) {
             my $signature = eval { $ast->to_systemverilog() } || 'unknown';
             my $count = ($ctx->{binary_logical_op_counts} || {})->{$signature} || 0;
             if ($count > 1) {
@@ -417,7 +417,7 @@ sub feed_current_asts_to_second_pass ($self, $second_pass_factorizer) {
 
                 for my $dt_enable (@{$rhs_group->{dt_specific_enables} || []}) {
                     if ($dt_enable->{enable_ast} && blessed($dt_enable->{enable_ast})) {
-                        my $sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($dt_enable->{enable_ast}) } || "[NO SV REPRESENTATION]";
+                        my $sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($dt_enable->{enable_ast}) } || "[NO SV REPRESENTATION]";
 
                         if ($self->ast_contains_intermediate_signals($dt_enable->{enable_ast})) {
                             $second_pass_factorizer->add_ast_expression(
@@ -434,7 +434,7 @@ sub feed_current_asts_to_second_pass ($self, $second_pass_factorizer) {
                 if ($rhs_group->{lhs_level_enable} && $rhs_group->{lhs_level_enable}{ast}) {
                     my $lhs_enable = $rhs_group->{lhs_level_enable};
                     if (blessed($lhs_enable->{ast})) {
-                        my $sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($lhs_enable->{ast}) } || "[NO SV REPRESENTATION]";
+                        my $sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($lhs_enable->{ast}) } || "[NO SV REPRESENTATION]";
 
                         if ($self->ast_contains_intermediate_signals($lhs_enable->{ast})) {
                             $second_pass_factorizer->add_ast_expression(
@@ -454,7 +454,7 @@ sub feed_current_asts_to_second_pass ($self, $second_pass_factorizer) {
     for my $lhs (keys %{$ctx->{lhs_assignments} || {}}) {
         for my $assignment (@{$ctx->{lhs_assignments}{$lhs}}) {
             if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast})) {
-                my $sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($assignment->{conditions_ast}) } || "[NO SV REPRESENTATION]";
+                my $sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($assignment->{conditions_ast}) } || "[NO SV REPRESENTATION]";
 
                 if ($self->ast_contains_intermediate_signals($assignment->{conditions_ast})) {
                     $second_pass_factorizer->add_ast_expression(
@@ -486,14 +486,14 @@ sub ast_contains_intermediate_signals ($self, $ast) {
 
     if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
         my $signal_name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast) || 'unknown';
-        my $ast_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($ast) } || 'unknown';
+        my $ast_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($ast) } || 'unknown';
         fsm_debug("  SECOND_PASS_FILTER: Bare signal reference '$signal_name' (AST: $ast_sv) - NOT factorizable", 3);
         return 0;
     }
 
     if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
         my $signal_name = $ast->{signal_name} || 'unknown';
-        my $ast_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($ast) } || 'unknown';
+        my $ast_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($ast) } || 'unknown';
         fsm_debug("  SECOND_PASS_FILTER: Bare intermediate signal reference '$signal_name' (AST: $ast_sv) - NOT factorizable", 3);
         return 0;
     }
@@ -645,8 +645,8 @@ sub update_original_asts_with_substituted_versions ($self, $factorizer) {
                         my $original_ast = $dt_enable_info->{enable_ast};
                         my $substituted_ast = $context_to_substituted_ast->{$context_key};
 
-                        my $original_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
-                        my $substituted_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+                        my $original_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                        my $substituted_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
 
                         $dt_enable_info->{enable_ast} = $substituted_ast;
                         $updated_count++;
@@ -669,8 +669,8 @@ sub update_original_asts_with_substituted_versions ($self, $factorizer) {
                         my $original_ast = $lhs_enable->{ast};
                         my $substituted_ast = $context_to_substituted_ast->{$context_key};
 
-                        my $original_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
-                        my $substituted_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+                        my $original_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                        my $substituted_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
 
                         $lhs_enable->{ast} = $substituted_ast;
                         $updated_count++;
@@ -702,8 +702,8 @@ sub update_original_asts_with_substituted_versions ($self, $factorizer) {
                 my $original_ast = $assignment->{conditions_ast};
                 my $substituted_ast = $context_to_substituted_ast->{$context_key};
 
-                my $original_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
-                my $substituted_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+                my $original_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                my $substituted_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
 
                 $assignment->{conditions_ast} = $substituted_ast;
                 $updated_count++;
@@ -763,8 +763,8 @@ sub update_original_asts_with_second_pass_substitutions ($self, $second_pass_fac
                         my $original_ast = $dt_enable_info->{enable_ast};
                         my $substituted_ast = $second_pass_context_to_ast->{$context_key};
 
-                        my $original_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
-                        my $substituted_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+                        my $original_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                        my $substituted_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
 
                         $dt_enable_info->{enable_ast} = $substituted_ast;
                         $updated_count++;
@@ -784,8 +784,8 @@ sub update_original_asts_with_second_pass_substitutions ($self, $second_pass_fac
                         my $original_ast = $lhs_enable->{ast};
                         my $substituted_ast = $second_pass_context_to_ast->{$context_key};
 
-                        my $original_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
-                        my $substituted_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+                        my $original_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                        my $substituted_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
 
                         $lhs_enable->{ast} = $substituted_ast;
                         $updated_count++;
@@ -810,8 +810,8 @@ sub update_original_asts_with_second_pass_substitutions ($self, $second_pass_fac
                 my $original_ast = $assignment->{conditions_ast};
                 my $substituted_ast = $second_pass_context_to_ast->{$context_key};
 
-                my $original_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
-                my $substituted_sv = eval { $ctx->{enable_graph}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
+                my $original_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($original_ast) } || "[NO SV REPRESENTATION]";
+                my $substituted_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($substituted_ast) } || "[NO SV REPRESENTATION]";
 
                 $assignment->{conditions_ast} = $substituted_ast;
                 $updated_count++;
@@ -1084,7 +1084,7 @@ sub contains_frequently_used_operations ($self, $ast, $visited_signal_names = un
     $visited_signal_names //= {};
 
     my $result = $self->_ast_contains_frequently_used_logical_operation($ast, $visited_signal_names);
-    my $ast_str = eval { $ctx->{enable_graph}->ast_to_systemverilog($ast) } || eval { $ast->to_systemverilog() } || ref($ast) || 'unknown_ast';
+    my $ast_str = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($ast) } || eval { $ast->to_systemverilog() } || ref($ast) || 'unknown_ast';
 
     if ($result) {
         fsm_debug("[FactorizationSupport.pm][contains_frequently_used_operations()] Expression '$ast_str' contains high-count logical operations - FACTOR", 3);
@@ -1107,8 +1107,8 @@ sub _ast_contains_frequently_used_logical_operation ($self, $ast, $visited_signa
     return 0 unless $ast && blessed($ast);
     return 0 unless exists $ctx->{binary_logical_op_counts};
 
-    if ($ctx->{enable_graph}->is_logical_operation($ast)) {
-        my $signature = eval { $ast->to_systemverilog() } || eval { $ctx->{enable_graph}->ast_to_systemverilog($ast) } || '';
+    if ($ctx->{enable_graph_ast_support}->is_logical_operation($ast)) {
+        my $signature = eval { $ast->to_systemverilog() } || eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($ast) } || '';
         my $count = $ctx->{binary_logical_op_counts}{$signature} || 0;
         if ($count > 1) {
             fsm_debug("[FactorizationSupport.pm][_ast_contains_frequently_used_logical_operation()] Found high-count logical op '$signature' ($count uses)", 3);

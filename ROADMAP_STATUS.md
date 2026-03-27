@@ -1505,3 +1505,9 @@ Exit criteria:
   test-selector conversion, and AST signal-name extraction now live in
   `FSM::Synthesis::EnableGraph::CaptureSupport`, so `EnableGraph` no longer
   owns that bounded capture/conversion family directly either.
+- `R11`: the matching AST rendering/classification owner split is now active
+  too: AST-to-SystemVerilog rendering, single-bit operand-aware operator
+  selection, factorizable-operator discovery, and
+  arithmetic/logical/factorization classification now live in
+  `FSM::Synthesis::EnableGraph::ASTSupport`, so `EnableGraph` no longer owns
+  that bounded rendering/classification family directly either.

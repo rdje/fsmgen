@@ -181,7 +181,7 @@ sub render_intermediate_signal_expression ($self, $signal_name, $signal_info) {
             return $signal_info->{expression};
         }
 
-        my $expression = $ctx->{enable_graph}->ast_to_systemverilog($runtime_ast);
+        my $expression = $ctx->{enable_graph_ast_support}->ast_to_systemverilog($runtime_ast);
         if ($signal_info && ref($signal_info) eq 'HASH') {
             $signal_info->{rendered_expression} = $expression;
             $signal_info->{rendered_expression_source} = $runtime_ast_source;
@@ -552,15 +552,15 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
         }
 
         # Check if it's an arithmetic operation (always keep)
-        if ($ctx->{enable_graph}->is_arithmetic_operation($ast)) {
+        if ($ctx->{enable_graph_ast_support}->is_arithmetic_operation($ast)) {
             fsm_debug("  AST_FILTER: Arithmetic operation - KEEPING", 3);
             return 0;
         }
 
         # Check if it's a logical operation
-        if ($ctx->{enable_graph}->is_logical_operation($ast)) {
+        if ($ctx->{enable_graph_ast_support}->is_logical_operation($ast)) {
             # Use the existing AST-based logical operation factorization logic
-            my $should_factor = $ctx->{enable_graph}->should_factor_logical_operation($ast);
+            my $should_factor = $ctx->{enable_graph_ast_support}->should_factor_logical_operation($ast);
             if ($should_factor && $usage_count >= 2) {
                 fsm_debug("  AST_FILTER: Multi-use logical operation - KEEPING", 3);
                 return 0;
