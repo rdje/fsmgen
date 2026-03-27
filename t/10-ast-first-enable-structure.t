@@ -284,48 +284,60 @@ ok(
     'live EnableGraph owns WEN/EN intermediate-signal prescan',
 );
 ok(
-    $hdl->{enable_graph}->can('count_binary_logical_operation_occurrences'),
-    'live EnableGraph owns binary logical-operation counting for factorization policy',
+    $hdl->{enable_graph_factorization_support}->can('count_binary_logical_operation_occurrences'),
+    'live EnableGraph factorization support owns binary logical-operation counting for factorization policy',
 );
 ok(
-    $hdl->{enable_graph}->can('feed_asts_to_factorizer'),
-    'live EnableGraph owns first-pass factorization AST feeding',
+    $hdl->{enable_graph_factorization_support}->can('collect_all_wen_en_ast_expressions'),
+    'live EnableGraph factorization support owns first-pass AST collection',
 );
 ok(
-    $hdl->{enable_graph}->can('feed_current_asts_to_second_pass'),
-    'live EnableGraph owns second-pass factorization AST feeding',
+    $hdl->{enable_graph_factorization_support}->can('feed_asts_to_factorizer'),
+    'live EnableGraph factorization support owns first-pass factorization AST feeding',
 );
 ok(
-    $hdl->{enable_graph}->can('ast_contains_intermediate_signals'),
-    'live EnableGraph owns second-pass intermediate-signal eligibility checks',
+    $hdl->{enable_graph_factorization_support}->can('feed_current_asts_to_second_pass'),
+    'live EnableGraph factorization support owns second-pass factorization AST feeding',
 );
 ok(
-    $hdl->{enable_graph}->can('ast_contains_signal'),
-    'live EnableGraph owns owner-side AST signal-reference inspection',
+    $hdl->{enable_graph_factorization_support}->can('ast_contains_intermediate_signals'),
+    'live EnableGraph factorization support owns second-pass intermediate-signal eligibility checks',
 );
 ok(
-    $hdl->{enable_graph}->can('count_unary_negations_in_original_expressions'),
-    'live EnableGraph owns substitution-era debug scans over owner-side AST structures',
+    $hdl->{enable_graph_factorization_support}->can('ast_has_intermediate_signals_recursive'),
+    'live EnableGraph factorization support owns recursive intermediate-signal subtree checks',
 );
 ok(
-    $hdl->{enable_graph}->can('is_signal_referenced_in_substitutions'),
-    'live EnableGraph owns substituted-expression live-usage evidence',
+    $hdl->{enable_graph_factorization_support}->can('ast_contains_signal'),
+    'live EnableGraph factorization support owns owner-side AST signal-reference inspection',
 );
 ok(
-    $hdl->{enable_graph}->can('is_signal_actually_used_in_final_expressions'),
-    'live EnableGraph owns final-expression live-usage evidence',
+    $hdl->{enable_graph_factorization_support}->can('count_unary_negations_in_original_expressions'),
+    'live EnableGraph factorization support owns substitution-era debug scans over owner-side AST structures',
 );
 ok(
-    $hdl->{enable_graph}->can('resolve_intermediate_signal_live_usage'),
-    'live EnableGraph owns cached live-usage metadata derivation',
+    $hdl->{enable_graph_factorization_support}->can('is_signal_referenced_in_substitutions'),
+    'live EnableGraph factorization support owns substituted-expression live-usage evidence',
 );
 ok(
-    $hdl->{enable_graph}->can('update_original_asts_with_substituted_versions'),
-    'live EnableGraph owns first-pass substitution synchronization into owner-side AST structures',
+    $hdl->{enable_graph_factorization_support}->can('is_signal_actually_used_in_final_expressions'),
+    'live EnableGraph factorization support owns final-expression live-usage evidence',
 );
 ok(
-    $hdl->{enable_graph}->can('update_original_asts_with_second_pass_substitutions'),
-    'live EnableGraph owns second-pass substitution synchronization into owner-side AST structures',
+    $hdl->{enable_graph_factorization_support}->can('resolve_intermediate_signal_live_usage'),
+    'live EnableGraph factorization support owns cached live-usage metadata derivation',
+);
+ok(
+    $hdl->{enable_graph_factorization_support}->can('update_original_asts_with_substituted_versions'),
+    'live EnableGraph factorization support owns first-pass substitution synchronization into owner-side AST structures',
+);
+ok(
+    $hdl->{enable_graph_factorization_support}->can('update_original_asts_with_second_pass_substitutions'),
+    'live EnableGraph factorization support owns second-pass substitution synchronization into owner-side AST structures',
+);
+ok(
+    $hdl->{enable_graph_factorization_support}->can('contains_frequently_used_operations'),
+    'live EnableGraph factorization support owns high-count logical-operation discovery for factorization policy',
 );
 ok(
     $hdl->{enable_graph}->can('build_internal_signal_declaration_plan'),
@@ -360,18 +372,36 @@ for my $dead_enable_graph_helper (
     qw(
         analyze_ast_complexity
         canonicalize_expression
+        count_binary_logical_operation_occurrences
+        collect_all_wen_en_ast_expressions
         get_intermediate_signal_ast
         get_intermediate_signal_expression
         build_dependency_recovery_ast_from_signal_name
         track_ast_intermediate_signals
         create_condition_expression_signal_name
+        feed_asts_to_factorizer
+        feed_current_asts_to_second_pass
         get_or_create_ast_signal_name
         get_or_create_global_expression
         is_complex_ast
+        ast_contains_intermediate_signals
+        ast_has_intermediate_signals_recursive
+        ast_contains_signal
+        count_unary_negations_in_original_expressions
+        is_signal_referenced_in_substitutions
+        is_signal_actually_used_in_final_expressions
+        resolve_intermediate_signal_live_usage
+        update_original_asts_with_substituted_versions
+        update_original_asts_with_second_pass_substitutions
+        contains_frequently_used_operations
         needs_parentheses
         _get_intermediate_signal_registry_entry
         _register_intermediate_signal_registry_entry
         _get_native_intermediate_signal_ast
+        _count_logical_ops_in_ast
+        _is_factorizable_sub_expression
+        _ast_contains_frequently_used_logical_operation
+        _build_context_to_ast_map
         should_factor_ast
         should_factor_condition
         signal_uses_register_assignment
@@ -384,6 +414,30 @@ for my $dead_enable_graph_helper (
     ok(
         !$hdl->{enable_graph}->can($dead_enable_graph_helper),
         "live EnableGraph no longer exposes dead helper '$dead_enable_graph_helper'",
+    );
+}
+
+for my $dead_enable_graph_factorization_helper (
+    qw(
+        analyze_ast_complexity
+        canonicalize_expression
+        create_condition_expression_signal_name
+        get_or_create_ast_signal_name
+        get_or_create_global_expression
+        is_complex_ast
+        needs_parentheses
+        should_factor_ast
+        should_factor_condition
+        signal_uses_register_assignment
+        set_explicit_reset_values
+        parentheses_are_redundant
+        _traverse_ast_for_complexity
+        generate_expression_from_signal_name
+    )
+) {
+    ok(
+        !$hdl->{enable_graph_factorization_support}->can($dead_enable_graph_factorization_helper),
+        "live EnableGraph factorization support no longer exposes dead helper '$dead_enable_graph_factorization_helper'",
     );
 }
 

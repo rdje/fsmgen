@@ -83,7 +83,7 @@ sub prepare_flattened_backend {
     $hdl_generator->{enable_graph}->set_fsm_module_reference($fsm_module);
     $hdl_generator->{orchestrator}->flatten_all_decision_trees($fsm_module);
     $hdl_generator->{enable_graph}->generate_enable_conditions($fsm_module);
-    $hdl_generator->{enable_graph}->count_binary_logical_operation_occurrences();
+    $hdl_generator->{enable_graph_factorization_support}->count_binary_logical_operation_occurrences();
     return $hdl_generator;
 }
 

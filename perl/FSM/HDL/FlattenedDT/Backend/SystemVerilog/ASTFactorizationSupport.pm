@@ -100,7 +100,7 @@ sub run_global_ast_factorization ($self) {
     } else {
         fsm_debug("GLOBAL_AST_FACT: [NOT_EXISTS] binary_logical_op_counts NOT found - running count now", 3);
         fsm_debug("*** WARNING: No logical operation counts available - this shouldn't happen! ***", 3);
-        $ctx->{enable_graph}->count_binary_logical_operation_occurrences();
+        $ctx->{enable_graph_factorization_support}->count_binary_logical_operation_occurrences();
     }
 
     # Load the generic AST factorization system
@@ -115,7 +115,7 @@ sub run_global_ast_factorization ($self) {
 
     # STEP 1: Collect and add all AST expressions to factorizer
     fsm_debug("*** STEP 1: FEEDING ASTs TO FACTORIZER ***", 3);
-    my $ast_count = $ctx->{enable_graph}->feed_asts_to_factorizer($factorizer);
+    my $ast_count = $ctx->{enable_graph_factorization_support}->feed_asts_to_factorizer($factorizer);
     fsm_debug("Fed $ast_count AST expressions to factorizer", 3);
 
     # Show what ASTs we have in the factorizer
@@ -213,14 +213,14 @@ sub run_global_ast_factorization ($self) {
 
     # COUNT UNARY NEGATIONS BEFORE UPDATE
     fsm_debug("\n--- BEFORE AST UPDATE: Counting unary negations in original expressions ---", 3);
-    $ctx->{enable_graph}->count_unary_negations_in_original_expressions();
+    $ctx->{enable_graph_factorization_support}->count_unary_negations_in_original_expressions();
 
-    my $update_count = $ctx->{enable_graph}->update_original_asts_with_substituted_versions($factorizer);
+    my $update_count = $ctx->{enable_graph_factorization_support}->update_original_asts_with_substituted_versions($factorizer);
     fsm_debug("*** ORIGINAL AST UPDATE COMPLETE: $update_count ASTs updated ***", 3);
 
     # COUNT UNARY NEGATIONS AFTER UPDATE
     fsm_debug("\n--- AFTER AST UPDATE: Counting unary negations in updated expressions ---", 3);
-    $ctx->{enable_graph}->count_unary_negations_in_original_expressions();
+    $ctx->{enable_graph_factorization_support}->count_unary_negations_in_original_expressions();
 
     # STEP 5: FIXPOINT FACTORIZATION - Iterate on post-substitution expressions until convergence
     fsm_debug("\n*** STEP 5: FIXPOINT FACTORIZATION FOR POST-SUBSTITUTION EXPRESSIONS ***", 3);

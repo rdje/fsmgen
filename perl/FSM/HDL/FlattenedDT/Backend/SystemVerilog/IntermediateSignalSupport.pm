@@ -492,7 +492,7 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
     fsm_debug("  AST_FILTER: Using AST-based filtering for " . ref($ast));
 
     my $usage_count = $signal_info->{usage_count} || 0;
-    my $live_usage = $ctx->{enable_graph}->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
+    my $live_usage = $ctx->{enable_graph_factorization_support}->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
     my $actually_used = $live_usage->{used_in_final_expressions} ? 1 : 0;
 
     # REFERENCE-AWARE FILTERING: Check if signal is referenced in substituted expressions
@@ -594,7 +594,7 @@ sub should_filter_runtime_ast_miss ($self, $signal_name, $signal_info) {
     my $miss_reason = ($signal_info && ref($signal_info) eq 'HASH')
         ? ($signal_info->{runtime_ast_miss_reason} || 'unknown_runtime_ast_miss')
         : 'unknown_runtime_ast_miss';
-    my $live_usage = $self->{flattened_dt}->{enable_graph}->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
+    my $live_usage = $self->{flattened_dt}->{enable_graph_factorization_support}->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
     my $referenced_in_substitutions = $live_usage->{referenced_in_substitutions} ? 1 : 0;
     my $used_in_final_expressions = $live_usage->{used_in_final_expressions} ? 1 : 0;
     my $evidence_state = $live_usage->{evidence_state} || 'none';

@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-27: EnableGraph factorization support now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling the synthesis-side factorization-analysis and substitution/live-usage evidence family out of the broader `EnableGraph` owner instead of leaving AST-factorization bookkeeping, substitution synchronization, and live-usage derivation mixed into the same package as broader synthesis planning.
+- Landed behavior:
+  - added [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm) as the owner of logical-operation counting, factorizer feed preparation, second-pass AST feed selection, substitution synchronization back into owner-side AST structures, AST-based intermediate-signal live-usage evidence, and high-count logical-operation discovery,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - updated [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm), and [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) so the live backend and iterative factorization callers now ask that owner directly,
+  - removed the extracted family from [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm),
+  - and added [t/203-enable-graph-factorization-support.t](/Users/richarddje/Documents/github/fsmgen/t/203-enable-graph-factorization-support.t) plus refreshed [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) so the new owner is locked directly.
+- Why this is worth shipping:
+  - it makes the remaining `EnableGraph` gravity more honest by separating factorization bookkeeping from broader synthesis planning,
+  - it gives the fixpoint and direct backend owners one explicit synthesis-side support boundary instead of hidden cross-calls back into `EnableGraph`,
+  - and it records one useful contract nuance explicitly: in the prepared direct backend context, a synthesized intermediate can be live by substitution evidence only, so this owner should not be treated as the owner of final-expression truth.
+
 ## 2026-03-27: EnableGraph intermediate-signal support now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the intermediate-signal registry and dependency-recovery family out of the broader synthesis owner instead of leaving defining-AST recovery, compatibility-expression parsing, signal-name dependency AST recovery, and referenced-intermediate tracking mixed into [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm).
 - Landed behavior:

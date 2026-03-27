@@ -353,7 +353,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
     # Step 2.10: Normalize live usage metadata so filtering consumes cached AST-derived usage facts.
     for my $signal_name (keys %all_intermediate_signals) {
         my $signal_info = $all_intermediate_signals{$signal_name};
-        my $live_usage = $ctx->{enable_graph}->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
+        my $live_usage = $ctx->{enable_graph_factorization_support}->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
         my $usage_summary = $live_usage->{evidence_state} || 'none';
         fsm_debug("CONSOL_INTER_SIG: [LIVE_USAGE] '$signal_name' => $usage_summary via " . ($live_usage->{source} || 'ast_live_usage_metadata'), 3);
     }

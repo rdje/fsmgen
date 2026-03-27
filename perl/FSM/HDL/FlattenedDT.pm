@@ -12,6 +12,7 @@ use lib "$FindBin::Bin";
 use FSM::Debug;  # Global debug system
 use FSM::ExpressionNamer;
 use FSM::Synthesis::EnableGraph;
+use FSM::Synthesis::EnableGraph::FactorizationSupport;
 use FSM::Synthesis::EnableGraph::IntermediateSignalSupport;
 use FSM::HDL::FlattenedDT::Orchestrator;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ASTFactorizationSupport;
@@ -82,6 +83,7 @@ sub new ($class, %args) {
     
     # Initial extraction slice: dedicated enable synthesis/orchestration layer.
     $self->{enable_graph} = FSM::Synthesis::EnableGraph->new(flattened_dt => $self);
+    $self->{enable_graph_factorization_support} = FSM::Synthesis::EnableGraph::FactorizationSupport->new(flattened_dt => $self);
     $self->{enable_graph_intermediate_support} = FSM::Synthesis::EnableGraph::IntermediateSignalSupport->new(flattened_dt => $self);
     $self->{orchestrator} = FSM::HDL::FlattenedDT::Orchestrator->new(flattened_dt => $self);
     $self->{backend_sv_scaffold} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter->new(flattened_dt => $self);
