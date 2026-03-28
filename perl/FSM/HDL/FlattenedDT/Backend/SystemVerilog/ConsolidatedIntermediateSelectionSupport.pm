@@ -17,7 +17,8 @@ per-signal rendered-expression lookup before selection
 
 =item *
 
-delegation to the extracted per-signal filter dispatcher
+direct AST-first keep/filter dispatch over the extracted recovery and
+filter-policy owners
 
 =item *
 
@@ -44,6 +45,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::Debug;
+use Scalar::Util qw(blessed);
 
 =head2 new
 
@@ -70,8 +72,8 @@ and return the resulting filtered set plus intermediate selection metadata.
 
 sub filter_consolidated_signals ($self, $all_intermediate_signals, $signal_dependencies) {
     my $ctx = $self->{flattened_dt};
-    my $filter_support = $ctx->{backend_sv_intermediate_support};
     my $recovery_support = $ctx->{backend_sv_intermediate_recovery_support};
+    my $filter_policy_support = $ctx->{backend_sv_intermediate_filter_policy_support};
     my %initially_filtered_signals;
     my %initially_kept_signals;
     my %rescued_signals;
@@ -81,7 +83,24 @@ sub filter_consolidated_signals ($self, $all_intermediate_signals, $signal_depen
         my $expression = $recovery_support->render_intermediate_signal_expression($signal_name, $signal_info);
         next unless defined($expression) && $expression ne '';
 
-        my $should_filter = $filter_support->should_filter_consolidated_signal($expression, $signal_name, $signal_info);
+        fsm_debug("\n*** AST_FILTER_CHECK: Analyzing signal '$signal_name' ***", 3);
+        fsm_debug("  Expression: '$expression'", 3);
+        fsm_debug("  Source: $signal_info->{source}", 3);
+        fsm_debug("  Usage count: " . ($signal_info->{usage_count} || 'unknown'));
+
+        my $ast = $recovery_support->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
+        if ($ast && blessed($ast)) {
+            fsm_debug("  Using runtime AST for filtering: " . ref($ast), 3);
+        } else {
+            my $miss_reason = ($signal_info && ref($signal_info) eq 'HASH')
+                ? ($signal_info->{runtime_ast_miss_reason} || 'unknown_runtime_ast_miss')
+                : 'unknown_runtime_ast_miss';
+            fsm_debug("  No runtime AST available - falling back to explicit runtime-AST-miss filtering ($miss_reason)", 3);
+        }
+
+        my $should_filter = ($ast && blessed($ast))
+            ? $filter_policy_support->should_filter_ast_based($ast, $signal_name, $signal_info)
+            : $filter_policy_support->should_filter_runtime_ast_miss($signal_name, $signal_info);
         if ($should_filter) {
             $initially_filtered_signals{$signal_name} = $signal_info;
             fsm_debug("[ConsolidatedIntermediateSelectionSupport.pm][filter_consolidated_signals()] INITIAL FILTER: '$signal_name' = $expression", 3);
@@ -140,5 +159,7 @@ C<FSM::HDL::FlattenedDT> backend context.
 
 Applies the dependency-aware consolidated-intermediate keep/filter/rescue plan
 and returns the resulting filtered set plus intermediate selection metadata.
+This owner now performs the live AST-first filter dispatch itself by combining
+the extracted recovery and filter-policy owners directly.
 
 =cut

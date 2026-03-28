@@ -1,8 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-28: live direct backend no longer instantiates the intermediate dispatcher shell
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) now owns the live AST-first consolidated keep/filter dispatch directly by combining the recovery and filter-policy owners,
+  - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) no longer instantiates `backend_sv_intermediate_support`,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) now survives only as a compatibility-shell package for direct owner tests,
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now records the measured post-change snapshot of `88` reachable project files and `87` reachable `.pm` packages.
+- Important continuity note:
+  - the next likely seam is no longer the old intermediate dispatcher shell,
+  - it is the remaining coordination across selection, planning, block preparation, and the narrowed consolidated emitter,
+  - and future sessions should read the direct consolidated-intermediate path as “collection, live selection, planning, block preparation, assignment emission, and final block/declaration emission,” with the old dispatcher shell outside the runtime spine.
+
 ## 2026-03-28: consolidated intermediate assignment emission now has a dedicated owner
 - Saved shipped behavior:
-  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm) now owns prepared consolidated assign emission on the direct backend path,
+- [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm) now owns prepared consolidated assign emission on the direct backend path,
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) is now narrowed to block composition plus consolidated wire-declaration rendering,
   - and [t/222-systemverilog-consolidated-intermediate-assignment-support.t](/Users/richarddje/Documents/github/fsmgen/t/222-systemverilog-consolidated-intermediate-assignment-support.t) plus the tightened owner checks now lock that split directly.
 - Important continuity note:

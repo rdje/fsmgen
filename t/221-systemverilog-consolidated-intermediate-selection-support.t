@@ -25,10 +25,27 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSelec
     sub render_intermediate_signal_expression ($self, $signal_name, $signal_info) {
         return $signal_info->{rendered_expression};
     }
+
+    sub resolve_intermediate_signal_runtime_ast ($self, $signal_name, $signal_info) {
+        return $signal_info->{runtime_ast};
+    }
 }
 
 {
-    package Local::FakeFilterSupport;
+    package Local::FakeAST;
+    use v5.20;
+    use strict;
+    use warnings;
+    use feature qw(signatures);
+    no warnings 'experimental::signatures';
+
+    sub new ($class) {
+        return bless {}, $class;
+    }
+}
+
+{
+    package Local::FakeFilterPolicySupport;
     use v5.20;
     use strict;
     use warnings;
@@ -39,7 +56,11 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSelec
         return bless {}, $class;
     }
 
-    sub should_filter_consolidated_signal ($self, $expression, $signal_name, $signal_info) {
+    sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
+        return $signal_info->{should_filter} ? 1 : 0;
+    }
+
+    sub should_filter_runtime_ast_miss ($self, $signal_name, $signal_info) {
         return $signal_info->{should_filter} ? 1 : 0;
     }
 }
@@ -47,7 +68,7 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSelec
 subtest 'consolidated intermediate selection support owns dependency-aware keep/filter/rescue selection' => sub {
     my $fake_backend = {
         backend_sv_intermediate_recovery_support => Local::FakeRecoverySupport->new(),
-        backend_sv_intermediate_support => Local::FakeFilterSupport->new(),
+        backend_sv_intermediate_filter_policy_support => Local::FakeFilterPolicySupport->new(),
     };
     my $support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSelectionSupport->new(
         flattened_dt => $fake_backend,
@@ -59,12 +80,14 @@ subtest 'consolidated intermediate selection support owns dependency-aware keep/
             dependency_signal_names => ['rescued_dep'],
             should_filter => 0,
             source => 'ast_factorization',
+            runtime_ast => Local::FakeAST->new(),
         },
         rescued_dep => {
             rendered_expression => 'A | B',
             dependency_signal_names => [],
             should_filter => 1,
             source => 'ast_factorization',
+            runtime_ast => Local::FakeAST->new(),
         },
         filtered_leaf => {
             rendered_expression => '1',

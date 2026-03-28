@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: live direct backend no longer instantiates the intermediate dispatcher shell
+- Continued the active `R11` backend-breakdown lane by removing one no-longer-honest live-path shell instead of preserving it as runtime architecture theater.
+- Landed behavior:
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) so it now owns the live AST-first keep/filter dispatch directly by combining the extracted recovery and filter-policy owners,
+  - removed the live `backend_sv_intermediate_support` instantiation from [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm),
+  - kept [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) only as a compatibility-shell package with honest POD, outside the live `bin/fsmgen` import spine,
+  - tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/221-systemverilog-consolidated-intermediate-selection-support.t](/Users/richarddje/Documents/github/fsmgen/t/221-systemverilog-consolidated-intermediate-selection-support.t) so the owner boundary now reflects the real runtime path,
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured post-change snapshot of `88` reachable project files and `87` reachable `.pm` packages.
+- Why this is worth shipping:
+  - it removes one more fake runtime owner from the direct backend path,
+  - it makes the consolidated selection package read more honestly as the live owner of keep/filter dispatch,
+  - and it sharpens the next seam correctly: remaining coordination across selection, planning, block preparation, and the narrowed emitter rather than another compatibility shell.
+
 ## 2026-03-28: consolidated intermediate assignment emission now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling prepared assign emission out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving final block composition, wire declarations, expression recovery, and assign rendering mixed together in one emitter package.
 - Landed behavior:

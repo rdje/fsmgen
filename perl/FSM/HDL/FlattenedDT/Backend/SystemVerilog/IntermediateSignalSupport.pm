@@ -6,14 +6,15 @@ FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalSupport - Own d
 
 =head1 DESCRIPTION
 
-Owns the bounded filter-policy family for the older direct generated-module
-SystemVerilog backend. This package now centralizes:
+Retains the bounded compatibility-shell surface for the older direct
+generated-module SystemVerilog backend. This package now centralizes:
 
 =over 4
 
 =item *
 
-dispatch over consolidated intermediate keep/filter decisions
+the small directly testable dispatcher surface for consolidated intermediate
+keep/filter decisions
 
 =item *
 
@@ -21,13 +22,15 @@ runtime-AST lookup handoff to the recovery owner before filtering
 
 =back
 
-The paired
+This package is no longer instantiated on the live
+C<FSM::HDL::FlattenedDT> backend path. The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalRecoverySupport>
 now owns runtime-AST lookup, dependency recovery, rendered-expression caching,
 and width inference, while the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalFilterPolicySupport>
 now owns the actual AST-aware and runtime-fallback filter heuristics. This
-package is the narrower consolidated-signal filter dispatcher.
+package remains as the narrower compatibility-shell dispatcher for direct
+owner tests and any future bounded callers that still need that exact wrapper.
 
 =cut
 

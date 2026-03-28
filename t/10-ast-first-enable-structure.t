@@ -346,12 +346,12 @@ ok(
     'live SystemVerilog intermediate filter-policy support owns simple-comparison shape checks',
 );
 ok(
-    $hdl->{backend_sv_intermediate_support}->can('should_filter_consolidated_signal'),
-    'live SystemVerilog intermediate support narrows to consolidated-signal filter dispatch',
+    $hdl->{backend_sv_consolidated_intermediate_selection_support}->can('filter_consolidated_signals'),
+    'live SystemVerilog consolidated intermediate selection support owns dependency-aware keep/filter/rescue selection',
 );
 ok(
-    !$hdl->{backend_sv_intermediate_support}->can('should_filter_ast_based'),
-    'live SystemVerilog intermediate support no longer keeps AST-aware heuristics inline',
+    !exists $hdl->{backend_sv_intermediate_support},
+    'live SystemVerilog backend no longer instantiates the compatibility intermediate dispatcher shell',
 );
 ok(
     !$hdl->{backend_sv_consolidated_intermediate}->can('topologically_sort_signals'),
