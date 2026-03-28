@@ -286,8 +286,16 @@ ok(
     'live SystemVerilog consolidated intermediate support owns merged signal collection and normalization',
 );
 ok(
+    $hdl->{backend_sv_consolidated_intermediate_selection_support}->can('filter_consolidated_signals'),
+    'live SystemVerilog consolidated intermediate selection support owns dependency-aware keep/filter/rescue selection',
+);
+ok(
     $hdl->{backend_sv_consolidated_intermediate_planning_support}->can('plan_consolidated_intermediate_signals'),
-    'live SystemVerilog consolidated intermediate planning support owns dependency-aware rescue/filter/order planning',
+    'live SystemVerilog consolidated intermediate planning support owns dependency-aware ordering and overall plan composition',
+);
+ok(
+    !$hdl->{backend_sv_consolidated_intermediate_planning_support}->can('filter_consolidated_signals'),
+    'live SystemVerilog consolidated intermediate planning support no longer keeps keep/filter/rescue selection inline',
 );
 ok(
     $hdl->{backend_sv_consolidated_intermediate_block_support}->can('prepare_consolidated_intermediate_block'),

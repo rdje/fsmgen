@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-28
+### consolidated intermediate selection now has a dedicated backend owner
+- Added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) as the owner of dependency-aware keep/filter/rescue selection over the normalized direct consolidated intermediate set.
+- Updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) so the live backend now instantiates that owner directly and narrows planning to dependency-map construction, dependency-safe ordering, and overall plan composition.
+- Added [t/221-systemverilog-consolidated-intermediate-selection-support.t](/Users/richarddje/Documents/github/fsmgen/t/221-systemverilog-consolidated-intermediate-selection-support.t), tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/215-systemverilog-consolidated-intermediate-planning-support.t](/Users/richarddje/Documents/github/fsmgen/t/215-systemverilog-consolidated-intermediate-planning-support.t), and refreshed the live architecture/roadmap notes.
+
 ### new-session bootstrap is now a dedicated root document
 - Added [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md) as the canonical first-task file for a normal new engineering session.
 - That bootstrap now tells a new agent to read [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) plus the README-linked Markdown set, analyze [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) and its import tree, refresh [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) if needed, and then continue helping fulfil [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md).

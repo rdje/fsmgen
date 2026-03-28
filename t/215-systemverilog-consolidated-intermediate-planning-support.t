@@ -11,6 +11,45 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlanningSupport;
 
 {
+    package Local::FakeSelectionSupport;
+    use v5.20;
+    use strict;
+    use warnings;
+    use feature qw(signatures);
+    no warnings 'experimental::signatures';
+
+    sub new ($class) {
+        return bless {}, $class;
+    }
+
+    sub filter_consolidated_signals ($self, $all_intermediate_signals, $signal_dependencies) {
+        return {
+            filtered_signals => {
+                rescued_dep => $all_intermediate_signals->{rescued_dep},
+                kept_parent => $all_intermediate_signals->{kept_parent},
+            },
+            initially_kept_signals => {
+                kept_parent => $all_intermediate_signals->{kept_parent},
+            },
+            initially_filtered_signals => {
+                rescued_dep => $all_intermediate_signals->{rescued_dep},
+                filtered_leaf => $all_intermediate_signals->{filtered_leaf},
+            },
+            rescued_signals => {
+                rescued_dep => $all_intermediate_signals->{rescued_dep},
+            },
+            finally_filtered_signals => {
+                filtered_leaf => $all_intermediate_signals->{filtered_leaf},
+            },
+            initially_kept_count => 1,
+            rescued_count => 1,
+            filtered_count => 1,
+            total_kept_count => 2,
+        };
+    }
+}
+
+{
     package Local::FakeRecoverySupport;
     use v5.20;
     use strict;
@@ -25,33 +64,12 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlann
     sub resolve_intermediate_signal_dependencies ($self, $signal_name, $signal_info) {
         return @{ $signal_info->{dependency_signal_names} || [] };
     }
-
-    sub render_intermediate_signal_expression ($self, $signal_name, $signal_info) {
-        return $signal_info->{rendered_expression};
-    }
 }
 
-{
-    package Local::FakeFilterSupport;
-    use v5.20;
-    use strict;
-    use warnings;
-    use feature qw(signatures);
-    no warnings 'experimental::signatures';
-
-    sub new ($class) {
-        return bless {}, $class;
-    }
-
-    sub should_filter_consolidated_signal ($self, $expression, $signal_name, $signal_info) {
-        return $signal_info->{should_filter} ? 1 : 0;
-    }
-}
-
-subtest 'consolidated intermediate planning support rebuilds dependency-aware rescue and ordering from normalized metadata' => sub {
+subtest 'consolidated intermediate planning support rebuilds dependency-aware ordering from normalized metadata and delegated selection' => sub {
     my $fake_backend = {
         backend_sv_intermediate_recovery_support => Local::FakeRecoverySupport->new(),
-        backend_sv_intermediate_support => Local::FakeFilterSupport->new(),
+        backend_sv_consolidated_intermediate_selection_support => Local::FakeSelectionSupport->new(),
     };
     my $support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlanningSupport->new(
         flattened_dt => $fake_backend,

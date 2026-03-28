@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-28: consolidated intermediate selection now has a dedicated owner
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) now owns dependency-aware keep/filter/rescue selection over the normalized consolidated intermediate set on the direct backend path,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) is now narrowed to dependency-map construction, dependency-safe ordering, and overall plan composition,
+  - and [t/221-systemverilog-consolidated-intermediate-selection-support.t](/Users/richarddje/Documents/github/fsmgen/t/221-systemverilog-consolidated-intermediate-selection-support.t) plus the tightened planning/owner checks now lock that split directly.
+- Important continuity note:
+  - the next likely seam is no longer “who owns set-level keep/filter/rescue selection” in the direct consolidated intermediate path,
+  - it is the remaining coordination between normalized collection, selection, planning, block preparation, and final emission,
+  - and the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) should now be read as “the direct consolidated intermediate path is split into preparation, selection, planning, block preparation, and emission.”
+
 ## 2026-03-28: new-session bootstrap is now a dedicated root document
 - Saved shipped behavior:
   - [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md) now exists as the canonical first-task file for a normal new engineering session,

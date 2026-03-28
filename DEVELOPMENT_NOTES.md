@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: consolidated intermediate selection now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling the set-level keep/filter/rescue decision family out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) instead of leaving selection policy mixed together with dependency-map construction, ordering, and plan composition.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) as the owner of dependency-aware keep/filter/rescue selection over the normalized consolidated intermediate set,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) to dependency-map construction, dependency-safe ordering, and overall plan composition,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend instantiates and uses the new owner explicitly,
+  - added [t/221-systemverilog-consolidated-intermediate-selection-support.t](/Users/richarddje/Documents/github/fsmgen/t/221-systemverilog-consolidated-intermediate-selection-support.t),
+  - and tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) plus [t/215-systemverilog-consolidated-intermediate-planning-support.t](/Users/richarddje/Documents/github/fsmgen/t/215-systemverilog-consolidated-intermediate-planning-support.t) so the owner boundary is saved honestly.
+- Why this is worth shipping:
+  - it separates “which consolidated signals survive and why” from “how the surviving set gets ordered and packaged,”
+  - it leaves planning reading more honestly as planning instead of half selection policy,
+  - and it keeps the next seam focused on the remaining direct-backend coordination around consolidated block preparation and final emission rather than another buried set-level rescue pocket.
+
 ## 2026-03-28: new-session bootstrap is now a dedicated root document
 - Added [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md) instead of burying the startup ritual at the end of [README.md](/Users/richarddje/Documents/github/fsmgen/README.md).
 - Why this shape is better:

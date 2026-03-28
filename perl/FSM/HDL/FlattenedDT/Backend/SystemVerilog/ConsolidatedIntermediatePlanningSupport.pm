@@ -17,10 +17,6 @@ dependency-map construction over normalized consolidated intermediate metadata
 
 =item *
 
-dependency-aware keep/filter/rescue planning for consolidated intermediates
-
-=item *
-
 dependency-safe emission ordering with cycle-tolerant fallback
 
 =back
@@ -30,8 +26,8 @@ C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter
 now narrows to final HDL rendering, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport>
 now owns collection-plus-planning composition for one prepared block, and this
-package owns the “which signals survive and in what order?” planning side of
-the direct backend path.
+package owns dependency-map construction, dependency-safe ordering, and overall
+plan composition over the extracted selection owner.
 
 =cut
 
@@ -82,70 +78,6 @@ sub build_signal_dependencies ($self, $all_intermediate_signals) {
     }
 
     return \%signal_dependencies;
-}
-
-=head2 filter_consolidated_signals
-
-Apply the dependency-aware consolidated-intermediate keep/filter plan and
-return the resulting filtered set plus intermediate planning metadata.
-
-=cut
-
-sub filter_consolidated_signals ($self, $all_intermediate_signals, $signal_dependencies) {
-    my $ctx = $self->{flattened_dt};
-    my $filter_support = $ctx->{backend_sv_intermediate_support};
-    my $recovery_support = $ctx->{backend_sv_intermediate_recovery_support};
-    my %initially_filtered_signals;
-    my %initially_kept_signals;
-    my %rescued_signals;
-
-    for my $signal_name (keys %{ $all_intermediate_signals || {} }) {
-        my $signal_info = $all_intermediate_signals->{$signal_name};
-        my $expression = $recovery_support->render_intermediate_signal_expression($signal_name, $signal_info);
-        next unless defined($expression) && $expression ne '';
-
-        my $should_filter = $filter_support->should_filter_consolidated_signal($expression, $signal_name, $signal_info);
-        if ($should_filter) {
-            $initially_filtered_signals{$signal_name} = $signal_info;
-            fsm_debug("[ConsolidatedIntermediatePlanningSupport.pm][filter_consolidated_signals()] INITIAL FILTER: '$signal_name' = $expression", 3);
-        } else {
-            $initially_kept_signals{$signal_name} = $signal_info;
-            fsm_debug("[ConsolidatedIntermediatePlanningSupport.pm][filter_consolidated_signals()] INITIAL KEEP: '$signal_name' = $expression", 3);
-        }
-    }
-
-    for my $kept_signal (keys %initially_kept_signals) {
-        next unless $signal_dependencies->{$kept_signal};
-        for my $dependency (@{ $signal_dependencies->{$kept_signal} }) {
-            if ($initially_filtered_signals{$dependency}) {
-                $rescued_signals{$dependency} = $initially_filtered_signals{$dependency};
-                fsm_debug("[ConsolidatedIntermediatePlanningSupport.pm][filter_consolidated_signals()] RESCUED: '$dependency' is needed by '$kept_signal'", 3);
-            }
-        }
-    }
-
-    my %filtered_signals = (%initially_kept_signals, %rescued_signals);
-    my %finally_filtered_signals = %initially_filtered_signals;
-    delete @finally_filtered_signals{keys %rescued_signals};
-
-    my $initially_kept_count = scalar(keys %initially_kept_signals);
-    my $rescued_count = scalar(keys %rescued_signals);
-    my $filtered_count = scalar(keys %finally_filtered_signals);
-    my $total_kept = scalar(keys %filtered_signals);
-
-    fsm_debug("[ConsolidatedIntermediatePlanningSupport.pm][filter_consolidated_signals()] Summary: initially_kept=$initially_kept_count rescued=$rescued_count filtered=$filtered_count total_kept=$total_kept", 3);
-
-    return {
-        filtered_signals => \%filtered_signals,
-        initially_kept_signals => \%initially_kept_signals,
-        initially_filtered_signals => \%initially_filtered_signals,
-        rescued_signals => \%rescued_signals,
-        finally_filtered_signals => \%finally_filtered_signals,
-        initially_kept_count => $initially_kept_count,
-        rescued_count => $rescued_count,
-        filtered_count => $filtered_count,
-        total_kept_count => $total_kept,
-    };
 }
 
 =head2 topologically_sort_signals
@@ -215,8 +147,12 @@ consolidated intermediate-signal set.
 =cut
 
 sub plan_consolidated_intermediate_signals ($self, $all_intermediate_signals) {
+    my $ctx = $self->{flattened_dt};
     my $signal_dependencies = $self->build_signal_dependencies($all_intermediate_signals);
-    my $filter_plan = $self->filter_consolidated_signals($all_intermediate_signals, $signal_dependencies);
+    my $filter_plan = $ctx->{backend_sv_consolidated_intermediate_selection_support}->filter_consolidated_signals(
+        $all_intermediate_signals,
+        $signal_dependencies,
+    );
     my @sorted_signals = $self->topologically_sort_signals(
         $filter_plan->{filtered_signals},
         $signal_dependencies,
@@ -244,11 +180,6 @@ C<FSM::HDL::FlattenedDT> backend context.
 
 Builds the intermediate-signal dependency map from already normalized
 consolidated signal metadata.
-
-=head2 filter_consolidated_signals
-
-Applies the dependency-aware consolidated-intermediate keep/filter plan and
-returns the resulting filtered set plus intermediate planning metadata.
 
 =head2 topologically_sort_signals
 
