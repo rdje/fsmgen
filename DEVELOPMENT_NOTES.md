@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: fixpoint loop state now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling aggregate loop-state creation, accepted-pass outcome application, and final termination/result normalization out of [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) instead of leaving that mutable state lifecycle mixed into the same package as pass scheduling and top-level coordination.
+- Landed behavior:
+  - added [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm) as the owner of the aggregate loop-state contract,
+  - narrowed [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) to pass scheduling and top-level coordination,
+  - added [t/218-factorization-fixpoint-loop-state-support.t](/Users/richarddje/Documents/github/fsmgen/t/218-factorization-fixpoint-loop-state-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) plus the roadmap/history notes so the saved architecture matches the live split.
+- Why this is worth shipping:
+  - it turns the aggregate fixpoint state contract into a real owner instead of a leftover loop-local hash,
+  - it leaves `Fixpoint` reading more honestly as the pass scheduler,
+  - and it moves the next backend seam away from “still more fixpoint bookkeeping” toward the remaining direct-backend dispatcher/planning/emission coordination.
+
 ## 2026-03-28: fixpoint pass execution now has a dedicated factorization owner
 - Continued the active `R11` backend-breakdown lane by pulling the one-pass execution body out of [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) instead of leaving factorizer construction, repeated-signature short-circuiting, and per-pass substitution/update work mixed into the same package as the outer loop and aggregate termination contract.
 - Landed behavior:

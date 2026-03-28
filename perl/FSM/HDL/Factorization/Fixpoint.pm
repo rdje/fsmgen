@@ -29,12 +29,19 @@ C<FSM::HDL::Factorization::Fixpoint::PassSupport>
 delegation of one-pass execution to
 C<FSM::HDL::Factorization::Fixpoint::PassExecutionSupport>
 
+=item *
+
+delegation of loop-state lifecycle and aggregate-result normalization to
+C<FSM::HDL::Factorization::Fixpoint::LoopStateSupport>
+
 =back
 
 The paired pass-support owner now keeps signature building, collision
 resolution, and new-signal projection; the paired pass-execution owner now
-keeps one-pass factorizer execution, substitution, and update work; and this
-package owns the outer loop and aggregate termination contract.
+keeps one-pass factorizer execution, substitution, and update work; the paired
+loop-state owner now keeps aggregate loop-state application and result
+normalization; and this package owns pass scheduling and top-level
+coordination.
 
 =cut
 
@@ -45,6 +52,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 use FSM::Debug;
+use FSM::HDL::Factorization::Fixpoint::LoopStateSupport;
 use FSM::HDL::Factorization::Fixpoint::PassExecutionSupport;
 use FSM::HDL::Factorization::Fixpoint::PassSupport;
 
@@ -65,6 +73,9 @@ sub new ($class, %args) {
     return bless {
         flattened_dt => $flattened_dt,
         pass_support => $pass_support,
+        loop_state_support => FSM::HDL::Factorization::Fixpoint::LoopStateSupport->new(
+            flattened_dt => $flattened_dt,
+        ),
         pass_execution_support => FSM::HDL::Factorization::Fixpoint::PassExecutionSupport->new(
             flattened_dt => $flattened_dt,
             pass_support => $pass_support,
@@ -83,21 +94,16 @@ reached.
 sub run_post_substitution_factorization ($self, %args) {
     my $ctx = $self->{flattened_dt};
     my $pass_support = $self->{pass_support};
+    my $loop_state_support = $self->{loop_state_support};
     my $pass_execution_support = $self->{pass_execution_support};
     my $primary_factorizer = $args{primary_factorizer};
     my $max_pass_number = $args{max_passes} // $ctx->{factorization_fixpoint_max_passes} // 16;
 
     my $primary_intermediate_signals = $pass_support->resolve_primary_intermediate_signals($primary_factorizer);
+    my $loop_state = $loop_state_support->initialize_loop_state();
 
     fsm_debug("[Fixpoint.pm][run_post_substitution_factorization()] Starting iterative post-substitution factorization", 3);
     fsm_debug("[Fixpoint.pm][run_post_substitution_factorization()] Maximum pass number: $max_pass_number", 3);
-
-    my %all_additional_signals;
-    my %seen_signatures;
-    my $passes_run = 0;
-    my $total_substitution_count = 0;
-    my $total_update_count = 0;
-    my $termination_reason = 'running';
 
     PASS_LOOP:
     for (my $pass_number = 2; $pass_number <= $max_pass_number; $pass_number++) {
@@ -106,45 +112,25 @@ sub run_post_substitution_factorization ($self, %args) {
         my $pass_outcome = $pass_execution_support->run_factorization_pass(
             pass_number => $pass_number,
             primary_intermediate_signals => $primary_intermediate_signals,
-            all_additional_signals => \%all_additional_signals,
-            seen_signatures => \%seen_signatures,
+            all_additional_signals => $loop_state->{all_additional_signals},
+            seen_signatures => $loop_state->{seen_signatures},
         );
 
-        if ($pass_outcome->{status} eq 'terminate') {
-            $termination_reason = $pass_outcome->{termination_reason};
-            last PASS_LOOP;
-        }
+        my $loop_transition = $loop_state_support->apply_pass_outcome(
+            $loop_state,
+            $pass_outcome,
+            $primary_intermediate_signals,
+        );
 
-        $total_substitution_count += $pass_outcome->{substitution_count};
-        $total_update_count += $pass_outcome->{update_count};
-
-        for my $signal_name (sort keys %{$pass_outcome->{new_unique_signals}}) {
-            $all_additional_signals{$signal_name} = $pass_outcome->{new_unique_signals}{$signal_name};
-            $primary_intermediate_signals->{$signal_name} = $pass_outcome->{new_unique_signals}{$signal_name};
-        }
-
-        $passes_run++;
-
-        if ($pass_outcome->{status} eq 'terminate_after_accept') {
-            $termination_reason = $pass_outcome->{termination_reason};
+        if ($loop_transition->{terminate}) {
             last PASS_LOOP;
         }
     }
 
-    if ($termination_reason eq 'running') {
-        $termination_reason = "max_pass_limit_reached_$max_pass_number";
-        fsm_debug("[Fixpoint.pm][run_post_substitution_factorization()] WARNING: reached pass cap $max_pass_number", 3);
-    }
-
-    fsm_debug("[Fixpoint.pm][run_post_substitution_factorization()] Completed: additional_signals=" . scalar(keys %all_additional_signals) . ", passes_run=$passes_run, substitutions=$total_substitution_count, updates=$total_update_count, reason=$termination_reason", 3);
-
-    return {
-        intermediate_signals => \%all_additional_signals,
-        passes_run => $passes_run,
-        total_substitution_count => $total_substitution_count,
-        total_update_count => $total_update_count,
-        termination_reason => $termination_reason,
-    };
+    return $loop_state_support->finalize_loop_result(
+        $loop_state,
+        max_pass_number => $max_pass_number,
+    );
 }
 
 1;

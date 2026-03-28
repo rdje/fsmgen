@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-28: fixpoint loop state now has a dedicated owner
+- Saved shipped behavior:
+  - [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm) now owns aggregate loop-state creation, accepted-pass outcome application, and final termination/result normalization for the iterative post-substitution factorization path,
+  - [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) is now narrowed further to pass scheduling and top-level coordination,
+  - and [t/218-factorization-fixpoint-loop-state-support.t](/Users/richarddje/Documents/github/fsmgen/t/218-factorization-fixpoint-loop-state-support.t) now locks the extracted owner directly against continue, terminate, terminate-after-accept, and pass-cap finalization paths.
+- Important continuity note:
+  - the next likely seam is no longer the fixpoint aggregate loop-state contract,
+  - it is the remaining direct-backend dispatcher/planning/emission coordination around the consolidated intermediate path,
+  - and the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) should now be read as “the direct fixpoint path is split into pass scheduling, loop state, pass execution, and pass helpers.”
+
 ## 2026-03-28: fixpoint pass execution now has a dedicated factorization owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm) now owns one-pass factorizer construction, repeated-signature short-circuit detection, and per-pass substitution/update execution,

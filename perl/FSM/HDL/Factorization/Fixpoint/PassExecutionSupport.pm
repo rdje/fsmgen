@@ -27,8 +27,10 @@ per-pass factorization, substitution, and owner-side AST update execution
 
 The paired C<FSM::HDL::Factorization::Fixpoint::PassSupport> owner keeps the
 signature/collision/new-signal helper family, while the paired
-C<FSM::HDL::Factorization::Fixpoint> owner keeps the outer loop, pass-cap, and
-aggregate-result contract.
+C<FSM::HDL::Factorization::Fixpoint::LoopStateSupport> owner keeps aggregate
+loop-state application and result normalization, and the paired
+C<FSM::HDL::Factorization::Fixpoint> owner keeps pass scheduling and top-level
+coordination.
 
 =cut
 

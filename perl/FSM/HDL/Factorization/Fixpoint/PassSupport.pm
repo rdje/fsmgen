@@ -29,9 +29,11 @@ selection and debug reporting for truly new second-pass signals
 
 =back
 
-The paired C<FSM::HDL::Factorization::Fixpoint> owner keeps the loop,
-termination, and aggregate-result contract, while this package owns the
-per-pass signal-processing helpers.
+The paired C<FSM::HDL::Factorization::Fixpoint> owner keeps pass scheduling and
+top-level coordination, the paired
+C<FSM::HDL::Factorization::Fixpoint::LoopStateSupport> owner keeps aggregate
+loop-state and result normalization, and this package owns the per-pass
+signal-processing helpers.
 
 =cut
 
