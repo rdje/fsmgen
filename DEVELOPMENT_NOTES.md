@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: consolidated intermediate assignment emission now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling prepared assign emission out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving final block composition, wire declarations, expression recovery, and assign rendering mixed together in one emitter package.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm) as the owner of prepared consolidated assign emission,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend instantiates that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) to block composition plus wire-declaration rendering with assignment emission delegated,
+  - added [t/222-systemverilog-consolidated-intermediate-assignment-support.t](/Users/richarddje/Documents/github/fsmgen/t/222-systemverilog-consolidated-intermediate-assignment-support.t),
+  - and tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) so the backend owner boundary is saved honestly.
+- Why this is worth shipping:
+  - it turns “emit the prepared assign lines” into a real owner instead of leaving that logic buried inside the block emitter,
+  - it leaves the emitter reading more honestly as block composition plus declaration rendering,
+  - and it keeps the next seam focused on the remaining coordination between block preparation, declaration rendering, and final block assembly rather than more hidden assign-line logic.
+
 ## 2026-03-28: consolidated intermediate selection now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the set-level keep/filter/rescue decision family out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) instead of leaving selection policy mixed together with dependency-map construction, ordering, and plan composition.
 - Landed behavior:

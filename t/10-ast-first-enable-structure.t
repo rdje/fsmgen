@@ -290,6 +290,10 @@ ok(
     'live SystemVerilog consolidated intermediate selection support owns dependency-aware keep/filter/rescue selection',
 );
 ok(
+    $hdl->{backend_sv_consolidated_intermediate_assignment_support}->can('render_consolidated_intermediate_assignments'),
+    'live SystemVerilog consolidated intermediate assignment support owns prepared assign emission',
+);
+ok(
     $hdl->{backend_sv_consolidated_intermediate_planning_support}->can('plan_consolidated_intermediate_signals'),
     'live SystemVerilog consolidated intermediate planning support owns dependency-aware ordering and overall plan composition',
 );

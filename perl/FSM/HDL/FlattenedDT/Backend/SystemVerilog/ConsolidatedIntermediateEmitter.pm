@@ -6,10 +6,11 @@ FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter -
 
 =head1 DESCRIPTION
 
-Owns the bounded consolidated intermediate-signal emission family for the older
+Owns the bounded consolidated intermediate block-emission family for the older
 direct generated-module SystemVerilog backend. This package takes the prepared
-consolidated intermediate block contract and renders the consolidated wire and
-assign block that appears before unified WEN/EN signal generation.
+consolidated intermediate block contract and renders the consolidated block
+shell: comment header, wire declarations, spacing, and final assignment-block
+handoff before unified WEN/EN signal generation.
 
 =cut
 
@@ -46,8 +47,8 @@ prepared block contract produced by the extracted block-preparation owner.
 
 sub render_consolidated_intermediate_block ($self, $prepared_block) {
     my $ctx = $self->{flattened_dt};
-    my $recovery_support = $ctx->{backend_sv_intermediate_recovery_support};
     my $width_support = $ctx->{backend_sv_intermediate_width_support};
+    my $assignment_support = $ctx->{backend_sv_consolidated_intermediate_assignment_support};
     my $filtered_signals = $prepared_block->{filtered_signals} || {};
     my $sorted_signals = $prepared_block->{sorted_signals} || [];
     my $hdl = "";
@@ -74,21 +75,8 @@ sub render_consolidated_intermediate_block ($self, $prepared_block) {
 
         $hdl .= "\n";  # Add spacing between declarations and assignments
 
-        # Second pass: Generate all assign statements
-        for my $signal_name (@{$sorted_signals}) {
-            my $signal_info = $filtered_signals->{$signal_name};
-            my $source = $signal_info->{source};
-
-            my $expression = $recovery_support->render_intermediate_signal_expression($signal_name, $signal_info);
-            unless (defined($expression) && $expression ne '') {
-                fsm_debug("CONSOL_INTER_SIG: WARNING - No renderable expression for $signal_name, skipping assign emission", 3);
-                next;
-            }
-
-            $hdl .= "  assign $signal_name = $expression; // Source: $source\n";
-
-            fsm_debug("  CONSOLIDATED: wire $signal_name = $expression (source: $source)", 3);
-        }
+        # Second pass: Generate all assign statements through the extracted owner
+        $hdl .= $assignment_support->render_consolidated_intermediate_assignments($prepared_block);
 
         $hdl .= "\n";
     } else {
