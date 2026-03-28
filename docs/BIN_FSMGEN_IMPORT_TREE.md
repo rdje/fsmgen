@@ -68,6 +68,51 @@ The heaviest remaining complexity is still the direct single-module HDL backend 
 - [perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm)
 - [perl/FSM/Synthesis/EnableGraph/SignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/SignalSupport.pm)
 
+## Measured snapshot
+This is the current static measurement view behind the qualitative assessment
+above.
+
+Reachable package-family counts from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen):
+- `Composition`: `28`
+- `HDL`: `20`
+- `Synthesis`: `10`
+- `IR`: `7`
+- `Adapter`: `5`
+- `Pipeline`: `5`
+- `Extension`: `3`
+- `Backend`: `2`
+- singleton support surfaces: `AST`, `CoreAST.pm`, `Debug.pm`, `ExpressionNamer.pm`, `SourceClassifier.pm`, `SourcePathResolver.pm`
+
+Current thin-coordinator line counts:
+- [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm): `147`
+- [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm): `118`
+- [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm): `101`
+- [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm): `153`
+- [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm): `148`
+- [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm): `273`
+- [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm): `75`
+- [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm): `153`
+
+Current largest reachable files by line count:
+- [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm): `1963`
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm): `1742`
+- [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm): `1405`
+- [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm): `1014`
+- [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm): `996`
+- [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm): `817`
+- [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen): `740`
+- [perl/FSM/Synthesis/EnableGraph/SignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/SignalSupport.pm): `675`
+- [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm): `662`
+- [perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm): `648`
+
+Interpretation:
+- line count alone is not the same thing as current architectural risk,
+- the parser/core AST/expression infrastructure is still large, but it reads as
+  comparatively foundational and stable right now,
+- the active `R11` change-risk gravity is still the direct backend stack plus
+  a few large composition/reporting builders, not the thinned top-level
+  pipeline facade.
+
 ## What `bin/fsmgen` actually owns
 [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) directly imports:
 - [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm)

@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-28
+### refreshed `bin/fsmgen` import-tree measurement snapshot
+- Re-read [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) plus the README-linked Markdown set and re-traced [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) against the live source tree.
+- Updated [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) with the current measured snapshot: `87` reachable project files, `86` reachable `.pm` packages, package-family counts, thin-coordinator line counts, and the largest reachable files by line count.
+- Recorded the current interpretation explicitly in that note too: `HDLGenerator` now reads as an honest thin facade, while the remaining active `R11` change-risk gravity still sits lower in the direct backend/support stack and selected large composition/reporting builders.
+
 ### direct intermediate width normalization now has a dedicated backend owner
 - Added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm) as the owner of direct intermediate width normalization and recursive width inference for the older direct SystemVerilog backend path.
 - Updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm), and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so the live backend now asks the width owner directly and narrows the recovery owner to runtime-AST/render/dependency recovery.

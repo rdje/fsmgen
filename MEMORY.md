@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-28: refreshed `bin/fsmgen` import-tree measurement snapshot
+- Saved current analysis:
+  - [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes measured package-family counts, thin-coordinator line counts, and the current largest reachable files by line count,
+  - the saved static trace still lands at `87` project files / `86` `.pm` packages reachable from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen),
+  - and the saved interpretation is explicit: `HDLGenerator` is now honestly thin, while the remaining active `R11` gravity is still lower in the direct backend/support stack and a few large composition/reporting builders.
+- Important continuity note:
+  - future sessions should treat the measured hotspot list as context, not as an automatic refactor order,
+  - the next roadmap slice should still be chosen by architectural leverage, not by raw file size alone.
+
 ## 2026-03-28: direct intermediate width normalization now has a dedicated backend owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm) now owns direct intermediate width normalization and recursive width inference,

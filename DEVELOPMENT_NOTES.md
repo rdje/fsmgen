@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: refreshed `bin/fsmgen` import-tree measurement snapshot
+- Re-read [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) plus the README-linked Markdown set, then re-traced [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) against the live source tree instead of relying only on prior session continuity.
+- Saved one measured architecture snapshot in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md):
+  - current static reachability remains `87` project files / `86` `.pm` packages,
+  - `HDLGenerator` is still honestly thin at `147` lines, with orchestration gravity sitting below it in the explicit source/direct/composition orchestrators,
+  - the largest reachable files by line count are now explicitly recorded, including [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm), [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm), [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm), and the direct backend/support families,
+  - and the note now distinguishes “largest file” from “current architecture risk,” so future sessions do not confuse foundational size with the active `R11` backend lane.
+- Why this is worth saving:
+  - it keeps the architecture note honest after the recent backend extractions,
+  - it gives future sessions a quick measured hotspot view instead of only qualitative memory,
+  - and it sharpens the roadmap steering language: the top facade is no longer the problem; the remaining gravity is lower in the direct backend and a few large support/builders.
+
 ## 2026-03-28: direct intermediate width normalization now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling width normalization and recursive width inference out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm) instead of leaving runtime-AST recovery, expression recovery, dependency recovery, and width policy mixed together in one package.
 - Landed behavior:
