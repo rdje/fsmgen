@@ -3,7 +3,6 @@
 use strict;
 use warnings;
 use Test::More;
-use Scalar::Util qw(blessed);
 use File::Spec;
 use File::Temp qw(tempdir);
 use FindBin;
@@ -11,32 +10,30 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalRecoverySupport;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'intermediate recovery support rebuilds runtime AST, render, and dependency metadata from a prepared backend context' => sub {
+subtest 'intermediate width support rebuilds width metadata from a prepared backend context' => sub {
     my $fsm_module = parse_fsm_module(
-        'sv_intermediate_recovery_contract',
+        'sv_intermediate_width_contract',
         <<'FSM'
-(?fsm:sv_intermediate_recovery_contract
+(?fsm:sv_intermediate_width_contract
   (+system
     (clock clk)
     (sreset rstn)
   )
   (+size
-    (A 1)
-    (B 1)
-    (C 1)
-    (D 1)
-    (OUT1 1)
-    (OUT2 1)
+    (A 8)
+    (B 8)
+    (OUT1 8)
+    (OUT2 8)
   )
   (idle
     (<(| A B)
-      (OUT1 <= C)
+      (OUT1 <= A)
     )
     (<(| A B)
-      (OUT2 <= D)
+      (OUT2 <= B)
     )
   )
 )
@@ -44,24 +41,22 @@ FSM
     );
 
     my $prepared_backend = prepare_flattened_backend($fsm_module);
-    my $recovery_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalRecoverySupport->new(
+    my $width_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport->new(
         flattened_dt => $prepared_backend,
     );
 
     my $intermediate_signals = $prepared_backend->{backend_sv_global_factorization}->run_global_ast_factorization();
     my $signal_info = $intermediate_signals->{A_or_B};
 
-    ok($signal_info, 'recovery support test fixture keeps the shared A_or_B intermediate signal');
+    ok($signal_info, 'width support test fixture keeps the shared A_or_B intermediate signal');
 
-    my $runtime_ast = $recovery_support->resolve_intermediate_signal_runtime_ast('A_or_B', $signal_info);
-    ok(blessed($runtime_ast), 'recovery support resolves a substituted runtime AST for the shared intermediate signal');
-    is($signal_info->{runtime_ast_source}, 'substituted_ast', 'recovery support records the substituted AST source');
+    my $resolved_width = $width_support->resolve_intermediate_signal_width('A_or_B', $signal_info, $intermediate_signals);
+    is($resolved_width, 8, 'width support infers the expected 8-bit width for the shared bitwise carrier');
+    is($signal_info->{width_source}, 'substituted_ast', 'width support records the substituted AST as the width source');
 
-    my $rendered_expression = $recovery_support->render_intermediate_signal_expression('A_or_B', $signal_info);
-    is($rendered_expression, 'A | B', 'recovery support renders the substituted AST back to SystemVerilog text');
-
-    my @dependencies = $recovery_support->resolve_intermediate_signal_dependencies('A_or_B', $signal_info);
-    is_deeply(\@dependencies, [], 'recovery support keeps non-intermediate leaf operands out of the intermediate dependency list');
+    my $runtime_ast = $prepared_backend->{backend_sv_intermediate_recovery_support}->resolve_intermediate_signal_runtime_ast('A_or_B', $signal_info);
+    my $ast_width = $width_support->infer_width_from_intermediate_ast($runtime_ast, $intermediate_signals);
+    is($ast_width, 8, 'width support recursively infers the same width from the substituted AST directly');
 };
 
 done_testing();

@@ -306,8 +306,16 @@ ok(
     'live SystemVerilog intermediate recovery support owns dependency recovery',
 );
 ok(
-    $hdl->{backend_sv_intermediate_recovery_support}->can('resolve_intermediate_signal_width'),
-    'live SystemVerilog intermediate recovery support owns width normalization',
+    $hdl->{backend_sv_intermediate_width_support}->can('resolve_intermediate_signal_width'),
+    'live SystemVerilog intermediate width support owns width normalization',
+);
+ok(
+    $hdl->{backend_sv_intermediate_width_support}->can('infer_width_from_intermediate_ast'),
+    'live SystemVerilog intermediate width support owns recursive width inference',
+);
+ok(
+    !$hdl->{backend_sv_intermediate_recovery_support}->can('resolve_intermediate_signal_width'),
+    'live SystemVerilog intermediate recovery support no longer keeps width normalization inline',
 );
 ok(
     $hdl->{backend_sv_intermediate_filter_policy_support}->can('should_filter_ast_based'),

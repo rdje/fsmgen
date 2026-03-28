@@ -14,7 +14,7 @@ Current baseline:
 - Reviewed on `2026-03-28`.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
-- Static trace from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) currently reaches `86` project files total, `85` `.pm` packages.
+- Static trace from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) currently reaches `87` project files total, `86` `.pm` packages.
 
 ## Executive read
 [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is a thin CLI/reporting shell.
@@ -44,6 +44,7 @@ The heaviest remaining complexity is still the direct single-module HDL backend 
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm)
+- [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm)
@@ -123,6 +124,7 @@ bin/fsmgen
         -> FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter
         -> FlattenedDT::Backend::SystemVerilog::InternalDeclarationEmitter
         -> FlattenedDT::Backend::SystemVerilog::IntermediateSignalRecoverySupport
+        -> FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport
         -> FlattenedDT::Backend::SystemVerilog::IntermediateSignalFilterPolicySupport
         -> FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport
         -> FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlanningSupport
@@ -385,16 +387,18 @@ the AST-factorization and substituted-AST recovery family now has a third owner 
 [ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm),
 the intermediate runtime-recovery/metadata family now has a fourth owner in
 [IntermediateSignalRecoverySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm),
-the consolidated intermediate preparation/normalization family now has a fifth owner in
+the intermediate width family now has a fifth owner in
+[IntermediateSignalWidthSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm),
+the consolidated intermediate preparation/normalization family now has a sixth owner in
 [ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm),
-the consolidated intermediate planning family now has a sixth owner in
+the consolidated intermediate planning family now has a seventh owner in
 [ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm),
-and the consolidated intermediate-signal emission family now has a seventh owner in
+and the consolidated intermediate-signal emission family now has an eighth owner in
 [ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm),
-and the intermediate-signal filter-policy family now has an eighth owner
+and the intermediate-signal filter-dispatch family now has a ninth owner
 in
 [IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm)
-instead of all eight pockets living inline in the broader backend renderer.
+instead of all nine pockets living inline in the broader backend renderer.
 That iterative post-substitution factorization path is now split more honestly
 too:
 [Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm)
@@ -409,8 +413,9 @@ owns per-pass signature building, collision recovery, and new-signal
 projection/debugging.
 That direct intermediate-signal path is now split more honestly too:
 [IntermediateSignalRecoverySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm)
-owns runtime-AST lookup, rendered-expression caching, dependency recovery,
-and width inference, while
+owns runtime-AST lookup, rendered-expression caching, and dependency recovery,
+[IntermediateSignalWidthSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm)
+owns width normalization and recursive width inference, while
 [IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm)
 narrows to filter policy over that normalized metadata.
 That direct consolidated-intermediate path is now split more honestly too:
@@ -501,9 +506,13 @@ It behaves like a hook system, not a competing architecture.
   consolidated intermediate block rather than leaving that coordination inline
   in the direct backend emitter.
 - `FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalRecoverySupport`
-  now also owns the runtime-AST/dependency/render/width half of the direct
-  intermediate-signal path rather than leaving recovery and normalization
-  mixed together with final filter policy.
+  now also owns the runtime-AST/dependency/render half of the direct
+  intermediate-signal path rather than leaving recovery mixed together with
+  width normalization and final filter policy.
+- `FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport`
+  now also owns direct intermediate width normalization and recursive width
+  inference rather than leaving width policy buried inside the broader
+  recovery owner.
 - `FSM::Synthesis::EnableGraph::ModulePlanningSupport` now also owns the
   module/state/declaration planning family rather than leaving effective
   system-contract lookup, state-register planning, module-boundary port

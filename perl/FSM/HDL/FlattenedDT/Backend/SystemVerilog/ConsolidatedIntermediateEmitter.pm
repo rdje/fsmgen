@@ -47,6 +47,7 @@ prepared block contract produced by the extracted block-preparation owner.
 sub render_consolidated_intermediate_block ($self, $prepared_block) {
     my $ctx = $self->{flattened_dt};
     my $recovery_support = $ctx->{backend_sv_intermediate_recovery_support};
+    my $width_support = $ctx->{backend_sv_intermediate_width_support};
     my $filtered_signals = $prepared_block->{filtered_signals} || {};
     my $sorted_signals = $prepared_block->{sorted_signals} || [];
     my $hdl = "";
@@ -61,7 +62,7 @@ sub render_consolidated_intermediate_block ($self, $prepared_block) {
         # First pass: Generate all wire declarations
         for my $signal_name (@{$sorted_signals}) {
             my $signal_info = $filtered_signals->{$signal_name};
-            my $width = $recovery_support->resolve_intermediate_signal_width($signal_name, $signal_info, $filtered_signals);
+            my $width = $width_support->resolve_intermediate_signal_width($signal_name, $signal_info, $filtered_signals);
 
             # Generate wire declaration
             if ($width > 1) {

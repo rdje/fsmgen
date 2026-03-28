@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: direct intermediate width normalization now has a dedicated backend owner
+- Continued the active `R11` backend-breakdown lane by pulling width normalization and recursive width inference out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm) instead of leaving runtime-AST recovery, expression recovery, dependency recovery, and width policy mixed together in one package.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm) as the owner of width normalization and recursive width inference for direct intermediate signals,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm) to runtime-AST lookup, rendered-expression recovery, and dependency recovery,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm), and the recovery path so the live backend asks the width owner directly,
+  - and added [t/220-systemverilog-intermediate-signal-width-support.t](/Users/richarddje/Documents/github/fsmgen/t/220-systemverilog-intermediate-signal-width-support.t) while tightening [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/213-systemverilog-intermediate-signal-recovery-support.t](/Users/richarddje/Documents/github/fsmgen/t/213-systemverilog-intermediate-signal-recovery-support.t).
+- Why this is worth shipping:
+  - it turns width handling into a truthful backend owner instead of a side pocket inside recovery,
+  - it makes the recovery package read more honestly as recovery,
+  - and it keeps the next seam focused on the remaining consolidated-intermediate coordination rather than hidden width residue.
+
 ## 2026-03-28: consolidated intermediate block preparation now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling collection-plus-planning coordination for the direct consolidated intermediate block out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving that package half-renderer and half-block-preparation coordinator.
 - Landed behavior:

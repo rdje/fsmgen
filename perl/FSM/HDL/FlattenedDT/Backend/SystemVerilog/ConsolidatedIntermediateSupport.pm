@@ -325,6 +325,7 @@ consume one AST-first cache.
 sub normalize_consolidated_intermediate_metadata ($self, $all_intermediate_signals) {
     my $ctx = $self->{flattened_dt};
     my $recovery_support = $ctx->{backend_sv_intermediate_recovery_support};
+    my $width_support = $ctx->{backend_sv_intermediate_width_support};
 
     for my $signal_name (keys %$all_intermediate_signals) {
         my $signal_info = $all_intermediate_signals->{$signal_name};
@@ -338,7 +339,7 @@ sub normalize_consolidated_intermediate_metadata ($self, $all_intermediate_signa
 
     for my $signal_name (keys %$all_intermediate_signals) {
         my $signal_info = $all_intermediate_signals->{$signal_name};
-        my $resolved_width = $recovery_support->resolve_intermediate_signal_width($signal_name, $signal_info, $all_intermediate_signals);
+        my $resolved_width = $width_support->resolve_intermediate_signal_width($signal_name, $signal_info, $all_intermediate_signals);
         $signal_info->{width} = $resolved_width;
         fsm_debug("CONSOL_INTER_SIG: [WIDTH] '$signal_name' width normalized to $resolved_width", 3);
     }

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-28: direct intermediate width normalization now has a dedicated backend owner
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalWidthSupport.pm) now owns direct intermediate width normalization and recursive width inference,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm) is now narrowed to runtime-AST lookup, rendered-expression recovery, and dependency recovery,
+  - and [t/220-systemverilog-intermediate-signal-width-support.t](/Users/richarddje/Documents/github/fsmgen/t/220-systemverilog-intermediate-signal-width-support.t) now locks the extracted width owner directly.
+- Important continuity note:
+  - the next likely seam is no longer “who owns intermediate width normalization,”
+  - it is the remaining direct-backend coordination around consolidated intermediate rendering/filter/ordering and any still-muddied handoff between the neighboring intermediate owners,
+  - and the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) should now be read as “the direct intermediate path is split into recovery, width, filter heuristics, filter dispatch, consolidated preparation, consolidated planning, block preparation, and final emission.”
+
 ## 2026-03-28: consolidated intermediate block preparation now has a dedicated owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) now owns the collection-plus-planning handoff for one prepared consolidated intermediate block on the direct backend path,
