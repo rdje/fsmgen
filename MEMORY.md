@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-28: new-session bootstrap is now a dedicated root document
+- Saved shipped behavior:
+  - [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md) now exists as the canonical first-task file for a normal new engineering session,
+  - it tells a new agent to read [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), read the README-linked Markdown set, analyze [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) and its import tree, refresh [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) if needed, and then continue against [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md),
+  - and [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) now points to that file explicitly in fast ramp-up, the documentation index, and a fresh-session shortcut note.
+- Important continuity note:
+  - for future sessions, the shortest reliable startup instruction is now:
+    - `Read SESSION_BOOTSTRAP.md and start from there.`
+  - this is meant to be the default engineering-session ritual, not a ban on narrower one-off tasks when the user explicitly wants something else.
+
 ## 2026-03-28: refreshed `bin/fsmgen` import-tree measurement snapshot
 - Saved current analysis:
   - [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now includes measured package-family counts, thin-coordinator line counts, and the current largest reachable files by line count,

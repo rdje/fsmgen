@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: new-session bootstrap is now a dedicated root document
+- Added [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md) instead of burying the startup ritual at the end of [README.md](/Users/richarddje/Documents/github/fsmgen/README.md).
+- Why this shape is better:
+  - [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) stays the general onboarding/navigation hub,
+  - the session-start ritual gets one explicit file that a user can name in one sentence,
+  - and the startup instruction stays easy to evolve without turning the README into a mixed onboarding/workflow document.
+- Saved policy:
+  - for a normal new engineering session, the preferred one-line instruction is now:
+    - `Read SESSION_BOOTSTRAP.md and start from there.`
+  - [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) should keep pointing to that file, but the detailed startup ritual should live in the dedicated bootstrap document, not in the README body.
+
 ## 2026-03-28: refreshed `bin/fsmgen` import-tree measurement snapshot
 - Re-read [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) plus the README-linked Markdown set, then re-traced [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) against the live source tree instead of relying only on prior session continuity.
 - Saved one measured architecture snapshot in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md):

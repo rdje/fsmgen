@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-28
+### new-session bootstrap is now a dedicated root document
+- Added [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md) as the canonical first-task file for a normal new engineering session.
+- That bootstrap now tells a new agent to read [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) plus the README-linked Markdown set, analyze [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) and its import tree, refresh [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) if needed, and then continue helping fulfil [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md).
+- Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) so the new-session bootstrap file is visible from the fast ramp-up list, the documentation index, and a one-line fresh-session shortcut.
+
 ### refreshed `bin/fsmgen` import-tree measurement snapshot
 - Re-read [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) plus the README-linked Markdown set and re-traced [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) against the live source tree.
 - Updated [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) with the current measured snapshot: `87` reachable project files, `86` reachable `.pm` packages, package-family counts, thin-coordinator line counts, and the largest reachable files by line count.
