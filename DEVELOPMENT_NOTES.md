@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: fixpoint pass support now has a dedicated factorization owner
+- Continued the active `R11` backend-breakdown lane by pulling the per-pass helper family out of [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) instead of leaving primary intermediate lookup, deterministic pass signatures, collision recovery, and new-signal projection/debugging mixed into the same package as the iterative loop and termination policy.
+- Landed behavior:
+  - added [perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm) as the owner of the per-pass helper family,
+  - narrowed [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) to loop orchestration, termination policy, and aggregate result reporting,
+  - added [t/214-factorization-fixpoint-pass-support.t](/Users/richarddje/Documents/github/fsmgen/t/214-factorization-fixpoint-pass-support.t) to lock the extracted owner directly,
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) plus the roadmap/history notes so the remaining post-factorization hotspots stay honest.
+- Why this is worth shipping:
+  - it makes the iterative second-pass lane read like one real loop owner plus one real per-pass helper owner instead of one mixed package,
+  - it keeps the next seam honest by narrowing `Fixpoint` to policy/termination work rather than helper clutter,
+  - and it gives us a direct contract lock around second-pass signature and collision behavior without routing through the whole backend.
+
 ## 2026-03-28: direct intermediate runtime recovery now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling the runtime-AST and metadata-recovery half of the direct intermediate-signal path out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) instead of leaving runtime lookup, dependency recovery, rendered-expression caching, width inference, and filter policy mixed together in one package.
 - Landed behavior:

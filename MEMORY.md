@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-28: fixpoint pass support now has a dedicated factorization owner
+- Saved shipped behavior:
+  - [perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm) now owns the iterative second-pass helper family: primary intermediate lookup, deterministic pass signatures, second-pass name-collision recovery, and new-signal projection/debugging,
+  - [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) is now narrowed to the loop, termination, and aggregate-result contract,
+  - and [t/214-factorization-fixpoint-pass-support.t](/Users/richarddje/Documents/github/fsmgen/t/214-factorization-fixpoint-pass-support.t) now locks that extracted owner directly.
+- Important continuity note:
+  - the next likely seam is no longer “who owns the fixpoint pass helpers,”
+  - it is the remaining post-factorization policy/termination gravity in [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) plus the downstream direct-backend filter/order/recovery owners,
+  - and the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) should now be read as “the direct factorization path is split into first-pass owner, fixpoint loop owner, and per-pass helper owner.”
+
 ## 2026-03-28: direct SystemVerilog global factorization now has a dedicated backend owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm) now owns the direct first-pass AST-factorization pipeline: factorizer construction, substitution, original-AST refresh, fixpoint delegation, and factorizer persistence,
