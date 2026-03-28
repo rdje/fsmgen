@@ -282,6 +282,10 @@ ok(
     'live SystemVerilog global factorization support owns fixpoint delegation for post-substitution factorization',
 );
 ok(
+    $hdl->{backend_sv_consolidated_intermediate_support}->can('collect_consolidated_intermediate_signals'),
+    'live SystemVerilog consolidated intermediate support owns merged signal collection and normalization',
+);
+ok(
     $hdl->{backend_sv_ast_factorization}->can('get_substituted_ast_for_signal'),
     'live SystemVerilog AST-factorization support keeps substituted-AST lookup for downstream owners',
 );

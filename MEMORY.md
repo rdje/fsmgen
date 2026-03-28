@@ -5263,3 +5263,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `FSM::Synthesis::EnableGraph::FactorizationSupport` no longer owns
   logical-operation counting, first-pass AST feed preparation, second-pass
   AST feed eligibility, or high-count logical-operation policy directly.
+- Direct consolidated intermediate preparation/normalization now also lives
+  in `FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport`,
+  so the older `ConsolidatedIntermediateEmitter` no longer owns AST-
+  factorized, prescanned, and FSMGen-parsed intermediate collection or
+  runtime metadata normalization directly.
+- The paired direct `ConsolidatedIntermediateEmitter` now narrows to
+  dependency-aware filtering, topological ordering, and final wire/assign
+  emission for that prepared consolidated signal set.

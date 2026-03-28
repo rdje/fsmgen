@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: direct consolidated intermediate preparation now has a dedicated backend owner
+- Continued the active `R11` backend-breakdown lane by pulling the merged-signal preparation and normalization half of the direct consolidated intermediate path out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving AST-factorized, prescanned, and FSMGen-parsed intermediate collection mixed together with the final dependency-aware emitter.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm) as the owner of merged consolidated intermediate collection plus runtime metadata normalization,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so it now asks the new support owner for the consolidated signal set before doing dependency-aware filtering, ordering, and final wire/assign emission,
+  - added [t/212-systemverilog-consolidated-intermediate-support.t](/Users/richarddje/Documents/github/fsmgen/t/212-systemverilog-consolidated-intermediate-support.t),
+  - and tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) so the backend owner boundary is locked honestly.
+- Why this is worth shipping:
+  - it makes the direct consolidated intermediate path read like two real responsibilities instead of one oversized emitter,
+  - it keeps merged-signal collection and normalization reusable and testable without entangling them with final HDL emission,
+  - and it sharpens the next seam honestly to the remaining post-factorization runtime/filtering/fixpoint gravity rather than more first-pass splitting.
+
 ## 2026-03-28: direct SystemVerilog global factorization now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling the live first-pass AST-factorization pipeline out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm) instead of leaving factorizer construction, substitution, original-AST refresh, fixpoint delegation, and factorizer persistence mixed together with the downstream substituted-AST lookup surface.
 - Landed behavior:
