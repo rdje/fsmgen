@@ -34,7 +34,8 @@ sub new ($class, %args) {
 
 sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
-    my $signal_support = $ctx->{backend_sv_intermediate_support};
+    my $filter_support = $ctx->{backend_sv_intermediate_support};
+    my $recovery_support = $ctx->{backend_sv_intermediate_recovery_support};
     my $all_intermediate_signals = $ctx->{backend_sv_consolidated_intermediate_support}
         ->collect_consolidated_intermediate_signals($fsm_module);
     my $hdl = "";
@@ -47,7 +48,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
 
     for my $signal_name (keys %$all_intermediate_signals) {
         my $signal_info = $all_intermediate_signals->{$signal_name};
-        my @referenced_signals = $signal_support->resolve_intermediate_signal_dependencies($signal_name, $signal_info);
+        my @referenced_signals = $recovery_support->resolve_intermediate_signal_dependencies($signal_name, $signal_info);
 
         # Find all intermediate signals referenced in this expression
         if (@referenced_signals) {
@@ -64,13 +65,13 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         my $signal_info = $all_intermediate_signals->{$signal_name};
 
         # Get expression for filtering analysis
-        my $expression = $signal_support->render_intermediate_signal_expression($signal_name, $signal_info);
+        my $expression = $recovery_support->render_intermediate_signal_expression($signal_name, $signal_info);
         unless (defined($expression) && $expression ne '') {
             next;
         }
 
         # Apply filtering logic
-        my $should_filter = $signal_support->should_filter_consolidated_signal($expression, $signal_name, $signal_info);
+        my $should_filter = $filter_support->should_filter_consolidated_signal($expression, $signal_name, $signal_info);
         if ($should_filter) {
             $initially_filtered_signals{$signal_name} = $signal_info;
             fsm_debug("  INITIAL FILTER: '$signal_name' = $expression (would be filtered)", 3);
@@ -115,7 +116,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
     if (%rescued_signals) {
         for my $rescued_signal (sort keys %rescued_signals) {
             my $signal_info = $rescued_signals{$rescued_signal};
-            my $expression = $signal_support->render_intermediate_signal_expression($rescued_signal, $signal_info);
+            my $expression = $recovery_support->render_intermediate_signal_expression($rescued_signal, $signal_info);
             fsm_debug("    RESCUED: $rescued_signal = $expression", 3);
         }
     }
@@ -128,7 +129,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
     if (%finally_filtered) {
         for my $filtered_signal (sort keys %finally_filtered) {
             my $signal_info = $finally_filtered{$filtered_signal};
-            my $expression = $signal_support->render_intermediate_signal_expression($filtered_signal, $signal_info);
+            my $expression = $recovery_support->render_intermediate_signal_expression($filtered_signal, $signal_info);
             fsm_debug("    FILTERED OUT: $filtered_signal = $expression", 3);
         }
     }
@@ -148,7 +149,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
         # First pass: Generate all wire declarations
         for my $signal_name (@sorted_signals) {
             my $signal_info = $filtered_signals{$signal_name};
-            my $width = $signal_support->resolve_intermediate_signal_width($signal_name, $signal_info, \%filtered_signals);
+            my $width = $recovery_support->resolve_intermediate_signal_width($signal_name, $signal_info, \%filtered_signals);
 
             # Generate wire declaration
             if ($width > 1) {
@@ -165,7 +166,7 @@ sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
             my $signal_info = $filtered_signals{$signal_name};
             my $source = $signal_info->{source};
 
-            my $expression = $signal_support->render_intermediate_signal_expression($signal_name, $signal_info);
+            my $expression = $recovery_support->render_intermediate_signal_expression($signal_name, $signal_info);
             unless (defined($expression) && $expression ne '') {
                 fsm_debug("CONSOL_INTER_SIG: WARNING - No renderable expression for $signal_name, skipping assign emission", 3);
                 next;

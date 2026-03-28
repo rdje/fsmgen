@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: direct intermediate runtime recovery now has a dedicated backend owner
+- Continued the active `R11` backend-breakdown lane by pulling the runtime-AST and metadata-recovery half of the direct intermediate-signal path out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) instead of leaving runtime lookup, dependency recovery, rendered-expression caching, width inference, and filter policy mixed together in one package.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm) as the owner of runtime AST lookup, rendered-expression caching, dependency recovery, and width inference,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) to filter policy over normalized metadata,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so the live direct backend now asks the recovery owner for normalized metadata and the filter owner for keep/drop decisions,
+  - added [t/213-systemverilog-intermediate-signal-recovery-support.t](/Users/richarddje/Documents/github/fsmgen/t/213-systemverilog-intermediate-signal-recovery-support.t),
+  - and retargeted [t/07-runtime-ast-miss-dependency-recovery.t](/Users/richarddje/Documents/github/fsmgen/t/07-runtime-ast-miss-dependency-recovery.t), [t/08-driving-ast-canonicalization.t](/Users/richarddje/Documents/github/fsmgen/t/08-driving-ast-canonicalization.t), and [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) to the real owner boundary.
+- Why this is worth shipping:
+  - it makes “recover normalized intermediate metadata” and “decide whether to emit it” two separate, honest backend responsibilities,
+  - it keeps the consolidated-emitter path clearer because recovery, filter policy, and final emission no longer collapse into one support owner,
+  - and it sharpens the next seam honestly to the remaining post-factorization filter/emission/fixpoint gravity rather than runtime-lookup sprawl.
+
 ## 2026-03-28: direct consolidated intermediate preparation now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling the merged-signal preparation and normalization half of the direct consolidated intermediate path out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving AST-factorized, prescanned, and FSMGen-parsed intermediate collection mixed together with the final dependency-aware emitter.
 - Landed behavior:

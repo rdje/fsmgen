@@ -286,6 +286,26 @@ ok(
     'live SystemVerilog consolidated intermediate support owns merged signal collection and normalization',
 );
 ok(
+    $hdl->{backend_sv_intermediate_recovery_support}->can('resolve_intermediate_signal_runtime_ast'),
+    'live SystemVerilog intermediate recovery support owns runtime-AST lookup',
+);
+ok(
+    $hdl->{backend_sv_intermediate_recovery_support}->can('render_intermediate_signal_expression'),
+    'live SystemVerilog intermediate recovery support owns rendered-expression recovery',
+);
+ok(
+    $hdl->{backend_sv_intermediate_recovery_support}->can('resolve_intermediate_signal_dependencies'),
+    'live SystemVerilog intermediate recovery support owns dependency recovery',
+);
+ok(
+    $hdl->{backend_sv_intermediate_recovery_support}->can('resolve_intermediate_signal_width'),
+    'live SystemVerilog intermediate recovery support owns width normalization',
+);
+ok(
+    $hdl->{backend_sv_intermediate_support}->can('should_filter_consolidated_signal'),
+    'live SystemVerilog intermediate support narrows to filter policy over normalized metadata',
+);
+ok(
     $hdl->{backend_sv_ast_factorization}->can('get_substituted_ast_for_signal'),
     'live SystemVerilog AST-factorization support keeps substituted-AST lookup for downstream owners',
 );

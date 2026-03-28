@@ -168,14 +168,14 @@ set when they were not already produced by first-pass factorization.
 
 sub merge_prescan_intermediate_signals ($self, $all_intermediate_signals) {
     my $ctx = $self->{flattened_dt};
-    my $signal_support = $ctx->{backend_sv_intermediate_support};
+    my $recovery_support = $ctx->{backend_sv_intermediate_recovery_support};
     return unless $ctx->{referenced_intermediate_signals};
 
     for my $signal_name (keys %{$ctx->{referenced_intermediate_signals}}) {
         next if exists $all_intermediate_signals->{$signal_name};
 
         my $referenced_signal_info = $ctx->{referenced_intermediate_signals}->{$signal_name} || {};
-        my $runtime_ast = $signal_support->resolve_intermediate_signal_runtime_ast($signal_name, $referenced_signal_info);
+        my $runtime_ast = $recovery_support->resolve_intermediate_signal_runtime_ast($signal_name, $referenced_signal_info);
         my $expression = (!$runtime_ast || !blessed($runtime_ast))
             ? $ctx->{enable_graph_intermediate_support}->get_intermediate_signal_expression($signal_name)
             : undef;
@@ -321,11 +321,11 @@ consume one AST-first cache.
 
 sub normalize_consolidated_intermediate_metadata ($self, $all_intermediate_signals) {
     my $ctx = $self->{flattened_dt};
-    my $signal_support = $ctx->{backend_sv_intermediate_support};
+    my $recovery_support = $ctx->{backend_sv_intermediate_recovery_support};
 
     for my $signal_name (keys %$all_intermediate_signals) {
         my $signal_info = $all_intermediate_signals->{$signal_name};
-        my $runtime_ast = $signal_support->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
+        my $runtime_ast = $recovery_support->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
         if ($runtime_ast && blessed($runtime_ast)) {
             fsm_debug("CONSOL_INTER_SIG: [RUNTIME_AST] '$signal_name' normalized via " . ($signal_info->{runtime_ast_source} || 'runtime_ast'), 3);
         } else {
@@ -335,21 +335,21 @@ sub normalize_consolidated_intermediate_metadata ($self, $all_intermediate_signa
 
     for my $signal_name (keys %$all_intermediate_signals) {
         my $signal_info = $all_intermediate_signals->{$signal_name};
-        my $resolved_width = $signal_support->resolve_intermediate_signal_width($signal_name, $signal_info, $all_intermediate_signals);
+        my $resolved_width = $recovery_support->resolve_intermediate_signal_width($signal_name, $signal_info, $all_intermediate_signals);
         $signal_info->{width} = $resolved_width;
         fsm_debug("CONSOL_INTER_SIG: [WIDTH] '$signal_name' width normalized to $resolved_width", 3);
     }
 
     for my $signal_name (keys %$all_intermediate_signals) {
         my $signal_info = $all_intermediate_signals->{$signal_name};
-        my @dependencies = $signal_support->resolve_intermediate_signal_dependencies($signal_name, $signal_info);
+        my @dependencies = $recovery_support->resolve_intermediate_signal_dependencies($signal_name, $signal_info);
         my $dependency_summary = @dependencies ? join(', ', @dependencies) : 'none';
         fsm_debug("CONSOL_INTER_SIG: [DEPENDENCIES] '$signal_name' => $dependency_summary via " . ($signal_info->{dependency_source} || 'none'), 3);
     }
 
     for my $signal_name (keys %$all_intermediate_signals) {
         my $signal_info = $all_intermediate_signals->{$signal_name};
-        my $rendered_expression = $signal_support->render_intermediate_signal_expression($signal_name, $signal_info);
+        my $rendered_expression = $recovery_support->render_intermediate_signal_expression($signal_name, $signal_info);
         my $render_source = $signal_info->{rendered_expression_source} || 'none';
         if (defined($rendered_expression) && $rendered_expression ne '') {
             fsm_debug("CONSOL_INTER_SIG: [RENDER] '$signal_name' cached via $render_source", 3);

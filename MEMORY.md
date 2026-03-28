@@ -5271,3 +5271,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - The paired direct `ConsolidatedIntermediateEmitter` now narrows to
   dependency-aware filtering, topological ordering, and final wire/assign
   emission for that prepared consolidated signal set.
+- Direct intermediate runtime recovery and metadata normalization now also
+  live in `FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalRecoverySupport`,
+  so `IntermediateSignalSupport` no longer owns runtime AST lookup,
+  rendered-expression caching, dependency recovery, or width inference
+  directly.
+- The paired direct `IntermediateSignalSupport` now narrows to filter policy
+  over normalized intermediate metadata instead of mixing recovery and filter
+  responsibilities together.
