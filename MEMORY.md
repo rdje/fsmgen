@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-28: consolidated intermediate stage generation now has a dedicated owner
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) now owns the full direct consolidated-intermediate stage handoff for one FSM module,
+  - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) no longer coordinates that stage inline,
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now records the measured post-change snapshot of `90` reachable project files and `89` reachable `.pm` packages.
+- Important continuity note:
+  - the next likely seam is no longer the stage handoff from `Orchestrator`,
+  - it is the remaining lower-level coordination inside the selection/planning/block/emitter cluster,
+  - and the live import-tree note should now be read as “the direct consolidated-intermediate path has explicit owners for preparation, selection, planning, block prep, assignment emission, declaration rendering, stage generation, and final block composition.”
+
 ## 2026-03-28: consolidated intermediate declaration rendering now has a dedicated owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm) now owns prepared consolidated wire declarations on the direct backend path,

@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: consolidated intermediate stage generation now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling the direct consolidated-intermediate stage handoff out of [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) instead of leaving that runtime stage coordinated inline after block preparation and render ownership were already split out.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) as the owner of the full direct consolidated-intermediate stage handoff,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so step 6 now delegates to that stage owner instead of manually coordinating block preparation plus emitter rendering,
+  - added [t/224-systemverilog-consolidated-intermediate-generation-support.t](/Users/richarddje/Documents/github/fsmgen/t/224-systemverilog-consolidated-intermediate-generation-support.t),
+  - tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `90`-file / `89`-package snapshot.
+- Why this is worth shipping:
+  - it removes one more coordination pocket from the older direct backend orchestrator,
+  - it makes the consolidated-intermediate stack read more honestly as a staged owner family rather than a set of extracted helpers still manually wired inline,
+  - and it sharpens the next seam to the remaining lower-level coordination inside the selection/planning/block/emitter cluster rather than the top-of-stage handoff.
+
 ## 2026-03-28: consolidated intermediate declaration rendering now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling prepared wire declaration rendering out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving width-aware declarations mixed together with block composition and assignment handoff.
 - Landed behavior:

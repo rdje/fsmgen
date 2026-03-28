@@ -253,10 +253,8 @@ sub generate_systemverilog ($self, $fsm_module) {
     fsm_debug("Step 5 - PRE-SCAN completed (AFTER logical operation counting!)", 3);
     
     # Step 6: Generate consolidated intermediate signals (combining AST factorization + pre-scan)
-    my $consolidated_intermediate_block = $ctx->{backend_sv_consolidated_intermediate_block_support}
-        ->prepare_consolidated_intermediate_block($fsm_module);
-    $hdl .= $ctx->{backend_sv_consolidated_intermediate}
-        ->render_consolidated_intermediate_block($consolidated_intermediate_block);
+    $hdl .= $ctx->{backend_sv_consolidated_intermediate_generation_support}
+        ->generate_consolidated_intermediate_block($fsm_module);
     fsm_debug("Step 6 - Consolidated intermediate signals generated", 3);
     
     # Step 7: Generate WEN/EN signals (using pre-declared intermediate signals)
