@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: consolidated intermediate block preparation now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling collection-plus-planning coordination for the direct consolidated intermediate block out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving that package half-renderer and half-block-preparation coordinator.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) as the owner of collection-plus-planning composition for one prepared consolidated intermediate block,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) to pure rendering from that prepared block contract,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm), [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm), and the direct boundary tests,
+  - and added [t/219-systemverilog-consolidated-intermediate-block-support.t](/Users/richarddje/Documents/github/fsmgen/t/219-systemverilog-consolidated-intermediate-block-support.t).
+- Why this is worth shipping:
+  - it makes the emitter description finally truthful,
+  - it turns “prepare the consolidated block” into a real owner instead of an inline prelude,
+  - and it moves the next backend seam away from collection/planning handoff and toward the remaining direct rendering/sequence coordination.
+
 ## 2026-03-28: fixpoint loop state now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling aggregate loop-state creation, accepted-pass outcome application, and final termination/result normalization out of [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) instead of leaving that mutable state lifecycle mixed into the same package as pass scheduling and top-level coordination.
 - Landed behavior:

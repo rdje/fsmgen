@@ -8,7 +8,7 @@ FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter -
 
 Owns the bounded consolidated intermediate-signal emission family for the older
 direct generated-module SystemVerilog backend. This package takes the prepared
-consolidated intermediate-signal plan and renders the consolidated wire and
+consolidated intermediate block contract and renders the consolidated wire and
 assign block that appears before unified WEN/EN signal generation.
 
 =cut
@@ -37,23 +37,18 @@ sub new ($class, %args) {
     }, $class;
 }
 
-=head2 generate_consolidated_intermediate_signals
+=head2 render_consolidated_intermediate_block
 
-Build and render the consolidated direct-backend intermediate-signal block by
-consuming the prepared consolidated signal set plus the extracted
-dependency/filter/order plan.
+Render the consolidated direct-backend intermediate-signal block from the
+prepared block contract produced by the extracted block-preparation owner.
 
 =cut
 
-sub generate_consolidated_intermediate_signals ($self, $fsm_module) {
+sub render_consolidated_intermediate_block ($self, $prepared_block) {
     my $ctx = $self->{flattened_dt};
     my $recovery_support = $ctx->{backend_sv_intermediate_recovery_support};
-    my $all_intermediate_signals = $ctx->{backend_sv_consolidated_intermediate_support}
-        ->collect_consolidated_intermediate_signals($fsm_module);
-    my $plan = $ctx->{backend_sv_consolidated_intermediate_planning_support}
-        ->plan_consolidated_intermediate_signals($all_intermediate_signals);
-    my $filtered_signals = $plan->{filtered_signals};
-    my $sorted_signals = $plan->{sorted_signals};
+    my $filtered_signals = $prepared_block->{filtered_signals} || {};
+    my $sorted_signals = $prepared_block->{sorted_signals} || [];
     my $hdl = "";
 
     # Step 4a: LHS signal declarations are emitted once in generate_internal_signal_declarations().
@@ -115,10 +110,9 @@ __END__
 Constructs one consolidated-intermediate emitter bound to a specific
 C<FSM::HDL::FlattenedDT> backend context.
 
-=head2 generate_consolidated_intermediate_signals
+=head2 render_consolidated_intermediate_block
 
-Builds and renders the consolidated direct-backend intermediate-signal block by
-consuming the prepared consolidated signal set plus the extracted
-dependency/filter/order plan and emitting the resulting wire and assign family.
+Renders the consolidated direct-backend intermediate-signal block from the
+prepared block contract produced by the extracted block-preparation owner.
 
 =cut

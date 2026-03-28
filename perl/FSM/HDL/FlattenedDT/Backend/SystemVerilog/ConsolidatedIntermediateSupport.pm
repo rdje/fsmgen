@@ -29,9 +29,12 @@ normalization over the consolidated signal set
 
 The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter>
-now keeps the dependency-aware filtering, ordering, and final HDL emission
-surface, while this package owns preparation of the consolidated signal set
-that the emitter consumes.
+now keeps final HDL emission, the paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlanningSupport>
+keeps dependency-aware rescue/filter/order planning, the paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport>
+now owns the collection-plus-planning handoff for one prepared block, and this
+package owns preparation of the normalized consolidated signal set.
 
 =cut
 

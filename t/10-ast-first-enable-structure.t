@@ -290,6 +290,10 @@ ok(
     'live SystemVerilog consolidated intermediate planning support owns dependency-aware rescue/filter/order planning',
 );
 ok(
+    $hdl->{backend_sv_consolidated_intermediate_block_support}->can('prepare_consolidated_intermediate_block'),
+    'live SystemVerilog consolidated intermediate block support owns collection-plus-planning handoff for one prepared block',
+);
+ok(
     $hdl->{backend_sv_intermediate_recovery_support}->can('resolve_intermediate_signal_runtime_ast'),
     'live SystemVerilog intermediate recovery support owns runtime-AST lookup',
 );
@@ -332,6 +336,10 @@ ok(
 ok(
     !$hdl->{backend_sv_consolidated_intermediate}->can('topologically_sort_signals'),
     'live SystemVerilog consolidated intermediate emitter no longer keeps planning/order helpers inline',
+);
+ok(
+    !$hdl->{backend_sv_consolidated_intermediate}->can('prepare_consolidated_intermediate_block'),
+    'live SystemVerilog consolidated intermediate emitter no longer keeps collection-plus-planning handoff inline',
 );
 ok(
     $hdl->{backend_sv_ast_factorization}->can('get_substituted_ast_for_signal'),

@@ -11,6 +11,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Backend::GeneratedModuleEmitter;
 use FSM::HDL::FlattenedDT;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::InternalDeclarationEmitter;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter;
@@ -112,6 +113,9 @@ sub rebuild_prefix_with_consolidated_intermediates {
     my $declaration_emitter = FSM::HDL::FlattenedDT::Backend::SystemVerilog::InternalDeclarationEmitter->new(
         flattened_dt => $hdl_generator,
     );
+    my $block_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport->new(
+        flattened_dt => $hdl_generator,
+    );
     my $consolidated_emitter = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter->new(
         flattened_dt => $hdl_generator,
     );
@@ -126,7 +130,8 @@ sub rebuild_prefix_with_consolidated_intermediates {
     $hdl_generator->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
     $hdl_generator->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
 
-    my $consolidated_block = $consolidated_emitter->generate_consolidated_intermediate_signals($fsm_module);
+    my $prepared_block = $block_support->prepare_consolidated_intermediate_block($fsm_module);
+    my $consolidated_block = $consolidated_emitter->render_consolidated_intermediate_block($prepared_block);
 
     return ($prefix . $consolidated_block, $consolidated_block);
 }

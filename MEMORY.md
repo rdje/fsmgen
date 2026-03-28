@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-28: consolidated intermediate block preparation now has a dedicated owner
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) now owns the collection-plus-planning handoff for one prepared consolidated intermediate block on the direct backend path,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) is now narrowed to pure rendering from that prepared block contract,
+  - and [t/219-systemverilog-consolidated-intermediate-block-support.t](/Users/richarddje/Documents/github/fsmgen/t/219-systemverilog-consolidated-intermediate-block-support.t) now locks the extracted owner directly.
+- Important continuity note:
+  - the next likely seam is no longer collection-plus-planning handoff inside the direct consolidated emitter,
+  - it is the remaining direct rendering/sequence coordination around the consolidated intermediate path and the neighboring intermediate recovery/filter owners,
+  - and the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) should now be read as “the direct consolidated intermediate path is split into support, planning, block preparation, and rendering.”
+
 ## 2026-03-28: fixpoint loop state now has a dedicated owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm) now owns aggregate loop-state creation, accepted-pass outcome application, and final termination/result normalization for the iterative post-substitution factorization path,

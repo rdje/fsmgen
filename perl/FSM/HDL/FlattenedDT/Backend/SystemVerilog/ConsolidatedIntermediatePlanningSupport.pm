@@ -27,8 +27,11 @@ dependency-safe emission ordering with cycle-tolerant fallback
 
 The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter>
-now narrows to final HDL rendering, while this package owns the “which signals
-survive and in what order?” planning side of the direct backend path.
+now narrows to final HDL rendering, the paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport>
+now owns collection-plus-planning composition for one prepared block, and this
+package owns the “which signals survive and in what order?” planning side of
+the direct backend path.
 
 =cut
 
