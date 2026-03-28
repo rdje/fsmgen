@@ -9,8 +9,8 @@ FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter -
 Owns the bounded consolidated intermediate block-emission family for the older
 direct generated-module SystemVerilog backend. This package takes the prepared
 consolidated intermediate block contract and renders the consolidated block
-shell: comment header, wire declarations, spacing, and final assignment-block
-handoff before unified WEN/EN signal generation.
+shell: comment header, spacing, and the handoff over the extracted declaration
+and assignment rendering owners before unified WEN/EN signal generation.
 
 =cut
 
@@ -47,10 +47,9 @@ prepared block contract produced by the extracted block-preparation owner.
 
 sub render_consolidated_intermediate_block ($self, $prepared_block) {
     my $ctx = $self->{flattened_dt};
-    my $width_support = $ctx->{backend_sv_intermediate_width_support};
+    my $declaration_support = $ctx->{backend_sv_consolidated_intermediate_declaration_support};
     my $assignment_support = $ctx->{backend_sv_consolidated_intermediate_assignment_support};
     my $filtered_signals = $prepared_block->{filtered_signals} || {};
-    my $sorted_signals = $prepared_block->{sorted_signals} || [];
     my $hdl = "";
 
     # Step 4a: LHS signal declarations are emitted once in generate_internal_signal_declarations().
@@ -60,18 +59,8 @@ sub render_consolidated_intermediate_block ($self, $prepared_block) {
     if (%{$filtered_signals}) {
         $hdl .= "  // Consolidated intermediate signals (AST factorization + pre-scan)\n";
 
-        # First pass: Generate all wire declarations
-        for my $signal_name (@{$sorted_signals}) {
-            my $signal_info = $filtered_signals->{$signal_name};
-            my $width = $width_support->resolve_intermediate_signal_width($signal_name, $signal_info, $filtered_signals);
-
-            # Generate wire declaration
-            if ($width > 1) {
-                $hdl .= "  wire [" . ($width - 1) . ":0] $signal_name;\n";
-            } else {
-                $hdl .= "  wire $signal_name;\n";
-            }
-        }
+        # First pass: Generate all wire declarations through the extracted owner
+        $hdl .= $declaration_support->render_consolidated_intermediate_declarations($prepared_block);
 
         $hdl .= "\n";  # Add spacing between declarations and assignments
 

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-28: consolidated intermediate declaration rendering now has a dedicated owner
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm) now owns prepared consolidated wire declarations on the direct backend path,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) is now narrowed to final block composition over declaration and assignment owners,
+  - and [t/223-systemverilog-consolidated-intermediate-declaration-support.t](/Users/richarddje/Documents/github/fsmgen/t/223-systemverilog-consolidated-intermediate-declaration-support.t) plus the tightened owner checks now lock that split directly.
+- Important continuity note:
+  - the next likely seam is no longer “who owns prepared consolidated wire declarations,”
+  - it is the remaining coordination between selection, planning, block preparation, and the narrowed emitter,
+  - and the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) should now be read as “the direct consolidated intermediate path is split into preparation, selection, planning, block preparation, assignment emission, declaration rendering, and final block composition.”
+
 ## 2026-03-28: live direct backend no longer instantiates the intermediate dispatcher shell
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) now owns the live AST-first consolidated keep/filter dispatch directly by combining the recovery and filter-policy owners,

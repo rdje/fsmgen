@@ -294,6 +294,10 @@ ok(
     'live SystemVerilog consolidated intermediate assignment support owns prepared assign emission',
 );
 ok(
+    $hdl->{backend_sv_consolidated_intermediate_declaration_support}->can('render_consolidated_intermediate_declarations'),
+    'live SystemVerilog consolidated intermediate declaration support owns prepared wire declaration rendering',
+);
+ok(
     $hdl->{backend_sv_consolidated_intermediate_planning_support}->can('plan_consolidated_intermediate_signals'),
     'live SystemVerilog consolidated intermediate planning support owns dependency-aware ordering and overall plan composition',
 );
@@ -360,6 +364,10 @@ ok(
 ok(
     !$hdl->{backend_sv_consolidated_intermediate}->can('prepare_consolidated_intermediate_block'),
     'live SystemVerilog consolidated intermediate emitter no longer keeps collection-plus-planning handoff inline',
+);
+ok(
+    !$hdl->{backend_sv_consolidated_intermediate}->can('render_consolidated_intermediate_declarations'),
+    'live SystemVerilog consolidated intermediate emitter no longer keeps declaration rendering inline',
 );
 ok(
     $hdl->{backend_sv_ast_factorization}->can('get_substituted_ast_for_signal'),

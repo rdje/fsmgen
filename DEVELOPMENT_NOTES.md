@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: consolidated intermediate declaration rendering now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling prepared wire declaration rendering out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving width-aware declarations mixed together with block composition and assignment handoff.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm) as the owner of prepared consolidated wire declarations,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) to final block composition over extracted declaration and assignment owners,
+  - added [t/223-systemverilog-consolidated-intermediate-declaration-support.t](/Users/richarddje/Documents/github/fsmgen/t/223-systemverilog-consolidated-intermediate-declaration-support.t),
+  - tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `89`-file / `88`-package snapshot.
+- Why this is worth shipping:
+  - it turns width-aware consolidated declarations into one honest backend owner instead of burying them in the emitter shell,
+  - it leaves the emitter reading more truthfully as block composition rather than half declaration renderer,
+  - and it sharpens the next seam to the remaining coordination between selection, planning, block preparation, and the narrowed emitter.
+
 ## 2026-03-28: live direct backend no longer instantiates the intermediate dispatcher shell
 - Continued the active `R11` backend-breakdown lane by removing one no-longer-honest live-path shell instead of preserving it as runtime architecture theater.
 - Landed behavior:
