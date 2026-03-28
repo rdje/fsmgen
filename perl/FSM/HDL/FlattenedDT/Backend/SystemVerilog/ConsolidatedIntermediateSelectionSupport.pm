@@ -2,7 +2,7 @@ package FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateS
 
 =head1 NAME
 
-FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSelectionSupport - Own dependency-aware consolidated intermediate keep/filter/rescue selection
+FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSelectionSupport - Own dependency-aware consolidated intermediate rescue and final selection
 
 =head1 DESCRIPTION
 
@@ -10,15 +10,6 @@ Owns the bounded selection family for the older direct generated-module
 SystemVerilog consolidated intermediate path. This package centralizes:
 
 =over 4
-
-=item *
-
-per-signal rendered-expression lookup before selection
-
-=item *
-
-direct AST-first keep/filter dispatch over the extracted recovery and
-filter-policy owners
 
 =item *
 
@@ -31,10 +22,14 @@ selection summary metadata for the final kept and filtered sets
 =back
 
 The paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateClassificationSupport>
+now owns the initial AST-first keep/filter partition over the normalized
+signal set. The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlanningSupport>
 now owns dependency-map construction, dependency-safe ordering, and overall plan
-composition, while this package owns the narrower “which consolidated
-intermediates survive?” selection side of the direct backend path.
+composition, while this package owns the narrower “which filtered signals get
+rescued and what is the final kept/filtered summary?” side of the direct
+backend path.
 
 =cut
 
@@ -72,43 +67,11 @@ and return the resulting filtered set plus intermediate selection metadata.
 
 sub filter_consolidated_signals ($self, $all_intermediate_signals, $signal_dependencies) {
     my $ctx = $self->{flattened_dt};
-    my $recovery_support = $ctx->{backend_sv_intermediate_recovery_support};
-    my $filter_policy_support = $ctx->{backend_sv_intermediate_filter_policy_support};
-    my %initially_filtered_signals;
-    my %initially_kept_signals;
+    my $classification = $ctx->{backend_sv_consolidated_intermediate_classification_support}
+        ->classify_consolidated_signals($all_intermediate_signals);
+    my %initially_filtered_signals = %{ $classification->{initially_filtered_signals} || {} };
+    my %initially_kept_signals = %{ $classification->{initially_kept_signals} || {} };
     my %rescued_signals;
-
-    for my $signal_name (keys %{ $all_intermediate_signals || {} }) {
-        my $signal_info = $all_intermediate_signals->{$signal_name};
-        my $expression = $recovery_support->render_intermediate_signal_expression($signal_name, $signal_info);
-        next unless defined($expression) && $expression ne '';
-
-        fsm_debug("\n*** AST_FILTER_CHECK: Analyzing signal '$signal_name' ***", 3);
-        fsm_debug("  Expression: '$expression'", 3);
-        fsm_debug("  Source: $signal_info->{source}", 3);
-        fsm_debug("  Usage count: " . ($signal_info->{usage_count} || 'unknown'));
-
-        my $ast = $recovery_support->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
-        if ($ast && blessed($ast)) {
-            fsm_debug("  Using runtime AST for filtering: " . ref($ast), 3);
-        } else {
-            my $miss_reason = ($signal_info && ref($signal_info) eq 'HASH')
-                ? ($signal_info->{runtime_ast_miss_reason} || 'unknown_runtime_ast_miss')
-                : 'unknown_runtime_ast_miss';
-            fsm_debug("  No runtime AST available - falling back to explicit runtime-AST-miss filtering ($miss_reason)", 3);
-        }
-
-        my $should_filter = ($ast && blessed($ast))
-            ? $filter_policy_support->should_filter_ast_based($ast, $signal_name, $signal_info)
-            : $filter_policy_support->should_filter_runtime_ast_miss($signal_name, $signal_info);
-        if ($should_filter) {
-            $initially_filtered_signals{$signal_name} = $signal_info;
-            fsm_debug("[ConsolidatedIntermediateSelectionSupport.pm][filter_consolidated_signals()] INITIAL FILTER: '$signal_name' = $expression", 3);
-        } else {
-            $initially_kept_signals{$signal_name} = $signal_info;
-            fsm_debug("[ConsolidatedIntermediateSelectionSupport.pm][filter_consolidated_signals()] INITIAL KEEP: '$signal_name' = $expression", 3);
-        }
-    }
 
     for my $kept_signal (keys %initially_kept_signals) {
         next unless $signal_dependencies->{$kept_signal};
@@ -159,7 +122,7 @@ C<FSM::HDL::FlattenedDT> backend context.
 
 Applies the dependency-aware consolidated-intermediate keep/filter/rescue plan
 and returns the resulting filtered set plus intermediate selection metadata.
-This owner now performs the live AST-first filter dispatch itself by combining
-the extracted recovery and filter-policy owners directly.
+This owner now starts from the extracted initial classification owner and then
+applies dependency-aware rescue plus final kept/filtered summary projection.
 
 =cut

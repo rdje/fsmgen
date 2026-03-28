@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-28: consolidated intermediate classification now has a dedicated owner
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateClassificationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateClassificationSupport.pm) now owns the initial AST-first keep/filter partition for the direct consolidated intermediate path,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) is now narrowed to dependency-aware rescue plus final kept/filtered summary projection,
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now records the measured post-change snapshot of `92` reachable project files and `91` reachable `.pm` packages.
+- Important continuity note:
+  - the next likely seam is no longer the first-pass classification split inside the direct consolidated intermediate path,
+  - it is the remaining lower-level coordination across selection, planning, block preparation, and final emission,
+  - and future sessions should read that backend stage as “collect, normalize, classify, rescue/select, plan, prepare, and render.”
+
 ## 2026-03-28: consolidated intermediate normalization now has a dedicated owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSupport.pm) now owns runtime AST, width, dependency, rendered-expression, and live-usage normalization over the merged direct consolidated intermediate set,

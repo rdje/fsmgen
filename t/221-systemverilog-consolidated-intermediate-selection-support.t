@@ -11,7 +11,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSelectionSupport;
 
 {
-    package Local::FakeRecoverySupport;
+    package Local::FakeClassificationSupport;
     use v5.20;
     use strict;
     use warnings;
@@ -22,53 +22,24 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSelec
         return bless {}, $class;
     }
 
-    sub render_intermediate_signal_expression ($self, $signal_name, $signal_info) {
-        return $signal_info->{rendered_expression};
-    }
-
-    sub resolve_intermediate_signal_runtime_ast ($self, $signal_name, $signal_info) {
-        return $signal_info->{runtime_ast};
-    }
-}
-
-{
-    package Local::FakeAST;
-    use v5.20;
-    use strict;
-    use warnings;
-    use feature qw(signatures);
-    no warnings 'experimental::signatures';
-
-    sub new ($class) {
-        return bless {}, $class;
+    sub classify_consolidated_signals ($self, $all_intermediate_signals) {
+        return {
+            initially_kept_signals => {
+                kept_parent => $all_intermediate_signals->{kept_parent},
+            },
+            initially_filtered_signals => {
+                rescued_dep => $all_intermediate_signals->{rescued_dep},
+                filtered_leaf => $all_intermediate_signals->{filtered_leaf},
+            },
+            initially_kept_count => 1,
+            initially_filtered_count => 2,
+        };
     }
 }
 
-{
-    package Local::FakeFilterPolicySupport;
-    use v5.20;
-    use strict;
-    use warnings;
-    use feature qw(signatures);
-    no warnings 'experimental::signatures';
-
-    sub new ($class) {
-        return bless {}, $class;
-    }
-
-    sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
-        return $signal_info->{should_filter} ? 1 : 0;
-    }
-
-    sub should_filter_runtime_ast_miss ($self, $signal_name, $signal_info) {
-        return $signal_info->{should_filter} ? 1 : 0;
-    }
-}
-
-subtest 'consolidated intermediate selection support owns dependency-aware keep/filter/rescue selection' => sub {
+subtest 'consolidated intermediate selection support owns dependency-aware rescue and final kept/filtered selection' => sub {
     my $fake_backend = {
-        backend_sv_intermediate_recovery_support => Local::FakeRecoverySupport->new(),
-        backend_sv_intermediate_filter_policy_support => Local::FakeFilterPolicySupport->new(),
+        backend_sv_consolidated_intermediate_classification_support => Local::FakeClassificationSupport->new(),
     };
     my $support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSelectionSupport->new(
         flattened_dt => $fake_backend,
@@ -78,21 +49,16 @@ subtest 'consolidated intermediate selection support owns dependency-aware keep/
         kept_parent => {
             rendered_expression => 'rescued_dep & A',
             dependency_signal_names => ['rescued_dep'],
-            should_filter => 0,
             source => 'ast_factorization',
-            runtime_ast => Local::FakeAST->new(),
         },
         rescued_dep => {
             rendered_expression => 'A | B',
             dependency_signal_names => [],
-            should_filter => 1,
             source => 'ast_factorization',
-            runtime_ast => Local::FakeAST->new(),
         },
         filtered_leaf => {
             rendered_expression => '1',
             dependency_signal_names => [],
-            should_filter => 1,
             source => 'runtime_ast_miss',
         },
     };

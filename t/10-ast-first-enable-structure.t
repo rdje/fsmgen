@@ -294,8 +294,16 @@ ok(
     'live SystemVerilog consolidated intermediate normalization support owns runtime metadata normalization',
 );
 ok(
+    $hdl->{backend_sv_consolidated_intermediate_classification_support}->can('classify_consolidated_signals'),
+    'live SystemVerilog consolidated intermediate classification support owns the initial AST-first keep/filter partition',
+);
+ok(
+    !$hdl->{backend_sv_consolidated_intermediate_selection_support}->can('classify_consolidated_signals'),
+    'live SystemVerilog consolidated intermediate selection support no longer keeps initial AST-first keep/filter classification inline',
+);
+ok(
     $hdl->{backend_sv_consolidated_intermediate_selection_support}->can('filter_consolidated_signals'),
-    'live SystemVerilog consolidated intermediate selection support owns dependency-aware keep/filter/rescue selection',
+    'live SystemVerilog consolidated intermediate selection support owns dependency-aware rescue and final kept/filtered selection',
 );
 ok(
     $hdl->{backend_sv_consolidated_intermediate_assignment_support}->can('render_consolidated_intermediate_assignments'),
@@ -363,7 +371,7 @@ ok(
 );
 ok(
     $hdl->{backend_sv_consolidated_intermediate_selection_support}->can('filter_consolidated_signals'),
-    'live SystemVerilog consolidated intermediate selection support owns dependency-aware keep/filter/rescue selection',
+    'live SystemVerilog consolidated intermediate selection support owns dependency-aware rescue and final kept/filtered selection',
 );
 ok(
     !exists $hdl->{backend_sv_intermediate_support},

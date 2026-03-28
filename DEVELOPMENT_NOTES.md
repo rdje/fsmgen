@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: consolidated intermediate classification now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling the initial AST-first keep/filter pass out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) instead of leaving first-pass classification mixed together with dependency rescue and final kept/filtered summary projection.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateClassificationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateClassificationSupport.pm) as the owner of per-signal render lookup plus AST-first keep/filter dispatch,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) to dependency-aware rescue and final kept/filtered summary projection over the extracted initial partition,
+  - added [t/226-systemverilog-consolidated-intermediate-classification-support.t](/Users/richarddje/Documents/github/fsmgen/t/226-systemverilog-consolidated-intermediate-classification-support.t),
+  - retargeted [t/221-systemverilog-consolidated-intermediate-selection-support.t](/Users/richarddje/Documents/github/fsmgen/t/221-systemverilog-consolidated-intermediate-selection-support.t) so it now locks the narrowed rescue/final-selection owner against the new classification seam,
+  - tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `92`-file / `91`-package snapshot.
+- Why this is worth shipping:
+  - it makes the direct consolidated-intermediate stage read more honestly as `collect -> normalize -> classify -> rescue/select -> plan -> prepare -> render`,
+  - it removes one more mixed-responsibility pocket from the live runtime path,
+  - and it keeps the next seam focused on the remaining coordination between selection, planning, block preparation, and final emission instead of the already-extracted first-pass classification.
+
 ## 2026-03-28: consolidated intermediate normalization now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling runtime metadata normalization out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm) instead of leaving merged-signal collection and normalized metadata preparation fused together in one oversized backend owner.
 - Landed behavior:

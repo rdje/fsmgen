@@ -25,6 +25,7 @@ use FSM::HDL::FlattenedDT::Orchestrator;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ASTFactorizationSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateAssignmentSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateClassificationSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateDeclarationSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport;
@@ -120,6 +121,7 @@ sub new ($class, %args) {
     $self->{backend_sv_ast_factorization} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ASTFactorizationSupport->new(flattened_dt => $self);
     $self->{backend_sv_consolidated_intermediate_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport->new(flattened_dt => $self);
     $self->{backend_sv_consolidated_intermediate_normalization_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateNormalizationSupport->new(flattened_dt => $self);
+    $self->{backend_sv_consolidated_intermediate_classification_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateClassificationSupport->new(flattened_dt => $self);
     $self->{backend_sv_consolidated_intermediate_selection_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSelectionSupport->new(flattened_dt => $self);
     $self->{backend_sv_consolidated_intermediate_planning_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlanningSupport->new(flattened_dt => $self);
     $self->{backend_sv_consolidated_intermediate_block_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport->new(flattened_dt => $self);
