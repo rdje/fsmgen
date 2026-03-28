@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-28: consolidated intermediate planning now has a dedicated backend owner
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) now owns dependency-map construction, dependency-aware rescue/filter planning, and dependency-safe emission ordering for consolidated intermediates,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) is now narrowed to final wire/assign emission from that extracted plan,
+  - and [t/215-systemverilog-consolidated-intermediate-planning-support.t](/Users/richarddje/Documents/github/fsmgen/t/215-systemverilog-consolidated-intermediate-planning-support.t) now locks that owner directly.
+- Important continuity note:
+  - the next likely seam is no longer “who owns consolidated rescue/order planning,”
+  - it is the remaining post-factorization/filter-policy gravity in [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm),
+  - and the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) should now be read as “the direct consolidated intermediate path is split into preparation, planning, and emission.”
+
 ## 2026-03-28: fixpoint pass support now has a dedicated factorization owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm) now owns the iterative second-pass helper family: primary intermediate lookup, deterministic pass signatures, second-pass name-collision recovery, and new-signal projection/debugging,

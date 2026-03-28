@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: consolidated intermediate planning now has a dedicated backend owner
+- Continued the active `R11` backend-breakdown lane by pulling dependency-map construction, dependency-aware rescue/filter planning, and emission ordering out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving merged-signal planning and final HDL emission mixed together.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) as the owner of dependency-map construction, dependency-aware rescue/filter planning, and dependency-safe emission ordering,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) to final wire/assign emission from the extracted plan,
+  - added [t/215-systemverilog-consolidated-intermediate-planning-support.t](/Users/richarddje/Documents/github/fsmgen/t/215-systemverilog-consolidated-intermediate-planning-support.t),
+  - and tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) so the live owner boundary is locked honestly.
+- Why this is worth shipping:
+  - it makes the direct consolidated intermediate path read like preparation, planning, and emission as three real responsibilities instead of two overloaded ones,
+  - it narrows the emitter to “turn a plan into HDL” instead of making it quietly own rescue and ordering policy,
+  - and it keeps the next seam honest: remaining post-factorization/filter-policy gravity rather than more consolidated-order plumbing.
+
 ## 2026-03-28: fixpoint pass support now has a dedicated factorization owner
 - Continued the active `R11` backend-breakdown lane by pulling the per-pass helper family out of [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) instead of leaving primary intermediate lookup, deterministic pass signatures, collision recovery, and new-signal projection/debugging mixed into the same package as the iterative loop and termination policy.
 - Landed behavior:

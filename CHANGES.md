@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-28
+### consolidated intermediate planning now has a dedicated backend owner
+- Added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) as the owner of dependency-map construction, dependency-aware rescue/filter planning, and dependency-safe emission ordering for the direct consolidated intermediate path.
+- Updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so the live backend now instantiates and uses that owner directly, while the emitter narrows to final wire/assign emission from the extracted plan.
+- Added [t/215-systemverilog-consolidated-intermediate-planning-support.t](/Users/richarddje/Documents/github/fsmgen/t/215-systemverilog-consolidated-intermediate-planning-support.t), tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t), and refreshed the live architecture/roadmap notes.
+
 ### fixpoint pass support now has a dedicated factorization owner
 - Added [perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm) as the owner of the iterative second-pass helper family: primary intermediate lookup, deterministic pass signatures, second-pass name-collision recovery, and new-signal projection/debugging.
 - Narrowed [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) to the iterative loop, termination policy, and aggregate-result contract, with package-level and routine-level POD added while landing that split.
