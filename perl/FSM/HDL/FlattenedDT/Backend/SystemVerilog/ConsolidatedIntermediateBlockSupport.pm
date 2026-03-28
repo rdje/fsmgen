@@ -28,7 +28,9 @@ projection of the prepared block contract consumed by the narrowed emitter
 
 The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport>
-keeps collection and normalization, the paired
+keeps collection and merge, the paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateNormalizationSupport>
+keeps runtime metadata normalization, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlanningSupport>
 keeps dependency-aware planning, and the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter>

@@ -283,7 +283,15 @@ ok(
 );
 ok(
     $hdl->{backend_sv_consolidated_intermediate_support}->can('collect_consolidated_intermediate_signals'),
-    'live SystemVerilog consolidated intermediate support owns merged signal collection and normalization',
+    'live SystemVerilog consolidated intermediate support owns merged signal collection and handoff into normalization',
+);
+ok(
+    !$hdl->{backend_sv_consolidated_intermediate_support}->can('normalize_consolidated_intermediate_metadata'),
+    'live SystemVerilog consolidated intermediate support no longer keeps runtime metadata normalization inline',
+);
+ok(
+    $hdl->{backend_sv_consolidated_intermediate_normalization_support}->can('normalize_consolidated_intermediate_metadata'),
+    'live SystemVerilog consolidated intermediate normalization support owns runtime metadata normalization',
 );
 ok(
     $hdl->{backend_sv_consolidated_intermediate_selection_support}->can('filter_consolidated_signals'),

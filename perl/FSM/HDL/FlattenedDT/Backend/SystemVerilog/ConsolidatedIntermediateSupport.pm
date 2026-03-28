@@ -2,11 +2,11 @@ package FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateS
 
 =head1 NAME
 
-FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport - Own direct consolidated intermediate collection and normalization support
+FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport - Own direct consolidated intermediate collection and merge support
 
 =head1 DESCRIPTION
 
-This package owns the non-emission half of the direct consolidated
+This package owns the collection half of the direct consolidated
 intermediate-signal flow for the older SystemVerilog backend. It centralizes:
 
 =over 4
@@ -20,21 +20,18 @@ pre-emission tracing of available FSM-level signal inventory
 collection and merge of AST-factorized, pre-scanned, and FSMGen-parsed
 intermediate signals
 
-=item *
-
-runtime-AST, width, dependency, rendered-expression, and live-usage
-normalization over the consolidated signal set
-
 =back
 
 The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter>
 now keeps final HDL emission, the paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateNormalizationSupport>
+now keeps runtime metadata normalization, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlanningSupport>
 keeps dependency-aware rescue/filter/order planning, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport>
 now owns the collection-plus-planning handoff for one prepared block, and this
-package owns preparation of the normalized consolidated signal set.
+package owns collection and merge preparation before normalization.
 
 =cut
 
@@ -314,67 +311,12 @@ sub merge_fsmgen_parsed_intermediate_signals ($self, $all_intermediate_signals, 
     fsm_debug("CONSOL_INTER_SIG: [FSMGEN_SIGNALS] Found $fsmgen_intermediate_count intermediate signals from FSMGenFull parsing", 3);
 }
 
-=head2 normalize_consolidated_intermediate_metadata
-
-Normalize runtime ASTs, widths, dependencies, rendered expressions, and
-live-usage metadata across the consolidated signal set so downstream phases can
-consume one AST-first cache.
-
-=cut
-
-sub normalize_consolidated_intermediate_metadata ($self, $all_intermediate_signals) {
-    my $ctx = $self->{flattened_dt};
-    my $recovery_support = $ctx->{backend_sv_intermediate_recovery_support};
-    my $width_support = $ctx->{backend_sv_intermediate_width_support};
-
-    for my $signal_name (keys %$all_intermediate_signals) {
-        my $signal_info = $all_intermediate_signals->{$signal_name};
-        my $runtime_ast = $recovery_support->resolve_intermediate_signal_runtime_ast($signal_name, $signal_info);
-        if ($runtime_ast && blessed($runtime_ast)) {
-            fsm_debug("CONSOL_INTER_SIG: [RUNTIME_AST] '$signal_name' normalized via " . ($signal_info->{runtime_ast_source} || 'runtime_ast'), 3);
-        } else {
-            fsm_debug("CONSOL_INTER_SIG: [RUNTIME_AST] '$signal_name' still lacks AST; compatibility fallback remains", 3);
-        }
-    }
-
-    for my $signal_name (keys %$all_intermediate_signals) {
-        my $signal_info = $all_intermediate_signals->{$signal_name};
-        my $resolved_width = $width_support->resolve_intermediate_signal_width($signal_name, $signal_info, $all_intermediate_signals);
-        $signal_info->{width} = $resolved_width;
-        fsm_debug("CONSOL_INTER_SIG: [WIDTH] '$signal_name' width normalized to $resolved_width", 3);
-    }
-
-    for my $signal_name (keys %$all_intermediate_signals) {
-        my $signal_info = $all_intermediate_signals->{$signal_name};
-        my @dependencies = $recovery_support->resolve_intermediate_signal_dependencies($signal_name, $signal_info);
-        my $dependency_summary = @dependencies ? join(', ', @dependencies) : 'none';
-        fsm_debug("CONSOL_INTER_SIG: [DEPENDENCIES] '$signal_name' => $dependency_summary via " . ($signal_info->{dependency_source} || 'none'), 3);
-    }
-
-    for my $signal_name (keys %$all_intermediate_signals) {
-        my $signal_info = $all_intermediate_signals->{$signal_name};
-        my $rendered_expression = $recovery_support->render_intermediate_signal_expression($signal_name, $signal_info);
-        my $render_source = $signal_info->{rendered_expression_source} || 'none';
-        if (defined($rendered_expression) && $rendered_expression ne '') {
-            fsm_debug("CONSOL_INTER_SIG: [RENDER] '$signal_name' cached via $render_source", 3);
-        } else {
-            fsm_debug("CONSOL_INTER_SIG: [RENDER] '$signal_name' has no cached renderable expression", 3);
-        }
-    }
-
-    for my $signal_name (keys %$all_intermediate_signals) {
-        my $signal_info = $all_intermediate_signals->{$signal_name};
-        my $live_usage = $ctx->{enable_graph_factorization_support}->resolve_intermediate_signal_live_usage($signal_name, $signal_info);
-        my $usage_summary = $live_usage->{evidence_state} || 'none';
-        fsm_debug("CONSOL_INTER_SIG: [LIVE_USAGE] '$signal_name' => $usage_summary via " . ($live_usage->{source} || 'ast_live_usage_metadata'), 3);
-    }
-}
-
 =head2 collect_consolidated_intermediate_signals
 
 Build the consolidated intermediate-signal set for the direct backend by
 merging first-pass factorization, pre-scan references, and FSMGen-parsed
-intermediate carriers, then normalizing the resulting metadata for emission.
+intermediate carriers, then delegating normalized metadata preparation to the
+extracted normalization owner.
 
 =cut
 
@@ -399,7 +341,8 @@ sub collect_consolidated_intermediate_signals ($self, $fsm_module) {
     $self->merge_ast_factorization_signals(\%all_intermediate_signals, $ast_intermediate_signals);
     $self->merge_prescan_intermediate_signals(\%all_intermediate_signals);
     $self->merge_fsmgen_parsed_intermediate_signals(\%all_intermediate_signals, $fsm_module);
-    $self->normalize_consolidated_intermediate_metadata(\%all_intermediate_signals);
+    $ctx->{backend_sv_consolidated_intermediate_normalization_support}
+        ->normalize_consolidated_intermediate_metadata(\%all_intermediate_signals);
 
     return \%all_intermediate_signals;
 }
@@ -433,14 +376,10 @@ set when first-pass factorization did not already produce them.
 Merges FSMGen-parsed intermediate carriers with native driving ASTs into the
 consolidated signal set.
 
-=head2 normalize_consolidated_intermediate_metadata
-
-Normalizes runtime ASTs, widths, dependencies, rendered expressions, and
-live-usage metadata over the consolidated signal set.
-
 =head2 collect_consolidated_intermediate_signals
 
-Builds the fully merged and normalized consolidated signal set that the
-emitter later filters, orders, and renders.
+Builds the fully merged consolidated signal set, then asks the extracted
+normalization owner to prepare the runtime metadata that the downstream
+selection, planning, and emission owners consume.
 
 =cut

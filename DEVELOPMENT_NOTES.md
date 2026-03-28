@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: consolidated intermediate normalization now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling runtime metadata normalization out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm) instead of leaving merged-signal collection and normalized metadata preparation fused together in one oversized backend owner.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSupport.pm) as the owner of runtime AST, width, dependency, rendered-expression, and live-usage normalization over the merged consolidated intermediate set,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm) to trace plus merged-signal collection with a final handoff into the normalization owner,
+  - tightened [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) POD so the block-preparation contract names collection and normalization as separate neighbors,
+  - added [t/225-systemverilog-consolidated-intermediate-normalization-support.t](/Users/richarddje/Documents/github/fsmgen/t/225-systemverilog-consolidated-intermediate-normalization-support.t),
+  - tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `91`-file / `90`-package snapshot.
+- Why this is worth shipping:
+  - it shrinks the biggest live owner in the consolidated-intermediate cluster instead of just moving another tiny helper,
+  - it makes the stage read more honestly as `collect -> normalize -> select -> plan -> prepare -> render`,
+  - and it keeps the next seam focused on the remaining lower-level coordination inside selection, planning, block preparation, and final emission.
+
 ## 2026-03-28: consolidated intermediate stage generation now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the direct consolidated-intermediate stage handoff out of [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) instead of leaving that runtime stage coordinated inline after block preparation and render ownership were already split out.
 - Landed behavior:
