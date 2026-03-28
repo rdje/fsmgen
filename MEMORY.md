@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-28: direct intermediate filter heuristics now have a dedicated backend owner
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm) now owns AST-aware keep/filter heuristics, runtime-AST-miss live-usage fallback, and the small AST-shape predicates for the direct intermediate-signal path,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) is now narrowed to consolidated-signal filter dispatch over recovery lookup plus that extracted policy owner,
+  - and [t/216-systemverilog-intermediate-signal-filter-policy-support.t](/Users/richarddje/Documents/github/fsmgen/t/216-systemverilog-intermediate-signal-filter-policy-support.t) plus the tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) now lock that backend split directly.
+- Important continuity note:
+  - the next likely seam is no longer “who owns the AST-vs-runtime filter heuristics,”
+  - it is the remaining post-factorization loop/planning/emission gravity around [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm), and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm),
+  - and the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) should now be read as “the direct intermediate path is split into recovery, filter heuristics, filter dispatch, consolidated preparation, consolidated planning, and final emission.”
+
 ## 2026-03-28: consolidated intermediate planning now has a dedicated backend owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) now owns dependency-map construction, dependency-aware rescue/filter planning, and dependency-safe emission ordering for consolidated intermediates,

@@ -306,8 +306,28 @@ ok(
     'live SystemVerilog intermediate recovery support owns width normalization',
 );
 ok(
+    $hdl->{backend_sv_intermediate_filter_policy_support}->can('should_filter_ast_based'),
+    'live SystemVerilog intermediate filter-policy support owns AST-aware keep/filter heuristics',
+);
+ok(
+    $hdl->{backend_sv_intermediate_filter_policy_support}->can('should_filter_runtime_ast_miss'),
+    'live SystemVerilog intermediate filter-policy support owns runtime-AST-miss fallback heuristics',
+);
+ok(
+    $hdl->{backend_sv_intermediate_filter_policy_support}->can('is_simple_negation'),
+    'live SystemVerilog intermediate filter-policy support owns simple-negation shape checks',
+);
+ok(
+    $hdl->{backend_sv_intermediate_filter_policy_support}->can('is_simple_comparison'),
+    'live SystemVerilog intermediate filter-policy support owns simple-comparison shape checks',
+);
+ok(
     $hdl->{backend_sv_intermediate_support}->can('should_filter_consolidated_signal'),
-    'live SystemVerilog intermediate support narrows to filter policy over normalized metadata',
+    'live SystemVerilog intermediate support narrows to consolidated-signal filter dispatch',
+);
+ok(
+    !$hdl->{backend_sv_intermediate_support}->can('should_filter_ast_based'),
+    'live SystemVerilog intermediate support no longer keeps AST-aware heuristics inline',
 );
 ok(
     !$hdl->{backend_sv_consolidated_intermediate}->can('topologically_sort_signals'),

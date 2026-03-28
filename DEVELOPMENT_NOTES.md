@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: direct intermediate filter heuristics now have a dedicated backend owner
+- Continued the active `R11` backend-breakdown lane by pulling the real AST-aware/runtime-fallback filter heuristics out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) instead of leaving the consolidated-signal dispatcher mixed together with the actual keep/filter decision family.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm) as the owner of AST-aware filter heuristics, runtime-AST-miss live-usage fallback, and the small AST-shape predicates used by that path,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) to instantiate that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) to consolidated-signal filter dispatch over recovery lookup plus the extracted policy owner,
+  - added [t/216-systemverilog-intermediate-signal-filter-policy-support.t](/Users/richarddje/Documents/github/fsmgen/t/216-systemverilog-intermediate-signal-filter-policy-support.t),
+  - and tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) so the backend owner boundary is locked honestly.
+- Why this is worth shipping:
+  - it turns “what metadata do we have?” and “what heuristics decide whether to keep it?” into separate owners instead of one muddy backend package,
+  - it narrows the existing intermediate-signal support package to the dispatcher role it was already behaving like in the surrounding architecture,
+  - and it keeps the next seam honest: remaining post-factorization loop/planning/emission gravity rather than more AST-vs-runtime filter splitting.
+
 ## 2026-03-28: consolidated intermediate planning now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling dependency-map construction, dependency-aware rescue/filter planning, and emission ordering out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) instead of leaving merged-signal planning and final HDL emission mixed together.
 - Landed behavior:

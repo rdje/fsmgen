@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-28
+### direct intermediate filter heuristics now have a dedicated backend owner
+- Added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm) as the owner of AST-aware keep/filter heuristics, runtime-AST-miss live-usage fallback, and the small AST-shape predicates used by the direct intermediate-signal path.
+- Updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) so the live backend now instantiates that owner explicitly and narrows the existing support package to consolidated-signal filter dispatch over recovery lookup plus the extracted policy owner.
+- Added [t/216-systemverilog-intermediate-signal-filter-policy-support.t](/Users/richarddje/Documents/github/fsmgen/t/216-systemverilog-intermediate-signal-filter-policy-support.t), tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t), and refreshed the live architecture/roadmap notes.
+
 ### consolidated intermediate planning now has a dedicated backend owner
 - Added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) as the owner of dependency-map construction, dependency-aware rescue/filter planning, and dependency-safe emission ordering for the direct consolidated intermediate path.
 - Updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) so the live backend now instantiates and uses that owner directly, while the emitter narrows to final wire/assign emission from the extracted plan.
