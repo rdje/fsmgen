@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-28: fixpoint pass execution now has a dedicated factorization owner
+- Saved shipped behavior:
+  - [perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm) now owns one-pass factorizer construction, repeated-signature short-circuit detection, and per-pass substitution/update execution,
+  - [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) is now narrowed further to the outer loop, pass-cap, and aggregate-result contract,
+  - and [t/217-factorization-fixpoint-pass-execution-support.t](/Users/richarddje/Documents/github/fsmgen/t/217-factorization-fixpoint-pass-execution-support.t) now locks the extracted owner directly against the prepared no-new-candidate and repeated-signature paths.
+- Important continuity note:
+  - the next likely seam is no longer “who owns one prepared second-pass execution,”
+  - it is the remaining aggregate termination/policy gravity in [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) plus the downstream direct-backend planning/emission convergence,
+  - and the live import-tree note in [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) should now be read as “the direct fixpoint path is split into outer loop, pass execution, and pass helpers.”
+
 ## 2026-03-28: direct intermediate filter heuristics now have a dedicated backend owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm) now owns AST-aware keep/filter heuristics, runtime-AST-miss live-usage fallback, and the small AST-shape predicates for the direct intermediate-signal path,

@@ -24,11 +24,17 @@ termination policy and aggregate result reporting
 delegation of per-pass signal-processing helpers to
 C<FSM::HDL::Factorization::Fixpoint::PassSupport>
 
+=item *
+
+delegation of one-pass execution to
+C<FSM::HDL::Factorization::Fixpoint::PassExecutionSupport>
+
 =back
 
 The paired pass-support owner now keeps signature building, collision
-resolution, and new-signal projection, while this package owns the loop and
-termination contract.
+resolution, and new-signal projection; the paired pass-execution owner now
+keeps one-pass factorizer execution, substitution, and update work; and this
+package owns the outer loop and aggregate termination contract.
 
 =cut
 
@@ -39,7 +45,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
 use FSM::Debug;
-use FSM::HDL::ASTFactorization;
+use FSM::HDL::Factorization::Fixpoint::PassExecutionSupport;
 use FSM::HDL::Factorization::Fixpoint::PassSupport;
 
 =head2 new
@@ -52,11 +58,16 @@ specific C<FSM::HDL::FlattenedDT> backend context.
 sub new ($class, %args) {
     my $flattened_dt = $args{flattened_dt}
       or die "[Fixpoint.pm][new()] Missing required 'flattened_dt' argument";
+    my $pass_support = FSM::HDL::Factorization::Fixpoint::PassSupport->new(
+        flattened_dt => $flattened_dt,
+    );
 
     return bless {
         flattened_dt => $flattened_dt,
-        pass_support => FSM::HDL::Factorization::Fixpoint::PassSupport->new(
+        pass_support => $pass_support,
+        pass_execution_support => FSM::HDL::Factorization::Fixpoint::PassExecutionSupport->new(
             flattened_dt => $flattened_dt,
+            pass_support => $pass_support,
         ),
     }, $class;
 }
@@ -72,6 +83,7 @@ reached.
 sub run_post_substitution_factorization ($self, %args) {
     my $ctx = $self->{flattened_dt};
     my $pass_support = $self->{pass_support};
+    my $pass_execution_support = $self->{pass_execution_support};
     my $primary_factorizer = $args{primary_factorizer};
     my $max_pass_number = $args{max_passes} // $ctx->{factorization_fixpoint_max_passes} // 16;
 
@@ -91,77 +103,30 @@ sub run_post_substitution_factorization ($self, %args) {
     for (my $pass_number = 2; $pass_number <= $max_pass_number; $pass_number++) {
         fsm_debug("[Fixpoint.pm][run_post_substitution_factorization()] Starting pass $pass_number", 3);
 
-        my $pass_factorizer = FSM::HDL::ASTFactorization->new(
-            min_usage_count => 2,
-            debug => debug_enabled(),
-            debug_level => 3,
-        );
-
-        my $fed_count = $ctx->{enable_graph_factorization_policy_support}->feed_current_asts_to_second_pass($pass_factorizer);
-        fsm_debug("[Fixpoint.pm][run_post_substitution_factorization()] Pass $pass_number fed $fed_count expression(s)", 3);
-        if ($fed_count == 0) {
-            $termination_reason = 'no_factorizable_post_substitution_expressions';
-            last PASS_LOOP;
-        }
-
-        my $signature = $pass_support->build_expression_signature($pass_factorizer);
-        if (exists $seen_signatures{$signature}) {
-            $termination_reason = 'repeated_input_signature';
-            fsm_debug("[Fixpoint.pm][run_post_substitution_factorization()] Pass $pass_number repeated expression signature, terminating", 3);
-            last PASS_LOOP;
-        }
-        $seen_signatures{$signature} = 1;
-
-        my $pass_result = $pass_factorizer->analyze_and_factorize();
-        my $pass_signals = $pass_result->{intermediate_signals} || {};
-
-        fsm_debug("[Fixpoint.pm][run_post_substitution_factorization()] Pass $pass_number results: total=$pass_result->{total_expressions}, unique=$pass_result->{unique_structures}, candidates=$pass_result->{factorization_candidates}", 3);
-
-        if (!%{$pass_signals}) {
-            $termination_reason = 'no_new_factorization_candidates';
-            last PASS_LOOP;
-        }
-
-        $pass_support->rename_colliding_pass_signals(
-            $pass_signals,
-            \%all_additional_signals,
-            $primary_intermediate_signals,
+        my $pass_outcome = $pass_execution_support->run_factorization_pass(
             pass_number => $pass_number,
+            primary_intermediate_signals => $primary_intermediate_signals,
+            all_additional_signals => \%all_additional_signals,
+            seen_signatures => \%seen_signatures,
         );
 
-        my $new_unique_signals = $pass_support->select_new_unique_signals(
-            $pass_signals,
-            \%all_additional_signals,
-            $primary_intermediate_signals,
-        );
-
-        my $new_signal_count = scalar(keys %{$new_unique_signals});
-        if ($new_signal_count == 0) {
-            $termination_reason = 'no_unique_new_intermediate_signals';
+        if ($pass_outcome->{status} eq 'terminate') {
+            $termination_reason = $pass_outcome->{termination_reason};
             last PASS_LOOP;
         }
 
-        $pass_support->log_new_unique_signals($new_unique_signals, pass_number => $pass_number);
+        $total_substitution_count += $pass_outcome->{substitution_count};
+        $total_update_count += $pass_outcome->{update_count};
 
-        my $substitution_count = $pass_factorizer->substitute_expressions_with_intermediate_signals(
-            $pass_factorizer->{ast_expressions},
-        );
-        $total_substitution_count += $substitution_count;
-        fsm_debug("[Fixpoint.pm][run_post_substitution_factorization()] Pass $pass_number substitutions: $substitution_count", 3);
-
-        my $update_count = $ctx->{enable_graph_factorization_support}->update_original_asts_with_second_pass_substitutions($pass_factorizer);
-        $total_update_count += $update_count;
-        fsm_debug("[Fixpoint.pm][run_post_substitution_factorization()] Pass $pass_number original AST updates: $update_count", 3);
-
-        for my $signal_name (sort keys %{$new_unique_signals}) {
-            $all_additional_signals{$signal_name} = $new_unique_signals->{$signal_name};
-            $primary_intermediate_signals->{$signal_name} = $new_unique_signals->{$signal_name};
+        for my $signal_name (sort keys %{$pass_outcome->{new_unique_signals}}) {
+            $all_additional_signals{$signal_name} = $pass_outcome->{new_unique_signals}{$signal_name};
+            $primary_intermediate_signals->{$signal_name} = $pass_outcome->{new_unique_signals}{$signal_name};
         }
 
         $passes_run++;
 
-        if ($substitution_count == 0) {
-            $termination_reason = "no_substitution_progress_pass_$pass_number";
+        if ($pass_outcome->{status} eq 'terminate_after_accept') {
+            $termination_reason = $pass_outcome->{termination_reason};
             last PASS_LOOP;
         }
     }

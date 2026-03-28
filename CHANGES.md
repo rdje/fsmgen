@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-28
+### fixpoint pass execution now has a dedicated factorization owner
+- Added [perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm) as the owner of one-pass factorizer construction, repeated-signature short-circuit detection, and per-pass substitution/update execution for the iterative post-substitution factorization path.
+- Updated [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) so the live fixpoint owner now delegates one-pass execution there and narrows to the outer loop, pass-cap, and aggregate-result contract.
+- Added [t/217-factorization-fixpoint-pass-execution-support.t](/Users/richarddje/Documents/github/fsmgen/t/217-factorization-fixpoint-pass-execution-support.t) and refreshed the live architecture/roadmap notes.
+
 ### direct intermediate filter heuristics now have a dedicated backend owner
 - Added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalFilterPolicySupport.pm) as the owner of AST-aware keep/filter heuristics, runtime-AST-miss live-usage fallback, and the small AST-shape predicates used by the direct intermediate-signal path.
 - Updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) so the live backend now instantiates that owner explicitly and narrows the existing support package to consolidated-signal filter dispatch over recovery lookup plus the extracted policy owner.

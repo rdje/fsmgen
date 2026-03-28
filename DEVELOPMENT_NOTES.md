@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-28: fixpoint pass execution now has a dedicated factorization owner
+- Continued the active `R11` backend-breakdown lane by pulling the one-pass execution body out of [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) instead of leaving factorizer construction, repeated-signature short-circuiting, and per-pass substitution/update work mixed into the same package as the outer loop and aggregate termination contract.
+- Landed behavior:
+  - added [perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm) as the owner of the one-pass execution family,
+  - narrowed [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm) to the outer loop, pass-cap, and aggregate-result contract while keeping package-level and routine-level POD honest,
+  - added [t/217-factorization-fixpoint-pass-execution-support.t](/Users/richarddje/Documents/github/fsmgen/t/217-factorization-fixpoint-pass-execution-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) plus the roadmap/history notes so the fixpoint split is saved accurately.
+- Why this is worth shipping:
+  - it turns “run one pass” into a real owner instead of leaving that body buried inside the loop package,
+  - it leaves `Fixpoint` reading more honestly as outer orchestration plus aggregate termination policy,
+  - and it keeps the next seam honest: the remaining post-factorization convergence work is no longer hidden in the one-pass body.
+
 ## 2026-03-28: direct intermediate filter heuristics now have a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling the real AST-aware/runtime-fallback filter heuristics out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm) instead of leaving the consolidated-signal dispatcher mixed together with the actual keep/filter decision family.
 - Landed behavior:
