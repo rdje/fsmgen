@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-29: consolidated intermediate dependency mechanics now have a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling dependency-map construction plus dependency-safe ordering out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) instead of leaving graph mechanics mixed together with overall plan composition.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm) as the owner of consolidated dependency-map construction plus dependency-safe ordering,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) to overall plan composition over the extracted selection and dependency owners,
+  - added [t/227-systemverilog-consolidated-intermediate-dependency-support.t](/Users/richarddje/Documents/github/fsmgen/t/227-systemverilog-consolidated-intermediate-dependency-support.t),
+  - retargeted [t/215-systemverilog-consolidated-intermediate-planning-support.t](/Users/richarddje/Documents/github/fsmgen/t/215-systemverilog-consolidated-intermediate-planning-support.t) so it now locks the narrowed planning owner against the new dependency seam,
+  - tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `93`-file / `92`-package snapshot.
+- Why this is worth shipping:
+  - it makes the consolidated backend stage read more honestly as `collect -> normalize -> classify -> rescue/select -> dependency graph -> plan -> prepare -> render`,
+  - it removes another mixed-responsibility pocket from the planning owner instead of just renaming it,
+  - and it narrows the next seam to the remaining coordination between plan composition, block preparation, and final emission rather than the already-extracted graph mechanics.
+
 ## 2026-03-28: consolidated intermediate classification now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the initial AST-first keep/filter pass out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm) instead of leaving first-pass classification mixed together with dependency rescue and final kept/filtered summary projection.
 - Landed behavior:

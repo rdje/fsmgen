@@ -314,8 +314,24 @@ ok(
     'live SystemVerilog consolidated intermediate declaration support owns prepared wire declaration rendering',
 );
 ok(
+    $hdl->{backend_sv_consolidated_intermediate_dependency_support}->can('build_signal_dependencies'),
+    'live SystemVerilog consolidated intermediate dependency support owns dependency-map construction',
+);
+ok(
+    $hdl->{backend_sv_consolidated_intermediate_dependency_support}->can('topologically_sort_signals'),
+    'live SystemVerilog consolidated intermediate dependency support owns dependency-safe ordering',
+);
+ok(
     $hdl->{backend_sv_consolidated_intermediate_planning_support}->can('plan_consolidated_intermediate_signals'),
-    'live SystemVerilog consolidated intermediate planning support owns dependency-aware ordering and overall plan composition',
+    'live SystemVerilog consolidated intermediate planning support owns overall plan composition over selection and dependency owners',
+);
+ok(
+    !$hdl->{backend_sv_consolidated_intermediate_planning_support}->can('build_signal_dependencies'),
+    'live SystemVerilog consolidated intermediate planning support no longer keeps dependency-map construction inline',
+);
+ok(
+    !$hdl->{backend_sv_consolidated_intermediate_planning_support}->can('topologically_sort_signals'),
+    'live SystemVerilog consolidated intermediate planning support no longer keeps dependency-safe ordering inline',
 );
 ok(
     !$hdl->{backend_sv_consolidated_intermediate_planning_support}->can('filter_consolidated_signals'),

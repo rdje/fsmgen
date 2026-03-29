@@ -50,7 +50,7 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlann
 }
 
 {
-    package Local::FakeRecoverySupport;
+    package Local::FakeDependencySupport;
     use v5.20;
     use strict;
     use warnings;
@@ -61,14 +61,20 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlann
         return bless {}, $class;
     }
 
-    sub resolve_intermediate_signal_dependencies ($self, $signal_name, $signal_info) {
-        return @{ $signal_info->{dependency_signal_names} || [] };
+    sub build_signal_dependencies ($self, $all_intermediate_signals) {
+        return {
+            kept_parent => ['rescued_dep'],
+        };
+    }
+
+    sub topologically_sort_signals ($self, $filtered_signals, $signal_dependencies) {
+        return ('rescued_dep', 'kept_parent');
     }
 }
 
-subtest 'consolidated intermediate planning support rebuilds dependency-aware ordering from normalized metadata and delegated selection' => sub {
+subtest 'consolidated intermediate planning support rebuilds overall plan composition from delegated dependency and selection owners' => sub {
     my $fake_backend = {
-        backend_sv_intermediate_recovery_support => Local::FakeRecoverySupport->new(),
+        backend_sv_consolidated_intermediate_dependency_support => Local::FakeDependencySupport->new(),
         backend_sv_consolidated_intermediate_selection_support => Local::FakeSelectionSupport->new(),
     };
     my $support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlanningSupport->new(
@@ -101,7 +107,7 @@ subtest 'consolidated intermediate planning support rebuilds dependency-aware or
     is_deeply(
         $plan->{signal_dependencies},
         { kept_parent => ['rescued_dep'] },
-        'planning support builds the dependency map from normalized metadata',
+        'planning support delegates dependency-map construction to the extracted dependency owner',
     );
     ok(
         exists $plan->{filtered_signals}{kept_parent},
@@ -136,7 +142,7 @@ subtest 'consolidated intermediate planning support rebuilds dependency-aware or
     is_deeply(
         $plan->{sorted_signals},
         ['rescued_dep', 'kept_parent'],
-        'planning support orders rescued dependencies ahead of dependent kept signals',
+        'planning support delegates dependency-safe ordering to the extracted dependency owner',
     );
 };
 
