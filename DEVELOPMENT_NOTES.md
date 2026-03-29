@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-29: prepared consolidated intermediate block projection now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling prepared block-contract projection out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) instead of leaving collection-plus-planning coordination mixed together with final prepared-block assembly.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm) as the owner of prepared consolidated block-contract projection,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) to collection plus planning handoff into the new prepared-block owner,
+  - added [t/228-systemverilog-consolidated-intermediate-prepared-block-support.t](/Users/richarddje/Documents/github/fsmgen/t/228-systemverilog-consolidated-intermediate-prepared-block-support.t),
+  - retargeted [t/219-systemverilog-consolidated-intermediate-block-support.t](/Users/richarddje/Documents/github/fsmgen/t/219-systemverilog-consolidated-intermediate-block-support.t) so it now locks the narrowed block owner against the extracted collection, planning, and prepared-block owners,
+  - tightened [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `94`-file / `93`-package snapshot.
+- Why this is worth shipping:
+  - it makes the direct consolidated backend read more honestly as `collect -> normalize -> classify -> rescue/select -> dependency-map/order -> plan -> block handoff -> prepared block projection -> render`,
+  - it removes one more mixed-responsibility pocket from the block owner instead of just renaming it,
+  - and it narrows the next seam to the remaining coordination between block handoff, stage generation, and final emission rather than the already-extracted prepared contract assembly.
+
 ## 2026-03-29: consolidated intermediate dependency mechanics now have a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling dependency-map construction plus dependency-safe ordering out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm) instead of leaving graph mechanics mixed together with overall plan composition.
 - Landed behavior:

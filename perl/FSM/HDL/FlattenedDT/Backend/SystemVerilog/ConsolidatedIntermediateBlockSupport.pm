@@ -20,10 +20,6 @@ prepared backend context
 
 planning handoff into the extracted dependency-aware rescue/filter/order owner
 
-=item *
-
-projection of the prepared block contract consumed by the narrowed emitter
-
 =back
 
 The paired
@@ -32,7 +28,9 @@ keeps collection and merge, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateNormalizationSupport>
 keeps runtime metadata normalization, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlanningSupport>
-keeps dependency-aware planning, and the paired
+keeps dependency-aware planning, the paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePreparedBlockSupport>
+keeps prepared block-contract projection, and the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter>
 now narrows to final HDL rendering from the prepared block contract.
 
@@ -43,8 +41,6 @@ use strict;
 use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
-
-use FSM::Debug;
 
 =head2 new
 
@@ -64,8 +60,8 @@ sub new ($class, %args) {
 
 =head2 prepare_consolidated_intermediate_block
 
-Prepare the normalized consolidated intermediate block contract for one FSM
-module by composing the extracted collection and planning owners.
+Prepare one consolidated intermediate block handoff for one FSM module by
+composing the extracted collection, planning, and prepared-block owners.
 
 =cut
 
@@ -76,20 +72,8 @@ sub prepare_consolidated_intermediate_block ($self, $fsm_module) {
     my $plan = $ctx->{backend_sv_consolidated_intermediate_planning_support}
         ->plan_consolidated_intermediate_signals($all_intermediate_signals);
 
-    fsm_debug(
-        "[ConsolidatedIntermediateBlockSupport.pm][prepare_consolidated_intermediate_block()] Prepared consolidated block: total_signals="
-          . scalar(keys %{ $all_intermediate_signals || {} })
-          . ", kept="
-          . ($plan->{total_kept_count} || 0)
-          . ", ordered="
-          . scalar(@{ $plan->{sorted_signals} || [] }),
-        3,
-    );
-
-    return {
-        all_intermediate_signals => $all_intermediate_signals,
-        %{$plan},
-    };
+    return $ctx->{backend_sv_consolidated_intermediate_prepared_block_support}
+        ->build_prepared_consolidated_intermediate_block($all_intermediate_signals, $plan);
 }
 
 1;
@@ -105,7 +89,7 @@ C<FSM::HDL::FlattenedDT> backend context.
 
 =head2 prepare_consolidated_intermediate_block
 
-Prepares the normalized consolidated intermediate block contract for one FSM
-module by composing the extracted collection and planning owners.
+Prepares one consolidated intermediate block handoff for one FSM module by
+composing the extracted collection, planning, and prepared-block owners.
 
 =cut

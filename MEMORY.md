@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-29: prepared consolidated intermediate block projection now has a dedicated owner
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm) now owns prepared block-contract projection for the direct consolidated intermediate path,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) is now narrowed to collection-plus-planning handoff into that prepared-block owner,
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now records the measured post-change snapshot of `94` reachable project files and `93` reachable `.pm` packages.
+- Important continuity note:
+  - the next likely seam is no longer prepared block-contract projection inside the direct consolidated intermediate path,
+  - it is the remaining lower-level coordination across block handoff, stage generation, and final emission,
+  - and future sessions should now read that backend stage as “collect, normalize, classify, rescue/select, dependency-map/order, plan, hand off the block, project the prepared contract, and render.”
+
 ## 2026-03-29: consolidated intermediate dependency mechanics now have a dedicated owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm) now owns dependency-map construction plus dependency-safe ordering for the direct consolidated intermediate path,

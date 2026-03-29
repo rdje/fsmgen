@@ -47,7 +47,20 @@ FSM
         flattened_dt => $prepared_backend,
     );
 
+    my $all_intermediate_signals = $prepared_backend->{backend_sv_consolidated_intermediate_support}
+        ->collect_consolidated_intermediate_signals($fsm_module);
+    my $plan = $prepared_backend->{backend_sv_consolidated_intermediate_planning_support}
+        ->plan_consolidated_intermediate_signals($all_intermediate_signals);
+    my $expected_block = $prepared_backend->{backend_sv_consolidated_intermediate_prepared_block_support}
+        ->build_prepared_consolidated_intermediate_block($all_intermediate_signals, $plan);
+
     my $block = $support->prepare_consolidated_intermediate_block($fsm_module);
+
+    is_deeply(
+        $block,
+        $expected_block,
+        'block support rebuilds the prepared block handoff from the extracted collection, planning, and prepared-block owners',
+    );
 
     ok(
         exists $block->{all_intermediate_signals}{A_or_B},

@@ -338,8 +338,16 @@ ok(
     'live SystemVerilog consolidated intermediate planning support no longer keeps keep/filter/rescue selection inline',
 );
 ok(
+    $hdl->{backend_sv_consolidated_intermediate_prepared_block_support}->can('build_prepared_consolidated_intermediate_block'),
+    'live SystemVerilog prepared block support owns prepared consolidated block-contract projection',
+);
+ok(
     $hdl->{backend_sv_consolidated_intermediate_block_support}->can('prepare_consolidated_intermediate_block'),
-    'live SystemVerilog consolidated intermediate block support owns collection-plus-planning handoff for one prepared block',
+    'live SystemVerilog consolidated intermediate block support owns collection-plus-planning handoff into prepared block projection for one direct backend block',
+);
+ok(
+    !$hdl->{backend_sv_consolidated_intermediate_block_support}->can('build_prepared_consolidated_intermediate_block'),
+    'live SystemVerilog consolidated intermediate block support no longer keeps prepared block-contract projection inline',
 );
 ok(
     $hdl->{backend_sv_consolidated_intermediate_generation_support}->can('generate_consolidated_intermediate_block'),
