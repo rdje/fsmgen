@@ -10,7 +10,6 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport;
 use FSM::Pipeline::SourceFrontend;
@@ -45,9 +44,6 @@ FSM
     );
 
     my $prepared_backend = prepare_flattened_backend($fsm_module);
-    my $block_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport->new(
-        flattened_dt => $prepared_backend,
-    );
     my $emitter = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter->new(
         flattened_dt => $prepared_backend,
     );
@@ -55,14 +51,19 @@ FSM
         flattened_dt => $prepared_backend,
     );
 
-    my $prepared_block = $block_support->prepare_consolidated_intermediate_block($fsm_module);
+    my $all_intermediate_signals = $prepared_backend->{backend_sv_consolidated_intermediate_support}
+        ->collect_consolidated_intermediate_signals($fsm_module);
+    my $plan = $prepared_backend->{backend_sv_consolidated_intermediate_planning_support}
+        ->plan_consolidated_intermediate_signals($all_intermediate_signals);
+    my $prepared_block = $prepared_backend->{backend_sv_consolidated_intermediate_prepared_block_support}
+        ->build_prepared_consolidated_intermediate_block($all_intermediate_signals, $plan);
     my $expected_block = $emitter->render_consolidated_intermediate_block($prepared_block);
     my $generated_block = $generation_support->generate_consolidated_intermediate_block($fsm_module);
 
     is(
         $generated_block,
         $expected_block,
-        'generation support rebuilds the same full consolidated block as explicit block preparation plus final emitter rendering',
+        'generation support rebuilds the same full consolidated block as explicit collection, planning, prepared-block projection, and final emitter rendering',
     );
 };
 

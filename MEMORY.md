@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-30: reusable library, semantic parameters, and phased intent-recovery start are now saved guidance
+- Saved direction:
+  - future reusable-library work should start as ordinary reusable `.fsm` assets flowing through the normal parser/IR/emitter path,
+  - that library should begin with a small curated gold set rather than a broad primitive zoo or magical builtins,
+  - future parameterization should use explicit semantic parameters plus explicit override binding that survives into IR rather than text/template preprocessing,
+  - and HDL import / intent recovery can start with design/probe work plus bounded round-trip experiments, but serious implementation should stay behind the active forward/backend cleanup and language-contract hardening.
+- Important continuity note:
+  - this was logged from explicit brainstorming and is saved as guidance, not as an immediate lane switch,
+  - future sessions should treat it as roadmap steering for when those lanes open, not as a command to stop `R11`.
+
+## 2026-03-30: live direct backend no longer instantiates the consolidated block compatibility shell
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) no longer instantiates `backend_sv_consolidated_intermediate_block_support`,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) now composes collection, planning, prepared-block projection, and final rendering directly,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) now survives only as a directly testable compatibility shell outside the live backend path,
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now records the measured post-change snapshot of `93` reachable project files and `92` reachable `.pm` packages.
+- Important continuity note:
+  - the next likely seam is no longer the old consolidated block shell,
+  - it is the remaining lower-level coordination across planning, prepared-block projection, stage generation, and final emission,
+  - and future sessions should read the direct consolidated-intermediate path as “collect, normalize, classify, rescue/select, dependency-map/order, plan, project the prepared block, and render,” with the old block shell outside the live runtime spine.
+
 ## 2026-03-29: prepared consolidated intermediate block projection now has a dedicated owner
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm) now owns prepared block-contract projection for the direct consolidated intermediate path,

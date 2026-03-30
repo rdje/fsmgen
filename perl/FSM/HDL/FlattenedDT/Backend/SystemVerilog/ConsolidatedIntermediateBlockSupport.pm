@@ -2,23 +2,20 @@ package FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateB
 
 =head1 NAME
 
-FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport - Own direct consolidated intermediate block preparation
+FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport - Compatibility shell for direct consolidated intermediate block preparation
 
 =head1 DESCRIPTION
 
-Owns the bounded preparation family for the older direct generated-module
-SystemVerilog consolidated intermediate block. This package centralizes:
+This package now survives as a narrow compatibility shell outside the live
+direct generated-module SystemVerilog backend path. It centralizes one
+directly testable wrapper:
 
 =over 4
 
 =item *
 
-collection of the normalized consolidated intermediate-signal set for one
-prepared backend context
-
-=item *
-
-planning handoff into the extracted dependency-aware rescue/filter/order owner
+rebuilding the prepared consolidated block handoff by composing the extracted
+collection, planning, and prepared-block projection owners
 
 =back
 
@@ -30,9 +27,10 @@ keeps runtime metadata normalization, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlanningSupport>
 keeps dependency-aware planning, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePreparedBlockSupport>
-keeps prepared block-contract projection, and the paired
-C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter>
-now narrows to final HDL rendering from the prepared block contract.
+keeps prepared block-contract projection, and the live
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport>
+package now composes those real owners directly instead of routing through
+this shell during normal backend generation.
 
 =cut
 
@@ -60,8 +58,9 @@ sub new ($class, %args) {
 
 =head2 prepare_consolidated_intermediate_block
 
-Prepare one consolidated intermediate block handoff for one FSM module by
-composing the extracted collection, planning, and prepared-block owners.
+Rebuild one prepared consolidated intermediate block handoff for one FSM
+module by composing the extracted collection, planning, and prepared-block
+owners.
 
 =cut
 
@@ -89,7 +88,8 @@ C<FSM::HDL::FlattenedDT> backend context.
 
 =head2 prepare_consolidated_intermediate_block
 
-Prepares one consolidated intermediate block handoff for one FSM module by
-composing the extracted collection, planning, and prepared-block owners.
+Rebuilds one prepared consolidated intermediate block handoff for one FSM
+module by composing the extracted collection, planning, and prepared-block
+owners.
 
 =cut

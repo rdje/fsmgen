@@ -10,7 +10,6 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateDeclarationSupport;
 use FSM::Pipeline::SourceFrontend;
 
@@ -39,14 +38,16 @@ FSM
     );
 
     my $hdl_generator = prepare_flattened_backend($fsm_module);
-    my $block_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport->new(
-        flattened_dt => $hdl_generator,
-    );
     my $declaration_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateDeclarationSupport->new(
         flattened_dt => $hdl_generator,
     );
 
-    my $prepared_block = $block_support->prepare_consolidated_intermediate_block($fsm_module);
+    my $all_intermediate_signals = $hdl_generator->{backend_sv_consolidated_intermediate_support}
+        ->collect_consolidated_intermediate_signals($fsm_module);
+    my $plan = $hdl_generator->{backend_sv_consolidated_intermediate_planning_support}
+        ->plan_consolidated_intermediate_signals($all_intermediate_signals);
+    my $prepared_block = $hdl_generator->{backend_sv_consolidated_intermediate_prepared_block_support}
+        ->build_prepared_consolidated_intermediate_block($all_intermediate_signals, $plan);
     my $declarations = $declaration_support->render_consolidated_intermediate_declarations($prepared_block);
     my $declared_signal = $prepared_block->{sorted_signals}[0];
 

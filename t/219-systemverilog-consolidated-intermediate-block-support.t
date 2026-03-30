@@ -13,7 +13,7 @@ use FSM::HDL::FlattenedDT;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'consolidated intermediate block support rebuilds the prepared block contract from a prepared backend context' => sub {
+subtest 'consolidated intermediate block support survives as a compatibility shell over the extracted prepared block owners' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_consolidated_block_support_contract',
         <<'FSM'

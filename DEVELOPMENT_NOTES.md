@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-30: reusable library, semantic parameters, and phased intent-recovery start are now logged explicitly
+- Captured the recent brainstorming exchange as explicit roadmap guidance instead of leaving it conversational only.
+- Saved direction:
+  - any future reusable-library lane should start as ordinary reusable `.fsm` assets flowing through the normal parser, IR, diagnostics, provenance, and backend path instead of magical builtins,
+  - that library should begin with a small curated gold set of broadly reusable control/dataflow helpers rather than a broad primitive zoo,
+  - any future generic/parameter lane should use explicit semantic parameters plus explicit override binding that survives into IR instead of a text/template preprocessor,
+  - and intent recovery/import can begin with design/probe work plus bounded round-trip experiments, but serious implementation should stay behind the active forward/backend cleanup and language-contract hardening so it targets a steadier semantic surface.
+- Why this is worth saving:
+  - it keeps a useful design discussion from becoming session-local memory only,
+  - it preserves the “brainstorming only” status honestly while still giving future sessions concrete steering,
+  - and it stops future work from drifting into builtin theater, macro systems, or premature import implementation.
+
+## 2026-03-30: live direct backend no longer instantiates the consolidated block compatibility shell
+- Continued the active `R11` backend-breakdown lane by removing one more no-longer-honest live owner instead of preserving it as runtime architecture theater.
+- Landed behavior:
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_consolidated_intermediate_block_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the live stage now composes collection, planning, prepared-block projection, and final rendering directly,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) to an honest compatibility-shell role outside the live backend path,
+  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t), [t/200-systemverilog-consolidated-intermediate-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/200-systemverilog-consolidated-intermediate-emitter.t), [t/219-systemverilog-consolidated-intermediate-block-support.t](/Users/richarddje/Documents/github/fsmgen/t/219-systemverilog-consolidated-intermediate-block-support.t), [t/222-systemverilog-consolidated-intermediate-assignment-support.t](/Users/richarddje/Documents/github/fsmgen/t/222-systemverilog-consolidated-intermediate-assignment-support.t), [t/223-systemverilog-consolidated-intermediate-declaration-support.t](/Users/richarddje/Documents/github/fsmgen/t/223-systemverilog-consolidated-intermediate-declaration-support.t), and [t/224-systemverilog-consolidated-intermediate-generation-support.t](/Users/richarddje/Documents/github/fsmgen/t/224-systemverilog-consolidated-intermediate-generation-support.t) so the direct-owner coverage reflects the real runtime path,
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `93`-file / `92`-package snapshot.
+- Why this is worth shipping:
+  - it removes one more fake live owner from the direct backend path,
+  - it makes the stage owner read truthfully as the place where collection/planning/prepared-block projection/final render are composed,
+  - and it narrows the next honest seam to the remaining planning/prepared-block/generation/emitter coordination instead of another compatibility shell.
+
 ## 2026-03-29: prepared consolidated intermediate block projection now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling prepared block-contract projection out of [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) instead of leaving collection-plus-planning coordination mixed together with final prepared-block assembly.
 - Landed behavior:

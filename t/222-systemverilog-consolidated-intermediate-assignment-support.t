@@ -11,7 +11,6 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateAssignmentSupport;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport;
 use FSM::Pipeline::SourceFrontend;
 
 subtest 'consolidated intermediate assignment support rebuilds prepared assign emission from a prepared backend context' => sub {
@@ -44,14 +43,16 @@ FSM
     );
 
     my $prepared_backend = prepare_flattened_backend($fsm_module);
-    my $block_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport->new(
-        flattened_dt => $prepared_backend,
-    );
     my $assignment_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateAssignmentSupport->new(
         flattened_dt => $prepared_backend,
     );
 
-    my $prepared_block = $block_support->prepare_consolidated_intermediate_block($fsm_module);
+    my $all_intermediate_signals = $prepared_backend->{backend_sv_consolidated_intermediate_support}
+        ->collect_consolidated_intermediate_signals($fsm_module);
+    my $plan = $prepared_backend->{backend_sv_consolidated_intermediate_planning_support}
+        ->plan_consolidated_intermediate_signals($all_intermediate_signals);
+    my $prepared_block = $prepared_backend->{backend_sv_consolidated_intermediate_prepared_block_support}
+        ->build_prepared_consolidated_intermediate_block($all_intermediate_signals, $plan);
     my $assignment_block = $assignment_support->render_consolidated_intermediate_assignments($prepared_block);
 
     like(
