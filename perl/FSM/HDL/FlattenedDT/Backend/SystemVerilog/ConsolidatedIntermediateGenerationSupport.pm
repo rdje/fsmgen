@@ -20,14 +20,15 @@ delegating to the extracted stage-preparation and rendering owners
 =back
 
 The paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStageSupport>
+now keeps the live stage-6 consolidated intermediate generation handoff for
+the direct backend path, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport>
 now keeps live prepared-block reconstruction over the extracted collection,
 planning, and prepared-block projection owners, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport>
 now keeps final prepared-block rendering over the extracted declaration and
-assignment owners, the narrowed
-C<FSM::HDL::FlattenedDT::Orchestrator> now composes those two owners directly
-during live backend generation, and the older
+assignment owners, and the older
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter>
 package now survives only as a directly testable compatibility shell outside
 the live backend path.
@@ -69,6 +70,13 @@ delegating to the extracted stage-preparation and rendering owners.
 
 sub generate_consolidated_intermediate_block ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
+    my $stage_support = $ctx->{backend_sv_consolidated_intermediate_stage_support};
+
+    if ($stage_support
+        && $stage_support->can('generate_consolidated_intermediate_block')) {
+        return $stage_support->generate_consolidated_intermediate_block($fsm_module);
+    }
+
     my $prepared_block = $ctx->{backend_sv_consolidated_intermediate_stage_preparation_support}
         ->prepare_consolidated_intermediate_block($fsm_module);
 

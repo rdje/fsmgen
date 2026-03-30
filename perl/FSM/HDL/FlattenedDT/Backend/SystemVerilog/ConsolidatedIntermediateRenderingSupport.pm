@@ -25,15 +25,16 @@ prepared contract
 =back
 
 The paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStageSupport>
+now owns the live stage-6 generation composition consumed by the direct
+backend orchestrator, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport>
 keeps live prepared-block reconstruction, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateDeclarationSupport>
 keeps prepared wire-declaration rendering, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateAssignmentSupport>
 keeps prepared assign rendering, and this package now keeps the live
-prepared-block rendering composition for the direct backend path. The narrowed
-C<FSM::HDL::FlattenedDT::Orchestrator> now composes this owner directly with
-the extracted stage-preparation owner, while the paired
+prepared-block rendering composition for the direct backend path. The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport>
 now survives only as a compatibility wrapper outside the live backend path.
 

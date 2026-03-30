@@ -346,6 +346,10 @@ ok(
     'live SystemVerilog consolidated intermediate stage-preparation support owns live prepared-block reconstruction from collection, planning, and projection owners',
 );
 ok(
+    $hdl->{backend_sv_consolidated_intermediate_stage_support}->can('generate_consolidated_intermediate_block'),
+    'live SystemVerilog consolidated intermediate stage support owns the direct stage-6 generation handoff',
+);
+ok(
     $hdl->{backend_sv_consolidated_intermediate_rendering_support}->can('render_prepared_consolidated_intermediate_block'),
     'live SystemVerilog consolidated intermediate rendering support owns final prepared-block rendering',
 );
@@ -359,7 +363,7 @@ ok(
 );
 ok(
     $hdl->{orchestrator}->can('generate_systemverilog'),
-    'live SystemVerilog orchestrator now composes stage preparation plus rendering directly during stage 6',
+    'live SystemVerilog orchestrator now delegates stage 6 through the consolidated intermediate stage owner',
 );
 ok(
     $hdl->{backend_sv_intermediate_recovery_support}->can('resolve_intermediate_signal_runtime_ast'),

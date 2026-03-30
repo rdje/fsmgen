@@ -10,15 +10,16 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStageSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'consolidated intermediate generation support remains a compatibility wrapper over the live stage-generation owner' => sub {
+subtest 'consolidated intermediate stage support owns the live stage-6 handoff over stage preparation plus rendering' => sub {
     my $fsm_module = parse_fsm_module(
-        'sv_consolidated_generation_support_contract',
+        'sv_consolidated_stage_support_contract',
         <<'FSM'
-(?fsm:sv_consolidated_generation_support_contract
+(?fsm:sv_consolidated_stage_support_contract
   (+system
     (clock clk)
     (sreset rstn)
@@ -44,20 +45,24 @@ FSM
     );
 
     my $prepared_backend = prepare_flattened_backend($fsm_module);
-    my $generation_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport->new(
-        flattened_dt => $prepared_backend,
-    );
     my $stage_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStageSupport->new(
         flattened_dt => $prepared_backend,
     );
+    my $stage_preparation_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport->new(
+        flattened_dt => $prepared_backend,
+    );
+    my $rendering_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport->new(
+        flattened_dt => $prepared_backend,
+    );
 
-    my $expected_block = $stage_support->generate_consolidated_intermediate_block($fsm_module);
-    my $generated_block = $generation_support->generate_consolidated_intermediate_block($fsm_module);
+    my $prepared_block = $stage_preparation_support->prepare_consolidated_intermediate_block($fsm_module);
+    my $expected_block = $rendering_support->render_prepared_consolidated_intermediate_block($prepared_block);
+    my $generated_block = $stage_support->generate_consolidated_intermediate_block($fsm_module);
 
     is(
         $generated_block,
         $expected_block,
-        'generation support compatibility wrapper rebuilds the same full consolidated block as the live stage-generation owner',
+        'stage support rebuilds the same consolidated intermediate HDL block as stage preparation plus rendering',
     );
 };
 

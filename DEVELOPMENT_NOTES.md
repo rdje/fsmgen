@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-31: live direct backend stage 6 now has its own explicit consolidated stage owner
+- Continued the active `R11` backend-breakdown lane by making the live stage-6 handoff explicit again instead of leaving `Orchestrator` to hand-compose two already-extracted owners after the old generation wrapper had been retired from the live path.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm) as the live owner of full consolidated intermediate stage generation over stage preparation plus rendering,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_consolidated_intermediate_stage_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so live stage 6 delegates to that owner instead of hand-composing stage preparation plus rendering inline,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the compatibility shell now points at the real live stage owner when it exists,
+  - refreshed the ownership docs in [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm),
+  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](/Users/richarddje/Documents/github/fsmgen/t/224-systemverilog-consolidated-intermediate-generation-support.t), added [t/231-systemverilog-consolidated-intermediate-stage-support.t](/Users/richarddje/Documents/github/fsmgen/t/231-systemverilog-consolidated-intermediate-stage-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `94`-file / `93`-package snapshot.
+- Why this is worth shipping:
+  - it restores an honest live owner for stage 6 without routing runtime back through the old compatibility shell,
+  - it makes `Orchestrator` thinner in a real way rather than only renaming the same sequencing pocket,
+  - and it narrows the next honest seam to the remaining lower-level coordination across consolidated-intermediate planning, stage preparation, live stage generation, and broader direct-backend convergence rather than the raw stage-6 handoff itself.
+
 ## 2026-03-30: live direct backend no longer instantiates the consolidated intermediate generation compatibility shell
 - Continued the active `R11` backend-breakdown lane by removing one more fake live owner instead of letting a compatibility wrapper continue to look architecturally central after its responsibilities had already been extracted.
 - Landed behavior:

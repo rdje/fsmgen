@@ -1059,3 +1059,10 @@ The first honest `R11` slices are now:
   `FSM::Synthesis::EnableGraph::FactorizationSupport` now narrows to
   substitution synchronization and live-usage evidence instead of owning the
   whole factorization family.
+- Forward-IR note: the paired live direct consolidated intermediate stage-6
+  generation family now also has an explicit owner in
+  `FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStageSupport`,
+  so `FlattenedDT::Orchestrator` no longer hand-composes stage preparation
+  plus rendering inline and the older
+  `FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport`
+  now survives only as a compatibility shell over that real live owner.

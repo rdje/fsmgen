@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-31: live direct backend stage 6 now has its own explicit consolidated stage owner
+- Saved shipped behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm) as the live owner of full consolidated intermediate stage generation over stage preparation plus rendering,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_consolidated_intermediate_stage_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so live stage 6 now delegates through that owner instead of hand-composing stage preparation plus rendering inline,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the compatibility shell now delegates to the real live stage owner when it exists,
+  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](/Users/richarddje/Documents/github/fsmgen/t/224-systemverilog-consolidated-intermediate-generation-support.t), added [t/231-systemverilog-consolidated-intermediate-stage-support.t](/Users/richarddje/Documents/github/fsmgen/t/231-systemverilog-consolidated-intermediate-stage-support.t),
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now records the measured post-change snapshot of `94` reachable project files and `93` reachable `.pm` packages.
+- Important continuity note:
+  - the next likely seam is no longer the raw live stage-6 handoff in `Orchestrator`,
+  - it is the remaining lower-level coordination across consolidated-intermediate planning, stage preparation, the new live stage owner, and broader direct-backend sequencing/convergence,
+  - and future sessions should read the direct backend stage as “collect, normalize, classify, rescue/select, dependency-map/order, plan, project the prepared block, prepare the stage block, generate the live stage block, and then continue with WEN/EN plus assignment emission,” with the older generation, block, emitter, and intermediate dispatcher shells all remaining outside the live runtime spine.
+
 ## 2026-03-30: live direct backend no longer instantiates the consolidated intermediate generation compatibility shell
 - Saved shipped behavior:
   - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend no longer instantiates `backend_sv_consolidated_intermediate_generation_support`,

@@ -19,8 +19,8 @@ the extracted collection, planning, and prepared-block projection owners
 
 =item *
 
-the live prepared-block handoff consumed directly by the narrowed
-C<FSM::HDL::FlattenedDT::Orchestrator> plus the extracted rendering owner
+the live prepared-block handoff consumed by the extracted stage-generation
+owner plus the extracted rendering owner
 
 =back
 
@@ -32,6 +32,9 @@ keeps plan composition, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePreparedBlockSupport>
 keeps prepared block-contract projection, and this package now keeps the live
 composition of those owners for the direct backend path. The older
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStageSupport>
+now keeps the live stage-6 generation handoff that consumes this prepared
+block, the older
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport>
 keeps the final prepared-block rendering step that now follows this owner in
 the live direct backend stage, and the older
