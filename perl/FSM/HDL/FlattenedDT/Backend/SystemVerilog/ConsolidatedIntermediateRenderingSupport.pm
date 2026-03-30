@@ -31,10 +31,11 @@ C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateDeclara
 keeps prepared wire-declaration rendering, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateAssignmentSupport>
 keeps prepared assign rendering, and this package now keeps the live
-prepared-block rendering composition for the direct backend path. The paired
+prepared-block rendering composition for the direct backend path. The narrowed
+C<FSM::HDL::FlattenedDT::Orchestrator> now composes this owner directly with
+the extracted stage-preparation owner, while the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport>
-now survives only as the narrower stage wrapper that composes stage
-preparation plus this rendering owner.
+now survives only as a compatibility wrapper outside the live backend path.
 
 =cut
 

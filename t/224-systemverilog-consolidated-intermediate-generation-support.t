@@ -15,7 +15,7 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRende
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'consolidated intermediate generation support rebuilds the full direct stage from a prepared backend context' => sub {
+subtest 'consolidated intermediate generation support remains a compatibility wrapper over stage preparation plus rendering' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_consolidated_generation_support_contract',
         <<'FSM'
@@ -62,7 +62,7 @@ FSM
     is(
         $generated_block,
         $expected_block,
-        'generation support rebuilds the same full consolidated block as stage preparation plus the rendering owner',
+        'generation support compatibility wrapper rebuilds the same full consolidated block as stage preparation plus the rendering owner',
     );
 };
 

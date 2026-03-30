@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-30: live direct backend no longer instantiates the consolidated intermediate generation compatibility shell
+- Continued the active `R11` backend-breakdown lane by removing one more fake live owner instead of letting a compatibility wrapper continue to look architecturally central after its responsibilities had already been extracted.
+- Landed behavior:
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend no longer instantiates `backend_sv_consolidated_intermediate_generation_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so live stage 6 now composes [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm) plus [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm) directly,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so it now survives only as a compatibility-shell test surface outside the live backend path,
+  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](/Users/richarddje/Documents/github/fsmgen/t/224-systemverilog-consolidated-intermediate-generation-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `93`-file / `92`-package snapshot.
+- Why this is worth shipping:
+  - it makes the live stage boundary truthful again by letting `Orchestrator` compose the real extracted owners instead of routing runtime through one more wrapper,
+  - it keeps the compatibility-shell story honest by moving the generation wrapper fully out of the live import spine rather than only narrowing its POD,
+  - and it narrows the next honest seam to the remaining plan/prepare/render sequencing rather than another round of shell cleanup.
+
 ## 2026-03-30: live consolidated intermediate prepared-block rendering now has a dedicated backend owner
 - Continued the active `R11` backend-breakdown lane by pulling one more live responsibility out of the generation wrapper instead of letting that wrapper quietly keep the final render step inline.
 - Landed behavior:

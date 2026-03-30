@@ -2,19 +2,20 @@ package FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateG
 
 =head1 NAME
 
-FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport - Own direct consolidated intermediate stage generation
+FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport - Compatibility shell for direct consolidated intermediate stage generation
 
 =head1 DESCRIPTION
 
-Owns the bounded stage-generation family for the older direct generated-module
-SystemVerilog consolidated intermediate path. This package centralizes:
+This package now survives as a narrow compatibility shell outside the live
+direct generated-module SystemVerilog backend path. It centralizes one
+directly testable wrapper:
 
 =over 4
 
 =item *
 
-the full stage handoff consumed by the narrowed
-C<FSM::HDL::FlattenedDT::Orchestrator>
+rebuilding the full consolidated intermediate block from one FSM module by
+delegating to the extracted stage-preparation and rendering owners
 
 =back
 
@@ -24,8 +25,9 @@ now keeps live prepared-block reconstruction over the extracted collection,
 planning, and prepared-block projection owners, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport>
 now keeps final prepared-block rendering over the extracted declaration and
-assignment owners, this package keeps only the live stage wrapper that
-composes those two owners, and the older
+assignment owners, the narrowed
+C<FSM::HDL::FlattenedDT::Orchestrator> now composes those two owners directly
+during live backend generation, and the older
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter>
 package now survives only as a directly testable compatibility shell outside
 the live backend path.
@@ -44,7 +46,7 @@ no warnings 'experimental::signatures';
 
 =head2 new
 
-Construct one consolidated-intermediate stage owner bound to a specific
+Construct one consolidated-intermediate generation wrapper bound to a specific
 C<FSM::HDL::FlattenedDT> backend context.
 
 =cut
@@ -60,9 +62,8 @@ sub new ($class, %args) {
 
 =head2 generate_consolidated_intermediate_block
 
-Generate the full consolidated intermediate HDL block for one FSM module by
-composing the extracted live stage-preparation owner plus the extracted
-prepared-block rendering owner directly.
+Rebuild the full consolidated intermediate HDL block for one FSM module by
+delegating to the extracted stage-preparation and rendering owners.
 
 =cut
 
@@ -83,13 +84,12 @@ __END__
 
 =head2 new
 
-Constructs one consolidated-intermediate stage owner bound to a specific
+Constructs one consolidated-intermediate generation wrapper bound to a specific
 C<FSM::HDL::FlattenedDT> backend context.
 
 =head2 generate_consolidated_intermediate_block
 
-Generates the full consolidated intermediate HDL block for one FSM module by
-composing the extracted live stage-preparation owner plus the extracted
-prepared-block rendering owner directly.
+Rebuilds the full consolidated intermediate HDL block for one FSM module by
+delegating to the extracted stage-preparation and rendering owners.
 
 =cut
