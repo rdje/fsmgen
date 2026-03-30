@@ -13,11 +13,6 @@ SystemVerilog consolidated intermediate path. This package centralizes:
 
 =item *
 
-full prepared-block generation for one direct backend context by composing the
-extracted collection, planning, and prepared-block projection owners
-
-=item *
-
 final consolidated intermediate block rendering from that prepared contract
 
 =item *
@@ -28,12 +23,9 @@ C<FSM::HDL::FlattenedDT::Orchestrator>
 =back
 
 The paired
-C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport>
-keeps merged-signal collection, the paired
-C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlanningSupport>
-keeps plan composition, the paired
-C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePreparedBlockSupport>
-keeps prepared block-contract projection, this package now also keeps final
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport>
+now keeps live prepared-block reconstruction over the extracted collection,
+planning, and prepared-block projection owners, this package keeps final
 prepared-block rendering over the extracted declaration and assignment owners,
 and the older
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter>
@@ -73,8 +65,8 @@ sub new ($class, %args) {
 =head2 generate_consolidated_intermediate_block
 
 Generate the full consolidated intermediate HDL block for one FSM module by
-composing the extracted collection, planning, prepared-block projection, and
-final prepared-block rendering directly.
+composing the extracted live stage-preparation owner plus final prepared-block
+rendering directly.
 
 =cut
 
@@ -87,12 +79,8 @@ prepared block contract produced by the extracted block-preparation owner.
 
 sub generate_consolidated_intermediate_block ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
-    my $all_intermediate_signals = $ctx->{backend_sv_consolidated_intermediate_support}
-        ->collect_consolidated_intermediate_signals($fsm_module);
-    my $plan = $ctx->{backend_sv_consolidated_intermediate_planning_support}
-        ->plan_consolidated_intermediate_signals($all_intermediate_signals);
-    my $prepared_block = $ctx->{backend_sv_consolidated_intermediate_prepared_block_support}
-        ->build_prepared_consolidated_intermediate_block($all_intermediate_signals, $plan);
+    my $prepared_block = $ctx->{backend_sv_consolidated_intermediate_stage_preparation_support}
+        ->prepare_consolidated_intermediate_block($fsm_module);
 
     return $self->render_prepared_consolidated_intermediate_block($prepared_block);
 }
@@ -143,8 +131,8 @@ C<FSM::HDL::FlattenedDT> backend context.
 =head2 generate_consolidated_intermediate_block
 
 Generates the full consolidated intermediate HDL block for one FSM module by
-composing the extracted collection, planning, prepared-block projection, and
-final prepared-block rendering directly.
+composing the extracted live stage-preparation owner plus final prepared-block
+rendering directly.
 
 =head2 render_prepared_consolidated_intermediate_block
 

@@ -10,15 +10,14 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'consolidated intermediate generation support rebuilds the full direct stage from a prepared backend context' => sub {
+subtest 'consolidated intermediate stage-preparation support rebuilds the live prepared block from extracted owners' => sub {
     my $fsm_module = parse_fsm_module(
-        'sv_consolidated_generation_support_contract',
+        'sv_consolidated_stage_preparation_support_contract',
         <<'FSM'
-(?fsm:sv_consolidated_generation_support_contract
+(?fsm:sv_consolidated_stage_preparation_support_contract
   (+system
     (clock clk)
     (sreset rstn)
@@ -44,21 +43,37 @@ FSM
     );
 
     my $prepared_backend = prepare_flattened_backend($fsm_module);
-    my $generation_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport->new(
-        flattened_dt => $prepared_backend,
-    );
-    my $stage_preparation_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport->new(
+    my $support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport->new(
         flattened_dt => $prepared_backend,
     );
 
-    my $prepared_block = $stage_preparation_support->prepare_consolidated_intermediate_block($fsm_module);
-    my $expected_block = expected_rendered_block($prepared_backend, $prepared_block);
-    my $generated_block = $generation_support->generate_consolidated_intermediate_block($fsm_module);
+    my $all_intermediate_signals = $prepared_backend->{backend_sv_consolidated_intermediate_support}
+        ->collect_consolidated_intermediate_signals($fsm_module);
+    my $plan = $prepared_backend->{backend_sv_consolidated_intermediate_planning_support}
+        ->plan_consolidated_intermediate_signals($all_intermediate_signals);
+    my $expected_block = $prepared_backend->{backend_sv_consolidated_intermediate_prepared_block_support}
+        ->build_prepared_consolidated_intermediate_block($all_intermediate_signals, $plan);
 
-    is(
-        $generated_block,
+    my $prepared_block = $support->prepare_consolidated_intermediate_block($fsm_module);
+
+    is_deeply(
+        $prepared_block,
         $expected_block,
-        'generation support rebuilds the same full consolidated block as stage preparation plus final prepared-block rendering',
+        'stage-preparation support rebuilds the same prepared block contract as explicit collection, planning, and prepared-block projection',
+    );
+
+    ok(
+        exists $prepared_block->{all_intermediate_signals}{A_or_B},
+        'stage-preparation support keeps the shared factorized carrier in the prepared full signal set',
+    );
+    ok(
+        exists $prepared_block->{filtered_signals}{A_or_B},
+        'stage-preparation support keeps the shared factorized carrier in the prepared kept set',
+    );
+    is(
+        $prepared_block->{sorted_signals}[0],
+        'A_or_B',
+        'stage-preparation support keeps the shared factorized carrier at the front of the dependency-safe render order',
     );
 };
 
@@ -90,24 +105,6 @@ sub prepare_flattened_backend {
     $hdl_generator->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
     $hdl_generator->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
     return $hdl_generator;
-}
-
-sub expected_rendered_block {
-    my ($prepared_backend, $prepared_block) = @_;
-    my $declaration_support = $prepared_backend->{backend_sv_consolidated_intermediate_declaration_support};
-    my $assignment_support = $prepared_backend->{backend_sv_consolidated_intermediate_assignment_support};
-    my $filtered_signals = $prepared_block->{filtered_signals} || {};
-    my $block = '';
-
-    if (%{$filtered_signals}) {
-        $block .= "  // Consolidated intermediate signals (AST factorization + pre-scan)\n";
-        $block .= $declaration_support->render_consolidated_intermediate_declarations($prepared_block);
-        $block .= "\n";
-        $block .= $assignment_support->render_consolidated_intermediate_assignments($prepared_block);
-        $block .= "\n";
-    }
-
-    return $block;
 }
 
 sub write_file {

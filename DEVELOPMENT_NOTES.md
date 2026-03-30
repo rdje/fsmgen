@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-30: live consolidated intermediate stage preparation now has a dedicated backend owner
+- Continued the active `R11` backend-breakdown lane by pulling one more live coordination pocket out of stage generation instead of letting the narrowed generation owner quietly keep rebuilding prepared blocks inline.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm) as the live owner of prepared-block reconstruction from the extracted collection, planning, and prepared-block projection owners,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates that owner explicitly,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the live stage now composes stage preparation plus final prepared-block rendering,
+  - corrected [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) POD so the compatibility shell names the new live owner honestly,
+  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](/Users/richarddje/Documents/github/fsmgen/t/224-systemverilog-consolidated-intermediate-generation-support.t), added [t/229-systemverilog-consolidated-intermediate-stage-preparation-support.t](/Users/richarddje/Documents/github/fsmgen/t/229-systemverilog-consolidated-intermediate-stage-preparation-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `93`-file / `92`-package snapshot.
+- Why this is worth shipping:
+  - it removes one more live coordination pocket from stage generation instead of only renaming the same boundary again,
+  - it keeps the compatibility-shell story honest by not routing the live backend back through the retired block owner,
+  - and it narrows the next honest seam to the remaining coordination across planning, prepared-block projection, stage preparation, and final rendering rather than stage preparation itself.
+
 ## 2026-03-30: live direct backend no longer instantiates the consolidated emitter compatibility shell
 - Continued the active `R11` backend-breakdown lane by removing one more no-longer-honest live owner instead of preserving it as runtime architecture theater.
 - Landed behavior:

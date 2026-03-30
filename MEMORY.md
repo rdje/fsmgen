@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-30: live consolidated intermediate stage preparation now has a dedicated backend owner
+- Saved shipped behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm) as the live owner of prepared-block reconstruction from the extracted collection, planning, and prepared-block projection owners,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_consolidated_intermediate_stage_preparation_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the live stage now composes stage preparation plus final prepared-block rendering instead of rebuilding the prepared block inline,
+  - kept [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) as a compatibility-shell test surface outside the live backend path with corrected POD about the new live owner,
+  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](/Users/richarddje/Documents/github/fsmgen/t/224-systemverilog-consolidated-intermediate-generation-support.t), and added [t/229-systemverilog-consolidated-intermediate-stage-preparation-support.t](/Users/richarddje/Documents/github/fsmgen/t/229-systemverilog-consolidated-intermediate-stage-preparation-support.t),
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now records the measured post-change snapshot of `93` reachable project files and `92` reachable `.pm` packages.
+- Important continuity note:
+  - the next likely seam is no longer live prepared-block reconstruction inside generation support,
+  - it is the remaining lower-level coordination across consolidated-intermediate planning, prepared-block projection, stage preparation, and final generation/rendering,
+  - and future sessions should read the direct backend stage as “collect, normalize, classify, rescue/select, dependency-map/order, plan, project the prepared block, prepare the live stage block, and render,” with the old block and emitter shells both outside the runtime spine.
+
 ## 2026-03-30: live direct backend no longer instantiates the consolidated emitter compatibility shell
 - Saved shipped behavior:
   - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) no longer instantiates `backend_sv_consolidated_intermediate`,

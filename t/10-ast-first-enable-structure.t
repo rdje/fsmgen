@@ -342,12 +342,16 @@ ok(
     'live SystemVerilog prepared block support owns prepared consolidated block-contract projection',
 );
 ok(
+    $hdl->{backend_sv_consolidated_intermediate_stage_preparation_support}->can('prepare_consolidated_intermediate_block'),
+    'live SystemVerilog consolidated intermediate stage-preparation support owns live prepared-block reconstruction from collection, planning, and projection owners',
+);
+ok(
     !exists $hdl->{backend_sv_consolidated_intermediate_block_support},
     'live SystemVerilog backend no longer instantiates the consolidated block compatibility shell',
 );
 ok(
     $hdl->{backend_sv_consolidated_intermediate_generation_support}->can('generate_consolidated_intermediate_block'),
-    'live SystemVerilog consolidated intermediate generation support owns the full direct stage handoff from collection and planning through final rendering',
+    'live SystemVerilog consolidated intermediate generation support owns the full direct stage handoff from stage preparation through final rendering',
 );
 ok(
     $hdl->{backend_sv_consolidated_intermediate_generation_support}->can('render_prepared_consolidated_intermediate_block'),
