@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-31: live direct backend post-flattening SystemVerilog assembly now has a dedicated pipeline owner
+- Saved shipped behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) as the live owner of the full step-2-through-step-7 post-flattening SystemVerilog assembly sequence,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_pipeline_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so it now keeps reset/module-attachment/flattening while delegating post-flattening HDL assembly,
+  - added [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t), retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now records the measured post-change snapshot of `95` reachable project files and `94` reachable `.pm` packages.
+- Important continuity note:
+  - the next likely seam is no longer the whole post-flattening SystemVerilog assembly sequence in `Orchestrator`,
+  - it is the remaining lower-level coordination across consolidated-intermediate planning, stage preparation, live stage generation, the new generation pipeline owner, and broader direct-backend convergence,
+  - and future sessions should read the direct backend split as “flatten first, then let the generation-pipeline owner assemble the module,” with `Orchestrator` now only bridging per-run state, flattening, and final pipeline handoff.
+
 ## 2026-03-31: live direct backend stage 6 now has its own explicit consolidated stage owner
 - Saved shipped behavior:
   - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm) as the live owner of full consolidated intermediate stage generation over stage preparation plus rendering,

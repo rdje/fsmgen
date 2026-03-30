@@ -354,6 +354,10 @@ ok(
     'live SystemVerilog consolidated intermediate rendering support owns final prepared-block rendering',
 );
 ok(
+    $hdl->{backend_sv_generation_pipeline_support}->can('generate_systemverilog_module'),
+    'live SystemVerilog generation-pipeline support owns post-flattening HDL assembly',
+);
+ok(
     !exists $hdl->{backend_sv_consolidated_intermediate_block_support},
     'live SystemVerilog backend no longer instantiates the consolidated block compatibility shell',
 );
@@ -363,7 +367,7 @@ ok(
 );
 ok(
     $hdl->{orchestrator}->can('generate_systemverilog'),
-    'live SystemVerilog orchestrator now delegates stage 6 through the consolidated intermediate stage owner',
+    'live SystemVerilog orchestrator now delegates post-flattening HDL assembly through the generation-pipeline owner',
 );
 ok(
     $hdl->{backend_sv_intermediate_recovery_support}->can('resolve_intermediate_signal_runtime_ast'),

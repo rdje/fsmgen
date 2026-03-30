@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-31
+### live direct backend post-flattening SystemVerilog assembly now has a dedicated pipeline owner
+- Added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) as the live owner of the full step-2-through-step-7 post-flattening SystemVerilog assembly sequence.
+- Updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) and [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so the live direct backend now instantiates `backend_sv_generation_pipeline_support` and delegates post-flattening HDL assembly there instead of keeping scaffold/declaration/enable/prescan/consolidated-stage/WEN-EN/assignment sequencing inline in `Orchestrator`.
+- Added [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t), retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t), and refreshed the continuity/import-tree set to the measured `95`-file / `94`-package snapshot.
+
 ### live direct backend stage 6 now has its own explicit consolidated stage owner
 - Added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm) as the live owner of full consolidated intermediate stage generation over the extracted stage-preparation and rendering owners.
 - Updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) and [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so the live direct backend now instantiates `backend_sv_consolidated_intermediate_stage_support` and delegates live stage 6 through that owner instead of hand-composing stage preparation plus rendering inline.

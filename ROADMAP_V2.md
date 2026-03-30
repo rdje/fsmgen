@@ -1066,3 +1066,9 @@ The first honest `R11` slices are now:
   plus rendering inline and the older
   `FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport`
   now survives only as a compatibility shell over that real live owner.
+- Forward-IR note: the paired live direct post-flattening SystemVerilog
+  assembly family now also has an explicit owner in
+  `FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport`,
+  so `FlattenedDT::Orchestrator` no longer owns scaffold/declaration/enable/
+  prescan/consolidated-stage/WEN-EN/assignment sequencing inline after
+  flattening.

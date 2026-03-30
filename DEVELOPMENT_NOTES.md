@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-31: live direct backend post-flattening SystemVerilog assembly now has a dedicated pipeline owner
+- Continued the active `R11` backend-breakdown lane by moving the whole post-flattening HDL assembly sequence out of `Orchestrator` once the lower-level owners were explicit enough to support an honest live pipeline owner.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) as the live owner of scaffold emission, declaration emission, enable generation, factorization-policy preparation, consolidated intermediate stage generation, unified WEN/EN emission, assignment emission, and module closeout,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_pipeline_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so it now keeps per-run reset, FSM-module attachment, and decision-tree flattening while delegating the whole post-flattening SystemVerilog assembly sequence,
+  - added [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t), retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `95`-file / `94`-package snapshot.
+- Why this is worth shipping:
+  - it makes `Orchestrator` narrower in a real architectural way instead of leaving one large post-flattening sequence pocket there indefinitely,
+  - it gives the live direct backend a clearer boundary between semantic flattening and text assembly,
+  - and it narrows the next honest seam to the remaining lower-level coordination around consolidated-intermediate planning/stage composition and broader direct-backend convergence rather than the whole post-flattening assembly sequence.
+
 ## 2026-03-31: live direct backend stage 6 now has its own explicit consolidated stage owner
 - Continued the active `R11` backend-breakdown lane by making the live stage-6 handoff explicit again instead of leaving `Orchestrator` to hand-compose two already-extracted owners after the old generation wrapper had been retired from the live path.
 - Landed behavior:
