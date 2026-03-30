@@ -6,11 +6,24 @@ FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter -
 
 =head1 DESCRIPTION
 
-Owns the bounded consolidated intermediate block-emission family for the older
-direct generated-module SystemVerilog backend. This package takes the prepared
-consolidated intermediate block contract and renders the consolidated block
-shell: comment header, spacing, and the handoff over the extracted declaration
-and assignment rendering owners before unified WEN/EN signal generation.
+This package now survives as a narrow compatibility shell outside the live
+direct generated-module SystemVerilog backend path. It centralizes one
+directly testable wrapper:
+
+=over 4
+
+=item *
+
+rebuilding consolidated intermediate block rendering from an already prepared
+block contract by delegating to the live generation owner when available
+
+=back
+
+The paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport>
+now owns the live final prepared-block rendering family for the direct backend
+path, while this package remains only as a compatibility surface for direct
+owner tests.
 
 =cut
 
@@ -47,6 +60,13 @@ prepared block contract produced by the extracted block-preparation owner.
 
 sub render_consolidated_intermediate_block ($self, $prepared_block) {
     my $ctx = $self->{flattened_dt};
+    my $generation_support = $ctx->{backend_sv_consolidated_intermediate_generation_support};
+
+    if ($generation_support
+        && $generation_support->can('render_prepared_consolidated_intermediate_block')) {
+        return $generation_support->render_prepared_consolidated_intermediate_block($prepared_block);
+    }
+
     my $declaration_support = $ctx->{backend_sv_consolidated_intermediate_declaration_support};
     my $assignment_support = $ctx->{backend_sv_consolidated_intermediate_assignment_support};
     my $filtered_signals = $prepared_block->{filtered_signals} || {};

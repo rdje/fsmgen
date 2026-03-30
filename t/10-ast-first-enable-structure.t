@@ -350,6 +350,10 @@ ok(
     'live SystemVerilog consolidated intermediate generation support owns the full direct stage handoff from collection and planning through final rendering',
 );
 ok(
+    $hdl->{backend_sv_consolidated_intermediate_generation_support}->can('render_prepared_consolidated_intermediate_block'),
+    'live SystemVerilog consolidated intermediate generation support owns final prepared-block rendering too',
+);
+ok(
     $hdl->{backend_sv_intermediate_recovery_support}->can('resolve_intermediate_signal_runtime_ast'),
     'live SystemVerilog intermediate recovery support owns runtime-AST lookup',
 );
@@ -398,20 +402,8 @@ ok(
     'live SystemVerilog backend no longer instantiates the compatibility intermediate dispatcher shell',
 );
 ok(
-    !$hdl->{backend_sv_consolidated_intermediate}->can('topologically_sort_signals'),
-    'live SystemVerilog consolidated intermediate emitter no longer keeps planning/order helpers inline',
-);
-ok(
-    !$hdl->{backend_sv_consolidated_intermediate}->can('prepare_consolidated_intermediate_block'),
-    'live SystemVerilog consolidated intermediate emitter no longer keeps collection-plus-planning handoff inline',
-);
-ok(
-    !$hdl->{backend_sv_consolidated_intermediate}->can('render_consolidated_intermediate_declarations'),
-    'live SystemVerilog consolidated intermediate emitter no longer keeps declaration rendering inline',
-);
-ok(
-    !$hdl->{backend_sv_consolidated_intermediate}->can('generate_consolidated_intermediate_block'),
-    'live SystemVerilog consolidated intermediate emitter no longer keeps full stage coordination inline',
+    !exists $hdl->{backend_sv_consolidated_intermediate},
+    'live SystemVerilog backend no longer instantiates the consolidated intermediate emitter compatibility shell',
 );
 ok(
     $hdl->{backend_sv_ast_factorization}->can('get_substituted_ast_for_signal'),

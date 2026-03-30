@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-30: live direct backend no longer instantiates the consolidated emitter compatibility shell
+- Saved shipped behavior:
+  - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) no longer instantiates `backend_sv_consolidated_intermediate`,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) now owns final prepared-block rendering directly in addition to collection/planning/prepared-block stage handoff,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) now survives only as a compatibility-shell test surface outside the live backend path,
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now records the measured post-change snapshot of `92` reachable project files and `91` reachable `.pm` packages.
+- Important continuity note:
+  - the next likely seam is no longer the old consolidated emitter shell,
+  - it is the remaining lower-level coordination across consolidated-intermediate planning, prepared-block projection, and live generation support,
+  - and future sessions should read the live direct backend path as “collect, normalize, classify, rescue/select, dependency-map/order, plan, project the prepared block, and render,” with the old emitter shell outside the runtime spine.
+
 ## 2026-03-30: future `.fsm` hierarchy should be authored bottom-up but compiled from the top
 - Saved direction:
   - whole `.fsm` designs should eventually behave like authored bottom-up N-level hierarchies with non-leaf composition nodes and leaf implementation nodes,

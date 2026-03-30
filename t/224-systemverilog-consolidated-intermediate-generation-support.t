@@ -10,7 +10,6 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport;
 use FSM::Pipeline::SourceFrontend;
 
@@ -44,9 +43,6 @@ FSM
     );
 
     my $prepared_backend = prepare_flattened_backend($fsm_module);
-    my $emitter = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter->new(
-        flattened_dt => $prepared_backend,
-    );
     my $generation_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport->new(
         flattened_dt => $prepared_backend,
     );
@@ -57,7 +53,7 @@ FSM
         ->plan_consolidated_intermediate_signals($all_intermediate_signals);
     my $prepared_block = $prepared_backend->{backend_sv_consolidated_intermediate_prepared_block_support}
         ->build_prepared_consolidated_intermediate_block($all_intermediate_signals, $plan);
-    my $expected_block = $emitter->render_consolidated_intermediate_block($prepared_block);
+    my $expected_block = expected_rendered_block($prepared_backend, $prepared_block);
     my $generated_block = $generation_support->generate_consolidated_intermediate_block($fsm_module);
 
     is(
@@ -95,6 +91,24 @@ sub prepare_flattened_backend {
     $hdl_generator->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
     $hdl_generator->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
     return $hdl_generator;
+}
+
+sub expected_rendered_block {
+    my ($prepared_backend, $prepared_block) = @_;
+    my $declaration_support = $prepared_backend->{backend_sv_consolidated_intermediate_declaration_support};
+    my $assignment_support = $prepared_backend->{backend_sv_consolidated_intermediate_assignment_support};
+    my $filtered_signals = $prepared_block->{filtered_signals} || {};
+    my $block = '';
+
+    if (%{$filtered_signals}) {
+        $block .= "  // Consolidated intermediate signals (AST factorization + pre-scan)\n";
+        $block .= $declaration_support->render_consolidated_intermediate_declarations($prepared_block);
+        $block .= "\n";
+        $block .= $assignment_support->render_consolidated_intermediate_assignments($prepared_block);
+        $block .= "\n";
+    }
+
+    return $block;
 }
 
 sub write_file {

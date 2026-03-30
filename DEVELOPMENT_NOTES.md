@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-30: live direct backend no longer instantiates the consolidated emitter compatibility shell
+- Continued the active `R11` backend-breakdown lane by removing one more no-longer-honest live owner instead of preserving it as runtime architecture theater.
+- Landed behavior:
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_consolidated_intermediate`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) so the live stage now owns final prepared-block rendering directly in addition to collection, planning, and prepared-block projection,
+  - narrowed [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) to an honest compatibility-shell role outside the live backend path,
+  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/224-systemverilog-consolidated-intermediate-generation-support.t](/Users/richarddje/Documents/github/fsmgen/t/224-systemverilog-consolidated-intermediate-generation-support.t) so the direct-owner coverage reflects the real runtime path,
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `92`-file / `91`-package snapshot.
+- Why this is worth shipping:
+  - it removes one more fake live owner from the direct backend path,
+  - it makes stage generation read truthfully as the place where prepared-block rendering actually happens,
+  - and it narrows the next honest seam to the remaining planning/prepared-block/generation coordination instead of another compatibility shell.
+
 ## 2026-03-30: bottom-up authored / top-invoked hierarchy guidance is now logged
 - Captured the latest composition-architecture brainstorming as explicit roadmap guidance instead of leaving it conversational only.
 - Saved direction:
