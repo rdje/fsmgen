@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-30: actor-first protocol extraction guidance and first imported APB/AMBA fixtures are now saved
+- Saved direction:
+  - reviewed the external protocol-extraction references under `/Users/richarddje/Documents/livework/protocols/arm/amba/`,
+  - the useful working method there is strongly aligned with the saved `H4` direction: start from normalized `Markdown`, work actor-first instead of protocol-as-a-monolith, and keep source facts, derived machine rules, local design decisions, and explicit abstractions separate,
+  - the method artifacts worth preserving are: protocol dossier, actor catalog, actor sheet per actor, assertion ledger, abstraction/boundedness log, FSM mapping sheet, and validation log,
+  - actor interfaces plus invariants/contracts/gates should be captured in plain English before `.fsm` emission,
+  - and the repo now has first imported protocol fixtures in [fsm/apb_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_requester.fsm), [fsm/apb_completer.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_completer.fsm), [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm), and [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm).
+- Important continuity note:
+  - the imported APB top now resolves against prefixed child source names `apb_requester` and `apb_completer` so the dataset fits cleanly inside the repo-wide `fsm/` corpus,
+  - all four imported fixtures were validated through the live `bin/fsmgen` entrypoint,
+  - and this is dataset seeding plus method capture, not a roadmap lane switch away from active `R11`.
+
 ## 2026-03-30: protocol/TRM spec-to-`.fsm` intent capture is now saved as a separate future direction
 - Saved direction:
   - treat future `PDF` / TRM / protocol-`Markdown` to `.fsm` work as a separate intent-capture lane rather than as HDL import under another name,

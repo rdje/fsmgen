@@ -1,0 +1,91 @@
+; Core APB requester/initiator model in active FSMGen ?fsm syntax.
+; Scope:
+; - core APB signals only
+; - one outstanding transfer at a time
+; - local request side is start/req_write/req_addr/req_wdata
+; - completion is reported with done plus latched last_read_data / last_error
+
+(?fsm:apb_requester
+
+  (+system
+    (clock clk)
+    (asreset rstn)
+  )
+
+  (:= addr_q=32'h00000000)
+  (:= write_q=0)
+  (:= wdata_q=32'h00000000)
+  (:= last_error=0)
+  (:= last_read_data=32'h00000000)
+
+  (+size
+    (start 1)
+    (req_write 1)
+    (req_addr 32)
+    (req_wdata 32)
+    (PREADY 1)
+    (PRDATA 32)
+    (PSLVERR 1)
+    (PSEL 1)
+    (PENABLE 1)
+    (PWRITE 1)
+    (PADDR 32)
+    (PWDATA 32)
+    (busy 1)
+    (done 1)
+    (last_error 1)
+    (last_read_data 32)
+    (addr_q 32)
+    (write_q 1)
+    (wdata_q 32)
+  )
+
+  (idle
+    (PSEL> = 0)
+    (PENABLE> = 0)
+    (PWRITE> = 0)
+    (PADDR> = 32'h00000000)
+    (PWDATA> = 32'h00000000)
+    (busy> = 0)
+    (done> = 0)
+
+    (<start
+      (addr_q <= req_addr)
+      (write_q <= req_write)
+      (wdata_q <= req_wdata)
+      (last_error> <= 0)
+      (-> setup)
+    )
+  )
+
+  (setup
+    (PSEL> = 1)
+    (PENABLE> = 0)
+    (PWRITE> = write_q)
+    (PADDR> = addr_q)
+    (PWDATA> = wdata_q)
+    (busy> = 1)
+    (done> = 0)
+
+    (-> access)
+  )
+
+  (access
+    (PSEL> = 1)
+    (PENABLE> = 1)
+    (PWRITE> = write_q)
+    (PADDR> = addr_q)
+    (PWDATA> = wdata_q)
+    (busy> = 1)
+    (done> = 0)
+
+    (<PREADY
+      (done> = 1)
+      (last_error> <= PSLVERR)
+      (<!write_q
+        (last_read_data> <= PRDATA)
+      )
+      (-> idle)
+    )
+  )
+)

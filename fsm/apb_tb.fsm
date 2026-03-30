@@ -1,0 +1,33 @@
+; Top-level APB composition that wires the requester and completer together.
+; Exposed top interface:
+; - stimulus/control into requester: start, req_write, req_addr, req_wdata
+; - completer wait-state control: wait_cycles
+; - requester completion observation: busy, done, last_error, last_read_data
+
+(?top:apb_tb
+  (?ports:public_io
+    clk
+    rstn
+    =start
+    =req_write
+    =req_addr<32
+    =req_wdata<32
+    =wait_cycles<4
+    =busy>
+    =done>
+    =last_error>
+    =last_read_data>32
+  )
+  (?fsmc:requester apb_requester)
+  (?fsmc:completer apb_completer)
+  (?toplink:apb_bus
+    /requester.PSEL/completer.PSEL/
+    /requester.PENABLE/completer.PENABLE/
+    /requester.PWRITE/completer.PWRITE/
+    /requester.PADDR/completer.PADDR/
+    /requester.PWDATA/completer.PWDATA/
+    /completer.PREADY/requester.PREADY/
+    /completer.PRDATA/requester.PRDATA/
+    /completer.PSLVERR/requester.PSLVERR/
+  )
+)

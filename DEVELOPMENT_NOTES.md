@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-30: actor-first protocol extraction guidance and first imported APB/AMBA fixtures are now logged
+- Reviewed the external protocol-extraction notes under `/Users/richarddje/Documents/livework/protocols/arm/amba/` and folded the useful parts into repo memory instead of relying on off-repo recollection.
+- Saved direction:
+  - the method is a strong fit for the saved `H4` lane because it starts from normalized `Markdown`, works actor-first, and explicitly separates source facts, derived machine rules, local design decisions, and explicit abstractions,
+  - the useful working artifacts are: protocol dossier, actor catalog, actor sheet per actor, assertion ledger, abstraction/boundedness log, FSM mapping sheet, and validation log,
+  - interfaces plus invariants/contracts/gates should be captured in plain English before `.fsm` emission,
+  - and the repo now has first imported seed fixtures in [fsm/apb_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_requester.fsm), [fsm/apb_completer.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_completer.fsm), [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm), and [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm).
+- Why this is worth saving:
+  - it gives the future intent-capture lane a concrete working method instead of only a high-level aspiration,
+  - it seeds the repo with real protocol examples that future sessions can validate and refine,
+  - and it keeps the imported examples honest by recording that they are useful early assets, not proof that protocol capture is solved in general.
+
 ## 2026-03-30: protocol/TRM spec-to-`.fsm` intent capture is now logged explicitly
 - Captured the recent brainstorming exchange as explicit roadmap guidance instead of leaving it conversational only.
 - Saved direction:

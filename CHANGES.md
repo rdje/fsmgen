@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-30
+### actor-first protocol extraction guidance and first imported APB/AMBA fixtures are now logged
+- Reviewed the external protocol-extraction references under `/Users/richarddje/Documents/livework/protocols/arm/amba/` and saved the useful method guidance into the roadmap/continuity trail instead of leaving it off-repo.
+- Saved method direction:
+  - start from normalized `Markdown`,
+  - work actor-first instead of protocol-as-a-monolith,
+  - keep source facts, derived machine rules, local design decisions, and explicit abstractions separate,
+  - and capture interfaces plus invariants/contracts/gates before `.fsm` emission.
+- Added [fsm/apb_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_requester.fsm), [fsm/apb_completer.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_completer.fsm), [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm), and [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm) as first imported protocol fixtures in the repo dataset, with the APB top normalized to resolve the prefixed child source names cleanly inside `fsm/`.
+- Validated those four fixtures through the live `bin/fsmgen` entrypoint so the imported dataset is not just archival text.
+
 ### protocol/TRM spec-to-`.fsm` intent capture is now logged as a separate future direction
 - Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the recent brainstorming exchange is now saved as explicit roadmap guidance instead of session-only discussion.
 - Saved direction:

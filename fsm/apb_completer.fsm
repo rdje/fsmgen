@@ -1,0 +1,82 @@
+; Core APB completer/target model in active FSMGen ?fsm syntax.
+; Scope:
+; - core APB signals only
+; - setup phase is detected from PSEL=1 and PENABLE=0
+; - optional wait cycles are provided by input wait_cycles
+; - address 32'h00000000 is the only implemented register location
+; - other addresses complete with PSLVERR=1
+
+(?fsm:apb_completer
+
+  (+system
+    (clock clk)
+    (asreset rstn)
+  )
+
+  (:= addr_q=32'h00000000)
+  (:= write_q=0)
+  (:= wdata_q=32'h00000000)
+  (:= wait_ctr=4'h0)
+  (:= reg_data_q=32'h00000000)
+
+  (+size
+    (PSEL 1)
+    (PENABLE 1)
+    (PWRITE 1)
+    (PADDR 32)
+    (PWDATA 32)
+    (wait_cycles 4)
+    (PREADY 1)
+    (PRDATA 32)
+    (PSLVERR 1)
+    (addr_q 32)
+    (write_q 1)
+    (wdata_q 32)
+    (wait_ctr 4)
+    (reg_data_q 32)
+  )
+
+  (idle
+    (PREADY> = 1)
+    (PRDATA> = 32'h00000000)
+    (PSLVERR> = 0)
+    (<PSEL
+      (<!PENABLE
+        (addr_q <= PADDR)
+        (write_q <= PWRITE)
+        (wdata_q <= PWDATA)
+        (wait_ctr <= wait_cycles)
+        (-> access)
+      )
+      (-> access)
+    )
+  )
+
+  (access
+    (PREADY> = 0)
+    (PRDATA> = 32'h00000000)
+    (PSLVERR> = 0)
+
+    (<wait_ctr!=0
+      (-- wait_ctr)
+    )
+
+    (<wait_ctr=0
+      (PREADY> = 1)
+      (<!write_q
+        (<addr_q=32'h00000000
+          (PRDATA> = reg_data_q)
+        )
+      )
+      (<addr_q!=32'h00000000
+        (PSLVERR> = 1)
+      )
+      (<write_q
+        (<addr_q=32'h00000000
+          (reg_data_q <= wdata_q)
+        )
+      )
+      (-> idle)
+    )
+  )
+)

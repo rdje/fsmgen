@@ -696,6 +696,14 @@ Preferred execution order:
 - keep serious implementation behind the active forward/backend cleanup and language-contract stabilization so this lane targets steadier IR and reporting surfaces,
 - and let successful captured protocols later seed the future reusable-library lane rather than creating a separate privileged asset world.
 
+Preferred working method:
+- start from normalized `Markdown`, not directly from the source `PDF`,
+- work actor-first instead of protocol-as-a-monolith,
+- build a protocol dossier, actor catalog, actor sheet per actor, assertion ledger, abstraction/boundedness log, FSM mapping sheet, and validation log,
+- keep source facts, derived machine rules, local design decisions, and explicit abstractions separate,
+- define actor interfaces plus invariants/contracts/gates in plain English before emitting `.fsm`,
+- and treat early imported fixtures such as the APB requester/completer/top and AMBA requester examples as seed corpus, not as proof that the general capture lane is already solved.
+
 Required behavior:
 - emit captured `.fsm` artifacts plus a capture report,
 - distinguish confidently captured intent from heuristic inference and unresolved ambiguity,
