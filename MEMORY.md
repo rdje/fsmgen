@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-30: future `.fsm` hierarchy should be authored bottom-up but compiled from the top
+- Saved direction:
+  - whole `.fsm` designs should eventually behave like authored bottom-up N-level hierarchies with non-leaf composition nodes and leaf implementation nodes,
+  - `fsmgen top.fsm` should remain the public UX and recursively realize child nodes level by level until the full top is emitted,
+  - internal non-leaf reusable composition modules should eventually become first-class authored artifacts instead of composition remaining only a one-top shell over leaf children,
+  - interface and semantic summaries should flow upward from children while binding/wiring is resolved at each parent level,
+  - and the important implementation distinction is authored tree vs elaborated instance tree: source reuse may make the authored graph a DAG, while elaboration still produces a hierarchical instance tree.
+- Important continuity note:
+  - this was logged from explicit brainstorming as future architecture steering, not as a command to widen the current composition contract immediately,
+  - future sessions should treat it as guidance for the reusable-source/composition lane under `R11`,
+  - and the intended user experience stays simple even if the implementation becomes recursive: build leaves first, invoke only the top.
+
 ## 2026-03-30: actor-first protocol extraction guidance and first imported APB/AMBA fixtures are now saved
 - Saved direction:
   - reviewed the external protocol-extraction references under `/Users/richarddje/Documents/livework/protocols/arm/amba/`,

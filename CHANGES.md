@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-30
+### bottom-up authored / top-invoked hierarchy guidance is now logged
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the latest brainstorming about multi-level `.fsm` hierarchy is now saved as explicit future-architecture guidance.
+- Saved direction:
+  - `.fsm` hierarchies should eventually be authored bottom-up,
+  - `fsmgen top.fsm` should remain the public UX and recursively realize the whole hierarchy from the top,
+  - internal non-leaf reusable composition modules should become first-class authored artifacts,
+  - and the implementation should distinguish authored graph from elaborated instance tree, because reuse can make the source graph a DAG even when emission still walks a tree.
+
 ### actor-first protocol extraction guidance and first imported APB/AMBA fixtures are now logged
 - Reviewed the external protocol-extraction references under `/Users/richarddje/Documents/livework/protocols/arm/amba/` and saved the useful method guidance into the roadmap/continuity trail instead of leaving it off-repo.
 - Saved method direction:

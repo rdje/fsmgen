@@ -430,6 +430,11 @@ Planned bounded sub-lane inside `R11`:
   - keep the output-driving semantics inside `?dt:name` aligned with existing DT handling instead of inventing a separate conflict model,
   - keep `?top:name` as the explicit composition root while treating `?dt:name`, `?mod:name`, and `?module:name` as the current standalone-DT root family,
   - and extend reusable-source lookup through existing `FSMLIB` semantics plus repeatable `--path DIR` CLI roots.
+- longer-term hierarchy direction:
+  - whole `.fsm` designs should eventually behave as authored bottom-up multi-level hierarchies with non-leaf composition nodes and leaf implementation nodes,
+  - users should still invoke only the top root, with `fsmgen top.fsm` recursively realizing child nodes, collecting interfaces/semantic summaries bottom-up, and resolving bindings/wiring at each parent level until the final top is emitted,
+  - internal non-leaf reusable composition modules should eventually become first-class authored artifacts instead of composition remaining only a top-shell over leaf children,
+  - and the implementation should distinguish authored graph from elaborated instance tree: source reuse may form a DAG, while elaboration still produces a concrete hierarchy for emission.
 - first contract questions to settle:
   - what the exact source-root family becomes beyond the now-shipped `?fsm:name`, `?dt:name`, `?mod:name`, `?module:name`, and `?top:name`,
   - whether unnamed reusable DT roots such as `?dt:` should exist at all or remain deferred,

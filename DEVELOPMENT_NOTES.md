@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-30: bottom-up authored / top-invoked hierarchy guidance is now logged
+- Captured the latest composition-architecture brainstorming as explicit roadmap guidance instead of leaving it conversational only.
+- Saved direction:
+  - future `.fsm` hierarchies should be authored bottom-up across N-level designs with non-leaf composition nodes and leaf implementation nodes,
+  - the public UX should still stay top-invoked: `fsmgen top.fsm` should recursively realize the full design from the top,
+  - internal non-leaf reusable composition modules should eventually become first-class authored artifacts rather than composition staying limited to a top-level shell over leaf children,
+  - and the implementation should explicitly distinguish authored graph from elaborated instance tree, because reusable source nodes may form a DAG even though emitted hierarchy still walks a concrete tree.
+- Why this is worth saving:
+  - it gives the reusable-source/composition lane a clearer destination than “more hierarchy someday,”
+  - it keeps the intended UX simple while allowing the internal elaboration story to become recursively honest,
+  - and it prevents future work from confusing authored modular reuse with naive file inclusion or one-level composition only.
+
 ## 2026-03-30: actor-first protocol extraction guidance and first imported APB/AMBA fixtures are now logged
 - Reviewed the external protocol-extraction notes under `/Users/richarddje/Documents/livework/protocols/arm/amba/` and folded the useful parts into repo memory instead of relying on off-repo recollection.
 - Saved direction:
