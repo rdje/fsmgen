@@ -13,10 +13,6 @@ SystemVerilog consolidated intermediate path. This package centralizes:
 
 =item *
 
-final consolidated intermediate block rendering from that prepared contract
-
-=item *
-
 the full stage handoff consumed by the narrowed
 C<FSM::HDL::FlattenedDT::Orchestrator>
 
@@ -25,9 +21,11 @@ C<FSM::HDL::FlattenedDT::Orchestrator>
 The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport>
 now keeps live prepared-block reconstruction over the extracted collection,
-planning, and prepared-block projection owners, this package keeps final
-prepared-block rendering over the extracted declaration and assignment owners,
-and the older
+planning, and prepared-block projection owners, the paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport>
+now keeps final prepared-block rendering over the extracted declaration and
+assignment owners, this package keeps only the live stage wrapper that
+composes those two owners, and the older
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter>
 package now survives only as a directly testable compatibility shell outside
 the live backend path.
@@ -43,8 +41,6 @@ use strict;
 use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
-
-use FSM::Debug;
 
 =head2 new
 
@@ -65,15 +61,8 @@ sub new ($class, %args) {
 =head2 generate_consolidated_intermediate_block
 
 Generate the full consolidated intermediate HDL block for one FSM module by
-composing the extracted live stage-preparation owner plus final prepared-block
-rendering directly.
-
-=cut
-
-=head2 render_prepared_consolidated_intermediate_block
-
-Render the consolidated direct-backend intermediate-signal block from the
-prepared block contract produced by the extracted block-preparation owner.
+composing the extracted live stage-preparation owner plus the extracted
+prepared-block rendering owner directly.
 
 =cut
 
@@ -82,39 +71,8 @@ sub generate_consolidated_intermediate_block ($self, $fsm_module) {
     my $prepared_block = $ctx->{backend_sv_consolidated_intermediate_stage_preparation_support}
         ->prepare_consolidated_intermediate_block($fsm_module);
 
-    return $self->render_prepared_consolidated_intermediate_block($prepared_block);
-}
-
-sub render_prepared_consolidated_intermediate_block ($self, $prepared_block) {
-    my $ctx = $self->{flattened_dt};
-    my $declaration_support = $ctx->{backend_sv_consolidated_intermediate_declaration_support};
-    my $assignment_support = $ctx->{backend_sv_consolidated_intermediate_assignment_support};
-    my $filtered_signals = $prepared_block->{filtered_signals} || {};
-    my $hdl = "";
-
-    # Step 4a: LHS signal declarations are emitted once in generate_internal_signal_declarations().
-    # Avoid redeclaring them here with incompatible types.
-
-    # Step 4b: Generate HDL for consolidated intermediate signals
-    if (%{$filtered_signals}) {
-        $hdl .= "  // Consolidated intermediate signals (AST factorization + pre-scan)\n";
-
-        # First pass: Generate all wire declarations through the extracted owner
-        $hdl .= $declaration_support->render_consolidated_intermediate_declarations($prepared_block);
-
-        $hdl .= "\n";  # Add spacing between declarations and assignments
-
-        # Second pass: Generate all assign statements through the extracted owner
-        $hdl .= $assignment_support->render_consolidated_intermediate_assignments($prepared_block);
-
-        $hdl .= "\n";
-    } else {
-        fsm_debug("  No consolidated intermediate signals needed after filtering", 3);
-    }
-
-    fsm_debug("*** CONSOLIDATED INTERMEDIATE SIGNAL GENERATION COMPLETE ***\n", 3);
-
-    return $hdl;
+    return $ctx->{backend_sv_consolidated_intermediate_rendering_support}
+        ->render_prepared_consolidated_intermediate_block($prepared_block);
 }
 
 1;
@@ -131,12 +89,7 @@ C<FSM::HDL::FlattenedDT> backend context.
 =head2 generate_consolidated_intermediate_block
 
 Generates the full consolidated intermediate HDL block for one FSM module by
-composing the extracted live stage-preparation owner plus final prepared-block
-rendering directly.
-
-=head2 render_prepared_consolidated_intermediate_block
-
-Renders the consolidated direct-backend intermediate-signal block from the
-prepared block contract produced by the extracted block-preparation owner.
+composing the extracted live stage-preparation owner plus the extracted
+prepared-block rendering owner directly.
 
 =cut

@@ -1,29 +1,40 @@
-package FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter;
+package FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport;
 
 =head1 NAME
 
-FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter - Render direct consolidated intermediate-signal blocks
+FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport - Own live direct consolidated intermediate prepared-block rendering
 
 =head1 DESCRIPTION
 
-This package now survives as a narrow compatibility shell outside the live
-direct generated-module SystemVerilog backend path. It centralizes one
-directly testable wrapper:
+Owns the bounded prepared-block rendering family for the older direct
+generated-module SystemVerilog consolidated intermediate path. This package
+centralizes:
 
 =over 4
 
 =item *
 
-rebuilding consolidated intermediate block rendering from an already prepared
-block contract by delegating to the live generation owner when available
+final consolidated intermediate block rendering from an already prepared block
+contract
+
+=item *
+
+composition of the extracted declaration and assignment owners over that
+prepared contract
 
 =back
 
 The paired
-C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport>
-now owns the live final prepared-block rendering family for the direct backend
-path, while this package remains only as a compatibility surface for direct
-owner tests.
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport>
+keeps live prepared-block reconstruction, the paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateDeclarationSupport>
+keeps prepared wire-declaration rendering, the paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateAssignmentSupport>
+keeps prepared assign rendering, and this package now keeps the live
+prepared-block rendering composition for the direct backend path. The paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport>
+now survives only as the narrower stage wrapper that composes stage
+preparation plus this rendering owner.
 
 =cut
 
@@ -37,36 +48,29 @@ use FSM::Debug;
 
 =head2 new
 
-Construct one consolidated-intermediate emitter bound to a specific
+Construct one consolidated-intermediate rendering owner bound to a specific
 C<FSM::HDL::FlattenedDT> backend context.
 
 =cut
 
 sub new ($class, %args) {
     my $flattened_dt = $args{flattened_dt}
-      or die "[ConsolidatedIntermediateEmitter.pm][new()] Missing required 'flattened_dt' argument";
+      or die "[ConsolidatedIntermediateRenderingSupport.pm][new()] Missing required 'flattened_dt' argument";
 
     return bless {
         flattened_dt => $flattened_dt,
     }, $class;
 }
 
-=head2 render_consolidated_intermediate_block
+=head2 render_prepared_consolidated_intermediate_block
 
 Render the consolidated direct-backend intermediate-signal block from the
-prepared block contract produced by the extracted block-preparation owner.
+prepared block contract produced by the extracted stage-preparation owner.
 
 =cut
 
-sub render_consolidated_intermediate_block ($self, $prepared_block) {
+sub render_prepared_consolidated_intermediate_block ($self, $prepared_block) {
     my $ctx = $self->{flattened_dt};
-    my $rendering_support = $ctx->{backend_sv_consolidated_intermediate_rendering_support};
-
-    if ($rendering_support
-        && $rendering_support->can('render_prepared_consolidated_intermediate_block')) {
-        return $rendering_support->render_prepared_consolidated_intermediate_block($prepared_block);
-    }
-
     my $declaration_support = $ctx->{backend_sv_consolidated_intermediate_declaration_support};
     my $assignment_support = $ctx->{backend_sv_consolidated_intermediate_assignment_support};
     my $filtered_signals = $prepared_block->{filtered_signals} || {};
@@ -105,12 +109,12 @@ __END__
 
 =head2 new
 
-Constructs one consolidated-intermediate emitter bound to a specific
+Constructs one consolidated-intermediate rendering owner bound to a specific
 C<FSM::HDL::FlattenedDT> backend context.
 
-=head2 render_consolidated_intermediate_block
+=head2 render_prepared_consolidated_intermediate_block
 
 Renders the consolidated direct-backend intermediate-signal block from the
-prepared block contract produced by the extracted block-preparation owner.
+prepared block contract produced by the extracted stage-preparation owner.
 
 =cut

@@ -10,16 +10,15 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'consolidated intermediate generation support rebuilds the full direct stage from a prepared backend context' => sub {
+subtest 'consolidated intermediate rendering support rebuilds final rendering from a prepared block contract' => sub {
     my $fsm_module = parse_fsm_module(
-        'sv_consolidated_generation_support_contract',
+        'sv_consolidated_rendering_support_contract',
         <<'FSM'
-(?fsm:sv_consolidated_generation_support_contract
+(?fsm:sv_consolidated_rendering_support_contract
   (+system
     (clock clk)
     (sreset rstn)
@@ -45,9 +44,6 @@ FSM
     );
 
     my $prepared_backend = prepare_flattened_backend($fsm_module);
-    my $generation_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport->new(
-        flattened_dt => $prepared_backend,
-    );
     my $stage_preparation_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport->new(
         flattened_dt => $prepared_backend,
     );
@@ -56,13 +52,13 @@ FSM
     );
 
     my $prepared_block = $stage_preparation_support->prepare_consolidated_intermediate_block($fsm_module);
-    my $expected_block = $rendering_support->render_prepared_consolidated_intermediate_block($prepared_block);
-    my $generated_block = $generation_support->generate_consolidated_intermediate_block($fsm_module);
+    my $rendered_block = $rendering_support->render_prepared_consolidated_intermediate_block($prepared_block);
+    my $expected_block = expected_rendered_block($prepared_backend, $prepared_block);
 
     is(
-        $generated_block,
+        $rendered_block,
         $expected_block,
-        'generation support rebuilds the same full consolidated block as stage preparation plus the rendering owner',
+        'rendering support rebuilds the same consolidated block as declaration plus assignment owners',
     );
 };
 
@@ -94,6 +90,24 @@ sub prepare_flattened_backend {
     $hdl_generator->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
     $hdl_generator->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
     return $hdl_generator;
+}
+
+sub expected_rendered_block {
+    my ($prepared_backend, $prepared_block) = @_;
+    my $declaration_support = $prepared_backend->{backend_sv_consolidated_intermediate_declaration_support};
+    my $assignment_support = $prepared_backend->{backend_sv_consolidated_intermediate_assignment_support};
+    my $filtered_signals = $prepared_block->{filtered_signals} || {};
+    my $block = '';
+
+    if (%{$filtered_signals}) {
+        $block .= "  // Consolidated intermediate signals (AST factorization + pre-scan)\n";
+        $block .= $declaration_support->render_consolidated_intermediate_declarations($prepared_block);
+        $block .= "\n";
+        $block .= $assignment_support->render_consolidated_intermediate_assignments($prepared_block);
+        $block .= "\n";
+    }
+
+    return $block;
 }
 
 sub write_file {

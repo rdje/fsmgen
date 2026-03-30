@@ -31,6 +31,7 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGener
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateNormalizationSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlanningSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePreparedBlockSupport;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSelectionSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport;
@@ -128,6 +129,7 @@ sub new ($class, %args) {
     $self->{backend_sv_consolidated_intermediate_planning_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePlanningSupport->new(flattened_dt => $self);
     $self->{backend_sv_consolidated_intermediate_prepared_block_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePreparedBlockSupport->new(flattened_dt => $self);
     $self->{backend_sv_consolidated_intermediate_stage_preparation_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport->new(flattened_dt => $self);
+    $self->{backend_sv_consolidated_intermediate_rendering_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport->new(flattened_dt => $self);
     $self->{backend_sv_consolidated_intermediate_assignment_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateAssignmentSupport->new(flattened_dt => $self);
     $self->{backend_sv_consolidated_intermediate_declaration_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateDeclarationSupport->new(flattened_dt => $self);
     $self->{backend_sv_consolidated_intermediate_generation_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport->new(flattened_dt => $self);

@@ -32,6 +32,9 @@ keeps plan composition, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePreparedBlockSupport>
 keeps prepared block-contract projection, and this package now keeps the live
 composition of those owners for the direct backend path. The older
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport>
+keeps the final prepared-block rendering step that now follows this owner in
+the live stage wrapper, and the older
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport>
 package survives only as a directly testable compatibility shell outside the
 live backend path.
