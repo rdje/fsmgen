@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-30
+### protocol/TRM spec-to-`.fsm` intent capture is now logged as a separate future direction
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the recent brainstorming exchange is now saved as explicit roadmap guidance instead of session-only discussion.
+- Saved direction:
+  - treat future TRM / protocol-spec / `Markdown` to `.fsm` work as a distinct `intent capture` lane rather than collapsing it into HDL import,
+  - prefer an honest `PDF -> .md -> normalized spec IR -> recovered protocol roles/transactions/timing rules/invariants -> .fsm + capture report` shape,
+  - expect early outputs such as requester/completer roles, monitors/checkers, reusable assertions, and optional `.fsm` composition/testbench harnesses,
+  - and keep serious implementation behind the active `R11` forward/backend cleanup while still allowing design/probe work to start earlier.
+
 ### reusable library, semantic parameters, and phased intent-recovery start are now logged explicitly
 - Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the recent brainstorming exchange is now saved as explicit guidance instead of session-only discussion.
 - Saved direction:

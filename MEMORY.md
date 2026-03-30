@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-30: protocol/TRM spec-to-`.fsm` intent capture is now saved as a separate future direction
+- Saved direction:
+  - treat future `PDF` / TRM / protocol-`Markdown` to `.fsm` work as a separate intent-capture lane rather than as HDL import under another name,
+  - prefer the term `intent capture` over `intent synthesis` when the source is prose/specification text, because the output should stay honest about ambiguity and human confirmation,
+  - model the likely pipeline as `PDF -> .md -> normalized spec IR -> recovered roles/transactions/timing rules/invariants -> .fsm + capture report`,
+  - expect bounded outputs such as requester/initiator roles, completer/target roles, checker/monitor assets, reusable assertions/invariants, and optional `.fsm` composition/testbench harnesses for protocols like `APB`, `AMBA`, `AXI`, `I2C`, and `I2S`,
+  - and treat this as assisted capture with explicit confidence/heuristic/ambiguity residue reporting, not as magical one-shot conversion.
+- Important continuity note:
+  - this was logged from explicit brainstorming and strong user agreement, not as an instruction to leave the active `R11` lane,
+  - future sessions should treat it as a real long-term roadmap direction worth design/probe work,
+  - and it should stay distinct from HDL import / intent recovery even if both directions eventually share middle-layer IRs.
+
 ## 2026-03-30: reusable library, semantic parameters, and phased intent-recovery start are now saved guidance
 - Saved direction:
   - future reusable-library work should start as ordinary reusable `.fsm` assets flowing through the normal parser/IR/emitter path,

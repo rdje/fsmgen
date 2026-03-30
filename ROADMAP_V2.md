@@ -667,6 +667,52 @@ Advanced synthesizable targets worth considering later, not rejecting upfront:
 Prerequisite:
 - the forward `.fsm` contract, diagnostics contract, and embedding/result surfaces should already be stable enough that HDL import targets a known IR instead of a moving language boundary.
 
+### H4. TRM / protocol-spec intent capture
+Long-term goal:
+- add a bounded spec-to-`.fsm` lane that can capture executable design intent from technical reference manuals, protocol specifications, and normalized `Markdown` source material.
+
+Intent:
+- treat prose/specification documents as a source of recoverable behavioral contract, role structure, timing rules, and invariants,
+- and treat spec-to-`.fsm` as intent capture rather than HDL import or exact natural-language inversion.
+
+Terminology stance:
+- prefer the term `intent capture` over `intent synthesis` for this lane,
+- because the source is prose/spec text and the output should stay explicit about ambiguity, residue, and required human confirmation.
+
+Primary scope boundary:
+- begin with bounded protocol and interface specifications such as `APB`, `AMBA`, `AXI`, `I2C`, and `I2S`,
+- rather than attempting arbitrary prose-heavy hardware manuals all at once.
+
+Likely output shape:
+- requester / initiator role `.fsm` roots,
+- completer / target role `.fsm` roots,
+- protocol checker / monitor assets,
+- reusable assertions and invariants,
+- and optional `.fsm` composition or testbench harnesses that exercise those roles together.
+
+Preferred execution order:
+- begin with design/probe work and bounded capture experiments before promoting this to a primary implementation lane,
+- treat `PDF -> .md` normalization as a separate pre-step rather than burying document cleanup inside the capture engine,
+- keep serious implementation behind the active forward/backend cleanup and language-contract stabilization so this lane targets steadier IR and reporting surfaces,
+- and let successful captured protocols later seed the future reusable-library lane rather than creating a separate privileged asset world.
+
+Required behavior:
+- emit captured `.fsm` artifacts plus a capture report,
+- distinguish confidently captured intent from heuristic inference and unresolved ambiguity,
+- and never present ambiguous prose as if it had been recovered with implementation-grade certainty.
+
+Expected technical pipeline:
+- normalize `PDF` or other source documents into structured `Markdown`,
+- build a normalized spec IR over roles, transactions, timing rules, fields, and invariants,
+- recover protocol role models and reusable behavioral rules from that IR,
+- project those recovered semantics into `.fsm` roots plus optional composition/testbench harnesses,
+- and emit a capture report alongside the generated sources.
+
+Relationship to other horizon lanes:
+- keep this lane distinct from HDL import / intent recovery even if both eventually share middle-layer semantic IRs,
+- because the source evidence, ambiguity model, and validation story are materially different,
+- and use the same honesty rule in both directions: report residue explicitly instead of pretending elegance where the source does not justify it.
+
 ## Current intent
 The active immediate lane is `R11`.
 

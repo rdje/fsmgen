@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-30: protocol/TRM spec-to-`.fsm` intent capture is now logged explicitly
+- Captured the recent brainstorming exchange as explicit roadmap guidance instead of leaving it conversational only.
+- Saved direction:
+  - future TRM / protocol-spec / `Markdown` to `.fsm` work should be treated as a separate intent-capture lane rather than as HDL import in disguise,
+  - the safer language here is `intent capture` rather than `intent synthesis`, because the output should remain explicit about ambiguity, residue, and required human confirmation,
+  - the likely technical shape is `PDF -> .md -> normalized spec IR -> recovered protocol roles/transactions/timing rules/invariants -> .fsm + capture report`,
+  - early bounded outputs should include requester/initiator roles, completer/target roles, checker/monitor assets, reusable assertions/invariants, and optional `.fsm` composition/testbench harnesses for protocols like `APB`, `AMBA`, `AXI`, `I2C`, and `I2S`,
+  - and serious implementation should stay behind the active forward/backend cleanup even though design/probe work is worth doing earlier.
+- Why this is worth saving:
+  - it keeps protocol/spec capture clearly separate from HDL import so future work does not merge two different evidence models,
+  - it preserves the honesty rule that ambiguous prose needs explicit residue reporting rather than fake precision,
+  - and it links naturally to the future reusable-library lane, because captured protocol roles/checkers can become first-class reusable `.fsm` assets later.
+
 ## 2026-03-30: reusable library, semantic parameters, and phased intent-recovery start are now logged explicitly
 - Captured the recent brainstorming exchange as explicit roadmap guidance instead of leaving it conversational only.
 - Saved direction:
