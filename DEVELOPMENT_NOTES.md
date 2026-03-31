@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-31: strict mode now enforces canonical standalone-DT roots too
+- Continued the visible `R9` support-tier lane by widening the first strict-mode boundary from one legacy FSM root family to the full current canonical direct-root naming split:
+  - strict mode already rejected legacy `+fsm`,
+  - and it now also rejects the legacy standalone-DT aliases `?mod:` and `?module:` in favor of canonical `?dt:`.
+- Landed behavior:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now owns the shared strict root-family enforcement helper,
+  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now delegates top-level strict root checking there,
+  - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm) and [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now pass strict mode through semantic module creation so generated child sources inherit the same root-family boundary,
+  - and [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks top-level and `?dtc`-child rejection for `?mod:` and `?module:` roots while keeping canonical `?dt:` accepted.
+- Why this is the right next slice:
+  - it keeps the strict-mode story simple and teachable by preferring one canonical root name per semantic family,
+  - it makes strict support-tier enforcement apply through reused child sources instead of only the outermost file entrypoint,
+  - and it stays visibly user-facing without dropping back into backend-only cleanup.
+
 ## 2026-03-31: strict mode now exists as a real first support-tier slice
 - This is the first intentional `R9` implementation slice rather than more planning-only strict-mode language:
   - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now accepts `--strict`,

@@ -82,6 +82,10 @@ Standard used here:
   - without explicit `(+system ...)`, any `?dt:name` module that contains at least one sequential assignment implicitly exposes `clk` / `rst_n`
   - driven non-intermediate targets in `?dt:name` are exposed as module outputs by default
   - `?dt:name` does not synthesize `current_state` / `next_state`
+- Legacy standalone-DT root aliases in default mode:
+  - `(?mod:module_name ...)`
+  - `(?module:module_name ...)`
+  - supported in default mode only; the current strict-mode slice rejects these aliases and requires `?dt:module_name`
 - Legacy `+fsm` root family:
   - flattened sibling form with a first top-level entry `(+fsm module_name)` and sibling `(+system ...)`, state blocks, and `(+size ...)`
   - nested legacy root form `(+fsm module_name ...)`
@@ -554,11 +558,14 @@ Boundary note:
 - The CLI now accepts `--strict`, and the public pipeline facade now accepts `strict_mode => 1`.
 - The current first strict-mode slice is intentionally narrow:
   - strict mode rejects the legacy `+fsm` root family,
+  - strict mode rejects the legacy standalone-DT root aliases `?mod:` and `?module:`,
   - requires the modern explicit `?fsm:module_name` root form for FSM sources,
+  - requires the canonical `?dt:module_name` root form for standalone-DT sources,
   - and leaves the rest of the currently supported root families unchanged.
 - In practice:
-  - default mode still accepts both `?fsm:name` and legacy `+fsm`,
-  - strict mode accepts `?fsm:name` but rejects `+fsm` with a targeted migration hint.
+  - default mode still accepts `?fsm:name`, legacy `+fsm`, `?dt:name`, `?mod:name`, and `?module:name`,
+  - strict mode accepts `?fsm:name` and `?dt:name`,
+  - and strict mode rejects `+fsm`, `?mod:name`, and `?module:name` with targeted migration hints.
 - This is the first support-tier enforcement slice, not the final full strict-mode surface.
 
 ### Draft normative contract for standalone `?dt:name` / `?mod:name` / `?module:name` roots
@@ -579,6 +586,7 @@ Accepted shape:
 
 Current meaning:
 - `?dt:name`, `?mod:name`, and `?module:name` are the active standalone-DT root family, not encoded FSM-state-machine roots.
+- In strict mode, the canonical supported root is `?dt:name`; `?mod:name` and `?module:name` remain default-mode compatibility aliases only.
 - Any root in that standalone-DT family may contain any number of top-level general DT blocks such as `(-foo ...)`.
 - Any root in that standalone-DT family may mix combinational assignments such as `(P = RHS)` and sequential assignments such as `(Q <- RHS)` in the same module.
 - Driven non-intermediate targets are exposed as module outputs by default.

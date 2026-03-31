@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-31
+### strict mode now enforces canonical standalone-DT roots too
+- Updated [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so the shared strict root-family boundary now lives in the frontend and can enforce legacy-root rejection during both top-level direct compilation and generated child realization.
+- Updated [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm), [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm), and [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so strict mode now rejects the legacy standalone-DT aliases `?mod:` and `?module:` in favor of canonical `?dt:` both for top-level sources and for `?dtc` child sources.
+- Added [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t), updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), and refreshed the roadmap/continuity set so the current strict-mode root-family boundary is now “canonical `?fsm:` / canonical `?dt:` only”.
+
 ### strict mode now exists with a first live legacy-root boundary
 - Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so the CLI now accepts `--strict`, and updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the public pipeline facade now accepts `strict_mode => 1`.
 - Updated [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) so strict mode now rejects the legacy `+fsm` root family with a targeted migration hint toward `?fsm:module_name` while still accepting modern explicit roots.

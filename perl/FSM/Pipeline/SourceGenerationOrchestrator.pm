@@ -42,10 +42,10 @@ sub generate_from_file ($class, %args) {
     );
     my $source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($raw_ast);
 
-    enforce_strict_source_boundary(
-        pipeline => $pipeline,
-        fsm_file => $fsm_file,
+    FSM::Pipeline::SourceFrontend->enforce_strict_source_boundary(
+        strict_mode => ($pipeline->{strict_mode} // 0),
         source_info => $source_info,
+        source_label => $fsm_file,
     );
 
     if (($source_info->{kind} // 'unknown') eq 'unknown'
@@ -106,26 +106,6 @@ sub generate_from_file ($class, %args) {
     fsm_debug("HDL generation pipeline completed successfully", 1);
     fsm_trace_exit("HDL generation complete for '$fsm_file'", 1);
     return $result;
-}
-
-sub enforce_strict_source_boundary (%args) {
-    my $pipeline = $args{pipeline}
-        or confess "enforce_strict_source_boundary requires a pipeline";
-    my $fsm_file = $args{fsm_file}
-        or confess "enforce_strict_source_boundary requires an fsm_file";
-    my $source_info = $args{source_info}
-        or confess "enforce_strict_source_boundary requires source_info";
-
-    return unless $pipeline->{strict_mode};
-
-    my $header = $source_info->{header} // '';
-    return unless $header eq '+fsm';
-
-    confess
-        "Strict mode rejects the legacy '+fsm' root family for source '$fsm_file'. "
-      . "Use the modern '?fsm:module_name' root form instead of '+fsm', "
-      . "or re-run without strict mode if you need legacy compatibility. "
-      . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
 }
 
 1;

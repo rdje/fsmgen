@@ -73,10 +73,41 @@ sub parse_composition_source ($class, %args) {
     return $parser->parse_source($raw_ast);
 }
 
+sub enforce_strict_source_boundary ($class, %args) {
+    return unless $args{strict_mode};
+
+    my $source_info = $args{source_info}
+        || $class->classify_source_ast($args{raw_ast});
+    my $header = $source_info->{header} // '';
+    my $source_label = $args{source_label} // ($header || 'source');
+
+    if ($header eq '+fsm') {
+        confess
+            "Strict mode rejects the legacy '+fsm' root family for source '$source_label'. "
+          . "Use the modern '?fsm:module_name' root form instead of '+fsm', "
+          . "or re-run without strict mode if you need legacy compatibility. "
+          . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+    }
+
+    if ($header =~ /^\?(?:mod|module):/) {
+        confess
+            "Strict mode rejects the legacy standalone-DT root alias '$header' for source '$source_label'. "
+          . "Use the canonical '?dt:module_name' root form instead of '?mod:' or '?module:', "
+          . "or re-run without strict mode if you need legacy compatibility. "
+          . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+    }
+}
+
 sub create_fsm_module ($class, %args) {
     my $raw_ast = $args{raw_ast}
         or confess "SourceFrontend requires a raw_ast";
     my $debug_level = $args{debug_level} // 0;
+
+    $class->enforce_strict_source_boundary(
+        raw_ast => $raw_ast,
+        strict_mode => ($args{strict_mode} // 0),
+        source_label => $args{source_label},
+    );
 
     fsm_trace_enter('Build semantic FSM module from raw AST', 2);
     fsm_debug("Creating semantic FSM module from raw AST", 1);
@@ -137,5 +168,10 @@ spec consumed by the composition generation path.
 
 Builds one semantic FSM/DT module from a direct-root raw AST through the
 current C<FSMGenFull> adapter.
+
+=head2 enforce_strict_source_boundary
+
+Checks the current strict-mode root-family boundary for one direct-root source
+before semantic module creation.
 
 =cut

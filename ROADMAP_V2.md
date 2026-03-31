@@ -115,7 +115,7 @@ Deliverable themes:
 
 First bounded slice:
 - make strict mode real at the CLI/pipeline surface,
-- start with one high-signal compatibility cut by rejecting the legacy `+fsm` root family in strict mode,
+- start with the high-signal root-family compatibility cuts by rejecting the legacy `+fsm` root family and the legacy standalone-DT aliases `?mod:` / `?module:` in strict mode,
 - and use that first slice to establish the support-tier enforcement pattern before widening it to other compatibility residue.
 
 Expected result:

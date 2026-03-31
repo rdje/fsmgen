@@ -583,10 +583,18 @@ Done:
   - strict mode rejects both flattened and nested legacy `+fsm` roots,
   - CLI help advertises `--strict`,
   - and pipeline plus CLI entry points both keep the same actionable migration hint.
+- The next strict-mode root-family slice is now also shipped:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now owns the shared strict root-family boundary so the same support-tier enforcement applies to top-level direct roots and generated child sources,
+  - strict mode now also rejects the legacy standalone-DT root aliases `?mod:` and `?module:` with a targeted migration hint toward `?dt:module_name`,
+  - and that same rejection now applies during `?dtc` child realization too instead of only at the top-level file entrypoint.
+- [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks that second strict-mode slice end to end:
+  - strict mode still accepts canonical `?dt:name` roots,
+  - strict mode rejects top-level `?mod:name` and `?module:name` roots,
+  - and strict mode also rejects embedded or external `?dtc` child sources that still use those legacy standalone-DT aliases.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the initial strict-mode boundary explicitly.
 Left:
-- Widen strict-mode enforcement beyond the first legacy-`+fsm` root boundary into more of the fully supported-vs-compatibility split.
-- Decide the next high-signal support-tier cuts after the current `+fsm` root family.
+- Widen strict-mode enforcement beyond the current canonical-root-family boundary into more of the fully supported-vs-compatibility split.
+- Decide the next high-signal support-tier cuts after the current legacy root-family slices.
 - Continue documenting strict-mode behavior as the supported-tier boundary widens.
 Exit criteria:
 - Users can run the tool in a mode that accepts only the fully supported language contract.

@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-31: strict mode now also rejects legacy standalone-DT root aliases
+- Saved shipped behavior:
+  - updated [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so the shared strict-mode root-family boundary now lives in one frontend owner instead of only at the top-level source orchestrator,
+  - updated [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm) and [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so strict-mode root-family enforcement now also reaches direct-root semantic module creation and generated child realization,
+  - strict mode now rejects the legacy standalone-DT aliases `?mod:` and `?module:` with a targeted migration hint toward `?dt:module_name`,
+  - and [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks that boundary for top-level roots plus `?dtc` child realization.
+- Important continuity note:
+  - the current strict-mode root-family contract is now canonical `?fsm:` and canonical `?dt:` only,
+  - while `+fsm`, `?mod:`, and `?module:` remain default-mode compatibility roots,
+  - and the next strict-mode slice should target another already-documented compatibility residue instead of reopening root-family ambiguity again.
+
 ## 2026-03-31: strict mode now exists and its first shipped boundary rejects legacy `+fsm` roots
 - Saved shipped behavior:
   - updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so the CLI now accepts `--strict`,

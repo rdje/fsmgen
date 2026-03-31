@@ -38,6 +38,8 @@ sub generate_from_source ($class, %args) {
     my $fsm_module = FSM::Pipeline::SourceFrontend->create_fsm_module(
         raw_ast => $raw_ast,
         debug_level => ($pipeline->{debug_level} // 0),
+        strict_mode => ($pipeline->{strict_mode} // 0),
+        source_label => ($source_info->{header} // 'direct source'),
     );
     my $intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
         fsm_module => $fsm_module,
