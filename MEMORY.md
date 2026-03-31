@@ -1,15 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
-## 2026-03-31: strict mode now also rejects legacy standalone-DT root aliases
-- Saved shipped behavior:
-  - updated [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so the shared strict-mode root-family boundary now lives in one frontend owner instead of only at the top-level source orchestrator,
-  - updated [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm) and [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so strict-mode root-family enforcement now also reaches direct-root semantic module creation and generated child realization,
-  - strict mode now rejects the legacy standalone-DT aliases `?mod:` and `?module:` with a targeted migration hint toward `?dt:module_name`,
-  - and [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks that boundary for top-level roots plus `?dtc` child realization.
+## 2026-03-31: strict mode no longer collapses `?mod:` / `?module:` into `?dt:`
+- Corrected shipped behavior:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) still owns the shared strict-mode root-family boundary,
+  - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm) and [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) still carry strict-mode enforcement through direct-root semantic module creation and generated child realization,
+  - but strict mode no longer rejects `?mod:` / `?module:` or suggests migrating them to `?dt:`,
+  - and [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks strict-mode acceptance for top-level `?dt:` / `?mod:` / `?module:` roots plus `?dtc` child realization through `?mod:` / `?module:`.
 - Important continuity note:
-  - the current strict-mode root-family contract is now canonical `?fsm:` and canonical `?dt:` only,
-  - while `+fsm`, `?mod:`, and `?module:` remain default-mode compatibility roots,
-  - and the next strict-mode slice should target another already-documented compatibility residue instead of reopening root-family ambiguity again.
+  - `?dt` means one decision tree,
+  - `?mod:` / `?module:` remain distinct module/entity-architecture roots in the intended language model,
+  - the current implementation may still route those roots through shared direct single-module machinery,
+  - but docs and strict mode should not describe them as semantic aliases of `?dt:`,
+  - and the live strict-mode root-family boundary is currently only the legacy `+fsm` family.
 
 ## 2026-03-31: strict mode now exists and its first shipped boundary rejects legacy `+fsm` roots
 - Saved shipped behavior:
@@ -1316,9 +1318,10 @@ This is the live continuity document for fast session recovery after crashes, re
 
 ## 2026-03-20: standalone-DT roots now also accept `?mod:name` and `?module:name`
 - Saved shipped behavior:
-  - `?mod:name` and `?module:name` now act as active standalone-DT root aliases beside `?dt:name`,
+  - `?mod:name` and `?module:name` became accepted on the same live direct single-module path as `?dt:name`,
   - and composition `?dtc` children may now realize embedded or external standalone-DT sources rooted at any of those three spellings.
 - Important continuity note:
+  - later continuity corrected the semantic interpretation: this shared path should not be read as proving that `?mod:` / `?module:` mean the same thing as `?dt:`,
   - this is real `R11` feature growth, not just hardening,
   - it keeps the semantic root family unified under the existing `dt` runtime path,
   - and it retires the old roadmap question about whether those aliases should exist at all.

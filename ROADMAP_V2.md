@@ -115,7 +115,7 @@ Deliverable themes:
 
 First bounded slice:
 - make strict mode real at the CLI/pipeline surface,
-- start with the high-signal root-family compatibility cuts by rejecting the legacy `+fsm` root family and the legacy standalone-DT aliases `?mod:` / `?module:` in strict mode,
+- start with the high-signal root-family compatibility cut by rejecting the legacy `+fsm` root family in strict mode,
 - and use that first slice to establish the support-tier enforcement pattern before widening it to other compatibility residue.
 
 Expected result:
@@ -223,7 +223,7 @@ Deliverable themes:
 
 First shipped `R11` slice now in tree:
 - `?dt:name` is now an active standalone-module root in the live toolchain.
-- `?mod:name` and `?module:name` are now also active standalone-DT root aliases in the live toolchain.
+- `?mod:name` and `?module:name` are also currently accepted on the live direct single-module path, but they should not be treated as semantic aliases of `?dt:name`.
 - The `.rtlif` mini-contract is now explicit enough to build on:
   - one flat `(?rtlif:module_name ...)` root,
   - embedded same-file `(?rtlif:module_name ...)` companion roots taking precedence over sidecar metadata when present,
@@ -436,7 +436,7 @@ Planned bounded sub-lane inside `R11`:
   - keep `?fsm:name` on implicit `clk` / `rst_n` by default,
   - let `?dt:name` acquire implicit `clk` / `rst_n` only when a sequential assignment exists,
   - keep the output-driving semantics inside `?dt:name` aligned with existing DT handling instead of inventing a separate conflict model,
-  - keep `?top:name` as the explicit composition root while treating `?dt:name`, `?mod:name`, and `?module:name` as the current standalone-DT root family,
+  - keep `?top:name` as the explicit composition root while keeping `?dt:name` as the standalone-DT root and leaving the precise broader `?mod:name` / `?module:name` module-root contract open,
   - and extend reusable-source lookup through existing `FSMLIB` semantics plus repeatable `--path DIR` CLI roots.
 - longer-term hierarchy direction:
   - whole `.fsm` designs should eventually behave as authored bottom-up multi-level hierarchies with non-leaf composition nodes and leaf implementation nodes,

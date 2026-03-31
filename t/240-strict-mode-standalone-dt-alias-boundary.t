@@ -15,12 +15,12 @@ use FSM::Pipeline::HDLGenerator;
 my $tempdir = tempdir(CLEANUP => 1);
 my $canonical_dt_path = File::Spec->catfile($tempdir, 'strict_dt_ok.fsm');
 my $canonical_dt_out_path = File::Spec->catfile($tempdir, 'strict_dt_ok.sv');
-my $mod_alias_path = File::Spec->catfile($tempdir, 'strict_mod_alias.fsm');
-my $mod_alias_out_path = File::Spec->catfile($tempdir, 'strict_mod_alias.sv');
-my $module_alias_path = File::Spec->catfile($tempdir, 'strict_module_alias.fsm');
-my $module_alias_out_path = File::Spec->catfile($tempdir, 'strict_module_alias.sv');
-my $embedded_top_path = File::Spec->catfile($tempdir, 'strict_embedded_mod_alias_top.fsm');
-my $external_top_path = File::Spec->catfile($tempdir, 'strict_external_module_alias_top.fsm');
+my $mod_path = File::Spec->catfile($tempdir, 'strict_mod_root.fsm');
+my $mod_out_path = File::Spec->catfile($tempdir, 'strict_mod_root.sv');
+my $module_path = File::Spec->catfile($tempdir, 'strict_module_root.fsm');
+my $module_out_path = File::Spec->catfile($tempdir, 'strict_module_root.sv');
+my $embedded_top_path = File::Spec->catfile($tempdir, 'strict_embedded_mod_root_top.fsm');
+my $external_top_path = File::Spec->catfile($tempdir, 'strict_external_module_root_top.fsm');
 
 write_file(
     $canonical_dt_path,
@@ -38,9 +38,9 @@ FSM
 );
 
 write_file(
-    $mod_alias_path,
+    $mod_path,
     <<'FSM'
-(?mod:strict_mod_alias
+(?mod:strict_mod_root
   (+size
     (DATA_IN 8)
     (DATA_OUT 8)
@@ -53,9 +53,9 @@ FSM
 );
 
 write_file(
-    $module_alias_path,
+    $module_path,
     <<'FSM'
-(?module:strict_module_alias
+(?module:strict_module_root
   (+size
     (ACC 8)
     (DATA_IN 8)
@@ -138,7 +138,7 @@ subtest 'strict mode still accepts the canonical ?dt root family' => sub {
     );
 };
 
-subtest 'strict mode rejects top-level ?mod and ?module aliases with migration guidance' => sub {
+subtest 'strict mode also accepts top-level ?mod and ?module roots' => sub {
     my $pipeline = FSM::Pipeline::HDLGenerator->new(
         target_language => 'systemverilog',
         debug_level => 0,
@@ -147,56 +147,34 @@ subtest 'strict mode rejects top-level ?mod and ?module aliases with migration g
     );
 
     for my $case (
-        [$mod_alias_path, qr/\?mod:strict_mod_alias/, 'top-level ?mod alias'],
-        [$module_alias_path, qr/\?module:strict_module_alias/, 'top-level ?module alias'],
+        [$mod_path, qr/\bmodule\s+strict_mod_root\b/s, 'top-level ?mod root'],
+        [$module_path, qr/\bmodule\s+strict_module_root\b/s, 'top-level ?module root'],
     ) {
-        my ($path, $header_regex, $label) = @$case;
-        my $error = eval {
-            $pipeline->generate_hdl_from_file($path);
-            undef;
-        };
-        $error = $@;
+        my ($path, $module_regex, $label) = @$case;
+        my $result = $pipeline->generate_hdl_from_file($path);
 
         like(
-            $error,
-            qr/Strict mode rejects the legacy standalone-DT root alias/s,
-            "strict pipeline rejects $label explicitly",
-        );
-        like(
-            $error,
-            $header_regex,
-            "strict pipeline names the rejected alias for $label",
-        );
-        like(
-            $error,
-            qr/\?dt:module_name/,
-            "strict pipeline gives the canonical ?dt migration hint for $label",
+            $result->{hdl_code},
+            $module_regex,
+            "strict pipeline still compiles $label",
         );
     }
 };
 
-subtest 'CLI strict mode rejects top-level ?mod and ?module aliases too' => sub {
+subtest 'CLI strict mode also accepts top-level ?dt, ?mod, and ?module roots' => sub {
     my ($mod_success, $mod_error_message, $mod_full_buf, $mod_stdout_buf, $mod_stderr_buf) = run(
-        command => ['./bin/fsmgen', '--strict', '--quiet', '-o', $mod_alias_out_path, $mod_alias_path],
+        command => ['./bin/fsmgen', '--strict', '--quiet', '-o', $mod_out_path, $mod_path],
     );
 
-    ok(!$mod_success, 'CLI strict mode rejects top-level ?mod alias');
-    ok(!-e $mod_alias_out_path, 'CLI strict mode does not emit HDL for top-level ?mod alias');
-
-    my $mod_output = join('', @{ $mod_stdout_buf || [] }, @{ $mod_stderr_buf || [] }, ($mod_error_message || ''));
-    like($mod_output, qr/Strict mode rejects the legacy standalone-DT root alias '\?mod:strict_mod_alias'/, 'CLI surfaces the strict ?mod-alias boundary');
-    like($mod_output, qr/\?dt:module_name/, 'CLI gives the canonical ?dt migration hint for ?mod');
+    ok($mod_success, 'CLI strict mode still accepts top-level ?mod roots');
+    ok(-e $mod_out_path, 'CLI strict mode still emits HDL for top-level ?mod roots');
 
     my ($module_success, $module_error_message, $module_full_buf, $module_stdout_buf, $module_stderr_buf) = run(
-        command => ['./bin/fsmgen', '--strict', '--quiet', '-o', $module_alias_out_path, $module_alias_path],
+        command => ['./bin/fsmgen', '--strict', '--quiet', '-o', $module_out_path, $module_path],
     );
 
-    ok(!$module_success, 'CLI strict mode rejects top-level ?module alias');
-    ok(!-e $module_alias_out_path, 'CLI strict mode does not emit HDL for top-level ?module alias');
-
-    my $module_output = join('', @{ $module_stdout_buf || [] }, @{ $module_stderr_buf || [] }, ($module_error_message || ''));
-    like($module_output, qr/Strict mode rejects the legacy standalone-DT root alias '\?module:strict_module_alias'/, 'CLI surfaces the strict ?module-alias boundary');
-    like($module_output, qr/\?dt:module_name/, 'CLI gives the canonical ?dt migration hint for ?module');
+    ok($module_success, 'CLI strict mode still accepts top-level ?module roots');
+    ok(-e $module_out_path, 'CLI strict mode still emits HDL for top-level ?module roots');
 
     my ($dt_success, $dt_error_message, $dt_full_buf, $dt_stdout_buf, $dt_stderr_buf) = run(
         command => ['./bin/fsmgen', '--strict', '--quiet', '-o', $canonical_dt_out_path, $canonical_dt_path],
@@ -206,7 +184,7 @@ subtest 'CLI strict mode rejects top-level ?mod and ?module aliases too' => sub 
     ok(-e $canonical_dt_out_path, 'CLI strict mode still emits HDL for canonical ?dt roots');
 };
 
-subtest 'strict mode also rejects legacy standalone-DT aliases inside dtc child realization' => sub {
+subtest 'strict mode still realizes embedded and external ?dtc children rooted at ?mod and ?module' => sub {
     my $pipeline = FSM::Pipeline::HDLGenerator->new(
         target_language => 'systemverilog',
         debug_level => 0,
@@ -215,26 +193,18 @@ subtest 'strict mode also rejects legacy standalone-DT aliases inside dtc child 
         source_search_paths => [$libdir],
     );
 
-    my $embedded_error = eval {
-        $pipeline->generate_hdl_from_file($embedded_top_path);
-        undef;
-    };
-    $embedded_error = $@;
+    my $embedded_result = $pipeline->generate_hdl_from_file($embedded_top_path);
     like(
-        $embedded_error,
-        qr/Strict mode rejects the legacy standalone-DT root alias '\?mod:route_src'/,
-        'strict mode rejects embedded ?mod dtc children too',
+        $embedded_result->{hdl_code},
+        qr/\bmodule\s+route_src\b/s,
+        'strict mode still realizes embedded ?mod dtc children',
     );
 
-    my $external_error = eval {
-        $pipeline->generate_hdl_from_file($external_top_path);
-        undef;
-    };
-    $external_error = $@;
+    my $external_result = $pipeline->generate_hdl_from_file($external_top_path);
     like(
-        $external_error,
-        qr/Strict mode rejects the legacy standalone-DT root alias '\?module:route_src'/,
-        'strict mode rejects external ?module dtc children too',
+        $external_result->{hdl_code},
+        qr/\bmodule\s+route_src\b/s,
+        'strict mode still realizes external ?module dtc children',
     );
 };
 

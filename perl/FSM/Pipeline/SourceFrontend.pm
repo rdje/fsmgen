@@ -89,13 +89,6 @@ sub enforce_strict_source_boundary ($class, %args) {
           . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
     }
 
-    if ($header =~ /^\?(?:mod|module):/) {
-        confess
-            "Strict mode rejects the legacy standalone-DT root alias '$header' for source '$source_label'. "
-          . "Use the canonical '?dt:module_name' root form instead of '?mod:' or '?module:', "
-          . "or re-run without strict mode if you need legacy compatibility. "
-          . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
-    }
 }
 
 sub create_fsm_module ($class, %args) {

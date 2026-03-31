@@ -82,10 +82,12 @@ Standard used here:
   - without explicit `(+system ...)`, any `?dt:name` module that contains at least one sequential assignment implicitly exposes `clk` / `rst_n`
   - driven non-intermediate targets in `?dt:name` are exposed as module outputs by default
   - `?dt:name` does not synthesize `current_state` / `next_state`
-- Legacy standalone-DT root aliases in default mode:
+- Additional direct single-module roots currently accepted by the live toolchain:
   - `(?mod:module_name ...)`
   - `(?module:module_name ...)`
-  - supported in default mode only; the current strict-mode slice rejects these aliases and requires `?dt:module_name`
+  - these roots currently compile through the same direct single-module path as `?dt:name`
+  - but that implementation reuse should not be read as semantic identity: `?dt` describes one decision tree, while `?mod` / `?module` are reserved for broader module/entity-architecture semantics
+  - strict mode currently leaves these roots accepted while that broader module-root contract is still being settled
 - Legacy `+fsm` root family:
   - flattened sibling form with a first top-level entry `(+fsm module_name)` and sibling `(+system ...)`, state blocks, and `(+size ...)`
   - nested legacy root form `(+fsm module_name ...)`
@@ -174,6 +176,7 @@ Combinational DT note:
 - `(?dtc:instance child_source)` with exactly one standalone-DT child source token
   - or `(?dtc:instance)` on named children, which defaults the child source to `instance`
   - the active child source may be embedded in the same file as `?dt:name`
+  - the current live path also accepts embedded or external `?mod:name` / `?module:name` child roots there, even though those roots are not semantically identical to `?dt:name`
   - or resolved from an external `.fsm` file beside the composition source, through repeated `--path DIR` roots, then through `FSMLIB`
   - combinational `?dtc` children expose only their real user-facing interface ports
   - standalone `?dtc` children with explicit conventional `(+system ...)` expose `clk` / `rstn`
@@ -493,7 +496,8 @@ Accepted source roots:
 Current boundary:
 - Supported:
   - `?fsm:module_name` as the active FSM source root, with an HDL-identifier-compatible module name
-  - `?dt:module_name`, `?mod:module_name`, and `?module:module_name` as the active standalone-DT root family, with an HDL-identifier-compatible module name
+  - `?dt:module_name` as the active standalone-DT source root, with an HDL-identifier-compatible module name
+  - `?mod:module_name` and `?module:module_name` as additional currently accepted direct single-module roots on the live shared parser/backend path, without declaring them semantic synonyms of `?dt:module_name`
   - `+fsm` as the legacy FSM root family:
     - either the flattened sibling form with a first top-level `(+fsm module_name)` entry,
     - or the nested legacy root form `(+fsm module_name ...)`
@@ -558,18 +562,21 @@ Boundary note:
 - The CLI now accepts `--strict`, and the public pipeline facade now accepts `strict_mode => 1`.
 - The current first strict-mode slice is intentionally narrow:
   - strict mode rejects the legacy `+fsm` root family,
-  - strict mode rejects the legacy standalone-DT root aliases `?mod:` and `?module:`,
   - requires the modern explicit `?fsm:module_name` root form for FSM sources,
-  - requires the canonical `?dt:module_name` root form for standalone-DT sources,
-  - and leaves the rest of the currently supported root families unchanged.
+  - and otherwise leaves the currently accepted `?dt:`, `?mod:`, `?module:`, and `?top:` roots unchanged while their broader contracts continue to settle.
 - In practice:
   - default mode still accepts `?fsm:name`, legacy `+fsm`, `?dt:name`, `?mod:name`, and `?module:name`,
-  - strict mode accepts `?fsm:name` and `?dt:name`,
-  - and strict mode rejects `+fsm`, `?mod:name`, and `?module:name` with targeted migration hints.
+  - strict mode currently accepts `?fsm:name`, `?dt:name`, `?mod:name`, `?module:name`, and `?top:name`,
+  - and strict mode currently rejects only `+fsm` with a targeted migration hint.
 - This is the first support-tier enforcement slice, not the final full strict-mode surface.
 
-### Draft normative contract for standalone `?dt:name` / `?mod:name` / `?module:name` roots
+### Draft normative contract for current `?dt:name` roots
 This is the current live contract for the first shipped reusable standalone-DT slice.
+
+Implementation note:
+- The live toolchain also currently accepts `?mod:name` and `?module:name` on the same direct single-module path.
+- That shared path is an implementation convenience, not a declaration that `?mod` / `?module` mean the same thing as `?dt`.
+- In the intended language model, `?dt` describes one decision tree, while `?mod` / `?module` are broader module/entity-architecture roots and may later grow different structure or instantiation rules.
 
 Accepted shape:
 ```lisp
@@ -585,12 +592,11 @@ Accepted shape:
 ```
 
 Current meaning:
-- `?dt:name`, `?mod:name`, and `?module:name` are the active standalone-DT root family, not encoded FSM-state-machine roots.
-- In strict mode, the canonical supported root is `?dt:name`; `?mod:name` and `?module:name` remain default-mode compatibility aliases only.
-- Any root in that standalone-DT family may contain any number of top-level general DT blocks such as `(-foo ...)`.
-- Any root in that standalone-DT family may mix combinational assignments such as `(P = RHS)` and sequential assignments such as `(Q <- RHS)` in the same module.
+- `?dt:name` is the active standalone-DT root, not an encoded FSM-state-machine root.
+- `?dt:name` may contain any number of top-level general DT blocks such as `(-foo ...)`.
+- `?dt:name` may mix combinational assignments such as `(P = RHS)` and sequential assignments such as `(Q <- RHS)` in the same module.
 - Driven non-intermediate targets are exposed as module outputs by default.
-- standalone-DT roots in that family do not synthesize `current_state` / `next_state`.
+- standalone-DT `?dt:name` roots do not synthesize `current_state` / `next_state`.
 
 Current top-level boundary:
 - Supported:
@@ -608,13 +614,14 @@ Current top-level boundary:
 
 System-port rule:
 - explicit conventional `(+system ...)` inside a standalone-DT root exposes `clk` / `rstn`
-- without explicit `(+system ...)`, purely combinational standalone-DT roots in that family expose no implicit `clk` / `rst_n`
-- without explicit `(+system ...)`, if any sequential assignment appears in that standalone-DT source, generation implicitly exposes `clk` / `rst_n`
+- without explicit `(+system ...)`, purely combinational standalone-DT `?dt:name` roots expose no implicit `clk` / `rst_n`
+- without explicit `(+system ...)`, if any sequential assignment appears in that standalone-DT `?dt:name` source, generation implicitly exposes `clk` / `rst_n`
 
 Boundary note:
 - The semantic split from `?fsm:name` is the control model, not “combinational-only” versus “sequential-capable”.
 - Explicit conventional `(+system ...)` now gives reusable standalone-DT roots and `?dtc` composition children one deliberate way to align with the shared `clk` / `rstn` contract when that interface stability matters.
-- The current shipped standalone-DT slice now includes `?dt:name`, `?mod:name`, and `?module:name` as one active reusable root family; broader reusable-module interface and unnamed-root questions remain future `R11` work.
+- The current shipped standalone-DT slice is centered on `?dt:name`.
+- The live implementation also currently accepts `?mod:name` and `?module:name` on the same direct-root machinery, but broader reusable-module interface questions for those roots remain future `R11` work.
 - Direct standalone-DT generation and realized `?dtc` children now also surface stable block-enable metadata through `module_info`: `standalone_dt_count`, `standalone_dt_names`, `standalone_dt_enable_families`, and one grouped `standalone_dt_module_enable_family` summary.
 - That same `module_info` surface now also reports grouped multi-drive target families for standalone-DT roots through `standalone_dt_multi_drive_target_count` and `standalone_dt_multi_drive_targets`.
 - Composition tops that realize `?dtc` children now also aggregate those reusable standalone-DT exports through `composition_standalone_dt_child_count`, `composition_standalone_dt_block_count`, `composition_standalone_dt_multi_drive_target_count`, and `composition_standalone_dt_children`.

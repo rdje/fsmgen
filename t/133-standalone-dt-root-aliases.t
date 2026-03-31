@@ -16,7 +16,7 @@ use FSM::SourceClassifier;
 
 my $tempdir = tempdir(CLEANUP => 1);
 
-subtest '?mod root aliases the standalone-DT source family directly' => sub {
+subtest '?mod root currently compiles through the shared direct single-module path' => sub {
     my $source_path = write_file(
         'mod_alias_root.fsm',
         <<'FSM'
@@ -34,7 +34,7 @@ FSM
 
     my $raw_ast = Lispish::multi($source_path);
     my $source_info = FSM::SourceClassifier::classify_source_ast($raw_ast);
-    is($source_info->{kind}, 'dt', '?mod root is classified as a dt source');
+    is($source_info->{kind}, 'dt', '?mod root currently reuses the dt source kind in the live implementation');
     is($source_info->{header}, '?mod:mod_alias_root', 'classifier preserves the ?mod header');
 
     my $pipeline = FSM::Pipeline::HDLGenerator->new(
@@ -44,13 +44,13 @@ FSM
     );
     my $result = $pipeline->generate_hdl_from_file($source_path);
 
-    is($result->{source_info}{kind}, 'dt', 'pipeline preserves dt source kind for ?mod roots');
-    is($result->{fsm_module}->source_root_kind, 'dt', '?mod root keeps the dt source_root_kind');
+    is($result->{source_info}{kind}, 'dt', 'pipeline currently reuses the dt source kind for ?mod roots');
+    is($result->{fsm_module}->source_root_kind, 'dt', '?mod root currently reuses the dt source_root_kind internally');
     like($result->{hdl_code}, qr/\bmodule\s+mod_alias_root\b/s, '?mod root still generates the expected module');
     unlike($result->{hdl_code}, qr/\binput\s+wire\s+clk\b/s, 'combinational ?mod root keeps the honest non-system interface');
 };
 
-subtest '?module root can be compiled directly through the CLI bare-name lookup path' => sub {
+subtest '?module root can be compiled directly through the current shared CLI path' => sub {
     my $libdir = File::Spec->catdir($tempdir, 'module_alias_lib');
     mkdir $libdir or die "Cannot create $libdir: $!";
 
@@ -86,7 +86,7 @@ FSM
     like($hdl, qr/\binput\s+wire\s+rst_n\b/s, 'sequential ?module root still exposes implicit rst_n');
 };
 
-subtest 'composition dtc children can realize embedded ?mod and external ?module roots' => sub {
+subtest 'composition dtc children can realize embedded ?mod and external ?module roots on the current shared path' => sub {
     my $libdir = File::Spec->catdir($tempdir, 'composition_dt_alias_lib');
     mkdir $libdir or die "Cannot create $libdir: $!";
 

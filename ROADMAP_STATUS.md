@@ -583,14 +583,14 @@ Done:
   - strict mode rejects both flattened and nested legacy `+fsm` roots,
   - CLI help advertises `--strict`,
   - and pipeline plus CLI entry points both keep the same actionable migration hint.
-- The next strict-mode root-family slice is now also shipped:
-  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now owns the shared strict root-family boundary so the same support-tier enforcement applies to top-level direct roots and generated child sources,
-  - strict mode now also rejects the legacy standalone-DT root aliases `?mod:` and `?module:` with a targeted migration hint toward `?dt:module_name`,
-  - and that same rejection now applies during `?dtc` child realization too instead of only at the top-level file entrypoint.
-- [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks that second strict-mode slice end to end:
-  - strict mode still accepts canonical `?dt:name` roots,
-  - strict mode rejects top-level `?mod:name` and `?module:name` roots,
-  - and strict mode also rejects embedded or external `?dtc` child sources that still use those legacy standalone-DT aliases.
+- The shared strict-mode root-family owner is now in place:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) owns the shared strict root-family boundary so the same support-tier enforcement applies to top-level direct roots and generated child sources,
+  - that boundary currently rejects only the legacy `+fsm` root family,
+  - and it intentionally does not collapse `?mod:` / `?module:` into `?dt:` because those roots remain semantically distinct in the intended language model.
+- [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks that corrected root-family behavior end to end:
+  - strict mode still accepts `?dt:name` roots,
+  - strict mode still accepts top-level `?mod:name` and `?module:name` roots on the current shared single-module path,
+  - and strict mode still realizes embedded or external `?dtc` child sources rooted at `?mod:` / `?module:`.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the initial strict-mode boundary explicitly.
 Left:
 - Widen strict-mode enforcement beyond the current canonical-root-family boundary into more of the fully supported-vs-compatibility split.
@@ -758,8 +758,9 @@ Done:
   - and standalone `?dt:name` generation stays out of the encoded `current_state` / `next_state` plan.
 - [t/82-standalone-dt-root-support.t](/Users/richarddje/Documents/github/fsmgen/t/82-standalone-dt-root-support.t) now locks both the combinational and sequential `?dt:name` success paths.
 - The next reusable-root naming slice is now also shipped:
-  - `?mod:name` and `?module:name` now act as active standalone-DT root aliases beside `?dt:name`,
-  - those aliases classify, parse, and generate through the same standalone-DT contract,
+  - `?mod:name` and `?module:name` are currently accepted on the same direct single-module path as `?dt:name`,
+  - that current path still classifies, parses, and generates them through the same implementation machinery,
+  - but they should not be treated as semantic aliases of `?dt:name`,
   - and composition `?dtc` children may now realize embedded or external standalone-DT sources rooted at any of those three spellings.
 - The first reusable-source lookup slice is now also shipped:
   - the CLI accepts repeatable `--path DIR` roots for bare `.fsm` input resolution,
