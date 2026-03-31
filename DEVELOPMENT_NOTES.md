@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-31: live direct backend recursive decision-tree flattening now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling the large recursive flattening cluster out of the top-level orchestrator once the capture and assignment-analysis neighbors were explicit enough to give that step an honest owner of its own.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm) as the live owner of recursive regular-state and standalone-DT flattening plus unified assignment-analysis handoff,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `decision_tree_flattening_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so its flattening methods now delegate there instead of keeping the recursive traversal inline,
+  - added [t/235-flatteneddt-decision-tree-flattening-support.t](/Users/richarddje/Documents/github/fsmgen/t/235-flatteneddt-decision-tree-flattening-support.t), retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `98`-file / `97`-package snapshot.
+- Why this is worth shipping:
+  - it makes `Orchestrator` materially thinner instead of leaving the deepest recursive traversal pocket there indefinitely,
+  - it gives the direct backend a named owner for the capture-heavy flattening phase that precedes text assembly,
+  - and it narrows the next honest seam to the remaining coordination among the extracted generation owners and the now-thinner top-level generation sequence rather than the raw recursive flattening cluster itself.
+
 ## 2026-03-31: live direct backend post-stage SystemVerilog tail now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the post-stage WEN/EN, assignment, and closeout sequence out of the broader generation pipeline once that tail was clearly cohesive enough to stand on its own.
 - Landed behavior:

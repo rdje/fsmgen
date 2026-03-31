@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-31: live direct backend recursive decision-tree flattening now has a dedicated owner
+- Saved shipped behavior:
+  - added [perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm) as the live owner of recursive regular-state and standalone-DT flattening plus the final unified assignment-analysis handoff,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `decision_tree_flattening_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so `flatten_all_decision_trees(...)` and `flatten_decision_tree(...)` now delegate to that owner instead of keeping the recursive traversal inline,
+  - added [t/235-flatteneddt-decision-tree-flattening-support.t](/Users/richarddje/Documents/github/fsmgen/t/235-flatteneddt-decision-tree-flattening-support.t), retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now records the measured post-change snapshot of `98` reachable project files and `97` reachable `.pm` packages.
+- Important continuity note:
+  - the next likely seam is no longer the raw recursive decision-tree flattening cluster in `Orchestrator`,
+  - it is the remaining lower-level coordination across the extracted prelude/stage/tail/pipeline owners plus broader direct-backend convergence around the now-thinner top-level generation sequence,
+  - and future sessions should read the direct backend path as “reset state, attach module context, flatten through the dedicated flattening owner, then assemble HDL through the extracted generation owners.”
+
 ## 2026-03-31: live direct backend post-stage SystemVerilog tail now has a dedicated owner
 - Saved shipped behavior:
   - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm) as the live owner of unified WEN/EN emission, signal-assignment emission, and final `endmodule` closeout after consolidated intermediate generation,

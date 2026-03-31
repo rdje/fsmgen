@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-31
+### live direct backend recursive decision-tree flattening now has a dedicated owner
+- Added [perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm) as the live owner of recursive regular-state and standalone-DT flattening plus the unified assignment-analysis handoff.
+- Updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) and [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so the live direct backend now instantiates `decision_tree_flattening_support` and delegates the recursive flattening cluster there instead of keeping it inline in `Orchestrator`.
+- Added [t/235-flatteneddt-decision-tree-flattening-support.t](/Users/richarddje/Documents/github/fsmgen/t/235-flatteneddt-decision-tree-flattening-support.t), retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t), and refreshed the continuity/import-tree set to the measured `98`-file / `97`-package snapshot.
+
 ### live direct backend post-stage SystemVerilog tail now has a dedicated owner
 - Added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm) as the live owner of unified WEN/EN emission, signal-assignment emission, and final `endmodule` closeout after consolidated intermediate generation.
 - Updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so the live direct backend now instantiates `backend_sv_generation_tail_support` and narrows the generation pipeline owner to prelude/stage/tail composition over that extracted tail.

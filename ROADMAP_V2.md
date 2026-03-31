@@ -1084,3 +1084,8 @@ The first honest `R11` slices are now:
   so `GenerationPipelineSupport` no longer owns unified WEN/EN emission,
   signal-assignment emission, and module closeout inline after consolidated
   intermediate generation.
+- Forward-IR note: the paired live direct recursive decision-tree flattening
+  family now also has an explicit owner in
+  `FSM::HDL::FlattenedDT::DecisionTreeFlatteningSupport`, so
+  `FlattenedDT::Orchestrator` no longer owns recursive regular-state and
+  standalone-DT flattening inline before direct backend text assembly.

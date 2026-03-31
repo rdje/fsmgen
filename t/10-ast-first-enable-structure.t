@@ -366,6 +366,14 @@ ok(
     'live SystemVerilog generation-pipeline support owns post-flattening HDL assembly',
 );
 ok(
+    $hdl->{decision_tree_flattening_support}->can('flatten_all_decision_trees'),
+    'live FlattenedDT decision-tree flattening support owns whole-module recursive flattening',
+);
+ok(
+    $hdl->{decision_tree_flattening_support}->can('flatten_decision_tree'),
+    'live FlattenedDT decision-tree flattening support owns per-node recursive flattening',
+);
+ok(
     !exists $hdl->{backend_sv_consolidated_intermediate_block_support},
     'live SystemVerilog backend no longer instantiates the consolidated block compatibility shell',
 );
