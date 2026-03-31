@@ -106,11 +106,8 @@ sub prepare_flattened_backend {
 sub build_expected_prelude {
     my ($prepared_backend, $fsm_module) = @_;
 
-    my $hdl = $prepared_backend->{backend_sv_scaffold}->generate_header($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_state_encoding($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_state_register($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
+    my $hdl = $prepared_backend->{backend_sv_generation_structural_prelude_support}
+        ->generate_structural_prelude($fsm_module);
     $hdl .= $prepared_backend->{backend_sv_generation_enable_preparation_support}
         ->generate_enable_preparation($fsm_module);
 

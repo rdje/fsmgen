@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-31: live direct backend structural pre-stage prelude now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling the structural prefix out of the broader prelude once the non-structural enable/prescan pocket already had its own owner and the remaining scaffold/internal-declaration half was clean enough to stand alone.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm) as the live owner of scaffold rendering plus internal declaration rendering before enable-oriented pre-stage preparation,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_structural_prelude_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) so it now keeps only structural-prelude plus enable-preparation composition,
+  - added [t/237-systemverilog-generation-structural-prelude-support.t](/Users/richarddje/Documents/github/fsmgen/t/237-systemverilog-generation-structural-prelude-support.t), retargeted [t/233-systemverilog-generation-prelude-support.t](/Users/richarddje/Documents/github/fsmgen/t/233-systemverilog-generation-prelude-support.t) and [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `100`-file / `99`-package snapshot.
+- Why this is worth shipping:
+  - it makes the live prelude owner honest by separating the purely structural prefix from the state-mutating enable preparation that follows it,
+  - it gives the direct backend a named owner for the structural SystemVerilog prefix that has to exist before any enable-oriented preparation runs,
+  - and it narrows the next honest seam to the remaining lower-level coordination across the extracted generation owners rather than the already-isolated structural half of the prelude.
+
 ## 2026-03-31: live direct backend enable-oriented pre-stage preparation now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the non-structural enable/prescan pocket out of the broader prelude once the scaffold and declaration neighbors were already explicit enough to leave that preparation family with a clean owner of its own.
 - Landed behavior:

@@ -1084,6 +1084,11 @@ The first honest `R11` slices are now:
   so `GenerationPreludeSupport` no longer owns enable-condition generation,
   logical-operation counting, and WEN/EN prescan inline before consolidated
   intermediate generation.
+- Forward-IR note: the paired live direct pre-stage SystemVerilog structural
+  prelude family now also has an explicit owner in
+  `FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationStructuralPreludeSupport`,
+  so `GenerationPreludeSupport` no longer owns header/module/state/internal-
+  declaration assembly inline before enable-oriented preparation.
 - Forward-IR note: the paired live direct post-stage SystemVerilog generation
   tail family now also has an explicit owner in
   `FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationTailSupport`,

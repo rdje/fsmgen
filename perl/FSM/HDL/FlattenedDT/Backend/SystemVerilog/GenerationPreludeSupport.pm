@@ -17,8 +17,8 @@ full pre-stage HDL assembly before consolidated intermediate generation
 
 =item *
 
-the live composition of scaffold/declaration emission plus the extracted
-enable-preparation owner
+the live composition of the extracted structural-prelude owner plus the
+extracted enable-preparation owner
 
 =back
 
@@ -27,6 +27,8 @@ C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport>
 now keeps the broader post-flattening module assembly sequence, but this
 package owns the prefix that must be established before the consolidated
 intermediate stage can run. The paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationStructuralPreludeSupport>
+now keeps structural scaffold/internal-declaration assembly, and the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport>
 now keeps enable-condition generation, logical-operation counting, and WEN/EN
 prescan over the direct backend state.
@@ -67,13 +69,8 @@ that must exist before consolidated intermediate generation can run.
 sub generate_systemverilog_prelude ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
 
-    # Step 2: Generate SystemVerilog with enable-based methodology
-    my $hdl = $ctx->{backend_sv_scaffold}->generate_header($fsm_module);
-    $hdl .= $ctx->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
-    $hdl .= $ctx->{backend_sv_scaffold}->generate_state_encoding($fsm_module);
-    $hdl .= $ctx->{backend_sv_scaffold}->generate_state_register($fsm_module);
-    $hdl .= $ctx->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
-    fsm_debug("Step 2 - Basic HDL structure generated", 3);
+    my $hdl = $ctx->{backend_sv_generation_structural_prelude_support}
+        ->generate_structural_prelude($fsm_module);
 
     $hdl .= $ctx->{backend_sv_generation_enable_preparation_support}
         ->generate_enable_preparation($fsm_module);
