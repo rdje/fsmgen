@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-31: live direct backend pre-stage SystemVerilog prelude now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling the pre-stage scaffold/declaration/enable/prescan sequence out of the broader generation pipeline once that sequence was clearly cohesive enough to stand on its own.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) as the live owner of scaffold emission, declaration emission, enable generation, factorization-policy preparation, and WEN/EN prescan before consolidated intermediate generation,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_prelude_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so it now keeps only post-prelude module assembly over the extracted prelude owner,
+  - added [t/233-systemverilog-generation-prelude-support.t](/Users/richarddje/Documents/github/fsmgen/t/233-systemverilog-generation-prelude-support.t), retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `96`-file / `95`-package snapshot.
+- Why this is worth shipping:
+  - it makes the live generation pipeline more honest by separating the pre-stage setup from the later stage/WEN-EN/assignment closeout flow,
+  - it gives the direct backend a named boundary for the side-effect-heavy enable/prescan preparation sequence,
+  - and it narrows the next honest seam to the remaining lower-level coordination around prelude/stage composition and broader direct-backend convergence rather than one longer pipeline pocket.
+
 ## 2026-03-31: live direct backend post-flattening SystemVerilog assembly now has a dedicated pipeline owner
 - Continued the active `R11` backend-breakdown lane by moving the whole post-flattening HDL assembly sequence out of `Orchestrator` once the lower-level owners were explicit enough to support an honest live pipeline owner.
 - Landed behavior:

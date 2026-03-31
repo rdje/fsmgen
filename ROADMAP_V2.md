@@ -1072,3 +1072,9 @@ The first honest `R11` slices are now:
   so `FlattenedDT::Orchestrator` no longer owns scaffold/declaration/enable/
   prescan/consolidated-stage/WEN-EN/assignment sequencing inline after
   flattening.
+- Forward-IR note: the paired live direct pre-stage SystemVerilog generation
+  prelude family now also has an explicit owner in
+  `FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport`,
+  so `GenerationPipelineSupport` no longer owns
+  scaffold/declaration/enable/factorization-policy/prescan preparation inline
+  before consolidated intermediate generation.

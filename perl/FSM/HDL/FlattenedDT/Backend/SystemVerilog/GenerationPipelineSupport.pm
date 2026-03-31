@@ -14,21 +14,22 @@ centralizes:
 
 =item *
 
-full step-2-through-step-7 SystemVerilog assembly once the decision trees
-have already been flattened
+full post-prelude direct SystemVerilog assembly once the decision trees have
+already been flattened and the direct backend prelude has been established
 
 =item *
 
-the live composition of scaffold emission, declaration emission, enable
-generation, factorization-policy preparation, consolidated intermediate stage
-generation, unified WEN/EN emission, assignment emission, and module closeout
+the live composition of consolidated intermediate stage generation, unified
+WEN/EN emission, assignment emission, and module closeout over the extracted
+generation-prelude owner
 
 =back
 
-The paired
-C<FSM::HDL::FlattenedDT::Orchestrator> now keeps per-run reset, FSM-module
-attachment, and decision-tree flattening, while this package keeps the live
-direct backend text-assembly sequence that follows those phases.
+The paired C<FSM::HDL::FlattenedDT::Orchestrator> now keeps per-run reset,
+FSM-module attachment, and decision-tree flattening, the paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport>
+keeps scaffold/declaration/enable/prescan preparation, and this package keeps
+the live direct backend text-assembly sequence that follows those phases.
 
 =cut
 
@@ -66,26 +67,8 @@ already flattened backend state.
 sub generate_systemverilog_module ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
 
-    # Step 2: Generate SystemVerilog with enable-based methodology
-    my $hdl = $ctx->{backend_sv_scaffold}->generate_header($fsm_module);
-    $hdl .= $ctx->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
-    $hdl .= $ctx->{backend_sv_scaffold}->generate_state_encoding($fsm_module);
-    $hdl .= $ctx->{backend_sv_scaffold}->generate_state_register($fsm_module);
-    $hdl .= $ctx->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
-    fsm_debug("Step 2 - Basic HDL structure generated", 3);
-
-    # Step 3: Generate enable conditions FIRST (this will track intermediate signal requirements)
-    $hdl .= $ctx->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
-    fsm_debug("Step 3 - Enable conditions generated", 3);
-
-    # TIMING FIX: Count logical operations BEFORE any intermediate signal creation!
-    fsm_debug("\n*** TIMING FIX: Running logical operation counting BEFORE pre-scan ***", 3);
-    $ctx->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
-    fsm_debug("Step 4 - Logical operation counting completed (BEFORE pre-scan!)", 3);
-
-    # Step 5: PRE-SCAN all WEN/EN expressions to identify needed intermediate signals (now with counts available)
-    $ctx->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
-    fsm_debug("Step 5 - PRE-SCAN completed (AFTER logical operation counting!)", 3);
+    my $hdl = $ctx->{backend_sv_generation_prelude_support}
+        ->generate_systemverilog_prelude($fsm_module);
 
     # Step 6: Generate consolidated intermediate signals (combining AST factorization + pre-scan)
     $hdl .= $ctx->{backend_sv_consolidated_intermediate_stage_support}

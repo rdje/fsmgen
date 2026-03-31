@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-31: live direct backend pre-stage SystemVerilog prelude now has a dedicated owner
+- Saved shipped behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) as the live owner of scaffold/declaration/enable/factorization-policy/prescan preparation before consolidated intermediate generation,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_prelude_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so it now composes the extracted prelude owner plus the existing stage/WEN-EN/assignment/closeout steps,
+  - added [t/233-systemverilog-generation-prelude-support.t](/Users/richarddje/Documents/github/fsmgen/t/233-systemverilog-generation-prelude-support.t), retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t),
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now records the measured post-change snapshot of `96` reachable project files and `95` reachable `.pm` packages.
+- Important continuity note:
+  - the next likely seam is no longer the live direct backend pre-stage scaffold/declaration/enable/prescan sequence inside `GenerationPipelineSupport`,
+  - it is the remaining lower-level coordination across the extracted prelude owner, consolidated-intermediate planning/stage composition, the narrowed generation pipeline owner, and broader direct-backend convergence,
+  - and future sessions should read the direct backend assembly path as “flatten first, build the prelude, generate the consolidated intermediate stage, then emit WEN/EN, assignments, and module closeout.”
+
 ## 2026-03-31: live direct backend post-flattening SystemVerilog assembly now has a dedicated pipeline owner
 - Saved shipped behavior:
   - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) as the live owner of the full step-2-through-step-7 post-flattening SystemVerilog assembly sequence,

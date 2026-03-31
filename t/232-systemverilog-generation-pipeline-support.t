@@ -87,14 +87,8 @@ sub prepare_flattened_backend {
 sub build_expected_hdl {
     my ($prepared_backend, $fsm_module) = @_;
 
-    my $hdl = $prepared_backend->{backend_sv_scaffold}->generate_header($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_state_encoding($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_state_register($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
-    $hdl .= $prepared_backend->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
-    $prepared_backend->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
-    $prepared_backend->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
+    my $hdl = $prepared_backend->{backend_sv_generation_prelude_support}
+        ->generate_systemverilog_prelude($fsm_module);
     $hdl .= $prepared_backend->{backend_sv_consolidated_intermediate_stage_support}
         ->generate_consolidated_intermediate_block($fsm_module);
     $hdl .= $prepared_backend->{enable_graph_enable_support}->generate_unified_wen_en_signals($fsm_module);
