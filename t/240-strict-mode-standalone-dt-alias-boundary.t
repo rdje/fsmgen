@@ -20,7 +20,9 @@ my $mod_out_path = File::Spec->catfile($tempdir, 'strict_mod_root.sv');
 my $module_path = File::Spec->catfile($tempdir, 'strict_module_root.fsm');
 my $module_out_path = File::Spec->catfile($tempdir, 'strict_module_root.sv');
 my $embedded_top_path = File::Spec->catfile($tempdir, 'strict_embedded_mod_root_top.fsm');
+my $embedded_top_out_path = File::Spec->catfile($tempdir, 'strict_embedded_mod_root_top.sv');
 my $external_top_path = File::Spec->catfile($tempdir, 'strict_external_module_root_top.fsm');
+my $external_top_out_path = File::Spec->catfile($tempdir, 'strict_external_module_root_top.sv');
 
 write_file(
     $canonical_dt_path,
@@ -184,7 +186,7 @@ subtest 'CLI strict mode also accepts top-level ?dt, ?mod, and ?module roots' =>
     ok(-e $canonical_dt_out_path, 'CLI strict mode still emits HDL for canonical ?dt roots');
 };
 
-subtest 'strict mode still realizes embedded and external ?dtc children rooted at ?mod and ?module' => sub {
+subtest 'strict mode rejects ?dtc children rooted at ?mod and ?module' => sub {
     my $pipeline = FSM::Pipeline::HDLGenerator->new(
         target_language => 'systemverilog',
         debug_level => 0,
@@ -193,18 +195,70 @@ subtest 'strict mode still realizes embedded and external ?dtc children rooted a
         source_search_paths => [$libdir],
     );
 
-    my $embedded_result = $pipeline->generate_hdl_from_file($embedded_top_path);
+    my $embedded_exception = eval {
+        $pipeline->generate_hdl_from_file($embedded_top_path);
+        undef;
+    };
+    $embedded_exception = $@;
+
     like(
-        $embedded_result->{hdl_code},
-        qr/\bmodule\s+route_src\b/s,
-        'strict mode still realizes embedded ?mod dtc children',
+        $embedded_exception,
+        qr/Source file:\s+'\Q$embedded_top_path\E'.*Generated child source:\s+'\?dtc' 'route_src'.*Strict mode rejects '\?mod:route_src' as the root of '\?dtc' source 'route_src'.*Use the canonical '\?dt:source_name' root form/s,
+        'strict mode rejects embedded ?mod dtc children with the canonical ?dt migration hint',
     );
 
-    my $external_result = $pipeline->generate_hdl_from_file($external_top_path);
+    my $external_exception = eval {
+        $pipeline->generate_hdl_from_file($external_top_path);
+        undef;
+    };
+    $external_exception = $@;
+
     like(
-        $external_result->{hdl_code},
-        qr/\bmodule\s+route_src\b/s,
-        'strict mode still realizes external ?module dtc children',
+        $external_exception,
+        qr/Source file:\s+'\Q$external_child_path\E'.*Parent composition source:\s+'\Q$external_top_path\E'.*Generated child source:\s+'\?dtc' 'route_src'.*Strict mode rejects '\?module:route_src' as the root of '\?dtc' source 'route_src'.*Use the canonical '\?dt:source_name' root form/s,
+        'strict mode rejects external ?module dtc children with full child-source context and the canonical ?dt migration hint',
+    );
+};
+
+subtest 'CLI strict mode also rejects ?dtc children rooted at ?mod and ?module' => sub {
+    my ($embedded_success, $embedded_error_message, $embedded_full_buf, $embedded_stdout_buf, $embedded_stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--quiet', '-o', $embedded_top_out_path, $embedded_top_path],
+    );
+
+    ok(!$embedded_success, 'CLI strict mode rejects embedded ?mod dtc children');
+    ok(!-e $embedded_top_out_path, 'CLI strict mode does not emit HDL for embedded ?mod dtc children');
+
+    my $embedded_output = join(
+        '',
+        @{ $embedded_stdout_buf || [] },
+        @{ $embedded_stderr_buf || [] },
+        ($embedded_error_message || ''),
+    );
+
+    like(
+        $embedded_output,
+        qr/Source file:\s+'\Q$embedded_top_path\E'.*Generated child source:\s+'\?dtc' 'route_src'.*Strict mode rejects '\?mod:route_src' as the root of '\?dtc' source 'route_src'.*Use the canonical '\?dt:source_name' root form/s,
+        'CLI strict mode surfaces the canonical ?dt migration hint for embedded ?mod dtc children',
+    );
+
+    my ($external_success, $external_error_message, $external_full_buf, $external_stdout_buf, $external_stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--quiet', '--path', $libdir, '-o', $external_top_out_path, $external_top_path],
+    );
+
+    ok(!$external_success, 'CLI strict mode rejects external ?module dtc children');
+    ok(!-e $external_top_out_path, 'CLI strict mode does not emit HDL for external ?module dtc children');
+
+    my $external_output = join(
+        '',
+        @{ $external_stdout_buf || [] },
+        @{ $external_stderr_buf || [] },
+        ($external_error_message || ''),
+    );
+
+    like(
+        $external_output,
+        qr/Source file:\s+'\Q$external_child_path\E'.*Parent composition source:\s+'\Q$external_top_path\E'.*Generated child source:\s+'\?dtc' 'route_src'.*Strict mode rejects '\?module:route_src' as the root of '\?dtc' source 'route_src'.*Use the canonical '\?dt:source_name' root form/s,
+        'CLI strict mode surfaces the canonical ?dt migration hint for external ?module dtc children',
     );
 };
 

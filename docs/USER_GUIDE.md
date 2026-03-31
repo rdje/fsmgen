@@ -177,6 +177,7 @@ Combinational DT note:
   - or `(?dtc:instance)` on named children, which defaults the child source to `instance`
   - the active child source may be embedded in the same file as `?dt:name`
   - the current live path also accepts embedded or external `?mod:name` / `?module:name` child roots there, even though those roots are not semantically identical to `?dt:name`
+  - strict mode narrows this child contract to the canonical `?dt:name` root family only
   - or resolved from an external `.fsm` file beside the composition source, through repeated `--path DIR` roots, then through `FSMLIB`
   - combinational `?dtc` children expose only their real user-facing interface ports
   - standalone `?dtc` children with explicit conventional `(+system ...)` expose `clk` / `rstn`
@@ -571,12 +572,14 @@ Boundary note:
 - The CLI now accepts `--strict`, and the public pipeline facade now accepts `strict_mode => 1`.
 - The current first strict-mode slice is intentionally narrow:
   - strict mode rejects the legacy `+fsm` root family,
+  - strict mode also rejects `?mod:` / `?module:` when they are used specifically as `?dtc` child roots and requires canonical `?dt:` there,
   - requires the modern explicit `?fsm:module_name` root form for FSM sources,
   - and otherwise leaves the currently accepted `?dt:`, `?mod:`, `?module:`, and `?top:` roots unchanged while their broader contracts continue to settle.
 - In practice:
   - default mode still accepts `?fsm:name`, legacy `+fsm`, `?dt:name`, `?mod:name`, and `?module:name`,
   - strict mode currently accepts `?fsm:name`, `?dt:name`, `?mod:name`, `?module:name`, and `?top:name`,
-  - and strict mode currently rejects only `+fsm` with a targeted migration hint.
+  - strict mode currently accepts only canonical `?dt:name` roots under `?dtc`,
+  - and strict mode currently rejects `+fsm` plus `?mod:` / `?module:` under `?dtc` with targeted migration hints.
 - Strict-mode failures now also keep the same `Source file: '...'` context line as other top-level pipeline failures.
 - This is the first support-tier enforcement slice, not the final full strict-mode surface.
 

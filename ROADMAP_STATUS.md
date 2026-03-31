@@ -587,10 +587,15 @@ Done:
   - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) owns the shared strict root-family boundary so the same support-tier enforcement applies to top-level direct roots and generated child sources,
   - that boundary currently rejects only the legacy `+fsm` root family,
   - and it intentionally does not collapse `?mod:` / `?module:` into `?dt:` because those roots remain semantically distinct in the intended language model.
+- The next bounded strict-mode child-root cut is now also shipped:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now also owns the generated-child strict helper for child-specific support-tier enforcement,
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now applies that helper before semantic realization so strict mode rejects `?mod:` / `?module:` when they are used specifically as `?dtc` child roots,
+  - top-level `?mod:` / `?module:` roots remain accepted in strict mode,
+  - and [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks the updated boundary end to end through both pipeline and CLI entry points for embedded and external `?dtc` children.
 - [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks that corrected root-family behavior end to end:
   - strict mode still accepts `?dt:name` roots,
   - strict mode still accepts top-level `?mod:name` and `?module:name` roots on the current shared single-module path,
-  - and strict mode still realizes embedded or external `?dtc` child sources rooted at `?mod:` / `?module:`.
+  - and strict mode now rejects embedded or external `?dtc` child sources rooted at `?mod:` / `?module:` with a canonical `?dt:` migration hint.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the initial strict-mode boundary explicitly.
 Left:
 - Widen strict-mode enforcement beyond the current canonical-root-family boundary into more of the fully supported-vs-compatibility split.

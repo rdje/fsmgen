@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: strict mode now requires canonical `?dt:` roots under `?dtc`
+- Continued the visible `R9` lane by making one child-specific support-tier cut instead of pretending the broader module-root contract is already settled.
+- Landed behavior:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now owns `enforce_strict_generated_child_source_boundary(...)` beside the earlier top-level strict-root helper,
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now calls that helper before semantic realization so strict mode rejects `?mod:` / `?module:` when they are used specifically as `?dtc` child roots,
+  - top-level `?mod:` / `?module:` roots remain accepted in strict mode on the current shared direct path,
+  - and [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks the updated behavior through both pipeline and CLI for embedded and external child sources.
+- Why this is worth shipping:
+  - it aligns strict mode with the intended semantic distinction you called out earlier: `?dt` is one decision tree, while `?mod:` / `?module:` are broader module roots,
+  - it narrows one real compatibility residue without overreaching into the still-settling top-level module-root contract,
+  - and it gives `R9` a second honest support-tier cut that is visible, understandable, and low-risk.
+
 ## 2026-04-01: RTL child metadata diagnostics now keep metadata-file and parent-source context
 - Continued the visible `R10` diagnostics lane by widening the earlier source-local error-shape pattern into the external/embedded RTL metadata path instead of leaving `?rtl` composition failures to surface only the inner `.rtlif` loader diagnostic.
 - Landed behavior:

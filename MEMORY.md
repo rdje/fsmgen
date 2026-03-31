@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: strict mode now requires canonical `?dt:` roots under `?dtc`
+- Continued the active `R9` lane by tightening the standalone-DT child-source contract without collapsing top-level module roots.
+- Important continuity note:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now owns a child-specific strict helper in addition to the earlier top-level `+fsm` root-family boundary,
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now applies that helper so strict mode rejects `?mod:` / `?module:` when they are used as `?dtc` child roots and points users to canonical `?dt:source_name`,
+  - top-level `?mod:` / `?module:` roots remain accepted in strict mode,
+  - and [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks the updated child-root boundary through both pipeline and CLI for embedded and external child sources.
+
 ## 2026-04-01: RTL child metadata failures now keep metadata-file and parent-source context
 - Continued the active `R10` diagnostics lane by teaching [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) to prepend stable context around blocked sidecar or embedded `.rtlif` metadata loading.
 - Important continuity note:

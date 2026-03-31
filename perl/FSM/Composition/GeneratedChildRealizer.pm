@@ -233,6 +233,13 @@ sub _realize_generated_child ($class, %args) {
         declared_child_kind => $declared_child_kind,
         child_source_path => $args{child_source_path},
         code => sub {
+            FSM::Pipeline::SourceFrontend->enforce_strict_generated_child_source_boundary(
+                raw_ast => $child_ast,
+                strict_mode => ($pipeline->{strict_mode} // 0),
+                declared_child_kind => $declared_child_kind,
+                source_label => $source_name,
+            );
+
             my $child_module = FSM::Pipeline::SourceFrontend->create_fsm_module(
                 raw_ast => $child_ast,
                 debug_level => ($pipeline->{debug_level} // 0),

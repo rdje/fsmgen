@@ -91,6 +91,25 @@ sub enforce_strict_source_boundary ($class, %args) {
 
 }
 
+sub enforce_strict_generated_child_source_boundary ($class, %args) {
+    return unless $args{strict_mode};
+
+    my $declared_child_kind = $args{declared_child_kind}
+        or confess "SourceFrontend requires a declared_child_kind";
+    my $source_info = $args{source_info}
+        || $class->classify_source_ast($args{raw_ast});
+    my $header = $source_info->{header} // '';
+    my $source_label = $args{source_label} // ($header || 'source');
+
+    if ($declared_child_kind eq '?dtc' && $header =~ /^\?(?:mod|module):/) {
+        confess
+            "Strict mode rejects '$header' as the root of '$declared_child_kind' source '$source_label'. "
+          . "Use the canonical '?dt:source_name' root form for standalone-DT child sources, "
+          . "or re-run without strict mode if you need compatibility with the current shared implementation path. "
+          . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+    }
+}
+
 sub create_fsm_module ($class, %args) {
     my $raw_ast = $args{raw_ast}
         or confess "SourceFrontend requires a raw_ast";
@@ -166,5 +185,10 @@ current C<FSMGenFull> adapter.
 
 Checks the current strict-mode root-family boundary for one direct-root source
 before semantic module creation.
+
+=head2 enforce_strict_generated_child_source_boundary
+
+Checks the current strict-mode boundary for one generated composition child
+source before semantic child realization continues.
 
 =cut
