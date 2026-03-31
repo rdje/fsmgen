@@ -288,6 +288,18 @@ This document captures engineering rationale, design constraints, and working de
   - it preserves the honesty rule that ambiguous prose needs explicit residue reporting rather than fake precision,
   - and it links naturally to the future reusable-library lane, because captured protocol roles/checkers can become first-class reusable `.fsm` assets later.
 
+## 2026-03-31: top-level failures now keep explicit source-file context and `R10` is active
+- Started the first dedicated `R10` provenance/diagnostic slice instead of leaving that lane as roadmap text only.
+- Landed behavior:
+  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now wraps top-level parse/generation failures with a stable `Source file: '...'` line at the source-file orchestration boundary,
+  - that source-local context now reaches both ordinary top-level parser/adapter failures and strict-mode support-tier failures,
+  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents that top-level and strict-mode failures keep the `Source file:` context line,
+  - and [t/241-top-level-source-file-diagnostic-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/241-top-level-source-file-diagnostic-boundary.t) now locks that behavior end to end through both pipeline and CLI entry points.
+- Why this is worth shipping:
+  - it is a small but real user-facing diagnostic upgrade,
+  - it makes large multi-file runs more source-local without disturbing the underlying construct-family diagnostics,
+  - and it moves `R10` from `not started` to `in progress` with a reusable top-level error-shaping pattern rather than another abstract roadmap note.
+
 ## 2026-03-31: AXI intent-capture case study and executable-PDF target are now preserved in detail
 - Reviewed the external AXI workspace under `/Users/richarddje/Documents/livework/protocols/arm/axi/` end to end and preserved the detailed conclusions in [docs/INTENT_CAPTURE_AXI_CASE_STUDY.md](/Users/richarddje/Documents/github/fsmgen/docs/INTENT_CAPTURE_AXI_CASE_STUDY.md) instead of leaving them as session-local analysis.
 - Saved direction:

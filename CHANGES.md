@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-31
+### top-level pipeline and CLI failures now keep `Source file:` context
+- Updated [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) so top-level parse/generation failures now keep a stable `Source file: '...'` line at the source-file orchestration boundary instead of surfacing only the inner parser/adapter/support-tier diagnostic.
+- Added [t/241-top-level-source-file-diagnostic-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/241-top-level-source-file-diagnostic-boundary.t) to lock that behavior end to end through both pipeline and CLI entry points for an ordinary top-level parse failure and for a strict-mode support-tier failure.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the first real `R10` slice is saved honestly and `R10` now moves from `not started` to `in progress`.
+
 ### AXI intent-capture case study and executable-PDF target are now preserved in repo docs
 - Added [docs/INTENT_CAPTURE_AXI_CASE_STUDY.md](/Users/richarddje/Documents/github/fsmgen/docs/INTENT_CAPTURE_AXI_CASE_STUDY.md) as the detailed saved reference for the future `H4` intent-capture lane, based on the full external AXI workspace under `/Users/richarddje/Documents/livework/protocols/arm/axi/`.
 - Saved in that note:

@@ -130,6 +130,11 @@ Deliverable themes:
 - targeted errors instead of generic fallthrough failures,
 - and clearer remediation guidance in diagnostics.
 
+First bounded slice:
+- make top-level failures keep the offending source path consistently,
+- start at the source-file orchestration boundary so both pipeline and CLI entry points benefit at once,
+- and use that first slice to establish one reusable provenance/error-shape pattern before pushing deeper into line/construct-level provenance.
+
 Expected result:
 - large `.fsm` files become much easier to debug and review.
 

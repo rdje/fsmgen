@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-31: top-level pipeline and CLI failures now keep `Source file:` context
+- Started the first dedicated `R10` slice by teaching [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) to prepend `Source file: '...'` when top-level parse/generation work raises a normal string error.
+- Important continuity note:
+  - this is intentionally a top-level orchestration boundary, not a claim that fine-grained line/construct provenance is finished,
+  - the same source-file context now appears for ordinary top-level parser/adapter failures and for strict-mode support-tier failures,
+  - [t/241-top-level-source-file-diagnostic-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/241-top-level-source-file-diagnostic-boundary.t) locks the new error shape through both pipeline and CLI entry points,
+  - and `R10` should now be treated as active rather than untouched.
+
 ## 2026-03-31: AXI intent-capture case study and executable-PDF target are now frozen in repo memory
 - Reviewed the full external AXI workspace under `/Users/richarddje/Documents/livework/protocols/arm/axi/` and preserved the detailed method/conclusions in [docs/INTENT_CAPTURE_AXI_CASE_STUDY.md](/Users/richarddje/Documents/github/fsmgen/docs/INTENT_CAPTURE_AXI_CASE_STUDY.md).
 - The saved durable direction is:

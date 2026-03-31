@@ -27,6 +27,19 @@ use FSM::Extension::Context;
 use FSM::Pipeline::DirectGenerationOrchestrator;
 use FSM::Pipeline::SourceFrontend;
 
+sub _with_source_file_context ($fsm_file, $code_ref) {
+    my @result = eval { $code_ref->() };
+    if (!$@) {
+        return wantarray ? @result : $result[0];
+    }
+
+    my $error = $@;
+    die $error if ref($error);
+    die $error if $error =~ /(?:^|\n)Source file:\s+'/s;
+
+    die "Source file: '$fsm_file'\n$error";
+}
+
 sub generate_from_file ($class, %args) {
     my $pipeline = $args{pipeline}
         or confess "SourceGenerationOrchestrator requires a pipeline";
@@ -36,35 +49,39 @@ sub generate_from_file ($class, %args) {
     fsm_trace_enter("Generate HDL from file '$fsm_file'", 1);
     fsm_debug("Starting HDL generation pipeline for: $fsm_file", 1);
 
-    my $raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
-        fsm_file => $fsm_file,
-        debug_level => ($pipeline->{debug_level} // 0),
-    );
-    my $source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($raw_ast);
-
-    FSM::Pipeline::SourceFrontend->enforce_strict_source_boundary(
-        strict_mode => ($pipeline->{strict_mode} // 0),
-        source_info => $source_info,
-        source_label => $fsm_file,
-    );
-
-    if (($source_info->{kind} // 'unknown') eq 'unknown'
-        && defined($source_info->{header})
-        && $source_info->{header} =~ /^\?[A-Za-z_][\w-]*:/) {
-        my $header = $source_info->{header};
-        confess
-            "Unsupported top-level source '$header'. "
-          . "The active pipeline supports '?fsm:name', '?dt:name', '?mod:name', '?module:name', '+fsm', and '?top:name'. "
-          . "Other tagged source kinds such as '?define:' are out of active support. "
-          . "See docs/USER_GUIDE.md for the current supported boundary.\n";
-    }
-
-    if ($source_info->{kind} && $source_info->{kind} eq 'composition') {
-        $source_info->{composition_spec} = FSM::Pipeline::SourceFrontend->parse_composition_source(
-            raw_ast => $raw_ast,
+    my ($raw_ast, $source_info) = _with_source_file_context($fsm_file, sub {
+        my $raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
+            fsm_file => $fsm_file,
             debug_level => ($pipeline->{debug_level} // 0),
         );
-    }
+        my $source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($raw_ast);
+
+        FSM::Pipeline::SourceFrontend->enforce_strict_source_boundary(
+            strict_mode => ($pipeline->{strict_mode} // 0),
+            source_info => $source_info,
+            source_label => $fsm_file,
+        );
+
+        if (($source_info->{kind} // 'unknown') eq 'unknown'
+            && defined($source_info->{header})
+            && $source_info->{header} =~ /^\?[A-Za-z_][\w-]*:/) {
+            my $header = $source_info->{header};
+            confess
+                "Unsupported top-level source '$header'. "
+              . "The active pipeline supports '?fsm:name', '?dt:name', '?mod:name', '?module:name', '+fsm', and '?top:name'. "
+              . "Other tagged source kinds such as '?define:' are out of active support. "
+              . "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        }
+
+        if ($source_info->{kind} && $source_info->{kind} eq 'composition') {
+            $source_info->{composition_spec} = FSM::Pipeline::SourceFrontend->parse_composition_source(
+                raw_ast => $raw_ast,
+                debug_level => ($pipeline->{debug_level} // 0),
+            );
+        }
+
+        return ($raw_ast, $source_info);
+    });
 
     my $parse_context = FSM::Extension::Context->new(
         stage => 'after_parse_source',
@@ -78,19 +95,23 @@ sub generate_from_file ($class, %args) {
 
     my $result;
     if ($source_info->{kind} && $source_info->{kind} eq 'composition') {
-        $result = FSM::Composition::GenerationOrchestrator->generate_from_source(
-            pipeline => $pipeline,
-            source_info => $source_info,
-            raw_ast => $raw_ast,
-            fsm_file => $fsm_file,
-        );
+        $result = _with_source_file_context($fsm_file, sub {
+            return FSM::Composition::GenerationOrchestrator->generate_from_source(
+                pipeline => $pipeline,
+                source_info => $source_info,
+                raw_ast => $raw_ast,
+                fsm_file => $fsm_file,
+            );
+        });
     }
     else {
-        $result = FSM::Pipeline::DirectGenerationOrchestrator->generate_from_source(
-            pipeline => $pipeline,
-            raw_ast => $raw_ast,
-            source_info => $source_info,
-        );
+        $result = _with_source_file_context($fsm_file, sub {
+            return FSM::Pipeline::DirectGenerationOrchestrator->generate_from_source(
+                pipeline => $pipeline,
+                raw_ast => $raw_ast,
+                source_info => $source_info,
+            );
+        });
     }
 
     my $result_context = FSM::Extension::Context->new(

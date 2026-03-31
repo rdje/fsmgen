@@ -606,9 +606,12 @@ Deliverables:
 - File/line/construct provenance through parsing and generation.
 - More targeted diagnostics instead of generic parser/runtime fallout.
 - Clear remediation guidance for common construct-family failures.
-Status: `not started`
+Status: `in progress`
 Done:
-- No dedicated v2 slice has started yet.
+- The first dedicated v2 provenance/diagnostic slice is now shipped:
+  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now wraps top-level parse/generation failures with a stable `Source file: '...'` line,
+  - that source-local context now reaches both ordinary top-level parser/adapter failures and strict-mode support-tier failures,
+  - and [t/241-top-level-source-file-diagnostic-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/241-top-level-source-file-diagnostic-boundary.t) now locks that boundary end to end through both pipeline and CLI entry points.
 Left:
 - Define provenance-carrying boundaries and upgrade key diagnostics.
 - Add regression coverage for error shape and location reporting.
