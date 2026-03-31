@@ -85,6 +85,7 @@ Standard used here:
 - Legacy `+fsm` root family:
   - flattened sibling form with a first top-level entry `(+fsm module_name)` and sibling `(+system ...)`, state blocks, and `(+size ...)`
   - nested legacy root form `(+fsm module_name ...)`
+  - supported in default mode only; the current first strict-mode slice rejects this legacy family and requires `?fsm:module_name`
 - Conventional `(+system ...)` section declaring the shared system pair:
   - `(+system (clock clk) (sreset rstn))`
   - `(+system (clock clk) (asreset rstn))`
@@ -548,6 +549,17 @@ Boundary note:
     - `(+fsm my_module)` with no sibling or nested body content at all
     - `(+fsm my_module BROKEN)`
     - any legacy `+fsm` root whose body items are not list forms
+
+### Strict mode (current first slice)
+- The CLI now accepts `--strict`, and the public pipeline facade now accepts `strict_mode => 1`.
+- The current first strict-mode slice is intentionally narrow:
+  - strict mode rejects the legacy `+fsm` root family,
+  - requires the modern explicit `?fsm:module_name` root form for FSM sources,
+  - and leaves the rest of the currently supported root families unchanged.
+- In practice:
+  - default mode still accepts both `?fsm:name` and legacy `+fsm`,
+  - strict mode accepts `?fsm:name` but rejects `+fsm` with a targeted migration hint.
+- This is the first support-tier enforcement slice, not the final full strict-mode surface.
 
 ### Draft normative contract for standalone `?dt:name` / `?mod:name` / `?module:name` roots
 This is the current live contract for the first shipped reusable standalone-DT slice.

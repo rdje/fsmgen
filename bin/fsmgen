@@ -121,6 +121,7 @@ sub shared_endpoint_binding_summary {
 my $debug_level = 0;  # Numeric compatibility mode (0..4)
 my $help = 0;
 my $quiet = 0;
+my $strict_mode = 0;
 my $output_file = "";
 my $target_language = "systemverilog";  # Default to SystemVerilog
 my $trace_verbosity = "";               # Named mode: none|low|medium|high|debug
@@ -138,6 +139,7 @@ my $has_trace_log_flag = grep { /^--trace-log(?:=.*)?$/ } @ARGV;
 GetOptions(
     'debug|d:i'   => \$debug_level,  # Optional integer value (0-4)
     'quiet|q'     => \$quiet,
+    'strict'      => \$strict_mode,
     'help|h'      => \$help,
     'output|o=s'  => \$output_file,
     'language|l=s' => \$target_language,
@@ -221,6 +223,9 @@ Options:
                   Load extension modules from an explicit config file
                   May be repeated
   -q, --quiet     Suppress informational messages
+  --strict        Enable strict support-tier enforcement
+                  Current first strict slice rejects legacy '+fsm' roots and
+                  requires the modern explicit '?fsm:module_name' family
   -l, --language  Target HDL language: systemverilog|sv|verilog|v|vhdl (default: systemverilog)
   -o, --output    Specify output file (default: <fsm_name>.<ext> in current working directory)
   -h, --help      Show this help message
@@ -306,6 +311,9 @@ Other Examples:
   # Debug SystemVerilog with custom output using FSMLIB lookup
   ./bin/fsmgen -l sv -d3 -o debug_output.sv my_fsm
 
+  # Enforce the current strict-mode boundary
+  ./bin/fsmgen --strict my_fsm
+
   # Load an explicit typed extension module from @INC
   PERL5LIB=./my_extensions ./bin/fsmgen \
     --extension-module My::Extension \
@@ -373,6 +381,7 @@ my $pipeline = FSM::Pipeline::HDLGenerator->new(
     debug_level => get_fsm_debug_level(),
     target_language => $target_language,
     quiet => $quiet,
+    strict_mode => $strict_mode,
     source_search_paths => \@source_search_paths,
     extension_modules => \@extension_modules,
     extension_config_files => \@extension_config_files,

@@ -113,6 +113,11 @@ Deliverable themes:
 - targeted errors for constructs outside the fully supported tier,
 - and workflow guidance on when to use strict mode.
 
+First bounded slice:
+- make strict mode real at the CLI/pipeline surface,
+- start with one high-signal compatibility cut by rejecting the legacy `+fsm` root family in strict mode,
+- and use that first slice to establish the support-tier enforcement pattern before widening it to other compatibility residue.
+
 Expected result:
 - production users can choose predictability over compatibility residue.
 

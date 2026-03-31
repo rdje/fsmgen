@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-31: strict mode now exists as a real first support-tier slice
+- This is the first intentional `R9` implementation slice rather than more planning-only strict-mode language:
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now accepts `--strict`,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now accepts `strict_mode => 1`,
+  - and [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now enforces the first real support-tier cut by rejecting the legacy `+fsm` root family in strict mode.
+- Boundary decision:
+  - strict mode is deliberately starting with one high-signal compatibility cut instead of pretending the whole final support-tier model is already implemented,
+  - modern explicit `?fsm:name` roots still compile under strict mode,
+  - and both flattened and nested legacy `+fsm` roots now fail with the same actionable migration hint toward `?fsm:module_name`.
+- Why this is the right first slice:
+  - it is visible to users immediately at the CLI and pipeline surface,
+  - it enforces a real supported-vs-compatibility distinction without reopening deep parser/runtime semantics,
+  - and it creates a concrete pattern for future strict-mode widening instead of keeping `R9` abstract.
+
 ## 2026-03-31: execution cadence should alternate more often between cleanup and visible capability work
 - Saved steering rule from the current collaboration reset:
   - recent backend cleanup was still useful, but the project should not stay on long uninterrupted consolidation streaks by default,

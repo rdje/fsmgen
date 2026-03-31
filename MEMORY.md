@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-31: strict mode now exists and its first shipped boundary rejects legacy `+fsm` roots
+- Saved shipped behavior:
+  - updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so the CLI now accepts `--strict`,
+  - updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the public pipeline facade now accepts `strict_mode => 1`,
+  - updated [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) so strict mode now rejects the legacy `+fsm` root family with a targeted migration hint toward `?fsm:module_name`,
+  - added [t/239-strict-mode-legacy-fsm-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/239-strict-mode-legacy-fsm-root-boundary.t),
+  - and updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) plus the roadmap/continuity set so the first strict-mode boundary is explicit.
+- Important continuity note:
+  - `R9` is no longer purely hypothetical; the first enforcement slice is live,
+  - the current strict-mode surface is intentionally narrow and should be widened in bounded high-signal cuts,
+  - and the next strict-mode candidate should be another compatibility-vs-supported boundary that is already well documented in `R8`.
+
 ## 2026-03-31: execution cadence now alternates cleanup and feature work more deliberately
 - Saved continuity rule:
   - do not let long uninterrupted consolidation-only streaks become the default working pattern,

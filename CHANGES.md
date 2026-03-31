@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-31
+### strict mode now exists with a first live legacy-root boundary
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so the CLI now accepts `--strict`, and updated [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) so the public pipeline facade now accepts `strict_mode => 1`.
+- Updated [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) so strict mode now rejects the legacy `+fsm` root family with a targeted migration hint toward `?fsm:module_name` while still accepting modern explicit roots.
+- Added [t/239-strict-mode-legacy-fsm-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/239-strict-mode-legacy-fsm-root-boundary.t), updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), and moved `R9` from `not started` to `in progress` in the live roadmap because the first real support-tier enforcement slice is now shipped.
+
 ### execution cadence now alternates more deliberately between cleanup and visible capability work
 - Recorded the new working rule in [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md): long uninterrupted consolidation-only streaks should no longer be the default, and after a cleanup slice the next honest move should usually be a visibly user-facing capability slice unless more cleanup is still the clear blocker.
 

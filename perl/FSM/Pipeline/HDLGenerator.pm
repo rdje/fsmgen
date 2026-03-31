@@ -75,6 +75,7 @@ sub new ($class, %args) {
         debug_level => $args{debug_level} // 0,
         target_language => $args{target_language} // 'systemverilog',
         quiet => $args{quiet} // 0,
+        strict_mode => $args{strict_mode} // 0,
         source_path_resolver => $source_path_resolver,
         rtl_interface_loader => $args{rtl_interface_loader}
             // FSM::Composition::RTLInterfaceLoader->new(
@@ -117,6 +118,7 @@ Arguments:
 - debug_level: Debug verbosity level (0-3, default: 0)
 - target_language: Target HDL language (default: 'systemverilog')
 - quiet: Suppress informational messages (default: 0)
+- strict_mode: Enable strict support-tier enforcement (default: 0)
 
 =head2 generate_hdl_from_file($fsm_file)
 

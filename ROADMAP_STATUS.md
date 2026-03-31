@@ -572,12 +572,22 @@ Deliverables:
 - A strict mode in the CLI/pipeline.
 - Targeted diagnostics for constructs outside the fully supported tier.
 - User/developer docs that explain how strict mode interacts with support tiers.
-Status: `not started`
+Status: `in progress`
 Done:
-- No live implementation yet.
+- The first live strict-mode slice is now shipped:
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now accepts `--strict`,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) now accepts `strict_mode => 1`,
+  - and [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now enforces the first support-tier boundary by rejecting the legacy `+fsm` root family in strict mode with a targeted migration hint toward `?fsm:module_name`.
+- [t/239-strict-mode-legacy-fsm-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/239-strict-mode-legacy-fsm-root-boundary.t) now locks that first strict-mode slice end to end:
+  - strict mode still accepts modern `?fsm:name` roots,
+  - strict mode rejects both flattened and nested legacy `+fsm` roots,
+  - CLI help advertises `--strict`,
+  - and pipeline plus CLI entry points both keep the same actionable migration hint.
+- [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the initial strict-mode boundary explicitly.
 Left:
-- Define strict-mode surface and failure contract after `R8` clarifies the language boundary.
-- Implement CLI/pipeline enforcement and tests.
+- Widen strict-mode enforcement beyond the first legacy-`+fsm` root boundary into more of the fully supported-vs-compatibility split.
+- Decide the next high-signal support-tier cuts after the current `+fsm` root family.
+- Continue documenting strict-mode behavior as the supported-tier boundary widens.
 Exit criteria:
 - Users can run the tool in a mode that accepts only the fully supported language contract.
 
