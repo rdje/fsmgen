@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-31: live direct backend prescan preparation now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by splitting the state-mutating prescan half away from the enable-fragment emitter once the structural prelude and broader enable-preparation wrapper were both explicit enough to leave logical-op counting and WEN/EN prescan with a clean owner of their own.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm) as the live owner of logical-operation counting plus WEN/EN prescan after enable-condition emission,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_prescan_preparation_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm) so it now keeps only enable-condition emission plus delegation to the extracted prescan owner,
+  - added [t/238-systemverilog-generation-prescan-preparation-support.t](/Users/richarddje/Documents/github/fsmgen/t/238-systemverilog-generation-prescan-preparation-support.t), retargeted [t/236-systemverilog-generation-enable-preparation-support.t](/Users/richarddje/Documents/github/fsmgen/t/236-systemverilog-generation-enable-preparation-support.t) and [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `101`-file / `100`-package snapshot.
+- Why this is worth shipping:
+  - it makes the live enable-preparation owner honest by separating emitted HDL from pure backend-analysis side effects,
+  - it gives the direct backend a named owner for the timing-sensitive count-before-prescan contract that seeds later consolidated intermediate generation,
+  - and it narrows the next honest seam to the remaining lower-level coordination across the extracted generation owners rather than the already-isolated count/prescan pocket.
+
 ## 2026-03-31: live direct backend structural pre-stage prelude now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the structural prefix out of the broader prelude once the non-structural enable/prescan pocket already had its own owner and the remaining scaffold/internal-declaration half was clean enough to stand alone.
 - Landed behavior:

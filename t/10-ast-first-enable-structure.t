@@ -358,8 +358,12 @@ ok(
     'live SystemVerilog generation-structural-prelude support owns the structural HDL prefix before enable preparation',
 );
 ok(
+    $hdl->{backend_sv_generation_prescan_preparation_support}->can('prepare_enable_prescan'),
+    'live SystemVerilog generation-prescan-preparation support owns logical-operation counting plus WEN/EN prescan before consolidated intermediate generation',
+);
+ok(
     $hdl->{backend_sv_generation_enable_preparation_support}->can('generate_enable_preparation'),
-    'live SystemVerilog generation-enable-preparation support owns enable-condition generation plus prescan preparation',
+    'live SystemVerilog generation-enable-preparation support owns enable-condition generation plus composition of the extracted prescan-preparation owner',
 );
 ok(
     $hdl->{backend_sv_generation_prelude_support}->can('generate_systemverilog_prelude'),

@@ -10,14 +10,14 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'generation enable preparation support owns the live pre-stage enable and prescan sequence' => sub {
+subtest 'generation prescan preparation support owns the live logical-count and prescan sequence' => sub {
     my $fsm_module = parse_fsm_module(
-        'sv_generation_enable_preparation_support_contract',
+        'sv_generation_prescan_preparation_support_contract',
         <<'FSM'
-(?fsm:sv_generation_enable_preparation_support_contract
+(?fsm:sv_generation_prescan_preparation_support_contract
   (+system
     (clock clk)
     (sreset rstn)
@@ -44,35 +44,29 @@ FSM
 
     my $expected_backend = prepare_flattened_backend($fsm_module);
     my $actual_backend = prepare_flattened_backend($fsm_module);
-    my $enable_preparation_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport->new(
+    my $prescan_preparation_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport->new(
         flattened_dt => $actual_backend,
     );
 
-    my $expected_fragment = build_expected_enable_preparation($expected_backend, $fsm_module);
-    my $generated_fragment = $enable_preparation_support->generate_enable_preparation($fsm_module);
-
-    is(
-        $generated_fragment,
-        $expected_fragment,
-        'generation enable preparation support rebuilds the same live enable-condition fragment as the backend owners',
-    );
+    build_expected_prescan_preparation($expected_backend);
+    $prescan_preparation_support->prepare_enable_prescan();
 
     is_deeply(
         $actual_backend->{binary_logical_op_counts},
         $expected_backend->{binary_logical_op_counts},
-        'generation enable preparation support preserves the same logical-operation counting state',
+        'generation prescan preparation support preserves the same logical-operation counting state',
     );
 
     is_deeply(
         [sort keys %{$actual_backend->{intermediate_signals} || {}}],
         [sort keys %{$expected_backend->{intermediate_signals} || {}}],
-        'generation enable preparation support preserves the same intermediate-signal registry keys after prescan',
+        'generation prescan preparation support preserves the same intermediate-signal registry keys after prescan',
     );
 
     is_deeply(
         [sort keys %{$actual_backend->{referenced_intermediate_signals} || {}}],
         [sort keys %{$expected_backend->{referenced_intermediate_signals} || {}}],
-        'generation enable preparation support preserves the same referenced intermediate-signal keys after prescan',
+        'generation prescan preparation support preserves the same referenced intermediate-signal keys after prescan',
     );
 };
 
@@ -100,17 +94,15 @@ sub prepare_flattened_backend {
     $hdl_generator->{orchestrator}->reset_generation_state();
     $hdl_generator->{enable_graph_signal_support}->set_fsm_module_reference($fsm_module);
     $hdl_generator->{orchestrator}->flatten_all_decision_trees($fsm_module);
+    $hdl_generator->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
     return $hdl_generator;
 }
 
-sub build_expected_enable_preparation {
-    my ($prepared_backend, $fsm_module) = @_;
+sub build_expected_prescan_preparation {
+    my ($prepared_backend) = @_;
 
-    my $hdl = $prepared_backend->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
-    $prepared_backend->{backend_sv_generation_prescan_preparation_support}
-        ->prepare_enable_prescan();
-
-    return $hdl;
+    $prepared_backend->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
+    $prepared_backend->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
 }
 
 sub write_file {

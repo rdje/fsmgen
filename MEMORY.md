@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-31: live direct backend prescan preparation now has a dedicated owner
+- Saved shipped behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm) as the live owner of logical-operation counting plus WEN/EN prescan after enable-condition emission and before consolidated intermediate generation,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_prescan_preparation_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm) so it now keeps enable-condition emission plus composition of that extracted prescan owner instead of keeping logical-op counting and WEN/EN prescan inline,
+  - added [t/238-systemverilog-generation-prescan-preparation-support.t](/Users/richarddje/Documents/github/fsmgen/t/238-systemverilog-generation-prescan-preparation-support.t), retargeted [t/236-systemverilog-generation-enable-preparation-support.t](/Users/richarddje/Documents/github/fsmgen/t/236-systemverilog-generation-enable-preparation-support.t) and [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now records the measured post-change snapshot of `101` reachable project files and `100` reachable `.pm` packages.
+- Important continuity note:
+  - the next likely seam is no longer the logical-op counting / WEN-EN prescan pocket inside `GenerationEnablePreparationSupport`,
+  - it is the remaining lower-level coordination across the extracted structural-prelude owner, the new prescan-preparation owner, the narrowed enable-preparation owner, consolidated-intermediate planning/stage owners, the extracted tail owner, the narrowed generation pipeline owner, and broader direct-backend convergence,
+  - and future sessions should read the direct backend assembly path as “flatten first, build the dedicated structural prelude, emit enable conditions, run the dedicated prescan-preparation owner, generate the consolidated intermediate stage, then let the tail owner emit WEN/EN, assignments, and module closeout.”
+
 ## 2026-03-31: live direct backend structural pre-stage prelude now has a dedicated owner
 - Saved shipped behavior:
   - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm) as the live owner of scaffold rendering plus internal declaration rendering before enable-oriented pre-stage preparation,

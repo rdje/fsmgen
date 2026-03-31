@@ -18,8 +18,8 @@ internal declaration emission
 
 =item *
 
-the live composition of enable-condition generation, logical-operation
-counting, and WEN/EN prescan before the consolidated intermediate stage runs
+the live composition of enable-condition generation plus the extracted
+prescan-preparation owner before the consolidated intermediate stage runs
 
 =back
 
@@ -27,7 +27,10 @@ The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport>
 now keeps the broader pre-stage prefix assembly, but this package owns the
 enable-oriented preparation that must happen after the basic module scaffold
-exists and before consolidated intermediate generation can run.
+exists and before consolidated intermediate generation can run. The paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport>
+now keeps logical-operation counting plus WEN/EN prescan over the direct
+backend state.
 
 =cut
 
@@ -69,14 +72,8 @@ sub generate_enable_preparation ($self, $fsm_module) {
     my $hdl = $ctx->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
     fsm_debug("Step 3 - Enable conditions generated", 3);
 
-    # TIMING FIX: Count logical operations BEFORE any intermediate signal creation!
-    fsm_debug("\n*** TIMING FIX: Running logical operation counting BEFORE pre-scan ***", 3);
-    $ctx->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
-    fsm_debug("Step 4 - Logical operation counting completed (BEFORE pre-scan!)", 3);
-
-    # Step 5: PRE-SCAN all WEN/EN expressions to identify needed intermediate signals (now with counts available)
-    $ctx->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
-    fsm_debug("Step 5 - PRE-SCAN completed (AFTER logical operation counting!)", 3);
+    $ctx->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
 
     return $hdl;
 }
