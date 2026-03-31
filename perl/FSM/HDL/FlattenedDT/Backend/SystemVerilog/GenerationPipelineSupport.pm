@@ -19,15 +19,19 @@ already been flattened and the direct backend prelude has been established
 
 =item *
 
-the live composition of consolidated intermediate stage generation plus the
-extracted generation-tail owner over the extracted generation-prelude owner
+the live composition of structural-prelude generation, enable-oriented
+preparation, consolidated intermediate stage generation, and the extracted
+generation-tail owner
 
 =back
 
 The paired C<FSM::HDL::FlattenedDT::Orchestrator> now keeps per-run reset,
 FSM-module attachment, and decision-tree flattening, the paired
-C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport>
-keeps scaffold/declaration/enable/prescan preparation, the paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationStructuralPreludeSupport>
+keeps structural scaffold/internal-declaration preparation, the paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport>
+keeps enable-condition emission plus the extracted prescan-preparation owner,
+the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationTailSupport>
 keeps post-stage WEN/EN/assignment/module closeout, and this package keeps
 the live direct backend text-assembly sequence that composes those phases.
@@ -68,8 +72,10 @@ already flattened backend state.
 sub generate_systemverilog_module ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
 
-    my $hdl = $ctx->{backend_sv_generation_prelude_support}
-        ->generate_systemverilog_prelude($fsm_module);
+    my $hdl = $ctx->{backend_sv_generation_structural_prelude_support}
+        ->generate_structural_prelude($fsm_module);
+    $hdl .= $ctx->{backend_sv_generation_enable_preparation_support}
+        ->generate_enable_preparation($fsm_module);
 
     # Step 6: Generate consolidated intermediate signals (combining AST factorization + pre-scan)
     $hdl .= $ctx->{backend_sv_consolidated_intermediate_stage_support}

@@ -13,7 +13,7 @@ use FSM::HDL::FlattenedDT;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'generation prelude support owns the live pre-stage HDL assembly and preparation sequence' => sub {
+subtest 'generation prelude support remains a compatibility shell over the extracted live pre-stage owners' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_generation_prelude_support_contract',
         <<'FSM'
@@ -54,7 +54,7 @@ FSM
     is(
         $generated_prefix,
         $expected_prefix,
-        'generation prelude support rebuilds the same pre-stage HDL prefix as the live backend owners',
+        'generation prelude support compatibility shell rebuilds the same pre-stage HDL prefix as the extracted live owners',
     );
 
     is_deeply(

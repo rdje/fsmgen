@@ -2,11 +2,11 @@ package FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport;
 
 =head1 NAME
 
-FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport - Own live pre-stage direct SystemVerilog generation prelude
+FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport - Compatibility shell for direct SystemVerilog pre-stage generation prelude
 
 =head1 DESCRIPTION
 
-Owns the bounded live generation-prelude family for the older direct
+Keeps a directly testable compatibility shell for the older direct
 generated-module SystemVerilog backend path. This package centralizes:
 
 =over 4
@@ -17,16 +17,16 @@ full pre-stage HDL assembly before consolidated intermediate generation
 
 =item *
 
-the live composition of the extracted structural-prelude owner plus the
+compatibility composition of the extracted structural-prelude owner plus the
 extracted enable-preparation owner
 
 =back
 
 The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport>
-now keeps the broader post-flattening module assembly sequence, but this
-package owns the prefix that must be established before the consolidated
-intermediate stage can run. The paired
+now composes the extracted pre-stage owners directly in the live backend
+path, so this package survives as a compatibility shell outside that live
+path. The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationStructuralPreludeSupport>
 now keeps structural scaffold/internal-declaration assembly, and the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport>
@@ -61,8 +61,8 @@ sub new ($class, %args) {
 
 =head2 generate_systemverilog_prelude
 
-Generate the direct SystemVerilog HDL prefix and prepare the backend state
-that must exist before consolidated intermediate generation can run.
+Rebuild the direct SystemVerilog HDL prefix and preparation sequence by
+delegating to the extracted live owners.
 
 =cut
 
@@ -91,7 +91,7 @@ C<FSM::HDL::FlattenedDT> backend context.
 
 =head2 generate_systemverilog_prelude
 
-Generates the direct SystemVerilog HDL prefix and prepares the backend state
-that must exist before consolidated intermediate generation can run.
+Rebuilds the direct SystemVerilog HDL prefix and preparation sequence by
+delegating to the extracted live owners.
 
 =cut

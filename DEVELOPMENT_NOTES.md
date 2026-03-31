@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-31: live direct backend no longer instantiates the generation-prelude shell
+- Continued the active `R11` backend-breakdown lane by retiring one more fake live owner once the structural-prelude and enable-preparation halves were both explicit enough that the old prelude wrapper no longer represented a real runtime boundary.
+- Landed behavior:
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_generation_prelude_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so it now composes the extracted structural-prelude and enable-preparation owners directly before the consolidated stage and tail owners,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) so it now survives only as a compatibility shell over those live owners,
+  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t), [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t), [t/233-systemverilog-generation-prelude-support.t](/Users/richarddje/Documents/github/fsmgen/t/233-systemverilog-generation-prelude-support.t), and [t/234-systemverilog-generation-tail-support.t](/Users/richarddje/Documents/github/fsmgen/t/234-systemverilog-generation-tail-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `100`-file / `99`-package snapshot.
+- Why this is worth shipping:
+  - it makes the live backend path honest again by removing a wrapper that had become architectural residue rather than a real runtime owner,
+  - it lets future sessions read the pre-stage direct backend sequence directly as structural-prelude assembly plus enable-oriented preparation instead of mentally stepping through one more facade,
+  - and it narrows the next honest seam to the remaining lower-level coordination across the extracted generation owners rather than more cleanup around the already-retired prelude shell.
+
 ## 2026-03-31: live direct backend prescan preparation now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by splitting the state-mutating prescan half away from the enable-fragment emitter once the structural prelude and broader enable-preparation wrapper were both explicit enough to leave logical-op counting and WEN/EN prescan with a clean owner of their own.
 - Landed behavior:

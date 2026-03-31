@@ -366,8 +366,8 @@ ok(
     'live SystemVerilog generation-enable-preparation support owns enable-condition generation plus composition of the extracted prescan-preparation owner',
 );
 ok(
-    $hdl->{backend_sv_generation_prelude_support}->can('generate_systemverilog_prelude'),
-    'live SystemVerilog generation-prelude support owns pre-stage HDL assembly and preparation',
+    !exists $hdl->{backend_sv_generation_prelude_support},
+    'live SystemVerilog backend no longer instantiates the generation-prelude compatibility shell',
 );
 ok(
     $hdl->{backend_sv_generation_tail_support}->can('generate_systemverilog_tail'),
