@@ -17,8 +17,8 @@ full pre-stage HDL assembly before consolidated intermediate generation
 
 =item *
 
-the live composition of scaffold emission, declaration emission, enable
-generation, factorization-policy preparation, and WEN/EN prescan
+the live composition of scaffold/declaration emission plus the extracted
+enable-preparation owner
 
 =back
 
@@ -26,7 +26,10 @@ The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport>
 now keeps the broader post-flattening module assembly sequence, but this
 package owns the prefix that must be established before the consolidated
-intermediate stage can run.
+intermediate stage can run. The paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport>
+now keeps enable-condition generation, logical-operation counting, and WEN/EN
+prescan over the direct backend state.
 
 =cut
 
@@ -72,18 +75,8 @@ sub generate_systemverilog_prelude ($self, $fsm_module) {
     $hdl .= $ctx->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
     fsm_debug("Step 2 - Basic HDL structure generated", 3);
 
-    # Step 3: Generate enable conditions FIRST (this will track intermediate signal requirements)
-    $hdl .= $ctx->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
-    fsm_debug("Step 3 - Enable conditions generated", 3);
-
-    # TIMING FIX: Count logical operations BEFORE any intermediate signal creation!
-    fsm_debug("\n*** TIMING FIX: Running logical operation counting BEFORE pre-scan ***", 3);
-    $ctx->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
-    fsm_debug("Step 4 - Logical operation counting completed (BEFORE pre-scan!)", 3);
-
-    # Step 5: PRE-SCAN all WEN/EN expressions to identify needed intermediate signals (now with counts available)
-    $ctx->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
-    fsm_debug("Step 5 - PRE-SCAN completed (AFTER logical operation counting!)", 3);
+    $hdl .= $ctx->{backend_sv_generation_enable_preparation_support}
+        ->generate_enable_preparation($fsm_module);
 
     return $hdl;
 }

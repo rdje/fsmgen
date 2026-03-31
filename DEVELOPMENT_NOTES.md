@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-31: live direct backend enable-oriented pre-stage preparation now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling the non-structural enable/prescan pocket out of the broader prelude once the scaffold and declaration neighbors were already explicit enough to leave that preparation family with a clean owner of its own.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm) as the live owner of enable-condition generation, logical-operation counting, and WEN/EN prescan before consolidated intermediate generation,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_enable_preparation_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) so it now keeps only scaffold/declaration composition plus delegation to that extracted owner,
+  - added [t/236-systemverilog-generation-enable-preparation-support.t](/Users/richarddje/Documents/github/fsmgen/t/236-systemverilog-generation-enable-preparation-support.t), retargeted [t/233-systemverilog-generation-prelude-support.t](/Users/richarddje/Documents/github/fsmgen/t/233-systemverilog-generation-prelude-support.t) and [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `99`-file / `98`-package snapshot.
+- Why this is worth shipping:
+  - it makes the prelude owner more honest by separating structural prelude assembly from the enable-oriented preparation that mutates backend state,
+  - it gives the direct backend a named owner for the timing-sensitive logical-op counting and WEN/EN prescan sequence,
+  - and it narrows the next honest seam to the remaining lower-level coordination across the extracted generation owners rather than the already-extracted non-structural prelude pocket.
+
 ## 2026-03-31: live direct backend recursive decision-tree flattening now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the large recursive flattening cluster out of the top-level orchestrator once the capture and assignment-analysis neighbors were explicit enough to give that step an honest owner of its own.
 - Landed behavior:

@@ -10,14 +10,14 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'generation prelude support owns the live pre-stage HDL assembly and preparation sequence' => sub {
+subtest 'generation enable preparation support owns the live pre-stage enable and prescan sequence' => sub {
     my $fsm_module = parse_fsm_module(
-        'sv_generation_prelude_support_contract',
+        'sv_generation_enable_preparation_support_contract',
         <<'FSM'
-(?fsm:sv_generation_prelude_support_contract
+(?fsm:sv_generation_enable_preparation_support_contract
   (+system
     (clock clk)
     (sreset rstn)
@@ -44,35 +44,35 @@ FSM
 
     my $expected_backend = prepare_flattened_backend($fsm_module);
     my $actual_backend = prepare_flattened_backend($fsm_module);
-    my $prelude_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport->new(
+    my $enable_preparation_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport->new(
         flattened_dt => $actual_backend,
     );
 
-    my $expected_prefix = build_expected_prelude($expected_backend, $fsm_module);
-    my $generated_prefix = $prelude_support->generate_systemverilog_prelude($fsm_module);
+    my $expected_fragment = build_expected_enable_preparation($expected_backend, $fsm_module);
+    my $generated_fragment = $enable_preparation_support->generate_enable_preparation($fsm_module);
 
     is(
-        $generated_prefix,
-        $expected_prefix,
-        'generation prelude support rebuilds the same pre-stage HDL prefix as the live backend owners',
+        $generated_fragment,
+        $expected_fragment,
+        'generation enable preparation support rebuilds the same live enable-condition fragment as the backend owners',
     );
 
     is_deeply(
         $actual_backend->{binary_logical_op_counts},
         $expected_backend->{binary_logical_op_counts},
-        'generation prelude support preserves the same logical-operation counting state',
+        'generation enable preparation support preserves the same logical-operation counting state',
     );
 
     is_deeply(
         [sort keys %{$actual_backend->{intermediate_signals} || {}}],
         [sort keys %{$expected_backend->{intermediate_signals} || {}}],
-        'generation prelude support preserves the same intermediate-signal registry keys after prescan',
+        'generation enable preparation support preserves the same intermediate-signal registry keys after prescan',
     );
 
     is_deeply(
         [sort keys %{$actual_backend->{referenced_intermediate_signals} || {}}],
         [sort keys %{$expected_backend->{referenced_intermediate_signals} || {}}],
-        'generation prelude support preserves the same referenced intermediate-signal keys after prescan',
+        'generation enable preparation support preserves the same referenced intermediate-signal keys after prescan',
     );
 };
 
@@ -103,16 +103,12 @@ sub prepare_flattened_backend {
     return $hdl_generator;
 }
 
-sub build_expected_prelude {
+sub build_expected_enable_preparation {
     my ($prepared_backend, $fsm_module) = @_;
 
-    my $hdl = $prepared_backend->{backend_sv_scaffold}->generate_header($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_state_encoding($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_state_register($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_generation_enable_preparation_support}
-        ->generate_enable_preparation($fsm_module);
+    my $hdl = $prepared_backend->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
+    $prepared_backend->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
+    $prepared_backend->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
 
     return $hdl;
 }

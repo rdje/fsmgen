@@ -354,6 +354,10 @@ ok(
     'live SystemVerilog consolidated intermediate rendering support owns final prepared-block rendering',
 );
 ok(
+    $hdl->{backend_sv_generation_enable_preparation_support}->can('generate_enable_preparation'),
+    'live SystemVerilog generation-enable-preparation support owns enable-condition generation plus prescan preparation',
+);
+ok(
     $hdl->{backend_sv_generation_prelude_support}->can('generate_systemverilog_prelude'),
     'live SystemVerilog generation-prelude support owns pre-stage HDL assembly and preparation',
 );
