@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-31: generated-child failures now keep child-source and parent-source context
+- Continued the active `R10` diagnostics lane by teaching [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) to prepend stable source-local context around generated-child parse/semantic-generation failures.
+- Important continuity note:
+  - external child failures now keep `Source file: 'child_source.fsm'`, `Parent composition source: 'top_source.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`,
+  - embedded child failures now keep `Source file: 'top_source.fsm'` plus `Generated child source: '?fsmc/?dtc' 'source_name'`,
+  - [t/242-composition-child-source-file-diagnostic-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/242-composition-child-source-file-diagnostic-boundary.t) locks that error shape through both pipeline and CLI,
+  - and the saved `R10` story is now “top-level failures first, then generated-child failures” rather than only the initial top-level boundary.
+
 ## 2026-03-31: top-level pipeline and CLI failures now keep `Source file:` context
 - Started the first dedicated `R10` slice by teaching [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) to prepend `Source file: '...'` when top-level parse/generation work raises a normal string error.
 - Important continuity note:

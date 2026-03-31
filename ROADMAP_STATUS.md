@@ -612,8 +612,13 @@ Done:
   - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now wraps top-level parse/generation failures with a stable `Source file: '...'` line,
   - that source-local context now reaches both ordinary top-level parser/adapter failures and strict-mode support-tier failures,
   - and [t/241-top-level-source-file-diagnostic-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/241-top-level-source-file-diagnostic-boundary.t) now locks that boundary end to end through both pipeline and CLI entry points.
+- The next bounded widening step is now also shipped through generated-child realization:
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now wraps child parse/semantic generation failures with stable source-local context,
+  - external child failures now keep `Source file: 'child_source.fsm'`, `Parent composition source: 'top_source.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`,
+  - embedded child failures now keep `Source file: 'top_source.fsm'` plus the same generated-child identity line,
+  - and [t/242-composition-child-source-file-diagnostic-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/242-composition-child-source-file-diagnostic-boundary.t) now locks that boundary through both pipeline and CLI entry points.
 Left:
-- Define provenance-carrying boundaries and upgrade key diagnostics.
+- Define the next provenance-carrying boundaries and upgrade key diagnostics.
 - Add regression coverage for error shape and location reporting.
 Exit criteria:
 - Major parser/generator failures identify the offending source construct precisely and explain the intended fix path clearly.

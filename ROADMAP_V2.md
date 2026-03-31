@@ -133,7 +133,8 @@ Deliverable themes:
 First bounded slice:
 - make top-level failures keep the offending source path consistently,
 - start at the source-file orchestration boundary so both pipeline and CLI entry points benefit at once,
-- and use that first slice to establish one reusable provenance/error-shape pattern before pushing deeper into line/construct-level provenance.
+- use that first slice to establish one reusable provenance/error-shape pattern before pushing deeper into line/construct-level provenance,
+- then widen that same pattern through generated-child realization so multi-file composition failures keep the child source path, the parent composition path when relevant, and the declared child-source identity instead of surfacing only inner adapter/parser text.
 
 Expected result:
 - large `.fsm` files become much easier to debug and review.

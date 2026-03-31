@@ -63,9 +63,12 @@ sub realize_fsmc_child_instance ($class, %args) {
     return $class->_realize_generated_child(
         pipeline => $pipeline,
         instance => $instance,
+        fsm_file => $fsm_file,
         source_name => $source_name,
         child_ast => $child_ast,
         child_kind => 'fsmc',
+        declared_child_kind => '?fsmc',
+        child_source_path => $child_source_path,
         add_shared_datapath_source_exports => 1,
     );
 }
@@ -84,9 +87,10 @@ sub realize_dtc_child_instance ($class, %args) {
 
     my $source_name = $instance->source_name;
     my $child_ast = $composition_spec->embedded_dt_sources->{$source_name};
+    my $child_source_path;
 
     unless ($child_ast) {
-        ($child_ast) = $class->load_external_dtc_child_source(
+        ($child_ast, $child_source_path) = $class->load_external_dtc_child_source(
             pipeline => $pipeline,
             source_name => $source_name,
             fsm_file => $fsm_file,
@@ -98,9 +102,12 @@ sub realize_dtc_child_instance ($class, %args) {
     return $class->_realize_generated_child(
         pipeline => $pipeline,
         instance => $instance,
+        fsm_file => $fsm_file,
         source_name => $source_name,
         child_ast => $child_ast,
         child_kind => 'dtc',
+        declared_child_kind => '?dtc',
+        child_source_path => $child_source_path,
         add_shared_datapath_source_exports => 0,
     );
 }
@@ -209,72 +216,84 @@ sub _realize_generated_child ($class, %args) {
         or confess "GeneratedChildRealizer requires a pipeline";
     my $instance = $args{instance}
         or confess "GeneratedChildRealizer requires an instance";
+    my $fsm_file = $args{fsm_file}
+        or confess "GeneratedChildRealizer requires an fsm_file";
     my $source_name = $args{source_name}
         or confess "GeneratedChildRealizer requires a source_name";
     my $child_ast = $args{child_ast}
         or confess "GeneratedChildRealizer requires a child_ast";
     my $child_kind = $args{child_kind}
         or confess "GeneratedChildRealizer requires a child_kind";
+    my $declared_child_kind = $args{declared_child_kind}
+        or confess "GeneratedChildRealizer requires a declared_child_kind";
 
-    my $child_module = FSM::Pipeline::SourceFrontend->create_fsm_module(
-        raw_ast => $child_ast,
-        debug_level => ($pipeline->{debug_level} // 0),
-        strict_mode => ($pipeline->{strict_mode} // 0),
-        source_label => $source_name,
-    );
-    my $child_intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
-        fsm_module => $child_module,
-    );
-    my $child_module_info = FSM::Pipeline::GeneratedModuleInfoBuilder->build_from_fsm_module(
-        fsm_module => $child_module,
-        intent_hir => $child_intent_hir,
-    );
-    my $backend_result = FSM::Backend::GeneratedModuleEmitter->emit_from_fsm_module(
-        fsm_module => $child_module,
-        target_language => ($pipeline->{target_language} // 'systemverilog'),
-        debug_level => ($pipeline->{debug_level} // 0),
-    );
-    $pipeline->{hdl_generator} = $backend_result->{hdl_generator};
-    FSM::Pipeline::GeneratedModuleInfoBuilder->enrich_with_generated_analysis(
-        module_info => $child_module_info,
-        fsm_module => $child_module,
-        target_language => ($pipeline->{target_language} // 'systemverilog'),
-        hdl_generator => $pipeline->{hdl_generator},
-    );
-    my $child_structural_rtl_ir = FSM::IR::StructuralRTLIRBuilder->build_from_generated_module_info(
-        module_info => $child_module_info,
-        fsm_module => $child_module,
-        target_language => ($pipeline->{target_language} // 'systemverilog'),
-    );
-    $child_module_info->{structural_rtl_ir} = $child_structural_rtl_ir->as_hashref;
-    my $child_hdl_code = FSM::Backend::GeneratedModuleEmitter->augment_with_standalone_dt_assertions(
-        hdl_code => $backend_result->{hdl_code},
-        module_info => $child_module_info,
-        target_language => ($pipeline->{target_language} // 'systemverilog'),
-    );
-
-    if ($args{add_shared_datapath_source_exports}) {
-        my $shared_datapath_source_exports = FSM::Composition::SharedDatapathSupport->build_source_export_metadata(
-            FSM::Pipeline::GeneratedModuleInfoBuilder->output_drive_families_from_module_info($child_module_info),
-        );
-        $child_module_info->{shared_datapath_source_export_count} = scalar(@$shared_datapath_source_exports);
-        $child_module_info->{shared_datapath_source_exports} = $shared_datapath_source_exports;
-        $child_hdl_code = $class->augment_generated_child_hdl_with_shared_datapath_exports(
-            $child_hdl_code,
-            $shared_datapath_source_exports,
-        );
-    }
-
-    my $child_interface_ports = FSM::Composition::InterfacePortBuilder->build_realized_child_interface_ports($child_module_info);
-
-    return FSM::Composition::RealizedInstance->new(
-        kind => $child_kind,
-        instance_name => ($instance->name // $child_module->name),
-        module_name => $child_module->name,
+    return $class->_with_generated_child_source_context(
+        fsm_file => $fsm_file,
         source_name => $source_name,
-        interface_ports => $child_interface_ports,
-        module_info => $child_module_info,
-        hdl_code => $child_hdl_code,
+        declared_child_kind => $declared_child_kind,
+        child_source_path => $args{child_source_path},
+        code => sub {
+            my $child_module = FSM::Pipeline::SourceFrontend->create_fsm_module(
+                raw_ast => $child_ast,
+                debug_level => ($pipeline->{debug_level} // 0),
+                strict_mode => ($pipeline->{strict_mode} // 0),
+                source_label => $source_name,
+            );
+            my $child_intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
+                fsm_module => $child_module,
+            );
+            my $child_module_info = FSM::Pipeline::GeneratedModuleInfoBuilder->build_from_fsm_module(
+                fsm_module => $child_module,
+                intent_hir => $child_intent_hir,
+            );
+            my $backend_result = FSM::Backend::GeneratedModuleEmitter->emit_from_fsm_module(
+                fsm_module => $child_module,
+                target_language => ($pipeline->{target_language} // 'systemverilog'),
+                debug_level => ($pipeline->{debug_level} // 0),
+            );
+            $pipeline->{hdl_generator} = $backend_result->{hdl_generator};
+            FSM::Pipeline::GeneratedModuleInfoBuilder->enrich_with_generated_analysis(
+                module_info => $child_module_info,
+                fsm_module => $child_module,
+                target_language => ($pipeline->{target_language} // 'systemverilog'),
+                hdl_generator => $pipeline->{hdl_generator},
+            );
+            my $child_structural_rtl_ir = FSM::IR::StructuralRTLIRBuilder->build_from_generated_module_info(
+                module_info => $child_module_info,
+                fsm_module => $child_module,
+                target_language => ($pipeline->{target_language} // 'systemverilog'),
+            );
+            $child_module_info->{structural_rtl_ir} = $child_structural_rtl_ir->as_hashref;
+            my $child_hdl_code = FSM::Backend::GeneratedModuleEmitter->augment_with_standalone_dt_assertions(
+                hdl_code => $backend_result->{hdl_code},
+                module_info => $child_module_info,
+                target_language => ($pipeline->{target_language} // 'systemverilog'),
+            );
+
+            if ($args{add_shared_datapath_source_exports}) {
+                my $shared_datapath_source_exports = FSM::Composition::SharedDatapathSupport->build_source_export_metadata(
+                    FSM::Pipeline::GeneratedModuleInfoBuilder->output_drive_families_from_module_info($child_module_info),
+                );
+                $child_module_info->{shared_datapath_source_export_count} = scalar(@$shared_datapath_source_exports);
+                $child_module_info->{shared_datapath_source_exports} = $shared_datapath_source_exports;
+                $child_hdl_code = $class->augment_generated_child_hdl_with_shared_datapath_exports(
+                    $child_hdl_code,
+                    $shared_datapath_source_exports,
+                );
+            }
+
+            my $child_interface_ports = FSM::Composition::InterfacePortBuilder->build_realized_child_interface_ports($child_module_info);
+
+            return FSM::Composition::RealizedInstance->new(
+                kind => $child_kind,
+                instance_name => ($instance->name // $child_module->name),
+                module_name => $child_module->name,
+                source_name => $source_name,
+                interface_ports => $child_interface_ports,
+                module_info => $child_module_info,
+                hdl_code => $child_hdl_code,
+            );
+        },
     );
 }
 
@@ -293,11 +312,20 @@ sub _load_external_generated_child_source ($class, %args) {
         or confess "GeneratedChildRealizer requires an expected_root_kind";
 
     my ($child_source_path) = $class->resolve_external_generated_child_source_path(%args);
-    my $child_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
-        fsm_file => $child_source_path,
-        debug_level => ($pipeline->{debug_level} // 0),
+    my ($child_ast, $child_source_info) = $class->_with_generated_child_source_context(
+        fsm_file => $fsm_file,
+        source_name => $source_name,
+        declared_child_kind => $child_kind,
+        child_source_path => $child_source_path,
+        code => sub {
+            my $child_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
+                fsm_file => $child_source_path,
+                debug_level => ($pipeline->{debug_level} // 0),
+            );
+            my $child_source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($child_ast);
+            return ($child_ast, $child_source_info);
+        },
     );
-    my $child_source_info = FSM::Pipeline::SourceFrontend->classify_source_ast($child_ast);
     my $child_root_kind = $child_source_info->{kind} // 'unknown';
     return ($child_ast, $child_source_path, $child_source_info) if $child_root_kind eq $expected_root_kind;
 
@@ -311,6 +339,40 @@ sub _load_external_generated_child_source ($class, %args) {
             . " (detected root '$child_header'). ".
         $kind_note." ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+}
+
+sub _with_generated_child_source_context ($class, %args) {
+    my $fsm_file = $args{fsm_file}
+        or confess "GeneratedChildRealizer requires an fsm_file";
+    my $source_name = $args{source_name}
+        or confess "GeneratedChildRealizer requires a source_name";
+    my $declared_child_kind = $args{declared_child_kind}
+        or confess "GeneratedChildRealizer requires a declared_child_kind";
+    my $code_ref = $args{code}
+        or confess "GeneratedChildRealizer requires a code callback";
+
+    my @result = eval { $code_ref->() };
+    if (!$@) {
+        return wantarray ? @result : $result[0];
+    }
+
+    my $error = $@;
+    die $error if ref($error);
+    die $error if $error =~ /(?:^|\n)Source file:\s+'/s;
+
+    my $message = '';
+    if (defined($args{child_source_path}) && length($args{child_source_path})) {
+        $message .= "Source file: '$args{child_source_path}'\n";
+        if ($args{child_source_path} ne $fsm_file) {
+            $message .= "Parent composition source: '$fsm_file'\n";
+        }
+    }
+    else {
+        $message .= "Source file: '$fsm_file'\n";
+    }
+    $message .= "Generated child source: '$declared_child_kind' '$source_name'\n";
+
+    die $message.$error;
 }
 
 sub _wrong_kind_note ($class, $child_kind, $child_root_kind) {

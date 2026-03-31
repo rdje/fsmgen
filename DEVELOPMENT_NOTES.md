@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-31: generated-child diagnostics now keep child-source and parent-source context
+- Continued the visible `R10` diagnostics lane by widening the earlier top-level `Source file:` pattern into generated-child realization instead of leaving multi-file composition failures to surface only the inner child parser/adapter text.
+- Landed behavior:
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now wraps both external child-source loading and generated-child semantic compilation with one bounded source-context helper,
+  - external generated-child failures now keep `Source file: 'child_source.fsm'`, `Parent composition source: 'top_source.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`,
+  - embedded generated-child failures now keep `Source file: 'top_source.fsm'` plus the same generated-child identity line,
+  - and [t/242-composition-child-source-file-diagnostic-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/242-composition-child-source-file-diagnostic-boundary.t) now locks both the external-child and embedded-child malformed-source families through pipeline and CLI entry points.
+- Why this is worth shipping:
+  - it makes the first `R10` diagnostics pattern pay off in the place where multi-file designs become harder to debug,
+  - it keeps the real failing child file visible without losing the parent composition source that led to that realization path,
+  - and it improves composition debugging without pretending line/construct provenance is already finished.
+
 ## 2026-03-31: strict mode correction keeps `?mod:` / `?module:` distinct from `?dt:`
 - Corrected the visible `R9` strict-mode lane after an overreach in the previous root-family cut.
 - Landed behavior:

@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-31
+### generated-child failures now keep child-source and parent-source context
+- Updated [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so generated-child parse/semantic-generation failures now keep stable source-local context instead of surfacing only the inner child parser/adapter text.
+- External generated-child failures now prepend `Source file: 'child_source.fsm'`, `Parent composition source: 'top_source.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`; embedded generated-child failures now prepend `Source file: 'top_source.fsm'` plus the same generated-child identity line.
+- Added [t/242-composition-child-source-file-diagnostic-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/242-composition-child-source-file-diagnostic-boundary.t) to lock that behavior end to end through both pipeline and CLI entry points for malformed external and embedded generated-child sources.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the second shipped `R10` slice is preserved honestly in the continuity trail.
+
 ### top-level pipeline and CLI failures now keep `Source file:` context
 - Updated [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) so top-level parse/generation failures now keep a stable `Source file: '...'` line at the source-file orchestration boundary instead of surfacing only the inner parser/adapter/support-tier diagnostic.
 - Added [t/241-top-level-source-file-diagnostic-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/241-top-level-source-file-diagnostic-boundary.t) to lock that behavior end to end through both pipeline and CLI entry points for an ordinary top-level parse failure and for a strict-mode support-tier failure.

@@ -517,6 +517,10 @@ Boundary note:
 - The active toolchain now treats unsupported tagged roots as out of support at the top-level boundary, not as accidental containers for live FSM parsing.
 - Bare top-level FSM content is now also rejected through an explicit source-root boundary instead of the older generic “expected `?fsm:name` or `+fsm`” parser error.
 - Top-level pipeline and CLI failures now also keep a `Source file: '...'` line so parse/support-tier failures stay source-local in larger runs.
+- Generated-child realization failures now keep the same source-local framing too:
+  - external child failures keep the child `Source file: '...'` plus a `Parent composition source: '...'` line,
+  - embedded child failures keep the containing composition `Source file: '...'`,
+  - and both now keep a `Generated child source: '?...c' 'name'` line before the underlying child diagnostic.
 - The legacy `+fsm` root family is supported as a real source kind, but it must still follow the active scalar-name contract:
   - accepted:
     - `(+fsm my_module)` followed by sibling `(+system ...)`, state/DT blocks, and other supported top-level forms
