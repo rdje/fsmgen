@@ -23,9 +23,8 @@ prescan-preparation owner before the consolidated intermediate stage runs
 
 =back
 
-The paired
-C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport>
-now keeps the broader pre-stage prefix assembly, but this package owns the
+The paired C<FSM::HDL::FlattenedDT::Orchestrator> now reaches this owner
+directly after structural-prelude assembly, but this package owns the
 enable-oriented preparation that must happen after the basic module scaffold
 exists and before consolidated intermediate generation can run. The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport>

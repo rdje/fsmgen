@@ -63,8 +63,18 @@ sub generate_systemverilog ($self, $fsm_module) {
     $self->flatten_all_decision_trees($fsm_module);
     fsm_debug("Step 1 - Decision trees flattened", 3);
     
-    my $hdl = $ctx->{backend_sv_generation_pipeline_support}
-        ->generate_systemverilog_module($fsm_module);
+    my $hdl = $ctx->{backend_sv_generation_structural_prelude_support}
+        ->generate_structural_prelude($fsm_module);
+    $hdl .= $ctx->{backend_sv_generation_enable_preparation_support}
+        ->generate_enable_preparation($fsm_module);
+
+    # Step 6: Generate consolidated intermediate signals (combining AST factorization + pre-scan)
+    $hdl .= $ctx->{backend_sv_consolidated_intermediate_stage_support}
+        ->generate_consolidated_intermediate_block($fsm_module);
+    fsm_debug("Step 6 - Consolidated intermediate signals generated", 3);
+
+    $hdl .= $ctx->{backend_sv_generation_tail_support}
+        ->generate_systemverilog_tail($fsm_module);
     fsm_debug("*** PIPELINE TIMING DEBUG: HDL Generation Pipeline Complete ***\n", 3);
     
     return $hdl;

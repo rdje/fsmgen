@@ -2,39 +2,40 @@ package FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport
 
 =head1 NAME
 
-FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport - Own live post-flattening direct SystemVerilog assembly
+FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport - Compatibility shell for post-flattening direct SystemVerilog assembly
 
 =head1 DESCRIPTION
 
-Owns the bounded live post-flattening generation-pipeline family for the
-older direct generated-module SystemVerilog backend path. This package
-centralizes:
+Keeps a directly testable compatibility shell for the older direct
+generated-module SystemVerilog backend path. This package centralizes:
 
 =over 4
 
 =item *
 
-full post-prelude direct SystemVerilog assembly once the decision trees have
-already been flattened and the direct backend prelude has been established
+full post-flattening direct SystemVerilog assembly once the decision trees
+have already been flattened and the direct backend prelude has been
+established
 
 =item *
 
-the live composition of structural-prelude generation, enable-oriented
+compatibility composition of structural-prelude generation, enable-oriented
 preparation, consolidated intermediate stage generation, and the extracted
 generation-tail owner
 
 =back
 
 The paired C<FSM::HDL::FlattenedDT::Orchestrator> now keeps per-run reset,
-FSM-module attachment, and decision-tree flattening, the paired
+FSM-module attachment, decision-tree flattening, and live post-flattening
+generation composition, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationStructuralPreludeSupport>
 keeps structural scaffold/internal-declaration preparation, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport>
 keeps enable-condition emission plus the extracted prescan-preparation owner,
 the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationTailSupport>
-keeps post-stage WEN/EN/assignment/module closeout, and this package keeps
-the live direct backend text-assembly sequence that composes those phases.
+keeps post-stage WEN/EN/assignment/module closeout, and this package now
+survives only as a compatibility shell outside that live backend path.
 
 =cut
 
@@ -64,8 +65,8 @@ sub new ($class, %args) {
 
 =head2 generate_systemverilog_module
 
-Generate the full direct SystemVerilog module body and closeout from the
-already flattened backend state.
+Rebuild the full direct SystemVerilog module body and closeout by
+delegating to the extracted live owners.
 
 =cut
 
@@ -101,7 +102,7 @@ C<FSM::HDL::FlattenedDT> backend context.
 
 =head2 generate_systemverilog_module
 
-Generates the full direct SystemVerilog module body and closeout from the
-already flattened backend state.
+Rebuilds the full direct SystemVerilog module body and closeout by
+delegating to the extracted live owners.
 
 =cut

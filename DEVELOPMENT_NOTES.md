@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-31: live direct backend no longer instantiates the generation-pipeline shell
+- Continued the active `R11` backend-breakdown lane by retiring one more fake live owner once the post-flattening direct backend sequence had been reduced to a straightforward orchestration of already-extracted structural-prelude, enable-preparation, consolidated-stage, and tail owners.
+- Landed behavior:
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_generation_pipeline_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so it now composes structural-prelude generation, enable-oriented preparation, consolidated intermediate stage generation, and tail closeout directly after flattening,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so it now survives only as a compatibility shell over those live owners,
+  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `99`-file / `98`-package snapshot.
+- Why this is worth shipping:
+  - it makes the live direct backend path more honest by removing a thin wrapper that no longer represented a real runtime boundary,
+  - it leaves the compatibility-shell surface available for direct owner tests without pretending that shell is still architecturally central,
+  - and it narrows the next honest seam to the remaining lower-level coordination across the extracted generation owners and the now-thinner top-level orchestrator instead of more wrapper cleanup.
+
 ## 2026-03-31: live direct backend no longer instantiates the generation-prelude shell
 - Continued the active `R11` backend-breakdown lane by retiring one more fake live owner once the structural-prelude and enable-preparation halves were both explicit enough that the old prelude wrapper no longer represented a real runtime boundary.
 - Landed behavior:

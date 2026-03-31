@@ -13,7 +13,7 @@ use FSM::HDL::FlattenedDT;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'generation pipeline support owns the live post-flattening SystemVerilog assembly sequence' => sub {
+subtest 'generation pipeline support remains a compatibility shell over the extracted live post-flattening owners' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_generation_pipeline_support_contract',
         <<'FSM'
@@ -53,7 +53,7 @@ FSM
     is(
         $generated_hdl,
         $expected_hdl,
-        'generation pipeline support rebuilds the same post-flattening HDL sequence as the live backend owners',
+        'generation pipeline support compatibility shell rebuilds the same post-flattening HDL sequence as the extracted live owners',
     );
 };
 

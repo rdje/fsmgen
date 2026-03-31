@@ -22,16 +22,14 @@ extracted enable-preparation owner
 
 =back
 
-The paired
-C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport>
-now composes the extracted pre-stage owners directly in the live backend
-path, so this package survives as a compatibility shell outside that live
-path. The paired
+The paired C<FSM::HDL::FlattenedDT::Orchestrator> now reaches the extracted
+pre-stage owners directly in the live backend path, so this package
+survives as a compatibility shell outside that live path. The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationStructuralPreludeSupport>
 now keeps structural scaffold/internal-declaration assembly, and the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport>
-now keeps enable-condition generation, logical-operation counting, and WEN/EN
-prescan over the direct backend state.
+now keeps enable-condition generation plus the extracted prescan-preparation
+owner over the direct backend state.
 
 =cut
 

@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-31: live direct backend no longer instantiates the generation-pipeline shell
+- Saved shipped behavior:
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_generation_pipeline_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so the live backend now composes structural-prelude generation, enable-oriented preparation, consolidated intermediate stage generation, and tail closeout directly after flattening,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so it now survives only as a compatibility shell outside the live backend path,
+  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t),
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now records the measured post-change snapshot of `99` reachable project files and `98` reachable `.pm` packages.
+- Important continuity note:
+  - the next likely seam is no longer the live generation-pipeline shell itself,
+  - it is the remaining lower-level coordination across the extracted structural-prelude owner, prescan-preparation owner, narrowed enable-preparation owner, consolidated-intermediate planning/stage owners, extracted tail owner, and the still-central top-level direct backend sequencing in [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm),
+  - and future sessions should read the live direct backend assembly path as “flatten first, then let `Orchestrator` compose structural prelude, enable preparation, consolidated intermediate stage, and tail closeout directly.”
+
 ## 2026-03-31: live direct backend no longer instantiates the generation-prelude shell
 - Saved shipped behavior:
   - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_generation_prelude_support`,

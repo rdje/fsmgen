@@ -22,10 +22,9 @@ and module closeout
 
 =back
 
-The paired
-C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport>
-now keeps the broader post-flattening module assembly sequence, but this
-package owns the tail that follows the consolidated intermediate stage.
+The paired C<FSM::HDL::FlattenedDT::Orchestrator> now keeps the broader
+post-flattening module assembly sequence directly, but this package owns the
+tail that follows the consolidated intermediate stage.
 
 =cut
 
