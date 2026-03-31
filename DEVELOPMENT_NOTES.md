@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-31: live direct backend post-stage SystemVerilog tail now has a dedicated owner
+- Continued the active `R11` backend-breakdown lane by pulling the post-stage WEN/EN, assignment, and closeout sequence out of the broader generation pipeline once that tail was clearly cohesive enough to stand on its own.
+- Landed behavior:
+  - added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm) as the live owner of unified WEN/EN emission, signal-assignment emission, and final `endmodule` closeout after consolidated intermediate generation,
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the direct backend now instantiates `backend_sv_generation_tail_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so it now keeps only prelude/stage/tail composition over that extracted tail owner,
+  - added [t/234-systemverilog-generation-tail-support.t](/Users/richarddje/Documents/github/fsmgen/t/234-systemverilog-generation-tail-support.t), retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t) and [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t),
+  - and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the measured `97`-file / `96`-package snapshot.
+- Why this is worth shipping:
+  - it makes the live generation pipeline more honest by separating post-stage closeout from prelude and stage composition,
+  - it gives the direct backend a named boundary for WEN/EN generation, final assignment emission, and module closeout,
+  - and it narrows the next honest seam to the remaining lower-level coordination across prelude/stage/tail composition and broader direct-backend convergence rather than one longer pipeline pocket.
+
 ## 2026-03-31: live direct backend pre-stage SystemVerilog prelude now has a dedicated owner
 - Continued the active `R11` backend-breakdown lane by pulling the pre-stage scaffold/declaration/enable/prescan sequence out of the broader generation pipeline once that sequence was clearly cohesive enough to stand on its own.
 - Landed behavior:

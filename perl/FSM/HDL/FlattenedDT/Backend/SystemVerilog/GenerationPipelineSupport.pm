@@ -19,17 +19,18 @@ already been flattened and the direct backend prelude has been established
 
 =item *
 
-the live composition of consolidated intermediate stage generation, unified
-WEN/EN emission, assignment emission, and module closeout over the extracted
-generation-prelude owner
+the live composition of consolidated intermediate stage generation plus the
+extracted generation-tail owner over the extracted generation-prelude owner
 
 =back
 
 The paired C<FSM::HDL::FlattenedDT::Orchestrator> now keeps per-run reset,
 FSM-module attachment, and decision-tree flattening, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport>
-keeps scaffold/declaration/enable/prescan preparation, and this package keeps
-the live direct backend text-assembly sequence that follows those phases.
+keeps scaffold/declaration/enable/prescan preparation, the paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationTailSupport>
+keeps post-stage WEN/EN/assignment/module closeout, and this package keeps
+the live direct backend text-assembly sequence that composes those phases.
 
 =cut
 
@@ -75,12 +76,8 @@ sub generate_systemverilog_module ($self, $fsm_module) {
         ->generate_consolidated_intermediate_block($fsm_module);
     fsm_debug("Step 6 - Consolidated intermediate signals generated", 3);
 
-    # Step 7: Generate WEN/EN signals (using pre-declared intermediate signals)
-    $hdl .= $ctx->{enable_graph_enable_support}->generate_unified_wen_en_signals($fsm_module);
-    fsm_debug("Step 7 - WEN/EN signals generated", 3);
-
-    $hdl .= $ctx->{enable_graph_assignment_support}->generate_signal_assignments($fsm_module);
-    $hdl .= "endmodule\n";
+    $hdl .= $ctx->{backend_sv_generation_tail_support}
+        ->generate_systemverilog_tail($fsm_module);
 
     return $hdl;
 }

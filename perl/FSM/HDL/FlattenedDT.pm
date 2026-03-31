@@ -37,6 +37,7 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStage
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationTailSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GlobalFactorizationSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::InternalDeclarationEmitter;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalFilterPolicySupport;
@@ -136,6 +137,7 @@ sub new ($class, %args) {
     $self->{backend_sv_consolidated_intermediate_assignment_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateAssignmentSupport->new(flattened_dt => $self);
     $self->{backend_sv_consolidated_intermediate_declaration_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateDeclarationSupport->new(flattened_dt => $self);
     $self->{backend_sv_generation_prelude_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport->new(flattened_dt => $self);
+    $self->{backend_sv_generation_tail_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationTailSupport->new(flattened_dt => $self);
     $self->{backend_sv_generation_pipeline_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport->new(flattened_dt => $self);
     $self->{backend_verilog} = FSM::HDL::FlattenedDT::Backend::Verilog->new(flattened_dt => $self);
     

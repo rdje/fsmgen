@@ -358,6 +358,10 @@ ok(
     'live SystemVerilog generation-prelude support owns pre-stage HDL assembly and preparation',
 );
 ok(
+    $hdl->{backend_sv_generation_tail_support}->can('generate_systemverilog_tail'),
+    'live SystemVerilog generation-tail support owns post-stage HDL closeout',
+);
+ok(
     $hdl->{backend_sv_generation_pipeline_support}->can('generate_systemverilog_module'),
     'live SystemVerilog generation-pipeline support owns post-flattening HDL assembly',
 );

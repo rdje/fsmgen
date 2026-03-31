@@ -1078,3 +1078,9 @@ The first honest `R11` slices are now:
   so `GenerationPipelineSupport` no longer owns
   scaffold/declaration/enable/factorization-policy/prescan preparation inline
   before consolidated intermediate generation.
+- Forward-IR note: the paired live direct post-stage SystemVerilog generation
+  tail family now also has an explicit owner in
+  `FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationTailSupport`,
+  so `GenerationPipelineSupport` no longer owns unified WEN/EN emission,
+  signal-assignment emission, and module closeout inline after consolidated
+  intermediate generation.

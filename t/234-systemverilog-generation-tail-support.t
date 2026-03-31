@@ -10,14 +10,14 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationTailSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'generation pipeline support owns the live post-flattening SystemVerilog assembly sequence' => sub {
+subtest 'generation tail support owns the live post-stage HDL closeout sequence' => sub {
     my $fsm_module = parse_fsm_module(
-        'sv_generation_pipeline_support_contract',
+        'sv_generation_tail_support_contract',
         <<'FSM'
-(?fsm:sv_generation_pipeline_support_contract
+(?fsm:sv_generation_tail_support_contract
   (+system
     (clock clk)
     (sreset rstn)
@@ -42,18 +42,18 @@ subtest 'generation pipeline support owns the live post-flattening SystemVerilog
 FSM
     );
 
-    my $prepared_backend = prepare_flattened_backend($fsm_module);
-    my $pipeline_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport->new(
+    my $prepared_backend = prepare_backend_to_stage($fsm_module);
+    my $tail_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationTailSupport->new(
         flattened_dt => $prepared_backend,
     );
 
-    my $expected_hdl = build_expected_hdl($prepared_backend, $fsm_module);
-    my $generated_hdl = $pipeline_support->generate_systemverilog_module($fsm_module);
+    my $expected_tail = build_expected_tail($prepared_backend, $fsm_module);
+    my $generated_tail = $tail_support->generate_systemverilog_tail($fsm_module);
 
     is(
-        $generated_hdl,
-        $expected_hdl,
-        'generation pipeline support rebuilds the same post-flattening HDL sequence as the live backend owners',
+        $generated_tail,
+        $expected_tail,
+        'generation tail support rebuilds the same post-stage HDL closeout sequence as the live backend owners',
     );
 };
 
@@ -75,24 +75,25 @@ sub parse_fsm_module {
     );
 }
 
-sub prepare_flattened_backend {
+sub prepare_backend_to_stage {
     my ($fsm_module) = @_;
     my $hdl_generator = FSM::HDL::FlattenedDT->new(debug => 0);
     $hdl_generator->{orchestrator}->reset_generation_state();
     $hdl_generator->{enable_graph_signal_support}->set_fsm_module_reference($fsm_module);
     $hdl_generator->{orchestrator}->flatten_all_decision_trees($fsm_module);
+    $hdl_generator->{backend_sv_generation_prelude_support}
+        ->generate_systemverilog_prelude($fsm_module);
+    $hdl_generator->{backend_sv_consolidated_intermediate_stage_support}
+        ->generate_consolidated_intermediate_block($fsm_module);
     return $hdl_generator;
 }
 
-sub build_expected_hdl {
+sub build_expected_tail {
     my ($prepared_backend, $fsm_module) = @_;
 
-    my $hdl = $prepared_backend->{backend_sv_generation_prelude_support}
-        ->generate_systemverilog_prelude($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_consolidated_intermediate_stage_support}
-        ->generate_consolidated_intermediate_block($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_generation_tail_support}
-        ->generate_systemverilog_tail($fsm_module);
+    my $hdl = $prepared_backend->{enable_graph_enable_support}->generate_unified_wen_en_signals($fsm_module);
+    $hdl .= $prepared_backend->{enable_graph_assignment_support}->generate_signal_assignments($fsm_module);
+    $hdl .= "endmodule\n";
 
     return $hdl;
 }
