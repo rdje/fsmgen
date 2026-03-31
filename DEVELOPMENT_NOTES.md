@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: RTL child metadata diagnostics now keep metadata-file and parent-source context
+- Continued the visible `R10` diagnostics lane by widening the earlier source-local error-shape pattern into the external/embedded RTL metadata path instead of leaving `?rtl` composition failures to surface only the inner `.rtlif` loader diagnostic.
+- Landed behavior:
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now wraps external sidecar resolution/parsing/validation and embedded `?rtlif` validation with one bounded context helper,
+  - sidecar `.rtlif` failures now keep `RTL metadata file: 'module.rtlif'`, `Parent composition source: 'top_source.fsm'`, and `RTL child module: '?rtl' 'module_name'`,
+  - embedded `?rtlif` failures now keep `Source file: 'top_source.fsm'` plus the same RTL-child identity line,
+  - and [t/243-composition-rtl-child-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/243-composition-rtl-child-diagnostic-context.t) now locks both the external-sidecar and embedded-metadata failure families through pipeline and CLI entry points.
+- Why this is worth shipping:
+  - it makes the diagnostics story symmetric across the two main composition child families that can fail in separate files,
+  - it keeps the resolved `.rtlif` sidecar visible when that is the failing artifact instead of forcing users to infer it from the longer message body,
+  - and it improves multi-file composition debugging without widening the actual `.rtlif` contract or changing composition semantics.
+
 ## 2026-03-31: generated-child diagnostics now keep child-source and parent-source context
 - Continued the visible `R10` diagnostics lane by widening the earlier top-level `Source file:` pattern into generated-child realization instead of leaving multi-file composition failures to surface only the inner child parser/adapter text.
 - Landed behavior:

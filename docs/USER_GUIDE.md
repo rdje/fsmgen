@@ -521,6 +521,10 @@ Boundary note:
   - external child failures keep the child `Source file: '...'` plus a `Parent composition source: '...'` line,
   - embedded child failures keep the containing composition `Source file: '...'`,
   - and both now keep a `Generated child source: '?...c' 'name'` line before the underlying child diagnostic.
+- External `?rtl` metadata failures now keep matching source-local framing too:
+  - sidecar `.rtlif` failures keep `RTL metadata file: '...'` plus `Parent composition source: '...'`,
+  - embedded `?rtlif` failures keep `Source file: '...'` for the containing composition source,
+  - and both now keep `RTL child module: '?rtl' 'module_name'` before the underlying metadata diagnostic.
 - The legacy `+fsm` root family is supported as a real source kind, but it must still follow the active scalar-name contract:
   - accepted:
     - `(+fsm my_module)` followed by sibling `(+system ...)`, state/DT blocks, and other supported top-level forms

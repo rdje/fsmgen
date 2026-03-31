@@ -134,7 +134,8 @@ First bounded slice:
 - make top-level failures keep the offending source path consistently,
 - start at the source-file orchestration boundary so both pipeline and CLI entry points benefit at once,
 - use that first slice to establish one reusable provenance/error-shape pattern before pushing deeper into line/construct-level provenance,
-- then widen that same pattern through generated-child realization so multi-file composition failures keep the child source path, the parent composition path when relevant, and the declared child-source identity instead of surfacing only inner adapter/parser text.
+- then widen that same pattern through generated-child realization so multi-file composition failures keep the child source path, the parent composition path when relevant, and the declared child-source identity instead of surfacing only inner adapter/parser text,
+- and then carry the same idea into external/embedded `?rtl` metadata loading so sidecar `.rtlif` failures keep the resolved metadata file plus parent composition source while embedded `?rtlif` failures still point back to the containing composition source.
 
 Expected result:
 - large `.fsm` files become much easier to debug and review.

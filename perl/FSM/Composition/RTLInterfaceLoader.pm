@@ -31,14 +31,26 @@ sub load_interface ($self, %args) {
     my $embedded_raw_ast = $args{embedded_raw_ast};
 
     if (defined $embedded_raw_ast) {
-        my $embedded_rtlif_ast = $self->find_embedded_rtlif_root(
-            $embedded_raw_ast,
-            $module_name,
-            $source_file,
+        my $embedded_rtlif_ast = $self->_with_rtl_child_context(
+            source_file => $source_file,
+            module_name => $module_name,
+            code => sub {
+                return $self->find_embedded_rtlif_root(
+                    $embedded_raw_ast,
+                    $module_name,
+                    $source_file,
+                );
+            },
         );
         if ($embedded_rtlif_ast) {
             my $metadata_path = $self->embedded_metadata_label($source_file, $module_name);
-            my $ports = $self->parse_metadata_ast($module_name, $embedded_rtlif_ast, $metadata_path);
+            my $ports = $self->_with_rtl_child_context(
+                source_file => $source_file,
+                module_name => $module_name,
+                code => sub {
+                    return $self->parse_metadata_ast($module_name, $embedded_rtlif_ast, $metadata_path);
+                },
+            );
             return {
                 module_name => $module_name,
                 metadata_path => $metadata_path,
@@ -48,10 +60,33 @@ sub load_interface ($self, %args) {
         }
     }
 
-    my $metadata_path = $self->resolve_metadata_path($module_name, $source_file);
-    my $raw_ast = Lispish::multi($metadata_path)
-        or confess "Failed to parse RTL interface metadata '$metadata_path' for module '$module_name'";
-    my $ports = $self->parse_metadata_ast($module_name, $raw_ast, $metadata_path);
+    my $metadata_path = $self->_with_rtl_child_context(
+        source_file => $source_file,
+        module_name => $module_name,
+        code => sub {
+            return $self->resolve_metadata_path($module_name, $source_file);
+        },
+    );
+    my $raw_ast = $self->_with_rtl_child_context(
+        source_file => $source_file,
+        module_name => $module_name,
+        metadata_path => $metadata_path,
+        context_kind => 'external_metadata',
+        code => sub {
+            my $raw_ast = Lispish::multi($metadata_path)
+                or confess "Failed to parse RTL interface metadata '$metadata_path' for module '$module_name'";
+            return $raw_ast;
+        },
+    );
+    my $ports = $self->_with_rtl_child_context(
+        source_file => $source_file,
+        module_name => $module_name,
+        metadata_path => $metadata_path,
+        context_kind => 'external_metadata',
+        code => sub {
+            return $self->parse_metadata_ast($module_name, $raw_ast, $metadata_path);
+        },
+    );
 
     return {
         module_name => $module_name,
@@ -210,6 +245,38 @@ sub parse_port_token ($self, $module_name, $token, $metadata_path) {
         raw_token => $token,
         origin_kind => 'rtlif_declared_port',
     );
+}
+
+sub _with_rtl_child_context ($self, %args) {
+    my $source_file = $args{source_file}
+        or confess "RTLInterfaceLoader requires a source_file";
+    my $module_name = $args{module_name}
+        or confess "RTLInterfaceLoader requires a module_name";
+    my $code_ref = $args{code}
+        or confess "RTLInterfaceLoader requires a code callback";
+
+    my @result = eval { $code_ref->() };
+    if (!$@) {
+        return wantarray ? @result : $result[0];
+    }
+
+    my $error = $@;
+    die $error if ref($error);
+    die $error if $error =~ /(?:^|\n)(?:Source file|RTL metadata file):\s+'/s;
+
+    my $message = '';
+    if (($args{context_kind} // '') eq 'external_metadata') {
+        my $metadata_path = $args{metadata_path}
+            or confess "RTLInterfaceLoader external metadata context requires a metadata_path";
+        $message .= "RTL metadata file: '$metadata_path'\n";
+        $message .= "Parent composition source: '$source_file'\n";
+    }
+    else {
+        $message .= "Source file: '$source_file'\n";
+    }
+    $message .= "RTL child module: '?rtl' '$module_name'\n";
+
+    die $message.$error;
 }
 
 1;

@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: RTL child metadata failures now keep metadata-file and parent-source context
+- Continued the active `R10` diagnostics lane by teaching [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) to prepend stable context around blocked sidecar or embedded `.rtlif` metadata loading.
+- Important continuity note:
+  - sidecar `.rtlif` failures now keep `RTL metadata file: 'module.rtlif'`, `Parent composition source: 'top_source.fsm'`, and `RTL child module: '?rtl' 'module_name'`,
+  - embedded `?rtlif` failures now keep `Source file: 'top_source.fsm'` plus the same RTL-child identity line,
+  - [t/243-composition-rtl-child-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/243-composition-rtl-child-diagnostic-context.t) locks both the external-sidecar and embedded-metadata failure families through pipeline and CLI,
+  - and the saved `R10` story is now “top-level failures, then generated-child failures, then RTL-child metadata failures”.
+
 ## 2026-03-31: generated-child failures now keep child-source and parent-source context
 - Continued the active `R10` diagnostics lane by teaching [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) to prepend stable source-local context around generated-child parse/semantic-generation failures.
 - Important continuity note:

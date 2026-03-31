@@ -1,5 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-01
+### rtl child metadata failures now keep metadata-file and parent-source context
+- Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so blocked sidecar or embedded `.rtlif` metadata loading now keeps stable source-local context instead of surfacing only the inner metadata diagnostic.
+- Sidecar `.rtlif` failures now prepend `RTL metadata file: 'module.rtlif'`, `Parent composition source: 'top_source.fsm'`, and `RTL child module: '?rtl' 'module_name'`; embedded `?rtlif` failures now prepend `Source file: 'top_source.fsm'` plus the same RTL-child identity line.
+- Added [t/243-composition-rtl-child-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/243-composition-rtl-child-diagnostic-context.t) to lock that behavior end to end through both pipeline and CLI entry points for malformed sidecar and embedded RTL metadata.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next shipped `R10` slice is preserved honestly in the continuity trail.
+
 ## 2026-03-31
 ### generated-child failures now keep child-source and parent-source context
 - Updated [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so generated-child parse/semantic-generation failures now keep stable source-local context instead of surfacing only the inner child parser/adapter text.
