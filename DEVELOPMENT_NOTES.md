@@ -288,6 +288,31 @@ This document captures engineering rationale, design constraints, and working de
   - it preserves the honesty rule that ambiguous prose needs explicit residue reporting rather than fake precision,
   - and it links naturally to the future reusable-library lane, because captured protocol roles/checkers can become first-class reusable `.fsm` assets later.
 
+## 2026-03-31: AXI intent-capture case study and executable-PDF target are now preserved in detail
+- Reviewed the external AXI workspace under `/Users/richarddje/Documents/livework/protocols/arm/axi/` end to end and preserved the detailed conclusions in [docs/INTENT_CAPTURE_AXI_CASE_STUDY.md](/Users/richarddje/Documents/github/fsmgen/docs/INTENT_CAPTURE_AXI_CASE_STUDY.md) instead of leaving them as session-local analysis.
+- Saved direction:
+  - the AXI workspace is now treated as the strongest concrete reference for the future `H4` lane rather than just another brainstorm,
+  - the most durable method signals are:
+    - normalized `Markdown` first,
+    - actor-first extraction,
+    - phases before states,
+    - persistent-state inference before final FSM state naming,
+    - explicit source-fact / derived-rule / local-decision / abstraction separation,
+    - assertion-ledger capture alongside implementation capture,
+    - and explicit abstraction/boundedness logging rather than silent narrowing,
+  - the AXI actor split is especially important:
+    - reusable transport micro-actors,
+    - separate manager and subordinate read/write actors,
+    - and an explicit interconnect/order/realignment actor instead of hiding that logic as glue,
+  - the first emitted AXI transport actor confirms the right first-emission strategy too:
+    - start with the smallest reusable invariant-bearing micro-actor, not with a giant top-level bus FSM,
+  - and the lane now has a stronger long-term target than “spec to `.fsm`”:
+    - a staged mostly-automated “executable PDF” flow that can eventually emit `.fsm` artifacts, harness/testbench surfaces, scenario/test intent, verification plans, functional-coverage plans, and an honesty-preserving capture report.
+- Why this is worth saving:
+  - it upgrades the intent-capture lane from a general idea to a concrete case-study-backed method,
+  - it gives future sessions one durable place to restart from when protocol/spec capture begins for real,
+  - and it preserves the stricter stage-gate idea that each capture phase should be validated by contracts/invariants/gates rather than by prose confidence alone.
+
 ## 2026-03-30: reusable library, semantic parameters, and phased intent-recovery start are now logged explicitly
 - Captured the recent brainstorming exchange as explicit roadmap guidance instead of leaving it conversational only.
 - Saved direction:

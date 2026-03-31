@@ -715,19 +715,32 @@ Preferred working method:
 - build a protocol dossier, actor catalog, actor sheet per actor, assertion ledger, abstraction/boundedness log, FSM mapping sheet, and validation log,
 - keep source facts, derived machine rules, local design decisions, and explicit abstractions separate,
 - define actor interfaces plus invariants/contracts/gates in plain English before emitting `.fsm`,
-- and treat early imported fixtures such as the APB requester/completer/top and AMBA requester examples as seed corpus, not as proof that the general capture lane is already solved.
+- treat early imported fixtures such as the APB requester/completer/top and AMBA requester examples as seed corpus, not as proof that the general capture lane is already solved,
+- and use [docs/INTENT_CAPTURE_AXI_CASE_STUDY.md](/Users/richarddje/Documents/github/fsmgen/docs/INTENT_CAPTURE_AXI_CASE_STUDY.md) as the current strongest concrete reference for the lane’s working method and artifact shape.
 
 Required behavior:
 - emit captured `.fsm` artifacts plus a capture report,
 - distinguish confidently captured intent from heuristic inference and unresolved ambiguity,
-- and never present ambiguous prose as if it had been recovered with implementation-grade certainty.
+- never present ambiguous prose as if it had been recovered with implementation-grade certainty,
+- and keep explicit stage contracts/gates around normalization, actor discovery, interface/phase extraction, invariant/contract/gate/assertion capture, abstraction logging, decomposition, emission, verification-asset generation, and back-annotation.
 
 Expected technical pipeline:
 - normalize `PDF` or other source documents into structured `Markdown`,
 - build a normalized spec IR over roles, transactions, timing rules, fields, and invariants,
 - recover protocol role models and reusable behavioral rules from that IR,
 - project those recovered semantics into `.fsm` roots plus optional composition/testbench harnesses,
+- emit verification-oriented artifacts such as scenario/test plans and functional-coverage plans alongside the generated sources where possible,
 - and emit a capture report alongside the generated sources.
+
+Longer-term automation target:
+- treat this lane as a future almost-fully-staged automated “executable PDF” flow for bounded protocol and RTL-block specifications,
+- where a normalized spec document can eventually yield:
+  - a set of `.fsm` role/module artifacts,
+  - a harness or testbench-ready composition surface,
+  - scenario/test intent,
+  - a verification plan,
+  - a functional-coverage plan,
+  - and an honesty-preserving capture report.
 
 Relationship to other horizon lanes:
 - keep this lane distinct from HDL import / intent recovery even if both eventually share middle-layer semantic IRs,

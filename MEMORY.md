@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-31: AXI intent-capture case study and executable-PDF target are now frozen in repo memory
+- Reviewed the full external AXI workspace under `/Users/richarddje/Documents/livework/protocols/arm/axi/` and preserved the detailed method/conclusions in [docs/INTENT_CAPTURE_AXI_CASE_STUDY.md](/Users/richarddje/Documents/github/fsmgen/docs/INTENT_CAPTURE_AXI_CASE_STUDY.md).
+- The saved durable direction is:
+  - use normalized `Markdown`, not raw `PDF`, as the working textual surface,
+  - work actor-first rather than protocol-as-a-monolith,
+  - define phases before final FSM states,
+  - justify persistent state from protocol rules,
+  - keep source facts, derived machine rules, local design decisions, and explicit abstractions separate,
+  - recover invariants/contracts/gates/assertions before `.fsm` emission,
+  - and treat reusable transport micro-actors plus explicit interconnect actors as first-class capture outputs rather than implementation details.
+- The saved long-term target is now stronger too:
+  - future intent capture should aim toward an almost-fully-staged automated “executable PDF” flow that can emit `.fsm` sets, harness/testbench surfaces, scenario/test intent, verification plans, functional-coverage plans, and an honesty-preserving capture report.
+- The saved process constraint is that every stage should have explicit gates:
+  - normalization,
+  - dossier/section mapping,
+  - actor discovery,
+  - interface/phase extraction,
+  - invariant/contract/gate/assertion capture,
+  - abstraction logging,
+  - decomposition,
+  - emission,
+  - verification-asset generation,
+  - and back-annotation/residue reporting.
+
 ## 2026-03-31: strict mode no longer collapses `?mod:` / `?module:` into `?dt:`
 - Corrected shipped behavior:
   - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) still owns the shared strict-mode root-family boundary,

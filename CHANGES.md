@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-03-31
+### AXI intent-capture case study and executable-PDF target are now preserved in repo docs
+- Added [docs/INTENT_CAPTURE_AXI_CASE_STUDY.md](/Users/richarddje/Documents/github/fsmgen/docs/INTENT_CAPTURE_AXI_CASE_STUDY.md) as the detailed saved reference for the future `H4` intent-capture lane, based on the full external AXI workspace under `/Users/richarddje/Documents/livework/protocols/arm/axi/`.
+- Saved in that note:
+  - the full actor-first PDF/Markdown-to-`.fsm` method extracted from the AXI workspace,
+  - the durable workflow artifacts and classification boundaries,
+  - the AXI-specific transport/path/interconnect decomposition lessons,
+  - the strongest reusable implementation/capture takeaways,
+  - and the stronger long-term “executable PDF” target where bounded protocol or RTL-block documents eventually drive `.fsm` output plus harness/testbench, scenario/test intent, verification-plan, functional-coverage, and capture-report artifacts.
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so that detailed case-study note is now linked from the continuity trail and the `H4` horizon now explicitly records the staged-gate and executable-PDF direction.
+
 ### strict mode correction keeps `?mod:` / `?module:` distinct from `?dt:`
 - Updated [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so the shared strict root-family boundary no longer rejects `?mod:` / `?module:` or suggests migrating them to `?dt:`.
 - Updated [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t), [t/133-standalone-dt-root-aliases.t](/Users/richarddje/Documents/github/fsmgen/t/133-standalone-dt-root-aliases.t), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), and the roadmap/continuity set so the live contract now says the honest thing: `?dt` is one decision-tree root, `?mod:` / `?module:` are distinct module roots in the intended language model, and the current implementation's shared direct single-module path should not be read as semantic aliasing.
