@@ -108,8 +108,10 @@ sub build_expected_prelude {
 
     my $hdl = $prepared_backend->{backend_sv_generation_structural_prelude_support}
         ->generate_structural_prelude($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_generation_enable_preparation_support}
-        ->generate_enable_preparation($fsm_module);
+    $hdl .= $prepared_backend->{enable_graph_enable_support}
+        ->generate_enable_conditions($fsm_module);
+    $prepared_backend->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
 
     return $hdl;
 }

@@ -2,34 +2,34 @@ package FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparati
 
 =head1 NAME
 
-FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport - Own live pre-stage direct SystemVerilog enable preparation
+FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport - Compatibility shell for direct SystemVerilog enable preparation
 
 =head1 DESCRIPTION
 
-Owns the bounded live enable-preparation family for the older direct
+Keeps a directly testable compatibility shell for the older direct
 generated-module SystemVerilog backend path. This package centralizes:
 
 =over 4
 
 =item *
 
-the non-structural pre-stage HDL preparation that follows scaffold and
+the older non-structural pre-stage HDL preparation that follows scaffold and
 internal declaration emission
 
 =item *
 
-the live composition of enable-condition generation plus the extracted
+compatibility composition of enable-condition generation plus the extracted
 prescan-preparation owner before the consolidated intermediate stage runs
 
 =back
 
-The paired C<FSM::HDL::FlattenedDT::Orchestrator> now reaches this owner
-directly after structural-prelude assembly, but this package owns the
-enable-oriented preparation that must happen after the basic module scaffold
-exists and before consolidated intermediate generation can run. The paired
+The paired C<FSM::HDL::FlattenedDT::Orchestrator> now reaches
+enable-condition generation and the extracted prescan-preparation owner
+directly after structural-prelude assembly, so this package survives only as
+a compatibility shell outside the live backend path. The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport>
-now keeps logical-operation counting plus WEN/EN prescan over the direct
-backend state.
+keeps logical-operation counting plus WEN/EN prescan over the direct backend
+state.
 
 =cut
 

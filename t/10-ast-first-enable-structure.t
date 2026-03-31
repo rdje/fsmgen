@@ -362,8 +362,8 @@ ok(
     'live SystemVerilog generation-prescan-preparation support owns logical-operation counting plus WEN/EN prescan before consolidated intermediate generation',
 );
 ok(
-    $hdl->{backend_sv_generation_enable_preparation_support}->can('generate_enable_preparation'),
-    'live SystemVerilog generation-enable-preparation support owns enable-condition generation plus composition of the extracted prescan-preparation owner',
+    !exists $hdl->{backend_sv_generation_enable_preparation_support},
+    'live SystemVerilog backend no longer instantiates the generation-enable-preparation compatibility shell',
 );
 ok(
     !exists $hdl->{backend_sv_generation_prelude_support},

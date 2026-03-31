@@ -17,8 +17,8 @@ full pre-stage HDL assembly before consolidated intermediate generation
 
 =item *
 
-compatibility composition of the extracted structural-prelude owner plus the
-extracted enable-preparation owner
+compatibility composition of the extracted structural-prelude owner plus
+direct enable-condition emission and the extracted prescan-preparation owner
 
 =back
 
@@ -27,9 +27,9 @@ pre-stage owners directly in the live backend path, so this package
 survives as a compatibility shell outside that live path. The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationStructuralPreludeSupport>
 now keeps structural scaffold/internal-declaration assembly, and the paired
-C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport>
-now keeps enable-condition generation plus the extracted prescan-preparation
-owner over the direct backend state.
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport>
+now keeps logical-operation counting plus WEN/EN prescan after
+enable-condition generation over the direct backend state.
 
 =cut
 
@@ -70,8 +70,10 @@ sub generate_systemverilog_prelude ($self, $fsm_module) {
     my $hdl = $ctx->{backend_sv_generation_structural_prelude_support}
         ->generate_structural_prelude($fsm_module);
 
-    $hdl .= $ctx->{backend_sv_generation_enable_preparation_support}
-        ->generate_enable_preparation($fsm_module);
+    $hdl .= $ctx->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
+    fsm_debug("Step 3 - Enable conditions generated", 3);
+    $ctx->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
 
     return $hdl;
 }

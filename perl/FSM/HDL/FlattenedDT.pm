@@ -36,7 +36,6 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSelec
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStageSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationStructuralPreludeSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationTailSupport;
@@ -141,7 +140,6 @@ sub new ($class, %args) {
     $self->{backend_sv_consolidated_intermediate_declaration_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateDeclarationSupport->new(flattened_dt => $self);
     $self->{backend_sv_generation_structural_prelude_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationStructuralPreludeSupport->new(flattened_dt => $self);
     $self->{backend_sv_generation_prescan_preparation_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport->new(flattened_dt => $self);
-    $self->{backend_sv_generation_enable_preparation_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport->new(flattened_dt => $self);
     $self->{backend_sv_generation_tail_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationTailSupport->new(flattened_dt => $self);
     $self->{backend_verilog} = FSM::HDL::FlattenedDT::Backend::Verilog->new(flattened_dt => $self);
     

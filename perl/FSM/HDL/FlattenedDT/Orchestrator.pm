@@ -65,8 +65,10 @@ sub generate_systemverilog ($self, $fsm_module) {
     
     my $hdl = $ctx->{backend_sv_generation_structural_prelude_support}
         ->generate_structural_prelude($fsm_module);
-    $hdl .= $ctx->{backend_sv_generation_enable_preparation_support}
-        ->generate_enable_preparation($fsm_module);
+    $hdl .= $ctx->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
+    fsm_debug("Step 3 - Enable conditions generated", 3);
+    $ctx->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
 
     # Step 6: Generate consolidated intermediate signals (combining AST factorization + pre-scan)
     $hdl .= $ctx->{backend_sv_consolidated_intermediate_stage_support}

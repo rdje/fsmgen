@@ -19,9 +19,10 @@ established
 
 =item *
 
-compatibility composition of structural-prelude generation, enable-oriented
-preparation, consolidated intermediate stage generation, and the extracted
-generation-tail owner
+compatibility composition of structural-prelude generation, direct
+enable-condition emission, the extracted prescan-preparation owner,
+consolidated intermediate stage generation, and the extracted generation-tail
+owner
 
 =back
 
@@ -30,8 +31,9 @@ FSM-module attachment, decision-tree flattening, and live post-flattening
 generation composition, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationStructuralPreludeSupport>
 keeps structural scaffold/internal-declaration preparation, the paired
-C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport>
-keeps enable-condition emission plus the extracted prescan-preparation owner,
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport>
+keeps logical-operation counting plus WEN/EN prescan after enable-condition
+emission,
 the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationTailSupport>
 keeps post-stage WEN/EN/assignment/module closeout, and this package now
@@ -75,8 +77,10 @@ sub generate_systemverilog_module ($self, $fsm_module) {
 
     my $hdl = $ctx->{backend_sv_generation_structural_prelude_support}
         ->generate_structural_prelude($fsm_module);
-    $hdl .= $ctx->{backend_sv_generation_enable_preparation_support}
-        ->generate_enable_preparation($fsm_module);
+    $hdl .= $ctx->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
+    fsm_debug("Step 3 - Enable conditions generated", 3);
+    $ctx->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
 
     # Step 6: Generate consolidated intermediate signals (combining AST factorization + pre-scan)
     $hdl .= $ctx->{backend_sv_consolidated_intermediate_stage_support}

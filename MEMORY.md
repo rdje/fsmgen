@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-31: live direct backend no longer instantiates the generation-enable-preparation shell
+- Saved shipped behavior:
+  - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_generation_enable_preparation_support`,
+  - updated [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so the live backend now emits enable conditions and runs the extracted prescan-preparation owner directly after the structural prelude,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationEnablePreparationSupport.pm) so it now survives only as a compatibility shell outside the live backend path,
+  - updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPreludeSupport.pm) so the older compatibility shells now rebuild their pre-stage flow over direct enable-condition generation plus the extracted prescan owner,
+  - retargeted [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t), [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t), [t/233-systemverilog-generation-prelude-support.t](/Users/richarddje/Documents/github/fsmgen/t/233-systemverilog-generation-prelude-support.t), [t/234-systemverilog-generation-tail-support.t](/Users/richarddje/Documents/github/fsmgen/t/234-systemverilog-generation-tail-support.t), and [t/236-systemverilog-generation-enable-preparation-support.t](/Users/richarddje/Documents/github/fsmgen/t/236-systemverilog-generation-enable-preparation-support.t),
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) now records the measured post-change snapshot of `98` reachable project files and `97` reachable `.pm` packages.
+- Important continuity note:
+  - the next likely seam is no longer the live generation-enable-preparation shell itself,
+  - it is the remaining lower-level coordination across the extracted structural-prelude owner, prescan-preparation owner, consolidated-intermediate planning/stage owners, extracted tail owner, and the still-central top-level direct backend sequencing in [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm),
+  - and future sessions should read the live direct backend assembly path as “flatten first, build the structural prelude, emit enable conditions directly, run the dedicated prescan owner, generate the consolidated intermediate stage, then let the tail owner close out the module.”
+
 ## 2026-03-31: live direct backend no longer instantiates the generation-pipeline shell
 - Saved shipped behavior:
   - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_generation_pipeline_support`,

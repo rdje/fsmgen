@@ -13,7 +13,7 @@ use FSM::HDL::FlattenedDT;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'generation enable preparation support owns the live pre-stage enable and prescan sequence' => sub {
+subtest 'generation enable preparation support remains a compatibility shell over the live enable-condition and prescan owners' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_generation_enable_preparation_support_contract',
         <<'FSM'
@@ -54,25 +54,25 @@ FSM
     is(
         $generated_fragment,
         $expected_fragment,
-        'generation enable preparation support rebuilds the same live enable-condition fragment as the backend owners',
+        'generation enable preparation support compatibility shell rebuilds the same enable-condition fragment as the live owners',
     );
 
     is_deeply(
         $actual_backend->{binary_logical_op_counts},
         $expected_backend->{binary_logical_op_counts},
-        'generation enable preparation support preserves the same logical-operation counting state',
+        'generation enable preparation support compatibility shell preserves the same logical-operation counting state',
     );
 
     is_deeply(
         [sort keys %{$actual_backend->{intermediate_signals} || {}}],
         [sort keys %{$expected_backend->{intermediate_signals} || {}}],
-        'generation enable preparation support preserves the same intermediate-signal registry keys after prescan',
+        'generation enable preparation support compatibility shell preserves the same intermediate-signal registry keys after prescan',
     );
 
     is_deeply(
         [sort keys %{$actual_backend->{referenced_intermediate_signals} || {}}],
         [sort keys %{$expected_backend->{referenced_intermediate_signals} || {}}],
-        'generation enable preparation support preserves the same referenced intermediate-signal keys after prescan',
+        'generation enable preparation support compatibility shell preserves the same referenced intermediate-signal keys after prescan',
     );
 };
 

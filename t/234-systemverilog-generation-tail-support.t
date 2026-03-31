@@ -83,8 +83,10 @@ sub prepare_backend_to_stage {
     $hdl_generator->{orchestrator}->flatten_all_decision_trees($fsm_module);
     $hdl_generator->{backend_sv_generation_structural_prelude_support}
         ->generate_structural_prelude($fsm_module);
-    $hdl_generator->{backend_sv_generation_enable_preparation_support}
-        ->generate_enable_preparation($fsm_module);
+    $hdl_generator->{enable_graph_enable_support}
+        ->generate_enable_conditions($fsm_module);
+    $hdl_generator->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
     $hdl_generator->{backend_sv_consolidated_intermediate_stage_support}
         ->generate_consolidated_intermediate_block($fsm_module);
     return $hdl_generator;

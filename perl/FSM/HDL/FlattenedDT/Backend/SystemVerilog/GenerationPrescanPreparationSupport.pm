@@ -23,10 +23,9 @@ the prepared direct backend state
 
 =back
 
-The paired
-C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationEnablePreparationSupport>
-now keeps the broader enable-oriented pre-stage fragment assembly, but this
-package owns the side-effect preparation that seeds factorization counts and
+The paired C<FSM::HDL::FlattenedDT::Orchestrator> now reaches this owner
+directly after enable-condition generation, and this package owns the
+side-effect preparation that seeds factorization counts and
 intermediate-signal discovery for the direct backend path.
 
 =cut
