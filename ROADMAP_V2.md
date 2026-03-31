@@ -34,6 +34,7 @@ That is what roadmap v2 is for.
 - Make diagnostics part of the product, not just a debugging aid.
 - Grow surface area only when semantics are crisp and regression-backed.
 - Keep composition and extension growth deliberate rather than legacy-compatible by default.
+- Alternate deliberately between consolidation slices and visibly user-facing capability slices; do not let long cleanup-only streaks become the default unless cleanup is still the clear blocker.
 
 ## Current package-breakdown note
 - The bounded source-frontend family now has an explicit owner in [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm), covering Lispish file parsing, top-level source-kind classification, typed composition parsing, and semantic FSM/DT module creation.
@@ -736,6 +737,9 @@ The first honest `R11` slices are now:
 2. let explicit local overrides stay precise without forcing whole-interface restatement,
 3. keep pushing shared-datapath and reusable-module feature slices before returning to contract-hardening-only work,
 4. keep `R8` paused except when a feature slice necessarily touches a still-unlocked boundary.
+- Execution-cadence note:
+  - after a backend/debt-reduction slice, strongly prefer the next slice to land in a visibly user-facing lane such as language contract, strict mode, diagnostics, or reusable assets,
+  - and only keep stacking consolidation slices when the next feature is still materially blocked by that cleanup.
 - Forward-IR note: `StructuralRTLIR` actual-connection nodes are now wider than
   plain signal references; the current bounded family includes indexed and
   sliced signal forms, while keeping rendering deliberately scoped to the

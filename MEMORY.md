@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-03-31: execution cadence now alternates cleanup and feature work more deliberately
+- Saved continuity rule:
+  - do not let long uninterrupted consolidation-only streaks become the default working pattern,
+  - after a cleanup/debt-reduction slice, the next honest move should usually be a visibly user-facing capability slice,
+  - and repeated cleanup slices are still allowed, but only when they are the clear blocker for the next feature/contract/diagnostic step.
+- Important continuity note:
+  - future sessions should treat this as an execution-policy rule rather than a one-off preference,
+  - and roadmap steering should now rebalance more often between internal architecture work and externally visible capability progress.
+
 ## 2026-03-31: live direct backend no longer instantiates the generation-structural-prelude shell
 - Saved shipped behavior:
   - updated [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm) so the live direct backend no longer instantiates `backend_sv_generation_structural_prelude_support`,

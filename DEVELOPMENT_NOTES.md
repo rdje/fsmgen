@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-03-31: execution cadence should alternate more often between cleanup and visible capability work
+- Saved steering rule from the current collaboration reset:
+  - recent backend cleanup was still useful, but the project should not stay on long uninterrupted consolidation streaks by default,
+  - after a cleanup/debt-reduction slice, the next honest slice should usually be a visibly user-facing capability step such as language-contract work, strict mode, diagnostics, or reusable assets,
+  - and repeated cleanup slices should now require a clearer “this still blocks the next feature” justification instead of being the automatic default.
+- Why this matters:
+  - architectural cleanup keeps paying off only up to the point where the project starts to look static from the outside,
+  - FSMGen now needs a more deliberate alternation between internal simplification and visible capability growth,
+  - and future steering should treat that alternation as part of roadmap execution quality, not just presentation.
+
 ## 2026-03-31: live direct backend no longer instantiates the generation-structural-prelude shell
 - Continued the active `R11` backend-breakdown lane by retiring one more fake live owner once the scaffold and internal-declaration emitters were explicit enough that the wrapper no longer represented a real runtime boundary.
 - Landed behavior:
