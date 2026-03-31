@@ -81,8 +81,11 @@ sub prepare_backend_to_stage {
     $hdl_generator->{orchestrator}->reset_generation_state();
     $hdl_generator->{enable_graph_signal_support}->set_fsm_module_reference($fsm_module);
     $hdl_generator->{orchestrator}->flatten_all_decision_trees($fsm_module);
-    $hdl_generator->{backend_sv_generation_structural_prelude_support}
-        ->generate_structural_prelude($fsm_module);
+    $hdl_generator->{backend_sv_scaffold}->generate_header($fsm_module);
+    $hdl_generator->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
+    $hdl_generator->{backend_sv_scaffold}->generate_state_encoding($fsm_module);
+    $hdl_generator->{backend_sv_scaffold}->generate_state_register($fsm_module);
+    $hdl_generator->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
     $hdl_generator->{enable_graph_enable_support}
         ->generate_enable_conditions($fsm_module);
     $hdl_generator->{backend_sv_generation_prescan_preparation_support}

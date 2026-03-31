@@ -14,7 +14,7 @@ Current baseline:
 - Reviewed on `2026-03-31`.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
-- Static trace from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) currently reaches `98` project files total, `97` `.pm` packages.
+- Static trace from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) currently reaches `97` project files total, `96` `.pm` packages.
 
 ## Executive read
 [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is a thin CLI/reporting shell.
@@ -42,7 +42,6 @@ The heaviest remaining complexity is still the direct single-module HDL backend 
 - [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm)
 - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
 - [perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm)
-- [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm)
@@ -85,7 +84,7 @@ above.
 
 Reachable package-family counts from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen):
 - `Composition`: `28`
-- `HDL`: `31`
+- `HDL`: `30`
 - `Synthesis`: `10`
 - `IR`: `7`
 - `Adapter`: `5`
@@ -99,10 +98,9 @@ Current thin-coordinator line counts:
 - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm): `118`
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm): `101`
 - [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm): `153`
-- [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm): `170`
-- [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm): `85`
+- [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm): `168`
+- [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm): `89`
 - [perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm): `242`
-- [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationStructuralPreludeSupport.pm): `94`
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm): `95`
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm): `93`
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm): `95`
@@ -131,6 +129,7 @@ Interpretation:
 - the next honest seams are no longer the raw recursive flattening cluster in
   `Orchestrator`, the older generation-pipeline compatibility shell, the
   older generation-prelude compatibility shell, the older
+  generation-structural-prelude compatibility shell, the older
   generation-enable-preparation compatibility shell, or the extracted
   post-stage WEN/EN/assignment/endmodule sequence now owned by
   `GenerationTailSupport`,
@@ -205,7 +204,6 @@ bin/fsmgen
         -> FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePreparedBlockSupport
         -> FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport
         -> FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport
-        -> FlattenedDT::Backend::SystemVerilog::GenerationStructuralPreludeSupport
         -> FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport
         -> FlattenedDT::Backend::SystemVerilog::GenerationTailSupport
         -> FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateAssignmentSupport

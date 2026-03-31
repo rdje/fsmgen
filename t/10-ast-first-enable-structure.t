@@ -354,8 +354,8 @@ ok(
     'live SystemVerilog consolidated intermediate rendering support owns final prepared-block rendering',
 );
 ok(
-    $hdl->{backend_sv_generation_structural_prelude_support}->can('generate_structural_prelude'),
-    'live SystemVerilog generation-structural-prelude support owns the structural HDL prefix before enable preparation',
+    !exists $hdl->{backend_sv_generation_structural_prelude_support},
+    'live SystemVerilog backend no longer instantiates the generation-structural-prelude compatibility shell',
 );
 ok(
     $hdl->{backend_sv_generation_prescan_preparation_support}->can('prepare_enable_prescan'),

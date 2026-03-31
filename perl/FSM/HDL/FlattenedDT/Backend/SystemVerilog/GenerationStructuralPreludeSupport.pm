@@ -2,11 +2,11 @@ package FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationStructuralPrelu
 
 =head1 NAME
 
-FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationStructuralPreludeSupport - Own live pre-stage direct SystemVerilog structural prelude
+FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationStructuralPreludeSupport - Compatibility shell for direct SystemVerilog structural prelude assembly
 
 =head1 DESCRIPTION
 
-Owns the bounded live structural-prelude family for the older direct
+Keeps a directly testable compatibility shell for the older direct
 generated-module SystemVerilog backend path. This package centralizes:
 
 =over 4
@@ -18,16 +18,17 @@ preparation can run
 
 =item *
 
-the live composition of scaffold rendering and internal declaration rendering
-for one direct backend module body
+compatibility composition of scaffold rendering and internal declaration
+rendering for one direct backend module body
 
 =back
 
-The paired
+The paired C<FSM::HDL::FlattenedDT::Orchestrator> now reaches the scaffold and
+internal-declaration owners directly in the live backend path, so this
+package survives as a compatibility shell outside that live path. The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport>
-now keeps the broader pre-stage prefix assembly, but this package owns the
-purely structural prefix that comes before enable-condition generation and
-prescan preparation.
+likewise rebuilds its compatibility prelude directly over those same live
+owners.
 
 =cut
 
@@ -57,8 +58,8 @@ sub new ($class, %args) {
 
 =head2 generate_structural_prelude
 
-Generate the direct SystemVerilog structural prefix that must exist before
-enable-oriented pre-stage preparation can run.
+Rebuild the direct SystemVerilog structural prefix by delegating to the live
+scaffold and internal-declaration owners.
 
 =cut
 
@@ -88,7 +89,7 @@ C<FSM::HDL::FlattenedDT> backend context.
 
 =head2 generate_structural_prelude
 
-Generates the direct SystemVerilog structural prefix that must exist before
-enable-oriented pre-stage preparation can run.
+Rebuilds the direct SystemVerilog structural prefix by delegating to the live
+scaffold and internal-declaration owners.
 
 =cut

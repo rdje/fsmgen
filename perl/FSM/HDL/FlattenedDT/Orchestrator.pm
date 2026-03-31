@@ -63,8 +63,12 @@ sub generate_systemverilog ($self, $fsm_module) {
     $self->flatten_all_decision_trees($fsm_module);
     fsm_debug("Step 1 - Decision trees flattened", 3);
     
-    my $hdl = $ctx->{backend_sv_generation_structural_prelude_support}
-        ->generate_structural_prelude($fsm_module);
+    my $hdl = $ctx->{backend_sv_scaffold}->generate_header($fsm_module);
+    $hdl .= $ctx->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
+    $hdl .= $ctx->{backend_sv_scaffold}->generate_state_encoding($fsm_module);
+    $hdl .= $ctx->{backend_sv_scaffold}->generate_state_register($fsm_module);
+    $hdl .= $ctx->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
+    fsm_debug("Step 2 - Basic HDL structure generated", 3);
     $hdl .= $ctx->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
     fsm_debug("Step 3 - Enable conditions generated", 3);
     $ctx->{backend_sv_generation_prescan_preparation_support}

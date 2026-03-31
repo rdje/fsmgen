@@ -19,8 +19,8 @@ established
 
 =item *
 
-compatibility composition of structural-prelude generation, direct
-enable-condition emission, the extracted prescan-preparation owner,
+compatibility composition of direct scaffold/internal-declaration assembly,
+direct enable-condition emission, the extracted prescan-preparation owner,
 consolidated intermediate stage generation, and the extracted generation-tail
 owner
 
@@ -29,8 +29,6 @@ owner
 The paired C<FSM::HDL::FlattenedDT::Orchestrator> now keeps per-run reset,
 FSM-module attachment, decision-tree flattening, and live post-flattening
 generation composition, the paired
-C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationStructuralPreludeSupport>
-keeps structural scaffold/internal-declaration preparation, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport>
 keeps logical-operation counting plus WEN/EN prescan after enable-condition
 emission,
@@ -75,8 +73,12 @@ delegating to the extracted live owners.
 sub generate_systemverilog_module ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
 
-    my $hdl = $ctx->{backend_sv_generation_structural_prelude_support}
-        ->generate_structural_prelude($fsm_module);
+    my $hdl = $ctx->{backend_sv_scaffold}->generate_header($fsm_module);
+    $hdl .= $ctx->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
+    $hdl .= $ctx->{backend_sv_scaffold}->generate_state_encoding($fsm_module);
+    $hdl .= $ctx->{backend_sv_scaffold}->generate_state_register($fsm_module);
+    $hdl .= $ctx->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
+    fsm_debug("Step 2 - Basic HDL structure generated", 3);
     $hdl .= $ctx->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
     fsm_debug("Step 3 - Enable conditions generated", 3);
     $ctx->{backend_sv_generation_prescan_preparation_support}
