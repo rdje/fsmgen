@@ -901,6 +901,47 @@ sub get_target_base_signal_name($self, $raw_signal_name, $target_expr) {
     return $self->normalize_signal_name($raw_signal_name);
 }
 
+sub get_target_base_signal_width($self, $target_expr, $fallback_width) {
+    my $resolved_width = 0;
+
+    if ($target_expr) {
+        if ($target_expr->isa('FSM::CoreAST::SignalRef')) {
+            my $signal_width = eval { $target_expr->signal && $target_expr->signal->width };
+            if (defined($signal_width) && $signal_width > $resolved_width) {
+                $resolved_width = $signal_width;
+            }
+
+            if ($target_expr->slice) {
+                my ($high, $low) = @{$target_expr->slice};
+                my $required_width = (($high > $low) ? $high : $low) + 1;
+                if ($required_width > $resolved_width) {
+                    $resolved_width = $required_width;
+                }
+            }
+        } elsif ($target_expr->isa('FSM::CoreAST::IndexedRef')) {
+            my $signal_width = eval { $target_expr->signal && $target_expr->signal->width };
+            if (defined($signal_width) && $signal_width > $resolved_width) {
+                $resolved_width = $signal_width;
+            }
+
+            my $index = $target_expr->index;
+            $index = $index->value if ref($index) && $index->can('value');
+            if (defined($index) && $index =~ /^\d+$/) {
+                my $required_width = $index + 1;
+                if ($required_width > $resolved_width) {
+                    $resolved_width = $required_width;
+                }
+            }
+        }
+    }
+
+    if (defined($fallback_width) && $fallback_width > $resolved_width) {
+        $resolved_width = $fallback_width;
+    }
+
+    return $resolved_width > 0 ? $resolved_width : 1;
+}
+
 sub parse_enums_section($self, $enums_ast) {
     my (undef, $enums_list) = @$enums_ast;
 
@@ -1525,11 +1566,9 @@ sub parse_signal_action($self, $action) {
         $final_width = 1;
     }
 
-    if ($final_width && ref($target_expr) eq 'FSM::CoreAST::SignalRef' && !$target_expr->slice) {
-        my $signal = $target_expr->signal;
-        if ($signal && (!$signal->width || $signal->width == 1) && $final_width > 1) {
-            $self->{signal_manager}->register_signal($signal->name, width => $final_width);
-        }
+    my $target_base_width = $self->get_target_base_signal_width($target_expr, $final_width);
+    if ($target_base_signal ne '' && $target_base_width > 1) {
+        $self->{signal_manager}->register_signal($target_base_signal, width => $target_base_width);
     }
     
     $target_expr = $self->{expression_builder}->parse_signal_reference($signal_name); 
@@ -1576,7 +1615,7 @@ sub parse_signal_action($self, $action) {
         my $next_output_name = "next_$target_base_signal";
         $self->{signal_manager}->register_signal(
             $next_output_name,
-            width => $final_width,
+            width => $target_base_width,
             is_output => 1,
             is_aux_output => 1,
         );
@@ -1618,7 +1657,7 @@ sub parse_signal_action($self, $action) {
         my $q_output_name = $target_base_signal . '_r';
         $self->{signal_manager}->register_signal(
             $q_output_name,
-            width => $final_width,
+            width => $target_base_width,
             is_output => 1,
             is_aux_output => 1,
         );

@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-02
+### partial dual-output LHS writes now keep full-width auxiliary outputs too
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so indexed/sliced LHS targets now derive a base-signal width from the registered signal plus the slice/index bounds, feed that width back into the signal registry, and use it when registering `<-=` / `<=+` auxiliary outputs.
+- Added [t/259-partial-dual-output-lhs-lowering.t](/Users/richarddje/Documents/github/fsmgen/t/259-partial-dual-output-lhs-lowering.t) to lock full-width `next_*` / `*_r` auxiliary outputs and full-width merged expressions for partial `<-=` and `<=+` writes whether `+size` appears before or after the state body.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the follow-on support boundary is preserved in the continuity trail.
+
 ### static numeric partial LHS writes now lower correctly through the direct backend
 - Updated [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm) so same-context partial indexed/sliced LHS writes are now normalized into one full-width effective assignment family before RHS grouping, enable shaping, and mux emission.
 - Added [t/258-partial-lhs-assignment-lowering.t](/Users/richarddje/Documents/github/fsmgen/t/258-partial-lhs-assignment-lowering.t) to lock the shipped contract for piecewise combinational `=`, piecewise register-out `<-`, piecewise register-in `<=`, and untouched-bit feedback for partial sequential writes.

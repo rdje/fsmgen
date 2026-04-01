@@ -11,7 +11,18 @@ This document captures engineering rationale, design constraints, and working de
 - Why this is worth shipping:
   - it turns a misleading “parser accepts it” pocket into real generated-HDL support,
   - it matches the intended mental model for indexed/sliced partial writes much more closely,
-  - and it gives us a solid base to widen later into the dual-output sequential families if we want to make that contract explicit too.
+  - and it gave us the right base to widen the same contract into the dual-output sequential families too.
+
+## 2026-04-02: partial dual-output writes now keep full-width auxiliary outputs
+- Continued the same visible language/correctness lane because the first partial-write fix had corrected the merged mux input but still left `<-=` / `<=+` auxiliary outputs (`next_*`, `*_r`) narrowed to the fragment width.
+- Landed behavior:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now infers the base-signal width for indexed/sliced LHS targets from both existing signal metadata and the slice/index bounds themselves,
+  - that inferred base width now updates the signal registry on the direct path instead of only trusting a full-width unsliced target to do that widening,
+  - and the same base width now drives the `<-=` and `<=+` auxiliary output registration, so `next_*` / `*_r` stay full-width even when the assignment itself only writes a slice or one bit.
+- Why this matters:
+  - it closes the last honest gap in the new partial-write support surface for the currently shipped sequential families,
+  - it keeps the public module interface consistent with the real signal width instead of the fragment width,
+  - and it makes later visual HDL inspection of partial dual-output writes much more trustworthy.
 
 ## 2026-04-02: strict mode now treats the compact top-level `:=` directive as compatibility residue
 - Continued the visible `R9` lane by widening strict mode into the legacy compact init/reset surface instead of keeping strict enforcement limited to root families and the explicit `+system` reset spelling.

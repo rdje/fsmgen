@@ -10,6 +10,15 @@ This is the live continuity document for fast session recovery after crashes, re
   - [t/258-partial-lhs-assignment-lowering.t](/Users/richarddje/Documents/github/fsmgen/t/258-partial-lhs-assignment-lowering.t) now locks the shipped contract for `=`, `<-`, and `<=`,
   - and the full suite stayed green after the fix (`Files=253`, `Tests=1928`, `PASS`), so this is now real supported behavior rather than only parsed syntax.
 
+## 2026-04-02: partial dual-output writes now keep full-width auxiliary outputs too
+- Continued the same visible language/correctness lane because the first partial-LHS fix still left `<-=` / `<=+` auxiliary outputs narrowed to the fragment width in the emitted module ports.
+- Important continuity note:
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now derives a base-signal width for indexed/sliced LHS targets from the registered signal width plus the slice/index bounds,
+  - that base width is now fed back into the signal registry itself and into the dual-output auxiliary ports for `<-=` and `<=+`,
+  - so partial writes such as `(ROD[3:2] <-= HI)` and `(RID[3:2] <=+ HI)` now keep `next_ROD` and `RID_r` at the full base-signal width instead of narrowing them to the fragment width,
+  - [t/259-partial-dual-output-lhs-lowering.t](/Users/richarddje/Documents/github/fsmgen/t/259-partial-dual-output-lhs-lowering.t) now locks that contract for both `+size`-before-state and `+size`-after-state ordering,
+  - and this closes the honest support gap that was still left after the earlier `=`, `<-`, `<=` partial-write slice.
+
 ## 2026-04-02: strict mode now rejects the compact top-level `:=` directive too
 - Continued the visible `R9` lane by widening strict mode into another section-level compatibility cut instead of staying only on root families and `+system` residue.
 - Important continuity note:
