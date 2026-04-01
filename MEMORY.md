@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-02: static numeric partial LHS writes now lower correctly through the direct backend
+- Continued with a visible language/correctness slice instead of more backend-only decomposition.
+- Important continuity note:
+  - the parser had already accepted static numeric indexed/sliced LHS targets such as `SIG[3]` and `SIG[7:0]`, but the direct enable/mux path had still been collapsing those writes onto the base signal name too early,
+  - [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm) now normalizes same-context partial writes into one full-width effective assignment family before RHS grouping, WEN/EN shaping, and mux emission,
+  - that means same-context piecewise combinational writes now assemble into one full-width mux input, and same-context piecewise `<-` / `<=` writes now assemble into one full-width sequential mux input too,
+  - partial sequential writes that leave some bits untouched now retain those bits through the right feedback source (`Q` for `<-`, `_q` for `<=`) instead of replacing the whole signal,
+  - [t/258-partial-lhs-assignment-lowering.t](/Users/richarddje/Documents/github/fsmgen/t/258-partial-lhs-assignment-lowering.t) now locks the shipped contract for `=`, `<-`, and `<=`,
+  - and the full suite stayed green after the fix (`Files=253`, `Tests=1928`, `PASS`), so this is now real supported behavior rather than only parsed syntax.
+
 ## 2026-04-02: strict mode now rejects the compact top-level `:=` directive too
 - Continued the visible `R9` lane by widening strict mode into another section-level compatibility cut instead of staying only on root families and `+system` residue.
 - Important continuity note:

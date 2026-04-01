@@ -146,6 +146,10 @@ Combinational DT note:
   - unsupported assignment operators such as `(A ?= B)` or `(A => B)` are rejected explicitly
 - Literal forms `1`, `8'3`, `8'b1010`, `8'hFF`, and `const_8b0`
 - Signal-reference forms `SIG`, `SIG[3]`, `SIG[7:0]`, `SIG'8`, `SIG.member`, and `SIG>`
+- Static numeric indexed/sliced LHS assignments on the current `?fsm:` / `?dt:` direct path
+  - current regression-backed lowering covers `=`, `<-`, and `<=`
+  - same-context piecewise writes such as `(OUT[3:2] = HI)`, `(OUT[1] = MID)`, `(OUT[0] = LO)` are assembled into one full-width mux input
+  - partial sequential writes such as `(RO[0] <- LO)` and `(RI[0] <= LO)` retain untouched bits through the appropriate feedback path instead of collapsing to raw whole-signal replacement
 - Condition forms that are in the active supported path: `<sig`, `<!sig`, `<sig=value`, `<sig==value`, `<sig!=value`, `<sig<value`, `<sig<=value`, `<sig>value`, `<sig>=value`, and test-node selector branches like `=0`, `!=8'0`, `<8'4`, `<=8'3`, `>8'3`, and `>=8'1`
 - Nested guarded blocks using standalone `< ...` / `<! ...` action forms
 - Condition suffixes attached directly to assignments or transitions, for example `(A <= B <start)` and `(-> busy <!full)`

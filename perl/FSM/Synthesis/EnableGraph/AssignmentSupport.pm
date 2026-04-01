@@ -78,14 +78,21 @@ sub build_unified_assignment_analysis ($self, $fsm_module = undef) {
     for my $lhs_name_key (keys %{$ctx->{all_lhs}}) {
         next unless $ctx->{lhs_assignments}->{$lhs_name_key};
 
-        my $lhs_ast = $ctx->{lhs_ast_map}->{$lhs_name_key};
+        my $raw_lhs_ast = $ctx->{lhs_ast_map}->{$lhs_name_key};
+        my $lhs_ast = $self->normalize_lhs_ast_for_analysis($lhs_name_key, $raw_lhs_ast);
+        my $normalized_assignments = $self->normalize_assignments_for_analysis(
+            $lhs_name_key,
+            $lhs_ast,
+            $ctx->{lhs_assignments}->{$lhs_name_key},
+        );
         my $lhs_name = blessed($lhs_ast) && $lhs_ast->can('name') ? $lhs_ast->name() : $lhs_name_key;
 
         fsm_debug("\n=== ANALYZING LHS AST: $lhs_name ===", 3);
-        fsm_debug("  Found " . scalar(@{$ctx->{lhs_assignments}->{$lhs_name_key}}) . " assignments", 3);
+        fsm_debug("  Found " . scalar(@{$ctx->{lhs_assignments}->{$lhs_name_key}}) . " captured assignments", 3);
+        fsm_debug("  Normalized into " . scalar(@$normalized_assignments) . " assignment families", 3);
 
         $ctx->{assignment_analysis}->{$lhs_name_key} = {
-            assignments => $ctx->{lhs_assignments}->{$lhs_name_key},
+            assignments => $normalized_assignments,
             rhs_groups => {},
             lhs_ast => $lhs_ast,
             multiplexer => {},
@@ -99,6 +106,323 @@ sub build_unified_assignment_analysis ($self, $fsm_module = undef) {
     }
 
     fsm_debug("\n*** UNIFIED PHASE 1 COMPLETE (AST WEB) ***", 3);
+}
+
+=head2 normalize_lhs_ast_for_analysis
+
+Normalize one captured LHS AST to the base-signal view used by assignment
+analysis and final mux generation.
+
+=cut
+
+sub normalize_lhs_ast_for_analysis ($self, $lhs_name_key, $lhs_ast) {
+    return $lhs_ast unless blessed($lhs_ast);
+
+    if ($lhs_ast->isa('FSM::CoreAST::SignalRef') && !$lhs_ast->slice) {
+        return $lhs_ast;
+    }
+
+    if ($lhs_ast->can('signal') && $lhs_ast->signal) {
+        return FSM::CoreAST::SignalRef->new($lhs_ast->signal);
+    }
+
+    return $lhs_ast;
+}
+
+=head2 normalize_assignments_for_analysis
+
+Collapse same-context partial LHS writes into full-width effective assignment
+families before enable generation and mux emission.
+
+=cut
+
+sub normalize_assignments_for_analysis ($self, $lhs_name_key, $lhs_ast, $assignments) {
+    return [] unless $assignments && @$assignments;
+
+    my $signal_width = $self->get_target_signal_width($lhs_name_key, $lhs_ast);
+    return $assignments unless defined($signal_width) && $signal_width > 0;
+
+    my %group_by_key;
+    my @group_order;
+
+    for my $assignment (@$assignments) {
+        my $group_key = $self->assignment_context_group_key($assignment);
+        if (!exists $group_by_key{$group_key}) {
+            $group_by_key{$group_key} = [];
+            push @group_order, $group_key;
+        }
+        push @{$group_by_key{$group_key}}, $assignment;
+    }
+
+    my @normalized;
+    for my $group_key (@group_order) {
+        my $group_assignments = $group_by_key{$group_key};
+        push @normalized, $self->materialize_assignment_group(
+            $lhs_name_key,
+            $lhs_ast,
+            $signal_width,
+            $group_assignments,
+        );
+    }
+
+    return \@normalized;
+}
+
+=head2 assignment_context_group_key
+
+Build a stable same-context key used to merge partial writes that share one
+DT/operator/enable context.
+
+=cut
+
+sub assignment_context_group_key ($self, $assignment) {
+    my $condition_key = "1'b1";
+    if ($assignment->{conditions_ast} && blessed($assignment->{conditions_ast}) && $assignment->{conditions_ast}->can('to_systemverilog')) {
+        $condition_key = $assignment->{conditions_ast}->to_systemverilog();
+    }
+
+    return join "\x1E",
+        ($assignment->{dt} // ''),
+        ($assignment->{operator} // ''),
+        ($assignment->{output_exposure} // 'auto'),
+        ($assignment->{is_state_trans} ? 1 : 0),
+        $condition_key;
+}
+
+=head2 materialize_assignment_group
+
+Convert one same-context assignment group into a single full-width effective
+assignment, preserving later fragment override order.
+
+=cut
+
+sub materialize_assignment_group ($self, $lhs_name_key, $lhs_ast, $signal_width, $group_assignments) {
+    my $first_assignment = $group_assignments->[0];
+    my $operator = $first_assignment->{operator} // '=';
+
+    my @segments = ({
+        dest_high => $signal_width - 1,
+        dest_low => 0,
+        source_expr => $self->initial_group_source_expr($lhs_name_key, $lhs_ast, $operator, $signal_width),
+        source_natural_width => $signal_width,
+        source_high => $signal_width - 1,
+        source_low => 0,
+    });
+
+    for my $assignment (@$group_assignments) {
+        my ($dest_high, $dest_low) = $self->assignment_target_range($assignment->{lhs_ast}, $signal_width);
+        my $fragment_width = $dest_high - $dest_low + 1;
+
+        $self->replace_segment_range(
+            \@segments,
+            $dest_high,
+            $dest_low,
+            $assignment->{rhs},
+            $fragment_width,
+        );
+    }
+
+    my %normalized = %$first_assignment;
+    $normalized{lhs_ast} = $lhs_ast;
+    $normalized{rhs} = $self->render_segment_expression(\@segments);
+    $normalized{source_provenance} = {
+        %{ref($first_assignment->{source_provenance}) eq 'HASH' ? $first_assignment->{source_provenance} : {}},
+        partial_write_group_size => scalar(@$group_assignments),
+    };
+
+    return \%normalized;
+}
+
+=head2 get_target_signal_width
+
+Resolve the full-width size of one captured LHS signal family.
+
+=cut
+
+sub get_target_signal_width ($self, $lhs_name_key, $lhs_ast) {
+    if ($lhs_ast && blessed($lhs_ast) && $lhs_ast->can('signal') && $lhs_ast->signal && $lhs_ast->signal->can('width')) {
+        my $width = $lhs_ast->signal->width;
+        return $width if defined($width) && $width > 0;
+    }
+
+    if ($lhs_ast && blessed($lhs_ast) && $lhs_ast->can('width')) {
+        my $width = $lhs_ast->width;
+        return $width if defined($width) && $width > 0;
+    }
+
+    my $signal_info = $self->get_signal_info($lhs_name_key);
+    return $signal_info->{width} if $signal_info && $signal_info->{width};
+
+    return 1;
+}
+
+=head2 assignment_target_range
+
+Resolve the base-signal destination range covered by one captured assignment.
+
+=cut
+
+sub assignment_target_range ($self, $lhs_ast, $signal_width) {
+    return ($signal_width - 1, 0) unless blessed($lhs_ast);
+
+    if ($lhs_ast->isa('FSM::CoreAST::SignalRef') && $lhs_ast->slice) {
+        my ($high, $low) = @{$lhs_ast->slice};
+        return ($high, $low);
+    }
+
+    if ($lhs_ast->isa('FSM::CoreAST::IndexedRef')) {
+        my $index = $lhs_ast->index;
+        $index = $index->value if blessed($index) && $index->can('value');
+        return ($index, $index) if defined $index && $index =~ /^\d+$/;
+    }
+
+    return ($signal_width - 1, 0);
+}
+
+=head2 initial_group_source_expr
+
+Return the base full-width source used for untouched bits when one partial
+assignment group does not write every bit.
+
+=cut
+
+sub initial_group_source_expr ($self, $lhs_name_key, $lhs_ast, $operator, $signal_width) {
+    my $ctx = $self->{flattened_dt};
+
+    if ($operator eq '<=' || $operator eq '<=+') {
+        return "${lhs_name_key}_q";
+    }
+
+    if ($operator eq '=') {
+        my $default_value = $ctx->{enable_graph_signal_support}->get_default_value_from_ast($lhs_ast);
+        if (defined($default_value) && $default_value ne $lhs_name_key) {
+            return $default_value;
+        }
+        return $self->zero_literal_for_width($signal_width);
+    }
+
+    return $lhs_name_key;
+}
+
+=head2 zero_literal_for_width
+
+Render a sized zero literal suitable for untouched combinational bits.
+
+=cut
+
+sub zero_literal_for_width ($self, $signal_width) {
+    return "1'b0" if !defined($signal_width) || $signal_width <= 1;
+    return "${signal_width}'b" . ('0' x $signal_width);
+}
+
+=head2 replace_segment_range
+
+Replace one destination range inside a descending segment map with a new source
+expression segment.
+
+=cut
+
+sub replace_segment_range ($self, $segments, $dest_high, $dest_low, $source_expr, $source_width) {
+    my (@before, @after);
+
+    for my $segment (@$segments) {
+        if ($segment->{dest_low} > $dest_high) {
+            push @before, $segment;
+            next;
+        }
+        if ($segment->{dest_high} < $dest_low) {
+            push @after, $segment;
+            next;
+        }
+
+        if ($segment->{dest_high} > $dest_high) {
+            push @before, $self->segment_subrange($segment, $segment->{dest_high}, $dest_high + 1);
+        }
+
+        if ($segment->{dest_low} < $dest_low) {
+            push @after, $self->segment_subrange($segment, $dest_low - 1, $segment->{dest_low});
+        }
+    }
+
+    my $replacement = {
+        dest_high => $dest_high,
+        dest_low => $dest_low,
+        source_expr => $source_expr,
+        source_natural_width => $source_width,
+        source_high => $source_width - 1,
+        source_low => 0,
+    };
+
+    @$segments = (@before, $replacement, @after);
+}
+
+=head2 segment_subrange
+
+Build one derived subsegment that preserves the original source-to-destination
+bit mapping.
+
+=cut
+
+sub segment_subrange ($self, $segment, $new_dest_high, $new_dest_low) {
+    my $new_source_low = $segment->{source_low} + ($new_dest_low - $segment->{dest_low});
+    my $new_source_high = $new_source_low + ($new_dest_high - $new_dest_low);
+
+    return {
+        %$segment,
+        dest_high => $new_dest_high,
+        dest_low => $new_dest_low,
+        source_high => $new_source_high,
+        source_low => $new_source_low,
+    };
+}
+
+=head2 render_segment_expression
+
+Render one descending segment map back into a full-width SystemVerilog
+expression.
+
+=cut
+
+sub render_segment_expression ($self, $segments) {
+    my @parts = map { $self->render_segment_source($_) } @$segments;
+    return $parts[0] if @parts == 1;
+    return '{' . join(', ', @parts) . '}';
+}
+
+=head2 render_segment_source
+
+Render one segment's source expression, slicing it when the segment only uses
+part of the source expression.
+
+=cut
+
+sub render_segment_source ($self, $segment) {
+    my $segment_width = $segment->{dest_high} - $segment->{dest_low} + 1;
+    my $source_width = $segment->{source_high} - $segment->{source_low} + 1;
+
+    if ($segment->{source_low} == 0
+            && $segment->{source_high} == $segment->{source_natural_width} - 1
+            && $segment_width == $source_width)
+    {
+        return $segment->{source_expr};
+    }
+
+    my $wrapped_expr = $self->wrap_sv_expr_for_select($segment->{source_expr});
+    if ($segment->{source_high} == $segment->{source_low}) {
+        return "${wrapped_expr}[$segment->{source_high}]";
+    }
+    return "${wrapped_expr}[$segment->{source_high}:$segment->{source_low}]";
+}
+
+=head2 wrap_sv_expr_for_select
+
+Parenthesize complex expressions before applying a bit-select or part-select.
+
+=cut
+
+sub wrap_sv_expr_for_select ($self, $expr) {
+    return $expr if $expr =~ /^[a-zA-Z_][a-zA-Z0-9_]*$/;
+    return "($expr)";
 }
 
 =head2 group_assignments_by_rhs

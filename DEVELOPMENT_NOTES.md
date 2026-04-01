@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-02: static numeric partial LHS writes are now a real shipped contract on the direct path
+- Continued with a visible language/correctness slice because parsed syntax without correct backend lowering was not acceptable support.
+- Landed behavior:
+  - [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm) now normalizes same-context partial writes before RHS grouping and mux generation instead of letting capture-time base-signal naming collapse them into raw whole-signal replacement,
+  - piecewise combinational writes such as `(OUT[3:2] = HI)`, `(OUT[1] = MID)`, `(OUT[0] = LO)` now assemble into one full-width combinational mux input,
+  - piecewise `<-` writes now assemble into one full-width `_next` expression,
+  - piecewise `<=` writes now assemble into one full-width D-input expression,
+  - and partial sequential writes that do not cover every bit now keep untouched bits through the correct feedback source (`lhs` for `<-`, `lhs_q` for `<=`) instead of zeroing or replacing the whole signal.
+- Why this is worth shipping:
+  - it turns a misleading “parser accepts it” pocket into real generated-HDL support,
+  - it matches the intended mental model for indexed/sliced partial writes much more closely,
+  - and it gives us a solid base to widen later into the dual-output sequential families if we want to make that contract explicit too.
+
 ## 2026-04-02: strict mode now treats the compact top-level `:=` directive as compatibility residue
 - Continued the visible `R9` lane by widening strict mode into the legacy compact init/reset surface instead of keeping strict enforcement limited to root families and the explicit `+system` reset spelling.
 - Landed behavior:

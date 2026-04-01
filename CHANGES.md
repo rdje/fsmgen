@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-02
+### static numeric partial LHS writes now lower correctly through the direct backend
+- Updated [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm) so same-context partial indexed/sliced LHS writes are now normalized into one full-width effective assignment family before RHS grouping, enable shaping, and mux emission.
+- Added [t/258-partial-lhs-assignment-lowering.t](/Users/richarddje/Documents/github/fsmgen/t/258-partial-lhs-assignment-lowering.t) to lock the shipped contract for piecewise combinational `=`, piecewise register-out `<-`, piecewise register-in `<=`, and untouched-bit feedback for partial sequential writes.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this support boundary is preserved in the continuity trail.
+
 ### strict mode now rejects the compact top-level `:=` directive too
 - Updated [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so strict mode now rejects the legacy compact top-level `(:= signal=value)` directive on the current `?fsm:` / `?dt:` path while leaving default-mode compatibility intact and top-level `?mod:` / `?module:` roots unchanged.
 - Added [t/257-strict-mode-compact-init-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/257-strict-mode-compact-init-boundary.t) to lock the shared frontend, pipeline, and CLI boundary for both a direct root and an external `?dtc` child source.

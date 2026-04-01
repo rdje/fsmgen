@@ -558,10 +558,15 @@ Done:
   - repeat macros such as `?repeat:[MAX_COUNT]`,
   - and placeholder tokens such as `[DATAIN]`.
 - [t/71-language-contract-generic-placeholder-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/71-language-contract-generic-placeholder-entrypoints.t) now locks pipeline and CLI no-output behavior for that same legacy generic/template placeholder family, so placeholder selectors, repeat macros, and placeholder tokens now have end-to-end entrypoint coverage instead of parser-only coverage.
+- [t/258-partial-lhs-assignment-lowering.t](/Users/richarddje/Documents/github/fsmgen/t/258-partial-lhs-assignment-lowering.t) now locks one more real assignment-correctness slice in the active language contract:
+  - same-context piecewise `=` writes such as `(OUT[3:2] = HI)`, `(OUT[1] = MID)`, `(OUT[0] = LO)` now lower into one full-width combinational mux input instead of collapsing to raw whole-signal replacement,
+  - same-context piecewise `<-` and `<=` writes now lower into one full-width sequential mux input too,
+  - and partial sequential writes that do not cover every bit now retain untouched bits through the correct feedback source (`Q` for `<-`, `_q` for `<=`) instead of zeroing or replacing the whole signal.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.
 - Continue adding focused regression coverage per adopted construct family so support claims are continuously provable.
+- Decide whether the same partial-LHS lowering contract should now also be promoted and regression-locked explicitly for the dual-output sequential families (`<-=`, `<=+`) and any future pulse/vector edge cases instead of staying only covered for `=`, `<-`, and `<=`.
 Exit criteria:
 - Every parser-visible active-language construct is bucketed clearly and documented normatively, with matching regression coverage for the supported tier.
 
