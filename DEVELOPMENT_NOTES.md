@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: protocol fixture smoke now starts `R12`
+- Started the visible `R12` lane by turning the imported APB / AMBA protocol seeds into regression-backed corpus entries instead of leaving them as examples only.
+- Landed behavior:
+  - [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t) now locks direct-root compile smoke for [fsm/apb_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_requester.fsm), [fsm/apb_completer.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_completer.fsm), and [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm),
+  - that same test now also locks [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm) as a composed regression seed through both the pipeline and CLI, including its generated-child and explicit-link lane,
+  - and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) now moves `R12` from `not started` to `in progress`.
+- Why this is worth shipping:
+  - it makes the imported protocol seeds count toward auditable support claims instead of just repo size,
+  - it starts the corpus lane with a mix of direct roots and one real composition top,
+  - and it gives us a clean policy for future library/protocol/example imports: they should become tests, not just files.
+
 ## 2026-04-01: CLI diagnostics now suppress raw Perl stack traces
 - Continued the visible `R10` diagnostics lane by cleaning the last-mile CLI presentation of the source-local error shapes we already shipped.
 - Landed behavior:

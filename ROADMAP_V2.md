@@ -517,6 +517,12 @@ Deliverable themes:
 - classify each case as supported / expected-failure / legacy-out-of-scope,
 - and add golden outputs or semantic checks where appropriate.
 
+First bounded slice:
+- start with named in-repo protocol seeds instead of only anonymous fixture accumulation,
+- lock direct-root smoke for imported protocol actors such as `apb_requester`, `apb_completer`, and `amba_requester`,
+- lock one composed protocol harness such as `apb_tb` so the corpus includes a real generated-child/toplink path and not only leaf modules,
+- and use that first slice to establish that imported/example assets only count toward support claims once they are regression-backed.
+
 Expected result:
 - support claims stop being conversational and become auditable.
 

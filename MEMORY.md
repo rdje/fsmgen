@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: protocol fixture smoke now starts the regression corpus lane
+- Started `R12` for real by turning the imported protocol fixtures into live regression-backed corpus entries instead of leaving them as uncounted examples only.
+- Important continuity note:
+  - [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t) now locks direct-root smoke for [fsm/apb_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_requester.fsm), [fsm/apb_completer.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_completer.fsm), and [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm),
+  - that same test also locks the composed protocol harness [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm) through both pipeline and CLI, so the first `R12` slice covers a real generated-child / explicit-link path,
+  - and the saved rule is now explicit: imported/example assets only count toward support claims once they are regression-backed.
+
 ## 2026-04-01: CLI failure output now suppresses raw Perl stack traces
 - Continued the active `R10` diagnostics lane by cleaning the last-mile CLI presentation of the source-local diagnostics we already shipped.
 - Important continuity note:

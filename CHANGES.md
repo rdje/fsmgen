@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-01
+### protocol fixture smoke now starts `R12`
+- Added [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t) to lock compile smoke for the imported protocol actors [fsm/apb_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_requester.fsm), [fsm/apb_completer.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_completer.fsm), and [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm).
+- That same test also locks the composed protocol harness [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm) through both the pipeline and CLI, so the first corpus slice includes a real generated-child / `?toplink` design and not only leaf modules.
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so `R12` now starts honestly and the protocol-seed rule is preserved in continuity.
+
 ### CLI diagnostics now suppress raw Perl stack traces
 - Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so ordinary string failures now print the intended diagnostic text and context lines without raw Perl `confess` stack frames.
 - Added [t/246-cli-error-output-cleanup.t](/Users/richarddje/Documents/github/fsmgen/t/246-cli-error-output-cleanup.t) to lock that behavior for one top-level parse failure and one generated-child failure.
