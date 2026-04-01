@@ -136,6 +136,7 @@ First bounded slice:
 - make top-level failures keep the offending source path consistently,
 - start at the source-file orchestration boundary so both pipeline and CLI entry points benefit at once,
 - use that first slice to establish one reusable provenance/error-shape pattern before pushing deeper into line/construct-level provenance,
+- normalize CLI presentation of those ordinary string diagnostics so source-local failure messages do not dump raw Perl stack traces,
 - then widen that same pattern through generated-child realization so multi-file composition failures keep the child source path, the parent composition path when relevant, and the declared child-source identity instead of surfacing only inner adapter/parser text,
 - then widen that same generated-child pattern through wrong-kind and unresolved external child boundaries so blocked composition child resolution/realization failures keep the same source-local framing instead of dropping back to raw search or wrong-kind text,
 - and then carry the same idea into external/embedded `?rtl` metadata loading so sidecar `.rtlif` failures keep the resolved metadata file plus parent composition source while embedded `?rtlif` failures still point back to the containing composition source.

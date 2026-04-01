@@ -117,6 +117,17 @@ sub shared_endpoint_binding_summary {
     return $endpoint . ' <= ' . $binding;
 }
 
+sub normalize_cli_error_text {
+    my ($error) = @_;
+    return "$error" if ref($error);
+
+    my $text = "$error";
+    $text =~ s/\n? at [^\n]+ line \d+\.\n(?:\t[^\n]*\n)*/\n/sg;
+    $text =~ s/\n{3,}/\n\n/g;
+    $text =~ s/\s+\z//s;
+    return $text . "\n";
+}
+
 # Command line options
 my $debug_level = 0;  # Numeric compatibility mode (0..4)
 my $help = 0;
@@ -394,6 +405,7 @@ my $result = eval {
 if ($@) {
     my $error = $@;
     my $failure_report = FSM::Composition::FailureReportBuilder->build_report($error);
+    my $display_error = normalize_cli_error_text($error);
 
     unless ($quiet || !$failure_report) {
         print "\n=== Composition Failure Summary ===\n";
@@ -416,7 +428,8 @@ if ($@) {
             if defined $failure_report->{blocked_reason} && length $failure_report->{blocked_reason};
     }
 
-    die $error;
+    print STDERR $display_error;
+    exit 1;
 }
 
 my $hdl_code = $result->{hdl_code};

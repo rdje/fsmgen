@@ -623,7 +623,8 @@ Done:
 - The first dedicated v2 provenance/diagnostic slice is now shipped:
   - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now wraps top-level parse/generation failures with a stable `Source file: '...'` line,
   - that source-local context now reaches both ordinary top-level parser/adapter failures and strict-mode support-tier failures,
-  - and [t/241-top-level-source-file-diagnostic-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/241-top-level-source-file-diagnostic-boundary.t) now locks that boundary end to end through both pipeline and CLI entry points.
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now also normalizes ordinary string failures before printing them so CLI users see the intended diagnostic text without raw Perl `confess` stack traces,
+  - and [t/241-top-level-source-file-diagnostic-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/241-top-level-source-file-diagnostic-boundary.t) plus [t/246-cli-error-output-cleanup.t](/Users/richarddje/Documents/github/fsmgen/t/246-cli-error-output-cleanup.t) now lock that boundary end to end through both pipeline and CLI entry points.
 - The next bounded widening step is now also shipped through generated-child realization:
   - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now wraps child parse/semantic generation failures with stable source-local context,
   - external child failures now keep `Source file: 'child_source.fsm'`, `Parent composition source: 'top_source.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`,

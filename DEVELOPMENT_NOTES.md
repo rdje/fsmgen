@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: CLI diagnostics now suppress raw Perl stack traces
+- Continued the visible `R10` diagnostics lane by cleaning the last-mile CLI presentation of the source-local error shapes we already shipped.
+- Landed behavior:
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now normalizes ordinary string errors before printing them, removing raw Perl `confess` stack frames while preserving the real diagnostic text and any earlier `Source file:` / `Parent composition source:` / `Generated child source:` context lines,
+  - the composition failure summary path is unchanged and still derives from the original raw error text before CLI presentation is cleaned,
+  - and [t/246-cli-error-output-cleanup.t](/Users/richarddje/Documents/github/fsmgen/t/246-cli-error-output-cleanup.t) now locks the cleaned CLI output for one top-level parse failure and one generated-child failure.
+- Why this is worth shipping:
+  - it is immediately visible to users running the CLI by hand,
+  - it keeps the work from the earlier `R10` source-local context slices readable instead of burying it under call-frame noise,
+  - and it improves diagnostics without changing parsing, generation, or failure-summary semantics.
+
 ## 2026-04-01: strict mode now requires canonical `?fsm:` roots under `?fsmc`
 - Continued the visible `R9` lane by making the FSM-child side of the strict child-root contract explicit instead of relying only on the broader top-level `+fsm` rejection text.
 - Landed behavior:

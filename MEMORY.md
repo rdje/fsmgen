@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: CLI failure output now suppresses raw Perl stack traces
+- Continued the active `R10` diagnostics lane by cleaning the last-mile CLI presentation of the source-local diagnostics we already shipped.
+- Important continuity note:
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now normalizes ordinary string errors before printing them so the CLI keeps the actual diagnostic text and context lines but drops raw Perl `confess` stack frames,
+  - top-level parse failures and generated-child failures still keep their earlier `Source file:` / `Parent composition source:` / `Generated child source:` framing,
+  - [t/246-cli-error-output-cleanup.t](/Users/richarddje/Documents/github/fsmgen/t/246-cli-error-output-cleanup.t) locks the cleaned CLI output for both a top-level parse failure and a generated-child failure,
+  - and the saved `R10` story is now “source-local context first, then cleaner CLI presentation”.
+
 ## 2026-04-01: strict mode now requires canonical `?fsm:` roots under `?fsmc`
 - Continued the active `R9` lane by making the FSM-child side of the strict child-root contract explicit instead of leaving it to the broader top-level `+fsm` rejection wording.
 - Important continuity note:

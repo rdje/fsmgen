@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-01
+### CLI diagnostics now suppress raw Perl stack traces
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so ordinary string failures now print the intended diagnostic text and context lines without raw Perl `confess` stack frames.
+- Added [t/246-cli-error-output-cleanup.t](/Users/richarddje/Documents/github/fsmgen/t/246-cli-error-output-cleanup.t) to lock that behavior for one top-level parse failure and one generated-child failure.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next visible `R10` slice is preserved honestly in the continuity trail.
+
 ### strict mode now requires canonical `?fsm:` roots under `?fsmc`
 - Updated [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so strict mode now rejects legacy `+fsm` specifically when it is used as the root of a `?fsmc` child source and points users to canonical `?fsm:source_name`.
 - Added [t/245-strict-mode-fsm-child-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/245-strict-mode-fsm-child-root-boundary.t) to lock that boundary through both pipeline and CLI for external flattened and nested legacy `+fsm` child roots with full child-source context.
