@@ -45,7 +45,7 @@ subtest 'legacy-out-of-scope entries stay compatibility-covered in default mode'
     }
 };
 
-subtest 'expected-failure entries reject through the classified strict boundary' => sub {
+subtest 'expected-failure entries reject through the classified strict support-tier boundaries' => sub {
     my $pipeline = FSM::Pipeline::HDLGenerator->new(
         target_language => 'systemverilog',
         debug_level => 0,
@@ -53,7 +53,12 @@ subtest 'expected-failure entries reject through the classified strict boundary'
         strict_mode => 1,
     );
 
-    for my $entry (grep { $_->{coverage} eq 'strict_root_rejection_pipeline_cli' } regression_corpus_entries()) {
+    for my $entry (
+        grep {
+            $_->{coverage} eq 'strict_root_rejection_pipeline_cli'
+                || $_->{coverage} eq 'strict_section_rejection_pipeline_cli'
+        } regression_corpus_entries()
+    ) {
         my $path = File::Spec->catfile($repo_root, split m{/}, $entry->{relpath});
 
         my $pipeline_error = eval {
@@ -64,7 +69,9 @@ subtest 'expected-failure entries reject through the classified strict boundary'
 
         ok($pipeline_error, "strict pipeline rejects $entry->{id}");
         like($pipeline_error, $entry->{expected_error_pattern}, "strict pipeline keeps the expected boundary text for $entry->{id}");
-        like($pipeline_error, $entry->{expected_hint_pattern}, "strict pipeline keeps the expected migration hint for $entry->{id}");
+        if ($entry->{expected_hint_pattern}) {
+            like($pipeline_error, $entry->{expected_hint_pattern}, "strict pipeline keeps the expected migration hint for $entry->{id}");
+        }
 
         my $out_path = File::Spec->catfile($tempdir, "$entry->{id}.sv");
         my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
@@ -82,7 +89,9 @@ subtest 'expected-failure entries reject through the classified strict boundary'
         );
 
         like($combined_output, $entry->{expected_error_pattern}, "CLI strict mode keeps the expected boundary text for $entry->{id}");
-        like($combined_output, $entry->{expected_hint_pattern}, "CLI strict mode keeps the expected migration hint for $entry->{id}");
+        if ($entry->{expected_hint_pattern}) {
+            like($combined_output, $entry->{expected_hint_pattern}, "CLI strict mode keeps the expected migration hint for $entry->{id}");
+        }
     }
 };
 

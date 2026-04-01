@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: the corpus now accounts for section-level compatibility residue too
+- Continued the visible `R12` lane by turning the empty-`(+size)` strict/default split into an explicit dual-contract corpus asset instead of leaving it only as an isolated strict-mode regression.
+- Important continuity note:
+  - [t/corpus/legacy_empty_size_noop.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_empty_size_noop.fsm) now exists as the first section-level compatibility-residue corpus asset,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records both `legacy.empty_size_noop.default_compat` and `legacy.empty_size_noop.strict_rejection` for the same file,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now knows the new `legacy_section_default_pipeline_cli` and `strict_section_rejection_pipeline_cli` coverage buckets,
+  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now treats strict support-tier expected failures as a broader family instead of only the earlier root-family case.
+
 ## 2026-04-01: typed extension hook failures now keep source-local context too
 - Continued the visible `R10` lane by widening the same artifact-label pattern into typed extension hook failures instead of letting those failures fall back to raw hook text.
 - Important continuity note:

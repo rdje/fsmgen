@@ -15,6 +15,7 @@ my @entries = regression_corpus_entries();
 my @protocol_entries = protocol_fixture_entries();
 
 ok(@entries >= 7, 'regression corpus catalog starts with named entries across multiple classifications');
+ok(@entries >= 9, 'regression corpus catalog now covers both root-level and section-level compatibility residue');
 is(scalar(@protocol_entries), 4, 'first visible corpus slice contains the four named protocol fixtures');
 
 my %allowed_classifications = map { $_ => 1 } qw(
@@ -27,7 +28,9 @@ my %allowed_coverages = map { $_ => 1 } qw(
     direct_root_pipeline_cli
     composition_top_pipeline_cli
     legacy_root_default_pipeline_cli
+    legacy_section_default_pipeline_cli
     strict_root_rejection_pipeline_cli
+    strict_section_rejection_pipeline_cli
     language_contract_rejection_pipeline_cli
 );
 
@@ -42,6 +45,8 @@ for my $required_id (qw(
     protocol.apb_tb
     legacy.mipicsi2_txccore_ulp.default_compat
     legacy.mipicsi2_txccore_ulp.strict_rejection
+    legacy.empty_size_noop.default_compat
+    legacy.empty_size_noop.strict_rejection
     contract.language_contract_bad_size_entry
 )) {
     ok($by_id{$required_id}, "catalog keeps required entry $required_id");
@@ -85,13 +90,13 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
-    1,
-    'catalog now also records one explicit legacy-out-of-scope compatibility entry',
+    2,
+    'catalog now records two explicit legacy-out-of-scope compatibility entries',
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    2,
-    'catalog now also records two explicit expected-failure entries',
+    3,
+    'catalog now records three explicit expected-failure entries',
 );
 
 done_testing();

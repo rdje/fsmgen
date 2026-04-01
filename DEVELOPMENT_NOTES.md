@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: the corpus now accounts for section-level compatibility residue too
+- Continued the visible `R12` lane by widening the support-accounting model beyond root-level compatibility residue.
+- Landed behavior:
+  - [t/corpus/legacy_empty_size_noop.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_empty_size_noop.fsm) is now the first explicit section-level compatibility-residue corpus asset,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records that same file twice with two distinct contracts:
+    - `legacy.empty_size_noop.default_compat` as `legacy_out_of_scope`
+    - `legacy.empty_size_noop.strict_rejection` as `expected_failure`
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now knows the new `legacy_section_default_pipeline_cli` and `strict_section_rejection_pipeline_cli` buckets,
+  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks both the default-mode compatibility path and the strict-mode rejection path for that asset.
+- Why this is worth shipping:
+  - it proves the corpus can talk about section-level compatibility residue, not only root-level legacy forms,
+  - it makes the empty-`(+size)` strict/default split part of auditable support accounting instead of leaving it as an isolated regression,
+  - and it keeps `R12` aligned with the real support story: the same file may carry more than one contract when default and strict mode intentionally diverge.
+
 ## 2026-04-01: typed extension hook failures now keep source-local context too
 - Continued the visible `R10` lane by widening the same artifact-label pattern into typed extension hook failures instead of letting those failures bypass the newer source-local wrappers.
 - Landed behavior:

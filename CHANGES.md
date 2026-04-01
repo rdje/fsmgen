@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-01
+### regression corpus now accounts for section-level compatibility residue too
+- Added [t/corpus/legacy_empty_size_noop.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_empty_size_noop.fsm) as the first explicit section-level compatibility-residue corpus asset.
+- Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) so that same file now carries two explicit contracts:
+  - `legacy.empty_size_noop.default_compat` as `legacy_out_of_scope`
+  - `legacy.empty_size_noop.strict_rejection` as `expected_failure`
+- Updated [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t), and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) so `R12` now tracks section-level default/strict divergence explicitly through the new `legacy_section_default_pipeline_cli` and `strict_section_rejection_pipeline_cli` buckets.
+- Updated [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this wider `R12` accounting shape is preserved in the continuity trail.
+
 ### typed extension hook failures now keep source-local context
 - Updated [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm) so ordinary typed extension hook failures now keep `Extension module: '...'` and `Extension stage: '...'`.
 - Updated [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) so both `after_parse_source` and `after_generate_result` now run under the same `Source file: '...'` wrapper as other top-level failures.

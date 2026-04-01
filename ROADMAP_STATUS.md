@@ -1389,9 +1389,15 @@ Done:
   - `contract.language_contract_bad_size_entry` is classified as `expected_failure` and records the normal `Malformed '+size' entry` boundary instead of a strict-mode-only rejection,
   - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that ordinary pipeline and CLI rejection path too,
   - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now includes the `language_contract_rejection_pipeline_cli` coverage bucket.
+- The first slice now also accounts for section-level compatibility residue instead of only root-level legacy behavior:
+  - [t/corpus/legacy_empty_size_noop.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_empty_size_noop.fsm) now appears twice in the catalog under two explicit contracts,
+  - `legacy.empty_size_noop.default_compat` is classified as `legacy_out_of_scope` and must still compile through pipeline and CLI in default mode,
+  - `legacy.empty_size_noop.strict_rejection` is classified as `expected_failure` and must keep the strict empty-`(+size)` rejection boundary through pipeline and CLI,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now treats strict support-tier expected failures as a broader family instead of only the earlier root-family case,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now includes the `legacy_section_default_pipeline_cli` and `strict_section_rejection_pipeline_cli` coverage buckets.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
-- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair and first malformed-language contract entry.
+- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, and first malformed-language contract entry.
 - Widen golden-output or semantic-check coverage where simple compile smoke is not enough.
 Exit criteria:
 - Support claims can be backed by a maintained corpus and explicit classification, not only by ad hoc focused tests.

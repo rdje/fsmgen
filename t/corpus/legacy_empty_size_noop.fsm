@@ -1,0 +1,14 @@
+(?fsm:legacy_empty_size_noop
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size)
+  (+size
+    (OUT 1)
+    (IN 1)
+  )
+  (idle
+    (OUT = IN)
+  )
+)

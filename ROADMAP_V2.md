@@ -527,6 +527,7 @@ First bounded slice:
 - promote that first slice into a small machine-checked corpus catalog so future support claims grow by explicit classification instead of ad hoc hardcoded test lists,
 - and widen that same first catalog beyond `supported_smoke` by proving at least one explicit compatibility-retained `legacy_out_of_scope` entry and one explicit `expected_failure` entry,
 - then prove that `expected_failure` is not just “strict-mode rejection” by adding at least one malformed-language contract entry with a normal pipeline/CLI rejection boundary,
+- then widen the same catalog beyond root-level legacy behavior by adding at least one section-level compatibility-residue asset that is retained in default mode but intentionally rejected in strict mode,
 - and use that first slice to establish that imported/example assets only count toward support claims once they are regression-backed.
 
 Expected result:
