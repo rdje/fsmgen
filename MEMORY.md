@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: the corpus now includes a static malformed-language expected-failure asset
+- Widened the `R12` catalog again so `expected_failure` no longer means only “strict-mode legacy root rejection.”
+- Important continuity note:
+  - [t/corpus/language_contract_bad_size_entry.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/language_contract_bad_size_entry.fsm) is now the first static malformed-language corpus asset,
+  - `contract.language_contract_bad_size_entry` in [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) is classified as `expected_failure` with the normal `Malformed '+size' entry` boundary,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that ordinary pipeline and CLI rejection path in addition to the earlier strict `+fsm` rejection path,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now carries the `language_contract_rejection_pipeline_cli` coverage bucket beside the earlier legacy/strict buckets.
+
 ## 2026-04-01: the first corpus catalog now carries explicit non-supported classifications too
 - Widened the new `R12` catalog beyond `supported_smoke` so the support story now includes one explicit compatibility-retained entry and one explicit expected rejection.
 - Important continuity note:

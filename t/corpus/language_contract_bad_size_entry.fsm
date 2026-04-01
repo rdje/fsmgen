@@ -1,0 +1,10 @@
+(?fsm:language_contract_bad_size_entry
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size BROKEN)
+  (idle
+    (OUT <= 1)
+  )
+)

@@ -1372,9 +1372,14 @@ Done:
   - `legacy.mipicsi2_txccore_ulp.default_compat` is classified as `legacy_out_of_scope` and must still compile through pipeline and CLI in default mode,
   - `legacy.mipicsi2_txccore_ulp.strict_rejection` is classified as `expected_failure` and must keep the strict `+fsm` rejection boundary through pipeline and CLI,
   - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now locks those first non-supported classifications end to end.
+- The first slice now also proves that `expected_failure` is broader than strict-mode compatibility cuts:
+  - [t/corpus/language_contract_bad_size_entry.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/language_contract_bad_size_entry.fsm) is now the first static malformed-language corpus asset,
+  - `contract.language_contract_bad_size_entry` is classified as `expected_failure` and records the normal `Malformed '+size' entry` boundary instead of a strict-mode-only rejection,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that ordinary pipeline and CLI rejection path too,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now includes the `language_contract_rejection_pipeline_cli` coverage bucket.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
-- Widen expected-failure and legacy-out-of-scope coverage beyond the first explicit compatibility/rejection pair.
+- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair and first malformed-language contract entry.
 - Widen golden-output or semantic-check coverage where simple compile smoke is not enough.
 Exit criteria:
 - Support claims can be backed by a maintained corpus and explicit classification, not only by ad hoc focused tests.

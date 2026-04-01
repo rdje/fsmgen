@@ -66,6 +66,15 @@ my @REGRESSION_CORPUS = (
         expected_error_pattern => qr/Strict mode rejects the legacy '\+fsm' root family/,
         expected_hint_pattern => qr/\?fsm:module_name/,
     },
+    {
+        id => 'contract.language_contract_bad_size_entry',
+        relpath => 't/corpus/language_contract_bad_size_entry.fsm',
+        family => 'language_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'language_contract_rejection_pipeline_cli',
+        source_kind => 'fsm',
+        expected_error_pattern => qr/Malformed '\+size' entry/,
+    },
 );
 
 sub regression_corpus_entries {

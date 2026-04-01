@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: the corpus now includes a static malformed-language expected-failure asset
+- Widened the visible `R12` catalog so `expected_failure` is no longer only about strict-mode compatibility cuts.
+- Landed behavior:
+  - [t/corpus/language_contract_bad_size_entry.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/language_contract_bad_size_entry.fsm) is now the first static malformed-language corpus asset,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now classifies it as `contract.language_contract_bad_size_entry`,
+  - that entry uses the new `language_contract_rejection_pipeline_cli` coverage bucket and records the normal `Malformed '+size' entry` boundary,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that ordinary pipeline and CLI rejection path with source-file context,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now explains that bucket alongside the earlier strict-root rejection bucket.
+- Why this is worth shipping:
+  - it proves the catalog can talk about language-contract failures, not only compatibility mode splits,
+  - it gives `R12` a static malformed asset we can build future negative coverage from,
+  - and it makes the support-accounting story more honest about what “expected failure” really means in this repo.
+
 ## 2026-04-01: the first corpus catalog now carries explicit non-supported classifications too
 - Widened the visible `R12` catalog so it no longer only says what we support; it now also says one concrete thing we retain only as compatibility and one concrete thing we intentionally reject.
 - Landed behavior:

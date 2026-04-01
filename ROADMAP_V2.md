@@ -523,6 +523,7 @@ First bounded slice:
 - lock one composed protocol harness such as `apb_tb` so the corpus includes a real generated-child/toplink path and not only leaf modules,
 - promote that first slice into a small machine-checked corpus catalog so future support claims grow by explicit classification instead of ad hoc hardcoded test lists,
 - and widen that same first catalog beyond `supported_smoke` by proving at least one explicit compatibility-retained `legacy_out_of_scope` entry and one explicit `expected_failure` entry,
+- then prove that `expected_failure` is not just “strict-mode rejection” by adding at least one malformed-language contract entry with a normal pipeline/CLI rejection boundary,
 - and use that first slice to establish that imported/example assets only count toward support claims once they are regression-backed.
 
 Expected result:

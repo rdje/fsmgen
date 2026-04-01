@@ -40,6 +40,9 @@ more than one contract for it, for example:
 - `strict_root_rejection_pipeline_cli`: the entry is intentionally rejected in
   strict mode through both the pipeline API and the CLI, and that rejection is
   part of the supported contract.
+- `language_contract_rejection_pipeline_cli`: the entry is intentionally
+  rejected by the normal language-contract boundary through both the pipeline
+  API and the CLI, and that rejection is part of the supported contract.
 
 ## Current named entries
 
@@ -51,6 +54,7 @@ more than one contract for it, for example:
 | `protocol.apb_tb` | [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |
 | `legacy.mipicsi2_txccore_ulp.default_compat` | [fsm/mipicsi2_txccore_ulp.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_txccore_ulp.fsm) | `legacy_out_of_scope` | `legacy_root_default_pipeline_cli` |
 | `legacy.mipicsi2_txccore_ulp.strict_rejection` | [fsm/mipicsi2_txccore_ulp.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_txccore_ulp.fsm) | `expected_failure` | `strict_root_rejection_pipeline_cli` |
+| `contract.language_contract_bad_size_entry` | [t/corpus/language_contract_bad_size_entry.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/language_contract_bad_size_entry.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 
 ## Current locking tests
 
@@ -60,8 +64,9 @@ more than one contract for it, for example:
   checks that the catalog stays named, classified, unique, and pointed at real
   repo assets.
 - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
-  checks that the first `legacy_out_of_scope` and `expected_failure` entries
-  actually behave according to their recorded contract.
+  checks that the first `legacy_out_of_scope` and the first two
+  `expected_failure` entries actually behave according to their recorded
+  contract.
 
 ## Working rule
 

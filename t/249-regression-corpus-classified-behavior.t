@@ -53,7 +53,7 @@ subtest 'expected-failure entries reject through the classified strict boundary'
         strict_mode => 1,
     );
 
-    for my $entry (grep { $_->{classification} eq 'expected_failure' } regression_corpus_entries()) {
+    for my $entry (grep { $_->{coverage} eq 'strict_root_rejection_pipeline_cli' } regression_corpus_entries()) {
         my $path = File::Spec->catfile($repo_root, split m{/}, $entry->{relpath});
 
         my $pipeline_error = eval {
@@ -83,6 +83,45 @@ subtest 'expected-failure entries reject through the classified strict boundary'
 
         like($combined_output, $entry->{expected_error_pattern}, "CLI strict mode keeps the expected boundary text for $entry->{id}");
         like($combined_output, $entry->{expected_hint_pattern}, "CLI strict mode keeps the expected migration hint for $entry->{id}");
+    }
+};
+
+subtest 'language-contract expected-failure entries reject through the normal pipeline boundary' => sub {
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug_level => 0,
+        quiet => 1,
+    );
+
+    for my $entry (grep { $_->{coverage} eq 'language_contract_rejection_pipeline_cli' } regression_corpus_entries()) {
+        my $path = File::Spec->catfile($repo_root, split m{/}, $entry->{relpath});
+
+        my $pipeline_error = eval {
+            $pipeline->generate_hdl_from_file($path);
+            undef;
+        };
+        $pipeline_error = $@ if !$pipeline_error;
+
+        ok($pipeline_error, "pipeline rejects $entry->{id}");
+        like($pipeline_error, $entry->{expected_error_pattern}, "pipeline keeps the expected boundary text for $entry->{id}");
+
+        my $out_path = File::Spec->catfile($tempdir, "$entry->{id}.sv");
+        my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+            command => ['./bin/fsmgen', '--quiet', '-o', $out_path, $path],
+        );
+
+        ok(!$success, "CLI rejects $entry->{id}");
+        ok(!-e $out_path, "CLI does not emit HDL for $entry->{id}");
+
+        my $combined_output = join(
+            '',
+            @{ $stdout_buf || [] },
+            @{ $stderr_buf || [] },
+            ($error_message || ''),
+        );
+
+        like($combined_output, qr/Source file:\s+'[^']+'/s, "CLI keeps source-file context for $entry->{id}");
+        like($combined_output, $entry->{expected_error_pattern}, "CLI keeps the expected boundary text for $entry->{id}");
     }
 };
 
