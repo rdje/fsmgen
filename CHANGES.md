@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-01
+### typed extension loading failures now keep artifact labels
+- Updated [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) so malformed extension config input now keeps `Extension config file: '...'`, and module-load / constructor failures now keep `Extension module: '...'`.
+- Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so `HDLGenerator->new(...)` now runs under the cleaned CLI error presentation path instead of letting constructor failures dump the raw script line.
+- Added [t/253-extension-loader-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/253-extension-loader-diagnostic-context.t) plus [t/lib/FSM/TestExtension/BadNew.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/TestExtension/BadNew.pm) to lock malformed extension config input and constructor-failing extension modules through both pipeline and CLI entry points.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this visible `R10` slice is preserved in the continuity trail.
+
 ### regression corpus now accounts for section-level compatibility residue too
 - Added [t/corpus/legacy_empty_size_noop.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_empty_size_noop.fsm) as the first explicit section-level compatibility-residue corpus asset.
 - Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) so that same file now carries two explicit contracts:

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: typed extension loading failures now keep artifact labels too
+- Continued the visible `R10` lane by widening the diagnostics family one step earlier into extension loading and pipeline construction.
+- Landed behavior:
+  - [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) now annotates malformed config-file failures with `Extension config file: '...'` and module-load / constructor failures with `Extension module: '...'`,
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now wraps `HDLGenerator->new(...)` in the same cleaned CLI error presentation path used for later ordinary string failures,
+  - [t/253-extension-loader-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/253-extension-loader-diagnostic-context.t) now locks malformed extension config input plus constructor-failing extension modules through both pipeline and CLI entry points,
+  - and [t/lib/FSM/TestExtension/BadNew.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/TestExtension/BadNew.pm) now provides the dedicated constructor-failure helper module for that coverage.
+- Why this is worth shipping:
+  - extension loading failures are user-visible and happen before normal source generation, so they should not fall back to raw constructor or script-line fallout after we already cleaned later diagnostics,
+  - the new labels make those failures actionable immediately by naming the failing config file or module,
+  - and it keeps the broader `R10` story coherent across entrypoint failures, source-generation failures, hook failures, and now extension-loader failures too.
+
 ## 2026-04-01: the corpus now accounts for section-level compatibility residue too
 - Continued the visible `R12` lane by widening the support-accounting model beyond root-level compatibility residue.
 - Landed behavior:

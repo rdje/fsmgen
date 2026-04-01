@@ -652,6 +652,10 @@ Done:
   - [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm) now annotates ordinary hook failures with `Extension module: '...'` plus `Extension stage: '...'`,
   - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now runs both `after_parse_source` and `after_generate_result` under the same `Source file: '...'` wrapper used by other top-level failures,
   - and [t/252-extension-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/252-extension-diagnostic-context.t) now locks that source-local extension failure shape through both pipeline and CLI entry points.
+- The next bounded widening step is now also shipped through typed extension loading/construction:
+  - [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) now annotates malformed config-file failures with `Extension config file: '...'` and module-load / constructor failures with `Extension module: '...'`,
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now also wraps `HDLGenerator->new(...)` in the same cleaned CLI error presentation path instead of letting constructor failures dump a raw script line,
+  - and [t/253-extension-loader-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/253-extension-loader-diagnostic-context.t) now locks both the pipeline and CLI constructor-failure shapes for malformed config input and constructor-failing extension modules.
 Left:
 - Define the next provenance-carrying boundaries and upgrade key diagnostics.
 - Add regression coverage for error shape and location reporting.

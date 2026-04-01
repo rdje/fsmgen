@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: typed extension loading failures now keep artifact labels too
+- Continued the visible `R10` lane by widening the same diagnostics family one step earlier, into extension loading and pipeline construction.
+- Important continuity note:
+  - [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) now annotates malformed config-file failures with `Extension config file: '...'` and module-load / constructor failures with `Extension module: '...'`,
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now wraps `HDLGenerator->new(...)` in the cleaned CLI error path, so constructor failures no longer dump a raw `bin/fsmgen` script line,
+  - [t/253-extension-loader-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/253-extension-loader-diagnostic-context.t) now locks both pipeline and CLI behavior for malformed extension config input and constructor-failing extension modules,
+  - and [t/lib/FSM/TestExtension/BadNew.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/TestExtension/BadNew.pm) now exists as the dedicated regression helper for constructor-failure coverage.
+
 ## 2026-04-01: the corpus now accounts for section-level compatibility residue too
 - Continued the visible `R12` lane by turning the empty-`(+size)` strict/default split into an explicit dual-contract corpus asset instead of leaving it only as an isolated strict-mode regression.
 - Important continuity note:

@@ -528,6 +528,10 @@ Boundary note:
   - `Source file: '...'` for the failing source,
   - `Extension module: 'Module::Name'` for the failing extension,
   - and `Extension stage: 'after_parse_source'` or `Extension stage: 'after_generate_result'` before the underlying extension diagnostic.
+- Typed extension loading failures now keep matching artifact context too:
+  - `Extension config file: '...'` for malformed or unreadable extension config input,
+  - `Extension module: 'Module::Name'` for missing or constructor-failing extension modules,
+  - and CLI constructor failures now also stay cleaned instead of dumping the raw `bin/fsmgen` script line.
 - Generated-child realization failures now keep the same source-local framing too:
   - external child failures keep the child `Source file: '...'` plus a `Parent composition source: '...'` line,
   - embedded child failures keep the containing composition `Source file: '...'`,
@@ -1275,6 +1279,7 @@ Practical rule:
 - if you need explicit parsed-source inspection, use `after_parse_source($context)`,
 - if you need explicit CLI loading, use repeated `--extension-module Module::Name` with modules already on `@INC`,
 - if you want to keep module lists out of the command line, use repeated `--extension-config <file>` with lines of the form `module Module::Name`,
+- if typed extension loading fails, the current pipeline/CLI now keeps `Extension config file:` or `Extension module:` labels around that failure, and CLI constructor failures stay cleaned instead of dumping the `bin/fsmgen` script line,
 - if a typed extension hook fails, the current pipeline/CLI now keeps `Source file:`, `Extension module:`, and `Extension stage:` labels around that failure so the failing hook stays source-local and actionable,
 - if you need `.plg` discovery, auto-discovery, richer extension parameters, or broad mid-pipeline mutation hooks, that is not part of the shipped boundary.
 

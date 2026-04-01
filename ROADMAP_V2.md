@@ -143,6 +143,7 @@ First bounded slice:
 - then carry the same idea into external/embedded `?rtl` metadata loading so sidecar `.rtlif` failures keep the resolved metadata file plus parent composition source while embedded `?rtlif` failures still point back to the containing composition source,
 - and finally bring the same artifact-label idea one step earlier into pre-pipeline CLI entrypoint failures so unresolved source lookup and output-open errors keep concrete requested-source/output-file context too.
 - the next honest widening step after that is to keep the same source-local framing around typed extension hook failures too, so extension errors preserve the failing source path plus the extension module/stage instead of surfacing as raw hook fallout.
+- the next sibling widening step after that is to keep loader/construction failures in the same family too, so malformed extension config files and constructor-failing extension modules keep explicit artifact labels and cleaned CLI output instead of raw constructor fallout.
 
 Expected result:
 - large `.fsm` files become much easier to debug and review.

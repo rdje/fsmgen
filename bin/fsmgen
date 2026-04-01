@@ -128,7 +128,33 @@ sub normalize_cli_error_text {
     return "$error" if ref($error);
 
     my $text = "$error";
-    $text =~ s/\n? at [^\n]+ line \d+\.\n(?:\t[^\n]*\n)*/\n/sg;
+
+    my @lines = split /\n/, $text, -1;
+    my @kept;
+    for (my $i = 0; $i < @lines; $i++) {
+        if ($lines[$i] =~ /^\s*at [^\n]+ line \d+\.\s*$/) {
+            $i++ while $i + 1 < @lines && $lines[$i + 1] =~ /^\t/;
+            $i++ while $i + 1 < @lines && $lines[$i + 1] eq '';
+            next;
+        }
+        push @kept, $lines[$i];
+    }
+
+    while (@kept && $kept[-1] eq '') {
+        pop @kept;
+    }
+    if (@kept) {
+        my $line = $kept[-1];
+        my $idx = rindex($line, ' at ');
+        if ($idx >= 0) {
+            my $suffix = substr($line, $idx);
+            if ($suffix =~ /^ at [^\n]+ line \d+\.\z/) {
+                $kept[-1] = substr($line, 0, $idx);
+            }
+        }
+    }
+
+    $text = join("\n", @kept);
     $text =~ s/\n{3,}/\n\n/g;
     $text =~ s/\s+\z//s;
     return $text . "\n";
@@ -406,15 +432,22 @@ print "=== FSM HDL Generator ===\n\n";
 print "Processing FSM file: $fsm_file\n" unless $quiet;
 
 # Create and run the HDL generation pipeline
-my $pipeline = FSM::Pipeline::HDLGenerator->new(
-    debug_level => get_fsm_debug_level(),
-    target_language => $target_language,
-    quiet => $quiet,
-    strict_mode => $strict_mode,
-    source_search_paths => \@source_search_paths,
-    extension_modules => \@extension_modules,
-    extension_config_files => \@extension_config_files,
-);
+my $pipeline = eval {
+    FSM::Pipeline::HDLGenerator->new(
+        debug_level => get_fsm_debug_level(),
+        target_language => $target_language,
+        quiet => $quiet,
+        strict_mode => $strict_mode,
+        source_search_paths => \@source_search_paths,
+        extension_modules => \@extension_modules,
+        extension_config_files => \@extension_config_files,
+    );
+};
+
+if ($@) {
+    print STDERR normalize_cli_error_text($@);
+    exit 1;
+}
 
 my $result = eval {
     $pipeline->generate_hdl_from_file($fsm_file);
