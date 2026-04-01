@@ -408,7 +408,8 @@ This is the current `R8` draft normative contract for the symbol-definition fami
 
 `(+size ...)`:
 - Declares signal widths through `(signal positive_integer_width)` entries.
-- The legacy empty form `(+size)` remains supported as a no-op because it still exists in the shipped corpus.
+- The legacy empty form `(+size)` remains supported as a no-op in default mode because it still exists in compatibility coverage.
+- Strict mode rejects the empty no-op form and requires either explicit width entries or no `+size` section at all.
 - Current active use:
   - `(+size (A 8) (B 8))`
   - `(+size)`
@@ -581,6 +582,7 @@ Boundary note:
   - strict mode rejects the legacy `+fsm` root family,
   - strict mode also rejects the legacy `+fsm` root family when it is used specifically as a `?fsmc` child root and requires canonical `?fsm:` there,
   - strict mode also rejects `?mod:` / `?module:` when they are used specifically as `?dtc` child roots and requires canonical `?dt:` there,
+  - strict mode also rejects the legacy empty `(+size)` no-op section and requires either explicit width entries or no `+size` section at all,
   - requires the modern explicit `?fsm:module_name` root form for FSM sources,
   - and otherwise leaves the currently accepted `?dt:`, `?mod:`, `?module:`, and `?top:` roots unchanged while their broader contracts continue to settle.
 - In practice:
@@ -588,7 +590,7 @@ Boundary note:
   - strict mode currently accepts `?fsm:name`, `?dt:name`, `?mod:name`, `?module:name`, and `?top:name`,
   - strict mode currently accepts only canonical `?fsm:name` roots under `?fsmc`,
   - strict mode currently accepts only canonical `?dt:name` roots under `?dtc`,
-  - and strict mode currently rejects legacy `+fsm` under `?fsmc` plus `?mod:` / `?module:` under `?dtc` with targeted migration hints.
+  - and strict mode currently rejects legacy `+fsm` under `?fsmc`, `?mod:` / `?module:` under `?dtc`, and empty `(+size)` no-op sections with targeted migration hints.
 - Strict-mode failures now also keep the same `Source file: '...'` context line as other top-level pipeline failures.
 - This is the first support-tier enforcement slice, not the final full strict-mode surface.
 

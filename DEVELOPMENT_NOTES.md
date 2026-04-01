@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: strict mode now rejects the legacy empty `(+size)` no-op
+- Continued the visible `R9` lane by moving beyond root-family cleanup into the first section-level compatibility cut.
+- Landed behavior:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now rejects the legacy empty `(+size)` section in strict mode while leaving default-mode compatibility unchanged,
+  - that check lives in the shared direct-root strict owner, so it reaches top-level sources and generated child sources through the same semantic-module path instead of being hard-coded in only one caller,
+  - [t/251-strict-mode-empty-size-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/251-strict-mode-empty-size-boundary.t) now locks the boundary through the shared frontend plus pipeline and CLI entry points,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the right split: default mode still accepts empty `(+size)` as compatibility residue, strict mode requires either explicit `(+size (signal width) ...)` entries or no `+size` section at all.
+- Why this is worth shipping:
+  - it is a real strict-mode support-tier cut that users can see without destabilizing the broader language surface,
+  - it starts moving `R9` from root-family cleanup into section-level compatibility residue, which is the next honest shape for strict mode,
+  - and it stays aligned with the existing live contract: empty `(+size)` is already documented as legacy residue rather than a preferred authored form.
+
 ## 2026-04-01: CLI entrypoint failures now keep requested-source and output-file context
 - Switched back to the visible `R10` lane after the recent `R12` corpus streak and tightened the CLI failure shape before the pipeline even starts.
 - Landed behavior:

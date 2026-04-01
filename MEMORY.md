@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: strict mode now rejects the legacy empty `(+size)` no-op
+- Continued the visible `R9` lane by making the first section-level compatibility-residue cut instead of only tightening root-family boundaries.
+- Important continuity note:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now rejects the legacy empty `(+size)` no-op section in strict mode while leaving default-mode compatibility intact,
+  - that check lives in the shared direct-root strict owner, so it reaches top-level sources and generated child sources through the same semantic-module path,
+  - [t/251-strict-mode-empty-size-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/251-strict-mode-empty-size-boundary.t) now locks the boundary through the shared frontend plus pipeline and CLI entry points,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now states the correct split explicitly: default mode still tolerates empty `(+size)` as compatibility residue, while strict mode requires explicit width entries or no `+size` section at all.
+
 ## 2026-04-01: CLI entrypoint failures now keep requested-source and output-file context
 - Switched back to the visible `R10` lane after the recent `R12` streak and widened the CLI error shape one step earlier in the flow.
 - Important continuity note:

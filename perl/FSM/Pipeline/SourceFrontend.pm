@@ -89,6 +89,21 @@ sub enforce_strict_source_boundary ($class, %args) {
           . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
     }
 
+    my $body_items = $class->_direct_root_body_items(
+        raw_ast => $args{raw_ast},
+        source_info => $source_info,
+    );
+    if ($body_items) {
+        for my $item (@$body_items) {
+            next unless $class->_is_legacy_empty_size_section($item);
+
+            confess
+                "Strict mode rejects the legacy empty '(+size)' section in source '$source_label'. "
+              . "Remove the empty section or replace it with explicit '(+size (signal width) ...)' entries, "
+              . "or re-run without strict mode if you need legacy compatibility. "
+              . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+        }
+    }
 }
 
 sub enforce_strict_generated_child_source_boundary ($class, %args) {
@@ -162,6 +177,60 @@ sub create_fsm_module ($class, %args) {
     fsm_debug("FSM module created successfully", 1);
     fsm_trace_exit('Semantic FSM module created', 2);
     return $fsm_module;
+}
+
+sub _direct_root_body_items ($class, %args) {
+    my $raw_ast = $args{raw_ast};
+    return undef unless ref($raw_ast) eq 'ARRAY';
+
+    my $source_info = $args{source_info}
+        || $class->classify_source_ast($raw_ast);
+    my $kind = $source_info->{kind} // '';
+    return undef unless $kind eq 'fsm' || $kind eq 'dt';
+
+    my $header = $source_info->{header} // '';
+
+    if (@$raw_ast > 0 && !ref($raw_ast->[0])) {
+        if ($header =~ /^\?(?:fsm|dt|mod|module):/) {
+            return ref($raw_ast->[1]) eq 'ARRAY' ? $raw_ast->[1] : undef;
+        }
+
+        if ($header eq '+fsm' && ref($raw_ast->[1]) eq 'ARRAY') {
+            my @body = @{$raw_ast->[1]} > 1 ? @{$raw_ast->[1]}[1 .. $#{$raw_ast->[1]}] : ();
+            return \@body;
+        }
+    }
+
+    if (@$raw_ast > 0 && ref($raw_ast->[0]) eq 'ARRAY') {
+        my $first = $raw_ast->[0];
+        my $first_header = $first->[0];
+
+        if (defined($first_header) && !ref($first_header) && $first_header =~ /^\?(?:fsm|dt|mod|module):/) {
+            return ref($first->[1]) eq 'ARRAY' ? $first->[1] : undef;
+        }
+
+        if (defined($first_header) && !ref($first_header) && $first_header eq '+fsm') {
+            if (@$raw_ast == 1) {
+                my $payload = $first->[1];
+                return [] unless ref($payload) eq 'ARRAY';
+                my @body = @$payload > 1 ? @$payload[1 .. $#$payload] : ();
+                return \@body;
+            }
+
+            my @body = @$raw_ast > 1 ? @$raw_ast[1 .. $#$raw_ast] : ();
+            return \@body;
+        }
+    }
+
+    return undef;
+}
+
+sub _is_legacy_empty_size_section ($class, $node) {
+    return 0 unless ref($node) eq 'ARRAY';
+    return 0 unless defined($node->[0]) && !ref($node->[0]) && $node->[0] eq '+size';
+    return 1 if @$node == 1;
+    return 1 if @$node == 2 && !defined($node->[1]);
+    return 0;
 }
 
 1;
