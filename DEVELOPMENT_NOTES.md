@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: CLI entrypoint failures now keep requested-source and output-file context
+- Switched back to the visible `R10` lane after the recent `R12` corpus streak and tightened the CLI failure shape before the pipeline even starts.
+- Landed behavior:
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now wraps unresolved source-lookup failures with `Requested source: '...'`,
+  - output-open failures now keep both `Source file: '...'` and `Output file: '...'` before the underlying open/write diagnostic,
+  - [t/250-cli-entrypoint-file-context.t](/Users/richarddje/Documents/github/fsmgen/t/250-cli-entrypoint-file-context.t) now locks both failure families,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents those pre-pipeline CLI artifact labels beside the later source-local pipeline diagnostics.
+- Why this is worth shipping:
+  - users hit missing-input and output-path failures by hand all the time,
+  - those failures happen before the richer pipeline provenance layer can help,
+  - and this keeps the terminal experience more consistent instead of having one polished diagnostic family and one older raw family.
+
 ## 2026-04-01: the corpus now includes a static malformed-language expected-failure asset
 - Widened the visible `R12` catalog so `expected_failure` is no longer only about strict-mode compatibility cuts.
 - Landed behavior:

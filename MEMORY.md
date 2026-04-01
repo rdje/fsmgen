@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: CLI entrypoint failures now keep requested-source and output-file context
+- Switched back to the visible `R10` lane after the recent `R12` streak and widened the CLI error shape one step earlier in the flow.
+- Important continuity note:
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prefixes unresolved source-lookup failures with `Requested source: '...'` instead of surfacing only the raw search failure body,
+  - output-open failures now also keep `Source file: '...'` plus `Output file: '...'` before the underlying `Cannot write to output file:` diagnostic,
+  - [t/250-cli-entrypoint-file-context.t](/Users/richarddje/Documents/github/fsmgen/t/250-cli-entrypoint-file-context.t) now locks both pre-pipeline CLI failure families,
+  - and this is explicitly a pre-pipeline artifact-context slice, not a claim that deeper parse/generation provenance is complete.
+
 ## 2026-04-01: the corpus now includes a static malformed-language expected-failure asset
 - Widened the `R12` catalog again so `expected_failure` no longer means only “strict-mode legacy root rejection.”
 - Important continuity note:

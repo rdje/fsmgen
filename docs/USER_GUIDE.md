@@ -519,6 +519,9 @@ Boundary note:
 - The active toolchain now treats unsupported tagged roots as out of support at the top-level boundary, not as accidental containers for live FSM parsing.
 - Bare top-level FSM content is now also rejected through an explicit source-root boundary instead of the older generic “expected `?fsm:name` or `+fsm`” parser error.
 - Top-level pipeline and CLI failures now also keep a `Source file: '...'` line so parse/support-tier failures stay source-local in larger runs.
+- CLI entrypoint failures that happen before pipeline generation now also keep explicit artifact context instead of only a raw one-line failure:
+  - unresolved source lookup failures now keep `Requested source: '...'`,
+  - and output-open failures now keep both `Source file: '...'` and `Output file: '...'`.
 - CLI failure output now also suppresses raw Perl `confess` stack traces for ordinary string diagnostics, so those same source-local messages stay readable instead of expanding into call-frame noise.
 - Generated-child realization failures now keep the same source-local framing too:
   - external child failures keep the child `Source file: '...'` plus a `Parent composition source: '...'` line,

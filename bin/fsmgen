@@ -27,7 +27,10 @@ sub resolve_fsm_file {
     if ($fsm_input =~ m{/}) {
         # Path specified - don't search FSMLIB, use path as-is
         unless (-f $fsm_input) {
-            die "Error: FSM file not found at specified path: $fsm_input\n";
+            die format_cli_artifact_error(
+                "Error: FSM file not found at specified path: $fsm_input\n",
+                ['Requested source', $fsm_input],
+            );
         }
         return $fsm_input;
     }
@@ -104,7 +107,10 @@ sub resolve_fsm_file {
         }
     }
     
-    die $error_msg;
+    die format_cli_artifact_error(
+        $error_msg,
+        ['Requested source', $fsm_input],
+    );
 }
 
 sub shared_endpoint_binding_summary {
@@ -126,6 +132,18 @@ sub normalize_cli_error_text {
     $text =~ s/\n{3,}/\n\n/g;
     $text =~ s/\s+\z//s;
     return $text . "\n";
+}
+
+sub format_cli_artifact_error {
+    my ($message, @artifacts) = @_;
+
+    my $text = normalize_cli_error_text($message);
+    my $prefix = join '', map {
+        my ($label, $value) = @{$_};
+        "$label: '$value'\n";
+    } @artifacts;
+
+    return $prefix . $text;
 }
 
 # Command line options
@@ -444,7 +462,11 @@ unless ($quiet) {
 }
 
 # Save to file
-open my $fh, '>', $output_file or die "Cannot write to $output_file: $!\n";
+open my $fh, '>', $output_file or die format_cli_artifact_error(
+    "Cannot write to output file: $!\n",
+    ['Source file', $fsm_file],
+    ['Output file', $output_file],
+);
 print $fh $hdl_code;
 close $fh;
 

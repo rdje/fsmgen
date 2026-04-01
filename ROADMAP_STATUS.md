@@ -640,6 +640,10 @@ Done:
   - sidecar `.rtlif` failures now keep `RTL metadata file: 'module.rtlif'`, `Parent composition source: 'top_source.fsm'`, and `RTL child module: '?rtl' 'module_name'`,
   - embedded `?rtlif` failures now keep `Source file: 'top_source.fsm'` plus the same RTL-child identity line,
   - and [t/243-composition-rtl-child-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/243-composition-rtl-child-diagnostic-context.t) now locks that boundary through both pipeline and CLI entry points.
+- The next bounded widening step is now also shipped through pre-pipeline CLI entrypoint failures:
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prefixes unresolved source-lookup failures with `Requested source: '...'`,
+  - output-open failures now keep both `Source file: '...'` and `Output file: '...'` before the underlying write/open diagnostic,
+  - and [t/250-cli-entrypoint-file-context.t](/Users/richarddje/Documents/github/fsmgen/t/250-cli-entrypoint-file-context.t) now locks both entrypoint failure families without raw Perl script-boundary noise.
 Left:
 - Define the next provenance-carrying boundaries and upgrade key diagnostics.
 - Add regression coverage for error shape and location reporting.
