@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: missing external child failures now name the expected child artifact
+- Continued the visible `R10` lane by tightening unresolved external `?fsmc` / `?dtc` lookup instead of leaving missing child-source resolution slightly less actionable than wrong-kind child failures or missing `.rtlif` sidecars.
+- Important continuity note:
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now wraps unresolved external child lookup with `Source file: '...'`, `Expected child source file: 'source_name.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`,
+  - that means missing child lookup no longer stops at only the containing composition path plus generated-child identity while still avoiding a fake resolved `Child source file:` artifact,
+  - [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) now also extracts that expected-child filename, so non-quiet composition failure summaries can show the missing external `.fsm` target directly,
+  - [t/256-composition-missing-child-source-artifact-context.t](/Users/richarddje/Documents/github/fsmgen/t/256-composition-missing-child-source-artifact-context.t) now locks the raw pipeline and CLI diagnostic shape for both missing `?fsmc` and missing `?dtc` lookup,
+  - and the missing-child summary subtests in [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now lock the new `Expected child source file:` summary artifact too.
+
 ## 2026-04-01: the corpus now includes a composition-contract expected-failure asset
 - Continued the visible `R12` lane by widening support accounting beyond strict-mode and direct language-contract rejection into one real composition-contract rejection family.
 - Important continuity note:

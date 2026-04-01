@@ -156,6 +156,7 @@ sub artifact_excerpt ($class, $summary_text) {
     return undef unless defined $summary_text && length $summary_text;
 
     my @patterns = (
+        [ qr/Expected child source file:\s+'([^']+)'/s, sub { return ('Expected child source file', "'$_[0]'"); } ],
         [ qr/resolves '\?(?:fsmc|dtc)' child '[^']+' to '([^']+)'/s, sub { return ('Child source file', "'$_[0]'"); } ],
         [ qr/Expected RTL metadata file:\s+'([^']+)'/s, sub { return ('Expected RTL metadata file', "'$_[0]'"); } ],
         [ qr/no declared interface metadata file '([^']+)' was found/s, sub { return ('Expected RTL metadata file', "'$_[0]'"); } ],

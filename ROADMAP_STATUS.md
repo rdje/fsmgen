@@ -644,6 +644,12 @@ Done:
   - wrong-kind external child failures now keep `Source file: 'child_source.fsm'`, `Parent composition source: 'top_source.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`,
   - unresolved external child failures now keep `Source file: 'top_source.fsm'` plus the same generated-child identity line without inventing a nonexistent child-file artifact,
   - and [t/244-composition-child-resolution-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/244-composition-child-resolution-diagnostic-context.t) now locks both failure families through pipeline and CLI entry points.
+- The next bounded widening step is now also shipped through missing external generated-child lookup:
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now also distinguishes unresolved external `?fsmc` / `?dtc` lookup from resolved wrong-kind child failures at the artifact-label level,
+  - missing external child failures now keep `Source file: 'top_source.fsm'`, `Expected child source file: 'source_name.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'` instead of stopping at only the containing composition path plus generated-child identity,
+  - [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) now extracts that same expected-child filename, so non-quiet composition failure summaries can surface the missing external `.fsm` target directly,
+  - [t/256-composition-missing-child-source-artifact-context.t](/Users/richarddje/Documents/github/fsmgen/t/256-composition-missing-child-source-artifact-context.t) now locks the raw pipeline and CLI diagnostic shape for both missing `?fsmc` and missing `?dtc` lookup,
+  - and the missing-child summary coverage in [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks the new `Expected child source file:` summary artifact too.
 - The next bounded widening step is now also shipped through RTL child metadata loading:
   - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now wraps external and embedded `?rtl` metadata failures with stable source-local context,
   - sidecar `.rtlif` failures now keep `RTL metadata file: 'module.rtlif'`, `Parent composition source: 'top_source.fsm'`, and `RTL child module: '?rtl' 'module_name'`,

@@ -537,7 +537,7 @@ Boundary note:
   - embedded child failures keep the containing composition `Source file: '...'`,
   - both now keep a `Generated child source: '?...c' 'name'` line before the underlying child diagnostic,
   - wrong-kind external child failures now keep that same resolved-child and parent-composition framing instead of surfacing only the wrong-kind note,
-  - and missing external child failures now keep the containing composition `Source file: '...'` plus the generated-child identity line instead of surfacing only the unresolved-child search text.
+  - and missing external child failures now keep the containing composition `Source file: '...'`, an `Expected child source file: 'source_name.fsm'` line, plus the generated-child identity line instead of surfacing only the unresolved-child search text.
 - External `?rtl` metadata failures now keep matching source-local framing too:
   - unresolved sidecar `.rtlif` failures keep `Source file: '...'` plus `Expected RTL metadata file: 'module.rtlif'`,
   - resolved sidecar `.rtlif` failures keep `RTL metadata file: '...'` plus `Parent composition source: '...'`,

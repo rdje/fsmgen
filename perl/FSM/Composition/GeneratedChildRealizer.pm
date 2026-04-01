@@ -322,6 +322,7 @@ sub _load_external_generated_child_source ($class, %args) {
         fsm_file => $fsm_file,
         source_name => $source_name,
         declared_child_kind => $child_kind,
+        expected_child_source_file => $class->_expected_child_source_file($source_name),
         code => sub {
             return $class->resolve_external_generated_child_source_path(%args);
         },
@@ -380,7 +381,7 @@ sub _with_generated_child_source_context ($class, %args) {
 
     my $error = $@;
     die $error if ref($error);
-    die $error if $error =~ /(?:^|\n)Source file:\s+'/s;
+    die $error if $error =~ /(?:^|\n)(?:Source file|Expected child source file):\s+'/s;
 
     my $message = '';
     if (defined($args{child_source_path}) && length($args{child_source_path})) {
@@ -391,10 +392,18 @@ sub _with_generated_child_source_context ($class, %args) {
     }
     else {
         $message .= "Source file: '$fsm_file'\n";
+        if (defined($args{expected_child_source_file}) && length($args{expected_child_source_file})) {
+            $message .= "Expected child source file: '$args{expected_child_source_file}'\n";
+        }
     }
     $message .= "Generated child source: '$declared_child_kind' '$source_name'\n";
 
     die $message.$error;
+}
+
+sub _expected_child_source_file ($class, $source_name) {
+    return $source_name if $source_name =~ /\.fsm$/i;
+    return "$source_name.fsm";
 }
 
 sub _wrong_kind_note ($class, $child_kind, $child_root_kind) {

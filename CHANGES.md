@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-01
+### missing external child failures now name the expected child artifact
+- Updated [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so unresolved external `?fsmc` / `?dtc` lookup failures now keep `Source file: '...'`, `Expected child source file: 'source_name.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'` instead of surfacing only the raw search text.
+- Updated [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) so non-quiet composition failure summaries now classify missing external child lookup as an `Expected child source file` artifact instead of leaving it artifact-less.
+- Added [t/256-composition-missing-child-source-artifact-context.t](/Users/richarddje/Documents/github/fsmgen/t/256-composition-missing-child-source-artifact-context.t) and updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both the raw pipeline/CLI diagnostic shape and the new summary artifact line.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this visible `R10` slice is preserved in the continuity trail.
+
 ### regression corpus now includes one composition-contract expected-failure asset
 - Added [t/corpus/missing_rtl_metadata_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_rtl_metadata_top.fsm) as the first static composition-top expected-failure corpus asset for the missing-`.rtlif` sidecar boundary.
 - Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) so `contract.missing_rtl_metadata_sidecar` is now classified under the new `composition_contract_rejection_pipeline_cli` coverage bucket.

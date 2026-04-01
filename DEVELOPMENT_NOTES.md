@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: unresolved external generated-child lookup now keeps an expected-artifact label
+- Continued the visible `R10` lane by tightening the missing-child `?fsmc` / `?dtc` case instead of letting unresolved external child lookup remain slightly less actionable than wrong-kind child realization or missing `.rtlif` sidecars.
+- Landed behavior:
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now distinguishes unresolved external child lookup from resolved wrong-kind child failures at the artifact-label level,
+  - missing external child lookup now keeps `Source file: '...'`, `Expected child source file: 'source_name.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`,
+  - resolved wrong-kind external child failures still keep the concrete `Child source file: 'resolved/path/source.fsm'` plus `Parent composition source: '...'`,
+  - and [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) now turns that same expected child filename into a first-class failure-summary artifact.
+- Why this is worth shipping:
+  - it makes missing external child lookup as actionable as the already-shipped wrong-kind child and missing-sidecar `.rtlif` cases,
+  - it keeps the wording honest by distinguishing “expected child file was not found” from “resolved child file exists but has the wrong root kind,”
+  - and it improves both the raw failure and the non-quiet composition summary without changing the underlying composition contract.
+
 ## 2026-04-01: `R12` now counts one composition-contract rejection family too
 - Continued the visible `R12` lane by widening the corpus into one static composition-top expected-failure asset instead of keeping all negative entries limited to strict-mode or direct language-contract cases.
 - Landed behavior:
