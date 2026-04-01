@@ -591,6 +591,7 @@ Boundary note:
   - strict mode also rejects the legacy `+fsm` root family when it is used specifically as a `?fsmc` child root and requires canonical `?fsm:` there,
   - strict mode also rejects `?mod:` / `?module:` when they are used specifically as `?dtc` child roots and requires canonical `?dt:` there,
   - strict mode also rejects the legacy empty `(+size)` no-op section and requires either explicit width entries or no `+size` section at all,
+  - strict mode also rejects the legacy explicit `(+system (clock clk) (asreset rstn))` spelling and currently requires the canonical explicit `(+system (clock clk) (sreset rstn))` form when `+system` is present,
   - requires the modern explicit `?fsm:module_name` root form for FSM sources,
   - and otherwise leaves the currently accepted `?dt:`, `?mod:`, `?module:`, and `?top:` roots unchanged while their broader contracts continue to settle.
 - In practice:
@@ -598,7 +599,7 @@ Boundary note:
   - strict mode currently accepts `?fsm:name`, `?dt:name`, `?mod:name`, `?module:name`, and `?top:name`,
   - strict mode currently accepts only canonical `?fsm:name` roots under `?fsmc`,
   - strict mode currently accepts only canonical `?dt:name` roots under `?dtc`,
-  - and strict mode currently rejects legacy `+fsm` under `?fsmc`, `?mod:` / `?module:` under `?dtc`, and empty `(+size)` no-op sections with targeted migration hints.
+  - and strict mode currently rejects legacy `+fsm` under `?fsmc`, `?mod:` / `?module:` under `?dtc`, empty `(+size)` no-op sections, and explicit `(+system ... (asreset rstn))` with targeted migration hints.
 - Strict-mode failures now also keep the same `Source file: '...'` context line as other top-level pipeline failures.
 - This is the first support-tier enforcement slice, not the final full strict-mode surface.
 
@@ -723,7 +724,7 @@ Accepted form:
 )
 ```
 
-Also accepted:
+Also accepted in default mode:
 ```lisp
 (+system
   (clock clk)
@@ -743,6 +744,10 @@ Current meaning:
   - default clock domain `clk`,
   - default reset domain `rstn`,
   - and typed system signals for `clk` and `rstn`.
+- Strict mode narrows the explicit reset spelling further:
+  - default mode still accepts `(asreset rstn)` as compatibility residue,
+  - strict mode rejects `(asreset rstn)`,
+  - and strict mode currently requires `(sreset rstn)` when an explicit `+system` reset declaration is present.
 
 Current boundary:
 - Supported:
@@ -777,6 +782,7 @@ Boundary note:
 - This slice makes the conventional shared-system declaration explicit and regression-backed.
 - It accepts the two current shipped explicit `+system` reset declarations already present in the active tree, but it does not yet widen the contract into arbitrary system metadata, custom clock/reset names, or richer reset-mode differentiation.
 - The accepted explicit `(?fsm:name ... (+system ...))` spelling `(sreset rstn)` is compatibility residue from the shipped tree, not a polarity-aware naming recommendation.
+- Strict mode now treats the alternate explicit `(asreset rstn)` spelling as compatibility residue too and narrows the explicit `+system` reset spelling to `(sreset rstn)` for now.
 - The forward/default async-reset convention remains `rst_n`, including the implicit no-`+system` path and the planned `?top:name` / sequential `?dt:name` lanes.
 - The active generator now also has one explicit implicit-default rule:
   - if no `+system` section is present at all, generation uses `clk` plus asynchronous active-low `rst_n`.

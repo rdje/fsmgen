@@ -103,6 +103,16 @@ sub enforce_strict_source_boundary ($class, %args) {
               . "or re-run without strict mode if you need legacy compatibility. "
               . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
         }
+
+        for my $item (@$body_items) {
+            next unless $class->_has_legacy_asreset_system_entry($item);
+
+            confess
+                "Strict mode rejects the legacy '(asreset rstn)' +system spelling in source '$source_label'. "
+              . "Use the canonical '(sreset rstn)' form inside '+system', "
+              . "or re-run without strict mode if you need legacy compatibility. "
+              . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+        }
     }
 }
 
@@ -230,6 +240,20 @@ sub _is_legacy_empty_size_section ($class, $node) {
     return 0 unless defined($node->[0]) && !ref($node->[0]) && $node->[0] eq '+size';
     return 1 if @$node == 1;
     return 1 if @$node == 2 && !defined($node->[1]);
+    return 0;
+}
+
+sub _has_legacy_asreset_system_entry ($class, $node) {
+    return 0 unless ref($node) eq 'ARRAY';
+    return 0 unless defined($node->[0]) && !ref($node->[0]) && $node->[0] eq '+system';
+    return 0 unless ref($node->[1]) eq 'ARRAY';
+
+    for my $entry (@{$node->[1]}) {
+        next unless ref($entry) eq 'ARRAY';
+        next unless defined($entry->[0]) && !ref($entry->[0]);
+        return 1 if $entry->[0] eq 'asreset';
+    }
+
     return 0;
 }
 

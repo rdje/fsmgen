@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: strict mode now rejects explicit `(asreset rstn)` too
+- Continued the visible `R9` lane by widening strict mode beyond the first root-family and empty-`(+size)` cuts into another explicit section-level compatibility-residue rule.
+- Important continuity note:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now rejects the legacy explicit `(asreset rstn)` `+system` spelling in strict mode while leaving default-mode compatibility intact,
+  - that check lives in the same shared direct-root strict owner as the earlier empty-`(+size)` rule, so it reaches both top-level direct roots and generated child sources,
+  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now passes `raw_ast` into the shared top-level strict hook too, so section-level strict cuts fire consistently at the file-orchestration boundary,
+  - and [t/254-strict-mode-asreset-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/254-strict-mode-asreset-boundary.t) now locks the new boundary through the shared frontend plus pipeline and CLI entry points for both direct roots and external `?fsmc` child sources.
+
 ## 2026-04-01: the corpus now accounts for child-root compatibility residue too
 - Continued the visible `R12` lane by widening support accounting into generated-child source-root residue instead of stopping at direct-root and section-level legacy cases.
 - Important continuity note:

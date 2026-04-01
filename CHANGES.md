@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-01
+### strict mode now rejects explicit `(+system ... (asreset rstn))`
+- Updated [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so strict mode now rejects the legacy explicit `(asreset rstn)` `+system` spelling while leaving default-mode compatibility intact.
+- Updated [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) so the shared top-level strict hook now receives `raw_ast`, which lets section-level strict boundaries fire consistently at the file-orchestration surface instead of only later during semantic-module creation.
+- Added [t/254-strict-mode-asreset-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/254-strict-mode-asreset-boundary.t) to lock the new boundary through the shared frontend plus pipeline and CLI entry points for both direct roots and external `?fsmc` child sources.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this visible `R9` slice is preserved in the continuity trail.
+
 ### regression corpus now accounts for child-root compatibility residue too
 - Added [t/corpus/legacy_fsm_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_top.fsm), [t/corpus/legacy_fsm_child_root_src.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_src.fsm), [t/corpus/legacy_dt_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_top.fsm), and [t/corpus/legacy_dt_child_root_src.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_src.fsm) as the first explicit child-root compatibility corpus fixtures.
 - Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) so the catalog now records both default-mode compatibility and strict-mode expected-rejection contracts for those `?fsmc` / `?dtc` child-root fixtures, together with explicit `search_path_relpaths`.

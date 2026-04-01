@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: strict mode now treats explicit `asreset` as compatibility residue
+- Continued the visible `R9` lane by widening strict-mode enforcement into another explicit `+system` compatibility-residue cut instead of inventing a new syntax family.
+- Landed behavior:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now scans direct-root body items for explicit `(asreset rstn)` inside `+system` and rejects that spelling in strict mode with a canonical `(sreset rstn)` migration hint,
+  - the same shared strict owner still leaves default-mode compatibility intact and still applies when semantic direct-root parsing is reached through generated child realization,
+  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now passes `raw_ast` into the shared top-level strict hook too, which means section-level strict rules no longer rely on the later semantic-module creation path to fire,
+  - and [t/254-strict-mode-asreset-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/254-strict-mode-asreset-boundary.t) now locks both the direct-root and external `?fsmc` child-source boundary shapes through pipeline and CLI.
+- Why this is worth shipping:
+  - it keeps `R9` moving in the same pattern as the earlier empty-`(+size)` cut: default-mode compatibility remains, strict mode narrows to one current authored spelling,
+  - it turns another known compatibility residue into an explicit support-tier choice instead of leaving it only as quietly accepted parser behavior,
+  - and it does that without reopening the broader unsettled `?mod` / `?module` or richer `+system` semantic questions.
+
 ## 2026-04-01: `R12` widened into child-root compatibility accounting
 - Continued the visible `R12` lane by moving support accounting into generated-child source-root compatibility residue instead of keeping it limited to direct roots and section no-ops.
 - Landed behavior:

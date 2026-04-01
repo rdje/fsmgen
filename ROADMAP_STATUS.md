@@ -600,6 +600,11 @@ Done:
   - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now also rejects the legacy empty `(+size)` no-op section in strict mode while leaving default-mode compatibility intact,
   - that check lives in the shared direct-root strict owner so it reaches top-level sources and generated child sources through the same semantic-module path,
   - and [t/251-strict-mode-empty-size-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/251-strict-mode-empty-size-boundary.t) now locks the boundary through the shared frontend plus pipeline and CLI entry points.
+- The next strict-mode section-level compatibility cut is now also shipped:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now also rejects the legacy explicit `(asreset rstn)` `+system` spelling in strict mode while leaving default-mode compatibility intact,
+  - that check lives in the same shared direct-root strict owner so it reaches top-level sources and generated child sources through the same semantic-module path,
+  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now passes the raw AST into that shared top-level strict hook too, so the section-level boundary fires consistently at the file-orchestration surface instead of only later during semantic-module creation,
+  - and [t/254-strict-mode-asreset-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/254-strict-mode-asreset-boundary.t) now locks the boundary through the shared frontend plus pipeline and CLI entry points for both direct roots and external `?fsmc` child sources.
 - [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks that corrected root-family behavior end to end:
   - strict mode still accepts `?dt:name` roots,
   - strict mode still accepts top-level `?mod:name` and `?module:name` roots on the current shared single-module path,
@@ -609,7 +614,7 @@ Done:
   - and those failures now keep full child-source context with a canonical `?fsm:` migration hint.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the initial strict-mode boundary explicitly.
 Left:
-- Widen strict-mode enforcement beyond the current canonical-root-family and first section-level compatibility cuts into more of the fully supported-vs-compatibility split.
+- Widen strict-mode enforcement beyond the current canonical-root-family and current section-level compatibility cuts into more of the fully supported-vs-compatibility split.
 - Decide the next high-signal support-tier cuts after the current legacy root-family slices.
 - Continue documenting strict-mode behavior as the supported-tier boundary widens.
 Exit criteria:
