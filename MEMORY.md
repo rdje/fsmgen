@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: the first corpus catalog now carries explicit non-supported classifications too
+- Widened the new `R12` catalog beyond `supported_smoke` so the support story now includes one explicit compatibility-retained entry and one explicit expected rejection.
+- Important continuity note:
+  - [fsm/mipicsi2_txccore_ulp.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_txccore_ulp.fsm) is now used as the first real dual-contract asset in [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm),
+  - `legacy.mipicsi2_txccore_ulp.default_compat` is classified as `legacy_out_of_scope` and must still compile through pipeline and CLI in default mode,
+  - `legacy.mipicsi2_txccore_ulp.strict_rejection` is classified as `expected_failure` and must keep the strict `+fsm` rejection boundary through pipeline and CLI,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now locks those two first non-supported contracts,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now explains that corpus entries are contracts, so the same file may appear more than once when the supported behavior differs by mode.
+
 ## 2026-04-01: first protocol corpus slice now has explicit catalog/accounting structure
 - Strengthened the first `R12` slice so it is not just one hardcoded smoke test anymore.
 - Important continuity note:

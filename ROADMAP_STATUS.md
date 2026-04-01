@@ -1367,9 +1367,14 @@ Done:
   - [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t) now reads that catalog instead of hardcoding the first protocol cases inline,
   - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now locks catalog uniqueness, classification, coverage buckets, and real-asset existence,
   - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now gives that same first slice a human-readable support-accounting note.
+- The first slice no longer only covers `supported_smoke`:
+  - the real shipped legacy `+fsm` asset [fsm/mipicsi2_txccore_ulp.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_txccore_ulp.fsm) now appears twice in the catalog under two explicit contracts,
+  - `legacy.mipicsi2_txccore_ulp.default_compat` is classified as `legacy_out_of_scope` and must still compile through pipeline and CLI in default mode,
+  - `legacy.mipicsi2_txccore_ulp.strict_rejection` is classified as `expected_failure` and must keep the strict `+fsm` rejection boundary through pipeline and CLI,
+  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now locks those first non-supported classifications end to end.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
-- Add expected-failure and legacy-out-of-scope cases beside supported smoke cases.
+- Widen expected-failure and legacy-out-of-scope coverage beyond the first explicit compatibility/rejection pair.
 - Widen golden-output or semantic-check coverage where simple compile smoke is not enough.
 Exit criteria:
 - Support claims can be backed by a maintained corpus and explicit classification, not only by ad hoc focused tests.

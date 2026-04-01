@@ -47,6 +47,25 @@ my @REGRESSION_CORPUS = (
         expected_instance_count => 2,
         expected_child_modules => ['apb_requester', 'apb_completer'],
     },
+    {
+        id => 'legacy.mipicsi2_txccore_ulp.default_compat',
+        relpath => 'fsm/mipicsi2_txccore_ulp.fsm',
+        family => 'legacy_fixture',
+        classification => 'legacy_out_of_scope',
+        coverage => 'legacy_root_default_pipeline_cli',
+        source_kind => 'fsm',
+        expected_module_name => 'mipicsi2_txccore_ulp',
+    },
+    {
+        id => 'legacy.mipicsi2_txccore_ulp.strict_rejection',
+        relpath => 'fsm/mipicsi2_txccore_ulp.fsm',
+        family => 'legacy_fixture',
+        classification => 'expected_failure',
+        coverage => 'strict_root_rejection_pipeline_cli',
+        source_kind => 'fsm',
+        expected_error_pattern => qr/Strict mode rejects the legacy '\+fsm' root family/,
+        expected_hint_pattern => qr/\?fsm:module_name/,
+    },
 );
 
 sub regression_corpus_entries {

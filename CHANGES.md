@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-01
+### regression corpus now records one compatibility-retained legacy asset and one strict expected rejection
+- Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) so the first catalog now includes two explicit non-supported classifications for the real shipped legacy `+fsm` asset [fsm/mipicsi2_txccore_ulp.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_txccore_ulp.fsm).
+- Added [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) to lock both contracts end to end:
+  - default-mode compatibility as `legacy_out_of_scope`
+  - and strict-mode `+fsm` rejection as `expected_failure`
+- Updated [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) so the catalog now treats the contract entry, not the raw file path, as the accounting unit.
+- Updated [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the broader `R12` support-accounting story stays honest.
+
 ### protocol corpus now has a machine-checked catalog
 - Added [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) as the first machine-checked `R12` catalog for named regression entries, including classification and coverage buckets.
 - Updated [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t) so the first imported protocol slice is now driven from that catalog instead of hardcoding the cases inline.

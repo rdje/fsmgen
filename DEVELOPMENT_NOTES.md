@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: the first corpus catalog now carries explicit non-supported classifications too
+- Widened the visible `R12` catalog so it no longer only says what we support; it now also says one concrete thing we retain only as compatibility and one concrete thing we intentionally reject.
+- Landed behavior:
+  - [fsm/mipicsi2_txccore_ulp.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_txccore_ulp.fsm) is now the first real dual-contract asset in [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm),
+  - `legacy.mipicsi2_txccore_ulp.default_compat` is classified as `legacy_out_of_scope` and still compiles through pipeline and CLI in default mode,
+  - `legacy.mipicsi2_txccore_ulp.strict_rejection` is classified as `expected_failure` and now locks the strict `+fsm` rejection path through pipeline and CLI,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now allows repeated file paths when the contract differs and instead treats the catalog entry as the unit of support accounting,
+  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now exercises those first non-supported classifications end to end.
+- Why this is worth shipping:
+  - support accounting is more honest when it says both “supported here” and “not part of supported surface here,”
+  - the same repo asset can now carry multiple explicit contracts instead of forcing everything into one bucket,
+  - and `R12` now has the first real proof that the catalog can describe compatibility residue and deliberate rejection, not only passing examples.
+
 ## 2026-04-01: first protocol corpus slice now has explicit catalog/accounting structure
 - Strengthened the visible `R12` start so it is not just one smoke test over four files.
 - Landed behavior:
