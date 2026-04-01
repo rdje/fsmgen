@@ -524,6 +524,10 @@ Boundary note:
   - unresolved source lookup failures now keep `Requested source: '...'`,
   - and output-open failures now keep both `Source file: '...'` and `Output file: '...'`.
 - CLI failure output now also suppresses raw Perl `confess` stack traces for ordinary string diagnostics, so those same source-local messages stay readable instead of expanding into call-frame noise.
+- Typed extension hook failures now keep matching artifact context too:
+  - `Source file: '...'` for the failing source,
+  - `Extension module: 'Module::Name'` for the failing extension,
+  - and `Extension stage: 'after_parse_source'` or `Extension stage: 'after_generate_result'` before the underlying extension diagnostic.
 - Generated-child realization failures now keep the same source-local framing too:
   - external child failures keep the child `Source file: '...'` plus a `Parent composition source: '...'` line,
   - embedded child failures keep the containing composition `Source file: '...'`,
@@ -1271,6 +1275,7 @@ Practical rule:
 - if you need explicit parsed-source inspection, use `after_parse_source($context)`,
 - if you need explicit CLI loading, use repeated `--extension-module Module::Name` with modules already on `@INC`,
 - if you want to keep module lists out of the command line, use repeated `--extension-config <file>` with lines of the form `module Module::Name`,
+- if a typed extension hook fails, the current pipeline/CLI now keeps `Source file:`, `Extension module:`, and `Extension stage:` labels around that failure so the failing hook stays source-local and actionable,
 - if you need `.plg` discovery, auto-discovery, richer extension parameters, or broad mid-pipeline mutation hooks, that is not part of the shipped boundary.
 
 See [docs/EXTENSION_MODEL.md](/Users/richarddje/Documents/github/fsmgen/docs/EXTENSION_MODEL.md) for the architecture note and exact current contract.

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: typed extension hook failures now keep source-local context too
+- Continued the visible `R10` lane by widening the same artifact-label pattern into typed extension hook failures instead of letting those failures bypass the newer source-local wrappers.
+- Landed behavior:
+  - [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm) now annotates ordinary hook failures with `Extension module: '...'` and `Extension stage: '...'`,
+  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now runs both `after_parse_source` and `after_generate_result` under the same `Source file: '...'` wrapper used by the earlier top-level diagnostics slices,
+  - [t/252-extension-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/252-extension-diagnostic-context.t) now locks parse-hook and result-hook failure shapes through both pipeline and CLI entry points,
+  - and [t/lib/FSM/TestExtension/Exploding.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/TestExtension/Exploding.pm) now provides the dedicated exploding extension used for that regression coverage.
+- Why this is worth shipping:
+  - extension failures are user-visible when teams start embedding or customizing FSMGen, so they should not fall back to raw hook fallout after we already cleaned the main pipeline paths,
+  - the new shape makes extension failures actionable immediately by naming the failing source, the failing module, and the failing hook stage,
+  - and it keeps the broader `R10` story coherent: one reusable artifact-label pattern is now applied across more of the live pipeline surface.
+
 ## 2026-04-01: strict mode now rejects the legacy empty `(+size)` no-op
 - Continued the visible `R9` lane by moving beyond root-family cleanup into the first section-level compatibility cut.
 - Landed behavior:

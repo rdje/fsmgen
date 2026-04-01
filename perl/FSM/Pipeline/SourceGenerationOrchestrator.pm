@@ -91,7 +91,10 @@ sub generate_from_file ($class, %args) {
         source_info => $source_info,
         raw_ast => $raw_ast,
     );
-    $pipeline->{extension_registry}->after_parse_source($parse_context);
+    _with_source_file_context($fsm_file, sub {
+        $pipeline->{extension_registry}->after_parse_source($parse_context);
+        return;
+    });
 
     my $result;
     if ($source_info->{kind} && $source_info->{kind} eq 'composition') {
@@ -122,7 +125,10 @@ sub generate_from_file ($class, %args) {
         source_info => $source_info,
         result => $result,
     );
-    $pipeline->{extension_registry}->after_generate_result($result_context);
+    _with_source_file_context($fsm_file, sub {
+        $pipeline->{extension_registry}->after_generate_result($result_context);
+        return;
+    });
 
     fsm_debug("HDL generation pipeline completed successfully", 1);
     fsm_trace_exit("HDL generation complete for '$fsm_file'", 1);

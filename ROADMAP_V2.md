@@ -142,6 +142,7 @@ First bounded slice:
 - then widen that same generated-child pattern through wrong-kind and unresolved external child boundaries so blocked composition child resolution/realization failures keep the same source-local framing instead of dropping back to raw search or wrong-kind text,
 - then carry the same idea into external/embedded `?rtl` metadata loading so sidecar `.rtlif` failures keep the resolved metadata file plus parent composition source while embedded `?rtlif` failures still point back to the containing composition source,
 - and finally bring the same artifact-label idea one step earlier into pre-pipeline CLI entrypoint failures so unresolved source lookup and output-open errors keep concrete requested-source/output-file context too.
+- the next honest widening step after that is to keep the same source-local framing around typed extension hook failures too, so extension errors preserve the failing source path plus the extension module/stage instead of surfacing as raw hook fallout.
 
 Expected result:
 - large `.fsm` files become much easier to debug and review.

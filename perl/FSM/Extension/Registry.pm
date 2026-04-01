@@ -28,7 +28,17 @@ sub extensions ($self) { return $self->{extensions} }
 sub dispatch_hook ($self, $hook_name, $context) {
     for my $extension (@{$self->extensions}) {
         next unless $extension->can($hook_name);
-        $extension->$hook_name($context);
+        my @result = eval { $extension->$hook_name($context) };
+        if (!$@) {
+            next;
+        }
+
+        my $error = $@;
+        die $error if ref($error);
+        die $error if $error =~ /(?:^|\n)Extension module:\s+'/s;
+
+        my $module_name = blessed($extension) || ref($extension) || 'unknown_extension';
+        die "Extension module: '$module_name'\nExtension stage: '$hook_name'\n$error";
     }
 }
 

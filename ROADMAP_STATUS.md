@@ -648,6 +648,10 @@ Done:
   - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prefixes unresolved source-lookup failures with `Requested source: '...'`,
   - output-open failures now keep both `Source file: '...'` and `Output file: '...'` before the underlying write/open diagnostic,
   - and [t/250-cli-entrypoint-file-context.t](/Users/richarddje/Documents/github/fsmgen/t/250-cli-entrypoint-file-context.t) now locks both entrypoint failure families without raw Perl script-boundary noise.
+- The next bounded widening step is now also shipped through typed extension hooks:
+  - [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm) now annotates ordinary hook failures with `Extension module: '...'` plus `Extension stage: '...'`,
+  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now runs both `after_parse_source` and `after_generate_result` under the same `Source file: '...'` wrapper used by other top-level failures,
+  - and [t/252-extension-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/252-extension-diagnostic-context.t) now locks that source-local extension failure shape through both pipeline and CLI entry points.
 Left:
 - Define the next provenance-carrying boundaries and upgrade key diagnostics.
 - Add regression coverage for error shape and location reporting.

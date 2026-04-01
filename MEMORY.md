@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: typed extension hook failures now keep source-local context too
+- Continued the visible `R10` lane by widening the same artifact-label pattern into typed extension hook failures instead of letting those failures fall back to raw hook text.
+- Important continuity note:
+  - [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm) now annotates ordinary extension-hook failures with `Extension module: '...'` and `Extension stage: '...'`,
+  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now runs `after_parse_source` and `after_generate_result` under the same `Source file: '...'` wrapper used by the earlier top-level diagnostic slices,
+  - [t/252-extension-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/252-extension-diagnostic-context.t) now locks that full `Source file` + `Extension module` + `Extension stage` shape through both pipeline and CLI entry points,
+  - and [t/lib/FSM/TestExtension/Exploding.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/TestExtension/Exploding.pm) now exists as the dedicated regression helper for extension-hook failure-shape coverage.
+
 ## 2026-04-01: strict mode now rejects the legacy empty `(+size)` no-op
 - Continued the visible `R9` lane by making the first section-level compatibility-residue cut instead of only tightening root-family boundaries.
 - Important continuity note:

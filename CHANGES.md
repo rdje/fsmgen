@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-01
+### typed extension hook failures now keep source-local context
+- Updated [perl/FSM/Extension/Registry.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Registry.pm) so ordinary typed extension hook failures now keep `Extension module: '...'` and `Extension stage: '...'`.
+- Updated [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) so both `after_parse_source` and `after_generate_result` now run under the same `Source file: '...'` wrapper as other top-level failures.
+- Added [t/lib/FSM/TestExtension/Exploding.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/TestExtension/Exploding.pm) plus [t/252-extension-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/252-extension-diagnostic-context.t) to lock the full extension failure shape through both pipeline and CLI entry points.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this visible `R10` slice is preserved in the continuity trail.
+
 ### strict mode now rejects the legacy empty `(+size)` no-op
 - Updated [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so strict mode now rejects the legacy empty `(+size)` no-op section while leaving default-mode compatibility intact.
 - Added [t/251-strict-mode-empty-size-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/251-strict-mode-empty-size-boundary.t) to lock that boundary through the shared frontend plus pipeline and CLI entry points.
