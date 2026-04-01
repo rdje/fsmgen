@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-02: strict mode now treats the compact top-level `:=` directive as compatibility residue
+- Continued the visible `R9` lane by widening strict mode into the legacy compact init/reset surface instead of keeping strict enforcement limited to root families and the explicit `+system` reset spelling.
+- Landed behavior:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now rejects the compact top-level `(:= signal=value)` directive in strict mode on the current `?fsm:` / `?dt:` path while leaving default-mode compatibility intact,
+  - that boundary lives in the same shared direct-root strict owner as the earlier empty-`(+size)` and explicit-`(asreset rstn)` cuts, so it reaches those direct roots and generated child sources while still leaving top-level `?mod:` / `?module:` roots untouched,
+  - [t/257-strict-mode-compact-init-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/257-strict-mode-compact-init-boundary.t) now locks the new boundary through the shared frontend plus pipeline and CLI entry points for a direct root and an external `?dtc` child,
+  - and the strict diagnostic is intentionally honest that the current shipped strict surface has no canonical replacement for the compact `:=` compatibility form yet.
+- Why this is worth shipping:
+  - it turns another known compatibility residue into an explicit support-tier choice instead of quietly accepting it in the strict lane,
+  - it broadens `R9` further into section-level authored-surface decisions rather than only root-family cleanup,
+  - and it keeps the strict contract truthful by rejecting a compatibility form without pretending a replacement already exists.
+
 ## 2026-04-01: `R12` now counts missing generated-child lookup as composition-contract rejection too
 - Continued the visible `R12` lane by widening the same composition-contract bucket that already covered missing external `.rtlif` sidecars into missing external generated-child source lookup too.
 - Landed behavior:

@@ -89,6 +89,8 @@ sub enforce_strict_source_boundary ($class, %args) {
           . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
     }
 
+    return if $header =~ /^\?(?:mod|module):/;
+
     my $body_items = $class->_direct_root_body_items(
         raw_ast => $args{raw_ast},
         source_info => $source_info,
@@ -111,6 +113,17 @@ sub enforce_strict_source_boundary ($class, %args) {
                 "Strict mode rejects the legacy '(asreset rstn)' +system spelling in source '$source_label'. "
               . "Use the canonical '(sreset rstn)' form inside '+system', "
               . "or re-run without strict mode if you need legacy compatibility. "
+              . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+        }
+
+        for my $item (@$body_items) {
+            next unless $class->_is_legacy_compact_init_directive($item);
+
+            confess
+                "Strict mode rejects the legacy compact '(:= signal=value)' top-level directive in source '$source_label'. "
+              . "This compatibility form has no strict-mode replacement in the current shipped contract; "
+              . "use explicit reset behavior in regular FSM/DT logic if that fits your design, "
+              . "or re-run without strict mode if you still need the compact ':=' surface. "
               . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
         }
     }
@@ -255,6 +268,12 @@ sub _has_legacy_asreset_system_entry ($class, $node) {
     }
 
     return 0;
+}
+
+sub _is_legacy_compact_init_directive ($class, $node) {
+    return 0 unless ref($node) eq 'ARRAY';
+    return 0 unless defined($node->[0]) && !ref($node->[0]) && $node->[0] eq ':=';
+    return 1;
 }
 
 1;

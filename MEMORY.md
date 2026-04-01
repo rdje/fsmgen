@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-02: strict mode now rejects the compact top-level `:=` directive too
+- Continued the visible `R9` lane by widening strict mode into another section-level compatibility cut instead of staying only on root families and `+system` residue.
+- Important continuity note:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now rejects the legacy compact top-level `(:= signal=value)` directive in strict mode on the current `?fsm:` / `?dt:` direct-root path while leaving default-mode compatibility unchanged,
+  - that check lives in the shared direct-root strict owner, so it reaches those direct roots and generated child sources through the same semantic-module path while still leaving top-level `?mod:` / `?module:` roots unchanged,
+  - [t/257-strict-mode-compact-init-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/257-strict-mode-compact-init-boundary.t) now locks the boundary through the shared frontend plus pipeline and CLI entry points for both direct roots and external `?dtc` child sources,
+  - and the shipped strict-mode note is intentionally honest: the current strict surface does not yet provide a canonical replacement for the compatibility `:=` form.
+
 ## 2026-04-01: the corpus now counts missing generated-child lookup as composition-contract behavior too
 - Continued the visible `R12` lane by widening the composition-contract bucket beyond missing `.rtlif` sidecars into missing external generated-child source lookup too.
 - Important continuity note:

@@ -593,6 +593,7 @@ Boundary note:
   - strict mode also rejects `?mod:` / `?module:` when they are used specifically as `?dtc` child roots and requires canonical `?dt:` there,
   - strict mode also rejects the legacy empty `(+size)` no-op section and requires either explicit width entries or no `+size` section at all,
   - strict mode also rejects the legacy explicit `(+system (clock clk) (asreset rstn))` spelling and currently requires the canonical explicit `(+system (clock clk) (sreset rstn))` form when `+system` is present,
+  - strict mode also rejects the legacy compact top-level `(:= signal=value)` directive on the current `?fsm:` / `?dt:` direct-root path and under generated-child realization, and currently has no canonical strict-mode replacement for that compatibility form,
   - requires the modern explicit `?fsm:module_name` root form for FSM sources,
   - and otherwise leaves the currently accepted `?dt:`, `?mod:`, `?module:`, and `?top:` roots unchanged while their broader contracts continue to settle.
 - In practice:
@@ -600,7 +601,7 @@ Boundary note:
   - strict mode currently accepts `?fsm:name`, `?dt:name`, `?mod:name`, `?module:name`, and `?top:name`,
   - strict mode currently accepts only canonical `?fsm:name` roots under `?fsmc`,
   - strict mode currently accepts only canonical `?dt:name` roots under `?dtc`,
-  - and strict mode currently rejects legacy `+fsm` under `?fsmc`, `?mod:` / `?module:` under `?dtc`, empty `(+size)` no-op sections, and explicit `(+system ... (asreset rstn))` with targeted migration hints.
+  - and strict mode currently rejects legacy `+fsm` under `?fsmc`, `?mod:` / `?module:` under `?dtc`, empty `(+size)` no-op sections, explicit `(+system ... (asreset rstn))`, and compact top-level `(:= signal=value)` directives on the current `?fsm:` / `?dt:` direct-root path.
 - Strict-mode failures now also keep the same `Source file: '...'` context line as other top-level pipeline failures.
 - This is the first support-tier enforcement slice, not the final full strict-mode surface.
 
@@ -821,6 +822,8 @@ Current boundary:
 Boundary note:
 - This slice makes the legacy compact `:=` form explicit and regression-backed instead of leaving it as accidental parser behavior.
 - Malformed `:=` payload shapes and malformed compact directives are now regression-backed across parser, pipeline, and CLI too.
+- Default mode still accepts the compact `:=` form as compatibility residue.
+- Strict mode now rejects the compact `:=` form on the current `?fsm:` / `?dt:` direct-root path, and the current shipped strict surface does not yet provide a canonical replacement for it.
 - Future canonical alternatives such as `(:= (lhs value))` or `(lhs := value)` are design ideas only and are preserved in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), not part of the active contract yet.
 
 ## 3) Basic usage

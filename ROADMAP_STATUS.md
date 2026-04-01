@@ -613,6 +613,11 @@ Done:
   - strict mode now rejects external flattened and nested legacy `+fsm` child roots under `?fsmc`,
   - and those failures now keep full child-source context with a canonical `?fsm:` migration hint.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the initial strict-mode boundary explicitly.
+- The next strict-mode section-level compatibility cut is now also shipped:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now also rejects the legacy compact top-level `(:= signal=value)` directive in strict mode while leaving default-mode compatibility intact on the current `?fsm:` / `?dt:` path,
+  - that check lives in the same shared direct-root strict owner so it reaches those direct roots plus generated child sources through the same semantic-module path while still leaving top-level `?mod:` / `?module:` roots unchanged,
+  - [t/257-strict-mode-compact-init-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/257-strict-mode-compact-init-boundary.t) now locks the boundary through the shared frontend plus pipeline and CLI entry points for both direct roots and external `?dtc` child sources,
+  - and the current shipped strict note is intentionally honest: this compatibility form does not yet have a canonical strict-mode replacement.
 Left:
 - Widen strict-mode enforcement beyond the current canonical-root-family and current section-level compatibility cuts into more of the fully supported-vs-compatibility split.
 - Decide the next high-signal support-tier cuts after the current legacy root-family slices.
