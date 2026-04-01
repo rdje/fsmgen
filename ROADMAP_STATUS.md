@@ -1362,6 +1362,11 @@ Done:
   - [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t) now locks direct-root smoke for the imported protocol actors [fsm/apb_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_requester.fsm), [fsm/apb_completer.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_completer.fsm), and [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm),
   - that same test now also locks the composed protocol harness [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm) through both the pipeline and CLI so the corpus includes a real generated-child / `?toplink` path instead of only leaf actors,
   - and imported/example protocol assets now have one explicit rule of engagement: they do not count toward support claims until they are regression-backed.
+- The first slice now also has explicit support-accounting structure instead of only one hardcoded smoke file:
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) is now the machine-checked catalog for the first named entries,
+  - [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t) now reads that catalog instead of hardcoding the first protocol cases inline,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now locks catalog uniqueness, classification, coverage buckets, and real-asset existence,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now gives that same first slice a human-readable support-accounting note.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
 - Add expected-failure and legacy-out-of-scope cases beside supported smoke cases.

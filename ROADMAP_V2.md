@@ -521,6 +521,7 @@ First bounded slice:
 - start with named in-repo protocol seeds instead of only anonymous fixture accumulation,
 - lock direct-root smoke for imported protocol actors such as `apb_requester`, `apb_completer`, and `amba_requester`,
 - lock one composed protocol harness such as `apb_tb` so the corpus includes a real generated-child/toplink path and not only leaf modules,
+- promote that first slice into a small machine-checked corpus catalog so future support claims grow by explicit classification instead of ad hoc hardcoded test lists,
 - and use that first slice to establish that imported/example assets only count toward support claims once they are regression-backed.
 
 Expected result:

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: first protocol corpus slice now has explicit catalog/accounting structure
+- Strengthened the visible `R12` start so it is not just one smoke test over four files.
+- Landed behavior:
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now acts as the first machine-checked regression-corpus catalog,
+  - [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t) now reads from that catalog instead of carrying the first protocol list inline,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now locks catalog uniqueness, known classifications, known coverage buckets, and real repo asset existence,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) is now the human-readable companion note for the same first slice.
+- Why this is worth shipping:
+  - `R12` is supposed to make support claims auditable, not just accumulate examples,
+  - it gives us a real growth pattern for future corpus work,
+  - and it makes the first protocol-backed support claim explicit in both machine-checked and human-readable form.
+
 ## 2026-04-01: protocol fixture smoke now starts `R12`
 - Started the visible `R12` lane by turning the imported APB / AMBA protocol seeds into regression-backed corpus entries instead of leaving them as examples only.
 - Landed behavior:

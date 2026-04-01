@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: first protocol corpus slice now has explicit catalog/accounting structure
+- Strengthened the first `R12` slice so it is not just one hardcoded smoke test anymore.
+- Important continuity note:
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records the first named corpus entries and their classification / coverage buckets in one machine-checked place,
+  - [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t) now compiles the first protocol fixtures from that catalog instead of embedding the list inline,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now checks uniqueness, known classifications, known coverage buckets, and real asset existence,
+  - [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) is now the human-readable companion note for the same slice,
+  - and the saved `R12` growth rule is now “add a classified catalog entry and matching automated checks,” not “point at an example file and assume it counts.”
+
 ## 2026-04-01: protocol fixture smoke now starts the regression corpus lane
 - Started `R12` for real by turning the imported protocol fixtures into live regression-backed corpus entries instead of leaving them as uncounted examples only.
 - Important continuity note:

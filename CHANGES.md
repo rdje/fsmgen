@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-01
+### protocol corpus now has a machine-checked catalog
+- Added [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) as the first machine-checked `R12` catalog for named regression entries, including classification and coverage buckets.
+- Updated [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t) so the first imported protocol slice is now driven from that catalog instead of hardcoding the cases inline.
+- Added [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) to lock catalog uniqueness, known classifications, known coverage buckets, and real asset existence.
+- Added [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) as the human-readable companion note for the same first support-accounting slice.
+
 ### protocol fixture smoke now starts `R12`
 - Added [t/247-protocol-fixture-regression-smoke.t](/Users/richarddje/Documents/github/fsmgen/t/247-protocol-fixture-regression-smoke.t) to lock compile smoke for the imported protocol actors [fsm/apb_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_requester.fsm), [fsm/apb_completer.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_completer.fsm), and [fsm/amba_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/amba_requester.fsm).
 - That same test also locks the composed protocol harness [fsm/apb_tb.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_tb.fsm) through both the pipeline and CLI, so the first corpus slice includes a real generated-child / `?toplink` design and not only leaf modules.
