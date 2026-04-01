@@ -117,6 +117,7 @@ First bounded slice:
 - make strict mode real at the CLI/pipeline surface,
 - start with the high-signal root-family compatibility cut by rejecting the legacy `+fsm` root family in strict mode,
 - then tighten the `?dtc` child contract so strict mode accepts only canonical `?dt:` roots there instead of continuing to treat `?mod:` / `?module:` as acceptable standalone-DT child residue,
+- then tighten the `?fsmc` child contract so strict mode accepts only canonical `?fsm:` roots there instead of continuing to tolerate legacy `+fsm` child residue,
 - and use that first slice to establish the support-tier enforcement pattern before widening it to other compatibility residue.
 
 Expected result:

@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: strict mode now requires canonical `?fsm:` roots under `?fsmc`
+- Continued the active `R9` lane by making the FSM-child side of the strict child-root contract explicit instead of leaving it to the broader top-level `+fsm` rejection wording.
+- Important continuity note:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now rejects legacy `+fsm` specifically when it is used as the root of a `?fsmc` child source and points users to canonical `?fsm:source_name`,
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) already applies that helper before semantic realization, so the child-specific migration hint now reaches pipeline and CLI entry points with the same generated-child source context as other child failures,
+  - [t/245-strict-mode-fsm-child-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/245-strict-mode-fsm-child-root-boundary.t) locks that updated boundary through both pipeline and CLI for external flattened and nested legacy `+fsm` child roots,
+  - and the saved `R9` story is now “top-level `+fsm`, then `?dtc` canonical `?dt`, then `?fsmc` canonical `?fsm`”.
+
 ## 2026-04-01: generated-child resolution failures now keep the same source-local framing
 - Continued the active `R10` diagnostics lane by widening the generated-child context helper into the two adjacent external-child failure families that were still surfacing only raw search or wrong-kind text.
 - Important continuity note:

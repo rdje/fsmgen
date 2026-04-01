@@ -101,6 +101,14 @@ sub enforce_strict_generated_child_source_boundary ($class, %args) {
     my $header = $source_info->{header} // '';
     my $source_label = $args{source_label} // ($header || 'source');
 
+    if ($declared_child_kind eq '?fsmc' && $header eq '+fsm') {
+        confess
+            "Strict mode rejects the legacy '+fsm' root family as the root of '$declared_child_kind' source '$source_label'. "
+          . "Use the canonical '?fsm:source_name' root form for FSM child sources, "
+          . "or re-run without strict mode if you need legacy compatibility. "
+          . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+    }
+
     if ($declared_child_kind eq '?dtc' && $header =~ /^\?(?:mod|module):/) {
         confess
             "Strict mode rejects '$header' as the root of '$declared_child_kind' source '$source_label'. "

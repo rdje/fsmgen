@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: strict mode now requires canonical `?fsm:` roots under `?fsmc`
+- Continued the visible `R9` lane by making the FSM-child side of the strict child-root contract explicit instead of relying only on the broader top-level `+fsm` rejection text.
+- Landed behavior:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now also rejects legacy `+fsm` specifically when it is used as the root of a `?fsmc` child source,
+  - that rejection now gives the child-specific migration hint toward canonical `?fsm:source_name` instead of only the earlier top-level `?fsm:module_name` wording,
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) already applies the generated-child strict helper before semantic realization, so both pipeline and CLI now surface that stricter child-root message with the full child-source context,
+  - and [t/245-strict-mode-fsm-child-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/245-strict-mode-fsm-child-root-boundary.t) now locks the external flattened and nested legacy `+fsm` child-root families end to end.
+- Why this is worth shipping:
+  - it makes the strict child-root contract symmetric across `?fsmc` and `?dtc`,
+  - it gives users a more accurate migration hint at the exact child-source boundary they are hitting,
+  - and it widens `R9` in a visible way without changing default-mode behavior.
+
 ## 2026-04-01: generated-child resolution failures now keep source-local context too
 - Continued the visible `R10` diagnostics lane by widening the earlier generated-child error-shape pattern into the two adjacent external-child failure families that were still surfacing only raw search or wrong-kind text.
 - Landed behavior:

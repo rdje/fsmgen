@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-01
+### strict mode now requires canonical `?fsm:` roots under `?fsmc`
+- Updated [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so strict mode now rejects legacy `+fsm` specifically when it is used as the root of a `?fsmc` child source and points users to canonical `?fsm:source_name`.
+- Added [t/245-strict-mode-fsm-child-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/245-strict-mode-fsm-child-root-boundary.t) to lock that boundary through both pipeline and CLI for external flattened and nested legacy `+fsm` child roots with full child-source context.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the next real `R9` boundary is preserved honestly.
+
 ### generated-child resolution failures now keep source-local context too
 - Updated [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so unresolved external child failures and wrong-kind external child failures now flow through the same generated-child context wrapper as the earlier parse/semantic child failures.
 - Wrong-kind external child failures now prepend `Source file: 'child_source.fsm'`, `Parent composition source: 'top_source.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`; unresolved external child failures now prepend `Source file: 'top_source.fsm'` plus the same generated-child identity line without inventing a missing child-file artifact.

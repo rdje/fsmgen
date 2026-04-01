@@ -592,10 +592,17 @@ Done:
   - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now applies that helper before semantic realization so strict mode rejects `?mod:` / `?module:` when they are used specifically as `?dtc` child roots,
   - top-level `?mod:` / `?module:` roots remain accepted in strict mode,
   - and [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks the updated boundary end to end through both pipeline and CLI entry points for embedded and external `?dtc` children.
+- The next sibling strict-mode child-root cut is now also shipped:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now also rejects legacy `+fsm` specifically when it is used as the root of a `?fsmc` child source instead of surfacing only the broader top-level strict message,
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) already applies that same helper before semantic realization so the child-specific migration hint reaches pipeline and CLI entry points with full source context,
+  - and [t/245-strict-mode-fsm-child-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/245-strict-mode-fsm-child-root-boundary.t) now locks that boundary end to end through both pipeline and CLI entry points for external flattened and nested legacy `+fsm` child roots.
 - [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks that corrected root-family behavior end to end:
   - strict mode still accepts `?dt:name` roots,
   - strict mode still accepts top-level `?mod:name` and `?module:name` roots on the current shared single-module path,
   - and strict mode now rejects embedded or external `?dtc` child sources rooted at `?mod:` / `?module:` with a canonical `?dt:` migration hint.
+- [t/245-strict-mode-fsm-child-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/245-strict-mode-fsm-child-root-boundary.t) now locks the parallel `?fsmc` child-root behavior end to end:
+  - strict mode now rejects external flattened and nested legacy `+fsm` child roots under `?fsmc`,
+  - and those failures now keep full child-source context with a canonical `?fsm:` migration hint.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the initial strict-mode boundary explicitly.
 Left:
 - Widen strict-mode enforcement beyond the current canonical-root-family boundary into more of the fully supported-vs-compatibility split.
