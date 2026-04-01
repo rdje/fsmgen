@@ -532,6 +532,7 @@ First bounded slice:
 - then prove that `expected_failure` is not just “strict-mode rejection” by adding at least one malformed-language contract entry with a normal pipeline/CLI rejection boundary,
 - then widen the same catalog beyond root-level legacy behavior by adding at least one section-level compatibility-residue asset that is retained in default mode but intentionally rejected in strict mode,
 - then widen the same catalog again into generated-child source-root residue by adding at least one compatibility-retained child-root asset plus one strict expected-rejection child-root asset that both depend on explicit source-search-path realization,
+- then widen the same catalog again into composition-contract rejection by adding at least one composition-top expected-failure asset whose failure is neither a strict-mode cut nor a direct language-contract parse rejection,
 - and use that first slice to establish that imported/example assets only count toward support claims once they are regression-backed.
 
 Expected result:

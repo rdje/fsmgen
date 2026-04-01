@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: the corpus now includes a composition-contract expected-failure asset
+- Continued the visible `R12` lane by widening support accounting beyond strict-mode and direct language-contract rejection into one real composition-contract rejection family.
+- Important continuity note:
+  - [t/corpus/missing_rtl_metadata_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_rtl_metadata_top.fsm) now exists as the first static composition-top expected-failure corpus asset,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records `contract.missing_rtl_metadata_sidecar` under the new `composition_contract_rejection_pipeline_cli` coverage bucket,
+  - that entry locks the normal missing-`.rtlif` composition boundary with the new `Expected RTL metadata file:` artifact label rather than treating it as only a focused diagnostics test,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now exercises that composition rejection path through both pipeline and CLI,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now records the new coverage bucket beside the earlier strict and language-contract rejection buckets.
+
 ## 2026-04-01: missing external `.rtlif` failures now name the expected sidecar artifact
 - Continued the visible `R10` lane by tightening one remaining `?rtl` diagnostics gap instead of dropping back into backend-only cleanup.
 - Important continuity note:

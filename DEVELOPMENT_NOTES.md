@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: `R12` now counts one composition-contract rejection family too
+- Continued the visible `R12` lane by widening the corpus into one static composition-top expected-failure asset instead of keeping all negative entries limited to strict-mode or direct language-contract cases.
+- Landed behavior:
+  - [t/corpus/missing_rtl_metadata_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_rtl_metadata_top.fsm) now captures the bounded “missing external `.rtlif` sidecar” composition failure as a named corpus asset,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now classifies it as `contract.missing_rtl_metadata_sidecar`,
+  - that entry uses the new `composition_contract_rejection_pipeline_cli` coverage bucket and records the missing-sidecar boundary through the `Expected RTL metadata file:` diagnostic family,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that composition rejection path through both pipeline and CLI,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now explains that bucket alongside the earlier strict and language-contract rejection buckets.
+- Why this is worth shipping:
+  - it proves the corpus can talk about composition contract failures, not only parser/strict failures,
+  - it connects the freshly shipped missing-`.rtlif` diagnostics work to explicit support accounting,
+  - and it keeps `R12` honest about the fact that `expected_failure` spans more than one subsystem in this repo.
+
 ## 2026-04-01: unresolved external `.rtlif` lookup now keeps an expected-artifact label
 - Continued the visible `R10` lane by tightening the missing-sidecar `?rtl` case instead of letting unresolved metadata lookup remain the one remaining rawer edge in the RTL-child diagnostics family.
 - Landed behavior:

@@ -15,7 +15,7 @@ my @entries = regression_corpus_entries();
 my @protocol_entries = protocol_fixture_entries();
 
 ok(@entries >= 7, 'regression corpus catalog starts with named entries across multiple classifications');
-ok(@entries >= 13, 'regression corpus catalog now covers root-level, section-level, and child-root compatibility residue');
+ok(@entries >= 14, 'regression corpus catalog now covers root-level, section-level, child-root, and composition-contract rejection residue');
 is(scalar(@protocol_entries), 4, 'first visible corpus slice contains the four named protocol fixtures');
 
 my %allowed_classifications = map { $_ => 1 } qw(
@@ -34,6 +34,7 @@ my %allowed_coverages = map { $_ => 1 } qw(
     strict_section_rejection_pipeline_cli
     strict_child_root_rejection_pipeline_cli
     language_contract_rejection_pipeline_cli
+    composition_contract_rejection_pipeline_cli
 );
 
 my %seen_ids;
@@ -54,6 +55,7 @@ for my $required_id (qw(
     legacy.dt_child_root.default_compat
     legacy.dt_child_root.strict_rejection
     contract.language_contract_bad_size_entry
+    contract.missing_rtl_metadata_sidecar
 )) {
     ok($by_id{$required_id}, "catalog keeps required entry $required_id");
 }
@@ -107,8 +109,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    5,
-    'catalog now records five explicit expected-failure entries',
+    6,
+    'catalog now records six explicit expected-failure entries',
 );
 
 done_testing();

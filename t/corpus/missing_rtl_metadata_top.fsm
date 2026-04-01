@@ -1,0 +1,26 @@
+(?top:missing_rtl_metadata_top
+  (?ports:public_io
+    clk
+    rstn
+    serial_out>
+  )
+  (?fsmc:producer producer_src)
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /producer.output_data/uart_tx.data_in/
+    /uart_tx.txd/serial_out/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-state0
+    (output_data> <= 8'1)
+  )
+  (+size
+    (output_data 8)
+  )
+)

@@ -142,6 +142,15 @@ my @REGRESSION_CORPUS = (
         source_kind => 'fsm',
         expected_error_pattern => qr/Malformed '\+size' entry/,
     },
+    {
+        id => 'contract.missing_rtl_metadata_sidecar',
+        relpath => 't/corpus/missing_rtl_metadata_top.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        expected_error_pattern => qr/Expected RTL metadata file:\s+'uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'uart_tx'.*no declared interface metadata file 'uart_tx\.rtlif' was found/s,
+    },
 );
 
 sub regression_corpus_entries {

@@ -170,4 +170,43 @@ subtest 'language-contract expected-failure entries reject through the normal pi
     }
 };
 
+subtest 'composition-contract expected-failure entries reject through the normal pipeline boundary' => sub {
+    for my $entry (grep { $_->{coverage} eq 'composition_contract_rejection_pipeline_cli' } regression_corpus_entries()) {
+        my $path = File::Spec->catfile($repo_root, split m{/}, $entry->{relpath});
+        my @search_paths = source_search_paths_for_entry($entry);
+        my $pipeline = FSM::Pipeline::HDLGenerator->new(
+            target_language => 'systemverilog',
+            debug_level => 0,
+            quiet => 1,
+            source_search_paths => \@search_paths,
+        );
+
+        my $pipeline_error = eval {
+            $pipeline->generate_hdl_from_file($path);
+            undef;
+        };
+        $pipeline_error = $@ if !$pipeline_error;
+
+        ok($pipeline_error, "pipeline rejects $entry->{id}");
+        like($pipeline_error, $entry->{expected_error_pattern}, "pipeline keeps the expected composition-contract boundary text for $entry->{id}");
+
+        my $out_path = File::Spec->catfile($tempdir, "$entry->{id}.sv");
+        my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+            command => ['./bin/fsmgen', '--quiet', cli_path_args_for_entry($entry), '-o', $out_path, $path],
+        );
+
+        ok(!$success, "CLI rejects $entry->{id}");
+        ok(!-e $out_path, "CLI does not emit HDL for $entry->{id}");
+
+        my $combined_output = join(
+            '',
+            @{ $stdout_buf || [] },
+            @{ $stderr_buf || [] },
+            ($error_message || ''),
+        );
+
+        like($combined_output, $entry->{expected_error_pattern}, "CLI keeps the expected composition-contract boundary text for $entry->{id}");
+    }
+};
+
 done_testing();
