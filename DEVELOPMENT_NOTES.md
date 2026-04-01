@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: `R12` now counts missing generated-child lookup as composition-contract rejection too
+- Continued the visible `R12` lane by widening the same composition-contract bucket that already covered missing external `.rtlif` sidecars into missing external generated-child source lookup too.
+- Landed behavior:
+  - [t/corpus/missing_fsm_child_source_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_fsm_child_source_top.fsm) and [t/corpus/missing_dt_child_source_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_dt_child_source_top.fsm) now capture the bounded “missing external `?fsmc` / `?dtc` child source” failures as named corpus assets,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now classifies them as `contract.missing_fsm_child_source` and `contract.missing_dt_child_source`,
+  - those entries use the existing `composition_contract_rejection_pipeline_cli` coverage bucket and record the missing-child boundary through the `Expected child source file:` diagnostics family,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks both composition rejection paths through both pipeline and CLI,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now explains that the composition-contract bucket is intentionally broader than only the `.rtlif` sidecar family.
+- Why this is worth shipping:
+  - it proves the composition-contract corpus is about boundary families, not one isolated subsystem,
+  - it converts the freshly shipped missing-child diagnostics into explicit support accounting,
+  - and it keeps `R12` honest about the fact that generated-child lookup is part of the maintained composition contract too.
+
 ## 2026-04-01: unresolved external generated-child lookup now keeps an expected-artifact label
 - Continued the visible `R10` lane by tightening the missing-child `?fsmc` / `?dtc` case instead of letting unresolved external child lookup remain slightly less actionable than wrong-kind child realization or missing `.rtlif` sidecars.
 - Landed behavior:

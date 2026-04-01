@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: the corpus now counts missing generated-child lookup as composition-contract behavior too
+- Continued the visible `R12` lane by widening the composition-contract bucket beyond missing `.rtlif` sidecars into missing external generated-child source lookup too.
+- Important continuity note:
+  - [t/corpus/missing_fsm_child_source_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_fsm_child_source_top.fsm) and [t/corpus/missing_dt_child_source_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_dt_child_source_top.fsm) now exist as static composition-top expected-failure corpus assets,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records `contract.missing_fsm_child_source` and `contract.missing_dt_child_source` under the existing `composition_contract_rejection_pipeline_cli` coverage bucket,
+  - those entries lock the normal unresolved external `?fsmc` / `?dtc` composition boundary through the new `Expected child source file:` diagnostic family rather than leaving that behavior only in focused diagnostics tests,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now exercises those missing-child composition rejection paths through both pipeline and CLI,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now records that the composition-contract rejection bucket spans both missing external child-source lookup and missing external `.rtlif` sidecars.
+
 ## 2026-04-01: missing external child failures now name the expected child artifact
 - Continued the visible `R10` lane by tightening unresolved external `?fsmc` / `?dtc` lookup instead of leaving missing child-source resolution slightly less actionable than wrong-kind child failures or missing `.rtlif` sidecars.
 - Important continuity note:

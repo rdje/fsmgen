@@ -1,0 +1,8 @@
+(?top:missing_fsm_child_source_top
+  (?ports:public_io
+    clk
+    rst_n
+    output_data>8
+  )
+  (?fsmc:child missing_src)
+)

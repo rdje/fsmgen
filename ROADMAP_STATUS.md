@@ -1426,6 +1426,11 @@ Done:
   - `contract.missing_rtl_metadata_sidecar` is classified as `expected_failure` and records the normal missing-`.rtlif` composition boundary through the new `composition_contract_rejection_pipeline_cli` coverage bucket,
   - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that composition rejection path through both pipeline and CLI,
   - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now includes the new composition-contract rejection bucket beside the earlier strict and language-contract buckets.
+- That same composition-contract slice now also covers missing external generated-child lookup instead of only missing `.rtlif` sidecars:
+  - [t/corpus/missing_fsm_child_source_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_fsm_child_source_top.fsm) and [t/corpus/missing_dt_child_source_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_dt_child_source_top.fsm) now exist as explicit composition-top expected-failure corpus assets for unresolved external `?fsmc` and `?dtc` lookup,
+  - `contract.missing_fsm_child_source` and `contract.missing_dt_child_source` are classified as `expected_failure` under the same `composition_contract_rejection_pipeline_cli` coverage bucket,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that those missing-child composition rejection paths through both pipeline and CLI using the new `Expected child source file:` diagnostics family,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now records that the composition-contract bucket spans both missing external child-source lookup and missing external `.rtlif` sidecars.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
 - Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, first child-root compatibility pair, first malformed-language contract entry, and first composition-contract rejection entry.

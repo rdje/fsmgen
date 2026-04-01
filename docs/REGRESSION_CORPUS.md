@@ -61,7 +61,9 @@ more than one contract for it, for example:
   API and the CLI, and that rejection is part of the supported contract.
 - `composition_contract_rejection_pipeline_cli`: the entry is intentionally
   rejected by the normal composition contract through both the pipeline API and
-  the CLI, and that rejection is part of the supported contract.
+  the CLI, and that rejection is part of the supported contract. This bucket
+  now covers both missing external generated-child source lookup and missing
+  external `?rtl` sidecar metadata.
 
 ## Current named entries
 
@@ -81,6 +83,8 @@ more than one contract for it, for example:
 | `legacy.dt_child_root.strict_rejection` | [t/corpus/legacy_dt_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_top.fsm) | `expected_failure` | `strict_child_root_rejection_pipeline_cli` |
 | `contract.language_contract_bad_size_entry` | [t/corpus/language_contract_bad_size_entry.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/language_contract_bad_size_entry.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.missing_rtl_metadata_sidecar` | [t/corpus/missing_rtl_metadata_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_rtl_metadata_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.missing_fsm_child_source` | [t/corpus/missing_fsm_child_source_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_fsm_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.missing_dt_child_source` | [t/corpus/missing_dt_child_source_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_dt_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 
 ## Current locking tests
 

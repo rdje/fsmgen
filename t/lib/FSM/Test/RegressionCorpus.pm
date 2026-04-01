@@ -151,6 +151,24 @@ my @REGRESSION_CORPUS = (
         source_kind => 'composition',
         expected_error_pattern => qr/Expected RTL metadata file:\s+'uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'uart_tx'.*no declared interface metadata file 'uart_tx\.rtlif' was found/s,
     },
+    {
+        id => 'contract.missing_fsm_child_source',
+        relpath => 't/corpus/missing_fsm_child_source_top.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        expected_error_pattern => qr/Expected child source file:\s+'missing_src\.fsm'.*Generated child source:\s+'\?fsmc' 'missing_src'.*child-source resolution is blocked because no active child FSM source was found either embedded in the same file or in an external '\.fsm' file/s,
+    },
+    {
+        id => 'contract.missing_dt_child_source',
+        relpath => 't/corpus/missing_dt_child_source_top.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        expected_error_pattern => qr/Expected child source file:\s+'missing_dt_src\.fsm'.*Generated child source:\s+'\?dtc' 'missing_dt_src'.*child-source resolution is blocked because no active standalone-DT child source was found either embedded in the same file or in an external '\.fsm' file/s,
+    },
 );
 
 sub regression_corpus_entries {

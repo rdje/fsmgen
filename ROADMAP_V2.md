@@ -534,6 +534,7 @@ First bounded slice:
 - then widen the same catalog beyond root-level legacy behavior by adding at least one section-level compatibility-residue asset that is retained in default mode but intentionally rejected in strict mode,
 - then widen the same catalog again into generated-child source-root residue by adding at least one compatibility-retained child-root asset plus one strict expected-rejection child-root asset that both depend on explicit source-search-path realization,
 - then widen the same catalog again into composition-contract rejection by adding at least one composition-top expected-failure asset whose failure is neither a strict-mode cut nor a direct language-contract parse rejection,
+- then widen that same composition-contract slice beyond one subsystem by adding at least one missing generated-child source case alongside the earlier missing external `.rtlif` sidecar case,
 - and use that first slice to establish that imported/example assets only count toward support claims once they are regression-backed.
 
 Expected result:
