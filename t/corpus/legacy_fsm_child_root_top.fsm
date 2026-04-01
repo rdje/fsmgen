@@ -1,0 +1,9 @@
+(?top:legacy_fsm_child_root_top
+  (?ports:public_io
+    clk<1
+    rst_n<1
+    data_in<1
+    data_out>1
+  )
+  (?fsmc:child legacy_fsm_child_root_src)
+)

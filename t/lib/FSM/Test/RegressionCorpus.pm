@@ -86,6 +86,54 @@ my @REGRESSION_CORPUS = (
         expected_hint_pattern => qr/replace it with explicit '\(\+size \(signal width\) \.\.\.\)' entries/,
     },
     {
+        id => 'legacy.fsm_child_root.default_compat',
+        relpath => 't/corpus/legacy_fsm_child_root_top.fsm',
+        family => 'legacy_fixture',
+        classification => 'legacy_out_of_scope',
+        coverage => 'legacy_child_root_default_pipeline_cli',
+        source_kind => 'composition',
+        search_path_relpaths => ['t/corpus'],
+        expected_top_name => 'legacy_fsm_child_root_top',
+        expected_lane => 'C1',
+        expected_instance_count => 1,
+        expected_child_modules => ['legacy_fsm_child_root_src'],
+    },
+    {
+        id => 'legacy.fsm_child_root.strict_rejection',
+        relpath => 't/corpus/legacy_fsm_child_root_top.fsm',
+        family => 'legacy_fixture',
+        classification => 'expected_failure',
+        coverage => 'strict_child_root_rejection_pipeline_cli',
+        source_kind => 'composition',
+        search_path_relpaths => ['t/corpus'],
+        expected_error_pattern => qr/Generated child source:\s+'\?fsmc' 'legacy_fsm_child_root_src'.*Strict mode rejects the legacy '\+fsm' root family as the root of '\?fsmc' source 'legacy_fsm_child_root_src'/s,
+        expected_hint_pattern => qr/\?fsm:source_name/,
+    },
+    {
+        id => 'legacy.dt_child_root.default_compat',
+        relpath => 't/corpus/legacy_dt_child_root_top.fsm',
+        family => 'legacy_fixture',
+        classification => 'legacy_out_of_scope',
+        coverage => 'legacy_child_root_default_pipeline_cli',
+        source_kind => 'composition',
+        search_path_relpaths => ['t/corpus'],
+        expected_top_name => 'legacy_dt_child_root_top',
+        expected_lane => 'C1',
+        expected_instance_count => 1,
+        expected_child_modules => ['legacy_dt_child_root_src'],
+    },
+    {
+        id => 'legacy.dt_child_root.strict_rejection',
+        relpath => 't/corpus/legacy_dt_child_root_top.fsm',
+        family => 'legacy_fixture',
+        classification => 'expected_failure',
+        coverage => 'strict_child_root_rejection_pipeline_cli',
+        source_kind => 'composition',
+        search_path_relpaths => ['t/corpus'],
+        expected_error_pattern => qr/Generated child source:\s+'\?dtc' 'legacy_dt_child_root_src'.*Strict mode rejects '\?module:legacy_dt_child_root_src' as the root of '\?dtc' source 'legacy_dt_child_root_src'/s,
+        expected_hint_pattern => qr/\?dt:source_name/,
+    },
+    {
         id => 'contract.language_contract_bad_size_entry',
         relpath => 't/corpus/language_contract_bad_size_entry.fsm',
         family => 'language_contract_fixture',
@@ -110,6 +158,9 @@ sub _copy_entry {
     my %copy = %{$entry};
     if (ref $copy{expected_child_modules} eq 'ARRAY') {
         $copy{expected_child_modules} = [@{$copy{expected_child_modules}}];
+    }
+    if (ref $copy{search_path_relpaths} eq 'ARRAY') {
+        $copy{search_path_relpaths} = [@{$copy{search_path_relpaths}}];
     }
 
     return \%copy;

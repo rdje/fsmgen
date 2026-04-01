@@ -41,6 +41,10 @@ more than one contract for it, for example:
   compatibility residue asset and must still compile through both the pipeline
   API and the CLI in default mode even though it is not part of the preferred
   authored surface.
+- `legacy_child_root_default_pipeline_cli`: the entry is retained as a child-
+  realization compatibility residue asset and must still compile through both
+  the pipeline API and the CLI in default mode, including any extra source
+  search roots needed to realize the child.
 - `strict_root_rejection_pipeline_cli`: the entry is intentionally rejected in
   strict mode through both the pipeline API and the CLI, and that rejection is
   part of the supported contract.
@@ -48,6 +52,10 @@ more than one contract for it, for example:
   in strict mode through both the pipeline API and the CLI because it relies on
   compatibility residue at the section level, and that rejection is part of the
   supported contract.
+- `strict_child_root_rejection_pipeline_cli`: the entry is intentionally
+  rejected in strict mode through both the pipeline API and the CLI because it
+  relies on compatibility residue at the generated-child source-root boundary,
+  and that rejection is part of the supported contract.
 - `language_contract_rejection_pipeline_cli`: the entry is intentionally
   rejected by the normal language-contract boundary through both the pipeline
   API and the CLI, and that rejection is part of the supported contract.
@@ -64,6 +72,10 @@ more than one contract for it, for example:
 | `legacy.mipicsi2_txccore_ulp.strict_rejection` | [fsm/mipicsi2_txccore_ulp.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/mipicsi2_txccore_ulp.fsm) | `expected_failure` | `strict_root_rejection_pipeline_cli` |
 | `legacy.empty_size_noop.default_compat` | [t/corpus/legacy_empty_size_noop.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_empty_size_noop.fsm) | `legacy_out_of_scope` | `legacy_section_default_pipeline_cli` |
 | `legacy.empty_size_noop.strict_rejection` | [t/corpus/legacy_empty_size_noop.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_empty_size_noop.fsm) | `expected_failure` | `strict_section_rejection_pipeline_cli` |
+| `legacy.fsm_child_root.default_compat` | [t/corpus/legacy_fsm_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_top.fsm) | `legacy_out_of_scope` | `legacy_child_root_default_pipeline_cli` |
+| `legacy.fsm_child_root.strict_rejection` | [t/corpus/legacy_fsm_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_top.fsm) | `expected_failure` | `strict_child_root_rejection_pipeline_cli` |
+| `legacy.dt_child_root.default_compat` | [t/corpus/legacy_dt_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_top.fsm) | `legacy_out_of_scope` | `legacy_child_root_default_pipeline_cli` |
+| `legacy.dt_child_root.strict_rejection` | [t/corpus/legacy_dt_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_top.fsm) | `expected_failure` | `strict_child_root_rejection_pipeline_cli` |
 | `contract.language_contract_bad_size_entry` | [t/corpus/language_contract_bad_size_entry.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/language_contract_bad_size_entry.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 
 ## Current locking tests
@@ -76,7 +88,8 @@ more than one contract for it, for example:
 - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
   checks that the current `legacy_out_of_scope` entries and the current
   `expected_failure` entries actually behave according to their recorded
-  contract.
+  contract, including child-root compatibility residue that depends on explicit
+  search-path realization.
 
 ## Working rule
 

@@ -1,0 +1,8 @@
+(+fsm legacy_fsm_child_root_src)
+(+size
+  (data_in 1)
+  (data_out 1)
+)
+(idle
+  (data_out> = data_in)
+)

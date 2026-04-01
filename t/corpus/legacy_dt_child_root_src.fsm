@@ -1,0 +1,9 @@
+(?module:legacy_dt_child_root_src
+  (+size
+    (data_in 8)
+    (result_data 8)
+  )
+  (-route
+    (result_data> = data_in)
+  )
+)

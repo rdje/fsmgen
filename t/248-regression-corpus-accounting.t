@@ -15,7 +15,7 @@ my @entries = regression_corpus_entries();
 my @protocol_entries = protocol_fixture_entries();
 
 ok(@entries >= 7, 'regression corpus catalog starts with named entries across multiple classifications');
-ok(@entries >= 9, 'regression corpus catalog now covers both root-level and section-level compatibility residue');
+ok(@entries >= 13, 'regression corpus catalog now covers root-level, section-level, and child-root compatibility residue');
 is(scalar(@protocol_entries), 4, 'first visible corpus slice contains the four named protocol fixtures');
 
 my %allowed_classifications = map { $_ => 1 } qw(
@@ -29,8 +29,10 @@ my %allowed_coverages = map { $_ => 1 } qw(
     composition_top_pipeline_cli
     legacy_root_default_pipeline_cli
     legacy_section_default_pipeline_cli
+    legacy_child_root_default_pipeline_cli
     strict_root_rejection_pipeline_cli
     strict_section_rejection_pipeline_cli
+    strict_child_root_rejection_pipeline_cli
     language_contract_rejection_pipeline_cli
 );
 
@@ -47,6 +49,10 @@ for my $required_id (qw(
     legacy.mipicsi2_txccore_ulp.strict_rejection
     legacy.empty_size_noop.default_compat
     legacy.empty_size_noop.strict_rejection
+    legacy.fsm_child_root.default_compat
+    legacy.fsm_child_root.strict_rejection
+    legacy.dt_child_root.default_compat
+    legacy.dt_child_root.strict_rejection
     contract.language_contract_bad_size_entry
 )) {
     ok($by_id{$required_id}, "catalog keeps required entry $required_id");
@@ -61,6 +67,12 @@ for my $entry (@entries) {
 
     my $path = File::Spec->catfile($repo_root, split m{/}, $entry->{relpath});
     ok(-e $path, "catalog entry '$entry->{id}' points at an existing repo file");
+    if (ref($entry->{search_path_relpaths}) eq 'ARRAY') {
+        for my $relpath (@{$entry->{search_path_relpaths}}) {
+            my $search_path = File::Spec->catfile($repo_root, split m{/}, $relpath);
+            ok(-d $search_path, "catalog entry '$entry->{id}' points at an existing search path '$relpath'");
+        }
+    }
 
     if ($entry->{classification} eq 'expected_failure') {
         ok($entry->{expected_error_pattern}, "expected-failure entry '$entry->{id}' records a boundary pattern");
@@ -90,13 +102,13 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
-    2,
-    'catalog now records two explicit legacy-out-of-scope compatibility entries',
+    4,
+    'catalog now records four explicit legacy-out-of-scope compatibility entries',
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    3,
-    'catalog now records three explicit expected-failure entries',
+    5,
+    'catalog now records five explicit expected-failure entries',
 );
 
 done_testing();

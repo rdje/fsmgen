@@ -1,0 +1,7 @@
+(?top:legacy_dt_child_root_top
+  (?ports:public_io
+    data_in<8
+    result_data>8
+  )
+  (?dtc:router legacy_dt_child_root_src)
+)

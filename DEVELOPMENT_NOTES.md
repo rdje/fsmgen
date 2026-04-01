@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: `R12` widened into child-root compatibility accounting
+- Continued the visible `R12` lane by moving support accounting into generated-child source-root compatibility residue instead of keeping it limited to direct roots and section no-ops.
+- Landed behavior:
+  - [t/corpus/legacy_fsm_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_top.fsm) plus [t/corpus/legacy_fsm_child_root_src.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_src.fsm) now model the compatibility-retained external `?fsmc` child-root case,
+  - [t/corpus/legacy_dt_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_top.fsm) plus [t/corpus/legacy_dt_child_root_src.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_src.fsm) now model the matching external `?dtc` child-root case,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now carries `search_path_relpaths` as first-class catalog metadata so support-accounting entries can describe not only the source file but also the resolution roots required to realize the contract honestly,
+  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now builds per-entry pipelines with those search roots and also forwards them through CLI `--path` arguments.
+- Why this is worth shipping:
+  - it lets `R12` count child-resolution behavior explicitly instead of treating all support accounting as if it were direct-root only,
+  - it ties the earlier strict child-root boundary work into the auditable corpus instead of leaving it only in isolated focused tests,
+  - and it gives future imported/composed fixtures a clearer accounting shape when support depends on search-root realization rather than only one file path.
+
 ## 2026-04-01: typed extension loading failures now keep artifact labels too
 - Continued the visible `R10` lane by widening the diagnostics family one step earlier into extension loading and pipeline construction.
 - Landed behavior:

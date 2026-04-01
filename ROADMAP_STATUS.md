@@ -1399,9 +1399,15 @@ Done:
   - `legacy.empty_size_noop.strict_rejection` is classified as `expected_failure` and must keep the strict empty-`(+size)` rejection boundary through pipeline and CLI,
   - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now treats strict support-tier expected failures as a broader family instead of only the earlier root-family case,
   - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now includes the `legacy_section_default_pipeline_cli` and `strict_section_rejection_pipeline_cli` coverage buckets.
+- The first slice now also accounts for child-root compatibility residue instead of stopping at direct-root and section-level cases:
+  - [t/corpus/legacy_fsm_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_top.fsm) and [t/corpus/legacy_dt_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_top.fsm) now exist as explicit composition-top corpus assets with matching external child-source fixtures under [t/corpus](/Users/richarddje/Documents/github/fsmgen/t/corpus),
+  - `legacy.fsm_child_root.default_compat` and `legacy.dt_child_root.default_compat` are classified as `legacy_out_of_scope` and must still compile through pipeline and CLI in default mode with explicit source-search-path realization,
+  - `legacy.fsm_child_root.strict_rejection` and `legacy.dt_child_root.strict_rejection` are classified as `expected_failure` and must keep the strict `?fsmc` / `?dtc` child-root rejection boundaries through pipeline and CLI,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now understand the new `legacy_child_root_default_pipeline_cli` and `strict_child_root_rejection_pipeline_cli` coverage buckets together with per-entry search roots,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now records child-root compatibility residue as a first-class part of the support-accounting story instead of leaving it only in isolated strict-mode tests.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
-- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, and first malformed-language contract entry.
+- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, first child-root compatibility pair, and first malformed-language contract entry.
 - Widen golden-output or semantic-check coverage where simple compile smoke is not enough.
 Exit criteria:
 - Support claims can be backed by a maintained corpus and explicit classification, not only by ad hoc focused tests.

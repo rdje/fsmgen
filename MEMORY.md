@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: the corpus now accounts for child-root compatibility residue too
+- Continued the visible `R12` lane by widening support accounting into generated-child source-root residue instead of stopping at direct-root and section-level legacy cases.
+- Important continuity note:
+  - [t/corpus/legacy_fsm_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_top.fsm) plus [t/corpus/legacy_fsm_child_root_src.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_src.fsm) now exist as the first explicit `?fsmc` child-root compatibility corpus pair,
+  - [t/corpus/legacy_dt_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_top.fsm) plus [t/corpus/legacy_dt_child_root_src.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_src.fsm) now exist as the matching `?dtc` child-root compatibility corpus pair,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records both default-mode compatibility and strict-mode expected-rejection contracts for those child-root fixtures, including explicit `search_path_relpaths`,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now locks the new child-root coverage buckets plus the existence of per-entry search roots,
+  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now knows how to exercise composition entries with explicit search-path realization through both pipeline and CLI.
+
 ## 2026-04-01: typed extension loading failures now keep artifact labels too
 - Continued the visible `R10` lane by widening the same diagnostics family one step earlier, into extension loading and pipeline construction.
 - Important continuity note:

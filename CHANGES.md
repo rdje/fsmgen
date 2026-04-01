@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-01
+### regression corpus now accounts for child-root compatibility residue too
+- Added [t/corpus/legacy_fsm_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_top.fsm), [t/corpus/legacy_fsm_child_root_src.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_src.fsm), [t/corpus/legacy_dt_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_top.fsm), and [t/corpus/legacy_dt_child_root_src.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_src.fsm) as the first explicit child-root compatibility corpus fixtures.
+- Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) so the catalog now records both default-mode compatibility and strict-mode expected-rejection contracts for those `?fsmc` / `?dtc` child-root fixtures, together with explicit `search_path_relpaths`.
+- Updated [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) so `R12` now locks the new `legacy_child_root_default_pipeline_cli` and `strict_child_root_rejection_pipeline_cli` buckets through both pipeline and CLI.
+- Updated [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the broader `R12` support-accounting story now includes child-root residue explicitly.
+
 ### typed extension loading failures now keep artifact labels
 - Updated [perl/FSM/Extension/Loader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Extension/Loader.pm) so malformed extension config input now keeps `Extension config file: '...'`, and module-load / constructor failures now keep `Extension module: '...'`.
 - Updated [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) so `HDLGenerator->new(...)` now runs under the cleaned CLI error presentation path instead of letting constructor failures dump the raw script line.
