@@ -622,6 +622,11 @@ Done:
   - external child failures now keep `Source file: 'child_source.fsm'`, `Parent composition source: 'top_source.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`,
   - embedded child failures now keep `Source file: 'top_source.fsm'` plus the same generated-child identity line,
   - and [t/242-composition-child-source-file-diagnostic-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/242-composition-child-source-file-diagnostic-boundary.t) now locks that boundary through both pipeline and CLI entry points.
+- The next bounded widening step is now also shipped through blocked generated-child resolution and wrong-kind realization:
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now routes unresolved external child and wrong-kind external child failures through the same generated-child context helper instead of surfacing only raw search/wrong-kind text,
+  - wrong-kind external child failures now keep `Source file: 'child_source.fsm'`, `Parent composition source: 'top_source.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`,
+  - unresolved external child failures now keep `Source file: 'top_source.fsm'` plus the same generated-child identity line without inventing a nonexistent child-file artifact,
+  - and [t/244-composition-child-resolution-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/244-composition-child-resolution-diagnostic-context.t) now locks both failure families through pipeline and CLI entry points.
 - The next bounded widening step is now also shipped through RTL child metadata loading:
   - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now wraps external and embedded `?rtl` metadata failures with stable source-local context,
   - sidecar `.rtlif` failures now keep `RTL metadata file: 'module.rtlif'`, `Parent composition source: 'top_source.fsm'`, and `RTL child module: '?rtl' 'module_name'`,

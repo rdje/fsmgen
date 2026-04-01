@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: generated-child resolution failures now keep source-local context too
+- Continued the visible `R10` diagnostics lane by widening the earlier generated-child error-shape pattern into the two adjacent external-child failure families that were still surfacing only raw search or wrong-kind text.
+- Landed behavior:
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now routes external child-source resolution failures and wrong-kind external child failures through `_with_generated_child_source_context(...)` instead of raising them bare,
+  - wrong-kind external child failures now keep `Source file: 'child_source.fsm'`, `Parent composition source: 'top_source.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`,
+  - unresolved external child failures now keep `Source file: 'top_source.fsm'` plus the same generated-child identity line without inventing a nonexistent child-file artifact,
+  - and [t/244-composition-child-resolution-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/244-composition-child-resolution-diagnostic-context.t) now locks both failure families through pipeline and CLI entry points.
+- Why this is worth shipping:
+  - it makes the generated-child diagnostics story consistent across parse failures, unresolved external children, and wrong-kind external children,
+  - it keeps the real failing artifact visible when one exists and stays honest when none was ever resolved,
+  - and it is a clear user-facing `R10` improvement without changing composition semantics.
+
 ## 2026-04-01: strict mode now requires canonical `?dt:` roots under `?dtc`
 - Continued the visible `R9` lane by making one child-specific support-tier cut instead of pretending the broader module-root contract is already settled.
 - Landed behavior:

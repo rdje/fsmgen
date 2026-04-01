@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-01
+### generated-child resolution failures now keep source-local context too
+- Updated [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so unresolved external child failures and wrong-kind external child failures now flow through the same generated-child context wrapper as the earlier parse/semantic child failures.
+- Wrong-kind external child failures now prepend `Source file: 'child_source.fsm'`, `Parent composition source: 'top_source.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`; unresolved external child failures now prepend `Source file: 'top_source.fsm'` plus the same generated-child identity line without inventing a missing child-file artifact.
+- Added [t/244-composition-child-resolution-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/244-composition-child-resolution-diagnostic-context.t) to lock both failure families through pipeline and CLI entry points.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this next visible `R10` slice is preserved honestly in the continuity trail.
+
 ### strict mode now requires canonical `?dt:` roots under `?dtc`
 - Updated [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so strict mode now has a child-specific support-tier boundary for generated standalone-DT children in addition to the earlier top-level `+fsm` cut.
 - Updated [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so strict mode now rejects `?mod:` / `?module:` when they are used specifically as `?dtc` child roots and points users to canonical `?dt:source_name`.

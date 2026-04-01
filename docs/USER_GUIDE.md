@@ -521,7 +521,9 @@ Boundary note:
 - Generated-child realization failures now keep the same source-local framing too:
   - external child failures keep the child `Source file: '...'` plus a `Parent composition source: '...'` line,
   - embedded child failures keep the containing composition `Source file: '...'`,
-  - and both now keep a `Generated child source: '?...c' 'name'` line before the underlying child diagnostic.
+  - both now keep a `Generated child source: '?...c' 'name'` line before the underlying child diagnostic,
+  - wrong-kind external child failures now keep that same resolved-child and parent-composition framing instead of surfacing only the wrong-kind note,
+  - and missing external child failures now keep the containing composition `Source file: '...'` plus the generated-child identity line instead of surfacing only the unresolved-child search text.
 - External `?rtl` metadata failures now keep matching source-local framing too:
   - sidecar `.rtlif` failures keep `RTL metadata file: '...'` plus `Parent composition source: '...'`,
   - embedded `?rtlif` failures keep `Source file: '...'` for the containing composition source,

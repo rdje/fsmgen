@@ -318,7 +318,14 @@ sub _load_external_generated_child_source ($class, %args) {
     my $expected_root_kind = $args{expected_root_kind}
         or confess "GeneratedChildRealizer requires an expected_root_kind";
 
-    my ($child_source_path) = $class->resolve_external_generated_child_source_path(%args);
+    my ($child_source_path) = $class->_with_generated_child_source_context(
+        fsm_file => $fsm_file,
+        source_name => $source_name,
+        declared_child_kind => $child_kind,
+        code => sub {
+            return $class->resolve_external_generated_child_source_path(%args);
+        },
+    );
     my ($child_ast, $child_source_info) = $class->_with_generated_child_source_context(
         fsm_file => $fsm_file,
         source_name => $source_name,
@@ -339,13 +346,21 @@ sub _load_external_generated_child_source ($class, %args) {
     my $child_header = $child_source_info->{header} // 'unknown root';
     my $kind_note = $class->_wrong_kind_note($child_kind, $child_root_kind);
 
-    confess
-        "Composition source '$header' in '$fsm_file' resolves '$child_kind' child '$source_name' to '$child_source_path', ".
-        "but child-source realization is blocked because that resolved file is not an active "
-            . ($expected_root_kind eq 'dt' ? 'standalone-DT child source' : 'FSM child source')
-            . " (detected root '$child_header'). ".
-        $kind_note." ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    return $class->_with_generated_child_source_context(
+        fsm_file => $fsm_file,
+        source_name => $source_name,
+        declared_child_kind => $child_kind,
+        child_source_path => $child_source_path,
+        code => sub {
+            confess
+                "Composition source '$header' in '$fsm_file' resolves '$child_kind' child '$source_name' to '$child_source_path', ".
+                "but child-source realization is blocked because that resolved file is not an active "
+                    . ($expected_root_kind eq 'dt' ? 'standalone-DT child source' : 'FSM child source')
+                    . " (detected root '$child_header'). ".
+                $kind_note." ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        },
+    );
 }
 
 sub _with_generated_child_source_context ($class, %args) {

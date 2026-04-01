@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: generated-child resolution failures now keep the same source-local framing
+- Continued the active `R10` diagnostics lane by widening the generated-child context helper into the two adjacent external-child failure families that were still surfacing only raw search or wrong-kind text.
+- Important continuity note:
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now routes unresolved external child and wrong-kind external child failures through `_with_generated_child_source_context(...)`,
+  - wrong-kind external child failures now keep `Source file: 'child_source.fsm'`, `Parent composition source: 'top_source.fsm'`, and `Generated child source: '?fsmc/?dtc' 'source_name'`,
+  - unresolved external child failures now keep `Source file: 'top_source.fsm'` plus the same generated-child identity line without inventing a missing child-file artifact,
+  - [t/244-composition-child-resolution-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/244-composition-child-resolution-diagnostic-context.t) locks both failure families through pipeline and CLI,
+  - and the saved `R10` story is now “top-level failures, then generated-child parse/semantic failures, then generated-child resolution/wrong-kind failures, then RTL-child metadata failures”.
+
 ## 2026-04-01: strict mode now requires canonical `?dt:` roots under `?dtc`
 - Continued the active `R9` lane by tightening the standalone-DT child-source contract without collapsing top-level module roots.
 - Important continuity note:
