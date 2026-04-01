@@ -63,6 +63,7 @@ sub load_interface ($self, %args) {
     my $metadata_path = $self->_with_rtl_child_context(
         source_file => $source_file,
         module_name => $module_name,
+        context_kind => 'missing_external_metadata',
         code => sub {
             return $self->resolve_metadata_path($module_name, $source_file);
         },
@@ -262,7 +263,7 @@ sub _with_rtl_child_context ($self, %args) {
 
     my $error = $@;
     die $error if ref($error);
-    die $error if $error =~ /(?:^|\n)(?:Source file|RTL metadata file):\s+'/s;
+    die $error if $error =~ /(?:^|\n)(?:Source file|RTL metadata file|Expected RTL metadata file):\s+'/s;
 
     my $message = '';
     if (($args{context_kind} // '') eq 'external_metadata') {
@@ -270,6 +271,10 @@ sub _with_rtl_child_context ($self, %args) {
             or confess "RTLInterfaceLoader external metadata context requires a metadata_path";
         $message .= "RTL metadata file: '$metadata_path'\n";
         $message .= "Parent composition source: '$source_file'\n";
+    }
+    elsif (($args{context_kind} // '') eq 'missing_external_metadata') {
+        $message .= "Source file: '$source_file'\n";
+        $message .= "Expected RTL metadata file: '" . $args{module_name} . ".rtlif'\n";
     }
     else {
         $message .= "Source file: '$source_file'\n";

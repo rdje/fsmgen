@@ -1566,6 +1566,9 @@ FSM
     is($report->{lane}, 'C3', 'failure report preserves the active composition lane for rtlif failures');
     is($report->{construct}, '?rtl', 'failure report preserves the external RTL construct for rtlif failures');
     is($report->{construct_summary}, '?rtl', 'failure report exposes a concise external RTL construct summary');
+    is($report->{artifact_label}, 'Expected RTL metadata file', 'failure report classifies the missing rtlif sidecar as expected artifact context');
+    is($report->{artifact_value}, "'uart_tx.rtlif'", 'failure report preserves the expected rtlif sidecar name');
+    is($report->{artifact_summary}, "Expected RTL metadata file 'uart_tx.rtlif'", 'failure report exposes a concise missing-rtlif artifact summary');
     is($report->{blocked_boundary}, 'RTL interface metadata resolution', 'failure report preserves the blocked rtlif boundary');
     is($report->{blocked_boundary_label}, 'RTL interface metadata resolution', 'failure report keeps the RTL boundary label readable');
     is(
@@ -3910,6 +3913,7 @@ FSM
     like($combined_output, qr/RTL module:\s+uart_tx/s, 'CLI reports the external RTL module for missing-rtlif failures');
     like($combined_output, qr/Lane:\s+C3/s, 'CLI reports the active lane when the blocked diagnostic exposes it');
     like($combined_output, qr/Construct:\s+\?rtl/s, 'CLI reports the external RTL construct when the blocked diagnostic exposes it');
+    like($combined_output, qr/Expected RTL metadata file:\s+'uart_tx\.rtlif'/s, 'CLI reports the expected missing rtlif sidecar artifact');
     like($combined_output, qr/Reason:\s+no declared interface metadata file 'uart_tx\.rtlif' was found/s, 'CLI reports the concise missing-rtlif reason');
 };
 

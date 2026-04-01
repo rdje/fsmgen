@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-01: unresolved external `.rtlif` lookup now keeps an expected-artifact label
+- Continued the visible `R10` lane by tightening the missing-sidecar `?rtl` case instead of letting unresolved metadata lookup remain the one remaining rawer edge in the RTL-child diagnostics family.
+- Landed behavior:
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now distinguishes unresolved external sidecar lookup from resolved external metadata parsing/validation,
+  - missing sidecar lookup now keeps `Source file: '...'`, `Expected RTL metadata file: 'module.rtlif'`, and `RTL child module: '?rtl' 'module_name'`,
+  - resolved external metadata failures still keep the concrete `RTL metadata file: 'resolved/path/module.rtlif'` plus `Parent composition source: '...'`,
+  - and [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) now turns that same expected sidecar name into a first-class failure-summary artifact.
+- Why this is worth shipping:
+  - it makes the missing-sidecar case as actionable as the already-shipped malformed-sidecar cases,
+  - it keeps the wording honest by distinguishing “expected but not found” from “resolved and malformed,”
+  - and it improves both the raw failure and the non-quiet composition summary without reopening the broader `.rtlif` contract.
+
 ## 2026-04-01: strict mode now treats explicit `asreset` as compatibility residue
 - Continued the visible `R9` lane by widening strict-mode enforcement into another explicit `+system` compatibility-residue cut instead of inventing a new syntax family.
 - Landed behavior:

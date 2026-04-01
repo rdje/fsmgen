@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-01
+### missing external `.rtlif` failures now name the expected sidecar artifact
+- Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so unresolved external `.rtlif` lookup failures now keep `Source file: '...'`, `Expected RTL metadata file: 'module.rtlif'`, and `RTL child module: '?rtl' 'module_name'` instead of surfacing only the raw search text.
+- Updated [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) so non-quiet composition failure summaries now classify missing sidecar lookup as an `Expected RTL metadata file` artifact instead of leaving it artifact-less.
+- Added [t/255-composition-missing-rtl-metadata-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/255-composition-missing-rtl-metadata-diagnostic-context.t) and updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both the raw pipeline/CLI diagnostic shape and the new summary artifact line.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this visible `R10` slice is preserved in the continuity trail.
+
 ### strict mode now rejects explicit `(+system ... (asreset rstn))`
 - Updated [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so strict mode now rejects the legacy explicit `(asreset rstn)` `+system` spelling while leaving default-mode compatibility intact.
 - Updated [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) so the shared top-level strict hook now receives `raw_ast`, which lets section-level strict boundaries fire consistently at the file-orchestration surface instead of only later during semantic-module creation.

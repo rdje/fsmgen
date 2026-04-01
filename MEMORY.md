@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-01: missing external `.rtlif` failures now name the expected sidecar artifact
+- Continued the visible `R10` lane by tightening one remaining `?rtl` diagnostics gap instead of dropping back into backend-only cleanup.
+- Important continuity note:
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now wraps unresolved external `.rtlif` lookup failures with `Source file: '...'`, `Expected RTL metadata file: 'module.rtlif'`, and `RTL child module: '?rtl' 'module_name'`,
+  - that means missing sidecar metadata no longer falls back to only the raw search-root/search-location prose while still avoiding a fake resolved `RTL metadata file:` artifact,
+  - [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) now also extracts that expected-artifact label, so non-quiet composition failure summaries can show the missing sidecar target directly,
+  - [t/255-composition-missing-rtl-metadata-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/255-composition-missing-rtl-metadata-diagnostic-context.t) now locks the raw pipeline and CLI diagnostic shape,
+  - and the missing-rtlif subtests in [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now lock the new `Expected RTL metadata file:` summary artifact too.
+
 ## 2026-04-01: strict mode now rejects explicit `(asreset rstn)` too
 - Continued the visible `R9` lane by widening strict mode beyond the first root-family and empty-`(+size)` cuts into another explicit section-level compatibility-residue rule.
 - Important continuity note:

@@ -649,6 +649,11 @@ Done:
   - sidecar `.rtlif` failures now keep `RTL metadata file: 'module.rtlif'`, `Parent composition source: 'top_source.fsm'`, and `RTL child module: '?rtl' 'module_name'`,
   - embedded `?rtlif` failures now keep `Source file: 'top_source.fsm'` plus the same RTL-child identity line,
   - and [t/243-composition-rtl-child-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/243-composition-rtl-child-diagnostic-context.t) now locks that boundary through both pipeline and CLI entry points.
+- The next bounded widening step is now also shipped through missing external RTL metadata resolution:
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now also wraps unresolved sidecar `.rtlif` lookup failures with `Source file: 'top_source.fsm'`, `Expected RTL metadata file: 'module.rtlif'`, and `RTL child module: '?rtl' 'module_name'` instead of surfacing only raw search text,
+  - [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) now extracts that same expected-artifact label, so non-quiet composition failure summaries can print the missing sidecar target instead of stopping at only the concise blocked reason,
+  - [t/255-composition-missing-rtl-metadata-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/255-composition-missing-rtl-metadata-diagnostic-context.t) now locks the raw pipeline/CLI diagnostic shape,
+  - and the missing-rtlif summary coverage in [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks the new summary artifact line too.
 - The next bounded widening step is now also shipped through pre-pipeline CLI entrypoint failures:
   - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now prefixes unresolved source-lookup failures with `Requested source: '...'`,
   - output-open failures now keep both `Source file: '...'` and `Output file: '...'` before the underlying write/open diagnostic,
