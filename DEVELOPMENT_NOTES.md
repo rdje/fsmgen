@@ -7795,3 +7795,44 @@ It is an exact-delay pulse request:
   now also locks:
   - RTL-backed `C3` success with omitted `?ports` and inferred top inputs
     coming from source-side top expressions.
+
+## 2026-04-03: source-side explicit-toplink concat expressions now have a first shipped slice
+- Continued the active `R11` lane by turning the already-shipped structural
+  `concat` connection-expression node into a real composition feature instead
+  of leaving it as helper/emitter-only vocabulary.
+- The first shipped explicit-toplink concat slice is now in tree:
+  - `?toplink` child-input sources may now use one bounded flat
+    comma-separated concat expression inside a `/source/target/` token,
+  - concat operands are currently bounded to declared whole top-port refs,
+    top-port `name[index]` / `name[msb:lsb]` refs, and fixed-width literal
+    actuals,
+  - and unsupported operands such as `=open` still fail explicitly through
+    the same `Top expression '...'` summary boundary instead of falling back
+    to generic endpoint wording.
+- The planner/runtime/inference contract is now honest for that slice:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    now lowers those concat sources into typed structural `concat_expr`
+    bindings directly on realized child inputs,
+  - the emitter walks those concat bindings directly instead of inventing
+    helper nets or fake top ports,
+  - [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm)
+    now treats concat-targeted child inputs as already explicitly linked for
+    undeclared same-name top-input inference,
+  - and omitted/empty-`?ports` top-boundary inference now also sees inferable
+    bit/slice operands inside those concat sources while still refusing to
+    guess widths for undeclared whole-port concat operands.
+- [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t)
+  now locks:
+  - direct linked-plan preservation of bounded concat bindings,
+  - end-to-end pipeline and CLI emission of those concat child-input
+    bindings,
+  - and blocked unsupported concat-operand rejection for that first shipped
+    source-side concat slice.
+- [t/177-composition-top-port-inference-builder.t](/Users/richarddje/Documents/github/fsmgen/t/177-composition-top-port-inference-builder.t)
+  now also locks:
+  - direct inference of undeclared top inputs from inferable concat
+    top-expression operands.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t)
+  now also locks:
+  - `Top expression '...'` summary context for blocked concat-operand
+    failures.

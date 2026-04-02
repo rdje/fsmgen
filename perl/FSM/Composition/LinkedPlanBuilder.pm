@@ -28,9 +28,11 @@ use FSM::Composition::SameNameLinkBuilder;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     bit_select_expr
     bit_vector_literal_expr
+    concat_expr
     normalized_binding
     open_expr
     signal_ref_binding
+    signal_ref_expr
     slice_expr
 );
 
@@ -200,7 +202,9 @@ sub build_plan ($class, %args) {
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                     if $target->{kind} eq 'top_port';
 
-                $top_port_usage{$source->{base_port_name}}{source} = 1;
+                for my $top_port_name (@{$source->{base_port_names} || []}) {
+                    $top_port_usage{$top_port_name}{source} = 1;
+                }
             }
 
             $bindings_by_instance{$target->{instance_name}}{$target->{port}->name} = normalized_binding({
@@ -482,11 +486,13 @@ sub assert_link_roles ($class, $source, $target, $fsm_file, $header) {
     }
 
     if (($source->{kind} || '') eq 'top_expr') {
-        confess
-            "Composition source '$header' in '$fsm_file' uses top expression '".$source->{raw}."' as an explicit link source, ".
-            "but explicit link is blocked because base top port '".$source->{base_port_name}."' is declared as ".$source->{base_port}->direction." instead of input. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $source->{base_port}->direction eq 'input';
+        for my $base_port (@{$source->{base_ports} || []}) {
+            confess
+                "Composition source '$header' in '$fsm_file' uses top expression '".$source->{raw}."' as an explicit link source, ".
+                "but explicit link is blocked because base top port '".$base_port->name."' is declared as ".$base_port->direction." instead of input. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                unless $base_port->direction eq 'input';
+        }
 
         confess
             "Composition source '$header' in '$fsm_file' uses top expression '".$source->{raw}."' as an explicit link source, ".
@@ -579,7 +585,121 @@ sub _actual_literal_bits_and_width ($class, $payload, $fsm_file, $header) {
 }
 
 sub top_expression_spec ($class, $endpoint) {
+    return $class->_parse_top_expression_spec(
+        $endpoint,
+        allow_plain_top_ref => 0,
+        allow_literal_actual => 0,
+    );
+}
+
+sub top_expression_base_port_name ($class, $endpoint) {
+    my $spec = $class->top_expression_spec($endpoint);
+    return undef unless $spec;
+    return $spec->{port_name};
+}
+
+sub top_expression_inference_specs ($class, $endpoint) {
+    my $spec = $class->top_expression_spec($endpoint);
+    return [] unless $spec;
+    return $class->_collect_top_expression_inference_specs($spec);
+}
+
+sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $fsm_file, $header) {
+    my $spec = $class->top_expression_spec($endpoint);
+    if (!$spec && defined($endpoint) && ($endpoint =~ /\A\{.*\}\z/s || index($endpoint, ',') >= 0)) {
+        confess
+            "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
+            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, and fixed-width literal actuals like '=4'b1010'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+    return undef unless $spec;
+    my $resolved_spec = $class->_resolve_top_expression_spec(
+        $spec,
+        $top_ports_by_name,
+        $endpoint,
+        $fsm_file,
+        $header,
+    );
+    my @base_ports = @{$resolved_spec->{base_ports} || []};
+    my @base_port_names = map { $_->name } @base_ports;
+    my $single_base_port = @base_ports == 1 ? $base_ports[0] : undef;
+
+    return {
+        raw => $endpoint,
+        key => "top_expr:$endpoint",
+        kind => 'top_expr',
+        base_port_name => $single_base_port ? $single_base_port->name : undef,
+        base_port => $single_base_port,
+        base_port_names => \@base_port_names,
+        base_ports => \@base_ports,
+        port_name => $single_base_port ? $single_base_port->name : undef,
+        port => {
+            direction => $single_base_port ? $single_base_port->direction : 'input',
+            width => $resolved_spec->{width},
+            type => $single_base_port ? $single_base_port->type : undef,
+        },
+        connection_expr => $resolved_spec->{connection_expr},
+    };
+}
+
+sub _collect_top_expression_inference_specs ($class, $spec) {
+    return [] unless ref($spec) eq 'HASH';
+
+    my $expr_kind = $spec->{expr_kind} || '';
+    if ($expr_kind eq 'bit_select' || $expr_kind eq 'slice') {
+        return [{
+            %$spec,
+        }];
+    }
+
+    if ($expr_kind eq 'concat') {
+        my @requirements;
+        for my $operand_spec (@{$spec->{operands} || []}) {
+            push @requirements, @{$class->_collect_top_expression_inference_specs($operand_spec)};
+        }
+        return \@requirements;
+    }
+
+    return [];
+}
+
+sub _parse_top_expression_spec ($class, $endpoint, %opts) {
     return undef unless defined($endpoint) && length($endpoint);
+
+    my $concat_payload = undef;
+    if ($endpoint =~ /\A\{(.*)\}\z/s) {
+        $concat_payload = $1;
+    }
+    elsif (index($endpoint, ',') >= 0) {
+        $concat_payload = $endpoint;
+    }
+
+    if (defined $concat_payload) {
+        my $operands = $class->_split_concat_operands($concat_payload) or return undef;
+        my @operand_specs = map {
+            my $operand_spec = $class->_parse_top_expression_spec(
+                $_,
+                allow_plain_top_ref => 1,
+                allow_literal_actual => 1,
+            );
+            return () unless $operand_spec;
+            $operand_spec;
+        } @$operands;
+        return undef unless @operand_specs == @$operands;
+        return {
+            raw => $endpoint,
+            expr_kind => 'concat',
+            operands => \@operand_specs,
+        };
+    }
+
+    if ($opts{allow_plain_top_ref} && $endpoint =~ /\A(\w+)\z/) {
+        return {
+            raw => $endpoint,
+            port_name => $1,
+            expr_kind => 'signal_ref',
+        };
+    }
 
     if ($endpoint =~ /\A(\w+)\[(\d+)\]\z/) {
         return {
@@ -600,17 +720,132 @@ sub top_expression_spec ($class, $endpoint) {
         };
     }
 
+    if ($opts{allow_literal_actual} && $endpoint =~ /\A=(.+)\z/) {
+        return undef if lc($1) eq 'open';
+        my ($bits, $width) = $class->_expression_literal_bits_and_width($1) or return undef;
+        return {
+            raw => $endpoint,
+            expr_kind => 'literal',
+            bits => $bits,
+            width => $width,
+        };
+    }
+
     return undef;
 }
 
-sub top_expression_base_port_name ($class, $endpoint) {
-    my $spec = $class->top_expression_spec($endpoint);
-    return undef unless $spec;
-    return $spec->{port_name};
+sub _split_concat_operands ($class, $inner_text) {
+    return undef unless defined $inner_text;
+
+    my @operands;
+    my $current = '';
+    my $depth = 0;
+    my @chars = split //, $inner_text;
+
+    for my $char (@chars) {
+        if ($char eq '{') {
+            $depth++;
+            $current .= $char;
+            next;
+        }
+
+        if ($char eq '}') {
+            return undef if $depth < 1;
+            $depth--;
+            $current .= $char;
+            next;
+        }
+
+        if ($char eq ',' && $depth == 0) {
+            my $operand = $current;
+            $operand =~ s/\A\s+|\s+\z//g;
+            return undef unless length $operand;
+            push @operands, $operand;
+            $current = '';
+            next;
+        }
+
+        $current .= $char;
+    }
+
+    return undef if $depth != 0;
+
+    $current =~ s/\A\s+|\s+\z//g;
+    return undef unless length $current;
+    push @operands, $current;
+
+    return \@operands;
 }
 
-sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $fsm_file, $header) {
-    my $spec = $class->top_expression_spec($endpoint) or return undef;
+sub _expression_literal_bits_and_width ($class, $payload) {
+    return ($1, 1)
+        if defined($payload) && $payload =~ /\A([01])\z/;
+
+    if (defined($payload) && $payload =~ /\A(\d+)'b([01]+)\z/i) {
+        my ($declared_width, $bits) = ($1, $2);
+        return undef unless length($bits) == $declared_width;
+        return ($bits, 0 + $declared_width);
+    }
+
+    return;
+}
+
+sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $endpoint, $fsm_file, $header) {
+    my $expr_kind = $spec->{expr_kind} || '';
+
+    if ($expr_kind eq 'signal_ref') {
+        my $port_name = $spec->{port_name} || '';
+        my $top_port = $top_ports_by_name->{$port_name};
+        confess
+            "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
+            "but explicit link endpoint resolution is blocked because concat operand '".$spec->{raw}."' references undeclared top port '$port_name'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $top_port;
+
+        return {
+            width => $top_port->width,
+            connection_expr => signal_ref_expr($port_name),
+            base_ports => [$top_port],
+        };
+    }
+
+    if ($expr_kind eq 'literal') {
+        return {
+            width => $spec->{width},
+            connection_expr => bit_vector_literal_expr($spec->{bits}),
+            base_ports => [],
+        };
+    }
+
+    if ($expr_kind eq 'concat') {
+        my @operand_exprs;
+        my @base_ports;
+        my %seen_port_name;
+        my $width = 0;
+
+        for my $operand_spec (@{$spec->{operands} || []}) {
+            my $resolved_operand = $class->_resolve_top_expression_spec(
+                $operand_spec,
+                $top_ports_by_name,
+                $endpoint,
+                $fsm_file,
+                $header,
+            );
+            push @operand_exprs, $resolved_operand->{connection_expr};
+            $width += $resolved_operand->{width};
+            for my $base_port (@{$resolved_operand->{base_ports} || []}) {
+                next if $seen_port_name{$base_port->name}++;
+                push @base_ports, $base_port;
+            }
+        }
+
+        return {
+            width => $width,
+            connection_expr => concat_expr(@operand_exprs),
+            base_ports => \@base_ports,
+        };
+    }
+
     my $port_name = $spec->{port_name};
     my $top_port = $top_ports_by_name->{$port_name};
 
@@ -623,7 +858,7 @@ sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $fs
     my $top_width = $top_port->width;
     my ($expr_width, $connection_expr);
 
-    if ($spec->{expr_kind} eq 'bit_select') {
+    if ($expr_kind eq 'bit_select') {
         confess
             "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
             "but explicit link endpoint resolution is blocked because bit index ".$spec->{index}." falls outside declared width $top_width of top port '$port_name'. ".
@@ -632,7 +867,8 @@ sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $fs
 
         $expr_width = 1;
         $connection_expr = bit_select_expr($port_name, $spec->{index});
-    } else {
+    }
+    else {
         confess
             "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
             "but explicit link endpoint resolution is blocked because slice bounds [".$spec->{msb}.':'.$spec->{lsb}."] fall outside declared width $top_width of top port '$port_name'. ".
@@ -644,18 +880,9 @@ sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $fs
     }
 
     return {
-        raw => $endpoint,
-        key => "top_expr:$endpoint",
-        kind => 'top_expr',
-        base_port_name => $port_name,
-        base_port => $top_port,
-        port_name => $port_name,
-        port => {
-            direction => $top_port->direction,
-            width => $expr_width,
-            type => $top_port->type,
-        },
+        width => $expr_width,
         connection_expr => $connection_expr,
+        base_ports => [$top_port],
     };
 }
 

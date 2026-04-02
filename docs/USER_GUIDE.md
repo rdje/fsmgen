@@ -199,6 +199,7 @@ Combinational DT note:
   - typed `:clock` / `:reset` metadata lets custom-named RTL system ports auto-wire through mixed composition
 - Explicit `(?toplink:name ...)` blocks with flat `/source/target/` tokens
 - Source-side top-port bit/slice `?toplink` expressions such as `payload_bus[15:8]` and `status_bus[0]` when the target is a realized child input
+- Source-side flat concat `?toplink` expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/uart_tx.data_in/` when the target is a realized child input
 - Explicit `?toplink` source actuals `=open`, `=0`, `=1`, and exact-width binary literals such as `=8'b10100101` when the target is a realized child input
 - Dotted child endpoints in links, for example `/producer.output_data/consumer.input_data/`
 - `C1` lane: one `?top`, one child (`?fsmc`, `?dtc`, or `?rtl`), explicit `?ports`, deterministic same-name top wiring
@@ -687,15 +688,15 @@ Boundary note:
 - That same composition override/block reporting surface now also consumes `structural_rtl_ir` for top-port and child-interface metadata, so those bounded same-name/interface-family details are no longer reread directly from plan internals there either.
 - That same composition-top `intent_hir` layer now also consumes `structural_rtl_ir` for top-port names, counts, and grouped input/output signal-analysis families, and the compatible top-level `module_info` signal metadata now mirrors that same structural top-port boundary instead of rebuilding it separately from plan internals.
 - That same composition-top `structural_rtl_ir` layer now also preserves explicit resolved links as first-class connectivity entries beside ports, nets, instances, and pin bindings. The provenance/reporting path now derives resolved-link identity/origin metadata from that structural layer, and compatible top-level resolved-link counts stay aligned with it too.
-- Structural composition instance bindings now also preserve typed `connection_expr` nodes, currently bounded to backend-neutral `signal_ref`, source-side top-port bit/slice forms, and the first shipped explicit-toplink actual-source forms through `open` and bit-vector literals, so the active top emitter can walk an explicit actual-connection shape instead of relying only on mirrored binding strings.
+- Structural composition instance bindings now also preserve typed `connection_expr` nodes, currently bounded to backend-neutral `signal_ref`, source-side top-port bit/slice forms, bounded concat forms over those source-side operands, and the first shipped explicit-toplink actual-source forms through `open` and bit-vector literals, so the active top emitter can walk an explicit actual-connection shape instead of relying only on mirrored binding strings.
 - The same composition path now also preserves those typed nodes earlier on realized plan instances, so `structural_rtl_ir` carries them through instead of inventing them only at serialization time.
 - That earlier binding normalization now also lives on the runtime `FSM::Composition::RealizedInstance` carrier itself, so `signal_name` / `connection_expr` alignment is now part of the plan-side child-binding contract.
 - That same `structural_rtl_ir` layer now also preserves declared explicit-toplink connectivity separately through `declared_links`, so the structural layer now carries both declared and resolved top/child wiring intent instead of only the post-resolution side.
 - That same override/block reporting surface now also takes its resolved connectivity from `structural_rtl_ir->{resolved_links}`: explicit-toplink override examples, inferred internal-carrier re-export overrides, and kept-internal carrier family detection no longer reread resolved links directly from plan internals.
 - That same block-reporting surface now also takes explicit child-link blocking intent from `structural_rtl_ir->{declared_links}` instead of rereading declared toplinks directly from plan internals.
-- That same structural binding path now also carries source-side top-port `name[index]` / `name[msb:lsb]` explicit-toplink sources directly into realized child inputs, and blocked range failures now keep `Top expression '...'` context in the non-quiet failure summary instead of leaving the expression only in raw exception text.
-- The current bounded `signal_ref` / `open` / bit-vector-literal construction, binding signal-name recovery, and backend-neutral text rendering for structural actual-connection nodes now also live in dedicated `FSM::IR::StructuralRTLIR::ConnectionExpr` helpers, so that first connection-expression contract is no longer split across pipeline-only helper subs.
-- Explicit-toplink actual sources now also use that same structural path directly, so `=open`, `=0`, `=1`, and exact-width `=N'b...` child-input bindings no longer need fake carrier nets or fake undeclared top ports just to reach the emitter.
+- That same structural binding path now also carries source-side top-port `name[index]` / `name[msb:lsb]` explicit-toplink sources and bounded flat concat source forms directly into realized child inputs, and blocked range/operand failures now keep `Top expression '...'` context in the non-quiet failure summary instead of leaving the expression only in raw exception text.
+- The current bounded `signal_ref` / `concat` / `open` / bit-vector-literal construction, binding signal-name recovery, and backend-neutral text rendering for structural actual-connection nodes now also live in dedicated `FSM::IR::StructuralRTLIR::ConnectionExpr` helpers, so that first connection-expression contract is no longer split across pipeline-only helper subs.
+- Explicit-toplink actual sources and source-side top expressions now also use that same structural path directly, so `=open`, `=0`, `=1`, exact-width `=N'b...`, and bounded concat child-input bindings no longer need fake carrier nets or fake undeclared top ports just to reach the emitter.
 - Direct generated `?fsm` / `?dt` roots now also surface a bounded `structural_rtl_ir` module-interface slice, and realized generated-child export surfaces preserve that same structural boundary summary beside `intent_hir` and `lowered_rtl_ir`.
 - That same composition provenance surface now also preserves per-resolved-link endpoint context plus one example subject per top-port and resolved-link provenance kind; when a provenance example touches a realized generated child endpoint, the example now carries bounded forward child context derived from that child's `intent_hir` and `lowered_rtl_ir`.
 - That same composition reporting surface now also preserves structured top-port / child-endpoint context for convention overrides and convention blocks; when those events touch realized generated child endpoints, the carried endpoint context includes bounded forward child summaries from `intent_hir` and `lowered_rtl_ir`, and non-quiet `bin/fsmgen` now prints richer link/endpoint examples instead of plain count-plus-name examples in those sections.
@@ -925,7 +926,7 @@ This currently works because:
 - `clk` and `rstn` use the shared system-input contract,
 - non-system connections are expressed explicitly through `?toplink`,
 - `?ports` may now be omitted or empty in explicit-link `C2` / `C3` when explicit `?toplink` endpoints themselves still imply the missing top ports honestly, including renamed top-boundary names,
-- source-side top expressions such as `payload_bus[15:8]` and `status_bus[0]` may now also participate in that omitted/empty-`?ports` inference, with the inferred base-port width coming from the highest referenced bit,
+- source-side top expressions such as `payload_bus[15:8]` and `status_bus[0]` may now also participate in that omitted/empty-`?ports` inference, including inferable bit/slice operands inside a bounded comma-separated concat source, with the inferred base-port width coming from the highest referenced bit,
 - undeclared top-facing child inputs may now be inferred when the child-side evidence is unambiguous and those inputs are not already consumed by explicit child-to-child links,
 - undeclared unique top-facing child outputs may now also be inferred when they are not already consumed by explicit child-to-child links,
 - plain explicit top inputs may now also reuse that same-name convention when compatible child inputs keep one direction plus exact width/type agreement,
@@ -981,6 +982,32 @@ This currently works because:
 - binary literal actuals must still match the target child-input width exactly,
 - and those actuals bind directly on the realized child port instead of inventing a top port or synthetic carrier net.
 
+Current narrow top-concat explicit-link example:
+```lisp
+(?top:uart_concat_top
+  (?ports:public_io
+    core_clk
+    rst_async_n
+    header_bus<2
+    status_bus
+    payload_bus<4
+    serial_out>
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /header_bus,status_bus[0],=1,payload_bus[3:0]/uart_tx.data_in/
+    /uart_tx.serial_out/serial_out/
+  )
+)
+```
+
+This currently works because:
+- the `/source/target/` token still stays flat, but the source side may now be one bounded comma-separated concat expression,
+- concat operands may currently be declared whole top-port refs, top-port bit/slice refs, or fixed-width literal actuals,
+- that concat still stays source-side only,
+- it still targets a realized child input port only,
+- and the emitted child binding uses the direct HDL concat instead of inventing a synthetic carrier net.
+
 Current narrow omitted-`?ports` top-expression inference example:
 ```lisp
 (?top:uart_slice_top
@@ -996,6 +1023,8 @@ This currently works because:
 - omitted `?ports` may now infer `payload_bus` and `status_bus` directly from those explicit links,
 - `payload_bus[15:8]` implies a base top-input width of at least 16,
 - `status_bus[0]` implies a base top-input width of at least 1,
+- the same inference path now also sees `name[index]` / `name[msb:lsb]` operands that appear inside a bounded comma-separated concat source,
+- undeclared whole-port concat operands still need a declared or otherwise already-inferred width,
 - top expressions still stay source-side only,
 - and they still target realized child input ports only.
 

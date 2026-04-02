@@ -839,6 +839,16 @@ The first honest `R11` slices are now:
   source-side declared-top `bit_select` / `slice` forms such as `bus[0]` and
   `bus[7:4]`, so the already-shipped structural expression nodes now have a
   first honest composition wiring path beyond plain top-port references.
+- Forward-IR note: that same producer/consumer path now also covers bounded
+  flat source-side concat forms such as `header_bus,status_bus[0],=1,payload`
+  over declared whole top-port refs, top-port bit/slice refs, and fixed-width
+  literal actuals, so explicit `?toplink` child-input bindings can now reuse
+  the already-shipped structural `concat` node directly instead of inventing
+  carrier nets or backend-specific text escapes.
+- Forward-IR note: omitted/empty-`?ports` top-boundary inference now also sees
+  inferable `name[index]` / `name[msb:lsb]` operands inside those bounded
+  concat sources, while undeclared whole-port concat operands still require a
+  declared or otherwise already-inferred width instead of a guessed remainder.
 - Forward-IR note: the structural connection-expression layer has now started
   the bounded member/field-access lane too, with a first `member_access` node
   over one source expression plus one identifier-like member name, rendered

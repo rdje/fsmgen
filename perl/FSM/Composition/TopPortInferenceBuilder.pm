@@ -82,8 +82,7 @@ sub augment_from_explicit_links ($class, %args) {
             my ($target_top_name) = $target =~ /^(\w+)$/;
             my $source_is_top = defined $source_top_name;
             my $target_is_top = defined $target_top_name;
-            my $source_top_expr_spec = FSM::Composition::LinkedPlanBuilder->top_expression_spec($source);
-            my $source_top_expr_name = $source_top_expr_spec ? $source_top_expr_spec->{port_name} : undef;
+            my $source_top_expr_specs = FSM::Composition::LinkedPlanBuilder->top_expression_inference_specs($source);
 
             if ($source_is_top && !$declared_by_name{$source_top_name} && $target =~ /^\w+\.\w+$/) {
                 my $child_endpoint = FSM::Composition::LinkedPlanBuilder->resolve_endpoint(
@@ -105,7 +104,7 @@ sub augment_from_explicit_links ($class, %args) {
                 );
             }
 
-            if (defined($source_top_expr_name) && !$declared_by_name{$source_top_expr_name} && $target =~ /^\w+\.\w+$/) {
+            if (@$source_top_expr_specs && $target =~ /^\w+\.\w+$/) {
                 my $child_endpoint = FSM::Composition::LinkedPlanBuilder->resolve_endpoint(
                     $target,
                     {},
@@ -114,15 +113,18 @@ sub augment_from_explicit_links ($class, %args) {
                     $fsm_file,
                     $header,
                 );
-                $class->_record_inferred_top_expression_port(
-                    \%inferred_specs,
-                    $source_top_expr_name,
-                    $source_top_expr_spec,
-                    $child_endpoint,
-                    $source.' -> '.$target,
-                    $fsm_file,
-                    $header,
-                );
+                for my $source_top_expr_spec (@$source_top_expr_specs) {
+                    next if $declared_by_name{$source_top_expr_spec->{port_name}};
+                    $class->_record_inferred_top_expression_port(
+                        \%inferred_specs,
+                        $source_top_expr_spec->{port_name},
+                        $source_top_expr_spec,
+                        $child_endpoint,
+                        $source.' -> '.$target,
+                        $fsm_file,
+                        $header,
+                    );
+                }
             }
 
             if ($target_is_top && !$declared_by_name{$target_top_name} && $source =~ /^\w+\.\w+$/) {
@@ -184,6 +186,8 @@ sub augment_undeclared_top_inputs ($class, %args) {
             my $source_is_child_endpoint = $source =~ /^\w+\.\w+$/;
             my $source_is_actual = $source =~ /^=/;
             my ($source_top_port_name) = $source =~ /^(\w+)$/;
+            my $source_top_expr_spec = FSM::Composition::LinkedPlanBuilder->top_expression_spec($source);
+            my $source_is_top_expression = defined $source_top_expr_spec;
             my $source_top_expr_port_name = FSM::Composition::LinkedPlanBuilder->top_expression_base_port_name($source);
             my $source_is_declared_top_port = defined($source_top_port_name) && $declared_by_name{$source_top_port_name};
             my $source_is_declared_top_expr = defined($source_top_expr_port_name) && $declared_by_name{$source_top_expr_port_name};
@@ -191,7 +195,7 @@ sub augment_undeclared_top_inputs ($class, %args) {
                 $same_name_undeclared_top_input_links{$target_port_name} = 1;
                 next;
             }
-            next unless $source_is_child_endpoint || $source_is_declared_top_port || $source_is_declared_top_expr || $source_is_actual;
+            next unless $source_is_child_endpoint || $source_is_declared_top_port || $source_is_declared_top_expr || $source_is_top_expression || $source_is_actual;
             $explicitly_linked_child_input_names{$target_port_name} = 1;
         }
     }
@@ -421,6 +425,8 @@ sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $
 
 sub _required_top_width_for_expression_spec ($class, $expression_spec) {
     my $expr_kind = $expression_spec->{expr_kind} || '';
+    return $expression_spec->{width}
+        if $expr_kind eq 'signal_ref';
     return ($expression_spec->{index} || 0) + 1
         if $expr_kind eq 'bit_select';
     return (($expression_spec->{msb} || 0) > ($expression_spec->{lsb} || 0)

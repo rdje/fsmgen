@@ -6049,3 +6049,16 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   base-port width from the highest referenced bit while still rejecting
   incompatible exact-width full-port evidence instead of guessing one width
   contract silently.
+- Explicit `?toplink` wiring may now also use the bounded flat comma-separated
+  source-side concat form inside one `/source/target/` token, for example
+  `header_bus,status_bus[0],=1,payload_bus[3:0]`, when the target is a
+  realized child input.
+- `FSM::Composition::LinkedPlanBuilder` now lowers those concat sources into
+  typed structural `concat_expr` bindings directly instead of inventing
+  carrier nets, and blocked unsupported concat operands keep the existing
+  `Top expression '...'` summary context.
+- Omitted/empty `?ports` explicit-link tops may now also see inferable
+  `name[index]` / `name[msb:lsb]` operands inside those bounded concat
+  sources, while undeclared whole-port concat operands still require a
+  declared or otherwise already-inferred top width instead of a guessed
+  remainder width.

@@ -86,6 +86,40 @@ subtest 'explicit-toplink builder infers undeclared top inputs from source-side 
     );
 };
 
+subtest 'explicit-toplink builder infers undeclared top inputs from concat top-expression operands' => sub {
+    my $ports = FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
+        ports => [],
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(
+                        source => '{payload_hi[3:0],status_bus[0],payload_lo[3:0]}',
+                        target => 'sink.frame_in',
+                    ),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance('sink',
+                input_port('frame_in', 9),
+            ),
+        ],
+        fsm_file => 'fixture.fsm',
+        header => 'fixture',
+    );
+
+    is_deeply(
+        [map { [$_->name, $_->direction, $_->width, $_->origin_kind] } @$ports],
+        [
+            ['payload_hi', 'input', 4, 'inferred_explicit_toplink_port'],
+            ['payload_lo', 'input', 4, 'inferred_explicit_toplink_port'],
+            ['status_bus', 'input', 1, 'inferred_explicit_toplink_port'],
+        ],
+        'builder infers undeclared top-input widths from bounded concat top-expression operands',
+    );
+};
+
 subtest 'explicit-toplink builder rejects incompatible exact-width and top-expression width evidence' => sub {
     my $exception = eval {
         FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(

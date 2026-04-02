@@ -1295,6 +1295,19 @@ Done:
   - and conflicting exact-width versus top-expression width evidence now fails explicitly instead of silently picking one contract.
 - [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) now also locks:
   - RTL-backed `C3` success with omitted `?ports` and inferred top inputs coming from source-side top expressions.
+- That same source-side top-expression slice now also covers bounded concat sources:
+  - explicit-link `C2` / `C3` child-input bindings may now use flat comma-separated source expressions such as `header_bus,status_bus[0],=1,payload_bus[3:0]`,
+  - concat operands are currently bounded to declared whole top-port refs, top-port bit/slice refs, and fixed-width literal actuals,
+  - omitted/empty-`?ports` top-boundary inference now also sees the inferable bit/slice operands inside those concat sources,
+  - and undeclared whole-port concat operands still require a declared or otherwise already-inferred top width instead of guessing a remainder width.
+- [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks:
+  - direct linked-plan preservation of bounded concat bindings,
+  - end-to-end pipeline and CLI emission of those concat child-input bindings,
+  - and blocked unsupported concat-operand rejection through the top-expression boundary.
+- [t/177-composition-top-port-inference-builder.t](/Users/richarddje/Documents/github/fsmgen/t/177-composition-top-port-inference-builder.t) now also locks:
+  - direct inference of undeclared top inputs from inferable concat top-expression operands.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now also locks:
+  - `Top expression '...'` summary context for blocked concat-operand failures.
 - The next convention-first top-boundary refinement is now also shipped:
   - explicit-link `C2` / `C3` plain explicit top inputs may now adopt same-name fanout convention when compatible child inputs still agree exactly on direction, width, and type metadata,
   - explicit-link `C2` / `C3` plain explicit top outputs may now adopt one unique same-name top-facing child output when that child-side evidence is still exact,
@@ -1395,7 +1408,7 @@ Left:
   - widen the now-shipped first `Intent HIR` extraction slice beyond direct generated roots, realized generated children, the standalone-DT composition-export surface, the broader generated-child composition-export surface, and the shared-datapath candidate contributor surface into the rest of the forward pipeline,
   - widen the now-shipped first explicit `Lowered RTL IR` extraction slice beyond generated output-drive families, standalone-DT grouped multi-drive targets, the standalone-DT composition-export surface, the broader generated-child composition-export surface, and the shared-datapath candidate contributor surface into the rest of the forward pipeline,
   - keep widening and consuming the now-shipped bounded `Structural RTL IR` / connectivity layer so explicit ports, nets, instances, pin bindings, and full top/child wiring keep moving out of plan-shaped and backend-adjacent residue,
-  - keep that `Structural RTL IR` backend-neutral, expressive, and extensible enough for rich top/child wiring, with child actual-pin connections growing beyond the now-shipped explicit-toplink source-actual slice (`=open`, `=0`, `=1`, and exact-width `=N'b...`) as typed structural connection expressions / actual-connection AST nodes instead of raw HDL strings,
+  - keep that `Structural RTL IR` backend-neutral, expressive, and extensible enough for rich top/child wiring, with child actual-pin connections growing beyond the now-shipped explicit-toplink source-actual plus top-boundary expression slice (`=open`, `=0`, `=1`, exact-width `=N'b...`, `name[index]`, `name[msb:lsb]`, and bounded flat concat source forms) as typed structural connection expressions / actual-connection AST nodes instead of raw HDL strings,
   - normalize any backend-specific or inelegant connection shape into helper nets / auxiliary assignments before it reaches the structural binding boundary,
   - keep those forward IR layers aligned with the future shared-middle/import architecture instead of allowing a second incompatible semantic stack to form,
   - clarify and then realize the intended `HDLGenerator` breakdown so orchestration/lowering may still see `IntentHIR` and `LoweredRTLIR` while the pure backend-emitter boundary converges toward `StructuralRTLIR` as the last IR before HDL text,
