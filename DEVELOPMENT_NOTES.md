@@ -7739,3 +7739,29 @@ It is an exact-delay pulse request:
   - rejection of actual sources driving non-child-input targets,
   - and rejection of unsupported actual literal forms outside that first
     bounded slice.
+
+## 2026-04-02: explicit-toplink top-port expressions now have a first shipped source-side slice
+- Continued the active `R11` lane by turning the already-shipped structural
+  `bit_select` / `slice` connection-expression nodes into a real composition
+  feature instead of leaving them as emitter-only vocabulary.
+- The first shipped explicit-toplink top-expression slice is now in tree:
+  - `?toplink` sources may now use declared top-port `name[index]` and
+    `name[msb:lsb]` forms such as `status_bus[0]` and `payload_bus[15:8]`,
+  - those top expressions currently appear on the source side only,
+  - and they currently target realized child input ports only.
+- The planner/runtime/reporting contract is now honest for that slice:
+  - `FSM::Composition::LinkedPlanBuilder` resolves those forms into typed
+    structural `bit_select_expr` / `slice_expr` bindings directly,
+  - the emitter walks them directly instead of inventing helper nets,
+  - top-port inference and provenance block detection treat those child inputs
+    as already explicitly linked,
+  - and blocked range failures now keep `Top expression '...'` context in the
+    bounded non-quiet composition-failure summary instead of leaving the
+    active expression only in raw exception text.
+- [t/263-composition-toplink-top-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/263-composition-toplink-top-expressions.t)
+  now locks:
+  - direct linked-plan preservation of bit-select and slice bindings,
+  - end-to-end pipeline and CLI emission of `.data_in(payload_bus[15:8])` and
+    `.enable(status_bus[0])`,
+  - and blocked out-of-range rejection for that first bounded top-expression
+    slice.

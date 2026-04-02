@@ -219,6 +219,7 @@ sub context_excerpt ($class, $summary_text) {
         [ qr/under '(\?rtlif:[^']+)'/s, sub { return ('RTL root', "'$_[0]'"); } ],
         [ qr/references child endpoint '([^']+)'/s, sub { return ('Child endpoint', "'$_[0]'"); } ],
         [ qr/uses child endpoint '([^']+)'/s, sub { return ('Child endpoint', "'$_[0]'"); } ],
+        [ qr/uses top expression '([^']+)'/s, sub { return ('Top expression', "'$_[0]'"); } ],
         [ qr/uses actual source '([^']+)'/s, sub { return ('Actual source', "'$_[0]'"); } ],
         [ qr/uses actual endpoint '([^']+)'/s, sub { return ('Actual endpoint', "'$_[0]'"); } ],
         [ qr/links top input '([^']+)' directly to top output '([^']+)'/s, sub {

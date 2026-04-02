@@ -26,10 +26,12 @@ use FSM::Composition::Plan;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::SameNameLinkBuilder;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
+    bit_select_expr
     bit_vector_literal_expr
     normalized_binding
     open_expr
     signal_ref_binding
+    slice_expr
 );
 
 sub build_from_toplinks ($class, %args) {
@@ -148,6 +150,7 @@ sub build_plan ($class, %args) {
     my @resolved_links;
     my %links_by_source;
     my %source_endpoint_by_key;
+    my %top_port_usage;
 
     for my $link (@resolved_links_input) {
         my $source = $class->resolve_endpoint(
@@ -157,6 +160,7 @@ sub build_plan ($class, %args) {
             \%child_ports_by_instance,
             $fsm_file,
             $header,
+            allow_top_expression_source => 1,
         );
         my $target = $class->resolve_endpoint(
             $link->target,
@@ -188,7 +192,17 @@ sub build_plan ($class, %args) {
         }
         $reserved_targets{$target_key} = "explicit link '".$source->{raw}."'";
 
-        if (($source->{kind} || '') =~ /^actual_/) {
+        if (($source->{kind} || '') =~ /^actual_/ || ($source->{kind} || '') eq 'top_expr') {
+            if (($source->{kind} || '') eq 'top_expr') {
+                confess
+                    "Composition source '$header' in '$fsm_file' links top expression '".$source->{raw}."' directly to top output '".$target->{raw}."', ".
+                    "but explicit-link topology is blocked because the current active $lane lane only supports top inputs driving child inputs. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                    if $target->{kind} eq 'top_port';
+
+                $top_port_usage{$source->{base_port_name}}{source} = 1;
+            }
+
             $bindings_by_instance{$target->{instance_name}}{$target->{port}->name} = normalized_binding({
                 port_name => $target->{port}->name,
                 connection_expr => $source->{connection_expr},
@@ -270,11 +284,10 @@ sub build_plan ($class, %args) {
         $bindings_by_instance{$source->{instance_name}}{$source->{port}->name} = $carrier_signal_name;
     }
 
-    my %top_port_usage;
     for my $resolved_link (@resolved_links) {
         my $source = $resolved_link->{source};
         my $target = $resolved_link->{target};
-        next if (($source->{kind} || '') =~ /^actual_/);
+        next if (($source->{kind} || '') =~ /^actual_/ || ($source->{kind} || '') eq 'top_expr');
         my $carrier_signal_name = $carrier_signal_by_source{$source->{key}};
 
         if ($source->{kind} eq 'top_port') {
@@ -382,9 +395,20 @@ sub assert_unique_top_ports ($class, $ports_block, $fsm_file, $header) {
     return \%top_ports_by_name;
 }
 
-sub resolve_endpoint ($class, $endpoint, $top_ports_by_name, $instances_by_name, $child_ports_by_instance, $fsm_file, $header) {
+sub resolve_endpoint ($class, $endpoint, $top_ports_by_name, $instances_by_name, $child_ports_by_instance, $fsm_file, $header, %opts) {
     if (my $actual_endpoint = $class->_resolve_actual_endpoint($endpoint, $fsm_file, $header)) {
         return $actual_endpoint;
+    }
+
+    if ($opts{allow_top_expression_source}) {
+        if (my $top_expression_endpoint = $class->_resolve_top_expression_endpoint(
+            $endpoint,
+            $top_ports_by_name,
+            $fsm_file,
+            $header,
+        )) {
+            return $top_expression_endpoint;
+        }
     }
 
     if ($endpoint =~ /^(\w+)\.(\w+)$/) {
@@ -435,7 +459,7 @@ sub resolve_endpoint ($class, $endpoint, $top_ports_by_name, $instances_by_name,
     confess
         "Composition source '$header' in '$fsm_file' uses explicit endpoint '$endpoint', ".
         "but explicit link endpoint resolution is blocked because that syntax is unsupported. ".
-        "The current active composition lanes accept only top-port names or 'instance.port' child endpoints. ".
+        "The current active composition lanes accept only top-port names, source-side top-port bit/slice expressions like 'data_bus[3]' or 'data_bus[7:4]', or 'instance.port' child endpoints. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
@@ -451,6 +475,22 @@ sub assert_link_roles ($class, $source, $target, $fsm_file, $header) {
         confess
             "Composition source '$header' in '$fsm_file' uses actual source '".$source->{raw}."' as an explicit link source, ".
             "but explicit actual binding is blocked because the first structural-actual slice only allows actual sources to target realized child input ports. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $target->{kind} eq 'child_port' && $target->{port}->direction eq 'input';
+
+        return;
+    }
+
+    if (($source->{kind} || '') eq 'top_expr') {
+        confess
+            "Composition source '$header' in '$fsm_file' uses top expression '".$source->{raw}."' as an explicit link source, ".
+            "but explicit link is blocked because base top port '".$source->{base_port_name}."' is declared as ".$source->{base_port}->direction." instead of input. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $source->{base_port}->direction eq 'input';
+
+        confess
+            "Composition source '$header' in '$fsm_file' uses top expression '".$source->{raw}."' as an explicit link source, ".
+            "but explicit link is blocked because top expressions currently target only realized child input ports. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $target->{kind} eq 'child_port' && $target->{port}->direction eq 'input';
 
@@ -536,6 +576,87 @@ sub _actual_literal_bits_and_width ($class, $payload, $fsm_file, $header) {
         "Composition source '$header' in '$fsm_file' uses actual endpoint '=$payload', ".
         "but explicit actual binding is blocked because the first structural-actual slice currently accepts only '=open', '=0', '=1', or binary literal forms like '=8'b10100101'. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+}
+
+sub top_expression_spec ($class, $endpoint) {
+    return undef unless defined($endpoint) && length($endpoint);
+
+    if ($endpoint =~ /\A(\w+)\[(\d+)\]\z/) {
+        return {
+            raw => $endpoint,
+            port_name => $1,
+            expr_kind => 'bit_select',
+            index => 0 + $2,
+        };
+    }
+
+    if ($endpoint =~ /\A(\w+)\[(\d+):(\d+)\]\z/) {
+        return {
+            raw => $endpoint,
+            port_name => $1,
+            expr_kind => 'slice',
+            msb => 0 + $2,
+            lsb => 0 + $3,
+        };
+    }
+
+    return undef;
+}
+
+sub top_expression_base_port_name ($class, $endpoint) {
+    my $spec = $class->top_expression_spec($endpoint);
+    return undef unless $spec;
+    return $spec->{port_name};
+}
+
+sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $fsm_file, $header) {
+    my $spec = $class->top_expression_spec($endpoint) or return undef;
+    my $port_name = $spec->{port_name};
+    my $top_port = $top_ports_by_name->{$port_name};
+
+    confess
+        "Composition source '$header' in '$fsm_file' references top expression '$endpoint', ".
+        "but explicit link endpoint resolution is blocked because '?ports' declares no top port named '$port_name'. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless $top_port;
+
+    my $top_width = $top_port->width;
+    my ($expr_width, $connection_expr);
+
+    if ($spec->{expr_kind} eq 'bit_select') {
+        confess
+            "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
+            "but explicit link endpoint resolution is blocked because bit index ".$spec->{index}." falls outside declared width $top_width of top port '$port_name'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless defined($top_width) && $top_width > 0 && $spec->{index} < $top_width;
+
+        $expr_width = 1;
+        $connection_expr = bit_select_expr($port_name, $spec->{index});
+    } else {
+        confess
+            "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
+            "but explicit link endpoint resolution is blocked because slice bounds [".$spec->{msb}.':'.$spec->{lsb}."] fall outside declared width $top_width of top port '$port_name'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless defined($top_width) && $top_width > 0 && $spec->{msb} < $top_width && $spec->{lsb} < $top_width;
+
+        $expr_width = abs($spec->{msb} - $spec->{lsb}) + 1;
+        $connection_expr = slice_expr($port_name, $spec->{msb}, $spec->{lsb});
+    }
+
+    return {
+        raw => $endpoint,
+        key => "top_expr:$endpoint",
+        kind => 'top_expr',
+        base_port_name => $port_name,
+        base_port => $top_port,
+        port_name => $port_name,
+        port => {
+            direction => $top_port->direction,
+            width => $expr_width,
+            type => $top_port->type,
+        },
+        connection_expr => $connection_expr,
+    };
 }
 
 sub endpoint_width ($class, $endpoint) {

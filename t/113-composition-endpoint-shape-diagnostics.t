@@ -114,7 +114,7 @@ subtest 'unsupported explicit endpoint syntax now says endpoint resolution is bl
 
     like(
         $exception,
-        qr/uses explicit endpoint 'producer\.output_data\.extra', .*explicit link endpoint resolution is blocked because that syntax is unsupported.*accept only top-port names or 'instance\.port' child endpoints/s,
+        qr/uses explicit endpoint 'producer\.output_data\.extra', .*explicit link endpoint resolution is blocked because that syntax is unsupported.*accept only top-port names, source-side top-port bit\/slice expressions like 'data_bus\[3\]' or 'data_bus\[7:4\]', or 'instance\.port' child endpoints/s,
         'unsupported explicit endpoint syntax now says endpoint resolution is blocked',
     );
 };

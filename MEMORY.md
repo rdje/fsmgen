@@ -6035,3 +6035,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `connection_expr` bindings instead of inventing carrier nets, and
   top-port inference / provenance block detection now treat those child
   inputs as already explicitly linked.
+- Explicit `?toplink` wiring may now also use declared top-port bit/slice
+  expressions such as `payload_bus[15:8]` and `status_bus[0]` on the source
+  side when the target is a realized child input.
+- `FSM::Composition::LinkedPlanBuilder` now resolves those source-side
+  top-port expressions into typed `bit_select_expr` / `slice_expr` bindings
+  directly, and top-port inference / provenance block detection now treat
+  those child inputs as already explicitly linked instead of inventing helper
+  nets or undeclared same-name top ports.

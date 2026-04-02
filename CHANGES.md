@@ -5501,3 +5501,15 @@ This is the persistent technical change history for FSMGen.
 - `t/262-composition-structural-actual-toplinks.t` now locks the new builder,
   pipeline, CLI, and rejection-path contract for that bounded actual-source
   slice.
+- Explicit `?toplink` wiring may now also use declared top-port bit/slice
+  expressions such as `payload_bus[15:8]` and `status_bus[0]` on the source
+  side when the target is a realized child input.
+- `FSM::Composition::LinkedPlanBuilder` now resolves those source-side
+  top-port expressions into typed `bit_select_expr` / `slice_expr` bindings
+  directly, and top-port inference / provenance block detection now treat
+  those child inputs as already explicitly wired instead of inventing helper
+  nets or undeclared same-name top ports.
+- `t/263-composition-toplink-top-expressions.t` now locks the direct builder,
+  pipeline, CLI, and blocked-range contract for that bounded top-expression
+  slice, while `t/131-composition-failure-summary-reporting.t` now also locks
+  `Top expression '...'` summary context for blocked range failures.

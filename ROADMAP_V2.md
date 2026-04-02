@@ -364,7 +364,7 @@ First shipped `R11` slice now in tree:
   - direct `?top` generation results now expose serialized `structural_rtl_ir`,
   - composition-top `module_info` now mirrors that same serialized structural surface,
   - the shipped slice currently covers explicit top ports, internal nets, realized instances, pin bindings, and auxiliary assignments,
-  - those structural instance pin bindings now also preserve typed `connection_expr` nodes, currently bounded to backend-neutral `signal_ref` plus the first shipped explicit-toplink actual-source forms through `open` and bit-vector literals,
+  - those structural instance pin bindings now also preserve typed `connection_expr` nodes, currently bounded to backend-neutral `signal_ref`, source-side top-port `bit_select` / `slice` forms, and the first shipped explicit-toplink actual-source forms through `open` and bit-vector literals,
   - and realized composition-plan instances now also preserve those same typed nodes before structural serialization instead of forcing `StructuralRTLIR` to synthesize them late,
   - with that earlier binding normalization now owned by `FSM::Composition::RealizedInstance` itself instead of only by `HDLGenerator`,
   - and the current bounded `signal_ref` / `open` / bit-vector-literal construction, signal-name recovery, and backend-neutral text rendering for those actual-connection nodes now also live in dedicated `FSM::IR::StructuralRTLIR::ConnectionExpr` helpers instead of staying split across pipeline glue,
@@ -373,7 +373,8 @@ First shipped `R11` slice now in tree:
   - with normalized binding cloning/backfilling now also centralized there, so both `FSM::Composition::RealizedInstance` and structural instance-binding serialization consume the same bounded binding contract,
   - and the first bounded signal-ref binding-list ensure/set operations now also live there, so `HDLGenerator` no longer owns the low-level “reuse this binding versus append/update it” rules for structural port-binding lists,
   - and explicit `?toplink` may now use `=open`, `=0`, `=1`, and exact-width `=N'b...` as source actuals into realized child inputs, with linked planning preserving those bindings directly instead of inventing helper nets or undeclared same-name top inputs,
-  - and the bounded failed-run summary path now also keeps that same structural-actual slice honest, so blocked actual-source role failures preserve `Actual source '=...'` context while blocked actual-endpoint target failures preserve `Actual endpoint '=...'` context under the concise `explicit actual binding` boundary,
+  - and that same direct structural binding path now also covers source-side top-port `name[index]` / `name[msb:lsb]` expressions over declared top inputs when they drive realized child inputs, again without inventing helper nets or undeclared same-name top inputs,
+  - and the bounded failed-run summary path now also keeps that same structural/top-expression slice honest, so blocked actual-source role failures preserve `Actual source '=...'` context, blocked actual-endpoint target failures preserve `Actual endpoint '=...'` context, and blocked top-expression range failures preserve `Top expression '...'` context under the concise `explicit actual binding` or `explicit link endpoint resolution` boundary as appropriate,
   - and the active composition-top emitter now walks that structural layer instead of re-reading only `FSM::Composition::Plan` state directly during top-module dumping.
 - The next structural widening step is now also shipped:
   - direct generated `?fsm` / `?dt` results now expose a bounded structural module-interface slice through `structural_rtl_ir`,
@@ -834,6 +835,10 @@ The first honest `R11` slices are now:
   `=open`, `=0`, `=1`, and exact-width `=N'b...` as source actuals into
   realized child inputs without inventing helper nets or undeclared same-name
   top inputs.
+- Forward-IR note: that same producer/consumer path now also covers
+  source-side declared-top `bit_select` / `slice` forms such as `bus[0]` and
+  `bus[7:4]`, so the already-shipped structural expression nodes now have a
+  first honest composition wiring path beyond plain top-port references.
 - Forward-IR note: the structural connection-expression layer has now started
   the bounded member/field-access lane too, with a first `member_access` node
   over one source expression plus one identifier-like member name, rendered

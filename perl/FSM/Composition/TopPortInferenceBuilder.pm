@@ -162,12 +162,14 @@ sub augment_undeclared_top_inputs ($class, %args) {
             my $source_is_child_endpoint = $source =~ /^\w+\.\w+$/;
             my $source_is_actual = $source =~ /^=/;
             my ($source_top_port_name) = $source =~ /^(\w+)$/;
+            my $source_top_expr_port_name = FSM::Composition::LinkedPlanBuilder->top_expression_base_port_name($source);
             my $source_is_declared_top_port = defined($source_top_port_name) && $declared_by_name{$source_top_port_name};
+            my $source_is_declared_top_expr = defined($source_top_expr_port_name) && $declared_by_name{$source_top_expr_port_name};
             if (defined($source_top_port_name) && !$source_is_declared_top_port && $source_top_port_name eq $target_port_name) {
                 $same_name_undeclared_top_input_links{$target_port_name} = 1;
                 next;
             }
-            next unless $source_is_child_endpoint || $source_is_declared_top_port || $source_is_actual;
+            next unless $source_is_child_endpoint || $source_is_declared_top_port || $source_is_declared_top_expr || $source_is_actual;
             $explicitly_linked_child_input_names{$target_port_name} = 1;
         }
     }

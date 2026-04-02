@@ -19,6 +19,7 @@ use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Composition::LinkedPlanBuilder;
 use FSM::Composition::InterfacePortBuilder;
 use FSM::IR::IntentHIR;
 use FSM::IR::StructuralRTLIRBuilder;
@@ -341,8 +342,10 @@ sub build_block_events ($class, %args) {
         if (defined $target_port_name) {
             my $source_is_child_endpoint = $source =~ /^\w+\.\w+$/;
             my $source_is_declared_top_port = exists $declared_top_ports{$source};
+            my $source_top_expr_port_name = FSM::Composition::LinkedPlanBuilder->top_expression_base_port_name($source);
+            my $source_is_declared_top_expr = defined($source_top_expr_port_name) && exists $declared_top_ports{$source_top_expr_port_name};
             my $source_is_actual = $source =~ /^=/;
-            if ($source_is_child_endpoint || $source_is_declared_top_port || $source_is_actual) {
+            if ($source_is_child_endpoint || $source_is_declared_top_port || $source_is_declared_top_expr || $source_is_actual) {
                 $explicitly_linked_child_input_names{$target_port_name} = 1;
             }
         }
@@ -476,6 +479,25 @@ sub endpoint_context ($class, %args) {
         };
     }
 
+    if (my $top_expr_port_name = FSM::Composition::LinkedPlanBuilder->top_expression_base_port_name($endpoint)) {
+        if (my $top_port = $structural_rtl_ir->top_port($top_expr_port_name)) {
+            my $spec = FSM::Composition::LinkedPlanBuilder->top_expression_spec($endpoint) || {};
+            my $width = ($spec->{expr_kind} || '') eq 'bit_select'
+                ? 1
+                : (($spec->{expr_kind} || '') eq 'slice'
+                    ? abs(($spec->{msb} || 0) - ($spec->{lsb} || 0)) + 1
+                    : $top_port->{width});
+            return {
+                kind => 'top_expression',
+                name => $top_expr_port_name,
+                endpoint => $endpoint,
+                direction => $top_port->{direction},
+                width => $width,
+                type => $top_port->{type},
+            };
+        }
+    }
+
     my ($instance_name, $port_name) = $endpoint =~ /^(\w+)\.(\w+)$/;
     return {
         kind => 'raw_endpoint',
@@ -531,6 +553,10 @@ sub endpoint_example_label ($class, $context, $fallback = undef) {
 
     if (($context->{kind} || '') eq 'top_port') {
         return $context->{name} || $context->{endpoint} || ($fallback // '');
+    }
+
+    if (($context->{kind} || '') eq 'top_expression') {
+        return $context->{endpoint} || $fallback || '';
     }
 
     if (($context->{kind} || '') eq 'child_endpoint') {
