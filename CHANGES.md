@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-02
+### README quick-start and import-tree note now match the live runtime surface again
+- Updated [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), and [WARP.md](/Users/richarddje/Documents/github/fsmgen/WARP.md) so their quick-start/debug examples now use the known-good direct-root sample [fsm/lte_dif_pmaster.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/lte_dif_pmaster.fsm) instead of the stale [fsm/trial_1.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/trial_1.fsm) reference.
+- Refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the current `2026-04-02` measured snapshot, keeping the reachable import set at `97` project files / `96` packages while updating stale line-count measurements for the live CLI/runtime spine.
+- Re-ran the documented README commands and local regression entrypoint as verification: the `trial_0` quick-start commands and the replacement `lte_dif_pmaster` debug run succeed, the old `trial_1` example fails because it still contains unsupported `!&` operator residue, and `./bin/ci-regression` stayed green (`Files=256`, `Tests=1950`, `PASS`).
+- `ROADMAP_STATUS.md` did not change for this task; the active lane and all workstream statuses remain as previously recorded.
+
 ### strict mode now narrows the direct module-root alias family too
 - Updated [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so strict mode now rejects the long direct-root alias `?module:` and points users to canonical `?mod:module_name`.
 - Updated [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) so the live strict contract is now: default mode still accepts top-level `?module:` as a compatibility alias, strict mode still accepts top-level `?dt:` and `?mod:`, strict mode rejects top-level `?module:`, and the earlier `?dtc` child-root canonicalization remains locked.

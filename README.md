@@ -68,7 +68,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ```bash
 ./bin/fsmgen fsm/trial_0.fsm
 ./bin/fsmgen --output /tmp/trial_0.sv fsm/trial_0.fsm
-./bin/fsmgen --debug=3 fsm/trial_1.fsm
+./bin/fsmgen --debug=3 fsm/lte_dif_pmaster.fsm
 ```
 
 ## Local CI / pre-push regression

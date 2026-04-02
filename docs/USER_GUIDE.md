@@ -1148,7 +1148,7 @@ export FSMLIB="/project/fsm:/shared/fsm"
 ## 6) Debug workflow
 Recommended debug run:
 ```bash
-./bin/fsmgen --trace-verbosity=debug --trace-log=trace.log --output /tmp/example.sv fsm/trial_1.fsm
+./bin/fsmgen --trace-verbosity=debug --trace-log=trace.log --output /tmp/example.sv fsm/lte_dif_pmaster.fsm
 ```
 
 Tracing behavior:

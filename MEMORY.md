@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-02: README quick-start and import-tree note now match the live runtime again
+- Stayed on a documentation-honesty slice instead of changing roadmap state after executing the current README workflow end-to-end.
+- Important continuity note:
+  - [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), and [WARP.md](/Users/richarddje/Documents/github/fsmgen/WARP.md) now point their debug/known-good example commands at [fsm/lte_dif_pmaster.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/lte_dif_pmaster.fsm) instead of the stale [fsm/trial_1.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/trial_1.fsm) quick-start reference,
+  - the trigger for that refresh was a live README execution pass: the first two `trial_0` commands still succeeded, but the old `trial_1` debug example now fails on unsupported `!&` operator residue while the documented support boundary no longer claims that operator,
+  - [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) is now refreshed against the current 2026-04-02 static import walk, keeping the measured reachable set at `97` project files / `96` packages while updating the stale line-count snapshot (`bin/fsmgen` now `820`, [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm) now `152`, [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm) now `1320`, and related entries),
+  - and the documented local regression entrypoint still finished green after this doc-only slice (`Files=256`, `Tests=1950`, `PASS`), so the continuity update is about documentation/runtime alignment rather than a new behavior change.
+
 ## 2026-04-02: strict mode now narrows the direct module-root alias family too
 - Switched back into `R9` after the recent `R10` diagnostics slice so the support-tier lane keeps moving alongside the visible diagnostics work.
 - Important continuity note:

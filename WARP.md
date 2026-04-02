@@ -27,9 +27,9 @@ FSMGen is a sophisticated finite state machine (FSM) HDL generator that converts
 ### Development Testing
 
 ```bash
-# Test with trial FSM files
+# Test with known-good FSM files
 ./bin/fsmgen fsm/trial_0.fsm
-./bin/fsmgen fsm/trial_1.fsm
+./bin/fsmgen fsm/lte_dif_pmaster.fsm
 
 # Test complex FSM with comprehensive features
 ./bin/fsmgen fsm/mipicsi2_tester_ctrl.fsm --debug
@@ -136,7 +136,7 @@ All major subsystems include comprehensive debug logging with `[module][function
 ### Testing Strategy
 
 1. **Start with simple FSM files** (`fsm/trial_0.fsm`) for basic functionality
-2. **Progress to complex examples** (`fsm/trial_1.fsm`) for advanced features
+2. **Progress to complex examples** (`fsm/lte_dif_pmaster.fsm`) for advanced features
 3. **Use real-world FSMs** (`fsm/mipicsi2_*.fsm`) for production testing
 4. **Always test with `--debug` mode** to validate internal pipeline behavior
 

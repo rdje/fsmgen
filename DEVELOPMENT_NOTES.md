@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-02: README quick-start examples should stay on known-good live samples
+- Kept this as a documentation-honesty slice instead of treating it as roadmap progress, because the live runtime and roadmap state did not change.
+- Landed behavior:
+  - [README.md](/Users/richarddje/Documents/github/fsmgen/README.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), and [WARP.md](/Users/richarddje/Documents/github/fsmgen/WARP.md) now use [fsm/lte_dif_pmaster.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/lte_dif_pmaster.fsm) for their non-trivial debug / known-good sample commands instead of [fsm/trial_1.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/trial_1.fsm),
+  - [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) is now refreshed to the current 2026-04-02 measured snapshot without changing its qualitative architecture read.
+- Why this is worth shipping:
+  - executing onboarding docs should not immediately route users into legacy/out-of-scope fixtures that no longer match the documented operator boundary,
+  - `trial_1` is still useful historical context, but it is no longer honest as a first debug/run recommendation because the active parser rejects its `!&` residue,
+  - and the import-tree note is most useful when its hard measurements are current even when the broader architecture story is unchanged.
+
 ## 2026-04-02: strict mode now narrows the direct module-root alias family too
 - Switched back into the visible `R9` lane after the recent `R10` diagnostics slice so support-tier enforcement keeps alternating with the diagnostics work instead of stalling behind it.
 - Landed behavior:
