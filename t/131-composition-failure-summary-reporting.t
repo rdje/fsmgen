@@ -3350,6 +3350,129 @@ FSM
     is($report->{blocked_reason}, 'that syntax is unsupported', 'failure report preserves the concise unsupported-endpoint reason');
 };
 
+subtest 'pipeline derives actual-source context from blocked explicit-actual source-role failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'actual_source_failure_summary_top.fsm');
+    my $rtl_metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:actual_source_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+    serial_out>
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /=1/serial_out/
+  )
+)
+FSM
+    );
+
+    write_file(
+        $rtl_metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  clk
+  rstn
+  data_in<1:data
+  txd>:data
+)
+RTLIF
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked explicit-actual source-role failures');
+    is($report->{top_name}, 'actual_source_failure_summary_top', 'failure report preserves the top name for blocked explicit-actual source-role failures');
+    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked explicit-actual source-role failures');
+    is($report->{context_label}, 'Actual source', 'failure report classifies explicit-actual source-role failures as actual-source context');
+    is($report->{context_value}, "'=1'", 'failure report preserves the blocked actual source token');
+    is($report->{context_summary}, "Actual source '=1'", 'failure report exposes a concise actual-source summary');
+    is($report->{blocked_boundary}, 'explicit actual binding', 'failure report preserves the blocked explicit-actual boundary for source-role failures');
+    is(
+        $report->{blocked_reason},
+        'the first structural-actual slice only allows actual sources to target realized child input ports',
+        'failure report preserves the concise explicit-actual source-role reason',
+    );
+};
+
+subtest 'pipeline derives actual-endpoint context from blocked explicit-actual target failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'actual_target_failure_summary_top.fsm');
+    my $rtl_metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:actual_target_failure_summary_top
+  (?ports:public_io
+    clk
+    rstn
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /uart_tx.txd/=open/
+  )
+)
+FSM
+    );
+
+    write_file(
+        $rtl_metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  clk
+  rstn
+  data_in<1:data
+  txd>:data
+)
+RTLIF
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked explicit-actual target failures');
+    is($report->{top_name}, 'actual_target_failure_summary_top', 'failure report preserves the top name for blocked explicit-actual target failures');
+    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked explicit-actual target failures');
+    is($report->{context_label}, 'Actual endpoint', 'failure report classifies explicit-actual target failures as actual-endpoint context');
+    is($report->{context_value}, "'=open'", 'failure report preserves the blocked actual endpoint token');
+    is($report->{context_summary}, "Actual endpoint '=open'", 'failure report exposes a concise actual-endpoint summary');
+    is($report->{blocked_boundary}, 'explicit actual binding', 'failure report preserves the blocked explicit-actual boundary for target failures');
+    is(
+        $report->{blocked_reason},
+        "the first structural-actual slice only allows '=open' and binary literal actuals as link sources into realized child input ports",
+        'failure report preserves the concise explicit-actual target reason',
+    );
+};
+
 subtest 'pipeline derives top-endpoint context from blocked missing top-endpoint failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'missing_top_endpoint_failure_summary_top.fsm');
@@ -5286,6 +5409,125 @@ FSM
     like($combined_output, qr/Context:\s+Endpoint 'producer\.output_data\.extra'/s, 'CLI reports the unsupported explicit endpoint as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for unsupported endpoint syntax');
     like($combined_output, qr/Reason:\s+that syntax is unsupported/s, 'CLI reports the concise unsupported-endpoint reason');
+};
+
+subtest 'CLI prints actual-source context in blocked explicit-actual source-role summaries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'actual_source_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'actual_source_failure_summary_cli_top.sv');
+    my $rtl_metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:actual_source_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+    serial_out>
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /=1/serial_out/
+  )
+)
+FSM
+    );
+
+    write_file(
+        $rtl_metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  clk
+  rstn
+  data_in<1:data
+  txd>:data
+)
+RTLIF
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked explicit-actual source-role composition fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked explicit-actual source-role fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-actual source-role failures');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked explicit-actual source-role failures');
+    like($combined_output, qr/Context:\s+Actual source '=1'/s, 'CLI reports the blocked actual source as summary context');
+    like($combined_output, qr/Blocked boundary:\s+explicit actual binding/s, 'CLI reports the blocked explicit-actual boundary for source-role failures');
+    like(
+        $combined_output,
+        qr/Reason:\s+the first structural-actual slice only allows actual sources to target realized child input ports/s,
+        'CLI reports the concise explicit-actual source-role reason',
+    );
+};
+
+subtest 'CLI prints actual-endpoint context in blocked explicit-actual target summaries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'actual_target_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'actual_target_failure_summary_cli_top.sv');
+    my $rtl_metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:actual_target_failure_summary_cli_top
+  (?ports:public_io
+    clk
+    rstn
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /uart_tx.txd/=open/
+  )
+)
+FSM
+    );
+
+    write_file(
+        $rtl_metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  clk
+  rstn
+  data_in<1:data
+  txd>:data
+)
+RTLIF
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked explicit-actual target composition fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked explicit-actual target fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-actual target failures');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked explicit-actual target failures');
+    like($combined_output, qr/Context:\s+Actual endpoint '=open'/s, 'CLI reports the blocked actual endpoint as summary context');
+    like($combined_output, qr/Blocked boundary:\s+explicit actual binding/s, 'CLI reports the blocked explicit-actual boundary for target failures');
+    like(
+        $combined_output,
+        qr/Reason:\s+the first structural-actual slice only allows '=open' and binary literal actuals as link sources into realized child input ports/s,
+        'CLI reports the concise explicit-actual target reason',
+    );
 };
 
 subtest 'CLI prints existing-instance missing-port context in blocked explicit-link summaries' => sub {

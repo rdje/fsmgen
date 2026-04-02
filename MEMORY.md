@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-02: explicit-actual failure summaries now keep the actual token context too
+- Stayed in the active `R11` lane, but kept this as a follow-on contract-hardening slice rather than a new runtime-capability widening.
+- Important continuity note:
+  - [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) now recognizes the shipped structural-actual diagnostic wording directly, so blocked `?toplink` failures that say `uses actual source '...'` or `uses actual endpoint '...'` surface bounded `Actual source '...'` or `Actual endpoint '...'` context lines in the non-quiet composition failure summary,
+  - [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks both the pipeline and CLI summary shape for blocked literal-source role failures and blocked actual-endpoint target failures on that explicit-toplink path,
+  - this does not widen runtime support beyond the already-shipped `=open` / `=0` / `=1` / exact-width `=N'b...` child-input binding slice,
+  - and the full regression stayed green after the summary-only follow-up (`Files=257`, `Tests=1959`, `PASS`).
+
 ## 2026-04-02: README quick-start and import-tree note now match the live runtime again
 - Stayed on a documentation-honesty slice instead of changing roadmap state after executing the current README workflow end-to-end.
 - Important continuity note:

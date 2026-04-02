@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-02: explicit-actual failure summaries should keep the actual token, not just the prose reason
+- Kept this in the active `R11` lane as a small contract-hardening follow-up to the shipped explicit-toplink structural-actual feature rather than treating it as a second runtime widening.
+- Landed behavior:
+  - [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) now treats the new structural-actual diagnostic forms as first-class summary context, mapping `uses actual source '...'` to `Actual source '...'` and `uses actual endpoint '...'` to `Actual endpoint '...'`,
+  - [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now locks both pipeline and CLI coverage for blocked literal-source role failures and blocked actual-endpoint target failures on the live explicit-toplink path.
+- Why this is worth shipping:
+  - the preceding structural-actual slice had already added real runtime support, so failed runs should expose those same `=...` tokens in the bounded summary instead of burying them only in the raw exception text,
+  - it keeps the non-quiet composition summary honest and symmetric with the older child-endpoint/top-port summary families,
+  - and it gives the first structural-actual slice a usable failure contract before widening actual syntax any further.
+
 ## 2026-04-02: README quick-start examples should stay on known-good live samples
 - Kept this as a documentation-honesty slice instead of treating it as roadmap progress, because the live runtime and roadmap state did not change.
 - Landed behavior:
