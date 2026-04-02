@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-02: missing composition lookup failures now keep explicit search-root context too
+- Switched back into a visible `R10` slice after the recent `R12` corpus widening so the diagnostics lane keeps moving in a user-facing way.
+- Important continuity note:
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now promotes missing external `?fsmc` / `?dtc` lookup details into explicit `Search roots:` and `Searched locations:` lines alongside the earlier `Source file:` and `Expected child source file:` labels,
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now does the same for missing external `.rtlif` lookup through an explicit `Search roots:` line beside `Source file:` and `Expected RTL metadata file:`,
+  - [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) plus [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now surface that same `Search roots:` context inside the non-quiet composition failure summary without displacing the earlier artifact or child-context lines,
+  - and [t/115-composition-child-source-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/115-composition-child-source-diagnostics.t), [t/117-composition-rtlif-metadata-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/117-composition-rtlif-metadata-diagnostics.t), [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t), [t/255-composition-missing-rtl-metadata-diagnostic-context.t](/Users/richarddje/Documents/github/fsmgen/t/255-composition-missing-rtl-metadata-diagnostic-context.t), and [t/256-composition-missing-child-source-artifact-context.t](/Users/richarddje/Documents/github/fsmgen/t/256-composition-missing-child-source-artifact-context.t) now lock both the raw and summarized shape.
+
 ## 2026-04-02: regression corpus now counts partial-write support as named supported features
 - Switched lanes deliberately into `R12` so the new partial indexed/sliced LHS support does not live only in focused contract tests.
 - Important continuity note:

@@ -265,6 +265,9 @@ sub _with_rtl_child_context ($self, %args) {
     die $error if ref($error);
     die $error if $error =~ /(?:^|\n)(?:Source file|RTL metadata file|Expected RTL metadata file):\s+'/s;
 
+    my ($clean_error, $search_roots) = $self->_extract_search_roots($error);
+    $error = $clean_error;
+
     my $message = '';
     if (($args{context_kind} // '') eq 'external_metadata') {
         my $metadata_path = $args{metadata_path}
@@ -275,6 +278,9 @@ sub _with_rtl_child_context ($self, %args) {
     elsif (($args{context_kind} // '') eq 'missing_external_metadata') {
         $message .= "Source file: '$source_file'\n";
         $message .= "Expected RTL metadata file: '" . $args{module_name} . ".rtlif'\n";
+        if (defined($search_roots) && length($search_roots)) {
+            $message .= "Search roots: $search_roots\n";
+        }
     }
     else {
         $message .= "Source file: '$source_file'\n";
@@ -282,6 +288,17 @@ sub _with_rtl_child_context ($self, %args) {
     $message .= "RTL child module: '?rtl' '$module_name'\n";
 
     die $message.$error;
+}
+
+sub _extract_search_roots ($self, $error) {
+    my $search_roots;
+    my $clean_error = $error;
+
+    if ($clean_error =~ s/\s+Search roots:\s*(.+?)\.\s+(?=(?:The active|See docs\/|\z))/ /s) {
+        $search_roots = $1;
+    }
+
+    return ($clean_error, $search_roots);
 }
 
 1;

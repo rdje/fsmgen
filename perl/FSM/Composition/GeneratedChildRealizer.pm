@@ -383,6 +383,10 @@ sub _with_generated_child_source_context ($class, %args) {
     die $error if ref($error);
     die $error if $error =~ /(?:^|\n)(?:Source file|Expected child source file):\s+'/s;
 
+    my ($clean_error, $search_roots, $searched_locations) =
+        $class->_extract_search_diagnostics($error);
+    $error = $clean_error;
+
     my $message = '';
     if (defined($args{child_source_path}) && length($args{child_source_path})) {
         $message .= "Source file: '$args{child_source_path}'\n";
@@ -395,10 +399,33 @@ sub _with_generated_child_source_context ($class, %args) {
         if (defined($args{expected_child_source_file}) && length($args{expected_child_source_file})) {
             $message .= "Expected child source file: '$args{expected_child_source_file}'\n";
         }
+        if (defined($search_roots) && length($search_roots)) {
+            $message .= "Search roots: $search_roots\n";
+        }
+        if (defined($searched_locations) && length($searched_locations)) {
+            $message .= "Searched locations: $searched_locations\n";
+        }
     }
     $message .= "Generated child source: '$declared_child_kind' '$source_name'\n";
 
     die $message.$error;
+}
+
+sub _extract_search_diagnostics ($class, $error) {
+    my $search_roots;
+    my $searched_locations;
+    my $clean_error = $error;
+
+    if (
+        $clean_error =~ s/\s+Search roots:\s*(.+?)\.\s+Searched locations:\s*(.+?)\.\s+(?=(?:The active|See docs\/|\z))/ /s
+    ) {
+        ($search_roots, $searched_locations) = ($1, $2);
+    }
+    elsif ($clean_error =~ s/\s+Search roots:\s*(.+?)\.\s+(?=(?:The active|See docs\/|\z))/ /s) {
+        $search_roots = $1;
+    }
+
+    return ($clean_error, $search_roots, $searched_locations);
 }
 
 sub _expected_child_source_file ($class, $source_name) {

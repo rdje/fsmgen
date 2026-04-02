@@ -41,6 +41,8 @@ FSM
     ok($exception, 'pipeline rejects missing external ?fsmc child source');
     like($exception, qr/Source file:\s+'\Q$composition_path\E'/s, 'pipeline keeps the composition source file');
     like($exception, qr/Expected child source file:\s+'missing_src\.fsm'/s, 'pipeline keeps the expected child source file artifact');
+    like($exception, qr/Search roots:\s+\Q$tempdir\E/s, 'pipeline keeps the search roots for missing external ?fsmc child lookup');
+    like($exception, qr/Searched locations:\s+\Q$tempdir\E\/missing_src\.fsm/s, 'pipeline keeps the searched child-source locations for missing external ?fsmc child lookup');
     like($exception, qr/Generated child source:\s+'\?fsmc' 'missing_src'/s, 'pipeline keeps the missing ?fsmc child identity');
     like($exception, qr/child-source resolution is blocked because no active child FSM source was found either embedded in the same file or in an external '\.fsm' file/s, 'pipeline keeps the blocked ?fsmc resolution diagnostic');
 
@@ -60,6 +62,8 @@ FSM
 
     like($combined_output, qr/Source file:\s+'\Q$composition_path\E'/s, 'CLI keeps the composition source file');
     like($combined_output, qr/Expected child source file:\s+'missing_src\.fsm'/s, 'CLI keeps the expected child source file artifact');
+    like($combined_output, qr/Search roots:\s+\Q$tempdir\E/s, 'CLI keeps the search roots for missing external ?fsmc child lookup');
+    like($combined_output, qr/Searched locations:\s+\Q$tempdir\E\/missing_src\.fsm/s, 'CLI keeps the searched child-source locations for missing external ?fsmc child lookup');
     like($combined_output, qr/Generated child source:\s+'\?fsmc' 'missing_src'/s, 'CLI keeps the missing ?fsmc child identity');
     like($combined_output, qr/child-source resolution is blocked because no active child FSM source was found either embedded in the same file or in an external '\.fsm' file/s, 'CLI keeps the blocked ?fsmc resolution diagnostic');
 };
@@ -93,6 +97,8 @@ FSM
     ok($exception, 'pipeline rejects missing external ?dtc child source');
     like($exception, qr/Source file:\s+'\Q$composition_path\E'/s, 'pipeline keeps the composition source file');
     like($exception, qr/Expected child source file:\s+'missing_dt_src\.fsm'/s, 'pipeline keeps the expected child source file artifact');
+    like($exception, qr/Search roots:\s+\Q$tempdir\E/s, 'pipeline keeps the search roots for missing external ?dtc child lookup');
+    like($exception, qr/Searched locations:\s+\Q$tempdir\E\/missing_dt_src\.fsm/s, 'pipeline keeps the searched child-source locations for missing external ?dtc child lookup');
     like($exception, qr/Generated child source:\s+'\?dtc' 'missing_dt_src'/s, 'pipeline keeps the missing ?dtc child identity');
     like($exception, qr/child-source resolution is blocked because no active standalone-DT child source was found either embedded in the same file or in an external '\.fsm' file/s, 'pipeline keeps the blocked ?dtc resolution diagnostic');
 
@@ -112,6 +118,8 @@ FSM
 
     like($combined_output, qr/Source file:\s+'\Q$composition_path\E'/s, 'CLI keeps the composition source file');
     like($combined_output, qr/Expected child source file:\s+'missing_dt_src\.fsm'/s, 'CLI keeps the expected child source file artifact');
+    like($combined_output, qr/Search roots:\s+\Q$tempdir\E/s, 'CLI keeps the search roots for missing external ?dtc child lookup');
+    like($combined_output, qr/Searched locations:\s+\Q$tempdir\E\/missing_dt_src\.fsm/s, 'CLI keeps the searched child-source locations for missing external ?dtc child lookup');
     like($combined_output, qr/Generated child source:\s+'\?dtc' 'missing_dt_src'/s, 'CLI keeps the missing ?dtc child identity');
     like($combined_output, qr/child-source resolution is blocked because no active standalone-DT child source was found either embedded in the same file or in an external '\.fsm' file/s, 'CLI keeps the blocked ?dtc resolution diagnostic');
 };

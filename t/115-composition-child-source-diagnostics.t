@@ -191,7 +191,7 @@ FSM
 
     like(
         $exception,
-        qr/declares '\?fsmc' child 'missing_src', .*child-source resolution is blocked because no active child FSM source was found either embedded in the same file or in an external '\.fsm' file.*Search roots: .*Searched locations: /s,
+        qr/Search roots:\s+\Q$tempdir\E.*Searched locations:\s+\Q$tempdir\E\/missing_src\.fsm.*declares '\?fsmc' child 'missing_src', .*child-source resolution is blocked because no active child FSM source was found either embedded in the same file or in an external '\.fsm' file/s,
         'pipeline now says missing external generated child resolution is blocked',
     );
 
@@ -248,7 +248,7 @@ FSM
 
     like(
         $exception,
-        qr/declares '\?dtc' child 'missing_dt_src', .*child-source resolution is blocked because no active standalone-DT child source was found either embedded in the same file or in an external '\.fsm' file.*Search roots: .*Searched locations: /s,
+        qr/Search roots:\s+\Q$tempdir\E.*Searched locations:\s+\Q$tempdir\E\/missing_dt_src\.fsm.*declares '\?dtc' child 'missing_dt_src', .*child-source resolution is blocked because no active standalone-DT child source was found either embedded in the same file or in an external '\.fsm' file/s,
         'pipeline now says missing external ?dtc child resolution is blocked',
     );
 };

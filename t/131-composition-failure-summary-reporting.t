@@ -1569,6 +1569,8 @@ FSM
     is($report->{artifact_label}, 'Expected RTL metadata file', 'failure report classifies the missing rtlif sidecar as expected artifact context');
     is($report->{artifact_value}, "'uart_tx.rtlif'", 'failure report preserves the expected rtlif sidecar name');
     is($report->{artifact_summary}, "Expected RTL metadata file 'uart_tx.rtlif'", 'failure report exposes a concise missing-rtlif artifact summary');
+    is($report->{search_roots_label}, 'Search roots', 'failure report classifies the missing rtlif search roots');
+    like($report->{search_roots_value}, qr/\Q$tempdir\E/, 'failure report preserves the missing rtlif search roots');
     is($report->{blocked_boundary}, 'RTL interface metadata resolution', 'failure report preserves the blocked rtlif boundary');
     is($report->{blocked_boundary_label}, 'RTL interface metadata resolution', 'failure report keeps the RTL boundary label readable');
     is(
@@ -2330,6 +2332,8 @@ FSM
     is($report->{artifact_label}, 'Expected child source file', 'failure report classifies the unresolved ?fsmc child target as an expected artifact');
     is($report->{artifact_value}, "'missing_src.fsm'", 'failure report preserves the expected ?fsmc child filename');
     is($report->{artifact_summary}, "Expected child source file 'missing_src.fsm'", 'failure report exposes a concise missing ?fsmc child artifact summary');
+    is($report->{search_roots_label}, 'Search roots', 'failure report classifies the missing ?fsmc child search roots');
+    like($report->{search_roots_value}, qr/\Q$tempdir\E/, 'failure report preserves the missing ?fsmc child search roots');
     is($report->{context_label}, 'Child', 'failure report classifies missing ?fsmc child-source resolution failures as child context');
     is($report->{context_value}, "'missing_src'", 'failure report preserves the missing ?fsmc child source name');
     is($report->{context_summary}, "Child 'missing_src'", 'failure report exposes a concise missing ?fsmc child-source summary');
@@ -2379,6 +2383,8 @@ FSM
     is($report->{artifact_label}, 'Expected child source file', 'failure report classifies the unresolved ?dtc child target as an expected artifact');
     is($report->{artifact_value}, "'missing_dt_src.fsm'", 'failure report preserves the expected ?dtc child filename');
     is($report->{artifact_summary}, "Expected child source file 'missing_dt_src.fsm'", 'failure report exposes a concise missing ?dtc child artifact summary');
+    is($report->{search_roots_label}, 'Search roots', 'failure report classifies the missing ?dtc child search roots');
+    like($report->{search_roots_value}, qr/\Q$tempdir\E/, 'failure report preserves the missing ?dtc child search roots');
     is($report->{context_label}, 'Child', 'failure report classifies missing ?dtc child-source resolution failures as child context');
     is($report->{context_value}, "'missing_dt_src'", 'failure report preserves the missing ?dtc child source name');
     is($report->{context_summary}, "Child 'missing_dt_src'", 'failure report exposes a concise missing ?dtc child-source summary');
@@ -3918,6 +3924,7 @@ FSM
     like($combined_output, qr/Lane:\s+C3/s, 'CLI reports the active lane when the blocked diagnostic exposes it');
     like($combined_output, qr/Construct:\s+\?rtl/s, 'CLI reports the external RTL construct when the blocked diagnostic exposes it');
     like($combined_output, qr/Expected RTL metadata file:\s+'uart_tx\.rtlif'/s, 'CLI reports the expected missing rtlif sidecar artifact');
+    like($combined_output, qr/Search roots:\s+\Q$tempdir\E/s, 'CLI reports the missing rtlif search roots');
     like($combined_output, qr/Reason:\s+no declared interface metadata file 'uart_tx\.rtlif' was found/s, 'CLI reports the concise missing-rtlif reason');
 };
 
@@ -5096,6 +5103,7 @@ FSM
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked missing ?fsmc child-source resolution failures');
     like($combined_output, qr/Construct:\s+\?fsmc/s, 'CLI reports the ?fsmc construct for blocked missing ?fsmc child-source resolution failures');
     like($combined_output, qr/Expected child source file:\s+'missing_src\.fsm'/s, 'CLI reports the expected ?fsmc child filename');
+    like($combined_output, qr/Search roots:\s+\Q$tempdir\E/s, 'CLI reports the missing ?fsmc child search roots');
     like($combined_output, qr/Context:\s+Child 'missing_src'/s, 'CLI reports the missing ?fsmc child source as summary context');
     like($combined_output, qr/Blocked boundary:\s+child-source resolution/s, 'CLI reports the blocked ?fsmc child-source resolution boundary');
     like($combined_output, qr/Reason:\s+no active child FSM source was found either embedded in the same file or in an external '\.fsm' file/s, 'CLI reports the concise missing ?fsmc child-source resolution reason');
@@ -5137,6 +5145,7 @@ FSM
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked missing ?dtc child-source resolution failures');
     like($combined_output, qr/Construct:\s+\?dtc/s, 'CLI reports the ?dtc construct for blocked missing ?dtc child-source resolution failures');
     like($combined_output, qr/Expected child source file:\s+'missing_dt_src\.fsm'/s, 'CLI reports the expected ?dtc child filename');
+    like($combined_output, qr/Search roots:\s+\Q$tempdir\E/s, 'CLI reports the missing ?dtc child search roots');
     like($combined_output, qr/Context:\s+Child 'missing_dt_src'/s, 'CLI reports the missing ?dtc child source as summary context');
     like($combined_output, qr/Blocked boundary:\s+child-source resolution/s, 'CLI reports the blocked ?dtc child-source resolution boundary');
     like($combined_output, qr/Reason:\s+no active standalone-DT child source was found either embedded in the same file or in an external '\.fsm' file/s, 'CLI reports the concise missing ?dtc child-source resolution reason');

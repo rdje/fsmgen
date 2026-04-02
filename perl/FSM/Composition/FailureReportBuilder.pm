@@ -55,6 +55,13 @@ sub build_report ($class, $error_text) {
         $report{artifact_summary} = $artifact->{summary};
     }
 
+    my $search_roots = $class->search_roots_excerpt($summary_text);
+    if ($search_roots) {
+        $report{search_roots_label} = $search_roots->{label};
+        $report{search_roots_value} = $search_roots->{value};
+        $report{search_roots_summary} = $search_roots->{summary};
+    }
+
     my $context = $class->context_excerpt($summary_text);
     if ($context) {
         unless (
@@ -171,6 +178,22 @@ sub artifact_excerpt ($class, $summary_text) {
             label => $label,
             value => $value,
             summary => "$label $value",
+        };
+    }
+
+    return undef;
+}
+
+sub search_roots_excerpt ($class, $summary_text) {
+    return undef unless defined $summary_text && length $summary_text;
+
+    if ($summary_text =~ /(?:^|\n)Search roots:\s*([^\n]+)/s) {
+        my $value = $1;
+        $value =~ s/\s+\z//;
+        return {
+            label => 'Search roots',
+            value => $value,
+            summary => $value,
         };
     }
 

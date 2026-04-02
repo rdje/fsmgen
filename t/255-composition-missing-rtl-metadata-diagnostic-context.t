@@ -59,6 +59,7 @@ FSM
     ok($exception, 'pipeline rejects unresolved external rtl metadata');
     like($exception, qr/Source file:\s+'\Q$composition_path\E'/s, 'pipeline keeps the composition source file');
     like($exception, qr/Expected RTL metadata file:\s+'uart_tx\.rtlif'/s, 'pipeline keeps the expected rtl metadata artifact');
+    like($exception, qr/Search roots:\s+\Q$tempdir\E/s, 'pipeline keeps the search roots for unresolved rtl metadata');
     like($exception, qr/RTL child module:\s+'\?rtl' 'uart_tx'/s, 'pipeline names the rtl child module');
     like($exception, qr/RTL interface metadata resolution is blocked because no declared interface metadata file 'uart_tx\.rtlif' was found/s, 'pipeline keeps the underlying resolution diagnostic');
 
@@ -78,6 +79,7 @@ FSM
 
     like($combined_output, qr/Source file:\s+'\Q$composition_path\E'/s, 'CLI keeps the composition source file');
     like($combined_output, qr/Expected RTL metadata file:\s+'uart_tx\.rtlif'/s, 'CLI keeps the expected rtl metadata artifact');
+    like($combined_output, qr/Search roots:\s+\Q$tempdir\E/s, 'CLI keeps the search roots for unresolved rtl metadata');
     like($combined_output, qr/RTL child module:\s+'\?rtl' 'uart_tx'/s, 'CLI names the rtl child module');
     like($combined_output, qr/RTL interface metadata resolution is blocked because no declared interface metadata file 'uart_tx\.rtlif' was found/s, 'CLI keeps the underlying resolution diagnostic');
 };

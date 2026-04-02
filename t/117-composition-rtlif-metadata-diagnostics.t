@@ -62,7 +62,7 @@ $exception = $@;
 
 like(
     $exception,
-    qr/Composition references external RTL module 'uart_tx', .*RTL interface metadata resolution is blocked because no declared interface metadata file 'uart_tx\.rtlif' was found.*Search roots: /s,
+    qr/Search roots:\s+\Q$tempdir\E.*Composition references external RTL module 'uart_tx', .*RTL interface metadata resolution is blocked because no declared interface metadata file 'uart_tx\.rtlif' was found/s,
     'pipeline now says missing external rtlif metadata blocks interface resolution',
 );
 like(

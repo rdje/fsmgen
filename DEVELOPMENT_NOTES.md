@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-02: missing composition lookup now keeps explicit search-path context too
+- Switched back into the visible `R10` lane after the recent `R12` widening so the cadence stays feature-facing instead of drifting into too many corpus-only slices in a row.
+- Landed behavior:
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now promotes missing external generated-child lookup search details into first-class `Search roots:` and `Searched locations:` lines instead of leaving them only inside the longer prose diagnostic,
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) now promotes missing external `.rtlif` lookup search details into a first-class `Search roots:` line too,
+  - [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) plus [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now carry that same `Search roots:` value into the non-quiet composition failure summary rather than discarding it after the raw failure text is built.
+- Why this is worth shipping:
+  - it keeps the active search contract visible when multi-root resolution fails,
+  - it makes missing lookup failures more actionable without changing any composition semantics,
+  - and it preserves the earlier artifact/context summary shape instead of forcing users to choose between “expected file” context and “where did it look?” context.
+
 ## 2026-04-02: `R12` now counts shipped partial-write support as named corpus behavior
 - Switched from the recent `R8` correctness streak into `R12` so the new partial indexed/sliced LHS support would be part of audited support accounting rather than only local contract tests.
 - Landed behavior:

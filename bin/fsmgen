@@ -471,6 +471,9 @@ if ($@) {
         print $failure_report->{artifact_label} . ": " . $failure_report->{artifact_value} . "\n"
             if defined $failure_report->{artifact_label} && length $failure_report->{artifact_label}
             && defined $failure_report->{artifact_value} && length $failure_report->{artifact_value};
+        print $failure_report->{search_roots_label} . ": " . $failure_report->{search_roots_value} . "\n"
+            if defined $failure_report->{search_roots_label} && length $failure_report->{search_roots_label}
+            && defined $failure_report->{search_roots_value} && length $failure_report->{search_roots_value};
         print "Context: " . $failure_report->{context_summary} . "\n"
             if defined $failure_report->{context_summary} && length $failure_report->{context_summary};
         print "Blocked boundary: " . $failure_report->{blocked_boundary_label} . "\n"
