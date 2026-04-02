@@ -48,6 +48,39 @@ my @REGRESSION_CORPUS = (
         expected_child_modules => ['apb_requester', 'apb_completer'],
     },
     {
+        id => 'feature.partial_lhs_with_size',
+        relpath => 't/corpus/partial_lhs_with_size.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        expected_module_name => 'partial_lhs_with_size',
+        expected_hdl_patterns => [
+            qr/\bOUT\s*=\s*\{HI,\s*MID,\s*LO\};/s,
+            qr/\bROD_next\s*=\s*\{HI,\s*MID,\s*LO\};/s,
+            qr/\bRID\s*=\s*\{HI,\s*MID,\s*LO\};/s,
+            qr/\boutput\s+reg\s+\[3:0\]\s+next_ROD\b/s,
+            qr/\boutput\s+reg\s+\[3:0\]\s+RID_r\b/s,
+        ],
+    },
+    {
+        id => 'feature.partial_lhs_inferred_width',
+        relpath => 't/corpus/partial_lhs_inferred_width.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        expected_module_name => 'partial_lhs_inferred_width',
+        expected_hdl_patterns => [
+            qr/\breg\s+\[3:0\]\s+OUT;/s,
+            qr/\boutput\s+reg\s+\[3:0\]\s+next_ROD\b/s,
+            qr/\boutput\s+reg\s+\[3:0\]\s+RID_r\b/s,
+            qr/\breg\s+\[4:0\]\s+IDXOUT;/s,
+            qr/\boutput\s+reg\s+\[4:0\]\s+next_IDXRO\b/s,
+            qr/\boutput\s+reg\s+\[4:0\]\s+IDXRI_r\b/s,
+        ],
+    },
+    {
         id => 'legacy.mipicsi2_txccore_ulp.default_compat',
         relpath => 'fsm/mipicsi2_txccore_ulp.fsm',
         family => 'legacy_fixture',
@@ -185,6 +218,9 @@ sub _copy_entry {
     my %copy = %{$entry};
     if (ref $copy{expected_child_modules} eq 'ARRAY') {
         $copy{expected_child_modules} = [@{$copy{expected_child_modules}}];
+    }
+    if (ref $copy{expected_hdl_patterns} eq 'ARRAY') {
+        $copy{expected_hdl_patterns} = [@{$copy{expected_hdl_patterns}}];
     }
     if (ref $copy{search_path_relpaths} eq 'ARRAY') {
         $copy{search_path_relpaths} = [@{$copy{search_path_relpaths}}];

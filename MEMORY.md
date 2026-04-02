@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-02: regression corpus now counts partial-write support as named supported features
+- Switched lanes deliberately into `R12` so the new partial indexed/sliced LHS support does not live only in focused contract tests.
+- Important continuity note:
+  - [t/corpus/partial_lhs_with_size.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/partial_lhs_with_size.fsm) and [t/corpus/partial_lhs_inferred_width.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/partial_lhs_inferred_width.fsm) now exist as stable corpus fixtures for the supported partial-write surface,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records them as `feature.partial_lhs_with_size` and `feature.partial_lhs_inferred_width` under `supported_smoke`,
+  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) now checks those entries through both pipeline and CLI while also locking key HDL-shape expectations,
+  - and this means the supported side of `R12` is no longer only imported protocol seeds; it now also includes shipped language features with explicit semantic-output checks.
+
 ## 2026-04-02: static numeric partial LHS writes now lower correctly through the direct backend
 - Continued with a visible language/correctness slice instead of more backend-only decomposition.
 - Important continuity note:

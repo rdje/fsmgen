@@ -1445,10 +1445,15 @@ Done:
   - `contract.missing_fsm_child_source` and `contract.missing_dt_child_source` are classified as `expected_failure` under the same `composition_contract_rejection_pipeline_cli` coverage bucket,
   - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that those missing-child composition rejection paths through both pipeline and CLI using the new `Expected child source file:` diagnostics family,
   - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now records that the composition-contract bucket spans both missing external child-source lookup and missing external `.rtlif` sidecars.
+- The same first catalog now also counts shipped supported language features instead of only imported protocol seeds on the supported side:
+  - [t/corpus/partial_lhs_with_size.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/partial_lhs_with_size.fsm) and [t/corpus/partial_lhs_inferred_width.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/partial_lhs_inferred_width.fsm) now exist as named `supported_smoke` direct-root corpus assets for partial indexed/sliced LHS lowering,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records them as `feature.partial_lhs_with_size` and `feature.partial_lhs_inferred_width`,
+  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) now checks those entries through both pipeline and CLI while also locking key HDL-shape expectations such as full-width merged partial-write expressions and full-width inferred `next_*` / `*_r` outputs,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now records that `supported_smoke` is no longer only the first imported protocol quartet.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
 - Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, first child-root compatibility pair, first malformed-language contract entry, and first composition-contract rejection entry.
-- Widen golden-output or semantic-check coverage where simple compile smoke is not enough.
+- Widen golden-output or semantic-check coverage beyond the first supported language-feature entries and the first protocol slice where simple compile smoke is not enough.
 Exit criteria:
 - Support claims can be backed by a maintained corpus and explicit classification, not only by ad hoc focused tests.
 

@@ -1,0 +1,28 @@
+(?fsm:partial_lhs_with_size
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (COND 1)
+    (HI 2)
+    (MID 1)
+    (LO 1)
+    (OUT 4)
+    (ROD 4)
+    (RID 4)
+  )
+  (idle
+    (<COND
+      (OUT[3:2] = HI)
+      (OUT[1] = MID)
+      (OUT[0] = LO)
+      (ROD[3:2] <-= HI)
+      (ROD[1] <-= MID)
+      (ROD[0] <-= LO)
+      (RID[3:2] <=+ HI)
+      (RID[1] <=+ MID)
+      (RID[0] <=+ LO)
+    )
+  )
+)

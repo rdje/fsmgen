@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-02: `R12` now counts shipped partial-write support as named corpus behavior
+- Switched from the recent `R8` correctness streak into `R12` so the new partial indexed/sliced LHS support would be part of audited support accounting rather than only local contract tests.
+- Landed behavior:
+  - [t/corpus/partial_lhs_with_size.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/partial_lhs_with_size.fsm) now carries the explicit-`+size` partial-write surface into the corpus,
+  - [t/corpus/partial_lhs_inferred_width.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/partial_lhs_inferred_width.fsm) now carries the no-`+size` inferred-width partial-write surface into the corpus,
+  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) now checks those entries through both pipeline and CLI while also locking emitted HDL details instead of only compile success.
+- Why this matters:
+  - it makes the support story for partial indexed/sliced LHS behavior auditable in the same corpus as other shipped contracts,
+  - it broadens `supported_smoke` beyond imported examples into real language features,
+  - and it gives us the first `R12` example where a supported entry is kept by semantic HDL checks rather than compile smoke alone.
+
 ## 2026-04-02: static numeric partial LHS writes are now a real shipped contract on the direct path
 - Continued with a visible language/correctness slice because parsed syntax without correct backend lowering was not acceptable support.
 - Landed behavior:

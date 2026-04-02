@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-02
+### regression corpus now counts the shipped partial-write support surface too
+- Added [t/corpus/partial_lhs_with_size.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/partial_lhs_with_size.fsm) and [t/corpus/partial_lhs_inferred_width.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/partial_lhs_inferred_width.fsm) as stable named corpus fixtures for the supported partial indexed/sliced LHS surface.
+- Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) and [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) so those fixtures now count as `supported_smoke` entries in the audited corpus catalog.
+- Added [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) so the corpus now checks those supported language-feature entries through both pipeline and CLI with semantic HDL-shape expectations instead of compile smoke alone.
+- Updated [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this `R12` widening is preserved in the continuity trail.
+
 ### partial target width inference is now regression-backed without +size
 - Added [t/260-partial-target-width-inference.t](/Users/richarddje/Documents/github/fsmgen/t/260-partial-target-width-inference.t) to lock the current direct-path contract when base-signal width comes only from static slice/index bounds and no explicit `+size` is present for the target.
 - That regression now keeps both slice-only and index-only partial targets honest through generated HDL and module-declaration checks, including full-width `next_*` / `*_r` auxiliary outputs for partial dual-output writes.
