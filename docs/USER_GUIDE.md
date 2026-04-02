@@ -19,8 +19,8 @@ Current limitation:
   - generated child sources realized either from the same file or from external searchable `.fsm` child sources,
   - external RTL children realized through embedded or sidecar `.rtlif` interface metadata,
   - `C1` single-child passthrough via deterministic same-name wiring or exact child-interface inference when `?ports` is omitted or empty,
-  - `C2` multi-generated-child composition via explicit `?toplink` wiring with `instance.port` child endpoints plus the first bounded source-actual forms (`=open`, `=0`, `=1`, and exact-width `=N'b...`) when they target realized child inputs, together with bounded omitted/empty-`?ports` inference when explicit top links themselves still make the top boundary unambiguous, bounded undeclared top-interface inference for still-top-facing child inputs and unique top-facing child outputs, bounded plain-explicit-port same-name convention, and bounded same-name internal-carrier inference for unique producer-to-consumer families.
-  - `C3` explicit-link composition for any explicit-link top that includes at least one `?rtl` child, with that same bounded source-actual slice plus the same bounded undeclared top-interface, plain-explicit-port convention, and internal-carrier inference rules.
+  - `C2` multi-generated-child composition via explicit `?toplink` wiring with `instance.port` child endpoints, source-side top-port bit/slice expressions, and the first bounded source-actual forms (`=open`, `=0`, `=1`, and exact-width `=N'b...`) when they target realized child inputs, together with bounded omitted/empty-`?ports` inference when explicit top links themselves still make the top boundary unambiguous, bounded undeclared top-interface inference for still-top-facing child inputs and unique top-facing child outputs, bounded plain-explicit-port same-name convention, and bounded same-name internal-carrier inference for unique producer-to-consumer families.
+  - `C3` explicit-link composition for any explicit-link top that includes at least one `?rtl` child, with that same bounded source-side top-expression and source-actual slice plus the same bounded undeclared top-interface, plain-explicit-port convention, and internal-carrier inference rules.
   - `C4` declared top-port connect-by-name via `=name` declarations inside `?ports`.
 - See [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) for the scoped `R6` plan and [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) for historical context.
 
@@ -198,7 +198,7 @@ Combinational DT note:
   - explicit type annotations currently limited to `:data`, `:clock`, and `:reset`
   - typed `:clock` / `:reset` metadata lets custom-named RTL system ports auto-wire through mixed composition
 - Explicit `(?toplink:name ...)` blocks with flat `/source/target/` tokens
-- Source-side top-port bit/slice `?toplink` expressions such as `payload_bus[15:8]` and `status_bus[0]` when the base top port is already declared and the target is a realized child input
+- Source-side top-port bit/slice `?toplink` expressions such as `payload_bus[15:8]` and `status_bus[0]` when the target is a realized child input
 - Explicit `?toplink` source actuals `=open`, `=0`, `=1`, and exact-width binary literals such as `=8'b10100101` when the target is a realized child input
 - Dotted child endpoints in links, for example `/producer.output_data/consumer.input_data/`
 - `C1` lane: one `?top`, one child (`?fsmc`, `?dtc`, or `?rtl`), explicit `?ports`, deterministic same-name top wiring
@@ -925,6 +925,7 @@ This currently works because:
 - `clk` and `rstn` use the shared system-input contract,
 - non-system connections are expressed explicitly through `?toplink`,
 - `?ports` may now be omitted or empty in explicit-link `C2` / `C3` when explicit `?toplink` endpoints themselves still imply the missing top ports honestly, including renamed top-boundary names,
+- source-side top expressions such as `payload_bus[15:8]` and `status_bus[0]` may now also participate in that omitted/empty-`?ports` inference, with the inferred base-port width coming from the highest referenced bit,
 - undeclared top-facing child inputs may now be inferred when the child-side evidence is unambiguous and those inputs are not already consumed by explicit child-to-child links,
 - undeclared unique top-facing child outputs may now also be inferred when they are not already consumed by explicit child-to-child links,
 - plain explicit top inputs may now also reuse that same-name convention when compatible child inputs keep one direction plus exact width/type agreement,
@@ -979,6 +980,24 @@ This currently works because:
 - explicit actual sources may currently target only realized child input ports,
 - binary literal actuals must still match the target child-input width exactly,
 - and those actuals bind directly on the realized child port instead of inventing a top port or synthetic carrier net.
+
+Current narrow omitted-`?ports` top-expression inference example:
+```lisp
+(?top:uart_slice_top
+  (?rtl:byte_sink)
+  (?toplink:wiring
+    /payload_bus[15:8]/byte_sink.data_in/
+    /status_bus[0]/byte_sink.enable/
+  )
+)
+```
+
+This currently works because:
+- omitted `?ports` may now infer `payload_bus` and `status_bus` directly from those explicit links,
+- `payload_bus[15:8]` implies a base top-input width of at least 16,
+- `status_bus[0]` implies a base top-input width of at least 1,
+- top expressions still stay source-side only,
+- and they still target realized child input ports only.
 
 Current narrow declared connect-by-name example:
 ```lisp

@@ -6043,3 +6043,9 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   directly, and top-port inference / provenance block detection now treat
   those child inputs as already explicitly linked instead of inventing helper
   nets or undeclared same-name top ports.
+- Omitted/empty `?ports` explicit-link tops may now also infer undeclared
+  base top inputs directly from those source-side top expressions.
+- `FSM::Composition::TopPortInferenceBuilder` now derives the inferred
+  base-port width from the highest referenced bit while still rejecting
+  incompatible exact-width full-port evidence instead of guessing one width
+  contract silently.

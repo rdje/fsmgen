@@ -7765,3 +7765,33 @@ It is an exact-delay pulse request:
     `.enable(status_bus[0])`,
   - and blocked out-of-range rejection for that first bounded top-expression
     slice.
+
+## 2026-04-02: top-expression omitted-?ports inference now has a first shipped slice
+- Continued the active `R11` lane by extending the earlier source-side
+  top-expression binding slice into the existing explicit-toplink top-boundary
+  inference path instead of forcing users to redeclare those base top inputs
+  manually.
+- The first shipped omitted/empty-`?ports` top-expression inference slice is
+  now in tree:
+  - explicit-link `C2` / `C3` tops may now infer one undeclared base top input
+    directly from source-side `name[index]` and `name[msb:lsb]` evidence,
+  - the inferred base-port width comes from the highest referenced bit,
+  - and conflicting exact-width full-port evidence still fails explicitly
+    instead of silently picking one width contract.
+- The inference/reporting contract is now honest for that slice:
+  - `FSM::Composition::TopPortInferenceBuilder` tracks compatible
+    direction/type/width evidence for those missing top inputs,
+  - whole-port explicit links still pin an exact width,
+  - top-expression uses contribute a minimum required width,
+  - and the builder now rejects mixes like `payload_bus[15:8]` plus
+    `/payload_bus/child.full_in/` when the exact-width evidence is too narrow.
+- [t/177-composition-top-port-inference-builder.t](/Users/richarddje/Documents/github/fsmgen/t/177-composition-top-port-inference-builder.t)
+  now locks:
+  - direct inference of undeclared top inputs from source-side top-expression
+    evidence,
+  - and rejection of incompatible exact-width versus top-expression width
+    evidence.
+- [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t)
+  now also locks:
+  - RTL-backed `C3` success with omitted `?ports` and inferred top inputs
+    coming from source-side top expressions.

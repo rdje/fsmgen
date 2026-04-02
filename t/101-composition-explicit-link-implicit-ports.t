@@ -18,6 +18,8 @@ my $c2_path = File::Spec->catfile($tempdir, 'implicit_ports_generated_top.fsm');
 my $c2_out_path = File::Spec->catfile($tempdir, 'implicit_ports_generated_top.sv');
 my $c3_path = File::Spec->catfile($tempdir, 'implicit_ports_rtl_top.fsm');
 my $c3_out_path = File::Spec->catfile($tempdir, 'implicit_ports_rtl_top.sv');
+my $expr_c3_path = File::Spec->catfile($tempdir, 'implicit_ports_top_expr_rtl_top.fsm');
+my $expr_c3_out_path = File::Spec->catfile($tempdir, 'implicit_ports_top_expr_rtl_top.sv');
 my $mixed_role_path = File::Spec->catfile($tempdir, 'implicit_ports_mixed_role_top.fsm');
 my $width_mismatch_path = File::Spec->catfile($tempdir, 'implicit_ports_width_mismatch_top.fsm');
 my $type_mismatch_path = File::Spec->catfile($tempdir, 'implicit_ports_type_mismatch_top.fsm');
@@ -109,6 +111,24 @@ write_file(
   rst_async_n:reset
   data_in<8:data
   txd>:data
+)
+FSM
+);
+
+write_file(
+    $expr_c3_path,
+    <<'FSM'
+(?top:implicit_ports_top_expr_rtl_top
+  (?rtl:byte_sink)
+  (?toplink:wiring
+    /payload_bus[15:8]/byte_sink.data_in/
+    /status_bus[0]/byte_sink.enable/
+  )
+)
+
+(?rtlif:byte_sink
+  data_in<8:data
+  enable<1:data
 )
 FSM
 );
@@ -229,6 +249,31 @@ subtest 'explicit-link C3 can use an empty ?ports block when the top boundary is
     );
     ok($success, 'CLI succeeds for explicit-link C3 with empty ?ports');
     ok(-e $c3_out_path, 'CLI writes HDL output for explicit-link C3 with empty ?ports');
+};
+
+subtest 'explicit-link C3 can infer undeclared top inputs from source-side top expressions' => sub {
+    my $result = $pipeline->generate_hdl_from_file($expr_c3_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C3', 'rtl-backed top-expression inference stays in C3');
+
+    my %ports = map { $_->name => $_ } @{$result->{composition_plan}->ports};
+    ok($ports{payload_bus}, 'base top input is inferred from source-side slice evidence');
+    ok($ports{status_bus}, 'base top input is inferred from source-side bit-select evidence');
+    is($ports{payload_bus}->width, 16, 'slice evidence infers the minimum declared top-input width');
+    is($ports{status_bus}->width, 1, 'bit-select evidence infers the minimum declared top-input width');
+
+    my $hdl = $result->{hdl_code};
+    like($hdl, qr/\binput\s+\[15:0\]\s+payload_bus\b/s, 'generated HDL exposes the inferred base top input width');
+    like($hdl, qr/\binput\s+status_bus\b/s, 'generated HDL exposes the inferred 1-bit top input');
+    like($hdl, qr/\.data_in\(payload_bus\[15:8\]\)/s, 'generated HDL keeps the inferred slice binding');
+    like($hdl, qr/\.enable\(status_bus\[0\]\)/s, 'generated HDL keeps the inferred bit-select binding');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $expr_c3_out_path, '--quiet', $expr_c3_path],
+    );
+    ok($success, 'CLI succeeds for explicit-link C3 with inferred top-expression ports');
+    ok(-e $expr_c3_out_path, 'CLI writes HDL output for explicit-link C3 with inferred top-expression ports');
 };
 
 subtest 'explicit top-link port inference rejects one undeclared top endpoint used as both input and output' => sub {

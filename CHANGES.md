@@ -5513,3 +5513,12 @@ This is the persistent technical change history for FSMGen.
   pipeline, CLI, and blocked-range contract for that bounded top-expression
   slice, while `t/131-composition-failure-summary-reporting.t` now also locks
   `Top expression '...'` summary context for blocked range failures.
+- Omitted/empty `?ports` explicit-link tops may now also infer undeclared base
+  top inputs directly from source-side top expressions such as
+  `payload_bus[15:8]` and `status_bus[0]`.
+- `FSM::Composition::TopPortInferenceBuilder` now derives that inferred
+  base-port width from the highest referenced bit while still rejecting
+  incompatible exact-width full-port evidence, and
+  `t/177-composition-top-port-inference-builder.t` plus
+  `t/101-composition-explicit-link-implicit-ports.t` now lock the new builder
+  and end-to-end omitted-`?ports` contract.

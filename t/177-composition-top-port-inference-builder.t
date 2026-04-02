@@ -54,6 +54,71 @@ subtest 'explicit-toplink builder infers renamed top ports from child endpoints'
     );
 };
 
+subtest 'explicit-toplink builder infers undeclared top inputs from source-side top expressions' => sub {
+    my $ports = FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
+        ports => [],
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(source => 'payload_bus[15:8]', target => 'sink.data_in'),
+                    FSM::Composition::Link->new(source => 'status_bus[0]', target => 'sink.enable'),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance('sink',
+                input_port('data_in', 8),
+                input_port('enable', 1),
+            ),
+        ],
+        fsm_file => 'fixture.fsm',
+        header => 'fixture',
+    );
+
+    is_deeply(
+        [map { [$_->name, $_->direction, $_->width, $_->origin_kind] } @$ports],
+        [
+            ['payload_bus', 'input', 16, 'inferred_explicit_toplink_port'],
+            ['status_bus',  'input',  1, 'inferred_explicit_toplink_port'],
+        ],
+        'builder infers undeclared top-input width from bounded top-expression evidence',
+    );
+};
+
+subtest 'explicit-toplink builder rejects incompatible exact-width and top-expression width evidence' => sub {
+    my $exception = eval {
+        FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
+            ports => [],
+            toplinks => [
+                FSM::Composition::TopLink->new(
+                    name => 'wiring',
+                    links => [
+                        FSM::Composition::Link->new(source => 'payload_bus[15:8]', target => 'sink.byte_in'),
+                        FSM::Composition::Link->new(source => 'payload_bus', target => 'sink.full_in'),
+                    ],
+                ),
+            ],
+            realized_instances => [
+                realized_instance('sink',
+                    input_port('byte_in', 8),
+                    input_port('full_in', 8),
+                ),
+            ],
+            fsm_file => 'fixture.fsm',
+            header => 'fixture',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/omits top port 'payload_bus', .*top-expression evidence requires declared width at least 16, while another explicit top-link use fixes that same top port at width 8.*payload_bus\[15:8\] -> sink\.byte_in.*payload_bus -> sink\.full_in/s,
+        'builder rejects exact-width evidence that is narrower than required top-expression width',
+    );
+};
+
 subtest 'undeclared top-input builder infers shared same-name input fanout' => sub {
     my $ports = FSM::Composition::TopPortInferenceBuilder->augment_undeclared_top_inputs(
         ports => [

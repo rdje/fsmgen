@@ -82,6 +82,8 @@ sub augment_from_explicit_links ($class, %args) {
             my ($target_top_name) = $target =~ /^(\w+)$/;
             my $source_is_top = defined $source_top_name;
             my $target_is_top = defined $target_top_name;
+            my $source_top_expr_spec = FSM::Composition::LinkedPlanBuilder->top_expression_spec($source);
+            my $source_top_expr_name = $source_top_expr_spec ? $source_top_expr_spec->{port_name} : undef;
 
             if ($source_is_top && !$declared_by_name{$source_top_name} && $target =~ /^\w+\.\w+$/) {
                 my $child_endpoint = FSM::Composition::LinkedPlanBuilder->resolve_endpoint(
@@ -96,6 +98,26 @@ sub augment_from_explicit_links ($class, %args) {
                     \%inferred_specs,
                     $source_top_name,
                     'input',
+                    $child_endpoint,
+                    $source.' -> '.$target,
+                    $fsm_file,
+                    $header,
+                );
+            }
+
+            if (defined($source_top_expr_name) && !$declared_by_name{$source_top_expr_name} && $target =~ /^\w+\.\w+$/) {
+                my $child_endpoint = FSM::Composition::LinkedPlanBuilder->resolve_endpoint(
+                    $target,
+                    {},
+                    \%instances_by_name,
+                    \%child_ports_by_instance,
+                    $fsm_file,
+                    $header,
+                );
+                $class->_record_inferred_top_expression_port(
+                    \%inferred_specs,
+                    $source_top_expr_name,
+                    $source_top_expr_spec,
                     $child_endpoint,
                     $source.' -> '.$target,
                     $fsm_file,
@@ -296,6 +318,36 @@ sub augment_undeclared_top_outputs ($class, %args) {
 sub _record_inferred_top_port ($class, $inferred_specs, $top_name, $direction, $child_endpoint, $evidence, $fsm_file, $header) {
     my $width = $child_endpoint->{port}->width;
     my $type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($child_endpoint->{port}->type);
+    return $class->_record_inferred_top_port_requirement(
+        $inferred_specs,
+        $top_name,
+        $direction,
+        $width,
+        $width,
+        $type,
+        $evidence,
+        $fsm_file,
+        $header,
+    );
+}
+
+sub _record_inferred_top_expression_port ($class, $inferred_specs, $top_name, $expression_spec, $child_endpoint, $evidence, $fsm_file, $header) {
+    my $type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($child_endpoint->{port}->type);
+    my $required_width = $class->_required_top_width_for_expression_spec($expression_spec);
+    return $class->_record_inferred_top_port_requirement(
+        $inferred_specs,
+        $top_name,
+        'input',
+        $required_width,
+        undef,
+        $type,
+        $evidence,
+        $fsm_file,
+        $header,
+    );
+}
+
+sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $direction, $required_width, $exact_width, $type, $evidence, $fsm_file, $header) {
     my $existing = $inferred_specs->{$top_name};
 
     if ($existing) {
@@ -309,16 +361,6 @@ sub _record_inferred_top_port ($class, $inferred_specs, $top_name, $direction, $
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
-        if ($existing->{width} != $width) {
-            my $seen = join(', ', @{$existing->{evidence}}, $evidence);
-            confess
-                "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
-                "but explicit top-link port inference is blocked because the linked child endpoints disagree on width (".$existing->{width}." vs $width). ".
-                "Seen explicit link evidence: $seen. ".
-                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on width. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-        }
-
         if ($existing->{type} ne $type) {
             my $seen = join(', ', @{$existing->{evidence}}, $evidence);
             confess
@@ -329,17 +371,63 @@ sub _record_inferred_top_port ($class, $inferred_specs, $top_name, $direction, $
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
+        if (defined($exact_width) && defined($existing->{exact_width}) && $existing->{exact_width} != $exact_width) {
+            my $seen = join(', ', @{$existing->{evidence}}, $evidence);
+            confess
+                "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
+                "but explicit top-link port inference is blocked because the linked child endpoints disagree on width (".$existing->{exact_width}." vs $exact_width). ".
+                "Seen explicit link evidence: $seen. ".
+                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on width. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        if (defined($exact_width) && !defined($existing->{exact_width}) && $existing->{width} > $exact_width) {
+            my $seen = join(', ', @{$existing->{evidence}}, $evidence);
+            confess
+                "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
+                "but explicit top-link port inference is blocked because top-expression evidence requires declared width at least ".$existing->{width}.", while another explicit top-link use fixes that same top port at width $exact_width. ".
+                "Seen explicit link evidence: $seen. ".
+                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on one compatible declared width contract. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        if (!defined($exact_width) && defined($existing->{exact_width}) && $required_width > $existing->{exact_width}) {
+            my $seen = join(', ', @{$existing->{evidence}}, $evidence);
+            confess
+                "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
+                "but explicit top-link port inference is blocked because top-expression evidence requires declared width at least $required_width, while another explicit top-link use fixes that same top port at width ".$existing->{exact_width}.". ".
+                "Seen explicit link evidence: $seen. ".
+                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on one compatible declared width contract. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
         push @{$existing->{evidence}}, $evidence;
+        $existing->{exact_width} = $exact_width if defined($exact_width);
+        $existing->{width} = defined($existing->{exact_width})
+            ? $existing->{exact_width}
+            : ($required_width > $existing->{width} ? $required_width : $existing->{width});
         return;
     }
 
     $inferred_specs->{$top_name} = {
         name => $top_name,
         direction => $direction,
-        width => $width,
+        width => $required_width,
+        exact_width => $exact_width,
         type => $type,
         evidence => [$evidence],
     };
+}
+
+sub _required_top_width_for_expression_spec ($class, $expression_spec) {
+    my $expr_kind = $expression_spec->{expr_kind} || '';
+    return ($expression_spec->{index} || 0) + 1
+        if $expr_kind eq 'bit_select';
+    return (($expression_spec->{msb} || 0) > ($expression_spec->{lsb} || 0)
+        ? ($expression_spec->{msb} || 0)
+        : ($expression_spec->{lsb} || 0)) + 1
+        if $expr_kind eq 'slice';
+    confess "TopPortInferenceBuilder requires a supported top-expression width rule";
 }
 
 sub _port_groups_from_instances ($realized_instances) {

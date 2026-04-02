@@ -1289,6 +1289,12 @@ Done:
   - generated-child `C2` success with omitted `?ports` and renamed top endpoints,
   - RTL-backed `C3` success with empty `(?ports)` and renamed top endpoints,
   - and mixed-role undeclared-endpoint rejection.
+- That same convention-first top-boundary slice now also covers source-side top expressions:
+  - omitted/empty-`?ports` explicit-link tops may now infer one undeclared base top input from `name[index]` and `name[msb:lsb]` source evidence,
+  - the inferred base-port width now comes from the highest referenced bit unless another explicit top-link use already fixes one compatible exact width,
+  - and conflicting exact-width versus top-expression width evidence now fails explicitly instead of silently picking one contract.
+- [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) now also locks:
+  - RTL-backed `C3` success with omitted `?ports` and inferred top inputs coming from source-side top expressions.
 - The next convention-first top-boundary refinement is now also shipped:
   - explicit-link `C2` / `C3` plain explicit top inputs may now adopt same-name fanout convention when compatible child inputs still agree exactly on direction, width, and type metadata,
   - explicit-link `C2` / `C3` plain explicit top outputs may now adopt one unique same-name top-facing child output when that child-side evidence is still exact,
