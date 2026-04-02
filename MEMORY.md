@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-02: strict mode now narrows the direct module-root alias family too
+- Switched back into `R9` after the recent `R10` diagnostics slice so the support-tier lane keeps moving alongside the visible diagnostics work.
+- Important continuity note:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now rejects the long direct-root alias `?module:` in strict mode and points users to canonical `?mod:module_name`,
+  - default mode still accepts `?module:` on the current shared single-module path as a compatibility alias,
+  - this does not collapse module roots into `?dt:` and does not reopen the broader module-root semantics you clarified earlier; it only narrows one alias family in the strict lane,
+  - and [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks the split through shared-frontend, pipeline, and CLI coverage while keeping the earlier `?dtc` child-root strict boundary intact.
+
 ## 2026-04-02: missing composition lookup failures now keep explicit search-root context too
 - Switched back into a visible `R10` slice after the recent `R12` corpus widening so the diagnostics lane keeps moving in a user-facing way.
 - Important continuity note:

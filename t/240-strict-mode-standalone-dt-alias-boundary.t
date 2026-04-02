@@ -10,7 +10,9 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use Lispish;
 use FSM::Pipeline::HDLGenerator;
+use FSM::Pipeline::SourceFrontend;
 
 my $tempdir = tempdir(CLEANUP => 1);
 my $canonical_dt_path = File::Spec->catfile($tempdir, 'strict_dt_ok.fsm');
@@ -140,7 +142,23 @@ subtest 'strict mode still accepts the canonical ?dt root family' => sub {
     );
 };
 
-subtest 'strict mode also accepts top-level ?mod and ?module roots' => sub {
+subtest 'default mode still accepts top-level ?module roots as compatibility aliases' => sub {
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug_level => 0,
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($module_path);
+
+    like(
+        $result->{hdl_code},
+        qr/\bmodule\s+strict_module_root\b/s,
+        'default-mode pipeline still compiles top-level ?module roots',
+    );
+};
+
+subtest 'strict mode still accepts top-level ?mod roots' => sub {
     my $pipeline = FSM::Pipeline::HDLGenerator->new(
         target_language => 'systemverilog',
         debug_level => 0,
@@ -148,22 +166,36 @@ subtest 'strict mode also accepts top-level ?mod and ?module roots' => sub {
         strict_mode => 1,
     );
 
-    for my $case (
-        [$mod_path, qr/\bmodule\s+strict_mod_root\b/s, 'top-level ?mod root'],
-        [$module_path, qr/\bmodule\s+strict_module_root\b/s, 'top-level ?module root'],
-    ) {
-        my ($path, $module_regex, $label) = @$case;
-        my $result = $pipeline->generate_hdl_from_file($path);
+    my $result = $pipeline->generate_hdl_from_file($mod_path);
 
-        like(
-            $result->{hdl_code},
-            $module_regex,
-            "strict pipeline still compiles $label",
-        );
-    }
+    like(
+        $result->{hdl_code},
+        qr/\bmodule\s+strict_mod_root\b/s,
+        'strict pipeline still compiles top-level ?mod roots',
+    );
 };
 
-subtest 'CLI strict mode also accepts top-level ?dt, ?mod, and ?module roots' => sub {
+subtest 'shared frontend strict boundary rejects top-level ?module roots explicitly' => sub {
+    my $raw_ast = Lispish::multi($module_path);
+
+    my $error = eval {
+        FSM::Pipeline::SourceFrontend->enforce_strict_source_boundary(
+            raw_ast => $raw_ast,
+            strict_mode => 1,
+            source_label => $module_path,
+        );
+        undef;
+    };
+    $error = $@ if !$error;
+
+    like(
+        $error,
+        qr/Strict mode rejects the legacy '\?module:' direct-root alias for source '\Q$module_path\E'.*Use the canonical '\?mod:module_name' root form/s,
+        'shared frontend surfaces the canonical ?mod migration hint for top-level ?module roots',
+    );
+};
+
+subtest 'CLI strict mode still accepts top-level ?dt and ?mod roots' => sub {
     my ($mod_success, $mod_error_message, $mod_full_buf, $mod_stdout_buf, $mod_stderr_buf) = run(
         command => ['./bin/fsmgen', '--strict', '--quiet', '-o', $mod_out_path, $mod_path],
     );
@@ -171,19 +203,53 @@ subtest 'CLI strict mode also accepts top-level ?dt, ?mod, and ?module roots' =>
     ok($mod_success, 'CLI strict mode still accepts top-level ?mod roots');
     ok(-e $mod_out_path, 'CLI strict mode still emits HDL for top-level ?mod roots');
 
-    my ($module_success, $module_error_message, $module_full_buf, $module_stdout_buf, $module_stderr_buf) = run(
-        command => ['./bin/fsmgen', '--strict', '--quiet', '-o', $module_out_path, $module_path],
-    );
-
-    ok($module_success, 'CLI strict mode still accepts top-level ?module roots');
-    ok(-e $module_out_path, 'CLI strict mode still emits HDL for top-level ?module roots');
-
     my ($dt_success, $dt_error_message, $dt_full_buf, $dt_stdout_buf, $dt_stderr_buf) = run(
         command => ['./bin/fsmgen', '--strict', '--quiet', '-o', $canonical_dt_out_path, $canonical_dt_path],
     );
 
     ok($dt_success, 'CLI strict mode still accepts canonical ?dt roots');
     ok(-e $canonical_dt_out_path, 'CLI strict mode still emits HDL for canonical ?dt roots');
+};
+
+subtest 'strict pipeline and CLI reject top-level ?module roots' => sub {
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug_level => 0,
+        quiet => 1,
+        strict_mode => 1,
+    );
+
+    my $pipeline_error = eval {
+        $pipeline->generate_hdl_from_file($module_path);
+        undef;
+    };
+    $pipeline_error = $@ if !$pipeline_error;
+
+    like(
+        $pipeline_error,
+        qr/Source file:\s+'\Q$module_path\E'.*Strict mode rejects the legacy '\?module:' direct-root alias.*Use the canonical '\?mod:module_name' root form/s,
+        'strict pipeline keeps source-file context around the top-level ?module alias boundary',
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--quiet', '-o', $module_out_path, $module_path],
+    );
+
+    ok(!$success, 'CLI strict mode rejects top-level ?module roots');
+    ok(!-e $module_out_path, 'CLI strict mode does not emit HDL for top-level ?module roots');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like(
+        $combined_output,
+        qr/Source file:\s+'\Q$module_path\E'.*Strict mode rejects the legacy '\?module:' direct-root alias.*Use the canonical '\?mod:module_name' root form/s,
+        'CLI strict mode surfaces the same canonical ?mod migration hint for top-level ?module roots',
+    );
 };
 
 subtest 'strict mode rejects ?dtc children rooted at ?mod and ?module' => sub {

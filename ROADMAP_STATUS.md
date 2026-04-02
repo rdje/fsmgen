@@ -599,7 +599,7 @@ Done:
 - The next bounded strict-mode child-root cut is now also shipped:
   - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now also owns the generated-child strict helper for child-specific support-tier enforcement,
   - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) now applies that helper before semantic realization so strict mode rejects `?mod:` / `?module:` when they are used specifically as `?dtc` child roots,
-  - top-level `?mod:` / `?module:` roots remain accepted in strict mode,
+  - top-level module roots remain semantically distinct from `?dt:` in strict mode,
   - and [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks the updated boundary end to end through both pipeline and CLI entry points for embedded and external `?dtc` children.
 - The next sibling strict-mode child-root cut is now also shipped:
   - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now also rejects legacy `+fsm` specifically when it is used as the root of a `?fsmc` child source instead of surfacing only the broader top-level strict message,
@@ -616,15 +616,20 @@ Done:
   - and [t/254-strict-mode-asreset-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/254-strict-mode-asreset-boundary.t) now locks the boundary through the shared frontend plus pipeline and CLI entry points for both direct roots and external `?fsmc` child sources.
 - [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks that corrected root-family behavior end to end:
   - strict mode still accepts `?dt:name` roots,
-  - strict mode still accepts top-level `?mod:name` and `?module:name` roots on the current shared single-module path,
+  - default mode still accepts top-level `?mod:name` and `?module:name` roots on the current shared single-module path,
   - and strict mode now rejects embedded or external `?dtc` child sources rooted at `?mod:` / `?module:` with a canonical `?dt:` migration hint.
 - [t/245-strict-mode-fsm-child-root-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/245-strict-mode-fsm-child-root-boundary.t) now locks the parallel `?fsmc` child-root behavior end to end:
   - strict mode now rejects external flattened and nested legacy `+fsm` child roots under `?fsmc`,
   - and those failures now keep full child-source context with a canonical `?fsm:` migration hint.
+- The next direct-root alias cut is now also shipped:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now rejects the long direct-root alias `?module:` in strict mode and points users to canonical `?mod:module_name`,
+  - default mode still accepts top-level `?module:` roots as compatibility aliases on the current shared single-module path,
+  - [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks that split end to end through the shared frontend plus pipeline and CLI entry points,
+  - and this keeps the module-root concept intact while still reducing one more equivalent spelling in the strict lane.
 - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md) now documents the initial strict-mode boundary explicitly.
 - The next strict-mode section-level compatibility cut is now also shipped:
   - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now also rejects the legacy compact top-level `(:= signal=value)` directive in strict mode while leaving default-mode compatibility intact on the current `?fsm:` / `?dt:` path,
-  - that check lives in the same shared direct-root strict owner so it reaches those direct roots plus generated child sources through the same semantic-module path while still leaving top-level `?mod:` / `?module:` roots unchanged,
+  - that check lives in the same shared direct-root strict owner so it reaches those direct roots plus generated child sources while still leaving top-level `?mod:` roots unchanged,
   - [t/257-strict-mode-compact-init-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/257-strict-mode-compact-init-boundary.t) now locks the boundary through the shared frontend plus pipeline and CLI entry points for both direct roots and external `?dtc` child sources,
   - and the current shipped strict note is intentionally honest: this compatibility form does not yet have a canonical strict-mode replacement.
 Left:

@@ -89,7 +89,15 @@ sub enforce_strict_source_boundary ($class, %args) {
           . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
     }
 
-    return if $header =~ /^\?(?:mod|module):/;
+    if ($header =~ /^\?module:/) {
+        confess
+            "Strict mode rejects the legacy '?module:' direct-root alias for source '$source_label'. "
+          . "Use the canonical '?mod:module_name' root form for module/entity-architecture roots, "
+          . "or re-run without strict mode if you need compatibility with the current shared implementation path. "
+          . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
+    }
+
+    return if $header =~ /^\?mod:/;
 
     my $body_items = $class->_direct_root_body_items(
         raw_ast => $args{raw_ast},

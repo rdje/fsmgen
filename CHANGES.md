@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-02
+### strict mode now narrows the direct module-root alias family too
+- Updated [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so strict mode now rejects the long direct-root alias `?module:` and points users to canonical `?mod:module_name`.
+- Updated [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) so the live strict contract is now: default mode still accepts top-level `?module:` as a compatibility alias, strict mode still accepts top-level `?dt:` and `?mod:`, strict mode rejects top-level `?module:`, and the earlier `?dtc` child-root canonicalization remains locked.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so this visible `R9` slice is preserved in the continuity trail.
+
 ### missing composition lookup failures now keep explicit search-root context too
 - Updated [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so missing external `?fsmc` / `?dtc` lookup now keeps explicit `Search roots:` and `Searched locations:` lines beside the earlier `Source file:` and `Expected child source file:` labels.
 - Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so missing external `.rtlif` lookup now keeps an explicit `Search roots:` line beside the earlier `Source file:` and `Expected RTL metadata file:` labels.

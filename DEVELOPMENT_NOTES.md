@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-02: strict mode now narrows the direct module-root alias family too
+- Switched back into the visible `R9` lane after the recent `R10` diagnostics slice so support-tier enforcement keeps alternating with the diagnostics work instead of stalling behind it.
+- Landed behavior:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now rejects the long direct-root alias `?module:` in strict mode and points users to canonical `?mod:module_name`,
+  - default mode still accepts `?module:` on the same current direct single-module path, so this is a support-tier narrowing rather than a default-mode language removal,
+  - [t/240-strict-mode-standalone-dt-alias-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/240-strict-mode-standalone-dt-alias-boundary.t) now locks the split through the shared frontend plus pipeline and CLI entry points.
+- Why this is worth shipping:
+  - it reduces one more equivalent spelling in the strict lane without touching the broader module-root semantics,
+  - it stays aligned with your earlier clarification that `?mod` / `?module` are module roots, not `?dt` aliases,
+  - and it gives strict mode one clearer canonical spelling for direct module/entity-architecture roots while the bigger module contract is still settling.
+
 ## 2026-04-02: missing composition lookup now keeps explicit search-path context too
 - Switched back into the visible `R10` lane after the recent `R12` widening so the cadence stays feature-facing instead of drifting into too many corpus-only slices in a row.
 - Landed behavior:

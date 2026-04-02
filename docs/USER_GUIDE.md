@@ -87,7 +87,8 @@ Standard used here:
   - `(?module:module_name ...)`
   - these roots currently compile through the same direct single-module path as `?dt:name`
   - but that implementation reuse should not be read as semantic identity: `?dt` describes one decision tree, while `?mod` / `?module` are reserved for broader module/entity-architecture semantics
-  - strict mode currently leaves these roots accepted while that broader module-root contract is still being settled
+  - default mode still accepts both spellings on that shared path
+  - strict mode now narrows that alias family to canonical `?mod:` while the broader module-root contract continues to settle
 - Legacy `+fsm` root family:
   - flattened sibling form with a first top-level entry `(+fsm module_name)` and sibling `(+system ...)`, state blocks, and `(+size ...)`
   - nested legacy root form `(+fsm module_name ...)`
@@ -597,17 +598,18 @@ Boundary note:
   - strict mode rejects the legacy `+fsm` root family,
   - strict mode also rejects the legacy `+fsm` root family when it is used specifically as a `?fsmc` child root and requires canonical `?fsm:` there,
   - strict mode also rejects `?mod:` / `?module:` when they are used specifically as `?dtc` child roots and requires canonical `?dt:` there,
+  - strict mode also rejects the long direct-root alias `?module:` and requires canonical `?mod:` for module/entity-architecture roots,
   - strict mode also rejects the legacy empty `(+size)` no-op section and requires either explicit width entries or no `+size` section at all,
   - strict mode also rejects the legacy explicit `(+system (clock clk) (asreset rstn))` spelling and currently requires the canonical explicit `(+system (clock clk) (sreset rstn))` form when `+system` is present,
   - strict mode also rejects the legacy compact top-level `(:= signal=value)` directive on the current `?fsm:` / `?dt:` direct-root path and under generated-child realization, and currently has no canonical strict-mode replacement for that compatibility form,
   - requires the modern explicit `?fsm:module_name` root form for FSM sources,
-  - and otherwise leaves the currently accepted `?dt:`, `?mod:`, `?module:`, and `?top:` roots unchanged while their broader contracts continue to settle.
+  - and otherwise leaves the currently accepted `?dt:`, `?mod:`, and `?top:` roots unchanged while their broader contracts continue to settle.
 - In practice:
   - default mode still accepts `?fsm:name`, legacy `+fsm`, `?dt:name`, `?mod:name`, and `?module:name`,
-  - strict mode currently accepts `?fsm:name`, `?dt:name`, `?mod:name`, `?module:name`, and `?top:name`,
+  - strict mode currently accepts `?fsm:name`, `?dt:name`, `?mod:name`, and `?top:name`,
   - strict mode currently accepts only canonical `?fsm:name` roots under `?fsmc`,
   - strict mode currently accepts only canonical `?dt:name` roots under `?dtc`,
-  - and strict mode currently rejects legacy `+fsm` under `?fsmc`, `?mod:` / `?module:` under `?dtc`, empty `(+size)` no-op sections, explicit `(+system ... (asreset rstn))`, and compact top-level `(:= signal=value)` directives on the current `?fsm:` / `?dt:` direct-root path.
+  - and strict mode currently rejects legacy `+fsm` under `?fsmc`, `?mod:` / `?module:` under `?dtc`, direct-root `?module:`, empty `(+size)` no-op sections, explicit `(+system ... (asreset rstn))`, and compact top-level `(:= signal=value)` directives on the current `?fsm:` / `?dt:` direct-root path.
 - Strict-mode failures now also keep the same `Source file: '...'` context line as other top-level pipeline failures.
 - This is the first support-tier enforcement slice, not the final full strict-mode surface.
 
@@ -618,6 +620,7 @@ Implementation note:
 - The live toolchain also currently accepts `?mod:name` and `?module:name` on the same direct single-module path.
 - That shared path is an implementation convenience, not a declaration that `?mod` / `?module` mean the same thing as `?dt`.
 - In the intended language model, `?dt` describes one decision tree, while `?mod` / `?module` are broader module/entity-architecture roots and may later grow different structure or instantiation rules.
+- Strict mode now narrows that direct module-root alias family to canonical `?mod:name`; `?module:name` remains default-mode compatibility only.
 
 Accepted shape:
 ```lisp
@@ -662,7 +665,7 @@ Boundary note:
 - The semantic split from `?fsm:name` is the control model, not “combinational-only” versus “sequential-capable”.
 - Explicit conventional `(+system ...)` now gives reusable standalone-DT roots and `?dtc` composition children one deliberate way to align with the shared `clk` / `rstn` contract when that interface stability matters.
 - The current shipped standalone-DT slice is centered on `?dt:name`.
-- The live implementation also currently accepts `?mod:name` and `?module:name` on the same direct-root machinery, but broader reusable-module interface questions for those roots remain future `R11` work.
+- The live implementation also currently accepts `?mod:name` and `?module:name` on the same direct-root machinery in default mode, but strict mode now narrows that alias family to canonical `?mod:name` while broader reusable-module interface questions remain future `R11` work.
 - Direct standalone-DT generation and realized `?dtc` children now also surface stable block-enable metadata through `module_info`: `standalone_dt_count`, `standalone_dt_names`, `standalone_dt_enable_families`, and one grouped `standalone_dt_module_enable_family` summary.
 - That same `module_info` surface now also reports grouped multi-drive target families for standalone-DT roots through `standalone_dt_multi_drive_target_count` and `standalone_dt_multi_drive_targets`.
 - Composition tops that realize `?dtc` children now also aggregate those reusable standalone-DT exports through `composition_standalone_dt_child_count`, `composition_standalone_dt_block_count`, `composition_standalone_dt_multi_drive_target_count`, and `composition_standalone_dt_children`.
