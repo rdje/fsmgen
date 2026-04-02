@@ -5480,3 +5480,17 @@ This is the persistent technical change history for FSMGen.
   `FSM::IR::StructuralRTLIR::ConnectionExpr`, and locked that the composition
   structural emitter now walks those literal bindings directly through the
   current Verilog-family backend.
+
+# 2026-04-02
+
+- Explicit `?toplink` wiring now has a first real structural-actual slice:
+  `=open`, `=0`, `=1`, and exact-width binary literal sources such as
+  `=8'b10100101` may now bind directly into realized child input ports.
+- `FSM::Composition::LinkedPlanBuilder` now preserves those explicit-toplink
+  actuals as typed `connection_expr` bindings instead of inventing fake
+  carrier nets, and undeclared top-input inference / provenance block
+  detection now treat those actual-sourced child inputs as already explicitly
+  wired.
+- `t/262-composition-structural-actual-toplinks.t` now locks the new builder,
+  pipeline, CLI, and rejection-path contract for that bounded actual-source
+  slice.

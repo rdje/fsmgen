@@ -341,7 +341,8 @@ sub build_block_events ($class, %args) {
         if (defined $target_port_name) {
             my $source_is_child_endpoint = $source =~ /^\w+\.\w+$/;
             my $source_is_declared_top_port = exists $declared_top_ports{$source};
-            if ($source_is_child_endpoint || $source_is_declared_top_port) {
+            my $source_is_actual = $source =~ /^=/;
+            if ($source_is_child_endpoint || $source_is_declared_top_port || $source_is_actual) {
                 $explicitly_linked_child_input_names{$target_port_name} = 1;
             }
         }

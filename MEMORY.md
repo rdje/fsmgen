@@ -6020,3 +6020,10 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - The paired direct `IntermediateSignalSupport` now narrows to filter policy
   over normalized intermediate metadata instead of mixing recovery and filter
   responsibilities together.
+- Explicit `?toplink` wiring now has a first real structural-actual slice:
+  `=open`, `=0`, `=1`, and exact-width `=N'b...` sources may now bind
+  directly into realized child input ports.
+- `FSM::Composition::LinkedPlanBuilder` now preserves those actuals as typed
+  `connection_expr` bindings instead of inventing carrier nets, and
+  top-port inference / provenance block detection now treat those child
+  inputs as already explicitly linked.

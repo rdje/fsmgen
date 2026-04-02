@@ -7703,3 +7703,29 @@ It is an exact-delay pulse request:
   substitution/live-usage side: substitution synchronization into owner-side
   AST structures, substituted signal-reference checks, and cached live-usage
   evidence derivation.
+
+## 2026-04-02: explicit-toplink actual bindings now have a first shipped structural slice
+- Continued the active `R11` lane by turning the already-shipped structural
+  actual-expression helpers into a real composition feature instead of leaving
+  them as future-facing AST vocabulary only.
+- The first shipped explicit-toplink actual-source slice is now in tree:
+  - `?toplink` sources may now use `=open`, `=0`, `=1`, and exact-width
+    binary literal forms such as `=8'b10100101`,
+  - those actuals currently target realized child input ports only,
+  - `=open` is width-agnostic,
+  - and binary literal actuals still require exact target-width agreement.
+- The planner/runtime contract is now honest for that slice:
+  - `FSM::Composition::LinkedPlanBuilder` preserves those bindings directly as
+    typed structural `connection_expr` payloads,
+  - the emitter walks them directly instead of requiring fake carrier nets,
+  - and undeclared top-input inference plus explicit-child-link block
+    reporting now treat those child inputs as already explicitly wired instead
+    of inventing same-name top ports around them.
+- [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t)
+  now locks:
+  - direct linked-plan preservation of literal and `open` actual bindings,
+  - end-to-end pipeline and CLI emission of `.data_in(8'b...)` and `.enable()`,
+  - rejection of actuals as targets,
+  - rejection of actual sources driving non-child-input targets,
+  - and rejection of unsupported actual literal forms outside that first
+    bounded slice.

@@ -968,14 +968,15 @@ Done:
   - direct `?top` generation results now expose serialized `structural_rtl_ir`,
   - composition-top `module_info` now mirrors that same serialized structural surface,
   - the shipped slice currently covers explicit top ports, internal nets, realized instances, pin bindings, and auxiliary assignments,
-  - those structural instance pin bindings now also preserve a first typed `connection_expr` node, currently bounded to backend-neutral `signal_ref`,
-  - and realized composition-plan instances now also preserve that same typed `signal_ref` node before structural serialization instead of forcing the structural layer to synthesize it late,
+  - those structural instance pin bindings now also preserve typed `connection_expr` nodes, currently bounded to backend-neutral `signal_ref` plus the first shipped explicit-toplink actual-source forms through `open` and bit-vector literals,
+  - and realized composition-plan instances now also preserve those same typed nodes before structural serialization instead of forcing the structural layer to synthesize them late,
   - with that earlier binding normalization now owned by `FSM::Composition::RealizedInstance` itself instead of only by `HDLGenerator`,
-  - and the current bounded `signal_ref` construction, signal-name recovery, and backend-neutral text rendering for those actual-connection nodes now also live in dedicated `FSM::IR::StructuralRTLIR::ConnectionExpr` helpers instead of staying split across pipeline glue,
+  - and the current bounded `signal_ref` / `open` / bit-vector-literal construction, signal-name recovery, and backend-neutral text rendering for those actual-connection nodes now also live in dedicated `FSM::IR::StructuralRTLIR::ConnectionExpr` helpers instead of staying split across pipeline glue,
   - with the remaining “effective binding expression” fallback now also centralized there, so structural serialization no longer re-synthesizes `signal_ref` nodes ad hoc from `signal_name` inside `HDLGenerator`,
   - and the first bounded signal-ref binding constructor/update helpers now also live there, so the pipeline no longer hand-pairs `signal_name` and `connection_expr` when creating or rebinding structural instance bindings,
   - with normalized binding cloning/backfilling now also centralized there, so both `FSM::Composition::RealizedInstance` and structural instance-binding serialization consume the same bounded binding contract,
   - and the first bounded signal-ref binding-list ensure/set operations now also live there, so `HDLGenerator` no longer owns the low-level “reuse this binding versus append/update it” rules for structural port-binding lists,
+  - and explicit `?toplink` actual sources now also use that same typed structural path directly, so `=open`, `=0`, `=1`, and exact-width `=N'b...` realized child-input bindings no longer need fake carrier nets or fake undeclared top ports,
   - and the active composition-top emitter now walks that structural layer instead of re-reading only plan state directly during top-module dumping.
 - [t/162-composition-top-structural-rtl-ir-surface.t](/Users/richarddje/Documents/github/fsmgen/t/162-composition-top-structural-rtl-ir-surface.t) now locks:
   - direct-result `structural_rtl_ir` surfacing for `?top` composition roots,
@@ -1386,7 +1387,7 @@ Left:
   - widen the now-shipped first `Intent HIR` extraction slice beyond direct generated roots, realized generated children, the standalone-DT composition-export surface, the broader generated-child composition-export surface, and the shared-datapath candidate contributor surface into the rest of the forward pipeline,
   - widen the now-shipped first explicit `Lowered RTL IR` extraction slice beyond generated output-drive families, standalone-DT grouped multi-drive targets, the standalone-DT composition-export surface, the broader generated-child composition-export surface, and the shared-datapath candidate contributor surface into the rest of the forward pipeline,
   - keep widening and consuming the now-shipped bounded `Structural RTL IR` / connectivity layer so explicit ports, nets, instances, pin bindings, and full top/child wiring keep moving out of plan-shaped and backend-adjacent residue,
-  - keep that `Structural RTL IR` backend-neutral, expressive, and extensible enough for rich top/child wiring, with child actual-pin connections growing as typed structural connection expressions / actual-connection AST nodes instead of raw HDL strings,
+  - keep that `Structural RTL IR` backend-neutral, expressive, and extensible enough for rich top/child wiring, with child actual-pin connections growing beyond the now-shipped explicit-toplink source-actual slice (`=open`, `=0`, `=1`, and exact-width `=N'b...`) as typed structural connection expressions / actual-connection AST nodes instead of raw HDL strings,
   - normalize any backend-specific or inelegant connection shape into helper nets / auxiliary assignments before it reaches the structural binding boundary,
   - keep those forward IR layers aligned with the future shared-middle/import architecture instead of allowing a second incompatible semantic stack to form,
   - clarify and then realize the intended `HDLGenerator` breakdown so orchestration/lowering may still see `IntentHIR` and `LoweredRTLIR` while the pure backend-emitter boundary converges toward `StructuralRTLIR` as the last IR before HDL text,
@@ -1522,6 +1523,11 @@ Exit criteria:
 - `R11`: `StructuralRTLIR` connection expressions now also cover explicit
   backend-neutral `open` actuals, so the structural connection AST can model
   intentionally unconnected child formals without using raw backend syntax.
+- `R11`: those bounded `open` and bit-vector-literal actuals now also have a
+  first real composition producer/consumer path, with explicit `?toplink`
+  source actuals (`=open`, `=0`, `=1`, and exact-width `=N'b...`) binding
+  directly into realized child inputs instead of going through fake carrier
+  nets or fake undeclared top ports.
 - `R11`: `StructuralRTLIR` connection expressions now also cover bounded
   `member_access` actuals, so the structural connection AST has started the
   richer aggregate/member connectivity lane without falling back to raw HDL

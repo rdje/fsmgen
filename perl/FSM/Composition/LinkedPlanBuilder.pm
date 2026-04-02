@@ -25,7 +25,12 @@ use FSM::Composition::Net;
 use FSM::Composition::Plan;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::SameNameLinkBuilder;
-use FSM::IR::StructuralRTLIR::ConnectionExpr qw(signal_ref_binding);
+use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
+    bit_vector_literal_expr
+    normalized_binding
+    open_expr
+    signal_ref_binding
+);
 
 sub build_from_toplinks ($class, %args) {
     my $lane = $args{lane} // '';
@@ -164,11 +169,15 @@ sub build_plan ($class, %args) {
 
         $class->assert_link_roles($source, $target, $fsm_file, $header);
 
+        my $source_width = $class->endpoint_width($source);
+        my $target_width = $class->endpoint_width($target);
+
         confess
-            "Composition source '$header' in '$fsm_file' links '".$source->{raw}."' (width ".$source->{port}->width.") to '".$target->{raw}."' (width ".$target->{port}->width."), ".
+            "Composition source '$header' in '$fsm_file' links '".$source->{raw}."' (width $source_width) to '".$target->{raw}."' (width $target_width), ".
             "but explicit link is blocked because the current active composition lanes require exact width agreement. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $source->{port}->width == $target->{port}->width;
+            unless (($source->{kind} || '') eq 'actual_open')
+                || $source_width == $target_width;
 
         my $target_key = $target->{key};
         if ($reserved_targets{$target_key}) {
@@ -178,6 +187,19 @@ sub build_plan ($class, %args) {
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
         $reserved_targets{$target_key} = "explicit link '".$source->{raw}."'";
+
+        if (($source->{kind} || '') =~ /^actual_/) {
+            $bindings_by_instance{$target->{instance_name}}{$target->{port}->name} = normalized_binding({
+                port_name => $target->{port}->name,
+                connection_expr => $source->{connection_expr},
+            });
+            push @resolved_links, {
+                link => $link,
+                source => $source,
+                target => $target,
+            };
+            next;
+        }
 
         my $source_key = $source->{key};
         $source_endpoint_by_key{$source_key} = $source;
@@ -252,6 +274,7 @@ sub build_plan ($class, %args) {
     for my $resolved_link (@resolved_links) {
         my $source = $resolved_link->{source};
         my $target = $resolved_link->{target};
+        next if (($source->{kind} || '') =~ /^actual_/);
         my $carrier_signal_name = $carrier_signal_by_source{$source->{key}};
 
         if ($source->{kind} eq 'top_port') {
@@ -289,15 +312,23 @@ sub build_plan ($class, %args) {
     for my $instance (@$realized_instances) {
         my @port_bindings;
         for my $port (@{$instance->interface_ports}) {
-            my $signal_name = $bindings_by_instance{$instance->instance_name}{$port->name};
+            my $binding_value = $bindings_by_instance{$instance->instance_name}{$port->name};
 
             confess
                 "Composition source '$header' in '$fsm_file' leaves child port '".$instance->instance_name.".".$port->name."' unconnected, ".
                 "but realized child wiring is blocked because the current active $lane lane requires every realized child port to be wired explicitly, through declared connect-by-name, or through the shared system-input contract. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-                unless defined $signal_name;
+                unless defined $binding_value;
 
-            push @port_bindings, signal_ref_binding($port->name, $signal_name);
+            if (ref($binding_value) eq 'HASH') {
+                push @port_bindings, normalized_binding({
+                    %$binding_value,
+                    port_name => $port->name,
+                });
+                next;
+            }
+
+            push @port_bindings, signal_ref_binding($port->name, $binding_value);
         }
 
         push @planned_instances, $class->clone_realized_instance_with_bindings($instance, \@port_bindings);
@@ -352,6 +383,10 @@ sub assert_unique_top_ports ($class, $ports_block, $fsm_file, $header) {
 }
 
 sub resolve_endpoint ($class, $endpoint, $top_ports_by_name, $instances_by_name, $child_ports_by_instance, $fsm_file, $header) {
+    if (my $actual_endpoint = $class->_resolve_actual_endpoint($endpoint, $fsm_file, $header)) {
+        return $actual_endpoint;
+    }
+
     if ($endpoint =~ /^(\w+)\.(\w+)$/) {
         my ($instance_name, $port_name) = ($1, $2);
         my $instance = $instances_by_name->{$instance_name};
@@ -405,6 +440,23 @@ sub resolve_endpoint ($class, $endpoint, $top_ports_by_name, $instances_by_name,
 }
 
 sub assert_link_roles ($class, $source, $target, $fsm_file, $header) {
+    if (($target->{kind} || '') =~ /^actual_/) {
+        confess
+            "Composition source '$header' in '$fsm_file' uses actual endpoint '".$target->{raw}."' as an explicit link target, ".
+            "but explicit actual binding is blocked because the first structural-actual slice only allows '=open' and binary literal actuals as link sources into realized child input ports. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    if (($source->{kind} || '') =~ /^actual_/) {
+        confess
+            "Composition source '$header' in '$fsm_file' uses actual source '".$source->{raw}."' as an explicit link source, ".
+            "but explicit actual binding is blocked because the first structural-actual slice only allows actual sources to target realized child input ports. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $target->{kind} eq 'child_port' && $target->{port}->direction eq 'input';
+
+        return;
+    }
+
     if ($source->{kind} eq 'top_port') {
         confess
             "Composition source '$header' in '$fsm_file' uses top port '".$source->{raw}."' as an explicit link source, ".
@@ -432,6 +484,66 @@ sub assert_link_roles ($class, $source, $target, $fsm_file, $header) {
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $target->{port}->direction eq 'input';
     }
+}
+
+sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header) {
+    return undef unless defined($endpoint) && length($endpoint);
+    return undef unless $endpoint =~ /^=(.+)$/;
+
+    my $payload = $1;
+    if ($payload eq 'open') {
+        return {
+            raw => $endpoint,
+            key => "actual:$endpoint",
+            kind => 'actual_open',
+            port => {
+                direction => 'actual',
+                width => 0,
+            },
+            connection_expr => open_expr(),
+        };
+    }
+
+    my ($bits, $width) = $class->_actual_literal_bits_and_width($payload, $fsm_file, $header);
+    return {
+        raw => $endpoint,
+        key => "actual:$endpoint",
+        kind => 'actual_literal',
+        port => {
+            direction => 'actual',
+            width => $width,
+        },
+        connection_expr => bit_vector_literal_expr($bits),
+    };
+}
+
+sub _actual_literal_bits_and_width ($class, $payload, $fsm_file, $header) {
+    if ($payload =~ /\A([01])\z/) {
+        return ($1, 1);
+    }
+
+    if ($payload =~ /\A(\d+)'b([01]+)\z/i) {
+        my ($declared_width, $bits) = ($1, $2);
+        confess
+            "Composition source '$header' in '$fsm_file' uses actual literal '=$payload', ".
+            "but explicit actual binding is blocked because the declared binary width does not match the literal payload length. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless length($bits) == $declared_width;
+        return ($bits, 0 + $declared_width);
+    }
+
+    confess
+        "Composition source '$header' in '$fsm_file' uses actual endpoint '=$payload', ".
+        "but explicit actual binding is blocked because the first structural-actual slice currently accepts only '=open', '=0', '=1', or binary literal forms like '=8'b10100101'. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+}
+
+sub endpoint_width ($class, $endpoint) {
+    my $port = ref($endpoint) eq 'HASH' ? $endpoint->{port} : undef;
+    return 0 unless $port;
+    return $port->{width} if ref($port) eq 'HASH';
+    return $port->width if ref($port) && $port->can('width');
+    return 0;
 }
 
 sub allocate_net_name ($class, $source, $top_ports_by_name, $existing_nets, $preferred_name = undef) {

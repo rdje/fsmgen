@@ -364,14 +364,15 @@ First shipped `R11` slice now in tree:
   - direct `?top` generation results now expose serialized `structural_rtl_ir`,
   - composition-top `module_info` now mirrors that same serialized structural surface,
   - the shipped slice currently covers explicit top ports, internal nets, realized instances, pin bindings, and auxiliary assignments,
-  - those structural instance pin bindings now also preserve a first typed `connection_expr` node, currently bounded to backend-neutral `signal_ref`,
-  - and realized composition-plan instances now also preserve that same typed `signal_ref` node before structural serialization instead of forcing `StructuralRTLIR` to synthesize it late,
+  - those structural instance pin bindings now also preserve typed `connection_expr` nodes, currently bounded to backend-neutral `signal_ref` plus the first shipped explicit-toplink actual-source forms through `open` and bit-vector literals,
+  - and realized composition-plan instances now also preserve those same typed nodes before structural serialization instead of forcing `StructuralRTLIR` to synthesize them late,
   - with that earlier binding normalization now owned by `FSM::Composition::RealizedInstance` itself instead of only by `HDLGenerator`,
-  - and the current bounded `signal_ref` construction, signal-name recovery, and backend-neutral text rendering for those actual-connection nodes now also live in dedicated `FSM::IR::StructuralRTLIR::ConnectionExpr` helpers instead of staying split across pipeline glue,
+  - and the current bounded `signal_ref` / `open` / bit-vector-literal construction, signal-name recovery, and backend-neutral text rendering for those actual-connection nodes now also live in dedicated `FSM::IR::StructuralRTLIR::ConnectionExpr` helpers instead of staying split across pipeline glue,
   - with the remaining “effective binding expression” fallback now also centralized there, so structural serialization no longer re-synthesizes `signal_ref` nodes ad hoc from `signal_name` inside `HDLGenerator`,
   - and the first bounded signal-ref binding constructor/update helpers now also live there, so the pipeline no longer hand-pairs `signal_name` and `connection_expr` when creating or rebinding structural instance bindings,
   - with normalized binding cloning/backfilling now also centralized there, so both `FSM::Composition::RealizedInstance` and structural instance-binding serialization consume the same bounded binding contract,
   - and the first bounded signal-ref binding-list ensure/set operations now also live there, so `HDLGenerator` no longer owns the low-level “reuse this binding versus append/update it” rules for structural port-binding lists,
+  - and explicit `?toplink` may now use `=open`, `=0`, `=1`, and exact-width `=N'b...` as source actuals into realized child inputs, with linked planning preserving those bindings directly instead of inventing helper nets or undeclared same-name top inputs,
   - and the active composition-top emitter now walks that structural layer instead of re-reading only `FSM::Composition::Plan` state directly during top-module dumping.
 - The next structural widening step is now also shipped:
   - direct generated `?fsm` / `?dt` results now expose a bounded structural module-interface slice through `structural_rtl_ir`,
@@ -827,6 +828,11 @@ The first honest `R11` slices are now:
   explicit `open` actual form, because “leave this formal unconnected” is real
   structural semantics and should not be represented as a backend-specific text
   escape hatch.
+- Forward-IR note: that bounded `open` / literal actual family now also has its
+  first real composition producer/consumer path: explicit `?toplink` may use
+  `=open`, `=0`, `=1`, and exact-width `=N'b...` as source actuals into
+  realized child inputs without inventing helper nets or undeclared same-name
+  top inputs.
 - Forward-IR note: the structural connection-expression layer has now started
   the bounded member/field-access lane too, with a first `member_access` node
   over one source expression plus one identifier-like member name, rendered

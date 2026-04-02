@@ -13,7 +13,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - generated child HDL plus generated top HDL through `bin/fsmgen`.
 - The active toolchain now also ships the first `C2` composition lane:
   - two or more generated children (`?fsmc` / `?dtc`),
-  - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
+  - explicit `?toplink` wiring using top-port names, `instance.port` child endpoints, and the first bounded source-actual forms (`=open`, `=0`, `=1`, and exact-width `=N'b...`) when they target realized child input ports,
   - either one explicit `?ports` block or an omitted/empty `?ports` shape when the explicit `?toplink` endpoints can still supply one consistent top-boundary contract,
   - deterministic instance ordering,
   - deterministic internal-net creation for child-to-child wiring,
@@ -24,7 +24,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 - The active toolchain now also ships the first `C3` composition lane:
   - at least one external `?rtl` child,
   - plus any number of generated children (`?fsmc` / `?dtc`) beside those external RTL children,
-  - explicit `?toplink` wiring using top-port names and `instance.port` child endpoints,
+  - explicit `?toplink` wiring using top-port names, `instance.port` child endpoints, and the first bounded source-actual forms (`=open`, `=0`, `=1`, and exact-width `=N'b...`) when they target realized child input ports,
   - either one explicit `?ports` block or an omitted/empty `?ports` shape when the explicit `?toplink` endpoints can still supply one consistent top-boundary contract,
   - external RTL interface metadata loaded from embedded or sidecar `.rtlif` artifacts,
   - bounded undeclared top-interface inference for same-name child inputs and unique child outputs that remain top-facing,
@@ -87,6 +87,8 @@ The currently shipped composition behavior is intentionally bounded:
 - inferred same-name internal carriers stay internal by default instead of being re-exported as top ports automatically,
 - an explicit same-name top output may re-export one of those inferred carriers without forcing manual child-to-child restatement,
 - explicit `?toplink` endpoints must match by role and exact width in `C2`, `C3`, and `C4`,
+- explicit `?toplink` actual sources may currently appear only on the source side and only when the target is a realized child input port,
+- `=open` is the one width-agnostic explicit actual source in that first slice, while `=0`, `=1`, and exact-width binary literal forms such as `=8'b10100101` must still match the target child-input width exactly,
 - explicit and declared connect-by-name mismatches now fail before emission and identify the conflicting endpoints and widths,
 - the typed composition plan now also exposes first-pass provenance metadata for downstream tooling and diagnostics:
   - `FSM::Composition::Port->origin_kind` distinguishes declared and inferred top-port paths,
@@ -138,6 +140,7 @@ The currently shipped composition behavior is intentionally bounded:
 - explicit-link endpoint syntax is currently:
   - top-port name, for example `result_data`,
   - or child endpoint `instance.port`, for example `producer.output_data`,
+  - or source actual `=open`, `=0`, `=1`, or exact-width binary literal `=N'b...`, for example `=8'b10100101`, when that explicit link targets a realized child input port,
 - composition output is currently limited to SystemVerilog / Verilog targets.
 
 ## Goal of `R6`
@@ -191,10 +194,11 @@ Current shipped runtime subset:
 - and that same composition-top `intent_hir` layer now also consumes `structural_rtl_ir` for top-port names, counts, and grouped input/output signal-analysis families, with compatible top-level `module_info` signal metadata mirroring that same structural top-port boundary,
 - and that same composition-top `structural_rtl_ir` layer now also preserves explicit resolved links as first-class connectivity entries beside ports, nets, instances, and pin bindings, with provenance/reporting and compatible top-level resolved-link counts now aligned to that same structural layer,
 - and that same composition-top `structural_rtl_ir` layer now also preserves declared explicit-toplink connectivity separately through `declared_links`, so the structural layer now carries both declared and resolved top/child wiring intent instead of only the post-resolution side,
-- and structural instance pin bindings now also preserve a first typed `connection_expr` node, currently bounded to backend-neutral `signal_ref`, so the emitter can walk explicit actual-connection nodes instead of only mirrored signal-name strings,
-- and realized composition-plan instance bindings now also preserve that same typed `signal_ref` node before structural serialization, so the structural layer now carries it through instead of synthesizing it only at the export boundary,
+- and structural instance pin bindings now also preserve typed `connection_expr` nodes, currently bounded to backend-neutral `signal_ref` plus the first shipped explicit-toplink actual-source forms through `open` and bit-vector literals, so the emitter can walk explicit actual-connection nodes instead of only mirrored signal-name strings,
+- and realized composition-plan instance bindings now also preserve those same typed nodes before structural serialization, so the structural layer now carries them through instead of synthesizing them only at the export boundary,
 - and that earlier binding normalization now lives on the runtime `FSM::Composition::RealizedInstance` carrier itself, so `signal_name` / `connection_expr` alignment is now a direct child-binding contract instead of only an `HDLGenerator` convention,
-- and the current bounded `signal_ref` construction, binding signal-name recovery, and backend-neutral text rendering for those structural actual-connection nodes now also live in dedicated `FSM::IR::StructuralRTLIR::ConnectionExpr` helpers instead of remaining split across pipeline glue,
+- and the current bounded `signal_ref` / `open` / bit-vector-literal construction, binding signal-name recovery, and backend-neutral text rendering for those structural actual-connection nodes now also live in dedicated `FSM::IR::StructuralRTLIR::ConnectionExpr` helpers instead of remaining split across pipeline glue,
+- and explicit-toplink actual sources now also land directly on realized child-input bindings through that typed structural layer, so `=open`, `=0`, `=1`, and exact-width `=N'b...` no longer need fake carrier nets or fake same-name top-input inference just to reach the emitter,
 - and that same override/block reporting surface now also takes its resolved connectivity from `structural_rtl_ir->{resolved_links}`, so explicit-toplink override examples, inferred internal-carrier re-export overrides, and kept-internal carrier family detection no longer reread resolved links directly from plan internals,
 - and that same block-reporting surface now also takes explicit child-link blocking intent from `structural_rtl_ir->{declared_links}` instead of rereading declared toplinks directly from plan internals,
 - and that same composition provenance surface now also preserves per-resolved-link endpoint context plus one example subject per top-port and resolved-link provenance kind, with generated-child endpoint examples carrying bounded forward child context from `intent_hir` / `lowered_rtl_ir`,
