@@ -19,6 +19,13 @@ This is the live continuity document for fast session recovery after crashes, re
   - [t/259-partial-dual-output-lhs-lowering.t](/Users/richarddje/Documents/github/fsmgen/t/259-partial-dual-output-lhs-lowering.t) now locks that contract for both `+size`-before-state and `+size`-after-state ordering,
   - and this closes the honest support gap that was still left after the earlier `=`, `<-`, `<=` partial-write slice.
 
+## 2026-04-02: partial target width inference is now regression-backed without +size too
+- Continued with one small contract-hardening follow-up instead of leaving the new partial-write support dependent on a one-off manual HDL probe.
+- Important continuity note:
+  - [t/260-partial-target-width-inference.t](/Users/richarddje/Documents/github/fsmgen/t/260-partial-target-width-inference.t) now locks the no-`+size` case where the base signal width must come only from the static slice/index bounds,
+  - that regression covers slice-only partial targets such as `OUT[3:2]` and index-only partial targets such as `IDXOUT[4]`,
+  - and it explicitly keeps full-width internal declarations plus full-width `next_*` / `*_r` auxiliary outputs regression-backed in those inference-only cases too.
+
 ## 2026-04-02: strict mode now rejects the compact top-level `:=` directive too
 - Continued the visible `R9` lane by widening strict mode into another section-level compatibility cut instead of staying only on root families and `+system` residue.
 - Important continuity note:

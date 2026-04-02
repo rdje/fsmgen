@@ -148,6 +148,7 @@ Combinational DT note:
 - Signal-reference forms `SIG`, `SIG[3]`, `SIG[7:0]`, `SIG'8`, `SIG.member`, and `SIG>`
 - Static numeric indexed/sliced LHS assignments on the current `?fsm:` / `?dt:` direct path
   - current regression-backed lowering covers `=`, `<-`, `<=`, `<-=`, and `<=+`
+  - base-signal width may come from explicit `+size` entries or directly from the static slice/index bounds themselves on the current direct path
   - same-context piecewise writes such as `(OUT[3:2] = HI)`, `(OUT[1] = MID)`, `(OUT[0] = LO)` are assembled into one full-width mux input
   - partial sequential writes such as `(RO[0] <- LO)` and `(RI[0] <= LO)` retain untouched bits through the appropriate feedback path instead of collapsing to raw whole-signal replacement
   - partial dual-output sequential writes such as `(ROD[3:2] <-= HI)` and `(RID[3:2] <=+ HI)` now also keep their auxiliary outputs (`next_ROD`, `RID_r`) at the full base-signal width instead of narrowing them to the written fragment

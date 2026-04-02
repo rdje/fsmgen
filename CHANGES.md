@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-02
+### partial target width inference is now regression-backed without +size
+- Added [t/260-partial-target-width-inference.t](/Users/richarddje/Documents/github/fsmgen/t/260-partial-target-width-inference.t) to lock the current direct-path contract when base-signal width comes only from static slice/index bounds and no explicit `+size` is present for the target.
+- That regression now keeps both slice-only and index-only partial targets honest through generated HDL and module-declaration checks, including full-width `next_*` / `*_r` auxiliary outputs for partial dual-output writes.
+- Updated [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md) so the no-`+size` inference contract is preserved in the continuity trail.
+
 ### partial dual-output LHS writes now keep full-width auxiliary outputs too
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so indexed/sliced LHS targets now derive a base-signal width from the registered signal plus the slice/index bounds, feed that width back into the signal registry, and use it when registering `<-=` / `<=+` auxiliary outputs.
 - Added [t/259-partial-dual-output-lhs-lowering.t](/Users/richarddje/Documents/github/fsmgen/t/259-partial-dual-output-lhs-lowering.t) to lock full-width `next_*` / `*_r` auxiliary outputs and full-width merged expressions for partial `<-=` and `<=+` writes whether `+size` appears before or after the state body.

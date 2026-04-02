@@ -24,6 +24,17 @@ This document captures engineering rationale, design constraints, and working de
   - it keeps the public module interface consistent with the real signal width instead of the fragment width,
   - and it makes later visual HDL inspection of partial dual-output writes much more trustworthy.
 
+## 2026-04-02: partial target width inference is now explicitly locked without +size
+- Continued with a small regression/contract slice because the next honest question after the parser fix was whether the same support still held when no explicit `+size` was present for the target at all.
+- Landed behavior:
+  - [t/260-partial-target-width-inference.t](/Users/richarddje/Documents/github/fsmgen/t/260-partial-target-width-inference.t) now locks slice-only width inference such as `OUT[3:2]` and index-only width inference such as `IDXOUT[4]`,
+  - it does that through generated HDL and module-declaration checks, not just parser-level AST inspection,
+  - and it keeps the no-`+size` case honest for plain combinational partial writes plus dual-output sequential families.
+- Why this matters:
+  - it turns the follow-up manual probe into a durable contract,
+  - it proves that static bounds themselves are now a real supported source of target width on the current direct path,
+  - and it reduces the chance of this exact support shape regressing quietly later.
+
 ## 2026-04-02: strict mode now treats the compact top-level `:=` directive as compatibility residue
 - Continued the visible `R9` lane by widening strict mode into the legacy compact init/reset surface instead of keeping strict enforcement limited to root families and the explicit `+system` reset spelling.
 - Landed behavior:

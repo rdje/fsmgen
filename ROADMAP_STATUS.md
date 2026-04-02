@@ -563,6 +563,9 @@ Done:
   - same-context piecewise `<-`, `<=`, `<-=`, and `<=+` writes now lower into one full-width sequential mux input too,
   - partial sequential writes that do not cover every bit now retain untouched bits through the correct feedback source (`Q` for `<-` / `<-=`, `_q` for `<=` / `<=+`) instead of zeroing or replacing the whole signal,
   - and [t/259-partial-dual-output-lhs-lowering.t](/Users/richarddje/Documents/github/fsmgen/t/259-partial-dual-output-lhs-lowering.t) now also locks full-width `next_*` / `*_r` auxiliary outputs for partial dual-output writes whether `+size` appears before or after the state body.
+- [t/260-partial-target-width-inference.t](/Users/richarddje/Documents/github/fsmgen/t/260-partial-target-width-inference.t) now locks the same partial-write contract when no explicit `+size` is present for the target at all:
+  - slice bounds alone now stay regression-backed as a source of base-signal width for partial `=`, `<-=`, and `<=+` writes,
+  - and indexed targets such as `IDXOUT[4]` / `IDXOUT[0]` now stay regression-backed as a source of a 5-bit base width too.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.
