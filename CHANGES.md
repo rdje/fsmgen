@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-04
+### intrinsic-width unsized decimal concat actuals now share the typed top-expression path too
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so bounded source-side concat operands now also accept unsized decimal actuals such as `=170` and `=0d170`.
+- Those decimal concat operands now keep the minimum width required by their numeric value instead of borrowing width from the child-input target, so concat stays intrinsic-width-aware while direct bindings still keep their separate target-width-aware numeric widening contract.
+- Updated [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock linked-plan plus pipeline/CLI success for bare and `0d` decimal concat operands and to refresh the blocked-operand wording for the still-blocked non-decimal unsupported families such as `=open`.
+
 ### nested brace-group toplink concat sources now survive the full source frontend
 - Updated [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so slash-delimited link tokens now preserve literal brace groups during `.fsm` file parsing instead of letting the Lispish reader flatten `{...}` inside `?toplink` source expressions before composition parsing ever sees them.
 - That means bounded nested concat sources such as `/header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/uart_tx.data_in/` now survive from raw AST through typed composition parsing, omitted/empty-`?ports` inference, child-input binding, direct top-output assignment, and final emitted HDL.
@@ -8,8 +13,8 @@ This is the persistent technical change history for FSMGen.
 
 ### intrinsic-width unsized binary/octal/hex concat actuals now use the typed top-expression path
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so bounded source-side concat operands now accept intrinsic-width unsized binary/octal/hex actuals such as `=0b1_0`, `=0o2`, `=0xA`, and `=A`.
-- Those concat operands now keep the width implied by their digits instead of borrowing width from the child-input target, while unsized decimal spellings such as `=170` and `=0d170` intentionally remain direct-binding-only.
-- Updated [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock linked-plan plus pipeline/CLI success for the new concat family and the refreshed blocked concat wording for still-unsupported unsized decimal operands.
+- Those concat operands now keep the width implied by their digits instead of borrowing width from the child-input target; this later became the base that let unsized decimal concat spellings join the same intrinsic-width family.
+- Updated [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock linked-plan plus pipeline/CLI success for that initial concat family and the then-current blocked unsized-decimal wording.
 
 ### prefixed unsized direct actuals now share the widened direct-binding family
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so common prefixed unsized direct actuals such as `=0b10100101`, `=0d170`, and `=0xA5` now ride the same direct-binding path as the already-shipped bare unsized numeric forms.

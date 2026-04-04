@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-04: unsized decimal concat operands can be intrinsic-width too if width comes from numeric value
+- Kept this in the active `R11` lane and widened the concat family only where the width rule stays explicit and local to the operand itself.
+- Landed behavior:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized decimal concat operands such as `=170` and `=0d170`,
+  - those operands now lower into the same typed `bit_vector_literal_expr` concat form as the other intrinsic-width unsized families,
+  - their width now comes from the minimum bit-width of the numeric value rather than from the child-input target or from decimal digit count,
+  - and the blocked concat-operand wording now names binary/decimal/octal/hex intrinsic-width families honestly instead of leaving decimal behind as if concat still rejected it.
+- Why this is worth shipping:
+  - it widens the bounded concat family in a way that is still self-width-aware and regression-backable,
+  - preserves the earlier distinction that direct bindings are target-width-aware while concat operands are intrinsic-width-aware,
+  - and removes a user-facing inconsistency where decimal was the only simple unsized numeric family still artificially excluded from concat.
+
 ## 2026-04-04: nested toplink concat grouping needed a source-front-end fix, not a lowering workaround
 - Kept this in the active `R11` lane and fixed the real quality seam instead of adding another local planner special case.
 - Landed behavior:
@@ -17,10 +29,10 @@ This document captures engineering rationale, design constraints, and working de
   - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts intrinsic-width unsized binary/octal/hex concat operands such as `=0b1_0`, `=0o2`, `=0xA`, and bare `=A`,
   - those operands lower through the same typed `bit_vector_literal_expr` concat path as the existing exact-width literal operands,
   - their width now comes from the digits themselves, so binary keeps bit count, octal keeps three bits per digit, and hex keeps four bits per digit,
-  - and unsized decimal spellings such as `=170` and `=0d170` still stay blocked in concat because they would need target-width-driven coercion rather than an intrinsic operand width.
+  - and this later turned out to generalize cleanly to unsized decimal spellings too once concat decimal width was defined as the minimum bit-width required by the numeric value.
 - Why this boundary is worth keeping:
   - it widens expressiveness for real tie-off and packed-header use without backing into hidden concat widening,
-  - preserves the earlier direct-binding story where unsized decimal is numeric and target-width-aware,
+  - preserves the earlier direct-binding story where unsized decimal is numeric and target-width-aware, while still letting concat decimal stay intrinsic-width rather than target-width-driven,
   - and keeps exact-width forms meaningful instead of collapsing every literal family into one implicit width-inference bucket.
 
 ## 2026-04-04: prefixed unsized direct actuals should share the same direct-binding contract as the bare unsized family

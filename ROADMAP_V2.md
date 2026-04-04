@@ -843,11 +843,12 @@ The first honest `R11` slices are now:
 - Forward-IR note: that same producer/consumer path now also covers bounded
   flat source-side concat forms such as `header_bus,status_bus[0],=1,payload`
   over declared whole top-port refs, top-port bit/slice refs, one-bit scalar
-  actuals, intrinsic-width unsized binary/octal/hex actuals, and fixed-width
-  binary/decimal/octal/hex literal actuals, so explicit `?toplink`
+  actuals, intrinsic-width unsized binary/decimal/octal/hex actuals, and
+  fixed-width binary/decimal/octal/hex literal actuals, so explicit `?toplink`
   child-input bindings can now reuse the already-shipped structural `concat`
   node directly instead of inventing carrier nets or backend-specific text
-  escapes while still keeping unsized decimal widening off the concat path.
+  escapes while keeping concat width intrinsic: binary/octal/hex use digit
+  width, and decimal now uses the minimum width required by its numeric value.
 - Forward-IR note: those bounded concat forms now also preserve nested
   brace-group source structure such as
   `header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}` from

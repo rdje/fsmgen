@@ -199,7 +199,7 @@ Combinational DT note:
   - typed `:clock` / `:reset` metadata lets custom-named RTL system ports auto-wire through mixed composition
 - Explicit `(?toplink:name ...)` blocks with flat `/source/target/` tokens
 - Source-side top-port bit/slice `?toplink` expressions such as `payload_bus[15:8]` and `status_bus[0]` when the target is a realized child input or declared top output
-- Source-side bounded concat `?toplink` expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/uart_tx.data_in/`, including nested brace-group forms such as `/header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/uart_tx.data_in/`, when the target is a realized child input or declared top output, now also including intrinsic-width unsized binary/octal/hex actual operands such as `=0b10`, `=0o7`, `=0xA5`, or `=A5`
+- Source-side bounded concat `?toplink` expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/uart_tx.data_in/`, including nested brace-group forms such as `/header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/uart_tx.data_in/`, when the target is a realized child input or declared top output, now also including intrinsic-width unsized binary/decimal/octal/hex actual operands such as `=0b10`, `=170`, `=0d170`, `=0o7`, `=0xA5`, or `=A5`
 - Explicit `?toplink` source actuals `=open`, scalar `=0` / `=1`, unsized binary/decimal/octal/hex direct actuals such as `=0b10100101`, `=0d170`, `=0o245`, `=0xA5`, `=170`, or `=A5`, underscore-separated spellings such as `=0b1010_0101`, `=0d1_70`, `=0o2_45`, `=0xA_5`, `=1_70`, or `=A_5`, and exact-width binary/decimal/octal/hex literals such as `=8'b10100101`, `=8'd165`, `=8'o245`, or `=8'hA5`, with `=open` still targeting realized child inputs only while direct scalar `=0` / `=1` plus unsized binary/decimal/octal/hex direct actuals widen to the realized child-input or declared top-output target width and exact-width literal actuals may now also target declared top outputs
 - The source frontend now preserves brace-grouped slash-token text before composition parsing, so nested concat `?toplink` groups survive from `.fsm` source through raw AST and emitted HDL instead of being flattened away at read time
 - One realized child output source fanned out to multiple top outputs through one deterministic shared carrier plus explicit top-output assignments
@@ -990,7 +990,7 @@ This currently works because:
 - `=open` still targets only realized child input ports,
 - binary/decimal/octal/hex literal actuals must still match the target child-input or top-output width exactly,
 - unsized binary/decimal/octal/hex direct actuals fail explicitly if the numeric value does not fit that direct binding target width,
-- and `=0` / `=1` stay one-bit operands inside bounded concat source expressions, intrinsic-width unsized binary/octal/hex operands such as `=0b10`, `=0o7`, `=0xA5`, or `=A5` keep the width implied by their digits there, and unsized decimal forms such as `=170` or `=0d170` still stay direct-binding-only,
+- and `=0` / `=1` stay one-bit operands inside bounded concat source expressions, intrinsic-width unsized binary/octal/hex operands such as `=0b10`, `=0o7`, `=0xA5`, or `=A5` keep the width implied by their digits there, and unsized decimal forms such as `=170` or `=0d170` now also keep the minimum width implied by their numeric value there,
 - and those actuals bind directly on the realized child port or the declared top output assignment instead of inventing a top port or synthetic carrier net.
 
 Current narrow top-concat explicit-link example:
@@ -1014,9 +1014,9 @@ Current narrow top-concat explicit-link example:
 
 This currently works because:
 - the `/source/target/` token still stays flat, but the source side may now be one bounded comma-separated concat expression,
-- concat operands may currently be declared whole top-port refs, top-port bit/slice refs, one-bit scalar actuals `=0` / `=1`, intrinsic-width unsized binary/octal/hex actuals such as `=0b10`, `=0o7`, `=0xA5`, or `=A5`, or exact-width binary/decimal/octal/hex literal actuals,
-- underscore-separated digit spellings are also accepted on those intrinsic-width unsized binary/octal/hex and exact-width concat literals, for example `=0b1_0`, `=0xA_5`, `=A_5`, `=2'b1_0`, or `=8'hA_5`,
-- unsized decimal actuals such as `=170` or `=0d170` still stay on the direct-binding path because concat does not widen from the child-input target width,
+- concat operands may currently be declared whole top-port refs, top-port bit/slice refs, one-bit scalar actuals `=0` / `=1`, intrinsic-width unsized binary/decimal/octal/hex actuals such as `=0b10`, `=170`, `=0d170`, `=0o7`, `=0xA5`, or `=A5`, or exact-width binary/decimal/octal/hex literal actuals,
+- underscore-separated digit spellings are also accepted on those intrinsic-width unsized binary/decimal/octal/hex and exact-width concat literals, for example `=0b1_0`, `=1_70`, `=0d1_70`, `=0xA_5`, `=A_5`, `=2'b1_0`, or `=8'hA_5`,
+- unsized decimal actuals such as `=170` or `=0d170` now also work inside bounded concat by taking the minimum width required by their numeric value instead of borrowing width from the child-input target,
 - that concat still stays source-side only,
 - it still targets a realized child input port only,
 - and the emitted child binding uses the direct HDL concat instead of inventing a synthetic carrier net.

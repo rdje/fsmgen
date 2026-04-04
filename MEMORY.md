@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-04: intrinsic-width unsized decimal concat actuals now share the bounded top-expression path too
+- Stayed in the active `R11` lane and widened concat one more step without weakening the direct-vs-concat width boundary.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized decimal concat operands such as `=170` and `=0d170`,
+  - those operands now lower through the same typed `bit_vector_literal_expr` concat path as the other intrinsic-width unsized families,
+  - their width now comes from the minimum number of bits required by the numeric value, so concat stays self-width-aware rather than target-width-aware,
+  - direct bindings still keep their separate numeric widening contract, so this does not backslide into one implicit width rule for every numeric source,
+  - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for bare and `0d` decimal concat operands,
+  - and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now keeps the blocked-operand wording aligned with the widened concat family.
+
 ## 2026-04-04: nested brace-group toplink concat sources now survive the full source frontend
 - Stayed in the active `R11` lane and fixed the real source-boundary quality bug instead of papering over it in lowering.
 - Important continuity note:
@@ -15,8 +25,8 @@ This is the live continuity document for fast session recovery after crashes, re
 - Important continuity note:
   - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts intrinsic-width unsized binary/octal/hex concat operands such as `=0b1_0`, `=0o2`, `=0xA`, and `=A`,
   - those operands now become typed `bit_vector_literal_expr` concat members whose width comes from their digits rather than from the child-input target,
-  - unsized decimal concat forms such as `=170` and `=0d170` still stay blocked so target-width widening remains a direct-binding-only contract,
-  - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for that new concat family and the still-blocked unsized-decimal concat boundary,
+  - that initial intrinsic-width concat family later widened further to include unsized decimal spellings such as `=170` and `=0d170`,
+  - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for that initial concat family, which then became the base for the later unsized-decimal widening too,
   - and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now keeps the concise concat-operand wording aligned with the widened intrinsic-width family.
 
 ## 2026-04-04: prefixed unsized direct actuals now share the widened direct-binding family

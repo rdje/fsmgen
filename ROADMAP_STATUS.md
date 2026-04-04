@@ -1297,8 +1297,8 @@ Done:
 - That same source-side top-expression slice now also covers bounded concat sources:
   - explicit-link `C2` / `C3` child-input bindings may now use flat comma-separated source expressions such as `header_bus,status_bus[0],=1,payload_bus[3:0]`,
   - those bounded concat sources may now also keep nested brace-group structure such as `header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}` instead of being flattened during file parsing,
-  - concat operands are currently bounded to declared whole top-port refs, top-port bit/slice refs, one-bit scalar actuals `=0` / `=1`, intrinsic-width unsized binary/octal/hex actuals such as `=0b10`, `=0o7`, `=0xA5`, or `=A5`, and exact-width binary/decimal/octal/hex literal actuals,
-  - those intrinsic-width unsized binary/octal/hex concat operands keep the width implied by their digits, while unsized decimal forms such as `=170` or `=0d170` still stay direct-binding-only,
+  - concat operands are currently bounded to declared whole top-port refs, top-port bit/slice refs, one-bit scalar actuals `=0` / `=1`, intrinsic-width unsized binary/decimal/octal/hex actuals such as `=0b10`, `=170`, `=0d170`, `=0o7`, `=0xA5`, or `=A5`, and exact-width binary/decimal/octal/hex literal actuals,
+  - those intrinsic-width unsized binary/octal/hex concat operands keep the width implied by their digits, and unsized decimal forms such as `=170` or `=0d170` now also keep the minimum width required by their numeric value instead of widening from the child-input target,
   - omitted/empty-`?ports` top-boundary inference now also sees the inferable bit/slice operands inside those concat sources,
   - the bounded source frontend now preserves brace-grouped slash-token text before composition parsing, so those nested concat groups survive from `.fsm` source through raw AST, composition parsing, and emitted HDL instead of being damaged at read time,
   - and omitted/empty-`?ports` top-boundary inference may now also size one remaining undeclared whole-port concat operand exactly from the child-input target remainder width, while several still-unsized whole-port operands still fail explicitly instead of guessing several widths at once.
@@ -1316,7 +1316,7 @@ Done:
   - direct scalar `=0` / `=1` actuals plus unsized binary/decimal/octal/hex direct actuals such as `=0b10100101`, `=0d170`, `=0o245`, `=0xA5`, `=170`, and `=A5` now also widen to the direct binding target width for realized child inputs and declared top outputs instead of acting like accidental one-bit-only direct sources or unsupported unsized values,
   - underscore-separated digit spellings such as `=0b1010_0101`, `=1_70`, `=0o2_45`, `=A_5`, `=8'd1_65`, and `=8'hA_5` are now accepted on those same direct literal families without changing their normalized value semantics,
   - that same direct exact-width literal family may now also drive declared top outputs without inventing carrier nets,
-  - the same exact-width decimal/octal/hex literal family now also participates inside bounded source-side concat operands beside new intrinsic-width unsized binary/octal/hex concat operands,
+  - the same exact-width decimal/octal/hex literal family now also participates inside bounded source-side concat operands beside new intrinsic-width unsized binary/decimal/octal/hex concat operands,
   - unsupported non-binary/non-decimal/non-octal/non-hex unsized actual spellings still fail explicitly through the existing bounded-literal wording, while unsized binary/decimal/octal/hex values that do not fit still fail as overflowed direct actuals,
   - and decimal/octal/hex payloads whose numeric value exceeds the declared width now fail explicitly instead of silently truncating.
 - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) now also locks:
@@ -1328,9 +1328,9 @@ Done:
   - and blocked overflowing decimal/octal/hex literal rejection.
 - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks:
   - direct linked-plan preservation of bounded concat bindings,
-  - end-to-end pipeline and CLI emission of those concat child-input bindings, now also including intrinsic-width unsized binary/octal/hex plus normalized exact-width decimal/octal/hex literal operands and nested brace-group concat preservation,
+  - end-to-end pipeline and CLI emission of those concat child-input bindings, now also including intrinsic-width unsized binary/decimal/octal/hex plus normalized exact-width decimal/octal/hex literal operands and nested brace-group concat preservation,
   - blocked unsupported concat-operand rejection through the top-expression boundary,
-  - and blocked unsized decimal concat rejection on both bare and `0d` spellings.
+  - and intrinsic-width unsized decimal concat success on both bare and `0d` spellings.
 - [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t) now also locks:
   - source-front-end preservation of brace-grouped raw `?toplink` slash tokens before composition parsing.
 - [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t) now also locks:

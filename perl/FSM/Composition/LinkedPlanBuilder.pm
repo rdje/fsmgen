@@ -806,7 +806,7 @@ sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $fs
     if (!$spec && defined($endpoint) && ($endpoint =~ /\A\{.*\}\z/s || index($endpoint, ',') >= 0)) {
         confess
             "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
-            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, scalar '=0'/'=1' actuals, intrinsic-width unsized binary/octal/hex actuals like '=0b1010', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'. ".
+            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
     return undef unless $spec;
@@ -996,9 +996,20 @@ sub _expression_literal_bits_and_width ($class, $payload) {
         return $class->_hex_literal_bits_and_width(length($hex_digits) * 4, $hex_digits);
     }
 
+    if (defined($payload) && $payload =~ /\A0d(.+)\z/i) {
+        my $decimal_digits = $class->_normalized_separated_digits($1, '[0-9]');
+        return undef unless defined $decimal_digits;
+        return $class->_intrinsic_decimal_literal_bits_and_width($decimal_digits);
+    }
+
     my $bare_hex_digits = $class->_normalized_separated_digits($payload, '[0-9A-Fa-f]');
     if (defined($bare_hex_digits) && $bare_hex_digits =~ /[A-Fa-f]/ && $payload !~ /\A0d/i) {
         return $class->_hex_literal_bits_and_width(length($bare_hex_digits) * 4, $bare_hex_digits);
+    }
+
+    my $bare_decimal_digits = $class->_normalized_separated_digits($payload, '[0-9]');
+    if (defined $bare_decimal_digits) {
+        return $class->_intrinsic_decimal_literal_bits_and_width($bare_decimal_digits);
     }
 
     if (defined($payload) && $payload =~ /\A(\d+)'b(.+)\z/i) {
@@ -1065,6 +1076,20 @@ sub _decimal_literal_bits_and_width ($class, $declared_width, $decimal_digits, %
     }
 
     return ($bits, 0 + $declared_width);
+}
+
+sub _intrinsic_decimal_literal_bits_and_width ($class, $decimal_digits) {
+    $decimal_digits = $class->_normalized_separated_digits($decimal_digits, '[0-9]');
+    return unless defined $decimal_digits;
+
+    my $value = Math::BigInt->new($decimal_digits);
+    return unless defined $value;
+
+    my $bits = $value->as_bin();
+    $bits =~ s/\A0b//;
+    $bits = '0' unless length $bits;
+
+    return ($bits, length($bits));
 }
 
 sub _binary_literal_bits_and_width ($class, $declared_width, $binary_bits, %opts) {
