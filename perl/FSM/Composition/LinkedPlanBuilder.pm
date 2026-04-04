@@ -193,6 +193,7 @@ sub build_plan ($class, %args) {
                 || (($source->{kind} || '') eq 'actual_scalar_literal')
                 || (($source->{kind} || '') eq 'actual_unsized_binary')
                 || (($source->{kind} || '') eq 'actual_unsized_decimal')
+                || (($source->{kind} || '') eq 'actual_unsized_signed_decimal')
                 || (($source->{kind} || '') eq 'actual_unsized_octal')
                 || (($source->{kind} || '') eq 'actual_unsized_hex')
                 || $source_width == $target_width;
@@ -566,7 +567,7 @@ sub assert_link_roles ($class, $source, $target, $fsm_file, $header) {
     if (($target->{kind} || '') =~ /^actual_/) {
         confess
             "Composition source '$header' in '$fsm_file' uses actual endpoint '".$target->{raw}."' as an explicit link target, ".
-            "but explicit actual binding is blocked because the first structural-actual slice only allows '=open', scalar '=0'/'=1', unsized binary/decimal/octal/hex direct actuals, and exact-width binary, decimal, octal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs. ".
+            "but explicit actual binding is blocked because the first structural-actual slice only allows '=open', scalar '=0'/'=1', unsized binary/decimal/octal/hex direct actuals, unsized signed decimal direct actuals like '=-1' or '=0d-1', and exact-width binary/decimal/octal/hex literal actuals plus exact-width signed decimal literal actuals like '=8'sd-1' as link sources into realized child input ports, plus literal actuals into declared top outputs. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
 
@@ -711,12 +712,44 @@ sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header) {
     }
 
     if ($payload =~ /\A0d(.+)\z/i) {
+        if ($1 =~ /\A-(.+)\z/) {
+            my $decimal_digits = $class->_normalized_separated_digits($1, '[0-9]');
+            if (defined $decimal_digits) {
+                return {
+                    raw => $endpoint,
+                    key => "actual:$endpoint",
+                    kind => 'actual_unsized_signed_decimal',
+                    decimal_digits => $decimal_digits,
+                    port => {
+                        direction => 'actual',
+                        width => 0,
+                    },
+                };
+            }
+        }
+
         my $decimal_digits = $class->_normalized_separated_digits($1, '[0-9]');
         if (defined $decimal_digits) {
             return {
                 raw => $endpoint,
                 key => "actual:$endpoint",
                 kind => 'actual_unsized_decimal',
+                decimal_digits => $decimal_digits,
+                port => {
+                    direction => 'actual',
+                    width => 0,
+                },
+            };
+        }
+    }
+
+    if ($payload =~ /\A-(.+)\z/) {
+        my $decimal_digits = $class->_normalized_separated_digits($1, '[0-9]');
+        if (defined $decimal_digits) {
+            return {
+                raw => $endpoint,
+                key => "actual:$endpoint",
+                kind => 'actual_unsized_signed_decimal',
                 decimal_digits => $decimal_digits,
                 port => {
                     direction => 'actual',
@@ -885,6 +918,21 @@ sub _resolve_child_expression_endpoint ($class, $endpoint, $instances_by_name, $
 }
 
 sub _actual_literal_bits_and_width ($class, $payload, $fsm_file, $header) {
+    if ($payload =~ /\A(\d+)'sd(-?(?:[0-9](?:_?[0-9])*))\z/i) {
+        my ($declared_width, $signed_decimal_text) = ($1, $2);
+        my ($bits, $width) = $class->_signed_decimal_literal_bits_and_width(
+            $declared_width,
+            $signed_decimal_text,
+            on_overflow => sub {
+                return
+                    "Composition source '$header' in '$fsm_file' uses actual literal '=$payload', ".
+                    "but explicit actual binding is blocked because the declared signed decimal width cannot represent the literal payload value. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+            },
+        );
+        return ($bits, $width) if defined $bits;
+    }
+
     if ($payload =~ /\A(\d+)'b(.+)\z/i) {
         my ($declared_width, $raw_bits) = ($1, $2);
         my $bits = $class->_normalized_separated_digits($raw_bits, '[01]');
@@ -950,7 +998,7 @@ sub _actual_literal_bits_and_width ($class, $payload, $fsm_file, $header) {
 
     confess
         "Composition source '$header' in '$fsm_file' uses actual endpoint '=$payload', ".
-        "but explicit actual binding is blocked because the first structural-actual slice currently accepts only '=open', scalar '=0'/'=1', unsized binary/decimal/octal/hex direct actual forms like '=0b10', '=0d10', '=0o7', '=0xA', '=170', or '=A5', or exact-width binary/decimal/octal/hex literal forms like '=8'b10100101', '=8'd165', '=8'o245', or '=8'hA5'. ".
+        "but explicit actual binding is blocked because the first structural-actual slice currently accepts only '=open', scalar '=0'/'=1', unsized binary/decimal/octal/hex direct actual forms like '=0b10', '=0d10', '=0o7', '=0xA', '=170', or '=A5', unsized signed decimal direct actual forms like '=-1' or '=0d-1', or exact-width binary/decimal/octal/hex literal forms like '=8'b10100101', '=8'd165', '=8'o245', or '=8'hA5' plus exact-width signed decimal literal forms like '=8'sd-1'. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
@@ -1027,7 +1075,7 @@ sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $in
     if (!$spec && defined($endpoint) && ($endpoint =~ /\A\{.*\}\z/s || index($endpoint, ',') >= 0)) {
         confess
             "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
-            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', repeat groups like '{4{status_bus[0]}}', scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'. ".
+            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', repeat groups like '{4{status_bus[0]}}', scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', '=4'hA', or '=8'sd-1'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
     return undef unless $spec;
@@ -1326,6 +1374,10 @@ sub _expression_literal_bits_and_width ($class, $payload) {
         return ($bits, 0 + $declared_width);
     }
 
+    if (defined($payload) && $payload =~ /\A(\d+)'sd(-?(?:[0-9](?:_?[0-9])*))\z/i) {
+        return $class->_signed_decimal_literal_bits_and_width($1, $2);
+    }
+
     if (defined($payload) && $payload =~ /\A(\d+)'d(.+)\z/i) {
         my $decimal_digits = $class->_normalized_separated_digits($2, '[0-9]');
         return undef unless defined $decimal_digits;
@@ -1396,6 +1448,50 @@ sub _intrinsic_decimal_literal_bits_and_width ($class, $decimal_digits) {
     $bits = '0' unless length $bits;
 
     return ($bits, length($bits));
+}
+
+sub _signed_decimal_literal_bits_and_width ($class, $declared_width, $signed_decimal_text, %opts) {
+    return unless defined($declared_width) && $declared_width =~ /\A\d+\z/ && $declared_width > 0;
+    return unless defined($signed_decimal_text) && !ref($signed_decimal_text);
+
+    my $negative = ($signed_decimal_text =~ s/\A-//) ? 1 : 0;
+    my $decimal_digits = $class->_normalized_separated_digits($signed_decimal_text, '[0-9]');
+    return unless defined $decimal_digits;
+
+    my $value = Math::BigInt->new($decimal_digits);
+    return unless defined $value;
+    $value->bneg() if $negative;
+
+    my $min_value = Math::BigInt->bone();
+    $min_value->blsft($declared_width - 1);
+    $min_value->bneg();
+
+    my $max_value = Math::BigInt->bone();
+    $max_value->blsft($declared_width - 1);
+    $max_value->bdec();
+
+    if ($value->copy()->bcmp($min_value) < 0 || $value->copy()->bcmp($max_value) > 0) {
+        confess $opts{on_overflow}->()
+            if $opts{on_overflow};
+        return;
+    }
+
+    my $normalized_value = $value->copy();
+    if ($normalized_value->is_neg()) {
+        my $modulus = Math::BigInt->bone();
+        $modulus->blsft($declared_width);
+        $normalized_value->badd($modulus);
+    }
+
+    my $bits = $normalized_value->as_bin();
+    $bits =~ s/\A0b//;
+    $bits = '0' unless length $bits;
+
+    if (length($bits) < $declared_width) {
+        $bits = ('0' x ($declared_width - length($bits))) . $bits;
+    }
+
+    return ($bits, 0 + $declared_width);
 }
 
 sub _binary_literal_bits_and_width ($class, $declared_width, $binary_bits, %opts) {
@@ -1843,6 +1939,7 @@ sub actual_connection_expr_for_target ($class, $source, $target_width, $fsm_file
         unless (($source->{kind} || '') eq 'actual_scalar_literal'
             || ($source->{kind} || '') eq 'actual_unsized_binary'
             || ($source->{kind} || '') eq 'actual_unsized_decimal'
+            || ($source->{kind} || '') eq 'actual_unsized_signed_decimal'
             || ($source->{kind} || '') eq 'actual_unsized_octal'
             || ($source->{kind} || '') eq 'actual_unsized_hex');
 
@@ -1883,6 +1980,21 @@ sub actual_connection_expr_for_target ($class, $source, $target_width, $fsm_file
                 return
                     "Composition source '$header' in '$fsm_file' uses actual literal '".$source->{raw}."', ".
                     "but explicit actual binding is blocked because unsized decimal actual value does not fit direct target width $target_width. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+            },
+        );
+        return bit_vector_literal_expr($bits);
+    }
+
+    if (($source->{kind} || '') eq 'actual_unsized_signed_decimal') {
+        my $decimal_digits = $source->{decimal_digits} // '';
+        my ($bits, undef) = $class->_signed_decimal_literal_bits_and_width(
+            $target_width,
+            "-$decimal_digits",
+            on_overflow => sub {
+                return
+                    "Composition source '$header' in '$fsm_file' uses actual literal '".$source->{raw}."', ".
+                    "but explicit actual binding is blocked because unsized signed decimal actual value does not fit signed direct target width $target_width. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
             },
         );

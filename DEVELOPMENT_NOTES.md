@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-05: signed decimal structural actuals belong on the same bounded literal path, not on a parallel signed-literal special case
+- Kept this in the active `R11` lane and widened the shipped numeric actual family in the narrowest honest way instead of opening a backend-specific signed expression shortcut.
+- Landed behavior:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized signed decimal direct actuals such as `=-1` and `=0d-1` on direct realized child-input and declared top-output bindings,
+  - those unsized signed decimal direct actuals now widen only when the numeric value fits the signed range of the direct target width and then lower into the same exact-width two's-complement `bit_vector_literal_expr` used by the existing structural literal family,
+  - the same bounded literal machinery now also accepts exact-width signed decimal forms such as `=8'sd-1` on both direct bindings and bounded concat operands,
+  - and exact-width signed decimal payloads that exceed the declared signed range now fail explicitly instead of truncating or silently changing meaning.
+- Why this is worth shipping:
+  - it closes a real expressiveness gap for negative tie-offs and all-ones style direct bindings without pretending the project already has a broader signed-type frontend,
+  - it keeps the AST honest by reusing the existing backend-neutral bit-vector literal path instead of adding a signed-only string escape,
+  - and it preserves the direct-vs-concat boundary cleanly: unsized negative decimal stays a direct-binding feature, while negative concat operands require an explicit-width signed decimal literal so concat width remains explicit.
+
 ## 2026-04-05: bounded repeat groups belong in the typed source-expression AST, not in renderer-only text
 - Kept this in the active `R11` lane and shipped the next source-expression widening as a structural-AST feature instead of another ad hoc string case.
 - Landed behavior:

@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-05: signed decimal structural actuals now share the bounded literal path too
+- Stayed in the active `R11` lane and widened the existing numeric actual family one more bounded step instead of inventing a signed-only lowering path.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized signed decimal direct actuals such as `=-1` and `=0d-1` on realized child inputs and declared top outputs,
+  - those direct signed-decimal actuals now widen only when the numeric value fits the signed range of the direct binding target width, and then lower through the same exact-width two's-complement `bit_vector_literal_expr` path used by the existing structural literal families,
+  - the same bounded literal path now also accepts exact-width signed decimal actuals such as `=8'sd-1` on direct bindings and bounded concat operands,
+  - exact-width signed decimal payloads that exceed the declared signed range now fail explicitly instead of truncating or silently wrapping,
+  - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) now locks direct linked-plan plus pipeline/CLI success for unsized and exact-width signed decimal direct actuals together with blocked overflow cases,
+  - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now also locks exact-width signed decimal literal success inside bounded concat,
+  - and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) keeps the concise actual-family wording aligned with the widened signed-decimal slice.
+
 ## 2026-04-05: bounded toplink repeat groups now share the typed top-expression path too
 - Stayed in the active `R11` lane and widened the same typed source-expression family instead of inventing a renderer-only shortcut for replication syntax.
 - Important continuity note:

@@ -3318,7 +3318,7 @@ RTLIF
     is($report->{blocked_boundary}, 'explicit link endpoint resolution', 'failure report preserves the blocked endpoint-resolution boundary for concat-operand failures');
     is(
         $report->{blocked_reason},
-        "concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', repeat groups like '{4{status_bus[0]}}', scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'",
+        "concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', repeat groups like '{4{status_bus[0]}}', scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', '=4'hA', or '=8'sd-1'",
         'failure report preserves the concise concat-operand top-expression reason',
     );
 };
@@ -3685,7 +3685,7 @@ RTLIF
     is($report->{blocked_boundary}, 'explicit actual binding', 'failure report preserves the blocked explicit-actual boundary for target failures');
     is(
         $report->{blocked_reason},
-        "the first structural-actual slice only allows '=open', scalar '=0'/'=1', unsized binary/decimal/octal/hex direct actuals, and exact-width binary, decimal, octal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs",
+        "the first structural-actual slice only allows '=open', scalar '=0'/'=1', unsized binary/decimal/octal/hex direct actuals, unsized signed decimal direct actuals like '=-1' or '=0d-1', and exact-width binary/decimal/octal/hex literal actuals plus exact-width signed decimal literal actuals like '=8'sd-1' as link sources into realized child input ports, plus literal actuals into declared top outputs",
         'failure report preserves the concise explicit-actual target reason',
     );
 };
@@ -5743,7 +5743,7 @@ RTLIF
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for concat-operand failures');
     like(
         $combined_output,
-        qr/Reason:\s+concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', repeat groups like '\{4\{status_bus\[0\]\}\}', scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
+        qr/Reason:\s+concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', repeat groups like '\{4\{status_bus\[0\]\}\}', scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', '=4'hA', or '=8'sd-1'/s,
         'CLI reports the concise concat-operand top-expression reason',
     );
 };
@@ -6098,7 +6098,7 @@ RTLIF
     like($combined_output, qr/Blocked boundary:\s+explicit actual binding/s, 'CLI reports the blocked explicit-actual boundary for target failures');
     like(
         $combined_output,
-        qr/Reason:\s+the first structural-actual slice only allows '=open', scalar '=0'\/'=1', unsized binary\/decimal\/octal\/hex direct actuals, and exact-width binary, decimal, octal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
+        qr/Reason:\s+the first structural-actual slice only allows '=open', scalar '=0'\/'=1', unsized binary\/decimal\/octal\/hex direct actuals, unsized signed decimal direct actuals like '=-1' or '=0d-1', and exact-width binary\/decimal\/octal\/hex literal actuals plus exact-width signed decimal literal actuals like '=8'sd-1' as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
         'CLI reports the concise explicit-actual target reason',
     );
 };
