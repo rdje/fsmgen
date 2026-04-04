@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-04: exact-width decimal actuals now ride the same structural literal path
+- Stayed in the active `R11` lane and kept this as another bounded structural-actual widening rather than introducing a new connection-expression family.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts exact-width decimal literal actuals such as `=8'd165` beside the existing binary and hex forms, normalizing them into the same `bit_vector_literal_expr` payload used throughout the structural binding path,
+  - the same exact-width decimal literal family now also works inside bounded source-side concat operands, so direct child-input actuals and concat-literal operands still share one backend-neutral literal contract,
+  - unsized decimal-like spellings still fail explicitly, and decimal payloads whose numeric value exceeds the declared width now fail explicitly instead of truncating,
+  - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t), [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t), and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now lock the widened direct/concat/summary contract,
+  - and the full regression stayed green after the slice (`Files=259`, `Tests=1980`, `PASS`).
+
 ## 2026-04-02: explicit-actual failure summaries now keep the actual token context too
 - Stayed in the active `R11` lane, but kept this as a follow-on contract-hardening slice rather than a new runtime-capability widening.
 - Important continuity note:

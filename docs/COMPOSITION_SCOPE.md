@@ -13,7 +13,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - generated child HDL plus generated top HDL through `bin/fsmgen`.
 - The active toolchain now also ships the first `C2` composition lane:
   - two or more generated children (`?fsmc` / `?dtc`),
-  - explicit `?toplink` wiring using top-port names, source-side top-port bit/slice expressions such as `data_bus[3]` or `data_bus[7:4]`, flat source-side concat expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/child.port/`, `instance.port` child endpoints, and the first bounded source-actual forms (`=open`, `=0`, `=1`, and exact-width `=N'b...` / `=N'h...`) when they target realized child input ports,
+  - explicit `?toplink` wiring using top-port names, source-side top-port bit/slice expressions such as `data_bus[3]` or `data_bus[7:4]`, flat source-side concat expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/child.port/`, `instance.port` child endpoints, and the first bounded source-actual forms (`=open`, `=0`, `=1`, and exact-width `=N'b...` / `=N'd...` / `=N'h...`) when they target realized child input ports,
   - either one explicit `?ports` block or an omitted/empty `?ports` shape when the explicit `?toplink` endpoints can still supply one consistent top-boundary contract,
   - deterministic instance ordering,
   - deterministic internal-net creation for child-to-child wiring,
@@ -24,7 +24,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 - The active toolchain now also ships the first `C3` composition lane:
   - at least one external `?rtl` child,
   - plus any number of generated children (`?fsmc` / `?dtc`) beside those external RTL children,
-  - explicit `?toplink` wiring using top-port names, source-side top-port bit/slice expressions such as `data_bus[3]` or `data_bus[7:4]`, flat source-side concat expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/child.port/`, `instance.port` child endpoints, and the first bounded source-actual forms (`=open`, `=0`, `=1`, and exact-width `=N'b...` / `=N'h...`) when they target realized child input ports,
+  - explicit `?toplink` wiring using top-port names, source-side top-port bit/slice expressions such as `data_bus[3]` or `data_bus[7:4]`, flat source-side concat expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/child.port/`, `instance.port` child endpoints, and the first bounded source-actual forms (`=open`, `=0`, `=1`, and exact-width `=N'b...` / `=N'd...` / `=N'h...`) when they target realized child input ports,
   - either one explicit `?ports` block or an omitted/empty `?ports` shape when the explicit `?toplink` endpoints can still supply one consistent top-boundary contract,
   - external RTL interface metadata loaded from embedded or sidecar `.rtlif` artifacts,
   - bounded undeclared top-interface inference for same-name child inputs and unique child outputs that remain top-facing,
@@ -89,11 +89,11 @@ The currently shipped composition behavior is intentionally bounded:
 - explicit `?toplink` endpoints must match by role and exact width in `C2`, `C3`, and `C4`,
 - explicit `?toplink` top-port expressions may currently appear only on the source side and may target only realized child input ports,
 - when omitted/empty `?ports` leaves the base top input undeclared, those source-side top-port expressions may now also infer that missing top input from the highest referenced bit as long as the linked child-input evidence still agrees on one compatible direction/type/width contract, including `name[index]` / `name[msb:lsb]` operands that appear inside the bounded concat source form,
-- source-side top-port expression forms are currently limited to `name[index]`, `name[msb:lsb]`, and flat comma-separated concat source forms whose operands are declared whole top-port references, top-port bit/slice expressions, or fixed-width binary/hex literal actuals,
+- source-side top-port expression forms are currently limited to `name[index]`, `name[msb:lsb]`, and flat comma-separated concat source forms whose operands are declared whole top-port references, top-port bit/slice expressions, or fixed-width binary/decimal/hex literal actuals,
 - when one such concat source leaves exactly one undeclared whole-port operand unsized, omitted/empty `?ports` may now infer that operand's exact width from the remaining realized child-input target width after the other concat operands are already exact,
 - but several still-unsized undeclared whole-port concat operands continue to fail explicitly instead of guessing several widths from one child-input target,
 - explicit `?toplink` actual sources may currently appear only on the source side and only when the target is a realized child input port,
-- `=open` is the one width-agnostic explicit actual source in that first slice, while `=0`, `=1`, and exact-width binary/hex literal forms such as `=8'b10100101` or `=8'hA5` must still match the target child-input width exactly,
+- `=open` is the one width-agnostic explicit actual source in that first slice, while `=0`, `=1`, and exact-width binary/decimal/hex literal forms such as `=8'b10100101`, `=8'd165`, or `=8'hA5` must still match the target child-input width exactly,
 - explicit and declared connect-by-name mismatches now fail before emission and identify the conflicting endpoints and widths,
 - the typed composition plan now also exposes first-pass provenance metadata for downstream tooling and diagnostics:
   - `FSM::Composition::Port->origin_kind` distinguishes declared and inferred top-port paths,
@@ -146,7 +146,7 @@ The currently shipped composition behavior is intentionally bounded:
   - top-port name, for example `result_data`,
   - or source-side top-port bit/slice expression over a declared top input, for example `payload_bus[15:8]` or `status_bus[0]`, when that explicit link targets a realized child input port,
   - or child endpoint `instance.port`, for example `producer.output_data`,
-  - or source actual `=open`, `=0`, `=1`, or exact-width binary/hex literal `=N'b...` / `=N'h...`, for example `=8'b10100101` or `=8'hA5`, when that explicit link targets a realized child input port,
+  - or source actual `=open`, `=0`, `=1`, or exact-width binary/decimal/hex literal `=N'b...` / `=N'd...` / `=N'h...`, for example `=8'b10100101`, `=8'd165`, or `=8'hA5`, when that explicit link targets a realized child input port,
 - composition output is currently limited to SystemVerilog / Verilog targets.
 
 ## Goal of `R6`
@@ -204,7 +204,7 @@ Current shipped runtime subset:
 - and realized composition-plan instance bindings now also preserve those same typed nodes before structural serialization, so the structural layer now carries them through instead of synthesizing them only at the export boundary,
 - and that earlier binding normalization now lives on the runtime `FSM::Composition::RealizedInstance` carrier itself, so `signal_name` / `connection_expr` alignment is now a direct child-binding contract instead of only an `HDLGenerator` convention,
 - and the current bounded `signal_ref` / `bit_select` / `slice` / `concat` / `open` / bit-vector-literal construction, binding signal-name recovery, and backend-neutral text rendering for those structural actual-connection nodes now also live in dedicated `FSM::IR::StructuralRTLIR::ConnectionExpr` helpers instead of remaining split across pipeline glue,
-- and explicit-toplink actual sources plus source-side top-port bit/slice and concat expressions now also land directly on realized child-input bindings through that typed structural layer, so `=open`, `=0`, `=1`, exact-width `=N'b...`, declared-top forms such as `payload_bus[15:8]`, and bounded concat forms such as `header_bus,status_bus[0],=1,payload_bus[3:0]` no longer need fake carrier nets or fake same-name top-input inference just to reach the emitter,
+- and explicit-toplink actual sources plus source-side top-port bit/slice and concat expressions now also land directly on realized child-input bindings through that typed structural layer, so `=open`, `=0`, `=1`, exact-width `=N'b...`, `=N'd...`, `=N'h...`, declared-top forms such as `payload_bus[15:8]`, and bounded concat forms such as `header_bus,status_bus[0],=1,payload_bus[3:0]` no longer need fake carrier nets or fake same-name top-input inference just to reach the emitter,
 - and that same override/block reporting surface now also takes its resolved connectivity from `structural_rtl_ir->{resolved_links}`, so explicit-toplink override examples, inferred internal-carrier re-export overrides, and kept-internal carrier family detection no longer reread resolved links directly from plan internals,
 - and that same block-reporting surface now also takes explicit child-link blocking intent from `structural_rtl_ir->{declared_links}` instead of rereading declared toplinks directly from plan internals,
 - and that same composition provenance surface now also preserves per-resolved-link endpoint context plus one example subject per top-port and resolved-link provenance kind, with generated-child endpoint examples carrying bounded forward child context from `intent_hir` / `lowered_rtl_ir`,

@@ -17,6 +17,7 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
+use Math::BigInt ();
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
@@ -471,7 +472,7 @@ sub assert_link_roles ($class, $source, $target, $fsm_file, $header) {
     if (($target->{kind} || '') =~ /^actual_/) {
         confess
             "Composition source '$header' in '$fsm_file' uses actual endpoint '".$target->{raw}."' as an explicit link target, ".
-            "but explicit actual binding is blocked because the first structural-actual slice only allows '=open' and exact-width binary or hex literal actuals as link sources into realized child input ports. ".
+            "but explicit actual binding is blocked because the first structural-actual slice only allows '=open' and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
 
@@ -578,6 +579,21 @@ sub _actual_literal_bits_and_width ($class, $payload, $fsm_file, $header) {
         return ($bits, 0 + $declared_width);
     }
 
+    if ($payload =~ /\A(\d+)'d(\d+)\z/i) {
+        my ($declared_width, $decimal_digits) = ($1, $2);
+        my ($bits, $width) = $class->_decimal_literal_bits_and_width(
+            $declared_width,
+            $decimal_digits,
+            on_overflow => sub {
+                return
+                    "Composition source '$header' in '$fsm_file' uses actual literal '=$payload', ".
+                    "but explicit actual binding is blocked because the declared decimal width cannot represent the literal payload value. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+            },
+        );
+        return ($bits, $width) if defined $bits;
+    }
+
     if ($payload =~ /\A(\d+)'h([0-9a-f]+)\z/i) {
         my ($declared_width, $hex_digits) = ($1, $2);
         my ($bits, $width) = $class->_hex_literal_bits_and_width(
@@ -595,7 +611,7 @@ sub _actual_literal_bits_and_width ($class, $payload, $fsm_file, $header) {
 
     confess
         "Composition source '$header' in '$fsm_file' uses actual endpoint '=$payload', ".
-        "but explicit actual binding is blocked because the first structural-actual slice currently accepts only '=open', '=0', '=1', or exact-width binary/hex literal forms like '=8'b10100101' or '=8'hA5'. ".
+        "but explicit actual binding is blocked because the first structural-actual slice currently accepts only '=open', '=0', '=1', or exact-width binary/decimal/hex literal forms like '=8'b10100101', '=8'd165', or '=8'hA5'. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
@@ -624,7 +640,7 @@ sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $fs
     if (!$spec && defined($endpoint) && ($endpoint =~ /\A\{.*\}\z/s || index($endpoint, ',') >= 0)) {
         confess
             "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
-            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, and fixed-width literal actuals like '=4'b1010' or '=4'hA'. ".
+            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, and fixed-width literal actuals like '=4'b1010', '=4'd10', or '=4'hA'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
     return undef unless $spec;
@@ -802,11 +818,40 @@ sub _expression_literal_bits_and_width ($class, $payload) {
         return ($bits, 0 + $declared_width);
     }
 
+    if (defined($payload) && $payload =~ /\A(\d+)'d(\d+)\z/i) {
+        return $class->_decimal_literal_bits_and_width($1, $2);
+    }
+
     if (defined($payload) && $payload =~ /\A(\d+)'h([0-9a-f]+)\z/i) {
         return $class->_hex_literal_bits_and_width($1, $2);
     }
 
     return;
+}
+
+sub _decimal_literal_bits_and_width ($class, $declared_width, $decimal_digits, %opts) {
+    return unless defined($declared_width) && $declared_width =~ /\A\d+\z/ && $declared_width > 0;
+    return unless defined($decimal_digits) && !ref($decimal_digits) && $decimal_digits =~ /\A\d+\z/;
+
+    my $value = Math::BigInt->new($decimal_digits);
+    return unless defined $value;
+
+    my $bits = $value->as_bin();
+    $bits =~ s/\A0b//;
+    $bits = '0' unless length $bits;
+
+    if (length($bits) < $declared_width) {
+        $bits = ('0' x ($declared_width - length($bits))) . $bits;
+        return ($bits, 0 + $declared_width);
+    }
+
+    if (length($bits) > $declared_width) {
+        confess $opts{on_overflow}->()
+            if $opts{on_overflow};
+        return;
+    }
+
+    return ($bits, 0 + $declared_width);
 }
 
 sub _hex_literal_bits_and_width ($class, $declared_width, $hex_digits, %opts) {

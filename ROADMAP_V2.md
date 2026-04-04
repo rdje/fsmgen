@@ -372,7 +372,7 @@ First shipped `R11` slice now in tree:
   - and the first bounded signal-ref binding constructor/update helpers now also live there, so the pipeline no longer hand-pairs `signal_name` and `connection_expr` when creating or rebinding structural instance bindings,
   - with normalized binding cloning/backfilling now also centralized there, so both `FSM::Composition::RealizedInstance` and structural instance-binding serialization consume the same bounded binding contract,
   - and the first bounded signal-ref binding-list ensure/set operations now also live there, so `HDLGenerator` no longer owns the low-level “reuse this binding versus append/update it” rules for structural port-binding lists,
-  - and explicit `?toplink` may now use `=open`, `=0`, `=1`, and exact-width `=N'b...` as source actuals into realized child inputs, with linked planning preserving those bindings directly instead of inventing helper nets or undeclared same-name top inputs,
+  - and explicit `?toplink` may now use `=open`, `=0`, `=1`, and exact-width `=N'b...` / `=N'd...` / `=N'h...` as source actuals into realized child inputs, with linked planning preserving those bindings directly instead of inventing helper nets or undeclared same-name top inputs,
   - and that same direct structural binding path now also covers source-side top-port `name[index]` / `name[msb:lsb]` expressions over declared top inputs when they drive realized child inputs, again without inventing helper nets or undeclared same-name top inputs,
   - and the bounded failed-run summary path now also keeps that same structural/top-expression slice honest, so blocked actual-source role failures preserve `Actual source '=...'` context, blocked actual-endpoint target failures preserve `Actual endpoint '=...'` context, and blocked top-expression range failures preserve `Top expression '...'` context under the concise `explicit actual binding` or `explicit link endpoint resolution` boundary as appropriate,
   - and the active composition-top emitter now walks that structural layer instead of re-reading only `FSM::Composition::Plan` state directly during top-module dumping.
@@ -832,9 +832,9 @@ The first honest `R11` slices are now:
   escape hatch.
 - Forward-IR note: that bounded `open` / literal actual family now also has its
   first real composition producer/consumer path: explicit `?toplink` may use
-  `=open`, `=0`, `=1`, exact-width `=N'b...`, and exact-width `=N'h...` as
-  source actuals into realized child inputs without inventing helper nets or
-  undeclared same-name top inputs.
+  `=open`, `=0`, `=1`, exact-width `=N'b...`, exact-width `=N'd...`, and
+  exact-width `=N'h...` as source actuals into realized child inputs without
+  inventing helper nets or undeclared same-name top inputs.
 - Forward-IR note: that same producer/consumer path now also covers
   source-side declared-top `bit_select` / `slice` forms such as `bus[0]` and
   `bus[7:4]`, so the already-shipped structural expression nodes now have a
@@ -842,9 +842,9 @@ The first honest `R11` slices are now:
 - Forward-IR note: that same producer/consumer path now also covers bounded
   flat source-side concat forms such as `header_bus,status_bus[0],=1,payload`
   over declared whole top-port refs, top-port bit/slice refs, and fixed-width
-  binary/hex literal actuals, so explicit `?toplink` child-input bindings can
-  now reuse the already-shipped structural `concat` node directly instead of
-  inventing carrier nets or backend-specific text escapes.
+  binary/decimal/hex literal actuals, so explicit `?toplink` child-input
+  bindings can now reuse the already-shipped structural `concat` node directly
+  instead of inventing carrier nets or backend-specific text escapes.
 - Forward-IR note: omitted/empty-`?ports` top-boundary inference now also sees
   inferable `name[index]` / `name[msb:lsb]` operands inside those bounded
   concat sources, and one remaining undeclared whole-port concat operand may

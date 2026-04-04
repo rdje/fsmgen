@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-04: exact-width decimal actuals should widen the literal family without widening the AST shape
+- Kept this in the active `R11` lane as a bounded structural-actual/runtime widening instead of introducing a fresh connection-expression node kind.
+- Landed behavior:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts exact-width decimal literal actuals such as `=8'd165` and normalizes them into the same `bit_vector_literal_expr` shape already used by binary and hex forms,
+  - that same decimal literal family now also works inside bounded source-side concat operands, so the direct actual path and the concat-operand path still share one structural literal contract,
+  - unsized decimal-like forms remain outside the active boundary, and overflowing decimal payloads now fail explicitly instead of silently truncating to the declared width,
+  - and [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t), [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t), and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now lock the widened runtime and concise-summary wording.
+- Why this is worth shipping:
+  - decimal literal actuals are a natural next user-facing widening after binary and hex, but they do not require a new backend-specific escape hatch because the planner still lowers them into the same backend-neutral bit-vector payload,
+  - it keeps the literal family honest by requiring explicit declared width and by rejecting overflow instead of silently discarding value bits,
+  - and it advances the active composition feature lane without leaning on the still-unsettled aggregate/type design questions elsewhere in `R11`.
+
 ## 2026-04-02: explicit-actual failure summaries should keep the actual token, not just the prose reason
 - Kept this in the active `R11` lane as a small contract-hardening follow-up to the shipped explicit-toplink structural-actual feature rather than treating it as a second runtime widening.
 - Landed behavior:

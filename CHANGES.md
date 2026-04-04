@@ -1,5 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-04
+### exact-width decimal actuals now share the structural literal path
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so exact-width decimal literal actuals such as `=8'd165` now normalize into the same backend-neutral `bit_vector_literal` structural binding form already used by the shipped binary and hex slices.
+- That same bounded literal widening now works both for direct explicit `?toplink` actual sources and for bounded source-side concat operands, while unsized decimal-like forms still fail explicitly and overflowing decimal payloads now fail instead of truncating silently.
+- Updated [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t), [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t), and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock the widened runtime and blocked-summary wording, including direct decimal success, decimal-overflow rejection, and the widened concat/explicit-actual concise reasons.
+
 ## 2026-04-03
 ### explicit-toplink source-side concat expressions now have a first shipped slice
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so explicit `?toplink` source-side top expressions now also accept the bounded flat comma-separated concat form used inside one `/source/target/` token, preserving those child-input bindings as typed structural `concat_expr` nodes instead of inventing carrier nets.

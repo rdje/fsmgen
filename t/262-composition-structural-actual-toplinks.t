@@ -43,6 +43,7 @@ subtest 'linked plan builder preserves literal and open toplinks as typed actual
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => "=8'b10100101", target => 'uart_tx.data_in'),
+                    FSM::Composition::Link->new(source => "=8'd165", target => 'uart_tx.decimal_data_in'),
                     FSM::Composition::Link->new(source => "=8'hA5", target => 'uart_tx.hex_data_in'),
                     FSM::Composition::Link->new(source => '=open', target => 'uart_tx.enable'),
                     FSM::Composition::Link->new(source => 'uart_tx.serial_out', target => 'serial_out'),
@@ -56,6 +57,7 @@ subtest 'linked plan builder preserves literal and open toplinks as typed actual
                 port('core_clk', 'input', 1, 'clock'),
                 port('rst_async_n', 'input', 1, 'reset'),
                 port('data_in', 'input', 8, undef),
+                port('decimal_data_in', 'input', 8, undef),
                 port('hex_data_in', 'input', 8, undef),
                 port('enable', 'input', 1, undef),
                 port('serial_out', 'output', 1, undef),
@@ -79,6 +81,12 @@ subtest 'linked plan builder preserves literal and open toplinks as typed actual
         $bindings{data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
         'literal explicit toplink becomes a typed bit-vector actual binding',
+    );
+    is($bindings{decimal_data_in}{signal_name} // '', '', 'decimal literal actual binding does not invent a flat signal mirror');
+    is_deeply(
+        $bindings{decimal_data_in}{connection_expr},
+        bit_vector_literal_expr('10100101'),
+        'decimal literal explicit toplink becomes the same typed bit-vector actual binding',
     );
     is($bindings{hex_data_in}{signal_name} // '', '', 'hex literal actual binding does not invent a flat signal mirror');
     is_deeply(
@@ -111,6 +119,7 @@ subtest 'pipeline and CLI emit structural literal and open actuals for explicit 
   (?rtl:uart_tx)
   (?toplink:wiring
     /=8'b10100101/uart_tx.data_in/
+    /=8'd165/uart_tx.decimal_data_in/
     /=8'hA5/uart_tx.hex_data_in/
     /=open/uart_tx.enable/
     /uart_tx.serial_out/serial_out/
@@ -121,6 +130,7 @@ subtest 'pipeline and CLI emit structural literal and open actuals for explicit 
   core_clk:clock
   rst_async_n:reset
   data_in<8:data
+  decimal_data_in<8:data
   hex_data_in<8:data
   enable:data
   serial_out>:data
@@ -146,6 +156,11 @@ FSM
         'pipeline preserves the typed literal actual binding in the realized composition plan',
     );
     is_deeply(
+        $bindings{decimal_data_in}{connection_expr},
+        bit_vector_literal_expr('10100101'),
+        'pipeline preserves the typed decimal literal actual binding in the realized composition plan',
+    );
+    is_deeply(
         $bindings{hex_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
         'pipeline preserves the typed hex literal actual binding in the realized composition plan',
@@ -158,6 +173,7 @@ FSM
 
     my $hdl = $result->{hdl_code};
     like($hdl, qr/\.data_in\(8'b10100101\)/, 'generated HDL emits the literal actual directly on the child port');
+    like($hdl, qr/\.decimal_data_in\(8'b10100101\)/, 'generated HDL emits the decimal literal actual directly on the child port');
     like($hdl, qr/\.hex_data_in\(8'b10100101\)/, 'generated HDL emits the hex literal actual directly on the child port');
     like($hdl, qr/\.enable\(\)/, 'generated HDL emits the open actual directly on the child port');
     unlike($hdl, qr/\bwire\s+comp_link_/s, 'generated HDL does not invent synthetic carrier nets for pure actual bindings');
@@ -242,7 +258,7 @@ subtest 'linked plan builder rejects actual endpoints as explicit link targets' 
 
     like(
         $exception,
-        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open' and exact-width binary or hex literal actuals as link sources into realized child input ports/s,
+        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open' and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports/s,
         'builder blocks actual endpoints from appearing as explicit link targets',
     );
 };
@@ -259,7 +275,7 @@ subtest 'linked plan builder rejects unsupported actual literal forms' => sub {
                 FSM::Composition::TopLink->new(
                 name => 'wiring',
                 links => [
-                    FSM::Composition::Link->new(source => "=8'd170", target => 'uart_tx.data_in'),
+                    FSM::Composition::Link->new(source => '=170', target => 'uart_tx.data_in'),
                 ],
             ),
         ],
@@ -279,8 +295,45 @@ subtest 'linked plan builder rejects unsupported actual literal forms' => sub {
 
     like(
         $exception,
-        qr/uses actual endpoint '=8'd170', .*currently accepts only '=open', '=0', '=1', or exact-width binary\/hex literal forms like '=8'b10100101' or '=8'hA5'/s,
-        'builder keeps the first structural-actual slice limited to open and bounded binary/hex literal sources',
+        qr/uses actual endpoint '=170', .*currently accepts only '=open', '=0', '=1', or exact-width binary\/decimal\/hex literal forms like '=8'b10100101', '=8'd165', or '=8'hA5'/s,
+        'builder keeps the first structural-actual slice limited to open and bounded binary/decimal/hex literal sources',
+    );
+};
+
+subtest 'linked plan builder rejects decimal actuals whose value exceeds the declared width' => sub {
+    my $exception = eval {
+        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+            lane => 'C3',
+            composition_spec => composition_spec('blocked_decimal_actual_width_top'),
+            top => FSM::Composition::Top->new(name => 'blocked_decimal_actual_width_top'),
+            ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
+            ports => [],
+            toplinks => [
+                FSM::Composition::TopLink->new(
+                    name => 'wiring',
+                    links => [
+                        FSM::Composition::Link->new(source => "=8'd256", target => 'uart_tx.data_in'),
+                    ],
+                ),
+            ],
+            realized_instances => [
+                realized_instance(
+                    'rtl',
+                    'uart_tx',
+                    port('data_in', 'input', 8, undef),
+                ),
+            ],
+            fsm_file => 'blocked_decimal_actual_width_top.fsm',
+            header => 'blocked_decimal_actual_width_top',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/uses actual literal '=8'd256', .*declared decimal width cannot represent the literal payload value/s,
+        'builder rejects decimal actuals whose numeric value does not fit the declared width',
     );
 };
 
