@@ -6199,3 +6199,18 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `=1_70`, `=0o2_45`, `=A_5`, `=8'd1_65`, and `=8'hA_5`, while keeping the
   same normalized numeric value and the same direct-vs-concat support
   boundary.
+- Explicit `?toplink` wiring may now also use source-side child-output
+  bit/slice expressions such as `producer.payload[7:4]` and
+  `producer.payload[0]` when the target is a realized child input or a
+  declared top output.
+- `FSM::Composition::LinkedPlanBuilder` now groups those projected child
+  sources by one deterministic base child-output carrier and then binds typed
+  `bit_select_expr` / `slice_expr` projections off that shared carrier for
+  sibling child-input consumers and direct top-output assignments instead of
+  inventing per-projection helper nets.
+- `FSM::Composition::TopPortInferenceBuilder`,
+  `FSM::Composition::ProvenanceReportBuilder`, and
+  `FSM::Composition::FailureReportBuilder` now also treat those source-side
+  child expressions as first-class explicit links, so omitted-port same-name
+  inference no longer duplicates them and blocked range failures keep concise
+  `Child expression '...'` summary context.

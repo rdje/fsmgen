@@ -217,6 +217,8 @@ sub context_excerpt ($class, $summary_text) {
         [ qr/contains multiple embedded '(\?rtlif:[^']+)' roots/s, sub { return ('RTL root', "'$_[0]'"); } ],
         [ qr/does not contain a '(\?rtlif:[^']+)' root/s, sub { return ('RTL root', "'$_[0]'"); } ],
         [ qr/under '(\?rtlif:[^']+)'/s, sub { return ('RTL root', "'$_[0]'"); } ],
+        [ qr/references child expression '([^']+)'/s, sub { return ('Child expression', "'$_[0]'"); } ],
+        [ qr/uses child expression '([^']+)'/s, sub { return ('Child expression', "'$_[0]'"); } ],
         [ qr/references child endpoint '([^']+)'/s, sub { return ('Child endpoint', "'$_[0]'"); } ],
         [ qr/uses child endpoint '([^']+)'/s, sub { return ('Child endpoint', "'$_[0]'"); } ],
         [ qr/(?:uses )?top expression '([^']+)'/s, sub { return ('Top expression', "'$_[0]'"); } ],

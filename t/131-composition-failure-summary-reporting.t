@@ -3323,6 +3323,74 @@ RTLIF
     );
 };
 
+subtest 'pipeline keeps child-expression context for blocked child-expression range failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'child_expression_failure_summary_top.fsm');
+    my $producer_metadata_path = File::Spec->catfile($tempdir, 'producer.rtlif');
+    my $consumer_metadata_path = File::Spec->catfile($tempdir, 'consumer.rtlif');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:child_expression_failure_summary_top
+  (?ports:public_io
+    top_flag>
+  )
+  (?rtl:producer)
+  (?rtl:consumer)
+  (?toplink:wiring
+    /producer.payload[8]/consumer.enable/
+  )
+)
+FSM
+    );
+
+    write_file(
+        $producer_metadata_path,
+        <<'RTLIF'
+(?rtlif:producer
+  payload>8:data
+)
+RTLIF
+    );
+
+    write_file(
+        $consumer_metadata_path,
+        <<'RTLIF'
+(?rtlif:consumer
+  enable:data
+)
+RTLIF
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked child-expression range failures');
+    is($report->{top_name}, 'child_expression_failure_summary_top', 'failure report preserves the top name for blocked child-expression range failures');
+    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked child-expression range failures');
+    is($report->{context_label}, 'Child expression', 'failure report classifies blocked child-expression range failures as child-expression context');
+    is($report->{context_value}, "'producer.payload[8]'", 'failure report preserves the blocked child-expression token');
+    is($report->{context_summary}, "Child expression 'producer.payload[8]'", 'failure report exposes a concise child-expression summary');
+    is($report->{blocked_boundary}, 'explicit link endpoint resolution', 'failure report preserves the blocked endpoint-resolution boundary for child-expression range failures');
+    is(
+        $report->{blocked_reason},
+        "bit index 8 falls outside declared width 8 of child endpoint 'producer.payload'",
+        'failure report preserves the concise child-expression range reason',
+    );
+};
+
 subtest 'pipeline keeps concat top-expression context for blocked omitted-port concat-width inference failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'top_concat_inference_failure_summary_top.fsm');
@@ -5555,6 +5623,72 @@ RTLIF
         $combined_output,
         qr/Reason:\s+concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
         'CLI reports the concise concat-operand top-expression reason',
+    );
+};
+
+subtest 'CLI prints child-expression context in blocked child-expression range summaries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'child_expression_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'child_expression_failure_summary_cli_top.sv');
+    my $producer_metadata_path = File::Spec->catfile($tempdir, 'producer.rtlif');
+    my $consumer_metadata_path = File::Spec->catfile($tempdir, 'consumer.rtlif');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:child_expression_failure_summary_cli_top
+  (?ports:public_io
+    top_flag>
+  )
+  (?rtl:producer)
+  (?rtl:consumer)
+  (?toplink:wiring
+    /producer.payload[8]/consumer.enable/
+  )
+)
+FSM
+    );
+
+    write_file(
+        $producer_metadata_path,
+        <<'RTLIF'
+(?rtlif:producer
+  payload>8:data
+)
+RTLIF
+    );
+
+    write_file(
+        $consumer_metadata_path,
+        <<'RTLIF'
+(?rtlif:consumer
+  enable:data
+)
+RTLIF
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked child-expression range composition fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked child-expression range fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for child-expression range failures');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked child-expression range failures');
+    like($combined_output, qr/Context:\s+Child expression 'producer\.payload\[8\]'/s, 'CLI reports the blocked child expression as summary context');
+    like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for child-expression range failures');
+    like(
+        $combined_output,
+        qr/Reason:\s+bit index 8 falls outside declared width 8 of child endpoint 'producer\.payload'/s,
+        'CLI reports the concise child-expression range reason',
     );
 };
 

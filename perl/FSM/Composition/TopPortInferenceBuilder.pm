@@ -122,7 +122,8 @@ sub augment_from_explicit_links ($class, %args) {
                 };
             }
 
-            if ($target_is_top && !$declared_by_name{$target_top_name} && $source =~ /^\w+\.\w+$/) {
+            my $source_child_expr_spec = FSM::Composition::LinkedPlanBuilder->child_expression_spec($source);
+            if ($target_is_top && !$declared_by_name{$target_top_name} && ($source =~ /^\w+\.\w+$/ || $source_child_expr_spec)) {
                 my $child_endpoint = FSM::Composition::LinkedPlanBuilder->resolve_endpoint(
                     $source,
                     {},
@@ -130,6 +131,7 @@ sub augment_from_explicit_links ($class, %args) {
                     \%child_ports_by_instance,
                     $fsm_file,
                     $header,
+                    allow_child_expression_source => 1,
                 );
                 $class->_record_inferred_top_port(
                     \%inferred_specs,
@@ -207,6 +209,7 @@ sub augment_undeclared_top_inputs ($class, %args) {
             my ($target_port_name) = $target =~ /^\w+\.(\w+)$/;
             next unless defined $target_port_name;
             my $source_is_child_endpoint = $source =~ /^\w+\.\w+$/;
+            my $source_is_child_expression = defined FSM::Composition::LinkedPlanBuilder->child_expression_spec($source);
             my $source_is_actual = $source =~ /^=/;
             my ($source_top_port_name) = $source =~ /^(\w+)$/;
             my $source_top_expr_spec = FSM::Composition::LinkedPlanBuilder->top_expression_spec($source);
@@ -218,7 +221,7 @@ sub augment_undeclared_top_inputs ($class, %args) {
                 $same_name_undeclared_top_input_links{$target_port_name} = 1;
                 next;
             }
-            next unless $source_is_child_endpoint || $source_is_declared_top_port || $source_is_declared_top_expr || $source_is_top_expression || $source_is_actual;
+            next unless $source_is_child_endpoint || $source_is_child_expression || $source_is_declared_top_port || $source_is_declared_top_expr || $source_is_top_expression || $source_is_actual;
             $explicitly_linked_child_input_names{$target_port_name} = 1;
         }
     }
@@ -293,8 +296,14 @@ sub augment_undeclared_top_outputs ($class, %args) {
     for my $toplink (@$toplinks) {
         for my $link (@{$toplink->links || []}) {
             my $source = $link->source || '';
-            next unless $source =~ /^(\w+)\.(\w+)$/;
-            $explicitly_linked_child_output_endpoints{"$1.$2"} = 1;
+            if ($source =~ /^(\w+)\.(\w+)$/) {
+                $explicitly_linked_child_output_endpoints{"$1.$2"} = 1;
+                next;
+            }
+
+            if (my $base_endpoint = FSM::Composition::LinkedPlanBuilder->child_expression_base_endpoint($source)) {
+                $explicitly_linked_child_output_endpoints{$base_endpoint} = 1;
+            }
         }
     }
 

@@ -341,11 +341,12 @@ sub build_block_events ($class, %args) {
         my ($target_instance, $target_port_name) = $target =~ /^(\w+)\.(\w+)$/;
         if (defined $target_port_name) {
             my $source_is_child_endpoint = $source =~ /^\w+\.\w+$/;
+            my $source_is_child_expression = defined FSM::Composition::LinkedPlanBuilder->child_expression_spec($source);
             my $source_is_declared_top_port = exists $declared_top_ports{$source};
             my $source_top_expr_port_name = FSM::Composition::LinkedPlanBuilder->top_expression_base_port_name($source);
             my $source_is_declared_top_expr = defined($source_top_expr_port_name) && exists $declared_top_ports{$source_top_expr_port_name};
             my $source_is_actual = $source =~ /^=/;
-            if ($source_is_child_endpoint || $source_is_declared_top_port || $source_is_declared_top_expr || $source_is_actual) {
+            if ($source_is_child_endpoint || $source_is_child_expression || $source_is_declared_top_port || $source_is_declared_top_expr || $source_is_actual) {
                 $explicitly_linked_child_input_names{$target_port_name} = 1;
             }
         }
@@ -353,6 +354,8 @@ sub build_block_events ($class, %args) {
         my ($source_instance, $source_port_name) = $source =~ /^(\w+)\.(\w+)$/;
         if (defined $source_port_name) {
             $explicitly_linked_child_output_endpoints{"$source_instance.$source_port_name"} = 1;
+        } elsif (my $base_endpoint = FSM::Composition::LinkedPlanBuilder->child_expression_base_endpoint($source)) {
+            $explicitly_linked_child_output_endpoints{$base_endpoint} = 1;
         }
     }
 
@@ -498,6 +501,28 @@ sub endpoint_context ($class, %args) {
         }
     }
 
+    if (my $child_expr_spec = FSM::Composition::LinkedPlanBuilder->child_expression_spec($endpoint)) {
+        my $base_endpoint = FSM::Composition::LinkedPlanBuilder->child_expression_base_endpoint($endpoint);
+        my $base_context = $class->endpoint_context(
+            %args,
+            endpoint => $base_endpoint,
+        );
+
+        if (($base_context->{kind} || '') eq 'child_endpoint') {
+            my $width = ($child_expr_spec->{expr_kind} || '') eq 'bit_select'
+                ? 1
+                : abs(($child_expr_spec->{msb} || 0) - ($child_expr_spec->{lsb} || 0)) + 1;
+
+            return {
+                %$base_context,
+                kind => 'child_expression',
+                endpoint => $endpoint,
+                base_endpoint => $base_endpoint,
+                width => $width,
+            };
+        }
+    }
+
     my ($instance_name, $port_name) = $endpoint =~ /^(\w+)\.(\w+)$/;
     return {
         kind => 'raw_endpoint',
@@ -557,6 +582,24 @@ sub endpoint_example_label ($class, $context, $fallback = undef) {
 
     if (($context->{kind} || '') eq 'top_expression') {
         return $context->{endpoint} || $fallback || '';
+    }
+
+    if (($context->{kind} || '') eq 'child_expression') {
+        my $root_kind = $context->{source_root_kind} || 'unknown_root';
+        my @details = ('?' . $root_kind);
+
+        if ($root_kind eq 'fsm') {
+            push @details, 'states: ' . ($context->{regular_state_count} || 0);
+        } elsif ($root_kind eq 'dt') {
+            push @details, 'blocks: ' . ($context->{standalone_dt_count} || 0);
+        }
+
+        if ($root_kind eq 'fsm' || $root_kind eq 'dt') {
+            push @details, 'output drive families: ' . ($context->{output_drive_family_count} || 0);
+        }
+
+        return ($context->{endpoint} || $fallback || 'unknown_endpoint')
+            . ' (' . join(', ', @details) . ')';
     }
 
     if (($context->{kind} || '') eq 'child_endpoint') {

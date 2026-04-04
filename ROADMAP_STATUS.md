@@ -1311,6 +1311,11 @@ Done:
   - explicit-link `C2` / `C3` source-side top-port bit/slice and bounded concat expressions may now drive declared top outputs directly through explicit top-output assignments,
   - sibling child-input consumers may still reuse those same typed top expressions in the same top without synthetic carrier nets,
   - and direct scalar `=0` / `=1`, unsized binary/decimal/octal/hex direct actuals, plus exact-width literal actual sources may now also drive declared top outputs through those same explicit top-output assignments, while `=open` remains the narrower child-input-only sibling.
+- That same source-side projected-expression family now also covers child outputs:
+  - explicit-link `C2` / `C3` source-side child-output bit/slice expressions such as `producer.payload[7:4]` and `producer.payload[0]` may now drive realized child inputs or declared top outputs directly,
+  - those projected child-output sources now share one deterministic base carrier for the underlying child output instead of inventing one helper net per projected use,
+  - sibling child-input consumers and direct top-output assignments now both bind typed projected expressions from that same shared base carrier,
+  - and blocked projected-child range failures now keep concise `Child expression '...'` summary context under the existing blocked endpoint-resolution boundary instead of leaving that token only in raw exception text.
 - That same first structural-actual slice now also covers unsized binary/decimal/octal/hex direct actuals plus exact-width decimal, octal, and hex literals:
   - explicit-link `C2` / `C3` child-input bindings may now use `=N'd...`, `=N'o...`, and `=N'h...` direct actual sources beside the already-shipped binary forms,
   - direct scalar `=0` / `=1` actuals plus unsized binary/decimal/octal/hex direct actuals such as `=0b10100101`, `=0d170`, `=0o245`, `=0xA5`, `=170`, and `=A5` now also widen to the direct binding target width for realized child inputs and declared top outputs instead of acting like accidental one-bit-only direct sources or unsupported unsized values,
@@ -1349,6 +1354,10 @@ Done:
 - [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t) now locks:
   - end-to-end pipeline and CLI emission for direct top-expression top-output assignments,
   - including bounded concat top-expression rendering through explicit top-output assignments.
+- [t/271-composition-child-source-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/271-composition-child-source-expressions.t) now locks:
+  - linked-plan preservation of projected child-output bindings through one deterministic shared base carrier,
+  - end-to-end pipeline and CLI emission of child-output bit/slice sources on child-input and direct top-output paths,
+  - and blocked out-of-range child-expression rejection.
 - [t/177-composition-top-port-inference-builder.t](/Users/richarddje/Documents/github/fsmgen/t/177-composition-top-port-inference-builder.t) now also locks:
   - direct inference of undeclared top inputs from inferable concat top-expression operands,
   - residual-width inference for one undeclared whole-port concat operand,
@@ -1357,8 +1366,12 @@ Done:
   - RTL-backed `C3` success with one undeclared whole-port concat operand inferred from the child-input target width.
 - [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now also locks:
   - `Top expression '...'` summary context for blocked concat-operand failures,
+  - `Child expression '...'` summary context for blocked projected-child range failures,
   - the same summary context plus concise reason for blocked omitted-port concat-width inference failures,
   - and widened concise-reason wording for the binary/decimal/octal/hex literal actual family.
+- [t/179-composition-provenance-report-builder.t](/Users/richarddje/Documents/github/fsmgen/t/179-composition-provenance-report-builder.t) now also locks:
+  - first-class provenance context for source-side child-output expressions,
+  - including preserved base endpoint and projected width metadata.
 - The next convention-first top-boundary refinement is now also shipped:
   - explicit-link `C2` / `C3` plain explicit top inputs may now adopt same-name fanout convention when compatible child inputs still agree exactly on direction, width, and type metadata,
   - explicit-link `C2` / `C3` plain explicit top outputs may now adopt one unique same-name top-facing child output when that child-side evidence is still exact,
@@ -1571,8 +1584,10 @@ Left:
 Exit criteria:
 - VHDL is a real, tested backend for the agreed scope rather than a recognized-but-unimplemented target.
 - `R11`: `StructuralRTLIR` connection expressions now cover bounded indexed and
-  sliced signal forms in addition to plain `signal_ref`, with the composition
-  emitter walking those typed forms through the current Verilog-family backend.
+  sliced signal forms in addition to plain `signal_ref`, including explicit
+  top-link source-side top-port and child-output projection forms, with the
+  composition emitter walking those typed forms through the current
+  Verilog-family backend.
 - `R11`: `StructuralRTLIR` connection expressions now also cover bounded concat
   forms over nested operands, with the composition emitter walking those typed
   actual-connection nodes directly through the current Verilog-family backend.
@@ -1600,6 +1615,11 @@ Exit criteria:
   source actuals (`=open`, `=0`, `=1`, and exact-width `=N'b...` /
   `=N'd...` / `=N'o...` / `=N'h...`) binding directly into realized child inputs instead
   of going through fake carrier nets or fake undeclared top ports.
+- `R11`: that same direct composition binding path now also covers
+  source-side child-output `instance.port[index]` / `instance.port[msb:lsb]`
+  projections, with planner grouping by one deterministic base child-output
+  carrier and binding typed projected expressions off that carrier for child
+  inputs and top outputs instead of inventing per-projection helper nets.
 - `R11`: `StructuralRTLIR` connection expressions now also cover bounded
   `member_access` actuals, so the structural connection AST has started the
   richer aggregate/member connectivity lane without falling back to raw HDL

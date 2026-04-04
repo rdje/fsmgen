@@ -142,12 +142,22 @@ FSM
         intent_hir => $result->{intent_hir},
         target_language => 'systemverilog',
     );
+    my $child_expr_context = FSM::Composition::ProvenanceReportBuilder->endpoint_context(
+        composition_plan => $result->{composition_plan},
+        endpoint => 'producer.serial_payload[7:0]',
+        structural_rtl_ir => $result->{structural_rtl_ir},
+        intent_hir => $result->{intent_hir},
+        target_language => 'systemverilog',
+    );
 
     is($top_context->{kind}, 'top_port', 'builder projects top-port provenance context directly');
     is($top_context->{direction}, 'output', 'top-port context keeps structural direction metadata');
     is($child_context->{kind}, 'child_endpoint', 'builder projects child-endpoint provenance context directly');
     is($child_context->{source_root_kind}, 'dt', 'child-endpoint context keeps recovered source-root kind');
     is($child_context->{width}, 8, 'child-endpoint context keeps structural width metadata');
+    is($child_expr_context->{kind}, 'child_expression', 'builder projects child-expression provenance context directly');
+    is($child_expr_context->{width}, 8, 'child-expression context keeps the projected structural width');
+    is($child_expr_context->{base_endpoint}, 'producer.serial_payload', 'child-expression context keeps the base child endpoint');
 };
 
 done_testing();

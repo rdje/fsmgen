@@ -374,7 +374,8 @@ First shipped `R11` slice now in tree:
   - and the first bounded signal-ref binding-list ensure/set operations now also live there, so `HDLGenerator` no longer owns the low-level “reuse this binding versus append/update it” rules for structural port-binding lists,
   - and explicit `?toplink` may now use `=open`, scalar `=0` / `=1`, unsized binary/decimal/octal/hex direct forms such as `=0b10`, `=0d10`, `=0o7`, `=0xA`, `=170`, or `=A5`, underscore-separated spellings such as `=0b1010_0101`, `=1_70`, `=0o2_45`, and `=8'hA_5`, and exact-width `=N'b...` / `=N'd...` / `=N'o...` / `=N'h...` as source actuals, with `=open` still targeting realized child inputs only while direct scalar `=0` / `=1` plus unsized binary/decimal/octal/hex direct actuals widen to the realized child-input or declared top-output target width, exact-width literal actuals may now also drive declared top outputs, and linked planning preserves those bindings directly instead of inventing helper nets or undeclared same-name top inputs,
   - and that same direct structural binding path now also covers source-side top-port `name[index]` / `name[msb:lsb]` expressions over declared top inputs when they drive realized child inputs, again without inventing helper nets or undeclared same-name top inputs,
-  - and the bounded failed-run summary path now also keeps that same structural/top-expression slice honest, so blocked actual-source role failures preserve `Actual source '=...'` context, blocked actual-endpoint target failures preserve `Actual endpoint '=...'` context, and blocked top-expression range failures preserve `Top expression '...'` context under the concise `explicit actual binding` or `explicit link endpoint resolution` boundary as appropriate,
+  - and that same direct structural binding path now also covers source-side child-output `instance.port[index]` / `instance.port[msb:lsb]` expressions when they drive realized child inputs or declared top outputs, with linked planning grouping those projected-child uses by one deterministic base carrier instead of inventing per-projection helper nets,
+  - and the bounded failed-run summary path now also keeps that same structural/top-expression slice honest, so blocked actual-source role failures preserve `Actual source '=...'` context, blocked actual-endpoint target failures preserve `Actual endpoint '=...'` context, blocked top-expression range failures preserve `Top expression '...'` context, and blocked child-expression range failures preserve `Child expression '...'` context under the concise `explicit actual binding` or `explicit link endpoint resolution` boundary as appropriate,
   - and the active composition-top emitter now walks that structural layer instead of re-reading only `FSM::Composition::Plan` state directly during top-module dumping.
 - The next structural widening step is now also shipped:
   - direct generated `?fsm` / `?dt` results now expose a bounded structural module-interface slice through `structural_rtl_ir`,
@@ -803,8 +804,10 @@ The first honest `R11` slices are now:
   - and only keep stacking consolidation slices when the next feature is still materially blocked by that cleanup.
 - Forward-IR note: `StructuralRTLIR` actual-connection nodes are now wider than
   plain signal references; the current bounded family includes indexed and
-  sliced signal forms, while keeping rendering deliberately scoped to the
-  current Verilog-family backend until broader backend support is designed.
+  sliced signal forms, including explicit-toplink source-side top-port and
+  child-output projections, while keeping rendering deliberately scoped to
+  the current Verilog-family backend until broader backend support is
+  designed.
 - Forward-IR note: that bounded `StructuralRTLIR` actual-connection family now
   also includes concatenation over nested operands, so the structural emitter
   is beginning to walk a richer backend-neutral binding AST instead of only

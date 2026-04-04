@@ -8132,3 +8132,49 @@ It is an exact-delay pulse request:
 - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t)
   now also locks a separated exact-width literal operand through the bounded
   concat path.
+
+## 2026-04-04: source-side child-output expressions now share the typed explicit-link path
+- Continued the active `R11` feature lane by widening the shipped
+  source-expression family instead of adding another raw-string escape hatch.
+- The widened projected-child slice is now in tree:
+  - explicit `?toplink` sources may now use child-output bit/slice forms such
+    as `producer.payload[7:4]` and `producer.payload[0]`,
+  - those projected child-output sources may now drive realized child inputs
+    or declared top outputs,
+  - and the live contract stays bounded to source-side child-output
+    `instance.port[index]` and `instance.port[msb:lsb]` forms rather than
+    opening arbitrary child-side expressions.
+- The planner/reporting contract is now honest for that slice:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    now resolves child-output bit/slice endpoints directly, groups them by
+    one deterministic base child-output carrier, and binds typed projected
+    expressions off that carrier for sibling child-input consumers and direct
+    top-output assignments,
+  - [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm)
+    now treats those child-expression sources as explicit links too, so
+    omitted/empty-`?ports` same-name inference no longer tries to re-drive
+    those same child-input or top-output families accidentally,
+  - [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm)
+    now surfaces first-class `child_expression` context with the preserved
+    base endpoint and projected width,
+  - and [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm)
+    now keeps concise `Child expression '...'` summary context for blocked
+    projected-child range failures.
+- [t/271-composition-child-source-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/271-composition-child-source-expressions.t)
+  now locks:
+  - linked-plan preservation of projected child-output bindings through one
+    deterministic base carrier,
+  - end-to-end pipeline and CLI emission of child-output bit/slice sources on
+    sibling child-input and direct top-output paths,
+  - and blocked out-of-range child-expression rejection.
+- [t/113-composition-endpoint-shape-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/113-composition-endpoint-shape-diagnostics.t)
+  now also locks the widened unsupported-endpoint wording for source-side
+  child-output bit/slice expressions.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t)
+  now also locks:
+  - pipeline and CLI `Child expression 'producer.payload[8]'` summary
+    context for blocked projected-child range failures.
+- [t/179-composition-provenance-report-builder.t](/Users/richarddje/Documents/github/fsmgen/t/179-composition-provenance-report-builder.t)
+  now also locks:
+  - first-class provenance context for projected child-output endpoints,
+  - including preserved base endpoint and projected width metadata.
