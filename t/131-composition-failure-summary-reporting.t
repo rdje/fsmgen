@@ -3469,7 +3469,7 @@ RTLIF
     is($report->{blocked_boundary}, 'explicit link endpoint resolution', 'failure report preserves the blocked endpoint-resolution boundary for concat-operand failures');
     is(
         $report->{blocked_reason},
-        "concat operands currently accept only top-port names, top-port bit/slice forms, and fixed-width literal actuals like '=4'b1010'",
+        "concat operands currently accept only top-port names, top-port bit/slice forms, and fixed-width literal actuals like '=4'b1010' or '=4'hA'",
         'failure report preserves the concise concat-operand top-expression reason',
     );
 };
@@ -3646,7 +3646,7 @@ RTLIF
     is($report->{blocked_boundary}, 'explicit actual binding', 'failure report preserves the blocked explicit-actual boundary for target failures');
     is(
         $report->{blocked_reason},
-        "the first structural-actual slice only allows '=open' and binary literal actuals as link sources into realized child input ports",
+        "the first structural-actual slice only allows '=open' and exact-width binary or hex literal actuals as link sources into realized child input ports",
         'failure report preserves the concise explicit-actual target reason',
     );
 };
@@ -5704,7 +5704,7 @@ RTLIF
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for concat-operand failures');
     like(
         $combined_output,
-        qr/Reason:\s+concat operands currently accept only top-port names, top-port bit\/slice forms, and fixed-width literal actuals like '=4'b1010'/s,
+        qr/Reason:\s+concat operands currently accept only top-port names, top-port bit\/slice forms, and fixed-width literal actuals like '=4'b1010' or '=4'hA'/s,
         'CLI reports the concise concat-operand top-expression reason',
     );
 };
@@ -5875,7 +5875,7 @@ RTLIF
     like($combined_output, qr/Blocked boundary:\s+explicit actual binding/s, 'CLI reports the blocked explicit-actual boundary for target failures');
     like(
         $combined_output,
-        qr/Reason:\s+the first structural-actual slice only allows '=open' and binary literal actuals as link sources into realized child input ports/s,
+        qr/Reason:\s+the first structural-actual slice only allows '=open' and exact-width binary or hex literal actuals as link sources into realized child input ports/s,
         'CLI reports the concise explicit-actual target reason',
     );
 };

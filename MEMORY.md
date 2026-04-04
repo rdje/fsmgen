@@ -6063,3 +6063,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   also be sized exactly from the child-input target remainder width while
   several still-unsized whole-port operands continue to fail explicitly
   instead of guessing several widths at once.
+- The same bounded structural-actual literal family now also covers exact-
+  width hex forms such as `=8'hA5` for both direct actual sources and concat
+  operands, with those literals normalized into the same structural
+  bit-vector form instead of introducing a second backend-specific literal
+  node.

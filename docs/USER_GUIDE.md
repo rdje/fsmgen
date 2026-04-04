@@ -200,7 +200,7 @@ Combinational DT note:
 - Explicit `(?toplink:name ...)` blocks with flat `/source/target/` tokens
 - Source-side top-port bit/slice `?toplink` expressions such as `payload_bus[15:8]` and `status_bus[0]` when the target is a realized child input
 - Source-side flat concat `?toplink` expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/uart_tx.data_in/` when the target is a realized child input
-- Explicit `?toplink` source actuals `=open`, `=0`, `=1`, and exact-width binary literals such as `=8'b10100101` when the target is a realized child input
+- Explicit `?toplink` source actuals `=open`, `=0`, `=1`, and exact-width binary/hex literals such as `=8'b10100101` or `=8'hA5` when the target is a realized child input
 - Dotted child endpoints in links, for example `/producer.output_data/consumer.input_data/`
 - `C1` lane: one `?top`, one child (`?fsmc`, `?dtc`, or `?rtl`), explicit `?ports`, deterministic same-name top wiring
 - `C2` lane: multiple generated children (`?fsmc` / `?dtc`) plus explicit `?toplink` wiring and deterministic internal nets
@@ -976,10 +976,10 @@ Current narrow structural-actual explicit-link example:
 ```
 
 This currently works because:
-- `=8'b10100101` is a bounded literal actual source, not a top port,
+- `=8'b10100101` or `=8'hA5` is a bounded literal actual source, not a top port,
 - `=open` is a bounded open actual source that leaves the child formal intentionally unconnected,
 - explicit actual sources may currently target only realized child input ports,
-- binary literal actuals must still match the target child-input width exactly,
+- binary/hex literal actuals must still match the target child-input width exactly,
 - and those actuals bind directly on the realized child port instead of inventing a top port or synthetic carrier net.
 
 Current narrow top-concat explicit-link example:
@@ -1003,7 +1003,7 @@ Current narrow top-concat explicit-link example:
 
 This currently works because:
 - the `/source/target/` token still stays flat, but the source side may now be one bounded comma-separated concat expression,
-- concat operands may currently be declared whole top-port refs, top-port bit/slice refs, or fixed-width literal actuals,
+- concat operands may currently be declared whole top-port refs, top-port bit/slice refs, or fixed-width binary/hex literal actuals,
 - that concat still stays source-side only,
 - it still targets a realized child input port only,
 - and the emitted child binding uses the direct HDL concat instead of inventing a synthetic carrier net.

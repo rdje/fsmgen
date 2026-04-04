@@ -7870,3 +7870,39 @@ It is an exact-delay pulse request:
   now also locks:
   - the concise blocked-boundary/context/reason summary for the several-
     unknown omitted-port concat-width failure.
+
+## 2026-04-04: exact-width hex actuals now share the structural literal path
+- Continued the active `R11` feature lane by widening the already-shipped
+  literal actual family instead of introducing a new connection-expression
+  shape.
+- The widened bounded literal slice is now in tree:
+  - explicit `?toplink` actual sources may now use exact-width hex literals
+    such as `=8'hA5` beside the already-shipped binary forms,
+  - the same exact-width hex literal family now also works inside bounded
+    source-side concat operands,
+  - unsupported decimal-like literal spellings still fail explicitly through
+    the bounded-literal wording,
+  - and overflowing hex payloads now fail explicitly instead of silently
+    truncating to the declared width.
+- The planner/reporting contract is now honest for that slice:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    now normalizes accepted hex literals into the same structural
+    `bit_vector_literal_expr` form used by the binary slice,
+  - direct actual bindings and concat-literal operands therefore stay on the
+    same backend-neutral structural path instead of adding a second literal
+    node family,
+  - and the blocked wording now consistently says `binary or hex` where the
+    widened literal family is the real contract.
+- [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t)
+  now also locks:
+  - direct linked-plan and end-to-end pipeline/CLI success for exact-width
+    hex actual sources,
+  - blocked unsupported decimal-like actual rejection,
+  - and blocked overflowing hex-literal rejection.
+- [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t)
+  now also locks:
+  - bounded source-side concat success with a normalized hex literal operand.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t)
+  now also locks:
+  - the widened concise binary/hex literal reason text in the blocked
+    explicit-actual and concat-operand summary families.

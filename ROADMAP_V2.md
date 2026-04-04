@@ -832,9 +832,9 @@ The first honest `R11` slices are now:
   escape hatch.
 - Forward-IR note: that bounded `open` / literal actual family now also has its
   first real composition producer/consumer path: explicit `?toplink` may use
-  `=open`, `=0`, `=1`, and exact-width `=N'b...` as source actuals into
-  realized child inputs without inventing helper nets or undeclared same-name
-  top inputs.
+  `=open`, `=0`, `=1`, exact-width `=N'b...`, and exact-width `=N'h...` as
+  source actuals into realized child inputs without inventing helper nets or
+  undeclared same-name top inputs.
 - Forward-IR note: that same producer/consumer path now also covers
   source-side declared-top `bit_select` / `slice` forms such as `bus[0]` and
   `bus[7:4]`, so the already-shipped structural expression nodes now have a
@@ -842,9 +842,9 @@ The first honest `R11` slices are now:
 - Forward-IR note: that same producer/consumer path now also covers bounded
   flat source-side concat forms such as `header_bus,status_bus[0],=1,payload`
   over declared whole top-port refs, top-port bit/slice refs, and fixed-width
-  literal actuals, so explicit `?toplink` child-input bindings can now reuse
-  the already-shipped structural `concat` node directly instead of inventing
-  carrier nets or backend-specific text escapes.
+  binary/hex literal actuals, so explicit `?toplink` child-input bindings can
+  now reuse the already-shipped structural `concat` node directly instead of
+  inventing carrier nets or backend-specific text escapes.
 - Forward-IR note: omitted/empty-`?ports` top-boundary inference now also sees
   inferable `name[index]` / `name[msb:lsb]` operands inside those bounded
   concat sources, and one remaining undeclared whole-port concat operand may

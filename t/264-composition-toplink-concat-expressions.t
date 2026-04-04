@@ -34,7 +34,7 @@ subtest 'linked plan builder preserves top concat sources as typed bindings' => 
         port('rst_async_n', 'input', 1, 'reset'),
         port('header_bus', 'input', 2, undef),
         port('status_bus', 'input', 1, undef),
-        port('payload_bus', 'input', 4, undef),
+        port('payload_bus', 'input', 3, undef),
         port('serial_out', 'output', 1, undef),
     );
 
@@ -49,7 +49,7 @@ subtest 'linked plan builder preserves top concat sources as typed bindings' => 
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
-                        source => 'header_bus,status_bus[0],=1,payload_bus[3:0]',
+                        source => "header_bus,status_bus[0],=2'h2,payload_bus[2:0]",
                         target => 'uart_tx.data_in',
                     ),
                     FSM::Composition::Link->new(source => 'uart_tx.serial_out', target => 'serial_out'),
@@ -81,10 +81,10 @@ subtest 'linked plan builder preserves top concat sources as typed bindings' => 
         concat_expr(
             signal_ref_expr('header_bus'),
             bit_select_expr('status_bus', 0),
-            bit_vector_literal_expr('1'),
-            slice_expr('payload_bus', 3, 0),
+            bit_vector_literal_expr('10'),
+            slice_expr('payload_bus', 2, 0),
         ),
-        'top concat source becomes a typed concat binding expression',
+        'top concat source becomes a typed concat binding expression, including hex literal operands',
     );
     is($bindings{serial_out}{signal_name}, 'serial_out', 'child output still rebinds directly to the top output');
 };
@@ -103,12 +103,12 @@ subtest 'pipeline and CLI emit top concat sources for explicit toplinks' => sub 
     rst_async_n
     header_bus<2
     status_bus
-    payload_bus<4
+    payload_bus<3
     serial_out>
   )
   (?rtl:uart_tx)
   (?toplink:wiring
-    /header_bus,status_bus[0],=1,payload_bus[3:0]/uart_tx.data_in/
+    /header_bus,status_bus[0],=2'h2,payload_bus[2:0]/uart_tx.data_in/
     /uart_tx.serial_out/serial_out/
   )
 )
@@ -139,17 +139,17 @@ FSM
         concat_expr(
             signal_ref_expr('header_bus'),
             bit_select_expr('status_bus', 0),
-            bit_vector_literal_expr('1'),
-            slice_expr('payload_bus', 3, 0),
+            bit_vector_literal_expr('10'),
+            slice_expr('payload_bus', 2, 0),
         ),
-        'pipeline preserves the typed concat binding in the realized composition plan',
+        'pipeline preserves the typed concat binding in the realized composition plan, including hex literal operands',
     );
 
     my $hdl = $result->{hdl_code};
     like(
         $hdl,
-        qr/\.data_in\(\{header_bus,\s*status_bus\[0\],\s*1'b1,\s*payload_bus\[3:0\]\}\)/,
-        'generated HDL emits the top concat directly on the child port',
+        qr/\.data_in\(\{header_bus,\s*status_bus\[0\],\s*2'b10,\s*payload_bus\[2:0\]\}\)/,
+        'generated HDL emits the top concat directly on the child port, including the normalized hex literal operand',
     );
     unlike($hdl, qr/\bwire\s+comp_link_/s, 'generated HDL does not invent synthetic carrier nets for pure top-concat bindings');
 

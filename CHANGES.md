@@ -5540,3 +5540,10 @@ This is the persistent technical change history for FSMGen.
   `t/101-composition-explicit-link-implicit-ports.t`, and
   `t/131-composition-failure-summary-reporting.t` now lock the new runtime and
   failure-summary contract.
+- Explicit `?toplink` actuals may now also use exact-width hex literal forms
+  such as `=8'hA5` anywhere the current exact-width binary literal family is
+  already supported, including bounded source-side concat operands.
+- `FSM::Composition::LinkedPlanBuilder` now normalizes those hex literals into
+  the same backend-neutral `bit_vector_literal` structural binding form,
+  still rejects unsupported decimal-like actuals explicitly, and now also
+  rejects overflowing hex payloads instead of silently truncating them.
