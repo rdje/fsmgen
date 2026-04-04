@@ -49,7 +49,7 @@ subtest 'linked plan builder preserves top concat sources as typed bindings' => 
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
-                        source => "header_bus,status_bus[0],=2'd2,=3'o2,=2'h2,payload_bus[2:0]",
+                        source => "header_bus,status_bus[0],=2'b1_0,=3'o2,=2'h2,payload_bus[2:0]",
                         target => 'uart_tx.data_in',
                     ),
                     FSM::Composition::Link->new(source => 'uart_tx.serial_out', target => 'serial_out'),
@@ -86,7 +86,7 @@ subtest 'linked plan builder preserves top concat sources as typed bindings' => 
             bit_vector_literal_expr('10'),
             slice_expr('payload_bus', 2, 0),
         ),
-        'top concat source becomes a typed concat binding expression, including decimal, octal, and hex literal operands',
+        'top concat source becomes a typed concat binding expression, including separated binary plus octal and hex literal operands',
     );
     is($bindings{serial_out}{signal_name}, 'serial_out', 'child output still rebinds directly to the top output');
 };
@@ -110,7 +110,7 @@ subtest 'pipeline and CLI emit top concat sources for explicit toplinks' => sub 
   )
   (?rtl:uart_tx)
   (?toplink:wiring
-    /header_bus,status_bus[0],=2'd2,=3'o2,=2'h2,payload_bus[2:0]/uart_tx.data_in/
+    /header_bus,status_bus[0],=2'b1_0,=3'o2,=2'h2,payload_bus[2:0]/uart_tx.data_in/
     /uart_tx.serial_out/serial_out/
   )
 )
@@ -146,14 +146,14 @@ FSM
             bit_vector_literal_expr('10'),
             slice_expr('payload_bus', 2, 0),
         ),
-        'pipeline preserves the typed concat binding in the realized composition plan, including decimal, octal, and hex literal operands',
+        'pipeline preserves the typed concat binding in the realized composition plan, including separated binary plus octal and hex literal operands',
     );
 
     my $hdl = $result->{hdl_code};
     like(
         $hdl,
         qr/\.data_in\(\{header_bus,\s*status_bus\[0\],\s*2'b10,\s*3'b010,\s*2'b10,\s*payload_bus\[2:0\]\}\)/,
-        'generated HDL emits the top concat directly on the child port, including the normalized decimal, octal, and hex literal operands',
+        'generated HDL emits the top concat directly on the child port, including the normalized separated binary plus octal and hex literal operands',
     );
     unlike($hdl, qr/\bwire\s+comp_link_/s, 'generated HDL does not invent synthetic carrier nets for pure top-concat bindings');
 

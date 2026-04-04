@@ -5595,3 +5595,7 @@ This is the persistent technical change history for FSMGen.
   the existing binary/decimal/hex family, and now rejects overflowing unsized
   or exact-width octal payloads explicitly instead of leaving octal outside
   the shipped literal family.
+- Those same structural actual families now also accept underscore-separated
+  digit spellings such as `=0b1010_0101`, `=1_70`, `=0o2_45`, `=A_5`,
+  `=8'd1_65`, and `=8'hA_5`, including exact-width literal operands inside
+  the bounded source-side concat path.

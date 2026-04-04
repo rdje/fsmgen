@@ -1311,6 +1311,7 @@ Done:
 - That same first structural-actual slice now also covers unsized binary/decimal/octal/hex direct actuals plus exact-width decimal, octal, and hex literals:
   - explicit-link `C2` / `C3` child-input bindings may now use `=N'd...`, `=N'o...`, and `=N'h...` direct actual sources beside the already-shipped binary forms,
   - direct scalar `=0` / `=1` actuals plus unsized binary/decimal/octal/hex direct actuals such as `=0b10100101`, `=0d170`, `=0o245`, `=0xA5`, `=170`, and `=A5` now also widen to the direct binding target width for realized child inputs and declared top outputs instead of acting like accidental one-bit-only direct sources or unsupported unsized values,
+  - underscore-separated digit spellings such as `=0b1010_0101`, `=1_70`, `=0o2_45`, `=A_5`, `=8'd1_65`, and `=8'hA_5` are now accepted on those same direct literal families without changing their normalized value semantics,
   - that same direct exact-width literal family may now also drive declared top outputs without inventing carrier nets,
   - the same exact-width decimal/octal/hex literal family now also participates inside bounded source-side concat operands,
   - unsupported non-binary/non-decimal/non-octal/non-hex unsized actual spellings still fail explicitly through the existing bounded-literal wording, while unsized binary/decimal/octal/hex values that do not fit still fail as overflowed direct actuals,

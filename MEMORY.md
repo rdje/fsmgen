@@ -6165,3 +6165,8 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   bounded concat operands, and both forms lower into the same structural
   bit-vector literal node instead of introducing an octal-specific escape
   hatch.
+- Those same direct and exact-width structural actual families now also
+  accept underscore-separated digit spellings such as `=0b1010_0101`,
+  `=1_70`, `=0o2_45`, `=A_5`, `=8'd1_65`, and `=8'hA_5`, while keeping the
+  same normalized numeric value and the same direct-vs-concat support
+  boundary.

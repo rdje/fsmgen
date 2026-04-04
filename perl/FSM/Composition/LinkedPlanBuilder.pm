@@ -606,74 +606,57 @@ sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header) {
         };
     }
 
-    if ($payload =~ /\A0b([01]+)\z/i) {
-        return {
-            raw => $endpoint,
-            key => "actual:$endpoint",
-            kind => 'actual_unsized_binary',
-            binary_bits => $1,
-            port => {
-                direction => 'actual',
-                width => 0,
-            },
-        };
+    if ($payload =~ /\A0b(.+)\z/i) {
+        my $binary_bits = $class->_normalized_separated_digits($1, '[01]');
+        if (defined $binary_bits) {
+            return {
+                raw => $endpoint,
+                key => "actual:$endpoint",
+                kind => 'actual_unsized_binary',
+                binary_bits => $binary_bits,
+                port => {
+                    direction => 'actual',
+                    width => 0,
+                },
+            };
+        }
     }
 
-    if ($payload =~ /\A0d(\d+)\z/i) {
-        return {
-            raw => $endpoint,
-            key => "actual:$endpoint",
-            kind => 'actual_unsized_decimal',
-            decimal_digits => $1,
-            port => {
-                direction => 'actual',
-                width => 0,
-            },
-        };
+    if ($payload =~ /\A0d(.+)\z/i) {
+        my $decimal_digits = $class->_normalized_separated_digits($1, '[0-9]');
+        if (defined $decimal_digits) {
+            return {
+                raw => $endpoint,
+                key => "actual:$endpoint",
+                kind => 'actual_unsized_decimal',
+                decimal_digits => $decimal_digits,
+                port => {
+                    direction => 'actual',
+                    width => 0,
+                },
+            };
+        }
     }
 
-    if ($payload =~ /\A0o([0-7]+)\z/i) {
-        return {
-            raw => $endpoint,
-            key => "actual:$endpoint",
-            kind => 'actual_unsized_octal',
-            octal_digits => $1,
-            port => {
-                direction => 'actual',
-                width => 0,
-            },
-        };
+    if ($payload =~ /\A0o(.+)\z/i) {
+        my $octal_digits = $class->_normalized_separated_digits($1, '[0-7]');
+        if (defined $octal_digits) {
+            return {
+                raw => $endpoint,
+                key => "actual:$endpoint",
+                kind => 'actual_unsized_octal',
+                octal_digits => $octal_digits,
+                port => {
+                    direction => 'actual',
+                    width => 0,
+                },
+            };
+        }
     }
 
-    if ($payload =~ /\A0x([0-9a-f]+)\z/i) {
-        return {
-            raw => $endpoint,
-            key => "actual:$endpoint",
-            kind => 'actual_unsized_hex',
-            hex_digits => $1,
-            port => {
-                direction => 'actual',
-                width => 0,
-            },
-        };
-    }
-
-    if ($payload =~ /\A(\d+)\z/) {
-        return {
-            raw => $endpoint,
-            key => "actual:$endpoint",
-            kind => 'actual_unsized_decimal',
-            decimal_digits => $1,
-            port => {
-                direction => 'actual',
-                width => 0,
-            },
-        };
-    }
-
-    if ($payload =~ /\A([0-9a-f]+)\z/i) {
-        my $hex_digits = $1;
-        if ($hex_digits =~ /[a-f]/i) {
+    if ($payload =~ /\A0x(.+)\z/i) {
+        my $hex_digits = $class->_normalized_separated_digits($1, '[0-9A-Fa-f]');
+        if (defined $hex_digits) {
             return {
                 raw => $endpoint,
                 key => "actual:$endpoint",
@@ -685,6 +668,34 @@ sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header) {
                 },
             };
         }
+    }
+
+    my $bare_decimal_digits = $class->_normalized_separated_digits($payload, '[0-9]');
+    if (defined $bare_decimal_digits) {
+        return {
+            raw => $endpoint,
+            key => "actual:$endpoint",
+            kind => 'actual_unsized_decimal',
+            decimal_digits => $bare_decimal_digits,
+            port => {
+                direction => 'actual',
+                width => 0,
+            },
+        };
+    }
+
+    my $bare_hex_digits = $class->_normalized_separated_digits($payload, '[0-9A-Fa-f]');
+    if (defined($bare_hex_digits) && $bare_hex_digits =~ /[A-Fa-f]/) {
+        return {
+            raw => $endpoint,
+            key => "actual:$endpoint",
+            kind => 'actual_unsized_hex',
+            hex_digits => $bare_hex_digits,
+            port => {
+                direction => 'actual',
+                width => 0,
+            },
+        };
     }
 
     my ($bits, $width) = $class->_actual_literal_bits_and_width($payload, $fsm_file, $header);
@@ -701,8 +712,10 @@ sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header) {
 }
 
 sub _actual_literal_bits_and_width ($class, $payload, $fsm_file, $header) {
-    if ($payload =~ /\A(\d+)'b([01]+)\z/i) {
-        my ($declared_width, $bits) = ($1, $2);
+    if ($payload =~ /\A(\d+)'b(.+)\z/i) {
+        my ($declared_width, $raw_bits) = ($1, $2);
+        my $bits = $class->_normalized_separated_digits($raw_bits, '[01]');
+        return undef unless defined $bits;
         confess
             "Composition source '$header' in '$fsm_file' uses actual literal '=$payload', ".
             "but explicit actual binding is blocked because the declared binary width does not match the literal payload length. ".
@@ -711,8 +724,10 @@ sub _actual_literal_bits_and_width ($class, $payload, $fsm_file, $header) {
         return ($bits, 0 + $declared_width);
     }
 
-    if ($payload =~ /\A(\d+)'d(\d+)\z/i) {
-        my ($declared_width, $decimal_digits) = ($1, $2);
+    if ($payload =~ /\A(\d+)'d(.+)\z/i) {
+        my ($declared_width, $raw_decimal_digits) = ($1, $2);
+        my $decimal_digits = $class->_normalized_separated_digits($raw_decimal_digits, '[0-9]');
+        return undef unless defined $decimal_digits;
         my ($bits, $width) = $class->_decimal_literal_bits_and_width(
             $declared_width,
             $decimal_digits,
@@ -726,8 +741,10 @@ sub _actual_literal_bits_and_width ($class, $payload, $fsm_file, $header) {
         return ($bits, $width) if defined $bits;
     }
 
-    if ($payload =~ /\A(\d+)'o([0-7]+)\z/i) {
-        my ($declared_width, $octal_digits) = ($1, $2);
+    if ($payload =~ /\A(\d+)'o(.+)\z/i) {
+        my ($declared_width, $raw_octal_digits) = ($1, $2);
+        my $octal_digits = $class->_normalized_separated_digits($raw_octal_digits, '[0-7]');
+        return undef unless defined $octal_digits;
         my ($bits, $width) = $class->_octal_literal_bits_and_width(
             $declared_width,
             $octal_digits,
@@ -741,8 +758,10 @@ sub _actual_literal_bits_and_width ($class, $payload, $fsm_file, $header) {
         return ($bits, $width) if defined $bits;
     }
 
-    if ($payload =~ /\A(\d+)'h([0-9a-f]+)\z/i) {
-        my ($declared_width, $hex_digits) = ($1, $2);
+    if ($payload =~ /\A(\d+)'h(.+)\z/i) {
+        my ($declared_width, $raw_hex_digits) = ($1, $2);
+        my $hex_digits = $class->_normalized_separated_digits($raw_hex_digits, '[0-9A-Fa-f]');
+        return undef unless defined $hex_digits;
         my ($bits, $width) = $class->_hex_literal_bits_and_width(
             $declared_width,
             $hex_digits,
@@ -959,30 +978,50 @@ sub _expression_literal_bits_and_width ($class, $payload) {
     return ($1, 1)
         if defined($payload) && $payload =~ /\A([01])\z/;
 
-    if (defined($payload) && $payload =~ /\A(\d+)'b([01]+)\z/i) {
-        my ($declared_width, $bits) = ($1, $2);
+    if (defined($payload) && $payload =~ /\A(\d+)'b(.+)\z/i) {
+        my ($declared_width, $raw_bits) = ($1, $2);
+        my $bits = $class->_normalized_separated_digits($raw_bits, '[01]');
+        return undef unless defined $bits;
         return undef unless length($bits) == $declared_width;
         return ($bits, 0 + $declared_width);
     }
 
-    if (defined($payload) && $payload =~ /\A(\d+)'d(\d+)\z/i) {
-        return $class->_decimal_literal_bits_and_width($1, $2);
+    if (defined($payload) && $payload =~ /\A(\d+)'d(.+)\z/i) {
+        my $decimal_digits = $class->_normalized_separated_digits($2, '[0-9]');
+        return undef unless defined $decimal_digits;
+        return $class->_decimal_literal_bits_and_width($1, $decimal_digits);
     }
 
-    if (defined($payload) && $payload =~ /\A(\d+)'o([0-7]+)\z/i) {
-        return $class->_octal_literal_bits_and_width($1, $2);
+    if (defined($payload) && $payload =~ /\A(\d+)'o(.+)\z/i) {
+        my $octal_digits = $class->_normalized_separated_digits($2, '[0-7]');
+        return undef unless defined $octal_digits;
+        return $class->_octal_literal_bits_and_width($1, $octal_digits);
     }
 
-    if (defined($payload) && $payload =~ /\A(\d+)'h([0-9a-f]+)\z/i) {
-        return $class->_hex_literal_bits_and_width($1, $2);
+    if (defined($payload) && $payload =~ /\A(\d+)'h(.+)\z/i) {
+        my $hex_digits = $class->_normalized_separated_digits($2, '[0-9A-Fa-f]');
+        return undef unless defined $hex_digits;
+        return $class->_hex_literal_bits_and_width($1, $hex_digits);
     }
 
     return;
 }
 
+sub _normalized_separated_digits ($class, $text, $digit_class) {
+    return undef unless defined($text) && !ref($text);
+    return undef unless defined($digit_class) && !ref($digit_class) && length($digit_class);
+
+    my $pattern = qr/\A(?:$digit_class)(?:_?(?:$digit_class))*\z/;
+    return undef unless $text =~ $pattern;
+
+    (my $normalized = $text) =~ s/_//g;
+    return $normalized;
+}
+
 sub _decimal_literal_bits_and_width ($class, $declared_width, $decimal_digits, %opts) {
     return unless defined($declared_width) && $declared_width =~ /\A\d+\z/ && $declared_width > 0;
-    return unless defined($decimal_digits) && !ref($decimal_digits) && $decimal_digits =~ /\A\d+\z/;
+    $decimal_digits = $class->_normalized_separated_digits($decimal_digits, '[0-9]');
+    return unless defined $decimal_digits;
 
     my $value = Math::BigInt->new($decimal_digits);
     return unless defined $value;
@@ -1007,7 +1046,8 @@ sub _decimal_literal_bits_and_width ($class, $declared_width, $decimal_digits, %
 
 sub _binary_literal_bits_and_width ($class, $declared_width, $binary_bits, %opts) {
     return unless defined($declared_width) && $declared_width =~ /\A\d+\z/ && $declared_width > 0;
-    return unless defined($binary_bits) && !ref($binary_bits) && $binary_bits =~ /\A[01]+\z/;
+    $binary_bits = $class->_normalized_separated_digits($binary_bits, '[01]');
+    return unless defined $binary_bits;
 
     my $bits = $binary_bits;
     if (length($bits) < $declared_width) {
@@ -1030,7 +1070,8 @@ sub _binary_literal_bits_and_width ($class, $declared_width, $binary_bits, %opts
 
 sub _octal_literal_bits_and_width ($class, $declared_width, $octal_digits, %opts) {
     return unless defined($declared_width) && $declared_width =~ /\A\d+\z/ && $declared_width > 0;
-    return unless defined($octal_digits) && !ref($octal_digits) && $octal_digits =~ /\A[0-7]+\z/;
+    $octal_digits = $class->_normalized_separated_digits($octal_digits, '[0-7]');
+    return unless defined $octal_digits;
 
     my %octal_bits = (
         0 => '000',
@@ -1064,7 +1105,8 @@ sub _octal_literal_bits_and_width ($class, $declared_width, $octal_digits, %opts
 
 sub _hex_literal_bits_and_width ($class, $declared_width, $hex_digits, %opts) {
     return unless defined($declared_width) && $declared_width =~ /\A\d+\z/ && $declared_width > 0;
-    return unless defined($hex_digits) && !ref($hex_digits) && $hex_digits =~ /\A[0-9a-f]+\z/i;
+    $hex_digits = $class->_normalized_separated_digits($hex_digits, '[0-9A-Fa-f]');
+    return unless defined $hex_digits;
 
     my %hex_bits = (
         0 => '0000',

@@ -8071,3 +8071,29 @@ It is an exact-delay pulse request:
   now also locks:
   - the widened concise binary/decimal/octal/hex literal reason text in the
     blocked explicit-actual and concat-operand summary families.
+
+## 2026-04-04: separated structural literals now share the same bounded path
+- Continued the active `R11` feature lane by widening the already-shipped
+  structural literal family for readability spellings instead of opening a
+  new literal category.
+- The widened bounded literal slice is now in tree:
+  - direct structural actuals now accept underscore-separated digit spellings
+    such as `=0b1010_0101`, `=1_70`, `=0o2_45`, `=A_5`, `=8'd1_65`, and
+    `=8'hA_5`,
+  - the same readability spellings now also work for exact-width literal
+    operands inside bounded source-side concat expressions,
+  - and the live direct-vs-concat boundary stays unchanged: unsized numerics
+    still widen only on direct bindings, not inside concat.
+- The planner contract is now honest for that slice:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    now normalizes underscore-separated digits before the existing binary /
+    decimal / octal / hex width and overflow logic,
+  - so separated spellings lower into the same structural
+    `bit_vector_literal_expr` payloads instead of introducing a second parsed
+    literal path.
+- [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t)
+  now locks separated direct-actual spellings through linked-plan, pipeline,
+  and CLI coverage across the existing bounded radix family.
+- [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t)
+  now also locks a separated exact-width literal operand through the bounded
+  concat path.

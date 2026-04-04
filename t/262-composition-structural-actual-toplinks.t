@@ -51,27 +51,27 @@ subtest 'linked plan builder preserves numeric and open toplinks as typed actual
             FSM::Composition::TopLink->new(
                 name => 'wiring',
                 links => [
-                    FSM::Composition::Link->new(source => "=8'b10100101", target => 'default_data'),
+                    FSM::Composition::Link->new(source => "=8'b1010_0101", target => 'default_data'),
                     FSM::Composition::Link->new(source => '=1', target => 'one_data'),
-                    FSM::Composition::Link->new(source => '=170', target => 'decimal_data'),
-                    FSM::Composition::Link->new(source => "=8'o245", target => 'octal_data'),
-                    FSM::Composition::Link->new(source => '=A5', target => 'hex_data'),
-                    FSM::Composition::Link->new(source => '=0b10100101', target => 'prefixed_binary_data'),
-                    FSM::Composition::Link->new(source => '=0d170', target => 'prefixed_decimal_data'),
-                    FSM::Composition::Link->new(source => '=0o245', target => 'prefixed_octal_data'),
-                    FSM::Composition::Link->new(source => '=0xA5', target => 'prefixed_hex_data'),
-                    FSM::Composition::Link->new(source => "=8'b10100101", target => 'uart_tx.data_in'),
+                    FSM::Composition::Link->new(source => '=1_70', target => 'decimal_data'),
+                    FSM::Composition::Link->new(source => "=8'o2_45", target => 'octal_data'),
+                    FSM::Composition::Link->new(source => '=A_5', target => 'hex_data'),
+                    FSM::Composition::Link->new(source => '=0b1010_0101', target => 'prefixed_binary_data'),
+                    FSM::Composition::Link->new(source => '=0d1_70', target => 'prefixed_decimal_data'),
+                    FSM::Composition::Link->new(source => '=0o2_45', target => 'prefixed_octal_data'),
+                    FSM::Composition::Link->new(source => '=0xA_5', target => 'prefixed_hex_data'),
+                    FSM::Composition::Link->new(source => "=8'b1010_0101", target => 'uart_tx.data_in'),
                     FSM::Composition::Link->new(source => '=0', target => 'uart_tx.zero_data_in'),
                     FSM::Composition::Link->new(source => '=1', target => 'uart_tx.one_data_in'),
-                    FSM::Composition::Link->new(source => '=170', target => 'uart_tx.unsized_decimal_data_in'),
-                    FSM::Composition::Link->new(source => '=0o245', target => 'uart_tx.unsized_octal_data_in'),
-                    FSM::Composition::Link->new(source => '=A5', target => 'uart_tx.unsized_hex_data_in'),
-                    FSM::Composition::Link->new(source => '=0b10100101', target => 'uart_tx.prefixed_binary_data_in'),
-                    FSM::Composition::Link->new(source => '=0d170', target => 'uart_tx.prefixed_decimal_data_in'),
-                    FSM::Composition::Link->new(source => '=0xA5', target => 'uart_tx.prefixed_hex_data_in'),
-                    FSM::Composition::Link->new(source => "=8'd165", target => 'uart_tx.decimal_data_in'),
-                    FSM::Composition::Link->new(source => "=8'o245", target => 'uart_tx.octal_data_in'),
-                    FSM::Composition::Link->new(source => "=8'hA5", target => 'uart_tx.hex_data_in'),
+                    FSM::Composition::Link->new(source => '=1_70', target => 'uart_tx.unsized_decimal_data_in'),
+                    FSM::Composition::Link->new(source => '=0o2_45', target => 'uart_tx.unsized_octal_data_in'),
+                    FSM::Composition::Link->new(source => '=A_5', target => 'uart_tx.unsized_hex_data_in'),
+                    FSM::Composition::Link->new(source => '=0b1010_0101', target => 'uart_tx.prefixed_binary_data_in'),
+                    FSM::Composition::Link->new(source => '=0d1_70', target => 'uart_tx.prefixed_decimal_data_in'),
+                    FSM::Composition::Link->new(source => '=0xA_5', target => 'uart_tx.prefixed_hex_data_in'),
+                    FSM::Composition::Link->new(source => "=8'd1_65", target => 'uart_tx.decimal_data_in'),
+                    FSM::Composition::Link->new(source => "=8'o2_45", target => 'uart_tx.octal_data_in'),
+                    FSM::Composition::Link->new(source => "=8'hA_5", target => 'uart_tx.hex_data_in'),
                     FSM::Composition::Link->new(source => '=open', target => 'uart_tx.enable'),
                     FSM::Composition::Link->new(source => 'uart_tx.serial_out', target => 'serial_out'),
                 ],
@@ -232,27 +232,27 @@ subtest 'pipeline and CLI emit structural numeric and open actuals for explicit 
       )
       (?rtl:uart_tx)
       (?toplink:wiring
-        /=8'b10100101/default_data/
+        /=8'b1010_0101/default_data/
         /=1/one_data/
-        /=170/decimal_data/
-        /=8'o245/octal_data/
-        /=A5/hex_data/
-        /=0b10100101/prefixed_binary_data/
-        /=0d170/prefixed_decimal_data/
-        /=0o245/prefixed_octal_data/
-        /=0xA5/prefixed_hex_data/
-        /=8'b10100101/uart_tx.data_in/
+        /=1_70/decimal_data/
+        /=8'o2_45/octal_data/
+        /=A_5/hex_data/
+        /=0b1010_0101/prefixed_binary_data/
+        /=0d1_70/prefixed_decimal_data/
+        /=0o2_45/prefixed_octal_data/
+        /=0xA_5/prefixed_hex_data/
+        /=8'b1010_0101/uart_tx.data_in/
         /=0/uart_tx.zero_data_in/
         /=1/uart_tx.one_data_in/
-        /=170/uart_tx.unsized_decimal_data_in/
-        /=0o245/uart_tx.unsized_octal_data_in/
-        /=A5/uart_tx.unsized_hex_data_in/
-        /=0b10100101/uart_tx.prefixed_binary_data_in/
-        /=0d170/uart_tx.prefixed_decimal_data_in/
-        /=0xA5/uart_tx.prefixed_hex_data_in/
-        /=8'd165/uart_tx.decimal_data_in/
-        /=8'o245/uart_tx.octal_data_in/
-        /=8'hA5/uart_tx.hex_data_in/
+        /=1_70/uart_tx.unsized_decimal_data_in/
+        /=0o2_45/uart_tx.unsized_octal_data_in/
+        /=A_5/uart_tx.unsized_hex_data_in/
+        /=0b1010_0101/uart_tx.prefixed_binary_data_in/
+        /=0d1_70/uart_tx.prefixed_decimal_data_in/
+        /=0xA_5/uart_tx.prefixed_hex_data_in/
+        /=8'd1_65/uart_tx.decimal_data_in/
+        /=8'o2_45/uart_tx.octal_data_in/
+        /=8'hA_5/uart_tx.hex_data_in/
         /=open/uart_tx.enable/
     /uart_tx.serial_out/serial_out/
   )
