@@ -1,9 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
-## 2026-04-04: direct fixed-width actuals may now drive declared top outputs too
+## 2026-04-04: direct scalar `=0` and `=1` actuals now widen to direct binding targets
+- Stayed in the active `R11` lane and kept this as the next honest structural-actual refinement instead of switching away from feature work while the planner path was already localized.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now treats direct explicit-actual sources `=0` and `=1` as scalar numeric zero/one sources that widen to the realized child-input or declared top-output target width instead of behaving like accidental one-bit-only direct bindings,
+  - bounded concat operands still keep `=0` / `=1` as one-bit operands unless the author spells an exact-width literal there, so the widening stays on the direct-binding path rather than silently changing concat semantics too,
+  - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) now locks widened scalar direct actuals on child inputs and declared top outputs,
+  - [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now keeps the family wording honest by saying the shipped structural-actual slice covers `=open`, scalar `=0` / `=1`, and exact-width binary/decimal/hex literal actuals,
+  - and `=open` remains the only child-input-only sibling in that family because “unconnected” is still not honest top-output wiring.
+
+## 2026-04-04: direct literal actuals may now drive declared top outputs too
 - Stayed in the active `R11` lane and kept this as the next honest sibling after the shipped top-expression/top-output slice instead of switching back to hardening-only work.
 - Important continuity note:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now emits direct top-output assignments for fixed-width actual sources such as `=0`, `=1`, `=8'b10100101`, `=8'd165`, and `=8'hA5` instead of limiting those direct actual tokens to realized child-input bindings,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now emits direct top-output assignments for literal actual sources such as `=0`, `=1`, `=8'b10100101`, `=8'd165`, and `=8'hA5` instead of limiting those direct actual tokens to realized child-input bindings,
   - that means direct literal actuals and bounded concat operands now both reach declared top outputs through the same typed structural-expression/rendering path rather than splitting into “concat can, direct actual cannot,”
   - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) now locks direct linked-plan plus pipeline/CLI success for literal-actual top-output assignments,
   - [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now keeps the still-blocked sibling honest by locking `=open`-to-top-output as the remaining explicit-actual source-role failure,

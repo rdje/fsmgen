@@ -30,6 +30,7 @@ subtest 'linked plan builder preserves literal and open toplinks as typed actual
         port('core_clk', 'input', 1, 'clock'),
         port('rst_async_n', 'input', 1, 'reset'),
         port('default_data', 'output', 8, undef),
+        port('one_data', 'output', 8, undef),
         port('serial_out', 'output', 1, undef),
     );
 
@@ -44,7 +45,10 @@ subtest 'linked plan builder preserves literal and open toplinks as typed actual
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => "=8'b10100101", target => 'default_data'),
+                    FSM::Composition::Link->new(source => '=1', target => 'one_data'),
                     FSM::Composition::Link->new(source => "=8'b10100101", target => 'uart_tx.data_in'),
+                    FSM::Composition::Link->new(source => '=0', target => 'uart_tx.zero_data_in'),
+                    FSM::Composition::Link->new(source => '=1', target => 'uart_tx.one_data_in'),
                     FSM::Composition::Link->new(source => "=8'd165", target => 'uart_tx.decimal_data_in'),
                     FSM::Composition::Link->new(source => "=8'hA5", target => 'uart_tx.hex_data_in'),
                     FSM::Composition::Link->new(source => '=open', target => 'uart_tx.enable'),
@@ -59,6 +63,8 @@ subtest 'linked plan builder preserves literal and open toplinks as typed actual
                 port('core_clk', 'input', 1, 'clock'),
                 port('rst_async_n', 'input', 1, 'reset'),
                 port('data_in', 'input', 8, undef),
+                port('zero_data_in', 'input', 8, undef),
+                port('one_data_in', 'input', 8, undef),
                 port('decimal_data_in', 'input', 8, undef),
                 port('hex_data_in', 'input', 8, undef),
                 port('enable', 'input', 1, undef),
@@ -76,8 +82,9 @@ subtest 'linked plan builder preserves literal and open toplinks as typed actual
         $plan->auxiliary_assignments,
         [
             "    assign default_data = 8'b10100101;",
+            "    assign one_data = 8'b00000001;",
         ],
-        'literal actual top-output bindings become direct auxiliary assignments',
+        'literal and scalar actual top-output bindings become direct auxiliary assignments',
     );
 
     my %bindings = map { $_->{port_name} => $_ } @{$plan->instances->[0]->port_bindings};
@@ -90,6 +97,18 @@ subtest 'linked plan builder preserves literal and open toplinks as typed actual
         $bindings{data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
         'literal explicit toplink becomes a typed bit-vector actual binding',
+    );
+    is($bindings{zero_data_in}{signal_name} // '', '', 'scalar zero actual binding does not invent a flat signal mirror');
+    is_deeply(
+        $bindings{zero_data_in}{connection_expr},
+        bit_vector_literal_expr('00000000'),
+        'scalar zero explicit toplink expands to the exact target width for child inputs',
+    );
+    is($bindings{one_data_in}{signal_name} // '', '', 'scalar one actual binding does not invent a flat signal mirror');
+    is_deeply(
+        $bindings{one_data_in}{connection_expr},
+        bit_vector_literal_expr('00000001'),
+        'scalar one explicit toplink expands to the exact target width for child inputs',
     );
     is($bindings{decimal_data_in}{signal_name} // '', '', 'decimal literal actual binding does not invent a flat signal mirror');
     is_deeply(
@@ -124,12 +143,16 @@ subtest 'pipeline and CLI emit structural literal and open actuals for explicit 
         core_clk
         rst_async_n
         default_data>8
+        one_data>8
         serial_out>
       )
       (?rtl:uart_tx)
       (?toplink:wiring
         /=8'b10100101/default_data/
+        /=1/one_data/
         /=8'b10100101/uart_tx.data_in/
+        /=0/uart_tx.zero_data_in/
+        /=1/uart_tx.one_data_in/
         /=8'd165/uart_tx.decimal_data_in/
         /=8'hA5/uart_tx.hex_data_in/
         /=open/uart_tx.enable/
@@ -141,6 +164,8 @@ subtest 'pipeline and CLI emit structural literal and open actuals for explicit 
   core_clk:clock
   rst_async_n:reset
   data_in<8:data
+  zero_data_in<8:data
+  one_data_in<8:data
   decimal_data_in<8:data
   hex_data_in<8:data
   enable:data
@@ -167,6 +192,16 @@ FSM
         'pipeline preserves the typed literal actual binding in the realized composition plan',
     );
     is_deeply(
+        $bindings{zero_data_in}{connection_expr},
+        bit_vector_literal_expr('00000000'),
+        'pipeline preserves the widened scalar zero binding in the realized composition plan',
+    );
+    is_deeply(
+        $bindings{one_data_in}{connection_expr},
+        bit_vector_literal_expr('00000001'),
+        'pipeline preserves the widened scalar one binding in the realized composition plan',
+    );
+    is_deeply(
         $bindings{decimal_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
         'pipeline preserves the typed decimal literal actual binding in the realized composition plan',
@@ -184,7 +219,10 @@ FSM
 
     my $hdl = $result->{hdl_code};
     like($hdl, qr/assign default_data = 8'b10100101;/, 'generated HDL emits the literal actual directly on the top output');
+    like($hdl, qr/assign one_data = 8'b00000001;/, 'generated HDL emits the widened scalar one actual directly on the top output');
     like($hdl, qr/\.data_in\(8'b10100101\)/, 'generated HDL emits the literal actual directly on the child port');
+    like($hdl, qr/\.zero_data_in\(8'b00000000\)/, 'generated HDL emits the widened scalar zero actual directly on the child port');
+    like($hdl, qr/\.one_data_in\(8'b00000001\)/, 'generated HDL emits the widened scalar one actual directly on the child port');
     like($hdl, qr/\.decimal_data_in\(8'b10100101\)/, 'generated HDL emits the decimal literal actual directly on the child port');
     like($hdl, qr/\.hex_data_in\(8'b10100101\)/, 'generated HDL emits the hex literal actual directly on the child port');
     like($hdl, qr/\.enable\(\)/, 'generated HDL emits the open actual directly on the child port');
@@ -270,7 +308,7 @@ subtest 'linked plan builder rejects actual endpoints as explicit link targets' 
 
     like(
         $exception,
-        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open' and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
+        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open', scalar '=0'\/'=1', and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
         'builder blocks actual endpoints from appearing as explicit link targets',
     );
 };

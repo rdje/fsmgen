@@ -1296,7 +1296,7 @@ Done:
   - RTL-backed `C3` success with omitted `?ports` and inferred top inputs coming from source-side top expressions.
 - That same source-side top-expression slice now also covers bounded concat sources:
   - explicit-link `C2` / `C3` child-input bindings may now use flat comma-separated source expressions such as `header_bus,status_bus[0],=1,payload_bus[3:0]`,
-  - concat operands are currently bounded to declared whole top-port refs, top-port bit/slice refs, and fixed-width binary/decimal/hex literal actuals,
+  - concat operands are currently bounded to declared whole top-port refs, top-port bit/slice refs, one-bit scalar actuals `=0` / `=1`, and exact-width binary/decimal/hex literal actuals,
   - omitted/empty-`?ports` top-boundary inference now also sees the inferable bit/slice operands inside those concat sources,
   - and omitted/empty-`?ports` top-boundary inference may now also size one remaining undeclared whole-port concat operand exactly from the child-input target remainder width, while several still-unsized whole-port operands still fail explicitly instead of guessing several widths at once.
 - The next explicit-link topology widening is now also shipped:
@@ -1307,16 +1307,17 @@ Done:
 - That same source-side top-expression slice now also covers declared top outputs:
   - explicit-link `C2` / `C3` source-side top-port bit/slice and bounded concat expressions may now drive declared top outputs directly through explicit top-output assignments,
   - sibling child-input consumers may still reuse those same typed top expressions in the same top without synthetic carrier nets,
-  - and direct fixed-width literal actual sources may now also drive declared top outputs through those same explicit top-output assignments, while `=open` remains the narrower child-input-only sibling.
+  - and direct scalar `=0` / `=1` actuals plus exact-width literal actual sources may now also drive declared top outputs through those same explicit top-output assignments, while `=open` remains the narrower child-input-only sibling.
 - That same first structural-actual slice now also covers exact-width decimal and hex literals:
   - explicit-link `C2` / `C3` child-input bindings may now use `=N'd...` and `=N'h...` direct actual sources beside the already-shipped binary forms,
-  - that same direct fixed-width literal family may now also drive declared top outputs without inventing carrier nets,
+  - direct scalar `=0` / `=1` actuals now also widen to the direct binding target width for realized child inputs and declared top outputs instead of acting like accidental one-bit-only direct sources,
+  - that same direct exact-width literal family may now also drive declared top outputs without inventing carrier nets,
   - the same exact-width decimal/hex literal family now also participates inside bounded source-side concat operands,
   - unsupported unsized decimal-like actuals still fail explicitly through the existing bounded-literal wording,
   - and decimal/hex payloads whose numeric value exceeds the declared width now fail explicitly instead of silently truncating.
 - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) now also locks:
-  - direct linked-plan and end-to-end pipeline/CLI success for exact-width literal actuals on child inputs and declared top outputs,
-  - explicit-target wording updated for the widened binary/decimal/hex actual family,
+  - direct linked-plan and end-to-end pipeline/CLI success for target-width-aware scalar `=0` / `=1` actuals plus exact-width literal actuals on child inputs and declared top outputs,
+  - explicit-target wording updated for the widened scalar-plus-binary/decimal/hex actual family,
   - blocked `=open`-to-top-output rejection,
   - blocked unsupported unsized decimal-like actual rejection,
   - and blocked overflowing decimal/hex literal rejection.

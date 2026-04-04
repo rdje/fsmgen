@@ -186,6 +186,7 @@ sub build_plan ($class, %args) {
             "but explicit link is blocked because the current active composition lanes require exact width agreement. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless (($source->{kind} || '') eq 'actual_open')
+                || (($source->{kind} || '') eq 'actual_scalar_literal')
                 || $source_width == $target_width;
 
         my $target_key = $target->{key};
@@ -198,13 +199,17 @@ sub build_plan ($class, %args) {
         $reserved_targets{$target_key} = "explicit link '".$source->{raw}."'";
 
         if (($source->{kind} || '') =~ /^actual_/ || ($source->{kind} || '') eq 'top_expr') {
+            my $bound_connection_expr = (($source->{kind} || '') =~ /^actual_/)
+                ? $class->actual_connection_expr_for_target($source, $target_width)
+                : $source->{connection_expr};
+
             if (($source->{kind} || '') eq 'top_expr') {
                 for my $top_port_name (@{$source->{base_port_names} || []}) {
                     $top_port_usage{$top_port_name}{source} = 1;
                 }
 
                 if ($target->{kind} eq 'top_port') {
-                    my $expr_text = render_expr($source->{connection_expr}, $target->{port}->name, 'systemverilog');
+                    my $expr_text = render_expr($bound_connection_expr, $target->{port}->name, 'systemverilog');
                     push @auxiliary_assignments, "    assign ".$target->{port}->name." = $expr_text;";
                     $top_port_usage{$target->{port}->name}{target} = 1;
                     push @resolved_links, {
@@ -216,7 +221,7 @@ sub build_plan ($class, %args) {
                 }
             }
             elsif ($target->{kind} eq 'top_port') {
-                my $expr_text = render_expr($source->{connection_expr}, $target->{port}->name, 'systemverilog');
+                my $expr_text = render_expr($bound_connection_expr, $target->{port}->name, 'systemverilog');
                 push @auxiliary_assignments, "    assign ".$target->{port}->name." = $expr_text;";
                 $top_port_usage{$target->{port}->name}{target} = 1;
                 push @resolved_links, {
@@ -229,7 +234,7 @@ sub build_plan ($class, %args) {
 
             $bindings_by_instance{$target->{instance_name}}{$target->{port}->name} = normalized_binding({
                 port_name => $target->{port}->name,
-                connection_expr => $source->{connection_expr},
+                connection_expr => $bound_connection_expr,
             });
             push @resolved_links, {
                 link => $link,
@@ -488,7 +493,7 @@ sub assert_link_roles ($class, $source, $target, $fsm_file, $header) {
     if (($target->{kind} || '') =~ /^actual_/) {
         confess
             "Composition source '$header' in '$fsm_file' uses actual endpoint '".$target->{raw}."' as an explicit link target, ".
-            "but explicit actual binding is blocked because the first structural-actual slice only allows '=open' and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs. ".
+            "but explicit actual binding is blocked because the first structural-actual slice only allows '=open', scalar '=0'/'=1', and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
 
@@ -583,6 +588,20 @@ sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header) {
         };
     }
 
+    if ($payload =~ /\A([01])\z/) {
+        return {
+            raw => $endpoint,
+            key => "actual:$endpoint",
+            kind => 'actual_scalar_literal',
+            scalar_bit => $1,
+            port => {
+                direction => 'actual',
+                width => 1,
+            },
+            connection_expr => bit_vector_literal_expr($1),
+        };
+    }
+
     my ($bits, $width) = $class->_actual_literal_bits_and_width($payload, $fsm_file, $header);
     return {
         raw => $endpoint,
@@ -597,10 +616,6 @@ sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header) {
 }
 
 sub _actual_literal_bits_and_width ($class, $payload, $fsm_file, $header) {
-    if ($payload =~ /\A([01])\z/) {
-        return ($1, 1);
-    }
-
     if ($payload =~ /\A(\d+)'b([01]+)\z/i) {
         my ($declared_width, $bits) = ($1, $2);
         confess
@@ -1030,6 +1045,25 @@ sub endpoint_width ($class, $endpoint) {
     return $port->{width} if ref($port) eq 'HASH';
     return $port->width if ref($port) && $port->can('width');
     return 0;
+}
+
+sub actual_connection_expr_for_target ($class, $source, $target_width) {
+    return $source->{connection_expr}
+        unless ref($source) eq 'HASH' && (($source->{kind} || '') =~ /^actual_/);
+
+    return $source->{connection_expr}
+        unless (($source->{kind} || '') eq 'actual_scalar_literal');
+
+    confess "Scalar actuals require a positive target width before binding.\n"
+        unless defined($target_width) && $target_width =~ /\A\d+\z/ && $target_width > 0;
+
+    my $scalar_bit = $source->{scalar_bit} // '';
+    confess "Scalar actuals must preserve one-bit payload metadata.\n"
+        unless $scalar_bit =~ /\A[01]\z/;
+
+    my $bits = '0' x $target_width;
+    substr($bits, -1, 1, $scalar_bit) if $scalar_bit eq '1';
+    return bit_vector_literal_expr($bits);
 }
 
 sub allocate_net_name ($class, $source, $top_ports_by_name, $existing_nets, $preferred_name = undef) {
