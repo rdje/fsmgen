@@ -29,6 +29,7 @@ our @EXPORT_OK = qw(
     bit_select_expr
     slice_expr
     concat_expr
+    repeat_expr
     bit_vector_literal_expr
     signal_ref_binding
     update_binding_signal_ref
@@ -119,6 +120,17 @@ sub concat_expr (@operands) {
     return {
         kind => 'concat',
         operands => [ map { _coerce_source_expr($_) } @operands ],
+    };
+}
+
+sub repeat_expr ($repeat_count, $operand) {
+    confess "StructuralRTLIR repeat expressions require a positive repeat count"
+        unless defined($repeat_count) && !ref($repeat_count) && $repeat_count =~ /\A[1-9]\d*\z/;
+
+    return {
+        kind => 'repeat',
+        repeat_count => 0 + $repeat_count,
+        operand => _coerce_source_expr($operand),
     };
 }
 
@@ -254,6 +266,10 @@ sub expr_signal_names ($expr) {
             _push_unique_signal_names(\@signal_names, @{expr_signal_names($operand)});
         }
         return \@signal_names;
+    }
+
+    if ($kind eq 'repeat') {
+        return expr_signal_names($expr->{operand});
     }
 
     confess "StructuralRTLIR connection_expr kind '$kind' has no recursive signal-name recovery rule.\n";
@@ -424,6 +440,19 @@ sub render_expr ($expr, $port_name = undef, $target_language = 'systemverilog') 
         return '{' . join(', ', @operand_text) . '}';
     }
 
+    if ($kind eq 'repeat') {
+        my $language = defined($target_language) ? lc($target_language) : '';
+        _confess_unsupported_target_language($target_language, $port_name, $kind)
+            unless _is_verilog_family($target_language) || $language eq 'vhdl';
+        my $repeat_count = $expr->{repeat_count};
+        confess "StructuralRTLIR repeat expressions must preserve a positive repeat count.\n"
+            unless defined($repeat_count) && $repeat_count =~ /\A[1-9]\d*\z/;
+        my $operand_text = render_expr($expr->{operand}, $port_name, $target_language);
+        return join(' & ', map { $operand_text } 1 .. $repeat_count)
+            if $language eq 'vhdl';
+        return sprintf('{%d{%s}}', $repeat_count, $operand_text);
+    }
+
     if ($kind eq 'bit_vector_literal') {
         my $language = defined($target_language) ? lc($target_language) : '';
         _confess_unsupported_target_language($target_language, $port_name, $kind)
@@ -549,6 +578,11 @@ Builds a bounded slice connection expression over one source expression.
 
 Builds a bounded concatenation connection expression over one or more operand
 expressions.
+
+=head2 repeat_expr
+
+Builds a bounded fixed-count replication connection expression over one nested
+operand expression.
 
 =head2 bit_vector_literal_expr
 

@@ -23,6 +23,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     bit_select_expr
     bit_vector_literal_expr
     concat_expr
+    repeat_expr
     signal_ref_expr
     slice_expr
 );
@@ -418,6 +419,253 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for nested explicit top-concat toplinks');
 };
 
+subtest 'linked plan builder preserves bounded repeat source groups' => sub {
+    my @ports = (
+        port('header_bus', 'input', 2, undef),
+        port('status_bus', 'input', 1, undef),
+        port('payload_bus', 'input', 2, undef),
+    );
+
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        lane => 'C3',
+        composition_spec => composition_spec('repeat_concat_top'),
+        top => FSM::Composition::Top->new(name => 'repeat_concat_top'),
+        ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
+        ports => \@ports,
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(
+                        source => 'header_bus,{3{status_bus[0]}},payload_bus[1:0]',
+                        target => 'uart_tx.data_in',
+                    ),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance(
+                'rtl',
+                'uart_tx',
+                port('data_in', 'input', 7, undef),
+            ),
+        ],
+        fsm_file => 'repeat_concat_top.fsm',
+        header => 'repeat_concat_top',
+    );
+
+    isa_ok($plan, 'FSM::Composition::Plan');
+    is($plan->lane, 'C3', 'builder records the active explicit-link lane for repeat source groups');
+    is(scalar(@{$plan->nets}), 0, 'repeat source groups over top operands do not force synthetic carrier nets');
+
+    my %bindings = map { $_->{port_name} => $_ } @{$plan->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{data_in}{connection_expr},
+        concat_expr(
+            signal_ref_expr('header_bus'),
+            repeat_expr(3, bit_select_expr('status_bus', 0)),
+            slice_expr('payload_bus', 1, 0),
+        ),
+        'repeat source groups become typed repeat expressions inside the concat binding tree',
+    );
+};
+
+subtest 'pipeline and CLI emit bounded repeat source groups for explicit toplinks' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'repeat_concat_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'repeat_concat_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:repeat_concat_top
+  (?ports:public_io
+    header_bus<2
+    status_bus
+    payload_bus<2
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /header_bus,{3{status_bus[0]}},payload_bus[1:0]/uart_tx.data_in/
+  )
+)
+
+(?rtlif:uart_tx
+  data_in<7:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C3', 'repeat explicit top-concat toplinks stay on the C3 lane');
+
+    my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{data_in}{connection_expr},
+        concat_expr(
+            signal_ref_expr('header_bus'),
+            repeat_expr(3, bit_select_expr('status_bus', 0)),
+            slice_expr('payload_bus', 1, 0),
+        ),
+        'pipeline preserves the typed repeat binding in the realized composition plan',
+    );
+
+    my $hdl = $result->{hdl_code};
+    like(
+        $hdl,
+        qr/\.data_in\(\{header_bus,\s*\{3\{status_bus\[0\]\}\},\s*payload_bus\[1:0\]\}\)/,
+        'generated HDL emits the bounded repeat group directly on the child port',
+    );
+    unlike($hdl, qr/\bwire\s+comp_link_/s, 'generated HDL does not invent synthetic carrier nets for top-only repeat bindings');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+
+    ok($success, 'CLI succeeds for bounded repeat explicit toplinks');
+    ok(-e $output_path, 'CLI writes HDL for bounded repeat explicit toplinks');
+};
+
+subtest 'child-output repeat groups share deterministic carriers and direct top-output assignments' => sub {
+    my @ports = (
+        port('packed_out', 'output', 4, undef),
+    );
+
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        lane => 'C3',
+        composition_spec => composition_spec('child_repeat_top'),
+        top => FSM::Composition::Top->new(name => 'child_repeat_top'),
+        ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
+        ports => \@ports,
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(
+                        source => '{2{producer.serial_lo}}',
+                        target => 'consumer.data_in',
+                    ),
+                    FSM::Composition::Link->new(
+                        source => '{2{producer.serial_lo}}',
+                        target => 'packed_out',
+                    ),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance(
+                'rtl',
+                'producer',
+                port('serial_lo', 'output', 2, undef),
+            ),
+            realized_instance(
+                'rtl',
+                'consumer',
+                port('data_in', 'input', 4, undef),
+            ),
+        ],
+        fsm_file => 'child_repeat_top.fsm',
+        header => 'child_repeat_top',
+    );
+
+    isa_ok($plan, 'FSM::Composition::Plan');
+    is($plan->lane, 'C3', 'builder records the active explicit-link lane for child-output repeat groups');
+    is_deeply(
+        [map { $_->name } @{$plan->nets}],
+        ['comp_link_producer_serial_lo'],
+        'child-output repeat groups allocate one deterministic base carrier per repeated child-output family',
+    );
+
+    my %bindings_by_instance = map { $_->instance_name => $_ } @{$plan->instances};
+    my %producer_bindings = map { $_->{port_name} => $_ } @{$bindings_by_instance{producer}->port_bindings};
+    my %consumer_bindings = map { $_->{port_name} => $_ } @{$bindings_by_instance{consumer}->port_bindings};
+
+    is($producer_bindings{serial_lo}{signal_name}, 'comp_link_producer_serial_lo', 'repeated child output still binds once to its shared base carrier');
+    is_deeply(
+        $consumer_bindings{data_in}{connection_expr},
+        repeat_expr(2, signal_ref_expr('comp_link_producer_serial_lo')),
+        'child-output repeat groups become typed repeat bindings over the shared base carrier',
+    );
+    is_deeply(
+        $plan->auxiliary_assignments,
+        [
+            '    assign packed_out = {2{comp_link_producer_serial_lo}};',
+        ],
+        'child-output repeat groups also drive declared top outputs through direct assignments over that carrier',
+    );
+};
+
+subtest 'pipeline and CLI emit child-output repeat groups through shared carriers' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'child_repeat_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'child_repeat_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:child_repeat_top
+  (?ports:public_io
+    packed_out>4
+  )
+  (?rtl:producer)
+  (?rtl:consumer)
+  (?toplink:wiring
+    /{2{producer.serial_lo}}/consumer.data_in/
+    /{2{producer.serial_lo}}/packed_out/
+  )
+)
+
+(?rtlif:producer
+  serial_lo>2:data
+)
+
+(?rtlif:consumer
+  data_in<4:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C3', 'child-output repeat toplinks stay on the C3 lane');
+
+    my %instances = map { $_->instance_name => $_ } @{$result->{composition_plan}->instances};
+    my %consumer_bindings = map { $_->{port_name} => $_ } @{$instances{consumer}->port_bindings};
+    is_deeply(
+        $consumer_bindings{data_in}{connection_expr},
+        repeat_expr(2, signal_ref_expr('comp_link_producer_serial_lo')),
+        'pipeline preserves the typed child-output repeat binding in the realized composition plan',
+    );
+
+    my $hdl = $result->{hdl_code};
+    like($hdl, qr/\bwire\s+\[1:0\]\s+comp_link_producer_serial_lo\s*;/s, 'generated HDL emits the shared carrier wire for the repeated child-output family');
+    like($hdl, qr/\.serial_lo\(comp_link_producer_serial_lo\)/, 'generated HDL binds the producer output to its shared repeat carrier');
+    like($hdl, qr/\.data_in\(\{2\{comp_link_producer_serial_lo\}\}\)/, 'generated HDL emits the child-output repeat directly on the consumer input');
+    like($hdl, qr/assign packed_out = \{2\{comp_link_producer_serial_lo\}\};/, 'generated HDL emits the child-output repeat directly on the top output assignment');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+
+    ok($success, 'CLI succeeds for child-output repeat toplinks');
+    ok(-e $output_path, 'CLI writes HDL for child-output repeat toplinks');
+};
+
 subtest 'child-output concat operands share deterministic carriers and direct top-output assignments' => sub {
     my @ports = (
         port('header_bus', 'input', 2, undef),
@@ -603,7 +851,7 @@ subtest 'linked plan builder rejects unsupported concat operands' => sub {
 
     like(
         $exception,
-        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
+        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', repeat groups like '\{4\{status_bus\[0\]\}\}', scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
         'builder blocks unsupported concat operands through the top-expression boundary',
     );
 };

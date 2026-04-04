@@ -1297,12 +1297,16 @@ Done:
 - That same source-side top-expression slice now also covers bounded concat sources:
   - explicit-link `C2` / `C3` child-input bindings may now use flat comma-separated source expressions such as `header_bus,status_bus[0],=1,payload_bus[3:0]`,
   - those bounded concat sources may now also keep nested brace-group structure such as `header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}` instead of being flattened during file parsing,
-  - concat operands are currently bounded to declared whole top-port refs, top-port bit/slice refs, child-output operands such as `producer.payload`, `producer.payload[7:4]`, and `producer.payload[0]`, one-bit scalar actuals `=0` / `=1`, intrinsic-width unsized binary/decimal/octal/hex actuals such as `=0b10`, `=170`, `=0d170`, `=0o7`, `=0xA5`, or `=A5`, and exact-width binary/decimal/octal/hex literal actuals,
+  - concat operands are currently bounded to declared whole top-port refs, top-port bit/slice refs, child-output operands such as `producer.payload`, `producer.payload[7:4]`, and `producer.payload[0]`, one-bit scalar actuals `=0` / `=1`, intrinsic-width unsized binary/decimal/octal/hex actuals such as `=0b10`, `=170`, `=0d170`, `=0o7`, `=0xA5`, or `=A5`, exact-width binary/decimal/octal/hex literal actuals, and bounded repeat groups such as `{3{status_bus[0]}}` or `{2{producer.serial_lo}}`,
   - those intrinsic-width unsized binary/octal/hex concat operands keep the width implied by their digits, and unsized decimal forms such as `=170` or `=0d170` now also keep the minimum width required by their numeric value instead of widening from the child-input target,
   - omitted/empty-`?ports` top-boundary inference now also sees the inferable bit/slice operands inside those concat sources,
   - child-output operands inside those concat sources now reuse the existing deterministic child-output carrier family and contribute fixed-width child-side evidence without becoming inferred top-boundary ports,
+  - repeat groups now lower through typed structural `repeat` expressions instead of raw renderer text, and repeated child-output operands reuse that same deterministic child-output carrier family instead of inventing repeat-only helper nets,
   - the bounded source frontend now preserves brace-grouped slash-token text before composition parsing, so those nested concat groups survive from `.fsm` source through raw AST, composition parsing, and emitted HDL instead of being damaged at read time,
-  - and omitted/empty-`?ports` top-boundary inference may now also size one remaining undeclared whole-port concat operand exactly from the child-input target remainder width, while several still-unsized whole-port operands still fail explicitly instead of guessing several widths at once.
+  - omitted/empty-`?ports` top-boundary inference may now also size one remaining undeclared whole-port concat operand exactly from the child-input target remainder width,
+  - it may now also size one undeclared repeated whole-port operand exactly when that same child-input remainder width divides evenly across the repeat count,
+  - while several still-unsized whole-port operands still fail explicitly instead of guessing several widths at once,
+  - and uneven repeat-width splits still fail explicitly instead of guessing one per-copy width silently.
 - The next explicit-link topology widening is now also shipped:
   - one realized child output source may now fan out to multiple top outputs through one deterministic shared carrier net plus explicit top-output assignments,
   - sibling child-input consumers may reuse that same carrier net in the same top without rebinding one public top output as the internal carrier,
@@ -1334,10 +1338,13 @@ Done:
   - and blocked overflowing decimal/octal/hex literal rejection.
 - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks:
   - direct linked-plan preservation of bounded concat bindings,
-  - end-to-end pipeline and CLI emission of those concat child-input bindings, now also including child-output operands, intrinsic-width unsized binary/decimal/octal/hex plus normalized exact-width decimal/octal/hex literal operands, and nested brace-group concat preservation,
+  - end-to-end pipeline and CLI emission of those concat child-input bindings, now also including child-output operands, intrinsic-width unsized binary/decimal/octal/hex plus normalized exact-width decimal/octal/hex literal operands, nested brace-group concat preservation, and bounded repeat-group lowering,
   - blocked unsupported concat-operand rejection through the top-expression boundary,
   - intrinsic-width unsized decimal concat success on both bare and `0d` spellings,
+  - child-output repeat groups reusing one deterministic shared carrier,
   - and blocked out-of-range child-expression rejection for concat child operands.
+- [t/167-structural-connection-expr-helpers.t](/Users/richarddje/Documents/github/fsmgen/t/167-structural-connection-expr-helpers.t) now also locks:
+  - helper, renderer, dependency, binding-text, and structural-emitter support for bounded `repeat_expr` nodes.
 - [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t) now also locks:
   - source-front-end preservation of brace-grouped raw `?toplink` slash tokens before composition parsing.
 - [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t) now also locks:
@@ -1364,13 +1371,16 @@ Done:
   - direct inference of undeclared top inputs from inferable concat top-expression operands,
   - omitted-port inference staying focused on true top operands even when child-output concat operands also participate,
   - residual-width inference for one undeclared whole-port concat operand,
+  - exact per-copy inference for one undeclared repeated whole-port operand,
   - and blocked several-unknown whole-port concat-operand rejection.
 - [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) now also locks:
-  - RTL-backed `C3` success with one undeclared whole-port concat operand inferred from the child-input target width.
+  - RTL-backed `C3` success with one undeclared whole-port concat operand inferred from the child-input target width,
+  - and RTL-backed `C3` success with one undeclared repeated whole-port operand inferred from the child-input target width.
 - [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now also locks:
   - `Top expression '...'` summary context for blocked concat-operand failures,
   - `Child expression '...'` summary context for blocked projected-child range failures,
   - the same summary context plus concise reason for blocked omitted-port concat-width inference failures,
+  - the same summary context plus concise reason for blocked omitted-port repeat-width inference failures,
   - and widened concise-reason wording for the binary/decimal/octal/hex literal actual family.
 - [t/179-composition-provenance-report-builder.t](/Users/richarddje/Documents/github/fsmgen/t/179-composition-provenance-report-builder.t) now also locks:
   - first-class provenance context for source-side child-output expressions,
@@ -1623,6 +1633,10 @@ Exit criteria:
   projections, with planner grouping by one deterministic base child-output
   carrier and binding typed projected expressions off that carrier for child
   inputs and top outputs instead of inventing per-projection helper nets.
+- `R11`: `StructuralRTLIR` connection expressions now also cover bounded
+  `repeat` nodes, so the structural connection AST can model source-side
+  replication groups such as `{3{status_bus[0]}}` or `{2{producer.serial_lo}}`
+  without falling back to renderer-only text.
 - `R11`: `StructuralRTLIR` connection expressions now also cover bounded
   `member_access` actuals, so the structural connection AST has started the
   richer aggregate/member connectivity lane without falling back to raw HDL

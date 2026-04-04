@@ -364,7 +364,7 @@ First shipped `R11` slice now in tree:
   - direct `?top` generation results now expose serialized `structural_rtl_ir`,
   - composition-top `module_info` now mirrors that same serialized structural surface,
   - the shipped slice currently covers explicit top ports, internal nets, realized instances, pin bindings, and auxiliary assignments,
-  - those structural instance pin bindings now also preserve typed `connection_expr` nodes, currently bounded to backend-neutral `signal_ref`, source-side top-port `bit_select` / `slice` forms, and the first shipped explicit-toplink actual-source forms through `open` and bit-vector literals,
+  - those structural instance pin bindings now also preserve typed `connection_expr` nodes, currently bounded to backend-neutral `signal_ref`, source-side top-port `bit_select` / `slice` / `repeat` forms, source-side child-output `bit_select` / `slice` / `repeat` forms, and the first shipped explicit-toplink actual-source forms through `open` and bit-vector literals,
   - and realized composition-plan instances now also preserve those same typed nodes before structural serialization instead of forcing `StructuralRTLIR` to synthesize them late,
   - with that earlier binding normalization now owned by `FSM::Composition::RealizedInstance` itself instead of only by `HDLGenerator`,
   - and the current bounded `signal_ref` / `open` / bit-vector-literal construction, signal-name recovery, and backend-neutral text rendering for those actual-connection nodes now also live in dedicated `FSM::IR::StructuralRTLIR::ConnectionExpr` helpers instead of staying split across pipeline glue,
@@ -375,6 +375,7 @@ First shipped `R11` slice now in tree:
   - and explicit `?toplink` may now use `=open`, scalar `=0` / `=1`, unsized binary/decimal/octal/hex direct forms such as `=0b10`, `=0d10`, `=0o7`, `=0xA`, `=170`, or `=A5`, underscore-separated spellings such as `=0b1010_0101`, `=1_70`, `=0o2_45`, and `=8'hA_5`, and exact-width `=N'b...` / `=N'd...` / `=N'o...` / `=N'h...` as source actuals, with `=open` still targeting realized child inputs only while direct scalar `=0` / `=1` plus unsized binary/decimal/octal/hex direct actuals widen to the realized child-input or declared top-output target width, exact-width literal actuals may now also drive declared top outputs, and linked planning preserves those bindings directly instead of inventing helper nets or undeclared same-name top inputs,
   - and that same direct structural binding path now also covers source-side top-port `name[index]` / `name[msb:lsb]` expressions over declared top inputs when they drive realized child inputs, again without inventing helper nets or undeclared same-name top inputs,
   - and that same direct structural binding path now also covers source-side child-output `instance.port[index]` / `instance.port[msb:lsb]` expressions when they drive realized child inputs or declared top outputs, with linked planning grouping those projected-child uses by one deterministic base carrier instead of inventing per-projection helper nets,
+  - and that same structural path now also covers bounded repeat groups such as `{3{status_bus[0]}}` and `{2{producer.serial_lo}}`, with child-output repeats reusing that same deterministic base-carrier family instead of inventing repeat-only helper nets,
   - and bounded source-side concat expressions may now also include child-output operands such as `producer.payload`, `producer.payload[7:4]`, and `producer.payload[0]`, with those operands reusing that same deterministic base-carrier family instead of inventing concat-only helper nets or raw dotted-name text paths,
   - and the bounded failed-run summary path now also keeps that same structural/top-expression slice honest, so blocked actual-source role failures preserve `Actual source '=...'` context, blocked actual-endpoint target failures preserve `Actual endpoint '=...'` context, blocked top-expression range failures preserve `Top expression '...'` context, and blocked child-expression range failures preserve `Child expression '...'` context under the concise `explicit actual binding` or `explicit link endpoint resolution` boundary as appropriate,
   - and the active composition-top emitter now walks that structural layer instead of re-reading only `FSM::Composition::Plan` state directly during top-module dumping.
@@ -859,6 +860,14 @@ The first honest `R11` slices are now:
   `.fsm` source through raw AST and composition parsing, so nested structural
   `concat` nodes survive file loading instead of being flattened by the source
   reader before lowering even begins.
+- Forward-IR note: that same producer/consumer path now also covers bounded
+  source-side repeat groups such as `{3{status_bus[0]}}` and
+  `{2{producer.serial_lo}}`, with linked planning lowering them into typed
+  structural `repeat` nodes instead of renderer-only text, child-output
+  repeats reusing the same deterministic base carrier family as projected
+  child-output operands, and omitted/empty-`?ports` inference now also
+  deriving one undeclared repeated whole-port operand when the child-target
+  remainder width divides evenly across the repeat count.
 - Forward-IR note: explicit-link planning now also supports one realized child
   output source fanning out to multiple top outputs through one deterministic
   shared carrier net plus explicit top-output assignments, so that topology no

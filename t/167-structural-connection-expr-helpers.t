@@ -18,6 +18,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     bit_select_expr
     slice_expr
     concat_expr
+    repeat_expr
     bit_vector_literal_expr
     signal_ref_binding
     update_binding_signal_ref
@@ -817,6 +818,89 @@ subtest 'bounded concat connection expressions render through the helper and the
         'structural backend emitter walks concat connection expressions directly',
     );
 
+};
+
+subtest 'bounded repeat connection expressions render through the helper and the structural emitter' => sub {
+    is_deeply(
+        repeat_expr(3, bit_select_expr('ctrl', 0)),
+        {
+            kind => 'repeat',
+            repeat_count => 3,
+            operand => {
+                kind => 'bit_select',
+                source_expr => {
+                    kind => 'signal_ref',
+                    signal_name => 'ctrl',
+                },
+                index => 0,
+            },
+        },
+        'repeat helper preserves the nested structural operand expression and repeat count',
+    );
+
+    is(
+        render_expr(repeat_expr(3, bit_select_expr('ctrl', 0))),
+        '{3{ctrl[0]}}',
+        'repeat expressions render through the current verilog-family backend',
+    );
+
+    is(
+        render_expr(repeat_expr(3, bit_select_expr('ctrl', 0)), 'triple_ctrl', 'vhdl'),
+        'ctrl(0) & ctrl(0) & ctrl(0)',
+        'repeat expressions expand through the current VHDL helper path',
+    );
+
+    is_deeply(
+        expr_signal_names(repeat_expr(3, bit_select_expr('ctrl', 0))),
+        ['ctrl'],
+        'repeat signal discovery preserves the referenced base signal',
+    );
+
+    is(
+        binding_expr_text({
+            port_name => 'triple_ctrl',
+            connection_expr => repeat_expr(3, bit_select_expr('ctrl', 0)),
+        }),
+        '{3{ctrl[0]}}',
+        'binding text rendering walks repeat expressions directly',
+    );
+
+    my $structural_rtl_ir = FSM::IR::StructuralRTLIR->new(
+        module_name => 'structural_repeat_top',
+        source_root_kind => 'top',
+        target_language => 'systemverilog',
+        ports => [
+            { name => 'ctrl', direction => 'input', width => 1, type => 'wire' },
+        ],
+        nets => [],
+        instances => [
+            {
+                kind => 'fsmc',
+                instance_name => 'u_child',
+                module_name => 'child_mod',
+                source_name => 'child_src',
+                interface_ports => [
+                    { name => 'triple_ctrl', direction => 'input', width => 3, type => undef },
+                ],
+                port_bindings => [
+                    {
+                        port_name => 'triple_ctrl',
+                        connection_expr => repeat_expr(3, bit_select_expr('ctrl', 0)),
+                    },
+                ],
+            },
+        ],
+        declared_links => [],
+        resolved_links => [],
+        auxiliary_assignments => [],
+    );
+
+    my $rendered = FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
+    like(
+        $rendered,
+        qr/\.triple_ctrl\(\{3\{ctrl\[0\]\}\}\)/,
+        'structural backend emitter walks repeat connection expressions directly',
+    );
 };
 
 subtest 'bounded bit-vector literal connection expressions render through the helper and the structural emitter' => sub {

@@ -32,6 +32,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     concat_expr
     normalized_binding
     open_expr
+    repeat_expr
     render_expr
     signal_ref_binding
     signal_ref_expr
@@ -1026,7 +1027,7 @@ sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $in
     if (!$spec && defined($endpoint) && ($endpoint =~ /\A\{.*\}\z/s || index($endpoint, ',') >= 0)) {
         confess
             "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
-            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'. ".
+            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', repeat groups like '{4{status_bus[0]}}', scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
     return undef unless $spec;
@@ -1080,6 +1081,10 @@ sub _collect_top_expression_inference_specs ($class, $spec) {
         return \@requirements;
     }
 
+    if ($expr_kind eq 'repeat') {
+        return $class->_collect_top_expression_inference_specs($spec->{operand});
+    }
+
     return [];
 }
 
@@ -1101,11 +1106,18 @@ sub _collect_top_expression_child_specs ($class, $spec) {
         return \@child_specs;
     }
 
+    if ($expr_kind eq 'repeat') {
+        return $class->_collect_top_expression_child_specs($spec->{operand});
+    }
+
     return [];
 }
 
 sub _parse_top_expression_spec ($class, $endpoint, %opts) {
     return undef unless defined($endpoint) && length($endpoint);
+
+    my $repeat_spec = $class->_parse_repeat_group_spec($endpoint, %opts);
+    return $repeat_spec if $repeat_spec;
 
     my $concat_payload = undef;
     if ($endpoint =~ /\A\{(.*)\}\z/s) {
@@ -1204,6 +1216,25 @@ sub _parse_top_expression_spec ($class, $endpoint, %opts) {
     }
 
     return undef;
+}
+
+sub _parse_repeat_group_spec ($class, $endpoint, %opts) {
+    return undef unless defined($endpoint) && $endpoint =~ /\A\{([1-9]\d*)\{(.*)\}\}\z/s;
+
+    my ($repeat_count, $operand_text) = (0 + $1, $2);
+    my $operand_spec = $class->_parse_top_expression_spec(
+        $operand_text,
+        allow_plain_top_ref => 1,
+        allow_literal_actual => 1,
+        allow_child_ref => 1,
+    ) or return undef;
+
+    return {
+        raw => $endpoint,
+        expr_kind => 'repeat',
+        repeat_count => $repeat_count,
+        operand => $operand_spec,
+    };
 }
 
 sub _split_concat_operands ($class, $inner_text) {
@@ -1610,6 +1641,25 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
         };
     }
 
+    if ($expr_kind eq 'repeat') {
+        my $resolved_operand = $class->_resolve_top_expression_spec(
+            $spec->{operand},
+            $top_ports_by_name,
+            $instances_by_name,
+            $child_ports_by_instance,
+            $endpoint,
+            $fsm_file,
+            $header,
+        );
+
+        return {
+            width => ($spec->{repeat_count} || 0) * $resolved_operand->{width},
+            connection_expr => repeat_expr($spec->{repeat_count}, $resolved_operand->{connection_expr}),
+            base_ports => [@{$resolved_operand->{base_ports} || []}],
+            child_base_sources => [@{$resolved_operand->{child_base_sources} || []}],
+        };
+    }
+
     my $port_name = $spec->{port_name};
     my $top_port = $top_ports_by_name->{$port_name};
 
@@ -1733,6 +1783,13 @@ sub rebind_source_expr_with_child_carriers ($class, $expr, $carrier_by_child_bas
         return concat_expr(map {
             $class->rebind_source_expr_with_child_carriers($_, $carrier_by_child_base_endpoint)
         } @{$expr->{operands} || []});
+    }
+
+    if ($kind eq 'repeat') {
+        return repeat_expr(
+            $expr->{repeat_count},
+            $class->rebind_source_expr_with_child_carriers($expr->{operand}, $carrier_by_child_base_endpoint),
+        );
     }
 
     if ($kind eq 'bit_vector_literal') {

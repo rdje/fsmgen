@@ -410,22 +410,28 @@ sub _record_inferred_ports_from_top_expression ($class, $inferred_specs, $declar
         record_requirements => 1,
     );
 
-    return $analysis->{progress} unless (($expression_spec->{expr_kind} || '') eq 'concat');
+    my $expr_kind = $expression_spec->{expr_kind} || '';
+    return $analysis->{progress}
+        unless $expr_kind eq 'concat' || $expr_kind eq 'repeat';
 
     my @unresolved = @{$analysis->{unresolved_signal_refs} || []};
     return $analysis->{progress} unless @unresolved == 1;
 
     my $target_width = $child_endpoint->{port}->width;
     my $remaining_width = $target_width - $analysis->{known_exact_width};
-    return $analysis->{progress} unless $remaining_width >= 1;
+    my $width_multiplier = $unresolved[0]{width_multiplier} || 1;
+    return $analysis->{progress} unless $remaining_width >= $width_multiplier;
+    return $analysis->{progress} if $remaining_width % $width_multiplier != 0;
+    my $inferred_width = int($remaining_width / $width_multiplier);
+    return $analysis->{progress} unless $inferred_width >= 1;
 
     my $type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($child_endpoint->{port}->type);
     return $class->_record_inferred_top_port_requirement(
         $inferred_specs,
         $unresolved[0]{port_name},
         'input',
-        $remaining_width,
-        $remaining_width,
+        $inferred_width,
+        $inferred_width,
         $type,
         $evidence,
         $fsm_file,
@@ -434,7 +440,8 @@ sub _record_inferred_ports_from_top_expression ($class, $inferred_specs, $declar
 }
 
 sub _assert_top_expression_inference_is_resolved ($class, $declared_by_name, $inferred_specs, $expression_spec, $child_endpoint, $evidence, $fsm_file, $header) {
-    return unless (($expression_spec->{expr_kind} || '') eq 'concat');
+    my $expr_kind = $expression_spec->{expr_kind} || '';
+    return unless $expr_kind eq 'concat' || $expr_kind eq 'repeat';
 
     my $analysis = $class->_analyze_top_expression_for_inference(
         $declared_by_name,
@@ -454,11 +461,21 @@ sub _assert_top_expression_inference_is_resolved ($class, $declared_by_name, $in
     my $target_width = $child_endpoint->{port}->width;
     my $known_width = $analysis->{known_exact_width};
     my $remaining_width = $target_width - $known_width;
+    my $width_multiplier = $unresolved[0]{width_multiplier} || 1;
 
     if (@operand_names > 1) {
         confess
             "Composition source '$header' in '$fsm_file' omits top ports '".join("', '", @operand_names)."', ".
             "but explicit top-link port inference is blocked because top expression '".$expression_spec->{raw}."' leaves several undeclared whole-port concat operands without exact widths. ".
+            "Seen explicit link evidence: $evidence. ".
+            "The current bounded omitted/empty-'?ports' concat inference slice only infers undeclared whole-port operands when one remaining concat operand can be sized exactly from the child-input target width. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    if ($width_multiplier > 1 && $remaining_width >= 1 && $remaining_width % $width_multiplier != 0) {
+        confess
+            "Composition source '$header' in '$fsm_file' omits top port '".$operand_names[0]."', ".
+            "but explicit top-link port inference is blocked because top expression '".$expression_spec->{raw}."' leaves remaining width $remaining_width that cannot be divided evenly across $width_multiplier repeated uses of undeclared whole-port concat operand '".$operand_names[0]."'. ".
             "Seen explicit link evidence: $evidence. ".
             "The current bounded omitted/empty-'?ports' concat inference slice only infers undeclared whole-port operands when one remaining concat operand can be sized exactly from the child-input target width. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -490,6 +507,20 @@ sub _annotate_expression_spec_child_widths ($class, $expression_spec, $instances
                 )
             } @{$expression_spec->{operands} || []}
         ];
+        return \%annotated;
+    }
+
+    if ($expr_kind eq 'repeat') {
+        my $annotated_operand = $class->_annotate_expression_spec_child_widths(
+            $expression_spec->{operand},
+            $instances_by_name,
+            $child_ports_by_instance,
+            $fsm_file,
+            $header,
+        );
+        $annotated{operand} = $annotated_operand;
+        $annotated{width} = ($expression_spec->{repeat_count} || 0) * ($annotated_operand->{width} || 0)
+            if defined($annotated_operand->{width});
         return \%annotated;
     }
 
@@ -562,6 +593,10 @@ sub _expression_spec_mentions_undeclared_top_inputs ($class, $expression_spec, $
         || $expr_kind eq 'child_bit_select'
         || $expr_kind eq 'child_slice';
 
+    if ($expr_kind eq 'repeat') {
+        return $class->_expression_spec_mentions_undeclared_top_inputs($expression_spec->{operand}, $declared_by_name);
+    }
+
     if ($expr_kind eq 'concat') {
         for my $operand_spec (@{$expression_spec->{operands} || []}) {
             return 1 if $class->_expression_spec_mentions_undeclared_top_inputs($operand_spec, $declared_by_name);
@@ -596,6 +631,7 @@ sub _analyze_top_expression_for_inference ($class, $declared_by_name, $inferred_
             known_exact_width => 0,
             unresolved_signal_refs => [{
                 port_name => $port_name,
+                width_multiplier => 1,
             }],
         };
     }
@@ -638,6 +674,30 @@ sub _analyze_top_expression_for_inference ($class, $declared_by_name, $inferred_
         };
     }
 
+    if ($expr_kind eq 'repeat') {
+        my $operand_analysis = $class->_analyze_top_expression_for_inference(
+            $declared_by_name,
+            $inferred_specs,
+            $expression_spec->{operand},
+            $child_endpoint,
+            $evidence,
+            $fsm_file,
+            $header,
+            %opts,
+        );
+        my @unresolved_signal_refs;
+        $class->_merge_unresolved_signal_refs(
+            \@unresolved_signal_refs,
+            $operand_analysis->{unresolved_signal_refs} || [],
+            ($expression_spec->{repeat_count} || 0),
+        );
+        return {
+            progress => $operand_analysis->{progress},
+            known_exact_width => ($expression_spec->{repeat_count} || 0) * $operand_analysis->{known_exact_width},
+            unresolved_signal_refs => \@unresolved_signal_refs,
+        };
+    }
+
     if ($expr_kind eq 'concat') {
         my $progress = 0;
         my $known_exact_width = 0;
@@ -656,7 +716,10 @@ sub _analyze_top_expression_for_inference ($class, $declared_by_name, $inferred_
             );
             $progress ||= $operand_analysis->{progress};
             $known_exact_width += $operand_analysis->{known_exact_width};
-            push @unresolved_signal_refs, @{$operand_analysis->{unresolved_signal_refs} || []};
+            $class->_merge_unresolved_signal_refs(
+                \@unresolved_signal_refs,
+                $operand_analysis->{unresolved_signal_refs} || [],
+            );
         }
 
         return {
@@ -783,7 +846,38 @@ sub _expression_spec_width ($class, $expression_spec) {
         return $width;
     }
 
+    if ($expr_kind eq 'repeat') {
+        return ($expression_spec->{repeat_count} || 0)
+            * $class->_expression_spec_width($expression_spec->{operand});
+    }
+
     confess "TopPortInferenceBuilder requires a supported top-expression exact-width rule";
+}
+
+sub _merge_unresolved_signal_refs ($class, $into, $incoming, $multiplier = 1) {
+    return unless ref($into) eq 'ARRAY';
+    return unless ref($incoming) eq 'ARRAY';
+    return unless defined($multiplier) && $multiplier =~ /\A\d+\z/ && $multiplier >= 1;
+
+    my %index_by_port = map { (($into->[$_]{port_name} || '') => $_) } 0 .. $#$into;
+
+    for my $entry (@$incoming) {
+        next unless ref($entry) eq 'HASH';
+        my $port_name = $entry->{port_name} || '';
+        next unless length $port_name;
+        my $entry_multiplier = ($entry->{width_multiplier} || 1) * $multiplier;
+
+        if (exists $index_by_port{$port_name}) {
+            $into->[$index_by_port{$port_name}]{width_multiplier} += $entry_multiplier;
+            next;
+        }
+
+        push @$into, {
+            port_name => $port_name,
+            width_multiplier => $entry_multiplier,
+        };
+        $index_by_port{$port_name} = $#$into;
+    }
 }
 
 sub _port_groups_from_instances ($realized_instances) {

@@ -156,6 +156,38 @@ subtest 'explicit-toplink builder infers undeclared top inputs from concat opera
     );
 };
 
+subtest 'explicit-toplink builder infers one undeclared repeated whole-port operand from child target width' => sub {
+    my $ports = FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
+        ports => [],
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(
+                        source => '{2{payload_bus}}',
+                        target => 'sink.frame_in',
+                    ),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance('sink',
+                input_port('frame_in', 8),
+            ),
+        ],
+        fsm_file => 'fixture.fsm',
+        header => 'fixture',
+    );
+
+    is_deeply(
+        [map { [$_->name, $_->direction, $_->width, $_->origin_kind] } @$ports],
+        [
+            ['payload_bus', 'input', 4, 'inferred_explicit_toplink_port'],
+        ],
+        'builder can infer one undeclared repeated whole-port operand when the remaining child-target width divides evenly across the repeat count',
+    );
+};
+
 subtest 'explicit-toplink builder infers one undeclared whole-port concat operand from child target width' => sub {
     my $ports = FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
         ports => [],

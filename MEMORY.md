@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-05: bounded toplink repeat groups now share the typed top-expression path too
+- Stayed in the active `R11` lane and widened the same typed source-expression family instead of inventing a renderer-only shortcut for replication syntax.
+- Important continuity note:
+  - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) now provides first-class `repeat_expr(...)` nodes with recursive dependency recovery and backend rendering, so bounded replication groups survive as structural AST instead of raw text,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts source-side repeat groups such as `{3{status_bus[0]}}` and `{2{producer.serial_lo}}` through the same explicit `?toplink` path used by the existing top expressions,
+  - those repeat groups now work on direct child-input bindings, direct top-output assignments, and nested concat membership, and repeated child-output operands reuse the existing deterministic base carrier family instead of inventing repeat-only helper nets,
+  - [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm) now also infers one undeclared repeated whole-port operand when the child-target remainder width divides evenly across the repeat count, while uneven repeat-width splits fail explicitly,
+  - [t/167-structural-connection-expr-helpers.t](/Users/richarddje/Documents/github/fsmgen/t/167-structural-connection-expr-helpers.t) now locks helper/rendering support for `repeat_expr`,
+  - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for top-only and child-output repeat groups,
+  - [t/177-composition-top-port-inference-builder.t](/Users/richarddje/Documents/github/fsmgen/t/177-composition-top-port-inference-builder.t) and [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) now lock repeat-aware omitted-port inference,
+  - and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now keeps `Top expression '...'` context for blocked repeat-width inference failures.
+
 ## 2026-04-04: child-output concat operands now share the bounded top-expression path too
 - Stayed in the active `R11` lane and landed the next honest source-expression widening on top of that same typed concat path.
 - Important continuity note:

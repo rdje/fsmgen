@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-05: bounded repeat groups belong in the typed source-expression AST, not in renderer-only text
+- Kept this in the active `R11` lane and shipped the next source-expression widening as a structural-AST feature instead of another ad hoc string case.
+- Landed behavior:
+  - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) now exposes `repeat_expr(...)` as a first-class bounded connection-expression node beside `concat_expr(...)`, with recursive signal discovery and backend rendering rather than treating `{N{...}}` as opaque text,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now parses source-side repeat groups such as `{3{status_bus[0]}}` and `{2{producer.serial_lo}}` through the same explicit-toplink source-expression family as top refs, child refs, slices, literals, and concat,
+  - repeated child-output operands now reuse the same deterministic base-carrier family as the already-shipped projected child-output source forms instead of inventing repeat-only helper nets,
+  - and repeat groups may now also appear inside bounded concat sources, so replication composes with the existing typed source-expression family instead of opening a separate syntax island.
+- Why this is worth shipping:
+  - it keeps the AST honest for future backend styles, because replication is now a real structural node the emitter can walk instead of a string feature that only the current SV path understands,
+  - it keeps omitted/empty-`?ports` inference principled by inferring repeated whole-port operands only when the child-target remainder width divides evenly across the repeat count,
+  - and it improves the failure contract by making blocked repeat-width inference a structured `Top expression '...'` summary case rather than another planner crash or raw diagnostic blob.
+
 ## 2026-04-04: child-output concat operands now share the bounded top-expression path too
 - Kept this in the active `R11` lane and widened source-side concat one more time without weakening the typed explicit-link contract.
 - Landed behavior:
