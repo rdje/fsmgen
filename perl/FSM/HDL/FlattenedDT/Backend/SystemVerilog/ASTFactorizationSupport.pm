@@ -62,7 +62,9 @@ sub generate_intermediate_signals ($self, $fsm_module) {
             }
 
             # Generate assign statement from AST
-            my $systemverilog_expr = $ast->to_systemverilog();
+            my $systemverilog_expr = $ctx->{enable_graph_ast_support}
+                ? $ctx->{enable_graph_ast_support}->ast_to_systemverilog($ast)
+                : $ast->to_systemverilog();
             $hdl .= "  assign $signal_name = $systemverilog_expr;\n";
         }
     } else {

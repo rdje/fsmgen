@@ -349,8 +349,113 @@ sub is_simple_expression {
     
     # Signal references are simple
     return 1 if $ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef');
+
+    # Truthiness-style comparisons are semantically simple and should stay inline.
+    return 1 if $self->is_truthiness_comparison($ast);
     
     # Everything else (binary ops, unary ops, etc.) is not simple
+    return 0;
+}
+
+sub is_truthiness_comparison {
+    my ($self, $ast) = @_;
+
+    return 0 unless $ast && blessed($ast);
+    return 0 unless $ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp');
+
+    my $operator = $ast->can('operator') ? ($ast->operator || '') : '';
+    return 0 unless $operator eq '==' || $operator eq '!=';
+
+    my ($signalish_operand, $literal_operand) = $self->extract_truthiness_operands(
+        $ast->can('left') ? $ast->left : undef,
+        $ast->can('right') ? $ast->right : undef,
+    );
+    return 0 unless $signalish_operand && $literal_operand;
+
+    my $literal_value = $self->literal_numeric_value($literal_operand);
+    return 1 if defined($literal_value) && $literal_value == 0;
+    return 1 if defined($literal_value) && $literal_value == 1 && $self->operand_is_single_bit($signalish_operand);
+    return 0;
+}
+
+sub extract_truthiness_operands {
+    my ($self, $left, $right) = @_;
+
+    if ($self->is_truthiness_signal_operand($left) && $self->is_literal_operand($right)) {
+        return ($left, $right);
+    }
+    if ($self->is_truthiness_signal_operand($right) && $self->is_literal_operand($left)) {
+        return ($right, $left);
+    }
+
+    return;
+}
+
+sub is_truthiness_signal_operand {
+    my ($self, $ast) = @_;
+    return 0 unless $ast && blessed($ast);
+    return 1 if $ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef');
+    return 1 if $ast->isa('FSM::AST::IndexedRef') || $ast->isa('FSM::CoreAST::IndexedRef');
+    return 1 if $ast->isa('FSM::HDL::IntermediateSignalRef');
+    return 0;
+}
+
+sub is_literal_operand {
+    my ($self, $ast) = @_;
+    return 0 unless $ast && blessed($ast);
+    return 1 if $ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal');
+    return 0;
+}
+
+sub literal_numeric_value {
+    my ($self, $literal) = @_;
+    return undef unless $self->is_literal_operand($literal);
+
+    my $text = eval { $literal->to_systemverilog() };
+    $text = eval { $literal->value } unless defined $text && $text ne '';
+    return undef unless defined $text;
+
+    $text =~ s/\s+//g;
+    $text =~ s/_//g;
+
+    if ($text =~ /\A(\d+)'([bdhxBDHX])([0-9a-fA-FxXzZ]+)\z/) {
+        my ($radix_char, $digits) = (lc($2), $3);
+        return undef if $digits =~ /[xXzZ]/;
+        return oct("0b$digits") if $radix_char eq 'b';
+        return 0 + $digits if $radix_char eq 'd';
+        return hex($digits) if $radix_char eq 'h' || $radix_char eq 'x';
+    }
+
+    return 0 + $text if $text =~ /\A\d+\z/;
+    return undef;
+}
+
+sub operand_is_single_bit {
+    my ($self, $ast) = @_;
+    return 0 unless $ast && blessed($ast);
+
+    if ($ast->isa('FSM::CoreAST::IndexedRef') || $ast->isa('FSM::AST::IndexedRef')) {
+        return 1;
+    }
+
+    if ($ast->isa('FSM::CoreAST::SignalRef')) {
+        my $slice = eval { $ast->slice };
+        if (ref($slice) eq 'ARRAY' && @$slice == 2) {
+            return 1 if $slice->[0] == $slice->[1];
+            return (($slice->[0] - $slice->[1]) == 0) ? 1 : 0;
+        }
+        my $signal = eval { $ast->signal };
+        return 1 if $signal && $signal->can('width') && ($signal->width || 1) == 1;
+    }
+
+    if ($ast->isa('FSM::AST::SignalRef')) {
+        return 1;
+    }
+
+    if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
+        return 1;
+    }
+
     return 0;
 }
 
@@ -448,6 +553,26 @@ sub generate_ast_based_name {
     
     return "unknown_signal" unless $ast && blessed($ast);
     
+    if ($self->is_truthiness_comparison($ast)) {
+        my ($signalish_operand, $literal_operand) = $self->extract_truthiness_operands(
+            $ast->can('left') ? $ast->left : undef,
+            $ast->can('right') ? $ast->right : undef,
+        );
+        my $literal_value = $self->literal_numeric_value($literal_operand);
+        my $signal_name = $self->generate_ast_based_name($signalish_operand);
+        my $operator = $ast->can('operator') ? ($ast->operator || '') : '';
+
+        return $signal_name
+            if defined($literal_value)
+            && (($literal_value == 0 && $operator eq '!=')
+                || ($literal_value == 1 && $operator eq '==' && $self->operand_is_single_bit($signalish_operand)));
+
+        return "not_${signal_name}"
+            if defined($literal_value)
+            && (($literal_value == 0 && $operator eq '==')
+                || ($literal_value == 1 && $operator eq '!=' && $self->operand_is_single_bit($signalish_operand)));
+    }
+
     if ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
         my $left_name = $self->generate_ast_based_name($ast->can('left') ? $ast->left : undef) || "unknown";
         my $right_name = $self->generate_ast_based_name($ast->can('right') ? $ast->right : undef) || "unknown";

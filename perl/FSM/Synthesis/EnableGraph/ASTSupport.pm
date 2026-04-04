@@ -246,6 +246,9 @@ sub _render_binary_op ($self, $ast, $parent_precedence) {
     my $left = $ast->left;
     my $right = $ast->right;
 
+    my $truthiness_render = $self->_render_truthiness_comparison($operator, $left, $right);
+    return $truthiness_render if defined $truthiness_render;
+
     my $my_precedence = $self->_get_operator_precedence($operator);
     my $left_sv = $self->_ast_to_systemverilog_internal($left, $my_precedence);
     my $right_sv = $self->_ast_to_systemverilog_internal($right, $my_precedence);
@@ -266,6 +269,84 @@ sub _render_binary_op ($self, $ast, $parent_precedence) {
 
     return "($expr)" if $self->_needs_parentheses($my_precedence, $parent_precedence);
     return $expr;
+}
+
+sub _render_truthiness_comparison ($self, $operator, $left, $right) {
+    return undef unless $operator eq '==' || $operator eq '!=';
+
+    my ($signalish_operand, $literal_operand) = $self->_extract_truthiness_operands($left, $right);
+    return undef unless $signalish_operand && $literal_operand;
+
+    my $literal_value = $self->_literal_numeric_value($literal_operand);
+    return undef unless defined $literal_value;
+
+    my $operand_sv = $self->_ast_to_systemverilog_internal($signalish_operand, 10);
+
+    if ($literal_value == 0) {
+        return $operator eq '!='
+            ? $operand_sv
+            : $self->_render_truthiness_negation($signalish_operand, $operand_sv);
+    }
+
+    if ($literal_value == 1 && $self->_operand_is_single_bit($signalish_operand)) {
+        return $operator eq '=='
+            ? $operand_sv
+            : $self->_render_truthiness_negation($signalish_operand, $operand_sv);
+    }
+
+    return undef;
+}
+
+sub _extract_truthiness_operands ($self, $left, $right) {
+    if ($self->_is_truthiness_signal_operand($left) && $self->_is_literal_operand($right)) {
+        return ($left, $right);
+    }
+    if ($self->_is_truthiness_signal_operand($right) && $self->_is_literal_operand($left)) {
+        return ($right, $left);
+    }
+    return;
+}
+
+sub _is_truthiness_signal_operand ($self, $ast) {
+    return 0 unless $ast && blessed($ast);
+    return 1 if $ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef');
+    return 1 if $ast->isa('FSM::AST::IndexedRef') || $ast->isa('FSM::CoreAST::IndexedRef');
+    return 1 if $ast->isa('FSM::HDL::IntermediateSignalRef');
+    return 0;
+}
+
+sub _is_literal_operand ($self, $ast) {
+    return 0 unless $ast && blessed($ast);
+    return 1 if $ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal');
+    return 0;
+}
+
+sub _literal_numeric_value ($self, $literal) {
+    return undef unless $self->_is_literal_operand($literal);
+
+    my $text = eval { $literal->to_systemverilog() };
+    $text = eval { $literal->value } unless defined $text && $text ne '';
+    return undef unless defined $text;
+
+    $text =~ s/\s+//g;
+    $text =~ s/_//g;
+
+    if ($text =~ /\A(\d+)'([bdhxBDHX])([0-9a-fA-FxXzZ]+)\z/) {
+        my ($width, $radix_char, $digits) = ($1, lc($2), $3);
+        return undef if $digits =~ /[xXzZ]/;
+        return oct("0b$digits") if $radix_char eq 'b';
+        return 0 + $digits if $radix_char eq 'd';
+        return hex($digits) if $radix_char eq 'h' || $radix_char eq 'x';
+    }
+
+    return 0 + $text if $text =~ /\A\d+\z/;
+    return undef;
+}
+
+sub _render_truthiness_negation ($self, $operand, $operand_sv) {
+    return $self->_operand_needs_parens_for_negation($operand)
+        ? "!($operand_sv)"
+        : "!$operand_sv";
 }
 
 =head2 _get_operator_precedence
@@ -610,6 +691,10 @@ sub _operand_needs_parens_for_negation ($self, $operand) {
     return 0 if $operand->isa('FSM::AST::SignalRef') || $operand->isa('FSM::CoreAST::SignalRef');
     return 0 if $operand->isa('FSM::AST::Literal') || $operand->isa('FSM::CoreAST::Literal');
     return 0 if $operand->isa('FSM::AST::IndexedRef') || $operand->isa('FSM::CoreAST::IndexedRef');
+    if ($operand->isa('FSM::AST::BinaryOp') || $operand->isa('FSM::CoreAST::BinaryOp') || $operand->isa('FSM::HDL::SubstitutedBinaryOp')) {
+        my $operator = eval { $operand->operator } || '';
+        return 0 if defined $self->_render_truthiness_comparison($operator, $operand->left, $operand->right);
+    }
     return 1;
 }
 

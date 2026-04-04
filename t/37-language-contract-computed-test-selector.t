@@ -79,8 +79,8 @@ like($hdl, qr/\binput\s+wire\s+A\b/, 'generated HDL exposes A as an input');
 like($hdl, qr/\binput\s+wire\s+B\b/, 'generated HDL exposes B as an input');
 like($hdl, qr/\bwire\s+\Q$condition_signal\E\s*;/, 'generated HDL declares the computed selector intermediate signal');
 like($hdl, qr/\bassign\s+\Q$condition_signal\E\s*=\s*A\s*\|\s*B\s*;/, 'generated HDL drives the computed selector intermediate signal from the expression');
-like($hdl, qr/\b\Q$condition_signal\E\s*==\s*1'b0\b/, 'generated HDL reuses the intermediate signal in the =0 branch');
-like($hdl, qr/\b\Q$condition_signal\E\s*==\s*1'b1\b/, 'generated HDL reuses the intermediate signal in the =1 branch');
+like($hdl, qr/\bassign\s+s0_x_1_en\s*=\s*s0_en\s*&\s*!\Q$condition_signal\E\s*;/, 'generated HDL reuses the intermediate signal through direct negation in the =0 branch');
+like($hdl, qr/\bassign\s+s0_y_1_en\s*=\s*s0_en\s*&\s*\Q$condition_signal\E\s*;/, 'generated HDL reuses the intermediate signal directly in the =1 branch');
 
 done_testing();
 

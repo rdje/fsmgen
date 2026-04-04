@@ -74,12 +74,12 @@ assert_binary_condition($elements->[5]->condition, '!=', 'mode', '0', 'suffix <m
 
 my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
 
-like($hdl, qr/\breq\s*!=\s*0\b/, 'generated HDL contains explicit req != 0 shorthand lowering');
-like($hdl, qr/\bfull\s*==\s*0\b/, 'generated HDL contains explicit full == 0 shorthand lowering');
+like($hdl, qr/\bidle_req_hit_1_en\s*=\s*idle_en\s*&\s*req\b/, 'generated HDL renders req shorthand through bare-signal truthiness');
+like($hdl, qr/\bidle_full_hit_1_en\s*=\s*idle_en\s*&\s*!full\b/, 'generated HDL renders !full shorthand through direct negation');
 like($hdl, qr/\bmode\s*==\s*3\b/, 'generated HDL contains equality shorthand lowering');
 like($hdl, qr/\bcount\s*<=\s*3\b/, 'generated HDL contains relational shorthand lowering');
-like($hdl, qr/\bstart\s*!=\s*0\b/, 'generated HDL contains suffix truthiness shorthand lowering');
-like($hdl, qr/\bmode\s*!=\s*0\b/, 'generated HDL contains suffix relational shorthand lowering');
+like($hdl, qr/\bidle_start_hit_1_en\s*=\s*idle_en\s*&\s*start\b/, 'generated HDL renders suffix truthiness shorthand through bare-signal truthiness');
+like($hdl, qr/\bidle_next_state_busy_en\s*=\s*idle_en\s*&\s*mode\b/, 'generated HDL renders multibit nonzero suffix shorthand through bare-signal truthiness');
 
 done_testing();
 

@@ -96,8 +96,40 @@ FSM
     );
     is(
         $support->ast_to_systemverilog($negated),
-        '!((A == 1))',
-        'AST support keeps negated comparison rendering stable',
+        '!A',
+        'AST support collapses negated 1-bit truthiness comparisons to direct negation',
+    );
+
+    my $truthy_nonzero = FSM::AST::BinaryOp->new(
+        '!=',
+        FSM::AST::SignalRef->new('BUS1'),
+        FSM::AST::Literal->new('0'),
+    );
+    my $truthy_zero = FSM::AST::BinaryOp->new(
+        '==',
+        FSM::AST::SignalRef->new('A'),
+        FSM::AST::Literal->new('0'),
+    );
+    my $truthy_one = FSM::AST::BinaryOp->new(
+        '==',
+        FSM::AST::SignalRef->new('A'),
+        FSM::AST::Literal->new('1'),
+    );
+
+    is(
+        $support->ast_to_systemverilog($truthy_nonzero),
+        'BUS1',
+        'AST support collapses multibit nonzero comparisons to bare signal truthiness',
+    );
+    is(
+        $support->ast_to_systemverilog($truthy_zero),
+        '!A',
+        'AST support collapses 1-bit equals-zero comparisons to direct negation',
+    );
+    is(
+        $support->ast_to_systemverilog($truthy_one),
+        'A',
+        'AST support collapses 1-bit equals-one comparisons to the bare signal',
     );
 
     ok(

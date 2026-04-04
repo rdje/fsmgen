@@ -173,8 +173,8 @@ like(
 );
 like(
     $hdl,
-    qr/\bMODE\s*==\s*1'b1\b/,
-    'generated HDL still emits the test-node comparison in enable logic',
+    qr/\bassign\s+s0_en_and_MODE\s*=\s*s0_en\s*&\s*MODE\s*;/,
+    'generated HDL collapses the test-node comparison to direct 1-bit signal truthiness in enable logic',
 );
 
 done_testing();
