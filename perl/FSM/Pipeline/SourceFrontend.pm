@@ -36,7 +36,12 @@ sub parse_fsm_file ($class, %args) {
     fsm_trace_enter('Parse FSM file with Lispish', 2);
     fsm_debug("Parsing FSM file with Lispish parser", 1);
 
-    my $raw_ast = Lispish::multi($fsm_file);
+    my $source_text = $class->_slurp_fsm_file($fsm_file);
+    my $prepared_source_text = $class->_protect_braces_inside_slash_tokens($source_text);
+
+    my $raw_ast = Lispish::multi(\$prepared_source_text);
+
+    $class->_restore_preserved_slash_token_braces($raw_ast);
 
     unless ($raw_ast) {
         fsm_trace_decision(0, "Lispish parser returned undefined AST for '$fsm_file'", 1);
@@ -56,6 +61,104 @@ sub parse_fsm_file ($class, %args) {
     fsm_debug("FSM file parsed successfully", 1);
     fsm_trace_exit('FSM file parsed', 2);
     return $raw_ast;
+}
+
+sub _slurp_fsm_file ($class, $fsm_file) {
+    open my $fh, '<', $fsm_file
+        or confess "Error: Failed to open FSM file '$fsm_file': $!";
+    local $/;
+    my $source_text = <$fh>;
+    close $fh
+        or confess "Error: Failed to close FSM file '$fsm_file': $!";
+
+    unless (defined $source_text && length $source_text) {
+        confess "(Lispish::multi) -E- File '$fsm_file' is either empty or does not exit,";
+    }
+
+    return $source_text;
+}
+
+sub _protect_braces_inside_slash_tokens ($class, $source_text) {
+    my $left_placeholder = $class->_slash_token_left_brace_placeholder;
+    my $right_placeholder = $class->_slash_token_right_brace_placeholder;
+
+    if (index($source_text, $left_placeholder) >= 0 || index($source_text, $right_placeholder) >= 0) {
+        confess "Internal error: slash-token brace-preservation placeholder collision in FSM source";
+    }
+
+    my $protected = q{};
+    my $index = 0;
+    my $length = length($source_text);
+
+    while ($index < $length) {
+        my ($token, $end_index) = $class->_consume_slash_token($source_text, $index);
+        if (defined $token) {
+            $token =~ s/\{/$left_placeholder/g;
+            $token =~ s/\}/$right_placeholder/g;
+            $protected .= $token;
+            $index = $end_index + 1;
+            next;
+        }
+
+        $protected .= substr($source_text, $index, 1);
+        $index++;
+    }
+
+    return $protected;
+}
+
+sub _consume_slash_token ($class, $source_text, $start_index) {
+    return unless substr($source_text, $start_index, 1) eq '/';
+
+    my $previous = $start_index > 0 ? substr($source_text, $start_index - 1, 1) : q{};
+    return unless !length($previous) || $previous =~ /[\s\("\']/;
+
+    my $length = length($source_text);
+    my $slash_count = 0;
+    my $end_index = undef;
+
+    for (my $cursor = $start_index; $cursor < $length; $cursor++) {
+        my $char = substr($source_text, $cursor, 1);
+        next unless $char eq '/';
+
+        $slash_count++;
+        if ($slash_count == 3) {
+            $end_index = $cursor;
+            last;
+        }
+    }
+
+    return unless defined $end_index;
+
+    my $following = $end_index + 1 < $length ? substr($source_text, $end_index + 1, 1) : q{};
+    return unless !length($following) || $following =~ /[\s\)"\';]/;
+
+    return (substr($source_text, $start_index, $end_index - $start_index + 1), $end_index);
+}
+
+sub _restore_preserved_slash_token_braces ($class, $raw_ast) {
+    return unless defined $raw_ast;
+
+    if (ref($raw_ast) eq 'ARRAY') {
+        for my $item (@$raw_ast) {
+            if (ref($item)) {
+                $class->_restore_preserved_slash_token_braces($item);
+                next;
+            }
+
+            next unless defined $item;
+            $item =~ s/\Q@{[$class->_slash_token_left_brace_placeholder]}\E/\{/g;
+            $item =~ s/\Q@{[$class->_slash_token_right_brace_placeholder]}\E/\}/g;
+        }
+    }
+}
+
+sub _slash_token_left_brace_placeholder ($class) {
+    return '__FSMGEN_SLASH_TOKEN_LBRACE_PLACEHOLDER_7AF5A6B7__';
+}
+
+sub _slash_token_right_brace_placeholder ($class) {
+    return '__FSMGEN_SLASH_TOKEN_RBRACE_PLACEHOLDER_7AF5A6B7__';
 }
 
 sub classify_source_ast ($class, $raw_ast) {

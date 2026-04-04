@@ -848,6 +848,12 @@ The first honest `R11` slices are now:
   child-input bindings can now reuse the already-shipped structural `concat`
   node directly instead of inventing carrier nets or backend-specific text
   escapes while still keeping unsized decimal widening off the concat path.
+- Forward-IR note: those bounded concat forms now also preserve nested
+  brace-group source structure such as
+  `header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}` from
+  `.fsm` source through raw AST and composition parsing, so nested structural
+  `concat` nodes survive file loading instead of being flattened by the source
+  reader before lowering even begins.
 - Forward-IR note: explicit-link planning now also supports one realized child
   output source fanning out to multiple top outputs through one deterministic
   shared carrier net plus explicit top-output assignments, so that topology no
@@ -875,6 +881,11 @@ The first honest `R11` slices are now:
   now also be sized exactly from the child-input target remainder width while
   several still-unsized whole-port operands continue to fail explicitly
   instead of guessing several widths at once.
+- Forward-IR note: that same nested-concat preservation now also reaches
+  declared top-output assignments and omitted-port inference, so the same
+  brace-grouped source expression can drive a child input, drive a top output,
+  and contribute to omitted/empty-`?ports` inference without taking different
+  parser paths.
 - Forward-IR note: the structural connection-expression layer has now started
   the bounded member/field-access lane too, with a first `member_access` node
   over one source expression plus one identifier-like member name, rendered

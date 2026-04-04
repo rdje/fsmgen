@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-04
+### nested brace-group toplink concat sources now survive the full source frontend
+- Updated [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so slash-delimited link tokens now preserve literal brace groups during `.fsm` file parsing instead of letting the Lispish reader flatten `{...}` inside `?toplink` source expressions before composition parsing ever sees them.
+- That means bounded nested concat sources such as `/header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/uart_tx.data_in/` now survive from raw AST through typed composition parsing, omitted/empty-`?ports` inference, child-input binding, direct top-output assignment, and final emitted HDL.
+- Updated [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t), [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t), [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t), and [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) to lock raw-token preservation plus end-to-end nested-concat behavior across builder, pipeline, CLI, top-output assignment, and omitted-port inference.
+
 ### intrinsic-width unsized binary/octal/hex concat actuals now use the typed top-expression path
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so bounded source-side concat operands now accept intrinsic-width unsized binary/octal/hex actuals such as `=0b1_0`, `=0o2`, `=0xA`, and `=A`.
 - Those concat operands now keep the width implied by their digits instead of borrowing width from the child-input target, while unsized decimal spellings such as `=170` and `=0d170` intentionally remain direct-binding-only.

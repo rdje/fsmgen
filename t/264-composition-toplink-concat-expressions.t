@@ -284,6 +284,140 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for intrinsic-width unsized concat toplinks');
 };
 
+subtest 'linked plan builder preserves nested concat source groups' => sub {
+    my @ports = (
+        port('header_bus', 'input', 3, undef),
+        port('status_bus', 'input', 2, undef),
+        port('payload_bus', 'input', 4, undef),
+        port('serial_out', 'output', 1, undef),
+    );
+
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        lane => 'C3',
+        composition_spec => composition_spec('nested_concat_top'),
+        top => FSM::Composition::Top->new(name => 'nested_concat_top'),
+        ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
+        ports => \@ports,
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(
+                        source => 'header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}',
+                        target => 'uart_tx.data_in',
+                    ),
+                    FSM::Composition::Link->new(source => 'uart_tx.serial_out', target => 'serial_out'),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance(
+                'rtl',
+                'uart_tx',
+                port('data_in', 'input', 10, undef),
+                port('serial_out', 'output', 1, undef),
+            ),
+        ],
+        fsm_file => 'nested_concat_top.fsm',
+        header => 'nested_concat_top',
+    );
+
+    isa_ok($plan, 'FSM::Composition::Plan');
+    is($plan->lane, 'C3', 'builder records the active explicit-link lane for nested concat groups');
+    is(scalar(@{$plan->nets}), 0, 'nested top-concat child inputs do not force synthetic carrier nets');
+
+    my %bindings = map { $_->{port_name} => $_ } @{$plan->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{data_in}{connection_expr},
+        concat_expr(
+            signal_ref_expr('header_bus'),
+            concat_expr(
+                bit_select_expr('status_bus', 0),
+                bit_vector_literal_expr('10'),
+            ),
+            concat_expr(
+                slice_expr('payload_bus', 3, 2),
+                slice_expr('payload_bus', 1, 0),
+            ),
+        ),
+        'nested brace-group concat sources become nested typed concat binding expressions',
+    );
+    is($bindings{serial_out}{signal_name}, 'serial_out', 'child output still rebinds directly to the top output');
+};
+
+subtest 'pipeline and CLI emit nested concat source groups for explicit toplinks' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'nested_concat_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'nested_concat_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:nested_concat_top
+  (?ports:public_io
+    header_bus<3
+    status_bus<2
+    payload_bus<4
+    serial_out>
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/uart_tx.data_in/
+    /uart_tx.serial_out/serial_out/
+  )
+)
+
+(?rtlif:uart_tx
+  data_in<10:data
+  serial_out>:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C3', 'nested explicit top-concat toplinks stay on the C3 lane');
+
+    my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{data_in}{connection_expr},
+        concat_expr(
+            signal_ref_expr('header_bus'),
+            concat_expr(
+                bit_select_expr('status_bus', 0),
+                bit_vector_literal_expr('10'),
+            ),
+            concat_expr(
+                slice_expr('payload_bus', 3, 2),
+                slice_expr('payload_bus', 1, 0),
+            ),
+        ),
+        'pipeline preserves the typed nested concat binding in the realized composition plan',
+    );
+
+    my $hdl = $result->{hdl_code};
+    like(
+        $hdl,
+        qr/\.data_in\(\{header_bus,\s*\{status_bus\[0\],\s*2'b10\},\s*\{payload_bus\[3:2\],\s*payload_bus\[1:0\]\}\}\)/,
+        'generated HDL emits the nested concat groups directly on the child port',
+    );
+    unlike($hdl, qr/\bwire\s+comp_link_/s, 'generated HDL does not invent synthetic carrier nets for nested top-concat bindings');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+
+    ok($success, 'CLI succeeds for nested explicit top-concat toplinks');
+    ok(-e $output_path, 'CLI writes HDL for nested explicit top-concat toplinks');
+};
+
 subtest 'linked plan builder rejects unsupported concat operands' => sub {
     my $exception = eval {
         FSM::Composition::LinkedPlanBuilder->build_from_toplinks(

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-04: nested toplink concat grouping needed a source-front-end fix, not a lowering workaround
+- Kept this in the active `R11` lane and fixed the real quality seam instead of adding another local planner special case.
+- Landed behavior:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now preserves literal brace groups inside slash-delimited link tokens while reading `.fsm` files, so the Lispish reader no longer destroys nested `?toplink` concat structure before typed composition parsing starts,
+  - nested source expressions such as `header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}` now therefore survive from raw AST into typed `concat_expr` lowering, direct top-output assignment, and omitted/empty-`?ports` inference,
+  - and the nested-concat success path is now locked not only at the linked-plan layer but also at the raw source/frontend layer through [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t), [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t), [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t), and [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t).
+- Why this is worth shipping:
+  - the generated HDL is only supposed to reflect the AST, so preserving nested grouping has to happen before lowering rather than being reconstructed later from damaged text,
+  - fixing it at the source boundary keeps the planner/emitter honest and simpler,
+  - and it turns a visual/codegen bug into a regression-backed AST-fidelity contract instead of leaving the reader as a silent lossy stage.
+
 ## 2026-04-04: bounded concat can grow to intrinsic-width unsized binary/octal/hex actuals without reintroducing target-width guessing
 - Kept this in the active `R11` lane and widened the bounded concat family only where operand width is self-determined by spelling.
 - Landed behavior:

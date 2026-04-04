@@ -1296,9 +1296,11 @@ Done:
   - RTL-backed `C3` success with omitted `?ports` and inferred top inputs coming from source-side top expressions.
 - That same source-side top-expression slice now also covers bounded concat sources:
   - explicit-link `C2` / `C3` child-input bindings may now use flat comma-separated source expressions such as `header_bus,status_bus[0],=1,payload_bus[3:0]`,
+  - those bounded concat sources may now also keep nested brace-group structure such as `header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}` instead of being flattened during file parsing,
   - concat operands are currently bounded to declared whole top-port refs, top-port bit/slice refs, one-bit scalar actuals `=0` / `=1`, intrinsic-width unsized binary/octal/hex actuals such as `=0b10`, `=0o7`, `=0xA5`, or `=A5`, and exact-width binary/decimal/octal/hex literal actuals,
   - those intrinsic-width unsized binary/octal/hex concat operands keep the width implied by their digits, while unsized decimal forms such as `=170` or `=0d170` still stay direct-binding-only,
   - omitted/empty-`?ports` top-boundary inference now also sees the inferable bit/slice operands inside those concat sources,
+  - the bounded source frontend now preserves brace-grouped slash-token text before composition parsing, so those nested concat groups survive from `.fsm` source through raw AST, composition parsing, and emitted HDL instead of being damaged at read time,
   - and omitted/empty-`?ports` top-boundary inference may now also size one remaining undeclared whole-port concat operand exactly from the child-input target remainder width, while several still-unsized whole-port operands still fail explicitly instead of guessing several widths at once.
 - The next explicit-link topology widening is now also shipped:
   - one realized child output source may now fan out to multiple top outputs through one deterministic shared carrier net plus explicit top-output assignments,
@@ -1326,9 +1328,13 @@ Done:
   - and blocked overflowing decimal/octal/hex literal rejection.
 - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks:
   - direct linked-plan preservation of bounded concat bindings,
-  - end-to-end pipeline and CLI emission of those concat child-input bindings, now also including intrinsic-width unsized binary/octal/hex plus normalized exact-width decimal/octal/hex literal operands,
+  - end-to-end pipeline and CLI emission of those concat child-input bindings, now also including intrinsic-width unsized binary/octal/hex plus normalized exact-width decimal/octal/hex literal operands and nested brace-group concat preservation,
   - blocked unsupported concat-operand rejection through the top-expression boundary,
   - and blocked unsized decimal concat rejection on both bare and `0d` spellings.
+- [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t) now also locks:
+  - source-front-end preservation of brace-grouped raw `?toplink` slash tokens before composition parsing.
+- [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t) now also locks:
+  - end-to-end pipeline and CLI emission of nested brace-group concat expressions that drive declared top outputs directly.
 - [t/176-composition-linked-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/176-composition-linked-plan-builder.t) now also locks:
   - linked-plan multi-top-output fanout through one deterministic carrier net and explicit top-output assignments.
 - [t/176-composition-linked-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/176-composition-linked-plan-builder.t) now also locks:

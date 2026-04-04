@@ -137,6 +137,78 @@ FSM
     );
 };
 
+subtest 'source frontend preserves brace-grouped explicit toplink tokens before composition parsing' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'source_frontend_nested_toplink_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:source_frontend_nested_toplink_top
+  (?ports:public_io
+    header_bus<3
+    status_bus<2
+    payload_bus<4
+    packed_status>10
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/packed_status/
+    /header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/uart_tx.data_in/
+  )
+)
+
+(?rtlif:uart_tx
+  data_in<10:data
+)
+FSM
+    );
+
+    my $frontend_raw_ast = FSM::Pipeline::SourceFrontend->parse_fsm_file(
+        fsm_file => $composition_path,
+        debug_level => 0,
+    );
+    my $frontend_spec = FSM::Pipeline::SourceFrontend->parse_composition_source(
+        raw_ast => $frontend_raw_ast,
+        debug_level => 0,
+    );
+    my $pipeline = new_pipeline();
+    my $pipeline_result = $pipeline->generate_hdl_from_file($composition_path);
+
+    is_deeply(
+        composition_toplink_tokens($frontend_raw_ast),
+        [
+            '/header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/packed_status/',
+            '/header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/uart_tx.data_in/',
+        ],
+        'source frontend keeps brace-grouped raw toplink tokens intact in the raw AST',
+    );
+
+    is_deeply(
+        [map { $_->source } @{$frontend_spec->top->toplinks->[0]->links}],
+        [
+            'header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}',
+            'header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}',
+        ],
+        'source frontend keeps brace-grouped toplink sources intact when it builds the composition spec',
+    );
+
+    is_deeply(
+        [map { $_->source } @{$pipeline_result->{composition_spec}->top->toplinks->[0]->links}],
+        [
+            'header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}',
+            'header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}',
+        ],
+        'pipeline keeps brace-grouped toplink sources intact on the carried composition spec surface',
+    );
+
+    like(
+        $pipeline_result->{hdl_code},
+        qr/assign packed_status = \{header_bus, \{status_bus\[0\], 2'b10\}, \{payload_bus\[3:2\], payload_bus\[1:0\]\}\};/,
+        'pipeline emits nested concat grouping after the preserved raw toplink token reaches composition lowering',
+    );
+};
+
 done_testing();
 
 sub new_pipeline {
@@ -189,4 +261,24 @@ sub write_file {
     open my $fh, '>', $path or die "Cannot open $path for write: $!";
     print {$fh} $content or die "Cannot write $path: $!";
     close $fh or die "Cannot close $path: $!";
+}
+
+sub composition_toplink_tokens {
+    my ($raw_ast) = @_;
+    my @tokens;
+    _collect_toplink_tokens($raw_ast, \@tokens);
+    return \@tokens;
+}
+
+sub _collect_toplink_tokens {
+    my ($node, $tokens) = @_;
+    return unless ref($node) eq 'ARRAY';
+
+    if (@$node >= 2 && !ref($node->[0]) && ($node->[0] // '') =~ /^\?toplink:/ && ref($node->[1]) eq 'ARRAY') {
+        push @$tokens, grep { defined($_) && !ref($_) && m{^/.+/.+/$} } @{$node->[1]};
+    }
+
+    for my $item (@$node) {
+        _collect_toplink_tokens($item, $tokens) if ref($item) eq 'ARRAY';
+    }
 }

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-04: nested brace-group toplink concat sources now survive the full source frontend
+- Stayed in the active `R11` lane and fixed the real source-boundary quality bug instead of papering over it in lowering.
+- Important continuity note:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now preserves brace-grouped slash-token text while reading `.fsm` files, so `{...}` inside `?toplink` source expressions survives raw parsing instead of being flattened by the Lispish reader before composition parsing,
+  - that means nested bounded concat sources such as `header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}` now stay intact through raw AST, typed composition parsing, child-input bindings, direct top-output assignments, and omitted/empty-`?ports` inference,
+  - [t/197-pipeline-source-frontend.t](/Users/richarddje/Documents/github/fsmgen/t/197-pipeline-source-frontend.t) now locks the raw-token preservation boundary explicitly,
+  - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now also locks end-to-end nested child-input concat preservation,
+  - [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t) now also locks nested direct top-output assignment from that same source expression family,
+  - and [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) now also locks omitted/empty-`?ports` inference through nested concat groups.
+
 ## 2026-04-04: intrinsic-width unsized binary/octal/hex concat actuals now use the bounded top-expression path
 - Stayed in the active `R11` lane and widened the concat side carefully instead of weakening the direct-vs-concat distinction.
 - Important continuity note:
