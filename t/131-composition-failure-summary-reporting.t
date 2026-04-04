@@ -3495,7 +3495,7 @@ RTLIF
     is($report->{blocked_boundary}, 'explicit actual binding', 'failure report preserves the blocked explicit-actual boundary for target failures');
     is(
         $report->{blocked_reason},
-        "the first structural-actual slice only allows '=open', scalar '=0'/'=1', unsized positive decimal/hex direct actuals, and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs",
+        "the first structural-actual slice only allows '=open', scalar '=0'/'=1', unsized binary/decimal/hex direct actuals, and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs",
         'failure report preserves the concise explicit-actual target reason',
     );
 };
@@ -5724,7 +5724,7 @@ RTLIF
     like($combined_output, qr/Blocked boundary:\s+explicit actual binding/s, 'CLI reports the blocked explicit-actual boundary for target failures');
     like(
         $combined_output,
-        qr/Reason:\s+the first structural-actual slice only allows '=open', scalar '=0'\/'=1', unsized positive decimal\/hex direct actuals, and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
+        qr/Reason:\s+the first structural-actual slice only allows '=open', scalar '=0'\/'=1', unsized binary\/decimal\/hex direct actuals, and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
         'CLI reports the concise explicit-actual target reason',
     );
 };

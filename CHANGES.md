@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-04
+### prefixed unsized direct actuals now share the widened direct-binding family
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so common prefixed unsized direct actuals such as `=0b10100101`, `=0d170`, and `=0xA5` now ride the same direct-binding path as the already-shipped bare unsized numeric forms.
+- Those prefixed unsized binary/decimal/hex direct actuals now widen to the direct binding target width and fail explicitly on overflow, while exact-width binary/decimal/hex literal forms stay exact-width contracts and bounded concat operands intentionally remain stricter.
+- Updated [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t), [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t), and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock direct linked-plan plus pipeline/CLI success, blocked prefixed concat rejection, blocked unsupported-shape wording, and blocked unsized binary overflow behavior.
+
 ### unsized decimal and hex direct actuals now widen on direct bindings
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so unsized positive decimal and hex direct actuals such as `=170` and `=A5` now behave as numeric direct-binding sources on realized child inputs and declared top outputs instead of failing through the older bounded-literal wording.
 - Those unsized decimal/hex direct actuals now widen to the direct binding target width and fail explicitly on overflow, while exact-width binary/decimal/hex literal forms stay exact-width contracts and bounded concat operands intentionally remain stricter.

@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-04: prefixed unsized direct actuals should share the same direct-binding contract as the bare unsized family
+- Kept this in the active `R11` lane and landed it as the next bounded structural-actual widening rather than inventing a wider coercion rule.
+- Landed behavior:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts prefixed unsized direct actuals such as `=0b10100101`, `=0d170`, and `=0xA5` on direct realized child-input and declared top-output bindings,
+  - those prefixed unsized direct actuals now widen to the direct binding target width as numeric values and fail explicitly when the numeric value does not fit,
+  - the direct-binding family wording now treats those prefixed forms and the earlier bare `=170` / `=A5` spellings as one bounded unsized numeric slice,
+  - exact-width forms such as `=8'd5` and `=8'hA5` still stay exact-width contracts rather than being widened again,
+  - and bounded concat operands still stay stricter than direct bindings, so prefixed unsized numerics do not silently leak into concat.
+- Why this is worth shipping:
+  - it removes another user-facing parser rough edge without weakening exact-width intent,
+  - aligns the explicit-toplink direct-actual family with already-familiar `0b` / `0x` spelling habits,
+  - and still keeps the boundary honest by stopping at direct bindings instead of silently widening concat semantics too.
+
 ## 2026-04-04: a future structured HDL generation mode looks feasible, but it should be a second backend route, not a forked frontend
 - Recorded this as future-steering guidance rather than shipped behavior.
 - Current architectural take:

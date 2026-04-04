@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-04: prefixed unsized direct actuals now share the widened direct-binding family
+- Stayed in the active `R11` lane and carried the direct-actual family forward one more bounded step instead of opening concat or sized-literal coercion.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts prefixed unsized direct actuals such as `=0b10100101`, `=0d170`, and `=0xA5` on realized child inputs and declared top outputs, widening them to the direct binding target width as numeric values and failing explicitly on overflow,
+  - those prefixed forms now share the same direct-binding contract as the earlier bare unsized decimal/hex forms instead of remaining parser-shape rejects,
+  - bounded concat operands still stay stricter than direct bindings, so prefixed unsized numeric widening does not silently appear inside concat,
+  - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) now locks direct linked-plan plus pipeline/CLI success for those prefixed direct actuals together with blocked unsupported-shape and binary-overflow cases,
+  - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now also keeps prefixed unsized concat operands blocked,
+  - and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) keeps the widened structural-actual family wording aligned with the shipped direct-binding contract.
+
 ## 2026-04-04: future structured HDL mode should branch at the backend, with flattened staying default
 - Recorded one future-steering note for generated-module emission.
 - Important continuity note:

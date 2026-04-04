@@ -1307,20 +1307,20 @@ Done:
 - That same source-side top-expression slice now also covers declared top outputs:
   - explicit-link `C2` / `C3` source-side top-port bit/slice and bounded concat expressions may now drive declared top outputs directly through explicit top-output assignments,
   - sibling child-input consumers may still reuse those same typed top expressions in the same top without synthetic carrier nets,
-  - and direct scalar `=0` / `=1`, unsized positive decimal/hex direct actuals, plus exact-width literal actual sources may now also drive declared top outputs through those same explicit top-output assignments, while `=open` remains the narrower child-input-only sibling.
-- That same first structural-actual slice now also covers unsized positive decimal/hex direct actuals plus exact-width decimal and hex literals:
+  - and direct scalar `=0` / `=1`, unsized binary/decimal/hex direct actuals, plus exact-width literal actual sources may now also drive declared top outputs through those same explicit top-output assignments, while `=open` remains the narrower child-input-only sibling.
+- That same first structural-actual slice now also covers unsized binary/decimal/hex direct actuals plus exact-width decimal and hex literals:
   - explicit-link `C2` / `C3` child-input bindings may now use `=N'd...` and `=N'h...` direct actual sources beside the already-shipped binary forms,
-  - direct scalar `=0` / `=1` actuals plus unsized positive decimal/hex direct actuals such as `=170` and `=A5` now also widen to the direct binding target width for realized child inputs and declared top outputs instead of acting like accidental one-bit-only direct sources or unsupported unsized values,
+  - direct scalar `=0` / `=1` actuals plus unsized binary/decimal/hex direct actuals such as `=0b10100101`, `=0d170`, `=0xA5`, `=170`, and `=A5` now also widen to the direct binding target width for realized child inputs and declared top outputs instead of acting like accidental one-bit-only direct sources or unsupported unsized values,
   - that same direct exact-width literal family may now also drive declared top outputs without inventing carrier nets,
   - the same exact-width decimal/hex literal family now also participates inside bounded source-side concat operands,
-  - unsupported non-decimal/non-hex unsized actual spellings still fail explicitly through the existing bounded-literal wording, while unsized decimal/hex values that do not fit still fail as overflowed direct actuals,
+  - unsupported non-binary/non-decimal/non-hex unsized actual spellings still fail explicitly through the existing bounded-literal wording, while unsized binary/decimal/hex values that do not fit still fail as overflowed direct actuals,
   - and decimal/hex payloads whose numeric value exceeds the declared width now fail explicitly instead of silently truncating.
 - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) now also locks:
-  - direct linked-plan and end-to-end pipeline/CLI success for target-width-aware scalar `=0` / `=1`, unsized positive decimal/hex direct actuals, plus exact-width literal actuals on child inputs and declared top outputs,
-  - explicit-target wording updated for the widened scalar-plus-unsized-decimal/hex-plus-binary/decimal/hex actual family,
+  - direct linked-plan and end-to-end pipeline/CLI success for target-width-aware scalar `=0` / `=1`, unsized binary/decimal/hex direct actuals, plus exact-width literal actuals on child inputs and declared top outputs,
+  - explicit-target wording updated for the widened scalar-plus-unsized-binary/decimal/hex-plus-binary/decimal/hex actual family,
   - blocked `=open`-to-top-output rejection,
   - blocked unsupported unsized actual-shape rejection,
-  - blocked overflowing unsized decimal/hex direct actual rejection,
+  - blocked overflowing unsized binary/decimal/hex direct actual rejection,
   - and blocked overflowing decimal/hex literal rejection.
 - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks:
   - direct linked-plan preservation of bounded concat bindings,
