@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-04: child-output concat operands now share the bounded top-expression path too
+- Kept this in the active `R11` lane and widened source-side concat one more time without weakening the typed explicit-link contract.
+- Landed behavior:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts child-output concat operands such as `producer.payload`, `producer.payload[7:4]`, and `producer.payload[0]` beside the existing top-port and literal operand families,
+  - those child-output concat operands lower through the same typed `concat_expr` path for realized child inputs and declared top outputs, while reusing one deterministic base carrier per referenced child output instead of inventing per-projection helper nets,
+  - [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm) now treats those child operands as known-width explicit child-output uses and therefore keeps omitted/empty-`?ports` inference focused on the true undeclared top operands in the same concat source,
+  - and [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm) plus [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) keep provenance and blocked summaries honest through concise `Child expression '...'` context for out-of-range child concat operands.
+- Why this is worth shipping:
+  - it closes the remaining gap between already-shipped child-output projections and the bounded concat source family instead of leaving concat as an arbitrary top-only special case,
+  - it reuses the typed structural path and deterministic carrier contract already established for projected child-output sources rather than adding a second lower-quality lowering path,
+  - and it keeps omitted-port inference honest by deriving top ports only from true top-boundary evidence even when child-output operands participate in the same concat.
+
 ## 2026-04-04: unsized decimal concat operands can be intrinsic-width too if width comes from numeric value
 - Kept this in the active `R11` lane and widened the concat family only where the width rule stays explicit and local to the operand itself.
 - Landed behavior:

@@ -356,6 +356,10 @@ sub build_block_events ($class, %args) {
             $explicitly_linked_child_output_endpoints{"$source_instance.$source_port_name"} = 1;
         } elsif (my $base_endpoint = FSM::Composition::LinkedPlanBuilder->child_expression_base_endpoint($source)) {
             $explicitly_linked_child_output_endpoints{$base_endpoint} = 1;
+        } else {
+            for my $base_endpoint (@{FSM::Composition::LinkedPlanBuilder->top_expression_child_base_endpoints($source)}) {
+                $explicitly_linked_child_output_endpoints{$base_endpoint} = 1;
+            }
         }
     }
 

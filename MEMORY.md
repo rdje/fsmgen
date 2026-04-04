@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-04: child-output concat operands now share the bounded top-expression path too
+- Stayed in the active `R11` lane and landed the next honest source-expression widening on top of that same typed concat path.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts child-output concat operands such as `producer.payload`, `producer.payload[7:4]`, and `producer.payload[0]` beside the existing top-port and literal operand families,
+  - those child-output concat operands now reuse one deterministic base carrier per referenced child output and lower into the same typed `concat_expr` path for realized child inputs and declared top outputs,
+  - [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm) now ignores those child-output concat operands for omitted/empty-`?ports` top inference while still inferring real top operands from the same concat source,
+  - [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm) now also treats those concat uses as first-class explicit child-output consumption,
+  - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for child-output concat operands on child-input and top-output targets,
+  - [t/177-composition-top-port-inference-builder.t](/Users/richarddje/Documents/github/fsmgen/t/177-composition-top-port-inference-builder.t) now locks that omitted-port inference still derives only undeclared top operands from mixed top-plus-child concat sources,
+  - and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now keeps `Child expression '...'` summary context on blocked out-of-range child concat operands.
+
 ## 2026-04-04: intrinsic-width unsized decimal concat actuals now share the bounded top-expression path too
 - Stayed in the active `R11` lane and widened concat one more step without weakening the direct-vs-concat width boundary.
 - Important continuity note:

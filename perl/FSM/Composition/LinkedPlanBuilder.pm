@@ -156,6 +156,8 @@ sub build_plan ($class, %args) {
     my %source_endpoint_by_key;
     my %top_port_usage;
     my @auxiliary_assignments;
+    my @nets;
+    my %carrier_signal_by_source;
 
     for my $link (@resolved_links_input) {
         my $source = $class->resolve_endpoint(
@@ -213,6 +215,26 @@ sub build_plan ($class, %args) {
                     $top_port_usage{$top_port_name}{source} = 1;
                 }
 
+                if (@{$source->{child_base_sources} || []}) {
+                    my %child_carrier_by_base_endpoint;
+                    for my $child_base_source (@{$source->{child_base_sources} || []}) {
+                        my $carrier_signal_name = $class->ensure_child_source_carrier(
+                            $child_base_source,
+                            [$target->{raw}],
+                            $top_ports_by_name,
+                            \@nets,
+                            \%bindings_by_instance,
+                            \%carrier_signal_by_source,
+                        );
+                        $child_carrier_by_base_endpoint{$child_base_source->{raw}} = $carrier_signal_name;
+                    }
+
+                    $bound_connection_expr = $class->rebind_source_expr_with_child_carriers(
+                        $source->{connection_expr},
+                        \%child_carrier_by_base_endpoint,
+                    );
+                }
+
                 if ($target->{kind} eq 'top_port') {
                     my $expr_text = render_expr($bound_connection_expr, $target->{port}->name, 'systemverilog');
                     push @auxiliary_assignments, "    assign ".$target->{port}->name." = $expr_text;";
@@ -263,9 +285,6 @@ sub build_plan ($class, %args) {
         };
     }
 
-    my @nets;
-    my %carrier_signal_by_source;
-
     for my $source_key (sort keys %links_by_source) {
         my $source = $source_endpoint_by_key{$source_key};
         my @group = @{$links_by_source{$source_key}};
@@ -283,8 +302,20 @@ sub build_plan ($class, %args) {
         my $group_has_child_expr = grep { ($_->{source}{kind} || '') eq 'child_expr' } @group;
 
         my $carrier_signal_name;
-        if (!$group_has_child_expr && @top_output_targets == 1) {
+        if (defined $carrier_signal_by_source{$source_key}) {
+            $carrier_signal_name = $class->ensure_child_source_carrier(
+                $source,
+                [map { $_->{target}{raw} } @group],
+                $top_ports_by_name,
+                \@nets,
+                \%bindings_by_instance,
+                \%carrier_signal_by_source,
+            );
+        }
+        elsif (!$group_has_child_expr && @top_output_targets == 1) {
             $carrier_signal_name = $top_output_targets[0]{target}{port}->name;
+            $carrier_signal_by_source{$source_key} = $carrier_signal_name;
+            $bindings_by_instance{$source->{instance_name}}{$source->{port}->name} = $carrier_signal_name;
         }
         else {
             my $preferred_net_name;
@@ -299,17 +330,16 @@ sub build_plan ($class, %args) {
                 }
             }
 
-            my $net_name = $class->allocate_net_name($source, $top_ports_by_name, \@nets, $preferred_net_name);
-            push @nets, FSM::Composition::Net->new(
-                name => $net_name,
-                width => $source->{port}->width,
-                source => $source->{raw},
-                targets => [map { $_->{target}{raw} } @group],
+            $carrier_signal_name = $class->ensure_child_source_carrier(
+                $source,
+                [map { $_->{target}{raw} } @group],
+                $top_ports_by_name,
+                \@nets,
+                \%bindings_by_instance,
+                \%carrier_signal_by_source,
+                $preferred_net_name,
             );
-            $carrier_signal_name = $net_name;
         }
-        $carrier_signal_by_source{$source_key} = $carrier_signal_name;
-        $bindings_by_instance{$source->{instance_name}}{$source->{port}->name} = $carrier_signal_name;
 
         for my $resolved_link (@group) {
             next unless $resolved_link->{target}{kind} eq 'top_port';
@@ -458,6 +488,8 @@ sub resolve_endpoint ($class, $endpoint, $top_ports_by_name, $instances_by_name,
         if (my $top_expression_endpoint = $class->_resolve_top_expression_endpoint(
             $endpoint,
             $top_ports_by_name,
+            $instances_by_name,
+            $child_ports_by_instance,
             $fsm_file,
             $header,
         )) {
@@ -941,6 +973,21 @@ sub top_expression_inference_specs ($class, $endpoint) {
     return $class->_collect_top_expression_inference_specs($spec);
 }
 
+sub top_expression_child_base_endpoints ($class, $endpoint) {
+    my $spec = $class->top_expression_spec($endpoint);
+    return [] unless $spec;
+
+    my %seen_endpoint;
+    my @base_endpoints;
+    for my $child_spec (@{$class->_collect_top_expression_child_specs($spec)}) {
+        my $base_endpoint = $child_spec->{instance_name}.'.'.$child_spec->{port_name};
+        next if $seen_endpoint{$base_endpoint}++;
+        push @base_endpoints, $base_endpoint;
+    }
+
+    return \@base_endpoints;
+}
+
 sub child_expression_spec ($class, $endpoint) {
     return undef unless defined($endpoint) && !ref($endpoint);
 
@@ -974,18 +1021,20 @@ sub child_expression_base_endpoint ($class, $endpoint) {
     return $spec->{instance_name}.'.'.$spec->{port_name};
 }
 
-sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $fsm_file, $header) {
+sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $instances_by_name, $child_ports_by_instance, $fsm_file, $header) {
     my $spec = $class->top_expression_spec($endpoint);
     if (!$spec && defined($endpoint) && ($endpoint =~ /\A\{.*\}\z/s || index($endpoint, ',') >= 0)) {
         confess
             "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
-            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'. ".
+            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
     return undef unless $spec;
     my $resolved_spec = $class->_resolve_top_expression_spec(
         $spec,
         $top_ports_by_name,
+        $instances_by_name,
+        $child_ports_by_instance,
         $endpoint,
         $fsm_file,
         $header,
@@ -1002,6 +1051,7 @@ sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $fs
         base_port => $single_base_port,
         base_port_names => \@base_port_names,
         base_ports => \@base_ports,
+        child_base_sources => $resolved_spec->{child_base_sources} || [],
         port_name => $single_base_port ? $single_base_port->name : undef,
         port => {
             direction => $single_base_port ? $single_base_port->direction : 'input',
@@ -1033,6 +1083,27 @@ sub _collect_top_expression_inference_specs ($class, $spec) {
     return [];
 }
 
+sub _collect_top_expression_child_specs ($class, $spec) {
+    return [] unless ref($spec) eq 'HASH';
+
+    my $expr_kind = $spec->{expr_kind} || '';
+    if ($expr_kind eq 'child_signal_ref' || $expr_kind eq 'child_bit_select' || $expr_kind eq 'child_slice') {
+        return [{
+            %$spec,
+        }];
+    }
+
+    if ($expr_kind eq 'concat') {
+        my @child_specs;
+        for my $operand_spec (@{$spec->{operands} || []}) {
+            push @child_specs, @{$class->_collect_top_expression_child_specs($operand_spec)};
+        }
+        return \@child_specs;
+    }
+
+    return [];
+}
+
 sub _parse_top_expression_spec ($class, $endpoint, %opts) {
     return undef unless defined($endpoint) && length($endpoint);
 
@@ -1051,6 +1122,7 @@ sub _parse_top_expression_spec ($class, $endpoint, %opts) {
                 $_,
                 allow_plain_top_ref => 1,
                 allow_literal_actual => 1,
+                allow_child_ref => 1,
             );
             return () unless $operand_spec;
             $operand_spec;
@@ -1071,12 +1143,31 @@ sub _parse_top_expression_spec ($class, $endpoint, %opts) {
         };
     }
 
+    if ($opts{allow_child_ref} && $endpoint =~ /\A(\w+)\.(\w+)\z/) {
+        return {
+            raw => $endpoint,
+            instance_name => $1,
+            port_name => $2,
+            expr_kind => 'child_signal_ref',
+        };
+    }
+
     if ($endpoint =~ /\A(\w+)\[(\d+)\]\z/) {
         return {
             raw => $endpoint,
             port_name => $1,
             expr_kind => 'bit_select',
             index => 0 + $2,
+        };
+    }
+
+    if ($opts{allow_child_ref} && $endpoint =~ /\A(\w+)\.(\w+)\[(\d+)\]\z/) {
+        return {
+            raw => $endpoint,
+            instance_name => $1,
+            port_name => $2,
+            expr_kind => 'child_bit_select',
+            index => 0 + $3,
         };
     }
 
@@ -1087,6 +1178,17 @@ sub _parse_top_expression_spec ($class, $endpoint, %opts) {
             expr_kind => 'slice',
             msb => 0 + $2,
             lsb => 0 + $3,
+        };
+    }
+
+    if ($opts{allow_child_ref} && $endpoint =~ /\A(\w+)\.(\w+)\[(\d+):(\d+)\]\z/) {
+        return {
+            raw => $endpoint,
+            instance_name => $1,
+            port_name => $2,
+            expr_kind => 'child_slice',
+            msb => 0 + $3,
+            lsb => 0 + $4,
         };
     }
 
@@ -1367,7 +1469,7 @@ sub _hex_literal_bits_and_width ($class, $declared_width, $hex_digits, %opts) {
     return ($bits, 0 + $declared_width);
 }
 
-sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $endpoint, $fsm_file, $header) {
+sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_by_name, $child_ports_by_instance, $endpoint, $fsm_file, $header) {
     my $expr_kind = $spec->{expr_kind} || '';
 
     if ($expr_kind eq 'signal_ref') {
@@ -1383,6 +1485,7 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $endpoint, 
             width => $top_port->width,
             connection_expr => signal_ref_expr($port_name),
             base_ports => [$top_port],
+            child_base_sources => [],
         };
     }
 
@@ -1391,19 +1494,98 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $endpoint, 
             width => $spec->{width},
             connection_expr => bit_vector_literal_expr($spec->{bits}),
             base_ports => [],
+            child_base_sources => [],
+        };
+    }
+
+    if ($expr_kind eq 'child_signal_ref' || $expr_kind eq 'child_bit_select' || $expr_kind eq 'child_slice') {
+        my $instance_name = $spec->{instance_name} || '';
+        my $port_name = $spec->{port_name} || '';
+        my $instance = $instances_by_name->{$instance_name};
+        my $context_label = $expr_kind eq 'child_signal_ref' ? 'child endpoint' : 'child expression';
+
+        confess
+            "Composition source '$header' in '$fsm_file' uses $context_label '".$spec->{raw}."', ".
+            "but explicit link endpoint resolution is blocked because no realized child instance named '$instance_name' exists. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $instance;
+
+        my $port = $child_ports_by_instance->{$instance_name}{$port_name};
+        confess
+            "Composition source '$header' in '$fsm_file' uses $context_label '".$spec->{raw}."', ".
+            "but explicit link endpoint resolution is blocked because instance '$instance_name' has no port named '$port_name'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $port;
+
+        confess
+            "Composition source '$header' in '$fsm_file' uses $context_label '".$spec->{raw}."', ".
+            "but explicit link is blocked because base child port '$instance_name.$port_name' is ".$port->direction." instead of output. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless ($port->direction || '') eq 'output';
+
+        my $base_width = $port->width;
+        my $base_endpoint = {
+            raw => "$instance_name.$port_name",
+            key => "child:$instance_name.$port_name",
+            kind => 'child_port',
+            instance_name => $instance_name,
+            instance => $instance,
+            port_name => $port_name,
+            port => $port,
+        };
+
+        if ($expr_kind eq 'child_signal_ref') {
+            return {
+                width => $base_width,
+                connection_expr => signal_ref_expr("$instance_name.$port_name"),
+                base_ports => [],
+                child_base_sources => [$base_endpoint],
+            };
+        }
+
+        if ($expr_kind eq 'child_bit_select') {
+            confess
+                "Composition source '$header' in '$fsm_file' uses child expression '".$spec->{raw}."', ".
+                "but explicit link endpoint resolution is blocked because bit index ".$spec->{index}." falls outside declared width $base_width of child endpoint '$instance_name.$port_name'. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                unless defined($base_width) && $base_width > 0 && $spec->{index} < $base_width;
+
+            return {
+                width => 1,
+                connection_expr => bit_select_expr("$instance_name.$port_name", $spec->{index}),
+                base_ports => [],
+                child_base_sources => [$base_endpoint],
+            };
+        }
+
+        confess
+            "Composition source '$header' in '$fsm_file' uses child expression '".$spec->{raw}."', ".
+            "but explicit link endpoint resolution is blocked because slice bounds [".$spec->{msb}.':'.$spec->{lsb}."] fall outside declared width $base_width of child endpoint '$instance_name.$port_name'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless defined($base_width) && $base_width > 0 && $spec->{msb} < $base_width && $spec->{lsb} < $base_width;
+
+        return {
+            width => abs($spec->{msb} - $spec->{lsb}) + 1,
+            connection_expr => slice_expr("$instance_name.$port_name", $spec->{msb}, $spec->{lsb}),
+            base_ports => [],
+            child_base_sources => [$base_endpoint],
         };
     }
 
     if ($expr_kind eq 'concat') {
         my @operand_exprs;
         my @base_ports;
+        my @child_base_sources;
         my %seen_port_name;
+        my %seen_child_base_key;
         my $width = 0;
 
         for my $operand_spec (@{$spec->{operands} || []}) {
             my $resolved_operand = $class->_resolve_top_expression_spec(
                 $operand_spec,
                 $top_ports_by_name,
+                $instances_by_name,
+                $child_ports_by_instance,
                 $endpoint,
                 $fsm_file,
                 $header,
@@ -1414,12 +1596,17 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $endpoint, 
                 next if $seen_port_name{$base_port->name}++;
                 push @base_ports, $base_port;
             }
+            for my $child_base_source (@{$resolved_operand->{child_base_sources} || []}) {
+                next if $seen_child_base_key{$child_base_source->{key}}++;
+                push @child_base_sources, $child_base_source;
+            }
         }
 
         return {
             width => $width,
             connection_expr => concat_expr(@operand_exprs),
             base_ports => \@base_ports,
+            child_base_sources => \@child_base_sources,
         };
     }
 
@@ -1460,6 +1647,7 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $endpoint, 
         width => $expr_width,
         connection_expr => $connection_expr,
         base_ports => [$top_port],
+        child_base_sources => [],
     };
 }
 
@@ -1515,6 +1703,79 @@ sub source_connection_expr_for_carrier ($class, $source, $carrier_signal_name) {
     }
 
     confess "Unsupported source kind '$kind' reached source_connection_expr_for_carrier.\n";
+}
+
+sub rebind_source_expr_with_child_carriers ($class, $expr, $carrier_by_child_base_endpoint) {
+    return undef unless ref($expr) eq 'HASH';
+
+    my $kind = $expr->{kind} || '';
+    if ($kind eq 'signal_ref') {
+        my $signal_name = $expr->{signal_name} || '';
+        return signal_ref_expr($carrier_by_child_base_endpoint->{$signal_name} // $signal_name);
+    }
+
+    if ($kind eq 'bit_select') {
+        return bit_select_expr(
+            $class->rebind_source_expr_with_child_carriers($expr->{source_expr}, $carrier_by_child_base_endpoint),
+            $expr->{index},
+        );
+    }
+
+    if ($kind eq 'slice') {
+        return slice_expr(
+            $class->rebind_source_expr_with_child_carriers($expr->{source_expr}, $carrier_by_child_base_endpoint),
+            $expr->{msb},
+            $expr->{lsb},
+        );
+    }
+
+    if ($kind eq 'concat') {
+        return concat_expr(map {
+            $class->rebind_source_expr_with_child_carriers($_, $carrier_by_child_base_endpoint)
+        } @{$expr->{operands} || []});
+    }
+
+    if ($kind eq 'bit_vector_literal') {
+        return bit_vector_literal_expr($expr->{bits});
+    }
+
+    if ($kind eq 'open') {
+        return open_expr();
+    }
+
+    confess "Unsupported connection expression kind '$kind' reached rebind_source_expr_with_child_carriers.\n";
+}
+
+sub ensure_child_source_carrier ($class, $source, $targets, $top_ports_by_name, $existing_nets, $bindings_by_instance, $carrier_signal_by_source, $preferred_name = undef) {
+    my $source_key = $class->source_family_key($source);
+    confess "Child source carriers require a stable source-family key.\n"
+        unless defined($source_key) && length($source_key);
+
+    if (defined(my $existing_carrier = $carrier_signal_by_source->{$source_key})) {
+        for my $net (@{$existing_nets || []}) {
+            next unless $net->name eq $existing_carrier;
+            my %seen_target = map { $_ => 1 } @{$net->targets || []};
+            for my $target (@{$targets || []}) {
+                next unless defined($target) && length($target);
+                next if $seen_target{$target}++;
+                push @{$net->targets}, $target;
+            }
+        }
+        $bindings_by_instance->{$source->{instance_name}}{$source->{port}->name} = $existing_carrier;
+        return $existing_carrier;
+    }
+
+    my $net_name = $class->allocate_net_name($source, $top_ports_by_name, $existing_nets, $preferred_name);
+    push @{$existing_nets || []}, FSM::Composition::Net->new(
+        name => $net_name,
+        width => $source->{port}->width,
+        source => $source->{raw},
+        targets => [grep { defined($_) && length($_) } @{$targets || []}],
+    );
+
+    $carrier_signal_by_source->{$source_key} = $net_name;
+    $bindings_by_instance->{$source->{instance_name}}{$source->{port}->name} = $net_name;
+    return $net_name;
 }
 
 sub actual_connection_expr_for_target ($class, $source, $target_width, $fsm_file = undef, $header = undef) {

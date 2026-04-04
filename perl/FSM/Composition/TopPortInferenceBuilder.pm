@@ -105,7 +105,17 @@ sub augment_from_explicit_links ($class, %args) {
                 );
             }
 
-            if ($source_top_expr_spec && $target =~ /^\w+\.\w+$/) {
+            if ($source_top_expr_spec
+                && $target =~ /^\w+\.\w+$/
+                && $class->_expression_spec_mentions_undeclared_top_inputs($source_top_expr_spec, \%declared_by_name))
+            {
+                $source_top_expr_spec = $class->_annotate_expression_spec_child_widths(
+                    $source_top_expr_spec,
+                    \%instances_by_name,
+                    \%child_ports_by_instance,
+                    $fsm_file,
+                    $header,
+                );
                 my $child_endpoint = FSM::Composition::LinkedPlanBuilder->resolve_endpoint(
                     $target,
                     {},
@@ -303,6 +313,11 @@ sub augment_undeclared_top_outputs ($class, %args) {
 
             if (my $base_endpoint = FSM::Composition::LinkedPlanBuilder->child_expression_base_endpoint($source)) {
                 $explicitly_linked_child_output_endpoints{$base_endpoint} = 1;
+                next;
+            }
+
+            for my $base_endpoint (@{FSM::Composition::LinkedPlanBuilder->top_expression_child_base_endpoints($source)}) {
+                $explicitly_linked_child_output_endpoints{$base_endpoint} = 1;
             }
         }
     }
@@ -457,6 +472,106 @@ sub _assert_top_expression_inference_is_resolved ($class, $declared_by_name, $in
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
+sub _annotate_expression_spec_child_widths ($class, $expression_spec, $instances_by_name, $child_ports_by_instance, $fsm_file, $header) {
+    return undef unless ref($expression_spec) eq 'HASH';
+
+    my %annotated = %$expression_spec;
+    my $expr_kind = $expression_spec->{expr_kind} || '';
+
+    if ($expr_kind eq 'concat') {
+        $annotated{operands} = [
+            map {
+                $class->_annotate_expression_spec_child_widths(
+                    $_,
+                    $instances_by_name,
+                    $child_ports_by_instance,
+                    $fsm_file,
+                    $header,
+                )
+            } @{$expression_spec->{operands} || []}
+        ];
+        return \%annotated;
+    }
+
+    return \%annotated
+        unless $expr_kind eq 'child_signal_ref' || $expr_kind eq 'child_bit_select' || $expr_kind eq 'child_slice';
+
+    my $instance_name = $expression_spec->{instance_name} || '';
+    my $port_name = $expression_spec->{port_name} || '';
+    my $instance = $instances_by_name->{$instance_name};
+    my $context_label = $expr_kind eq 'child_signal_ref' ? 'child endpoint' : 'child expression';
+
+    confess
+        "Composition source '$header' in '$fsm_file' uses $context_label '".$expression_spec->{raw}."', ".
+        "but explicit top-link port inference is blocked because no realized child instance named '$instance_name' exists. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless $instance;
+
+    my $port = $child_ports_by_instance->{$instance_name}{$port_name};
+    confess
+        "Composition source '$header' in '$fsm_file' uses $context_label '".$expression_spec->{raw}."', ".
+        "but explicit top-link port inference is blocked because instance '$instance_name' has no port named '$port_name'. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless $port;
+
+    confess
+        "Composition source '$header' in '$fsm_file' uses $context_label '".$expression_spec->{raw}."', ".
+        "but explicit top-link port inference is blocked because base child port '$instance_name.$port_name' is ".$port->direction." instead of output. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless ($port->direction || '') eq 'output';
+
+    my $base_width = $port->width;
+    if ($expr_kind eq 'child_signal_ref') {
+        $annotated{width} = $base_width;
+        return \%annotated;
+    }
+
+    if ($expr_kind eq 'child_bit_select') {
+        confess
+            "Composition source '$header' in '$fsm_file' uses child expression '".$expression_spec->{raw}."', ".
+            "but explicit top-link port inference is blocked because bit index ".$expression_spec->{index}." falls outside declared width $base_width of child endpoint '$instance_name.$port_name'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless defined($base_width) && $base_width > 0 && $expression_spec->{index} < $base_width;
+
+        $annotated{width} = 1;
+        return \%annotated;
+    }
+
+    confess
+        "Composition source '$header' in '$fsm_file' uses child expression '".$expression_spec->{raw}."', ".
+        "but explicit top-link port inference is blocked because slice bounds [".$expression_spec->{msb}.':'.$expression_spec->{lsb}."] fall outside declared width $base_width of child endpoint '$instance_name.$port_name'. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless defined($base_width) && $base_width > 0 && $expression_spec->{msb} < $base_width && $expression_spec->{lsb} < $base_width;
+
+    $annotated{width} = abs(($expression_spec->{msb} || 0) - ($expression_spec->{lsb} || 0)) + 1;
+    return \%annotated;
+}
+
+sub _expression_spec_mentions_undeclared_top_inputs ($class, $expression_spec, $declared_by_name) {
+    return 0 unless ref($expression_spec) eq 'HASH';
+
+    my $expr_kind = $expression_spec->{expr_kind} || '';
+    if ($expr_kind eq 'signal_ref' || $expr_kind eq 'bit_select' || $expr_kind eq 'slice') {
+        my $port_name = $expression_spec->{port_name} || '';
+        return !$declared_by_name->{$port_name};
+    }
+
+    return 0
+        if $expr_kind eq 'literal'
+        || $expr_kind eq 'child_signal_ref'
+        || $expr_kind eq 'child_bit_select'
+        || $expr_kind eq 'child_slice';
+
+    if ($expr_kind eq 'concat') {
+        for my $operand_spec (@{$expression_spec->{operands} || []}) {
+            return 1 if $class->_expression_spec_mentions_undeclared_top_inputs($operand_spec, $declared_by_name);
+        }
+        return 0;
+    }
+
+    confess "TopPortInferenceBuilder requires a supported top-expression operand kind";
+}
+
 sub _analyze_top_expression_for_inference ($class, $declared_by_name, $inferred_specs, $expression_spec, $child_endpoint, $evidence, $fsm_file, $header, %opts) {
     my $expr_kind = $expression_spec->{expr_kind} || '';
 
@@ -511,6 +626,14 @@ sub _analyze_top_expression_for_inference ($class, $declared_by_name, $inferred_
         return {
             progress => 0,
             known_exact_width => $expression_spec->{width},
+            unresolved_signal_refs => [],
+        };
+    }
+
+    if ($expr_kind eq 'child_signal_ref' || $expr_kind eq 'child_bit_select' || $expr_kind eq 'child_slice') {
+        return {
+            progress => 0,
+            known_exact_width => $class->_expression_spec_width($expression_spec),
             unresolved_signal_refs => [],
         };
     }
@@ -634,24 +757,24 @@ sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $
 sub _required_top_width_for_expression_spec ($class, $expression_spec) {
     my $expr_kind = $expression_spec->{expr_kind} || '';
     return $expression_spec->{width}
-        if $expr_kind eq 'signal_ref';
+        if $expr_kind eq 'signal_ref' || $expr_kind eq 'child_signal_ref';
     return ($expression_spec->{index} || 0) + 1
-        if $expr_kind eq 'bit_select';
+        if $expr_kind eq 'bit_select' || $expr_kind eq 'child_bit_select';
     return (($expression_spec->{msb} || 0) > ($expression_spec->{lsb} || 0)
         ? ($expression_spec->{msb} || 0)
         : ($expression_spec->{lsb} || 0)) + 1
-        if $expr_kind eq 'slice';
+        if $expr_kind eq 'slice' || $expr_kind eq 'child_slice';
     confess "TopPortInferenceBuilder requires a supported top-expression width rule";
 }
 
 sub _expression_spec_width ($class, $expression_spec) {
     my $expr_kind = $expression_spec->{expr_kind} || '';
     return $expression_spec->{width}
-        if $expr_kind eq 'signal_ref' || $expr_kind eq 'literal';
+        if $expr_kind eq 'signal_ref' || $expr_kind eq 'literal' || $expr_kind eq 'child_signal_ref';
     return 1
-        if $expr_kind eq 'bit_select';
+        if $expr_kind eq 'bit_select' || $expr_kind eq 'child_bit_select';
     return abs(($expression_spec->{msb} || 0) - ($expression_spec->{lsb} || 0)) + 1
-        if $expr_kind eq 'slice';
+        if $expr_kind eq 'slice' || $expr_kind eq 'child_slice';
 
     if ($expr_kind eq 'concat') {
         my $width = 0;

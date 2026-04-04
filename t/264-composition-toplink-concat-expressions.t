@@ -418,6 +418,153 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for nested explicit top-concat toplinks');
 };
 
+subtest 'child-output concat operands share deterministic carriers and direct top-output assignments' => sub {
+    my @ports = (
+        port('header_bus', 'input', 2, undef),
+        port('packed_out', 'output', 8, undef),
+    );
+
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        lane => 'C3',
+        composition_spec => composition_spec('child_concat_top'),
+        top => FSM::Composition::Top->new(name => 'child_concat_top'),
+        ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
+        ports => \@ports,
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(
+                        source => 'producer.serial_hi[3:0],header_bus,producer.serial_lo',
+                        target => 'consumer.data_in',
+                    ),
+                    FSM::Composition::Link->new(
+                        source => 'producer.serial_hi[3:0],header_bus,producer.serial_lo',
+                        target => 'packed_out',
+                    ),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance(
+                'rtl',
+                'producer',
+                port('serial_hi', 'output', 4, undef),
+                port('serial_lo', 'output', 2, undef),
+            ),
+            realized_instance(
+                'rtl',
+                'consumer',
+                port('data_in', 'input', 8, undef),
+            ),
+        ],
+        fsm_file => 'child_concat_top.fsm',
+        header => 'child_concat_top',
+    );
+
+    isa_ok($plan, 'FSM::Composition::Plan');
+    is($plan->lane, 'C3', 'builder records the active explicit-link lane for child-output concat operands');
+    is_deeply(
+        [map { $_->name } @{$plan->nets}],
+        ['comp_link_producer_serial_hi', 'comp_link_producer_serial_lo'],
+        'child-output concat operands allocate one deterministic base carrier per child-output family',
+    );
+
+    my %bindings_by_instance = map { $_->instance_name => $_ } @{$plan->instances};
+    my %producer_bindings = map { $_->{port_name} => $_ } @{$bindings_by_instance{producer}->port_bindings};
+    my %consumer_bindings = map { $_->{port_name} => $_ } @{$bindings_by_instance{consumer}->port_bindings};
+
+    is($producer_bindings{serial_hi}{signal_name}, 'comp_link_producer_serial_hi', 'high child output binds once to its shared base carrier');
+    is($producer_bindings{serial_lo}{signal_name}, 'comp_link_producer_serial_lo', 'low child output binds once to its shared base carrier');
+    is_deeply(
+        $consumer_bindings{data_in}{connection_expr},
+        concat_expr(
+            slice_expr('comp_link_producer_serial_hi', 3, 0),
+            signal_ref_expr('header_bus'),
+            signal_ref_expr('comp_link_producer_serial_lo'),
+        ),
+        'child-output concat operands become a typed concat binding over base carriers and top-port refs',
+    );
+    is_deeply(
+        $plan->auxiliary_assignments,
+        [
+            '    assign packed_out = {comp_link_producer_serial_hi[3:0], header_bus, comp_link_producer_serial_lo};',
+        ],
+        'child-output concat operands also drive declared top outputs through direct assignments over those carriers',
+    );
+};
+
+subtest 'pipeline and CLI emit child-output concat operands through shared carriers' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'child_concat_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'child_concat_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:child_concat_top
+  (?ports:public_io
+    header_bus<2
+    packed_out>8
+  )
+  (?rtl:producer)
+  (?rtl:consumer)
+  (?toplink:wiring
+    /producer.serial_hi[3:0],header_bus,producer.serial_lo/consumer.data_in/
+    /producer.serial_hi[3:0],header_bus,producer.serial_lo/packed_out/
+  )
+)
+
+(?rtlif:producer
+  serial_hi>4:data
+  serial_lo>2:data
+)
+
+(?rtlif:consumer
+  data_in<8:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C3', 'child-output concat toplinks stay on the C3 lane');
+
+    my %instances = map { $_->instance_name => $_ } @{$result->{composition_plan}->instances};
+    my %consumer_bindings = map { $_->{port_name} => $_ } @{$instances{consumer}->port_bindings};
+    is_deeply(
+        $consumer_bindings{data_in}{connection_expr},
+        concat_expr(
+            slice_expr('comp_link_producer_serial_hi', 3, 0),
+            signal_ref_expr('header_bus'),
+            signal_ref_expr('comp_link_producer_serial_lo'),
+        ),
+        'pipeline preserves the typed child-output concat binding in the realized composition plan',
+    );
+
+    my $hdl = $result->{hdl_code};
+    like($hdl, qr/\bwire\s+\[3:0\]\s+comp_link_producer_serial_hi\s*;/s, 'generated HDL emits the shared carrier wire for the first child-output concat operand');
+    like($hdl, qr/\bwire\s+\[1:0\]\s+comp_link_producer_serial_lo\s*;/s, 'generated HDL emits the shared carrier wire for the second child-output concat operand');
+    like($hdl, qr/\.serial_hi\(comp_link_producer_serial_hi\)/, 'generated HDL binds the first producer output to its shared carrier');
+    like($hdl, qr/\.serial_lo\(comp_link_producer_serial_lo\)/, 'generated HDL binds the second producer output to its shared carrier');
+    like($hdl, qr/\.data_in\(\{comp_link_producer_serial_hi\[3:0\],\s*header_bus,\s*comp_link_producer_serial_lo\}\)/, 'generated HDL emits the child-output concat directly on the consumer input');
+    like($hdl, qr/assign packed_out = \{comp_link_producer_serial_hi\[3:0\],\s*header_bus,\s*comp_link_producer_serial_lo\};/, 'generated HDL emits the child-output concat directly on the top output assignment');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+
+    ok($success, 'CLI succeeds for child-output concat toplinks');
+    ok(-e $output_path, 'CLI writes HDL for child-output concat toplinks');
+};
+
 subtest 'linked plan builder rejects unsupported concat operands' => sub {
     my $exception = eval {
         FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
@@ -456,8 +603,56 @@ subtest 'linked plan builder rejects unsupported concat operands' => sub {
 
     like(
         $exception,
-        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
+        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
         'builder blocks unsupported concat operands through the top-expression boundary',
+    );
+};
+
+subtest 'linked plan builder rejects out-of-range child-output concat operands' => sub {
+    my $exception = eval {
+        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+            lane => 'C3',
+            composition_spec => composition_spec('blocked_child_concat_top'),
+            top => FSM::Composition::Top->new(name => 'blocked_child_concat_top'),
+            ports_block => FSM::Composition::PortsBlock->new(
+                name => 'public_io',
+                ports => [port('header_bus', 'input', 2, undef)],
+            ),
+            ports => [port('header_bus', 'input', 2, undef)],
+            toplinks => [
+                FSM::Composition::TopLink->new(
+                    name => 'wiring',
+                    links => [
+                        FSM::Composition::Link->new(
+                            source => 'producer.payload[8],header_bus',
+                            target => 'consumer.data_in',
+                        ),
+                    ],
+                ),
+            ],
+            realized_instances => [
+                realized_instance(
+                    'rtl',
+                    'producer',
+                    port('payload', 'output', 8, undef),
+                ),
+                realized_instance(
+                    'rtl',
+                    'consumer',
+                    port('data_in', 'input', 3, undef),
+                ),
+            ],
+            fsm_file => 'blocked_child_concat_top.fsm',
+            header => 'blocked_child_concat_top',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/uses child expression 'producer\.payload\[8\]', .*bit index 8 falls outside declared width 8 of child endpoint 'producer\.payload'/s,
+        'builder blocks out-of-range child-output concat operands through child-expression diagnostics',
     );
 };
 

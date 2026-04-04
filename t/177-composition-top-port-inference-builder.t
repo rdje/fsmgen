@@ -120,6 +120,42 @@ subtest 'explicit-toplink builder infers undeclared top inputs from concat top-e
     );
 };
 
+subtest 'explicit-toplink builder infers undeclared top inputs from concat operands even when child-output operands participate too' => sub {
+    my $ports = FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
+        ports => [],
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(
+                        source => '{producer.tag,status_bus[0],payload_lo[3:0]}',
+                        target => 'sink.frame_in',
+                    ),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance('producer',
+                output_port('tag', 2),
+            ),
+            realized_instance('sink',
+                input_port('frame_in', 7),
+            ),
+        ],
+        fsm_file => 'fixture.fsm',
+        header => 'fixture',
+    );
+
+    is_deeply(
+        [map { [$_->name, $_->direction, $_->width, $_->origin_kind] } @$ports],
+        [
+            ['payload_lo', 'input', 4, 'inferred_explicit_toplink_port'],
+            ['status_bus', 'input', 1, 'inferred_explicit_toplink_port'],
+        ],
+        'builder still infers only undeclared top-input operands when concat also includes child-output operands',
+    );
+};
+
 subtest 'explicit-toplink builder infers one undeclared whole-port concat operand from child target width' => sub {
     my $ports = FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
         ports => [],
