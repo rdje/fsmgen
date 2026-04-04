@@ -149,6 +149,68 @@ subtest 'linked plan builder fans one child source out to multiple top outputs t
     is($consumer_bindings{payload}, 'comp_link_producer_payload', 'consumer input reuses the shared carrier net for multi-top-output fanout');
 };
 
+subtest 'linked plan builder fans one top input directly to top outputs and child inputs' => sub {
+    my @ports = (
+        port('clk', 'input', 1, 'clock'),
+        port('rstn', 'input', 1, 'reset'),
+        port('start', 'input', 8, undef),
+        port('tap_a', 'output', 8, undef),
+        port('tap_b', 'output', 8, undef),
+    );
+
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        lane => 'C2',
+        composition_spec => composition_spec('linked_plan_builder_top_input_fanout_top'),
+        top => FSM::Composition::Top->new(name => 'linked_plan_builder_top_input_fanout_top'),
+        ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
+        ports => \@ports,
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(source => 'start', target => 'tap_a'),
+                    FSM::Composition::Link->new(source => 'start', target => 'tap_b'),
+                    FSM::Composition::Link->new(source => 'start', target => 'left.payload'),
+                    FSM::Composition::Link->new(source => 'start', target => 'right.payload'),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance(
+                'left',
+                port('clk', 'input', 1, 'clock'),
+                port('rstn', 'input', 1, 'reset'),
+                port('payload', 'input', 8, undef),
+            ),
+            realized_instance(
+                'right',
+                port('clk', 'input', 1, 'clock'),
+                port('rstn', 'input', 1, 'reset'),
+                port('payload', 'input', 8, undef),
+            ),
+        ],
+        fsm_file => 'linked_plan_builder_top_input_fanout_top.fsm',
+        header => 'linked_plan_builder_top_input_fanout_top',
+    );
+
+    is($plan->lane, 'C2', 'builder keeps the active explicit-link lane for direct top-input fanout');
+    is(scalar(@{$plan->nets}), 0, 'builder keeps direct top-input fanout net-free');
+    is_deeply(
+        $plan->auxiliary_assignments,
+        [
+            '    assign tap_a = start;',
+            '    assign tap_b = start;',
+        ],
+        'builder emits direct top-output assignments for the top-input fanout',
+    );
+
+    my %left_bindings = map { $_->{port_name} => $_->{signal_name} } @{$plan->instances->[0]->port_bindings};
+    my %right_bindings = map { $_->{port_name} => $_->{signal_name} } @{$plan->instances->[1]->port_bindings};
+
+    is($left_bindings{payload}, 'start', 'left child input reuses the top input directly');
+    is($right_bindings{payload}, 'start', 'right child input reuses the same top input directly');
+};
+
 subtest 'linked plan builder rejects missing explicit toplinks on explicit-link lanes' => sub {
     my $exception = eval {
         FSM::Composition::LinkedPlanBuilder->build_from_toplinks(

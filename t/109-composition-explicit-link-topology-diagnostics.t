@@ -13,7 +13,6 @@ use FSM::Pipeline::HDLGenerator;
 
 my $tempdir = tempdir(CLEANUP => 1);
 my $missing_toplink_path = File::Spec->catfile($tempdir, 'missing_toplink_top.fsm');
-my $top_to_top_path = File::Spec->catfile($tempdir, 'top_to_top_link_top.fsm');
 
 write_file(
     $missing_toplink_path,
@@ -26,51 +25,6 @@ write_file(
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-)
-
-(?fsm:producer_src
-  (+system
-    (clock clk)
-    (sreset rstn)
-  )
-  (-state0
-    (output_data> <= 8'3)
-  )
-  (+size
-    (output_data 8)
-  )
-)
-
-(?fsm:consumer_src
-  (+system
-    (clock clk)
-    (sreset rstn)
-  )
-  (-state0
-    (final_data> <= 8'5)
-  )
-  (+size
-    (final_data 8)
-  )
-)
-FSM
-);
-
-write_file(
-    $top_to_top_path,
-    <<'FSM'
-(?top:top_to_top_link_top
-  (?ports:public_io
-    clk
-    rstn
-    start<8
-    result_data>8
-  )
-  (?fsmc:producer producer_src)
-  (?fsmc:consumer consumer_src)
-  (?toplink:wiring
-    /start/result_data/
-  )
 )
 
 (?fsm:producer_src
@@ -118,20 +72,6 @@ subtest 'missing explicit toplink now says lane entry is blocked' => sub {
         $exception,
         qr/recognized and parsed into typed composition IR, .*explicit-link lane entry is blocked because the current active C2 lane requires explicit '\?toplink' wiring/s,
         'missing explicit toplink now says explicit-link lane entry is blocked',
-    );
-};
-
-subtest 'top-input directly to top-output now says explicit-link topology is blocked' => sub {
-    my $exception = eval {
-        $pipeline->generate_hdl_from_file($top_to_top_path);
-        undef;
-    };
-    $exception = $@;
-
-    like(
-        $exception,
-        qr/links top input 'start' directly to top output 'result_data', .*explicit-link topology is blocked because the current active C2 lane only supports top inputs driving child inputs/s,
-        'top-input to top-output explicit links now say topology is blocked',
     );
 };
 

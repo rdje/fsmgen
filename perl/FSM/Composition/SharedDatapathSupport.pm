@@ -228,6 +228,7 @@ sub augment_plan ($class, %args) {
 
     my $nets = $composition_plan->{nets} ||= [];
     $composition_plan->{auxiliary_assignments} ||= [];
+    my @existing_auxiliary_assignments = @{$composition_plan->{auxiliary_assignments} || []};
     return $composition_plan unless @{$shared_datapath_candidates || []};
 
     my %needed_exports;
@@ -456,8 +457,11 @@ sub augment_plan ($class, %args) {
         push @lifted_runtime_sections, @runtime_lines;
     }
 
-    my @auxiliary_lines;
-    push @auxiliary_lines, @helper_assignments if @helper_assignments;
+    my @auxiliary_lines = @existing_auxiliary_assignments;
+    if (@helper_assignments) {
+        push @auxiliary_lines, "" if @auxiliary_lines;
+        push @auxiliary_lines, @helper_assignments;
+    }
     if (@assertion_sections) {
         push @auxiliary_lines, "" if @auxiliary_lines;
         push @auxiliary_lines, @assertion_sections;

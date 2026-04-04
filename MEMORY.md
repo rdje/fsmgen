@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-04: declared top inputs may now fan out directly to top outputs too
+- Stayed in the active `R11` lane and kept this as another feature slice instead of circling back into summary-only or hardening-only work.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now allows one declared top input to drive one or more top outputs directly through explicit top-output assignments while sibling child-input consumers reuse that same top input without a synthetic helper carrier,
+  - [perl/FSM/Composition/SharedDatapathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathSupport.pm) now preserves those preexisting auxiliary assignments when shared-datapath runtime rewriting is also active instead of overwriting them later,
+  - [t/176-composition-linked-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/176-composition-linked-plan-builder.t) and [t/266-composition-top-input-top-output-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/266-composition-top-input-top-output-fanout.t) now lock the direct linked-plan and mixed-runtime pipeline/CLI contract for that widened topology,
+  - [t/109-composition-explicit-link-topology-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/109-composition-explicit-link-topology-diagnostics.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) no longer expect the old blocked top-input-to-top-output failure family,
+  - the remaining blocked sibling in this narrower topology family is still source-side top-expression directly to top-output, not plain declared top-input fanout,
+  - and the full regression stayed green after the slice (`Files=261`, `Tests=1978`, `PASS`).
+
 ## 2026-04-04: one child source may now fan out to multiple top outputs in explicit-link tops
 - Stayed in the active `R11` lane and kept this as another real composition-feature widening before returning to hardening-only work.
 - Important continuity note:

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-04: plain declared top-input fanout to top outputs should be real wiring, not blocked topology
+- Kept this in the active `R11` lane as another feature slice because the plan/emitter architecture already had the pieces needed for this without inventing new syntax.
+- Landed behavior:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now lets one declared top input drive one or more top outputs directly through explicit top-output assignments while sibling child-input consumers continue to bind to that same top input signal directly,
+  - the planner therefore keeps this topology net-free on the top-input side instead of inventing an unnecessary helper carrier just to bounce one existing top signal back out,
+  - [perl/FSM/Composition/SharedDatapathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathSupport.pm) now preserves those preexisting top-boundary assignments when shared-datapath runtime rewriting is also active, instead of replacing them wholesale,
+  - and [t/176-composition-linked-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/176-composition-linked-plan-builder.t) plus [t/266-composition-top-input-top-output-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/266-composition-top-input-top-output-fanout.t) now lock both the direct linked-plan contract and the mixed-runtime end-to-end emission path.
+- Why this is worth shipping:
+  - the old block was stricter than the real structural model required, because a declared top input already exists as a stable signal and only needs explicit public re-export assignments,
+  - preserving those assignments across shared-datapath augmentation makes the feature honest in mixed tops instead of only in artificially isolated fixtures,
+  - and this continues the deliberate feature-first cadence without stepping into the still-larger unresolved source-expression-to-top-output design questions.
+
 ## 2026-04-04: child-output fanout to multiple top outputs should be a real topology, not a blocked sibling
 - Kept this in the active `R11` lane as another feature slice instead of returning to topology-report hardening while the implementation path was still straightforward.
 - Landed behavior:

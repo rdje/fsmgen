@@ -126,7 +126,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - The duplicate-driver failed-run summary contract is now explicitly locked for both target families: top-boundary targets keep `Top port '...'` context, and child-input targets keep `Child endpoint 'instance.port'` context, while the concise reason still names the earlier explicit link that already reserved that target.
   - Failed-run summaries now also recognize blocked explicit-link width-mismatch diagnostics as target context instead of reason-only failures, so these runs keep `Top port '...'` or `Child endpoint 'instance.port'` context depending on the blocked target while preserving the concise `exact width agreement` reason.
   - The explicit-link width-mismatch failed-run summary contract is now explicitly locked for both reachable target families too: child-target mismatches keep `Child endpoint 'instance.port'` context, and top-boundary mismatches keep `Top port '...'` context while preserving the same concise exact-width-agreement reason.
-  - The sibling explicit-link topology family where a top input is wired directly to a top output is now also summary-backed with `Lane: C2`, `Construct: ?toplink`, and `Top port '...'` context for the blocked top-input source instead of leaving that source only in the raw exception text.
+  - The sibling explicit-link topology family where a declared top input is wired directly to one or more top outputs is now a shipped routing slice instead of a blocked-summary-only family: explicit-link planning keeps the top input as the child-facing carrier and emits explicit top-output assignments for the public fanout.
   - The missing-`?toplink` explicit-link lane-entry family is now also summary-backed, keeping `Lane: C2`, `Construct: ?toplink`, the blocked `explicit-link lane entry` boundary, and the concise reason while explicitly avoiding any invented context line when the diagnostic itself does not name one.
   - Failed-run duplicate-declaration summaries now also surface duplicate-name context instead of leaving it only in the raw exception text: blocked duplicate top-port declarations keep `Construct: ?ports` plus `Top port '...'` context, while blocked duplicate child-instance declarations keep `Child '...'` context with the same blocked `shape` boundary and uniqueness reason.
   - The explicit-link role-mismatch failed-run summary contract is now also symmetric across the remaining sibling families: blocked child-endpoint sources keep `Child endpoint 'instance.port'` context with the concise `input instead of output` reason, and blocked top-port targets keep `Top port '...'` context with the concise `input instead of output` reason, instead of relying only on the previously locked child-target and top-source families.
@@ -1302,7 +1302,8 @@ Done:
 - The next explicit-link topology widening is now also shipped:
   - one realized child output source may now fan out to multiple top outputs through one deterministic shared carrier net plus explicit top-output assignments,
   - sibling child-input consumers may reuse that same carrier net in the same top without rebinding one public top output as the internal carrier,
-  - and top-input-to-top-output explicit links remain blocked as the still-unsupported topology sibling.
+  - one declared top input may now also drive one or more top outputs directly through explicit top-output assignments while sibling child-input consumers reuse that same top input directly instead of inventing a helper carrier,
+  - and shared-datapath augmentation now preserves those earlier explicit top-output assignments instead of overwriting them later in mixed-runtime tops.
 - That same first structural-actual slice now also covers exact-width decimal and hex literals:
   - explicit-link `C2` / `C3` child-input bindings may now use `=N'd...` and `=N'h...` direct actual sources beside the already-shipped binary forms,
   - the same exact-width decimal/hex literal family now also participates inside bounded source-side concat operands,
@@ -1319,8 +1320,13 @@ Done:
   - and blocked unsupported concat-operand rejection through the top-expression boundary.
 - [t/176-composition-linked-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/176-composition-linked-plan-builder.t) now also locks:
   - linked-plan multi-top-output fanout through one deterministic carrier net and explicit top-output assignments.
+- [t/176-composition-linked-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/176-composition-linked-plan-builder.t) now also locks:
+  - linked-plan direct top-input fanout to top outputs and child inputs without synthetic helper nets.
 - [t/265-composition-multi-top-output-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/265-composition-multi-top-output-fanout.t) now locks:
   - end-to-end pipeline and CLI emission for one child source fanned out to multiple top outputs through one shared carrier net.
+- [t/266-composition-top-input-top-output-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/266-composition-top-input-top-output-fanout.t) now locks:
+  - end-to-end pipeline and CLI emission for direct top-input fanout to top outputs,
+  - and preservation of those top-output assignments when shared-datapath runtime rewriting is also active in the same top.
 - [t/177-composition-top-port-inference-builder.t](/Users/richarddje/Documents/github/fsmgen/t/177-composition-top-port-inference-builder.t) now also locks:
   - direct inference of undeclared top inputs from inferable concat top-expression operands,
   - residual-width inference for one undeclared whole-port concat operand,

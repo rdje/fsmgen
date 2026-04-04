@@ -202,6 +202,7 @@ Combinational DT note:
 - Source-side flat concat `?toplink` expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/uart_tx.data_in/` when the target is a realized child input
 - Explicit `?toplink` source actuals `=open`, `=0`, `=1`, and exact-width binary/decimal/hex literals such as `=8'b10100101`, `=8'd165`, or `=8'hA5` when the target is a realized child input
 - One realized child output source fanned out to multiple top outputs through one deterministic shared carrier plus explicit top-output assignments
+- One declared top input fanned out directly to one or more top outputs through explicit top-output assignments while sibling child-input consumers reuse that same top input without helper nets
 - Dotted child endpoints in links, for example `/producer.output_data/consumer.input_data/`
 - `C1` lane: one `?top`, one child (`?fsmc`, `?dtc`, or `?rtl`), explicit `?ports`, deterministic same-name top wiring
 - `C2` lane: multiple generated children (`?fsmc` / `?dtc`) plus explicit `?toplink` wiring and deterministic internal nets
@@ -230,7 +231,7 @@ Combinational DT note:
   - and it now also covers explicit-toplink-driven undeclared top-port inference failures when direction, width, or type evidence disagrees,
   - and it now also covers explicit `?toplink` validation failures when endpoint resolution, direction, duplicate-drive, or width evidence blocks the declared link,
   - and it now also covers explicit-link top-wiring and realized-child-wiring failures when declared top ports or realized child ports remain unwired in explicit-link lanes,
-  - and it now also covers explicit-link lane-entry and topology failures when explicit-link lanes are entered without `?toplink` or when top inputs try to drive top outputs directly,
+  - and it now also covers explicit-link lane-entry and remaining topology failures when explicit-link lanes are entered without `?toplink` or when a still-unsupported explicit-link topology is requested,
   - and it now also covers top-level composition lane/shape gates when no child instances exist, when `?ports` multiplicity is invalid, or when omitted/empty `?ports` appears outside the bounded inference cases,
   - and it now also covers declared `=name` connect-by-name failures when direction, width, ambiguity, or missing-endpoint evidence blocks the declared match,
   - and it now also covers `C1` passthrough exposure failures when explicit top exposure omits a realized child port or disagrees with the realized child interface on name, width, or direction,
@@ -934,6 +935,7 @@ This currently works because:
 - plain explicit top outputs may now also reuse that same-name convention when one unique same-name child output remains top-facing,
 - undeclared same-name internal child-to-child carriers may now be inferred when one unique child output and one or more child inputs share the same name and no explicit link already touches that name family,
 - those inferred same-name carriers stay internal by default, but an explicit same-name top output may adopt and re-export one of them when width/type metadata still match,
+- explicit-link tops may now also route one declared top input directly to one or more declared top outputs through explicit top-output assignments while sibling child-input consumers reuse that same top input without an invented helper carrier,
 - explicit link widths and endpoint roles must match exactly.
 
 Current narrow plain-explicit-port convention example:

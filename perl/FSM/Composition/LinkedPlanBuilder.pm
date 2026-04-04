@@ -244,11 +244,8 @@ sub build_plan ($class, %args) {
 
         if ($source->{kind} eq 'top_port') {
             for my $resolved_link (@group) {
-                confess
-                    "Composition source '$header' in '$fsm_file' links top input '".$source->{raw}."' directly to top output '".$resolved_link->{target}{raw}."', ".
-                    "but explicit-link topology is blocked because the current active $lane lane only supports top inputs driving child inputs. ".
-                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-                    if $resolved_link->{target}{kind} eq 'top_port';
+                next unless $resolved_link->{target}{kind} eq 'top_port';
+                push @auxiliary_assignments, "    assign ".$resolved_link->{target}{port}->name." = ".$source->{port}->name.";";
             }
             $carrier_signal_by_source{$source_key} = $source->{port}->name;
             next;
