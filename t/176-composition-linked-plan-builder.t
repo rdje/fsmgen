@@ -83,6 +83,72 @@ subtest 'linked plan builder assembles a bounded explicit-link plan with auto sy
     is($consumer_bindings{done}, 'done', 'consumer output is rebound directly to the top output');
 };
 
+subtest 'linked plan builder fans one child source out to multiple top outputs through one carrier net' => sub {
+    my @ports = (
+        port('clk', 'input', 1, 'clock'),
+        port('rstn', 'input', 1, 'reset'),
+        port('status_a', 'output', 8, undef),
+        port('status_b', 'output', 8, undef),
+    );
+
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        lane => 'C2',
+        composition_spec => composition_spec('linked_plan_builder_multi_top_output_top'),
+        top => FSM::Composition::Top->new(name => 'linked_plan_builder_multi_top_output_top'),
+        ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
+        ports => \@ports,
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(source => 'producer.payload', target => 'status_a'),
+                    FSM::Composition::Link->new(source => 'producer.payload', target => 'status_b'),
+                    FSM::Composition::Link->new(source => 'producer.payload', target => 'consumer.payload'),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance(
+                'producer',
+                port('clk', 'input', 1, 'clock'),
+                port('rstn', 'input', 1, 'reset'),
+                port('payload', 'output', 8, undef),
+            ),
+            realized_instance(
+                'consumer',
+                port('clk', 'input', 1, 'clock'),
+                port('rstn', 'input', 1, 'reset'),
+                port('payload', 'input', 8, undef),
+            ),
+        ],
+        fsm_file => 'linked_plan_builder_multi_top_output_top.fsm',
+        header => 'linked_plan_builder_multi_top_output_top',
+    );
+
+    is($plan->lane, 'C2', 'builder keeps the active explicit-link lane for multi-top-output fanout');
+    is(scalar(@{$plan->nets}), 1, 'builder creates one deterministic carrier net for multi-top-output fanout');
+    is($plan->nets->[0]->name, 'comp_link_producer_payload', 'builder keeps the deterministic carrier net naming rule for multi-top-output fanout');
+    is_deeply(
+        $plan->nets->[0]->targets,
+        ['status_a', 'status_b', 'consumer.payload'],
+        'carrier net records both top-output targets and child-input consumers',
+    );
+    is_deeply(
+        $plan->auxiliary_assignments,
+        [
+            '    assign status_a = comp_link_producer_payload;',
+            '    assign status_b = comp_link_producer_payload;',
+        ],
+        'builder emits explicit top-output fanout assignments for the shared carrier',
+    );
+
+    my %producer_bindings = map { $_->{port_name} => $_->{signal_name} } @{$plan->instances->[0]->port_bindings};
+    my %consumer_bindings = map { $_->{port_name} => $_->{signal_name} } @{$plan->instances->[1]->port_bindings};
+
+    is($producer_bindings{payload}, 'comp_link_producer_payload', 'producer output drives the shared carrier net for multi-top-output fanout');
+    is($consumer_bindings{payload}, 'comp_link_producer_payload', 'consumer input reuses the shared carrier net for multi-top-output fanout');
+};
+
 subtest 'linked plan builder rejects missing explicit toplinks on explicit-link lanes' => sub {
     my $exception = eval {
         FSM::Composition::LinkedPlanBuilder->build_from_toplinks(

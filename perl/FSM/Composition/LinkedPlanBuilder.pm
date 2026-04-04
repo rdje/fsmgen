@@ -235,6 +235,7 @@ sub build_plan ($class, %args) {
     }
 
     my @nets;
+    my @auxiliary_assignments;
     my %carrier_signal_by_source;
 
     for my $source_key (sort keys %links_by_source) {
@@ -254,16 +255,12 @@ sub build_plan ($class, %args) {
         }
 
         my @top_output_targets = grep { $_->{target}{kind} eq 'top_port' } @group;
-        confess
-            "Composition source '$header' in '$fsm_file' drives multiple top outputs from '".$source->{raw}."', ".
-            "but explicit-link topology is blocked because the current active $lane lane supports at most one top-output target per resolved source. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            if @top_output_targets > 1;
 
         my $carrier_signal_name;
         if (@top_output_targets == 1) {
             $carrier_signal_name = $top_output_targets[0]{target}{port}->name;
-        } else {
+        }
+        else {
             my $preferred_net_name;
             if (@group) {
                 my @implicit_internal_names = map {
@@ -284,6 +281,10 @@ sub build_plan ($class, %args) {
                 targets => [map { $_->{target}{raw} } @group],
             );
             $carrier_signal_name = $net_name;
+
+            for my $top_output_target (@top_output_targets) {
+                push @auxiliary_assignments, "    assign ".$top_output_target->{target}{port}->name." = $carrier_signal_name;";
+            }
         }
         $carrier_signal_by_source{$source_key} = $carrier_signal_name;
         $bindings_by_instance{$source->{instance_name}}{$source->{port}->name} = $carrier_signal_name;
@@ -360,7 +361,7 @@ sub build_plan ($class, %args) {
         resolved_links => [@system_auto_links, @resolved_links_input],
         nets => \@nets,
         instances => \@planned_instances,
-        auxiliary_assignments => [],
+        auxiliary_assignments => \@auxiliary_assignments,
         shared_datapath_candidates => [],
         raw_spec => $composition_spec,
     );

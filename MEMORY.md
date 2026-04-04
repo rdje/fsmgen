@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-04: one child source may now fan out to multiple top outputs in explicit-link tops
+- Stayed in the active `R11` lane and kept this as another real composition-feature widening before returning to hardening-only work.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now realizes one child output source driving multiple top outputs through one deterministic shared carrier net plus explicit top-output assignments instead of blocking that topology,
+  - sibling child-input consumers in the same explicit-link top now reuse that same carrier net instead of forcing one public top output to double as the internal carrier,
+  - [t/176-composition-linked-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/176-composition-linked-plan-builder.t) and [t/265-composition-multi-top-output-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/265-composition-multi-top-output-fanout.t) now lock the linked-plan and end-to-end pipeline/CLI contract for that widened topology,
+  - [t/109-composition-explicit-link-topology-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/109-composition-explicit-link-topology-diagnostics.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) no longer expect the old blocked multi-top-output failure family,
+  - and the still-blocked explicit-link topology sibling remains top-input directly to top-output, not child-output fanout.
+
 ## 2026-04-04: exact-width decimal actuals now ride the same structural literal path
 - Stayed in the active `R11` lane and kept this as another bounded structural-actual widening rather than introducing a new connection-expression family.
 - Important continuity note:

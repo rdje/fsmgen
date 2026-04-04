@@ -315,7 +315,7 @@ First shipped `R11` slice now in tree:
     - explicit-toplink-driven undeclared top-port inference failures now also say when that inference path is blocked by direction, width, or type disagreement,
     - explicit `?toplink` validation failures now also say when endpoint resolution, direction, duplicate-drive, or width evidence blocks the declared link,
     - explicit-link top-wiring and realized-child-wiring failures now also say when declared top ports or realized child ports remain unwired in explicit-link lanes,
-    - explicit-link lane-entry and topology failures now also say when explicit-link lanes are entered without `?toplink`, when top inputs try to drive top outputs directly, or when one source tries to drive multiple top outputs,
+    - explicit-link lane-entry and topology failures now also say when explicit-link lanes are entered without `?toplink` or when top inputs try to drive top outputs directly,
     - top-level composition lane/shape gates now also say when lane entry is blocked by missing child instances and when shape is blocked by invalid `?ports` multiplicity or omitted/empty `?ports` outside the bounded inference cases,
     - explicit top-output re-export mismatches for inferred same-name internal carriers now also say when that bounded re-export path is blocked by width or type disagreement,
     - declared `=name` connect-by-name failures now also say when the declared match is blocked by direction, width, ambiguity, or missing-endpoint evidence,
@@ -845,6 +845,10 @@ The first honest `R11` slices are now:
   binary/decimal/hex literal actuals, so explicit `?toplink` child-input
   bindings can now reuse the already-shipped structural `concat` node directly
   instead of inventing carrier nets or backend-specific text escapes.
+- Forward-IR note: explicit-link planning now also supports one realized child
+  output source fanning out to multiple top outputs through one deterministic
+  shared carrier net plus explicit top-output assignments, so that topology no
+  longer needs to be blocked as if it required multiple independent drivers.
 - Forward-IR note: omitted/empty-`?ports` top-boundary inference now also sees
   inferable `name[index]` / `name[msb:lsb]` operands inside those bounded
   concat sources, and one remaining undeclared whole-port concat operand may

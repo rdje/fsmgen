@@ -14,7 +14,6 @@ use FSM::Pipeline::HDLGenerator;
 my $tempdir = tempdir(CLEANUP => 1);
 my $missing_toplink_path = File::Spec->catfile($tempdir, 'missing_toplink_top.fsm');
 my $top_to_top_path = File::Spec->catfile($tempdir, 'top_to_top_link_top.fsm');
-my $multi_top_output_path = File::Spec->catfile($tempdir, 'multi_top_output_link_top.fsm');
 
 write_file(
     $missing_toplink_path,
@@ -102,52 +101,6 @@ write_file(
 FSM
 );
 
-write_file(
-    $multi_top_output_path,
-    <<'FSM'
-(?top:multi_top_output_link_top
-  (?ports:public_io
-    clk
-    rstn
-    status_a>8
-    status_b>8
-  )
-  (?fsmc:producer producer_src)
-  (?fsmc:consumer consumer_src)
-  (?toplink:wiring
-    /producer.output_data/status_a/
-    /producer.output_data/status_b/
-  )
-)
-
-(?fsm:producer_src
-  (+system
-    (clock clk)
-    (sreset rstn)
-  )
-  (-state0
-    (output_data> <= 8'3)
-  )
-  (+size
-    (output_data 8)
-  )
-)
-
-(?fsm:consumer_src
-  (+system
-    (clock clk)
-    (sreset rstn)
-  )
-  (-state0
-    (final_data> <= 8'5)
-  )
-  (+size
-    (final_data 8)
-  )
-)
-FSM
-);
-
 my $pipeline = FSM::Pipeline::HDLGenerator->new(
     debug_level => 0,
     target_language => 'systemverilog',
@@ -179,20 +132,6 @@ subtest 'top-input directly to top-output now says explicit-link topology is blo
         $exception,
         qr/links top input 'start' directly to top output 'result_data', .*explicit-link topology is blocked because the current active C2 lane only supports top inputs driving child inputs/s,
         'top-input to top-output explicit links now say topology is blocked',
-    );
-};
-
-subtest 'one source driving multiple top outputs now says explicit-link topology is blocked' => sub {
-    my $exception = eval {
-        $pipeline->generate_hdl_from_file($multi_top_output_path);
-        undef;
-    };
-    $exception = $@;
-
-    like(
-        $exception,
-        qr/drives multiple top outputs from 'producer\.output_data', .*explicit-link topology is blocked because the current active C2 lane supports at most one top-output target per resolved source/s,
-        'multiple top-output targets from one source now say topology is blocked',
     );
 };
 

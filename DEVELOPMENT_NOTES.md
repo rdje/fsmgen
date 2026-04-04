@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-04: child-output fanout to multiple top outputs should be a real topology, not a blocked sibling
+- Kept this in the active `R11` lane as another feature slice instead of returning to topology-report hardening while the implementation path was still straightforward.
+- Landed behavior:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now allows one realized child output source to drive multiple top outputs in explicit-link composition,
+  - the planner realizes that topology through one deterministic shared carrier net plus explicit top-output assignments, so sibling child-input consumers can reuse the same source without rebinding one public top output as the internal carrier,
+  - the generated top therefore stays honest about structure: one real driver net from the child, plus explicit public fanout assignments at the top boundary,
+  - and the still-blocked sibling topology remains top-input directly to top-output, which still lacks a shipped explicit-link contract.
+- Why this is worth shipping:
+  - the old block was stricter than the actual plan/emitter architecture needed, because the project already had carrier nets and auxiliary assignments as first-class composition surfaces,
+  - this widens real user-facing composition expressiveness in a way that fits the existing structural IR instead of introducing a one-off backend shortcut,
+  - and it keeps the execution cadence aligned with the current direction to keep landing missing feature slices before circling back into hardening-only work.
+
 ## 2026-04-04: exact-width decimal actuals should widen the literal family without widening the AST shape
 - Kept this in the active `R11` lane as a bounded structural-actual/runtime widening instead of introducing a fresh connection-expression node kind.
 - Landed behavior:

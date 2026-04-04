@@ -201,6 +201,7 @@ Combinational DT note:
 - Source-side top-port bit/slice `?toplink` expressions such as `payload_bus[15:8]` and `status_bus[0]` when the target is a realized child input
 - Source-side flat concat `?toplink` expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/uart_tx.data_in/` when the target is a realized child input
 - Explicit `?toplink` source actuals `=open`, `=0`, `=1`, and exact-width binary/decimal/hex literals such as `=8'b10100101`, `=8'd165`, or `=8'hA5` when the target is a realized child input
+- One realized child output source fanned out to multiple top outputs through one deterministic shared carrier plus explicit top-output assignments
 - Dotted child endpoints in links, for example `/producer.output_data/consumer.input_data/`
 - `C1` lane: one `?top`, one child (`?fsmc`, `?dtc`, or `?rtl`), explicit `?ports`, deterministic same-name top wiring
 - `C2` lane: multiple generated children (`?fsmc` / `?dtc`) plus explicit `?toplink` wiring and deterministic internal nets
@@ -229,7 +230,7 @@ Combinational DT note:
   - and it now also covers explicit-toplink-driven undeclared top-port inference failures when direction, width, or type evidence disagrees,
   - and it now also covers explicit `?toplink` validation failures when endpoint resolution, direction, duplicate-drive, or width evidence blocks the declared link,
   - and it now also covers explicit-link top-wiring and realized-child-wiring failures when declared top ports or realized child ports remain unwired in explicit-link lanes,
-  - and it now also covers explicit-link lane-entry and topology failures when explicit-link lanes are entered without `?toplink`, when top inputs try to drive top outputs directly, or when one source tries to drive multiple top outputs,
+  - and it now also covers explicit-link lane-entry and topology failures when explicit-link lanes are entered without `?toplink` or when top inputs try to drive top outputs directly,
   - and it now also covers top-level composition lane/shape gates when no child instances exist, when `?ports` multiplicity is invalid, or when omitted/empty `?ports` appears outside the bounded inference cases,
   - and it now also covers declared `=name` connect-by-name failures when direction, width, ambiguity, or missing-endpoint evidence blocks the declared match,
   - and it now also covers `C1` passthrough exposure failures when explicit top exposure omits a realized child port or disagrees with the realized child interface on name, width, or direction,

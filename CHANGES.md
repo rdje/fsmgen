@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-04
+### explicit-link child-output fanout now supports multiple top outputs
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so one realized child output source may now drive multiple top outputs in explicit-link composition through one deterministic shared carrier net plus explicit top-output assignments, while sibling child-input consumers can reuse that same carrier.
+- Added [t/176-composition-linked-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/176-composition-linked-plan-builder.t) and [t/265-composition-multi-top-output-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/265-composition-multi-top-output-fanout.t) coverage to lock the linked-plan and end-to-end pipeline/CLI contract for that widened topology, and removed the now-stale blocked multi-top-output topology expectations from [t/109-composition-explicit-link-topology-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/109-composition-explicit-link-topology-diagnostics.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t).
+
 ### exact-width decimal actuals now share the structural literal path
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so exact-width decimal literal actuals such as `=8'd165` now normalize into the same backend-neutral `bit_vector_literal` structural binding form already used by the shipped binary and hex slices.
 - That same bounded literal widening now works both for direct explicit `?toplink` actual sources and for bounded source-side concat operands, while unsized decimal-like forms still fail explicitly and overflowing decimal payloads now fail instead of truncating silently.
