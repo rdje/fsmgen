@@ -201,8 +201,51 @@ subtest 'linked plan builder rejects unsupported concat operands' => sub {
 
     like(
         $exception,
-        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, and fixed-width literal actuals like '=4'b1010', '=4'd10', or '=4'hA'/s,
+        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, and exact-width literal actuals like '=4'b1010', '=4'd10', or '=4'hA'/s,
         'builder blocks unsupported concat operands through the top-expression boundary',
+    );
+};
+
+subtest 'linked plan builder still rejects unsized numeric concat operands' => sub {
+    my $exception = eval {
+        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+            lane => 'C3',
+            composition_spec => composition_spec('blocked_unsized_numeric_concat_top'),
+            top => FSM::Composition::Top->new(name => 'blocked_unsized_numeric_concat_top'),
+            ports_block => FSM::Composition::PortsBlock->new(
+                name => 'public_io',
+                ports => [port('payload_bus', 'input', 4, undef)],
+            ),
+            ports => [port('payload_bus', 'input', 4, undef)],
+            toplinks => [
+                FSM::Composition::TopLink->new(
+                    name => 'wiring',
+                    links => [
+                        FSM::Composition::Link->new(
+                            source => 'payload_bus[3:0],=170',
+                            target => 'uart_tx.data_in',
+                        ),
+                    ],
+                ),
+            ],
+            realized_instances => [
+                realized_instance(
+                    'rtl',
+                    'uart_tx',
+                    port('data_in', 'input', 12, undef),
+                ),
+            ],
+            fsm_file => 'blocked_unsized_numeric_concat_top.fsm',
+            header => 'blocked_unsized_numeric_concat_top',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/uses top expression 'payload_bus\[3:0\],=170', .*concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, and exact-width literal actuals like '=4'b1010', '=4'd10', or '=4'hA'/s,
+        'builder keeps unsized numeric actual widening on the direct-binding path instead of silently enabling it inside concat operands',
     );
 };
 

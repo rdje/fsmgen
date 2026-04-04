@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-04
+### unsized decimal and hex direct actuals now widen on direct bindings
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so unsized positive decimal and hex direct actuals such as `=170` and `=A5` now behave as numeric direct-binding sources on realized child inputs and declared top outputs instead of failing through the older bounded-literal wording.
+- Those unsized decimal/hex direct actuals now widen to the direct binding target width and fail explicitly on overflow, while exact-width binary/decimal/hex literal forms stay exact-width contracts and bounded concat operands intentionally remain stricter.
+- Updated [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t), [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t), and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock direct linked-plan plus pipeline/CLI success, blocked overflow behavior, and the still-stricter concat / unsupported-shape wording.
+
 ### direct scalar `=0` and `=1` actuals now widen to direct binding targets
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so direct explicit-actual sources `=0` and `=1` no longer behave like accidental one-bit-only bindings on realized child inputs and declared top outputs.
 - Those two scalar actuals now widen to the direct binding target width as numeric zero/one, while exact-width binary/decimal/hex literal actuals still require exact target-width agreement and bounded concat operands still keep `=0` / `=1` as one-bit operands unless an exact-width literal is spelled explicitly.

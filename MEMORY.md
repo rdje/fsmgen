@@ -8,6 +8,16 @@ This is the live continuity document for fast session recovery after crashes, re
   - the clean future branch point is [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm), with [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) carrying one future generation-style option,
   - and the semantic frontend, validations, provenance, and forward IR layers should stay shared so the two modes differ in HDL shape, not in accepted semantics.
 
+## 2026-04-04: unsized decimal and hex direct actuals now widen on direct bindings
+- Stayed in the active `R11` lane and carried through the next real direct-binding widening instead of switching away from feature work.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized positive decimal and hex direct actuals such as `=170` and `=A5` on realized child inputs and declared top outputs, widening them to the direct binding target width as numeric values and failing explicitly on overflow,
+  - exact-width forms such as `=8'd165` and `=8'hA5` remain exact-width contracts instead of being widened again,
+  - bounded concat operands still stay stricter than direct bindings, so unsized numeric widening does not silently appear inside concat,
+  - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) now locks direct linked-plan plus pipeline/CLI success for unsized decimal/hex direct actuals together with blocked unsupported-shape and overflow cases,
+  - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now keeps concat honest by locking that unsized numeric operands still fail there,
+  - and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) continues to keep the widened family wording and blocked summary surface aligned with the shipped contract.
+
 ## 2026-04-04: next likely structural-actual widening is unsized decimal/hex direct bindings, not looser exact-width coercion
 - Recorded one steering decision for the next `R11` sibling after the shipped scalar `=0` / `=1` widening.
 - Important continuity note:

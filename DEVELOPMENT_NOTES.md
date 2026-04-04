@@ -17,6 +17,18 @@ This document captures engineering rationale, design constraints, and working de
 - Main risk to avoid:
   - do not bolt a second text-emitter directly onto the current flattened-only internals in a way that duplicates semantic decisions, because then the two routes would drift on reset/default/priority/partial-assignment behavior instead of differing only in HDL shape.
 
+## 2026-04-04: unsized positive decimal/hex direct actuals now belong to the shipped direct-binding contract
+- Kept this in the active `R11` lane and landed it as the next bounded structural-actual widening instead of leaving it as a steering-only note.
+- Landed behavior:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized positive decimal direct actuals such as `=170` and unsized hex direct actuals such as `=A5` on direct realized child-input and declared top-output bindings,
+  - those unsized direct actuals now widen to the direct binding target width as numeric values and fail explicitly when the numeric value does not fit,
+  - exact-width forms such as `=8'd5` and `=8'hA5` still stay exact-width contracts rather than being widened again,
+  - and bounded concat operands still stay stricter than direct bindings, so unsized numeric widening does not silently leak into concat.
+- Why this is worth shipping:
+  - it removes another rough edge from honest explicit top wiring without weakening exact-width intent,
+  - keeps the direct-binding contract intuitive for numeric literals,
+  - and still avoids a broader implicit coercion rule that would blur concat or sized-literal meaning.
+
 ## 2026-04-04: unsized numeric direct actuals are a plausible next widening, but exact-width forms should stay exact
 - Recorded this as steering guidance for the next structural-actual feature slice rather than as shipped behavior.
 - Current implementation direction:

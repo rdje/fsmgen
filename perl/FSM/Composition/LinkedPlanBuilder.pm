@@ -187,6 +187,8 @@ sub build_plan ($class, %args) {
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless (($source->{kind} || '') eq 'actual_open')
                 || (($source->{kind} || '') eq 'actual_scalar_literal')
+                || (($source->{kind} || '') eq 'actual_unsized_decimal')
+                || (($source->{kind} || '') eq 'actual_unsized_hex')
                 || $source_width == $target_width;
 
         my $target_key = $target->{key};
@@ -200,7 +202,7 @@ sub build_plan ($class, %args) {
 
         if (($source->{kind} || '') =~ /^actual_/ || ($source->{kind} || '') eq 'top_expr') {
             my $bound_connection_expr = (($source->{kind} || '') =~ /^actual_/)
-                ? $class->actual_connection_expr_for_target($source, $target_width)
+                ? $class->actual_connection_expr_for_target($source, $target_width, $fsm_file, $header)
                 : $source->{connection_expr};
 
             if (($source->{kind} || '') eq 'top_expr') {
@@ -493,7 +495,7 @@ sub assert_link_roles ($class, $source, $target, $fsm_file, $header) {
     if (($target->{kind} || '') =~ /^actual_/) {
         confess
             "Composition source '$header' in '$fsm_file' uses actual endpoint '".$target->{raw}."' as an explicit link target, ".
-            "but explicit actual binding is blocked because the first structural-actual slice only allows '=open', scalar '=0'/'=1', and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs. ".
+            "but explicit actual binding is blocked because the first structural-actual slice only allows '=open', scalar '=0'/'=1', unsized positive decimal/hex direct actuals, and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
 
@@ -602,6 +604,35 @@ sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header) {
         };
     }
 
+    if ($payload =~ /\A(\d+)\z/) {
+        return {
+            raw => $endpoint,
+            key => "actual:$endpoint",
+            kind => 'actual_unsized_decimal',
+            decimal_digits => $1,
+            port => {
+                direction => 'actual',
+                width => 0,
+            },
+        };
+    }
+
+    if ($payload =~ /\A([0-9a-f]+)\z/i) {
+        my $hex_digits = $1;
+        if ($hex_digits =~ /[a-f]/i) {
+            return {
+                raw => $endpoint,
+                key => "actual:$endpoint",
+                kind => 'actual_unsized_hex',
+                hex_digits => $hex_digits,
+                port => {
+                    direction => 'actual',
+                    width => 0,
+                },
+            };
+        }
+    }
+
     my ($bits, $width) = $class->_actual_literal_bits_and_width($payload, $fsm_file, $header);
     return {
         raw => $endpoint,
@@ -658,7 +689,7 @@ sub _actual_literal_bits_and_width ($class, $payload, $fsm_file, $header) {
 
     confess
         "Composition source '$header' in '$fsm_file' uses actual endpoint '=$payload', ".
-        "but explicit actual binding is blocked because the first structural-actual slice currently accepts only '=open', '=0', '=1', or exact-width binary/decimal/hex literal forms like '=8'b10100101', '=8'd165', or '=8'hA5'. ".
+        "but explicit actual binding is blocked because the first structural-actual slice currently accepts only '=open', scalar '=0'/'=1', unsized positive decimal/hex direct actual forms like '=170' or '=A5', or exact-width binary/decimal/hex literal forms like '=8'b10100101', '=8'd165', or '=8'hA5'. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
@@ -687,7 +718,7 @@ sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $fs
     if (!$spec && defined($endpoint) && ($endpoint =~ /\A\{.*\}\z/s || index($endpoint, ',') >= 0)) {
         confess
             "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
-            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, and fixed-width literal actuals like '=4'b1010', '=4'd10', or '=4'hA'. ".
+            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, scalar '=0'/'=1' actuals, and exact-width literal actuals like '=4'b1010', '=4'd10', or '=4'hA'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
     return undef unless $spec;
@@ -1047,23 +1078,59 @@ sub endpoint_width ($class, $endpoint) {
     return 0;
 }
 
-sub actual_connection_expr_for_target ($class, $source, $target_width) {
+sub actual_connection_expr_for_target ($class, $source, $target_width, $fsm_file = undef, $header = undef) {
     return $source->{connection_expr}
         unless ref($source) eq 'HASH' && (($source->{kind} || '') =~ /^actual_/);
 
     return $source->{connection_expr}
-        unless (($source->{kind} || '') eq 'actual_scalar_literal');
+        unless (($source->{kind} || '') eq 'actual_scalar_literal'
+            || ($source->{kind} || '') eq 'actual_unsized_decimal'
+            || ($source->{kind} || '') eq 'actual_unsized_hex');
 
     confess "Scalar actuals require a positive target width before binding.\n"
         unless defined($target_width) && $target_width =~ /\A\d+\z/ && $target_width > 0;
 
-    my $scalar_bit = $source->{scalar_bit} // '';
-    confess "Scalar actuals must preserve one-bit payload metadata.\n"
-        unless $scalar_bit =~ /\A[01]\z/;
+    if (($source->{kind} || '') eq 'actual_scalar_literal') {
+        my $scalar_bit = $source->{scalar_bit} // '';
+        confess "Scalar actuals must preserve one-bit payload metadata.\n"
+            unless $scalar_bit =~ /\A[01]\z/;
 
-    my $bits = '0' x $target_width;
-    substr($bits, -1, 1, $scalar_bit) if $scalar_bit eq '1';
-    return bit_vector_literal_expr($bits);
+        my $bits = '0' x $target_width;
+        substr($bits, -1, 1, $scalar_bit) if $scalar_bit eq '1';
+        return bit_vector_literal_expr($bits);
+    }
+
+    if (($source->{kind} || '') eq 'actual_unsized_decimal') {
+        my $decimal_digits = $source->{decimal_digits} // '';
+        my ($bits, undef) = $class->_decimal_literal_bits_and_width(
+            $target_width,
+            $decimal_digits,
+            on_overflow => sub {
+                return
+                    "Composition source '$header' in '$fsm_file' uses actual literal '".$source->{raw}."', ".
+                    "but explicit actual binding is blocked because unsized decimal actual value does not fit direct target width $target_width. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+            },
+        );
+        return bit_vector_literal_expr($bits);
+    }
+
+    if (($source->{kind} || '') eq 'actual_unsized_hex') {
+        my $hex_digits = $source->{hex_digits} // '';
+        my ($bits, undef) = $class->_hex_literal_bits_and_width(
+            $target_width,
+            $hex_digits,
+            on_overflow => sub {
+                return
+                    "Composition source '$header' in '$fsm_file' uses actual literal '".$source->{raw}."', ".
+                    "but explicit actual binding is blocked because unsized hex actual value does not fit direct target width $target_width. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+            },
+        );
+        return bit_vector_literal_expr($bits);
+    }
+
+    confess "Unsupported actual kind '".$source->{kind}."' reached actual_connection_expr_for_target.\n";
 }
 
 sub allocate_net_name ($class, $source, $top_ports_by_name, $existing_nets, $preferred_name = undef) {
