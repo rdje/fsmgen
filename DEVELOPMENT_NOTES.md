@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-04: bounded concat can grow to intrinsic-width unsized binary/octal/hex actuals without reintroducing target-width guessing
+- Kept this in the active `R11` lane and widened the bounded concat family only where operand width is self-determined by spelling.
+- Landed behavior:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts intrinsic-width unsized binary/octal/hex concat operands such as `=0b1_0`, `=0o2`, `=0xA`, and bare `=A`,
+  - those operands lower through the same typed `bit_vector_literal_expr` concat path as the existing exact-width literal operands,
+  - their width now comes from the digits themselves, so binary keeps bit count, octal keeps three bits per digit, and hex keeps four bits per digit,
+  - and unsized decimal spellings such as `=170` and `=0d170` still stay blocked in concat because they would need target-width-driven coercion rather than an intrinsic operand width.
+- Why this boundary is worth keeping:
+  - it widens expressiveness for real tie-off and packed-header use without backing into hidden concat widening,
+  - preserves the earlier direct-binding story where unsized decimal is numeric and target-width-aware,
+  - and keeps exact-width forms meaningful instead of collapsing every literal family into one implicit width-inference bucket.
+
 ## 2026-04-04: prefixed unsized direct actuals should share the same direct-binding contract as the bare unsized family
 - Kept this in the active `R11` lane and landed it as the next bounded structural-actual widening rather than inventing a wider coercion rule.
 - Landed behavior:

@@ -3318,7 +3318,7 @@ RTLIF
     is($report->{blocked_boundary}, 'explicit link endpoint resolution', 'failure report preserves the blocked endpoint-resolution boundary for concat-operand failures');
     is(
         $report->{blocked_reason},
-        "concat operands currently accept only top-port names, top-port bit/slice forms, scalar '=0'/'=1' actuals, and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'",
+        "concat operands currently accept only top-port names, top-port bit/slice forms, scalar '=0'/'=1' actuals, intrinsic-width unsized binary/octal/hex actuals like '=0b1010', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'",
         'failure report preserves the concise concat-operand top-expression reason',
     );
 };
@@ -5553,7 +5553,7 @@ RTLIF
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for concat-operand failures');
     like(
         $combined_output,
-        qr/Reason:\s+concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
+        qr/Reason:\s+concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/octal\/hex actuals like '=0b1010', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
         'CLI reports the concise concat-operand top-expression reason',
     );
 };

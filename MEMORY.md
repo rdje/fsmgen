@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-04: intrinsic-width unsized binary/octal/hex concat actuals now use the bounded top-expression path
+- Stayed in the active `R11` lane and widened the concat side carefully instead of weakening the direct-vs-concat distinction.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts intrinsic-width unsized binary/octal/hex concat operands such as `=0b1_0`, `=0o2`, `=0xA`, and `=A`,
+  - those operands now become typed `bit_vector_literal_expr` concat members whose width comes from their digits rather than from the child-input target,
+  - unsized decimal concat forms such as `=170` and `=0d170` still stay blocked so target-width widening remains a direct-binding-only contract,
+  - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for that new concat family and the still-blocked unsized-decimal concat boundary,
+  - and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now keeps the concise concat-operand wording aligned with the widened intrinsic-width family.
+
 ## 2026-04-04: prefixed unsized direct actuals now share the widened direct-binding family
 - Stayed in the active `R11` lane and carried the direct-actual family forward one more bounded step instead of opening concat or sized-literal coercion.
 - Important continuity note:

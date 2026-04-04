@@ -842,10 +842,12 @@ The first honest `R11` slices are now:
   first honest composition wiring path beyond plain top-port references.
 - Forward-IR note: that same producer/consumer path now also covers bounded
   flat source-side concat forms such as `header_bus,status_bus[0],=1,payload`
-  over declared whole top-port refs, top-port bit/slice refs, and fixed-width
-  binary/decimal/octal/hex literal actuals, so explicit `?toplink` child-input
-  bindings can now reuse the already-shipped structural `concat` node directly
-  instead of inventing carrier nets or backend-specific text escapes.
+  over declared whole top-port refs, top-port bit/slice refs, one-bit scalar
+  actuals, intrinsic-width unsized binary/octal/hex actuals, and fixed-width
+  binary/decimal/octal/hex literal actuals, so explicit `?toplink`
+  child-input bindings can now reuse the already-shipped structural `concat`
+  node directly instead of inventing carrier nets or backend-specific text
+  escapes while still keeping unsized decimal widening off the concat path.
 - Forward-IR note: explicit-link planning now also supports one realized child
   output source fanning out to multiple top outputs through one deterministic
   shared carrier net plus explicit top-output assignments, so that topology no

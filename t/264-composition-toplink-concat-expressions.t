@@ -165,6 +165,125 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for explicit top-concat toplinks');
 };
 
+subtest 'linked plan builder preserves intrinsic-width unsized numeric concat operands' => sub {
+    my @ports = (
+        port('header_bus', 'input', 2, undef),
+        port('payload_bus', 'input', 3, undef),
+    );
+
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        lane => 'C3',
+        composition_spec => composition_spec('unsized_numeric_concat_top'),
+        top => FSM::Composition::Top->new(name => 'unsized_numeric_concat_top'),
+        ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
+        ports => \@ports,
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(
+                        source => 'header_bus,=0b1_0,=0o2,=0xA,=A,payload_bus[2:0]',
+                        target => 'uart_tx.data_in',
+                    ),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance(
+                'rtl',
+                'uart_tx',
+                port('data_in', 'input', 18, undef),
+            ),
+        ],
+        fsm_file => 'unsized_numeric_concat_top.fsm',
+        header => 'unsized_numeric_concat_top',
+    );
+
+    isa_ok($plan, 'FSM::Composition::Plan');
+    is($plan->lane, 'C3', 'builder records the active explicit-link lane for intrinsic-width unsized concat operands');
+    is(scalar(@{$plan->nets}), 0, 'intrinsic-width unsized concat operands do not force synthetic carrier nets');
+
+    my %bindings = map { $_->{port_name} => $_ } @{$plan->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{data_in}{connection_expr},
+        concat_expr(
+            signal_ref_expr('header_bus'),
+            bit_vector_literal_expr('10'),
+            bit_vector_literal_expr('010'),
+            bit_vector_literal_expr('1010'),
+            bit_vector_literal_expr('1010'),
+            slice_expr('payload_bus', 2, 0),
+        ),
+        'intrinsic-width unsized binary, octal, prefixed-hex, and bare-hex operands become typed concat literal expressions',
+    );
+};
+
+subtest 'pipeline and CLI emit intrinsic-width unsized numeric concat operands' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'unsized_numeric_concat_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'unsized_numeric_concat_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:unsized_numeric_concat_top
+  (?ports:public_io
+    header_bus<2
+    payload_bus<3
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /header_bus,=0b1_0,=0o2,=0xA,=A,payload_bus[2:0]/uart_tx.data_in/
+  )
+)
+
+(?rtlif:uart_tx
+  data_in<18:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C3', 'intrinsic-width unsized concat toplinks stay on the C3 lane');
+
+    my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{data_in}{connection_expr},
+        concat_expr(
+            signal_ref_expr('header_bus'),
+            bit_vector_literal_expr('10'),
+            bit_vector_literal_expr('010'),
+            bit_vector_literal_expr('1010'),
+            bit_vector_literal_expr('1010'),
+            slice_expr('payload_bus', 2, 0),
+        ),
+        'pipeline preserves the typed intrinsic-width unsized concat binding in the realized composition plan',
+    );
+
+    my $hdl = $result->{hdl_code};
+    like(
+        $hdl,
+        qr/\.data_in\(\{header_bus,\s*2'b10,\s*3'b010,\s*4'b1010,\s*4'b1010,\s*payload_bus\[2:0\]\}\)/,
+        'generated HDL emits intrinsic-width unsized concat operands directly on the child port',
+    );
+    unlike($hdl, qr/\bwire\s+comp_link_/s, 'generated HDL does not invent synthetic carrier nets for intrinsic-width unsized concat bindings');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+
+    ok($success, 'CLI succeeds for intrinsic-width unsized concat toplinks');
+    ok(-e $output_path, 'CLI writes HDL for intrinsic-width unsized concat toplinks');
+};
+
 subtest 'linked plan builder rejects unsupported concat operands' => sub {
     my $exception = eval {
         FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
@@ -203,12 +322,12 @@ subtest 'linked plan builder rejects unsupported concat operands' => sub {
 
     like(
         $exception,
-        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
+        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/octal\/hex actuals like '=0b1010', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
         'builder blocks unsupported concat operands through the top-expression boundary',
     );
 };
 
-subtest 'linked plan builder still rejects unsized numeric concat operands' => sub {
+subtest 'linked plan builder still rejects unsized decimal concat operands' => sub {
     my $exception = eval {
         FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
             lane => 'C3',
@@ -246,17 +365,17 @@ subtest 'linked plan builder still rejects unsized numeric concat operands' => s
 
     like(
         $exception,
-        qr/uses top expression 'payload_bus\[3:0\],=170', .*concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
-        'builder keeps unsized numeric actual widening on the direct-binding path instead of silently enabling it inside concat operands',
+        qr/uses top expression 'payload_bus\[3:0\],=170', .*concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/octal\/hex actuals like '=0b1010', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
+        'builder keeps unsized decimal actual widening on the direct-binding path instead of silently enabling it inside concat operands',
     );
 };
 
-subtest 'linked plan builder still rejects prefixed unsized numeric concat operands' => sub {
+subtest 'linked plan builder still rejects prefixed unsized decimal concat operands' => sub {
     my $exception = eval {
         FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
             lane => 'C3',
-            composition_spec => composition_spec('blocked_prefixed_unsized_numeric_concat_top'),
-            top => FSM::Composition::Top->new(name => 'blocked_prefixed_unsized_numeric_concat_top'),
+            composition_spec => composition_spec('blocked_prefixed_unsized_decimal_concat_top'),
+            top => FSM::Composition::Top->new(name => 'blocked_prefixed_unsized_decimal_concat_top'),
             ports_block => FSM::Composition::PortsBlock->new(
                 name => 'public_io',
                 ports => [port('payload_bus', 'input', 4, undef)],
@@ -267,7 +386,7 @@ subtest 'linked plan builder still rejects prefixed unsized numeric concat opera
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(
-                            source => 'payload_bus[3:0],=0xA5',
+                            source => 'payload_bus[3:0],=0d170',
                             target => 'uart_tx.data_in',
                         ),
                     ],
@@ -280,8 +399,8 @@ subtest 'linked plan builder still rejects prefixed unsized numeric concat opera
                     port('data_in', 'input', 12, undef),
                 ),
             ],
-            fsm_file => 'blocked_prefixed_unsized_numeric_concat_top.fsm',
-            header => 'blocked_prefixed_unsized_numeric_concat_top',
+            fsm_file => 'blocked_prefixed_unsized_decimal_concat_top.fsm',
+            header => 'blocked_prefixed_unsized_decimal_concat_top',
         );
         undef;
     };
@@ -289,8 +408,8 @@ subtest 'linked plan builder still rejects prefixed unsized numeric concat opera
 
     like(
         $exception,
-        qr/uses top expression 'payload_bus\[3:0\],=0xA5', .*concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
-        'builder keeps prefixed unsized numeric actual widening on the direct-binding path instead of silently enabling it inside concat operands',
+        qr/uses top expression 'payload_bus\[3:0\],=0d170', .*concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/octal\/hex actuals like '=0b1010', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
+        'builder keeps prefixed unsized decimal actual widening on the direct-binding path instead of silently enabling it inside concat operands',
     );
 };
 

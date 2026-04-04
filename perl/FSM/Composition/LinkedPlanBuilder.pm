@@ -806,7 +806,7 @@ sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $fs
     if (!$spec && defined($endpoint) && ($endpoint =~ /\A\{.*\}\z/s || index($endpoint, ',') >= 0)) {
         confess
             "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
-            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, scalar '=0'/'=1' actuals, and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'. ".
+            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, scalar '=0'/'=1' actuals, intrinsic-width unsized binary/octal/hex actuals like '=0b1010', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
     return undef unless $spec;
@@ -977,6 +977,29 @@ sub _split_concat_operands ($class, $inner_text) {
 sub _expression_literal_bits_and_width ($class, $payload) {
     return ($1, 1)
         if defined($payload) && $payload =~ /\A([01])\z/;
+
+    if (defined($payload) && $payload =~ /\A0b(.+)\z/i) {
+        my $binary_bits = $class->_normalized_separated_digits($1, '[01]');
+        return undef unless defined $binary_bits;
+        return ($binary_bits, length($binary_bits));
+    }
+
+    if (defined($payload) && $payload =~ /\A0o(.+)\z/i) {
+        my $octal_digits = $class->_normalized_separated_digits($1, '[0-7]');
+        return undef unless defined $octal_digits;
+        return $class->_octal_literal_bits_and_width(length($octal_digits) * 3, $octal_digits);
+    }
+
+    if (defined($payload) && $payload =~ /\A0x(.+)\z/i) {
+        my $hex_digits = $class->_normalized_separated_digits($1, '[0-9A-Fa-f]');
+        return undef unless defined $hex_digits;
+        return $class->_hex_literal_bits_and_width(length($hex_digits) * 4, $hex_digits);
+    }
+
+    my $bare_hex_digits = $class->_normalized_separated_digits($payload, '[0-9A-Fa-f]');
+    if (defined($bare_hex_digits) && $bare_hex_digits =~ /[A-Fa-f]/ && $payload !~ /\A0d/i) {
+        return $class->_hex_literal_bits_and_width(length($bare_hex_digits) * 4, $bare_hex_digits);
+    }
 
     if (defined($payload) && $payload =~ /\A(\d+)'b(.+)\z/i) {
         my ($declared_width, $raw_bits) = ($1, $2);

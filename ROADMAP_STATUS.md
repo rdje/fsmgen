@@ -1296,7 +1296,8 @@ Done:
   - RTL-backed `C3` success with omitted `?ports` and inferred top inputs coming from source-side top expressions.
 - That same source-side top-expression slice now also covers bounded concat sources:
   - explicit-link `C2` / `C3` child-input bindings may now use flat comma-separated source expressions such as `header_bus,status_bus[0],=1,payload_bus[3:0]`,
-  - concat operands are currently bounded to declared whole top-port refs, top-port bit/slice refs, one-bit scalar actuals `=0` / `=1`, and exact-width binary/decimal/octal/hex literal actuals,
+  - concat operands are currently bounded to declared whole top-port refs, top-port bit/slice refs, one-bit scalar actuals `=0` / `=1`, intrinsic-width unsized binary/octal/hex actuals such as `=0b10`, `=0o7`, `=0xA5`, or `=A5`, and exact-width binary/decimal/octal/hex literal actuals,
+  - those intrinsic-width unsized binary/octal/hex concat operands keep the width implied by their digits, while unsized decimal forms such as `=170` or `=0d170` still stay direct-binding-only,
   - omitted/empty-`?ports` top-boundary inference now also sees the inferable bit/slice operands inside those concat sources,
   - and omitted/empty-`?ports` top-boundary inference may now also size one remaining undeclared whole-port concat operand exactly from the child-input target remainder width, while several still-unsized whole-port operands still fail explicitly instead of guessing several widths at once.
 - The next explicit-link topology widening is now also shipped:
@@ -1313,7 +1314,7 @@ Done:
   - direct scalar `=0` / `=1` actuals plus unsized binary/decimal/octal/hex direct actuals such as `=0b10100101`, `=0d170`, `=0o245`, `=0xA5`, `=170`, and `=A5` now also widen to the direct binding target width for realized child inputs and declared top outputs instead of acting like accidental one-bit-only direct sources or unsupported unsized values,
   - underscore-separated digit spellings such as `=0b1010_0101`, `=1_70`, `=0o2_45`, `=A_5`, `=8'd1_65`, and `=8'hA_5` are now accepted on those same direct literal families without changing their normalized value semantics,
   - that same direct exact-width literal family may now also drive declared top outputs without inventing carrier nets,
-  - the same exact-width decimal/octal/hex literal family now also participates inside bounded source-side concat operands,
+  - the same exact-width decimal/octal/hex literal family now also participates inside bounded source-side concat operands beside new intrinsic-width unsized binary/octal/hex concat operands,
   - unsupported non-binary/non-decimal/non-octal/non-hex unsized actual spellings still fail explicitly through the existing bounded-literal wording, while unsized binary/decimal/octal/hex values that do not fit still fail as overflowed direct actuals,
   - and decimal/octal/hex payloads whose numeric value exceeds the declared width now fail explicitly instead of silently truncating.
 - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) now also locks:
@@ -1325,8 +1326,9 @@ Done:
   - and blocked overflowing decimal/octal/hex literal rejection.
 - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks:
   - direct linked-plan preservation of bounded concat bindings,
-  - end-to-end pipeline and CLI emission of those concat child-input bindings, now also including normalized decimal and hex literal operands,
-  - and blocked unsupported concat-operand rejection through the top-expression boundary.
+  - end-to-end pipeline and CLI emission of those concat child-input bindings, now also including intrinsic-width unsized binary/octal/hex plus normalized exact-width decimal/octal/hex literal operands,
+  - blocked unsupported concat-operand rejection through the top-expression boundary,
+  - and blocked unsized decimal concat rejection on both bare and `0d` spellings.
 - [t/176-composition-linked-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/176-composition-linked-plan-builder.t) now also locks:
   - linked-plan multi-top-output fanout through one deterministic carrier net and explicit top-output assignments.
 - [t/176-composition-linked-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/176-composition-linked-plan-builder.t) now also locks:

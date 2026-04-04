@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-04
+### intrinsic-width unsized binary/octal/hex concat actuals now use the typed top-expression path
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so bounded source-side concat operands now accept intrinsic-width unsized binary/octal/hex actuals such as `=0b1_0`, `=0o2`, `=0xA`, and `=A`.
+- Those concat operands now keep the width implied by their digits instead of borrowing width from the child-input target, while unsized decimal spellings such as `=170` and `=0d170` intentionally remain direct-binding-only.
+- Updated [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock linked-plan plus pipeline/CLI success for the new concat family and the refreshed blocked concat wording for still-unsupported unsized decimal operands.
+
 ### prefixed unsized direct actuals now share the widened direct-binding family
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so common prefixed unsized direct actuals such as `=0b10100101`, `=0d170`, and `=0xA5` now ride the same direct-binding path as the already-shipped bare unsized numeric forms.
 - Those prefixed unsized binary/decimal/hex direct actuals now widen to the direct binding target width and fail explicitly on overflow, while exact-width binary/decimal/hex literal forms stay exact-width contracts and bounded concat operands intentionally remain stricter.
