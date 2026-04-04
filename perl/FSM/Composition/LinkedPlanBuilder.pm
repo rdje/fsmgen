@@ -32,6 +32,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     concat_expr
     normalized_binding
     open_expr
+    render_expr
     signal_ref_binding
     signal_ref_expr
     slice_expr
@@ -154,6 +155,7 @@ sub build_plan ($class, %args) {
     my %links_by_source;
     my %source_endpoint_by_key;
     my %top_port_usage;
+    my @auxiliary_assignments;
 
     for my $link (@resolved_links_input) {
         my $source = $class->resolve_endpoint(
@@ -197,14 +199,20 @@ sub build_plan ($class, %args) {
 
         if (($source->{kind} || '') =~ /^actual_/ || ($source->{kind} || '') eq 'top_expr') {
             if (($source->{kind} || '') eq 'top_expr') {
-                confess
-                    "Composition source '$header' in '$fsm_file' links top expression '".$source->{raw}."' directly to top output '".$target->{raw}."', ".
-                    "but explicit-link topology is blocked because the current active $lane lane only supports top inputs driving child inputs. ".
-                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-                    if $target->{kind} eq 'top_port';
-
                 for my $top_port_name (@{$source->{base_port_names} || []}) {
                     $top_port_usage{$top_port_name}{source} = 1;
+                }
+
+                if ($target->{kind} eq 'top_port') {
+                    my $expr_text = render_expr($source->{connection_expr}, $target->{port}->name, 'systemverilog');
+                    push @auxiliary_assignments, "    assign ".$target->{port}->name." = $expr_text;";
+                    $top_port_usage{$target->{port}->name}{target} = 1;
+                    push @resolved_links, {
+                        link => $link,
+                        source => $source,
+                        target => $target,
+                    };
+                    next;
                 }
             }
 
@@ -235,7 +243,6 @@ sub build_plan ($class, %args) {
     }
 
     my @nets;
-    my @auxiliary_assignments;
     my %carrier_signal_by_source;
 
     for my $source_key (sort keys %links_by_source) {
@@ -495,9 +502,12 @@ sub assert_link_roles ($class, $source, $target, $fsm_file, $header) {
 
         confess
             "Composition source '$header' in '$fsm_file' uses top expression '".$source->{raw}."' as an explicit link source, ".
-            "but explicit link is blocked because top expressions currently target only realized child input ports. ".
+            "but explicit link is blocked because source-side top expressions currently target only realized child input ports or declared top outputs. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $target->{kind} eq 'child_port' && $target->{port}->direction eq 'input';
+            unless (
+                ($target->{kind} eq 'child_port' && $target->{port}->direction eq 'input')
+                || ($target->{kind} eq 'top_port' && $target->{port}->direction eq 'output')
+            );
 
         return;
     }

@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-04: source-side top expressions may now drive top outputs directly too
+- Stayed in the active `R11` lane and kept this as another expression/top-boundary feature slice rather than widening actual-source rules at the same time.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now emits direct top-output assignments from source-side top-port bit/slice and bounded concat expressions instead of blocking those expressions at the top boundary,
+  - sibling child-input consumers may still reuse those same typed expressions in the same top without synthetic carrier nets, so direct child-input and direct top-output expression uses now share one planner path,
+  - [t/263-composition-toplink-top-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/263-composition-toplink-top-expressions.t) and [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t) now lock the linked-plan plus pipeline/CLI contract for that widened top-boundary expression slice,
+  - explicit actual sources are still narrower and remain child-input-only for now,
+  - and the next honest sibling beyond this slice is likely the remaining actual-source/top-output boundary rather than more top-expression hardening.
+
 ## 2026-04-04: declared top inputs may now fan out directly to top outputs too
 - Stayed in the active `R11` lane and kept this as another feature slice instead of circling back into summary-only or hardening-only work.
 - Important continuity note:

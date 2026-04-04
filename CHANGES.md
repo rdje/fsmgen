@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-04
+### source-side top expressions now drive top outputs directly too
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so source-side top-port bit/slice expressions and bounded flat concat expressions may now drive declared top outputs directly through explicit top-output assignments while sibling child-input consumers still reuse those same typed expressions without synthetic carrier nets.
+- Added [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t) and expanded [t/263-composition-toplink-top-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/263-composition-toplink-top-expressions.t) to lock the linked-plan and end-to-end pipeline/CLI contract for direct top-expression top-output assignments, including bounded concat rendering through the emitted top-level assignments.
+
 ### explicit top-input fanout now supports direct top-output assignments
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so explicit-link tops may now route one declared top input directly to one or more top outputs through explicit top-output assignments while sibling child-input consumers reuse that same top input without synthetic helper nets.
 - Updated [perl/FSM/Composition/SharedDatapathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SharedDatapathSupport.pm) so later shared-datapath augmentation preserves those preexisting auxiliary assignments instead of replacing them in mixed-runtime tops.

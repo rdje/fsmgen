@@ -154,6 +154,79 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for explicit top-expression toplinks');
 };
 
+subtest 'linked plan builder preserves top-expression sources for direct top-output assignments too' => sub {
+    my @ports = (
+        port('core_clk', 'input', 1, 'clock'),
+        port('rst_async_n', 'input', 1, 'reset'),
+        port('payload_bus', 'input', 16, undef),
+        port('status_bus', 'input', 4, undef),
+        port('serial_hi', 'output', 8, undef),
+        port('serial_flag', 'output', 1, undef),
+        port('packed_status', 'output', 8, undef),
+        port('serial_out', 'output', 1, undef),
+    );
+
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        lane => 'C3',
+        composition_spec => composition_spec('top_expr_top_output_top'),
+        top => FSM::Composition::Top->new(name => 'top_expr_top_output_top'),
+        ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
+        ports => \@ports,
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(source => 'payload_bus[15:8]', target => 'serial_hi'),
+                    FSM::Composition::Link->new(source => 'status_bus[0]', target => 'serial_flag'),
+                    FSM::Composition::Link->new(source => "payload_bus[3:0],status_bus[0],status_bus[1],=2'b10", target => 'packed_status'),
+                    FSM::Composition::Link->new(source => 'payload_bus[15:8]', target => 'uart_tx.data_in'),
+                    FSM::Composition::Link->new(source => 'status_bus[0]', target => 'uart_tx.enable'),
+                    FSM::Composition::Link->new(source => 'uart_tx.serial_out', target => 'serial_out'),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance(
+                'rtl',
+                'uart_tx',
+                port('core_clk', 'input', 1, 'clock'),
+                port('rst_async_n', 'input', 1, 'reset'),
+                port('data_in', 'input', 8, undef),
+                port('enable', 'input', 1, undef),
+                port('serial_out', 'output', 1, undef),
+            ),
+        ],
+        fsm_file => 'top_expr_top_output_top.fsm',
+        header => 'top_expr_top_output_top',
+    );
+
+    isa_ok($plan, 'FSM::Composition::Plan');
+    is($plan->lane, 'C3', 'builder records the active explicit-link lane for top-expression top-output wiring');
+    is(scalar(@{$plan->nets}), 0, 'top-expression top-output wiring does not invent synthetic carrier nets');
+    is_deeply(
+        $plan->auxiliary_assignments,
+        [
+            '    assign serial_hi = payload_bus[15:8];',
+            '    assign serial_flag = status_bus[0];',
+            "    assign packed_status = {payload_bus[3:0], status_bus[0], status_bus[1], 2'b10};",
+        ],
+        'builder emits direct top-output assignments from typed top-expression sources',
+    );
+
+    my %bindings = map { $_->{port_name} => $_ } @{$plan->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{data_in}{connection_expr},
+        slice_expr('payload_bus', 15, 8),
+        'top slice source still becomes a typed child-input binding expression',
+    );
+    is_deeply(
+        $bindings{enable}{connection_expr},
+        bit_select_expr('status_bus', 0),
+        'top bit-select source still becomes a typed child-input binding expression',
+    );
+    is($bindings{serial_out}{signal_name}, 'serial_out', 'child output still rebinds directly to the top output');
+};
+
 subtest 'linked plan builder rejects out-of-range top expressions' => sub {
     my $exception = eval {
         FSM::Composition::LinkedPlanBuilder->build_from_toplinks(

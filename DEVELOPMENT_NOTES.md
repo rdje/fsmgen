@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-04: source-side top expressions should reach top outputs through the same typed path
+- Kept this in the active `R11` lane as another feature slice because the typed top-expression path and the existing top-output auxiliary-assignment surface were already in place.
+- Landed behavior:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now allows source-side top-port bit/slice expressions and bounded concat expressions to drive declared top outputs directly through emitted top-output assignments,
+  - sibling child-input consumers still use the same `connection_expr` payloads on realized instance bindings, so direct top-output and direct child-input expression uses now share one structural planner path instead of diverging into text-only special cases,
+  - and [t/263-composition-toplink-top-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/263-composition-toplink-top-expressions.t) plus [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t) now lock both the typed linked-plan shape and the emitted HDL assignment path, including bounded concat rendering.
+- Why this is worth shipping:
+  - it widens a real user-facing gap that was already called out as the next honest seam after plain top-input fanout,
+  - it reuses the existing backend-neutral expression AST plus renderer instead of inventing one-off string assembly for top assignments,
+  - and it keeps the scope honest by not widening explicit actual sources at the same time.
+
 ## 2026-04-04: plain declared top-input fanout to top outputs should be real wiring, not blocked topology
 - Kept this in the active `R11` lane as another feature slice because the plan/emitter architecture already had the pieces needed for this without inventing new syntax.
 - Landed behavior:

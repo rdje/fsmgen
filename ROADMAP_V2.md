@@ -854,6 +854,11 @@ The first honest `R11` slices are now:
   assignments while sibling child-input consumers reuse that same top input,
   and shared-datapath augmentation now preserves those preexisting assignments
   instead of overwriting them later in the top-runtime rewrite path.
+- Forward-IR note: source-side top-port bit/slice and bounded concat
+  expressions now also reach declared top outputs through those same explicit
+  top-output assignments, so the already-shipped structural expression nodes
+  now have a first direct top-boundary assignment path beyond child-input
+  bindings.
 - Forward-IR note: omitted/empty-`?ports` top-boundary inference now also sees
   inferable `name[index]` / `name[msb:lsb]` operands inside those bounded
   concat sources, and one remaining undeclared whole-port concat operand may

@@ -1304,6 +1304,10 @@ Done:
   - sibling child-input consumers may reuse that same carrier net in the same top without rebinding one public top output as the internal carrier,
   - one declared top input may now also drive one or more top outputs directly through explicit top-output assignments while sibling child-input consumers reuse that same top input directly instead of inventing a helper carrier,
   - and shared-datapath augmentation now preserves those earlier explicit top-output assignments instead of overwriting them later in mixed-runtime tops.
+- That same source-side top-expression slice now also covers declared top outputs:
+  - explicit-link `C2` / `C3` source-side top-port bit/slice and bounded concat expressions may now drive declared top outputs directly through explicit top-output assignments,
+  - sibling child-input consumers may still reuse those same typed top expressions in the same top without synthetic carrier nets,
+  - and explicit actual sources remain the narrower child-input-only slice for now.
 - That same first structural-actual slice now also covers exact-width decimal and hex literals:
   - explicit-link `C2` / `C3` child-input bindings may now use `=N'd...` and `=N'h...` direct actual sources beside the already-shipped binary forms,
   - the same exact-width decimal/hex literal family now also participates inside bounded source-side concat operands,
@@ -1322,11 +1326,16 @@ Done:
   - linked-plan multi-top-output fanout through one deterministic carrier net and explicit top-output assignments.
 - [t/176-composition-linked-plan-builder.t](/Users/richarddje/Documents/github/fsmgen/t/176-composition-linked-plan-builder.t) now also locks:
   - linked-plan direct top-input fanout to top outputs and child inputs without synthetic helper nets.
+- [t/263-composition-toplink-top-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/263-composition-toplink-top-expressions.t) now also locks:
+  - linked-plan direct top-output assignments from typed bit/slice and bounded concat top-expression sources while sibling child-input bindings stay typed too.
 - [t/265-composition-multi-top-output-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/265-composition-multi-top-output-fanout.t) now locks:
   - end-to-end pipeline and CLI emission for one child source fanned out to multiple top outputs through one shared carrier net.
 - [t/266-composition-top-input-top-output-fanout.t](/Users/richarddje/Documents/github/fsmgen/t/266-composition-top-input-top-output-fanout.t) now locks:
   - end-to-end pipeline and CLI emission for direct top-input fanout to top outputs,
   - and preservation of those top-output assignments when shared-datapath runtime rewriting is also active in the same top.
+- [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t) now locks:
+  - end-to-end pipeline and CLI emission for direct top-expression top-output assignments,
+  - including bounded concat top-expression rendering through explicit top-output assignments.
 - [t/177-composition-top-port-inference-builder.t](/Users/richarddje/Documents/github/fsmgen/t/177-composition-top-port-inference-builder.t) now also locks:
   - direct inference of undeclared top inputs from inferable concat top-expression operands,
   - residual-width inference for one undeclared whole-port concat operand,
