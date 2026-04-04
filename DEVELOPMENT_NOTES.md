@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-04: a future structured HDL generation mode looks feasible, but it should be a second backend route, not a forked frontend
+- Recorded this as future-steering guidance rather than shipped behavior.
+- Current architectural take:
+  - the project should keep the current flattened generation mode as the default and continue to treat it as the primary debug-oriented path,
+  - a second selectable generated-module mode that preserves FSM/DT control structure in the emitted HDL through target-language `if` / `case` / statement-oriented forms looks feasible and valuable for readability/review,
+  - that future mode should branch at the generated-module backend selection seam in [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm), not by creating a second parser or semantic pipeline,
+  - [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) therefore look like the right public surface to carry one future generation-style option such as `flattened` versus `structured`, while keeping `flattened` as the default,
+  - the shared language checks, provenance, forward IR, and pre-generation validation gates should stay common across both modes,
+  - and the structured mode should therefore be treated as a second lowering/emission route over the same validated module semantics, not as a looser alternative semantics.
+- Suggested implementation order if this feature is opened:
+  - first direct generated `?fsm` SystemVerilog,
+  - then direct generated `?dt`,
+  - then parity for realized generated children inside composition,
+  - and only later any broader cross-target stylistic promises for Verilog/VHDL.
+- Main risk to avoid:
+  - do not bolt a second text-emitter directly onto the current flattened-only internals in a way that duplicates semantic decisions, because then the two routes would drift on reset/default/priority/partial-assignment behavior instead of differing only in HDL shape.
+
 ## 2026-04-04: unsized numeric direct actuals are a plausible next widening, but exact-width forms should stay exact
 - Recorded this as steering guidance for the next structural-actual feature slice rather than as shipped behavior.
 - Current implementation direction:

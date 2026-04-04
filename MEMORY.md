@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-04: future structured HDL mode should branch at the backend, with flattened staying default
+- Recorded one future-steering note for generated-module emission.
+- Important continuity note:
+  - a second selectable HDL generation route that preserves FSM/DT control structure now looks architecturally plausible,
+  - flattened generation should stay the default mode and current debug-first path,
+  - the clean future branch point is [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm), with [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) and [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm) carrying one future generation-style option,
+  - and the semantic frontend, validations, provenance, and forward IR layers should stay shared so the two modes differ in HDL shape, not in accepted semantics.
+
 ## 2026-04-04: next likely structural-actual widening is unsized decimal/hex direct bindings, not looser exact-width coercion
 - Recorded one steering decision for the next `R11` sibling after the shipped scalar `=0` / `=1` widening.
 - Important continuity note:
