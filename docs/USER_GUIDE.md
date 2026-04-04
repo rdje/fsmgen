@@ -19,7 +19,7 @@ Current limitation:
   - generated child sources realized either from the same file or from external searchable `.fsm` child sources,
   - external RTL children realized through embedded or sidecar `.rtlif` interface metadata,
   - `C1` single-child passthrough via deterministic same-name wiring or exact child-interface inference when `?ports` is omitted or empty,
-- `C2` multi-generated-child composition via explicit `?toplink` wiring with `instance.port` child endpoints, source-side top-port bit/slice expressions, and the first bounded source-actual forms (`=open`, scalar `=0` / `=1`, unsized binary/decimal/hex direct forms such as `=0b10`, `=0d10`, `=0xA`, `=170`, or `=A5`, and exact-width `=N'b...` / `=N'd...` / `=N'h...`), with `=open` still targeting realized child inputs only while direct scalar `=0` / `=1` plus unsized binary/decimal/hex direct actuals widen to the realized child-input or declared top-output target width and exact-width literal actuals may now also target declared top outputs, together with bounded omitted/empty-`?ports` inference when explicit top links themselves still make the top boundary unambiguous, bounded undeclared top-interface inference for still-top-facing child inputs and unique top-facing child outputs, bounded plain-explicit-port same-name convention, and bounded same-name internal-carrier inference for unique producer-to-consumer families.
+- `C2` multi-generated-child composition via explicit `?toplink` wiring with `instance.port` child endpoints, source-side top-port bit/slice expressions, and the first bounded source-actual forms (`=open`, scalar `=0` / `=1`, unsized binary/decimal/octal/hex direct forms such as `=0b10`, `=0d10`, `=0o7`, `=0xA`, `=170`, or `=A5`, and exact-width `=N'b...` / `=N'd...` / `=N'o...` / `=N'h...`), with `=open` still targeting realized child inputs only while direct scalar `=0` / `=1` plus unsized binary/decimal/octal/hex direct actuals widen to the realized child-input or declared top-output target width and exact-width literal actuals may now also target declared top outputs, together with bounded omitted/empty-`?ports` inference when explicit top links themselves still make the top boundary unambiguous, bounded undeclared top-interface inference for still-top-facing child inputs and unique top-facing child outputs, bounded plain-explicit-port same-name convention, and bounded same-name internal-carrier inference for unique producer-to-consumer families.
   - `C3` explicit-link composition for any explicit-link top that includes at least one `?rtl` child, with that same bounded source-side top-expression and source-actual slice plus the same bounded undeclared top-interface, plain-explicit-port convention, and internal-carrier inference rules.
   - `C4` declared top-port connect-by-name via `=name` declarations inside `?ports`.
 - See [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md) for the scoped `R6` plan and [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md) for historical context.
@@ -200,7 +200,7 @@ Combinational DT note:
 - Explicit `(?toplink:name ...)` blocks with flat `/source/target/` tokens
 - Source-side top-port bit/slice `?toplink` expressions such as `payload_bus[15:8]` and `status_bus[0]` when the target is a realized child input or declared top output
 - Source-side flat concat `?toplink` expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/uart_tx.data_in/` when the target is a realized child input or declared top output
-- Explicit `?toplink` source actuals `=open`, scalar `=0` / `=1`, unsized binary/decimal/hex direct actuals such as `=0b10100101`, `=0d170`, `=0xA5`, `=170`, or `=A5`, and exact-width binary/decimal/hex literals such as `=8'b10100101`, `=8'd165`, or `=8'hA5`, with `=open` still targeting realized child inputs only while direct scalar `=0` / `=1` plus unsized binary/decimal/hex direct actuals widen to the realized child-input or declared top-output target width and exact-width literal actuals may now also target declared top outputs
+- Explicit `?toplink` source actuals `=open`, scalar `=0` / `=1`, unsized binary/decimal/octal/hex direct actuals such as `=0b10100101`, `=0d170`, `=0o245`, `=0xA5`, `=170`, or `=A5`, and exact-width binary/decimal/octal/hex literals such as `=8'b10100101`, `=8'd165`, `=8'o245`, or `=8'hA5`, with `=open` still targeting realized child inputs only while direct scalar `=0` / `=1` plus unsized binary/decimal/octal/hex direct actuals widen to the realized child-input or declared top-output target width and exact-width literal actuals may now also target declared top outputs
 - One realized child output source fanned out to multiple top outputs through one deterministic shared carrier plus explicit top-output assignments
 - One declared top input fanned out directly to one or more top outputs through explicit top-output assignments while sibling child-input consumers reuse that same top input without helper nets
 - Dotted child endpoints in links, for example `/producer.output_data/consumer.input_data/`
@@ -698,7 +698,7 @@ Boundary note:
 - That same block-reporting surface now also takes explicit child-link blocking intent from `structural_rtl_ir->{declared_links}` instead of rereading declared toplinks directly from plan internals.
 - That same structural binding path now also carries source-side top-port `name[index]` / `name[msb:lsb]` explicit-toplink sources and bounded flat concat source forms directly into realized child inputs and declared top outputs, and blocked range/operand failures now keep `Top expression '...'` context in the non-quiet failure summary instead of leaving the expression only in raw exception text.
 - The current bounded `signal_ref` / `concat` / `open` / bit-vector-literal construction, binding signal-name recovery, and backend-neutral text rendering for structural actual-connection nodes now also live in dedicated `FSM::IR::StructuralRTLIR::ConnectionExpr` helpers, so that first connection-expression contract is no longer split across pipeline-only helper subs.
-- Explicit-toplink actual sources and source-side top expressions now also use that same structural path directly, so `=open`, `=0`, `=1`, exact-width `=N'b...`, `=N'd...`, `=N'h...`, and bounded concat child-input or top-output bindings no longer need fake carrier nets or fake undeclared top ports just to reach the emitter.
+- Explicit-toplink actual sources and source-side top expressions now also use that same structural path directly, so `=open`, `=0`, `=1`, exact-width `=N'b...`, `=N'd...`, `=N'o...`, `=N'h...`, and bounded concat child-input or top-output bindings no longer need fake carrier nets or fake undeclared top ports just to reach the emitter.
 - Direct generated `?fsm` / `?dt` roots now also surface a bounded `structural_rtl_ir` module-interface slice, and realized generated-child export surfaces preserve that same structural boundary summary beside `intent_hir` and `lowered_rtl_ir`.
 - That same composition provenance surface now also preserves per-resolved-link endpoint context plus one example subject per top-port and resolved-link provenance kind; when a provenance example touches a realized generated child endpoint, the example now carries bounded forward child context derived from that child's `intent_hir` and `lowered_rtl_ir`.
 - That same composition reporting surface now also preserves structured top-port / child-endpoint context for convention overrides and convention blocks; when those events touch realized generated child endpoints, the carried endpoint context includes bounded forward child summaries from `intent_hir` and `lowered_rtl_ir`, and non-quiet `bin/fsmgen` now prints richer link/endpoint examples instead of plain count-plus-name examples in those sections.
@@ -981,13 +981,13 @@ Current narrow structural-actual explicit-link example:
 ```
 
 This currently works because:
-- `=8'b10100101`, `=8'd165`, or `=8'hA5` is a bounded exact-width literal actual source, not a top port,
+- `=8'b10100101`, `=8'd165`, `=8'o245`, or `=8'hA5` is a bounded exact-width literal actual source, not a top port,
 - `=open` is a bounded open actual source that leaves the child formal intentionally unconnected,
-- scalar `=0` and `=1` direct actuals plus unsized binary/decimal/hex direct actuals such as `=0b10100101`, `=0d170`, `=0xA5`, `=170`, and `=A5` may now target either a realized child input port or a declared top output by widening to that direct binding target width as numeric values,
-- fixed-width binary/decimal/hex literal actuals may now target either a realized child input port or a declared top output,
+- scalar `=0` and `=1` direct actuals plus unsized binary/decimal/octal/hex direct actuals such as `=0b10100101`, `=0d170`, `=0o245`, `=0xA5`, `=170`, and `=A5` may now target either a realized child input port or a declared top output by widening to that direct binding target width as numeric values,
+- fixed-width binary/decimal/octal/hex literal actuals may now target either a realized child input port or a declared top output,
 - `=open` still targets only realized child input ports,
-- binary/decimal/hex literal actuals must still match the target child-input or top-output width exactly,
-- unsized binary/decimal/hex direct actuals fail explicitly if the numeric value does not fit that direct binding target width,
+- binary/decimal/octal/hex literal actuals must still match the target child-input or top-output width exactly,
+- unsized binary/decimal/octal/hex direct actuals fail explicitly if the numeric value does not fit that direct binding target width,
 - and `=0` / `=1` stay one-bit operands inside bounded concat source expressions unless you spell an exact-width literal form there,
 - and those actuals bind directly on the realized child port or the declared top output assignment instead of inventing a top port or synthetic carrier net.
 
@@ -1012,7 +1012,7 @@ Current narrow top-concat explicit-link example:
 
 This currently works because:
 - the `/source/target/` token still stays flat, but the source side may now be one bounded comma-separated concat expression,
-- concat operands may currently be declared whole top-port refs, top-port bit/slice refs, one-bit scalar actuals `=0` / `=1`, or exact-width binary/decimal/hex literal actuals,
+- concat operands may currently be declared whole top-port refs, top-port bit/slice refs, one-bit scalar actuals `=0` / `=1`, or exact-width binary/decimal/octal/hex literal actuals,
 - that concat still stays source-side only,
 - it still targets a realized child input port only,
 - and the emitted child binding uses the direct HDL concat instead of inventing a synthetic carrier net.

@@ -8030,3 +8030,44 @@ It is an exact-delay pulse request:
   now also locks:
   - the widened concise binary/hex literal reason text in the blocked
     explicit-actual and concat-operand summary families.
+
+## 2026-04-04: octal structural actuals now complete the bounded radix family
+- Continued the active `R11` feature lane by widening the already-shipped
+  structural literal family one more step instead of inventing a new
+  connection-expression category.
+- The widened bounded literal slice is now in tree:
+  - explicit `?toplink` actual sources may now use unsized octal direct
+    forms such as `=0o245` on direct child-input and declared-top-output
+    bindings,
+  - exact-width octal literal forms such as `=8'o245` now also work beside
+    the existing binary/decimal/hex family on direct bindings,
+  - that same exact-width octal literal family now also works inside bounded
+    source-side concat operands,
+  - and overflowing unsized or exact-width octal payloads now fail
+    explicitly instead of leaving octal outside the shipped bounded-literal
+    contract.
+- The planner/reporting contract is now honest for that slice:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    now parses prefixed unsized `0o` actuals plus exact-width `'o` literals
+    and lowers both into the same structural `bit_vector_literal_expr`
+    payload already used by the binary/decimal/hex family,
+  - bounded concat parsing now also accepts exact-width octal literal
+    operands without widening unsized numerics there,
+  - and the concise blocked-reason wording now says binary/decimal/octal/hex
+    where that is the real contract.
+- [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t)
+  now also locks:
+  - direct linked-plan and end-to-end pipeline/CLI success for unsized and
+    exact-width octal actual sources,
+  - blocked unsupported unsized actual-shape rejection after octal joined the
+    live family,
+  - blocked overflowing unsized octal rejection,
+  - and blocked overflowing exact-width octal rejection.
+- [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t)
+  now also locks:
+  - bounded source-side concat success with a normalized exact-width octal
+    literal operand.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t)
+  now also locks:
+  - the widened concise binary/decimal/octal/hex literal reason text in the
+    blocked explicit-actual and concat-operand summary families.

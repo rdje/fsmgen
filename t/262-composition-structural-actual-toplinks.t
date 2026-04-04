@@ -32,9 +32,11 @@ subtest 'linked plan builder preserves numeric and open toplinks as typed actual
         port('default_data', 'output', 8, undef),
         port('one_data', 'output', 8, undef),
         port('decimal_data', 'output', 8, undef),
+        port('octal_data', 'output', 8, undef),
         port('hex_data', 'output', 8, undef),
         port('prefixed_binary_data', 'output', 8, undef),
         port('prefixed_decimal_data', 'output', 8, undef),
+        port('prefixed_octal_data', 'output', 8, undef),
         port('prefixed_hex_data', 'output', 8, undef),
         port('serial_out', 'output', 1, undef),
     );
@@ -52,19 +54,23 @@ subtest 'linked plan builder preserves numeric and open toplinks as typed actual
                     FSM::Composition::Link->new(source => "=8'b10100101", target => 'default_data'),
                     FSM::Composition::Link->new(source => '=1', target => 'one_data'),
                     FSM::Composition::Link->new(source => '=170', target => 'decimal_data'),
+                    FSM::Composition::Link->new(source => "=8'o245", target => 'octal_data'),
                     FSM::Composition::Link->new(source => '=A5', target => 'hex_data'),
                     FSM::Composition::Link->new(source => '=0b10100101', target => 'prefixed_binary_data'),
                     FSM::Composition::Link->new(source => '=0d170', target => 'prefixed_decimal_data'),
+                    FSM::Composition::Link->new(source => '=0o245', target => 'prefixed_octal_data'),
                     FSM::Composition::Link->new(source => '=0xA5', target => 'prefixed_hex_data'),
                     FSM::Composition::Link->new(source => "=8'b10100101", target => 'uart_tx.data_in'),
                     FSM::Composition::Link->new(source => '=0', target => 'uart_tx.zero_data_in'),
                     FSM::Composition::Link->new(source => '=1', target => 'uart_tx.one_data_in'),
                     FSM::Composition::Link->new(source => '=170', target => 'uart_tx.unsized_decimal_data_in'),
+                    FSM::Composition::Link->new(source => '=0o245', target => 'uart_tx.unsized_octal_data_in'),
                     FSM::Composition::Link->new(source => '=A5', target => 'uart_tx.unsized_hex_data_in'),
                     FSM::Composition::Link->new(source => '=0b10100101', target => 'uart_tx.prefixed_binary_data_in'),
                     FSM::Composition::Link->new(source => '=0d170', target => 'uart_tx.prefixed_decimal_data_in'),
                     FSM::Composition::Link->new(source => '=0xA5', target => 'uart_tx.prefixed_hex_data_in'),
                     FSM::Composition::Link->new(source => "=8'd165", target => 'uart_tx.decimal_data_in'),
+                    FSM::Composition::Link->new(source => "=8'o245", target => 'uart_tx.octal_data_in'),
                     FSM::Composition::Link->new(source => "=8'hA5", target => 'uart_tx.hex_data_in'),
                     FSM::Composition::Link->new(source => '=open', target => 'uart_tx.enable'),
                     FSM::Composition::Link->new(source => 'uart_tx.serial_out', target => 'serial_out'),
@@ -81,11 +87,13 @@ subtest 'linked plan builder preserves numeric and open toplinks as typed actual
                 port('zero_data_in', 'input', 8, undef),
                 port('one_data_in', 'input', 8, undef),
                 port('unsized_decimal_data_in', 'input', 8, undef),
+                port('unsized_octal_data_in', 'input', 8, undef),
                 port('unsized_hex_data_in', 'input', 8, undef),
                 port('prefixed_binary_data_in', 'input', 8, undef),
                 port('prefixed_decimal_data_in', 'input', 8, undef),
                 port('prefixed_hex_data_in', 'input', 8, undef),
                 port('decimal_data_in', 'input', 8, undef),
+                port('octal_data_in', 'input', 8, undef),
                 port('hex_data_in', 'input', 8, undef),
                 port('enable', 'input', 1, undef),
                 port('serial_out', 'output', 1, undef),
@@ -104,9 +112,11 @@ subtest 'linked plan builder preserves numeric and open toplinks as typed actual
             "    assign default_data = 8'b10100101;",
             "    assign one_data = 8'b00000001;",
             "    assign decimal_data = 8'b10101010;",
+            "    assign octal_data = 8'b10100101;",
             "    assign hex_data = 8'b10100101;",
             "    assign prefixed_binary_data = 8'b10100101;",
             "    assign prefixed_decimal_data = 8'b10101010;",
+            "    assign prefixed_octal_data = 8'b10100101;",
             "    assign prefixed_hex_data = 8'b10100101;",
         ],
         'direct numeric actual top-output bindings become direct auxiliary assignments',
@@ -141,6 +151,12 @@ subtest 'linked plan builder preserves numeric and open toplinks as typed actual
         bit_vector_literal_expr('10101010'),
         'unsized decimal explicit toplink widens to the exact target width for child inputs',
     );
+    is($bindings{unsized_octal_data_in}{signal_name} // '', '', 'unsized octal actual binding does not invent a flat signal mirror');
+    is_deeply(
+        $bindings{unsized_octal_data_in}{connection_expr},
+        bit_vector_literal_expr('10100101'),
+        'unsized octal explicit toplink widens to the exact target width for child inputs',
+    );
     is($bindings{unsized_hex_data_in}{signal_name} // '', '', 'unsized hex actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{unsized_hex_data_in}{connection_expr},
@@ -171,6 +187,12 @@ subtest 'linked plan builder preserves numeric and open toplinks as typed actual
         bit_vector_literal_expr('10100101'),
         'decimal literal explicit toplink becomes the same typed bit-vector actual binding',
     );
+    is($bindings{octal_data_in}{signal_name} // '', '', 'octal literal actual binding does not invent a flat signal mirror');
+    is_deeply(
+        $bindings{octal_data_in}{connection_expr},
+        bit_vector_literal_expr('10100101'),
+        'octal literal explicit toplink becomes the same typed bit-vector actual binding',
+    );
     is($bindings{hex_data_in}{signal_name} // '', '', 'hex literal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{hex_data_in}{connection_expr},
@@ -200,9 +222,11 @@ subtest 'pipeline and CLI emit structural numeric and open actuals for explicit 
         default_data>8
         one_data>8
         decimal_data>8
+        octal_data>8
         hex_data>8
         prefixed_binary_data>8
         prefixed_decimal_data>8
+        prefixed_octal_data>8
         prefixed_hex_data>8
         serial_out>
       )
@@ -211,19 +235,23 @@ subtest 'pipeline and CLI emit structural numeric and open actuals for explicit 
         /=8'b10100101/default_data/
         /=1/one_data/
         /=170/decimal_data/
+        /=8'o245/octal_data/
         /=A5/hex_data/
         /=0b10100101/prefixed_binary_data/
         /=0d170/prefixed_decimal_data/
+        /=0o245/prefixed_octal_data/
         /=0xA5/prefixed_hex_data/
         /=8'b10100101/uart_tx.data_in/
         /=0/uart_tx.zero_data_in/
         /=1/uart_tx.one_data_in/
         /=170/uart_tx.unsized_decimal_data_in/
+        /=0o245/uart_tx.unsized_octal_data_in/
         /=A5/uart_tx.unsized_hex_data_in/
         /=0b10100101/uart_tx.prefixed_binary_data_in/
         /=0d170/uart_tx.prefixed_decimal_data_in/
         /=0xA5/uart_tx.prefixed_hex_data_in/
         /=8'd165/uart_tx.decimal_data_in/
+        /=8'o245/uart_tx.octal_data_in/
         /=8'hA5/uart_tx.hex_data_in/
         /=open/uart_tx.enable/
     /uart_tx.serial_out/serial_out/
@@ -237,11 +265,13 @@ subtest 'pipeline and CLI emit structural numeric and open actuals for explicit 
   zero_data_in<8:data
   one_data_in<8:data
   unsized_decimal_data_in<8:data
+  unsized_octal_data_in<8:data
   unsized_hex_data_in<8:data
   prefixed_binary_data_in<8:data
   prefixed_decimal_data_in<8:data
   prefixed_hex_data_in<8:data
   decimal_data_in<8:data
+  octal_data_in<8:data
   hex_data_in<8:data
   enable:data
   serial_out>:data
@@ -282,6 +312,11 @@ FSM
         'pipeline preserves the widened unsized decimal binding in the realized composition plan',
     );
     is_deeply(
+        $bindings{unsized_octal_data_in}{connection_expr},
+        bit_vector_literal_expr('10100101'),
+        'pipeline preserves the widened unsized octal binding in the realized composition plan',
+    );
+    is_deeply(
         $bindings{unsized_hex_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
         'pipeline preserves the widened unsized hex binding in the realized composition plan',
@@ -307,6 +342,11 @@ FSM
         'pipeline preserves the typed decimal literal actual binding in the realized composition plan',
     );
     is_deeply(
+        $bindings{octal_data_in}{connection_expr},
+        bit_vector_literal_expr('10100101'),
+        'pipeline preserves the typed octal literal actual binding in the realized composition plan',
+    );
+    is_deeply(
         $bindings{hex_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
         'pipeline preserves the typed hex literal actual binding in the realized composition plan',
@@ -321,19 +361,23 @@ FSM
     like($hdl, qr/assign default_data = 8'b10100101;/, 'generated HDL emits the literal actual directly on the top output');
     like($hdl, qr/assign one_data = 8'b00000001;/, 'generated HDL emits the widened scalar one actual directly on the top output');
     like($hdl, qr/assign decimal_data = 8'b10101010;/, 'generated HDL emits the widened unsized decimal actual directly on the top output');
+    like($hdl, qr/assign octal_data = 8'b10100101;/, 'generated HDL emits the octal literal actual directly on the top output');
     like($hdl, qr/assign hex_data = 8'b10100101;/, 'generated HDL emits the widened unsized hex actual directly on the top output');
     like($hdl, qr/assign prefixed_binary_data = 8'b10100101;/, 'generated HDL emits the widened prefixed binary actual directly on the top output');
     like($hdl, qr/assign prefixed_decimal_data = 8'b10101010;/, 'generated HDL emits the widened prefixed decimal actual directly on the top output');
+    like($hdl, qr/assign prefixed_octal_data = 8'b10100101;/, 'generated HDL emits the widened prefixed octal actual directly on the top output');
     like($hdl, qr/assign prefixed_hex_data = 8'b10100101;/, 'generated HDL emits the widened prefixed hex actual directly on the top output');
     like($hdl, qr/\.data_in\(8'b10100101\)/, 'generated HDL emits the literal actual directly on the child port');
     like($hdl, qr/\.zero_data_in\(8'b00000000\)/, 'generated HDL emits the widened scalar zero actual directly on the child port');
     like($hdl, qr/\.one_data_in\(8'b00000001\)/, 'generated HDL emits the widened scalar one actual directly on the child port');
     like($hdl, qr/\.unsized_decimal_data_in\(8'b10101010\)/, 'generated HDL emits the widened unsized decimal actual directly on the child port');
+    like($hdl, qr/\.unsized_octal_data_in\(8'b10100101\)/, 'generated HDL emits the widened unsized octal actual directly on the child port');
     like($hdl, qr/\.unsized_hex_data_in\(8'b10100101\)/, 'generated HDL emits the widened unsized hex actual directly on the child port');
     like($hdl, qr/\.prefixed_binary_data_in\(8'b10100101\)/, 'generated HDL emits the widened prefixed binary actual directly on the child port');
     like($hdl, qr/\.prefixed_decimal_data_in\(8'b10101010\)/, 'generated HDL emits the widened prefixed decimal actual directly on the child port');
     like($hdl, qr/\.prefixed_hex_data_in\(8'b10100101\)/, 'generated HDL emits the widened prefixed hex actual directly on the child port');
     like($hdl, qr/\.decimal_data_in\(8'b10100101\)/, 'generated HDL emits the decimal literal actual directly on the child port');
+    like($hdl, qr/\.octal_data_in\(8'b10100101\)/, 'generated HDL emits the octal literal actual directly on the child port');
     like($hdl, qr/\.hex_data_in\(8'b10100101\)/, 'generated HDL emits the hex literal actual directly on the child port');
     like($hdl, qr/\.enable\(\)/, 'generated HDL emits the open actual directly on the child port');
     unlike($hdl, qr/\bwire\s+comp_link_/s, 'generated HDL does not invent synthetic carrier nets for pure actual bindings');
@@ -418,7 +462,7 @@ subtest 'linked plan builder rejects actual endpoints as explicit link targets' 
 
     like(
         $exception,
-        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open', scalar '=0'\/'=1', unsized binary\/decimal\/hex direct actuals, and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
+        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open', scalar '=0'\/'=1', unsized binary\/decimal\/octal\/hex direct actuals, and exact-width binary, decimal, octal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
         'builder blocks actual endpoints from appearing as explicit link targets',
     );
 };
@@ -435,7 +479,7 @@ subtest 'linked plan builder rejects unsupported actual literal forms' => sub {
                 FSM::Composition::TopLink->new(
                 name => 'wiring',
                 links => [
-                    FSM::Composition::Link->new(source => '=0o7', target => 'uart_tx.data_in'),
+                    FSM::Composition::Link->new(source => '=0q7', target => 'uart_tx.data_in'),
                 ],
             ),
         ],
@@ -455,7 +499,7 @@ subtest 'linked plan builder rejects unsupported actual literal forms' => sub {
 
     like(
         $exception,
-        qr/uses actual endpoint '=0o7', .*currently accepts only '=open', scalar '=0'\/'=1', unsized binary\/decimal\/hex direct actual forms like '=0b10', '=0d10', '=0xA', '=170', or '=A5', or exact-width binary\/decimal\/hex literal forms like '=8'b10100101', '=8'd165', or '=8'hA5'/s,
+        qr/uses actual endpoint '=0q7', .*currently accepts only '=open', scalar '=0'\/'=1', unsized binary\/decimal\/octal\/hex direct actual forms like '=0b10', '=0d10', '=0o7', '=0xA', '=170', or '=A5', or exact-width binary\/decimal\/octal\/hex literal forms like '=8'b10100101', '=8'd165', '=8'o245', or '=8'hA5'/s,
         'builder still blocks unsupported unsized literal spellings outside the widened direct unsized-numeric slice',
     );
 };
@@ -571,6 +615,43 @@ subtest 'linked plan builder rejects unsized hex actuals whose value exceeds the
     );
 };
 
+subtest 'linked plan builder rejects unsized octal actuals whose value exceeds the direct target width' => sub {
+    my $exception = eval {
+        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+            lane => 'C3',
+            composition_spec => composition_spec('blocked_unsized_octal_actual_width_top'),
+            top => FSM::Composition::Top->new(name => 'blocked_unsized_octal_actual_width_top'),
+            ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
+            ports => [],
+            toplinks => [
+                FSM::Composition::TopLink->new(
+                    name => 'wiring',
+                    links => [
+                        FSM::Composition::Link->new(source => '=0o400', target => 'uart_tx.data_in'),
+                    ],
+                ),
+            ],
+            realized_instances => [
+                realized_instance(
+                    'rtl',
+                    'uart_tx',
+                    port('data_in', 'input', 8, undef),
+                ),
+            ],
+            fsm_file => 'blocked_unsized_octal_actual_width_top.fsm',
+            header => 'blocked_unsized_octal_actual_width_top',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/uses actual literal '=0o400', .*unsized octal actual value does not fit direct target width 8/s,
+        'builder rejects unsized octal actuals whose numeric value does not fit the direct target width',
+    );
+};
+
 subtest 'linked plan builder rejects unsized binary actuals whose value exceeds the direct target width' => sub {
     my $exception = eval {
         FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
@@ -642,6 +723,43 @@ subtest 'linked plan builder rejects hex actuals whose value exceeds the declare
         $exception,
         qr/uses actual literal '=8'h1FF', .*declared hex width cannot represent the literal payload value/s,
         'builder rejects hex actuals whose numeric value does not fit the declared width',
+    );
+};
+
+subtest 'linked plan builder rejects octal actuals whose value exceeds the declared width' => sub {
+    my $exception = eval {
+        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+            lane => 'C3',
+            composition_spec => composition_spec('blocked_octal_actual_width_top'),
+            top => FSM::Composition::Top->new(name => 'blocked_octal_actual_width_top'),
+            ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
+            ports => [],
+            toplinks => [
+                FSM::Composition::TopLink->new(
+                    name => 'wiring',
+                    links => [
+                        FSM::Composition::Link->new(source => "=8'o400", target => 'uart_tx.data_in'),
+                    ],
+                ),
+            ],
+            realized_instances => [
+                realized_instance(
+                    'rtl',
+                    'uart_tx',
+                    port('data_in', 'input', 8, undef),
+                ),
+            ],
+            fsm_file => 'blocked_octal_actual_width_top.fsm',
+            header => 'blocked_octal_actual_width_top',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/uses actual literal '=8'o400', .*declared octal width cannot represent the literal payload value/s,
+        'builder rejects octal actuals whose numeric value does not fit the declared width',
     );
 };
 

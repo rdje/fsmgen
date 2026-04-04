@@ -6159,3 +6159,9 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   operands, with those literals normalized into the same structural
   bit-vector form instead of introducing a second backend-specific literal
   node.
+- The same bounded structural-actual literal family now also covers octal:
+  unsized direct `=0o245` now widens to direct child-input or top-output
+  target width, exact-width `=8'o245` now works on direct bindings and
+  bounded concat operands, and both forms lower into the same structural
+  bit-vector literal node instead of introducing an octal-specific escape
+  hatch.

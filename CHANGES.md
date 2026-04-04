@@ -5586,3 +5586,12 @@ This is the persistent technical change history for FSMGen.
   the same backend-neutral `bit_vector_literal` structural binding form,
   still rejects unsupported decimal-like actuals explicitly, and now also
   rejects overflowing hex payloads instead of silently truncating them.
+- Explicit `?toplink` actuals may now also use octal forms on the same
+  bounded structural path: unsized direct `=0o245` widens to the direct
+  child-input or top-output target width, while exact-width `=8'o245` works
+  both on direct bindings and as a bounded source-side concat operand.
+- `FSM::Composition::LinkedPlanBuilder` now normalizes octal actuals into the
+  same backend-neutral `bit_vector_literal` structural binding form used by
+  the existing binary/decimal/hex family, and now rejects overflowing unsized
+  or exact-width octal payloads explicitly instead of leaving octal outside
+  the shipped literal family.

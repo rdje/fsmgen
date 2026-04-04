@@ -49,7 +49,7 @@ subtest 'linked plan builder preserves top concat sources as typed bindings' => 
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
-                        source => "header_bus,status_bus[0],=2'd2,=2'h2,payload_bus[2:0]",
+                        source => "header_bus,status_bus[0],=2'd2,=3'o2,=2'h2,payload_bus[2:0]",
                         target => 'uart_tx.data_in',
                     ),
                     FSM::Composition::Link->new(source => 'uart_tx.serial_out', target => 'serial_out'),
@@ -62,7 +62,7 @@ subtest 'linked plan builder preserves top concat sources as typed bindings' => 
                 'uart_tx',
                 port('core_clk', 'input', 1, 'clock'),
                 port('rst_async_n', 'input', 1, 'reset'),
-                port('data_in', 'input', 10, undef),
+                port('data_in', 'input', 13, undef),
                 port('serial_out', 'output', 1, undef),
             ),
         ],
@@ -82,10 +82,11 @@ subtest 'linked plan builder preserves top concat sources as typed bindings' => 
             signal_ref_expr('header_bus'),
             bit_select_expr('status_bus', 0),
             bit_vector_literal_expr('10'),
+            bit_vector_literal_expr('010'),
             bit_vector_literal_expr('10'),
             slice_expr('payload_bus', 2, 0),
         ),
-        'top concat source becomes a typed concat binding expression, including decimal and hex literal operands',
+        'top concat source becomes a typed concat binding expression, including decimal, octal, and hex literal operands',
     );
     is($bindings{serial_out}{signal_name}, 'serial_out', 'child output still rebinds directly to the top output');
 };
@@ -109,7 +110,7 @@ subtest 'pipeline and CLI emit top concat sources for explicit toplinks' => sub 
   )
   (?rtl:uart_tx)
   (?toplink:wiring
-    /header_bus,status_bus[0],=2'd2,=2'h2,payload_bus[2:0]/uart_tx.data_in/
+    /header_bus,status_bus[0],=2'd2,=3'o2,=2'h2,payload_bus[2:0]/uart_tx.data_in/
     /uart_tx.serial_out/serial_out/
   )
 )
@@ -117,7 +118,7 @@ subtest 'pipeline and CLI emit top concat sources for explicit toplinks' => sub 
 (?rtlif:uart_tx
   core_clk:clock
   rst_async_n:reset
-  data_in<10:data
+  data_in<13:data
   serial_out>:data
 )
 FSM
@@ -141,17 +142,18 @@ FSM
             signal_ref_expr('header_bus'),
             bit_select_expr('status_bus', 0),
             bit_vector_literal_expr('10'),
+            bit_vector_literal_expr('010'),
             bit_vector_literal_expr('10'),
             slice_expr('payload_bus', 2, 0),
         ),
-        'pipeline preserves the typed concat binding in the realized composition plan, including decimal and hex literal operands',
+        'pipeline preserves the typed concat binding in the realized composition plan, including decimal, octal, and hex literal operands',
     );
 
     my $hdl = $result->{hdl_code};
     like(
         $hdl,
-        qr/\.data_in\(\{header_bus,\s*status_bus\[0\],\s*2'b10,\s*2'b10,\s*payload_bus\[2:0\]\}\)/,
-        'generated HDL emits the top concat directly on the child port, including the normalized decimal and hex literal operands',
+        qr/\.data_in\(\{header_bus,\s*status_bus\[0\],\s*2'b10,\s*3'b010,\s*2'b10,\s*payload_bus\[2:0\]\}\)/,
+        'generated HDL emits the top concat directly on the child port, including the normalized decimal, octal, and hex literal operands',
     );
     unlike($hdl, qr/\bwire\s+comp_link_/s, 'generated HDL does not invent synthetic carrier nets for pure top-concat bindings');
 
@@ -201,7 +203,7 @@ subtest 'linked plan builder rejects unsupported concat operands' => sub {
 
     like(
         $exception,
-        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, and exact-width literal actuals like '=4'b1010', '=4'd10', or '=4'hA'/s,
+        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
         'builder blocks unsupported concat operands through the top-expression boundary',
     );
 };
@@ -244,7 +246,7 @@ subtest 'linked plan builder still rejects unsized numeric concat operands' => s
 
     like(
         $exception,
-        qr/uses top expression 'payload_bus\[3:0\],=170', .*concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, and exact-width literal actuals like '=4'b1010', '=4'd10', or '=4'hA'/s,
+        qr/uses top expression 'payload_bus\[3:0\],=170', .*concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
         'builder keeps unsized numeric actual widening on the direct-binding path instead of silently enabling it inside concat operands',
     );
 };
@@ -287,7 +289,7 @@ subtest 'linked plan builder still rejects prefixed unsized numeric concat opera
 
     like(
         $exception,
-        qr/uses top expression 'payload_bus\[3:0\],=0xA5', .*concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, and exact-width literal actuals like '=4'b1010', '=4'd10', or '=4'hA'/s,
+        qr/uses top expression 'payload_bus\[3:0\],=0xA5', .*concat operands currently accept only top-port names, top-port bit\/slice forms, scalar '=0'\/'=1' actuals, and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', or '=4'hA'/s,
         'builder keeps prefixed unsized numeric actual widening on the direct-binding path instead of silently enabling it inside concat operands',
     );
 };
