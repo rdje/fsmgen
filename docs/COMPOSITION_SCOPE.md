@@ -13,7 +13,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
   - generated child HDL plus generated top HDL through `bin/fsmgen`.
 - The active toolchain now also ships the first `C2` composition lane:
   - two or more generated children (`?fsmc` / `?dtc`),
-  - explicit `?toplink` wiring using top-port names, source-side top-port bit/slice expressions such as `data_bus[3]` or `data_bus[7:4]`, flat source-side concat expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/child.port/`, `instance.port` child endpoints, and the first bounded source-actual forms (`=open`, `=0`, `=1`, and exact-width `=N'b...` / `=N'd...` / `=N'h...`) when those actuals target realized child input ports,
+  - explicit `?toplink` wiring using top-port names, source-side top-port bit/slice expressions such as `data_bus[3]` or `data_bus[7:4]`, flat source-side concat expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/child.port/`, `instance.port` child endpoints, and the first bounded source-actual forms (`=open`, `=0`, `=1`, and exact-width `=N'b...` / `=N'd...` / `=N'h...`), with `=open` still targeting realized child input ports only while fixed-width literal actuals may now target realized child input ports or declared top outputs,
   - one resolved child output source may now also fan out to multiple top outputs through one deterministic shared carrier plus explicit top-output assignments,
   - one declared top input may now also drive one or more top outputs directly through explicit top-output assignments while sibling child-input consumers reuse that same top input without synthetic helper nets,
   - either one explicit `?ports` block or an omitted/empty `?ports` shape when the explicit `?toplink` endpoints can still supply one consistent top-boundary contract,
@@ -26,7 +26,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 - The active toolchain now also ships the first `C3` composition lane:
   - at least one external `?rtl` child,
   - plus any number of generated children (`?fsmc` / `?dtc`) beside those external RTL children,
-  - explicit `?toplink` wiring using top-port names, source-side top-port bit/slice expressions such as `data_bus[3]` or `data_bus[7:4]`, flat source-side concat expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/child.port/`, `instance.port` child endpoints, and the first bounded source-actual forms (`=open`, `=0`, `=1`, and exact-width `=N'b...` / `=N'd...` / `=N'h...`) when those actuals target realized child input ports,
+  - explicit `?toplink` wiring using top-port names, source-side top-port bit/slice expressions such as `data_bus[3]` or `data_bus[7:4]`, flat source-side concat expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/child.port/`, `instance.port` child endpoints, and the first bounded source-actual forms (`=open`, `=0`, `=1`, and exact-width `=N'b...` / `=N'd...` / `=N'h...`), with `=open` still targeting realized child input ports only while fixed-width literal actuals may now target realized child input ports or declared top outputs,
   - one resolved child output source may now also fan out to multiple top outputs through one deterministic shared carrier plus explicit top-output assignments,
   - one declared top input may now also drive one or more top outputs directly through explicit top-output assignments while sibling child-input consumers reuse that same top input without synthetic helper nets,
   - either one explicit `?ports` block or an omitted/empty `?ports` shape when the explicit `?toplink` endpoints can still supply one consistent top-boundary contract,
@@ -98,8 +98,9 @@ The currently shipped composition behavior is intentionally bounded:
 - source-side top-port expression forms are currently limited to `name[index]`, `name[msb:lsb]`, and flat comma-separated concat source forms whose operands are declared whole top-port references, top-port bit/slice expressions, or fixed-width binary/decimal/hex literal actuals,
 - when one such concat source leaves exactly one undeclared whole-port operand unsized, omitted/empty `?ports` may now infer that operand's exact width from the remaining realized child-input target width after the other concat operands are already exact,
 - but several still-unsized undeclared whole-port concat operands continue to fail explicitly instead of guessing several widths from one child-input target,
-- explicit `?toplink` actual sources may currently appear only on the source side and only when the target is a realized child input port,
-- `=open` is the one width-agnostic explicit actual source in that first slice, while `=0`, `=1`, and exact-width binary/decimal/hex literal forms such as `=8'b10100101`, `=8'd165`, or `=8'hA5` must still match the target child-input width exactly,
+- explicit `?toplink` actual sources may currently appear only on the source side,
+- `=open` is the one width-agnostic explicit actual source in that first slice and still targets only realized child input ports,
+- `=0`, `=1`, and exact-width binary/decimal/hex literal forms such as `=8'b10100101`, `=8'd165`, or `=8'hA5` may now target realized child input ports or declared top outputs, but must still match the target width exactly,
 - explicit and declared connect-by-name mismatches now fail before emission and identify the conflicting endpoints and widths,
 - the typed composition plan now also exposes first-pass provenance metadata for downstream tooling and diagnostics:
   - `FSM::Composition::Port->origin_kind` distinguishes declared and inferred top-port paths,
@@ -150,9 +151,9 @@ The currently shipped composition behavior is intentionally bounded:
   - plus explicit ports declared in the loaded `<module>.rtlif` metadata for `?rtl`,
 - explicit-link endpoint syntax is currently:
   - top-port name, for example `result_data`,
-  - or source-side top-port bit/slice expression over a declared top input, for example `payload_bus[15:8]` or `status_bus[0]`, when that explicit link targets a realized child input port,
+  - or source-side top-port bit/slice expression over a declared top input, for example `payload_bus[15:8]` or `status_bus[0]`, when that explicit link targets a realized child input port or a declared top output,
   - or child endpoint `instance.port`, for example `producer.output_data`,
-  - or source actual `=open`, `=0`, `=1`, or exact-width binary/decimal/hex literal `=N'b...` / `=N'd...` / `=N'h...`, for example `=8'b10100101`, `=8'd165`, or `=8'hA5`, when that explicit link targets a realized child input port,
+  - or source actual `=open`, `=0`, `=1`, or exact-width binary/decimal/hex literal `=N'b...` / `=N'd...` / `=N'h...`, for example `=8'b10100101`, `=8'd165`, or `=8'hA5`, where `=open` currently targets only a realized child input port while fixed-width literal actuals may target a realized child input port or a declared top output,
 - composition output is currently limited to SystemVerilog / Verilog targets.
 
 ## Goal of `R6`

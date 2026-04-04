@@ -215,6 +215,17 @@ sub build_plan ($class, %args) {
                     next;
                 }
             }
+            elsif ($target->{kind} eq 'top_port') {
+                my $expr_text = render_expr($source->{connection_expr}, $target->{port}->name, 'systemverilog');
+                push @auxiliary_assignments, "    assign ".$target->{port}->name." = $expr_text;";
+                $top_port_usage{$target->{port}->name}{target} = 1;
+                push @resolved_links, {
+                    link => $link,
+                    source => $source,
+                    target => $target,
+                };
+                next;
+            }
 
             $bindings_by_instance{$target->{instance_name}}{$target->{port}->name} = normalized_binding({
                 port_name => $target->{port}->name,
@@ -477,16 +488,29 @@ sub assert_link_roles ($class, $source, $target, $fsm_file, $header) {
     if (($target->{kind} || '') =~ /^actual_/) {
         confess
             "Composition source '$header' in '$fsm_file' uses actual endpoint '".$target->{raw}."' as an explicit link target, ".
-            "but explicit actual binding is blocked because the first structural-actual slice only allows '=open' and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports. ".
+            "but explicit actual binding is blocked because the first structural-actual slice only allows '=open' and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
 
     if (($source->{kind} || '') =~ /^actual_/) {
+        my $targets_child_input = $target->{kind} eq 'child_port' && $target->{port}->direction eq 'input';
+        my $targets_top_output = $target->{kind} eq 'top_port' && $target->{port}->direction eq 'output';
+
+        if (($source->{kind} || '') eq 'actual_open') {
+            confess
+                "Composition source '$header' in '$fsm_file' uses actual source '".$source->{raw}."' as an explicit link source, ".
+                "but explicit actual binding is blocked because '=open' currently targets only realized child input ports, not declared top outputs. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                unless $targets_child_input;
+
+            return;
+        }
+
         confess
             "Composition source '$header' in '$fsm_file' uses actual source '".$source->{raw}."' as an explicit link source, ".
-            "but explicit actual binding is blocked because the first structural-actual slice only allows actual sources to target realized child input ports. ".
+            "but explicit actual binding is blocked because the first structural-actual slice only allows literal actual sources to target realized child input ports or declared top outputs. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            unless $target->{kind} eq 'child_port' && $target->{port}->direction eq 'input';
+            unless $targets_child_input || $targets_top_output;
 
         return;
     }

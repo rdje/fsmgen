@@ -1307,15 +1307,17 @@ Done:
 - That same source-side top-expression slice now also covers declared top outputs:
   - explicit-link `C2` / `C3` source-side top-port bit/slice and bounded concat expressions may now drive declared top outputs directly through explicit top-output assignments,
   - sibling child-input consumers may still reuse those same typed top expressions in the same top without synthetic carrier nets,
-  - and explicit actual sources remain the narrower child-input-only slice for now.
+  - and direct fixed-width literal actual sources may now also drive declared top outputs through those same explicit top-output assignments, while `=open` remains the narrower child-input-only sibling.
 - That same first structural-actual slice now also covers exact-width decimal and hex literals:
   - explicit-link `C2` / `C3` child-input bindings may now use `=N'd...` and `=N'h...` direct actual sources beside the already-shipped binary forms,
+  - that same direct fixed-width literal family may now also drive declared top outputs without inventing carrier nets,
   - the same exact-width decimal/hex literal family now also participates inside bounded source-side concat operands,
   - unsupported unsized decimal-like actuals still fail explicitly through the existing bounded-literal wording,
   - and decimal/hex payloads whose numeric value exceeds the declared width now fail explicitly instead of silently truncating.
 - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) now also locks:
-  - direct linked-plan and end-to-end pipeline/CLI success for exact-width decimal and hex actual sources,
+  - direct linked-plan and end-to-end pipeline/CLI success for exact-width literal actuals on child inputs and declared top outputs,
   - explicit-target wording updated for the widened binary/decimal/hex actual family,
+  - blocked `=open`-to-top-output rejection,
   - blocked unsupported unsized decimal-like actual rejection,
   - and blocked overflowing decimal/hex literal rejection.
 - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks:

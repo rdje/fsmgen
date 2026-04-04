@@ -3377,7 +3377,7 @@ RTLIF
     );
 };
 
-subtest 'pipeline derives actual-source context from blocked explicit-actual source-role failures' => sub {
+subtest 'pipeline derives actual-source context from blocked explicit-open source-role failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'actual_source_failure_summary_top.fsm');
     my $rtl_metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
@@ -3393,7 +3393,7 @@ subtest 'pipeline derives actual-source context from blocked explicit-actual sou
   )
   (?rtl:uart_tx)
   (?toplink:wiring
-    /=1/serial_out/
+    /=open/serial_out/
   )
 )
 FSM
@@ -3425,17 +3425,17 @@ RTLIF
 
     my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
-    ok($report, 'pipeline derives a composition failure report from blocked explicit-actual source-role failures');
-    is($report->{top_name}, 'actual_source_failure_summary_top', 'failure report preserves the top name for blocked explicit-actual source-role failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked explicit-actual source-role failures');
-    is($report->{context_label}, 'Actual source', 'failure report classifies explicit-actual source-role failures as actual-source context');
-    is($report->{context_value}, "'=1'", 'failure report preserves the blocked actual source token');
-    is($report->{context_summary}, "Actual source '=1'", 'failure report exposes a concise actual-source summary');
+    ok($report, 'pipeline derives a composition failure report from blocked explicit-open source-role failures');
+    is($report->{top_name}, 'actual_source_failure_summary_top', 'failure report preserves the top name for blocked explicit-open source-role failures');
+    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked explicit-open source-role failures');
+    is($report->{context_label}, 'Actual source', 'failure report classifies explicit-open source-role failures as actual-source context');
+    is($report->{context_value}, "'=open'", 'failure report preserves the blocked actual source token');
+    is($report->{context_summary}, "Actual source '=open'", 'failure report exposes a concise actual-source summary');
     is($report->{blocked_boundary}, 'explicit actual binding', 'failure report preserves the blocked explicit-actual boundary for source-role failures');
     is(
         $report->{blocked_reason},
-        'the first structural-actual slice only allows actual sources to target realized child input ports',
-        'failure report preserves the concise explicit-actual source-role reason',
+        "'=open' currently targets only realized child input ports, not declared top outputs",
+        'failure report preserves the concise explicit-open source-role reason',
     );
 };
 
@@ -3495,7 +3495,7 @@ RTLIF
     is($report->{blocked_boundary}, 'explicit actual binding', 'failure report preserves the blocked explicit-actual boundary for target failures');
     is(
         $report->{blocked_reason},
-        "the first structural-actual slice only allows '=open' and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports",
+        "the first structural-actual slice only allows '=open' and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs",
         'failure report preserves the concise explicit-actual target reason',
     );
 };
@@ -5610,7 +5610,7 @@ RTLIF
     );
 };
 
-subtest 'CLI prints actual-source context in blocked explicit-actual source-role summaries' => sub {
+subtest 'CLI prints actual-source context in blocked explicit-open source-role summaries' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'actual_source_failure_summary_cli_top.fsm');
     my $output_path = File::Spec->catfile($tempdir, 'actual_source_failure_summary_cli_top.sv');
@@ -5627,7 +5627,7 @@ subtest 'CLI prints actual-source context in blocked explicit-actual source-role
   )
   (?rtl:uart_tx)
   (?toplink:wiring
-    /=1/serial_out/
+    /=open/serial_out/
   )
 )
 FSM
@@ -5649,8 +5649,8 @@ RTLIF
         command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
     );
 
-    ok(!$success, 'CLI fails for blocked explicit-actual source-role composition fixture');
-    ok(!-e $output_path, 'CLI does not emit HDL output for blocked explicit-actual source-role fixture');
+    ok(!$success, 'CLI fails for blocked explicit-open source-role composition fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked explicit-open source-role fixture');
 
     my $combined_output = join(
         '',
@@ -5659,14 +5659,14 @@ RTLIF
         ($error_message || ''),
     );
 
-    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-actual source-role failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked explicit-actual source-role failures');
-    like($combined_output, qr/Context:\s+Actual source '=1'/s, 'CLI reports the blocked actual source as summary context');
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-open source-role failures');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked explicit-open source-role failures');
+    like($combined_output, qr/Context:\s+Actual source '=open'/s, 'CLI reports the blocked actual source as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit actual binding/s, 'CLI reports the blocked explicit-actual boundary for source-role failures');
     like(
         $combined_output,
-        qr/Reason:\s+the first structural-actual slice only allows actual sources to target realized child input ports/s,
-        'CLI reports the concise explicit-actual source-role reason',
+        qr/Reason:\s+'=open' currently targets only realized child input ports, not declared top outputs/s,
+        'CLI reports the concise explicit-open source-role reason',
     );
 };
 
@@ -5724,7 +5724,7 @@ RTLIF
     like($combined_output, qr/Blocked boundary:\s+explicit actual binding/s, 'CLI reports the blocked explicit-actual boundary for target failures');
     like(
         $combined_output,
-        qr/Reason:\s+the first structural-actual slice only allows '=open' and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports/s,
+        qr/Reason:\s+the first structural-actual slice only allows '=open' and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
         'CLI reports the concise explicit-actual target reason',
     );
 };

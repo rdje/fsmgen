@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-04: direct fixed-width actuals should reach top outputs through the same typed path too
+- Kept this in the active `R11` lane as the next bounded structural-actual widening because the planner already had the typed connection-expression path and the direct top-output auxiliary-assignment path in place.
+- Landed behavior:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now allows direct fixed-width literal actual sources such as `=0`, `=1`, `=8'b10100101`, `=8'd165`, and `=8'hA5` to drive declared top outputs directly through explicit top-output assignments,
+  - direct realized child-input actual bindings still use the same typed `bit_vector_literal_expr` payload on the child port bindings, so child-input and top-output literal uses now share one structural literal contract,
+  - and `=open` remains intentionally limited to realized child input ports, because “leave this formal unconnected” is honest structural child-binding semantics but not honest top-output wiring.
+- Why this is worth shipping:
+  - it closes an awkward gap where bounded concat-to-top-output already worked with literal operands but the equivalent direct literal token still failed,
+  - it reuses the same backend-neutral connection-expression/rendering path instead of inventing a text-only top-output literal special case,
+  - and it keeps the scope honest by not pretending `=open` has a meaningful direct-top-output interpretation.
+
 ## 2026-04-04: source-side top expressions should reach top outputs through the same typed path
 - Kept this in the active `R11` lane as another feature slice because the typed top-expression path and the existing top-output auxiliary-assignment surface were already in place.
 - Landed behavior:

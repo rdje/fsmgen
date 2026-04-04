@@ -29,6 +29,7 @@ subtest 'linked plan builder preserves literal and open toplinks as typed actual
     my @ports = (
         port('core_clk', 'input', 1, 'clock'),
         port('rst_async_n', 'input', 1, 'reset'),
+        port('default_data', 'output', 8, undef),
         port('serial_out', 'output', 1, undef),
     );
 
@@ -42,6 +43,7 @@ subtest 'linked plan builder preserves literal and open toplinks as typed actual
             FSM::Composition::TopLink->new(
                 name => 'wiring',
                 links => [
+                    FSM::Composition::Link->new(source => "=8'b10100101", target => 'default_data'),
                     FSM::Composition::Link->new(source => "=8'b10100101", target => 'uart_tx.data_in'),
                     FSM::Composition::Link->new(source => "=8'd165", target => 'uart_tx.decimal_data_in'),
                     FSM::Composition::Link->new(source => "=8'hA5", target => 'uart_tx.hex_data_in'),
@@ -70,6 +72,13 @@ subtest 'linked plan builder preserves literal and open toplinks as typed actual
     isa_ok($plan, 'FSM::Composition::Plan');
     is($plan->lane, 'C3', 'builder records the active explicit-link lane');
     is(scalar(@{$plan->nets}), 0, 'actual-bound child inputs do not force synthetic carrier nets');
+    is_deeply(
+        $plan->auxiliary_assignments,
+        [
+            "    assign default_data = 8'b10100101;",
+        ],
+        'literal actual top-output bindings become direct auxiliary assignments',
+    );
 
     my %bindings = map { $_->{port_name} => $_ } @{$plan->instances->[0]->port_bindings};
 
@@ -111,17 +120,19 @@ subtest 'pipeline and CLI emit structural literal and open actuals for explicit 
         $composition_path,
         <<'FSM'
 (?top:structural_actual_top
-  (?ports:public_io
-    core_clk
-    rst_async_n
-    serial_out>
-  )
-  (?rtl:uart_tx)
-  (?toplink:wiring
-    /=8'b10100101/uart_tx.data_in/
-    /=8'd165/uart_tx.decimal_data_in/
-    /=8'hA5/uart_tx.hex_data_in/
-    /=open/uart_tx.enable/
+      (?ports:public_io
+        core_clk
+        rst_async_n
+        default_data>8
+        serial_out>
+      )
+      (?rtl:uart_tx)
+      (?toplink:wiring
+        /=8'b10100101/default_data/
+        /=8'b10100101/uart_tx.data_in/
+        /=8'd165/uart_tx.decimal_data_in/
+        /=8'hA5/uart_tx.hex_data_in/
+        /=open/uart_tx.enable/
     /uart_tx.serial_out/serial_out/
   )
 )
@@ -172,6 +183,7 @@ FSM
     );
 
     my $hdl = $result->{hdl_code};
+    like($hdl, qr/assign default_data = 8'b10100101;/, 'generated HDL emits the literal actual directly on the top output');
     like($hdl, qr/\.data_in\(8'b10100101\)/, 'generated HDL emits the literal actual directly on the child port');
     like($hdl, qr/\.decimal_data_in\(8'b10100101\)/, 'generated HDL emits the decimal literal actual directly on the child port');
     like($hdl, qr/\.hex_data_in\(8'b10100101\)/, 'generated HDL emits the hex literal actual directly on the child port');
@@ -186,7 +198,7 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for explicit structural-actual toplinks');
 };
 
-subtest 'linked plan builder rejects actual sources that do not target realized child inputs' => sub {
+subtest 'linked plan builder rejects open actual sources that do not target realized child inputs' => sub {
     my $exception = eval {
         FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
             lane => 'C3',
@@ -201,7 +213,7 @@ subtest 'linked plan builder rejects actual sources that do not target realized 
                 FSM::Composition::TopLink->new(
                     name => 'wiring',
                     links => [
-                        FSM::Composition::Link->new(source => '=1', target => 'serial_out'),
+                        FSM::Composition::Link->new(source => '=open', target => 'serial_out'),
                     ],
                 ),
             ],
@@ -221,8 +233,8 @@ subtest 'linked plan builder rejects actual sources that do not target realized 
 
     like(
         $exception,
-        qr/uses actual source '=1' as an explicit link source, .*only allows actual sources to target realized child input ports/s,
-        'builder blocks literal actuals from driving non-child-input targets',
+        qr/uses actual source '=open' as an explicit link source, .*'=open' currently targets only realized child input ports, not declared top outputs/s,
+        'builder still blocks open actuals from driving declared top outputs',
     );
 };
 
@@ -258,7 +270,7 @@ subtest 'linked plan builder rejects actual endpoints as explicit link targets' 
 
     like(
         $exception,
-        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open' and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports/s,
+        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open' and exact-width binary, decimal, or hex literal actuals as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
         'builder blocks actual endpoints from appearing as explicit link targets',
     );
 };

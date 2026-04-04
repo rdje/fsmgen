@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-04
+### direct fixed-width actuals now reach declared top outputs too
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so direct fixed-width literal actual sources such as `=0`, `=1`, `=8'b10100101`, `=8'd165`, and `=8'hA5` may now drive declared top outputs through explicit top-output assignments instead of being limited to realized child-input bindings.
+- Kept the boundary honest: `=open` remains child-input-only, because a top output still needs a real driven expression rather than an “unconnected” placeholder.
+- Updated [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock the widened direct-literal top-output success path plus the still-blocked `=open` top-output summary wording.
+
 ### source-side top expressions now drive top outputs directly too
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so source-side top-port bit/slice expressions and bounded flat concat expressions may now drive declared top outputs directly through explicit top-output assignments while sibling child-input consumers still reuse those same typed expressions without synthetic carrier nets.
 - Added [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t) and expanded [t/263-composition-toplink-top-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/263-composition-toplink-top-expressions.t) to lock the linked-plan and end-to-end pipeline/CLI contract for direct top-expression top-output assignments, including bounded concat rendering through the emitted top-level assignments.

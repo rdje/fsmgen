@@ -1,13 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-04: direct fixed-width actuals may now drive declared top outputs too
+- Stayed in the active `R11` lane and kept this as the next honest sibling after the shipped top-expression/top-output slice instead of switching back to hardening-only work.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now emits direct top-output assignments for fixed-width actual sources such as `=0`, `=1`, `=8'b10100101`, `=8'd165`, and `=8'hA5` instead of limiting those direct actual tokens to realized child-input bindings,
+  - that means direct literal actuals and bounded concat operands now both reach declared top outputs through the same typed structural-expression/rendering path rather than splitting into “concat can, direct actual cannot,”
+  - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) now locks direct linked-plan plus pipeline/CLI success for literal-actual top-output assignments,
+  - [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now keeps the still-blocked sibling honest by locking `=open`-to-top-output as the remaining explicit-actual source-role failure,
+  - `=open` remains child-input-only on purpose because a declared top output still needs a concrete driven expression,
+  - and the next honest sibling after this slice is no longer “actual-source to top-output” in general, but rather whether any broader non-literal explicit-actual family is worth opening at all.
+
 ## 2026-04-04: source-side top expressions may now drive top outputs directly too
 - Stayed in the active `R11` lane and kept this as another expression/top-boundary feature slice rather than widening actual-source rules at the same time.
 - Important continuity note:
   - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now emits direct top-output assignments from source-side top-port bit/slice and bounded concat expressions instead of blocking those expressions at the top boundary,
   - sibling child-input consumers may still reuse those same typed expressions in the same top without synthetic carrier nets, so direct child-input and direct top-output expression uses now share one planner path,
   - [t/263-composition-toplink-top-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/263-composition-toplink-top-expressions.t) and [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t) now lock the linked-plan plus pipeline/CLI contract for that widened top-boundary expression slice,
-  - explicit actual sources are still narrower and remain child-input-only for now,
-  - and the next honest sibling beyond this slice is likely the remaining actual-source/top-output boundary rather than more top-expression hardening.
+  - the old “direct actual-source to top-output” sibling is now partially closed by the later literal-actual slice, with `=open` still intentionally excluded there,
+  - and the next honest sibling beyond these top-boundary expression/actual slices is now likely another structural-actual or shared-boundary widening rather than more top-expression hardening.
 
 ## 2026-04-04: declared top inputs may now fan out directly to top outputs too
 - Stayed in the active `R11` lane and kept this as another feature slice instead of circling back into summary-only or hardening-only work.
