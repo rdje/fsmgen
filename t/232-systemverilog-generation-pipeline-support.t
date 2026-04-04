@@ -50,6 +50,9 @@ FSM
     my $expected_hdl = build_expected_hdl($prepared_backend, $fsm_module);
     my $generated_hdl = $pipeline_support->generate_systemverilog_module($fsm_module);
 
+    normalize_generated_date(\$expected_hdl);
+    normalize_generated_date(\$generated_hdl);
+
     is(
         $generated_hdl,
         $expected_hdl,
@@ -92,12 +95,16 @@ sub build_expected_hdl {
     $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_state_encoding($fsm_module);
     $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_state_register($fsm_module);
     $hdl .= $prepared_backend->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
-    $hdl .= $prepared_backend->{enable_graph_enable_support}
-        ->generate_enable_conditions($fsm_module);
     $prepared_backend->{backend_sv_generation_prescan_preparation_support}
         ->prepare_enable_prescan();
-    $hdl .= $prepared_backend->{backend_sv_consolidated_intermediate_stage_support}
-        ->generate_consolidated_intermediate_block($fsm_module);
+    my $prepared_block = $prepared_backend->{backend_sv_consolidated_intermediate_stage_preparation_support}
+        ->prepare_consolidated_intermediate_block($fsm_module);
+    $prepared_backend->{backend_sv_operand_contract_validation_support}
+        ->validate_pre_generation_operand_contract($fsm_module, $prepared_block);
+    $hdl .= $prepared_backend->{enable_graph_enable_support}
+        ->generate_enable_conditions($fsm_module);
+    $hdl .= $prepared_backend->{backend_sv_consolidated_intermediate_rendering_support}
+        ->render_prepared_consolidated_intermediate_block($prepared_block);
     $hdl .= $prepared_backend->{backend_sv_generation_tail_support}
         ->generate_systemverilog_tail($fsm_module);
 
@@ -109,4 +116,10 @@ sub write_file {
     open my $fh, '>', $path or die "Cannot open $path for write: $!";
     print {$fh} $content or die "Cannot write $path: $!";
     close $fh or die "Cannot close $path: $!";
+}
+
+sub normalize_generated_date {
+    my ($text_ref) = @_;
+    return unless defined $text_ref && ref($text_ref) eq 'SCALAR';
+    $$text_ref =~ s{// Date: .*}{// Date: <normalized>}g;
 }

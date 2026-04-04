@@ -29,15 +29,16 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSelec
             },
             initially_filtered_signals => {
                 rescued_dep => $all_intermediate_signals->{rescued_dep},
+                transitive_leaf => $all_intermediate_signals->{transitive_leaf},
                 filtered_leaf => $all_intermediate_signals->{filtered_leaf},
             },
             initially_kept_count => 1,
-            initially_filtered_count => 2,
+            initially_filtered_count => 3,
         };
     }
 }
 
-subtest 'consolidated intermediate selection support owns dependency-aware rescue and final kept/filtered selection' => sub {
+subtest 'consolidated intermediate selection support owns transitive dependency-aware rescue and final kept/filtered selection' => sub {
     my $fake_backend = {
         backend_sv_consolidated_intermediate_classification_support => Local::FakeClassificationSupport->new(),
     };
@@ -52,7 +53,12 @@ subtest 'consolidated intermediate selection support owns dependency-aware rescu
             source => 'ast_factorization',
         },
         rescued_dep => {
-            rendered_expression => 'A | B',
+            rendered_expression => 'transitive_leaf | B',
+            dependency_signal_names => ['transitive_leaf'],
+            source => 'ast_factorization',
+        },
+        transitive_leaf => {
+            rendered_expression => 'A != 0',
             dependency_signal_names => [],
             source => 'ast_factorization',
         },
@@ -65,7 +71,10 @@ subtest 'consolidated intermediate selection support owns dependency-aware rescu
 
     my $selection = $support->filter_consolidated_signals(
         $all_intermediate_signals,
-        { kept_parent => ['rescued_dep'] },
+        {
+            kept_parent => ['rescued_dep'],
+            rescued_dep => ['transitive_leaf'],
+        },
     );
 
     ok(
@@ -77,6 +86,10 @@ subtest 'consolidated intermediate selection support owns dependency-aware rescu
         'selection support rescues a filtered dependency needed by a kept parent signal',
     );
     ok(
+        exists $selection->{filtered_signals}{transitive_leaf},
+        'selection support rescues transitive filtered dependencies needed by rescued signals too',
+    );
+    ok(
         !exists $selection->{filtered_signals}{filtered_leaf},
         'selection support leaves unrelated filtered signals out of the final kept set',
     );
@@ -85,13 +98,17 @@ subtest 'consolidated intermediate selection support owns dependency-aware rescu
         'selection support records the rescued dependency explicitly',
     );
     ok(
+        exists $selection->{rescued_signals}{transitive_leaf},
+        'selection support records transitive rescued dependencies explicitly',
+    );
+    ok(
         exists $selection->{finally_filtered_signals}{filtered_leaf},
         'selection support records the still-filtered leaf explicitly',
     );
     is(
         $selection->{rescued_count},
-        1,
-        'selection support reports the rescued dependency count',
+        2,
+        'selection support reports the transitive rescued dependency count',
     );
     is(
         $selection->{filtered_count},

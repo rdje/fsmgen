@@ -45,7 +45,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use Data::Dumper;
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed refaddr);
 
 use FSM::Debug;
 
@@ -215,10 +215,40 @@ Internal recursive collector for C<extract_intermediate_signals_from_ast>.
 =cut
 
 sub _collect_intermediate_signals_from_ast($self, $ast, $signal_names, $seen_node_ids, $seen_signal_names) {
-    return unless $ast && blessed($ast);
+    return unless $ast && (blessed($ast) || ref($ast) eq 'HASH');
 
-    my $node_id = sprintf('%p', $ast);
+    my $node_id = refaddr($ast);
+    $node_id = sprintf('%p', $ast) unless defined $node_id;
     return if $seen_node_ids->{$node_id}++;
+
+    if (ref($ast) eq 'HASH' && !blessed($ast)) {
+        if (($ast->{type} || '') eq 'signal') {
+            my $signal_name = $ast->{name};
+            if (defined($signal_name) && $signal_name ne '' && $self->is_intermediate_signal($signal_name)) {
+                if (!$seen_signal_names->{$signal_name}++) {
+                    push @$signal_names, $signal_name;
+                    fsm_debug("[SignalSupport.pm][_collect_intermediate_signals_from_ast()] Found intermediate signal ref '$signal_name' from parsed expression tree", 3);
+                }
+            }
+        }
+
+        for my $key (qw(left right operand condition true_expr false_expr index expression)) {
+            my $child = $ast->{$key};
+            next unless $child && (blessed($child) || ref($child) eq 'HASH');
+            $self->_collect_intermediate_signals_from_ast($child, $signal_names, $seen_node_ids, $seen_signal_names);
+        }
+
+        for my $key (qw(operands children arguments expressions parts)) {
+            my $children = $ast->{$key};
+            next unless ref($children) eq 'ARRAY';
+            for my $child (@$children) {
+                next unless $child && (blessed($child) || ref($child) eq 'HASH');
+                $self->_collect_intermediate_signals_from_ast($child, $signal_names, $seen_node_ids, $seen_signal_names);
+            }
+        }
+
+        return;
+    }
 
     if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
         my $signal_name = eval { $ast->signal_name } || $ast->{signal_name};

@@ -402,7 +402,11 @@ sub parse_size_section($self, $size_ast) {
                 && $resolved_width =~ /\A\d+\z/
                 && $resolved_width > 0;
 
-        $self->{signal_manager}->register_signal($resolved_sig, width => $resolved_width);
+        $self->{signal_manager}->register_signal(
+            $resolved_sig,
+            width => $resolved_width,
+            width_declared => 1,
+        );
 
         # Keep rm/mr auxiliary outputs width-aligned with their parent signal
         # even when +size appears after assignment actions.
@@ -413,6 +417,7 @@ sub parse_size_section($self, $size_ast) {
                 width => $resolved_width,
                 is_output => 1,
                 is_aux_output => 1,
+                width_declared => 1,
             );
         }
         my $q_aux = "${resolved_sig}_r";
@@ -422,6 +427,7 @@ sub parse_size_section($self, $size_ast) {
                 width => $resolved_width,
                 is_output => 1,
                 is_aux_output => 1,
+                width_declared => 1,
             );
         }
     }
@@ -1531,7 +1537,14 @@ sub parse_signal_action($self, $action) {
     } elsif (ref($target_expr) eq 'FSM::CoreAST::IndexedRef') {
         $lhs_width = 1;
         $lhs_explicit = 1;
-    } elsif (ref($target_expr) eq 'FSM::CoreAST::SignalRef' && $target_expr->signal && $target_expr->signal->width && $target_expr->signal->width > 1) {
+    } elsif (ref($target_expr) eq 'FSM::CoreAST::SignalRef'
+        && $target_expr->signal
+        && defined($target_expr->signal->width)
+        && $target_expr->signal->width > 0
+        && (
+            $target_expr->signal->width > 1
+            || ($target_expr->signal->can('get_attribute') && $target_expr->signal->get_attribute('width_declared'))
+        )) {
         $lhs_width = $target_expr->signal->width;
         $lhs_explicit = 1;
     }
@@ -1546,25 +1559,48 @@ sub parse_signal_action($self, $action) {
     } elsif (ref($source_expr) eq 'FSM::CoreAST::IndexedRef') {
         $rhs_width = 1;
         $rhs_explicit = 1;
-    } elsif (ref($source_expr) eq 'FSM::CoreAST::SignalRef' && $source_expr->signal && $source_expr->signal->width && $source_expr->signal->width > 1) {
+    } elsif (ref($source_expr) eq 'FSM::CoreAST::SignalRef'
+        && $source_expr->signal
+        && defined($source_expr->signal->width)
+        && $source_expr->signal->width > 0
+        && (
+            $source_expr->signal->width > 1
+            || ($source_expr->signal->can('get_attribute') && $source_expr->signal->get_attribute('width_declared'))
+        )) {
         $rhs_width = $source_expr->signal->width;
         $rhs_explicit = 1;
     }
 
+    my %width_contract = (
+        lhs_width => $lhs_width,
+        rhs_width => $rhs_width,
+        lhs_explicit => $lhs_explicit ? 1 : 0,
+        rhs_explicit => $rhs_explicit ? 1 : 0,
+    );
+
     if ($lhs_explicit && $rhs_explicit) {
         if ($lhs_width != $rhs_width) {
             $self->{expression_builder}->handle_width_mismatch($lhs_width, $rhs_width, $signal_name, $value_expr, \$source_expr);
+            $width_contract{resolution} = $lhs_width > $rhs_width
+                ? 'rhs_expanded_to_lhs'
+                : 'rhs_truncated_to_lhs';
+        } else {
+            $width_contract{resolution} = 'exact_match';
         }
         $final_width = $lhs_width;
     } elsif ($lhs_explicit) {
         $final_width = $lhs_width;
         $self->{expression_builder}->propagate_width_to_expression($source_expr, $final_width);
+        $width_contract{resolution} = 'rhs_width_inferred_from_lhs';
     } elsif ($rhs_explicit) {
         $final_width = $rhs_width;
         $self->{expression_builder}->propagate_width_to_expression($target_expr, $final_width);
+        $width_contract{resolution} = 'lhs_width_inferred_from_rhs';
     } else {
         $final_width = 1;
+        $width_contract{resolution} = 'default_1bit';
     }
+    $width_contract{final_width} = $final_width if defined $final_width;
 
     my $target_base_width = $self->get_target_base_signal_width($target_expr, $final_width);
     if ($target_base_signal ne '' && $target_base_width > 1) {
@@ -1593,6 +1629,7 @@ sub parse_signal_action($self, $action) {
         $source_provenance{compound_operator} = $compound_operator_used;
         $source_provenance{compound_delta} = $compound_delta_used;
     }
+    $source_provenance{width_contract} = \%width_contract;
 
     my $assignment;
     if ($operator eq '<-') {

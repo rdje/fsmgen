@@ -456,6 +456,12 @@ sub _signal_is_single_bit ($self, $name) {
         return 1;
     }
 
+    if ($name =~ /_(?:en|wen)$/) {
+        fsm_debug("      PATH: Generated enable/write-enable signal", 3);
+        fsm_debug("      RESULT: single-bit (enable families are boolean)", 3);
+        return 1;
+    }
+
     if ($name =~ /^current_state$/) {
         fsm_debug("      PATH: State comparison signal", 3);
         fsm_debug("      RESULT: single-bit (state comparison)", 3);
@@ -512,7 +518,7 @@ sub _operand_is_single_bit ($self, $ast) {
         fsm_debug("      RESULT: single-bit (bit indexing)", 3);
         return 1;
 
-    } elsif ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp')) {
+    } elsif ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp') || $ast->isa('FSM::HDL::SubstitutedBinaryOp')) {
         fsm_debug("      PATH: BinaryOp", 3);
         my $op = eval { $ast->operator } || '';
         fsm_debug("      Binary operator: '$op'", 3);
@@ -532,7 +538,7 @@ sub _operand_is_single_bit ($self, $ast) {
         fsm_debug("      RESULT: multi-bit (other binary operator)", 3);
         return 0;
 
-    } elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
+    } elsif ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp') || $ast->isa('FSM::HDL::SubstitutedUnaryOp')) {
         fsm_debug("      PATH: UnaryOp", 3);
         my $op = eval { $ast->operator } || '';
         fsm_debug("      Unary operator: '$op'", 3);

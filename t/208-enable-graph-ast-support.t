@@ -55,6 +55,11 @@ FSM
         FSM::AST::SignalRef->new('BUS1'),
         FSM::AST::SignalRef->new('BUS2'),
     );
+    my $generated_enable_logical = FSM::AST::BinaryOp->new(
+        '&&',
+        FSM::AST::SignalRef->new('idle_en'),
+        FSM::AST::SignalRef->new('setup_en'),
+    );
     my $arithmetic = FSM::AST::BinaryOp->new(
         '+',
         FSM::AST::SignalRef->new('BUS1'),
@@ -78,6 +83,11 @@ FSM
         $support->ast_to_systemverilog($multi_bit_logical),
         'BUS1 || BUS2',
         'AST support keeps multi-bit logical operators as logical SystemVerilog operators',
+    );
+    is(
+        $support->ast_to_systemverilog($generated_enable_logical),
+        'idle_en & setup_en',
+        'AST support renders generated enable signals through bitwise operators too',
     );
     is(
         $support->ast_to_systemverilog($arithmetic),

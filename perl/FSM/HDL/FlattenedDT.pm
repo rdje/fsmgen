@@ -43,6 +43,7 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::InternalDeclarationEmitter;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalFilterPolicySupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalRecoverySupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::OperandContractValidationSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter;
 use FSM::HDL::FlattenedDT::Backend::Verilog;
 
@@ -123,6 +124,7 @@ sub new ($class, %args) {
     $self->{backend_sv_intermediate_recovery_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalRecoverySupport->new(flattened_dt => $self);
     $self->{backend_sv_intermediate_width_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport->new(flattened_dt => $self);
     $self->{backend_sv_intermediate_filter_policy_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalFilterPolicySupport->new(flattened_dt => $self);
+    $self->{backend_sv_operand_contract_validation_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::OperandContractValidationSupport->new(flattened_dt => $self);
     $self->{backend_sv_global_factorization} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GlobalFactorizationSupport->new(flattened_dt => $self);
     $self->{backend_sv_ast_factorization} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ASTFactorizationSupport->new(flattened_dt => $self);
     $self->{backend_sv_consolidated_intermediate_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSupport->new(flattened_dt => $self);

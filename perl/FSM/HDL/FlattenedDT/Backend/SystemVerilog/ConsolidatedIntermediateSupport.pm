@@ -149,12 +149,21 @@ signal set.
 =cut
 
 sub merge_ast_factorization_signals ($self, $all_intermediate_signals, $ast_intermediate_signals) {
-    return unless $ast_intermediate_signals && %$ast_intermediate_signals;
+    my $ctx = $self->{flattened_dt};
+    my %merged_factorization_signals = %{ $ast_intermediate_signals || {} };
 
-    for my $signal_name (keys %$ast_intermediate_signals) {
+    if ($ctx->{ast_factorizer} && $ctx->{ast_factorizer}->{intermediate_signals}) {
+        for my $signal_name (keys %{ $ctx->{ast_factorizer}->{intermediate_signals} || {} }) {
+            $merged_factorization_signals{$signal_name} //= $ctx->{ast_factorizer}->{intermediate_signals}{$signal_name};
+        }
+    }
+
+    return unless %merged_factorization_signals;
+
+    for my $signal_name (keys %merged_factorization_signals) {
         $all_intermediate_signals->{$signal_name} = {
             source => 'ast_factorization',
-            %{$ast_intermediate_signals->{$signal_name}},
+            %{$merged_factorization_signals{$signal_name}},
         };
     }
 }
@@ -311,6 +320,33 @@ sub merge_fsmgen_parsed_intermediate_signals ($self, $all_intermediate_signals, 
     fsm_debug("CONSOL_INTER_SIG: [FSMGEN_SIGNALS] Found $fsmgen_intermediate_count intermediate signals from FSMGenFull parsing", 3);
 }
 
+=head2 sync_consolidated_signals_to_registry
+
+Mirror the merged consolidated intermediate set back into the live
+C<intermediate_signals> registry so downstream recovery helpers can recognize
+every helper name while resolving dependency fallbacks.
+
+=cut
+
+sub sync_consolidated_signals_to_registry ($self, $all_intermediate_signals) {
+    my $ctx = $self->{flattened_dt};
+    $ctx->{intermediate_signals} //= {};
+
+    for my $signal_name (keys %{ $all_intermediate_signals || {} }) {
+        my $signal_info = $all_intermediate_signals->{$signal_name} || {};
+        my $existing = $ctx->{intermediate_signals}{$signal_name};
+        $existing = { expression => $existing }
+            if defined($existing) && ref($existing) ne 'HASH';
+        $existing ||= {};
+
+        $ctx->{intermediate_signals}{$signal_name} = {
+            %$existing,
+            %$signal_info,
+            name => $signal_name,
+        };
+    }
+}
+
 =head2 collect_consolidated_intermediate_signals
 
 Build the consolidated intermediate-signal set for the direct backend by
@@ -341,8 +377,10 @@ sub collect_consolidated_intermediate_signals ($self, $fsm_module) {
     $self->merge_ast_factorization_signals(\%all_intermediate_signals, $ast_intermediate_signals);
     $self->merge_prescan_intermediate_signals(\%all_intermediate_signals);
     $self->merge_fsmgen_parsed_intermediate_signals(\%all_intermediate_signals, $fsm_module);
+    $self->sync_consolidated_signals_to_registry(\%all_intermediate_signals);
     $ctx->{backend_sv_consolidated_intermediate_normalization_support}
         ->normalize_consolidated_intermediate_metadata(\%all_intermediate_signals);
+    $self->sync_consolidated_signals_to_registry(\%all_intermediate_signals);
 
     return \%all_intermediate_signals;
 }

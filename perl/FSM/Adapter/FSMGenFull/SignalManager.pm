@@ -50,7 +50,7 @@ sub register_signal($self, $signal_name, %attributes) {
     } else {
         delete $normalized_attrs{attributes};
     }
-    for my $attr_key (qw(is_output is_intermediate is_aux_output signal_role)) {
+    for my $attr_key (qw(is_output is_intermediate is_aux_output signal_role width_declared)) {
         if (exists $normalized_attrs{$attr_key}) {
             $attribute_bag{$attr_key} = delete $normalized_attrs{$attr_key};
         }

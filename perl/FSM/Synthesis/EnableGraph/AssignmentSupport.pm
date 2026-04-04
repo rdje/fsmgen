@@ -886,10 +886,18 @@ family.
 
 sub generate_unified_comb_mux ($self, $lhs, $lhs_analysis) {
     my $multiplexer = $lhs_analysis->{multiplexer};
+    my $default_value = $multiplexer->{default_value};
+    my $signal_width = $self->get_lhs_width_from_analysis($lhs_analysis);
 
     my $hdl = "  // Unified combinational mux for: $lhs\n";
     $hdl .= "  always_comb begin\n";
-    my $safe_default = "1'b0";
+    my $safe_default = (
+        defined($default_value)
+        && $default_value ne ''
+        && $default_value ne $lhs
+    )
+        ? $default_value
+        : $self->zero_literal_for_width($signal_width);
     $hdl .= "    $lhs = $safe_default;  // Default value\n";
 
     for my $enable_info (@{$multiplexer->{enables}}) {

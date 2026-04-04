@@ -257,6 +257,32 @@ sub resolve_intermediate_signal_dependencies ($self, $signal_name, $signal_info)
         @dependencies = $ctx->{enable_graph_signal_support}->extract_intermediate_signals_from_ast($runtime_ast);
         $dependency_source = $signal_info->{runtime_ast_source} || 'runtime_ast';
         delete $signal_info->{dependency_fallback_source} if $signal_info && ref($signal_info) eq 'HASH';
+
+        if (defined($expression) && $expression ne '') {
+            my %fallback_signal_info = $signal_info && ref($signal_info) eq 'HASH'
+                ? %{$signal_info}
+                : ();
+            delete @fallback_signal_info{
+                qw(runtime_ast runtime_ast_source runtime_ast_resolution_state runtime_ast_miss_reason dependency_fallback_source)
+            };
+
+            my @fallback_dependencies = $self->extract_intermediate_signals_from_runtime_ast_miss(
+                $signal_name,
+                \%fallback_signal_info,
+                $expression,
+            );
+
+            if (@fallback_dependencies) {
+                my $fallback_source = $fallback_signal_info{dependency_fallback_source}
+                    || 'rendered_expression_fallback';
+                my %seen_dependencies = map { $_ => 1 } @dependencies;
+                push @dependencies, grep { !$seen_dependencies{$_}++ } @fallback_dependencies;
+                $dependency_source = $dependency_source . '+' . $fallback_source;
+                if ($signal_info && ref($signal_info) eq 'HASH') {
+                    $signal_info->{dependency_fallback_source} = $fallback_source;
+                }
+            }
+        }
     } else {
         if (defined($expression) && $expression ne '') {
             @dependencies = $self->extract_intermediate_signals_from_runtime_ast_miss($signal_name, $signal_info, $expression);
@@ -342,6 +368,20 @@ sub extract_intermediate_signals_from_runtime_ast_miss ($self, $signal_name, $si
             );
             return $ctx->{enable_graph_signal_support}->extract_intermediate_signals_from_ast($parsed_ast)
                 if $parsed_ast && blessed($parsed_ast);
+
+            if ($ctx->{expr_namer} && $ctx->{expr_namer}->can('parse_expression')) {
+                my $parsed_expression_tree = eval { $ctx->{expr_namer}->parse_expression($candidate_expression) };
+                my @parsed_expression_dependencies =
+                    $parsed_expression_tree
+                    ? $ctx->{enable_graph_signal_support}->extract_intermediate_signals_from_ast($parsed_expression_tree)
+                    : ();
+                if (@parsed_expression_dependencies) {
+                    if ($signal_info && ref($signal_info) eq 'HASH') {
+                        $signal_info->{dependency_fallback_source} = 'parsed_' . $candidate_source . '_expression_tree';
+                    }
+                    return @parsed_expression_dependencies;
+                }
+            }
         }
 
         my $cleaned_expression = $ctx->{enable_graph_signal_support}->clean_intermediate_expression($candidate_expression);
@@ -360,6 +400,20 @@ sub extract_intermediate_signals_from_runtime_ast_miss ($self, $signal_name, $si
             );
             return $ctx->{enable_graph_signal_support}->extract_intermediate_signals_from_ast($parsed_ast)
                 if $parsed_ast && blessed($parsed_ast);
+
+            if ($ctx->{expr_namer} && $ctx->{expr_namer}->can('parse_expression')) {
+                my $parsed_expression_tree = eval { $ctx->{expr_namer}->parse_expression($cleaned_expression) };
+                my @parsed_expression_dependencies =
+                    $parsed_expression_tree
+                    ? $ctx->{enable_graph_signal_support}->extract_intermediate_signals_from_ast($parsed_expression_tree)
+                    : ();
+                if (@parsed_expression_dependencies) {
+                    if ($signal_info && ref($signal_info) eq 'HASH') {
+                        $signal_info->{dependency_fallback_source} = 'parsed_' . $cleaned_source . '_expression_tree';
+                    }
+                    return @parsed_expression_dependencies;
+                }
+            }
         }
     }
 

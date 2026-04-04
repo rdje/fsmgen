@@ -72,14 +72,25 @@ sub filter_consolidated_signals ($self, $all_intermediate_signals, $signal_depen
     my %initially_filtered_signals = %{ $classification->{initially_filtered_signals} || {} };
     my %initially_kept_signals = %{ $classification->{initially_kept_signals} || {} };
     my %rescued_signals;
+    my %visited_signal_dependencies;
+    my @pending_signals = sort keys %initially_kept_signals;
 
-    for my $kept_signal (keys %initially_kept_signals) {
-        next unless $signal_dependencies->{$kept_signal};
-        for my $dependency (@{ $signal_dependencies->{$kept_signal} }) {
-            if ($initially_filtered_signals{$dependency}) {
+    while (@pending_signals) {
+        my $current_signal = shift @pending_signals;
+        next if $visited_signal_dependencies{$current_signal}++;
+        next unless $signal_dependencies->{$current_signal};
+
+        for my $dependency (sort @{ $signal_dependencies->{$current_signal} }) {
+            next unless exists $initially_kept_signals{$dependency}
+                || exists $initially_filtered_signals{$dependency};
+
+            if ($initially_filtered_signals{$dependency} && !$rescued_signals{$dependency}) {
                 $rescued_signals{$dependency} = $initially_filtered_signals{$dependency};
-                fsm_debug("[ConsolidatedIntermediateSelectionSupport.pm][filter_consolidated_signals()] RESCUED: '$dependency' is needed by '$kept_signal'", 3);
+                fsm_debug("[ConsolidatedIntermediateSelectionSupport.pm][filter_consolidated_signals()] RESCUED: '$dependency' is needed by '$current_signal'", 3);
             }
+
+            push @pending_signals, $dependency
+                unless $visited_signal_dependencies{$dependency};
         }
     }
 
