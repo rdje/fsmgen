@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-04: next likely structural-actual widening is unsized decimal/hex direct bindings, not looser exact-width coercion
+- Recorded one steering decision for the next `R11` sibling after the shipped scalar `=0` / `=1` widening.
+- Important continuity note:
+  - unsized positive decimal and hex direct actuals now look like the next honest widening for [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm): treat them as numeric values, widen them to the direct binding target width, and fail explicitly on overflow,
+  - exact-width forms such as `=8'd5` and `=8'hA5` should remain exact-width contracts instead of being silently widened again,
+  - and bounded concat operands should stay stricter than direct bindings unless a later slice opens a separate concat-numeric inference contract on purpose.
+
 ## 2026-04-04: direct scalar `=0` and `=1` actuals now widen to direct binding targets
 - Stayed in the active `R11` lane and kept this as the next honest structural-actual refinement instead of switching away from feature work while the planner path was already localized.
 - Important continuity note:

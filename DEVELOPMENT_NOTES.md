@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-04: unsized numeric direct actuals are a plausible next widening, but exact-width forms should stay exact
+- Recorded this as steering guidance for the next structural-actual feature slice rather than as shipped behavior.
+- Current implementation direction:
+  - unsized positive decimal direct actuals such as `=170` and unsized hex direct actuals such as `=A5` are reasonable next candidates for the direct-binding path in [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm),
+  - the intended semantics for that future slice would be “treat the token as a numeric value, widen it to the realized child-input or declared top-output target width, and fail explicitly on overflow,”
+  - exact-width forms such as `=8'd5` and `=8'hA5` should stay exact-width contracts rather than being silently widened again to a larger target,
+  - and bounded concat operands should stay stricter than direct bindings: unsized numeric widening should not silently appear inside concat unless a separate concat-specific contract is opened deliberately.
+- Why this steering note matters:
+  - `=0` and `=1` were the safest first widening because they avoid value-shape ambiguity,
+  - widening unsized decimal/hex direct actuals next would remove another direct-binding rough edge without weakening exact-width intent,
+  - and keeping sized literals exact plus concat stricter preserves an honest contract boundary instead of turning every numeric token into an implicit coercion rule.
+
 ## 2026-04-04: direct scalar `=0` and `=1` actuals should widen to the direct binding target
 - Kept this in the active `R11` lane as the next bounded structural-actual refinement because the planner already had the target endpoint width in hand anywhere direct actuals bind.
 - Landed behavior:
