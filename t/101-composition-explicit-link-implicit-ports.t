@@ -20,6 +20,8 @@ my $c3_path = File::Spec->catfile($tempdir, 'implicit_ports_rtl_top.fsm');
 my $c3_out_path = File::Spec->catfile($tempdir, 'implicit_ports_rtl_top.sv');
 my $expr_c3_path = File::Spec->catfile($tempdir, 'implicit_ports_top_expr_rtl_top.fsm');
 my $expr_c3_out_path = File::Spec->catfile($tempdir, 'implicit_ports_top_expr_rtl_top.sv');
+my $concat_infer_c3_path = File::Spec->catfile($tempdir, 'implicit_ports_top_concat_operand_infer_rtl_top.fsm');
+my $concat_infer_c3_out_path = File::Spec->catfile($tempdir, 'implicit_ports_top_concat_operand_infer_rtl_top.sv');
 my $mixed_role_path = File::Spec->catfile($tempdir, 'implicit_ports_mixed_role_top.fsm');
 my $width_mismatch_path = File::Spec->catfile($tempdir, 'implicit_ports_width_mismatch_top.fsm');
 my $type_mismatch_path = File::Spec->catfile($tempdir, 'implicit_ports_type_mismatch_top.fsm');
@@ -129,6 +131,22 @@ write_file(
 (?rtlif:byte_sink
   data_in<8:data
   enable<1:data
+)
+FSM
+);
+
+write_file(
+    $concat_infer_c3_path,
+    <<'FSM'
+(?top:implicit_ports_top_concat_operand_infer_rtl_top
+  (?rtl:byte_sink)
+  (?toplink:wiring
+    /header_bus,status_bus[0],payload_bus[3:0]/byte_sink.data_in/
+  )
+)
+
+(?rtlif:byte_sink
+  data_in<8:data
 )
 FSM
 );
@@ -274,6 +292,33 @@ subtest 'explicit-link C3 can infer undeclared top inputs from source-side top e
     );
     ok($success, 'CLI succeeds for explicit-link C3 with inferred top-expression ports');
     ok(-e $expr_c3_out_path, 'CLI writes HDL output for explicit-link C3 with inferred top-expression ports');
+};
+
+subtest 'explicit-link C3 can infer one undeclared whole-port concat operand from target width' => sub {
+    my $result = $pipeline->generate_hdl_from_file($concat_infer_c3_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C3', 'rtl-backed concat operand inference stays in C3');
+
+    my %ports = map { $_->name => $_ } @{$result->{composition_plan}->ports};
+    ok($ports{header_bus}, 'whole-port concat operand is inferred from target width');
+    ok($ports{status_bus}, 'bit-select operand still contributes inferred top input');
+    ok($ports{payload_bus}, 'slice operand still contributes inferred top input');
+    is($ports{header_bus}->width, 3, 'whole-port concat operand picks up the residual target width');
+    is($ports{status_bus}->width, 1, 'bit-select operand keeps its minimum inferred width');
+    is($ports{payload_bus}->width, 4, 'slice operand keeps its minimum inferred width');
+
+    my $hdl = $result->{hdl_code};
+    like($hdl, qr/\binput\s+\[2:0\]\s+header_bus\b/s, 'generated HDL exposes the residual-width inferred top input');
+    like($hdl, qr/\binput\s+status_bus\b/s, 'generated HDL exposes the inferred 1-bit concat operand');
+    like($hdl, qr/\binput\s+\[3:0\]\s+payload_bus\b/s, 'generated HDL exposes the inferred slice-base top input');
+    like($hdl, qr/\.data_in\(\{header_bus,\s*status_bus\[0\],\s*payload_bus\[3:0\]\}\)/s, 'generated HDL keeps the concat binding with the inferred whole-port operand');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $concat_infer_c3_out_path, '--quiet', $concat_infer_c3_path],
+    );
+    ok($success, 'CLI succeeds for explicit-link C3 with inferred whole-port concat operands');
+    ok(-e $concat_infer_c3_out_path, 'CLI writes HDL output for explicit-link C3 with inferred whole-port concat operands');
 };
 
 subtest 'explicit top-link port inference rejects one undeclared top endpoint used as both input and output' => sub {

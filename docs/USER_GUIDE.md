@@ -1024,7 +1024,8 @@ This currently works because:
 - `payload_bus[15:8]` implies a base top-input width of at least 16,
 - `status_bus[0]` implies a base top-input width of at least 1,
 - the same inference path now also sees `name[index]` / `name[msb:lsb]` operands that appear inside a bounded comma-separated concat source,
-- undeclared whole-port concat operands still need a declared or otherwise already-inferred width,
+- one remaining undeclared whole-port concat operand may now also pick up an exact width from the remaining child-input target width when the other concat operands are already exact,
+- but several still-unsized undeclared whole-port concat operands still fail explicitly instead of guessing several widths from one child-input target,
 - top expressions still stay source-side only,
 - and they still target realized child input ports only.
 

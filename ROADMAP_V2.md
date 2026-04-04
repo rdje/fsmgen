@@ -847,8 +847,10 @@ The first honest `R11` slices are now:
   carrier nets or backend-specific text escapes.
 - Forward-IR note: omitted/empty-`?ports` top-boundary inference now also sees
   inferable `name[index]` / `name[msb:lsb]` operands inside those bounded
-  concat sources, while undeclared whole-port concat operands still require a
-  declared or otherwise already-inferred width instead of a guessed remainder.
+  concat sources, and one remaining undeclared whole-port concat operand may
+  now also be sized exactly from the child-input target remainder width while
+  several still-unsized whole-port operands continue to fail explicitly
+  instead of guessing several widths at once.
 - Forward-IR note: the structural connection-expression layer has now started
   the bounded member/field-access lane too, with a first `member_access` node
   over one source expression plus one identifier-like member name, rendered

@@ -7836,3 +7836,37 @@ It is an exact-delay pulse request:
   now also locks:
   - `Top expression '...'` summary context for blocked concat-operand
     failures.
+
+## 2026-04-04: omitted-port concat inference now has a first residual-width slice
+- Continued the active `R11` feature lane by widening omitted/empty-`?ports`
+  concat inference instead of starting a fresh contract family.
+- The new bounded top-boundary inference slice is now in tree:
+  - when a source-side concat such as
+    `/header_bus,status_bus[0],payload_bus[3:0]/child.data_in/` leaves
+    exactly one undeclared whole-port operand unsized,
+  - the planner may now infer that operand's exact width from the remaining
+    realized child-input target width after the other concat operands are
+    already exact,
+  - and several still-unsized whole-port operands still fail explicitly
+    instead of guessing several widths from one child-input target.
+- The planner/reporting contract is now honest for that slice:
+  - [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm)
+    now iterates explicit-toplink expression evidence until one exact-width
+    concat remainder can be fixed honestly,
+  - that same builder now rejects the sibling several-unknown concat case
+    explicitly instead of deferring to a later undeclared-top-port failure,
+  - and [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm)
+    now also keeps `Top expression '...'` summary context for that blocked
+    omitted-port concat-width inference wording.
+- [t/177-composition-top-port-inference-builder.t](/Users/richarddje/Documents/github/fsmgen/t/177-composition-top-port-inference-builder.t)
+  now also locks:
+  - residual-width inference for one undeclared whole-port concat operand,
+  - and blocked several-unknown whole-port concat-operand rejection.
+- [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t)
+  now also locks:
+  - RTL-backed `C3` success for that residual-width omitted-`?ports` concat
+    case.
+- [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t)
+  now also locks:
+  - the concise blocked-boundary/context/reason summary for the several-
+    unknown omitted-port concat-width failure.

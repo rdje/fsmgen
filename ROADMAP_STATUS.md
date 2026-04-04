@@ -1299,15 +1299,20 @@ Done:
   - explicit-link `C2` / `C3` child-input bindings may now use flat comma-separated source expressions such as `header_bus,status_bus[0],=1,payload_bus[3:0]`,
   - concat operands are currently bounded to declared whole top-port refs, top-port bit/slice refs, and fixed-width literal actuals,
   - omitted/empty-`?ports` top-boundary inference now also sees the inferable bit/slice operands inside those concat sources,
-  - and undeclared whole-port concat operands still require a declared or otherwise already-inferred top width instead of guessing a remainder width.
+  - and omitted/empty-`?ports` top-boundary inference may now also size one remaining undeclared whole-port concat operand exactly from the child-input target remainder width, while several still-unsized whole-port operands still fail explicitly instead of guessing several widths at once.
 - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks:
   - direct linked-plan preservation of bounded concat bindings,
   - end-to-end pipeline and CLI emission of those concat child-input bindings,
   - and blocked unsupported concat-operand rejection through the top-expression boundary.
 - [t/177-composition-top-port-inference-builder.t](/Users/richarddje/Documents/github/fsmgen/t/177-composition-top-port-inference-builder.t) now also locks:
-  - direct inference of undeclared top inputs from inferable concat top-expression operands.
+  - direct inference of undeclared top inputs from inferable concat top-expression operands,
+  - residual-width inference for one undeclared whole-port concat operand,
+  - and blocked several-unknown whole-port concat-operand rejection.
+- [t/101-composition-explicit-link-implicit-ports.t](/Users/richarddje/Documents/github/fsmgen/t/101-composition-explicit-link-implicit-ports.t) now also locks:
+  - RTL-backed `C3` success with one undeclared whole-port concat operand inferred from the child-input target width.
 - [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) now also locks:
-  - `Top expression '...'` summary context for blocked concat-operand failures.
+  - `Top expression '...'` summary context for blocked concat-operand failures,
+  - and the same summary context plus concise reason for blocked omitted-port concat-width inference failures.
 - The next convention-first top-boundary refinement is now also shipped:
   - explicit-link `C2` / `C3` plain explicit top inputs may now adopt same-name fanout convention when compatible child inputs still agree exactly on direction, width, and type metadata,
   - explicit-link `C2` / `C3` plain explicit top outputs may now adopt one unique same-name top-facing child output when that child-side evidence is still exact,

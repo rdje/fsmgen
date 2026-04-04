@@ -6059,6 +6059,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `Top expression '...'` summary context.
 - Omitted/empty `?ports` explicit-link tops may now also see inferable
   `name[index]` / `name[msb:lsb]` operands inside those bounded concat
-  sources, while undeclared whole-port concat operands still require a
-  declared or otherwise already-inferred top width instead of a guessed
-  remainder width.
+  sources, and one remaining undeclared whole-port concat operand may now
+  also be sized exactly from the child-input target remainder width while
+  several still-unsized whole-port operands continue to fail explicitly
+  instead of guessing several widths at once.

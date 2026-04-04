@@ -66,6 +66,7 @@ sub augment_from_explicit_links ($class, %args) {
     my %instances_by_name;
     my %child_ports_by_instance;
     my %inferred_specs;
+    my @expression_links;
 
     for my $instance (@$realized_instances) {
         $instances_by_name{$instance->instance_name} = $instance;
@@ -82,7 +83,7 @@ sub augment_from_explicit_links ($class, %args) {
             my ($target_top_name) = $target =~ /^(\w+)$/;
             my $source_is_top = defined $source_top_name;
             my $target_is_top = defined $target_top_name;
-            my $source_top_expr_specs = FSM::Composition::LinkedPlanBuilder->top_expression_inference_specs($source);
+            my $source_top_expr_spec = FSM::Composition::LinkedPlanBuilder->top_expression_spec($source);
 
             if ($source_is_top && !$declared_by_name{$source_top_name} && $target =~ /^\w+\.\w+$/) {
                 my $child_endpoint = FSM::Composition::LinkedPlanBuilder->resolve_endpoint(
@@ -104,7 +105,7 @@ sub augment_from_explicit_links ($class, %args) {
                 );
             }
 
-            if (@$source_top_expr_specs && $target =~ /^\w+\.\w+$/) {
+            if ($source_top_expr_spec && $target =~ /^\w+\.\w+$/) {
                 my $child_endpoint = FSM::Composition::LinkedPlanBuilder->resolve_endpoint(
                     $target,
                     {},
@@ -113,18 +114,12 @@ sub augment_from_explicit_links ($class, %args) {
                     $fsm_file,
                     $header,
                 );
-                for my $source_top_expr_spec (@$source_top_expr_specs) {
-                    next if $declared_by_name{$source_top_expr_spec->{port_name}};
-                    $class->_record_inferred_top_expression_port(
-                        \%inferred_specs,
-                        $source_top_expr_spec->{port_name},
-                        $source_top_expr_spec,
-                        $child_endpoint,
-                        $source.' -> '.$target,
-                        $fsm_file,
-                        $header,
-                    );
-                }
+                push @expression_links, {
+                    source => $source,
+                    target => $target,
+                    child_endpoint => $child_endpoint,
+                    expression_spec => $source_top_expr_spec,
+                };
             }
 
             if ($target_is_top && !$declared_by_name{$target_top_name} && $source =~ /^\w+\.\w+$/) {
@@ -147,6 +142,34 @@ sub augment_from_explicit_links ($class, %args) {
                 );
             }
         }
+    }
+
+    my $made_progress = 1;
+    while ($made_progress) {
+        $made_progress = 0;
+        for my $expression_link (@expression_links) {
+            $made_progress ||= $class->_record_inferred_ports_from_top_expression(
+                \%inferred_specs,
+                \%declared_by_name,
+                $expression_link->{expression_spec},
+                $expression_link->{child_endpoint},
+                $expression_link->{source}.' -> '.$expression_link->{target},
+                $fsm_file,
+                $header,
+            );
+        }
+    }
+
+    for my $expression_link (@expression_links) {
+        $class->_assert_top_expression_inference_is_resolved(
+            \%declared_by_name,
+            \%inferred_specs,
+            $expression_link->{expression_spec},
+            $expression_link->{child_endpoint},
+            $expression_link->{source}.' -> '.$expression_link->{target},
+            $fsm_file,
+            $header,
+        );
     }
 
     my @inferred_ports = map {
@@ -351,8 +374,173 @@ sub _record_inferred_top_expression_port ($class, $inferred_specs, $top_name, $e
     );
 }
 
+sub _record_inferred_ports_from_top_expression ($class, $inferred_specs, $declared_by_name, $expression_spec, $child_endpoint, $evidence, $fsm_file, $header) {
+    my $analysis = $class->_analyze_top_expression_for_inference(
+        $declared_by_name,
+        $inferred_specs,
+        $expression_spec,
+        $child_endpoint,
+        $evidence,
+        $fsm_file,
+        $header,
+        record_requirements => 1,
+    );
+
+    return $analysis->{progress} unless (($expression_spec->{expr_kind} || '') eq 'concat');
+
+    my @unresolved = @{$analysis->{unresolved_signal_refs} || []};
+    return $analysis->{progress} unless @unresolved == 1;
+
+    my $target_width = $child_endpoint->{port}->width;
+    my $remaining_width = $target_width - $analysis->{known_exact_width};
+    return $analysis->{progress} unless $remaining_width >= 1;
+
+    my $type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($child_endpoint->{port}->type);
+    return $class->_record_inferred_top_port_requirement(
+        $inferred_specs,
+        $unresolved[0]{port_name},
+        'input',
+        $remaining_width,
+        $remaining_width,
+        $type,
+        $evidence,
+        $fsm_file,
+        $header,
+    ) || $analysis->{progress};
+}
+
+sub _assert_top_expression_inference_is_resolved ($class, $declared_by_name, $inferred_specs, $expression_spec, $child_endpoint, $evidence, $fsm_file, $header) {
+    return unless (($expression_spec->{expr_kind} || '') eq 'concat');
+
+    my $analysis = $class->_analyze_top_expression_for_inference(
+        $declared_by_name,
+        $inferred_specs,
+        $expression_spec,
+        $child_endpoint,
+        $evidence,
+        $fsm_file,
+        $header,
+        record_requirements => 0,
+    );
+
+    my @unresolved = @{$analysis->{unresolved_signal_refs} || []};
+    return unless @unresolved;
+
+    my @operand_names = sort map { $_->{port_name} } @unresolved;
+    my $target_width = $child_endpoint->{port}->width;
+    my $known_width = $analysis->{known_exact_width};
+    my $remaining_width = $target_width - $known_width;
+
+    if (@operand_names > 1) {
+        confess
+            "Composition source '$header' in '$fsm_file' omits top ports '".join("', '", @operand_names)."', ".
+            "but explicit top-link port inference is blocked because top expression '".$expression_spec->{raw}."' leaves several undeclared whole-port concat operands without exact widths. ".
+            "Seen explicit link evidence: $evidence. ".
+            "The current bounded omitted/empty-'?ports' concat inference slice only infers undeclared whole-port operands when one remaining concat operand can be sized exactly from the child-input target width. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    confess
+        "Composition source '$header' in '$fsm_file' omits top port '".$operand_names[0]."', ".
+        "but explicit top-link port inference is blocked because top expression '".$expression_spec->{raw}."' leaves no remaining width for that undeclared whole-port concat operand after accounting for $known_width of the child-input target width $target_width. ".
+        "Seen explicit link evidence: $evidence. ".
+        "The current bounded omitted/empty-'?ports' concat inference slice only infers undeclared whole-port operands when one remaining concat operand can be sized exactly from the child-input target width. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+}
+
+sub _analyze_top_expression_for_inference ($class, $declared_by_name, $inferred_specs, $expression_spec, $child_endpoint, $evidence, $fsm_file, $header, %opts) {
+    my $expr_kind = $expression_spec->{expr_kind} || '';
+
+    if ($expr_kind eq 'signal_ref') {
+        my $port_name = $expression_spec->{port_name} || '';
+        my $declared_port = $declared_by_name->{$port_name};
+        return {
+            progress => 0,
+            known_exact_width => ($declared_port ? $declared_port->width : 0),
+            unresolved_signal_refs => [],
+        } if $declared_port;
+
+        my $existing = $inferred_specs->{$port_name};
+        return {
+            progress => 0,
+            known_exact_width => $existing->{exact_width},
+            unresolved_signal_refs => [],
+        } if $existing && defined($existing->{exact_width});
+
+        return {
+            progress => 0,
+            known_exact_width => 0,
+            unresolved_signal_refs => [{
+                port_name => $port_name,
+            }],
+        };
+    }
+
+    if ($expr_kind eq 'bit_select' || $expr_kind eq 'slice') {
+        my $progress = 0;
+        my $port_name = $expression_spec->{port_name};
+        if (!$declared_by_name->{$port_name} && $opts{record_requirements}) {
+            $progress = $class->_record_inferred_top_expression_port(
+                $inferred_specs,
+                $port_name,
+                $expression_spec,
+                $child_endpoint,
+                $evidence,
+                $fsm_file,
+                $header,
+            );
+        }
+
+        return {
+            progress => $progress,
+            known_exact_width => $class->_expression_spec_width($expression_spec),
+            unresolved_signal_refs => [],
+        };
+    }
+
+    if ($expr_kind eq 'literal') {
+        return {
+            progress => 0,
+            known_exact_width => $expression_spec->{width},
+            unresolved_signal_refs => [],
+        };
+    }
+
+    if ($expr_kind eq 'concat') {
+        my $progress = 0;
+        my $known_exact_width = 0;
+        my @unresolved_signal_refs;
+
+        for my $operand_spec (@{$expression_spec->{operands} || []}) {
+            my $operand_analysis = $class->_analyze_top_expression_for_inference(
+                $declared_by_name,
+                $inferred_specs,
+                $operand_spec,
+                $child_endpoint,
+                $evidence,
+                $fsm_file,
+                $header,
+                %opts,
+            );
+            $progress ||= $operand_analysis->{progress};
+            $known_exact_width += $operand_analysis->{known_exact_width};
+            push @unresolved_signal_refs, @{$operand_analysis->{unresolved_signal_refs} || []};
+        }
+
+        return {
+            progress => $progress,
+            known_exact_width => $known_exact_width,
+            unresolved_signal_refs => \@unresolved_signal_refs,
+        };
+    }
+
+    confess "TopPortInferenceBuilder requires a supported top-expression inference rule";
+}
+
 sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $direction, $required_width, $exact_width, $type, $evidence, $fsm_file, $header) {
     my $existing = $inferred_specs->{$top_name};
+    my $evidence_changed = 0;
+    my $shape_changed = 0;
 
     if ($existing) {
         if ($existing->{direction} ne $direction) {
@@ -405,12 +593,22 @@ sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
-        push @{$existing->{evidence}}, $evidence;
-        $existing->{exact_width} = $exact_width if defined($exact_width);
-        $existing->{width} = defined($existing->{exact_width})
+        if (!grep { $_ eq $evidence } @{$existing->{evidence}}) {
+            push @{$existing->{evidence}}, $evidence;
+            $evidence_changed = 1;
+        }
+        if (defined($exact_width) && (!defined($existing->{exact_width}) || $existing->{exact_width} != $exact_width)) {
+            $existing->{exact_width} = $exact_width;
+            $shape_changed = 1;
+        }
+        my $new_width = defined($existing->{exact_width})
             ? $existing->{exact_width}
             : ($required_width > $existing->{width} ? $required_width : $existing->{width});
-        return;
+        if ($existing->{width} != $new_width) {
+            $existing->{width} = $new_width;
+            $shape_changed = 1;
+        }
+        return $shape_changed || $evidence_changed ? 1 : 0;
     }
 
     $inferred_specs->{$top_name} = {
@@ -421,6 +619,7 @@ sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $
         type => $type,
         evidence => [$evidence],
     };
+    return 1;
 }
 
 sub _required_top_width_for_expression_spec ($class, $expression_spec) {
@@ -434,6 +633,25 @@ sub _required_top_width_for_expression_spec ($class, $expression_spec) {
         : ($expression_spec->{lsb} || 0)) + 1
         if $expr_kind eq 'slice';
     confess "TopPortInferenceBuilder requires a supported top-expression width rule";
+}
+
+sub _expression_spec_width ($class, $expression_spec) {
+    my $expr_kind = $expression_spec->{expr_kind} || '';
+    return $expression_spec->{width}
+        if $expr_kind eq 'signal_ref' || $expr_kind eq 'literal';
+    return 1
+        if $expr_kind eq 'bit_select';
+    return abs(($expression_spec->{msb} || 0) - ($expression_spec->{lsb} || 0)) + 1
+        if $expr_kind eq 'slice';
+
+    if ($expr_kind eq 'concat') {
+        my $width = 0;
+        $width += $class->_expression_spec_width($_)
+            for @{$expression_spec->{operands} || []};
+        return $width;
+    }
+
+    confess "TopPortInferenceBuilder requires a supported top-expression exact-width rule";
 }
 
 sub _port_groups_from_instances ($realized_instances) {

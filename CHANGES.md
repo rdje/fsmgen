@@ -5530,3 +5530,13 @@ This is the persistent technical change history for FSMGen.
   `t/177-composition-top-port-inference-builder.t` plus
   `t/101-composition-explicit-link-implicit-ports.t` now lock the new builder
   and end-to-end omitted-`?ports` contract.
+- Omitted/empty `?ports` explicit-link tops may now also infer one undeclared
+  whole-port concat operand from the remaining realized child-input target
+  width when the other concat operands are already exact.
+- `FSM::Composition::TopPortInferenceBuilder` now resolves that bounded
+  residual-width concat case iteratively, still blocks several unsized
+  whole-port concat operands explicitly, and
+  `t/177-composition-top-port-inference-builder.t`,
+  `t/101-composition-explicit-link-implicit-ports.t`, and
+  `t/131-composition-failure-summary-reporting.t` now lock the new runtime and
+  failure-summary contract.

@@ -120,6 +120,74 @@ subtest 'explicit-toplink builder infers undeclared top inputs from concat top-e
     );
 };
 
+subtest 'explicit-toplink builder infers one undeclared whole-port concat operand from child target width' => sub {
+    my $ports = FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
+        ports => [],
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(
+                        source => 'header_bus,status_bus[0],payload_bus[3:0]',
+                        target => 'sink.frame_in',
+                    ),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance('sink',
+                input_port('frame_in', 8),
+            ),
+        ],
+        fsm_file => 'fixture.fsm',
+        header => 'fixture',
+    );
+
+    is_deeply(
+        [map { [$_->name, $_->direction, $_->width, $_->origin_kind] } @$ports],
+        [
+            ['header_bus', 'input', 3, 'inferred_explicit_toplink_port'],
+            ['payload_bus', 'input', 4, 'inferred_explicit_toplink_port'],
+            ['status_bus',  'input', 1, 'inferred_explicit_toplink_port'],
+        ],
+        'builder can size one undeclared whole-port concat operand from the child-input target width',
+    );
+};
+
+subtest 'explicit-toplink builder rejects several undeclared whole-port concat operands without exact widths' => sub {
+    my $exception = eval {
+        FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
+            ports => [],
+            toplinks => [
+                FSM::Composition::TopLink->new(
+                    name => 'wiring',
+                    links => [
+                        FSM::Composition::Link->new(
+                            source => 'left_bus,right_bus,status_bus[0]',
+                            target => 'sink.frame_in',
+                        ),
+                    ],
+                ),
+            ],
+            realized_instances => [
+                realized_instance('sink',
+                    input_port('frame_in', 8),
+                ),
+            ],
+            fsm_file => 'fixture.fsm',
+            header => 'fixture',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/omits top ports 'left_bus', 'right_bus', .*top expression 'left_bus,right_bus,status_bus\[0\]' leaves several undeclared whole-port concat operands without exact widths.*left_bus,right_bus,status_bus\[0\] -> sink\.frame_in/s,
+        'builder blocks omitted-port concat inference when several whole-port operands still lack exact widths',
+    );
+};
+
 subtest 'explicit-toplink builder rejects incompatible exact-width and top-expression width evidence' => sub {
     my $exception = eval {
         FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
@@ -148,7 +216,7 @@ subtest 'explicit-toplink builder rejects incompatible exact-width and top-expre
 
     like(
         $exception,
-        qr/omits top port 'payload_bus', .*top-expression evidence requires declared width at least 16, while another explicit top-link use fixes that same top port at width 8.*payload_bus\[15:8\] -> sink\.byte_in.*payload_bus -> sink\.full_in/s,
+        qr/omits top port 'payload_bus', .*top-expression evidence requires declared width at least 16, while another explicit top-link use fixes that same top port at width 8.*payload_bus -> sink\.full_in.*payload_bus\[15:8\] -> sink\.byte_in/s,
         'builder rejects exact-width evidence that is narrower than required top-expression width',
     );
 };
