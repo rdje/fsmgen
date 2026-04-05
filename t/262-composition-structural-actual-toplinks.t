@@ -43,6 +43,11 @@ subtest 'linked plan builder preserves numeric and open toplinks as typed actual
         port('prefixed_decimal_data', 'output', 8, undef),
         port('prefixed_octal_data', 'output', 8, undef),
         port('prefixed_hex_data', 'output', 8, undef),
+        port('sv_unsized_binary_data', 'output', 8, undef),
+        port('sv_unsized_decimal_data', 'output', 8, undef),
+        port('sv_unsized_signed_decimal_data', 'output', 8, undef),
+        port('sv_unsized_octal_data', 'output', 8, undef),
+        port('sv_unsized_hex_data', 'output', 8, undef),
         port('serial_out', 'output', 1, undef),
     );
 
@@ -70,6 +75,11 @@ subtest 'linked plan builder preserves numeric and open toplinks as typed actual
                     FSM::Composition::Link->new(source => '=0d1_70', target => 'prefixed_decimal_data'),
                     FSM::Composition::Link->new(source => '=0o2_45', target => 'prefixed_octal_data'),
                     FSM::Composition::Link->new(source => '=0xA_5', target => 'prefixed_hex_data'),
+                    FSM::Composition::Link->new(source => "='b1010_0101", target => 'sv_unsized_binary_data'),
+                    FSM::Composition::Link->new(source => "='d1_70", target => 'sv_unsized_decimal_data'),
+                    FSM::Composition::Link->new(source => "='sd-1", target => 'sv_unsized_signed_decimal_data'),
+                    FSM::Composition::Link->new(source => "='o2_45", target => 'sv_unsized_octal_data'),
+                    FSM::Composition::Link->new(source => "='hA_5", target => 'sv_unsized_hex_data'),
                     FSM::Composition::Link->new(source => "=8'b1010_0101", target => 'uart_tx.data_in'),
                     FSM::Composition::Link->new(source => '=0', target => 'uart_tx.zero_data_in'),
                     FSM::Composition::Link->new(source => '=1', target => 'uart_tx.one_data_in'),
@@ -84,6 +94,11 @@ subtest 'linked plan builder preserves numeric and open toplinks as typed actual
                     FSM::Composition::Link->new(source => '=0b1010_0101', target => 'uart_tx.prefixed_binary_data_in'),
                     FSM::Composition::Link->new(source => '=0d1_70', target => 'uart_tx.prefixed_decimal_data_in'),
                     FSM::Composition::Link->new(source => '=0xA_5', target => 'uart_tx.prefixed_hex_data_in'),
+                    FSM::Composition::Link->new(source => "='b1010_0101", target => 'uart_tx.sv_unsized_binary_data_in'),
+                    FSM::Composition::Link->new(source => "='d1_70", target => 'uart_tx.sv_unsized_decimal_data_in'),
+                    FSM::Composition::Link->new(source => "='sd-1", target => 'uart_tx.sv_unsized_signed_decimal_data_in'),
+                    FSM::Composition::Link->new(source => "='o2_45", target => 'uart_tx.sv_unsized_octal_data_in'),
+                    FSM::Composition::Link->new(source => "='hA_5", target => 'uart_tx.sv_unsized_hex_data_in'),
                     FSM::Composition::Link->new(source => "=8'd1_65", target => 'uart_tx.decimal_data_in'),
                     FSM::Composition::Link->new(source => "=8'o2_45", target => 'uart_tx.octal_data_in'),
                     FSM::Composition::Link->new(source => "=8'hA_5", target => 'uart_tx.hex_data_in'),
@@ -112,6 +127,11 @@ subtest 'linked plan builder preserves numeric and open toplinks as typed actual
                 port('prefixed_binary_data_in', 'input', 8, undef),
                 port('prefixed_decimal_data_in', 'input', 8, undef),
                 port('prefixed_hex_data_in', 'input', 8, undef),
+                port('sv_unsized_binary_data_in', 'input', 8, undef),
+                port('sv_unsized_decimal_data_in', 'input', 8, undef),
+                port('sv_unsized_signed_decimal_data_in', 'input', 8, undef),
+                port('sv_unsized_octal_data_in', 'input', 8, undef),
+                port('sv_unsized_hex_data_in', 'input', 8, undef),
                 port('decimal_data_in', 'input', 8, undef),
                 port('octal_data_in', 'input', 8, undef),
                 port('hex_data_in', 'input', 8, undef),
@@ -143,6 +163,11 @@ subtest 'linked plan builder preserves numeric and open toplinks as typed actual
             "    assign prefixed_decimal_data = 8'b10101010;",
             "    assign prefixed_octal_data = 8'b10100101;",
             "    assign prefixed_hex_data = 8'b10100101;",
+            "    assign sv_unsized_binary_data = 8'b10100101;",
+            "    assign sv_unsized_decimal_data = 8'b10101010;",
+            "    assign sv_unsized_signed_decimal_data = 8'b11111111;",
+            "    assign sv_unsized_octal_data = 8'b10100101;",
+            "    assign sv_unsized_hex_data = 8'b10100101;",
         ],
         'direct numeric actual top-output bindings become direct auxiliary assignments',
     );
@@ -236,6 +261,36 @@ subtest 'linked plan builder preserves numeric and open toplinks as typed actual
         bit_vector_literal_expr('10100101'),
         'prefixed hex explicit toplink widens to the exact target width for child inputs',
     );
+    is($bindings{sv_unsized_binary_data_in}{signal_name} // '', '', 'SV unsized binary actual binding does not invent a flat signal mirror');
+    is_deeply(
+        $bindings{sv_unsized_binary_data_in}{connection_expr},
+        bit_vector_literal_expr('10100101'),
+        'SV unsized binary explicit toplink widens to the exact target width for child inputs',
+    );
+    is($bindings{sv_unsized_decimal_data_in}{signal_name} // '', '', 'SV unsized decimal actual binding does not invent a flat signal mirror');
+    is_deeply(
+        $bindings{sv_unsized_decimal_data_in}{connection_expr},
+        bit_vector_literal_expr('10101010'),
+        'SV unsized decimal explicit toplink widens to the exact target width for child inputs',
+    );
+    is($bindings{sv_unsized_signed_decimal_data_in}{signal_name} // '', '', 'SV unsized signed decimal actual binding does not invent a flat signal mirror');
+    is_deeply(
+        $bindings{sv_unsized_signed_decimal_data_in}{connection_expr},
+        bit_vector_literal_expr('11111111'),
+        'SV unsized signed decimal explicit toplink lowers through exact-width two-complement bits for child inputs',
+    );
+    is($bindings{sv_unsized_octal_data_in}{signal_name} // '', '', 'SV unsized octal actual binding does not invent a flat signal mirror');
+    is_deeply(
+        $bindings{sv_unsized_octal_data_in}{connection_expr},
+        bit_vector_literal_expr('10100101'),
+        'SV unsized octal explicit toplink widens to the exact target width for child inputs',
+    );
+    is($bindings{sv_unsized_hex_data_in}{signal_name} // '', '', 'SV unsized hex actual binding does not invent a flat signal mirror');
+    is_deeply(
+        $bindings{sv_unsized_hex_data_in}{connection_expr},
+        bit_vector_literal_expr('10100101'),
+        'SV unsized hex explicit toplink widens to the exact target width for child inputs',
+    );
     is($bindings{decimal_data_in}{signal_name} // '', '', 'decimal literal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{decimal_data_in}{connection_expr},
@@ -288,6 +343,11 @@ subtest 'pipeline and CLI emit structural numeric and open actuals for explicit 
         prefixed_decimal_data>8
         prefixed_octal_data>8
         prefixed_hex_data>8
+        sv_unsized_binary_data>8
+        sv_unsized_decimal_data>8
+        sv_unsized_signed_decimal_data>8
+        sv_unsized_octal_data>8
+        sv_unsized_hex_data>8
         serial_out>
       )
       (?rtl:uart_tx)
@@ -306,6 +366,11 @@ subtest 'pipeline and CLI emit structural numeric and open actuals for explicit 
         /=0d1_70/prefixed_decimal_data/
         /=0o2_45/prefixed_octal_data/
         /=0xA_5/prefixed_hex_data/
+        /='b1010_0101/sv_unsized_binary_data/
+        /='d1_70/sv_unsized_decimal_data/
+        /='sd-1/sv_unsized_signed_decimal_data/
+        /='o2_45/sv_unsized_octal_data/
+        /='hA_5/sv_unsized_hex_data/
         /=8'b1010_0101/uart_tx.data_in/
         /=0/uart_tx.zero_data_in/
         /=1/uart_tx.one_data_in/
@@ -320,6 +385,11 @@ subtest 'pipeline and CLI emit structural numeric and open actuals for explicit 
         /=0b1010_0101/uart_tx.prefixed_binary_data_in/
         /=0d1_70/uart_tx.prefixed_decimal_data_in/
         /=0xA_5/uart_tx.prefixed_hex_data_in/
+        /='b1010_0101/uart_tx.sv_unsized_binary_data_in/
+        /='d1_70/uart_tx.sv_unsized_decimal_data_in/
+        /='sd-1/uart_tx.sv_unsized_signed_decimal_data_in/
+        /='o2_45/uart_tx.sv_unsized_octal_data_in/
+        /='hA_5/uart_tx.sv_unsized_hex_data_in/
         /=8'd1_65/uart_tx.decimal_data_in/
         /=8'o2_45/uart_tx.octal_data_in/
         /=8'hA_5/uart_tx.hex_data_in/
@@ -345,6 +415,11 @@ subtest 'pipeline and CLI emit structural numeric and open actuals for explicit 
   prefixed_binary_data_in<8:data
   prefixed_decimal_data_in<8:data
   prefixed_hex_data_in<8:data
+  sv_unsized_binary_data_in<8:data
+  sv_unsized_decimal_data_in<8:data
+  sv_unsized_signed_decimal_data_in<8:data
+  sv_unsized_octal_data_in<8:data
+  sv_unsized_hex_data_in<8:data
   decimal_data_in<8:data
   octal_data_in<8:data
   hex_data_in<8:data
@@ -437,6 +512,31 @@ FSM
         'pipeline preserves the widened prefixed hex binding in the realized composition plan',
     );
     is_deeply(
+        $bindings{sv_unsized_binary_data_in}{connection_expr},
+        bit_vector_literal_expr('10100101'),
+        'pipeline preserves the widened SV unsized binary binding in the realized composition plan',
+    );
+    is_deeply(
+        $bindings{sv_unsized_decimal_data_in}{connection_expr},
+        bit_vector_literal_expr('10101010'),
+        'pipeline preserves the widened SV unsized decimal binding in the realized composition plan',
+    );
+    is_deeply(
+        $bindings{sv_unsized_signed_decimal_data_in}{connection_expr},
+        bit_vector_literal_expr('11111111'),
+        'pipeline preserves the widened SV unsized signed decimal binding in the realized composition plan',
+    );
+    is_deeply(
+        $bindings{sv_unsized_octal_data_in}{connection_expr},
+        bit_vector_literal_expr('10100101'),
+        'pipeline preserves the widened SV unsized octal binding in the realized composition plan',
+    );
+    is_deeply(
+        $bindings{sv_unsized_hex_data_in}{connection_expr},
+        bit_vector_literal_expr('10100101'),
+        'pipeline preserves the widened SV unsized hex binding in the realized composition plan',
+    );
+    is_deeply(
         $bindings{decimal_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
         'pipeline preserves the typed decimal literal actual binding in the realized composition plan',
@@ -472,6 +572,11 @@ FSM
     like($hdl, qr/assign prefixed_decimal_data = 8'b10101010;/, 'generated HDL emits the widened prefixed decimal actual directly on the top output');
     like($hdl, qr/assign prefixed_octal_data = 8'b10100101;/, 'generated HDL emits the widened prefixed octal actual directly on the top output');
     like($hdl, qr/assign prefixed_hex_data = 8'b10100101;/, 'generated HDL emits the widened prefixed hex actual directly on the top output');
+    like($hdl, qr/assign sv_unsized_binary_data = 8'b10100101;/, 'generated HDL emits the widened SV unsized binary actual directly on the top output');
+    like($hdl, qr/assign sv_unsized_decimal_data = 8'b10101010;/, 'generated HDL emits the widened SV unsized decimal actual directly on the top output');
+    like($hdl, qr/assign sv_unsized_signed_decimal_data = 8'b11111111;/, 'generated HDL emits the widened SV unsized signed decimal actual directly on the top output');
+    like($hdl, qr/assign sv_unsized_octal_data = 8'b10100101;/, 'generated HDL emits the widened SV unsized octal actual directly on the top output');
+    like($hdl, qr/assign sv_unsized_hex_data = 8'b10100101;/, 'generated HDL emits the widened SV unsized hex actual directly on the top output');
     like($hdl, qr/\.data_in\(8'b10100101\)/, 'generated HDL emits the literal actual directly on the child port');
     like($hdl, qr/\.zero_data_in\(8'b00000000\)/, 'generated HDL emits the widened scalar zero actual directly on the child port');
     like($hdl, qr/\.one_data_in\(8'b00000001\)/, 'generated HDL emits the widened scalar one actual directly on the child port');
@@ -486,6 +591,11 @@ FSM
     like($hdl, qr/\.prefixed_binary_data_in\(8'b10100101\)/, 'generated HDL emits the widened prefixed binary actual directly on the child port');
     like($hdl, qr/\.prefixed_decimal_data_in\(8'b10101010\)/, 'generated HDL emits the widened prefixed decimal actual directly on the child port');
     like($hdl, qr/\.prefixed_hex_data_in\(8'b10100101\)/, 'generated HDL emits the widened prefixed hex actual directly on the child port');
+    like($hdl, qr/\.sv_unsized_binary_data_in\(8'b10100101\)/, 'generated HDL emits the widened SV unsized binary actual directly on the child port');
+    like($hdl, qr/\.sv_unsized_decimal_data_in\(8'b10101010\)/, 'generated HDL emits the widened SV unsized decimal actual directly on the child port');
+    like($hdl, qr/\.sv_unsized_signed_decimal_data_in\(8'b11111111\)/, 'generated HDL emits the widened SV unsized signed decimal actual directly on the child port');
+    like($hdl, qr/\.sv_unsized_octal_data_in\(8'b10100101\)/, 'generated HDL emits the widened SV unsized octal actual directly on the child port');
+    like($hdl, qr/\.sv_unsized_hex_data_in\(8'b10100101\)/, 'generated HDL emits the widened SV unsized hex actual directly on the child port');
     like($hdl, qr/\.decimal_data_in\(8'b10100101\)/, 'generated HDL emits the decimal literal actual directly on the child port');
     like($hdl, qr/\.octal_data_in\(8'b10100101\)/, 'generated HDL emits the octal literal actual directly on the child port');
     like($hdl, qr/\.hex_data_in\(8'b10100101\)/, 'generated HDL emits the hex literal actual directly on the child port');
@@ -572,7 +682,7 @@ subtest 'linked plan builder rejects actual endpoints as explicit link targets' 
 
     like(
         $exception,
-        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open', scalar '=0'\/'=1', unsized binary\/decimal\/octal\/hex direct actuals, unsized signed decimal direct actuals like '=-1' or '=0d-1', and exact-width binary\/decimal\/octal\/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
+        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open', scalar '=0'\/'=1', unsized binary\/decimal\/octal\/hex direct actuals, unsized signed decimal direct actuals like '=-1', '=0d-1', or '='sd-1', and exact-width binary\/decimal\/octal\/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
         'builder blocks actual endpoints from appearing as explicit link targets',
     );
 };
@@ -609,7 +719,7 @@ subtest 'linked plan builder rejects unsupported actual literal forms' => sub {
 
     like(
         $exception,
-        qr/uses actual endpoint '=0q7', .*currently accepts only '=open', scalar '=0'\/'=1', unsized binary\/decimal\/octal\/hex direct actual forms like '=0b10', '=0d10', '=0o7', '=0xA', '=170', or '=A5', unsized signed decimal direct actual forms like '=-1' or '=0d-1', or exact-width binary\/decimal\/octal\/hex literal forms in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5'/s,
+        qr/uses actual endpoint '=0q7', .*currently accepts only '=open', scalar '=0'\/'=1', unsized binary\/decimal\/octal\/hex direct actual forms like '=0b10', '='b10', '=0d10', '='d10', '=0o7', '='o7', '=0xA', '='hA', '=170', or '=A5', unsized signed decimal direct actual forms like '=-1', '=0d-1', or '='sd-1', or exact-width binary\/decimal\/octal\/hex literal forms in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5'/s,
         'builder still blocks unsupported unsized literal spellings outside the widened direct unsized-numeric slice',
     );
 };

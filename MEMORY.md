@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-05: standard unsized SV actual spellings now alias the bounded structural literal family
+- Stayed in the active `R11` lane and widened the literal surface one more bounded step without creating a second literal contract.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized SV-style based spellings such as `='b10100101`, `='d170`, `='sd-1`, `='o245`, and `='hA5` on explicit `?toplink` actuals,
+  - direct realized-child-input and declared-top-output bindings treat `='b...`, `='d...`, `='o...`, and `='h...` exactly like the existing unsized binary/decimal/octal/hex direct-actual families, while `='sd...` aliases the existing unsized signed-decimal direct-binding lane,
+  - bounded concat operands now also accept intrinsic-width `='b...`, `='d...`, `='o...`, and `='h...` forms on the same typed literal path,
+  - no new AST node was added; those spellings normalize onto the existing unsized literal families,
+  - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) now locks direct linked-plan plus pipeline/CLI success for the new SV-style direct actual aliases,
+  - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks intrinsic-width SV-style concat alias success,
+  - and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) keeps the concise blocked wording aligned with the widened alias family.
+
 ## 2026-04-05: signed based structural actuals now share the bounded literal path too
 - Stayed in the active `R11` lane and widened the exact-width literal family one more bounded step instead of introducing a signed-only parser or renderer branch.
 - Important continuity note:

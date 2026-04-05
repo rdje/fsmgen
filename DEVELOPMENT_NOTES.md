@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-05: standard SV unsized actual spellings should normalize onto the existing unsized literal families
+- Kept this in the active `R11` lane and widened the source spelling surface without opening a second literal semantics path.
+- Landed behavior:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts direct actual spellings such as `='b10100101`, `='d170`, `='sd-1`, `='o245`, and `='hA5`,
+  - direct bindings treat `='b...`, `='d...`, `='o...`, and `='h...` as aliases for the already-shipped unsized binary/decimal/octal/hex numeric families, while `='sd...` aliases the existing unsized signed-decimal direct lane,
+  - bounded concat operands now also accept intrinsic-width `='b...`, `='d...`, `='o...`, and `='h...` aliases on the same typed literal path,
+  - and the concise failure wording now names those aliases honestly instead of leaving the implementation wider than the docs and summary surface.
+- Why this is worth shipping:
+  - it makes composition wiring feel more naturally HDL-native without changing the AST contract,
+  - it avoids a low-quality split where visually similar numeric spellings would take different lowering paths,
+  - and it keeps direct-vs-concat width behavior unchanged while still broadening the accepted literal surface.
+
 ## 2026-04-05: exact-width signed based literals should stay on the existing bit-vector contract
 - Kept this in the active `R11` lane and widened the exact-width literal family in the narrowest honest way instead of pretending signed based literals need a new semantic category.
 - Landed behavior:

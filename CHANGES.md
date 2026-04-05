@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-05
+### standard unsized SV actual spellings now alias the bounded structural literal family
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so explicit `?toplink` actuals now also accept standard unsized SystemVerilog-based spellings such as `='b10100101`, `='d170`, `='sd-1`, `='o245`, and `='hA5` on the same bounded structural path as the earlier `0b` / `0d` / `0o` / `0x` aliases.
+- Direct realized-child-input and declared-top-output bindings now treat `='b...`, `='d...`, `='o...`, and `='h...` exactly like the existing unsized binary/decimal/octal/hex numeric actuals, while `='sd...` aliases the existing unsized signed-decimal direct-binding lane.
+- Bounded source-side concat operands now also accept the intrinsic-width unsized SV-style binary/decimal/octal/hex forms `='b...`, `='d...`, `='o...`, and `='h...`, and they still lower through the same typed `bit_vector_literal_expr` path rather than a second parser-only literal category.
+- Updated [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t), [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t), and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock the widened direct-binding and concat success paths plus the refreshed concise blocked-reason wording.
+
 ### signed based structural actuals now share the bounded explicit-toplink literal path too
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so explicit `?toplink` actuals now also accept exact-width signed binary/octal/hex forms such as `=8'sb10100101`, `=8'so245`, and `=8'shA5` on direct realized-child-input and declared-top-output bindings, plus those same signed based literal forms inside bounded source-side concat operands.
 - Those exact-width signed binary/octal/hex literals now lower through the same backend-neutral `bit_vector_literal_expr` path already used by the existing unsigned exact-width literal family instead of introducing a signed-only literal node or a backend-specific text escape.

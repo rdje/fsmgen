@@ -567,7 +567,7 @@ sub assert_link_roles ($class, $source, $target, $fsm_file, $header) {
     if (($target->{kind} || '') =~ /^actual_/) {
         confess
             "Composition source '$header' in '$fsm_file' uses actual endpoint '".$target->{raw}."' as an explicit link target, ".
-            "but explicit actual binding is blocked because the first structural-actual slice only allows '=open', scalar '=0'/'=1', unsized binary/decimal/octal/hex direct actuals, unsized signed decimal direct actuals like '=-1' or '=0d-1', and exact-width binary/decimal/octal/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs. ".
+            "but explicit actual binding is blocked because the first structural-actual slice only allows '=open', scalar '=0'/'=1', unsized binary/decimal/octal/hex direct actuals, unsized signed decimal direct actuals like '=-1', '=0d-1', or '='sd-1', and exact-width binary/decimal/octal/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
 
@@ -695,6 +695,22 @@ sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header) {
         };
     }
 
+    if ($payload =~ /\A'b(.+)\z/i) {
+        my $binary_bits = $class->_normalized_separated_digits($1, '[01]');
+        if (defined $binary_bits) {
+            return {
+                raw => $endpoint,
+                key => "actual:$endpoint",
+                kind => 'actual_unsized_binary',
+                binary_bits => $binary_bits,
+                port => {
+                    direction => 'actual',
+                    width => 0,
+                },
+            };
+        }
+    }
+
     if ($payload =~ /\A0b(.+)\z/i) {
         my $binary_bits = $class->_normalized_separated_digits($1, '[01]');
         if (defined $binary_bits) {
@@ -703,6 +719,40 @@ sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header) {
                 key => "actual:$endpoint",
                 kind => 'actual_unsized_binary',
                 binary_bits => $binary_bits,
+                port => {
+                    direction => 'actual',
+                    width => 0,
+                },
+            };
+        }
+    }
+
+    if ($payload =~ /\A'sd(-?(?:[0-9](?:_?[0-9])*))\z/i) {
+        if ($1 =~ /\A-(.+)\z/) {
+            my $decimal_digits = $class->_normalized_separated_digits($1, '[0-9]');
+            if (defined $decimal_digits) {
+                return {
+                    raw => $endpoint,
+                    key => "actual:$endpoint",
+                    kind => 'actual_unsized_signed_decimal',
+                    decimal_digits => $decimal_digits,
+                    port => {
+                        direction => 'actual',
+                        width => 0,
+                    },
+                };
+            }
+        }
+    }
+
+    if ($payload =~ /\A'd(.+)\z/i) {
+        my $decimal_digits = $class->_normalized_separated_digits($1, '[0-9]');
+        if (defined $decimal_digits) {
+            return {
+                raw => $endpoint,
+                key => "actual:$endpoint",
+                kind => 'actual_unsized_decimal',
+                decimal_digits => $decimal_digits,
                 port => {
                     direction => 'actual',
                     width => 0,
@@ -759,6 +809,22 @@ sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header) {
         }
     }
 
+    if ($payload =~ /\A'o(.+)\z/i) {
+        my $octal_digits = $class->_normalized_separated_digits($1, '[0-7]');
+        if (defined $octal_digits) {
+            return {
+                raw => $endpoint,
+                key => "actual:$endpoint",
+                kind => 'actual_unsized_octal',
+                octal_digits => $octal_digits,
+                port => {
+                    direction => 'actual',
+                    width => 0,
+                },
+            };
+        }
+    }
+
     if ($payload =~ /\A0o(.+)\z/i) {
         my $octal_digits = $class->_normalized_separated_digits($1, '[0-7]');
         if (defined $octal_digits) {
@@ -767,6 +833,22 @@ sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header) {
                 key => "actual:$endpoint",
                 kind => 'actual_unsized_octal',
                 octal_digits => $octal_digits,
+                port => {
+                    direction => 'actual',
+                    width => 0,
+                },
+            };
+        }
+    }
+
+    if ($payload =~ /\A'h(.+)\z/i) {
+        my $hex_digits = $class->_normalized_separated_digits($1, '[0-9A-Fa-f]');
+        if (defined $hex_digits) {
+            return {
+                raw => $endpoint,
+                key => "actual:$endpoint",
+                kind => 'actual_unsized_hex',
+                hex_digits => $hex_digits,
                 port => {
                     direction => 'actual',
                     width => 0,
@@ -1044,7 +1126,7 @@ sub _actual_literal_bits_and_width ($class, $payload, $fsm_file, $header) {
 
     confess
         "Composition source '$header' in '$fsm_file' uses actual endpoint '=$payload', ".
-        "but explicit actual binding is blocked because the first structural-actual slice currently accepts only '=open', scalar '=0'/'=1', unsized binary/decimal/octal/hex direct actual forms like '=0b10', '=0d10', '=0o7', '=0xA', '=170', or '=A5', unsized signed decimal direct actual forms like '=-1' or '=0d-1', or exact-width binary/decimal/octal/hex literal forms in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5'. ".
+        "but explicit actual binding is blocked because the first structural-actual slice currently accepts only '=open', scalar '=0'/'=1', unsized binary/decimal/octal/hex direct actual forms like '=0b10', '='b10', '=0d10', '='d10', '=0o7', '='o7', '=0xA', '='hA', '=170', or '=A5', unsized signed decimal direct actual forms like '=-1', '=0d-1', or '='sd-1', or exact-width binary/decimal/octal/hex literal forms in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5'. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
@@ -1121,7 +1203,7 @@ sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $in
     if (!$spec && defined($endpoint) && ($endpoint =~ /\A\{.*\}\z/s || index($endpoint, ',') >= 0)) {
         confess
             "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
-            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', repeat groups like '{4{status_bus[0]}}', scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'. ".
+            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', repeat groups like '{4{status_bus[0]}}', scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
     return undef unless $spec;
@@ -1384,7 +1466,19 @@ sub _expression_literal_bits_and_width ($class, $payload) {
         return ($binary_bits, length($binary_bits));
     }
 
+    if (defined($payload) && $payload =~ /\A'b(.+)\z/i) {
+        my $binary_bits = $class->_normalized_separated_digits($1, '[01]');
+        return undef unless defined $binary_bits;
+        return ($binary_bits, length($binary_bits));
+    }
+
     if (defined($payload) && $payload =~ /\A0o(.+)\z/i) {
+        my $octal_digits = $class->_normalized_separated_digits($1, '[0-7]');
+        return undef unless defined $octal_digits;
+        return $class->_octal_literal_bits_and_width(length($octal_digits) * 3, $octal_digits);
+    }
+
+    if (defined($payload) && $payload =~ /\A'o(.+)\z/i) {
         my $octal_digits = $class->_normalized_separated_digits($1, '[0-7]');
         return undef unless defined $octal_digits;
         return $class->_octal_literal_bits_and_width(length($octal_digits) * 3, $octal_digits);
@@ -1396,7 +1490,19 @@ sub _expression_literal_bits_and_width ($class, $payload) {
         return $class->_hex_literal_bits_and_width(length($hex_digits) * 4, $hex_digits);
     }
 
+    if (defined($payload) && $payload =~ /\A'h(.+)\z/i) {
+        my $hex_digits = $class->_normalized_separated_digits($1, '[0-9A-Fa-f]');
+        return undef unless defined $hex_digits;
+        return $class->_hex_literal_bits_and_width(length($hex_digits) * 4, $hex_digits);
+    }
+
     if (defined($payload) && $payload =~ /\A0d(.+)\z/i) {
+        my $decimal_digits = $class->_normalized_separated_digits($1, '[0-9]');
+        return undef unless defined $decimal_digits;
+        return $class->_intrinsic_decimal_literal_bits_and_width($decimal_digits);
+    }
+
+    if (defined($payload) && $payload =~ /\A'd(.+)\z/i) {
         my $decimal_digits = $class->_normalized_separated_digits($1, '[0-9]');
         return undef unless defined $decimal_digits;
         return $class->_intrinsic_decimal_literal_bits_and_width($decimal_digits);
