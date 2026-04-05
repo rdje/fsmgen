@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-05
+### signed based structural actuals now share the bounded explicit-toplink literal path too
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so explicit `?toplink` actuals now also accept exact-width signed binary/octal/hex forms such as `=8'sb10100101`, `=8'so245`, and `=8'shA5` on direct realized-child-input and declared-top-output bindings, plus those same signed based literal forms inside bounded source-side concat operands.
+- Those exact-width signed binary/octal/hex literals now lower through the same backend-neutral `bit_vector_literal_expr` path already used by the existing unsigned exact-width literal family instead of introducing a signed-only literal node or a backend-specific text escape.
+- Exact-width signed binary/octal/hex payloads whose width exceeds the declared size now fail explicitly instead of truncating, and the blocked explicit-actual / concat-operand summary wording now names the widened signed-based literal family honestly.
+- Updated [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t), [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t), and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock direct linked-plan plus pipeline/CLI success, bounded concat success, explicit signed-hex overflow rejection, and the widened concise blocked-reason wording for the signed-based literal family.
+
 ### signed decimal structural actuals now share the bounded explicit-toplink literal path
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so explicit `?toplink` actuals now also accept unsized signed decimal direct forms such as `=-1` and `=0d-1` on direct realized-child-input and declared-top-output bindings.
 - Those unsized signed decimal direct actuals now widen to the direct binding target width only when the numeric value fits the signed range of that target width, and they lower into the same exact-width two's-complement `bit_vector_literal_expr` form already used by the other structural literal families instead of introducing a signed-only escape hatch.

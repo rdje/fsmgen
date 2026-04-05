@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-05: signed based structural actuals now share the bounded literal path too
+- Stayed in the active `R11` lane and widened the exact-width literal family one more bounded step instead of introducing a signed-only parser or renderer branch.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts exact-width signed binary/octal/hex actuals such as `=8'sb10100101`, `=8'so245`, and `=8'shA5` on direct realized child-input and declared top-output bindings,
+  - those same exact-width signed based forms now also work inside bounded source-side concat operands,
+  - they lower through the same exact-width `bit_vector_literal_expr` path already used by the unsigned exact-width literal family, so this widening stays on one backend-neutral structural-literal contract,
+  - payloads whose width exceeds the declared size now fail explicitly instead of truncating,
+  - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) now locks direct linked-plan plus pipeline/CLI success for signed binary/octal/hex literals together with blocked signed-hex overflow,
+  - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now also locks exact-width signed binary/octal/hex literal success inside bounded concat,
+  - and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) keeps the concise actual-family and concat-family wording aligned with the widened signed-based literal slice.
+
 ## 2026-04-05: signed decimal structural actuals now share the bounded literal path too
 - Stayed in the active `R11` lane and widened the existing numeric actual family one more bounded step instead of inventing a signed-only lowering path.
 - Important continuity note:

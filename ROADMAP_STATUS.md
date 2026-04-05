@@ -1297,7 +1297,7 @@ Done:
 - That same source-side top-expression slice now also covers bounded concat sources:
   - explicit-link `C2` / `C3` child-input bindings may now use flat comma-separated source expressions such as `header_bus,status_bus[0],=1,payload_bus[3:0]`,
   - those bounded concat sources may now also keep nested brace-group structure such as `header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}` instead of being flattened during file parsing,
-  - concat operands are currently bounded to declared whole top-port refs, top-port bit/slice refs, child-output operands such as `producer.payload`, `producer.payload[7:4]`, and `producer.payload[0]`, one-bit scalar actuals `=0` / `=1`, intrinsic-width unsized binary/decimal/octal/hex actuals such as `=0b10`, `=170`, `=0d170`, `=0o7`, `=0xA5`, or `=A5`, exact-width binary/decimal/signed-decimal/octal/hex literal actuals, and bounded repeat groups such as `{3{status_bus[0]}}` or `{2{producer.serial_lo}}`,
+  - concat operands are currently bounded to declared whole top-port refs, top-port bit/slice refs, child-output operands such as `producer.payload`, `producer.payload[7:4]`, and `producer.payload[0]`, one-bit scalar actuals `=0` / `=1`, intrinsic-width unsized binary/decimal/octal/hex actuals such as `=0b10`, `=170`, `=0d170`, `=0o7`, `=0xA5`, or `=A5`, exact-width binary/decimal/signed-decimal/octal/hex literal actuals in unsigned or signed form, and bounded repeat groups such as `{3{status_bus[0]}}` or `{2{producer.serial_lo}}`,
   - those intrinsic-width unsized binary/octal/hex concat operands keep the width implied by their digits, and unsized decimal forms such as `=170` or `=0d170` now also keep the minimum width required by their numeric value instead of widening from the child-input target,
   - omitted/empty-`?ports` top-boundary inference now also sees the inferable bit/slice operands inside those concat sources,
   - child-output operands inside those concat sources now reuse the existing deterministic child-output carrier family and contribute fixed-width child-side evidence without becoming inferred top-boundary ports,
@@ -1321,27 +1321,29 @@ Done:
   - those projected child-output sources now share one deterministic base carrier for the underlying child output instead of inventing one helper net per projected use,
   - sibling child-input consumers and direct top-output assignments now both bind typed projected expressions from that same shared base carrier,
   - and blocked projected-child range failures now keep concise `Child expression '...'` summary context under the existing blocked endpoint-resolution boundary instead of leaving that token only in raw exception text.
-- That same first structural-actual slice now also covers unsized binary/decimal/signed-decimal/octal/hex direct actuals plus exact-width decimal, signed-decimal, octal, and hex literals:
-  - explicit-link `C2` / `C3` child-input bindings may now use `=N'd...`, `=N'sd...`, `=N'o...`, and `=N'h...` direct actual sources beside the already-shipped binary forms,
+- That same first structural-actual slice now also covers unsized binary/decimal/signed-decimal/octal/hex direct actuals plus exact-width binary/octal/hex signed forms beside exact-width decimal, signed-decimal, octal, and hex literals:
+  - explicit-link `C2` / `C3` child-input bindings may now use `=N'sb...`, `=N'd...`, `=N'sd...`, `=N'so...`, `=N'o...`, `=N'sh...`, and `=N'h...` direct actual sources beside the already-shipped unsigned binary/octal/hex forms,
   - direct scalar `=0` / `=1` actuals plus unsized binary/decimal/octal/hex direct actuals such as `=0b10100101`, `=0d170`, `=0o245`, `=0xA5`, `=170`, and `=A5` now also widen to the direct binding target width for realized child inputs and declared top outputs instead of acting like accidental one-bit-only direct sources or unsupported unsized values,
   - unsized signed decimal direct actuals such as `=-1` and `=0d-1` now also widen to those same direct binding targets when the numeric value fits the signed range of the target width,
   - underscore-separated digit spellings such as `=0b1010_0101`, `=1_70`, `=0o2_45`, `=A_5`, `=8'd1_65`, and `=8'hA_5` are now accepted on those same direct literal families without changing their normalized value semantics,
   - that same direct exact-width literal family may now also drive declared top outputs without inventing carrier nets,
-  - the same exact-width decimal/signed-decimal/octal/hex literal family now also participates inside bounded source-side concat operands beside new intrinsic-width unsized binary/decimal/octal/hex concat operands,
+  - the same exact-width binary/octal/hex signed forms plus the existing decimal/signed-decimal/octal/hex literal family now also participate inside bounded source-side concat operands beside new intrinsic-width unsized binary/decimal/octal/hex concat operands,
   - unsupported non-binary/non-decimal/non-octal/non-hex unsized actual spellings still fail explicitly through the existing bounded-literal wording, while unsized binary/decimal/octal/hex values that do not fit still fail as overflowed direct actuals,
   - unsized signed decimal values that do not fit the signed range of the direct binding target width now also fail explicitly,
+  - exact-width signed binary/octal/hex payloads that exceed the declared width now also fail explicitly instead of silently truncating,
   - and decimal/signed-decimal/octal/hex payloads whose numeric value exceeds the declared width contract now fail explicitly instead of silently truncating.
 - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) now also locks:
-  - direct linked-plan and end-to-end pipeline/CLI success for target-width-aware scalar `=0` / `=1`, unsized binary/decimal/signed-decimal/octal/hex direct actuals, plus exact-width literal actuals on child inputs and declared top outputs,
-  - explicit-target wording updated for the widened scalar-plus-unsized-binary/decimal/signed-decimal/octal/hex-plus-binary/decimal/signed-decimal/octal/hex actual family,
+  - direct linked-plan and end-to-end pipeline/CLI success for target-width-aware scalar `=0` / `=1`, unsized binary/decimal/signed-decimal/octal/hex direct actuals, plus exact-width literal actuals in unsigned or signed form on child inputs and declared top outputs,
+  - explicit-target wording updated for the widened scalar-plus-unsized-binary/decimal/signed-decimal/octal/hex-plus-exact-width-signed/unsigned literal actual family,
   - blocked `=open`-to-top-output rejection,
   - blocked unsupported unsized actual-shape rejection,
   - blocked overflowing unsized binary/decimal/octal/hex direct actual rejection,
   - blocked overflowing unsized signed decimal direct actual rejection,
+  - blocked overflowing exact-width signed hex literal rejection,
   - and blocked overflowing decimal/signed-decimal/octal/hex literal rejection.
 - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks:
   - direct linked-plan preservation of bounded concat bindings,
-  - end-to-end pipeline and CLI emission of those concat child-input bindings, now also including child-output operands, intrinsic-width unsized binary/decimal/octal/hex plus normalized exact-width decimal/signed-decimal/octal/hex literal operands, nested brace-group concat preservation, and bounded repeat-group lowering,
+  - end-to-end pipeline and CLI emission of those concat child-input bindings, now also including child-output operands, intrinsic-width unsized binary/decimal/octal/hex plus normalized exact-width binary/octal/hex signed forms and exact-width decimal/signed-decimal/octal/hex literal operands, nested brace-group concat preservation, and bounded repeat-group lowering,
   - blocked unsupported concat-operand rejection through the top-expression boundary,
   - intrinsic-width unsized decimal concat success on both bare and `0d` spellings,
   - child-output repeat groups reusing one deterministic shared carrier,

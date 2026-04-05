@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-05: exact-width signed based literals should stay on the existing bit-vector contract
+- Kept this in the active `R11` lane and widened the exact-width literal family in the narrowest honest way instead of pretending signed based literals need a new semantic category.
+- Landed behavior:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts exact-width signed binary/octal/hex actuals such as `=8'sb10100101`, `=8'so245`, and `=8'shA5` on direct realized child-input and declared top-output bindings,
+  - those same exact-width signed based forms now also work inside bounded source-side concat operands,
+  - they lower through the same exact-width `bit_vector_literal_expr` path already used by unsigned binary/octal/hex literal actuals, so the AST still carries one backend-neutral exact-width bit-pattern contract rather than a signed-only literal node,
+  - and payloads that exceed the declared width now fail explicitly instead of truncating or silently changing width.
+- Why this is worth shipping:
+  - it closes the ergonomic gap between common SystemVerilog signed based spellings and the already-shipped unsigned exact-width literal family,
+  - it keeps signed based literals honest as exact-width bit patterns rather than mixing them up with signed decimal range semantics,
+  - and it preserves a high-quality frontend contract: signed decimal stays the numeric/signed-range lane, while signed binary/octal/hex stay exact-width bit-pattern literals on the same structural path as their unsigned siblings.
+
 ## 2026-04-05: signed decimal structural actuals belong on the same bounded literal path, not on a parallel signed-literal special case
 - Kept this in the active `R11` lane and widened the shipped numeric actual family in the narrowest honest way instead of opening a backend-specific signed expression shortcut.
 - Landed behavior:

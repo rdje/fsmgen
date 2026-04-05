@@ -50,7 +50,7 @@ subtest 'linked plan builder preserves top concat sources as typed bindings' => 
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
-                        source => "header_bus,status_bus[0],=2'b1_0,=3'o2,=2'h2,=8'sd-1,payload_bus[2:0]",
+                        source => "header_bus,status_bus[0],=2'sb1_0,=3'so2,=4'shA,=8'sd-1,payload_bus[2:0]",
                         target => 'uart_tx.data_in',
                     ),
                     FSM::Composition::Link->new(source => 'uart_tx.serial_out', target => 'serial_out'),
@@ -63,7 +63,7 @@ subtest 'linked plan builder preserves top concat sources as typed bindings' => 
                 'uart_tx',
                 port('core_clk', 'input', 1, 'clock'),
                 port('rst_async_n', 'input', 1, 'reset'),
-                port('data_in', 'input', 21, undef),
+                port('data_in', 'input', 23, undef),
                 port('serial_out', 'output', 1, undef),
             ),
         ],
@@ -84,11 +84,11 @@ subtest 'linked plan builder preserves top concat sources as typed bindings' => 
             bit_select_expr('status_bus', 0),
             bit_vector_literal_expr('10'),
             bit_vector_literal_expr('010'),
-            bit_vector_literal_expr('10'),
+            bit_vector_literal_expr('1010'),
             bit_vector_literal_expr('11111111'),
             slice_expr('payload_bus', 2, 0),
         ),
-        'top concat source becomes a typed concat binding expression, including signed decimal plus separated binary, octal, and hex literal operands',
+        'top concat source becomes a typed concat binding expression, including signed binary, octal, hex, and decimal literal operands',
     );
     is($bindings{serial_out}{signal_name}, 'serial_out', 'child output still rebinds directly to the top output');
 };
@@ -112,7 +112,7 @@ subtest 'pipeline and CLI emit top concat sources for explicit toplinks' => sub 
   )
   (?rtl:uart_tx)
   (?toplink:wiring
-    /header_bus,status_bus[0],=2'b1_0,=3'o2,=2'h2,=8'sd-1,payload_bus[2:0]/uart_tx.data_in/
+    /header_bus,status_bus[0],=2'sb1_0,=3'so2,=4'shA,=8'sd-1,payload_bus[2:0]/uart_tx.data_in/
     /uart_tx.serial_out/serial_out/
   )
 )
@@ -120,7 +120,7 @@ subtest 'pipeline and CLI emit top concat sources for explicit toplinks' => sub 
 (?rtlif:uart_tx
   core_clk:clock
   rst_async_n:reset
-  data_in<21:data
+  data_in<23:data
   serial_out>:data
 )
 FSM
@@ -145,18 +145,18 @@ FSM
             bit_select_expr('status_bus', 0),
             bit_vector_literal_expr('10'),
             bit_vector_literal_expr('010'),
-            bit_vector_literal_expr('10'),
+            bit_vector_literal_expr('1010'),
             bit_vector_literal_expr('11111111'),
             slice_expr('payload_bus', 2, 0),
         ),
-        'pipeline preserves the typed concat binding in the realized composition plan, including signed decimal plus separated binary, octal, and hex literal operands',
+        'pipeline preserves the typed concat binding in the realized composition plan, including signed binary, octal, hex, and decimal literal operands',
     );
 
     my $hdl = $result->{hdl_code};
     like(
         $hdl,
-        qr/\.data_in\(\{header_bus,\s*status_bus\[0\],\s*2'b10,\s*3'b010,\s*2'b10,\s*8'b11111111,\s*payload_bus\[2:0\]\}\)/,
-        'generated HDL emits the top concat directly on the child port, including the normalized signed decimal plus separated binary, octal, and hex literal operands',
+        qr/\.data_in\(\{header_bus,\s*status_bus\[0\],\s*2'b10,\s*3'b010,\s*4'b1010,\s*8'b11111111,\s*payload_bus\[2:0\]\}\)/,
+        'generated HDL emits the top concat directly on the child port, including the normalized signed binary, octal, hex, and decimal literal operands',
     );
     unlike($hdl, qr/\bwire\s+comp_link_/s, 'generated HDL does not invent synthetic carrier nets for pure top-concat bindings');
 
@@ -853,7 +853,7 @@ subtest 'linked plan builder rejects unsupported concat operands' => sub {
 
     like(
         $exception,
-        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', repeat groups like '\{4\{status_bus\[0\]\}\}', scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'd10', '=3'o7', '=4'hA', or '=8'sd-1'/s,
+        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', repeat groups like '\{4\{status_bus\[0\]\}\}', scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '=170', '=0d170', '=0o7', '=0xA5', or '=A5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'/s,
         'builder blocks unsupported concat operands through the top-expression boundary',
     );
 };
