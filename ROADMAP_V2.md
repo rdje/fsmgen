@@ -223,6 +223,8 @@ Deliverable themes:
   - prefer convention over configuration by making type inference the default path for most signals and ports:
     - infer scalar versus aggregate shape from LHS and RHS usage,
     - infer record fields and array shapes from member/index access and compatible assignments,
+    - avoid forcing explicit scalar type declarations when authored usage already recovers one safe answer,
+    - fail explicitly when inference stays ambiguous or underconstrained instead of silently guessing,
     - and keep explicit type declarations available mainly as overrides, disambiguation anchors, and interface-stability controls,
   - keep the initial operational contract narrower than the eventual syntax surface:
     - member/field reads and writes,
@@ -495,7 +497,9 @@ Planned bounded sub-lane inside `R11`:
 - intent:
   - add one portable synthesizable type system that works as a frontend contract first and a backend lowering problem second,
   - let most users omit explicit type declarations most of the time by inferring signal and port types from how names are used in assignments and expressions,
-  - and keep explicit type declarations mainly as overrides where inference is ambiguous or where the user wants to freeze an interface contract.
+  - avoid forcing explicit scalar declarations when usage already determines one safe type,
+  - fail explicitly when inference cannot determine one safe type instead of falling back to hidden guesses,
+  - and keep explicit type declarations mainly as overrides where the user wants to disambiguate or freeze an interface contract.
 - proposed syntax:
 ```lisp
 (+types

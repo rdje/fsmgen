@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-06: future typed declarations should stay inference-first and fail-safe
+- Saved one more steering rule for the future `(+types ...)` lane.
+- Important continuity note:
+  - scalar names should not require explicit type declarations when one safe
+    answer can be inferred from authored usage,
+  - aggregate shapes should infer conservatively from member/index/LHS/RHS
+    usage where possible,
+  - ambiguous or underconstrained type situations should fail explicitly
+    rather than being guessed,
+  - and explicit declarations should remain available mainly as overrides,
+    ambiguity anchors, and interface-stability controls.
+
 ## 2026-04-06: semantic packages now ship bounded aggregate leaf access
 - Saved the next package-lane slice after direct-root imports landed.
 - Important continuity note:

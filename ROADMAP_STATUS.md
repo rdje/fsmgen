@@ -150,7 +150,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - That same file-based `RTL root` summary path is now regression-locked through the flatness family too, so missing-root, empty-port, and nested-structure `.rtlif` failures all surface the active `?rtlif:<module>` token consistently.
   - The token-scoped `.rtlif` summary path is now also regression-locked through unsupported-type and non-positive-width failures, so token-shape, port-sizing, and port-typing failures all keep the offending token beside the resolved `RTL metadata file:` artifact line.
   - The governing future rule is now explicit too: convention should stay primary, but explicit port/link declarations should override inference locally instead of forcing whole-interface restatement.
-  - A second future convention-over-configuration lane is now explicitly recorded too: whether scalar and aggregate signal types should be inferred by default from LHS/RHS/member/index usage, with explicit declarations used mainly as overrides.
+  - A second future convention-over-configuration lane is now explicitly recorded too: scalar and aggregate signal types should be inferred by default from LHS/RHS/member/index usage, scalar names should not require explicit type declarations when the type is recoverable from authored usage, and ambiguous or underconstrained cases should fail explicitly instead of nudging users toward blanket type boilerplate.
   - A third future syntax-cleanup note is now recorded too: whether `?toplink` should stay canonical or gain a clearer preferred alias such as `?wiring`, ideally without breaking existing composition sources abruptly.
   - Keep `R8` hardening opportunistic unless it directly blocks a feature lane.
 

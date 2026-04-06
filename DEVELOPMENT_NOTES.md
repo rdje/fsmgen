@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-06: future type inference should be scalar-first, inference-first, and fail-safe
+- Captured one more steering decision for the future typed signal/port lane.
+- Saved rule:
+  - scalar names should not require explicit type declarations when one safe
+    answer can be inferred from authored LHS/RHS usage,
+  - aggregate shape and member/index structure should likewise infer
+    conservatively from authored usage where possible,
+  - convention over configuration should remain the default experience,
+  - but inference must stay fail-safe: if the authored program does not
+    determine one safe type, FSMGen should stop with an explicit diagnostic
+    rather than guessing or requiring broad upfront boilerplate everywhere,
+  - and explicit type declarations should remain available mainly as
+    overrides, ambiguity anchors, and interface-stability controls.
+- Why this matters:
+  - it keeps the language intent-level instead of forcing users to restate
+    obvious scalar facts,
+  - it preserves the project’s convention-first philosophy without turning it
+    into hidden inference,
+  - and it sets a better quality bar for the future `(+types ...)` lane:
+    infer when safe, reject when not, never silently guess.
+
 ## 2026-04-06: semantic packages now carry bounded aggregate values, but only scalar leaves are live
 - Continued the same semantic package lane instead of opening a second
   aggregate-only mechanism.
@@ -2998,6 +3019,8 @@ This document captures engineering rationale, design constraints, and working de
   - and aliases / subtypes.
 - The most important workflow rule in that future lane is convention over configuration:
   - `fsmgen` should infer scalar versus aggregate signal/port types from LHS/RHS/member/index usage most of the time,
+  - scalar names should not require explicit type declarations when authored usage already determines one safe type,
+  - ambiguous or underconstrained cases should fail explicitly instead of being guessed silently,
   - and explicit type declarations should exist mainly as overrides, ambiguity anchors, and interface-stability controls rather than as mandatory boilerplate.
 - The proposed explicit syntax is centered on a future `(+types ...)` family, but the phased implementation boundary is intentionally narrower than the eventual syntax surface:
   1. type AST plus explicit declarations,
