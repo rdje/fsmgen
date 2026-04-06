@@ -740,7 +740,9 @@ Deliverables:
   - and per-instance tuning parameters should remain a separate module/composition contract unless a later generic/global-constant lane proves a subset truly belongs in packages too.
 - Define one bounded portable synthesizable-type lane:
   - bits / bit-vectors, enums, records / packed-struct-like aggregates, fixed-size arrays, arrays of records, and named aliases / subtypes should become a deliberate frontend type core,
+  - SystemVerilog aggregate lowering should prefer packed-struct semantics by default for the portable struct/record contract instead of relying on looser tool-specific unpacked-struct behavior,
   - that type core should stay portable across SystemVerilog and future VHDL instead of promising backend-specific conveniences such as free aggregate-to-vector casting,
+  - future VHDL lowering may support nested record/array structure only for the subset the backend can prove and regression-lock as synthesizable, rather than promising unlimited nesting up front,
   - type inference should be the default path for most signal and port declarations, with explicit type declarations mainly acting as overrides, disambiguation anchors, and interface-stability controls,
   - aggregate declarations should also infer by default from authored member/index/LHS/RHS usage rather than only from explicit declarations,
   - the frontend should be willing to autovivify nested record/list structure from that usage, including alternating list/record nesting, whenever one safe shape is recoverable,

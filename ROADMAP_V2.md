@@ -219,7 +219,9 @@ Deliverable themes:
     - fixed-size arrays,
     - arrays of records,
     - and named aliases / subtypes,
+  - prefer packed-struct semantics as the default SystemVerilog lowering for frontend record/struct types so the portable contract does not depend on looser unpacked-struct synthesis behavior,
   - defer backend-specific or semantically sharp-edged features such as unions and user-visible promises of free aggregate-to-vector casting until the portable core is stable,
+  - keep the future VHDL promise narrower and evidence-based: nested record/array aggregates may be supported where the backend can lower and regression-lock them honestly, but the frontend should not promise unlimited nesting across all targets before that backend exists,
   - prefer convention over configuration by making type inference the default path for most signals and ports:
     - infer scalar versus aggregate shape from LHS and RHS usage,
     - infer record fields and array shapes from member/index access and compatible assignments,

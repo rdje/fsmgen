@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-06: SV aggregates should be packed-first and VHDL aggregate promises should stay narrower
+- Saved one more portability rule for the future aggregate/type lane.
+- Important continuity note:
+  - inferred frontend record/struct types should lower as packed structs by
+    default in SystemVerilog,
+  - looser unpacked-struct tool behavior should not become the portable
+    frontend promise,
+  - future VHDL nested record/array support should be promised only for the
+    subset the backend can lower and regression-lock as synthesizable,
+  - and richer inferred aggregate shapes must still fail explicitly on a
+    backend that cannot represent them honestly.
+
 ## 2026-04-06: future aggregate types should autovivify from usage too
 - Saved one more steering rule for the future typed aggregate lane.
 - Important continuity note:

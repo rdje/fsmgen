@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-06: portable aggregate lowering should be packed-first in SV and evidence-based in VHDL
+- Captured one more portability rule for the future aggregate/type lane.
+- Saved rule:
+  - frontend record/struct types should lower as packed structs by default in
+    SystemVerilog so the portable contract stays aligned with the safer
+    synthesizable bit-level interpretation,
+  - unpacked-struct-friendly tool behavior should not become the frontend
+    default promise,
+  - nested record/list structure may still be inferred freely in the frontend,
+  - but future VHDL support for nested record/array aggregates should be
+    promised only for the subset the backend can lower and regression-lock as
+    synthesizable,
+  - and therefore the frontend may infer richer aggregate shapes than a given
+    backend currently supports, with the backend required to fail explicitly
+    rather than pretend that unsupported nesting is portable.
+- Why this matters:
+  - it keeps the frontend expressive without lying about backend reality,
+  - it picks the safer SystemVerilog structural default,
+  - and it prevents a future VHDL backend from inheriting a frontend promise
+    it cannot honor honestly.
+
 ## 2026-04-06: aggregate inference should autovivify shape from usage, not force upfront declarations
 - Captured one more future type-lane rule, this time specifically for
   aggregates.
