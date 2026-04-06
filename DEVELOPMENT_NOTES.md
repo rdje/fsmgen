@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-05: SV unsized signed based actual spellings should normalize onto the existing structural literal families too
+- Kept this in the active `R11` lane and widened the signed literal spelling surface without opening a second signed-only lowering contract.
+- Landed behavior:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts direct actual spellings such as `='sb1010`, `='so645`, and `='shA5`,
+  - direct bindings treat those forms as intrinsic-width signed payloads that sign-extend to the direct target width only when the signed value fits the target range,
+  - bounded concat operands now also accept intrinsic-width `='sb...`, `='so...`, and `='sh...` aliases on the same typed literal path,
+  - and the concise failure wording now names those signed based aliases honestly instead of leaving the implementation wider than the docs and summary surface.
+- Why this is worth shipping:
+  - it closes the remaining ergonomic gap in the SystemVerilog-style literal family without splitting exact-width and unsized signed based forms across different semantic paths,
+  - it keeps the AST honest by reusing the existing backend-neutral bit-vector literal contract rather than inventing a signed text escape,
+  - and it preserves the direct-vs-concat width boundary cleanly: direct bindings sign-extend from intrinsic payload width, while concat keeps intrinsic operand width without hidden target-width guessing.
+
 ## 2026-04-05: standard SV unsized actual spellings should normalize onto the existing unsized literal families
 - Kept this in the active `R11` lane and widened the source spelling surface without opening a second literal semantics path.
 - Landed behavior:

@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-05: SV unsized signed based actual spellings now alias the bounded structural literal family too
+- Stayed in the active `R11` lane and widened the signed literal surface without opening a separate signed-only parser or AST path.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized signed SV-style based spellings such as `='sb1010`, `='so645`, and `='shA5` on explicit `?toplink` actuals,
+  - direct realized-child-input and declared-top-output bindings now interpret those spellings as intrinsic-width signed payloads that sign-extend to the direct target width when the signed value fits,
+  - bounded concat operands now also accept intrinsic-width `='sb...`, `='so...`, and `='sh...` forms on the same typed literal path,
+  - no new AST node was added; those spellings normalize onto the existing structural bit-vector literal contract,
+  - [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) now locks direct sign-extension behavior plus blocked signed-width overflow,
+  - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks intrinsic-width signed-based concat success,
+  - and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) keeps the concise blocked wording aligned with the widened signed-based alias family.
+
 ## 2026-04-05: standard unsized SV actual spellings now alias the bounded structural literal family
 - Stayed in the active `R11` lane and widened the literal surface one more bounded step without creating a second literal contract.
 - Important continuity note:

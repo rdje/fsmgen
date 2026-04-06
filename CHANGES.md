@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-05
+### SV unsized signed based actuals now alias the bounded structural literal family too
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so explicit `?toplink` actuals now also accept unsized signed based SystemVerilog spellings such as `='sb1010`, `='so645`, and `='shA5`.
+- Direct realized-child-input and declared-top-output bindings now treat those signed based spellings as intrinsic-width signed payloads that sign-extend to the direct target width and fail explicitly when the signed value does not fit that target width.
+- Bounded source-side concat operands now also accept intrinsic-width unsized signed binary/octal/hex forms such as `='sb1010`, `='so7`, and `='shA`, and they still lower through the same typed `bit_vector_literal_expr` path rather than through a signed-only AST branch.
+- Updated [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t), [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t), and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock direct sign-extension behavior, blocked signed-fit overflow, concat acceptance, and the refreshed concise blocked-reason wording.
+
 ### standard unsized SV actual spellings now alias the bounded structural literal family
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so explicit `?toplink` actuals now also accept standard unsized SystemVerilog-based spellings such as `='b10100101`, `='d170`, `='sd-1`, `='o245`, and `='hA5` on the same bounded structural path as the earlier `0b` / `0d` / `0o` / `0x` aliases.
 - Direct realized-child-input and declared-top-output bindings now treat `='b...`, `='d...`, `='o...`, and `='h...` exactly like the existing unsized binary/decimal/octal/hex numeric actuals, while `='sd...` aliases the existing unsized signed-decimal direct-binding lane.

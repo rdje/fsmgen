@@ -610,6 +610,154 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for explicit structural-actual toplinks');
 };
 
+subtest 'linked plan builder sign-extends SV unsized signed based direct actuals' => sub {
+    my @ports = (
+        port('sv_unsized_signed_binary_data', 'output', 8, undef),
+        port('sv_unsized_signed_octal_data', 'output', 12, undef),
+        port('sv_unsized_signed_hex_data', 'output', 12, undef),
+    );
+
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        lane => 'C3',
+        composition_spec => composition_spec('sv_unsized_signed_based_actual_top'),
+        top => FSM::Composition::Top->new(name => 'sv_unsized_signed_based_actual_top'),
+        ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
+        ports => \@ports,
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(source => "='sb1010", target => 'sv_unsized_signed_binary_data'),
+                    FSM::Composition::Link->new(source => "='so6_45", target => 'sv_unsized_signed_octal_data'),
+                    FSM::Composition::Link->new(source => "='shA_5", target => 'sv_unsized_signed_hex_data'),
+                    FSM::Composition::Link->new(source => "='sb1010", target => 'uart_tx.sv_unsized_signed_binary_data_in'),
+                    FSM::Composition::Link->new(source => "='so6_45", target => 'uart_tx.sv_unsized_signed_octal_data_in'),
+                    FSM::Composition::Link->new(source => "='shA_5", target => 'uart_tx.sv_unsized_signed_hex_data_in'),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance(
+                'rtl',
+                'uart_tx',
+                port('sv_unsized_signed_binary_data_in', 'input', 8, undef),
+                port('sv_unsized_signed_octal_data_in', 'input', 12, undef),
+                port('sv_unsized_signed_hex_data_in', 'input', 12, undef),
+            ),
+        ],
+        fsm_file => 'sv_unsized_signed_based_actual_top.fsm',
+        header => 'sv_unsized_signed_based_actual_top',
+    );
+
+    isa_ok($plan, 'FSM::Composition::Plan');
+    is($plan->lane, 'C3', 'builder records the active explicit-link lane for SV unsized signed based actuals');
+    is(scalar(@{$plan->nets}), 0, 'SV unsized signed based actuals do not force synthetic carrier nets');
+    is_deeply(
+        $plan->auxiliary_assignments,
+        [
+            "    assign sv_unsized_signed_binary_data = 8'b11111010;",
+            "    assign sv_unsized_signed_octal_data = 12'b111110100101;",
+            "    assign sv_unsized_signed_hex_data = 12'b111110100101;",
+        ],
+        'SV unsized signed based top-output bindings sign-extend to the direct target width',
+    );
+
+    my %bindings = map { $_->{port_name} => $_ } @{$plan->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{sv_unsized_signed_binary_data_in}{connection_expr},
+        bit_vector_literal_expr('11111010'),
+        'SV unsized signed binary actuals sign-extend on direct child-input bindings',
+    );
+    is_deeply(
+        $bindings{sv_unsized_signed_octal_data_in}{connection_expr},
+        bit_vector_literal_expr('111110100101'),
+        'SV unsized signed octal actuals sign-extend on direct child-input bindings',
+    );
+    is_deeply(
+        $bindings{sv_unsized_signed_hex_data_in}{connection_expr},
+        bit_vector_literal_expr('111110100101'),
+        'SV unsized signed hex actuals sign-extend on direct child-input bindings',
+    );
+};
+
+subtest 'pipeline and CLI emit sign-extended SV unsized signed based direct actuals' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'sv_unsized_signed_based_actual_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'sv_unsized_signed_based_actual_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:sv_unsized_signed_based_actual_top
+  (?ports:public_io
+    sv_unsized_signed_binary_data>8
+    sv_unsized_signed_octal_data>12
+    sv_unsized_signed_hex_data>12
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /='sb1010/sv_unsized_signed_binary_data/
+    /='so6_45/sv_unsized_signed_octal_data/
+    /='shA_5/sv_unsized_signed_hex_data/
+    /='sb1010/uart_tx.sv_unsized_signed_binary_data_in/
+    /='so6_45/uart_tx.sv_unsized_signed_octal_data_in/
+    /='shA_5/uart_tx.sv_unsized_signed_hex_data_in/
+  )
+)
+
+(?rtlif:uart_tx
+  sv_unsized_signed_binary_data_in<8:data
+  sv_unsized_signed_octal_data_in<12:data
+  sv_unsized_signed_hex_data_in<12:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C3', 'SV unsized signed based direct-actual toplinks stay on the C3 lane');
+
+    my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{sv_unsized_signed_binary_data_in}{connection_expr},
+        bit_vector_literal_expr('11111010'),
+        'pipeline preserves sign-extended SV unsized signed binary bindings',
+    );
+    is_deeply(
+        $bindings{sv_unsized_signed_octal_data_in}{connection_expr},
+        bit_vector_literal_expr('111110100101'),
+        'pipeline preserves sign-extended SV unsized signed octal bindings',
+    );
+    is_deeply(
+        $bindings{sv_unsized_signed_hex_data_in}{connection_expr},
+        bit_vector_literal_expr('111110100101'),
+        'pipeline preserves sign-extended SV unsized signed hex bindings',
+    );
+
+    my $hdl = $result->{hdl_code};
+    like($hdl, qr/assign sv_unsized_signed_binary_data = 8'b11111010;/, 'generated HDL emits the sign-extended SV unsized signed binary actual directly on the top output');
+    like($hdl, qr/assign sv_unsized_signed_octal_data = 12'b111110100101;/, 'generated HDL emits the sign-extended SV unsized signed octal actual directly on the top output');
+    like($hdl, qr/assign sv_unsized_signed_hex_data = 12'b111110100101;/, 'generated HDL emits the sign-extended SV unsized signed hex actual directly on the top output');
+    like($hdl, qr/\.sv_unsized_signed_binary_data_in\(8'b11111010\)/, 'generated HDL emits the sign-extended SV unsized signed binary actual directly on the child port');
+    like($hdl, qr/\.sv_unsized_signed_octal_data_in\(12'b111110100101\)/, 'generated HDL emits the sign-extended SV unsized signed octal actual directly on the child port');
+    like($hdl, qr/\.sv_unsized_signed_hex_data_in\(12'b111110100101\)/, 'generated HDL emits the sign-extended SV unsized signed hex actual directly on the child port');
+    unlike($hdl, qr/\bwire\s+comp_link_/s, 'generated HDL does not invent synthetic carrier nets for SV unsized signed based actuals');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+
+    ok($success, 'CLI succeeds for SV unsized signed based actual toplinks');
+    ok(-e $output_path, 'CLI writes HDL for SV unsized signed based actual toplinks');
+};
+
 subtest 'linked plan builder rejects open actual sources that do not target realized child inputs' => sub {
     my $exception = eval {
         FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
@@ -682,7 +830,7 @@ subtest 'linked plan builder rejects actual endpoints as explicit link targets' 
 
     like(
         $exception,
-        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open', scalar '=0'\/'=1', unsized binary\/decimal\/octal\/hex direct actuals, unsized signed decimal direct actuals like '=-1', '=0d-1', or '='sd-1', and exact-width binary\/decimal\/octal\/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
+        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open', scalar '=0'\/'=1', unsized binary\/decimal\/octal\/hex direct actuals, unsized signed decimal direct actuals like '=-1', '=0d-1', or '='sd-1', unsized signed binary\/octal\/hex direct actuals like '='sb1010', '='so7', or '='shA', and exact-width binary\/decimal\/octal\/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
         'builder blocks actual endpoints from appearing as explicit link targets',
     );
 };
@@ -719,7 +867,7 @@ subtest 'linked plan builder rejects unsupported actual literal forms' => sub {
 
     like(
         $exception,
-        qr/uses actual endpoint '=0q7', .*currently accepts only '=open', scalar '=0'\/'=1', unsized binary\/decimal\/octal\/hex direct actual forms like '=0b10', '='b10', '=0d10', '='d10', '=0o7', '='o7', '=0xA', '='hA', '=170', or '=A5', unsized signed decimal direct actual forms like '=-1', '=0d-1', or '='sd-1', or exact-width binary\/decimal\/octal\/hex literal forms in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5'/s,
+        qr/uses actual endpoint '=0q7', .*currently accepts only '=open', scalar '=0'\/'=1', unsized binary\/decimal\/octal\/hex direct actual forms like '=0b10', '='b10', '=0d10', '='d10', '=0o7', '='o7', '=0xA', '='hA', '=170', or '=A5', unsized signed decimal direct actual forms like '=-1', '=0d-1', or '='sd-1', unsized signed binary\/octal\/hex direct actual forms like '='sb1010', '='so7', or '='shA', or exact-width binary\/decimal\/octal\/hex literal forms in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5'/s,
         'builder still blocks unsupported unsized literal spellings outside the widened direct unsized-numeric slice',
     );
 };
@@ -758,6 +906,43 @@ subtest 'linked plan builder rejects unsized signed decimal actuals whose value 
         $exception,
         qr/uses actual literal '=-129', .*unsized signed decimal actual value does not fit signed direct target width 8/s,
         'builder rejects unsized signed decimal actuals whose numeric value does not fit the signed direct target width',
+    );
+};
+
+subtest 'linked plan builder rejects unsized signed hex actuals whose value exceeds the signed direct target width' => sub {
+    my $exception = eval {
+        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+            lane => 'C3',
+            composition_spec => composition_spec('blocked_unsized_signed_hex_actual_width_top'),
+            top => FSM::Composition::Top->new(name => 'blocked_unsized_signed_hex_actual_width_top'),
+            ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
+            ports => [],
+            toplinks => [
+                FSM::Composition::TopLink->new(
+                    name => 'wiring',
+                    links => [
+                        FSM::Composition::Link->new(source => "='shA_5", target => 'uart_tx.data_in'),
+                    ],
+                ),
+            ],
+            realized_instances => [
+                realized_instance(
+                    'rtl',
+                    'uart_tx',
+                    port('data_in', 'input', 7, undef),
+                ),
+            ],
+            fsm_file => 'blocked_unsized_signed_hex_actual_width_top.fsm',
+            header => 'blocked_unsized_signed_hex_actual_width_top',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/uses actual literal '='shA_5', .*unsized signed hex actual value does not fit signed direct target width 7/s,
+        'builder rejects unsized signed hex actuals whose numeric value does not fit the signed direct target width',
     );
 };
 
