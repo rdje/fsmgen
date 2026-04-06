@@ -223,12 +223,15 @@ Deliverable themes:
   - prefer convention over configuration by making type inference the default path for most signals and ports:
     - infer scalar versus aggregate shape from LHS and RHS usage,
     - infer record fields and array shapes from member/index access and compatible assignments,
+    - infer nested record/list structure from authored usage rather than requiring users to predeclare every intermediate aggregate layer,
+    - allow alternating list/record/list nesting in the frontend model when authored usage determines one safe aggregate shape,
     - avoid forcing explicit scalar type declarations when authored usage already recovers one safe answer,
     - fail explicitly when inference stays ambiguous or underconstrained instead of silently guessing,
     - and keep explicit type declarations available mainly as overrides, disambiguation anchors, and interface-stability controls,
   - keep the authored surface easy and expressive rather than ceremony-heavy:
     - `.fsm` authoring should feel closer to a dynamic language or script surface than to a declaration-first HDL clone,
     - mixed integer spellings should be accepted whenever the frontend can normalize them onto one safe semantic meaning,
+    - aggregate authoring should feel similarly low-friction, with the engine autovivifying intermediate list/record structure from usage whenever that recovery is honest,
     - and the engine should prefer behind-the-scenes normalization/coercion only when that meaning is honest and backend-portable, otherwise it should stop with an explicit diagnostic,
   - keep the initial operational contract narrower than the eventual syntax surface:
     - member/field reads and writes,
@@ -503,8 +506,10 @@ Planned bounded sub-lane inside `R11`:
   - let most users omit explicit type declarations most of the time by inferring signal and port types from how names are used in assignments and expressions,
   - avoid forcing explicit scalar declarations when usage already determines one safe type,
   - make authored `.fsm` feel dynamic and forgiving at the surface by accepting mixed integer formats and other low-friction spelling variation whenever the engine can recover one safe meaning,
+  - infer aggregate list/record structure the same way, including nested autovivified shapes when authored usage determines one safe aggregate model,
   - fail explicitly when inference cannot determine one safe type instead of falling back to hidden guesses,
-  - and keep explicit type declarations mainly as overrides where the user wants to disambiguate or freeze an interface contract.
+  - keep explicit type declarations mainly as overrides where the user wants to disambiguate or freeze an interface contract,
+  - and make backend capability checks explicit when an inferred aggregate shape is richer than the selected HDL target can lower honestly.
 - proposed syntax:
 ```lisp
 (+types

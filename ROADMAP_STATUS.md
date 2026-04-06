@@ -741,7 +741,10 @@ Deliverables:
 - Define one bounded portable synthesizable-type lane:
   - bits / bit-vectors, enums, records / packed-struct-like aggregates, fixed-size arrays, arrays of records, and named aliases / subtypes should become a deliberate frontend type core,
   - that type core should stay portable across SystemVerilog and future VHDL instead of promising backend-specific conveniences such as free aggregate-to-vector casting,
-  - and type inference should be the default path for most signal and port declarations, with explicit type declarations mainly acting as overrides, disambiguation anchors, and interface-stability controls.
+  - type inference should be the default path for most signal and port declarations, with explicit type declarations mainly acting as overrides, disambiguation anchors, and interface-stability controls,
+  - aggregate declarations should also infer by default from authored member/index/LHS/RHS usage rather than only from explicit declarations,
+  - the frontend should be willing to autovivify nested record/list structure from that usage, including alternating list/record nesting, whenever one safe shape is recoverable,
+  - and the selected backend should then either lower that inferred shape honestly or fail explicitly if the shape exceeds what that backend can represent safely.
 - Start extracting explicit forward compiler IR layers out of the active `.fsm` to HDL path instead of leaving proto-HIR/proto-lowered semantics implicit:
   - first one bounded `Intent HIR` slice for direct generated roots and realized generated children,
   - then one bounded `Lowered RTL IR` slice once that first forward semantic surface is stable,
@@ -833,9 +836,10 @@ Done:
 - That same future `R11` direction now also records:
   - a portable synthesizable-type core built around bits/vectors, enums, records, fixed arrays, arrays of records, and aliases/subtypes,
   - a strong convention-over-configuration preference for inferring scalar versus aggregate signal/port types from LHS/RHS/member/index usage,
+  - a matching aggregate-autovivification preference where nested record/list structure comes from authored usage whenever one safe shape exists,
   - explicit type declarations as bounded overrides rather than the default authoring path,
   - proposed explicit syntax centered on a future `(+types ...)` family,
-  - and phased boundaries that start with type AST plus explicit declarations before broadening into inference, member access, exact-type aggregate assignment, and backend-specific conversion helpers.
+  - and phased boundaries that start with type AST plus explicit declarations before broadening into inference, member access, exact-type aggregate assignment, and backend-specific conversion helpers, with backend capability checks staying explicit when inferred aggregate nesting outruns a target language.
 - That same future `R11` direction now also records:
   - interface bundles/protocol groups, enum-first `case` / `match`, small local alias/default blocks, bounded replication, first-class RTL intent helpers, terse invariant/assertion forms, and stronger explain/report surfaces as the current highest-leverage candidates for keeping the language powerful without making it noisy,
   - and a bounded meta-programming rule: if a future generic/meta lane exists at all, it should stay semantic, list-oriented, elaboration-bounded, and RTL-focused rather than becoming a broad macro/template system.

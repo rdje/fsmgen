@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-06: future aggregate types should autovivify from usage too
+- Saved one more steering rule for the future typed aggregate lane.
+- Important continuity note:
+  - aggregate variables should infer by default from member/index/LHS/RHS
+    usage,
+  - member access should grow record/struct shape and index access should
+    grow list/array shape,
+  - nested list/record/list structure should autovivify when one safe shape
+    is recoverable from authored usage,
+  - and the backend must either lower that inferred shape honestly or fail
+    explicitly if the chosen HDL target cannot represent it safely.
+
 ## 2026-04-06: future `.fsm` authoring should feel dynamic, with hard semantic recovery behind it
 - Saved one more language-surface steering rule for future type/literal work.
 - Important continuity note:

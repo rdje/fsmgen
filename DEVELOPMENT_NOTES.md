@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-06: aggregate inference should autovivify shape from usage, not force upfront declarations
+- Captured one more future type-lane rule, this time specifically for
+  aggregates.
+- Saved rule:
+  - aggregate variables should infer by default from how they are used, not
+    only from explicit declarations,
+  - member access should grow record/struct shape,
+  - index access should grow list/array shape,
+  - nested usage should be allowed to autovivify deeper list/record/list
+    structure when one safe shape is recoverable,
+  - and that same inference should stay honest across targets: the frontend
+    may infer a rich nested aggregate model, but the selected backend must
+    either lower it safely or fail explicitly if that target cannot represent
+    the inferred shape.
+- Why this matters:
+  - it aligns the future language feel with the already-recorded dynamic
+    authoring goal,
+  - it keeps aggregate authoring close to the Perl-style autovivification
+    intuition the user explicitly wants,
+  - and it preserves quality: the engine does the hard work, but it does not
+    silently flatten, guess, or lie about backend capability.
+
 ## 2026-04-06: authored `.fsm` should feel dynamic, but engine behavior must stay semantically hard
 - Captured one more language-surface rule for future parser, literal, and type
   work.
@@ -29,6 +51,8 @@ This document captures engineering rationale, design constraints, and working de
     answer can be inferred from authored LHS/RHS usage,
   - aggregate shape and member/index structure should likewise infer
     conservatively from authored usage where possible,
+  - nested aggregate shapes should autovivify from authored member/index usage
+    when one safe record/list structure is recoverable,
   - mixed integer spellings should be accepted whenever one safe normalized
     meaning can be recovered from authored usage,
   - convention over configuration should remain the default experience,
@@ -3044,6 +3068,7 @@ This document captures engineering rationale, design constraints, and working de
 - The most important workflow rule in that future lane is convention over configuration:
   - `fsmgen` should infer scalar versus aggregate signal/port types from LHS/RHS/member/index usage most of the time,
   - scalar names should not require explicit type declarations when authored usage already determines one safe type,
+  - nested aggregate list/record structure should likewise grow from authored usage when one safe shape is recoverable,
   - mixed integer spellings should be accepted whenever one safe normalized meaning can be recovered from authored usage,
   - ambiguous or underconstrained cases should fail explicitly instead of being guessed silently,
   - and explicit type declarations should exist mainly as overrides, ambiguity anchors, and interface-stability controls rather than as mandatory boilerplate.
