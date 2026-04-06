@@ -6326,3 +6326,17 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   child expressions as first-class explicit links, so omitted-port same-name
   inference no longer duplicates them and blocked range failures keep concise
   `Child expression '...'` summary context.
+- Direct generated roots may now also use bounded semantic package imports:
+  direct `?fsm` / `?dt` roots accept `(+import pkg_name ...)`, shared
+  `?pkg:name` roots may be embedded or resolved from external searchable
+  `.fsm` package sources, and namespaced package symbols such as
+  `shared.RESET_BYTE` and `shared.mode.BUSY` now resolve as literals in
+  assignment RHS expressions and guard equality conditions on that same
+  direct-root path.
+- `FSM::Package::ImportResolver` is now the shared package search/parse owner
+  for both composition-top and direct-root package imports, so the repo no
+  longer keeps separate import-resolution logic on those two paths.
+- Generated child sources realized through the direct-root pipeline may now
+  use the same bounded package-import contract too, which keeps package
+  semantics aligned between standalone direct roots and generated-child reuse
+  instead of leaving composition children on a weaker import surface.

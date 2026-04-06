@@ -35,11 +35,15 @@ sub generate_from_source ($class, %args) {
     my $source_info = $args{source_info}
         || FSM::Pipeline::SourceFrontend->classify_source_ast($raw_ast);
 
+    my %frontend_context;
     my $fsm_module = FSM::Pipeline::SourceFrontend->create_fsm_module(
         raw_ast => $raw_ast,
         debug_level => ($pipeline->{debug_level} // 0),
         strict_mode => ($pipeline->{strict_mode} // 0),
         source_label => ($source_info->{header} // 'direct source'),
+        fsm_file => $args{fsm_file},
+        source_path_resolver => ($args{source_path_resolver} // $pipeline->{source_path_resolver}),
+        frontend_context => \%frontend_context,
     );
     my $intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
         fsm_module => $fsm_module,
@@ -83,6 +87,7 @@ sub generate_from_source ($class, %args) {
         module_info => $module_info,
         hdl_code => $hdl_code,
         statistics => $statistics,
+        resolved_package_imports => ($frontend_context{resolved_package_imports} || {}),
         raw_ast => $raw_ast,
         source_info => $source_info,
     };

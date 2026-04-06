@@ -18,7 +18,8 @@ sub new($class, %args) {
     fsm_trace_enter('Initialize FSMGenFull adapter facade', 2);
     my $debug = $args{debug} // 0;
     
-    my $signal_manager = FSM::Adapter::FSMGenFull::SignalManager->new(debug => $debug);
+    my $signal_manager = $args{signal_manager}
+        // FSM::Adapter::FSMGenFull::SignalManager->new(debug => $debug);
     
     my $expression_builder = FSM::Adapter::FSMGenFull::ExpressionBuilder->new(
         debug => $debug,

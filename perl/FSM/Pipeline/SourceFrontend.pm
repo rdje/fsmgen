@@ -23,9 +23,13 @@ no warnings 'experimental::signatures';
 
 use Data::Dumper;
 use FSM::Adapter::FSMGenFull;
+use FSM::Adapter::FSMGenFull::ExpressionBuilder;
+use FSM::Adapter::FSMGenFull::SignalManager;
 use FSM::Composition::Parser;
 use FSM::Debug;
+use FSM::Package::ImportResolver;
 use FSM::SourceClassifier;
+use FSM::SourcePathResolver;
 use Lispish;
 
 sub parse_fsm_file ($class, %args) {
@@ -271,6 +275,14 @@ sub create_fsm_module ($class, %args) {
     my $raw_ast = $args{raw_ast}
         or confess "SourceFrontend requires a raw_ast";
     my $debug_level = $args{debug_level} // 0;
+    my $source_info = $args{source_info}
+        || $class->classify_source_ast($raw_ast);
+    my $source_header = $source_info->{header} // 'direct source';
+    my $source_path_resolver = $args{source_path_resolver}
+        // FSM::SourcePathResolver->new();
+    my $frontend_context = ref($args{frontend_context}) eq 'HASH'
+        ? $args{frontend_context}
+        : undef;
 
     $class->enforce_strict_source_boundary(
         raw_ast => $raw_ast,
@@ -281,7 +293,41 @@ sub create_fsm_module ($class, %args) {
     fsm_trace_enter('Build semantic FSM module from raw AST', 2);
     fsm_debug("Creating semantic FSM module from raw AST", 1);
 
-    my $adapter = FSM::Adapter::FSMGenFull->new(debug => ($debug_level > 0));
+    my $signal_manager = FSM::Adapter::FSMGenFull::SignalManager->new(
+        debug => ($debug_level > 0),
+    );
+    my $package_imports = $class->_direct_root_package_imports(
+        raw_ast => $raw_ast,
+        source_info => $source_info,
+        source_label => ($args{source_label} // $source_header),
+    );
+    my $resolved_package_imports = {};
+    if (@$package_imports) {
+        $resolved_package_imports = FSM::Package::ImportResolver->resolve_imports(
+            package_imports => $package_imports,
+            embedded_package_sources => $class->collect_embedded_package_sources($raw_ast),
+            fsm_file => $args{fsm_file},
+            source_path_resolver => $source_path_resolver,
+            owner_label => "Direct source '$source_header'" . (
+                defined($args{fsm_file}) && length($args{fsm_file})
+                    ? " in '$args{fsm_file}'"
+                    : ''
+            ),
+            debug_level => $debug_level,
+            docs_hint => " See docs/USER_GUIDE.md for the current package boundary.\n",
+        );
+        $class->_import_package_symbols_into_signal_manager(
+            signal_manager => $signal_manager,
+            resolved_package_imports => $resolved_package_imports,
+            package_imports => $package_imports,
+            debug_level => $debug_level,
+        );
+    }
+
+    my $adapter = FSM::Adapter::FSMGenFull->new(
+        debug => ($debug_level > 0),
+        signal_manager => $signal_manager,
+    );
 
     my $fsm_module;
     eval {
@@ -306,6 +352,14 @@ sub create_fsm_module ($class, %args) {
             my $dumped = Dumper($fsm_module);
             fsm_debug("Full FSM module AST dump:\n$dumped", 3);
         }
+    }
+
+    if (@$package_imports) {
+        $fsm_module->{attributes}{package_imports} = [ @$package_imports ];
+    }
+    if ($frontend_context) {
+        $frontend_context->{package_imports} = [ @$package_imports ];
+        $frontend_context->{resolved_package_imports} = $resolved_package_imports;
     }
 
     fsm_debug("FSM module created successfully", 1);
@@ -385,6 +439,108 @@ sub _is_legacy_compact_init_directive ($class, $node) {
     return 0 unless ref($node) eq 'ARRAY';
     return 0 unless defined($node->[0]) && !ref($node->[0]) && $node->[0] eq ':=';
     return 1;
+}
+
+sub _direct_root_package_imports ($class, %args) {
+    my $body_items = $class->_direct_root_body_items(%args);
+    return [] unless $body_items;
+
+    my $source_info = $args{source_info}
+        || $class->classify_source_ast($args{raw_ast});
+    my $source_label = $args{source_label} // ($source_info->{header} // 'source');
+
+    my @package_imports;
+    for my $item (@$body_items) {
+        next unless ref($item) eq 'ARRAY';
+        next unless defined($item->[0]) && !ref($item->[0]) && $item->[0] eq '+import';
+        push @package_imports, @{ $class->_parse_direct_import_block($source_label, $item) };
+    }
+
+    return \@package_imports;
+}
+
+sub _parse_direct_import_block ($class, $source_label, $imports_ast) {
+    my (undef, $imports_list) = @$imports_ast;
+
+    confess
+        "Malformed '+import' section in source '$source_label'. "
+      . "The active contract supports '+import' only as a non-empty list of HDL-identifier-compatible package names. "
+      . "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless ref($imports_list) eq 'ARRAY' && @$imports_list;
+
+    my @package_names;
+    for my $package_name (@$imports_list) {
+        my $resolved_name = $class->_unwrap_scalar_token($package_name);
+        confess
+            "Malformed '+import' package name '$resolved_name' in source '$source_label'. "
+          . "The active contract expects each imported package name to be an HDL-identifier-compatible bare name. "
+          . "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless defined($resolved_name) && !ref($resolved_name) && $resolved_name =~ /\A[A-Za-z_]\w*\z/;
+        push @package_names, $resolved_name;
+    }
+
+    return \@package_names;
+}
+
+sub collect_embedded_package_sources ($class, $raw_ast) {
+    my %embedded_package_sources;
+    return \%embedded_package_sources unless ref($raw_ast) eq 'ARRAY';
+
+    for my $ast_node (@$raw_ast) {
+        next unless ref($ast_node) eq 'ARRAY';
+        next unless @$ast_node > 0;
+        next if ref($ast_node->[0]);
+        next unless $ast_node->[0] =~ /^\?pkg:/;
+        my $package_name = $class->_decode_embedded_package_source_name($ast_node->[0]);
+        next unless $package_name;
+        $embedded_package_sources{$package_name} = $ast_node;
+    }
+
+    return \%embedded_package_sources;
+}
+
+sub _decode_embedded_package_source_name ($class, $header) {
+    return $1 if defined($header) && !ref($header) && $header =~ /\A\?pkg:([A-Za-z_]\w*)\z/;
+    return undef;
+}
+
+sub _unwrap_scalar_token ($class, $value) {
+    my $unwrapped = $value;
+    while (ref($unwrapped) eq 'ARRAY' && @$unwrapped == 1) {
+        $unwrapped = $unwrapped->[0];
+    }
+    return $unwrapped;
+}
+
+sub _import_package_symbols_into_signal_manager ($class, %args) {
+    my $signal_manager = $args{signal_manager}
+        or confess "SourceFrontend requires a signal_manager to import package symbols";
+    my $resolved_package_imports = $args{resolved_package_imports} || {};
+    my $package_imports = $args{package_imports} || [sort keys %$resolved_package_imports];
+    my $expression_builder = FSM::Adapter::FSMGenFull::ExpressionBuilder->new(
+        debug => ($args{debug_level} // 0) > 0,
+        signal_manager => $signal_manager,
+    );
+
+    for my $package_name (@$package_imports) {
+        my $package_spec = $resolved_package_imports->{$package_name} or next;
+        my $symbols = $package_spec->symbols or next;
+
+        for my $constant_name (sort keys %{ $symbols->constants || {} }) {
+            my $payload = $symbols->constants->{$constant_name};
+            my $literal_expr = $expression_builder->parse_scalar_expression($payload);
+            $signal_manager->store_constant("$package_name.$constant_name", $literal_expr);
+        }
+
+        for my $enum_name (sort keys %{ $symbols->enums || {} }) {
+            my $members = $symbols->enums->{$enum_name} || {};
+            for my $member_name (sort keys %$members) {
+                my $payload = $members->{$member_name};
+                my $literal_expr = $expression_builder->parse_scalar_expression($payload);
+                $signal_manager->store_constant("$package_name.$enum_name.$member_name", $literal_expr);
+            }
+        }
+    }
 }
 
 1;

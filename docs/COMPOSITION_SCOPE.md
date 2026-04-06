@@ -61,6 +61,7 @@ The currently shipped composition behavior is intentionally bounded:
 - zero or more embedded `?pkg:name` roots in the same file and zero or more external `?pkg:name` package sources resolved through the normal search roots,
 - one or more child instances, currently `?fsmc`, `?dtc`, and `?rtl`,
 - every generated child must reference exactly one active child source, either embedded in the same file or resolved from an external `.fsm` file,
+- those generated child sources may now also use the bounded direct-root `(+import ...)` contract, with embedded or external `?pkg:name` package sources resolved from the realized child-source context,
 - `C1` single-child passthrough works without `?toplink` for one `?fsmc`, `?dtc`, or `?rtl` child,
 - `C1` may infer the whole top interface directly from that lone child when `?ports` is omitted or empty,
 - `C2` multi-generated-child composition uses explicit `?toplink`,
@@ -113,6 +114,7 @@ The currently shipped composition behavior is intentionally bounded:
 - underscore-separated digit spellings such as `=0b1010_0101`, `=1_70`, `=0o2_45`, `=A_5`, `=8'd1_65`, and `=8'hA_5` are accepted on those same direct literal families,
 - underscore-separated digit spellings are also accepted on the intrinsic-width unsized binary/decimal/octal/hex concat family, for example `=0b1_0`, `=0d1_70`, `=1_70`, `=0xA_5`, or `=A_5`,
 - composition-root `+constants` / `+enums` plus imported `?pkg:name` packages may currently provide named literal actuals such as `=RESET_BYTE`, `=mode.BUSY`, `=shared.RESET_BYTE`, or `=shared.mode.BUSY` for explicit `?toplink` direct actuals and concat operands only; they do not yet open a broader typed source-expression, aggregate-symbol, or general symbol-resolution lane,
+- generated child `?fsmc` / `?dtc` sources realized through the direct-root pipeline may now also use bounded `(+import pkg_name ...)`, and namespaced package symbols such as `shared.RESET_BYTE` or `shared.mode.BUSY` now resolve there as literals in assignment RHS expressions and guard equality conditions,
 - the source frontend now preserves brace-grouped slash-token text before composition parsing, so those nested concat groups survive from `.fsm` source through raw AST, composition parsing, and final emitted HDL instead of being flattened away at read time,
 - explicit and declared connect-by-name mismatches now fail before emission and identify the conflicting endpoints and widths,
 - the typed composition plan now also exposes first-pass provenance metadata for downstream tooling and diagnostics:

@@ -397,6 +397,17 @@ sub parse_scalar_expression($self, $scalar) {
             operator => '!',
             operand => $operand
         );
+    } elsif ($scalar =~ /^([a-zA-Z_]\w*(?:\.[a-zA-Z_]\w*){2,})$/) {
+        my $resolved_symbol = $self->{signal_manager}->resolve_symbol($1);
+        if ($resolved_symbol) {
+            fsm_debug("          SYMBOL RESOLVED: '$1' -> literal/constant", 3);
+            return $resolved_symbol;
+        }
+
+        Carp::confess
+            "Unsupported expression token '$scalar'. ".
+            "Active dotted package-qualified symbols must resolve to imported named scalar or enum values before expression parsing. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
     } elsif ($scalar =~ /^([a-zA-Z_]\w*)(\.[a-zA-Z_]\w*)?(\[[\d:]+\])?('(\d+))?(\>)?$/) {
         my ($base_name, $member_name, $slice, $width_annotation, $width, $output_marker) = ($1, $2, $3, $4, $5, $6);
         my $full_name = $member_name ? "$base_name$member_name" : $base_name;

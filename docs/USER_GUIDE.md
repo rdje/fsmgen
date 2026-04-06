@@ -78,7 +78,7 @@ Standard used here:
 ### Fully supported single-module constructs
 - Root form `(?fsm:module_name ...)` with an HDL-identifier-compatible module name (`[A-Za-z_]\\w*`)
 - Root form `(?dt:module_name ...)` with an HDL-identifier-compatible module name (`[A-Za-z_]\\w*`)
-  - top-level standalone-DT content is currently limited to the conventional `(+system ...)` form, `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`, compact top-level `(:= signal=value)` directives, and general DT blocks like `(-foo ...)`
+  - top-level standalone-DT content is currently limited to the conventional `(+system ...)` form, `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`, bounded `(+import ...)`, compact top-level `(:= signal=value)` directives, and general DT blocks like `(-foo ...)`
   - explicit conventional `(+system ...)` yields `clk` / `rstn` in standalone-DT roots too
   - without explicit `(+system ...)`, purely combinational `?dt:name` modules expose no implicit system ports
   - without explicit `(+system ...)`, any `?dt:name` module that contains at least one sequential assignment implicitly exposes `clk` / `rst_n`
@@ -114,6 +114,9 @@ Reset-state note:
   - `(+enums ...)`
   - `(+define ...)`
   - `(+params ...)`
+- Bounded package-import sections:
+  - `(+import pkg_name ...)`
+  - imported namespaced package symbols such as `shared.RESET_BYTE` and `shared.mode.BUSY` currently resolve as literals in direct-root assignment RHS expressions and guard equality conditions
 - Compact top-level init/reset directives like `(:= tester_reset=1)`
 
 Combinational DT note:
@@ -213,7 +216,9 @@ Combinational DT note:
 Package note:
 - `?pkg:name` roots are reusable declaration containers, not HDL-generating roots.
 - The first shipped package slice is intentionally narrow: shared named scalar values and enum families only.
-- Aggregate package payloads and broader package use from direct `?fsm` / `?dt` roots remain future work.
+- Bounded direct `?fsm` / `?dt` roots may now also use `(+import pkg_name ...)`, and namespaced package symbols such as `shared.RESET_BYTE` and `shared.mode.BUSY` now resolve as literals in assignment RHS expressions and guard equality conditions on that direct-root path.
+- Generated child sources that are realized through that same direct-root path may use the same bounded `(+import ...)` contract too.
+- Aggregate package payloads remain future work.
 - The source frontend now preserves brace-grouped slash-token text before composition parsing, so nested concat `?toplink` groups survive from `.fsm` source through raw AST and emitted HDL instead of being flattened away at read time
 - One realized child output source fanned out to multiple top outputs through one deterministic shared carrier plus explicit top-output assignments
 - One declared top input fanned out directly to one or more top outputs through explicit top-output assignments while sibling child-input consumers reuse that same top input without helper nets
@@ -429,8 +434,8 @@ Test nodes:
   - `<value`, `<=value`, `>value`, `>=value` mean the corresponding relational comparison against the test signal
 - Computed selectors may synthesize an internal intermediate signal so the expression can be reused by the branch comparisons during HDL generation.
 
-### Draft normative contract for symbol-definition sections
-This is the current `R8` draft normative contract for the symbol-definition families that are now regression-backed explicitly.
+### Draft normative contract for symbol-definition and import sections
+This is the current `R8` draft normative contract for the symbol-definition and import families that are now regression-backed explicitly.
 
 `(+size ...)`:
 - Declares signal widths through `(signal positive_integer_width)` entries.
@@ -479,6 +484,17 @@ This is the current `R8` draft normative contract for the symbol-definition fami
 - Those references resolve as literals in assignment RHS expressions and guard equality conditions.
 - Malformed shapes like `(+enums)`, `(+enums BROKEN)`, `(+enums (mode))`, and malformed members like `(+enums (mode BROKEN))` are rejected explicitly.
 
+`(+import ...)`:
+- Imports one or more shared package namespaces from bounded `?pkg:name` roots.
+- Shape:
+  - non-empty flat list of package names
+- Current active use:
+  - `(+import shared other_pkg)`
+- Direct-root references stay namespaced, for example `shared.RESET_BYTE` and `shared.mode.BUSY`.
+- Those imported names currently resolve as literals in direct-root assignment RHS expressions and guard equality conditions.
+- Composition-top imports reuse the same package sources, but currently feed only `?toplink` literal-actual positions such as `=shared.RESET_BYTE` and `=shared.mode.BUSY`.
+- Malformed shapes like `(+import)`, `(+import BROKEN_LIST)`, and invalid package names such as `(+import bad-name)` are rejected explicitly.
+
 Regression-backed examples:
 ```lisp
 (+constants
@@ -507,8 +523,9 @@ Regression-backed examples:
 ```
 
 Boundary note:
-- This slice locks symbol resolution in assignment RHS expressions and guard equality conditions.
-- It also locks the malformed section/entry boundary for `+constants`, `+define`, `+params`, and `+enums`, so these families no longer rely on incidental Perl list-unpacking errors.
+- This slice locks direct-root symbol resolution in assignment RHS expressions and guard equality conditions.
+- It also locks namespaced package import resolution on that same direct-root path plus bounded composition-top package-import use on `?toplink` literal-actual positions.
+- It also locks the malformed section/entry boundary for `+constants`, `+define`, `+params`, `+enums`, and `+import`, so these families no longer rely on incidental Perl list-unpacking errors.
 - Broader semantics for these families should be documented explicitly if and when the contract is widened beyond that current active use.
 
 ### Draft normative contract for top-level source kinds

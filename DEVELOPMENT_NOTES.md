@@ -8314,3 +8314,42 @@ It is an exact-delay pulse request:
   now also locks:
   - first-class provenance context for projected child-output endpoints,
   - including preserved base endpoint and projected width metadata.
+
+## 2026-04-06: direct generated roots now share the semantic package-import lane
+- Continued the active package lane by widening the same semantic resolver and
+  literal-resolution contract into direct generated roots instead of creating
+  a second composition-only import path.
+- The widened package slice is now in tree:
+  - direct `?fsm` / `?dt` roots may now use bounded `(+import pkg_name ...)`,
+  - shared `?pkg:name` roots may be embedded in the same source file or
+    resolved from external searchable `.fsm` package sources on that same
+    path,
+  - namespaced package symbols such as `shared.RESET_BYTE` and
+    `shared.mode.BUSY` now resolve as literals in direct-root assignment RHS
+    expressions and guard equality conditions,
+  - and generated child sources realized through that same direct-root path
+    may use the same bounded package-import contract too.
+- The implementation contract is now honest for that slice:
+  - [perl/FSM/Package/ImportResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/ImportResolver.pm)
+    now owns the shared package search-and-parse path for embedded and
+    external package imports,
+  - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm)
+    now preloads direct-root package symbols into the direct parser signal
+    manager before direct-root expression parsing starts,
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
+    now accepts top-level `+import` on direct generated roots and preserves
+    ordered import metadata on the parsed module,
+  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm)
+    now resolves multi-dot namespaced package symbols before falling through
+    to generic dotted-token rejection,
+  - and [perl/FSM/Composition/PackageImportResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PackageImportResolver.pm)
+    now reuses that same shared resolver instead of keeping a separate
+    composition-only package lookup implementation.
+- [t/273-direct-package-imports.t](/Users/richarddje/Documents/github/fsmgen/t/273-direct-package-imports.t)
+  now locks:
+  - direct `?fsm` package imports through pipeline and CLI,
+  - direct `?dt` package imports through pipeline and CLI,
+  - embedded plus external package source resolution,
+  - malformed `+import` rejection for invalid package names,
+  - and generated-child reuse of the same package-import lane through
+    composition realization.

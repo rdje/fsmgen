@@ -153,6 +153,9 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
         } elsif ($element_name eq '+enums') {
             fsm_debug("Parsing enums section", 3);
             $self->parse_enums_section($element);
+        } elsif ($element_name eq '+import') {
+            fsm_debug("Parsing import section", 3);
+            $self->parse_import_section($module_name, $element);
         } elsif ($element_name eq '+define') {
             fsm_debug("Parsing define directive", 3);
             $self->parse_define_directive($element);
@@ -296,9 +299,9 @@ sub root_contract_label($self, $root_kind = 'fsm') {
 }
 
 sub supported_directives_description($self, $root_kind = 'fsm') {
-    return "The active contract currently supports only the conventional '+system' form, '+size', '+constants', '+enums', '+define', and '+params' inside '?dt:name'"
+    return "The active contract currently supports only the conventional '+system' form, '+size', '+constants', '+enums', '+import', '+define', and '+params' inside '?dt:name'"
         if $root_kind eq 'dt';
-    return "The active contract currently supports only '+system', '+size', '+constants', '+enums', '+define', and '+params' inside '?fsm:name'";
+    return "The active contract currently supports only '+system', '+size', '+constants', '+enums', '+import', '+define', and '+params' inside '?fsm:name'";
 }
 
 sub supported_top_level_forms_description($self, $root_kind = 'fsm', $is_flat_ast = 0) {
@@ -998,6 +1001,33 @@ sub parse_enums_section($self, $enums_ast) {
             $enum_values{$resolved_member_name} = $resolved_member_value;
         }
         $self->{signal_manager}->store_enum($resolved_enum_name, \%enum_values);
+    }
+}
+
+sub parse_import_section($self, $module_name, $imports_ast) {
+    my (undef, $imports_list) = @$imports_ast;
+
+    Carp::confess
+        "Malformed '+import' section in source '$module_name'. ".
+        "The active contract supports '+import' only as a non-empty list of HDL-identifier-compatible package names. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless ref($imports_list) eq 'ARRAY' && @$imports_list;
+
+    my $module = $self->{fsm_module};
+    $module->{attributes}{package_imports} //= [];
+    my %seen = map { $_ => 1 } @{ $module->{attributes}{package_imports} || [] };
+
+    for my $package_name (@$imports_list) {
+        my $resolved_name = $self->unwrap_scalar_token($package_name);
+
+        Carp::confess
+            "Malformed '+import' package name '".$self->describe_contract_name($resolved_name)."' in source '$module_name'. ".
+            "The active contract expects each imported package name to be an HDL-identifier-compatible bare name. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless $self->is_contract_identifier($resolved_name);
+
+        next if $seen{$resolved_name}++;
+        push @{ $module->{attributes}{package_imports} }, $resolved_name;
     }
 }
 

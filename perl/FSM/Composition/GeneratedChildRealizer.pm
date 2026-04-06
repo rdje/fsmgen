@@ -245,6 +245,8 @@ sub _realize_generated_child ($class, %args) {
                 debug_level => ($pipeline->{debug_level} // 0),
                 strict_mode => ($pipeline->{strict_mode} // 0),
                 source_label => $source_name,
+                fsm_file => ($args{child_source_path} // $fsm_file),
+                source_path_resolver => $pipeline->{source_path_resolver},
             );
             my $child_intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
                 fsm_module => $child_module,

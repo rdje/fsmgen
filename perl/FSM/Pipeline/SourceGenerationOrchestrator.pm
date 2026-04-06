@@ -123,6 +123,7 @@ sub generate_from_file ($class, %args) {
                 pipeline => $pipeline,
                 raw_ast => $raw_ast,
                 source_info => $source_info,
+                fsm_file => $fsm_file,
             );
         });
     }
