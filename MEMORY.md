@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-06: future shared declarations should use semantic packages, not include-style text reuse
+- Saved one more future-lane steering decision for reusable declarations across `.fsm` files.
+- Important continuity note:
+  - future shared constants, enums, and named types should live in first-class package-like authored objects rather than in textual include fragments,
+  - those packages should be imported explicitly and stay namespaced by default,
+  - the intended first package contents are `+constants`, `+enums`, and future `+types`,
+  - and per-instance parameterization should stay separate unless a later deliberate contract says a subset truly belongs in global/package scope.
+
 ## 2026-04-06: composition-top named literal actuals now close the first no-magic-number gap in explicit toplinks
 - Stayed in the active `R11` lane and widened the explicit-toplink literal surface in a bounded way instead of pretending the future full type lane is already here.
 - Important continuity note:

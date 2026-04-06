@@ -470,7 +470,8 @@ Planned bounded sub-lane inside `R11`:
   - let `?dt:name` acquire implicit `clk` / `rst_n` only when a sequential assignment exists,
   - keep the output-driving semantics inside `?dt:name` aligned with existing DT handling instead of inventing a separate conflict model,
   - keep `?top:name` as the explicit composition root while keeping `?dt:name` as the standalone-DT root and leaving the precise broader `?mod:name` / `?module:name` module-root contract open,
-  - and extend reusable-source lookup through existing `FSMLIB` semantics plus repeatable `--path DIR` CLI roots.
+  - extend reusable-source lookup through existing `FSMLIB` semantics plus repeatable `--path DIR` CLI roots,
+  - and add one semantic package/import lane for sharable non-behavioral declarations such as `+constants`, `+enums`, and future `+types`, rather than falling back to textual include-style reuse.
 - longer-term hierarchy direction:
   - whole `.fsm` designs should eventually behave as authored bottom-up multi-level hierarchies with non-leaf composition nodes and leaf implementation nodes,
   - users should still invoke only the top root, with `fsmgen top.fsm` recursively realizing child nodes, collecting interfaces/semantic summaries bottom-up, and resolving bindings/wiring at each parent level until the final top is emitted,
@@ -478,12 +479,17 @@ Planned bounded sub-lane inside `R11`:
   - and the implementation should distinguish authored graph from elaborated instance tree: source reuse may form a DAG, while elaboration still produces a concrete hierarchy for emission.
 - first contract questions to settle:
   - what the exact source-root family becomes beyond the now-shipped `?fsm:name`, `?dt:name`, `?mod:name`, `?module:name`, and `?top:name`,
+  - whether the package root should be something like `?pkg:name`, `?package:name`, or a different but still explicitly non-behavioral family,
   - whether unnamed reusable DT roots such as `?dt:` should exist at all or remain deferred,
   - how standalone DT interfaces are declared/exposed,
+  - which declaration families belong in packages from day one: certainly shared constants/enums and likely future named types, but probably not instance-specific parameterization by default,
+  - what the explicit import/use syntax should be for `?fsm`, `?dt`, and `?top` roots,
+  - whether package symbols are always referenced by namespace or may also be imported selectively,
   - how block-level and module-level enable families are surfaced so same-target arbitration stays explicit without structural over-rejection,
   - how lookup precedence works between explicit paths, `--path` roots, `FSMLIB`, and local files,
   - how duplicate-name shadowing is diagnosed,
-  - and how reusable DT/module roots are referenced from other `.fsm` sources without drifting back into legacy implicit behavior.
+  - how reusable DT/module roots are referenced from other `.fsm` sources without drifting back into legacy implicit behavior,
+  - and how the package lane avoids turning into a preprocessor or macro system instead of staying semantic, namespaced, and frontend-checkable.
 - portable synthesizable scalar/aggregate types with inference-first declarations.
 - intent:
   - add one portable synthesizable type system that works as a frontend contract first and a backend lowering problem second,

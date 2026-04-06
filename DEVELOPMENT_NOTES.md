@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-06: shared declarations should eventually come through semantic packages, not textual include
+- Captured one more future `R11` direction instead of leaving it as conversational intent only.
+- Saved steering:
+  - FSMGen should eventually support reusable package-like authored objects for shared declarations across any number of `.fsm` files,
+  - the first-class package contents should be non-behavioral declarations such as `+constants`, `+enums`, and future `+types`,
+  - this should be a real semantic import/use lane with parser-visible ownership, validation, and namespacing rather than a textual include or macro-preprocessor feature,
+  - namespaced references should be the default so cross-file reuse stays explicit and predictable,
+  - and instance-specific parameterization should not be silently folded into packages unless a later deliberate contract says those values are truly global/package-level rather than instantiation-local.
+- Why this direction is preferable:
+  - it solves the real “shared constants/enums/types without magic numbers” problem,
+  - it stays compatible with the already-planned reusable-source and future `(+types ...)` lanes,
+  - and it avoids the low-quality failure mode where textual inclusion or implicit globals make symbol ownership, shadowing, and frontend validation much harder to keep honest.
+
 ## 2026-04-06: composition-top symbols should feed literal actuals through the same bounded structural path
 - Kept this in the active `R11` lane and widened explicit-toplink expressiveness without pretending the future full type system is already shipped.
 - Landed behavior:
