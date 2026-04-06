@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-06: semantic packages now ship bounded aggregate leaf access
+- Saved the next package-lane slice after direct-root imports landed.
+- Important continuity note:
+  - package `(+constants ...)` entries may now be scalar literals, non-empty
+    lists, or nested hash-like aggregates,
+  - imported package scalar leaves such as `shared.BYTES[1]`,
+    `shared.FRAME.flag`, and `shared.NEST.header.nibble` now resolve as
+    literals on direct-root RHS/guard paths and bounded composition actual /
+    concat positions,
+  - unresolved whole-aggregate references such as `shared.FRAME` now fail
+    explicitly instead of degrading into generic signal names,
+  - mixed aggregate shapes such as `((mode 3) 0)` are now rejected at package
+    parse time,
+  - and `FSM::Composition::LinkedPlanBuilder` now prefers typed top-expression
+    parsing for concat/repeat source tokens even when they begin with an
+    actual operand, which keeps package-backed concat actuals on the intended
+    typed structural path.
+
 ## 2026-04-06: first semantic package/import slice now ships for composition named actuals
 - Saved the first real shipped package behavior, not just roadmap steering.
 - Important continuity note:

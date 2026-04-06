@@ -116,7 +116,7 @@ Reset-state note:
   - `(+params ...)`
 - Bounded package-import sections:
   - `(+import pkg_name ...)`
-  - imported namespaced package symbols such as `shared.RESET_BYTE` and `shared.mode.BUSY` currently resolve as literals in direct-root assignment RHS expressions and guard equality conditions
+  - imported namespaced package scalar leaves such as `shared.RESET_BYTE`, `shared.mode.BUSY`, `shared.BYTES[1]`, and `shared.FRAME.flag` currently resolve as literals in direct-root assignment RHS expressions and guard equality conditions
 - Compact top-level init/reset directives like `(:= tester_reset=1)`
 
 Combinational DT note:
@@ -180,9 +180,9 @@ Combinational DT note:
 ### Fully supported composition `.fsm` constructs
 - Root form `(?top:top_name ...)` with an HDL-identifier-compatible top name (`[A-Za-z_]\\w*`)
 - Bounded top-root symbol sections `(+constants ...)` and `(+enums ...)`
-- Bounded package roots `(?pkg:package_name ...)` for shared named scalar values and enum families
-- Bounded top-root package imports `(+import pkg_name ...)` with namespaced package references such as `=pkg_name.RESET_BYTE` and `=pkg_name.mode.BUSY`
-  - those symbols may currently feed only `?toplink` literal-actual positions such as `=RESET_BYTE` or `=mode.BUSY`
+- Bounded package roots `(?pkg:package_name ...)` for shared named scalar values, bounded named aggregate values, and enum families
+- Bounded top-root package imports `(+import pkg_name ...)` with namespaced package references such as `=pkg_name.RESET_BYTE`, `=pkg_name.mode.BUSY`, `=pkg_name.BYTES[1]`, and `=pkg_name.FRAME.flag`
+  - those symbols currently feed only `?toplink` literal-actual positions, and aggregate imports must resolve all the way to a scalar leaf
 - Explicit `(?ports:block ...)` blocks with flat port tokens
 - Port tokens like `clk`, `rstn`, `data_in<8`, `txd>`, and `=final_data>8`
 - `(?fsmc:instance child_source)` with exactly one child FSM source token
@@ -215,10 +215,13 @@ Combinational DT note:
 
 Package note:
 - `?pkg:name` roots are reusable declaration containers, not HDL-generating roots.
-- The first shipped package slice is intentionally narrow: shared named scalar values and enum families only.
-- Bounded direct `?fsm` / `?dt` roots may now also use `(+import pkg_name ...)`, and namespaced package symbols such as `shared.RESET_BYTE` and `shared.mode.BUSY` now resolve as literals in assignment RHS expressions and guard equality conditions on that direct-root path.
+- The active package slice is still intentionally bounded:
+  - package `(+constants ...)` entries may now be scalar literals, non-empty lists, or nested hash-like aggregates written as `(member value)` pairs.
+  - imported package references must resolve all the way to a scalar leaf such as `shared.BYTES[1]`, `shared.FRAME.flag`, or `shared.NEST.header.nibble`.
+  - unresolved whole-aggregate references such as `shared.FRAME` are rejected explicitly instead of degrading into generic signal names.
+- Bounded direct `?fsm` / `?dt` roots may now also use `(+import pkg_name ...)`, and namespaced package scalar leaves such as `shared.RESET_BYTE`, `shared.mode.BUSY`, `shared.BYTES[1]`, and `shared.FRAME.flag` now resolve as literals in assignment RHS expressions and guard equality conditions on that direct-root path.
 - Generated child sources that are realized through that same direct-root path may use the same bounded `(+import ...)` contract too.
-- Aggregate package payloads remain future work.
+- Whole-aggregate package flow/types remain future work.
 - The source frontend now preserves brace-grouped slash-token text before composition parsing, so nested concat `?toplink` groups survive from `.fsm` source through raw AST and emitted HDL instead of being flattened away at read time
 - One realized child output source fanned out to multiple top outputs through one deterministic shared carrier plus explicit top-output assignments
 - One declared top input fanned out directly to one or more top outputs through explicit top-output assignments while sibling child-input consumers reuse that same top input without helper nets
@@ -490,9 +493,9 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - non-empty flat list of package names
 - Current active use:
   - `(+import shared other_pkg)`
-- Direct-root references stay namespaced, for example `shared.RESET_BYTE` and `shared.mode.BUSY`.
-- Those imported names currently resolve as literals in direct-root assignment RHS expressions and guard equality conditions.
-- Composition-top imports reuse the same package sources, but currently feed only `?toplink` literal-actual positions such as `=shared.RESET_BYTE` and `=shared.mode.BUSY`.
+- Direct-root references stay namespaced, for example `shared.RESET_BYTE`, `shared.mode.BUSY`, `shared.BYTES[1]`, and `shared.FRAME.flag`.
+- Those imported names currently resolve as literals in direct-root assignment RHS expressions and guard equality conditions when the reference reaches a scalar leaf.
+- Composition-top imports reuse the same package sources, but currently feed only `?toplink` literal-actual positions such as `=shared.RESET_BYTE`, `=shared.mode.BUSY`, `=shared.BYTES[1]`, and `=shared.FRAME.flag`.
 - Malformed shapes like `(+import)`, `(+import BROKEN_LIST)`, and invalid package names such as `(+import bad-name)` are rejected explicitly.
 
 Regression-backed examples:

@@ -358,6 +358,22 @@ sub parse_scalar_expression($self, $scalar) {
             "Expand the template before parsing or keep it in legacy-only sources. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }
+
+    my $resolved_symbol = $self->{signal_manager}->resolve_symbol($scalar);
+    if ($resolved_symbol) {
+        fsm_debug("          SYMBOL RESOLVED: '$scalar' -> literal/constant", 3);
+        return $resolved_symbol;
+    }
+
+    if ($scalar =~ /[.\[]/) {
+        my $aggregate_prefix = $self->{signal_manager}->aggregate_symbol_prefix_for($scalar);
+        if (defined $aggregate_prefix) {
+            Carp::confess
+                "Unsupported aggregate-valued package symbol '$scalar'. ".
+                "The active semantic package lane currently requires member/index access all the way to a scalar leaf, for example '$aggregate_prefix.member' or '$aggregate_prefix\[0\]'. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        }
+    }
     
     if ($scalar =~ /^(\d+)'([bdhxBDHX])([0-9a-fA-F_]+)$/) {
         my ($width, $radix_char, $value) = ($1, lc($2), $3);
@@ -398,12 +414,6 @@ sub parse_scalar_expression($self, $scalar) {
             operand => $operand
         );
     } elsif ($scalar =~ /^([a-zA-Z_]\w*(?:\.[a-zA-Z_]\w*){2,})$/) {
-        my $resolved_symbol = $self->{signal_manager}->resolve_symbol($1);
-        if ($resolved_symbol) {
-            fsm_debug("          SYMBOL RESOLVED: '$1' -> literal/constant", 3);
-            return $resolved_symbol;
-        }
-
         Carp::confess
             "Unsupported expression token '$scalar'. ".
             "Active dotted package-qualified symbols must resolve to imported named scalar or enum values before expression parsing. ".
@@ -411,12 +421,6 @@ sub parse_scalar_expression($self, $scalar) {
     } elsif ($scalar =~ /^([a-zA-Z_]\w*)(\.[a-zA-Z_]\w*)?(\[[\d:]+\])?('(\d+))?(\>)?$/) {
         my ($base_name, $member_name, $slice, $width_annotation, $width, $output_marker) = ($1, $2, $3, $4, $5, $6);
         my $full_name = $member_name ? "$base_name$member_name" : $base_name;
-        
-        my $resolved_symbol = $self->{signal_manager}->resolve_symbol($full_name);
-        if ($resolved_symbol) {
-            fsm_debug("          SYMBOL RESOLVED: '$full_name' -> literal/constant", 3);
-            return $resolved_symbol;
-        }
         
         my $signal_name = $base_name;
         my $signal = $self->{signal_manager}->register_signal($signal_name, 

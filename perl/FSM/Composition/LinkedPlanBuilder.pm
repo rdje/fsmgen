@@ -488,6 +488,24 @@ sub assert_unique_top_ports ($class, $ports_block, $fsm_file, $header) {
 }
 
 sub resolve_endpoint ($class, $endpoint, $top_ports_by_name, $instances_by_name, $child_ports_by_instance, $fsm_file, $header, %opts) {
+    if ($opts{allow_top_expression_source}
+        && defined($endpoint)
+        && !ref($endpoint)
+        && ($endpoint =~ /\A\{.*\}\z/s || index($endpoint, ',') >= 0))
+    {
+        if (my $top_expression_endpoint = $class->_resolve_top_expression_endpoint(
+            $endpoint,
+            $top_ports_by_name,
+            $instances_by_name,
+            $child_ports_by_instance,
+            $fsm_file,
+            $header,
+            %opts,
+        )) {
+            return $top_expression_endpoint;
+        }
+    }
+
     if (my $actual_endpoint = $class->_resolve_actual_endpoint($endpoint, $fsm_file, $header, %opts)) {
         return $actual_endpoint;
     }

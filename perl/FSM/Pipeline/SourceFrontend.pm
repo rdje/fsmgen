@@ -525,9 +525,15 @@ sub _import_package_symbols_into_signal_manager ($class, %args) {
     for my $package_name (@$package_imports) {
         my $package_spec = $resolved_package_imports->{$package_name} or next;
         my $symbols = $package_spec->symbols or next;
+        my $aggregate_paths = $symbols->constant_aggregate_paths || {};
+        my $scalar_leaves = $symbols->constant_scalar_leaves || {};
 
-        for my $constant_name (sort keys %{ $symbols->constants || {} }) {
-            my $payload = $symbols->constants->{$constant_name};
+        for my $aggregate_path (sort keys %$aggregate_paths) {
+            $signal_manager->store_aggregate_symbol("$package_name.$aggregate_path");
+        }
+
+        for my $constant_name (sort keys %$scalar_leaves) {
+            my $payload = $scalar_leaves->{$constant_name};
             my $literal_expr = $expression_builder->parse_scalar_expression($payload);
             $signal_manager->store_constant("$package_name.$constant_name", $literal_expr);
         }

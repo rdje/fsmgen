@@ -1,5 +1,34 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-06: semantic packages now carry bounded aggregate values, but only scalar leaves are live
+- Continued the same semantic package lane instead of opening a second
+  aggregate-only mechanism.
+- Landed behavior:
+  - package `(+constants ...)` entries may now be scalar literals, non-empty
+    lists, or nested hash-like aggregates written as `(member value)` pairs,
+  - namespaced package references such as `shared.BYTES[1]`,
+    `shared.FRAME.flag`, and `shared.NEST.header.nibble` now resolve as
+    literals on direct-root RHS/guard paths and bounded composition actual /
+    concat positions,
+  - unresolved whole-aggregate references such as `shared.FRAME` now fail
+    explicitly instead of silently degrading into generic signal names,
+  - and mixed aggregate shapes such as `((mode 3) 0)` are rejected at package
+    parse time instead of being accepted accidentally.
+- Why this boundary is worth keeping:
+  - it ships real shared aggregate reuse without pretending the future full
+    typed aggregate lane is already here,
+  - it keeps package values semantic and frontend-checkable rather than
+    turning them into raw text blobs,
+  - and it preserves an honest contract: scalar-leaf access is live now,
+    whole-aggregate flow/types remain future work.
+- Implementation note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    now also prefers typed top-expression parsing when a `/source/target/`
+    token contains concat/repeat syntax even if the source begins with an
+    actual operand, so package-backed concat sources like
+    `=shared.SETTINGS.enable,=shared.NIBBLES[1]` stay on the typed structural
+    path instead of being misclassified as one plain actual endpoint.
+
 ## 2026-04-06: first semantic package slice should stay namespaced and literal-only
 - Landed the first real package/import behavior instead of leaving the package lane as roadmap-only intent.
 - Landed behavior:

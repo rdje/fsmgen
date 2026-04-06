@@ -1652,8 +1652,15 @@ Exit criteria:
   structural-actual path as local top-root named literals, and direct `?fsm`
   / `?dt` roots may now also use bounded `+import` blocks whose namespaced
   package symbols resolve in assignment RHS expressions and guard equality
-  conditions without pretending aggregate package payloads are already
-  shipped.
+  conditions.
+- `R11`: that same semantic package/import lane now also covers bounded named
+  aggregate package values on scalar-leaf access only: package `+constants`
+  entries may now be scalar literals, non-empty lists, or nested hash-like
+  aggregates, namespaced package references such as `shared.BYTES[1]` or
+  `shared.FRAME.flag` now resolve as literals on direct-root RHS/guard paths
+  and bounded composition actual/concat positions, unresolved whole-aggregate
+  references such as `shared.FRAME` now fail explicitly, and whole-aggregate
+  flow/types remain future work.
 - `R11`: that same direct composition binding path now also covers
   source-side child-output `instance.port[index]` / `instance.port[msb:lsb]`
   projections, with planner grouping by one deterministic base child-output

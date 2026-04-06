@@ -19,6 +19,7 @@ sub new($class, %args) {
         enums => {},           # +enums: enum_name -> {member -> value}
         defines => {},         # +define: name -> value_expression
         params => {},          # +params: name -> parameter_value
+        aggregate_symbols => {}, # imported aggregate-valued package symbol roots
     }, $class;
 }
 
@@ -171,6 +172,28 @@ sub store_param($self, $name, $value) {
     $self->{params}{$name} = $value;
 }
 
+sub store_aggregate_symbol($self, $name) {
+    $self->{aggregate_symbols}{$name} = 1 if defined $name && length $name;
+    return $self->{aggregate_symbols}{$name};
+}
+
+sub is_aggregate_symbol($self, $name) {
+    return 0 unless defined $name;
+    return $self->{aggregate_symbols}{$name} ? 1 : 0;
+}
+
+sub aggregate_symbol_prefix_for($self, $name) {
+    return undef unless defined $name && length $name;
+
+    my @candidates = sort { length($b) <=> length($a) } keys %{ $self->{aggregate_symbols} || {} };
+    for my $candidate (@candidates) {
+        return $candidate if $name eq $candidate;
+        return $candidate if $name =~ /^\Q$candidate\E(?:\.|\[)/;
+    }
+
+    return undef;
+}
+
 # Symbol resolution methods
 sub resolve_symbol($self, $symbol_name) {
     # Check in order: constants, defines, enum members, params
@@ -214,6 +237,7 @@ sub get_symbol_summary($self) {
         enums => scalar(keys %{$self->{enums}}),
         defines => scalar(keys %{$self->{defines}}),
         params => scalar(keys %{$self->{params}}),
+        aggregate_symbols => scalar(keys %{$self->{aggregate_symbols}}),
     );
     return \%summary;
 }
