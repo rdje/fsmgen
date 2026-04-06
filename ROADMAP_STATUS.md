@@ -1644,6 +1644,13 @@ Exit criteria:
   literal payloads such as `=RESET_BYTE` or `=mode.BUSY` from those top-root
   symbols on direct bindings and bounded concat operands without opening a
   second renderer-only symbol path or claiming a broader type system yet.
+- `R11`: the first semantic package/import slice now also ships for
+  composition tops: `?top` may use bounded `+import` blocks, shared
+  `?pkg:name` roots may be embedded or resolved through the normal search
+  roots, and namespaced package symbols such as `=shared.RESET_BYTE` or
+  `=shared.mode.BUSY` now feed the same bounded structural-actual path as
+  local top-root named literals without pretending aggregate package payloads
+  are already shipped.
 - `R11`: that same direct composition binding path now also covers
   source-side child-output `instance.port[index]` / `instance.port[msb:lsb]`
   projections, with planner grouping by one deterministic base child-output

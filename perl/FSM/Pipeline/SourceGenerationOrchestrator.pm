@@ -74,6 +74,15 @@ sub generate_from_file ($class, %args) {
               . "See docs/USER_GUIDE.md for the current supported boundary.\n";
         }
 
+        if (($source_info->{kind} // 'unknown') eq 'package') {
+            my $header = $source_info->{header} // '?pkg:name';
+            confess
+                "Package source '$header' does not generate HDL directly. "
+              . "The first semantic package lane treats '?pkg:name' roots as reusable declaration containers for import into composition sources, not as standalone HDL-generation roots. "
+              . "Import this package from '?top:name' with '+import', or use a direct '?fsm:name', '?dt:name', '?mod:name', '?module:name', '+fsm', or '?top:name' source when you want HDL output. "
+              . "See docs/USER_GUIDE.md for the current package boundary.\n";
+        }
+
         if ($source_info->{kind} && $source_info->{kind} eq 'composition') {
             $source_info->{composition_spec} = FSM::Pipeline::SourceFrontend->parse_composition_source(
                 raw_ast => $raw_ast,

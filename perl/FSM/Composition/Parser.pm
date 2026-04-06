@@ -35,11 +35,13 @@ sub parse_source ($self, $raw_ast) {
     my $top = $self->parse_top($top_ast);
     my $embedded_fsm_sources = $self->collect_embedded_fsm_sources($raw_ast);
     my $embedded_dt_sources = $self->collect_embedded_dt_sources($raw_ast);
+    my $embedded_package_sources = $self->collect_embedded_package_sources($raw_ast);
 
     return FSM::Composition::Spec->new(
         top => $top,
         embedded_fsm_sources => $embedded_fsm_sources,
         embedded_dt_sources => $embedded_dt_sources,
+        embedded_package_sources => $embedded_package_sources,
         raw_ast => $raw_ast,
     );
 }
@@ -71,6 +73,7 @@ sub parse_top ($self, $top_ast) {
     my @instances;
     my @ports_blocks;
     my @toplinks;
+    my @package_imports;
     my $top_symbols = FSM::Composition::TopSymbols->new();
     my @inline_top_items;
     my $symbol_manager = FSM::Adapter::FSMGenFull::SignalManager->new(
@@ -109,6 +112,11 @@ sub parse_top ($self, $top_ast) {
             next;
         }
 
+        if (@$child && defined($child->[0]) && !ref($child->[0]) && $child->[0] eq '+import') {
+            push @package_imports, @{$self->parse_top_import_block($top_name, $child)};
+            next;
+        }
+
         my ($kind, $parsed_child) = $self->parse_top_child($top_name, $child);
 
         if ($kind eq 'instance') {
@@ -135,6 +143,7 @@ sub parse_top ($self, $top_ast) {
         instances => \@instances,
         ports_blocks => \@ports_blocks,
         toplinks => \@toplinks,
+        package_imports => \@package_imports,
         top_symbols => $top_symbols,
         raw_ast => $top_ast,
     );
@@ -143,19 +152,19 @@ sub parse_top ($self, $top_ast) {
 sub parse_top_child ($self, $top_name, $child_ast) {
     confess
         "Composition top '$top_name' contains a child entry that is empty or missing its header, ".
-        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', or '+enums'.".
+        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', or '+import'.".
         $self->scope_docs_suffix
         unless @$child_ast;
 
     my $header = $child_ast->[0];
     confess
         "Composition top '$top_name' contains a child entry that is empty or missing its header, ".
-        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', or '+enums'.".
+        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', or '+import'.".
         $self->scope_docs_suffix
         unless defined($header) && length($header);
     confess
         "Composition top '$top_name' contains a child entry that does not begin with a string header, ".
-        "but composition child header shape is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', or '+enums'.".
+        "but composition child header shape is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', or '+import'.".
         $self->scope_docs_suffix
         if ref($header);
 
@@ -209,7 +218,7 @@ sub parse_top_child ($self, $top_name, $child_ast) {
 
     confess
         "Composition top '$top_name' contains child '$header', ".
-        "but composition child kind support is blocked because the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?toplink', '+constants', and '+enums'.".
+        "but composition child kind support is blocked because the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?toplink', '+constants', '+enums', and '+import'.".
         $self->scope_docs_suffix;
 }
 
@@ -319,6 +328,29 @@ sub parse_top_enums_block ($self, $top_name, $child_ast, $top_symbols, $expressi
 
     $top_symbols->push_raw_block($child_ast);
     return $top_symbols;
+}
+
+sub parse_top_import_block ($self, $top_name, $child_ast) {
+    my (undef, $imports_list) = @$child_ast;
+
+    confess
+        "Composition top '$top_name' contains malformed '+import' section, ".
+        "but composition package-import section shape is blocked because '+import' currently requires a non-empty list of package names."
+        . $self->scope_docs_suffix
+        unless ref($imports_list) eq 'ARRAY' && @$imports_list;
+
+    my @package_names;
+    for my $package_name (@$imports_list) {
+        my $resolved_name = $self->unwrap_scalar_token($package_name);
+        confess
+            "Composition top '$top_name' contains malformed '+import' package name '".$self->describe_contract_name($resolved_name)."', ".
+            "but composition package-import token shape is blocked because each imported package name must be an HDL-identifier-compatible bare name."
+            . $self->scope_docs_suffix
+            unless $self->is_contract_identifier($resolved_name);
+        push @package_names, $resolved_name;
+    }
+
+    return \@package_names;
 }
 
 sub parse_fsmc_child ($self, $top_name, $child_ast, $child_name, $items) {
@@ -517,6 +549,23 @@ sub collect_embedded_dt_sources ($self, $raw_ast) {
     return \%embedded_dt_sources;
 }
 
+sub collect_embedded_package_sources ($self, $raw_ast) {
+    my %embedded_package_sources;
+    return \%embedded_package_sources unless ref($raw_ast) eq 'ARRAY';
+
+    for my $ast_node (@$raw_ast) {
+        next unless ref($ast_node) eq 'ARRAY';
+        next unless @$ast_node > 0;
+        next if ref($ast_node->[0]);
+        next unless $ast_node->[0] =~ /^\?pkg:/;
+        my $package_name = $self->decode_embedded_package_source_name($ast_node->[0]);
+        next unless $package_name;
+        $embedded_package_sources{$package_name} = $ast_node;
+    }
+
+    return \%embedded_package_sources;
+}
+
 sub decode_top_name ($self, $header) {
     return $1 if defined($header) && !ref($header) && $header =~ /\A\?top:([A-Za-z_]\w*)\z/;
 
@@ -544,6 +593,16 @@ sub decode_embedded_dt_source_name ($self, $header) {
     confess
         "Malformed embedded DT source '$display'. ".
         "The active composition contract expects embedded standalone-DT child sources shaped like '?dt:source_name', '?mod:source_name', or '?module:source_name' with an HDL-identifier-compatible source name ([A-Za-z_]\\w*).".
+        $self->scope_docs_suffix;
+}
+
+sub decode_embedded_package_source_name ($self, $header) {
+    return $1 if defined($header) && !ref($header) && $header =~ /\A\?pkg:([A-Za-z_]\w*)\z/;
+
+    my $display = defined($header) ? (ref($header) ? ref($header) : $header) : 'undef';
+    confess
+        "Malformed embedded package source '$display'. ".
+        "The active composition contract expects embedded package sources shaped like '?pkg:package_name' with an HDL-identifier-compatible package name ([A-Za-z_]\\w*).".
         $self->scope_docs_suffix;
 }
 

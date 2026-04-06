@@ -39,7 +39,7 @@ $exception = $@;
 
 like(
     $exception,
-    qr/Composition top 'unsupported_child_top' contains child '\?bogus:child', .*composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', and '\+enums'/s,
+    qr/Composition top 'unsupported_child_top' contains child '\?bogus:child', .*composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', '\+enums', and '\+import'/s,
     'pipeline now says unsupported child kinds block composition child-kind support',
 );
 like(
@@ -69,7 +69,7 @@ my $combined_output = join(
 
 like(
     $combined_output,
-    qr/composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', and '\+enums'/s,
+    qr/composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', '\+enums', and '\+import'/s,
     'CLI surfaces the blocked unsupported-child diagnostic',
 );
 

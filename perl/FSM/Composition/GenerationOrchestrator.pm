@@ -24,6 +24,7 @@ no warnings 'experimental::signatures';
 use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Backend::VerilogFamily::StructuralRTLIREmitter;
 use FSM::Composition::ChildExportBuilder;
+use FSM::Composition::PackageImportResolver;
 use FSM::Composition::PlanBuilder;
 use FSM::Composition::ProvenanceReportBuilder;
 use FSM::Composition::ResultMetadataBuilder;
@@ -53,6 +54,13 @@ sub generate_from_source ($class, %args) {
         // FSM::Backend::GeneratedModuleEmitter->statistics_from_generator(undef);
 
     $source_info->{composition_spec} //= $composition_spec;
+
+    my $resolved_package_imports = FSM::Composition::PackageImportResolver->resolve_imports(
+        composition_spec => $composition_spec,
+        fsm_file => $fsm_file,
+        source_path_resolver => $source_path_resolver,
+        debug_level => ($pipeline->{debug_level} // 0),
+    );
 
     my $composition_plan = FSM::Composition::PlanBuilder->build_plan(
         pipeline => $pipeline,
@@ -133,6 +141,7 @@ sub generate_from_source ($class, %args) {
         module_info => $module_info,
         hdl_code => $hdl_code,
         statistics => $statistics,
+        resolved_package_imports => $resolved_package_imports,
         raw_ast => $raw_ast,
         source_info => $source_info,
     };

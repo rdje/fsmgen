@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-06: first semantic package/import slice now ships for composition named actuals
+- Saved the first real shipped package behavior, not just roadmap steering.
+- Important continuity note:
+  - `?pkg:name` roots now parse as reusable declaration containers for shared named scalar values and enum families,
+  - `?top` roots may now use bounded `(+import pkg_name ...)` blocks,
+  - imported package sources may be embedded in the same composition file or resolved externally through the normal search-path contract,
+  - package symbols stay namespaced by default, so actuals use forms like `=shared.RESET_BYTE` and `=shared.mode.BUSY`,
+  - those imported package symbols now feed the same bounded structural literal path as local top-root named actuals on direct bindings and concat operands,
+  - and direct `?pkg:name` entrypoints now fail explicitly as non-generating package roots.
+
 ## 2026-04-06: shared declaration surface should stay compact and package-oriented
 - Saved one more steering decision about the future declaration model.
 - Important continuity note:

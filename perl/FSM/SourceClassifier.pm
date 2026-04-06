@@ -17,6 +17,8 @@ sub classify_source_ast ($raw_ast) {
             $kind = 'dt';
         } elsif ($header =~ /^\?top:/) {
             $kind = 'composition';
+        } elsif ($header =~ /^\?pkg:/) {
+            $kind = 'package';
         }
     }
 

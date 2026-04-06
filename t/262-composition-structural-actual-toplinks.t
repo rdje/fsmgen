@@ -971,7 +971,7 @@ subtest 'linked plan builder rejects actual endpoints as explicit link targets' 
 
     like(
         $exception,
-        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open', scalar '=0'\/'=1', named literal actuals from composition-root '\+constants' \/ '\+enums' like '=RESET_BYTE' or '=mode\.BUSY', unsized binary\/decimal\/octal\/hex direct actuals, unsized signed decimal direct actuals like '=-1', '=0d-1', or '='sd-1', unsized signed binary\/octal\/hex direct actuals like '='sb1010', '='so7', or '='shA', and exact-width binary\/decimal\/octal\/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
+        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open', scalar '=0'\/'=1', named literal actuals from composition-root '\+constants' \/ '\+enums' or imported packages like '=RESET_BYTE', '=mode\.BUSY', '=shared\.RESET_BYTE', or '=shared\.mode\.BUSY', unsized binary\/decimal\/octal\/hex direct actuals, unsized signed decimal direct actuals like '=-1', '=0d-1', or '='sd-1', unsized signed binary\/octal\/hex direct actuals like '='sb1010', '='so7', or '='shA', and exact-width binary\/decimal\/octal\/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
         'builder blocks actual endpoints from appearing as explicit link targets',
     );
 };
@@ -1008,7 +1008,7 @@ subtest 'linked plan builder rejects unsupported actual literal forms' => sub {
 
     like(
         $exception,
-        qr/uses actual endpoint '=0q7', .*currently accepts only '=open', scalar '=0'\/'=1', named literal actuals from composition-root '\+constants' \/ '\+enums' like '=RESET_BYTE' or '=mode\.BUSY', unsized binary\/decimal\/octal\/hex direct actual forms like '=0b10', '='b10', '=0d10', '='d10', '=0o7', '='o7', '=0xA', '='hA', '=170', or '=A5', unsized signed decimal direct actual forms like '=-1', '=0d-1', or '='sd-1', unsized signed binary\/octal\/hex direct actual forms like '='sb1010', '='so7', or '='shA', or exact-width binary\/decimal\/octal\/hex literal forms in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5'/s,
+        qr/uses actual endpoint '=0q7', .*currently accepts only '=open', scalar '=0'\/'=1', named literal actuals from composition-root '\+constants' \/ '\+enums' or imported packages like '=RESET_BYTE', '=mode\.BUSY', '=shared\.RESET_BYTE', or '=shared\.mode\.BUSY', unsized binary\/decimal\/octal\/hex direct actual forms like '=0b10', '='b10', '=0d10', '='d10', '=0o7', '='o7', '=0xA', '='hA', '=170', or '=A5', unsized signed decimal direct actual forms like '=-1', '=0d-1', or '='sd-1', unsized signed binary\/octal\/hex direct actual forms like '='sb1010', '='so7', or '='shA', or exact-width binary\/decimal\/octal\/hex literal forms in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5'/s,
         'builder still blocks unsupported unsized literal spellings outside the widened direct unsized-numeric slice',
     );
 };

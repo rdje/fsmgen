@@ -50,7 +50,7 @@ FSM
     is($report->{blocked_boundary_label}, 'child kind support', 'failure report exposes a CLI-friendly blocked-boundary label');
     is(
         $report->{blocked_reason},
-        "the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?toplink', '+constants', and '+enums'",
+        "the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?toplink', '+constants', '+enums', and '+import'",
         'failure report preserves the concise blocked reason for parser-scoped failures',
     );
 };
@@ -324,7 +324,7 @@ FSM
     is($report->{blocked_boundary_label}, 'child structure', 'failure report exposes a CLI-friendly blocked-boundary label for empty child entries');
     is(
         $report->{blocked_reason},
-        "every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', or '+enums'",
+        "every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', or '+import'",
         'failure report preserves the concise empty-child-entry reason',
     );
 };
@@ -366,7 +366,7 @@ FSM
     is($report->{blocked_boundary_label}, 'child header shape', 'failure report exposes a CLI-friendly blocked-boundary label for non-string child headers');
     is(
         $report->{blocked_reason},
-        "every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', or '+enums'",
+        "every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', or '+import'",
         'failure report preserves the concise non-string child-header reason',
     );
 };
@@ -3318,7 +3318,7 @@ RTLIF
     is($report->{blocked_boundary}, 'explicit link endpoint resolution', 'failure report preserves the blocked endpoint-resolution boundary for concat-operand failures');
     is(
         $report->{blocked_reason},
-        "concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', repeat groups like '{4{status_bus[0]}}', scalar '=0'/'=1' actuals, named literal actuals from composition-root '+constants' / '+enums' like '=RESET_BYTE' or '=mode.BUSY', intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed decimal actuals like '=-1', '=0d-1', or '='sd-1', intrinsic-width unsized signed binary/octal/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'",
+        "concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', repeat groups like '{4{status_bus[0]}}', scalar '=0'/'=1' actuals, named literal actuals from composition-root '+constants' / '+enums' or imported packages like '=RESET_BYTE', '=mode.BUSY', '=shared.RESET_BYTE', or '=shared.mode.BUSY', intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed decimal actuals like '=-1', '=0d-1', or '='sd-1', intrinsic-width unsized signed binary/octal/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'",
         'failure report preserves the concise concat-operand top-expression reason',
     );
 };
@@ -3685,7 +3685,7 @@ RTLIF
     is($report->{blocked_boundary}, 'explicit actual binding', 'failure report preserves the blocked explicit-actual boundary for target failures');
     is(
         $report->{blocked_reason},
-        "the first structural-actual slice only allows '=open', scalar '=0'/'=1', named literal actuals from composition-root '+constants' / '+enums' like '=RESET_BYTE' or '=mode.BUSY', unsized binary/decimal/octal/hex direct actuals, unsized signed decimal direct actuals like '=-1', '=0d-1', or '='sd-1', unsized signed binary/octal/hex direct actuals like '='sb1010', '='so7', or '='shA', and exact-width binary/decimal/octal/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs",
+        "the first structural-actual slice only allows '=open', scalar '=0'/'=1', named literal actuals from composition-root '+constants' / '+enums' or imported packages like '=RESET_BYTE', '=mode.BUSY', '=shared.RESET_BYTE', or '=shared.mode.BUSY', unsized binary/decimal/octal/hex direct actuals, unsized signed decimal direct actuals like '=-1', '=0d-1', or '='sd-1', unsized signed binary/octal/hex direct actuals like '='sb1010', '='so7', or '='shA', and exact-width binary/decimal/octal/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs",
         'failure report preserves the concise explicit-actual target reason',
     );
 };
@@ -5743,7 +5743,7 @@ RTLIF
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for concat-operand failures');
     like(
         $combined_output,
-        qr/Reason:\s+concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', repeat groups like '\{4\{status_bus\[0\]\}\}', scalar '=0'\/'=1' actuals, named literal actuals from composition-root '\+constants' \/ '\+enums' like '=RESET_BYTE' or '=mode\.BUSY', intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed decimal actuals like '=-1', '=0d-1', or '='sd-1', intrinsic-width unsized signed binary\/octal\/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'/s,
+        qr/Reason:\s+concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', repeat groups like '\{4\{status_bus\[0\]\}\}', scalar '=0'\/'=1' actuals, named literal actuals from composition-root '\+constants' \/ '\+enums' or imported packages like '=RESET_BYTE', '=mode\.BUSY', '=shared\.RESET_BYTE', or '=shared\.mode\.BUSY', intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed decimal actuals like '=-1', '=0d-1', or '='sd-1', intrinsic-width unsized signed binary\/octal\/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'/s,
         'CLI reports the concise concat-operand top-expression reason',
     );
 };
@@ -6098,7 +6098,7 @@ RTLIF
     like($combined_output, qr/Blocked boundary:\s+explicit actual binding/s, 'CLI reports the blocked explicit-actual boundary for target failures');
     like(
         $combined_output,
-        qr/Reason:\s+the first structural-actual slice only allows '=open', scalar '=0'\/'=1', named literal actuals from composition-root '\+constants' \/ '\+enums' like '=RESET_BYTE' or '=mode\.BUSY', unsized binary\/decimal\/octal\/hex direct actuals, unsized signed decimal direct actuals like '=-1', '=0d-1', or '='sd-1', unsized signed binary\/octal\/hex direct actuals like '='sb1010', '='so7', or '='shA', and exact-width binary\/decimal\/octal\/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
+        qr/Reason:\s+the first structural-actual slice only allows '=open', scalar '=0'\/'=1', named literal actuals from composition-root '\+constants' \/ '\+enums' or imported packages like '=RESET_BYTE', '=mode\.BUSY', '=shared\.RESET_BYTE', or '=shared\.mode\.BUSY', unsized binary\/decimal\/octal\/hex direct actuals, unsized signed decimal direct actuals like '=-1', '=0d-1', or '='sd-1', unsized signed binary\/octal\/hex direct actuals like '='sb1010', '='so7', or '='shA', and exact-width binary\/decimal\/octal\/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
         'CLI reports the concise explicit-actual target reason',
     );
 };
@@ -6852,10 +6852,10 @@ FSM
     like($combined_output, qr/Blocked boundary:\s+child kind support/s, 'CLI reports the blocked composition boundary');
     like(
         $combined_output,
-        qr/Reason:\s+the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', and '\+enums'/s,
+        qr/Reason:\s+the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', '\+enums', and '\+import'/s,
         'CLI reports the concise blocked reason',
     );
-    like($combined_output, qr/composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', and '\+enums'/s, 'CLI still surfaces the original blocked diagnostic text');
+    like($combined_output, qr/composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', '\+enums', and '\+import'/s, 'CLI still surfaces the original blocked diagnostic text');
 };
 
 subtest 'CLI prints mapping-directive context for blocked ?ports mapping failures' => sub {
@@ -7244,7 +7244,7 @@ FSM
     unlike($combined_output, qr/Construct:\s+/s, 'CLI does not invent a construct for blocked empty child entries');
     like($combined_output, qr/Context:\s+Child entry 'missing header'/s, 'CLI reports empty child-entry context in the summary');
     like($combined_output, qr/Blocked boundary:\s+child structure/s, 'CLI reports the blocked child-structure boundary');
-    like($combined_output, qr/Reason:\s+every child must start with a real string header such as '\?fsmc:name', '\?dtc:name', '\?rtl:module', '\?ports', '\?toplink:name', '\+constants', or '\+enums'/s, 'CLI reports the concise empty child-entry reason');
+    like($combined_output, qr/Reason:\s+every child must start with a real string header such as '\?fsmc:name', '\?dtc:name', '\?rtl:module', '\?ports', '\?toplink:name', '\+constants', '\+enums', or '\+import'/s, 'CLI reports the concise empty child-entry reason');
 };
 
 subtest 'CLI prints child-entry context for blocked non-string child headers' => sub {
@@ -7279,7 +7279,7 @@ FSM
     unlike($combined_output, qr/Construct:\s+/s, 'CLI does not invent a construct for blocked non-string child headers');
     like($combined_output, qr/Context:\s+Child entry 'non-string header'/s, 'CLI reports non-string child-header context in the summary');
     like($combined_output, qr/Blocked boundary:\s+child header shape/s, 'CLI reports the blocked child-header-shape boundary');
-    like($combined_output, qr/Reason:\s+every child must start with a real string header such as '\?fsmc:name', '\?dtc:name', '\?rtl:module', '\?ports', '\?toplink:name', '\+constants', or '\+enums'/s, 'CLI reports the concise non-string child-header reason');
+    like($combined_output, qr/Reason:\s+every child must start with a real string header such as '\?fsmc:name', '\?dtc:name', '\?rtl:module', '\?ports', '\?toplink:name', '\+constants', '\+enums', or '\+import'/s, 'CLI reports the concise non-string child-header reason');
 };
 
 subtest 'CLI prints child context for blocked unnamed ?fsmc source-count failures' => sub {

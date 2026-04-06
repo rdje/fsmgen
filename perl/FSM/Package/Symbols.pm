@@ -1,4 +1,4 @@
-package FSM::Composition::TopSymbols;
+package FSM::Package::Symbols;
 
 use v5.20;
 use strict;
@@ -10,14 +10,12 @@ sub new ($class, %args) {
     return bless {
         constants => $args{constants} || {},
         enums => $args{enums} || {},
-        imported_packages => $args{imported_packages} || {},
         raw_blocks => $args{raw_blocks} || [],
     }, $class;
 }
 
 sub constants ($self) { return $self->{constants} }
 sub enums ($self) { return $self->{enums} }
-sub imported_packages ($self) { return $self->{imported_packages} }
 sub raw_blocks ($self) { return $self->{raw_blocks} }
 
 sub store_constant ($self, $name, $payload) {
@@ -38,11 +36,6 @@ sub push_raw_block ($self, $block_ast) {
     return $self->{raw_blocks};
 }
 
-sub import_package ($self, $package_name, $package_symbols) {
-    $self->{imported_packages}{$package_name} = $package_symbols;
-    return $package_symbols;
-}
-
 sub resolve_actual_payload ($self, $symbol_name) {
     return undef unless defined($symbol_name) && !ref($symbol_name);
 
@@ -52,16 +45,8 @@ sub resolve_actual_payload ($self, $symbol_name) {
 
     if ($symbol_name =~ /\A([A-Za-z_]\w*)\.([A-Za-z_]\w*)\z/) {
         my ($enum_name, $member_name) = ($1, $2);
-        if (exists $self->{enums}{$enum_name}) {
-            return $self->{enums}{$enum_name}{$member_name};
-        }
-    }
-
-    if ($symbol_name =~ /\A([A-Za-z_]\w*)\.(.+)\z/) {
-        my ($package_name, $package_symbol) = ($1, $2);
-        my $package_symbols = $self->{imported_packages}{$package_name};
-        return undef unless $package_symbols && $package_symbols->can('resolve_actual_payload');
-        return $package_symbols->resolve_actual_payload($package_symbol);
+        return undef unless exists $self->{enums}{$enum_name};
+        return $self->{enums}{$enum_name}{$member_name};
     }
 
     return undef;

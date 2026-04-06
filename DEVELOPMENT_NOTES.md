@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-06: first semantic package slice should stay namespaced and literal-only
+- Landed the first real package/import behavior instead of leaving the package lane as roadmap-only intent.
+- Landed behavior:
+  - `?pkg:name` roots now parse through dedicated package helpers as reusable declaration containers for shared named scalar values and enum families,
+  - `?top` roots may now use bounded `(+import pkg_name ...)` blocks,
+  - package sources may be embedded in the same file or resolved from external searchable `.fsm` files through the normal preferred-dir / `--path` / `FSMLIB` contract,
+  - imported package symbols now stay namespaced by default, so actuals use forms such as `=shared.RESET_BYTE` and `=shared.mode.BUSY`,
+  - and those package-backed named actuals now lower through the same typed structural literal path already used by local composition-root `+constants` / `+enums`.
+- Why this boundary is worth keeping:
+  - it ships real reusable shared values now without faking textual include semantics,
+  - it keeps symbol ownership explicit and frontend-checkable,
+  - and it stays honest about what is not shipped yet: aggregate package payloads and broader direct-root package use remain future work.
+
 ## 2026-04-06: canonical shared-declaration surface should stay small and package-first
 - Realigned the language steering away from treating `+define`, `+enums`, `+params`, and `+constants` as equally important long-term semantic pillars.
 - Saved steering:

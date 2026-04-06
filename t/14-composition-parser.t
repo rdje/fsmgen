@@ -226,6 +226,47 @@ is(
     'top symbols resolve enum members onto canonical literal payloads',
 );
 
+my $package_top_spec = $parser->parse_source(
+    scalar Lispish::multi(\<<'FSM'),
+(?top:package_top
+  (+import shared_local shared_external)
+  (?ports:public_io
+    status_out>
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /=shared_local.mode.BUSY/status_out/
+  )
+)
+
+(?pkg:shared_local
+  (+constants
+    (RESET_BYTE 8'hA5)
+  )
+  (+enums
+    (mode
+      (IDLE 0)
+      (BUSY 1)
+    )
+  )
+)
+FSM
+);
+
+is_deeply(
+    $package_top_spec->top->package_imports,
+    ['shared_local', 'shared_external'],
+    'parser preserves explicit package imports on the typed composition top',
+);
+ok(
+    exists $package_top_spec->embedded_package_sources->{shared_local},
+    'parser records embedded package roots alongside the typed composition top',
+);
+ok(
+    !exists $package_top_spec->embedded_package_sources->{shared_external},
+    'parser does not invent missing embedded package roots',
+);
+
 my $multi_dtc_source_error = eval {
     $parser->parse_source(
         scalar Lispish::single(\'(?top:multi_dt_source (?dtc:combo a b))'),
