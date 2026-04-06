@@ -6,31 +6,33 @@ use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Package::Symbols;
+
 sub new ($class, %args) {
-    return bless {
+    my $local_symbols = $args{local_symbols} || FSM::Package::Symbols->new(
         constants => $args{constants} || {},
         enums => $args{enums} || {},
+    );
+
+    return bless {
+        local_symbols => $local_symbols,
         imported_packages => $args{imported_packages} || {},
         raw_blocks => $args{raw_blocks} || [],
     }, $class;
 }
 
-sub constants ($self) { return $self->{constants} }
-sub enums ($self) { return $self->{enums} }
+sub local_symbols ($self) { return $self->{local_symbols} }
+sub constants ($self) { return $self->{local_symbols}->constants }
+sub enums ($self) { return $self->{local_symbols}->enums }
 sub imported_packages ($self) { return $self->{imported_packages} }
 sub raw_blocks ($self) { return $self->{raw_blocks} }
 
 sub store_constant ($self, $name, $payload) {
-    $self->{constants}{$name} = $payload;
-    return $payload;
+    return $self->{local_symbols}->store_constant($name, $payload);
 }
 
 sub store_enum ($self, $enum_name, $members_hashref) {
-    $self->{enums}{$enum_name} = {
-        %{ $self->{enums}{$enum_name} || {} },
-        %{ $members_hashref || {} },
-    };
-    return $self->{enums}{$enum_name};
+    return $self->{local_symbols}->store_enum($enum_name, $members_hashref);
 }
 
 sub push_raw_block ($self, $block_ast) {
@@ -46,16 +48,8 @@ sub import_package ($self, $package_name, $package_symbols) {
 sub resolve_actual_payload ($self, $symbol_name) {
     return undef unless defined($symbol_name) && !ref($symbol_name);
 
-    if (exists $self->{constants}{$symbol_name}) {
-        return $self->{constants}{$symbol_name};
-    }
-
-    if ($symbol_name =~ /\A([A-Za-z_]\w*)\.([A-Za-z_]\w*)\z/) {
-        my ($enum_name, $member_name) = ($1, $2);
-        if (exists $self->{enums}{$enum_name}) {
-            return $self->{enums}{$enum_name}{$member_name};
-        }
-    }
+    my $resolved_local_payload = $self->{local_symbols}->resolve_actual_payload($symbol_name);
+    return $resolved_local_payload if defined $resolved_local_payload;
 
     if ($symbol_name =~ /\A([A-Za-z_]\w*)\.(.+)\z/) {
         my ($package_name, $package_symbol) = ($1, $2);
@@ -68,10 +62,7 @@ sub resolve_actual_payload ($self, $symbol_name) {
 }
 
 sub summary ($self) {
-    return {
-        constants => scalar(keys %{ $self->{constants} || {} }),
-        enums => scalar(keys %{ $self->{enums} || {} }),
-    };
+    return $self->{local_symbols}->summary;
 }
 
 1;

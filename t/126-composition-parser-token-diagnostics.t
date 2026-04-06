@@ -200,8 +200,8 @@ subtest 'malformed composition-root +constants entries now say top symbol token 
   data_in<8:data
 )
 FSM
-        pipeline_regex => qr/Composition top 'bad_top_constants_top' contains malformed '\+constants' entry for constant 'bad-name', .*composition top symbol token shape is blocked because each '\+constants' entry must use an HDL-identifier-compatible name and a scalar value token/s,
-        cli_regex => qr/composition top symbol token shape is blocked because each '\+constants' entry must use an HDL-identifier-compatible name and a scalar value token/s,
+        pipeline_regex => qr/Composition top 'bad_top_constants_top' contains malformed '\+constants' entry for constant 'bad-name', .*composition top symbol token shape is blocked because each '\+constants' entry must use an HDL-identifier-compatible name/s,
+        cli_regex => qr/composition top symbol token shape is blocked because each '\+constants' entry must use an HDL-identifier-compatible name/s,
         cli_failure_name => 'malformed composition-root +constants entries',
     );
 };

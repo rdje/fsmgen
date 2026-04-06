@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-06: local composition-top aggregate constants now work on scalar-leaf actual paths
+- Saved the next bounded composition symbol slice after package aggregate
+  leaves landed.
+- Important continuity note:
+  - composition-top `(+constants ...)` entries may now be scalar literals,
+    non-empty lists, or nested hash-like aggregates,
+  - local top-root references such as `BYTES[1]`, `FRAME.flag`, and
+    `NEST.header.nibble` now resolve on explicit `?toplink` direct-actual and
+    concat-operand positions,
+  - mixed local aggregate shapes are rejected explicitly at the composition
+    parser boundary,
+  - and whole-aggregate local-symbol flow/types remain future work.
+
 ## 2026-04-06: SV aggregates should be packed-first and VHDL aggregate promises should stay narrower
 - Saved one more portability rule for the future aggregate/type lane.
 - Important continuity note:

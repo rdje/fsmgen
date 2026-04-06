@@ -226,6 +226,51 @@ is(
     'top symbols resolve enum members onto canonical literal payloads',
 );
 
+my $aggregate_symbol_top_spec = $parser->parse_source(
+    scalar Lispish::single(\'(?top:aggregate_symbol_top
+  (+constants
+    (BYTES (8\'165 8\'60 0))
+    (FRAME ((mode 3) (flag 1)))
+    (NEST ((header ((nibble 4\'10))) (tail (1 0))))
+  )
+  (?ports:public_io
+    status_out>
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /=FRAME.flag/status_out/
+  )
+)'),
+);
+
+is_deeply(
+    $aggregate_symbol_top_spec->top->top_symbols->summary,
+    {
+        constants => 3,
+        enums => 0,
+    },
+    'parser records composition-root aggregate +constants as typed top symbols too',
+);
+is(
+    $aggregate_symbol_top_spec->top->top_symbols->resolve_actual_payload('BYTES[1]'),
+    "8'd60",
+    'top symbols resolve composition-root aggregate list leaves onto canonical literal payloads',
+);
+is(
+    $aggregate_symbol_top_spec->top->top_symbols->resolve_actual_payload('FRAME.flag'),
+    '1',
+    'top symbols resolve composition-root aggregate hash leaves onto canonical literal payloads',
+);
+is(
+    $aggregate_symbol_top_spec->top->top_symbols->resolve_actual_payload('NEST.header.nibble'),
+    "4'd10",
+    'top symbols resolve nested composition-root aggregate leaves onto canonical literal payloads',
+);
+ok(
+    !defined($aggregate_symbol_top_spec->top->top_symbols->resolve_actual_payload('FRAME')),
+    'top symbols keep unresolved composition-root aggregate roots off the scalar payload path',
+);
+
 my $package_top_spec = $parser->parse_source(
     scalar Lispish::multi(\<<'FSM'),
 (?top:package_top

@@ -227,35 +227,32 @@ sub parse_top_constants_block ($self, $top_name, $child_ast, $top_symbols, $expr
 
     confess
         "Composition top '$top_name' contains malformed '+constants' section, ".
-        "but composition top symbol section shape is blocked because '+constants' currently requires a non-empty list of '(NAME scalar_value)' entries.".
+        "but composition top symbol section shape is blocked because '+constants' currently requires a non-empty list of '(NAME value)' entries where the value is either a literal scalar, a non-empty list aggregate, or a non-empty hash-like aggregate.".
         $self->scope_docs_suffix
         unless ref($constants_list) eq 'ARRAY' && @$constants_list;
 
     for my $constant_def (@$constants_list) {
         confess
             "Composition top '$top_name' contains malformed '+constants' entry, ".
-            "but composition top symbol entry shape is blocked because each '+constants' entry must be a pair '(NAME scalar_value)'.".
+            "but composition top symbol entry shape is blocked because each '+constants' entry must be a pair '(NAME value)'.".
             $self->scope_docs_suffix
             unless ref($constant_def) eq 'ARRAY' && @$constant_def == 2;
 
         my ($name, $value) = @$constant_def;
         my $resolved_name = $self->unwrap_scalar_token($name);
-        my $resolved_value = $self->unwrap_scalar_token($value);
 
         confess
             "Composition top '$top_name' contains malformed '+constants' entry for constant '".$self->describe_contract_name($resolved_name)."', ".
-            "but composition top symbol token shape is blocked because each '+constants' entry must use an HDL-identifier-compatible name and a scalar value token.".
+            "but composition top symbol token shape is blocked because each '+constants' entry must use an HDL-identifier-compatible name.".
             $self->scope_docs_suffix
-            unless $self->is_contract_identifier($resolved_name)
-                && defined($resolved_value)
-                && !ref($resolved_value);
+            unless $self->is_contract_identifier($resolved_name);
 
-        my $canonical_payload = $self->canonicalize_top_symbol_literal_payload(
+        my $canonical_payload = $self->canonicalize_top_constant_payload(
             top_name => $top_name,
             section_header => '+constants',
             symbol_kind => 'constant',
             symbol_name => $resolved_name,
-            value_token => $resolved_value,
+            value_ast => $value,
             expression_builder => $expression_builder,
         );
 
@@ -651,6 +648,141 @@ sub canonicalize_top_symbol_literal_payload ($self, %args) {
     return $width."'b".$value if $radix eq 'binary';
     return $width."'h".$value if $radix eq 'hex';
     return $width."'d".$value;
+}
+
+sub canonicalize_top_constant_payload ($self, %args) {
+    my $top_name = $args{top_name} // 'top';
+    my $section_header = $args{section_header} // '+constants';
+    my $symbol_kind = $args{symbol_kind} // 'constant';
+    my $symbol_name = $args{symbol_name} // 'unknown';
+    my $value_ast = $args{value_ast};
+    my $expression_builder = $args{expression_builder};
+
+    my $scalar_value = $self->unwrap_scalar_token($value_ast);
+    if (defined($scalar_value) && !ref($scalar_value)) {
+        return $self->canonicalize_top_symbol_literal_payload(
+            top_name => $top_name,
+            section_header => $section_header,
+            symbol_kind => $symbol_kind,
+            symbol_name => $symbol_name,
+            value_token => $scalar_value,
+            expression_builder => $expression_builder,
+        );
+    }
+
+    confess
+        "Composition top '$top_name' contains '$section_header' entry for $symbol_kind '$symbol_name', ".
+        "but composition top aggregate value support is blocked because that value is neither a scalar literal nor a real aggregate list/hash payload.".
+        $self->scope_docs_suffix
+        unless ref($value_ast) eq 'ARRAY';
+
+    confess
+        "Composition top '$top_name' contains '$section_header' entry for $symbol_kind '$symbol_name' with an empty aggregate value, ".
+        "but composition top aggregate value support is blocked because aggregate top-symbol values must be non-empty lists or non-empty hash-like member sets.".
+        $self->scope_docs_suffix
+        unless @$value_ast;
+
+    my $value_items = $self->top_value_items($value_ast);
+
+    confess
+        "Composition top '$top_name' contains '$section_header' entry for $symbol_kind '$symbol_name' with an empty aggregate value, ".
+        "but composition top aggregate value support is blocked because aggregate top-symbol values must be non-empty lists or non-empty hash-like member sets.".
+        $self->scope_docs_suffix
+        unless @$value_items;
+
+    my $hash_like_entries = 0;
+    my $non_hash_entries = 0;
+    for my $entry (@$value_items) {
+        my $member_name = (ref($entry) eq 'ARRAY' && @$entry == 2)
+            ? $self->unwrap_scalar_token($entry->[0])
+            : undef;
+        if (defined($member_name) && $self->is_contract_identifier($member_name)) {
+            $hash_like_entries++;
+        } else {
+            $non_hash_entries++;
+        }
+    }
+
+    if ($hash_like_entries && !$non_hash_entries) {
+        my %members;
+        for my $entry (@$value_items) {
+            my ($member_name_ast, $member_value_ast) = @$entry;
+            my $member_name = $self->unwrap_scalar_token($member_name_ast);
+            $members{$member_name} = $self->canonicalize_top_constant_payload(
+                top_name => $top_name,
+                section_header => $section_header,
+                symbol_kind => "$symbol_kind member",
+                symbol_name => $symbol_name.'.'.$member_name,
+                value_ast => $member_value_ast,
+                expression_builder => $expression_builder,
+            );
+        }
+
+        return {
+            kind => 'map',
+            members => \%members,
+        };
+    }
+
+    confess
+        "Composition top '$top_name' contains '$section_header' entry for $symbol_kind '$symbol_name' with a mixed aggregate value, ".
+        "but composition top aggregate value support is blocked because list-style and hash-style aggregate entries cannot be mixed in one top-symbol value.".
+        $self->scope_docs_suffix
+        if $hash_like_entries && $non_hash_entries;
+
+    my @items;
+    for my $index (0 .. $#$value_items) {
+        push @items, $self->canonicalize_top_constant_payload(
+            top_name => $top_name,
+            section_header => $section_header,
+            symbol_kind => "$symbol_kind item",
+            symbol_name => $symbol_name."[$index]",
+            value_ast => $value_items->[$index],
+            expression_builder => $expression_builder,
+        );
+    }
+
+    return {
+        kind => 'list',
+        items => \@items,
+    };
+}
+
+sub top_value_items ($self, $value_ast) {
+    my $cursor = $value_ast;
+
+    while (ref($cursor) eq 'ARRAY' && @$cursor == 1 && ref($cursor->[0]) eq 'ARRAY') {
+        $cursor = $cursor->[0];
+    }
+
+    my @items;
+    while (1) {
+        if (!ref($cursor)) {
+            push @items, $cursor if defined $cursor;
+            last;
+        }
+
+        if (ref($cursor) eq 'ARRAY' && @$cursor == 1) {
+            push @items, $cursor->[0] if defined $cursor->[0];
+            last;
+        }
+
+        if (ref($cursor) eq 'ARRAY' && @$cursor == 2) {
+            push @items, $cursor->[0];
+            $cursor = $cursor->[1];
+            next;
+        }
+
+        if (ref($cursor) eq 'ARRAY') {
+            push @items, @$cursor;
+            last;
+        }
+
+        push @items, $cursor;
+        last;
+    }
+
+    return \@items;
 }
 
 1;

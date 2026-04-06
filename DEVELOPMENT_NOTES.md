@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-06: local composition-top aggregate constants should not lag behind imported packages
+- Continued the active symbol/aggregate lane by removing an avoidable asymmetry:
+  imported packages already supported aggregate leaf access, but local `?top`
+  `+constants` still forced authors to move reusable aggregate values into
+  packages just to use them in explicit `?toplink` actuals.
+- Landed behavior:
+  - composition-top `(+constants ...)` entries may now be scalar literals,
+    non-empty lists, or nested hash-like `(member value)` aggregates,
+  - local top-root references such as `BYTES[1]`, `FRAME.flag`, and
+    `NEST.header.nibble` now resolve on the same bounded named-actual path as
+    imported package leaves,
+  - and mixed local aggregate shapes such as `((mode 3) 0)` now fail
+    explicitly at the composition parser boundary instead of drifting deeper.
+- Why this is worth shipping:
+  - it keeps local authored data and imported shared data on one honest
+    scalar-leaf contract,
+  - it avoids pushing users toward packages when the value is only local to
+    one composition top,
+  - and it reuses the structured payload model already proven on the package
+    path rather than inventing a composition-only escape hatch.
+
 ## 2026-04-06: portable aggregate lowering should be packed-first in SV and evidence-based in VHDL
 - Captured one more portability rule for the future aggregate/type lane.
 - Saved rule:

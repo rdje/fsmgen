@@ -1651,6 +1651,12 @@ Exit criteria:
   literal payloads such as `=RESET_BYTE` or `=mode.BUSY` from those top-root
   symbols on direct bindings and bounded concat operands without opening a
   second renderer-only symbol path or claiming a broader type system yet.
+- `R11`: that same composition-top symbol lane now also covers bounded local
+  aggregate `+constants` values on scalar-leaf access only: top-root
+  `+constants` entries may now be scalar literals, non-empty lists, or nested
+  hash-like aggregates, references such as `=BYTES[1]` or `=FRAME.flag` now
+  resolve on explicit actual/direct-concat positions, and whole-aggregate
+  local symbol flow remains future work.
 - `R11`: the first semantic package/import slice now also ships for
   composition tops and direct generated roots: `?top` may use bounded
   `+import` blocks, shared `?pkg:name` roots may be embedded or resolved
