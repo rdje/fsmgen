@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-05: intrinsic-width unsized signed decimal concat actuals now share the bounded structural literal family
+- Stayed in the active `R11` lane and widened concat one more bounded step without weakening the direct-vs-concat width contract.
+- Important continuity note:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized signed decimal concat operands such as `=-1`, `=0d-1`, and `='sd-1`,
+  - those operands now use the minimum signed width required by the numeric value rather than borrowing width from the child-input target,
+  - that means `=-1` lowers as `1'b1`, `=0d-2` lowers as `2'b10`, and `='sd-3` lowers as `3'b101` on the typed structural path,
+  - [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for that intrinsic-width signed-decimal concat family,
+  - and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) keeps the blocked concat-operand wording aligned with the widened family.
+
 ## 2026-04-05: SV unsized signed based actual spellings now alias the bounded structural literal family too
 - Stayed in the active `R11` lane and widened the signed literal surface without opening a separate signed-only parser or AST path.
 - Important continuity note:

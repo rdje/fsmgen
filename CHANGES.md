@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-05
+### intrinsic-width unsized signed decimal concat actuals now share the bounded structural literal family
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so bounded source-side concat operands now also accept unsized signed decimal forms such as `=-1`, `=0d-1`, and `='sd-1`.
+- Those concat operands now use the minimum signed width required by the numeric value, so `=-1` lowers as `1'b1`, `=0d-2` lowers as `2'b10`, and `='sd-3` lowers as `3'b101` instead of borrowing width from the child-input target.
+- The widening stays on the same typed `bit_vector_literal_expr` path as the rest of the bounded structural literal family, and the blocked concat-operand wording now names intrinsic-width unsized signed decimal forms honestly beside the already-shipped signed based and unsigned numeric families.
+- Updated [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock linked-plan plus pipeline/CLI success and the refreshed concise blocked-reason wording.
+
 ### SV unsized signed based actuals now alias the bounded structural literal family too
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so explicit `?toplink` actuals now also accept unsized signed based SystemVerilog spellings such as `='sb1010`, `='so645`, and `='shA5`.
 - Direct realized-child-input and declared-top-output bindings now treat those signed based spellings as intrinsic-width signed payloads that sign-extend to the direct target width and fail explicitly when the signed value does not fit that target width.

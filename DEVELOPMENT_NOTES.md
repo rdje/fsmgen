@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-05: unsized signed decimal concat actuals can be intrinsic-width too when width comes from signed range
+- Kept this in the active `R11` lane and widened concat only where the width rule stays local, typed, and regression-backable.
+- Landed behavior:
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized signed decimal concat operands such as `=-1`, `=0d-1`, and `='sd-1`,
+  - those operands now lower into the same typed `bit_vector_literal_expr` path as the other concat literal families,
+  - their width now comes from the minimum signed width needed to represent the value rather than from the child-input target or from raw decimal digit count,
+  - and the blocked concat-operand wording now names intrinsic-width unsized signed decimal forms honestly beside the already-shipped unsigned numeric and signed based families.
+- Why this is worth shipping:
+  - it closes the last obvious ergonomic gap in the intrinsic-width concat literal family,
+  - preserves the direct-vs-concat split cleanly by keeping concat operand width intrinsic and target-independent,
+  - and avoids a low-quality asymmetry where signed decimal was forced into exact-width-only concat while signed based and unsigned numeric forms were already intrinsic-width-aware.
+
 ## 2026-04-05: SV unsized signed based actual spellings should normalize onto the existing structural literal families too
 - Kept this in the active `R11` lane and widened the signed literal spelling surface without opening a second signed-only lowering contract.
 - Landed behavior:

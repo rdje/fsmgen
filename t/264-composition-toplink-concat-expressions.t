@@ -404,6 +404,119 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for intrinsic-width SV-style unsized signed concat toplinks');
 };
 
+subtest 'linked plan builder preserves intrinsic-width unsized signed decimal concat operands' => sub {
+    my @ports = (
+        port('payload_bus', 'input', 3, undef),
+    );
+
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        lane => 'C3',
+        composition_spec => composition_spec('signed_decimal_concat_top'),
+        top => FSM::Composition::Top->new(name => 'signed_decimal_concat_top'),
+        ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
+        ports => \@ports,
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(
+                        source => "payload_bus[2:0],=-1,=0d-2,='sd-3",
+                        target => 'uart_tx.data_in',
+                    ),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance(
+                'rtl',
+                'uart_tx',
+                port('data_in', 'input', 9, undef),
+            ),
+        ],
+        fsm_file => 'signed_decimal_concat_top.fsm',
+        header => 'signed_decimal_concat_top',
+    );
+
+    isa_ok($plan, 'FSM::Composition::Plan');
+    is($plan->lane, 'C3', 'builder records the active explicit-link lane for intrinsic-width unsized signed decimal concat operands');
+    is(scalar(@{$plan->nets}), 0, 'intrinsic-width unsized signed decimal concat operands do not force synthetic carrier nets');
+
+    my %bindings = map { $_->{port_name} => $_ } @{$plan->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{data_in}{connection_expr},
+        concat_expr(
+            slice_expr('payload_bus', 2, 0),
+            bit_vector_literal_expr('1'),
+            bit_vector_literal_expr('10'),
+            bit_vector_literal_expr('101'),
+        ),
+        'unsized signed decimal operands become typed concat literal expressions with intrinsic signed width',
+    );
+};
+
+subtest 'pipeline and CLI emit intrinsic-width unsized signed decimal concat operands' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'signed_decimal_concat_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'signed_decimal_concat_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:signed_decimal_concat_top
+  (?ports:public_io
+    payload_bus<3
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /payload_bus[2:0],=-1,=0d-2,='sd-3/uart_tx.data_in/
+  )
+)
+
+(?rtlif:uart_tx
+  data_in<9:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C3', 'intrinsic-width unsized signed decimal concat toplinks stay on the C3 lane');
+
+    my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{data_in}{connection_expr},
+        concat_expr(
+            slice_expr('payload_bus', 2, 0),
+            bit_vector_literal_expr('1'),
+            bit_vector_literal_expr('10'),
+            bit_vector_literal_expr('101'),
+        ),
+        'pipeline preserves the typed intrinsic-width unsized signed decimal concat binding in the realized composition plan',
+    );
+
+    my $hdl = $result->{hdl_code};
+    like(
+        $hdl,
+        qr/\.data_in\(\{payload_bus\[2:0\],\s*1'b1,\s*2'b10,\s*3'b101\}\)/,
+        'generated HDL emits intrinsic-width unsized signed decimal concat operands directly on the child port',
+    );
+    unlike($hdl, qr/\bwire\s+comp_link_/s, 'generated HDL does not invent synthetic carrier nets for intrinsic-width unsized signed decimal concat bindings');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+
+    ok($success, 'CLI succeeds for intrinsic-width unsized signed decimal concat toplinks');
+    ok(-e $output_path, 'CLI writes HDL for intrinsic-width unsized signed decimal concat toplinks');
+};
+
 subtest 'linked plan builder preserves nested concat source groups' => sub {
     my @ports = (
         port('header_bus', 'input', 3, undef),
@@ -970,7 +1083,7 @@ subtest 'linked plan builder rejects unsupported concat operands' => sub {
 
     like(
         $exception,
-        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', repeat groups like '\{4\{status_bus\[0\]\}\}', scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed binary\/octal\/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'/s,
+        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', repeat groups like '\{4\{status_bus\[0\]\}\}', scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed decimal actuals like '=-1', '=0d-1', or '='sd-1', intrinsic-width unsized signed binary\/octal\/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'/s,
         'builder blocks unsupported concat operands through the top-expression boundary',
     );
 };

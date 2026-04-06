@@ -3318,7 +3318,7 @@ RTLIF
     is($report->{blocked_boundary}, 'explicit link endpoint resolution', 'failure report preserves the blocked endpoint-resolution boundary for concat-operand failures');
     is(
         $report->{blocked_reason},
-        "concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', repeat groups like '{4{status_bus[0]}}', scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed binary/octal/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'",
+        "concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', repeat groups like '{4{status_bus[0]}}', scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed decimal actuals like '=-1', '=0d-1', or '='sd-1', intrinsic-width unsized signed binary/octal/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'",
         'failure report preserves the concise concat-operand top-expression reason',
     );
 };
@@ -5743,7 +5743,7 @@ RTLIF
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for concat-operand failures');
     like(
         $combined_output,
-        qr/Reason:\s+concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', repeat groups like '\{4\{status_bus\[0\]\}\}', scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed binary\/octal\/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'/s,
+        qr/Reason:\s+concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', repeat groups like '\{4\{status_bus\[0\]\}\}', scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed decimal actuals like '=-1', '=0d-1', or '='sd-1', intrinsic-width unsized signed binary\/octal\/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'/s,
         'CLI reports the concise concat-operand top-expression reason',
     );
 };

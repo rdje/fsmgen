@@ -1254,7 +1254,7 @@ sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $in
     if (!$spec && defined($endpoint) && ($endpoint =~ /\A\{.*\}\z/s || index($endpoint, ',') >= 0)) {
         confess
             "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
-            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', repeat groups like '{4{status_bus[0]}}', scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed binary/octal/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'. ".
+            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', repeat groups like '{4{status_bus[0]}}', scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed decimal actuals like '=-1', '=0d-1', or '='sd-1', intrinsic-width unsized signed binary/octal/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
     return undef unless $spec;
@@ -1565,8 +1565,18 @@ sub _expression_literal_bits_and_width ($class, $payload) {
         return $class->_hex_literal_bits_and_width(length($hex_digits) * 4, $hex_digits);
     }
 
+    if (defined($payload) && $payload =~ /\A'sd(-?(?:[0-9](?:_?[0-9])*))\z/i) {
+        my $signed_decimal_text = $1;
+        return undef unless $signed_decimal_text =~ /\A-/;
+        return $class->_intrinsic_signed_decimal_literal_bits_and_width($signed_decimal_text);
+    }
+
     if (defined($payload) && $payload =~ /\A0d(.+)\z/i) {
-        my $decimal_digits = $class->_normalized_separated_digits($1, '[0-9]');
+        my $decimal_text = $1;
+        if ($decimal_text =~ /\A-/) {
+            return $class->_intrinsic_signed_decimal_literal_bits_and_width($decimal_text);
+        }
+        my $decimal_digits = $class->_normalized_separated_digits($decimal_text, '[0-9]');
         return undef unless defined $decimal_digits;
         return $class->_intrinsic_decimal_literal_bits_and_width($decimal_digits);
     }
@@ -1575,6 +1585,12 @@ sub _expression_literal_bits_and_width ($class, $payload) {
         my $decimal_digits = $class->_normalized_separated_digits($1, '[0-9]');
         return undef unless defined $decimal_digits;
         return $class->_intrinsic_decimal_literal_bits_and_width($decimal_digits);
+    }
+
+    if (defined($payload) && $payload =~ /\A-(.+)\z/) {
+        my $decimal_digits = $class->_normalized_separated_digits($1, '[0-9]');
+        return undef unless defined $decimal_digits;
+        return $class->_intrinsic_signed_decimal_literal_bits_and_width("-$decimal_digits");
     }
 
     my $bare_hex_digits = $class->_normalized_separated_digits($payload, '[0-9A-Fa-f]');
@@ -1689,6 +1705,42 @@ sub _intrinsic_decimal_literal_bits_and_width ($class, $decimal_digits) {
     $bits = '0' unless length $bits;
 
     return ($bits, length($bits));
+}
+
+sub _intrinsic_signed_decimal_literal_bits_and_width ($class, $signed_decimal_text) {
+    return unless defined($signed_decimal_text) && !ref($signed_decimal_text);
+
+    my $negative = ($signed_decimal_text =~ s/\A-//) ? 1 : 0;
+    my $decimal_digits = $class->_normalized_separated_digits($signed_decimal_text, '[0-9]');
+    return unless defined $decimal_digits;
+
+    my $value = Math::BigInt->new($decimal_digits);
+    return unless defined $value;
+    $value->bneg() if $negative;
+
+    return $class->_intrinsic_signed_integer_bits_and_width($value);
+}
+
+sub _intrinsic_signed_integer_bits_and_width ($class, $value) {
+    return unless defined($value) && ref($value) && $value->isa('Math::BigInt');
+
+    my $width = 1;
+    if (!$value->is_neg()) {
+        my $bits = $value->copy()->as_bin();
+        $bits =~ s/\A0b//;
+        my $bit_length = ($bits eq '0') ? 0 : length($bits);
+        $width = $bit_length + 1 if $bit_length >= 1;
+    }
+    else {
+        my $magnitude_minus_one = $value->copy()->bneg();
+        $magnitude_minus_one->bdec();
+        my $bits = $magnitude_minus_one->as_bin();
+        $bits =~ s/\A0b//;
+        my $bit_length = ($bits eq '0') ? 0 : length($bits);
+        $width = $bit_length + 1 if $bit_length >= 1;
+    }
+
+    return $class->_signed_integer_bits_and_width($width, $value);
 }
 
 sub _signed_decimal_literal_bits_and_width ($class, $declared_width, $signed_decimal_text, %opts) {
