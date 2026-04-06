@@ -1,11 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-06: shared declaration surface should stay compact and package-oriented
+- Saved one more steering decision about the future declaration model.
+- Important continuity note:
+  - the long-term intent-level declaration surface should center on `+constants`, `+enums`, and future `+types`,
+  - `+define` should not be promoted as a separate long-term semantic family unless it remains purely compatibility residue,
+  - `+params` should stay tied to true per-instance generic/configuration behavior rather than becoming a second shared-value mechanism,
+  - future package-like authored objects should be able to export named scalar values and named aggregate values as well as enum families and future named types,
+  - and those shared aggregates should stay semantic/frontend-checkable rather than devolving into raw text fragments.
+
 ## 2026-04-06: future shared declarations should use semantic packages, not include-style text reuse
 - Saved one more future-lane steering decision for reusable declarations across `.fsm` files.
 - Important continuity note:
-  - future shared constants, enums, and named types should live in first-class package-like authored objects rather than in textual include fragments,
+  - future shared scalar values, aggregate values, enum families, and named types should live in first-class package-like authored objects rather than in textual include fragments,
   - those packages should be imported explicitly and stay namespaced by default,
-  - the intended first package contents are `+constants`, `+enums`, and future `+types`,
+  - the intended long-term semantic surface is `+constants`, `+enums`, and future `+types`, with aggregate values living through that same semantic package lane rather than through raw text tricks,
   - and per-instance parameterization should stay separate unless a later deliberate contract says a subset truly belongs in global/package scope.
 
 ## 2026-04-06: composition-top named literal actuals now close the first no-magic-number gap in explicit toplinks

@@ -1,15 +1,29 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-06: canonical shared-declaration surface should stay small and package-first
+- Realigned the language steering away from treating `+define`, `+enums`, `+params`, and `+constants` as equally important long-term semantic pillars.
+- Saved steering:
+  - the canonical intent-level declaration surface should center on `+constants`, `+enums`, and future `+types`,
+  - `+define` may remain as compatibility residue or fold into `+constants`, but it should not keep growing as a separate semantic lane,
+  - `+params` should stay reserved for real per-instance generic/configuration behavior rather than becoming another general shared-value mechanism,
+  - reusable package-like authored objects should eventually export named scalar values and named aggregate values in addition to enum families and future named types,
+  - and those shared aggregates should stay semantic/frontend-checkable rather than degenerating into raw textual list/hash fragments with no ownership or validation.
+- Why this direction is preferable:
+  - it keeps the source language closer to design intent than to a one-for-one clone of SystemVerilog/VHDL surface syntax,
+  - it gives users a clean way to avoid magic numbers and repeated aggregate payloads across many `.fsm` files,
+  - and it prevents the declaration surface from drifting into several partially-overlapping ways to spell the same idea.
+
 ## 2026-04-06: shared declarations should eventually come through semantic packages, not textual include
 - Captured one more future `R11` direction instead of leaving it as conversational intent only.
 - Saved steering:
   - FSMGen should eventually support reusable package-like authored objects for shared declarations across any number of `.fsm` files,
-  - the first-class package contents should be non-behavioral declarations such as `+constants`, `+enums`, and future `+types`,
+  - the first-class package contents should be named scalar values, named aggregate values, enum families, and future `+types`,
   - this should be a real semantic import/use lane with parser-visible ownership, validation, and namespacing rather than a textual include or macro-preprocessor feature,
   - namespaced references should be the default so cross-file reuse stays explicit and predictable,
+  - `+define` should not be promoted as an equal long-term semantic family beside `+constants`,
   - and instance-specific parameterization should not be silently folded into packages unless a later deliberate contract says those values are truly global/package-level rather than instantiation-local.
 - Why this direction is preferable:
-  - it solves the real “shared constants/enums/types without magic numbers” problem,
+  - it solves the real “shared named values and shared aggregate objects without magic numbers or duplication” problem,
   - it stays compatible with the already-planned reusable-source and future `(+types ...)` lanes,
   - and it avoids the low-quality failure mode where textual inclusion or implicit globals make symbol ownership, shadowing, and frontend validation much harder to keep honest.
 

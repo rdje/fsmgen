@@ -732,10 +732,11 @@ Deliverables:
   - and generated enable families should support explicit mutual-exclusion assertions instead of relying on an over-broad conflict ban,
   - `?top:name` remains the explicit composition-root concept unless a later family-level root-syntax decision introduces aliases such as `?mod:name` or `?module:name`,
   - reusable-source lookup should grow through existing `FSMLIB` semantics plus repeatable per-invocation `--path DIR` roots,
-  - a future reusable declarative package lane should exist for sharable `+constants`, `+enums`, future `+types`, and other bounded non-behavioral declarations,
+  - a future reusable declarative package lane should exist for sharable named scalar values, named aggregate values, `+enums`, and future `+types`,
   - that package lane should use explicit semantic import/use rather than textual include or macro substitution,
   - symbols should stay namespaced by default so cross-file reuse does not collapse into implicit global leakage,
-  - and per-instance tuning parameters should remain a separate module/composition contract unless a later global-constant lane proves they truly belong in packages too.
+  - the long-term canonical declaration surface should stay intent-level and compact around `+constants`, `+enums`, and future `+types` rather than promoting `+define` as a separate semantic family,
+  - and per-instance tuning parameters should remain a separate module/composition contract unless a later generic/global-constant lane proves a subset truly belongs in packages too.
 - Define one bounded portable synthesizable-type lane:
   - bits / bit-vectors, enums, records / packed-struct-like aggregates, fixed-size arrays, arrays of records, and named aliases / subtypes should become a deliberate frontend type core,
   - that type core should stay portable across SystemVerilog and future VHDL instead of promising backend-specific conveniences such as free aggregate-to-vector casting,
