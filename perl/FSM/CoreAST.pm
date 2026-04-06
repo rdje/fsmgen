@@ -1790,6 +1790,8 @@ package FSM::CoreAST::FSMModule;
     sub attributes($self) { $self->{attributes} }
     sub explicit_system_contract($self) { return $self->{attributes}{system_contract} }
     sub source_root_kind($self) { return $self->{attributes}{source_root_kind} // 'fsm' }
+    sub direct_root_symbols($self) { return $self->{attributes}{direct_root_symbols} }
+    sub package_imports($self) { return $self->{attributes}{package_imports} || [] }
     sub is_dt_root($self) { return $self->source_root_kind eq 'dt' }
     sub is_fsm_root($self) { return $self->source_root_kind eq 'fsm' }
 

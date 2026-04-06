@@ -1681,6 +1681,11 @@ Exit criteria:
   assignment RHS expressions and guard equality conditions, unresolved
   whole-aggregate references such as `FRAME` now fail explicitly, and
   whole-aggregate local-symbol flow/types remain future work.
+- `R11`: direct generated roots now also preserve one bounded `symbol_contract`
+  through forward `intent_hir` and mirrored `module_info`, so local
+  constants/enums, canonical aggregate payloads, scalar-leaf summaries, and
+  imported package names no longer disappear into parser-only state before the
+  future whole-aggregate/type lane can consume them.
 - `R11`: that same direct composition binding path now also covers
   source-side child-output `instance.port[index]` / `instance.port[msb:lsb]`
   projections, with planner grouping by one deterministic base child-output

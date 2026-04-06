@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-06: direct-root symbol contracts now survive into forward IR and module_info
+- Saved the next aggregate/type groundwork slice after local direct-root
+  aggregate constants landed.
+- Important continuity note:
+  - direct `?fsm` / `?dt` roots now preserve one bounded `symbol_contract`
+    through `intent_hir` and mirrored `module_info`,
+  - that surface currently includes local constant/enum names and counts,
+    canonical constant payloads, scalar-leaf convenience payloads,
+    aggregate-root path summaries, and imported package names/counts,
+  - it does not claim whole-aggregate assignment/type flow is shipped yet,
+  - but it gives future whole-aggregate/type work and future embedding/API work
+    one explicit semantic handoff instead of forcing reparsing.
+
 ## 2026-04-06: local direct-root aggregate constants now work on scalar-leaf expression paths
 - Saved the next direct-root aggregate symmetry slice after packages and
   composition-top locals landed.

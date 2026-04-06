@@ -1,0 +1,118 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Test::More;
+use File::Spec;
+use File::Temp qw(tempdir);
+use FindBin;
+
+use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+
+use FSM::Pipeline::HDLGenerator;
+use FSM::Pipeline::GeneratedModuleInfoBuilder;
+
+subtest 'direct roots preserve a bounded symbol contract through intent_hir and module_info' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
+    mkdir $libdir or die "Cannot create $libdir: $!";
+
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_symbol_contract_root.fsm');
+    my $package_path = File::Spec->catfile($libdir, 'shared_external.fsm');
+
+    write_file(
+        $package_path,
+        <<'FSM'
+(?pkg:shared_external
+  (+constants
+    (RESET_BYTE 8'hA5)
+    (FRAME ((mode 3) (flag 1)))
+  )
+  (+enums
+    (wire_mode
+      (IDLE 0)
+      (BUSY 1)
+    )
+  )
+)
+FSM
+    );
+
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_symbol_contract_root
+  (+import shared_external)
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+constants
+    (BYTES (8'hA5 8'h3C 0))
+    (FRAME ((mode 3) (flag 1)))
+  )
+  (+enums
+    (mode
+      (IDLE 0)
+      (BUSY 1)
+    )
+  )
+  (+size
+    (OUT 8)
+  )
+  (idle
+    (OUT = BYTES[1])
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+        source_search_paths => [$libdir],
+    );
+    my $result = $pipeline->generate_hdl_from_file($fsm_path);
+    my $intent_hir = $result->{intent_hir};
+    my $module_info = $result->{module_info};
+    my $symbol_contract = $intent_hir->{symbol_contract};
+
+    ok($symbol_contract, 'direct intent_hir preserves a symbol contract payload');
+    is($symbol_contract->{constant_count}, 2, 'symbol contract counts declared local constant roots');
+    is_deeply($symbol_contract->{constant_names}, ['BYTES', 'FRAME'], 'symbol contract preserves stable local constant names');
+    is($symbol_contract->{enum_count}, 1, 'symbol contract counts declared local enums');
+    is_deeply($symbol_contract->{enum_names}, ['mode'], 'symbol contract preserves stable local enum names');
+    is($symbol_contract->{constants}{FRAME}{kind}, 'map', 'symbol contract preserves aggregate constant payload shape');
+    is($symbol_contract->{constants}{FRAME}{members}{flag}{payload}, '1', 'symbol contract preserves nested aggregate scalar payloads');
+    is($symbol_contract->{constant_scalar_leaves}{'BYTES[1]'}, "8'h3C", 'symbol contract exposes scalar-leaf convenience payloads');
+    is($symbol_contract->{constant_scalar_leaves}{'FRAME.flag'}, '1', 'symbol contract exposes aggregate member scalar leaves');
+    is_deeply(
+        $symbol_contract->{constant_aggregate_paths},
+        ['BYTES', 'FRAME'],
+        'symbol contract exposes stable aggregate root paths',
+    );
+    is($symbol_contract->{enums}{mode}{BUSY}, '1', 'symbol contract preserves canonical enum member payloads');
+    is($symbol_contract->{package_import_count}, 1, 'symbol contract counts imported packages');
+    is_deeply($symbol_contract->{package_imports}, ['shared_external'], 'symbol contract preserves imported package names');
+
+    is_deeply(
+        $module_info->{symbol_contract},
+        $symbol_contract,
+        'module_info mirrors the same direct-root symbol contract surface',
+    );
+    is_deeply(
+        FSM::Pipeline::GeneratedModuleInfoBuilder->intent_hir_from_module_info($module_info)->{symbol_contract},
+        $symbol_contract,
+        'module-info query path also preserves the same symbol contract surface',
+    );
+};
+
+done_testing();
+
+sub write_file {
+    my ($path, $content) = @_;
+    open my $fh, '>', $path or die "Cannot open $path for write: $!";
+    print {$fh} $content or die "Cannot write $path: $!";
+    close $fh or die "Cannot close $path: $!";
+}

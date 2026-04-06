@@ -508,6 +508,11 @@ This is the current `R8` draft normative contract for the symbol-definition and 
 - Composition-top imports reuse the same package sources, but currently feed only `?toplink` literal-actual positions such as `=shared.RESET_BYTE`, `=shared.mode.BUSY`, `=shared.BYTES[1]`, and `=shared.FRAME.flag`.
 - Malformed shapes like `(+import)`, `(+import BROKEN_LIST)`, and invalid package names such as `(+import bad-name)` are rejected explicitly.
 
+Forward IR note:
+- direct `?fsm` / `?dt` results now also preserve one bounded `symbol_contract` through `intent_hir` and mirrored `module_info`
+- that surface currently carries local constant/enum names and counts, canonical constant payloads, scalar-leaf convenience payloads, aggregate-root path summaries, and imported package names/counts
+- it is meant as a semantic export/inspection surface for embedders and future compiler work, not as evidence that whole-aggregate assignment/type flow is already shipped
+
 Regression-backed examples:
 ```lisp
 (+constants

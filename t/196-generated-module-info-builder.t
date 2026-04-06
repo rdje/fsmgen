@@ -24,6 +24,15 @@ subtest 'generated module-info builder rebuilds the bounded direct-root module_i
         $fsm_path,
         <<'FSM'
 (?dt:generated_module_info_builder_root
+  (+constants
+    (FRAME ((mode 3) (flag 1)))
+  )
+  (+enums
+    (mode
+      (IDLE 0)
+      (BUSY 1)
+    )
+  )
   (-left
     (<trigger
       (serial_out> = 1)
@@ -127,6 +136,7 @@ sub module_info_snapshot {
         standalone_dt_module_enable_family => $module_info->{standalone_dt_module_enable_family},
         parameter_count => $module_info->{parameter_count},
         parameter_names => $module_info->{parameter_names},
+        symbol_contract => $module_info->{symbol_contract},
         intent_hir => $module_info->{intent_hir},
         lowered_rtl_ir => $module_info->{lowered_rtl_ir},
         structural_rtl_ir => $module_info->{structural_rtl_ir},

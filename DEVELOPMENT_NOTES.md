@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-06: direct-root symbol contracts should survive the forward IR instead of being rediscovered later
+- Continued the aggregate/type-lane groundwork after local direct-root aggregate
+  leaves landed.
+- Landed behavior:
+  - direct `?fsm` / `?dt` roots now preserve one bounded local symbol contract
+    on the semantic module instead of flattening every local constant/enum away
+    immediately,
+  - [perl/FSM/IR/IntentHIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/IntentHIRBuilder.pm)
+    now mirrors that contract into forward `intent_hir`,
+  - [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm)
+    now mirrors the same contract into top-level `module_info`,
+  - and the shipped surface currently includes local constant/enum names and
+    counts, canonical constant payloads, scalar-leaf convenience payloads,
+    aggregate-root path summaries, and imported package names/counts.
+- Why this is worth shipping:
+  - it removes another low-quality “reparse or rediscover it later” seam,
+  - it gives future whole-aggregate/type work one honest semantic handoff
+    point instead of another parser-only side channel,
+  - and it improves the future embedding/API story by preserving the authored
+    symbol layer explicitly instead of only preserving its scalarized effects.
+
 ## 2026-04-06: local direct-root aggregate constants should not lag behind package imports either
 - Continued the same aggregate/symbol symmetry cleanup after local composition-top
   constants landed.

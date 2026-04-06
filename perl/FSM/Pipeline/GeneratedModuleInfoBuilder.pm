@@ -65,6 +65,7 @@ sub build_from_fsm_module ($class, %args) {
         standalone_dt_module_enable_family => $intent_hir_hash->{standalone_dt_module_enable_family},
         parameter_count => $intent_hir_hash->{parameter_count},
         parameter_names => $intent_hir_hash->{parameter_names},
+        symbol_contract => $intent_hir_hash->{symbol_contract},
         intent_hir => _clone_structured_value($intent_hir_hash),
     };
 }

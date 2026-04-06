@@ -54,6 +54,7 @@ sub build_from_fsm_module ($class, %args) {
     my %signal_analysis = $class->analyze_signals(\%all_signals);
     my $standalone_dt_enable_metadata = $class->build_standalone_dt_enable_metadata(\@all_states);
     my @parameter_names = sort keys %{ $fsm_module->parameters || {} };
+    my $symbol_contract = $class->build_direct_root_symbol_contract($fsm_module);
 
     my $intent_hir = FSM::IR::IntentHIR->new(
         module_name => $module_name,
@@ -89,6 +90,7 @@ sub build_from_fsm_module ($class, %args) {
         standalone_dt_enable_families => $standalone_dt_enable_metadata->{standalone_dt_enable_families},
         standalone_dt_module_enable_family => $standalone_dt_enable_metadata->{standalone_dt_module_enable_family},
         parameter_names => \@parameter_names,
+        symbol_contract => $symbol_contract,
     );
 
     fsm_trace_exit('FSM module analysis complete', 2);
@@ -139,6 +141,7 @@ sub build_from_composition_plan ($class, %args) {
         standalone_dt_enable_families => [],
         standalone_dt_module_enable_family => {},
         parameter_names => [],
+        symbol_contract => undef,
         composition_child_count => $composition_child_exports->{child_count},
         composition_children => $composition_child_exports->{children},
         composition_generated_child_count => $generated_child_exports->{child_count},
@@ -151,6 +154,35 @@ sub build_from_composition_plan ($class, %args) {
         composition_standalone_dt_children => $standalone_dt_child_exports->{children},
         composition_lane => $composition_plan->lane,
     );
+}
+
+sub build_direct_root_symbol_contract ($class, $fsm_module) {
+    return undef unless $fsm_module && ref($fsm_module);
+
+    my $direct_root_symbols = $fsm_module->can('direct_root_symbols')
+        ? $fsm_module->direct_root_symbols
+        : undef;
+    my $package_imports = $fsm_module->can('package_imports')
+        ? $fsm_module->package_imports
+        : [];
+
+    my $symbol_contract = (
+        $direct_root_symbols && $direct_root_symbols->can('as_hashref')
+            ? $direct_root_symbols->as_hashref
+            : {}
+    );
+
+    $symbol_contract->{package_import_count} = scalar(@{$package_imports || []});
+    $symbol_contract->{package_imports} = [ @{$package_imports || []} ];
+
+    my $has_local_symbols = (
+        ($symbol_contract->{constant_count} // 0) > 0
+        || ($symbol_contract->{enum_count} // 0) > 0
+    );
+    my $has_imports = ($symbol_contract->{package_import_count} // 0) > 0;
+
+    return undef unless $has_local_symbols || $has_imports;
+    return $symbol_contract;
 }
 
 sub build_standalone_dt_enable_metadata ($class, $all_states) {

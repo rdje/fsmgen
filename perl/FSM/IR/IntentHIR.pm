@@ -38,6 +38,7 @@ sub new ($class, %args) {
         standalone_dt_enable_families => _clone($args{standalone_dt_enable_families} || []),
         standalone_dt_module_enable_family => _clone($args{standalone_dt_module_enable_family} || {}),
         parameter_names => [@{$args{parameter_names} || []}],
+        symbol_contract => _clone($args{symbol_contract}),
         composition_child_count => $args{composition_child_count},
         composition_children => _clone($args{composition_children}),
         composition_generated_child_count => $args{composition_generated_child_count},
@@ -64,6 +65,7 @@ sub requires_implicit_system_ports ($self) { return $self->{requires_implicit_sy
 sub standalone_dt_enable_families ($self) { return $self->{standalone_dt_enable_families} }
 sub standalone_dt_module_enable_family ($self) { return $self->{standalone_dt_module_enable_family} }
 sub parameter_names ($self) { return $self->{parameter_names} }
+sub symbol_contract ($self) { return $self->{symbol_contract} }
 sub composition_child_count ($self) { return $self->{composition_child_count} }
 sub composition_children ($self) { return $self->{composition_children} }
 sub composition_generated_child_count ($self) { return $self->{composition_generated_child_count} }
@@ -191,6 +193,7 @@ sub as_hashref ($self) {
         standalone_dt_module_enable_family => _clone($self->standalone_dt_module_enable_family || {}),
         parameter_count => scalar(@$parameter_names),
         parameter_names => $parameter_names,
+        symbol_contract => _clone($self->symbol_contract),
     };
 
     $result->{composition_child_count} = $self->composition_child_count

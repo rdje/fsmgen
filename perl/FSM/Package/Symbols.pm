@@ -88,6 +88,26 @@ sub summary ($self) {
     };
 }
 
+sub as_hashref ($self) {
+    my $constants = _clone($self->{constants} || {});
+    my $enums = _clone($self->{enums} || {});
+    my $constant_names = [ sort keys %{ $self->{constants} || {} } ];
+    my $enum_names = [ sort keys %{ $self->{enums} || {} } ];
+    my $constant_scalar_leaves = $self->constant_scalar_leaves || {};
+    my $constant_aggregate_paths = [ sort keys %{ $self->constant_aggregate_paths || {} } ];
+
+    return {
+        constant_count => scalar(@$constant_names),
+        constant_names => $constant_names,
+        constants => $constants,
+        enum_count => scalar(@$enum_names),
+        enum_names => $enum_names,
+        enums => $enums,
+        constant_scalar_leaves => _clone($constant_scalar_leaves),
+        constant_aggregate_paths => $constant_aggregate_paths,
+    };
+}
+
 sub _scalar_payload_value ($payload) {
     return undef unless defined $payload;
     return $payload unless ref($payload) eq 'HASH';
@@ -172,6 +192,22 @@ sub _collect_aggregate_paths ($path, $payload, $aggregate_paths) {
     for my $index (0 .. $#$items) {
         _collect_aggregate_paths("$path\[$index\]", $items->[$index], $aggregate_paths);
     }
+}
+
+sub _clone ($value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone($value->{$_}) } sort keys %$value
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone($_) } @$value ];
+    }
+
+    return $value;
 }
 
 1;

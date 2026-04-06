@@ -126,6 +126,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
     my $module = FSM::CoreAST::FSMModule->new(name => $module_name);
     $self->{fsm_module} = $module;
     $module->{attributes}{source_root_kind} = $root_kind;
+    $module->{attributes}{direct_root_symbols} //= FSM::Package::Symbols->new();
     my $root_contract_label = $self->root_contract_label($root_kind);
     my $top_level_forms_desc = $self->supported_top_level_forms_description($root_kind, $is_flat_ast);
     my $supported_directives_desc = $self->supported_directives_description($root_kind);
@@ -387,6 +388,10 @@ sub parse_constants_section($self, $constants_ast) {
             my $payload = $symbols->constant_scalar_leaves->{$constant_name};
             my $literal_expr = $self->{expression_builder}->parse_scalar_expression($payload);
             $self->{signal_manager}->store_constant($constant_name, $literal_expr);
+        }
+
+        if ($self->{fsm_module} && $self->{fsm_module}->can('direct_root_symbols')) {
+            $self->{fsm_module}->direct_root_symbols->store_constant($resolved_name, $canonical_payload);
         }
     }
 }
@@ -1183,6 +1188,22 @@ sub parse_enums_section($self, $enums_ast) {
             $enum_values{$resolved_member_name} = $resolved_member_value;
         }
         $self->{signal_manager}->store_enum($resolved_enum_name, \%enum_values);
+
+        if ($self->{fsm_module} && $self->{fsm_module}->can('direct_root_symbols')) {
+            my %canonical_enum_values = map {
+                $_ => $self->canonicalize_constant_literal_payload(
+                    module_name => ($self->{fsm_module}->name // 'source'),
+                    section_header => '+enums',
+                    symbol_kind => 'enum member',
+                    symbol_name => $resolved_enum_name.'.'.$_,
+                    value_token => $enum_values{$_},
+                )
+            } sort keys %enum_values;
+            $self->{fsm_module}->direct_root_symbols->store_enum(
+                $resolved_enum_name,
+                \%canonical_enum_values,
+            );
+        }
     }
 }
 
