@@ -9,6 +9,7 @@ no warnings 'experimental::signatures';
 use Data::Dumper;
 use FSM::CoreAST;
 use FSM::Debug;
+use FSM::Package::Symbols;
 use FSM::SourceClassifier;
 
 sub new($class, %args) {
@@ -336,36 +337,57 @@ sub describe_top_level_source_root($self, $raw_ast) {
 
 sub parse_constants_section($self, $constants_ast) {
     my (undef, $constants_list) = @$constants_ast;
+    my $module_name = ($self->{fsm_module} && $self->{fsm_module}->can('name'))
+        ? $self->{fsm_module}->name
+        : 'source';
 
     Carp::confess
         "Malformed '+constants' section. ".
-        "The active contract supports '+constants' only as a non-empty list of '(NAME scalar_value)' entries. ".
+        "The active contract supports '+constants' only as a non-empty list of '(NAME value)' entries where the value is either a scalar literal or a bounded aggregate list/hash payload. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless ref($constants_list) eq 'ARRAY' && @$constants_list;
 
     for my $constant_def (@$constants_list) {
         Carp::confess
             "Malformed '+constants' entry. ".
-            "Each '+constants' entry must be a pair '(NAME scalar_value)'. ".
+            "Each '+constants' entry must be a pair '(NAME value)'. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
             unless ref($constant_def) eq 'ARRAY' && @$constant_def == 2;
 
         my ($name, $value) = @$constant_def;
         my $resolved_name = $self->unwrap_scalar_token($name);
-        my $resolved_value = $self->unwrap_scalar_token($value);
 
         Carp::confess
             "Malformed '+constants' entry for constant '".$self->describe_contract_name($resolved_name)."'. ".
-            "Each '+constants' entry must use an HDL-identifier-compatible name and a scalar value token. ".
+            "Each '+constants' entry must use an HDL-identifier-compatible name. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
-            unless $self->is_contract_identifier($resolved_name)
-                && defined($resolved_value)
-                && !ref($resolved_value);
+            unless $self->is_contract_identifier($resolved_name);
 
-        my $literal_expr = $self->{expression_builder}->parse_scalar_expression(
-            $resolved_value
+        my $canonical_payload = $self->canonicalize_constant_payload(
+            module_name => $module_name,
+            section_header => '+constants',
+            symbol_kind => 'constant',
+            symbol_name => $resolved_name,
+            value_ast => $value,
         );
-        $self->{signal_manager}->store_constant($resolved_name, $literal_expr);
+
+        $self->{signal_manager}->record_constant_definition($resolved_name);
+
+        my $symbols = FSM::Package::Symbols->new(
+            constants => {
+                $resolved_name => $canonical_payload,
+            },
+        );
+
+        for my $aggregate_path (sort keys %{ $symbols->constant_aggregate_paths || {} }) {
+            $self->{signal_manager}->store_aggregate_symbol($aggregate_path);
+        }
+
+        for my $constant_name (sort keys %{ $symbols->constant_scalar_leaves || {} }) {
+            my $payload = $symbols->constant_scalar_leaves->{$constant_name};
+            my $literal_expr = $self->{expression_builder}->parse_scalar_expression($payload);
+            $self->{signal_manager}->store_constant($constant_name, $literal_expr);
+        }
     }
 }
 
@@ -560,6 +582,166 @@ sub is_contract_identifier($self, $value) {
 
 sub describe_contract_name($self, $value) {
     return defined($value) && !ref($value) ? $value : 'unknown';
+}
+
+sub canonicalize_constant_literal_payload($self, %args) {
+    my $module_name = $args{module_name} // 'source';
+    my $section_header = $args{section_header} // '+constants';
+    my $symbol_kind = $args{symbol_kind} // 'symbol';
+    my $symbol_name = $args{symbol_name} // 'unknown';
+    my $value_token = $args{value_token};
+
+    my $literal_expr = eval {
+        $self->{expression_builder}->parse_scalar_expression($value_token);
+    };
+    my $parse_error = $@;
+
+    Carp::confess
+        "Malformed '$section_header' entry for $symbol_kind '$symbol_name' in source '$module_name' with value token '$value_token'. ".
+        "Each '$section_header' value must resolve to a literal scalar value such as '0', '8'3', '8'hA5', or 'const_8b0'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        if $parse_error || ref($literal_expr) ne 'FSM::CoreAST::Literal';
+
+    my $value = $literal_expr->value;
+    my $width = $literal_expr->width;
+    my $radix = $literal_expr->radix // 'decimal';
+
+    return $value unless defined $width;
+    return $width."'b".$value if $radix eq 'binary';
+    return $width."'h".$value if $radix eq 'hex';
+    return $width."'d".$value;
+}
+
+sub canonicalize_constant_payload($self, %args) {
+    my $module_name = $args{module_name} // 'source';
+    my $section_header = $args{section_header} // '+constants';
+    my $symbol_kind = $args{symbol_kind} // 'constant';
+    my $symbol_name = $args{symbol_name} // 'unknown';
+    my $value_ast = $args{value_ast};
+
+    my $scalar_value = $self->unwrap_scalar_token($value_ast);
+    if (defined($scalar_value) && !ref($scalar_value)) {
+        my $payload = $self->canonicalize_constant_literal_payload(
+            %args,
+            value_token => $scalar_value,
+        );
+        return {
+            kind => 'scalar',
+            payload => $payload,
+        };
+    }
+
+    Carp::confess
+        "Malformed '$section_header' entry for $symbol_kind '$symbol_name' in source '$module_name'. ".
+        "Each '$section_header' value must be either a scalar literal, a non-empty list aggregate, or a non-empty hash-like aggregate written as '(member value)' pairs. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless ref($value_ast) eq 'ARRAY';
+
+    Carp::confess
+        "Malformed '$section_header' entry for $symbol_kind '$symbol_name' in source '$module_name' with an empty aggregate value. ".
+        "Aggregate constant values must be non-empty lists or non-empty hash-like member sets. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless @$value_ast;
+
+    my $value_items = $self->constant_value_items($value_ast);
+
+    Carp::confess
+        "Malformed '$section_header' entry for $symbol_kind '$symbol_name' in source '$module_name' with an empty aggregate value. ".
+        "Aggregate constant values must be non-empty lists or non-empty hash-like member sets. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless @$value_items;
+
+    my $hash_like_entries = 0;
+    my $non_hash_entries = 0;
+    for my $entry (@$value_items) {
+        my $member_name = (ref($entry) eq 'ARRAY' && @$entry == 2)
+            ? $self->unwrap_scalar_token($entry->[0])
+            : undef;
+        if (defined($member_name) && $self->is_contract_identifier($member_name)) {
+            $hash_like_entries++;
+        } else {
+            $non_hash_entries++;
+        }
+    }
+
+    if ($hash_like_entries && !$non_hash_entries) {
+        my %members;
+        for my $entry (@$value_items) {
+            my ($member_name_ast, $member_value_ast) = @$entry;
+            my $member_name = $self->unwrap_scalar_token($member_name_ast);
+            $members{$member_name} = $self->canonicalize_constant_payload(
+                module_name => $module_name,
+                section_header => $section_header,
+                symbol_kind => "$symbol_kind member",
+                symbol_name => $symbol_name.'.'.$member_name,
+                value_ast => $member_value_ast,
+            );
+        }
+
+        return {
+            kind => 'map',
+            members => \%members,
+        };
+    }
+
+    Carp::confess
+        "Malformed '$section_header' entry for $symbol_kind '$symbol_name' in source '$module_name' with a mixed aggregate value. ".
+        "List-style and hash-style aggregate entries cannot be mixed in one constant value. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        if $hash_like_entries && $non_hash_entries;
+
+    my @items;
+    for my $index (0 .. $#$value_items) {
+        push @items, $self->canonicalize_constant_payload(
+            module_name => $module_name,
+            section_header => $section_header,
+            symbol_kind => "$symbol_kind item",
+            symbol_name => $symbol_name."[$index]",
+            value_ast => $value_items->[$index],
+        );
+    }
+
+    return {
+        kind => 'list',
+        items => \@items,
+    };
+}
+
+sub constant_value_items($self, $value_ast) {
+    my $cursor = $value_ast;
+
+    while (ref($cursor) eq 'ARRAY' && @$cursor == 1 && ref($cursor->[0]) eq 'ARRAY') {
+        $cursor = $cursor->[0];
+    }
+
+    my @items;
+    while (1) {
+        if (!ref($cursor)) {
+            push @items, $cursor if defined $cursor;
+            last;
+        }
+
+        if (ref($cursor) eq 'ARRAY' && @$cursor == 1) {
+            push @items, $cursor->[0] if defined $cursor->[0];
+            last;
+        }
+
+        if (ref($cursor) eq 'ARRAY' && @$cursor == 2) {
+            push @items, $cursor->[0];
+            $cursor = $cursor->[1];
+            next;
+        }
+
+        if (ref($cursor) eq 'ARRAY') {
+            push @items, @$cursor;
+            last;
+        }
+
+        push @items, $cursor;
+        last;
+    }
+
+    return \@items;
 }
 
 sub reset_transition_target_tracking($self) {

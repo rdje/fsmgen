@@ -365,14 +365,12 @@ sub parse_scalar_expression($self, $scalar) {
         return $resolved_symbol;
     }
 
-    if ($scalar =~ /[.\[]/) {
-        my $aggregate_prefix = $self->{signal_manager}->aggregate_symbol_prefix_for($scalar);
-        if (defined $aggregate_prefix) {
-            Carp::confess
-                "Unsupported aggregate-valued package symbol '$scalar'. ".
-                "The active semantic package lane currently requires member/index access all the way to a scalar leaf, for example '$aggregate_prefix.member' or '$aggregate_prefix\[0\]'. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n";
-        }
+    my $aggregate_prefix = $self->{signal_manager}->aggregate_symbol_prefix_for($scalar);
+    if (defined $aggregate_prefix) {
+        Carp::confess
+            "Unsupported aggregate-valued symbol '$scalar'. ".
+            "The active scalar-expression lane currently requires member/index access all the way to a scalar leaf, for example '$aggregate_prefix.member' or '$aggregate_prefix\[0\]'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }
     
     if ($scalar =~ /^(\d+)'([bdhxBDHX])([0-9a-fA-F_]+)$/) {

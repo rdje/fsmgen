@@ -458,12 +458,14 @@ This is the current `R8` draft normative contract for the symbol-definition and 
 `(+constants ...)`:
 - Defines named literal constants.
 - Shape:
-  - non-empty list of `(NAME scalar_value)` entries
+  - non-empty list of `(NAME value)` entries
 - Current active use:
   - `(+constants (C0 8'3) (ZERO const_8b0))`
 - References to those names resolve as literals in assignment RHS expressions and guard equality conditions.
+- Direct-root note:
+  - inside `?fsm:name` and `?dt:name`, `(+constants ...)` also has a bounded aggregate extension where values may be non-empty lists or nested hash-like `(member value)` aggregates, but the current live direct-root path still requires references to resolve all the way to scalar leaves such as `BYTES[1]`, `FRAME.flag`, or `NEST.header.nibble`.
 - Composition-top note:
-  - inside `?top:name`, `(+constants ...)` also has a bounded aggregate extension where values may be non-empty lists or nested hash-like `(member value)` aggregates, but the current live composition path still requires references to resolve all the way to scalar leaves such as `BYTES[1]` or `FRAME.flag`.
+  - inside `?top:name`, `(+constants ...)` has that same bounded aggregate extension, and the current live composition path likewise still requires references to resolve all the way to scalar leaves such as `BYTES[1]` or `FRAME.flag`.
 - Malformed shapes like `(+constants)`, `(+constants BROKEN)`, and malformed entries like `(+constants (C0))` are rejected explicitly.
 
 `(+define ...)`:
@@ -511,6 +513,7 @@ Regression-backed examples:
 (+constants
   (C0 8'3)
   (ZERO const_8b0)
+  (FRAME ((mode 3) (flag 1)))
 )
 (+define (D0 8'4))
 (+params

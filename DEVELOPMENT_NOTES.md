@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-06: local direct-root aggregate constants should not lag behind package imports either
+- Continued the same aggregate/symbol symmetry cleanup after local composition-top
+  constants landed.
+- Landed behavior:
+  - direct `?fsm` / `?dt` `(+constants ...)` entries may now be scalar
+    literals, non-empty lists, or nested hash-like `(member value)` aggregates,
+  - local direct-root references such as `BYTES[1]`, `FRAME.flag`, and
+    `NEST.header.nibble` now resolve as literals in assignment RHS expressions
+    and guard equality conditions,
+  - unresolved whole aggregates such as `FRAME` now fail explicitly through the
+    same aggregate-root boundary already used for imported package symbols,
+  - and mixed local aggregate shapes such as `((mode 3) 0)` now fail at the
+    direct-root parser boundary instead of degrading into later-stage noise.
+- Why this is worth shipping:
+  - it removes another avoidable split between local authored data and imported
+    shared data,
+  - it keeps the live direct-root path aligned with the dynamic-feeling
+    aggregate steering already logged for the future type lane,
+  - and it reuses the same scalar-leaf contract rather than pretending
+    whole-aggregate direct-root flow is already shipped.
+
 ## 2026-04-06: local composition-top aggregate constants should not lag behind imported packages
 - Continued the active symbol/aggregate lane by removing an avoidable asymmetry:
   imported packages already supported aggregate leaf access, but local `?top`

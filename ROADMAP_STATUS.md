@@ -1674,6 +1674,13 @@ Exit criteria:
   and bounded composition actual/concat positions, unresolved whole-aggregate
   references such as `shared.FRAME` now fail explicitly, and whole-aggregate
   flow/types remain future work.
+- `R11`: that same scalar-leaf aggregate-value lane now also covers local
+  direct `?fsm` / `?dt` `+constants`: direct-root `+constants` entries may now
+  be scalar literals, non-empty lists, or nested hash-like aggregates, local
+  references such as `BYTES[1]` or `FRAME.flag` now resolve as literals in
+  assignment RHS expressions and guard equality conditions, unresolved
+  whole-aggregate references such as `FRAME` now fail explicitly, and
+  whole-aggregate local-symbol flow/types remain future work.
 - `R11`: that same direct composition binding path now also covers
   source-side child-output `instance.port[index]` / `instance.port[msb:lsb]`
   projections, with planner grouping by one deterministic base child-output

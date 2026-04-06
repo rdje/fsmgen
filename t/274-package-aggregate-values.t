@@ -264,7 +264,7 @@ FSM
 
     like(
         $pipeline_error,
-        qr/Unsupported aggregate-valued package symbol 'shared_external\.FRAME'/s,
+        qr/Unsupported aggregate-valued symbol 'shared_external\.FRAME'/s,
         'pipeline rejects unresolved aggregate package roots with a targeted direct-root diagnostic',
     );
 
@@ -276,7 +276,7 @@ FSM
     ok(!-e $output_path, 'CLI does not emit HDL for unresolved aggregate package roots');
     like(
         $combined_output,
-        qr/Unsupported aggregate-valued package symbol 'shared_external\.FRAME'/s,
+        qr/Unsupported aggregate-valued symbol 'shared_external\.FRAME'/s,
         'CLI surfaces the targeted aggregate-root boundary',
     );
     isnt($error_code, 0, 'CLI exits non-zero for unresolved aggregate package roots');

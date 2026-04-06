@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-06
+### local direct-root aggregate constants now share the scalar-leaf expression path
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so direct `?fsm` / `?dt` `(+constants ...)` entries may now be scalar literals, non-empty lists, or nested hash-like `(member value)` aggregates instead of staying scalar-only.
+- Updated [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm) and [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) so local aggregate scalar leaves such as `BYTES[1]`, `FRAME.flag`, and `NEST.header.nibble` now resolve as literals in assignment RHS expressions and guard equality conditions, while unresolved whole aggregates such as `FRAME` fail explicitly through the same aggregate-root boundary now used for package imports.
+- This slice stays intentionally bounded: direct-root local aggregate constants now feed only scalar-leaf expression positions; whole-aggregate local-symbol flow/types remain future work.
+- Added [t/276-direct-local-aggregate-values.t](/Users/richarddje/Documents/github/fsmgen/t/276-direct-local-aggregate-values.t) and updated [t/274-package-aggregate-values.t](/Users/richarddje/Documents/github/fsmgen/t/274-package-aggregate-values.t) to lock local aggregate-leaf success, unresolved local aggregate-root rejection, mixed aggregate-shape rejection, and the broader aggregate-root diagnostic wording.
+
 ### composition-top aggregate constants now share the named-actual path on scalar leaves
 - Updated [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so composition-top `(+constants ...)` now accepts scalar literals, non-empty list aggregates, and nested hash-like `(member value)` aggregates instead of staying scalar-only.
 - Updated [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm) so local top-root symbol resolution now reuses the same structured constant-leaf contract already shipped for packages, which means local references such as `BYTES[1]`, `FRAME.flag`, and `NEST.header.nibble` now resolve through the same scalar-leaf path as imported package payloads.

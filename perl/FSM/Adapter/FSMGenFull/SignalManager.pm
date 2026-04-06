@@ -16,10 +16,11 @@ sub new($class, %args) {
         signal_usage => {},     # Track usage patterns for analysis
         # Symbol tables for constants, enums, defines, and params
         constants => {},        # +constants: name -> literal_value
+        constant_definitions => {}, # declared +constants roots (for summary/continuity)
         enums => {},           # +enums: enum_name -> {member -> value}
         defines => {},         # +define: name -> value_expression
         params => {},          # +params: name -> parameter_value
-        aggregate_symbols => {}, # imported aggregate-valued package symbol roots
+        aggregate_symbols => {}, # aggregate-valued symbol roots that must resolve to scalar leaves
     }, $class;
 }
 
@@ -160,6 +161,12 @@ sub store_constant($self, $name, $literal_expr) {
     $self->{constants}{$name} = $literal_expr;
 }
 
+sub record_constant_definition($self, $name) {
+    return unless defined $name && length $name;
+    $self->{constant_definitions}{$name} = 1;
+    return $self->{constant_definitions}{$name};
+}
+
 sub store_enum($self, $enum_name, $enum_values_hashref) {
     $self->{enums}{$enum_name} = $enum_values_hashref;
 }
@@ -232,8 +239,10 @@ sub resolve_symbol($self, $symbol_name) {
 
 # Summaries
 sub get_symbol_summary($self) {
+    my $constant_definition_count = scalar(keys %{$self->{constant_definitions} || {}});
+
     my %summary = (
-        constants => scalar(keys %{$self->{constants}}),
+        constants => $constant_definition_count || scalar(keys %{$self->{constants}}),
         enums => scalar(keys %{$self->{enums}}),
         defines => scalar(keys %{$self->{defines}}),
         params => scalar(keys %{$self->{params}}),

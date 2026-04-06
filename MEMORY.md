@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-06: local direct-root aggregate constants now work on scalar-leaf expression paths
+- Saved the next direct-root aggregate symmetry slice after packages and
+  composition-top locals landed.
+- Important continuity note:
+  - direct `?fsm` / `?dt` `(+constants ...)` entries may now be scalar
+    literals, non-empty lists, or nested hash-like aggregates,
+  - local direct-root references such as `BYTES[1]`, `FRAME.flag`, and
+    `NEST.header.nibble` now resolve as literals in assignment RHS expressions
+    and guard equality conditions,
+  - unresolved whole aggregates such as `FRAME` now fail explicitly instead of
+    degrading into generic signal names,
+  - mixed local aggregate shapes are rejected explicitly at the direct-root
+    parser boundary,
+  - and whole-aggregate local-symbol flow/types remain future work.
+
 ## 2026-04-06: local composition-top aggregate constants now work on scalar-leaf actual paths
 - Saved the next bounded composition symbol slice after package aggregate
   leaves landed.
