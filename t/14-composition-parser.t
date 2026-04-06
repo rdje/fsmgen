@@ -179,6 +179,53 @@ ok(
     'parser records embedded DT roots alongside the typed composition top',
 );
 
+my $symbol_top_spec = $parser->parse_source(
+    scalar Lispish::single(\'(?top:symbol_top
+  (+constants
+    (RESET_BYTE 8\'165)
+    (IDLE_MASK const_4b0)
+  )
+  (+enums
+    (mode
+      (IDLE 0)
+      (BUSY 1)
+    )
+  )
+  (?ports:public_io
+    status_out>
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /=mode.BUSY/status_out/
+  )
+)'),
+);
+
+is($symbol_top_spec->top->name, 'symbol_top', 'parser preserves composition top name when symbol sections are present');
+is_deeply(
+    $symbol_top_spec->top->top_symbols->summary,
+    {
+        constants => 2,
+        enums => 1,
+    },
+    'parser records composition-root +constants and +enums as typed top symbols',
+);
+is(
+    $symbol_top_spec->top->top_symbols->resolve_actual_payload('RESET_BYTE'),
+    "8'd165",
+    'top symbols canonicalize composition-root constants onto the structural-actual literal family',
+);
+is(
+    $symbol_top_spec->top->top_symbols->resolve_actual_payload('IDLE_MASK'),
+    "4'b0",
+    'top symbols preserve const_8b-style binary constants as canonical literal payloads',
+);
+is(
+    $symbol_top_spec->top->top_symbols->resolve_actual_payload('mode.BUSY'),
+    '1',
+    'top symbols resolve enum members onto canonical literal payloads',
+);
+
 my $multi_dtc_source_error = eval {
     $parser->parse_source(
         scalar Lispish::single(\'(?top:multi_dt_source (?dtc:combo a b))'),

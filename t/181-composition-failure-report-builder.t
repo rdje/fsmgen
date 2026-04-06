@@ -14,7 +14,7 @@ use FSM::Composition::FailureReportBuilder;
 subtest 'failure report builder extracts child-header failures' => sub {
     my $report = FSM::Composition::FailureReportBuilder->build_report(
         "Composition source '?top:unsupported_child_failure_summary_top' contains child '?bogus:child', ".
-        "but composition child kind support is blocked because the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', and '?toplink'. ".
+        "but composition child kind support is blocked because the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?toplink', '+constants', and '+enums'. ".
         "See docs/COMPOSITION_SCOPE.md.\n",
     );
 
@@ -27,7 +27,7 @@ subtest 'failure report builder extracts child-header failures' => sub {
     is($report->{blocked_boundary_label}, 'child kind support', 'builder derives the concise boundary label');
     is(
         $report->{blocked_reason},
-        "the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', and '?toplink'",
+        "the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?toplink', '+constants', and '+enums'",
         'builder keeps the concise blocked reason',
     );
 };

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-06: composition-top symbols should feed literal actuals through the same bounded structural path
+- Kept this in the active `R11` lane and widened explicit-toplink expressiveness without pretending the future full type system is already shipped.
+- Landed behavior:
+  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now accepts bounded `(+constants ...)` and `(+enums ...)` sections directly under `?top`,
+  - [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm) now canonicalizes those composition-top symbols into the existing literal payload family,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now resolves named actuals such as `=RESET_BYTE` and `=mode.BUSY` from that symbol table on direct bindings and bounded concat operands,
+  - and those named actuals still lower through the same structural literal path as the shipped numeric actual families rather than through a renderer-only text escape.
+- Why this is worth shipping:
+  - it removes a real magic-number hotspot in composition wiring without waiting for the much larger future aggregate/type lane,
+  - it keeps the AST honest by reusing the existing typed literal contract instead of inventing a symbol-specific bypass,
+  - and it preserves a high-quality boundary: literal symbol resolution is shipped now, while broader typed/source-expression semantics stay explicitly future work.
+
 ## 2026-04-05: unsized signed decimal concat actuals can be intrinsic-width too when width comes from signed range
 - Kept this in the active `R11` lane and widened concat only where the width rule stays local, typed, and regression-backable.
 - Landed behavior:

@@ -19,6 +19,7 @@ use FSM::Composition::RealizedInstance;
 use FSM::Composition::Spec;
 use FSM::Composition::Top;
 use FSM::Composition::TopLink;
+use FSM::Composition::TopSymbols;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     bit_select_expr
     bit_vector_literal_expr
@@ -166,6 +167,142 @@ FSM
 
     ok($success, 'CLI succeeds for explicit top-concat toplinks');
     ok(-e $output_path, 'CLI writes HDL for explicit top-concat toplinks');
+};
+
+subtest 'linked plan builder preserves named actual concat operands from composition-root symbols' => sub {
+    my @ports = (
+        port('header_bus', 'input', 2, undef),
+        port('serial_out', 'output', 1, undef),
+    );
+
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        lane => 'C3',
+        composition_spec => composition_spec('named_symbol_concat_top'),
+        top => FSM::Composition::Top->new(
+            name => 'named_symbol_concat_top',
+            top_symbols => FSM::Composition::TopSymbols->new(
+                constants => {
+                    HEADER_NIBBLE => "4'hA",
+                },
+                enums => {
+                    mode => {
+                        BUSY => '1',
+                    },
+                },
+            ),
+        ),
+        ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
+        ports => \@ports,
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(
+                        source => 'header_bus,=HEADER_NIBBLE,=mode.BUSY',
+                        target => 'uart_tx.data_in',
+                    ),
+                    FSM::Composition::Link->new(source => 'uart_tx.serial_out', target => 'serial_out'),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance(
+                'rtl',
+                'uart_tx',
+                port('data_in', 'input', 7, undef),
+                port('serial_out', 'output', 1, undef),
+            ),
+        ],
+        fsm_file => 'named_symbol_concat_top.fsm',
+        header => 'named_symbol_concat_top',
+    );
+
+    isa_ok($plan, 'FSM::Composition::Plan');
+    is($plan->lane, 'C3', 'builder records the active explicit-link lane for named actual concat operands');
+    is(scalar(@{$plan->nets}), 0, 'named actual concat operands do not force synthetic carrier nets');
+
+    my %bindings = map { $_->{port_name} => $_ } @{$plan->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{data_in}{connection_expr},
+        concat_expr(
+            signal_ref_expr('header_bus'),
+            bit_vector_literal_expr('1010'),
+            bit_vector_literal_expr('1'),
+        ),
+        'composition-root constants and enums become typed concat literal operands',
+    );
+};
+
+subtest 'pipeline and CLI emit named actual concat operands from composition-root symbols' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'named_symbol_concat_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'named_symbol_concat_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:named_symbol_concat_top
+  (+constants
+    (HEADER_NIBBLE 4'hA)
+  )
+  (+enums
+    (mode
+      (IDLE 0)
+      (BUSY 1)
+    )
+  )
+  (?ports:public_io
+    header_bus<7
+    serial_out>
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /header_bus[6:5],=HEADER_NIBBLE,=mode.BUSY/uart_tx.header_bus/
+    /uart_tx.serial_out/serial_out/
+  )
+)
+
+(?rtlif:uart_tx
+  header_bus<7:data
+  serial_out>:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+
+    my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{header_bus}{connection_expr},
+        concat_expr(
+            slice_expr('header_bus', 6, 5),
+            bit_vector_literal_expr('1010'),
+            bit_vector_literal_expr('1'),
+        ),
+        'pipeline preserves named actual concat operands on the typed concat path',
+    );
+
+    my $hdl = $result->{hdl_code};
+    like(
+        $hdl,
+        qr/\.header_bus\(\{header_bus\[6:5\],\s*4'b1010,\s*1'b1\}\)/,
+        'generated HDL emits composition-root named actual concat operands directly on the child port',
+    );
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+
+    ok($success, 'CLI succeeds for composition-root named actual concat toplinks');
+    ok(-e $output_path, 'CLI writes HDL for composition-root named actual concat toplinks');
 };
 
 subtest 'linked plan builder preserves intrinsic-width SV-style unsized numeric concat operands' => sub {
@@ -1083,7 +1220,7 @@ subtest 'linked plan builder rejects unsupported concat operands' => sub {
 
     like(
         $exception,
-        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', repeat groups like '\{4\{status_bus\[0\]\}\}', scalar '=0'\/'=1' actuals, intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed decimal actuals like '=-1', '=0d-1', or '='sd-1', intrinsic-width unsized signed binary\/octal\/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'/s,
+        qr/uses top expression 'payload_bus\[3:0\],=open', .*concat operands currently accept only top-port names, top-port bit\/slice forms, child endpoints like 'producer\.payload', child-output bit\/slice forms like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', repeat groups like '\{4\{status_bus\[0\]\}\}', scalar '=0'\/'=1' actuals, named literal actuals from composition-root '\+constants' \/ '\+enums' like '=RESET_BYTE' or '=mode\.BUSY', intrinsic-width unsized binary\/decimal\/octal\/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed decimal actuals like '=-1', '=0d-1', or '='sd-1', intrinsic-width unsized signed binary\/octal\/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'/s,
         'builder blocks unsupported concat operands through the top-expression boundary',
     );
 };

@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-06: composition-top named literal actuals now close the first no-magic-number gap in explicit toplinks
+- Stayed in the active `R11` lane and widened the explicit-toplink literal surface in a bounded way instead of pretending the future full type lane is already here.
+- Important continuity note:
+  - [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm) now preserves composition-root `+constants` and `+enums` as canonical literal payloads on `?top` roots,
+  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now accepts those two symbol sections directly under `?top` and rejects malformed or non-literal entries at the parser boundary with composition-scoped wording,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now resolves named actuals such as `=RESET_BYTE` and `=mode.BUSY` through that top-root symbol table,
+  - those named literal actuals now work on direct realized-child-input bindings, direct declared-top-output bindings, and bounded concat operands,
+  - and this stays intentionally bounded to literal-actual positions only rather than opening a broader typed/source-expression contract ahead of the future `(+types ...)` lane.
+
 ## 2026-04-05: intrinsic-width unsized signed decimal concat actuals now share the bounded structural literal family
 - Stayed in the active `R11` lane and widened concat one more bounded step without weakening the direct-vs-concat width contract.
 - Important continuity note:

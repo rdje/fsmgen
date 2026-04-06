@@ -19,6 +19,7 @@ use FSM::Composition::RealizedInstance;
 use FSM::Composition::Spec;
 use FSM::Composition::Top;
 use FSM::Composition::TopLink;
+use FSM::Composition::TopSymbols;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     bit_vector_literal_expr
     open_expr
@@ -610,6 +611,146 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for explicit structural-actual toplinks');
 };
 
+subtest 'linked plan builder preserves named actuals from composition-root symbols' => sub {
+    my @ports = (
+        port('symbol_flag', 'output', 1, undef),
+        port('symbol_byte', 'output', 8, undef),
+    );
+
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        lane => 'C3',
+        composition_spec => composition_spec('symbol_actual_top'),
+        top => FSM::Composition::Top->new(
+            name => 'symbol_actual_top',
+            top_symbols => FSM::Composition::TopSymbols->new(
+                constants => {
+                    RESET_BYTE => "8'hA5",
+                },
+                enums => {
+                    mode => {
+                        BUSY => '1',
+                    },
+                },
+            ),
+        ),
+        ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
+        ports => \@ports,
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(source => '=RESET_BYTE', target => 'uart_tx.data_in'),
+                    FSM::Composition::Link->new(source => '=mode.BUSY', target => 'symbol_flag'),
+                    FSM::Composition::Link->new(source => '=RESET_BYTE', target => 'symbol_byte'),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance(
+                'rtl',
+                'uart_tx',
+                port('data_in', 'input', 8, undef),
+            ),
+        ],
+        fsm_file => 'symbol_actual_top.fsm',
+        header => 'symbol_actual_top',
+    );
+
+    isa_ok($plan, 'FSM::Composition::Plan');
+    is($plan->lane, 'C3', 'builder records the active explicit-link lane for composition-root named actuals');
+
+    my %bindings = map { $_->{port_name} => $_ } @{$plan->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{data_in}{connection_expr},
+        bit_vector_literal_expr('10100101'),
+        'composition-root constant actuals lower through the existing typed literal binding path',
+    );
+    is_deeply(
+        $plan->auxiliary_assignments,
+        [
+            "    assign symbol_flag = 1'b1;",
+            "    assign symbol_byte = 8'b10100101;",
+        ],
+        'composition-root enum and constant actuals also drive declared top outputs through direct assignments',
+    );
+};
+
+subtest 'pipeline and CLI emit named actuals from composition-root symbols' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'symbol_actual_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'symbol_actual_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:symbol_actual_top
+  (+constants
+    (RESET_BYTE 8'165)
+  )
+  (+enums
+    (mode
+      (IDLE 0)
+      (BUSY 1)
+    )
+  )
+  (?ports:public_io
+    symbol_flag>
+    symbol_byte>8
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /=RESET_BYTE/uart_tx.data_in/
+    /=mode.BUSY/symbol_flag/
+    /=RESET_BYTE/symbol_byte/
+  )
+)
+
+(?rtlif:uart_tx
+  data_in<8:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is(
+        $result->{composition_spec}->top->top_symbols->resolve_actual_payload('RESET_BYTE'),
+        "8'd165",
+        'pipeline preserves canonicalized composition-root constant payloads on the typed composition spec',
+    );
+    is(
+        $result->{composition_spec}->top->top_symbols->resolve_actual_payload('mode.BUSY'),
+        '1',
+        'pipeline preserves canonicalized composition-root enum payloads on the typed composition spec',
+    );
+
+    my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{data_in}{connection_expr},
+        bit_vector_literal_expr('10100101'),
+        'pipeline resolves composition-root named actuals onto the existing typed literal binding path',
+    );
+
+    my $hdl = $result->{hdl_code};
+    like($hdl, qr/assign\s+symbol_flag\s*=\s*1'b1\s*;/, 'generated HDL emits enum-backed named actual top-output assignments');
+    like($hdl, qr/assign\s+symbol_byte\s*=\s*8'b10100101\s*;/, 'generated HDL emits constant-backed named actual top-output assignments');
+    like($hdl, qr/\.data_in\(8'b10100101\)/, 'generated HDL emits constant-backed named actual child-input bindings');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+
+    ok($success, 'CLI succeeds for composition-root named actual toplinks');
+    ok(-e $output_path, 'CLI writes HDL for composition-root named actual toplinks');
+};
+
 subtest 'linked plan builder sign-extends SV unsized signed based direct actuals' => sub {
     my @ports = (
         port('sv_unsized_signed_binary_data', 'output', 8, undef),
@@ -830,7 +971,7 @@ subtest 'linked plan builder rejects actual endpoints as explicit link targets' 
 
     like(
         $exception,
-        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open', scalar '=0'\/'=1', unsized binary\/decimal\/octal\/hex direct actuals, unsized signed decimal direct actuals like '=-1', '=0d-1', or '='sd-1', unsized signed binary\/octal\/hex direct actuals like '='sb1010', '='so7', or '='shA', and exact-width binary\/decimal\/octal\/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
+        qr/uses actual endpoint '=open' as an explicit link target, .*only allows '=open', scalar '=0'\/'=1', named literal actuals from composition-root '\+constants' \/ '\+enums' like '=RESET_BYTE' or '=mode\.BUSY', unsized binary\/decimal\/octal\/hex direct actuals, unsized signed decimal direct actuals like '=-1', '=0d-1', or '='sd-1', unsized signed binary\/octal\/hex direct actuals like '='sb1010', '='so7', or '='shA', and exact-width binary\/decimal\/octal\/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs/s,
         'builder blocks actual endpoints from appearing as explicit link targets',
     );
 };
@@ -867,7 +1008,7 @@ subtest 'linked plan builder rejects unsupported actual literal forms' => sub {
 
     like(
         $exception,
-        qr/uses actual endpoint '=0q7', .*currently accepts only '=open', scalar '=0'\/'=1', unsized binary\/decimal\/octal\/hex direct actual forms like '=0b10', '='b10', '=0d10', '='d10', '=0o7', '='o7', '=0xA', '='hA', '=170', or '=A5', unsized signed decimal direct actual forms like '=-1', '=0d-1', or '='sd-1', unsized signed binary\/octal\/hex direct actual forms like '='sb1010', '='so7', or '='shA', or exact-width binary\/decimal\/octal\/hex literal forms in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5'/s,
+        qr/uses actual endpoint '=0q7', .*currently accepts only '=open', scalar '=0'\/'=1', named literal actuals from composition-root '\+constants' \/ '\+enums' like '=RESET_BYTE' or '=mode\.BUSY', unsized binary\/decimal\/octal\/hex direct actual forms like '=0b10', '='b10', '=0d10', '='d10', '=0o7', '='o7', '=0xA', '='hA', '=170', or '=A5', unsized signed decimal direct actual forms like '=-1', '=0d-1', or '='sd-1', unsized signed binary\/octal\/hex direct actual forms like '='sb1010', '='so7', or '='shA', or exact-width binary\/decimal\/octal\/hex literal forms in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5'/s,
         'builder still blocks unsupported unsized literal spellings outside the widened direct unsized-numeric slice',
     );
 };

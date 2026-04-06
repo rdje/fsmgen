@@ -167,7 +167,7 @@ $unsupported_child_error = $@;
 
 like(
     $unsupported_child_error,
-    qr/contains child '\?bogus:child', .*composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', and '\?toplink'/s,
+    qr/contains child '\?bogus:child', .*composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', and '\+enums'/s,
     'parser now says unsupported child kinds block composition child-kind support',
 );
 

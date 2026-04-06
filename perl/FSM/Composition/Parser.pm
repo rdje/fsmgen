@@ -7,6 +7,8 @@ use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Adapter::FSMGenFull::ExpressionBuilder;
+use FSM::Adapter::FSMGenFull::SignalManager;
 use FSM::Composition::Spec;
 use FSM::Composition::Top;
 use FSM::Composition::Instance;
@@ -14,6 +16,7 @@ use FSM::Composition::Port;
 use FSM::Composition::Link;
 use FSM::Composition::PortsBlock;
 use FSM::Composition::TopLink;
+use FSM::Composition::TopSymbols;
 
 sub new ($class, %args) {
     return bless {
@@ -68,7 +71,15 @@ sub parse_top ($self, $top_ast) {
     my @instances;
     my @ports_blocks;
     my @toplinks;
+    my $top_symbols = FSM::Composition::TopSymbols->new();
     my @inline_top_items;
+    my $symbol_manager = FSM::Adapter::FSMGenFull::SignalManager->new(
+        debug => ($self->{debug} ? 1 : 0),
+    );
+    my $expression_builder = FSM::Adapter::FSMGenFull::ExpressionBuilder->new(
+        debug => ($self->{debug} ? 1 : 0),
+        signal_manager => $symbol_manager,
+    );
 
     for my $child (@$children) {
         if (!ref($child)) {
@@ -77,6 +88,27 @@ sub parse_top ($self, $top_ast) {
         }
 
         confess "Composition top '$top_name' contains a non-list child item" unless ref($child) eq 'ARRAY';
+
+        if (@$child && defined($child->[0]) && !ref($child->[0]) && $child->[0] eq '+constants') {
+            $self->parse_top_constants_block(
+                $top_name,
+                $child,
+                $top_symbols,
+                $expression_builder,
+            );
+            next;
+        }
+
+        if (@$child && defined($child->[0]) && !ref($child->[0]) && $child->[0] eq '+enums') {
+            $self->parse_top_enums_block(
+                $top_name,
+                $child,
+                $top_symbols,
+                $expression_builder,
+            );
+            next;
+        }
+
         my ($kind, $parsed_child) = $self->parse_top_child($top_name, $child);
 
         if ($kind eq 'instance') {
@@ -103,6 +135,7 @@ sub parse_top ($self, $top_ast) {
         instances => \@instances,
         ports_blocks => \@ports_blocks,
         toplinks => \@toplinks,
+        top_symbols => $top_symbols,
         raw_ast => $top_ast,
     );
 }
@@ -110,19 +143,19 @@ sub parse_top ($self, $top_ast) {
 sub parse_top_child ($self, $top_name, $child_ast) {
     confess
         "Composition top '$top_name' contains a child entry that is empty or missing its header, ".
-        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', or '?toplink:name'.".
+        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', or '+enums'.".
         $self->scope_docs_suffix
         unless @$child_ast;
 
     my $header = $child_ast->[0];
     confess
         "Composition top '$top_name' contains a child entry that is empty or missing its header, ".
-        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', or '?toplink:name'.".
+        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', or '+enums'.".
         $self->scope_docs_suffix
         unless defined($header) && length($header);
     confess
         "Composition top '$top_name' contains a child entry that does not begin with a string header, ".
-        "but composition child header shape is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', or '?toplink:name'.".
+        "but composition child header shape is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', or '+enums'.".
         $self->scope_docs_suffix
         if ref($header);
 
@@ -176,8 +209,116 @@ sub parse_top_child ($self, $top_name, $child_ast) {
 
     confess
         "Composition top '$top_name' contains child '$header', ".
-        "but composition child kind support is blocked because the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', and '?toplink'.".
+        "but composition child kind support is blocked because the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?toplink', '+constants', and '+enums'.".
         $self->scope_docs_suffix;
+}
+
+sub parse_top_constants_block ($self, $top_name, $child_ast, $top_symbols, $expression_builder) {
+    my (undef, $constants_list) = @$child_ast;
+
+    confess
+        "Composition top '$top_name' contains malformed '+constants' section, ".
+        "but composition top symbol section shape is blocked because '+constants' currently requires a non-empty list of '(NAME scalar_value)' entries.".
+        $self->scope_docs_suffix
+        unless ref($constants_list) eq 'ARRAY' && @$constants_list;
+
+    for my $constant_def (@$constants_list) {
+        confess
+            "Composition top '$top_name' contains malformed '+constants' entry, ".
+            "but composition top symbol entry shape is blocked because each '+constants' entry must be a pair '(NAME scalar_value)'.".
+            $self->scope_docs_suffix
+            unless ref($constant_def) eq 'ARRAY' && @$constant_def == 2;
+
+        my ($name, $value) = @$constant_def;
+        my $resolved_name = $self->unwrap_scalar_token($name);
+        my $resolved_value = $self->unwrap_scalar_token($value);
+
+        confess
+            "Composition top '$top_name' contains malformed '+constants' entry for constant '".$self->describe_contract_name($resolved_name)."', ".
+            "but composition top symbol token shape is blocked because each '+constants' entry must use an HDL-identifier-compatible name and a scalar value token.".
+            $self->scope_docs_suffix
+            unless $self->is_contract_identifier($resolved_name)
+                && defined($resolved_value)
+                && !ref($resolved_value);
+
+        my $canonical_payload = $self->canonicalize_top_symbol_literal_payload(
+            top_name => $top_name,
+            section_header => '+constants',
+            symbol_kind => 'constant',
+            symbol_name => $resolved_name,
+            value_token => $resolved_value,
+            expression_builder => $expression_builder,
+        );
+
+        $top_symbols->store_constant($resolved_name, $canonical_payload);
+    }
+
+    $top_symbols->push_raw_block($child_ast);
+    return $top_symbols;
+}
+
+sub parse_top_enums_block ($self, $top_name, $child_ast, $top_symbols, $expression_builder) {
+    my (undef, $enums_list) = @$child_ast;
+
+    confess
+        "Composition top '$top_name' contains malformed '+enums' section, ".
+        "but composition top symbol section shape is blocked because '+enums' currently requires a non-empty list of '(enum_name (MEMBER value) ...)' definitions.".
+        $self->scope_docs_suffix
+        unless ref($enums_list) eq 'ARRAY' && @$enums_list;
+
+    for my $enum_def (@$enums_list) {
+        confess
+            "Composition top '$top_name' contains malformed '+enums' definition, ".
+            "but composition top symbol entry shape is blocked because each '+enums' definition must use the shape '(enum_name (MEMBER value) ...)'.".
+            $self->scope_docs_suffix
+            unless ref($enum_def) eq 'ARRAY' && @$enum_def == 2;
+
+        my ($enum_name, $members_list) = @$enum_def;
+        my $resolved_enum_name = $self->unwrap_scalar_token($enum_name);
+
+        confess
+            "Composition top '$top_name' contains malformed '+enums' definition for enum '".$self->describe_contract_name($resolved_enum_name)."', ".
+            "but composition top symbol token shape is blocked because each '+enums' definition must use an HDL-identifier-compatible enum name and at least one '(MEMBER value)' entry.".
+            $self->scope_docs_suffix
+            unless $self->is_contract_identifier($resolved_enum_name)
+                && ref($members_list) eq 'ARRAY'
+                && @$members_list;
+
+        my %enum_values;
+        for my $member_def (@$members_list) {
+            confess
+                "Composition top '$top_name' contains malformed '+enums' member for enum '$resolved_enum_name', ".
+                "but composition top symbol entry shape is blocked because each enum member must be a pair '(MEMBER value)'.".
+                $self->scope_docs_suffix
+                unless ref($member_def) eq 'ARRAY' && @$member_def == 2;
+
+            my ($member_name, $member_value) = @$member_def;
+            my $resolved_member_name = $self->unwrap_scalar_token($member_name);
+            my $resolved_member_value = $self->unwrap_scalar_token($member_value);
+
+            confess
+                "Composition top '$top_name' contains malformed '+enums' member '".$self->describe_contract_name($resolved_member_name)."' for enum '$resolved_enum_name', ".
+                "but composition top symbol token shape is blocked because each enum member must use an HDL-identifier-compatible member name and a scalar value token.".
+                $self->scope_docs_suffix
+                unless $self->is_contract_identifier($resolved_member_name)
+                    && defined($resolved_member_value)
+                    && !ref($resolved_member_value);
+
+            $enum_values{$resolved_member_name} = $self->canonicalize_top_symbol_literal_payload(
+                top_name => $top_name,
+                section_header => '+enums',
+                symbol_kind => 'enum member',
+                symbol_name => $resolved_enum_name.'.'.$resolved_member_name,
+                value_token => $resolved_member_value,
+                expression_builder => $expression_builder,
+            );
+        }
+
+        $top_symbols->store_enum($resolved_enum_name, \%enum_values);
+    }
+
+    $top_symbols->push_raw_block($child_ast);
+    return $top_symbols;
 }
 
 sub parse_fsmc_child ($self, $top_name, $child_ast, $child_name, $items) {
@@ -404,6 +545,53 @@ sub decode_embedded_dt_source_name ($self, $header) {
         "Malformed embedded DT source '$display'. ".
         "The active composition contract expects embedded standalone-DT child sources shaped like '?dt:source_name', '?mod:source_name', or '?module:source_name' with an HDL-identifier-compatible source name ([A-Za-z_]\\w*).".
         $self->scope_docs_suffix;
+}
+
+sub unwrap_scalar_token ($self, $value) {
+    my $unwrapped = $value;
+    while (ref($unwrapped) eq 'ARRAY' && @$unwrapped == 1) {
+        $unwrapped = $unwrapped->[0];
+    }
+    return $unwrapped;
+}
+
+sub is_contract_identifier ($self, $value) {
+    return defined($value)
+        && !ref($value)
+        && $value =~ /\A[A-Za-z_]\w*\z/;
+}
+
+sub describe_contract_name ($self, $value) {
+    return defined($value) && !ref($value) ? $value : 'unknown';
+}
+
+sub canonicalize_top_symbol_literal_payload ($self, %args) {
+    my $top_name = $args{top_name} // 'top';
+    my $section_header = $args{section_header} // '+symbols';
+    my $symbol_kind = $args{symbol_kind} // 'symbol';
+    my $symbol_name = $args{symbol_name} // 'unknown';
+    my $value_token = $args{value_token};
+    my $expression_builder = $args{expression_builder};
+
+    my $literal_expr = eval {
+        $expression_builder->parse_scalar_expression($value_token);
+    };
+    my $parse_error = $@;
+
+    confess
+        "Composition top '$top_name' contains '$section_header' entry for $symbol_kind '$symbol_name' with value token '$value_token', ".
+        "but composition top symbol literal support is blocked because top symbol values currently must resolve to literal scalar values such as '0', '8'3', '8'hA5', 'const_8b0', or previously declared top constants/enums.".
+        $self->scope_docs_suffix
+        if $parse_error || ref($literal_expr) ne 'FSM::CoreAST::Literal';
+
+    my $value = $literal_expr->value;
+    my $width = $literal_expr->width;
+    my $radix = $literal_expr->radix // 'decimal';
+
+    return $value unless defined $width;
+    return $width."'b".$value if $radix eq 'binary';
+    return $width."'h".$value if $radix eq 'hex';
+    return $width."'d".$value;
 }
 
 1;

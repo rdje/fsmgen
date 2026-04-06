@@ -68,6 +68,7 @@ sub build_plan ($class, %args) {
     my $realized_instances = $args{realized_instances} || [];
     my $fsm_file = $args{fsm_file};
     my $header = $args{header};
+    my $top_symbols = $top && $top->can('top_symbols') ? $top->top_symbols : undef;
 
     my $top_ports_by_name = $class->assert_unique_top_ports($ports_block, $fsm_file, $header);
     my %instances_by_name;
@@ -168,6 +169,7 @@ sub build_plan ($class, %args) {
             \%child_ports_by_instance,
             $fsm_file,
             $header,
+            top_symbols => $top_symbols,
             allow_top_expression_source => 1,
             allow_child_expression_source => 1,
         );
@@ -178,6 +180,7 @@ sub build_plan ($class, %args) {
             \%child_ports_by_instance,
             $fsm_file,
             $header,
+            top_symbols => $top_symbols,
         );
 
         $class->assert_link_roles($source, $target, $fsm_file, $header);
@@ -485,7 +488,7 @@ sub assert_unique_top_ports ($class, $ports_block, $fsm_file, $header) {
 }
 
 sub resolve_endpoint ($class, $endpoint, $top_ports_by_name, $instances_by_name, $child_ports_by_instance, $fsm_file, $header, %opts) {
-    if (my $actual_endpoint = $class->_resolve_actual_endpoint($endpoint, $fsm_file, $header)) {
+    if (my $actual_endpoint = $class->_resolve_actual_endpoint($endpoint, $fsm_file, $header, %opts)) {
         return $actual_endpoint;
     }
 
@@ -497,6 +500,7 @@ sub resolve_endpoint ($class, $endpoint, $top_ports_by_name, $instances_by_name,
             $child_ports_by_instance,
             $fsm_file,
             $header,
+            %opts,
         )) {
             return $top_expression_endpoint;
         }
@@ -570,7 +574,7 @@ sub assert_link_roles ($class, $source, $target, $fsm_file, $header) {
     if (($target->{kind} || '') =~ /^actual_/) {
         confess
             "Composition source '$header' in '$fsm_file' uses actual endpoint '".$target->{raw}."' as an explicit link target, ".
-            "but explicit actual binding is blocked because the first structural-actual slice only allows '=open', scalar '=0'/'=1', unsized binary/decimal/octal/hex direct actuals, unsized signed decimal direct actuals like '=-1', '=0d-1', or '='sd-1', unsized signed binary/octal/hex direct actuals like '='sb1010', '='so7', or '='shA', and exact-width binary/decimal/octal/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs. ".
+            "but explicit actual binding is blocked because the first structural-actual slice only allows '=open', scalar '=0'/'=1', named literal actuals from composition-root '+constants' / '+enums' like '=RESET_BYTE' or '=mode.BUSY', unsized binary/decimal/octal/hex direct actuals, unsized signed decimal direct actuals like '=-1', '=0d-1', or '='sd-1', unsized signed binary/octal/hex direct actuals like '='sb1010', '='so7', or '='shA', and exact-width binary/decimal/octal/hex literal actuals in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5' as link sources into realized child input ports, plus literal actuals into declared top outputs. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
 
@@ -666,7 +670,7 @@ sub assert_link_roles ($class, $source, $target, $fsm_file, $header) {
     }
 }
 
-sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header) {
+sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header, %opts) {
     return undef unless defined($endpoint) && length($endpoint);
     return undef unless $endpoint =~ /^=(.+)$/;
 
@@ -696,6 +700,21 @@ sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header) {
             },
             connection_expr => bit_vector_literal_expr($1),
         };
+    }
+
+    if (my $resolved_payload = $class->_resolve_top_symbol_actual_payload($payload, $opts{top_symbols})) {
+        my $resolved_actual = $class->_resolve_actual_endpoint(
+            '='.$resolved_payload,
+            $fsm_file,
+            $header,
+        );
+        if ($resolved_actual) {
+            $resolved_actual->{raw} = $endpoint;
+            $resolved_actual->{key} = "actual:$endpoint";
+            $resolved_actual->{symbol_name} = $payload;
+            $resolved_actual->{resolved_payload} = $resolved_payload;
+            return $resolved_actual;
+        }
     }
 
     if ($payload =~ /\A'b(.+)\z/i) {
@@ -1177,7 +1196,7 @@ sub _actual_literal_bits_and_width ($class, $payload, $fsm_file, $header) {
 
     confess
         "Composition source '$header' in '$fsm_file' uses actual endpoint '=$payload', ".
-        "but explicit actual binding is blocked because the first structural-actual slice currently accepts only '=open', scalar '=0'/'=1', unsized binary/decimal/octal/hex direct actual forms like '=0b10', '='b10', '=0d10', '='d10', '=0o7', '='o7', '=0xA', '='hA', '=170', or '=A5', unsized signed decimal direct actual forms like '=-1', '=0d-1', or '='sd-1', unsized signed binary/octal/hex direct actual forms like '='sb1010', '='so7', or '='shA', or exact-width binary/decimal/octal/hex literal forms in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5'. ".
+        "but explicit actual binding is blocked because the first structural-actual slice currently accepts only '=open', scalar '=0'/'=1', named literal actuals from composition-root '+constants' / '+enums' like '=RESET_BYTE' or '=mode.BUSY', unsized binary/decimal/octal/hex direct actual forms like '=0b10', '='b10', '=0d10', '='d10', '=0o7', '='o7', '=0xA', '='hA', '=170', or '=A5', unsized signed decimal direct actual forms like '=-1', '=0d-1', or '='sd-1', unsized signed binary/octal/hex direct actual forms like '='sb1010', '='so7', or '='shA', or exact-width binary/decimal/octal/hex literal forms in unsigned or signed form like '=8'b10100101', '=8'sb10100101', '=8'd165', '=8'sd-1', '=8'o245', '=8'so245', '=8'hA5', or '=8'shA5'. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
@@ -1249,12 +1268,17 @@ sub child_expression_base_endpoint ($class, $endpoint) {
     return $spec->{instance_name}.'.'.$spec->{port_name};
 }
 
-sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $instances_by_name, $child_ports_by_instance, $fsm_file, $header) {
-    my $spec = $class->top_expression_spec($endpoint);
+sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $instances_by_name, $child_ports_by_instance, $fsm_file, $header, %opts) {
+    my $spec = $class->_parse_top_expression_spec(
+        $endpoint,
+        allow_plain_top_ref => 0,
+        allow_literal_actual => 0,
+        top_symbols => $opts{top_symbols},
+    );
     if (!$spec && defined($endpoint) && ($endpoint =~ /\A\{.*\}\z/s || index($endpoint, ',') >= 0)) {
         confess
             "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
-            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', repeat groups like '{4{status_bus[0]}}', scalar '=0'/'=1' actuals, intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed decimal actuals like '=-1', '=0d-1', or '='sd-1', intrinsic-width unsized signed binary/octal/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'. ".
+            "but explicit link endpoint resolution is blocked because concat operands currently accept only top-port names, top-port bit/slice forms, child endpoints like 'producer.payload', child-output bit/slice forms like 'producer.payload[3]' or 'producer.payload[7:4]', repeat groups like '{4{status_bus[0]}}', scalar '=0'/'=1' actuals, named literal actuals from composition-root '+constants' / '+enums' like '=RESET_BYTE' or '=mode.BUSY', intrinsic-width unsized binary/decimal/octal/hex actuals like '=0b1010', '='b1010', '=170', '=0d170', '='d170', '=0o7', '='o7', '=0xA5', '='hA5', or '=A5', intrinsic-width unsized signed decimal actuals like '=-1', '=0d-1', or '='sd-1', intrinsic-width unsized signed binary/octal/hex actuals like '='sb1010', '='so7', or '='shA5', and exact-width literal actuals like '=4'b1010', '=4'sb1010', '=4'd10', '=8'sd-1', '=3'o7', '=3'so7', '=4'hA', or '=4'shA'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
     return undef unless $spec;
@@ -1362,6 +1386,7 @@ sub _parse_top_expression_spec ($class, $endpoint, %opts) {
                 allow_plain_top_ref => 1,
                 allow_literal_actual => 1,
                 allow_child_ref => 1,
+                top_symbols => $opts{top_symbols},
             );
             return () unless $operand_spec;
             $operand_spec;
@@ -1433,7 +1458,13 @@ sub _parse_top_expression_spec ($class, $endpoint, %opts) {
 
     if ($opts{allow_literal_actual} && $endpoint =~ /\A=(.+)\z/) {
         return undef if lc($1) eq 'open';
-        my ($bits, $width) = $class->_expression_literal_bits_and_width($1) or return undef;
+        my ($bits, $width) = $class->_expression_literal_bits_and_width($1);
+        if (!defined($bits) && $opts{top_symbols}) {
+            my $resolved_payload = $class->_resolve_top_symbol_actual_payload($1, $opts{top_symbols});
+            ($bits, $width) = $class->_expression_literal_bits_and_width($resolved_payload)
+                if defined $resolved_payload;
+        }
+        return undef unless defined $bits;
         return {
             raw => $endpoint,
             expr_kind => 'literal',
@@ -1454,6 +1485,7 @@ sub _parse_repeat_group_spec ($class, $endpoint, %opts) {
         allow_plain_top_ref => 1,
         allow_literal_actual => 1,
         allow_child_ref => 1,
+        top_symbols => $opts{top_symbols},
     ) or return undef;
 
     return {
@@ -1505,6 +1537,16 @@ sub _split_concat_operands ($class, $inner_text) {
     push @operands, $current;
 
     return \@operands;
+}
+
+sub _resolve_top_symbol_actual_payload ($class, $payload, $top_symbols) {
+    return undef unless defined($payload) && !ref($payload);
+    return undef unless $top_symbols && $top_symbols->can('resolve_actual_payload');
+
+    my $resolved_payload = $top_symbols->resolve_actual_payload($payload);
+    return undef unless defined($resolved_payload) && !ref($resolved_payload) && length($resolved_payload);
+
+    return $resolved_payload;
 }
 
 sub _expression_literal_bits_and_width ($class, $payload) {

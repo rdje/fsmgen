@@ -185,6 +185,50 @@ FSM
     );
 };
 
+subtest 'malformed composition-root +constants entries now say top symbol token shape is blocked' => sub {
+    expect_failure(
+        name => 'bad_top_constants_top',
+        body => <<'FSM',
+(?top:bad_top_constants_top
+  (+constants
+    (bad-name 8'165)
+  )
+  (?rtl:uart_tx)
+)
+
+(?rtlif:uart_tx
+  data_in<8:data
+)
+FSM
+        pipeline_regex => qr/Composition top 'bad_top_constants_top' contains malformed '\+constants' entry for constant 'bad-name', .*composition top symbol token shape is blocked because each '\+constants' entry must use an HDL-identifier-compatible name and a scalar value token/s,
+        cli_regex => qr/composition top symbol token shape is blocked because each '\+constants' entry must use an HDL-identifier-compatible name and a scalar value token/s,
+        cli_failure_name => 'malformed composition-root +constants entries',
+    );
+};
+
+subtest 'non-literal composition-root +enums values now say top symbol literal support is blocked' => sub {
+    expect_failure(
+        name => 'nonscalar_top_enums_top',
+        body => <<'FSM',
+(?top:nonscalar_top_enums_top
+  (+enums
+    (mode
+      (BUSY unresolved_name)
+    )
+  )
+  (?rtl:uart_tx)
+)
+
+(?rtlif:uart_tx
+  data_in<8:data
+)
+FSM
+        pipeline_regex => qr/Composition top 'nonscalar_top_enums_top' contains '\+enums' entry for enum member 'mode\.BUSY' with value token 'unresolved_name', .*composition top symbol literal support is blocked because top symbol values currently must resolve to literal scalar values/s,
+        cli_regex => qr/composition top symbol literal support is blocked because top symbol values currently must resolve to literal scalar values/s,
+        cli_failure_name => 'non-literal composition-root +enums values',
+    );
+};
+
 done_testing();
 
 sub expect_failure {

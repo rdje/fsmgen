@@ -1634,6 +1634,11 @@ Exit criteria:
   source actuals (`=open`, `=0`, `=1`, and exact-width `=N'b...` /
   `=N'd...` / `=N'o...` / `=N'h...`) binding directly into realized child inputs instead
   of going through fake carrier nets or fake undeclared top ports.
+- `R11`: composition `?top` roots may now also carry bounded `+constants` /
+  `+enums` symbol sections, and explicit `?toplink` actuals may resolve named
+  literal payloads such as `=RESET_BYTE` or `=mode.BUSY` from those top-root
+  symbols on direct bindings and bounded concat operands without opening a
+  second renderer-only symbol path or claiming a broader type system yet.
 - `R11`: that same direct composition binding path now also covers
   source-side child-output `instance.port[index]` / `instance.port[msb:lsb]`
   projections, with planner grouping by one deterministic base child-output
