@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-06: future `.fsm` authoring should feel dynamic, with hard semantic recovery behind it
+- Saved one more language-surface steering rule for future type/literal work.
+- Important continuity note:
+  - authored `.fsm` should feel closer to a dynamic script surface than to a
+    declaration-heavy HDL frontend,
+  - scalar types should infer by default where one safe answer exists,
+  - mixed integer spellings should be accepted whenever the engine can
+    normalize them onto one safe semantic meaning,
+  - the engine should do the hard recovery and validation work behind the
+    scenes,
+  - and ambiguity or unsafe recovery should still fail explicitly instead of
+    being guessed.
+
 ## 2026-04-06: future typed declarations should stay inference-first and fail-safe
 - Saved one more steering rule for the future `(+types ...)` lane.
 - Important continuity note:

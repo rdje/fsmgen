@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-06: authored `.fsm` should feel dynamic, but engine behavior must stay semantically hard
+- Captured one more language-surface rule for future parser, literal, and type
+  work.
+- Saved rule:
+  - authoring `.fsm` should feel closer to writing a dynamic-language program
+    or script than to feeding a declaration-heavy HDL frontend,
+  - users should usually be able to write the obvious thing without first
+    spelling type ceremony for every scalar,
+  - mixed integer spellings and related low-friction numeric forms should be
+    accepted whenever the engine can normalize them onto one safe semantic
+    meaning,
+  - the engine should work hard behind the scenes to recover the intended
+    meaning when that recovery is honest, portable, and validation-backed,
+  - but the tool must still fail explicitly when meaning, width, signedness,
+    or aggregate shape cannot be recovered safely.
+- Why this matters:
+  - it keeps the user surface easy, expressive, and convention-first,
+  - it prevents the project from drifting into a ceremony-heavy clone of
+    SystemVerilog/VHDL source style,
+  - and it preserves the SOTA-quality bar: “dynamic-feeling” does not mean
+    permissive guessing, it means strong inference plus strong validation.
+
 ## 2026-04-06: future type inference should be scalar-first, inference-first, and fail-safe
 - Captured one more steering decision for the future typed signal/port lane.
 - Saved rule:
@@ -7,6 +29,8 @@ This document captures engineering rationale, design constraints, and working de
     answer can be inferred from authored LHS/RHS usage,
   - aggregate shape and member/index structure should likewise infer
     conservatively from authored usage where possible,
+  - mixed integer spellings should be accepted whenever one safe normalized
+    meaning can be recovered from authored usage,
   - convention over configuration should remain the default experience,
   - but inference must stay fail-safe: if the authored program does not
     determine one safe type, FSMGen should stop with an explicit diagnostic
@@ -3020,6 +3044,7 @@ This document captures engineering rationale, design constraints, and working de
 - The most important workflow rule in that future lane is convention over configuration:
   - `fsmgen` should infer scalar versus aggregate signal/port types from LHS/RHS/member/index usage most of the time,
   - scalar names should not require explicit type declarations when authored usage already determines one safe type,
+  - mixed integer spellings should be accepted whenever one safe normalized meaning can be recovered from authored usage,
   - ambiguous or underconstrained cases should fail explicitly instead of being guessed silently,
   - and explicit type declarations should exist mainly as overrides, ambiguity anchors, and interface-stability controls rather than as mandatory boilerplate.
 - The proposed explicit syntax is centered on a future `(+types ...)` family, but the phased implementation boundary is intentionally narrower than the eventual syntax surface:
