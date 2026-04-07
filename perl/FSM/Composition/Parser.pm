@@ -660,7 +660,7 @@ sub canonicalize_top_constant_payload ($self, %args) {
 
     my $scalar_value = $self->unwrap_scalar_token($value_ast);
     if (defined($scalar_value) && !ref($scalar_value)) {
-        return $self->canonicalize_top_symbol_literal_payload(
+        my $payload = $self->canonicalize_top_symbol_literal_payload(
             top_name => $top_name,
             section_header => $section_header,
             symbol_kind => $symbol_kind,
@@ -668,6 +668,10 @@ sub canonicalize_top_constant_payload ($self, %args) {
             value_token => $scalar_value,
             expression_builder => $expression_builder,
         );
+        return {
+            kind => 'scalar',
+            payload => $payload,
+        };
     }
 
     confess

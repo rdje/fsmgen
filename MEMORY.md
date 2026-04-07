@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-07: composition-top symbol contracts now survive into forward IR and module_info
+- Saved the next aggregate/type groundwork slice after direct-root
+  `symbol_contract` export landed.
+- Important continuity note:
+  - composition `?top` results now preserve one bounded `symbol_contract`
+    through composition-top `intent_hir` and mirrored `module_info`,
+  - that surface now matches the direct-root contract shape for local
+    constant/enum names and counts, canonical constant payloads, scalar-leaf
+    convenience payloads, aggregate-root path summaries, and imported package
+    names/counts,
+  - composition-top aggregate constants now also serialize scalar leaves in the
+    same wrapped payload form used by direct roots,
+  - and future whole-aggregate/type work no longer has to rediscover the
+    composition-top symbol layer from raw-spec residue.
+
 ## 2026-04-06: direct-root symbol contracts now survive into forward IR and module_info
 - Saved the next aggregate/type groundwork slice after local direct-root
   aggregate constants landed.

@@ -510,6 +510,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
 
 Forward IR note:
 - direct `?fsm` / `?dt` results now also preserve one bounded `symbol_contract` through `intent_hir` and mirrored `module_info`
+- composition `?top` results now preserve that same bounded `symbol_contract` through composition-top `intent_hir` and mirrored `module_info`
 - that surface currently carries local constant/enum names and counts, canonical constant payloads, scalar-leaf convenience payloads, aggregate-root path summaries, and imported package names/counts
 - it is meant as a semantic export/inspection surface for embedders and future compiler work, not as evidence that whole-aggregate assignment/type flow is already shipped
 

@@ -141,7 +141,7 @@ sub build_from_composition_plan ($class, %args) {
         standalone_dt_enable_families => [],
         standalone_dt_module_enable_family => {},
         parameter_names => [],
-        symbol_contract => undef,
+        symbol_contract => $class->build_composition_top_symbol_contract($composition_plan),
         composition_child_count => $composition_child_exports->{child_count},
         composition_children => $composition_child_exports->{children},
         composition_generated_child_count => $generated_child_exports->{child_count},
@@ -169,6 +169,44 @@ sub build_direct_root_symbol_contract ($class, $fsm_module) {
     my $symbol_contract = (
         $direct_root_symbols && $direct_root_symbols->can('as_hashref')
             ? $direct_root_symbols->as_hashref
+            : {}
+    );
+
+    $symbol_contract->{package_import_count} = scalar(@{$package_imports || []});
+    $symbol_contract->{package_imports} = [ @{$package_imports || []} ];
+
+    my $has_local_symbols = (
+        ($symbol_contract->{constant_count} // 0) > 0
+        || ($symbol_contract->{enum_count} // 0) > 0
+    );
+    my $has_imports = ($symbol_contract->{package_import_count} // 0) > 0;
+
+    return undef unless $has_local_symbols || $has_imports;
+    return $symbol_contract;
+}
+
+sub build_composition_top_symbol_contract ($class, $composition_plan) {
+    return undef unless $composition_plan && ref($composition_plan);
+
+    my $composition_spec = $composition_plan->can('raw_spec')
+        ? $composition_plan->raw_spec
+        : undef;
+    my $top = $composition_spec && $composition_spec->can('top')
+        ? $composition_spec->top
+        : undef;
+
+    return undef unless $top && ref($top);
+
+    my $top_symbols = $top->can('top_symbols')
+        ? $top->top_symbols
+        : undef;
+    my $package_imports = $top->can('package_imports')
+        ? $top->package_imports
+        : [];
+
+    my $symbol_contract = (
+        $top_symbols && $top_symbols->can('as_hashref')
+            ? $top_symbols->as_hashref
             : {}
     );
 

@@ -1686,6 +1686,11 @@ Exit criteria:
   constants/enums, canonical aggregate payloads, scalar-leaf summaries, and
   imported package names no longer disappear into parser-only state before the
   future whole-aggregate/type lane can consume them.
+- `R11`: composition tops now also preserve that same bounded `symbol_contract`
+  through composition-top `intent_hir` and mirrored `module_info`, so local
+  top constants/enums and imported package names/counts survive the composition
+  forward-IR boundary instead of forcing later whole-aggregate/type work to
+  reach back through raw-spec residue.
 - `R11`: that same direct composition binding path now also covers
   source-side child-output `instance.port[index]` / `instance.port[msb:lsb]`
   projections, with planner grouping by one deterministic base child-output

@@ -65,4 +65,17 @@ sub summary ($self) {
     return $self->{local_symbols}->summary;
 }
 
+sub as_hashref ($self) {
+    my $symbol_contract = (
+        $self->{local_symbols} && $self->{local_symbols}->can('as_hashref')
+            ? $self->{local_symbols}->as_hashref
+            : {}
+    );
+
+    $symbol_contract->{package_import_count} = scalar(keys %{ $self->{imported_packages} || {} });
+    $symbol_contract->{package_imports} = [ sort keys %{ $self->{imported_packages} || {} } ];
+
+    return $symbol_contract;
+}
+
 1;

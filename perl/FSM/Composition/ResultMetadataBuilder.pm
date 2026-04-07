@@ -67,6 +67,7 @@ sub build_module_info ($class, %args) {
         requires_implicit_system_ports => $intent_hir_hash->{requires_implicit_system_ports},
         parameter_count => $intent_hir_hash->{parameter_count},
         parameter_names => $intent_hir_hash->{parameter_names},
+        symbol_contract => $intent_hir_hash->{symbol_contract},
         intent_hir => $intent_hir_hash,
         lowered_rtl_ir => $lowered_rtl_ir_hash,
         structural_rtl_ir => $structural_rtl_ir_hash,

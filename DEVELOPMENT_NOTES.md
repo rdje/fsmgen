@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-07: composition tops should not drop their symbol layer at the forward-IR boundary
+- Followed the direct-root symbol-contract slice through the remaining symmetry
+  gap on composition tops.
+- Landed behavior:
+  - composition `?top` results now preserve one bounded local/import symbol
+    contract through composition-top `intent_hir`,
+  - [perl/FSM/Composition/ResultMetadataBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ResultMetadataBuilder.pm)
+    now mirrors that same contract into top-level composition `module_info`,
+  - [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)
+    now exposes the same bounded export surface as direct-root symbols,
+  - and [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm)
+    now canonicalizes top-constant scalar leaves onto the same wrapped payload
+    shape used by direct roots, so the exported contract stays structurally
+    aligned instead of drifting into two competing representations.
+- Why this is worth shipping:
+  - it removes another low-quality “recover it from raw spec later” seam,
+  - it gives the future whole-aggregate/type lane one honest composition-top
+    semantic handoff point,
+  - and it keeps embedding/API-facing inspection surfaces aligned across direct
+    roots and composition tops.
+
 ## 2026-04-06: direct-root symbol contracts should survive the forward IR instead of being rediscovered later
 - Continued the aggregate/type-lane groundwork after local direct-root aggregate
   leaves landed.
