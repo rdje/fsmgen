@@ -1690,6 +1690,13 @@ Exit criteria:
   `=shared.HEADER`, while whole hash-like roots such as `FRAME` or
   `shared.FRAME` still fail explicitly until field-order/type semantics are
   made real.
+- `R11`: later bounded aggregate values may now reuse previously declared named
+  scalar ingredients instead of forcing raw numerics at every leaf: direct
+  roots, composition tops, and `?pkg:name` packages may now build later
+  aggregate values from earlier local/package constants, enum members, and
+  earlier whole list-valued roots such as `(HEADER (mode.BUSY RESET_BYTE))`
+  and `(PACKET (HEADER mode.IDLE))`, while forward references and hash-root
+  packing remain intentionally out of contract.
 - `R11`: direct generated roots now also preserve one bounded `symbol_contract`
   through forward `intent_hir` and mirrored `module_info`, so local
   constants/enums, canonical aggregate payloads, scalar-leaf summaries, and

@@ -209,6 +209,106 @@ FSM
     );
 };
 
+subtest 'pipeline and CLI resolve named ingredients inside package aggregate values' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
+    mkdir $libdir or die "Cannot create $libdir: $!";
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_package_named_aggregate_values.fsm');
+    my $package_path = File::Spec->catfile($libdir, 'shared_external.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_package_named_aggregate_values.sv');
+
+    write_file(
+        $package_path,
+        <<'FSM'
+(?pkg:shared_external
+  (+enums
+    (mode
+      (IDLE 0)
+      (BUSY 1)
+    )
+  )
+  (+constants
+    (RESET_BYTE 8'hA5)
+    (HEADER (mode.BUSY RESET_BYTE))
+    (PACKET (HEADER mode.IDLE))
+    (FLAGS ((busy mode.BUSY)))
+  )
+)
+FSM
+    );
+
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_package_named_aggregate_values
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+import shared_external)
+  (+size
+    (SEL 10)
+    (OUT 10)
+    (FLAG 1)
+    (HIT 1)
+  )
+  (idle
+    (OUT = shared_external.PACKET)
+    (FLAG = shared_external.FLAGS.busy)
+    (HIT = 1 <SEL=shared_external.PACKET)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug => 0,
+        source_search_paths => [$libdir],
+    );
+    my $result = $pipeline->generate_hdl_from_file($fsm_path);
+    my $fsm_module = $result->{fsm_module};
+
+    my %assignment_by_target = %{ assignments_by_target($fsm_module, 'idle') };
+    is_literal_assignment($assignment_by_target{OUT}, '1101001010', 10, 'OUT resolves named package aggregate roots to one literal');
+    is_literal_assignment($assignment_by_target{FLAG}, '1', undef, 'FLAG resolves enum-backed package aggregate leaves to a literal');
+
+    my %conditional_by_target = %{ conditionals_by_target($fsm_module, 'idle') };
+    assert_condition_equality(
+        $conditional_by_target{HIT}->condition,
+        'SEL',
+        '1101001010',
+        'named package aggregate roots also resolve in direct-root condition context',
+    );
+    is(
+        $conditional_by_target{HIT}->condition->right->width,
+        10,
+        'named package aggregate roots preserve width in condition context',
+    );
+
+    my $hdl = $result->{hdl_code};
+    unlike(
+        $hdl,
+        qr/shared_external\.PACKET|shared_external\.HEADER|shared_external\.RESET_BYTE|shared_external\.FLAGS\.busy|shared_external\.mode\.BUSY/s,
+        'generated HDL lowers named package aggregate ingredients before emission',
+    );
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '--path', $libdir, '--output', $output_path, $fsm_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+    my $output_text = slurp_file($output_path);
+
+    ok($success, 'CLI accepts named package aggregate ingredients');
+    ok(-e $output_path, 'CLI emits HDL for named package aggregate ingredients');
+    ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for named package aggregate ingredients');
+    unlike($combined_output, qr/package symbol literal support is blocked|aggregate-valued package symbol/s, 'successful named package aggregate CLI run does not report package-symbol failures');
+    unlike(
+        $output_text,
+        qr/shared_external\.PACKET|shared_external\.HEADER|shared_external\.RESET_BYTE|shared_external\.FLAGS\.busy|shared_external\.mode\.BUSY/s,
+        'CLI output lowers named package aggregate ingredients before emission',
+    );
+};
+
 subtest 'pipeline and CLI resolve package aggregate leaves for composition actuals' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');

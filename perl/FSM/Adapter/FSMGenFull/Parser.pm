@@ -9,6 +9,7 @@ no warnings 'experimental::signatures';
 use Data::Dumper;
 use FSM::CoreAST;
 use FSM::Debug;
+use FSM::Package::SignalManagerProjectionSupport;
 use FSM::Package::Symbols;
 use FSM::SourceClassifier;
 
@@ -373,25 +374,15 @@ sub parse_constants_section($self, $constants_ast) {
         );
 
         $self->{signal_manager}->record_constant_definition($resolved_name);
-
-        my $symbols = FSM::Package::Symbols->new(
-            constants => {
-                $resolved_name => $canonical_payload,
-            },
+        FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
+            signal_manager => $self->{signal_manager},
+            symbols => FSM::Package::Symbols->new(
+                constants => {
+                    $resolved_name => $canonical_payload,
+                },
+            ),
+            expression_builder => $self->{expression_builder},
         );
-
-        for my $aggregate_path (sort keys %{ $symbols->constant_aggregate_paths || {} }) {
-            $self->{signal_manager}->store_aggregate_symbol(
-                $aggregate_path,
-                $symbols->resolve_payload($aggregate_path),
-            );
-        }
-
-        for my $constant_name (sort keys %{ $symbols->constant_scalar_leaves || {} }) {
-            my $payload = $symbols->constant_scalar_leaves->{$constant_name};
-            my $literal_expr = $self->{expression_builder}->parse_scalar_expression($payload);
-            $self->{signal_manager}->store_constant($constant_name, $literal_expr);
-        }
 
         if ($self->{fsm_module} && $self->{fsm_module}->can('direct_root_symbols')) {
             $self->{fsm_module}->direct_root_symbols->store_constant($resolved_name, $canonical_payload);
@@ -1190,18 +1181,29 @@ sub parse_enums_section($self, $enums_ast) {
 
             $enum_values{$resolved_member_name} = $resolved_member_value;
         }
-        $self->{signal_manager}->store_enum($resolved_enum_name, \%enum_values);
+        my $enum_module_name = ($self->{fsm_module} && $self->{fsm_module}->can('name'))
+            ? ($self->{fsm_module}->name // 'source')
+            : 'source';
+        my %canonical_enum_values = map {
+            $_ => $self->canonicalize_constant_literal_payload(
+                module_name => $enum_module_name,
+                section_header => '+enums',
+                symbol_kind => 'enum member',
+                symbol_name => $resolved_enum_name.'.'.$_,
+                value_token => $enum_values{$_},
+            )
+        } sort keys %enum_values;
+        FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
+            signal_manager => $self->{signal_manager},
+            symbols => FSM::Package::Symbols->new(
+                enums => {
+                    $resolved_enum_name => \%canonical_enum_values,
+                },
+            ),
+            expression_builder => $self->{expression_builder},
+        );
 
         if ($self->{fsm_module} && $self->{fsm_module}->can('direct_root_symbols')) {
-            my %canonical_enum_values = map {
-                $_ => $self->canonicalize_constant_literal_payload(
-                    module_name => ($self->{fsm_module}->name // 'source'),
-                    section_header => '+enums',
-                    symbol_kind => 'enum member',
-                    symbol_name => $resolved_enum_name.'.'.$_,
-                    value_token => $enum_values{$_},
-                )
-            } sort keys %enum_values;
             $self->{fsm_module}->direct_root_symbols->store_enum(
                 $resolved_enum_name,
                 \%canonical_enum_values,

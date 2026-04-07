@@ -17,6 +17,8 @@ use FSM::Composition::Link;
 use FSM::Composition::PortsBlock;
 use FSM::Composition::TopLink;
 use FSM::Composition::TopSymbols;
+use FSM::Package::Symbols;
+use FSM::Package::SignalManagerProjectionSupport;
 
 sub new ($class, %args) {
     return bless {
@@ -97,6 +99,7 @@ sub parse_top ($self, $top_ast) {
                 $top_name,
                 $child,
                 $top_symbols,
+                $symbol_manager,
                 $expression_builder,
             );
             next;
@@ -107,6 +110,7 @@ sub parse_top ($self, $top_ast) {
                 $top_name,
                 $child,
                 $top_symbols,
+                $symbol_manager,
                 $expression_builder,
             );
             next;
@@ -222,7 +226,7 @@ sub parse_top_child ($self, $top_name, $child_ast) {
         $self->scope_docs_suffix;
 }
 
-sub parse_top_constants_block ($self, $top_name, $child_ast, $top_symbols, $expression_builder) {
+sub parse_top_constants_block ($self, $top_name, $child_ast, $top_symbols, $symbol_manager, $expression_builder) {
     my (undef, $constants_list) = @$child_ast;
 
     confess
@@ -257,13 +261,22 @@ sub parse_top_constants_block ($self, $top_name, $child_ast, $top_symbols, $expr
         );
 
         $top_symbols->store_constant($resolved_name, $canonical_payload);
+        FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
+            signal_manager => $symbol_manager,
+            symbols => FSM::Package::Symbols->new(
+                constants => {
+                    $resolved_name => $canonical_payload,
+                },
+            ),
+            expression_builder => $expression_builder,
+        );
     }
 
     $top_symbols->push_raw_block($child_ast);
     return $top_symbols;
 }
 
-sub parse_top_enums_block ($self, $top_name, $child_ast, $top_symbols, $expression_builder) {
+sub parse_top_enums_block ($self, $top_name, $child_ast, $top_symbols, $symbol_manager, $expression_builder) {
     my (undef, $enums_list) = @$child_ast;
 
     confess
@@ -321,6 +334,15 @@ sub parse_top_enums_block ($self, $top_name, $child_ast, $top_symbols, $expressi
         }
 
         $top_symbols->store_enum($resolved_enum_name, \%enum_values);
+        FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
+            signal_manager => $symbol_manager,
+            symbols => FSM::Package::Symbols->new(
+                enums => {
+                    $resolved_enum_name => \%enum_values,
+                },
+            ),
+            expression_builder => $expression_builder,
+        );
     }
 
     $top_symbols->push_raw_block($child_ast);

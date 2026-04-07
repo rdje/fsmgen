@@ -28,6 +28,7 @@ use FSM::Adapter::FSMGenFull::SignalManager;
 use FSM::Composition::Parser;
 use FSM::Debug;
 use FSM::Package::ImportResolver;
+use FSM::Package::SignalManagerProjectionSupport;
 use FSM::SourceClassifier;
 use FSM::SourcePathResolver;
 use Lispish;
@@ -517,38 +518,16 @@ sub _import_package_symbols_into_signal_manager ($class, %args) {
         or confess "SourceFrontend requires a signal_manager to import package symbols";
     my $resolved_package_imports = $args{resolved_package_imports} || {};
     my $package_imports = $args{package_imports} || [sort keys %$resolved_package_imports];
-    my $expression_builder = FSM::Adapter::FSMGenFull::ExpressionBuilder->new(
-        debug => ($args{debug_level} // 0) > 0,
-        signal_manager => $signal_manager,
-    );
 
     for my $package_name (@$package_imports) {
         my $package_spec = $resolved_package_imports->{$package_name} or next;
         my $symbols = $package_spec->symbols or next;
-        my $aggregate_paths = $symbols->constant_aggregate_paths || {};
-        my $scalar_leaves = $symbols->constant_scalar_leaves || {};
-
-        for my $aggregate_path (sort keys %$aggregate_paths) {
-            $signal_manager->store_aggregate_symbol(
-                "$package_name.$aggregate_path",
-                $symbols->resolve_payload($aggregate_path),
-            );
-        }
-
-        for my $constant_name (sort keys %$scalar_leaves) {
-            my $payload = $scalar_leaves->{$constant_name};
-            my $literal_expr = $expression_builder->parse_scalar_expression($payload);
-            $signal_manager->store_constant("$package_name.$constant_name", $literal_expr);
-        }
-
-        for my $enum_name (sort keys %{ $symbols->enums || {} }) {
-            my $members = $symbols->enums->{$enum_name} || {};
-            for my $member_name (sort keys %$members) {
-                my $payload = $members->{$member_name};
-                my $literal_expr = $expression_builder->parse_scalar_expression($payload);
-                $signal_manager->store_constant("$package_name.$enum_name.$member_name", $literal_expr);
-            }
-        }
+        FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
+            signal_manager => $signal_manager,
+            symbols => $symbols,
+            namespace_prefix => $package_name,
+            debug_level => $args{debug_level} // 0,
+        );
     }
 }
 

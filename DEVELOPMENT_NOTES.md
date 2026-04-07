@@ -1,5 +1,29 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-08: later aggregate values should be able to reuse earlier named scalar ingredients
+- Continued the aggregate/type lane by removing another low-value authoring
+  friction point instead of pushing users back toward magic numerics inside
+  aggregate literals.
+- Landed behavior:
+  - later direct-root, composition-top, and `?pkg:name` aggregate values may
+    now reuse previously declared local/package constants, enum members, and
+    earlier whole list-valued roots such as `(HEADER (mode.BUSY RESET_BYTE))`
+    and `(PACKET (HEADER mode.IDLE))`,
+  - one shared
+    [perl/FSM/Package/SignalManagerProjectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/SignalManagerProjectionSupport.pm)
+    helper now owns how canonical symbol payloads are projected back into the
+    scalar-expression layer,
+  - and that same helper now keeps direct parsing, composition-top parsing,
+    package parsing, and imported-package projection aligned instead of letting
+    each path grow a different symbol-reuse story.
+- Why this boundary is deliberate:
+  - aggregate authoring should be low-friction and should not force raw
+    numerics once one safe named meaning already exists,
+  - but the contract is still intentionally order-sensitive and limited to
+    previously declared symbols,
+  - so forward references and whole hash-root packing remain explicitly out of
+    contract.
+
 ## 2026-04-07: whole aggregate widening should start with list roots, not fake record packing
 - Continued the aggregate/type lane after composition-top symbol contracts
   reached forward IR.

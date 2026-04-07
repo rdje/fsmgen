@@ -142,6 +142,68 @@ FSM
     unlike($combined_output, qr/hash-like aggregate roots still require member access|whole aggregate actual roots/s, 'successful whole-list composition CLI run does not report aggregate-root failures');
 };
 
+subtest 'pipeline and CLI resolve named ingredients inside composition-root aggregate values' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'top_named_aggregate_actuals.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'top_named_aggregate_actuals.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:top_named_aggregate_actuals
+  (+enums
+    (mode
+      (IDLE 0)
+      (BUSY 1)
+    )
+  )
+  (+constants
+    (RESET_BYTE 8'hA5)
+    (HEADER (mode.BUSY RESET_BYTE))
+    (PACKET (HEADER mode.IDLE))
+    (FLAGS ((busy mode.BUSY)))
+  )
+  (?ports:public_io
+    packet_out>10
+    flag_out>
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /=PACKET/packet_out/
+    /=FLAGS.busy/flag_out/
+    /=PACKET/uart_tx.data_in/
+  )
+)
+
+(?rtlif:uart_tx
+  data_in<10:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+    );
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+    my $hdl = $result->{hdl_code};
+
+    like($hdl, qr/assign\s+packet_out\s*=\s*10'b1101001010\s*;/, 'generated HDL emits named aggregate-root direct actual on top output');
+    like($hdl, qr/assign\s+flag_out\s*=\s*1'b1\s*;/, 'generated HDL emits enum-backed aggregate leaf on top output');
+    like($hdl, qr/\.data_in\(10'b1101001010\)/, 'generated HDL binds named aggregate root into child inputs');
+    unlike($hdl, qr/\bPACKET\b|\bHEADER\b|\bRESET_BYTE\b|mode\.BUSY|FLAGS\.busy/s, 'generated HDL lowers named aggregate ingredients before emission');
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '-o', $output_path, $composition_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+
+    ok($success, 'CLI accepts named aggregate ingredients inside composition-top constants');
+    ok(-e $output_path, 'CLI emits HDL for named aggregate ingredients inside composition-top constants');
+    ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for named aggregate ingredients inside composition-top constants');
+    unlike($combined_output, qr/composition top symbol literal support is blocked|aggregate value support is blocked/s, 'successful named composition aggregate CLI run does not report symbol-value failures');
+};
+
 subtest 'pipeline and CLI resolve composition-root aggregate leaves for concat operands' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'top_aggregate_concat.fsm');

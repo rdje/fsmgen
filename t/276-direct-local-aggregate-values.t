@@ -191,6 +191,95 @@ FSM
     );
 };
 
+subtest 'local aggregate values may reuse earlier local constants and enums' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_local_named_aggregate_values.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_local_named_aggregate_values.sv');
+
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_local_named_aggregate_values
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+enums
+    (mode
+      (IDLE 0)
+      (BUSY 1)
+    )
+  )
+  (+constants
+    (RESET_BYTE 8'hA5)
+    (HEADER (mode.BUSY RESET_BYTE))
+    (PACKET (HEADER mode.IDLE))
+    (FLAGS ((busy mode.BUSY)))
+  )
+  (+size
+    (SEL 10)
+    (OUT 10)
+    (FLAG 1)
+    (HIT 1)
+  )
+  (idle
+    (OUT = PACKET)
+    (FLAG = FLAGS.busy)
+    (HIT = 1 <SEL=PACKET)
+  )
+)
+FSM
+    );
+
+    my $raw_ast = Lispish::multi($fsm_path);
+    my $adapter = FSM::Adapter::FSMGenFull->new(debug => 0);
+    my $fsm_module = $adapter->parse_fsm($raw_ast);
+
+    my %assignment_by_target = %{ assignments_by_target($fsm_module, 'idle') };
+    is_literal_assignment($assignment_by_target{OUT}, '1101001010', 10, 'OUT resolves nested named aggregate roots to one literal');
+    is_literal_assignment($assignment_by_target{FLAG}, '1', undef, 'FLAG resolves enum-backed aggregate leaves to a literal');
+
+    my %conditional_by_target = %{ conditionals_by_target($fsm_module, 'idle') };
+    assert_condition_equality(
+        $conditional_by_target{HIT}->condition,
+        'SEL',
+        '1101001010',
+        'named aggregate roots also resolve in direct-root condition context',
+    );
+    is(
+        $conditional_by_target{HIT}->condition->right->width,
+        10,
+        'named aggregate roots preserve width in condition context',
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug => 0,
+    );
+    my $pipeline_result = $pipeline->generate_hdl_from_file($fsm_path);
+    my $pipeline_hdl = $pipeline_result->{hdl_code};
+    unlike(
+        $pipeline_hdl,
+        qr/\bPACKET\b|\bHEADER\b|\bRESET_BYTE\b|mode\.BUSY|FLAGS\.busy/s,
+        'pipeline output lowers named aggregate ingredients before emission',
+    );
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '--output', $output_path, $fsm_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+    my $output_text = slurp_file($output_path);
+
+    ok($success, 'CLI accepts named aggregate ingredients inside local constants');
+    ok(-e $output_path, 'CLI emits HDL for named aggregate ingredients inside local constants');
+    ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for named aggregate ingredients inside local constants');
+    unlike($combined_output, qr/Malformed '\+constants' entry|aggregate-valued symbol/s, 'successful named-aggregate CLI run does not report aggregate-symbol failures');
+    unlike(
+        $output_text,
+        qr/\bPACKET\b|\bHEADER\b|\bRESET_BYTE\b|mode\.BUSY|FLAGS\.busy/s,
+        'CLI output lowers named aggregate ingredients before emission',
+    );
+};
+
 subtest 'pipeline and CLI reject unresolved local aggregate roots in direct-root expressions' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'bad_local_aggregate_root_ref.fsm');

@@ -1,5 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-08
+### later aggregate values may now reuse earlier named scalar ingredients
+- Added [perl/FSM/Package/SignalManagerProjectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/SignalManagerProjectionSupport.pm) as the shared owner for projecting canonical symbol payloads back into the scalar-expression layer, instead of leaving direct roots, composition tops, package parsing, and imported package plumbing to drift through separate ad hoc projection rules.
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm), [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm), [perl/FSM/Package/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/Parser.pm), and [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) so later aggregate values may now reuse previously declared local/package constants, enum members, and earlier whole list-valued roots such as `(HEADER (mode.BUSY RESET_BYTE))` and `(PACKET (HEADER mode.IDLE))` instead of forcing authors back to raw numerics at every aggregate leaf.
+- This slice stays intentionally bounded: the reuse contract is order-sensitive and local to previously declared symbols, while forward references and whole hash-root packing remain explicitly out of contract.
+- Updated [t/274-package-aggregate-values.t](/Users/richarddje/Documents/github/fsmgen/t/274-package-aggregate-values.t), [t/275-composition-top-aggregate-values.t](/Users/richarddje/Documents/github/fsmgen/t/275-composition-top-aggregate-values.t), and [t/276-direct-local-aggregate-values.t](/Users/richarddje/Documents/github/fsmgen/t/276-direct-local-aggregate-values.t) to lock named-ingredient aggregate success across packages, composition tops, and direct roots.
+
 ## 2026-04-07
 ### whole list-valued aggregate roots now lower on the live direct/composition paths
 - Added [perl/FSM/Package/PayloadLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/PayloadLiteralSupport.pm) as the shared bounded helper that lowers canonical aggregate payloads into one exact literal only when the payload is a list-valued aggregate with scalar literal leaves and a deterministic left-to-right layout.

@@ -10,6 +10,7 @@ no warnings 'experimental::signatures';
 use FSM::Adapter::FSMGenFull::ExpressionBuilder;
 use FSM::Adapter::FSMGenFull::SignalManager;
 use FSM::Package::Spec;
+use FSM::Package::SignalManagerProjectionSupport;
 use FSM::Package::Symbols;
 
 sub new ($class, %args) {
@@ -77,6 +78,7 @@ sub parse_package_root ($self, $package_ast) {
                 $package_name,
                 $child,
                 $symbols,
+                $symbol_manager,
                 $expression_builder,
             );
             next;
@@ -87,6 +89,7 @@ sub parse_package_root ($self, $package_ast) {
                 $package_name,
                 $child,
                 $symbols,
+                $symbol_manager,
                 $expression_builder,
             );
             next;
@@ -104,7 +107,7 @@ sub parse_package_root ($self, $package_ast) {
     );
 }
 
-sub parse_package_constants_block ($self, $package_name, $child_ast, $symbols, $expression_builder) {
+sub parse_package_constants_block ($self, $package_name, $child_ast, $symbols, $symbol_manager, $expression_builder) {
     my (undef, $constants_list) = @$child_ast;
 
     confess
@@ -136,13 +139,22 @@ sub parse_package_constants_block ($self, $package_name, $child_ast, $symbols, $
         );
 
         $symbols->store_constant($resolved_name, $canonical_payload);
+        FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
+            signal_manager => $symbol_manager,
+            symbols => FSM::Package::Symbols->new(
+                constants => {
+                    $resolved_name => $canonical_payload,
+                },
+            ),
+            expression_builder => $expression_builder,
+        );
     }
 
     $symbols->push_raw_block($child_ast);
     return $symbols;
 }
 
-sub parse_package_enums_block ($self, $package_name, $child_ast, $symbols, $expression_builder) {
+sub parse_package_enums_block ($self, $package_name, $child_ast, $symbols, $symbol_manager, $expression_builder) {
     my (undef, $enums_list) = @$child_ast;
 
     confess
@@ -195,6 +207,15 @@ sub parse_package_enums_block ($self, $package_name, $child_ast, $symbols, $expr
         }
 
         $symbols->store_enum($resolved_enum_name, \%enum_values);
+        FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
+            signal_manager => $symbol_manager,
+            symbols => FSM::Package::Symbols->new(
+                enums => {
+                    $resolved_enum_name => \%enum_values,
+                },
+            ),
+            expression_builder => $expression_builder,
+        );
     }
 
     $symbols->push_raw_block($child_ast);

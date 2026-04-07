@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-08: later aggregate values now reuse earlier named scalar ingredients
+- Saved the next bounded aggregate-authoring slice after whole-list aggregate
+  roots landed.
+- Important continuity note:
+  - later direct-root, composition-top, and `?pkg:name` aggregate values may
+    now reuse previously declared constants, enum members, and earlier whole
+    list-valued roots such as `(HEADER (mode.BUSY RESET_BYTE))` and
+    `(PACKET (HEADER mode.IDLE))`,
+  - one shared symbol-projection helper now owns how canonical symbol payloads
+    are fed back into scalar-expression parsing across direct roots,
+    composition tops, packages, and imported package projection,
+  - and the boundary stays honest: this is previous-symbol reuse only, not
+    forward references or whole hash-root packing.
+
 ## 2026-04-07: whole list aggregate roots now lower on the live direct/composition paths
 - Saved the next aggregate/type groundwork slice after composition-top
   `symbol_contract` export landed.
