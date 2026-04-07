@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-07: whole list aggregate roots now lower on the live direct/composition paths
+- Saved the next aggregate/type groundwork slice after composition-top
+  `symbol_contract` export landed.
+- Important continuity note:
+  - direct `?fsm` / `?dt` roots now accept whole list-valued aggregate roots
+    such as `BYTES`, `TAIL`, or `shared.BYTES` in assignment RHS expressions
+    and guard equality conditions,
+  - bounded composition actual/concat positions now accept those same whole
+    list-valued roots such as `=HEADER`, `=TAIL`, or `=shared.HEADER`,
+  - one shared payload-lowering helper now owns that flattening rule,
+  - and whole hash-like aggregate roots such as `FRAME` or `shared.FRAME`
+    still fail explicitly until record field-order/type semantics are made
+    real.
+
 ## 2026-04-07: composition-top symbol contracts now survive into forward IR and module_info
 - Saved the next aggregate/type groundwork slice after direct-root
   `symbol_contract` export landed.

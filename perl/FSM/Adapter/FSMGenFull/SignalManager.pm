@@ -21,6 +21,7 @@ sub new($class, %args) {
         defines => {},         # +define: name -> value_expression
         params => {},          # +params: name -> parameter_value
         aggregate_symbols => {}, # aggregate-valued symbol roots that must resolve to scalar leaves
+        aggregate_payloads => {}, # aggregate-valued symbol roots that can lower whole-list payloads
     }, $class;
 }
 
@@ -179,8 +180,9 @@ sub store_param($self, $name, $value) {
     $self->{params}{$name} = $value;
 }
 
-sub store_aggregate_symbol($self, $name) {
+sub store_aggregate_symbol($self, $name, $payload = undef) {
     $self->{aggregate_symbols}{$name} = 1 if defined $name && length $name;
+    $self->{aggregate_payloads}{$name} = $payload if defined $name && length $name && defined $payload;
     return $self->{aggregate_symbols}{$name};
 }
 
@@ -199,6 +201,11 @@ sub aggregate_symbol_prefix_for($self, $name) {
     }
 
     return undef;
+}
+
+sub resolve_aggregate_symbol_payload($self, $name) {
+    return undef unless defined $name;
+    return $self->{aggregate_payloads}{$name};
 }
 
 # Symbol resolution methods

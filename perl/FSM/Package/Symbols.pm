@@ -37,24 +37,31 @@ sub push_raw_block ($self, $block_ast) {
 }
 
 sub resolve_actual_payload ($self, $symbol_name) {
+    my $resolved_payload = $self->resolve_payload($symbol_name);
+    return _scalar_payload_value($resolved_payload);
+}
+
+sub resolve_payload ($self, $symbol_name) {
     return undef unless defined($symbol_name) && !ref($symbol_name);
 
     if (exists $self->{constants}{$symbol_name}) {
-        return _scalar_payload_value($self->{constants}{$symbol_name});
+        return $self->{constants}{$symbol_name};
     }
 
     if ($symbol_name =~ /\A([A-Za-z_]\w*)\.([A-Za-z_]\w*)\z/) {
         my ($enum_name, $member_name) = ($1, $2);
         if (exists $self->{enums}{$enum_name} && exists $self->{enums}{$enum_name}{$member_name}) {
-            return $self->{enums}{$enum_name}{$member_name};
+            return {
+                kind => 'scalar',
+                payload => $self->{enums}{$enum_name}{$member_name},
+            };
         }
     }
 
     if ($symbol_name =~ /\A([A-Za-z_]\w*)(.*)\z/) {
         my ($constant_name, $suffix) = ($1, $2);
         if (exists $self->{constants}{$constant_name}) {
-            my $resolved_payload = _resolve_payload_suffix($self->{constants}{$constant_name}, $suffix);
-            return _scalar_payload_value($resolved_payload);
+            return _resolve_payload_suffix($self->{constants}{$constant_name}, $suffix);
         }
     }
 

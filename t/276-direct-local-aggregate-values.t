@@ -109,6 +109,88 @@ FSM
     );
 };
 
+subtest 'local direct-root list aggregate roots lower as whole literals' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_local_list_aggregate_root.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_local_list_aggregate_root.sv');
+
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_local_list_aggregate_root
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+constants
+    (BYTES (8'hA5 8'h3C))
+    (TAIL (1 0))
+    (FRAME ((mode 3) (flag 1)))
+  )
+  (+size
+    (SEL 16)
+    (OUT 16)
+    (TAIL_OUT 2)
+    (HIT 1)
+  )
+  (idle
+    (OUT = BYTES)
+    (TAIL_OUT = TAIL)
+    (HIT = 1 <SEL=BYTES)
+  )
+)
+FSM
+    );
+
+    my $raw_ast = Lispish::multi($fsm_path);
+    my $adapter = FSM::Adapter::FSMGenFull->new(debug => 0);
+    my $fsm_module = $adapter->parse_fsm($raw_ast);
+
+    my %assignment_by_target = %{ assignments_by_target($fsm_module, 'idle') };
+    is_literal_assignment($assignment_by_target{OUT}, '1010010100111100', 16, 'OUT resolves whole local list aggregate root to one literal');
+    is_literal_assignment($assignment_by_target{TAIL_OUT}, '10', 2, 'TAIL_OUT resolves nested local list aggregate root to one literal');
+
+    my %conditional_by_target = %{ conditionals_by_target($fsm_module, 'idle') };
+    assert_condition_equality(
+        $conditional_by_target{HIT}->condition,
+        'SEL',
+        '1010010100111100',
+        'whole local list aggregate root resolves in direct-root condition context',
+    );
+    is(
+        $conditional_by_target{HIT}->condition->right->width,
+        16,
+        'whole local list aggregate root preserves width in condition context',
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug => 0,
+    );
+    my $pipeline_result = $pipeline->generate_hdl_from_file($fsm_path);
+    my $pipeline_hdl = $pipeline_result->{hdl_code};
+    unlike(
+        $pipeline_hdl,
+        qr/\bBYTES\b|\bTAIL\b/s,
+        'pipeline output lowers whole local list aggregate roots before emission',
+    );
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '--output', $output_path, $fsm_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+    my $output_text = slurp_file($output_path);
+
+    ok($success, 'CLI accepts whole local list aggregate roots');
+    ok(-e $output_path, 'CLI emits HDL for whole local list aggregate roots');
+    ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for whole local list aggregate roots');
+    unlike($combined_output, qr/Unsupported aggregate-valued symbol|whole aggregate roots/s, 'successful whole-list aggregate CLI run does not report aggregate-root failures');
+    unlike(
+        $output_text,
+        qr/\bBYTES\b|\bTAIL\b/s,
+        'CLI output lowers whole local list aggregate roots before emission',
+    );
+};
+
 subtest 'pipeline and CLI reject unresolved local aggregate roots in direct-root expressions' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'bad_local_aggregate_root_ref.fsm');
@@ -148,8 +230,8 @@ FSM
     ok($pipeline_error, 'pipeline rejects unresolved local aggregate roots');
     like(
         $pipeline_error,
-        qr/Unsupported aggregate-valued symbol 'FRAME'/s,
-        'pipeline surfaces the targeted unresolved local aggregate-root boundary',
+        qr/whole aggregate roots only for list-valued aggregates|Unsupported aggregate-valued symbol 'FRAME'/s,
+        'pipeline surfaces the targeted unresolved local hash-aggregate boundary',
     );
 
     my @cmd = ('./bin/fsmgen', '--quiet', '--output', $output_path, $fsm_path);
@@ -160,8 +242,8 @@ FSM
     ok(!-e $output_path, 'CLI does not emit HDL for unresolved local aggregate roots');
     like(
         $combined_output,
-        qr/Unsupported aggregate-valued symbol 'FRAME'/s,
-        'CLI surfaces the targeted unresolved local aggregate-root boundary',
+        qr/whole aggregate roots only for list-valued aggregates|Unsupported aggregate-valued symbol 'FRAME'/s,
+        'CLI surfaces the targeted unresolved local hash-aggregate boundary',
     );
     isnt($error_code, 0, 'CLI exits non-zero for unresolved local aggregate roots');
 };

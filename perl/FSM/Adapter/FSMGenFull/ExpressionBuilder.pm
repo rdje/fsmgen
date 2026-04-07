@@ -9,6 +9,7 @@ no warnings 'experimental::signatures';
 use Data::Dumper;
 use FSM::CoreAST;
 use FSM::Debug;
+use FSM::Package::PayloadLiteralSupport;
 
 sub new($class, %args) {
     # Requires a signal_manager
@@ -363,6 +364,22 @@ sub parse_scalar_expression($self, $scalar) {
     if ($resolved_symbol) {
         fsm_debug("          SYMBOL RESOLVED: '$scalar' -> literal/constant", 3);
         return $resolved_symbol;
+    }
+
+    my $aggregate_payload = $self->{signal_manager}->resolve_aggregate_symbol_payload($scalar);
+    if (defined $aggregate_payload) {
+        my ($bits, $width, $reason) = FSM::Package::PayloadLiteralSupport->payload_to_bits_and_width($aggregate_payload);
+        if (defined $bits) {
+            fsm_debug("          AGGREGATE ROOT RESOLVED: '$scalar' -> ${width}'b$bits", 3);
+            return FSM::CoreAST::Literal->new($bits, width => $width, radix => 'binary');
+        }
+
+        if (($reason || '') eq 'hash_aggregate') {
+            Carp::confess
+                "Unsupported aggregate-valued symbol '$scalar'. ".
+                "The active scalar-expression lane currently supports whole aggregate roots only for list-valued aggregates with scalar literal leaves; hash-like aggregate roots still require member access such as '$scalar.member'. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        }
     }
 
     my $aggregate_prefix = $self->{signal_manager}->aggregate_symbol_prefix_for($scalar);

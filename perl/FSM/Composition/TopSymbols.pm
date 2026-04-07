@@ -61,6 +61,22 @@ sub resolve_actual_payload ($self, $symbol_name) {
     return undef;
 }
 
+sub resolve_payload ($self, $symbol_name) {
+    return undef unless defined($symbol_name) && !ref($symbol_name);
+
+    my $resolved_local_payload = $self->{local_symbols}->resolve_payload($symbol_name);
+    return $resolved_local_payload if defined $resolved_local_payload;
+
+    if ($symbol_name =~ /\A([A-Za-z_]\w*)\.(.+)\z/) {
+        my ($package_name, $package_symbol) = ($1, $2);
+        my $package_symbols = $self->{imported_packages}{$package_name};
+        return undef unless $package_symbols && $package_symbols->can('resolve_payload');
+        return $package_symbols->resolve_payload($package_symbol);
+    }
+
+    return undef;
+}
+
 sub summary ($self) {
     return $self->{local_symbols}->summary;
 }

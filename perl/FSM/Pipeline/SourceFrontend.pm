@@ -529,7 +529,10 @@ sub _import_package_symbols_into_signal_manager ($class, %args) {
         my $scalar_leaves = $symbols->constant_scalar_leaves || {};
 
         for my $aggregate_path (sort keys %$aggregate_paths) {
-            $signal_manager->store_aggregate_symbol("$package_name.$aggregate_path");
+            $signal_manager->store_aggregate_symbol(
+                "$package_name.$aggregate_path",
+                $symbols->resolve_payload($aggregate_path),
+            );
         }
 
         for my $constant_name (sort keys %$scalar_leaves) {

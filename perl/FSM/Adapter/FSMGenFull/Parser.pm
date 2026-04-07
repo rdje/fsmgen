@@ -381,7 +381,10 @@ sub parse_constants_section($self, $constants_ast) {
         );
 
         for my $aggregate_path (sort keys %{ $symbols->constant_aggregate_paths || {} }) {
-            $self->{signal_manager}->store_aggregate_symbol($aggregate_path);
+            $self->{signal_manager}->store_aggregate_symbol(
+                $aggregate_path,
+                $symbols->resolve_payload($aggregate_path),
+            );
         }
 
         for my $constant_name (sort keys %{ $symbols->constant_scalar_leaves || {} }) {

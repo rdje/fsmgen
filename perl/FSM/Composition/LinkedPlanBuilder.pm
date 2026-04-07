@@ -38,6 +38,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     signal_ref_expr
     slice_expr
 );
+use FSM::Package::PayloadLiteralSupport;
 
 sub build_from_toplinks ($class, %args) {
     my $lane = $args{lane} // '';
@@ -732,6 +733,31 @@ sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header, %opts) {
             $resolved_actual->{symbol_name} = $payload;
             $resolved_actual->{resolved_payload} = $resolved_payload;
             return $resolved_actual;
+        }
+    }
+
+    if (my $resolved_payload = $class->_resolve_top_symbol_payload($payload, $opts{top_symbols})) {
+        my ($bits, $width, $reason) = FSM::Package::PayloadLiteralSupport->payload_to_bits_and_width($resolved_payload);
+        if (defined $bits) {
+            return {
+                raw => $endpoint,
+                key => "actual:$endpoint",
+                kind => 'actual_literal',
+                symbol_name => $payload,
+                resolved_payload => $resolved_payload,
+                port => {
+                    direction => 'actual',
+                    width => $width,
+                },
+                connection_expr => bit_vector_literal_expr($bits),
+            };
+        }
+
+        if (($reason || '') eq 'hash_aggregate') {
+            confess
+                "Composition source '$header' in '$fsm_file' uses actual endpoint '=$payload', ".
+                "but explicit actual binding is blocked because whole aggregate actual roots currently support only list-valued aggregates with scalar literal leaves; hash-like aggregate roots still require member access such as '=$payload.member'. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
     }
 
@@ -1481,6 +1507,23 @@ sub _parse_top_expression_spec ($class, $endpoint, %opts) {
             my $resolved_payload = $class->_resolve_top_symbol_actual_payload($1, $opts{top_symbols});
             ($bits, $width) = $class->_expression_literal_bits_and_width($resolved_payload)
                 if defined $resolved_payload;
+
+            if (!defined($bits)) {
+                my $aggregate_payload = $class->_resolve_top_symbol_payload($1, $opts{top_symbols});
+                if (defined $aggregate_payload) {
+                    my (undef, undef, $reason) = FSM::Package::PayloadLiteralSupport->payload_to_bits_and_width($aggregate_payload);
+                    if (($reason || '') eq 'hash_aggregate') {
+                        return {
+                            raw => $endpoint,
+                            expr_kind => 'unsupported_aggregate_literal',
+                            symbol_name => $1,
+                            reason => $reason,
+                        };
+                    }
+
+                    ($bits, $width, undef) = FSM::Package::PayloadLiteralSupport->payload_to_bits_and_width($aggregate_payload);
+                }
+            }
         }
         return undef unless defined $bits;
         return {
@@ -1565,6 +1608,13 @@ sub _resolve_top_symbol_actual_payload ($class, $payload, $top_symbols) {
     return undef unless defined($resolved_payload) && !ref($resolved_payload) && length($resolved_payload);
 
     return $resolved_payload;
+}
+
+sub _resolve_top_symbol_payload ($class, $payload, $top_symbols) {
+    return undef unless defined($payload) && !ref($payload);
+    return undef unless $top_symbols && $top_symbols->can('resolve_payload');
+
+    return $top_symbols->resolve_payload($payload);
 }
 
 sub _expression_literal_bits_and_width ($class, $payload) {
@@ -2003,6 +2053,14 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
             base_ports => [],
             child_base_sources => [],
         };
+    }
+
+    if ($expr_kind eq 'unsupported_aggregate_literal') {
+        my $symbol_name = $spec->{symbol_name} || $spec->{raw} || 'aggregate';
+        confess
+            "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
+            "but explicit link endpoint resolution is blocked because whole aggregate actual operands currently support only list-valued aggregates with scalar literal leaves; hash-like aggregate roots still require member access such as '=$symbol_name.member'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
 
     if ($expr_kind eq 'child_signal_ref' || $expr_kind eq 'child_bit_select' || $expr_kind eq 'child_slice') {

@@ -1681,6 +1681,15 @@ Exit criteria:
   assignment RHS expressions and guard equality conditions, unresolved
   whole-aggregate references such as `FRAME` now fail explicitly, and
   whole-aggregate local-symbol flow/types remain future work.
+- `R11`: that same aggregate-value lane now also covers whole list-valued
+  aggregate roots on the existing direct/composition literal paths: direct
+  `?fsm` / `?dt` expressions may now lower local or imported list roots such
+  as `BYTES`, `TAIL`, or `shared.BYTES` into one literal when every leaf is a
+  scalar literal, and bounded composition actual/concat positions may now use
+  those same whole list-valued roots such as `=HEADER`, `=TAIL`, or
+  `=shared.HEADER`, while whole hash-like roots such as `FRAME` or
+  `shared.FRAME` still fail explicitly until field-order/type semantics are
+  made real.
 - `R11`: direct generated roots now also preserve one bounded `symbol_contract`
   through forward `intent_hir` and mirrored `module_info`, so local
   constants/enums, canonical aggregate payloads, scalar-leaf summaries, and

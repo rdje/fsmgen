@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-07: whole aggregate widening should start with list roots, not fake record packing
+- Continued the aggregate/type lane after composition-top symbol contracts
+  reached forward IR.
+- Landed behavior:
+  - direct `?fsm` / `?dt` expressions may now lower whole list-valued
+    aggregate roots such as `BYTES`, `TAIL`, or `shared.BYTES` as one literal
+    when every leaf is already a scalar literal,
+  - bounded composition actual/concat positions may now use those same whole
+    list-valued roots such as `=HEADER`, `=TAIL`, or `=shared.HEADER`,
+  - and the lowering now goes through one shared
+    [perl/FSM/Package/PayloadLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/PayloadLiteralSupport.pm)
+    helper instead of teaching the direct and composition paths two separate
+    aggregate-flattening stories.
+- Why this boundary is deliberate:
+  - list order is already a real authored contract,
+  - hash/record aggregate order is not yet a real language contract,
+  - so whole hash-like roots such as `FRAME` or `shared.FRAME` still fail
+    explicitly instead of pretending we already settled record packing.
+
 ## 2026-04-07: composition tops should not drop their symbol layer at the forward-IR boundary
 - Followed the direct-root symbol-contract slice through the remaining symmetry
   gap on composition tops.
