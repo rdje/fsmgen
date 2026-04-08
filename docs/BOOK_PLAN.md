@@ -4,7 +4,24 @@ This document captures the planned split of the monolithic
 [USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
 into a book-like documentation set.
 
-Status: planned, not yet executed.
+Status: in progress.
+
+The mdBook scaffold now exists under
+`docs/book/` with:
+
+- `docs/book/book.toml`
+- `docs/book/src/SUMMARY.md`
+- the first shipped chapter set under `docs/book/src/`
+
+The migration is still incomplete:
+
+- [USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  remains the broad live reference during the split,
+- focused reference docs such as
+  [COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
+  still carry the narrow normative boundary for their lanes,
+- and the book should keep absorbing user-facing material until it becomes the
+  default learning surface.
 
 ## Why split the guide
 
@@ -40,41 +57,46 @@ The preferred long-term structure is:
   - table of contents
   - quick orientation
   - “read this first” page
-- `docs/book/00-introduction.md`
+- `docs/book/book.toml`
+  - mdBook configuration
+- `docs/book/src/SUMMARY.md`
+  - chapter order
+  - navigation spine
+- `docs/book/src/00-introduction.md`
   - What FSMGen is
   - what problems it solves
   - mental model
-- `docs/book/01-first-fsm.md`
+- `docs/book/src/01-first-fsm.md`
   - first working `.fsm`
   - first HDL generation
   - first debug loop
-- `docs/book/02-language-basics.md`
+- `docs/book/src/02-language-basics.md`
   - core syntax
   - signals
   - assignment operators
   - guards
   - tests
   - update shorthand
-- `docs/book/03-decision-trees-and-fsms.md`
+- `docs/book/src/03-decision-trees-and-fsms.md`
   - `?fsm`
   - `?dt`
   - state transitions
   - combinational DTs
   - reset/init
-- `docs/book/04-symbols-types-and-imports.md`
+- `docs/book/src/04-symbols-types-and-imports.md`
   - `+constants`
   - `+enums`
   - `+types`
   - scalar type aliases
   - aggregate type aliases
   - `+import`
-- `docs/book/05-composition-basics.md`
+- `docs/book/src/05-composition-basics.md`
   - `?top`
   - child kinds
   - `?ports`
   - simple `?toplink`
   - same-name convention
-- `docs/book/06-composition-advanced.md`
+- `docs/book/src/06-composition-advanced.md`
   - source-side expressions
   - actuals
   - concat/repeat
@@ -82,36 +104,40 @@ The preferred long-term structure is:
   - inferred top ports
   - inferred carriers
   - declared type compatibility
-- `docs/book/07-packages-and-sharing.md`
+- `docs/book/src/07-packages-and-sharing.md`
   - `?pkg`
   - semantic imports
   - namespacing
   - shared scalar values
   - shared aggregate values
-- `docs/book/08-type-inference-and-aggregate-data.md`
+- `docs/book/src/08-type-inference-and-aggregate-data.md`
   - inference-first typing
   - aggregate autovivification direction
   - packed lowering model
   - current supported boundary
-- `docs/book/09-generated-hdl-debugging-and-inspection.md`
+- `docs/book/src/09-generated-hdl-debugging-and-inspection.md`
   - CLI flow
   - generated HDL reading
   - debug workflow
   - IR surfaces
   - diagnostics
-- `docs/book/10-errors-strict-mode-and-troubleshooting.md`
+- `docs/book/src/10-errors-strict-mode-and-troubleshooting.md`
   - common failures
   - strict mode
   - how to interpret errors
   - regression guidance
-- `docs/book/11-extensions-and-embedding.md`
+- `docs/book/src/11-extensions-and-embedding.md`
   - typed extensions
   - embedding/API notes
   - advanced integration entry points
-- `docs/book/12-cookbook.md`
+- `docs/book/src/12-cookbook.md`
   - realistic copyable patterns
   - small end-to-end examples
   - “how do I model X?” answers
+- `docs/book/src/90-reference-map.md`
+  - migration map
+  - focused-reference links
+  - old-guide section mapping
 
 ## Docs that stay as focused references
 
@@ -155,6 +181,8 @@ The split should happen incrementally so docs stay usable at every step.
 
 ### Phase 1: establish the landing page and chapter skeleton
 
+Status: shipped.
+
 - reduce `docs/USER_GUIDE.md` to:
   - short introduction
   - quickstart links
@@ -168,6 +196,8 @@ The split should happen incrementally so docs stay usable at every step.
 
 ### Phase 2: extract beginner flow first
 
+Status: in progress.
+
 - move “What FSMGen is”
 - move first-run/basic-usage material
 - move the earliest language basics
@@ -175,6 +205,8 @@ The split should happen incrementally so docs stay usable at every step.
 This gives new users an easier on-ramp immediately.
 
 ### Phase 3: split the language and type material
+
+Status: in progress.
 
 - extract core language syntax/reference
 - extract symbols/types/imports
@@ -184,6 +216,8 @@ This prevents the language contract from being buried inside one giant page.
 
 ### Phase 4: split composition cleanly
 
+Status: in progress.
+
 - extract composition basics
 - extract advanced composition topics
 - keep
@@ -192,11 +226,15 @@ This prevents the language contract from being buried inside one giant page.
 
 ### Phase 5: split tooling/debugging/troubleshooting
 
+Status: in progress.
+
 - move options/debug workflow/generated HDL reading
 - move strict mode and troubleshooting
 - move extensions/embedding
 
 ### Phase 6: add the cookbook layer
+
+Status: started.
 
 - add realistic, copyable examples
 - answer recurring “how do I model X?” questions

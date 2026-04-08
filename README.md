@@ -12,23 +12,26 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 2. `SESSION_BOOTSTRAP.md`: default first task for a new engineering session.
 3. `ROADMAP_STATUS.md`: canonical live roadmap/workstream status.
 4. `ROADMAP_V2.md`: detailed post-`R0`..`R7` roadmap intent and sequencing.
-5. `docs/USER_GUIDE.md`: usage and CLI behavior.
-6. `docs/COMPOSITION_SCOPE.md`: concrete `R6` composition scope and acceptance boundary.
-7. `docs/COMPOSITION_LEGACY_MAPPING.md`: historical `fx/bin/fsmgen` composition behavior mapped onto the active `R6` plan.
-8. `docs/EXTENSION_MODEL.md`: active `R7` typed extension boundary replacing legacy `.plg` / `PPlugin` as architecture direction.
-9. `CHANGES.md`: chronological technical changes.
-10. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-11. `MEMORY.md`: continuity/handoff state.
-12. `COMMIT.md`: commit workflow requirements.
-13. `WARP.md`: repository-specific agent/development guidance.
-14. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+5. `docs/book/src/SUMMARY.md`: progressive mdBook table of contents.
+6. `docs/USER_GUIDE.md`: broad live reference during the book split.
+7. `docs/COMPOSITION_SCOPE.md`: concrete `R6` composition scope and acceptance boundary.
+8. `docs/COMPOSITION_LEGACY_MAPPING.md`: historical `fx/bin/fsmgen` composition behavior mapped onto the active `R6` plan.
+9. `docs/EXTENSION_MODEL.md`: active `R7` typed extension boundary replacing legacy `.plg` / `PPlugin` as architecture direction.
+10. `CHANGES.md`: chronological technical changes.
+11. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+12. `MEMORY.md`: continuity/handoff state.
+13. `COMMIT.md`: commit workflow requirements.
+14. `WARP.md`: repository-specific agent/development guidance.
+15. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
 - `SESSION_BOOTSTRAP.md` — canonical first-task file for a new engineering session.
 - `ROADMAP_STATUS.md` — canonical live roadmap/workstream status board.
 - `ROADMAP_V2.md` — detailed post-`R0`..`R7` roadmap intent and sequencing.
-- `docs/USER_GUIDE.md` — end-user guide and command usage.
+- `docs/book/` — mdBook source for the progressive FSMGen book.
+- `docs/BOOK_PLAN.md` — migration plan from the monolithic guide into the mdBook.
+- `docs/USER_GUIDE.md` — broad live reference and command usage during the split.
 - `docs/COMPOSITION_SCOPE.md` — concrete composition scope and acceptance boundary for the active architecture.
 - `docs/COMPOSITION_LEGACY_MAPPING.md` — historical legacy-composition behavior mapped onto the active architecture.
 - `docs/EXTENSION_MODEL.md` — typed extension boundary for the active `R7` replacement path.
@@ -70,6 +73,14 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ./bin/fsmgen --output /tmp/trial_0.sv fsm/trial_0.fsm
 ./bin/fsmgen --debug=3 fsm/lte_dif_pmaster.fsm
 ```
+
+## Documentation quick preview
+```bash
+mdbook build docs/book
+cd docs/book && mdbook serve
+```
+- The mdBook is the progressive learning surface.
+- `docs/USER_GUIDE.md` remains the broad live reference while that split is still in progress.
 
 ## Local CI / pre-push regression
 ```bash

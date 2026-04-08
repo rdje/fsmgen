@@ -126,6 +126,7 @@ dist/
 # Generated documentation
 docs/build/
 docs/_build/
+docs/book/book/
 
 ## IDE and Tool Configuration (keep project-level configs)
 # But ignore user-specific configs
@@ -158,6 +159,7 @@ __pycache__/
 !fsm/*.fsm
 # Keep documentation
 !docs/*.md
+!docs/book/src/*.md
 # Keep license and readme files
 !LICENSE*
 !README*

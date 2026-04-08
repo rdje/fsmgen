@@ -1,0 +1,18 @@
+[book]
+title = "FSMGen Book"
+authors = ["FSMGen contributors"]
+description = "Progressive, example-rich documentation for FSMGen and the .fsm language."
+language = "en"
+src = "src"
+
+[build]
+create-missing = false
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "navy"
+smart-punctuation = true
+
+[output.html.fold]
+enable = true
+level = 0

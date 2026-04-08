@@ -1,0 +1,119 @@
+# Type Inference and Aggregate Data
+
+This chapter explains the long-term typing philosophy and the current shipped
+boundary.
+
+## The Direction
+
+FSMGen is aiming for an authoring surface that feels closer to a dynamic
+language than to handwritten HDL declarations.
+
+The principle is:
+
+- infer whenever one safe answer exists
+- do the hard semantic work inside the engine
+- fail explicitly when meaning is ambiguous
+
+That applies to both scalars and aggregates.
+
+## Current Shipped Reality
+
+The full inference-first vision is not complete yet.
+
+What is shipped today:
+
+- widths from explicit `+size`
+- widths from scalar type aliases
+- widths from positive integer scalar symbols
+- bounded aggregate constant values
+- packed aggregate type aliases through `(list ...)` and `(record ...)`
+- declared-type preservation through the live pipeline
+- aggregate-aware compatibility checks on the current live paths
+
+What is not fully shipped yet:
+
+- “never declare scalar types unless you want to” across the whole language
+- broad automatic aggregate type growth from arbitrary usage
+- backend-owned struct/record emission as the default lowering
+
+## Mixed Integer Formats
+
+The user-facing direction is intentionally permissive when one meaning is clear.
+
+Examples that the engine should normalize safely:
+
+- binary, decimal, octal, and hex spellings
+- signed and unsigned numeric forms
+- underscore-separated readability spellings
+
+The author should not have to rewrite a design just because one value is
+written as hex and another as decimal.
+
+## Aggregate Data
+
+The current aggregate mental model is:
+
+- `list` means ordered packed elements
+- `record` means ordered named fields
+
+Current whole-aggregate lowering works when every leaf still resolves to one
+scalar literal.
+
+Record packing currently follows authored member order.
+
+## Packed Lowering Rule
+
+Today, the live SV path still lowers declared aggregate aliases primarily as
+packed-width carriers.
+
+That means:
+
+- type identity is preserved semantically
+- compatibility checks can use the aggregate shape
+- but emitted HDL is not yet claiming full frontend-shaped typed struct flow
+
+This is deliberate. The backend should never pretend a richer type surface is
+stable before it really is.
+
+## SystemVerilog And VHDL Intent
+
+The semantic type model should eventually carry facts like:
+
+- width
+- signedness
+- 2-state vs 4-state
+- scalar vs enum vs aggregate role
+
+Then the backend can choose the right carrier:
+
+- SystemVerilog `bit` vs `logic`
+- signed vs unsigned vector families
+- VHDL vector vs numeric carriers where appropriate
+
+without forcing those backend spellings into `.fsm` source.
+
+## Aggregate Autovivification Direction
+
+The future aggregate direction is intentionally close to autovivification:
+
+- member access should grow record shape
+- index access should grow list shape
+- nested list/record/list layering should be possible when one safe meaning
+  exists
+
+But the guardrail remains:
+
+- if the backend cannot honor the inferred shape honestly, generation must fail
+  explicitly
+
+## Practical Guidance Today
+
+Today, if you want the strongest current contract:
+
+- use named scalar aliases when a width/sign/state-model anchor matters
+- use `record` and `list` aliases for aggregate intent
+- use aggregate constants and package-backed shared values to avoid magic
+  numbers
+- expect packed-width lowering in emitted HDL for now
+
+That gives you the best current mix of usability and correctness.

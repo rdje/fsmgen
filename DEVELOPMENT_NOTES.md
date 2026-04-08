@@ -9034,3 +9034,33 @@ It is an exact-delay pulse request:
   - [t/198-systemverilog-scaffold-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/198-systemverilog-scaffold-emitter.t)
   - [t/199-systemverilog-internal-declaration-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/199-systemverilog-internal-declaration-emitter.t)
   - [t/204-enable-graph-module-planning-support.t](/Users/richarddje/Documents/github/fsmgen/t/204-enable-graph-module-planning-support.t)
+
+## 2026-04-09: the documentation split is now a real mdBook migration, not only a plan
+- The project now has a real mdBook source tree under
+  [docs/book/](/Users/richarddje/Documents/github/fsmgen/docs/book)
+  with a usable `book.toml`, `SUMMARY.md`, and the first shipped chapter set.
+- The book is now the progressive documentation surface:
+  - [docs/book/src/00-introduction.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/00-introduction.md)
+  - [docs/book/src/01-first-fsm.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/01-first-fsm.md)
+  - [docs/book/src/02-language-basics.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/02-language-basics.md)
+  - [docs/book/src/03-decision-trees-and-fsms.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/03-decision-trees-and-fsms.md)
+  - [docs/book/src/04-symbols-types-and-imports.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/04-symbols-types-and-imports.md)
+  - [docs/book/src/05-composition-basics.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/05-composition-basics.md)
+  - [docs/book/src/06-composition-advanced.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/06-composition-advanced.md)
+  - [docs/book/src/07-packages-and-sharing.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/07-packages-and-sharing.md)
+  - [docs/book/src/08-type-inference-and-aggregate-data.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/08-type-inference-and-aggregate-data.md)
+  - [docs/book/src/09-generated-hdl-debugging-and-inspection.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/09-generated-hdl-debugging-and-inspection.md)
+  - [docs/book/src/10-errors-strict-mode-and-troubleshooting.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/10-errors-strict-mode-and-troubleshooting.md)
+  - [docs/book/src/11-extensions-and-embedding.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/11-extensions-and-embedding.md)
+  - [docs/book/src/12-cookbook.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/12-cookbook.md)
+  - [docs/book/src/90-reference-map.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/90-reference-map.md)
+- The migration stance is now explicit:
+  - the mdBook is the friendly learning path,
+  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+    remains the broad live reference while material is still being split,
+  - and narrow normative docs such as
+    [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
+    should stay focused rather than being copied wholesale into the book.
+- Local doc build hygiene matters too: the generated mdBook output directory
+  `docs/book/book/` should stay ignored so validating the book never dirties
+  the repo with build artifacts.

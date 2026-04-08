@@ -1,5 +1,17 @@
 # FSMGen User Guide
 
+This guide remains the broad live reference while the progressive mdBook is
+being built under `docs/book/`.
+
+Recommended entry points now are:
+
+- `docs/book/src/SUMMARY.md` for the book table of contents
+- `docs/book/src/00-introduction.md` for the conceptual starting point
+- `docs/book/src/12-cookbook.md` for copyable patterns
+
+This file still carries the full live reference during the migration, so when a
+detail has not been split into the book yet, this guide remains authoritative.
+
 ## 1) What FSMGen is
 FSMGen converts Lisp-like `.fsm` state-machine descriptions into HDL.
 
