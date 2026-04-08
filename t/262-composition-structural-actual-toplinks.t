@@ -751,6 +751,150 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for composition-root named actual toplinks');
 };
 
+subtest 'linked plan builder preserves compatible whole aggregate actuals on typed direct targets' => sub {
+    my $frame_spec = ordered_record_spec(
+        [mode => bits_spec(2)],
+        [flag => bit_spec()],
+    );
+    my @ports = (
+        port('typed_status_out', 'output', 3, undef,
+            declared_type_name => 'frame_t',
+            declared_type_spec => $frame_spec,
+        ),
+    );
+
+    my $top_symbols = FSM::Composition::TopSymbols->new();
+    $top_symbols->store_constant('FRAME', {
+        kind => 'map',
+        member_order => ['mode', 'flag'],
+        members => {
+            mode => { kind => 'scalar', payload => "2'b10" },
+            flag => { kind => 'scalar', payload => '1' },
+        },
+    });
+
+    my $top = FSM::Composition::Top->new(
+        name => 'typed_aggregate_actual_top',
+        top_symbols => $top_symbols,
+    );
+
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        lane => 'C3',
+        composition_spec => FSM::Composition::Spec->new(top => $top),
+        top => $top,
+        ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
+        ports => \@ports,
+        toplinks => [
+            FSM::Composition::TopLink->new(
+                name => 'wiring',
+                links => [
+                    FSM::Composition::Link->new(source => '=FRAME', target => 'typed_status_out'),
+                    FSM::Composition::Link->new(source => '=FRAME', target => 'uart_tx.status_in'),
+                ],
+            ),
+        ],
+        realized_instances => [
+            realized_instance(
+                'rtl',
+                'uart_tx',
+                port('status_in', 'input', 3, undef,
+                    declared_type_name => 'frame_t',
+                    declared_type_spec => $frame_spec,
+                ),
+            ),
+        ],
+        fsm_file => 'typed_aggregate_actual_top.fsm',
+        header => 'typed_aggregate_actual_top',
+    );
+
+    isa_ok($plan, 'FSM::Composition::Plan');
+    is_deeply(
+        $plan->auxiliary_assignments,
+        [
+            "    assign typed_status_out = 3'b101;",
+        ],
+        'compatible whole aggregate actuals still drive typed top outputs directly',
+    );
+
+    my %bindings = map { $_->{port_name} => $_ } @{$plan->instances->[0]->port_bindings};
+    is_deeply(
+        $bindings{status_in}{connection_expr},
+        bit_vector_literal_expr('101'),
+        'compatible whole aggregate actuals still bind directly into typed child inputs',
+    );
+};
+
+subtest 'linked plan builder rejects whole aggregate actuals across incompatible typed aggregate targets' => sub {
+    my $top_symbols = FSM::Composition::TopSymbols->new();
+    $top_symbols->store_constant('FRAME', {
+        kind => 'map',
+        member_order => ['mode', 'flag'],
+        members => {
+            mode => { kind => 'scalar', payload => "2'b10" },
+            flag => { kind => 'scalar', payload => '1' },
+        },
+    });
+
+    my $top = FSM::Composition::Top->new(
+        name => 'blocked_typed_aggregate_actual_top',
+        top_symbols => $top_symbols,
+    );
+
+    my $exception = eval {
+        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+            lane => 'C3',
+            composition_spec => FSM::Composition::Spec->new(top => $top),
+            top => $top,
+            ports_block => FSM::Composition::PortsBlock->new(
+                name => 'public_io',
+                ports => [
+                    port('typed_status_out', 'output', 3, undef,
+                        declared_type_name => 'wrong_t',
+                        declared_type_spec => list_spec(
+                            bit_spec(),
+                            bits_spec(2),
+                        ),
+                    ),
+                ],
+            ),
+            ports => [
+                port('typed_status_out', 'output', 3, undef,
+                    declared_type_name => 'wrong_t',
+                    declared_type_spec => list_spec(
+                        bit_spec(),
+                        bits_spec(2),
+                    ),
+                ),
+            ],
+            toplinks => [
+                FSM::Composition::TopLink->new(
+                    name => 'wiring',
+                    links => [
+                        FSM::Composition::Link->new(source => '=FRAME', target => 'typed_status_out'),
+                    ],
+                ),
+            ],
+            realized_instances => [
+                realized_instance(
+                    'rtl',
+                    'uart_tx',
+                    port('dummy', 'input', 1, undef),
+                ),
+            ],
+            fsm_file => 'blocked_typed_aggregate_actual_top.fsm',
+            header => 'blocked_typed_aggregate_actual_top',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/uses actual source '=FRAME' as an explicit link source, .*whole aggregate actual contract 'record\{mode:bits\[2\], flag:bit\}' does not match target declared type 'list<bit, bits\[2\]>' on 'typed_status_out'/s,
+        'builder rejects width-equal whole aggregate actuals when the target preserves an incompatible aggregate declared type contract',
+    );
+};
+
 subtest 'linked plan builder sign-extends SV unsized signed based direct actuals' => sub {
     my @ports = (
         port('sv_unsized_signed_binary_data', 'output', 8, undef),
@@ -1445,13 +1589,63 @@ sub realized_instance {
 }
 
 sub port {
-    my ($name, $direction, $width, $type) = @_;
+    my ($name, $direction, $width, $type, %extra) = @_;
     return FSM::Composition::Port->new(
         name => $name,
         direction => $direction,
         width => $width,
         type => $type,
+        %extra,
     );
+}
+
+sub bit_spec {
+    return {
+        kind => 'bit',
+        width => 1,
+        signed => 0,
+    };
+}
+
+sub bits_spec {
+    my ($width) = @_;
+    return {
+        kind => 'bits',
+        width => $width,
+        signed => 0,
+    };
+}
+
+sub list_spec {
+    my (@items) = @_;
+    my $width = 0;
+    $width += ($_->{width} // 0) for @items;
+    return {
+        kind => 'list',
+        width => $width,
+        signed => 0,
+        items => [@items],
+    };
+}
+
+sub ordered_record_spec {
+    my (@entries) = @_;
+    my %members;
+    my @member_order;
+    my $width = 0;
+    for my $entry (@entries) {
+        my ($member_name, $member_spec) = @$entry;
+        $members{$member_name} = $member_spec;
+        push @member_order, $member_name;
+        $width += ($member_spec->{width} // 0);
+    }
+    return {
+        kind => 'record',
+        width => $width,
+        signed => 0,
+        member_order => \@member_order,
+        members => \%members,
+    };
 }
 
 sub write_file {

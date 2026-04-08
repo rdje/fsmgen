@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-09: whole aggregate actual roots should not bypass typed direct-target contracts
+- Continued the typed composition lane after same-name convention, explicit
+  plain port links, and inferred carrier nets were already declared-type-aware.
+- Landed behavior:
+  - whole named aggregate actual roots such as `=FRAME` or `=shared.FRAME`
+    now infer one canonical list/record payload shape on the bounded
+    explicit-actual path,
+  - when such a whole aggregate actual binds directly to a declared top output
+    or realized child input that preserved an aggregate `declared_type_spec`,
+    that inferred whole-aggregate shape must now match the target aggregate
+    contract instead of relying only on equal packed width,
+  - concat remains intentionally bit-oriented, and scalar literal actuals still
+    stay on the value-oriented literal path rather than pretending they carry
+    aggregate type identity.
+- Why this boundary matters:
+  - once named aggregate aliases and declared type identity are already live,
+    letting `=FRAME` bypass aggregate compatibility on direct targets would
+    leave one obvious width-only escape hatch in the typed composition story,
+  - and this keeps the next aggregate-aware lowering slice on one honest typed
+    handoff instead of mixing real aggregate contracts with silent width-only
+    exceptions.
+
 ## 2026-04-09: the documentation split should now be planned concretely
 - Promoted the earlier “book-like docs” direction into a concrete migration
   plan because the current

@@ -218,6 +218,7 @@ Combinational DT note:
 - Source-side bounded concat `?toplink` expressions such as `/header_bus,status_bus[0],=1,payload_bus[3:0]/uart_tx.data_in/`, including nested brace-group forms such as `/header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/uart_tx.data_in/`, when the target is a realized child input or declared top output, now also including intrinsic-width unsized binary/decimal/octal/hex actual operands such as `=0b10`, `='b10`, `=170`, `=0d170`, `='d170`, `=0o7`, `='o7`, `=0xA5`, `='hA5`, or `=A5`, exact-width signed and unsigned based/decimal literal operands such as `=4'sb1010`, `=3'so7`, `=4'shA`, or `=8'sd-1`, named literal actual operands such as `=HEADER_NIBBLE`, `=BYTES[1]`, `=FRAME.flag`, `=mode.BUSY`, `=shared.RESET_BYTE`, or `=shared.mode.BUSY` resolved from top-root `+constants` / `+enums` and imported `?pkg:name` packages, and child-output operands such as `producer.payload`, `producer.payload[7:4]`, or `producer.payload[0]`
 - Source-side bounded repeat-group `?toplink` expressions such as `/{3{status_bus[0]}}/uart_tx.data_in/` or `/{2{producer.serial_lo}}/packed_out/`, which lower through the same typed structural path and reuse the same deterministic child-output carrier family when the repeated operand comes from a child output
 - Explicit `?toplink` source actuals `=open`, scalar `=0` / `=1`, unsized binary/decimal/signed-decimal/octal/hex direct actuals such as `=0b10100101`, `='b10100101`, `=0d170`, `='d170`, `=-1`, `=0d-1`, `='sd-1`, `='sb1010`, `='so645`, `='shA5`, `=0o245`, `='o245`, `=0xA5`, `='hA5`, `=170`, or `=A5`, underscore-separated spellings such as `=0b1010_0101`, `='b1010_0101`, `=0d1_70`, `='d1_70`, `=0o2_45`, `='o2_45`, `='so6_45`, `=0xA_5`, `='hA_5`, `=1_70`, or `=A_5`, exact-width binary/decimal/signed-decimal/octal/hex literals in unsigned or signed form such as `=8'b10100101`, `=8'sb10100101`, `=8'd165`, `=8'sd-1`, `=8'o245`, `=8'so245`, `=8'hA5`, or `=8'shA5`, whole aggregate roots such as `=HEADER`, `=TAIL`, `=FRAME`, `=shared.HEADER`, or `=shared.FRAME`, and named literal actuals resolved from top-root `+constants` / `+enums` and imported `?pkg:name` packages such as `=RESET_BYTE`, `=BYTES[1]`, `=FRAME.flag`, `=mode.BUSY`, `=shared.RESET_BYTE`, or `=shared.mode.BUSY`, with `=open` still targeting realized child inputs only while direct scalar `=0` / `=1` plus unsized binary/decimal/octal/hex direct actuals widen to the realized child-input or declared top-output target width, unsized signed decimal direct actuals plus unsized signed binary/octal/hex direct actuals widen when the signed value fits the signed range of that direct target width, exact-width literal actuals may now also target declared top outputs, whole aggregate roots staying bounded to aggregates whose leaves all lower to scalar literals, hash-like whole roots packing authored members left to right in declaration order, and named literal actuals staying bounded to the same direct actual and concat-operand positions on the existing structural literal path
+  - when one such whole aggregate root binds directly to a declared top output or realized child input that preserved an aggregate declared type alias, the inferred whole-aggregate shape must also match that target aggregate contract instead of passing on packed width alone
 
 Package note:
 - `?pkg:name` roots are reusable declaration containers, not HDL-generating roots.
@@ -477,6 +478,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
 - Composition-top note:
   - inside `?top:name`, `(+constants ...)` has that same bounded aggregate extension, and the live composition path now accepts scalar leaves such as `BYTES[1]` or `FRAME.flag` plus whole aggregate roots such as `HEADER`, `TAIL`, or `FRAME` on the bounded literal-actual path.
   - whole hash-like aggregate roots lower there through that same authored-member packing rule.
+  - on direct `?toplink` bindings into typed aggregate top outputs or typed aggregate child inputs, width-equal whole aggregate roots must now also match the target aggregate type shape instead of relying only on packed width.
 - Malformed shapes like `(+constants)`, `(+constants BROKEN)`, and malformed entries like `(+constants (C0))` are rejected explicitly.
 
 `(+define ...)`:
@@ -1081,8 +1083,42 @@ This currently works because:
 - `=open` still targets only realized child input ports,
 - binary/octal/hex literal actuals, whether unsigned or signed, must still match the target child-input or top-output width exactly, decimal literal actuals must still match the target child-input or top-output width exactly as numeric values, and signed decimal literals must also fit the signed range of their declared width,
 - unsized binary/decimal/octal/hex direct actuals fail explicitly if the numeric value does not fit that direct binding target width, and unsized signed decimal direct actuals plus unsized signed binary/octal/hex direct actuals fail explicitly if the signed value does not fit the signed range of that direct binding target width,
+- whole aggregate direct actuals such as `=FRAME` still lower through one packed literal, but when the direct target preserved an aggregate type alias such as `frame_t` or `header_t`, that whole-aggregate shape must now also match the target aggregate contract instead of relying only on packed width,
 - and `=0` / `=1` stay one-bit operands inside bounded concat source expressions, intrinsic-width unsized binary/octal/hex operands such as `=0b10`, `='b10`, `=0o7`, `='o7`, `=0xA5`, `='hA5`, or `=A5` keep the width implied by their digits there, unsized decimal forms such as `=170`, `=0d170`, or `='d170` now also keep the minimum width implied by their numeric value there, and negative decimal concat uses currently require an exact-width signed decimal literal such as `=8'sd-1`,
 - and those actuals bind directly on the realized child port or the declared top output assignment instead of inventing a top port or synthetic carrier net.
+
+Current narrow typed whole-aggregate actual example:
+```lisp
+(?top:typed_actual_top
+  (+constants
+    (FRAME
+      (mode 2'b10)
+      (flag 1))
+  )
+  (+types
+    (type frame_t (record (mode (bits 2)) (flag bit)))
+  )
+  (?ports:public_io
+    packed_out>frame_t
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /=FRAME/packed_out/
+    /=0/uart_tx.enable/
+  )
+)
+
+(?rtlif:uart_tx
+  enable:data
+)
+```
+
+This currently works because:
+- `FRAME` is one bounded whole aggregate root whose leaves all lower to scalar literals,
+- `frame_t` preserves one aggregate declared type contract on the declared top output,
+- the authored aggregate shape matches that same `(record (mode (bits 2)) (flag bit))` contract,
+- so direct whole-aggregate actual binding is allowed on that typed direct target,
+- but a width-equal target declared as something incompatible like `(list bit (bits 2))` would now fail explicitly instead of slipping through on width alone.
 
 Current narrow top-concat explicit-link example:
 ```lisp

@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-09: whole aggregate actual roots now honor typed direct-target contracts
+- Saved the next typed explicit-actual slice after typed carrier nets landed.
+- Important continuity note:
+  - whole named aggregate actual roots such as `=FRAME` and `=shared.FRAME`
+    now infer one canonical aggregate shape on the bounded direct actual path,
+  - when those whole aggregate actuals bind directly to typed aggregate top
+    outputs or typed aggregate child inputs, width-equal but
+    aggregate-shape-incompatible targets are now rejected explicitly,
+  - concat remains bit-oriented here, and scalar literal actuals still stay on
+    the existing value-oriented literal path.
+
 ## 2026-04-09: the docs split now has a concrete plan artifact
 - Saved the next documentation follow-through step after deciding the guide is
   already large enough to justify planning the split.

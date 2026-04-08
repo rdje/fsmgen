@@ -40,6 +40,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     slice_expr
 );
 use FSM::Package::PayloadLiteralSupport;
+use FSM::Package::PayloadTypeSupport;
 
 sub build_from_toplinks ($class, %args) {
     my $lane = $args{lane} // '';
@@ -207,6 +208,7 @@ sub build_plan ($class, %args) {
                 || $source_width == $target_width;
 
         $class->assert_declared_type_compatibility($source, $target, $fsm_file, $header);
+        $class->assert_actual_aggregate_type_compatibility($source, $target, $fsm_file, $header);
 
         my $target_key = $target->{key};
         if ($reserved_targets{$target_key}) {
@@ -707,6 +709,33 @@ sub assert_declared_type_compatibility ($class, $source, $target, $fsm_file, $he
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
+sub assert_actual_aggregate_type_compatibility ($class, $source, $target, $fsm_file, $header) {
+    return unless ref($source) eq 'HASH' && (($source->{kind} || '') =~ /^actual_/);
+    return unless ($target->{kind} || '') eq 'top_port' || ($target->{kind} || '') eq 'child_port';
+
+    my $aggregate_type_spec = $source->{aggregate_type_spec};
+    return unless ref($aggregate_type_spec) eq 'HASH';
+
+    my $target_declared_type_spec = FSM::Composition::InterfacePortBuilder->declared_type_spec($target->{port});
+    return unless ref($target_declared_type_spec) eq 'HASH';
+
+    my $target_kind = $target_declared_type_spec->{kind} || '';
+    return unless $target_kind eq 'list' || $target_kind eq 'record';
+    return if FSM::Package::PayloadTypeSupport->payload_compatible_with_type_spec(
+        $aggregate_type_spec,
+        $target_declared_type_spec,
+    );
+
+    my $aggregate_type_label = FSM::Composition::InterfacePortBuilder->declared_type_label($aggregate_type_spec);
+    my $target_type_label = FSM::Composition::InterfacePortBuilder->declared_type_label($target_declared_type_spec);
+
+    confess
+        "Composition source '$header' in '$fsm_file' uses actual source '".$source->{raw}."' as an explicit link source, ".
+        "but explicit actual binding is blocked because whole aggregate actual contract '$aggregate_type_label' does not match target declared type '$target_type_label' on '".$target->{raw}."'. ".
+        "The current typed composition slice only allows whole aggregate actual roots to target preserved aggregate contracts when packed shape and leaf widths stay compatible too. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+}
+
 sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header, %opts) {
     return undef unless defined($endpoint) && length($endpoint);
     return undef unless $endpoint =~ /^=(.+)$/;
@@ -757,12 +786,17 @@ sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header, %opts) {
     if (my $resolved_payload = $class->_resolve_top_symbol_payload($payload, $opts{top_symbols})) {
         my ($bits, $width, $reason) = FSM::Package::PayloadLiteralSupport->payload_to_bits_and_width($resolved_payload);
         if (defined $bits) {
+            my $aggregate_type_spec = undef;
+            if (ref($resolved_payload) eq 'HASH' && (($resolved_payload->{kind} || '') eq 'list' || ($resolved_payload->{kind} || '') eq 'map')) {
+                $aggregate_type_spec = FSM::Package::PayloadTypeSupport->payload_to_type_spec($resolved_payload);
+            }
             return {
                 raw => $endpoint,
                 key => "actual:$endpoint",
                 kind => 'actual_literal',
                 symbol_name => $payload,
                 resolved_payload => $resolved_payload,
+                aggregate_type_spec => $aggregate_type_spec,
                 port => {
                     direction => 'actual',
                     width => $width,

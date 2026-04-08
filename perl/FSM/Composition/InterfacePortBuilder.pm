@@ -135,7 +135,7 @@ sub declared_type_name ($class, $port) {
     return $port->{declared_type_name}
         if ref($port) eq 'HASH' && exists $port->{declared_type_name};
     return $port->declared_type_name
-        if ref($port) && $port->can('declared_type_name');
+        if ref($port) && ref($port) ne 'HASH' && $port->can('declared_type_name');
     return undef;
 }
 
@@ -144,7 +144,7 @@ sub declared_type_spec ($class, $port) {
     return _clone_structured_value($port->{declared_type_spec})
         if ref($port) eq 'HASH' && exists $port->{declared_type_spec};
     return $port->declared_type_spec
-        if ref($port) && $port->can('declared_type_spec');
+        if ref($port) && ref($port) ne 'HASH' && $port->can('declared_type_spec');
     return undef;
 }
 

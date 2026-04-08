@@ -1332,6 +1332,11 @@ The first honest `R11` slices are now:
   driven by one typed child-output family, so the structural RTL handoff no
   longer drops named aggregate/scalar type identity at internal net boundaries
   before later aggregate-aware lowering or embedder inspection can consume it.
+- Forward-IR note: whole named aggregate actual roots on the bounded
+  explicit-actual path now also consume that same declared-type boundary when
+  they bind directly to typed aggregate targets, so width-equal but
+  aggregate-shape-incompatible `=FRAME`-style direct actuals are now blocked
+  explicitly instead of slipping through on packed width alone.
 - Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
   approachable, the preferred shape is a book-like docs set with one Markdown
   file per major topic, a landing-page/table-of-contents role for

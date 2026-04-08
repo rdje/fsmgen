@@ -1,5 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-09
+### whole aggregate actual roots now honor typed direct-target aggregate contracts
+- Added [perl/FSM/Package/PayloadTypeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/PayloadTypeSupport.pm) as the shared bounded owner for inferring canonical packed type-shape specs from constant payloads and comparing those inferred list/record shapes against declared aggregate type contracts.
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so whole named aggregate actual roots such as `=FRAME` or `=shared.FRAME` no longer validate only by packed width on direct bindings: when they target a declared top output or realized child input that preserved an aggregate `declared_type_spec`, explicit-link planning now also requires the inferred whole-aggregate shape to match that target aggregate contract.
+- Updated [perl/FSM/Composition/InterfacePortBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/InterfacePortBuilder.pm) so declared-type formatting stays honest for plain hash-backed type specs too, fixing the `can`-on-unblessed-reference crash that the new typed whole-aggregate actual regressions exposed.
+- Updated [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t) and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock both the direct success case for compatible typed whole-aggregate actual roots and the blocked summary surface for width-equal but aggregate-shape-incompatible direct targets.
+
 ## 2026-04-08
 ### inferred composition carrier nets now preserve declared type identity
 - Updated [perl/FSM/Composition/Net.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Net.pm), [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm), and [perl/FSM/IR/StructuralRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIRBuilder.pm) so inferred internal carrier nets now preserve `declared_type_name` plus canonical `declared_type_spec` whenever they are driven by one typed child-output family, instead of flattening those internal carriers back to width-only metadata.
