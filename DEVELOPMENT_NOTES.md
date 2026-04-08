@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-08: composition local type aliases should collapse onto imported package types through one deferred semantic marker
+- Continued the aggregate/type lane by taking the just-shipped imported
+  composition width-token work one bounded step further instead of leaving
+  local aliases as a parser-era gap.
+- Landed behavior:
+  - composition local `+types` aliases may now target imported package scalar
+    types such as `(type byte_t shared_types.byte)`,
+  - unresolved imported package type refs now lower first into one bounded
+    deferred imported-alias marker inside
+    [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)
+    instead of failing immediately or forcing import resolution into parsing,
+  - dependent local aliases collapse onto that same deferred marker during the
+    declarative type-resolution pass,
+  - and semantic package import resolution then finalizes those aliases before
+    declared `?ports` widths and exported symbol contracts are consumed.
+- Why this boundary is deliberate:
+  - it keeps the composition type lane on one semantic-resolution story
+    instead of splitting into “direct package-qualified widths” versus
+    “local aliases to imported types” code paths,
+  - it preserves declaration-order independence for local aliases even when
+    the real source of truth lives in an imported package,
+  - and it avoids reintroducing filesystem reach-through into parser code.
+
 ## 2026-04-08: imported composition port width aliases should resolve after package imports, not by parser reach-through
 - Continued the aggregate/type lane by widening the bounded composition
   `?ports` width path one honest step instead of smuggling filesystem lookup

@@ -526,6 +526,7 @@ sub resolve_pending_top_types ($self, $top_name, $top_symbols, $symbol_manager, 
                 type_name => $entry->{name},
                 spec_ast => $entry->{spec_ast},
                 top_symbols => $top_symbols,
+                allow_unresolved_imported_type_refs => 1,
             );
         },
         store_type => sub ($type_name, $type_spec) {
@@ -884,6 +885,7 @@ sub canonicalize_top_type_spec ($self, %args) {
     my $type_name = $args{type_name} // 'unknown';
     my $spec_ast = $args{spec_ast};
     my $top_symbols = $args{top_symbols};
+    my $allow_unresolved_imported_type_refs = $args{allow_unresolved_imported_type_refs} // 0;
 
     my $scalar = $self->unwrap_scalar_token($spec_ast);
     if (defined($scalar) && !ref($scalar)) {
@@ -895,6 +897,15 @@ sub canonicalize_top_type_spec ($self, %args) {
         if ($top_symbols && $self->is_contract_type_reference($scalar)) {
             my $resolved_spec = $top_symbols->resolve_type($scalar);
             return $resolved_spec if $resolved_spec;
+        }
+
+        if ($allow_unresolved_imported_type_refs
+            && $self->is_contract_type_reference($scalar)
+            && $scalar =~ /\./) {
+            return {
+                kind => 'deferred_imported_alias',
+                imported_type_ref => $scalar,
+            };
         }
     }
 
@@ -915,7 +926,7 @@ sub canonicalize_top_type_spec ($self, %args) {
 
     confess
         "Composition top '$top_name' contains malformed '+types' entry for type '$type_name', ".
-        "but the first active '+types' lane supports only 'bit', '(bits N)', or aliases to already-resolved local scalar types.".
+        "but the first active '+types' lane supports only 'bit', '(bits N)', or aliases to already-resolved local or imported scalar types.".
         $self->scope_docs_suffix;
 }
 

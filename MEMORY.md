@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-08: composition local type aliases may now target imported package scalar types
+- Saved the next bounded follow-on slice after direct package-qualified
+  imported composition width tokens landed.
+- Important continuity note:
+  - composition `+types` may now declare local aliases such as
+    `(type byte_t shared_types.byte)` and then use those aliases on the
+    `?ports` width path,
+  - unresolved imported package type refs now lower first into one bounded
+    deferred imported-alias marker inside
+    [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm),
+  - [perl/FSM/Composition/PackageImportResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PackageImportResolver.pm)
+    now finalizes those local aliases after semantic package imports land,
+  - that also means dependent local aliases like `alias_t -> byte_t ->
+    shared_types.byte` stay honest without reintroducing parser-order rules,
+  - and the next honest `+types` seam is no longer “local aliases to imported
+    package scalar types,” but broader semantic type properties beyond width.
+
 ## 2026-04-08: composition `?ports` imported scalar type aliases now ship on the live width path
 - Saved the next honest follow-on slice after the first bounded scalar
   `+types` lane landed.
@@ -15,8 +32,8 @@ This is the live continuity document for fast session recovery after crashes, re
   - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm)
     now resolves composition package imports before `after_parse_source`
     extensions run so callers see the same fully resolved composition spec,
-  - and local aliases that themselves point at imported package scalar types
-    are still a later seam rather than an implicit part of this slice.
+  - and the immediately following shipped slice now also covers local aliases
+    that themselves point at imported package scalar types.
 
 ## 2026-04-08: future semantic types should carry backend-neutral meaning first
 - Saved one more steering note for the richer future `+types` lane.

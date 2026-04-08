@@ -39,6 +39,9 @@ sub resolve_imports ($class, %args) {
         $top_symbols->import_package($package_name, $package_spec->symbols);
     }
 
+    $top_symbols->finalize_imported_type_aliases
+        if $top_symbols->can('finalize_imported_type_aliases');
+
     FSM::Composition::PortWidthResolver->resolve_declared_port_widths(
         top => $top,
         docs_hint => " See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md",

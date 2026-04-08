@@ -50,6 +50,23 @@ sub import_package ($self, $package_name, $package_symbols) {
     return $package_symbols;
 }
 
+sub _is_deferred_imported_type_alias ($self, $type_spec) {
+    return ref($type_spec) eq 'HASH'
+        && ($type_spec->{kind} || '') eq 'deferred_imported_alias'
+        && defined($type_spec->{imported_type_ref})
+        && !ref($type_spec->{imported_type_ref});
+}
+
+sub _resolve_imported_type_ref ($self, $type_ref) {
+    return undef unless defined($type_ref) && !ref($type_ref);
+    return undef unless $type_ref =~ /\A([A-Za-z_]\w*)\.(.+)\z/;
+
+    my ($package_name, $package_type) = ($1, $2);
+    my $package_symbols = $self->{imported_packages}{$package_name};
+    return undef unless $package_symbols && $package_symbols->can('resolve_type');
+    return $package_symbols->resolve_type($package_type);
+}
+
 sub resolve_actual_payload ($self, $symbol_name) {
     return undef unless defined($symbol_name) && !ref($symbol_name);
 
@@ -86,7 +103,13 @@ sub resolve_type ($self, $type_name) {
     return undef unless defined($type_name) && !ref($type_name);
 
     my $resolved_local_type = $self->{local_symbols}->resolve_type($type_name);
-    return $resolved_local_type if defined $resolved_local_type;
+    if (defined $resolved_local_type) {
+        if ($self->_is_deferred_imported_type_alias($resolved_local_type)) {
+            my $resolved_imported_type = $self->_resolve_imported_type_ref($resolved_local_type->{imported_type_ref});
+            return $resolved_imported_type if defined $resolved_imported_type;
+        }
+        return $resolved_local_type;
+    }
 
     if ($type_name =~ /\A([A-Za-z_]\w*)\.(.+)\z/) {
         my ($package_name, $package_type) = ($1, $2);
@@ -96,6 +119,21 @@ sub resolve_type ($self, $type_name) {
     }
 
     return undef;
+}
+
+sub finalize_imported_type_aliases ($self) {
+    my $local_types = $self->{local_symbols}->types || {};
+
+    for my $type_name (sort keys %$local_types) {
+        my $type_spec = $self->{local_symbols}->resolve_type($type_name);
+        next unless $self->_is_deferred_imported_type_alias($type_spec);
+
+        my $resolved_imported_type = $self->_resolve_imported_type_ref($type_spec->{imported_type_ref});
+        next unless defined $resolved_imported_type;
+        $self->{local_symbols}->store_type($type_name, $resolved_imported_type);
+    }
+
+    return 1;
 }
 
 sub summary ($self) {

@@ -519,7 +519,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
 - Composition-top note:
   - inside `?top:name`, local `(+types ...)` declarations may now drive local `?ports` width aliases such as `out_data>byte_t` or `out_flag>flag_t`.
   - imported package scalar type aliases may now also drive `?ports` widths through package-qualified tokens such as `out_data>shared.byte` or `out_flag>shared.flag`.
-  - local aliases that themselves point at imported package types are still a later seam; the currently shipped imported composition path is the direct package-qualified width-token form.
+  - local aliases may now also target imported package scalar types, so forms like `(+types (type byte_t shared.byte))` may then drive `?ports` widths through `out_data>byte_t`.
 - Malformed shapes like `(+types)`, `(+types BROKEN)`, malformed entries like `(+types (type only_name))`, and explicit type dependency cycles are rejected explicitly.
 
 `(+import ...)`:

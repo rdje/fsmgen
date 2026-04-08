@@ -218,6 +218,159 @@ FSM
     unlike($combined_output, qr/composition port sizing is blocked|resolved scalar type alias/s, 'successful imported composition type CLI run does not report width-token failures');
 };
 
+subtest 'composition local scalar type aliases may target imported package scalar types' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
+    mkdir $libdir or die "Cannot create $libdir: $!";
+
+    my $composition_path = File::Spec->catfile($tempdir, 'typed_top_local_import_alias_ports.fsm');
+    my $package_path = File::Spec->catfile($libdir, 'shared_types.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'typed_top_local_import_alias_ports.sv');
+
+    write_file(
+        $package_path,
+        <<'FSM'
+(?pkg:shared_types
+  (+types
+    (type byte (bits 8))
+    (type flag bit)
+  )
+)
+FSM
+    );
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:typed_top_local_import_alias_ports
+  (+import shared_types)
+  (?ports:public_io
+    out_data>byte_t
+    out_flag>flag_t
+  )
+  (+types
+    (type flag_t shared_types.flag)
+    (type byte_t shared_types.byte)
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /uart_tx.data_out/out_data/
+    /uart_tx.flag_out/out_flag/
+  )
+)
+
+(?rtlif:uart_tx
+  data_out>8:data
+  flag_out>:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+        source_search_paths => [$libdir],
+    );
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+    my $ports = $result->{composition_spec}->top->ports_blocks->[0]->ports;
+    my %ports_by_name = map { $_->name => $_ } @$ports;
+    my $symbol_contract = $result->{intent_hir}{symbol_contract};
+    my $hdl = $result->{hdl_code};
+
+    is($ports_by_name{out_data}->width, 8, 'composition local alias to imported package byte type resolves to width 8');
+    is($ports_by_name{out_flag}->width, 1, 'composition local alias to imported package bit type resolves to width 1');
+    is($symbol_contract->{types}{byte_t}{width}, 8, 'composition symbol contract finalizes imported local byte alias width');
+    is($symbol_contract->{types}{flag_t}{width}, 1, 'composition symbol contract finalizes imported local bit alias width');
+    like($hdl, qr/output\s+\[7:0\]\s+out_data\b/s, 'generated top HDL uses local alias to imported package byte width on out_data');
+    like($hdl, qr/output\s+out_flag\b/s, 'generated top HDL uses local alias to imported package bit width on out_flag');
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '--path', $libdir, '--output', $output_path, $composition_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+
+    ok($success, 'CLI accepts composition local scalar type aliases that target imported package scalar types');
+    ok(-e $output_path, 'CLI emits HDL for composition local scalar type aliases that target imported package scalar types');
+    ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for composition local scalar type aliases that target imported package scalar types');
+    unlike($combined_output, qr/composition port sizing is blocked|malformed '\+types' entry/s, 'successful imported local composition alias CLI run does not report type failures');
+};
+
+subtest 'composition local scalar type aliases reject unresolved imported package scalar types explicitly' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
+    mkdir $libdir or die "Cannot create $libdir: $!";
+
+    my $composition_path = File::Spec->catfile($tempdir, 'bad_typed_top_local_import_alias_ports.fsm');
+    my $package_path = File::Spec->catfile($libdir, 'shared_types.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'bad_typed_top_local_import_alias_ports.sv');
+
+    write_file(
+        $package_path,
+        <<'FSM'
+(?pkg:shared_types
+  (+types
+    (type byte (bits 8))
+  )
+)
+FSM
+    );
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:bad_typed_top_local_import_alias_ports
+  (+import shared_types)
+  (?ports:public_io
+    out_data>byte_t
+  )
+  (+types
+    (type byte_t shared_types.missing)
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /uart_tx.data_out/out_data/
+  )
+)
+
+(?rtlif:uart_tx
+  data_out>8:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+        source_search_paths => [$libdir],
+    );
+
+    my $pipeline_error = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $pipeline_error = $@ if !$pipeline_error;
+
+    like(
+        $pipeline_error,
+        qr/Composition top 'bad_typed_top_local_import_alias_ports' contains '\?ports' token 'out_data>byte_t', .*width token 'byte_t' is neither a positive integer nor a resolved scalar type alias/s,
+        'pipeline reports unresolved imported local composition scalar type aliases explicitly at the port-width boundary',
+    );
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '--path', $libdir, '--output', $output_path, $composition_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+
+    ok(!$success, 'CLI rejects composition local scalar type aliases that target unresolved imported package scalar types');
+    ok(!-e $output_path, 'CLI does not emit HDL for unresolved imported local composition scalar type aliases');
+    like(
+        $combined_output,
+        qr/Composition top 'bad_typed_top_local_import_alias_ports' contains '\?ports' token 'out_data>byte_t', .*width token 'byte_t' is neither a positive integer nor a resolved scalar type alias/s,
+        'CLI surfaces the unresolved imported local composition scalar type alias boundary',
+    );
+    isnt($error_code, 0, 'CLI exits non-zero for unresolved imported local composition scalar type aliases');
+};
+
 subtest 'composition ?ports reject unresolved imported package scalar type aliases explicitly' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');

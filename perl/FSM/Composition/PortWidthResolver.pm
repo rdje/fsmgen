@@ -7,6 +7,13 @@ use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+sub _is_deferred_imported_type_alias ($class, $type_spec) {
+    return ref($type_spec) eq 'HASH'
+        && ($type_spec->{kind} || '') eq 'deferred_imported_alias'
+        && defined($type_spec->{imported_type_ref})
+        && !ref($type_spec->{imported_type_ref});
+}
+
 sub is_contract_type_reference ($class, $value) {
     return defined($value)
         && !ref($value)
@@ -34,6 +41,8 @@ sub resolve_width_token ($class, %args) {
         my $type_spec = $top_symbols->resolve_type($width_token);
         return 0 + $type_spec->{width}
             if $type_spec && ref($type_spec) eq 'HASH' && defined $type_spec->{width} && $type_spec->{width} > 0;
+        return undef
+            if $allow_unresolved_imported_type_refs && $class->_is_deferred_imported_type_alias($type_spec);
     }
 
     if ($allow_unresolved_imported_type_refs
