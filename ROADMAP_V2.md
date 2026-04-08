@@ -1337,6 +1337,10 @@ The first honest `R11` slices are now:
   they bind directly to typed aggregate targets, so width-equal but
   aggregate-shape-incompatible `=FRAME`-style direct actuals are now blocked
   explicitly instead of slipping through on packed width alone.
+- Forward-IR note: direct-root whole aggregate RHS assignments now also
+  consume that same declared-type boundary before emission, so `(OUT = FRAME)`
+  no longer slips through typed aggregate `+size` targets on packed width
+  alone when the preserved target aggregate contract is shape-incompatible.
 - Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
   approachable, the preferred shape is a book-like docs set with one Markdown
   file per major topic, a landing-page/table-of-contents role for

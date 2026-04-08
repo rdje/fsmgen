@@ -91,6 +91,49 @@ FSM
     );
 };
 
+subtest 'operand-contract validation rejects width-equal whole aggregate RHS values against incompatible typed aggregate LHS contracts' => sub {
+    my $fsm_module = parse_fsm_module(
+        'sv_assignment_aggregate_contract',
+        <<'FSM'
+(?fsm:sv_assignment_aggregate_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+constants
+    (FRAME ((mode 2'b10) (flag 1)))
+  )
+  (+types
+    (type wrong_t (list bit (bits 2)))
+  )
+  (+size
+    (OUT wrong_t)
+  )
+  (idle
+    (OUT = FRAME)
+  )
+)
+FSM
+    );
+
+    my $backend = prepare_flattened_backend($fsm_module);
+    $backend->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
+    my $prepared_block = $backend->{backend_sv_consolidated_intermediate_stage_preparation_support}
+        ->prepare_consolidated_intermediate_block($fsm_module);
+
+    my $error = capture_error(sub {
+        $backend->{backend_sv_operand_contract_validation_support}
+            ->validate_pre_generation_operand_contract($fsm_module, $prepared_block);
+    });
+
+    like(
+        $error,
+        qr/assignment to 'OUT' uses whole aggregate RHS 'FRAME' with contract 'record\{mode:bits\[2\], flag:bit\}' that does not match declared type 'list<bit, bits\[2\]>'/s,
+        'validator rejects width-equal whole aggregate RHS values when the typed LHS keeps an incompatible aggregate contract',
+    );
+};
+
 subtest 'generation pipeline support runs width-contract validation before final HDL emission' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_assignment_width_pipeline_contract',
@@ -131,6 +174,50 @@ FSM
         $error,
         qr/assignment to 'BUS' uses RHS 'A' with incompatible width 1 for LHS width 3/s,
         'generation pipeline validation keeps assignment width context in the diagnostic',
+    );
+
+    my $typed_fsm_module = parse_fsm_module(
+        'sv_assignment_aggregate_pipeline_contract',
+        <<'FSM'
+(?fsm:sv_assignment_aggregate_pipeline_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+constants
+    (FRAME ((mode 2'b10) (flag 1)))
+  )
+  (+types
+    (type wrong_t (list bit (bits 2)))
+  )
+  (+size
+    (OUT wrong_t)
+  )
+  (idle
+    (OUT = FRAME)
+  )
+)
+FSM
+    );
+
+    my $typed_backend = prepare_flattened_backend($typed_fsm_module);
+    my $typed_pipeline_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport->new(
+        flattened_dt => $typed_backend,
+    );
+
+    my $typed_error = capture_error(sub {
+        $typed_pipeline_support->generate_systemverilog_module($typed_fsm_module);
+    });
+
+    like(
+        $typed_error,
+        qr/Pre-generation operand contract validation failed/,
+        'generation pipeline compatibility shell fails before emission when aggregate contract validation breaks',
+    );
+    like(
+        $typed_error,
+        qr/assignment to 'OUT' uses whole aggregate RHS 'FRAME' with contract 'record\{mode:bits\[2\], flag:bit\}' that does not match declared type 'list<bit, bits\[2\]>'/s,
+        'generation pipeline validation keeps aggregate contract context in the diagnostic',
     );
 };
 

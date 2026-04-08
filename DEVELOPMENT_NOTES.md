@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-09: direct whole aggregate RHS assignments should honor typed aggregate targets too
+- Continued the typed aggregate lane immediately after composition whole
+  aggregate actual roots became declared-type-aware.
+- Landed behavior:
+  - direct-root assignments now preserve whole aggregate RHS provenance when a
+    raw RHS token such as `FRAME` resolved to one bounded aggregate root,
+  - the pre-generation operand-contract validator now consumes that provenance
+    against full-signal typed aggregate `+size` targets,
+  - and width-equal but aggregate-shape-incompatible direct assignments are
+    now blocked before SystemVerilog emission instead of relying on packed
+    width alone.
+- Why this boundary matters:
+  - once composition actuals already respected typed aggregate contracts,
+    leaving direct-root `(OUT = FRAME)` as a width-only escape hatch would have
+    split the language into two different aggregate-typing stories,
+  - and this keeps the direct path aligned with the broader rule that typed
+    aggregate meaning must not silently disappear just because the current
+    backend lowers those values to packed bits.
+
 ## 2026-04-09: whole aggregate actual roots should not bypass typed direct-target contracts
 - Continued the typed composition lane after same-name convention, explicit
   plain port links, and inferred carrier nets were already declared-type-aware.

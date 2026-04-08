@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-09: direct whole aggregate RHS assignments now honor typed aggregate targets
+- Saved the matching direct-root aggregate-typing slice after composition whole
+  aggregate actuals became declared-type-aware.
+- Important continuity note:
+  - direct-root assignments now preserve whole aggregate RHS provenance for
+    raw aggregate roots such as `FRAME` and `shared.FRAME`,
+  - pre-generation operand-contract validation now rejects width-equal but
+    aggregate-shape-incompatible direct assignments into typed aggregate
+    `+size` targets,
+  - and this keeps direct-root aggregate typing aligned with the now-shipped
+    composition actual contract instead of leaving a width-only direct-path
+    escape hatch.
+
 ## 2026-04-09: whole aggregate actual roots now honor typed direct-target contracts
 - Saved the next typed explicit-actual slice after typed carrier nets landed.
 - Important continuity note:

@@ -24,6 +24,10 @@ sub payload_compatible_with_type_spec ($class, $payload_or_spec, $target_type_sp
     return $class->_type_spec_accepts_payload_type_spec($target_type_spec, $payload_type_spec);
 }
 
+sub type_spec_label ($class, $type_spec) {
+    return $class->_type_spec_label($type_spec);
+}
+
 sub _payload_to_type_spec ($class, $payload) {
     return undef unless defined $payload;
 
@@ -168,6 +172,43 @@ sub _type_spec_accepts_payload_type_spec ($class, $target_type_spec, $payload_ty
     return 0;
 }
 
+sub _type_spec_label ($class, $spec) {
+    return 'unknown' unless ref($spec) eq 'HASH';
+
+    my $kind = $spec->{kind} || '';
+    if ($kind eq 'bit') {
+        my $label = 'bit';
+        $label = "signed $label" if $spec->{signed};
+        $label = ($spec->{state_model} || '').' '.$label if defined $spec->{state_model};
+        $label =~ s/\A\s+|\s+\z//g;
+        return $label;
+    }
+
+    if ($kind eq 'bits') {
+        my $label = 'bits['.($spec->{width} // '?').']';
+        $label = "signed $label" if $spec->{signed};
+        $label = ($spec->{state_model} || '').' '.$label if defined $spec->{state_model};
+        $label =~ s/\A\s+|\s+\z//g;
+        return $label;
+    }
+
+    if ($kind eq 'list') {
+        return 'list<'.join(', ', map { $class->_type_spec_label($_) } @{ $spec->{items} || [] }).'>';
+    }
+
+    if ($kind eq 'record') {
+        return 'record{'.join(', ', map {
+            $_.':'.$class->_type_spec_label(($spec->{members} || {})->{$_})
+        } @{ $spec->{member_order} || [] }).'}';
+    }
+
+    if ($kind eq 'deferred_imported_alias') {
+        return $spec->{imported_type_ref} // 'deferred_imported_alias';
+    }
+
+    return $kind;
+}
+
 1;
 
 __END__
@@ -193,5 +234,9 @@ Infers one canonical packed type shape from a scalar/list/map payload.
 Returns true when a target type spec accepts the inferred payload shape. Scalar
 leaf compatibility is width-based; aggregate compatibility is shape plus
 ordered-field/item based.
+
+=head2 type_spec_label
+
+Formats one canonical type spec into a compact user-facing label.
 
 =cut

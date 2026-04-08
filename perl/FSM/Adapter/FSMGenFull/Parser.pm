@@ -12,6 +12,7 @@ use FSM::Debug;
 use FSM::Package::DeclarativeSymbolResolver;
 use FSM::Package::DeclarativeTypeSupport;
 use FSM::Package::DeclarativeTypeResolver;
+use FSM::Package::PayloadTypeSupport;
 use FSM::Package::SignalManagerProjectionSupport;
 use FSM::Package::Symbols;
 use FSM::SourceClassifier;
@@ -2165,6 +2166,11 @@ sub parse_signal_action($self, $action) {
         raw_condition_suffix => defined($full_condition) ? (ref($full_condition) ? ref($full_condition) : $full_condition) : undef,
         had_compound_modifier => $compound_spec ? 1 : 0,
     );
+    my $aggregate_contract = $self->resolve_direct_assignment_aggregate_contract($value_expr);
+    if ($aggregate_contract) {
+        $source_provenance{aggregate_symbol_name} = $aggregate_contract->{symbol_name};
+        $source_provenance{aggregate_type_spec} = $aggregate_contract->{type_spec};
+    }
     if (defined $compound_operator_used) {
         $source_provenance{compound_operator} = $compound_operator_used;
         $source_provenance{compound_delta} = $compound_delta_used;
@@ -2316,6 +2322,25 @@ sub parse_signal_action($self, $action) {
     }
     
     return $assignment;
+}
+
+sub resolve_direct_assignment_aggregate_contract($self, $value_expr) {
+    return undef if ref($value_expr);
+    return undef unless defined($value_expr) && length($value_expr);
+
+    my $aggregate_payload = $self->{signal_manager}->resolve_aggregate_symbol_payload($value_expr);
+    return undef unless defined $aggregate_payload;
+
+    my $type_spec = FSM::Package::PayloadTypeSupport->payload_to_type_spec($aggregate_payload);
+    return undef unless ref($type_spec) eq 'HASH';
+
+    my $kind = $type_spec->{kind} || '';
+    return undef unless $kind eq 'list' || $kind eq 'record';
+
+    return {
+        symbol_name => $value_expr,
+        type_spec => $type_spec,
+    };
 }
 
 sub resolve_single_bit_logic_level($self, $source_expr, $raw_value_expr) {

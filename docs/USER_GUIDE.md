@@ -475,6 +475,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - direct-root aggregate values may now also reuse same-scope local constants and enum members as scalar ingredients regardless of declaration order, with explicit dependency cycles rejected.
   - the live direct-root path now accepts scalar leaves such as `BYTES[1]`, `FRAME.flag`, or `NEST.header.nibble`, and whole aggregate roots such as `BYTES`, `TAIL`, or `FRAME`.
   - whole hash-like aggregate roots lower by packing authored members left to right in declaration order when every nested leaf still resolves to one scalar literal.
+  - when one of those whole aggregate roots is assigned directly into a `+size` target that preserved an aggregate named type alias, the inferred whole-aggregate shape must also match that target aggregate contract instead of relying only on packed width.
 - Composition-top note:
   - inside `?top:name`, `(+constants ...)` has that same bounded aggregate extension, and the live composition path now accepts scalar leaves such as `BYTES[1]` or `FRAME.flag` plus whole aggregate roots such as `HEADER`, `TAIL`, or `FRAME` on the bounded literal-actual path.
   - whole hash-like aggregate roots lower there through that same authored-member packing rule.
@@ -519,6 +520,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
 - Direct-root note:
   - inside `?fsm:name` and `?dt:name`, `(+size ...)` width entries may now use local or imported type names such as `(OUT byte_t)`, `(FRAME frame_t)`, or `(FLAG shared.flag_t)`.
   - bounded aggregate type aliases now cover packed `(list ...)` and `(record ...)` forms, and the live backend currently lowers those named aggregate types to one packed vector width instead of emitting frontend-shaped typedefs.
+  - when one of those direct-root `+size` targets preserves an aggregate alias such as `frame_t`, whole aggregate RHS roots such as `FRAME` must now also keep one compatible aggregate shape instead of slipping through on equal packed width alone.
   - when one of those width entries resolves to a signed scalar type alias, the generated SystemVerilog boundary/internal declarations now preserve that signedness, for example `input wire signed [7:0] IN` or `reg signed [7:0] OUT`.
   - when one of those width entries resolves to an explicit `(two_state ...)` or `(four_state ...)` scalar type alias, the generated SystemVerilog boundary/internal declarations now also preserve that state-model intent as `bit` or `logic`, for example `input bit [7:0] IN`, `logic signed [7:0] OUT`, or `input logic signed [7:0] IN`.
   - those same direct-root `(+size ...)` width entries may now also use local or imported positive integer scalar symbols such as `(OUT BYTE_W)` or `(FLAG shared.FLAG_W)` when the resolved symbol is one positive integer literal value.

@@ -411,6 +411,127 @@ FSM
     );
 };
 
+subtest 'pipeline and CLI accept typed whole local aggregate roots when aggregate shape matches' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_local_typed_map_aggregate_root.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_local_typed_map_aggregate_root.sv');
+
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_local_typed_map_aggregate_root
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+constants
+    (FRAME ((mode 2'b10) (flag 1)))
+  )
+  (+types
+    (type frame_t (record (mode (bits 2)) (flag bit)))
+  )
+  (+size
+    (OUT frame_t)
+  )
+  (idle
+    (OUT = FRAME)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug => 0,
+    );
+    my $result = $pipeline->generate_hdl_from_file($fsm_path);
+    my $fsm_module = $result->{fsm_module};
+    my $hdl = $result->{hdl_code};
+
+    my %assignment_by_target = %{ assignments_by_target($fsm_module, 'idle') };
+    is_literal_assignment($assignment_by_target{OUT}, '101', 3, 'OUT resolves typed whole local map aggregate root to one literal');
+
+    unlike(
+        $hdl,
+        qr/\bFRAME\b/s,
+        'pipeline output lowers typed whole local map aggregate roots before emission',
+    );
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '--output', $output_path, $fsm_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+    my $output_text = slurp_file($output_path);
+
+    ok($success, 'CLI accepts typed whole local map aggregate roots');
+    ok(-e $output_path, 'CLI emits HDL for typed whole local map aggregate roots');
+    ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for typed whole local map aggregate roots');
+    unlike($combined_output, qr/aggregate contract|whole aggregate RHS/s, 'successful typed whole-map aggregate CLI run does not report aggregate-contract failures');
+    unlike(
+        $output_text,
+        qr/\bFRAME\b/s,
+        'CLI output lowers typed whole local map aggregate roots before emission',
+    );
+};
+
+subtest 'pipeline and CLI reject width-equal whole local aggregate roots against incompatible typed aggregate targets' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'bad_direct_local_typed_map_aggregate_root.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'bad_direct_local_typed_map_aggregate_root.sv');
+
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:bad_direct_local_typed_map_aggregate_root
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+constants
+    (FRAME ((mode 2'b10) (flag 1)))
+  )
+  (+types
+    (type wrong_t (list bit (bits 2)))
+  )
+  (+size
+    (OUT wrong_t)
+  )
+  (idle
+    (OUT = FRAME)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug => 0,
+    );
+    my $pipeline_error = eval {
+        $pipeline->generate_hdl_from_file($fsm_path);
+        undef;
+    };
+    $pipeline_error = $@ if !$pipeline_error;
+
+    like(
+        $pipeline_error,
+        qr/assignment to 'OUT' uses whole aggregate RHS 'FRAME' with contract 'record\{mode:bits\[2\], flag:bit\}' that does not match declared type 'list<bit, bits\[2\]>'/s,
+        'pipeline rejects width-equal whole local aggregate roots when the typed target keeps an incompatible aggregate contract',
+    );
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '--output', $output_path, $fsm_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+
+    ok(!$success, 'CLI rejects width-equal whole local aggregate roots against incompatible typed aggregate targets');
+    ok(!-e $output_path, 'CLI does not emit HDL for incompatible typed whole local aggregate roots');
+    like(
+        $combined_output,
+        qr/assignment to 'OUT' uses whole aggregate RHS 'FRAME' with contract 'record\{mode:bits\[2\], flag:bit\}' that does not match declared type 'list<bit, bits\[2\]>'/s,
+        'CLI surfaces the blocked direct aggregate contract mismatch',
+    );
+    isnt($error_code, 0, 'CLI exits non-zero for incompatible typed whole local aggregate roots');
+};
+
 subtest 'pipeline and CLI reject mixed local aggregate value shapes' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'bad_local_aggregate_shape.fsm');

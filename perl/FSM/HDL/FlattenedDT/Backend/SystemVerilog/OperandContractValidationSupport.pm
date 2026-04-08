@@ -24,6 +24,7 @@ no warnings 'experimental::signatures';
 use Scalar::Util qw(blessed refaddr);
 
 use FSM::Debug;
+use FSM::Package::PayloadTypeSupport;
 
 =head2 new
 
@@ -89,6 +90,11 @@ sub validate_pre_generation_operand_contract ($self, $fsm_module, $prepared_bloc
             $self->_validate_assignment_width_contract(
                 $lhs,
                 $lhs_analysis,
+                $assignment,
+                \@violations,
+            );
+            $self->_validate_assignment_aggregate_contract(
+                $lhs,
                 $assignment,
                 \@violations,
             );
@@ -287,6 +293,64 @@ sub _validate_assignment_width_contract ($self, $lhs, $lhs_analysis, $assignment
         "assignment to '$lhs' uses RHS '$rhs_display' with incompatible width"
         . (defined($rhs_width) ? " $rhs_width" : ' <unknown>')
         . " for LHS width $lhs_width; the current contract blocks $adaptation and requires an explicit width-aligned source expression before generation";
+}
+
+sub _validate_assignment_aggregate_contract ($self, $lhs, $assignment, $violations) {
+    return unless ref($assignment) eq 'HASH';
+
+    my $source_provenance = ref($assignment->{source_provenance}) eq 'HASH'
+        ? $assignment->{source_provenance}
+        : {};
+    my $source_aggregate_type_spec = ref($source_provenance->{aggregate_type_spec}) eq 'HASH'
+        ? $source_provenance->{aggregate_type_spec}
+        : undef;
+    return unless $source_aggregate_type_spec;
+
+    my $source_kind = $source_aggregate_type_spec->{kind} || '';
+    return unless $source_kind eq 'list' || $source_kind eq 'record';
+
+    my $lhs_ast = $assignment->{lhs_ast};
+    return unless blessed($lhs_ast);
+    return if $lhs_ast->isa('FSM::CoreAST::IndexedRef') || $lhs_ast->isa('FSM::AST::IndexedRef');
+    return unless $lhs_ast->isa('FSM::CoreAST::SignalRef') || $lhs_ast->isa('FSM::AST::SignalRef');
+    return if $lhs_ast->can('slice') && $lhs_ast->slice;
+
+    my $target_signal = $lhs_ast->can('signal') ? $lhs_ast->signal : undef;
+    return unless $target_signal && blessed($target_signal);
+    return unless $target_signal->can('declared_type_spec');
+
+    my $target_declared_type_spec = $target_signal->declared_type_spec;
+    return unless ref($target_declared_type_spec) eq 'HASH';
+
+    my $target_kind = $target_declared_type_spec->{kind} || '';
+    return unless $target_kind eq 'list' || $target_kind eq 'record';
+
+    return if FSM::Package::PayloadTypeSupport->payload_compatible_with_type_spec(
+        $source_aggregate_type_spec,
+        $target_declared_type_spec,
+    );
+
+    my $rhs_display = defined($source_provenance->{aggregate_symbol_name})
+            && $source_provenance->{aggregate_symbol_name} ne ''
+        ? $source_provenance->{aggregate_symbol_name}
+        : (
+            defined($source_provenance->{raw_value_expr})
+                && $source_provenance->{raw_value_expr} ne ''
+                && $source_provenance->{raw_value_expr} !~ /^(?:ARRAY|HASH)$/
+            ? $source_provenance->{raw_value_expr}
+            : (
+                defined($assignment->{rhs}) && $assignment->{rhs} ne ''
+                    ? $assignment->{rhs}
+                    : '<unknown>'
+            )
+        );
+
+    my $source_type_label = FSM::Package::PayloadTypeSupport->type_spec_label($source_aggregate_type_spec);
+    my $target_type_label = FSM::Package::PayloadTypeSupport->type_spec_label($target_declared_type_spec);
+
+    push @$violations,
+        "assignment to '$lhs' uses whole aggregate RHS '$rhs_display' with contract '$source_type_label'"
+        . " that does not match declared type '$target_type_label'; the current contract blocks width-equal aggregate-shape mismatch before generation";
 }
 
 sub _validate_named_expression ($self, $label, $expression, $inventory, $violations) {
