@@ -45,28 +45,67 @@ sub resolve_types ($class, %args) {
         my @deps;
         my %seen;
 
-        my $scalar = $unwrap_scalar_token->($spec_ast);
-        if (defined($scalar) && !ref($scalar)) {
-            my $dep = $dependency_for_token->($scalar);
-            if ($dep) {
-                my $key = $dep->{type} . ':' . $dep->{name};
-                push @deps, $dep unless $seen{$key}++;
-            }
-            $deps_cache{$type_name} = \@deps;
-            return $deps_cache{$type_name};
-        }
-
-        my $cursor = $unwrap_single_nested_list->($spec_ast);
-        if (ref($cursor) eq 'ARRAY' && @$cursor) {
-            my $head = $unwrap_scalar_token->($cursor->[0]);
-            if (defined($head) && !ref($head) && $head ne 'bits') {
-                my $dep = $dependency_for_token->($head);
+        my $collect_dependencies;
+        $collect_dependencies = sub ($node) {
+            my $scalar = $unwrap_scalar_token->($node);
+            if (defined($scalar) && !ref($scalar)) {
+                my $dep = $dependency_for_token->($scalar);
                 if ($dep) {
                     my $key = $dep->{type} . ':' . $dep->{name};
                     push @deps, $dep unless $seen{$key}++;
                 }
+                return;
             }
-        }
+
+            my $cursor = $unwrap_single_nested_list->($node);
+            return unless ref($cursor) eq 'ARRAY' && @$cursor;
+
+            my $head = $unwrap_scalar_token->($cursor->[0]);
+            return unless defined($head) && !ref($head);
+
+            if ($head eq 'bits') {
+                return;
+            }
+
+            if ($head eq 'signed' || $head eq 'two_state' || $head eq 'four_state') {
+                $collect_dependencies->($cursor->[1]) if @$cursor >= 2;
+                return;
+            }
+
+            if ($head eq 'list') {
+                my @body_items = @{$cursor}[1 .. $#$cursor];
+                if (@body_items == 1 && ref($body_items[0]) eq 'ARRAY') {
+                    @body_items = @{ $body_items[0] };
+                }
+                for my $item_ast (@body_items) {
+                    $collect_dependencies->($item_ast);
+                }
+                return;
+            }
+
+            if ($head eq 'record') {
+                my @body_items = @{$cursor}[1 .. $#$cursor];
+                if (@body_items == 1 && ref($body_items[0]) eq 'ARRAY') {
+                    @body_items = @{ $body_items[0] };
+                }
+                for my $member_ast (@body_items) {
+                    next unless ref($member_ast) eq 'ARRAY' && @$member_ast >= 2;
+                    my $member_spec_ast = @$member_ast == 2
+                        ? $member_ast->[1]
+                        : [ @{$member_ast}[1 .. $#$member_ast] ];
+                    $collect_dependencies->($member_spec_ast);
+                }
+                return;
+            }
+
+            my $dep = $dependency_for_token->($head);
+            if ($dep) {
+                my $key = $dep->{type} . ':' . $dep->{name};
+                push @deps, $dep unless $seen{$key}++;
+            }
+        };
+
+        $collect_dependencies->($spec_ast);
 
         $deps_cache{$type_name} = \@deps;
         return $deps_cache{$type_name};

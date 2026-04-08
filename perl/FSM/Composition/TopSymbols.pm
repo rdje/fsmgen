@@ -6,6 +6,7 @@ use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Package::DeclarativeTypeSupport;
 use FSM::Package::Symbols;
 use FSM::Package::ScalarWidthSupport;
 
@@ -136,17 +137,15 @@ sub finalize_imported_type_aliases ($self) {
 
     for my $type_name (sort keys %$local_types) {
         my $type_spec = $self->{local_symbols}->resolve_type($type_name);
-        next unless $self->_is_deferred_imported_type_alias($type_spec);
+        my $finalized_spec = FSM::Package::DeclarativeTypeSupport->finalize_imported_type_spec(
+            type_spec => $type_spec,
+            resolve_type_reference => sub ($type_ref) {
+                return $self->_resolve_imported_type_ref($type_ref);
+            },
+        );
+        next unless defined $finalized_spec;
 
-        my $resolved_imported_type = $self->_resolve_imported_type_ref($type_spec->{imported_type_ref});
-        next unless defined $resolved_imported_type;
-        if (exists $type_spec->{signed}) {
-            $resolved_imported_type->{signed} = ($type_spec->{signed} // 0) ? 1 : 0;
-        }
-        if (exists $type_spec->{state_model}) {
-            $resolved_imported_type->{state_model} = $type_spec->{state_model};
-        }
-        $self->{local_symbols}->store_type($type_name, $resolved_imported_type);
+        $self->{local_symbols}->store_type($type_name, $finalized_spec);
     }
 
     return 1;

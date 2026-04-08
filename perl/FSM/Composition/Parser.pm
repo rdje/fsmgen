@@ -18,7 +18,7 @@ use FSM::Composition::Link;
 use FSM::Composition::PortsBlock;
 use FSM::Composition::TopLink;
 use FSM::Composition::TopSymbols;
-use FSM::Package::DeclarativeScalarTypeSupport;
+use FSM::Package::DeclarativeTypeSupport;
 use FSM::Package::DeclarativeSymbolResolver;
 use FSM::Package::DeclarativeTypeResolver;
 use FSM::Package::Symbols;
@@ -385,7 +385,7 @@ sub parse_top_types_block ($self, $top_name, $child_ast, $top_symbols) {
 
     confess
         "Composition top '$top_name' contains malformed '+types' section, ".
-        "but composition top type section shape is blocked because '+types' currently requires a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)' entries.".
+        "but composition top type section shape is blocked because '+types' currently requires a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', '(type NAME (list ...))', '(type NAME (record (field TYPE) ...))', or '(type NAME other_type)' entries.".
         $self->scope_docs_suffix
         unless ref($types_list) eq 'ARRAY' && @$types_list;
 
@@ -393,7 +393,7 @@ sub parse_top_types_block ($self, $top_name, $child_ast, $top_symbols) {
     for my $type_def (@$types_list) {
         confess
             "Composition top '$top_name' contains malformed '+types' entry, ".
-            "but composition top type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)'.".
+            "but composition top type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', '(type NAME (list ...))', '(type NAME (record (field TYPE) ...))', or '(type NAME other_type)'.".
             $self->scope_docs_suffix
             unless ref($type_def) eq 'ARRAY' && @$type_def >= 2;
 
@@ -412,7 +412,7 @@ sub parse_top_types_block ($self, $top_name, $child_ast, $top_symbols) {
         } else {
             confess
                 "Composition top '$top_name' contains malformed '+types' entry, ".
-                "but composition top type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)'.".
+                "but composition top type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', '(type NAME (list ...))', '(type NAME (record (field TYPE) ...))', or '(type NAME other_type)'.".
                 $self->scope_docs_suffix;
         }
 
@@ -549,7 +549,7 @@ sub resolve_pending_top_types ($self, $top_name, $top_symbols, $symbol_manager, 
 
             confess
                 "Composition top '$top_name' contains a declarative type dependency cycle, ".
-                "but composition top type scope now resolves normal non-cyclic scalar type aliases without depending on declaration order and still blocks cycles explicitly. ".
+                "but composition top type scope now resolves normal non-cyclic type aliases without depending on declaration order and still blocks cycles explicitly. ".
                 "Cycle: ".join(' -> ', @chain).".".
                 $self->scope_docs_suffix;
         },
@@ -895,7 +895,7 @@ sub canonicalize_top_type_spec ($self, %args) {
     my $top_symbols = $args{top_symbols};
     my $allow_unresolved_imported_type_refs = $args{allow_unresolved_imported_type_refs} // 0;
 
-    my $resolved_spec = FSM::Package::DeclarativeScalarTypeSupport->canonicalize_type_spec(
+    my $resolved_spec = FSM::Package::DeclarativeTypeSupport->canonicalize_type_spec(
         spec_ast => $spec_ast,
         unwrap_scalar_token => sub ($value) { return $self->unwrap_scalar_token($value) },
         unwrap_single_nested_list => sub ($value) { return $self->unwrap_single_nested_list($value) },
@@ -916,12 +916,13 @@ sub canonicalize_top_type_spec ($self, %args) {
                 imported_type_ref => $type_ref,
             };
         },
+        is_contract_identifier => sub ($value) { return $self->is_contract_identifier($value) },
     );
     return $resolved_spec if $resolved_spec;
 
     confess
         "Composition top '$top_name' contains malformed '+types' entry for type '$type_name', ".
-        "but the first active '+types' lane supports only 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', '(two_state ...)', '(four_state ...)', or aliases to already-resolved local or imported scalar types.".
+        "but the first active '+types' lane supports 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', '(two_state ...)', '(four_state ...)', '(list ...)', '(record (field TYPE) ...)', or aliases to already-resolved local or imported types.".
         $self->scope_docs_suffix;
 }
 

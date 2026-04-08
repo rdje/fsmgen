@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-08: packed aggregate type aliases now ride the live `+types` lane
+- Saved the next honest widening after scalar width/signed/state-model aliases
+  landed cleanly.
+- Important continuity note:
+  - direct roots, composition tops, and semantic packages now accept packed
+    `(list ...)` and `(record (field TYPE) ...)` aliases through one shared
+    type canonicalization owner in
+    [perl/FSM/Package/DeclarativeTypeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/DeclarativeTypeSupport.pm),
+  - those aggregate aliases resolve without declaration-order dependence
+    through the same declarative type scope as scalar aliases,
+  - direct-root `+size` and composition `?ports` may now use those aggregate
+    aliases on the live width path,
+  - local composition aggregate aliases may now also contain imported package
+    type members because deferred nested imported refs are preserved until
+    semantic package import finalization,
+  - exported `symbol_contract` / mirrored `module_info` now preserve
+    aggregate type shape and authored `member_order`,
+  - and the current live backend still lowers those aggregate aliases to one
+    packed vector width instead of pretending portable record/typedef
+    lowering is already complete.
+
 ## 2026-04-08: positive integer scalar symbols now feed the live width-token paths
 - Saved the next bounded width-lane widening after imported/local scalar type
   alias support landed cleanly.

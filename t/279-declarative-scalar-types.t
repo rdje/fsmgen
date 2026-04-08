@@ -320,7 +320,7 @@ FSM
 
     like(
         $pipeline_error,
-        qr/Malformed '\+size' entry for signal 'OUT'.*positive integer width, a named scalar type.*positive integer scalar symbol/s,
+        qr/Malformed '\+size' entry for signal 'OUT'.*positive integer width, a named type.*positive integer scalar symbol/s,
         'pipeline reports non-positive direct-root scalar symbol widths explicitly',
     );
 
@@ -332,7 +332,7 @@ FSM
     ok(!-e $output_path, 'CLI does not emit HDL for non-positive direct-root scalar symbol widths');
     like(
         $combined_output,
-        qr/Malformed '\+size' entry for signal 'OUT'.*positive integer width, a named scalar type.*positive integer scalar symbol/s,
+        qr/Malformed '\+size' entry for signal 'OUT'.*positive integer width, a named type.*positive integer scalar symbol/s,
         'CLI surfaces the non-positive direct-root scalar symbol width boundary',
     );
     isnt($error_code, 0, 'CLI exits non-zero for non-positive direct-root scalar symbol widths');
@@ -649,7 +649,7 @@ FSM
 
     like(
         $pipeline_error,
-        qr/Composition top 'bad_scalar_symbol_top_ports' contains '\?ports' token 'out_data>ZERO_W', .*positive integer, a resolved scalar type alias, nor a positive integer scalar symbol/s,
+        qr/Composition top 'bad_scalar_symbol_top_ports' contains '\?ports' token 'out_data>ZERO_W', .*positive integer, a resolved type alias, nor a positive integer scalar symbol/s,
         'pipeline reports non-positive composition scalar symbol widths explicitly',
     );
 
@@ -661,7 +661,7 @@ FSM
     ok(!-e $output_path, 'CLI does not emit HDL for non-positive composition scalar symbol widths');
     like(
         $combined_output,
-        qr/Composition top 'bad_scalar_symbol_top_ports' contains '\?ports' token 'out_data>ZERO_W', .*positive integer, a resolved scalar type alias, nor a positive integer scalar symbol/s,
+        qr/Composition top 'bad_scalar_symbol_top_ports' contains '\?ports' token 'out_data>ZERO_W', .*positive integer, a resolved type alias, nor a positive integer scalar symbol/s,
         'CLI surfaces the non-positive composition scalar symbol width boundary',
     );
     isnt($error_code, 0, 'CLI exits non-zero for non-positive composition scalar symbol widths');
@@ -872,7 +872,7 @@ FSM
 
     like(
         $pipeline_error,
-        qr/Composition top 'bad_typed_top_local_import_alias_ports' contains '\?ports' token 'out_data>byte_t', .*width token 'byte_t' is neither a positive integer, a resolved scalar type alias, nor a positive integer scalar symbol/s,
+        qr/Composition top 'bad_typed_top_local_import_alias_ports' contains '\?ports' token 'out_data>byte_t', .*width token 'byte_t' is neither a positive integer, a resolved type alias, nor a positive integer scalar symbol/s,
         'pipeline reports unresolved imported local composition scalar type aliases explicitly at the port-width boundary',
     );
 
@@ -884,7 +884,7 @@ FSM
     ok(!-e $output_path, 'CLI does not emit HDL for unresolved imported local composition scalar type aliases');
     like(
         $combined_output,
-        qr/Composition top 'bad_typed_top_local_import_alias_ports' contains '\?ports' token 'out_data>byte_t', .*width token 'byte_t' is neither a positive integer, a resolved scalar type alias, nor a positive integer scalar symbol/s,
+        qr/Composition top 'bad_typed_top_local_import_alias_ports' contains '\?ports' token 'out_data>byte_t', .*width token 'byte_t' is neither a positive integer, a resolved type alias, nor a positive integer scalar symbol/s,
         'CLI surfaces the unresolved imported local composition scalar type alias boundary',
     );
     isnt($error_code, 0, 'CLI exits non-zero for unresolved imported local composition scalar type aliases');
@@ -945,7 +945,7 @@ FSM
 
     like(
         $pipeline_error,
-        qr/Composition top 'bad_typed_top_imported_ports' contains '\?ports' token 'out_data>shared_types\.missing', .*width token 'shared_types\.missing' is neither a positive integer, a resolved scalar type alias, nor a positive integer scalar symbol/s,
+        qr/Composition top 'bad_typed_top_imported_ports' contains '\?ports' token 'out_data>shared_types\.missing', .*width token 'shared_types\.missing' is neither a positive integer, a resolved type alias, nor a positive integer scalar symbol/s,
         'pipeline reports unresolved imported composition ?ports scalar type aliases explicitly',
     );
 
@@ -957,7 +957,7 @@ FSM
     ok(!-e $output_path, 'CLI does not emit HDL for unresolved imported composition ?ports scalar type aliases');
     like(
         $combined_output,
-        qr/Composition top 'bad_typed_top_imported_ports' contains '\?ports' token 'out_data>shared_types\.missing', .*width token 'shared_types\.missing' is neither a positive integer, a resolved scalar type alias, nor a positive integer scalar symbol/s,
+        qr/Composition top 'bad_typed_top_imported_ports' contains '\?ports' token 'out_data>shared_types\.missing', .*width token 'shared_types\.missing' is neither a positive integer, a resolved type alias, nor a positive integer scalar symbol/s,
         'CLI surfaces the unresolved imported composition ?ports scalar type alias boundary',
     );
     isnt($error_code, 0, 'CLI exits non-zero for unresolved imported composition ?ports scalar type aliases');

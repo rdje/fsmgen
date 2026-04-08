@@ -10,7 +10,7 @@ use Data::Dumper;
 use FSM::CoreAST;
 use FSM::Debug;
 use FSM::Package::DeclarativeSymbolResolver;
-use FSM::Package::DeclarativeScalarTypeSupport;
+use FSM::Package::DeclarativeTypeSupport;
 use FSM::Package::DeclarativeTypeResolver;
 use FSM::Package::SignalManagerProjectionSupport;
 use FSM::Package::Symbols;
@@ -431,7 +431,7 @@ sub parse_types_section($self, $types_ast) {
 
     Carp::confess
         "Malformed '+types' section. ".
-        "The active contract supports '+types' only as a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)' entries. ".
+        "The active contract supports '+types' only as a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', '(type NAME (list ...))', '(type NAME (record (field TYPE) ...))', or '(type NAME other_type)' entries. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless ref($types_list) eq 'ARRAY' && @$types_list;
 
@@ -439,7 +439,7 @@ sub parse_types_section($self, $types_ast) {
     for my $type_def (@$types_list) {
         Carp::confess
             "Malformed '+types' entry. ".
-            "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)'. ".
+            "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', '(type NAME (list ...))', '(type NAME (record (field TYPE) ...))', or '(type NAME other_type)'. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
             unless ref($type_def) eq 'ARRAY' && @$type_def >= 2;
 
@@ -458,7 +458,7 @@ sub parse_types_section($self, $types_ast) {
         } else {
             Carp::confess
                 "Malformed '+types' entry. ".
-                "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)'. ".
+                "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', '(type NAME (list ...))', '(type NAME (record (field TYPE) ...))', or '(type NAME other_type)'. ".
                 "See docs/USER_GUIDE.md for the current supported boundary.\n";
         }
 
@@ -733,7 +733,7 @@ sub resolve_declared_width_contract($self, %args) {
 
     Carp::confess
         "Malformed '+size' entry for signal '$signal_name'. ".
-        "Each '+size' entry must use an HDL-identifier-compatible signal name and either a positive integer width, a named scalar type such as 'bit', 'byte', or 'pkg_name.byte', or a positive integer scalar symbol such as 'BYTE_W' or 'pkg_name.BYTE_W'. ".
+        "Each '+size' entry must use an HDL-identifier-compatible signal name and either a positive integer width, a named type such as 'bit', 'byte', 'frame_t', or 'pkg_name.byte', or a positive integer scalar symbol such as 'BYTE_W' or 'pkg_name.BYTE_W'. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 
@@ -742,18 +742,19 @@ sub canonicalize_scalar_type_spec($self, %args) {
     my $type_name = $args{type_name} // 'unknown';
     my $spec_ast = $args{spec_ast};
 
-    my $resolved_spec = FSM::Package::DeclarativeScalarTypeSupport->canonicalize_type_spec(
+    my $resolved_spec = FSM::Package::DeclarativeTypeSupport->canonicalize_type_spec(
         spec_ast => $spec_ast,
         unwrap_scalar_token => sub ($value) { return $self->unwrap_scalar_token($value) },
         unwrap_single_nested_list => sub ($value) { return $self->unwrap_single_nested_list($value) },
         is_contract_type_reference => sub ($value) { return $self->is_contract_type_reference($value) },
         resolve_type_reference => sub ($type_ref) { return $self->{signal_manager}->resolve_type($type_ref) },
+        is_contract_identifier => sub ($value) { return $self->is_contract_identifier($value) },
     );
     return $resolved_spec if $resolved_spec;
 
     Carp::confess
         "Malformed '+types' entry for type '$type_name' in source '$module_name'. ".
-        "The first active '+types' lane supports only 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', '(two_state ...)', '(four_state ...)', or aliases to already-resolved scalar types. ".
+        "The first active '+types' lane supports 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', '(two_state ...)', '(four_state ...)', '(list ...)', '(record (field TYPE) ...)', or aliases to already-resolved local/imported types. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 
@@ -1496,7 +1497,7 @@ sub resolve_pending_direct_root_types($self, $module_name, $type_entries) {
 
             Carp::confess
                 "Malformed declarative type scope in source '$module_name'. ".
-                "The active '+types' contract resolves normal non-cyclic scalar type aliases without depending on declaration order, but type dependency cycles are blocked. ".
+                "The active '+types' contract resolves normal non-cyclic type aliases without depending on declaration order, but type dependency cycles are blocked. ".
                 "Cycle: ".join(' -> ', @chain).". ".
                 "See docs/USER_GUIDE.md for the current supported boundary.\n";
         },

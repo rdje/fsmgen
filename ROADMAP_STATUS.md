@@ -1742,6 +1742,16 @@ Exit criteria:
   canonical scalar type specs now preserve `state_model` beside `width` and
   `signed` without promoting raw backend spellings into the authored source
   contract.
+- `R11`: that same bounded `+types` lane now also carries the first real
+  packed aggregate-type slice: direct roots, composition tops, and semantic
+  packages now accept packed `(list ...)` and `(record (field TYPE) ...)`
+  aliases without declaration-order dependence, direct-root `+size` and
+  composition `?ports` may use those aggregate aliases including local aliases
+  with nested imported package type members, direct/composition
+  `symbol_contract` plus mirrored `module_info` now preserve canonical
+  aggregate type shape and member order, and the live SystemVerilog lowering
+  currently maps those aggregate aliases to one packed vector width instead of
+  exposing backend typedef syntax as the authored contract.
 - `R11`: direct generated roots now also preserve one bounded `symbol_contract`
   through forward `intent_hir` and mirrored `module_info`, so local
   constants/enums, canonical aggregate payloads, scalar-leaf summaries, and

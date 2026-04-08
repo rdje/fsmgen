@@ -9,7 +9,7 @@ no warnings 'experimental::signatures';
 
 use FSM::Adapter::FSMGenFull::ExpressionBuilder;
 use FSM::Adapter::FSMGenFull::SignalManager;
-use FSM::Package::DeclarativeScalarTypeSupport;
+use FSM::Package::DeclarativeTypeSupport;
 use FSM::Package::DeclarativeSymbolResolver;
 use FSM::Package::DeclarativeTypeResolver;
 use FSM::Package::Spec;
@@ -231,14 +231,14 @@ sub parse_package_types_block ($self, $package_name, $child_ast, $symbols) {
 
     confess
         "Package '$package_name' contains malformed '+types' section, ".
-        "but package type section shape is blocked because '+types' currently requires a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)' entries."
+        "but package type section shape is blocked because '+types' currently requires a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', '(type NAME (list ...))', '(type NAME (record (field TYPE) ...))', or '(type NAME other_type)' entries."
         unless ref($types_list) eq 'ARRAY' && @$types_list;
 
     my @type_entries;
     for my $type_def (@$types_list) {
         confess
             "Package '$package_name' contains malformed '+types' entry, ".
-            "but package type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)'."
+            "but package type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', '(type NAME (list ...))', '(type NAME (record (field TYPE) ...))', or '(type NAME other_type)'."
             unless ref($type_def) eq 'ARRAY' && @$type_def >= 2;
 
         my ($keyword, $name, $spec_ast);
@@ -256,7 +256,7 @@ sub parse_package_types_block ($self, $package_name, $child_ast, $symbols) {
         } else {
             confess
                 "Package '$package_name' contains malformed '+types' entry, ".
-                "but package type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)'.";
+                "but package type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', '(type NAME (list ...))', '(type NAME (record (field TYPE) ...))', or '(type NAME other_type)'.";
         }
 
         my $resolved_keyword = $self->unwrap_scalar_token($keyword);
@@ -390,7 +390,7 @@ sub resolve_pending_package_types ($self, $package_name, $symbols, $symbol_manag
 
             confess
                 "Package '$package_name' contains a declarative type dependency cycle, ".
-                "but package type scope now resolves normal non-cyclic scalar type aliases without depending on declaration order and still blocks cycles explicitly. ".
+                "but package type scope now resolves normal non-cyclic type aliases without depending on declaration order and still blocks cycles explicitly. ".
                 "Cycle: ".join(' -> ', @chain).".";
         },
     );
@@ -446,7 +446,7 @@ sub canonicalize_package_type_spec ($self, %args) {
     my $symbols = $args{symbols};
     my $signal_manager = $args{signal_manager};
 
-    my $resolved_spec = FSM::Package::DeclarativeScalarTypeSupport->canonicalize_type_spec(
+    my $resolved_spec = FSM::Package::DeclarativeTypeSupport->canonicalize_type_spec(
         spec_ast => $spec_ast,
         unwrap_scalar_token => sub ($value) { return $self->unwrap_scalar_token($value) },
         unwrap_single_nested_list => sub ($value) { return $self->unwrap_single_nested_list($value) },
@@ -465,12 +465,13 @@ sub canonicalize_package_type_spec ($self, %args) {
                     : undef
             );
         },
+        is_contract_identifier => sub ($value) { return $self->is_contract_identifier($value) },
     );
     return $resolved_spec if $resolved_spec;
 
     confess
         "Package '$package_name' contains malformed '+types' entry for type '$type_name', ".
-        "but the first active '+types' lane supports only 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', '(two_state ...)', '(four_state ...)', or aliases to already-resolved scalar types.";
+        "but the first active '+types' lane supports 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', '(two_state ...)', '(four_state ...)', '(list ...)', '(record (field TYPE) ...)', or aliases to already-resolved local/imported types.";
 }
 
 sub canonicalize_package_symbol_literal_payload ($self, %args) {

@@ -1297,3 +1297,13 @@ The first honest `R11` slices are now:
   canonical `symbol_contract` type specs now preserve `state_model` beside
   `width` and `signed` without exposing raw backend type spellings as the
   authored source-language contract.
+- Forward-IR note: the first packed aggregate-type widening on top of that
+  bounded `+types` lane is now shipped too: `(list ...)` and
+  `(record (field TYPE) ...)` aliases resolve through the same declarative
+  type/import lane across direct roots, composition tops, and semantic
+  packages, direct-root `+size` plus composition `?ports` may use those
+  aggregate aliases including local aliases with nested imported package type
+  members, canonical `symbol_contract` / mirrored `module_info` now preserve
+  aggregate type shape plus authored `member_order`, and the current live SV
+  lowering keeps the authored contract honest by mapping those aggregate types
+  to packed vector widths instead of frontend-shaped typedef syntax.

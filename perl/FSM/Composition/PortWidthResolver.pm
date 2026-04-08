@@ -7,6 +7,8 @@ use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Package::DeclarativeTypeSupport;
+
 sub _is_deferred_imported_type_alias ($class, $type_spec) {
     return ref($type_spec) eq 'HASH'
         && ($type_spec->{kind} || '') eq 'deferred_imported_alias'
@@ -57,6 +59,12 @@ sub resolve_port_contract ($class, %args) {
             signed => ($type_spec->{signed} // 0) ? 1 : 0,
             state_model => $type_spec->{state_model},
         } if $allow_unresolved_imported_type_refs && $class->_is_deferred_imported_type_alias($type_spec);
+        return {
+            width => undef,
+            signed => ($type_spec->{signed} // 0) ? 1 : 0,
+            state_model => $type_spec->{state_model},
+        } if $allow_unresolved_imported_type_refs
+            && FSM::Package::DeclarativeTypeSupport->has_deferred_imported_aliases($type_spec);
     }
 
     if ($top_symbols && $class->is_contract_type_reference($width_token)) {
@@ -79,7 +87,7 @@ sub resolve_port_contract ($class, %args) {
     }
 
     confess "Composition top '$top_name' contains '?ports' token '$token', ".
-        "but composition port sizing is blocked because width token '$width_token' is neither a positive integer, a resolved scalar type alias, nor a positive integer scalar symbol.".
+        "but composition port sizing is blocked because width token '$width_token' is neither a positive integer, a resolved type alias, nor a positive integer scalar symbol.".
         $docs_hint;
 }
 

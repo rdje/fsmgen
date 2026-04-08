@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-08: the first live aggregate `+types` slice should stay semantic and packed-width-first
+- Continued the new `+types` lane by opening the first honest aggregate step
+  instead of stopping at scalar aliases once width/signed/state-model were in
+  place.
+- Landed behavior:
+  - direct roots, composition tops, and semantic packages now accept packed
+    `(list ...)` and `(record (field TYPE) ...)` aliases in `+types`,
+  - those aggregate aliases resolve through the same declarative-scope type
+    pass as scalar aliases, so normal non-cyclic references do not depend on
+    declaration order,
+  - direct-root `+size` and composition `?ports` may now use those aggregate
+    aliases on the live width path,
+  - local composition aggregate aliases may now also contain imported package
+    type members without forcing parser-order import tricks,
+  - and forward `symbol_contract` / mirrored `module_info` now preserve
+    aggregate type shape plus authored `member_order`.
+- Why this boundary is deliberate:
+  - it keeps `.fsm` authoring intent-level by letting users name one aggregate
+    shape without forcing backend spellings into source,
+  - it preserves the authored aggregate structure for future typed lowering
+    work,
+  - but the current live backend still lowers those aggregate aliases to one
+    packed vector width instead of pretending a portable record/typedef
+    contract is already finished.
+
 ## 2026-04-08: authored width tokens should accept positive integer scalar symbols through one semantic width extractor
 - Continued the aggregate/type lane by closing the obvious usability gap after
   scalar type aliases landed, instead of forcing users to wrap every shared
