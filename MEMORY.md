@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-08: composition `?ports` imported scalar type aliases now ship on the live width path
+- Saved the next honest follow-on slice after the first bounded scalar
+  `+types` lane landed.
+- Important continuity note:
+  - composition `?ports` may now use direct package-qualified imported scalar
+    type aliases such as `out_data>shared_types.byte` and
+    `out_flag>shared_types.flag`,
+  - authored width tokens now survive parsing on
+    [perl/FSM/Composition/Port.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Port.pm)
+    so imported width aliases can resolve after semantic package imports land,
+  - [perl/FSM/Composition/PackageImportResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PackageImportResolver.pm)
+    now also rebinds those deferred imported widths before planning,
+  - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm)
+    now resolves composition package imports before `after_parse_source`
+    extensions run so callers see the same fully resolved composition spec,
+  - and local aliases that themselves point at imported package scalar types
+    are still a later seam rather than an implicit part of this slice.
+
 ## 2026-04-08: future semantic types should carry backend-neutral meaning first
 - Saved one more steering note for the richer future `+types` lane.
 - Important continuity note:
@@ -26,8 +44,9 @@ This is the live continuity document for fast session recovery after crashes, re
   - explicit type cycles now fail clearly,
   - imported package scalar types now feed the direct-root width path through
     the normal package projection lane,
-  - composition `?ports` type aliases are intentionally local-only in this
-    first slice,
+  - composition `?ports` initially shipped as local-only in that first slice,
+    but the live contract now also covers direct package-qualified imported
+    scalar type aliases on the `?ports` width path,
   - and forward `symbol_contract` / mirrored `module_info` now preserve local
     type names/counts plus canonical scalar type specs for both direct and
     composition results.

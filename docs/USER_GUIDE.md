@@ -518,7 +518,8 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - local and imported scalar types resolve through one declarative-scope pass, so normal non-cyclic references do not depend on declaration order.
 - Composition-top note:
   - inside `?top:name`, local `(+types ...)` declarations may now drive local `?ports` width aliases such as `out_data>byte_t` or `out_flag>flag_t`.
-  - this first shipped composition slice is intentionally local-only for `?ports`; imported package type aliases are not yet promised on the top-port-width path.
+  - imported package scalar type aliases may now also drive `?ports` widths through package-qualified tokens such as `out_data>shared.byte` or `out_flag>shared.flag`.
+  - local aliases that themselves point at imported package types are still a later seam; the currently shipped imported composition path is the direct package-qualified width-token form.
 - Malformed shapes like `(+types)`, `(+types BROKEN)`, malformed entries like `(+types (type only_name))`, and explicit type dependency cycles are rejected explicitly.
 
 `(+import ...)`:

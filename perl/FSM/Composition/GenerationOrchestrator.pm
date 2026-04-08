@@ -55,12 +55,14 @@ sub generate_from_source ($class, %args) {
 
     $source_info->{composition_spec} //= $composition_spec;
 
-    my $resolved_package_imports = FSM::Composition::PackageImportResolver->resolve_imports(
-        composition_spec => $composition_spec,
-        fsm_file => $fsm_file,
-        source_path_resolver => $source_path_resolver,
-        debug_level => ($pipeline->{debug_level} // 0),
-    );
+    my $resolved_package_imports = $args{resolved_package_imports}
+        || $source_info->{resolved_package_imports}
+        || FSM::Composition::PackageImportResolver->resolve_imports(
+            composition_spec => $composition_spec,
+            fsm_file => $fsm_file,
+            source_path_resolver => $source_path_resolver,
+            debug_level => ($pipeline->{debug_level} // 0),
+        );
 
     my $composition_plan = FSM::Composition::PlanBuilder->build_plan(
         pipeline => $pipeline,

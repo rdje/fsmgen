@@ -21,6 +21,7 @@ use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Composition::PackageImportResolver;
 use FSM::Composition::GenerationOrchestrator;
 use FSM::Debug;
 use FSM::Extension::Context;
@@ -86,6 +87,12 @@ sub generate_from_file ($class, %args) {
         if ($source_info->{kind} && $source_info->{kind} eq 'composition') {
             $source_info->{composition_spec} = FSM::Pipeline::SourceFrontend->parse_composition_source(
                 raw_ast => $raw_ast,
+                debug_level => ($pipeline->{debug_level} // 0),
+            );
+            $source_info->{resolved_package_imports} = FSM::Composition::PackageImportResolver->resolve_imports(
+                composition_spec => $source_info->{composition_spec},
+                fsm_file => $fsm_file,
+                source_path_resolver => $pipeline->{source_path_resolver},
                 debug_level => ($pipeline->{debug_level} // 0),
             );
         }

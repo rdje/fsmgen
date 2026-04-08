@@ -1709,9 +1709,11 @@ Exit criteria:
   roots, and `?pkg:name` packages now accept bounded scalar type aliases for
   `bit`, `(bits N)`, and named scalar aliases without declaration-order
   dependence, direct-root `+size` plus local composition `?ports` widths may
-  now use those scalar type names, explicit type dependency cycles now fail
-  clearly, and forward `symbol_contract` / mirrored `module_info` now also
-  preserve local type names/counts plus canonical scalar type specs.
+  now use those scalar type names, composition `?ports` may now also use
+  direct package-qualified imported scalar type aliases such as
+  `shared.byte`, explicit type dependency cycles now fail clearly, and
+  forward `symbol_contract` / mirrored `module_info` now also preserve local
+  type names/counts plus canonical scalar type specs.
 - `R11`: direct generated roots now also preserve one bounded `symbol_contract`
   through forward `intent_hir` and mirrored `module_info`, so local
   constants/enums, canonical aggregate payloads, scalar-leaf summaries, and

@@ -13,6 +13,7 @@ use FSM::Composition::Spec;
 use FSM::Composition::Top;
 use FSM::Composition::Instance;
 use FSM::Composition::Port;
+use FSM::Composition::PortWidthResolver;
 use FSM::Composition::Link;
 use FSM::Composition::PortsBlock;
 use FSM::Composition::TopLink;
@@ -699,6 +700,7 @@ sub parse_port_token ($self, $top_name, $token, $top_symbols = undef) {
             token => $token,
             width_token => $size,
             top_symbols => $top_symbols,
+            allow_unresolved_imported_type_refs => 1,
         );
     }
 
@@ -706,6 +708,7 @@ sub parse_port_token ($self, $top_name, $token, $top_symbols = undef) {
         name => $port,
         direction => defined($direction) ? ($direction eq '<' ? 'input' : 'output') : 'input',
         width => $resolved_width,
+        width_token => $size,
         type => $type,
         binding_mode => defined($binding) ? 'connect_by_name' : 'explicit',
         raw_token => $token,
@@ -869,29 +872,11 @@ sub is_contract_type_reference ($self, $value) {
 }
 
 sub resolve_top_port_width_token ($self, %args) {
-    my $top_name = $args{top_name} // 'top';
-    my $token = $args{token} // '?ports';
-    my $width_token = $args{width_token};
-    my $top_symbols = $args{top_symbols};
-
-    return 1 unless defined $width_token;
-    return 0 + $width_token if $width_token =~ /\A\d+\z/ && $width_token > 0;
-
-    if ($width_token =~ /\A\d+\z/) {
-        confess "Composition top '$top_name' contains '?ports' token '$token', ".
-            "but composition port sizing is blocked because it declares non-positive width '$width_token'.".
-            $self->scope_docs_suffix;
-    }
-
-    if ($top_symbols && $self->is_contract_type_reference($width_token)) {
-        my $type_spec = $top_symbols->resolve_type($width_token);
-        return 0 + $type_spec->{width}
-            if $type_spec && ref($type_spec) eq 'HASH' && defined $type_spec->{width} && $type_spec->{width} > 0;
-    }
-
-    confess "Composition top '$top_name' contains '?ports' token '$token', ".
-        "but composition port sizing is blocked because width token '$width_token' is neither a positive integer nor a previously resolved local scalar type alias.".
-        $self->scope_docs_suffix;
+    return FSM::Composition::PortWidthResolver->resolve_width_token(
+        %args,
+        docs_hint => $self->scope_docs_suffix,
+        allow_unresolved_imported_type_refs => ($args{allow_unresolved_imported_type_refs} // 0),
+    );
 }
 
 sub canonicalize_top_type_spec ($self, %args) {

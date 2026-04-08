@@ -1,5 +1,31 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-08: imported composition port width aliases should resolve after package imports, not by parser reach-through
+- Continued the aggregate/type lane by widening the bounded composition
+  `?ports` width path one honest step instead of smuggling filesystem lookup
+  into the parser itself.
+- Landed behavior:
+  - composition `?ports` may now use direct package-qualified imported scalar
+    type aliases such as `out_data>shared_types.byte`,
+  - authored width tokens now survive parsing on
+    [perl/FSM/Composition/Port.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Port.pm)
+    and resolve through the shared
+    [perl/FSM/Composition/PortWidthResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PortWidthResolver.pm)
+    helper,
+  - semantic package import resolution now rebinds those unresolved imported
+    widths before composition planning starts,
+  - and the top-level source orchestrator now resolves composition package
+    imports before `after_parse_source` hooks so extensions see the same
+    fully resolved composition spec as later planning stages.
+- Why this boundary is deliberate:
+  - it keeps parsing structurally pure and local, while still giving the live
+    generation pipeline fully resolved imported type widths,
+  - it avoids duplicating import-resolution I/O between early pipeline parse
+    hooks and later composition planning,
+  - and it keeps the next honest seam explicit: local aliases that themselves
+    point at imported package scalar types still need a deliberate follow-on
+    resolver widening rather than being implied accidentally here.
+
 ## 2026-04-08: future type lowering should stay semantic first and backend-specific only at the edge
 - Saved one more steering rule for the future richer `+types` lane after the
   first scalar alias slice landed.

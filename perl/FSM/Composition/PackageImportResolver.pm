@@ -7,6 +7,7 @@ use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Composition::PortWidthResolver;
 use FSM::Package::ImportResolver;
 
 sub resolve_imports ($class, %args) {
@@ -37,6 +38,11 @@ sub resolve_imports ($class, %args) {
         my $package_spec = $resolved_packages->{$package_name} or next;
         $top_symbols->import_package($package_name, $package_spec->symbols);
     }
+
+    FSM::Composition::PortWidthResolver->resolve_declared_port_widths(
+        top => $top,
+        docs_hint => " See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md",
+    );
 
     return $resolved_packages;
 }
