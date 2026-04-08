@@ -238,6 +238,70 @@ subtest 'linked plan builder rejects missing explicit toplinks on explicit-link 
     );
 };
 
+subtest 'linked plan builder rejects explicit port-to-port links across incompatible declared type contracts' => sub {
+    my @ports = (
+        port('clk', 'input', 1, 'clock'),
+        port('rstn', 'input', 1, 'reset'),
+        port('result_data', 'output', 8, undef),
+    );
+
+    my $exception = eval {
+        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+            lane => 'C2',
+            composition_spec => composition_spec('typed_linked_plan_builder_top'),
+            top => FSM::Composition::Top->new(name => 'typed_linked_plan_builder_top'),
+            ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
+            ports => \@ports,
+            toplinks => [
+                FSM::Composition::TopLink->new(
+                    name => 'wiring',
+                    links => [
+                        FSM::Composition::Link->new(source => 'producer.payload', target => 'consumer.payload'),
+                        FSM::Composition::Link->new(source => 'consumer.result_data', target => 'result_data'),
+                    ],
+                ),
+            ],
+            realized_instances => [
+                realized_instance(
+                    'producer',
+                    port('clk', 'input', 1, 'clock'),
+                    port('rstn', 'input', 1, 'reset'),
+                    port('payload', 'output', 8, undef,
+                        declared_type_name => 'packet_t',
+                        declared_type_spec => record_spec(
+                            tag => bit_spec(),
+                            payload => bits_spec(7),
+                        ),
+                    ),
+                ),
+                realized_instance(
+                    'consumer',
+                    port('clk', 'input', 1, 'clock'),
+                    port('rstn', 'input', 1, 'reset'),
+                    port('payload', 'input', 8, undef,
+                        declared_type_name => 'byte_t',
+                        declared_type_spec => bits_spec(8),
+                    ),
+                    port('result_data', 'output', 8, undef,
+                        declared_type_name => 'byte_t',
+                        declared_type_spec => bits_spec(8),
+                    ),
+                ),
+            ],
+            fsm_file => 'typed_linked_plan_builder_top.fsm',
+            header => 'typed_linked_plan_builder_top',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/links 'producer\.payload' to 'consumer\.payload', .*explicit link is blocked because those endpoints preserve incompatible declared type contracts \('packet_t' vs 'byte_t'\)/s,
+        'builder rejects explicit port-to-port links across incompatible declared type contracts',
+    );
+};
+
 done_testing();
 
 sub composition_spec {
@@ -263,11 +327,43 @@ sub realized_instance {
 }
 
 sub port {
-    my ($name, $direction, $width, $type) = @_;
+    my ($name, $direction, $width, $type, %extra) = @_;
     return FSM::Composition::Port->new(
         name => $name,
         direction => $direction,
         width => $width,
         type => $type,
+        %extra,
     );
+}
+
+sub bit_spec {
+    return {
+        kind => 'bit',
+        width => 1,
+        signed => 0,
+    };
+}
+
+sub bits_spec {
+    my ($width) = @_;
+    return {
+        kind => 'bits',
+        width => $width,
+        signed => 0,
+    };
+}
+
+sub record_spec {
+    my (%members) = @_;
+    my @member_order = sort keys %members;
+    my $width = 0;
+    $width += ($members{$_}{width} // 0) for @member_order;
+    return {
+        kind => 'record',
+        width => $width,
+        signed => 0,
+        member_order => \@member_order,
+        members => { %members },
+    };
 }

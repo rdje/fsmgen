@@ -95,6 +95,7 @@ The currently shipped composition behavior is intentionally bounded:
 - inferred same-name internal carriers stay internal by default instead of being re-exported as top ports automatically,
 - an explicit same-name top output may re-export one of those inferred carriers without forcing manual child-to-child restatement,
 - explicit `?toplink` endpoints must match by role and exact width in `C2`, `C3`, and `C4`,
+- when one explicit `?toplink` binds a plain port endpoint directly to another plain port endpoint and both sides preserved `declared_type_name` / canonical `declared_type_spec` from named aliases, those declared type contracts must stay compatible too,
 - explicit-link tops may now also fan out one realized child output source to multiple top outputs through one deterministic shared carrier net plus explicit top-output assignments,
 - explicit-link tops may now also route one declared top input directly to one or more top outputs through explicit top-output assignments while sibling child-input consumers reuse that same top input without synthetic helper nets,
 - explicit `?toplink` top-port and child-output expressions may currently appear only on the source side and may target realized child input ports or declared top outputs,

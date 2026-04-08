@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-08: explicit plain `?toplink` bindings are now declared-type-aware too
+- Saved the next typed-composition compatibility slice after same-name
+  convention and undeclared top-port inference were hardened.
+- Important continuity note:
+  - explicit plain port-to-port `?toplink` bindings now reject width-equal
+    endpoints when both sides preserve incompatible `declared_type_spec`
+    contracts,
+  - the blocked failure-summary surface now keeps child-endpoint or top-port
+    context for those explicit-link declared-type mismatches,
+  - and expression/literal actual sources still stay on the existing typed
+    structural path instead of pretending they are declared-type-preserving
+    plain ports.
+
 ## 2026-04-08: same-name composition matching is now declared-type-aware
 - Saved the next typed-composition slice after declared type identity survived
   the structural boundary.

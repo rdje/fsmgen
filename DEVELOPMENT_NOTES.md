@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-08: explicit port-to-port `?toplink` bindings must not bypass declared types
+- Continued the typed composition hardening immediately after same-name
+  convention and undeclared top-port inference became declared-type-aware.
+- Landed behavior:
+  - explicit plain port-to-port `?toplink` bindings now also block when both
+    endpoints preserve incompatible `declared_type_spec` contracts,
+  - that applies to child-to-child, top-to-child, and child-to-top plain port
+    bindings on the explicit-link path,
+  - expression and literal actual sources stay on their existing typed
+    structural path and are not retrofitted into fake declared-type
+    compatibility checks,
+  - and the blocked failure-summary surface now preserves concise child-endpoint
+    or top-port context for those explicit-link declared-type mismatches too.
+- Why this boundary matters:
+  - once preserved declared type identity was live and same-name convention
+    consumed it, leaving explicit `?toplink` as a width-only escape hatch would
+    have made the type contract feel optional instead of real,
+  - and this keeps the next aggregate-aware lowering/compatibility work on one
+  honest declared-type boundary instead of separate convention versus
+  explicit-link rules.
+
 ## 2026-04-08: same-name composition contracts must consume declared types, not width alone
 - Continued the typed composition lane immediately after preserving declared
   type identity on the live structural boundary.

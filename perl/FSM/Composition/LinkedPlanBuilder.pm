@@ -22,6 +22,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::Composition::Link;
+use FSM::Composition::InterfacePortBuilder;
 use FSM::Composition::Net;
 use FSM::Composition::Plan;
 use FSM::Composition::RealizedInstance;
@@ -204,6 +205,8 @@ sub build_plan ($class, %args) {
                 || (($source->{kind} || '') eq 'actual_unsized_octal')
                 || (($source->{kind} || '') eq 'actual_unsized_hex')
                 || $source_width == $target_width;
+
+        $class->assert_declared_type_compatibility($source, $target, $fsm_file, $header);
 
         my $target_key = $target->{key};
         if ($reserved_targets{$target_key}) {
@@ -687,6 +690,21 @@ sub assert_link_roles ($class, $source, $target, $fsm_file, $header) {
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $target->{port}->direction eq 'input';
     }
+}
+
+sub assert_declared_type_compatibility ($class, $source, $target, $fsm_file, $header) {
+    return unless ($source->{kind} || '') eq 'top_port' || ($source->{kind} || '') eq 'child_port';
+    return unless ($target->{kind} || '') eq 'top_port' || ($target->{kind} || '') eq 'child_port';
+    return unless FSM::Composition::InterfacePortBuilder->declared_type_conflicts($source->{port}, $target->{port});
+
+    my $source_declared_type = FSM::Composition::InterfacePortBuilder->declared_type_label($source->{port});
+    my $target_declared_type = FSM::Composition::InterfacePortBuilder->declared_type_label($target->{port});
+
+    confess
+        "Composition source '$header' in '$fsm_file' links '".$source->{raw}."' to '".$target->{raw}."', ".
+        "but explicit link is blocked because those endpoints preserve incompatible declared type contracts ('".$source_declared_type."' vs '".$target_declared_type."'). ".
+        "The current typed composition slice only allows direct port-to-port '?toplink' bindings when preserved declared type contracts stay compatible too. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
 sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header, %opts) {

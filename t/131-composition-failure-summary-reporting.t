@@ -3130,6 +3130,169 @@ FSM
     is($report->{blocked_reason}, 'the current active composition lanes require exact width agreement', 'failure report preserves the concise explicit-link top-port width-mismatch reason');
 };
 
+subtest 'pipeline derives child-endpoint context from blocked explicit-link declared-type mismatch failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'declared_type_mismatch_failure_summary_child.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:declared_type_mismatch_failure_summary_child
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data/consumer.input_data/
+    /consumer.final_data/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type packet_t (record (tag bit) (payload (bits 7))))
+  )
+  (-state0
+    (output_data> <= 8'hA5)
+  )
+  (+size
+    (output_data packet_t)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type byte_t (bits 8))
+  )
+  (-state0
+    (final_data> <= input_data)
+  )
+  (+size
+    (input_data byte_t)
+    (final_data byte_t)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked explicit-link declared-type child-endpoint failures');
+    is($report->{top_name}, 'declared_type_mismatch_failure_summary_child', 'failure report preserves the top name for blocked explicit-link declared-type child-endpoint failures');
+    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked declared-type child-endpoint failures');
+    is($report->{context_label}, 'Child endpoint', 'failure report classifies explicit-link declared-type child mismatches as child-endpoint context');
+    is($report->{context_value}, "'consumer.input_data'", 'failure report preserves the blocked child-endpoint target for declared-type child mismatches');
+    is($report->{context_summary}, "Child endpoint 'consumer.input_data'", 'failure report exposes a concise declared-type child-endpoint summary');
+    is($report->{blocked_boundary}, 'explicit link', 'failure report preserves the blocked explicit-link boundary for declared-type child-endpoint failures');
+    is($report->{blocked_reason}, "those endpoints preserve incompatible declared type contracts ('packet_t' vs 'byte_t')", 'failure report preserves the concise explicit-link declared-type child-endpoint reason');
+};
+
+subtest 'pipeline derives top-port context from blocked explicit-link declared-type mismatch failures' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'declared_type_mismatch_failure_summary_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:declared_type_mismatch_failure_summary_top
+  (+types
+    (type packet_t (record (tag bit) (payload (bits 7))))
+  )
+  (?ports:public_io
+    clk
+    rstn
+    result_data>packet_t
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data/consumer.input_data/
+    /consumer.final_data/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type byte_t (bits 8))
+  )
+  (-state0
+    (output_data> <= 8'hA5)
+  )
+  (+size
+    (output_data byte_t)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type byte_t (bits 8))
+  )
+  (-state0
+    (final_data> <= input_data)
+  )
+  (+size
+    (input_data byte_t)
+    (final_data byte_t)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
+
+    ok($report, 'pipeline derives a composition failure report from blocked explicit-link declared-type top-port failures');
+    is($report->{top_name}, 'declared_type_mismatch_failure_summary_top', 'failure report preserves the top name for blocked explicit-link declared-type top-port failures');
+    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked declared-type top-port failures');
+    is($report->{context_label}, 'Top port', 'failure report classifies explicit-link declared-type top mismatches as top-port context');
+    is($report->{context_value}, "'result_data'", 'failure report preserves the blocked top-port target for declared-type top mismatches');
+    is($report->{context_summary}, "Top port 'result_data'", 'failure report exposes a concise declared-type top-port summary');
+    is($report->{blocked_boundary}, 'explicit link', 'failure report preserves the blocked explicit-link boundary for declared-type top-port failures');
+    is($report->{blocked_reason}, "those endpoints preserve incompatible declared type contracts ('byte_t' vs 'packet_t')", 'failure report preserves the concise explicit-link declared-type top-port reason');
+};
+
 subtest 'pipeline derives explicit-endpoint context from blocked endpoint-syntax failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'unsupported_endpoint_failure_summary_top.fsm');
@@ -6748,6 +6911,165 @@ FSM
     like($combined_output, qr/Context:\s+Top port 'result_data'/s, 'CLI reports the blocked top-port target as summary context for width mismatches');
     like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for top-port width-mismatch failures');
     like($combined_output, qr/Reason:\s+the current active composition lanes require exact width agreement/s, 'CLI reports the concise explicit-link top-port width-mismatch reason');
+};
+
+subtest 'CLI prints child-endpoint context for blocked explicit-link declared-type mismatch summaries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'declared_type_mismatch_failure_summary_cli_child.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'declared_type_mismatch_failure_summary_cli_child.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:declared_type_mismatch_failure_summary_cli_child
+  (?ports:public_io
+    clk
+    rstn
+    result_data>8
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data/consumer.input_data/
+    /consumer.final_data/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type packet_t (record (tag bit) (payload (bits 7))))
+  )
+  (-state0
+    (output_data> <= 8'hA5)
+  )
+  (+size
+    (output_data packet_t)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type byte_t (bits 8))
+  )
+  (-state0
+    (final_data> <= input_data)
+  )
+  (+size
+    (input_data byte_t)
+    (final_data byte_t)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked explicit-link declared-type child-endpoint fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked explicit-link declared-type child-endpoint fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link declared-type child-endpoint failures');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked declared-type child-endpoint failures');
+    like($combined_output, qr/Context:\s+Child endpoint 'consumer\.input_data'/s, 'CLI reports the blocked child-endpoint target as summary context for declared-type child mismatches');
+    like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for declared-type child-endpoint failures');
+    like($combined_output, qr/Reason:\s+those endpoints preserve incompatible declared type contracts \('packet_t' vs 'byte_t'\)/s, 'CLI reports the concise explicit-link declared-type child-endpoint reason');
+};
+
+subtest 'CLI prints top-port context for blocked explicit-link declared-type mismatch summaries' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'declared_type_mismatch_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'declared_type_mismatch_failure_summary_cli_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:declared_type_mismatch_failure_summary_cli_top
+  (+types
+    (type packet_t (record (tag bit) (payload (bits 7))))
+  )
+  (?ports:public_io
+    clk
+    rstn
+    result_data>packet_t
+  )
+  (?fsmc:producer producer_src)
+  (?fsmc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.output_data/consumer.input_data/
+    /consumer.final_data/result_data/
+  )
+)
+
+(?fsm:producer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type byte_t (bits 8))
+  )
+  (-state0
+    (output_data> <= 8'hA5)
+  )
+  (+size
+    (output_data byte_t)
+  )
+)
+
+(?fsm:consumer_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type byte_t (bits 8))
+  )
+  (-state0
+    (final_data> <= input_data)
+  )
+  (+size
+    (input_data byte_t)
+    (final_data byte_t)
+  )
+)
+FSM
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
+    );
+
+    ok(!$success, 'CLI fails for blocked explicit-link declared-type top-port fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked explicit-link declared-type top-port fixture');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link declared-type top-port failures');
+    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked declared-type top-port failures');
+    like($combined_output, qr/Context:\s+Top port 'result_data'/s, 'CLI reports the blocked top-port target as summary context for declared-type top mismatches');
+    like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for declared-type top-port failures');
+    like($combined_output, qr/Reason:\s+those endpoints preserve incompatible declared type contracts \('byte_t' vs 'packet_t'\)/s, 'CLI reports the concise explicit-link declared-type top-port reason');
 };
 
 subtest 'CLI prints missing top-endpoint context in blocked explicit-link summaries' => sub {

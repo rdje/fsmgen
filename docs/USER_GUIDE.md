@@ -1025,7 +1025,8 @@ This currently works because:
 - undeclared same-name internal child-to-child carriers may now be inferred when one unique child output and one or more child inputs share the same name and no explicit link already touches that name family,
 - those inferred same-name carriers stay internal by default, but an explicit same-name top output may adopt and re-export one of them when width/type metadata and any preserved declared type contract still match,
 - explicit-link tops may now also route one declared top input directly to one or more declared top outputs through explicit top-output assignments while sibling child-input consumers reuse that same top input without an invented helper carrier,
-- explicit link widths and endpoint roles must match exactly.
+- explicit link widths and endpoint roles must match exactly,
+- and plain port-to-port explicit links now also require one compatible declared type contract when both endpoints were declared through named type aliases.
 
 Current narrow plain-explicit-port convention example:
 ```lisp

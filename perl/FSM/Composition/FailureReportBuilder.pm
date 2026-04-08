@@ -232,6 +232,11 @@ sub context_excerpt ($class, $summary_text) {
                 ? ('Child endpoint', "'$_[0]'")
                 : ('Top port', "'$_[0]'");
         } ],
+        [ qr/links '[^']+' to '([^']+)', .*incompatible declared type contracts/s, sub {
+            return $_[0] =~ /\./
+                ? ('Child endpoint', "'$_[0]'")
+                : ('Top port', "'$_[0]'");
+        } ],
         [ qr/links '[^']+' \(width \d+\) to '([^']+)' \(width \d+\)/s, sub {
             return $_[0] =~ /\./
                 ? ('Child endpoint', "'$_[0]'")

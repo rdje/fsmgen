@@ -1321,3 +1321,9 @@ The first honest `R11` slices are now:
   but declared-type-incompatible child families, and inferred undeclared top
   ports preserve one shared declared type contract when the eligible child
   evidence is uniform.
+- Forward-IR note: that same declared-type boundary now also feeds the live
+  explicit-link port-to-port path, so plain `?toplink` bindings no longer
+  bypass declared type compatibility just because the author spelled the link
+  explicitly; width-equal but alias-incompatible endpoints are now blocked on
+  that path too, with the bounded failure-summary surface preserving concise
+  child-endpoint or top-port context for those mismatches.
