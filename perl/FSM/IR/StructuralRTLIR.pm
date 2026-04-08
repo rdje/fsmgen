@@ -60,12 +60,14 @@ sub port_metadata ($self) {
             name => $port->{name},
             width => $port->{width},
             direction => $port->{direction},
+            signed => ($port->{signed} // 0) ? 1 : 0,
         };
 
         push @signal_names, $port->{name};
         $signals{$port->{name}} = {
             width => $port->{width},
             direction => $port->{direction},
+            signed => ($port->{signed} // 0) ? 1 : 0,
         };
 
         if (($port->{direction} || '') eq 'output') {

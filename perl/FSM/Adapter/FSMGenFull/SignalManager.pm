@@ -96,6 +96,7 @@ sub register_signal($self, $signal_name, %attributes) {
             
             # Update core fields when explicitly provided
             $existing->{type} = $normalized_attrs{type} if defined $normalized_attrs{type};
+            $existing->{signed} = $normalized_attrs{signed} ? 1 : 0 if exists $normalized_attrs{signed};
             $existing->{clock_domain} = $normalized_attrs{clock_domain} if exists $normalized_attrs{clock_domain};
             $existing->{reset_domain} = $normalized_attrs{reset_domain} if exists $normalized_attrs{reset_domain};
             

@@ -322,7 +322,7 @@ FSM
     is($router_out->{port_name}, 'OUT', 'structural_rtl_ir endpoint lookup preserves the formal port name');
     is_deeply(
         $router_out->{port},
-        { direction => 'output', name => 'OUT', type => undef, width => 8 },
+        { direction => 'output', name => 'OUT', type => undef, width => 8, signed => 0 },
         'structural_rtl_ir endpoint lookup preserves the interface port metadata',
     );
 
@@ -344,6 +344,7 @@ FSM
             direction => 'output',
             name => 'result_data',
             origin_kind => 'declared_explicit_port',
+            signed => 0,
             type => undef,
             width => 8,
         },
@@ -382,30 +383,30 @@ FSM
     is_deeply(
         $port_metadata->{signal_analysis}{inputs},
         [
-            { name => 'clk', width => 1, direction => 'input' },
-            { name => 'rstn', width => 1, direction => 'input' },
-            { name => 'select', width => 1, direction => 'input' },
-            { name => 'data_a', width => 8, direction => 'input' },
-            { name => 'data_b', width => 8, direction => 'input' },
+            { name => 'clk', width => 1, direction => 'input', signed => 0 },
+            { name => 'rstn', width => 1, direction => 'input', signed => 0 },
+            { name => 'select', width => 1, direction => 'input', signed => 0 },
+            { name => 'data_a', width => 8, direction => 'input', signed => 0 },
+            { name => 'data_b', width => 8, direction => 'input', signed => 0 },
         ],
         'structural_rtl_ir port metadata groups input ports',
     );
     is_deeply(
         $port_metadata->{signal_analysis}{outputs},
         [
-            { name => 'result_data', width => 8, direction => 'output' },
+            { name => 'result_data', width => 8, direction => 'output', signed => 0 },
         ],
         'structural_rtl_ir port metadata groups output ports',
     );
     is_deeply(
         $port_metadata->{signals},
         {
-            clk => { width => 1, direction => 'input' },
-            rstn => { width => 1, direction => 'input' },
-            select => { width => 1, direction => 'input' },
-            data_a => { width => 8, direction => 'input' },
-            data_b => { width => 8, direction => 'input' },
-            result_data => { width => 8, direction => 'output' },
+            clk => { width => 1, direction => 'input', signed => 0 },
+            rstn => { width => 1, direction => 'input', signed => 0 },
+            select => { width => 1, direction => 'input', signed => 0 },
+            data_a => { width => 8, direction => 'input', signed => 0 },
+            data_b => { width => 8, direction => 'input', signed => 0 },
+            result_data => { width => 8, direction => 'output', signed => 0 },
         },
         'structural_rtl_ir port metadata preserves the compatible signals map',
     );

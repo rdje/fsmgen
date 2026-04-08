@@ -1722,6 +1722,16 @@ Exit criteria:
   scalar width symbols, and one shared scalar-width extraction helper now
   keeps that numeric-width boundary aligned instead of splitting it into
   parser-local special cases.
+- `R11`: that same first real bounded `+types` lane now also carries one real
+  semantic type property beyond raw width: signed scalar aliases for
+  `(+types (type NAME (signed bit)))` and
+  `(+types (type NAME (signed (bits N))))` are now shipped across direct
+  roots, composition tops, and semantic packages, direct-root `+size` and
+  composition `?ports` now preserve that signedness through emitted
+  SystemVerilog declarations, local/imported alias resolution keeps that
+  signedness through the same declarative-scope and package-import lanes, and
+  forward `symbol_contract` / mirrored `module_info` now preserve the signed
+  flag beside width in canonical scalar type specs.
 - `R11`: direct generated roots now also preserve one bounded `symbol_contract`
   through forward `intent_hir` and mirrored `module_info`, so local
   constants/enums, canonical aggregate payloads, scalar-leaf summaries, and

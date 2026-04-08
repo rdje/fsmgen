@@ -44,11 +44,13 @@ sub build_from_generated_module_info ($class, %args) {
                 ? $module_info->{signals}{$signal_name}
                 : undef;
             my $type = (ref($signal) && $signal->can('type')) ? $signal->type : undef;
+            my $signed = (ref($signal) && $signal->can('signed')) ? $signal->signed : 0;
 
             push @ports, {
                 name => $signal_name,
                 direction => $direction,
                 width => ($entry->{width} || 1),
+                signed => $signed ? 1 : 0,
                 type => $type,
             };
             $seen_ports{$signal_name} = 1;
@@ -63,6 +65,7 @@ sub build_from_generated_module_info ($class, %args) {
             name => $system_contract->{clock},
             direction => 'input',
             width => 1,
+            signed => 0,
             type => 'clock',
         };
         $seen_ports{$system_contract->{clock}} = 1;
@@ -75,6 +78,7 @@ sub build_from_generated_module_info ($class, %args) {
             name => $system_contract->{reset},
             direction => 'input',
             width => 1,
+            signed => 0,
             type => 'reset',
         };
         $seen_ports{$system_contract->{reset}} = 1;
@@ -108,6 +112,7 @@ sub build_from_composition_plan ($class, $composition_plan, $target_language = '
                     name => $_->name,
                     direction => $_->direction,
                     width => $_->width,
+                    signed => ($_->can('signed') ? $_->signed : 0),
                     type => $_->type,
                     binding_mode => $_->binding_mode,
                     origin_kind => $_->origin_kind,
@@ -137,6 +142,7 @@ sub build_from_composition_plan ($class, $composition_plan, $target_language = '
                                 name => $_->name,
                                 direction => $_->direction,
                                 width => $_->width,
+                                signed => ($_->can('signed') ? $_->signed : 0),
                                 type => $_->type,
                             }
                         } @{$_->interface_ports || []}

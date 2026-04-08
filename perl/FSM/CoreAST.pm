@@ -24,6 +24,7 @@ package FSM::CoreAST::Signal;
         $hash_to_bless->{name} = $args{name} // Carp::confess "Signal name required";
         $hash_to_bless->{_width} = $final_width;
         $hash_to_bless->{type} = $args{type} // 'wire';
+        $hash_to_bless->{signed} = ($args{signed} // 0) ? 1 : 0;
         $hash_to_bless->{clock_domain} = $args{clock_domain};
         $hash_to_bless->{reset_domain} = $args{reset_domain};
         $hash_to_bless->{attributes} = $args{attributes} // {};
@@ -42,6 +43,7 @@ package FSM::CoreAST::Signal;
     sub name($self) { $self->{name} }
     sub width($self) { $self->{_width} }
     sub type($self) { $self->{type} }
+    sub signed($self) { $self->{signed} }
     sub clock_domain($self) { $self->{clock_domain} }
     sub reset_domain($self) { $self->{reset_domain} }
     sub attributes($self) { $self->{attributes} }

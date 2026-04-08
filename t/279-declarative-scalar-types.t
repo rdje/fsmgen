@@ -87,6 +87,76 @@ FSM
     like($output_text, qr/reg\s+\[7:0\]\s+OUT\b/s, 'CLI output preserves imported scalar type alias width');
 };
 
+subtest 'direct-root signed scalar type aliases preserve signedness through symbol contracts and SV declarations' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
+    mkdir $libdir or die "Cannot create $libdir: $!";
+
+    my $fsm_path = File::Spec->catfile($tempdir, 'signed_typed_direct_root.fsm');
+    my $package_path = File::Spec->catfile($libdir, 'shared_types.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'signed_typed_direct_root.sv');
+
+    write_file(
+        $package_path,
+        <<'FSM'
+(?pkg:shared_types
+  (+types
+    (type signed_byte (signed (bits 8)))
+  )
+)
+FSM
+    );
+
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:signed_typed_direct_root
+  (+import shared_types)
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type local_signed_byte shared_types.signed_byte)
+  )
+  (+size
+    (IN local_signed_byte)
+    (OUT local_signed_byte)
+  )
+  (idle
+    (OUT = IN)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+        source_search_paths => [$libdir],
+    );
+    my $result = $pipeline->generate_hdl_from_file($fsm_path);
+    my $symbol_contract = $result->{intent_hir}{symbol_contract};
+    my $hdl = $result->{hdl_code};
+
+    is($symbol_contract->{types}{local_signed_byte}{width}, 8, 'direct signed type alias preserves width in the symbol contract');
+    is($symbol_contract->{types}{local_signed_byte}{signed}, 1, 'direct signed type alias preserves signedness in the symbol contract');
+    like($hdl, qr/input\s+wire\s+signed\s+\[7:0\]\s+IN\b/s, 'generated HDL emits signed direct-root input ports for signed scalar types');
+    like($hdl, qr/reg\s+signed\s+\[7:0\]\s+OUT\b/s, 'generated HDL emits signed direct-root internal registers for signed scalar types');
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '--path', $libdir, '--output', $output_path, $fsm_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+    my $output_text = slurp_file($output_path);
+
+    ok($success, 'CLI accepts direct-root signed scalar type aliases');
+    ok(-e $output_path, 'CLI emits HDL for direct-root signed scalar type aliases');
+    ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for direct-root signed scalar type aliases');
+    unlike($combined_output, qr/declarative type|signed scalar type alias/s, 'successful direct-root signed type CLI run does not report type failures');
+    like($output_text, qr/input\s+wire\s+signed\s+\[7:0\]\s+IN\b/s, 'CLI output preserves signed direct-root input ports');
+};
+
 subtest 'direct-root +size widths may use local and imported positive integer scalar symbols' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
@@ -272,6 +342,81 @@ FSM
     ok(-e $output_path, 'CLI emits HDL for composition-top local scalar type aliases');
     ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for composition-top local scalar type aliases');
     unlike($combined_output, qr/declarative type|local scalar type alias/s, 'successful composition type CLI run does not report type failures');
+};
+
+subtest 'composition ?ports preserve signed scalar type aliases through symbol contracts and emitted SV' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
+    mkdir $libdir or die "Cannot create $libdir: $!";
+
+    my $composition_path = File::Spec->catfile($tempdir, 'signed_typed_top_ports.fsm');
+    my $package_path = File::Spec->catfile($libdir, 'shared_types.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'signed_typed_top_ports.sv');
+
+    write_file(
+        $package_path,
+        <<'FSM'
+(?pkg:shared_types
+  (+types
+    (type signed_byte (signed (bits 8)))
+  )
+)
+FSM
+    );
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:signed_typed_top_ports
+  (+import shared_types)
+  (?ports:public_io
+    in_data<shared_types.signed_byte
+    out_data>byte_t
+  )
+  (+types
+    (type byte_t shared_types.signed_byte)
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /in_data/uart_tx.data_in/
+    /uart_tx.data_out/out_data/
+  )
+)
+
+(?rtlif:uart_tx
+  data_in<8:data
+  data_out>8:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+        source_search_paths => [$libdir],
+    );
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+    my $ports = $result->{composition_spec}->top->ports_blocks->[0]->ports;
+    my %ports_by_name = map { $_->name => $_ } @$ports;
+    my $symbol_contract = $result->{intent_hir}{symbol_contract};
+    my $hdl = $result->{hdl_code};
+
+    is($ports_by_name{in_data}->width, 8, 'composition signed imported package type resolves to width 8');
+    is($ports_by_name{in_data}->signed, 1, 'composition imported package type preserves signedness on ?ports');
+    is($ports_by_name{out_data}->signed, 1, 'composition local alias to imported signed type preserves signedness on ?ports');
+    is($symbol_contract->{types}{byte_t}{signed}, 1, 'composition symbol contract preserves signed local aliases');
+    like($hdl, qr/input\s+signed\s+\[7:0\]\s+in_data\b/s, 'generated top HDL emits signed input ports for imported signed scalar types');
+    like($hdl, qr/output\s+signed\s+\[7:0\]\s+out_data\b/s, 'generated top HDL emits signed output ports for local aliases to imported signed scalar types');
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '--path', $libdir, '--output', $output_path, $composition_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+
+    ok($success, 'CLI accepts composition signed scalar type aliases');
+    ok(-e $output_path, 'CLI emits HDL for composition signed scalar type aliases');
+    ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for composition signed scalar type aliases');
+    unlike($combined_output, qr/composition port sizing is blocked|signed scalar type alias/s, 'successful composition signed type CLI run does not report width-token failures');
 };
 
 subtest 'composition ?ports widths may use local and imported positive integer scalar symbols' => sub {

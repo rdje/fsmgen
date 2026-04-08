@@ -140,6 +140,9 @@ sub finalize_imported_type_aliases ($self) {
 
         my $resolved_imported_type = $self->_resolve_imported_type_ref($type_spec->{imported_type_ref});
         next unless defined $resolved_imported_type;
+        if (exists $type_spec->{signed}) {
+            $resolved_imported_type->{signed} = ($type_spec->{signed} // 0) ? 1 : 0;
+        }
         $self->{local_symbols}->store_type($type_name, $resolved_imported_type);
     }
 

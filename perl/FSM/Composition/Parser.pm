@@ -18,6 +18,7 @@ use FSM::Composition::Link;
 use FSM::Composition::PortsBlock;
 use FSM::Composition::TopLink;
 use FSM::Composition::TopSymbols;
+use FSM::Package::DeclarativeScalarTypeSupport;
 use FSM::Package::DeclarativeSymbolResolver;
 use FSM::Package::DeclarativeTypeResolver;
 use FSM::Package::Symbols;
@@ -384,7 +385,7 @@ sub parse_top_types_block ($self, $top_name, $child_ast, $top_symbols) {
 
     confess
         "Composition top '$top_name' contains malformed '+types' section, ".
-        "but composition top type section shape is blocked because '+types' currently requires a non-empty list of '(type NAME bit)', '(type NAME (bits N))', or '(type NAME other_type)' entries.".
+        "but composition top type section shape is blocked because '+types' currently requires a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)' entries.".
         $self->scope_docs_suffix
         unless ref($types_list) eq 'ARRAY' && @$types_list;
 
@@ -392,7 +393,7 @@ sub parse_top_types_block ($self, $top_name, $child_ast, $top_symbols) {
     for my $type_def (@$types_list) {
         confess
             "Composition top '$top_name' contains malformed '+types' entry, ".
-            "but composition top type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', or '(type NAME other_type)'.".
+            "but composition top type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)'.".
             $self->scope_docs_suffix
             unless ref($type_def) eq 'ARRAY' && @$type_def >= 2;
 
@@ -411,7 +412,7 @@ sub parse_top_types_block ($self, $top_name, $child_ast, $top_symbols) {
         } else {
             confess
                 "Composition top '$top_name' contains malformed '+types' entry, ".
-                "but composition top type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', or '(type NAME other_type)'.".
+                "but composition top type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)'.".
                 $self->scope_docs_suffix;
         }
 
@@ -694,13 +695,17 @@ sub parse_port_token ($self, $top_name, $token, $top_symbols = undef) {
         "but composition port token shape is blocked because it is not a valid explicit top-port token for the current active contract.".
         $self->scope_docs_suffix
         unless $port;
-    my $resolved_width = 1;
+    my $resolved_contract = {
+        width => 1,
+        signed => 0,
+    };
     if (defined $direction) {
-        $resolved_width = $self->resolve_top_port_width_token(
+        $resolved_contract = FSM::Composition::PortWidthResolver->resolve_port_contract(
             top_name => $top_name,
             token => $token,
             width_token => $size,
             top_symbols => $top_symbols,
+            docs_hint => $self->scope_docs_suffix,
             allow_unresolved_imported_type_refs => 1,
         );
     }
@@ -708,8 +713,9 @@ sub parse_port_token ($self, $top_name, $token, $top_symbols = undef) {
     return FSM::Composition::Port->new(
         name => $port,
         direction => defined($direction) ? ($direction eq '<' ? 'input' : 'output') : 'input',
-        width => $resolved_width,
+        width => $resolved_contract->{width},
         width_token => $size,
+        signed => ($resolved_contract->{signed} // 0),
         type => $type,
         binding_mode => defined($binding) ? 'connect_by_name' : 'explicit',
         raw_token => $token,
@@ -887,46 +893,33 @@ sub canonicalize_top_type_spec ($self, %args) {
     my $top_symbols = $args{top_symbols};
     my $allow_unresolved_imported_type_refs = $args{allow_unresolved_imported_type_refs} // 0;
 
-    my $scalar = $self->unwrap_scalar_token($spec_ast);
-    if (defined($scalar) && !ref($scalar)) {
-        return {
-            kind => 'bit',
-            width => 1,
-        } if $scalar eq 'bit';
-
-        if ($top_symbols && $self->is_contract_type_reference($scalar)) {
-            my $resolved_spec = $top_symbols->resolve_type($scalar);
-            return $resolved_spec if $resolved_spec;
-        }
-
-        if ($allow_unresolved_imported_type_refs
-            && $self->is_contract_type_reference($scalar)
-            && $scalar =~ /\./) {
+    my $resolved_spec = FSM::Package::DeclarativeScalarTypeSupport->canonicalize_type_spec(
+        spec_ast => $spec_ast,
+        unwrap_scalar_token => sub ($value) { return $self->unwrap_scalar_token($value) },
+        unwrap_single_nested_list => sub ($value) { return $self->unwrap_single_nested_list($value) },
+        is_contract_type_reference => sub ($value) { return $self->is_contract_type_reference($value) },
+        resolve_type_reference => sub ($type_ref) {
+            return (
+                $top_symbols && $self->is_contract_type_reference($type_ref)
+                    ? $top_symbols->resolve_type($type_ref)
+                    : undef
+            );
+        },
+        defer_type_reference => sub ($type_ref) {
+            return undef unless $allow_unresolved_imported_type_refs;
+            return undef unless $self->is_contract_type_reference($type_ref);
+            return undef unless $type_ref =~ /\./;
             return {
                 kind => 'deferred_imported_alias',
-                imported_type_ref => $scalar,
+                imported_type_ref => $type_ref,
             };
-        }
-    }
-
-    my $cursor = $self->unwrap_single_nested_list($spec_ast);
-    if (ref($cursor) eq 'ARRAY' && @$cursor == 2) {
-        my $head = $self->unwrap_scalar_token($cursor->[0]);
-        my $width_token = $self->unwrap_scalar_token($cursor->[1]);
-
-        if (defined($head) && !ref($head) && $head eq 'bits'
-            && defined($width_token) && !ref($width_token)
-            && $width_token =~ /\A\d+\z/ && $width_token > 0) {
-            return {
-                kind => 'bits',
-                width => 0 + $width_token,
-            };
-        }
-    }
+        },
+    );
+    return $resolved_spec if $resolved_spec;
 
     confess
         "Composition top '$top_name' contains malformed '+types' entry for type '$type_name', ".
-        "but the first active '+types' lane supports only 'bit', '(bits N)', or aliases to already-resolved local or imported scalar types.".
+        "but the first active '+types' lane supports only 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', or aliases to already-resolved local or imported scalar types.".
         $self->scope_docs_suffix;
 }
 

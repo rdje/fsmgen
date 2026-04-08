@@ -21,9 +21,12 @@ subtest 'enable-graph module-planning support rebuilds module, declaration, and 
     (clock clk)
     (sreset rstn)
   )
+  (+types
+    (type signed_byte (signed (bits 8)))
+  )
   (+size
-    (OUT 8)
-    (IN 8)
+    (OUT signed_byte)
+    (IN signed_byte)
     (FLAG 1)
   )
   (idle
@@ -64,6 +67,7 @@ FSM
     is($base_port_by_name{clk}{direction}, 'input', 'module-planning support keeps clk as an input base port');
     is($base_port_by_name{rstn}{direction}, 'input', 'module-planning support keeps rstn as an input base port');
     is($input_by_name{IN}{width}, 8, 'module-planning support keeps IN as an 8-bit input');
+    is($input_by_name{IN}{signed}, 1, 'module-planning support preserves signed semantic type intent on direct inputs');
     ok(!exists $output_by_name{OUT}, 'module-planning support does not promote OUT to a module output without explicit output exposure');
     ok(!exists $output_by_name{FLAG}, 'module-planning support does not promote FLAG to a module output without explicit output exposure');
     ok(!exists $module_plan->{declared_port_signals}{OUT}, 'module-planning support does not record OUT as a declared module port without explicit output exposure');
@@ -76,6 +80,8 @@ FSM
     );
     is($decl_plan->{aux_decls}{OUT_q}, 8, 'module-planning support exposes the OUT_q helper width for register-input assignments');
     is($decl_plan->{signal_decls}{OUT}, 8, 'module-planning support keeps OUT as an internal declared signal without explicit output exposure');
+    is($decl_plan->{signal_signed}{OUT}, 1, 'module-planning support preserves signed semantic type intent on internal declarations');
+    is($decl_plan->{aux_signed}{OUT_q}, 1, 'module-planning support preserves signed semantic type intent on helper declarations');
     is($decl_plan->{signal_decls}{FLAG}, 1, 'module-planning support keeps FLAG as an internal declared signal without explicit output exposure');
 };
 

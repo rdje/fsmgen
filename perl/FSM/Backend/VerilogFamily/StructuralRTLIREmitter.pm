@@ -43,12 +43,14 @@ sub emit_module ($class, $structural_rtl_ir) {
 
     my @port_lines = map {
         my $width = ($_->{width} || 1) > 1 ? sprintf("[%d:0] ", $_->{width} - 1) : '';
-        sprintf("    %s %s%s", $_->{direction}, $width, $_->{name});
+        my $signed = ($_->{signed} // 0) ? 'signed ' : '';
+        sprintf("    %s %s%s%s", $_->{direction}, $signed, $width, $_->{name});
     } @ports;
 
     my @net_lines = map {
         my $width = ($_->{width} || 1) > 1 ? sprintf("[%d:0] ", $_->{width} - 1) : '';
-        sprintf("    wire %s%s;", $width, $_->{name})
+        my $signed = ($_->{signed} // 0) ? 'signed ' : '';
+        sprintf("    wire %s%s%s;", $signed, $width, $_->{name})
     } @nets;
 
     my @instance_blocks = map {

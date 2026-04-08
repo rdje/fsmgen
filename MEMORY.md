@@ -6601,3 +6601,17 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   use the same bounded package-import contract too, which keeps package
   semantics aligned between standalone direct roots and generated-child reuse
   instead of leaving composition children on a weaker import surface.
+- The first semantic scalar-type-property widening beyond raw width is now
+  shipped too: bounded `+types` now covers signed scalar aliases through
+  `(signed bit)` and `(signed (bits N))`, direct-root `+size` and
+  composition `?ports` preserve that signedness into emitted SystemVerilog
+  declarations, and canonical `symbol_contract` type specs now preserve the
+  `signed` flag beside `width`.
+- Deferred imported composition aliases must not inject a default
+  `signed => 0` placeholder, because that would overwrite imported signed
+  types during finalization; signed override only becomes real when the
+  author explicitly asked for it.
+- Direct internal/helper declaration planning cannot rely only on
+  `fsm_module->signals` for signedness, because some live direct LHS signals
+  survive only on assignment-analysis `lhs_ast` signal refs; that signedness
+  now has to be recovered from the analyzed LHS path too.

@@ -8760,3 +8760,36 @@ It is an exact-delay pulse request:
   - malformed `+import` rejection for invalid package names,
   - and generated-child reuse of the same package-import lane through
     composition realization.
+
+## 2026-04-08: signed scalar aliases now ride the bounded `+types` lane end to end
+- Continued the bounded semantic type lane by shipping the first scalar type
+  property beyond raw width: signedness.
+- The shipped source contract is still intent-level and narrow:
+  - `+types` now accepts `bit`, `(bits N)`, `(signed bit)`,
+    `(signed (bits N))`, and aliases to already-resolved scalar types,
+  - direct-root `+size` and composition `?ports` may use those signed scalar
+    aliases the same way they already use unsigned width aliases,
+  - and the generated Verilog-family surface now preserves that intent as
+    `signed` on direct module ports, internal regs/helper regs, and
+    composition top ports.
+- The implementation is intentionally semantic-first rather than backend-
+  spelling-first:
+  - [perl/FSM/Package/DeclarativeScalarTypeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/DeclarativeScalarTypeSupport.pm)
+    now owns the shared scalar-type canonicalization rules so direct roots,
+    composition tops, and semantic packages do not keep drifting on three
+    parser-local implementations,
+  - [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)
+    now preserves explicit signed overrides only when the author actually
+    asked for them, instead of letting deferred imported aliases silently
+    clobber imported signed types with a placeholder `signed => 0`,
+  - and [perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm)
+    now recovers signedness for internal/helper declarations from the
+    analyzed LHS signal path when that signal never became a normal
+    `fsm_module->signals` entry.
+- The live regression locks are in:
+  - [t/279-declarative-scalar-types.t](/Users/richarddje/Documents/github/fsmgen/t/279-declarative-scalar-types.t)
+  - [t/277-direct-symbol-contract-forward-ir.t](/Users/richarddje/Documents/github/fsmgen/t/277-direct-symbol-contract-forward-ir.t)
+  - [t/278-composition-symbol-contract-forward-ir.t](/Users/richarddje/Documents/github/fsmgen/t/278-composition-symbol-contract-forward-ir.t)
+  - [t/198-systemverilog-scaffold-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/198-systemverilog-scaffold-emitter.t)
+  - [t/199-systemverilog-internal-declaration-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/199-systemverilog-internal-declaration-emitter.t)
+  - [t/204-enable-graph-module-planning-support.t](/Users/richarddje/Documents/github/fsmgen/t/204-enable-graph-module-planning-support.t)

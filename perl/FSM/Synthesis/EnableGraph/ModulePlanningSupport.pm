@@ -155,6 +155,9 @@ sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports 
 
     my %signal_decls;
     my %aux_decls;
+    my %signal_signed;
+    my %aux_signed;
+    my %signals = %{$fsm_module->signals || {}};
 
     my $state_plan = $self->build_state_register_plan($fsm_module);
     if ($state_plan->{has_state_registers}) {
@@ -169,22 +172,36 @@ sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports 
         my $width = $ctx->{enable_graph_assignment_support}->get_lhs_width_from_analysis($lhs_analysis);
         my $assignment_type = $ctx->{enable_graph_assignment_support}->get_signal_assignment_type($lhs, $lhs_analysis);
         my $multiplexer_type = $lhs_analysis->{multiplexer}->{type} || 'comb';
+        my $lhs_signed = _signal_signed($signals{$lhs});
+        if (!$lhs_signed && $lhs_analysis->{lhs_ast} && ref($lhs_analysis->{lhs_ast}) && $lhs_analysis->{lhs_ast}->can('signal')) {
+            $lhs_signed = _signal_signed($lhs_analysis->{lhs_ast}->signal);
+        }
 
         unless ($declared_ports{$lhs}) {
             $signal_decls{$lhs} = $width;
+            $signal_signed{$lhs} = $lhs_signed;
         }
 
         if ($multiplexer_type eq 'flop' && ($assignment_type eq 'register_out' || $assignment_type eq 'register_out_dual')) {
             my $next_name = "${lhs}_next";
-            $aux_decls{$next_name} = $width unless $declared_ports{$next_name};
+            unless ($declared_ports{$next_name}) {
+                $aux_decls{$next_name} = $width;
+                $aux_signed{$next_name} = $lhs_signed;
+            }
         } elsif ($multiplexer_type eq 'flop' && ($assignment_type eq 'register_in' || $assignment_type eq 'register_in_dual')) {
             my $q_name = "${lhs}_q";
-            $aux_decls{$q_name} = $width unless $declared_ports{$q_name};
+            unless ($declared_ports{$q_name}) {
+                $aux_decls{$q_name} = $width;
+                $aux_signed{$q_name} = $lhs_signed;
+            }
         } elsif ($assignment_type eq 'pulse_delayed') {
             my $delay_cycles = $ctx->{enable_graph_assignment_support}->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
             if ($delay_cycles > 0) {
                 my $pipe_name = "${lhs}_pulse_delay_pipe";
-                $aux_decls{$pipe_name} = $delay_cycles unless $declared_ports{$pipe_name};
+                unless ($declared_ports{$pipe_name}) {
+                    $aux_decls{$pipe_name} = $delay_cycles;
+                    $aux_signed{$pipe_name} = 0;
+                }
             }
         }
     }
@@ -192,6 +209,8 @@ sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports 
     return {
         signal_decls => \%signal_decls,
         aux_decls => \%aux_decls,
+        signal_signed => \%signal_signed,
+        aux_signed => \%aux_signed,
     };
 }
 
@@ -296,6 +315,7 @@ sub build_module_declaration_plan ($self, $fsm_module) {
             storage => $is_output ? 'reg' : 'wire',
             name => $sig_name,
             width => $signal_width,
+            signed => _signal_signed($signal),
         };
 
         if ($is_output) {
@@ -314,6 +334,17 @@ sub build_module_declaration_plan ($self, $fsm_module) {
         declared_port_signals => \%seen_signals,
         port_directions => \%port_directions,
     };
+}
+
+sub _signal_signed ($signal) {
+    return 0 unless $signal;
+    return ($signal->signed // 0) ? 1 : 0
+        if ref($signal) && $signal->can('signed');
+    return ($signal->get_attribute('signed') // 0) ? 1 : 0
+        if ref($signal) && $signal->can('get_attribute');
+    return ($signal->attributes->{signed} // 0) ? 1 : 0
+        if ref($signal) && $signal->can('attributes') && $signal->attributes;
+    return 0;
 }
 
 1;

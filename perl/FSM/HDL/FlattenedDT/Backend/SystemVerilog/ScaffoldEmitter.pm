@@ -74,11 +74,12 @@ sub generate_module_declaration ($self, $fsm_module) {
 sub _render_module_port_plan ($port_plan) {
     my $width = $port_plan->{width} || 1;
     my $width_str = ($width > 1) ? "[" . ($width - 1) . ":0] " : "";
+    my $signed_str = ($port_plan->{signed} // 0) ? "signed " : "";
     if ($port_plan->{direction} eq 'output' && $port_plan->{storage} eq 'reg') {
-        return "  output reg  ${width_str}$port_plan->{name}";
+        return "  output reg " . ($signed_str || " ") . "${width_str}$port_plan->{name}";
     }
 
-    return "  $port_plan->{direction}  $port_plan->{storage} ${width_str}$port_plan->{name}";
+    return "  $port_plan->{direction}  $port_plan->{storage} ${signed_str}${width_str}$port_plan->{name}";
 }
 
 sub generate_state_encoding ($self, $fsm_module) {

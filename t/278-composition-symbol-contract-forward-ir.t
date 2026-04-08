@@ -22,7 +22,7 @@ subtest 'composition tops preserve a bounded symbol contract through intent_hir 
 (?top:composition_symbol_contract_forward_ir
   (+import shared_external)
   (+types
-    (type byte_t (bits 8))
+    (type byte_t (signed (bits 8)))
     (type flag_t bit)
   )
   (+constants
@@ -123,7 +123,9 @@ FSM
     is($symbol_contract->{type_count}, 2, 'symbol contract counts declared local types');
     is_deeply($symbol_contract->{type_names}, ['byte_t', 'flag_t'], 'symbol contract preserves stable local type names');
     is($symbol_contract->{types}{byte_t}{width}, 8, 'symbol contract preserves canonical scalar type widths');
+    is($symbol_contract->{types}{byte_t}{signed}, 1, 'symbol contract preserves canonical signed scalar type intent');
     is($symbol_contract->{types}{flag_t}{width}, 1, 'symbol contract preserves bit-like scalar type widths');
+    is($symbol_contract->{types}{flag_t}{signed}, 0, 'symbol contract preserves unsigned-by-default scalar type intent');
     is($symbol_contract->{constants}{FRAME}{kind}, 'map', 'symbol contract preserves aggregate constant payload shape');
     is_deeply($symbol_contract->{constants}{FRAME}{member_order}, ['mode', 'flag'], 'symbol contract preserves authored aggregate member order');
     is($symbol_contract->{constants}{FRAME}{members}{flag}{payload}, '1', 'symbol contract preserves nested aggregate scalar payloads');

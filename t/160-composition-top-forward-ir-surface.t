@@ -127,6 +127,7 @@ FSM
                     name => $_->{name},
                     width => $_->{width},
                     direction => $_->{direction},
+                    signed => ($_->{signed} // 0) ? 1 : 0,
                 }
             } grep { ($_->{direction} || '') eq 'input' } @{$structural_rtl_ir->{ports}}
         ],
@@ -140,6 +141,7 @@ FSM
                     name => $_->{name},
                     width => $_->{width},
                     direction => $_->{direction},
+                    signed => ($_->{signed} // 0) ? 1 : 0,
                 }
             } grep { ($_->{direction} || '') eq 'output' } @{$structural_rtl_ir->{ports}}
         ],
@@ -152,6 +154,7 @@ FSM
                 ($_->{name} => {
                     width => $_->{width},
                     direction => $_->{direction},
+                    signed => ($_->{signed} // 0) ? 1 : 0,
                 })
             } @{$structural_rtl_ir->{ports}}
         },

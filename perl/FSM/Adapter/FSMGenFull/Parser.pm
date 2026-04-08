@@ -10,6 +10,7 @@ use Data::Dumper;
 use FSM::CoreAST;
 use FSM::Debug;
 use FSM::Package::DeclarativeSymbolResolver;
+use FSM::Package::DeclarativeScalarTypeSupport;
 use FSM::Package::DeclarativeTypeResolver;
 use FSM::Package::SignalManagerProjectionSupport;
 use FSM::Package::Symbols;
@@ -430,7 +431,7 @@ sub parse_types_section($self, $types_ast) {
 
     Carp::confess
         "Malformed '+types' section. ".
-        "The active contract supports '+types' only as a non-empty list of '(type NAME bit)', '(type NAME (bits N))', or '(type NAME other_type)' entries. ".
+        "The active contract supports '+types' only as a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)' entries. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless ref($types_list) eq 'ARRAY' && @$types_list;
 
@@ -438,7 +439,7 @@ sub parse_types_section($self, $types_ast) {
     for my $type_def (@$types_list) {
         Carp::confess
             "Malformed '+types' entry. ".
-            "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', or '(type NAME other_type)'. ".
+            "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)'. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
             unless ref($type_def) eq 'ARRAY' && @$type_def >= 2;
 
@@ -457,7 +458,7 @@ sub parse_types_section($self, $types_ast) {
         } else {
             Carp::confess
                 "Malformed '+types' entry. ".
-                "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', or '(type NAME other_type)'. ".
+                "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)'. ".
                 "See docs/USER_GUIDE.md for the current supported boundary.\n";
         }
 
@@ -518,14 +519,15 @@ sub parse_size_section($self, $size_ast) {
                 && !ref($resolved_sig)
                 && $resolved_sig =~ /\A[A-Za-z_]\w*\z/;
 
-        my $declared_width = $self->resolve_declared_width_token(
+        my $width_contract = $self->resolve_declared_width_contract(
             signal_name => $resolved_sig,
             width_token => $resolved_width,
         );
 
         $self->{signal_manager}->register_signal(
             $resolved_sig,
-            width => $declared_width,
+            width => $width_contract->{width},
+            signed => ($width_contract->{signed} // 0),
             width_declared => 1,
         );
 
@@ -535,7 +537,8 @@ sub parse_size_section($self, $size_ast) {
         if ($self->{signal_manager}->get_signal($next_aux)) {
             $self->{signal_manager}->register_signal(
                 $next_aux,
-                width => $declared_width,
+                width => $width_contract->{width},
+                signed => ($width_contract->{signed} // 0),
                 is_output => 1,
                 is_aux_output => 1,
                 width_declared => 1,
@@ -545,7 +548,8 @@ sub parse_size_section($self, $size_ast) {
         if ($self->{signal_manager}->get_signal($q_aux)) {
             $self->{signal_manager}->register_signal(
                 $q_aux,
-                width => $declared_width,
+                width => $width_contract->{width},
+                signed => ($width_contract->{signed} // 0),
                 is_output => 1,
                 is_aux_output => 1,
                 width_declared => 1,
@@ -687,21 +691,38 @@ sub is_contract_type_reference($self, $value) {
 }
 
 sub resolve_declared_width_token($self, %args) {
+    my $width_contract = $self->resolve_declared_width_contract(%args);
+    return $width_contract->{width};
+}
+
+sub resolve_declared_width_contract($self, %args) {
     my $signal_name = $args{signal_name} // 'signal';
     my $width_token = $args{width_token};
 
-    return 0 + $width_token
+    return {
+        width => 0 + $width_token,
+        signed => 0,
+    }
         if defined($width_token)
             && !ref($width_token)
             && $width_token =~ /\A\d+\z/
             && $width_token > 0;
 
     if ($self->is_contract_type_reference($width_token)) {
-        my $resolved_width = $self->{signal_manager}->resolve_type_width($width_token);
-        return $resolved_width if defined $resolved_width && $resolved_width > 0;
+        my $resolved_type = $self->{signal_manager}->resolve_type($width_token);
+        if ($resolved_type && ref($resolved_type) eq 'HASH'
+            && defined($resolved_type->{width}) && $resolved_type->{width} > 0) {
+            return {
+                width => 0 + $resolved_type->{width},
+                signed => ($resolved_type->{signed} // 0) ? 1 : 0,
+            };
+        }
 
         my $resolved_scalar_width = $self->{signal_manager}->resolve_positive_integer_scalar($width_token);
-        return $resolved_scalar_width if defined $resolved_scalar_width && $resolved_scalar_width > 0;
+        return {
+            width => $resolved_scalar_width,
+            signed => 0,
+        } if defined $resolved_scalar_width && $resolved_scalar_width > 0;
     }
 
     Carp::confess
@@ -715,37 +736,18 @@ sub canonicalize_scalar_type_spec($self, %args) {
     my $type_name = $args{type_name} // 'unknown';
     my $spec_ast = $args{spec_ast};
 
-    my $scalar = $self->unwrap_scalar_token($spec_ast);
-    if (defined($scalar) && !ref($scalar)) {
-        return {
-            kind => 'bit',
-            width => 1,
-        } if $scalar eq 'bit';
-
-        if ($self->is_contract_type_reference($scalar)) {
-            my $resolved_spec = $self->{signal_manager}->resolve_type($scalar);
-            return $resolved_spec if $resolved_spec;
-        }
-    }
-
-    my $cursor = $self->unwrap_single_nested_list($spec_ast);
-    if (ref($cursor) eq 'ARRAY' && @$cursor == 2) {
-        my $head = $self->unwrap_scalar_token($cursor->[0]);
-        my $width_token = $self->unwrap_scalar_token($cursor->[1]);
-
-        if (defined($head) && !ref($head) && $head eq 'bits'
-            && defined($width_token) && !ref($width_token)
-            && $width_token =~ /\A\d+\z/ && $width_token > 0) {
-            return {
-                kind => 'bits',
-                width => 0 + $width_token,
-            };
-        }
-    }
+    my $resolved_spec = FSM::Package::DeclarativeScalarTypeSupport->canonicalize_type_spec(
+        spec_ast => $spec_ast,
+        unwrap_scalar_token => sub ($value) { return $self->unwrap_scalar_token($value) },
+        unwrap_single_nested_list => sub ($value) { return $self->unwrap_single_nested_list($value) },
+        is_contract_type_reference => sub ($value) { return $self->is_contract_type_reference($value) },
+        resolve_type_reference => sub ($type_ref) { return $self->{signal_manager}->resolve_type($type_ref) },
+    );
+    return $resolved_spec if $resolved_spec;
 
     Carp::confess
         "Malformed '+types' entry for type '$type_name' in source '$module_name'. ".
-        "The first active '+types' lane supports only 'bit', '(bits N)', or aliases to already-resolved scalar types. ".
+        "The first active '+types' lane supports only 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', or aliases to already-resolved scalar types. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 

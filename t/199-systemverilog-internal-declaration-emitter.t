@@ -24,6 +24,9 @@ subtest 'internal declaration emitter rebuilds the direct backend prefix for a m
     (clock clk)
     (sreset rstn)
   )
+  (+types
+    (type signed_byte (signed (bits 8)))
+  )
   (-state0
     (A <- B)
     (C <= D)
@@ -35,18 +38,18 @@ subtest 'internal declaration emitter rebuilds the direct backend prefix for a m
     (P0 <2 0)
   )
   (+size
-    (A 8)
-    (B 8)
-    (C 8)
-    (D 8)
+    (A signed_byte)
+    (B signed_byte)
+    (C signed_byte)
+    (D signed_byte)
     (E 1)
     (F 1)
     (G 1)
     (H 1)
-    (I 8)
-    (J 8)
-    (K 8)
-    (L 8)
+    (I signed_byte)
+    (J signed_byte)
+    (K signed_byte)
+    (L signed_byte)
     (P1 1)
     (P0 1)
   )
@@ -69,9 +72,9 @@ FSM
         $normalized_prefix,
         'internal declaration emitter rebuilds the same direct backend prefix as the emitted HDL surface',
     );
-    like($internal_block, qr/\breg \[7:0\] A;/, 'internal declaration block keeps direct internal register declarations');
-    like($internal_block, qr/\breg \[7:0\] I_next;/, 'internal declaration block keeps dual-output helper register declarations');
-    like($internal_block, qr/\breg \[7:0\] K_q;/, 'internal declaration block keeps q-visible helper register declarations');
+    like($internal_block, qr/\breg signed \[7:0\] A;/, 'internal declaration block keeps signed direct internal register declarations');
+    like($internal_block, qr/\breg signed \[7:0\] I_next;/, 'internal declaration block keeps signed dual-output helper register declarations');
+    like($internal_block, qr/\breg signed \[7:0\] K_q;/, 'internal declaration block keeps signed q-visible helper register declarations');
     like($internal_block, qr/\breg \[2:0\] P1_pulse_delay_pipe;/, 'internal declaration block keeps pulse-delay helper declarations');
 };
 

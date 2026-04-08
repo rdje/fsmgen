@@ -1283,3 +1283,9 @@ The first honest `R11` slices are now:
   `FSM::HDL::FlattenedDT::DecisionTreeFlatteningSupport`, so
   `FlattenedDT::Orchestrator` no longer owns recursive regular-state and
   standalone-DT flattening inline before direct backend text assembly.
+- Forward-IR note: the first semantic scalar-type-property widening beyond raw
+  width is now shipped too: signed scalar aliases live in the bounded
+  `+types` lane, direct-root `+size` plus composition `?ports` preserve that
+  signedness into emitted SystemVerilog declarations, and canonical
+  `symbol_contract` type specs now preserve `signed` beside `width` without
+  exposing raw backend type spellings as the source-language contract.

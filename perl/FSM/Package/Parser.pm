@@ -9,6 +9,7 @@ no warnings 'experimental::signatures';
 
 use FSM::Adapter::FSMGenFull::ExpressionBuilder;
 use FSM::Adapter::FSMGenFull::SignalManager;
+use FSM::Package::DeclarativeScalarTypeSupport;
 use FSM::Package::DeclarativeSymbolResolver;
 use FSM::Package::DeclarativeTypeResolver;
 use FSM::Package::Spec;
@@ -230,14 +231,14 @@ sub parse_package_types_block ($self, $package_name, $child_ast, $symbols) {
 
     confess
         "Package '$package_name' contains malformed '+types' section, ".
-        "but package type section shape is blocked because '+types' currently requires a non-empty list of '(type NAME bit)', '(type NAME (bits N))', or '(type NAME other_type)' entries."
+        "but package type section shape is blocked because '+types' currently requires a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)' entries."
         unless ref($types_list) eq 'ARRAY' && @$types_list;
 
     my @type_entries;
     for my $type_def (@$types_list) {
         confess
             "Package '$package_name' contains malformed '+types' entry, ".
-            "but package type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', or '(type NAME other_type)'."
+            "but package type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)'."
             unless ref($type_def) eq 'ARRAY' && @$type_def >= 2;
 
         my ($keyword, $name, $spec_ast);
@@ -255,7 +256,7 @@ sub parse_package_types_block ($self, $package_name, $child_ast, $symbols) {
         } else {
             confess
                 "Package '$package_name' contains malformed '+types' entry, ".
-                "but package type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', or '(type NAME other_type)'.";
+                "but package type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)'.";
         }
 
         my $resolved_keyword = $self->unwrap_scalar_token($keyword);
@@ -445,42 +446,31 @@ sub canonicalize_package_type_spec ($self, %args) {
     my $symbols = $args{symbols};
     my $signal_manager = $args{signal_manager};
 
-    my $scalar = $self->unwrap_scalar_token($spec_ast);
-    if (defined($scalar) && !ref($scalar)) {
-        return {
-            kind => 'bit',
-            width => 1,
-        } if $scalar eq 'bit';
+    my $resolved_spec = FSM::Package::DeclarativeScalarTypeSupport->canonicalize_type_spec(
+        spec_ast => $spec_ast,
+        unwrap_scalar_token => sub ($value) { return $self->unwrap_scalar_token($value) },
+        unwrap_single_nested_list => sub ($value) { return $self->unwrap_single_nested_list($value) },
+        is_contract_type_reference => sub ($value) { return $self->is_contract_type_reference($value) },
+        resolve_type_reference => sub ($type_ref) {
+            my $resolved_from_symbols = (
+                $symbols && $self->is_contract_type_reference($type_ref)
+                    ? $symbols->resolve_type($type_ref)
+                    : undef
+            );
+            return $resolved_from_symbols if $resolved_from_symbols;
 
-        if ($symbols && $self->is_contract_type_reference($scalar)) {
-            my $resolved_spec = $symbols->resolve_type($scalar);
-            return $resolved_spec if $resolved_spec;
-        }
-
-        if ($signal_manager && $self->is_contract_type_reference($scalar)) {
-            my $resolved_spec = $signal_manager->resolve_type($scalar);
-            return $resolved_spec if $resolved_spec;
-        }
-    }
-
-    my $cursor = $self->unwrap_single_nested_list($spec_ast);
-    if (ref($cursor) eq 'ARRAY' && @$cursor == 2) {
-        my $head = $self->unwrap_scalar_token($cursor->[0]);
-        my $width_token = $self->unwrap_scalar_token($cursor->[1]);
-
-        if (defined($head) && !ref($head) && $head eq 'bits'
-            && defined($width_token) && !ref($width_token)
-            && $width_token =~ /\A\d+\z/ && $width_token > 0) {
-            return {
-                kind => 'bits',
-                width => 0 + $width_token,
-            };
-        }
-    }
+            return (
+                $signal_manager && $self->is_contract_type_reference($type_ref)
+                    ? $signal_manager->resolve_type($type_ref)
+                    : undef
+            );
+        },
+    );
+    return $resolved_spec if $resolved_spec;
 
     confess
         "Package '$package_name' contains malformed '+types' entry for type '$type_name', ".
-        "but the first active '+types' lane supports only 'bit', '(bits N)', or aliases to already-resolved scalar types.";
+        "but the first active '+types' lane supports only 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', or aliases to already-resolved scalar types.";
 }
 
 sub canonicalize_package_symbol_literal_payload ($self, %args) {

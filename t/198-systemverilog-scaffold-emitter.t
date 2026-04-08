@@ -23,9 +23,12 @@ subtest 'scaffold emitter rebuilds the regular-state direct backend prefix from 
     (clock clk)
     (sreset rstn)
   )
+  (+types
+    (type signed_byte (signed (bits 8)))
+  )
   (+size
-    (OUT 1)
-    (IN 1)
+    (OUT signed_byte)
+    (IN signed_byte)
   )
   (idle
     (OUT <= IN)
@@ -50,6 +53,7 @@ FSM
         'scaffold emitter rebuilds the same regular-state prefix as the direct backend output',
     );
     like($scaffold, qr/localparam\s+IDLE\s*=\s*1'd0;/, 'regular-state scaffold keeps the state encoding block');
+    like($scaffold, qr/input\s+wire\s+signed\s+\[7:0\]\s+IN\b/s, 'regular-state scaffold keeps signed module-port declarations from semantic types');
     like($scaffold, qr/always_ff\s*@\(posedge clk or negedge rstn\)/, 'regular-state scaffold keeps the sequential state block');
 };
 

@@ -37,27 +37,30 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
     );
     my %signal_decls = %{$declaration_plan->{signal_decls} || {}};
     my %aux_decls = %{$declaration_plan->{aux_decls} || {}};
+    my %signal_signed = %{$declaration_plan->{signal_signed} || {}};
+    my %aux_signed = %{$declaration_plan->{aux_signed} || {}};
 
     return "" unless (%signal_decls || %aux_decls);
 
     my $hdl = "  // Internal signal declarations\n";
-    $hdl .= _render_reg_declarations(\%signal_decls);
+    $hdl .= _render_reg_declarations(\%signal_decls, \%signal_signed);
 
     if (%aux_decls) {
         $hdl .= "  // Internal mux helper registers\n";
-        $hdl .= _render_reg_declarations(\%aux_decls);
+        $hdl .= _render_reg_declarations(\%aux_decls, \%aux_signed);
     }
     $hdl .= "\n";
 
     return $hdl;
 }
 
-sub _render_reg_declarations ($decls) {
+sub _render_reg_declarations ($decls, $signed_map = undef) {
     my $hdl = "";
     for my $signal_name (sort keys %{$decls || {}}) {
         my $width = $decls->{$signal_name} || 1;
         my $width_str = ($width > 1) ? "[" . ($width - 1) . ":0] " : "";
-        $hdl .= "  reg ${width_str}${signal_name};\n";
+        my $signed_str = ($signed_map && ($signed_map->{$signal_name} // 0)) ? "signed " : "";
+        $hdl .= "  reg ${signed_str}${width_str}${signal_name};\n";
     }
     return $hdl;
 }
