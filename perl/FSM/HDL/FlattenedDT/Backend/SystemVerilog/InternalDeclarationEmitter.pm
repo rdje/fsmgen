@@ -39,30 +39,45 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
     my %aux_decls = %{$declaration_plan->{aux_decls} || {}};
     my %signal_signed = %{$declaration_plan->{signal_signed} || {}};
     my %aux_signed = %{$declaration_plan->{aux_signed} || {}};
+    my %signal_state_model = %{$declaration_plan->{signal_state_model} || {}};
+    my %aux_state_model = %{$declaration_plan->{aux_state_model} || {}};
 
     return "" unless (%signal_decls || %aux_decls);
 
     my $hdl = "  // Internal signal declarations\n";
-    $hdl .= _render_reg_declarations(\%signal_decls, \%signal_signed);
+    $hdl .= _render_reg_declarations(\%signal_decls, \%signal_signed, \%signal_state_model);
 
     if (%aux_decls) {
         $hdl .= "  // Internal mux helper registers\n";
-        $hdl .= _render_reg_declarations(\%aux_decls, \%aux_signed);
+        $hdl .= _render_reg_declarations(\%aux_decls, \%aux_signed, \%aux_state_model);
     }
     $hdl .= "\n";
 
     return $hdl;
 }
 
-sub _render_reg_declarations ($decls, $signed_map = undef) {
+sub _render_reg_declarations ($decls, $signed_map = undef, $state_model_map = undef) {
     my $hdl = "";
     for my $signal_name (sort keys %{$decls || {}}) {
         my $width = $decls->{$signal_name} || 1;
         my $width_str = ($width > 1) ? "[" . ($width - 1) . ":0] " : "";
         my $signed_str = ($signed_map && ($signed_map->{$signal_name} // 0)) ? "signed " : "";
+        my $state_model = $state_model_map ? $state_model_map->{$signal_name} : undef;
+        my $type_keyword = _state_model_keyword($state_model);
+        if (defined $type_keyword) {
+            $hdl .= "  ${type_keyword} ${signed_str}${width_str}${signal_name};\n";
+            next;
+        }
         $hdl .= "  reg ${signed_str}${width_str}${signal_name};\n";
     }
     return $hdl;
+}
+
+sub _state_model_keyword ($state_model) {
+    return undef unless defined $state_model && !ref($state_model);
+    return 'bit' if $state_model eq 'two_state';
+    return 'logic' if $state_model eq 'four_state';
+    return undef;
 }
 
 1;

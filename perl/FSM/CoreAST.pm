@@ -25,6 +25,7 @@ package FSM::CoreAST::Signal;
         $hash_to_bless->{_width} = $final_width;
         $hash_to_bless->{type} = $args{type} // 'wire';
         $hash_to_bless->{signed} = ($args{signed} // 0) ? 1 : 0;
+        $hash_to_bless->{state_model} = $args{state_model};
         $hash_to_bless->{clock_domain} = $args{clock_domain};
         $hash_to_bless->{reset_domain} = $args{reset_domain};
         $hash_to_bless->{attributes} = $args{attributes} // {};
@@ -44,6 +45,7 @@ package FSM::CoreAST::Signal;
     sub width($self) { $self->{_width} }
     sub type($self) { $self->{type} }
     sub signed($self) { $self->{signed} }
+    sub state_model($self) { $self->{state_model} }
     sub clock_domain($self) { $self->{clock_domain} }
     sub reset_domain($self) { $self->{reset_domain} }
     sub attributes($self) { $self->{attributes} }

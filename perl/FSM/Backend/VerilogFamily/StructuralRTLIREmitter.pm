@@ -44,13 +44,17 @@ sub emit_module ($class, $structural_rtl_ir) {
     my @port_lines = map {
         my $width = ($_->{width} || 1) > 1 ? sprintf("[%d:0] ", $_->{width} - 1) : '';
         my $signed = ($_->{signed} // 0) ? 'signed ' : '';
-        sprintf("    %s %s%s%s", $_->{direction}, $signed, $width, $_->{name});
+        my $state_model = _state_model_keyword($_->{state_model});
+        my $type_prefix = defined($state_model) ? "${state_model} ${signed}" : $signed;
+        sprintf("    %s %s%s%s", $_->{direction}, $type_prefix, $width, $_->{name});
     } @ports;
 
     my @net_lines = map {
         my $width = ($_->{width} || 1) > 1 ? sprintf("[%d:0] ", $_->{width} - 1) : '';
         my $signed = ($_->{signed} // 0) ? 'signed ' : '';
-        sprintf("    wire %s%s%s;", $signed, $width, $_->{name})
+        my $state_model = _state_model_keyword($_->{state_model});
+        my $type_prefix = defined($state_model) ? "${state_model} ${signed}" : $signed;
+        sprintf("    wire %s%s%s;", $type_prefix, $width, $_->{name})
     } @nets;
 
     my @instance_blocks = map {
@@ -78,6 +82,13 @@ sub emit_module ($class, $structural_rtl_ir) {
     push @body_lines, "endmodule";
 
     return join("\n", @body_lines);
+}
+
+sub _state_model_keyword ($state_model) {
+    return undef unless defined $state_model && !ref($state_model);
+    return 'bit' if $state_model eq 'two_state';
+    return 'logic' if $state_model eq 'four_state';
+    return undef;
 }
 
 1;

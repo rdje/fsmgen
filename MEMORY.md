@@ -6615,3 +6615,20 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `fsm_module->signals` for signedness, because some live direct LHS signals
   survive only on assignment-analysis `lhs_ast` signal refs; that signedness
   now has to be recovered from the analyzed LHS path too.
+- The next semantic scalar-type-property widening beyond raw width and
+  signedness is now shipped too: bounded `+types` now also accepts
+  explicit `(two_state ...)` and `(four_state ...)` wrappers across direct
+  roots, composition tops, and semantic packages, direct-root `+size` and
+  composition `?ports` preserve that state-model into emitted SystemVerilog
+  declarations, and canonical `symbol_contract` type specs now preserve
+  `state_model` beside `width` and `signed`.
+- Deferred imported composition aliases must preserve explicit
+  `state_model` overrides during finalization the same way they now preserve
+  explicit signed overrides, because local wrappers like
+  `(type byte_t (four_state shared.byte))` are part of the honest semantic
+  surface and should not disappear once the imported package type resolves.
+- The bounded lowering rule for this first state-model slice is explicit and
+  compatibility-friendly: only explicit state-model aliases lower to
+  concrete SystemVerilog carriers (`two_state -> bit`, `four_state -> logic`),
+  while bare `bit` / `(bits N)` keep the current compatibility surface until
+  the broader semantic type lane is ready to tighten defaults on purpose.

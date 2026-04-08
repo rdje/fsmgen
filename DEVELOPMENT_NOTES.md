@@ -8793,3 +8793,34 @@ It is an exact-delay pulse request:
   - [t/198-systemverilog-scaffold-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/198-systemverilog-scaffold-emitter.t)
   - [t/199-systemverilog-internal-declaration-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/199-systemverilog-internal-declaration-emitter.t)
   - [t/204-enable-graph-module-planning-support.t](/Users/richarddje/Documents/github/fsmgen/t/204-enable-graph-module-planning-support.t)
+
+## 2026-04-08: explicit two-state and four-state scalar aliases now ride the bounded `+types` lane end to end
+- Continued the bounded semantic type lane by shipping the first explicit
+  state-model property beyond raw width and signedness.
+- The shipped source contract stays semantic rather than backend-spelled:
+  - `+types` now also accepts `(two_state ...)` and `(four_state ...)`
+    wrappers around bounded scalar specs and scalar aliases,
+  - direct-root `+size` and composition `?ports` preserve that state-model
+    intent the same way they already preserve width and signedness,
+  - and only explicit state-model aliases lower to concrete SystemVerilog
+    carriers, with `two_state -> bit` and `four_state -> logic`, while bare
+    `bit` / `(bits N)` keep the current compatibility surface unchanged.
+- The implementation is still semantic-first:
+  - [perl/FSM/Package/DeclarativeScalarTypeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/DeclarativeScalarTypeSupport.pm)
+    now owns the shared `(two_state ...)` / `(four_state ...)` wrapper
+    canonicalization so direct roots, composition tops, and semantic packages
+    do not drift on parser-local state-model rules,
+  - [perl/FSM/Composition/TopSymbols.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopSymbols.pm)
+    now keeps explicit state-model overrides on deferred imported aliases
+    through finalization instead of dropping them when the imported type is
+    resolved,
+  - and the direct/composition declaration owners now lower explicit
+    state-model intent late from semantic metadata instead of forcing raw
+    backend spellings into the authored `.fsm` surface.
+- The live regression locks are in:
+  - [t/279-declarative-scalar-types.t](/Users/richarddje/Documents/github/fsmgen/t/279-declarative-scalar-types.t)
+  - [t/277-direct-symbol-contract-forward-ir.t](/Users/richarddje/Documents/github/fsmgen/t/277-direct-symbol-contract-forward-ir.t)
+  - [t/278-composition-symbol-contract-forward-ir.t](/Users/richarddje/Documents/github/fsmgen/t/278-composition-symbol-contract-forward-ir.t)
+  - [t/198-systemverilog-scaffold-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/198-systemverilog-scaffold-emitter.t)
+  - [t/199-systemverilog-internal-declaration-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/199-systemverilog-internal-declaration-emitter.t)
+  - [t/204-enable-graph-module-planning-support.t](/Users/richarddje/Documents/github/fsmgen/t/204-enable-graph-module-planning-support.t)

@@ -25,7 +25,7 @@ subtest 'internal declaration emitter rebuilds the direct backend prefix for a m
     (sreset rstn)
   )
   (+types
-    (type signed_byte (signed (bits 8)))
+    (type signed_byte (four_state (signed (bits 8))))
   )
   (-state0
     (A <- B)
@@ -72,9 +72,9 @@ FSM
         $normalized_prefix,
         'internal declaration emitter rebuilds the same direct backend prefix as the emitted HDL surface',
     );
-    like($internal_block, qr/\breg signed \[7:0\] A;/, 'internal declaration block keeps signed direct internal register declarations');
-    like($internal_block, qr/\breg signed \[7:0\] I_next;/, 'internal declaration block keeps signed dual-output helper register declarations');
-    like($internal_block, qr/\breg signed \[7:0\] K_q;/, 'internal declaration block keeps signed q-visible helper register declarations');
+    like($internal_block, qr/\blogic signed \[7:0\] A;/, 'internal declaration block keeps explicit four-state signed internal declarations');
+    like($internal_block, qr/\blogic signed \[7:0\] I_next;/, 'internal declaration block keeps explicit four-state signed dual-output helper declarations');
+    like($internal_block, qr/\blogic signed \[7:0\] K_q;/, 'internal declaration block keeps explicit four-state signed q-visible helper declarations');
     like($internal_block, qr/\breg \[2:0\] P1_pulse_delay_pipe;/, 'internal declaration block keeps pulse-delay helper declarations');
 };
 

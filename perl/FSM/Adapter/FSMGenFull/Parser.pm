@@ -431,7 +431,7 @@ sub parse_types_section($self, $types_ast) {
 
     Carp::confess
         "Malformed '+types' section. ".
-        "The active contract supports '+types' only as a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)' entries. ".
+        "The active contract supports '+types' only as a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)' entries. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless ref($types_list) eq 'ARRAY' && @$types_list;
 
@@ -439,7 +439,7 @@ sub parse_types_section($self, $types_ast) {
     for my $type_def (@$types_list) {
         Carp::confess
             "Malformed '+types' entry. ".
-            "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)'. ".
+            "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)'. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
             unless ref($type_def) eq 'ARRAY' && @$type_def >= 2;
 
@@ -458,7 +458,7 @@ sub parse_types_section($self, $types_ast) {
         } else {
             Carp::confess
                 "Malformed '+types' entry. ".
-                "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)'. ".
+                "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)'. ".
                 "See docs/USER_GUIDE.md for the current supported boundary.\n";
         }
 
@@ -528,6 +528,7 @@ sub parse_size_section($self, $size_ast) {
             $resolved_sig,
             width => $width_contract->{width},
             signed => ($width_contract->{signed} // 0),
+            state_model => $width_contract->{state_model},
             width_declared => 1,
         );
 
@@ -539,6 +540,7 @@ sub parse_size_section($self, $size_ast) {
                 $next_aux,
                 width => $width_contract->{width},
                 signed => ($width_contract->{signed} // 0),
+                state_model => $width_contract->{state_model},
                 is_output => 1,
                 is_aux_output => 1,
                 width_declared => 1,
@@ -550,6 +552,7 @@ sub parse_size_section($self, $size_ast) {
                 $q_aux,
                 width => $width_contract->{width},
                 signed => ($width_contract->{signed} // 0),
+                state_model => $width_contract->{state_model},
                 is_output => 1,
                 is_aux_output => 1,
                 width_declared => 1,
@@ -702,6 +705,7 @@ sub resolve_declared_width_contract($self, %args) {
     return {
         width => 0 + $width_token,
         signed => 0,
+        state_model => undef,
     }
         if defined($width_token)
             && !ref($width_token)
@@ -715,6 +719,7 @@ sub resolve_declared_width_contract($self, %args) {
             return {
                 width => 0 + $resolved_type->{width},
                 signed => ($resolved_type->{signed} // 0) ? 1 : 0,
+                state_model => $resolved_type->{state_model},
             };
         }
 
@@ -722,6 +727,7 @@ sub resolve_declared_width_contract($self, %args) {
         return {
             width => $resolved_scalar_width,
             signed => 0,
+            state_model => undef,
         } if defined $resolved_scalar_width && $resolved_scalar_width > 0;
     }
 
@@ -747,7 +753,7 @@ sub canonicalize_scalar_type_spec($self, %args) {
 
     Carp::confess
         "Malformed '+types' entry for type '$type_name' in source '$module_name'. ".
-        "The first active '+types' lane supports only 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', or aliases to already-resolved scalar types. ".
+        "The first active '+types' lane supports only 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', '(two_state ...)', '(four_state ...)', or aliases to already-resolved scalar types. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 

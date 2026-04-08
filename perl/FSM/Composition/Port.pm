@@ -13,6 +13,7 @@ sub new ($class, %args) {
         width => exists $args{width} ? $args{width} : 1,
         width_token => $args{width_token},
         signed => ($args{signed} // 0) ? 1 : 0,
+        state_model => $args{state_model},
         type => $args{type},
         binding_mode => $args{binding_mode} // 'explicit',
         raw_token => $args{raw_token},
@@ -25,6 +26,7 @@ sub direction ($self) { return $self->{direction} }
 sub width ($self) { return $self->{width} }
 sub width_token ($self) { return $self->{width_token} }
 sub signed ($self) { return $self->{signed} }
+sub state_model ($self) { return $self->{state_model} }
 sub type ($self) { return $self->{type} }
 sub binding_mode ($self) { return $self->{binding_mode} }
 sub raw_token ($self) { return $self->{raw_token} }
@@ -38,6 +40,11 @@ sub set_width ($self, $width) {
 sub set_signed ($self, $signed) {
     $self->{signed} = $signed ? 1 : 0;
     return $self->{signed};
+}
+
+sub set_state_model ($self, $state_model) {
+    $self->{state_model} = $state_model;
+    return $self->{state_model};
 }
 
 1;

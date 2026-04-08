@@ -143,6 +143,9 @@ sub finalize_imported_type_aliases ($self) {
         if (exists $type_spec->{signed}) {
             $resolved_imported_type->{signed} = ($type_spec->{signed} // 0) ? 1 : 0;
         }
+        if (exists $type_spec->{state_model}) {
+            $resolved_imported_type->{state_model} = $type_spec->{state_model};
+        }
         $self->{local_symbols}->store_type($type_name, $resolved_imported_type);
     }
 

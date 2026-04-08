@@ -62,6 +62,7 @@ sub port_metadata ($self) {
             direction => $port->{direction},
             signed => ($port->{signed} // 0) ? 1 : 0,
         };
+        $entry->{state_model} = $port->{state_model} if defined $port->{state_model};
 
         push @signal_names, $port->{name};
         $signals{$port->{name}} = {
@@ -69,6 +70,7 @@ sub port_metadata ($self) {
             direction => $port->{direction},
             signed => ($port->{signed} // 0) ? 1 : 0,
         };
+        $signals{$port->{name}}{state_model} = $port->{state_model} if defined $port->{state_model};
 
         if (($port->{direction} || '') eq 'output') {
             push @outputs, _clone($entry);

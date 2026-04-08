@@ -45,14 +45,17 @@ sub build_from_generated_module_info ($class, %args) {
                 : undef;
             my $type = (ref($signal) && $signal->can('type')) ? $signal->type : undef;
             my $signed = (ref($signal) && $signal->can('signed')) ? $signal->signed : 0;
+            my $state_model = (ref($signal) && $signal->can('state_model')) ? $signal->state_model : undef;
 
-            push @ports, {
+            my $port_entry = {
                 name => $signal_name,
                 direction => $direction,
                 width => ($entry->{width} || 1),
                 signed => $signed ? 1 : 0,
                 type => $type,
             };
+            $port_entry->{state_model} = $state_model if defined $state_model;
+            push @ports, $port_entry;
             $seen_ports{$signal_name} = 1;
         }
     }
@@ -108,7 +111,8 @@ sub build_from_composition_plan ($class, $composition_plan, $target_language = '
         target_language => ($target_language // 'systemverilog'),
         ports => [
             map {
-                +{
+                do {
+                    my $port_entry = {
                     name => $_->name,
                     direction => $_->direction,
                     width => $_->width,
@@ -116,6 +120,10 @@ sub build_from_composition_plan ($class, $composition_plan, $target_language = '
                     type => $_->type,
                     binding_mode => $_->binding_mode,
                     origin_kind => $_->origin_kind,
+                    };
+                    my $state_model = $_->can('state_model') ? $_->state_model : undef;
+                    $port_entry->{state_model} = $state_model if defined $state_model;
+                    $port_entry;
                 }
             } @{$composition_plan->ports || []}
         ],
@@ -138,12 +146,17 @@ sub build_from_composition_plan ($class, $composition_plan, $target_language = '
                     source_name => $_->source_name,
                     interface_ports => [
                         map {
-                            +{
+                            do {
+                                my $interface_entry = {
                                 name => $_->name,
                                 direction => $_->direction,
                                 width => $_->width,
                                 signed => ($_->can('signed') ? $_->signed : 0),
                                 type => $_->type,
+                                };
+                                my $state_model = $_->can('state_model') ? $_->state_model : undef;
+                                $interface_entry->{state_model} = $state_model if defined $state_model;
+                                $interface_entry;
                             }
                         } @{$_->interface_ports || []}
                     ],

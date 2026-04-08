@@ -43,6 +43,17 @@ sub canonicalize_type_spec ($class, %args) {
         my $head = $unwrap_scalar_token->($cursor->[0]);
         my $tail = $cursor->[1];
 
+        if (defined($head) && !ref($head) && ($head eq 'two_state' || $head eq 'four_state')) {
+            my $inner_spec = $class->canonicalize_type_spec(
+                %args,
+                spec_ast => $tail,
+            );
+            return undef unless $inner_spec;
+
+            $inner_spec->{state_model} = $head;
+            return $class->_normalized_type_spec($inner_spec);
+        }
+
         if (defined($head) && !ref($head) && $head eq 'bits') {
             my $width_token = $unwrap_scalar_token->($tail);
             if (defined($width_token) && !ref($width_token)
@@ -93,10 +104,20 @@ sub _normalized_type_spec ($class, $type_spec) {
     if ($class->_is_deferred_type_spec(\%normalized)) {
         $normalized{signed} = $normalized{signed} ? 1 : 0
             if exists $normalized{signed};
+        if (exists $normalized{state_model}) {
+            return undef unless defined($normalized{state_model})
+                && !ref($normalized{state_model})
+                && $normalized{state_model} =~ /\A(?:two_state|four_state)\z/;
+        }
         return \%normalized;
     }
 
     $normalized{signed} = ($normalized{signed} // 0) ? 1 : 0;
+    if (exists $normalized{state_model}) {
+        return undef unless defined($normalized{state_model})
+            && !ref($normalized{state_model})
+            && $normalized{state_model} =~ /\A(?:two_state|four_state)\z/;
+    }
     return \%normalized;
 }
 

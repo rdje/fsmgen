@@ -1732,6 +1732,16 @@ Exit criteria:
   signedness through the same declarative-scope and package-import lanes, and
   forward `symbol_contract` / mirrored `module_info` now preserve the signed
   flag beside width in canonical scalar type specs.
+- `R11`: that same bounded `+types` lane now also carries the first explicit
+  state-model property beyond raw width and signedness: scalar aliases may now
+  use `(two_state ...)` and `(four_state ...)` wrappers across direct roots,
+  composition tops, and semantic packages, direct-root `+size` plus
+  composition `?ports` preserve that intent through emitted SystemVerilog
+  `bit` / `logic` declarations, local/imported alias resolution keeps that
+  state-model through the same declarative-scope and package-import lanes, and
+  canonical scalar type specs now preserve `state_model` beside `width` and
+  `signed` without promoting raw backend spellings into the authored source
+  contract.
 - `R11`: direct generated roots now also preserve one bounded `symbol_contract`
   through forward `intent_hir` and mirrored `module_info`, so local
   constants/enums, canonical aggregate payloads, scalar-leaf summaries, and

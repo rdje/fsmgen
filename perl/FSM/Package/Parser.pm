@@ -231,14 +231,14 @@ sub parse_package_types_block ($self, $package_name, $child_ast, $symbols) {
 
     confess
         "Package '$package_name' contains malformed '+types' section, ".
-        "but package type section shape is blocked because '+types' currently requires a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)' entries."
+        "but package type section shape is blocked because '+types' currently requires a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)' entries."
         unless ref($types_list) eq 'ARRAY' && @$types_list;
 
     my @type_entries;
     for my $type_def (@$types_list) {
         confess
             "Package '$package_name' contains malformed '+types' entry, ".
-            "but package type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)'."
+            "but package type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)'."
             unless ref($type_def) eq 'ARRAY' && @$type_def >= 2;
 
         my ($keyword, $name, $spec_ast);
@@ -256,7 +256,7 @@ sub parse_package_types_block ($self, $package_name, $child_ast, $symbols) {
         } else {
             confess
                 "Package '$package_name' contains malformed '+types' entry, ".
-                "but package type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)'.";
+                "but package type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)'.";
         }
 
         my $resolved_keyword = $self->unwrap_scalar_token($keyword);
@@ -470,7 +470,7 @@ sub canonicalize_package_type_spec ($self, %args) {
 
     confess
         "Package '$package_name' contains malformed '+types' entry for type '$type_name', ".
-        "but the first active '+types' lane supports only 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', or aliases to already-resolved scalar types.";
+        "but the first active '+types' lane supports only 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', '(two_state ...)', '(four_state ...)', or aliases to already-resolved scalar types.";
 }
 
 sub canonicalize_package_symbol_literal_payload ($self, %args) {

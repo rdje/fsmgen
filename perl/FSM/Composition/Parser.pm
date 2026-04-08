@@ -385,7 +385,7 @@ sub parse_top_types_block ($self, $top_name, $child_ast, $top_symbols) {
 
     confess
         "Composition top '$top_name' contains malformed '+types' section, ".
-        "but composition top type section shape is blocked because '+types' currently requires a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)' entries.".
+        "but composition top type section shape is blocked because '+types' currently requires a non-empty list of '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)' entries.".
         $self->scope_docs_suffix
         unless ref($types_list) eq 'ARRAY' && @$types_list;
 
@@ -393,7 +393,7 @@ sub parse_top_types_block ($self, $top_name, $child_ast, $top_symbols) {
     for my $type_def (@$types_list) {
         confess
             "Composition top '$top_name' contains malformed '+types' entry, ".
-            "but composition top type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)'.".
+            "but composition top type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)'.".
             $self->scope_docs_suffix
             unless ref($type_def) eq 'ARRAY' && @$type_def >= 2;
 
@@ -412,7 +412,7 @@ sub parse_top_types_block ($self, $top_name, $child_ast, $top_symbols) {
         } else {
             confess
                 "Composition top '$top_name' contains malformed '+types' entry, ".
-                "but composition top type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', or '(type NAME other_type)'.".
+                "but composition top type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', '(type NAME (signed bit))', '(type NAME (signed (bits N)))', '(type NAME (two_state ...))', '(type NAME (four_state ...))', or '(type NAME other_type)'.".
                 $self->scope_docs_suffix;
         }
 
@@ -698,6 +698,7 @@ sub parse_port_token ($self, $top_name, $token, $top_symbols = undef) {
     my $resolved_contract = {
         width => 1,
         signed => 0,
+        state_model => undef,
     };
     if (defined $direction) {
         $resolved_contract = FSM::Composition::PortWidthResolver->resolve_port_contract(
@@ -716,6 +717,7 @@ sub parse_port_token ($self, $top_name, $token, $top_symbols = undef) {
         width => $resolved_contract->{width},
         width_token => $size,
         signed => ($resolved_contract->{signed} // 0),
+        state_model => $resolved_contract->{state_model},
         type => $type,
         binding_mode => defined($binding) ? 'connect_by_name' : 'explicit',
         raw_token => $token,
@@ -919,7 +921,7 @@ sub canonicalize_top_type_spec ($self, %args) {
 
     confess
         "Composition top '$top_name' contains malformed '+types' entry for type '$type_name', ".
-        "but the first active '+types' lane supports only 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', or aliases to already-resolved local or imported scalar types.".
+        "but the first active '+types' lane supports only 'bit', '(bits N)', '(signed bit)', '(signed (bits N))', '(two_state ...)', '(four_state ...)', or aliases to already-resolved local or imported scalar types.".
         $self->scope_docs_suffix;
 }
 

@@ -48,8 +48,8 @@ FSM
     (sreset rstn)
   )
   (+types
-    (type byte_t (signed (bits 8)))
-    (type flag_t bit)
+    (type byte_t (four_state (signed (bits 8))))
+    (type flag_t (two_state bit))
   )
   (+constants
     (BYTES (8'hA5 8'h3C 0))
@@ -91,8 +91,10 @@ FSM
     is_deeply($symbol_contract->{type_names}, ['byte_t', 'flag_t'], 'symbol contract preserves stable local type names');
     is($symbol_contract->{types}{byte_t}{width}, 8, 'symbol contract preserves canonical scalar type widths');
     is($symbol_contract->{types}{byte_t}{signed}, 1, 'symbol contract preserves canonical signed scalar type intent');
+    is($symbol_contract->{types}{byte_t}{state_model}, 'four_state', 'symbol contract preserves explicit four-state scalar type intent');
     is($symbol_contract->{types}{flag_t}{width}, 1, 'symbol contract preserves bit-like scalar type widths');
     is($symbol_contract->{types}{flag_t}{signed}, 0, 'symbol contract preserves unsigned-by-default scalar type intent');
+    is($symbol_contract->{types}{flag_t}{state_model}, 'two_state', 'symbol contract preserves explicit two-state scalar type intent');
     is($symbol_contract->{constants}{FRAME}{kind}, 'map', 'symbol contract preserves aggregate constant payload shape');
     is_deeply($symbol_contract->{constants}{FRAME}{member_order}, ['mode', 'flag'], 'symbol contract preserves authored aggregate member order');
     is($symbol_contract->{constants}{FRAME}{members}{flag}{payload}, '1', 'symbol contract preserves nested aggregate scalar payloads');

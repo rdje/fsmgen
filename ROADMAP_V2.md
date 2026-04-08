@@ -1289,3 +1289,11 @@ The first honest `R11` slices are now:
   signedness into emitted SystemVerilog declarations, and canonical
   `symbol_contract` type specs now preserve `signed` beside `width` without
   exposing raw backend type spellings as the source-language contract.
+- Forward-IR note: the next semantic scalar-type-property widening beyond raw
+  width and signedness is now shipped too: explicit `(two_state ...)` and
+  `(four_state ...)` scalar aliases live in that same bounded `+types` lane,
+  direct-root `+size` plus composition `?ports` preserve that state-model
+  intent into emitted SystemVerilog `bit` / `logic` declarations, and
+  canonical `symbol_contract` type specs now preserve `state_model` beside
+  `width` and `signed` without exposing raw backend type spellings as the
+  authored source-language contract.

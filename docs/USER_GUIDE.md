@@ -510,12 +510,13 @@ This is the current `R8` draft normative contract for the symbol-definition and 
 `(+types ...)`:
 - Defines bounded scalar named types.
 - Shape:
-  - non-empty list of `(type NAME bit)`, `(type NAME (bits N))`, `(type NAME (signed bit))`, `(type NAME (signed (bits N)))`, or `(type NAME other_type)` entries
+  - non-empty list of `(type NAME bit)`, `(type NAME (bits N))`, `(type NAME (signed bit))`, `(type NAME (signed (bits N)))`, `(type NAME (two_state ...))`, `(type NAME (four_state ...))`, or `(type NAME other_type)` entries
 - Current active use:
-  - `(+types (type flag_t bit) (type sflag_t (signed bit)) (type byte_t (bits 8)) (type sbyte_t (signed (bits 8))) (type byte_alias shared.byte_t))`
+  - `(+types (type flag_t (two_state bit)) (type sflag_t (four_state (signed bit))) (type byte_t (bits 8)) (type sbyte_t (four_state (signed (bits 8)))) (type byte_alias shared.byte_t))`
 - Direct-root note:
   - inside `?fsm:name` and `?dt:name`, `(+size ...)` width entries may now use local or imported scalar type names such as `(OUT byte_t)` or `(FLAG shared.flag_t)`.
   - when one of those width entries resolves to a signed scalar type alias, the generated SystemVerilog boundary/internal declarations now preserve that signedness, for example `input wire signed [7:0] IN` or `reg signed [7:0] OUT`.
+  - when one of those width entries resolves to an explicit `(two_state ...)` or `(four_state ...)` scalar type alias, the generated SystemVerilog boundary/internal declarations now also preserve that state-model intent as `bit` or `logic`, for example `input bit [7:0] IN`, `logic signed [7:0] OUT`, or `input logic signed [7:0] IN`.
   - those same direct-root `(+size ...)` width entries may now also use local or imported positive integer scalar symbols such as `(OUT BYTE_W)` or `(FLAG shared.FLAG_W)` when the resolved symbol is one positive integer literal value.
   - local and imported scalar types resolve through one declarative-scope pass, so normal non-cyclic references do not depend on declaration order.
 - Composition-top note:
@@ -523,6 +524,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - imported package scalar type aliases may now also drive `?ports` widths through package-qualified tokens such as `out_data>shared.byte` or `out_flag>shared.flag`.
   - local aliases may now also target imported package scalar types, so forms like `(+types (type byte_t shared.byte))` may then drive `?ports` widths through `out_data>byte_t`.
   - when those local or imported `?ports` width aliases resolve to signed scalar types, emitted Verilog-family top ports now preserve that signedness, for example `input signed [7:0] in_data` or `output signed [7:0] out_data`.
+  - when those local or imported `?ports` width aliases resolve to explicit `(two_state ...)` or `(four_state ...)` scalar types, emitted Verilog-family top ports now also preserve that state-model intent as `bit` or `logic`, for example `input bit [7:0] in_data`, `output bit [7:0] out_data`, or `input logic signed [7:0] in_data`.
   - composition `?ports` width tokens may now also use local or imported positive integer scalar symbols such as `out_data>BYTE_W` or `out_data>shared.BYTE_W` when the resolved symbol is one positive integer literal value.
 - Malformed shapes like `(+types)`, `(+types BROKEN)`, malformed entries like `(+types (type only_name))`, and explicit type dependency cycles are rejected explicitly.
 

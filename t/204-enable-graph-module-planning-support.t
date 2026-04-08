@@ -22,7 +22,7 @@ subtest 'enable-graph module-planning support rebuilds module, declaration, and 
     (sreset rstn)
   )
   (+types
-    (type signed_byte (signed (bits 8)))
+    (type signed_byte (four_state (signed (bits 8))))
   )
   (+size
     (OUT signed_byte)
@@ -68,6 +68,7 @@ FSM
     is($base_port_by_name{rstn}{direction}, 'input', 'module-planning support keeps rstn as an input base port');
     is($input_by_name{IN}{width}, 8, 'module-planning support keeps IN as an 8-bit input');
     is($input_by_name{IN}{signed}, 1, 'module-planning support preserves signed semantic type intent on direct inputs');
+    is($input_by_name{IN}{state_model}, 'four_state', 'module-planning support preserves explicit four-state semantic type intent on direct inputs');
     ok(!exists $output_by_name{OUT}, 'module-planning support does not promote OUT to a module output without explicit output exposure');
     ok(!exists $output_by_name{FLAG}, 'module-planning support does not promote FLAG to a module output without explicit output exposure');
     ok(!exists $module_plan->{declared_port_signals}{OUT}, 'module-planning support does not record OUT as a declared module port without explicit output exposure');
@@ -81,7 +82,9 @@ FSM
     is($decl_plan->{aux_decls}{OUT_q}, 8, 'module-planning support exposes the OUT_q helper width for register-input assignments');
     is($decl_plan->{signal_decls}{OUT}, 8, 'module-planning support keeps OUT as an internal declared signal without explicit output exposure');
     is($decl_plan->{signal_signed}{OUT}, 1, 'module-planning support preserves signed semantic type intent on internal declarations');
+    is($decl_plan->{signal_state_model}{OUT}, 'four_state', 'module-planning support preserves explicit four-state semantic type intent on internal declarations');
     is($decl_plan->{aux_signed}{OUT_q}, 1, 'module-planning support preserves signed semantic type intent on helper declarations');
+    is($decl_plan->{aux_state_model}{OUT_q}, 'four_state', 'module-planning support preserves explicit four-state semantic type intent on helper declarations');
     is($decl_plan->{signal_decls}{FLAG}, 1, 'module-planning support keeps FLAG as an internal declared signal without explicit output exposure');
 };
 

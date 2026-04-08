@@ -75,11 +75,22 @@ sub _render_module_port_plan ($port_plan) {
     my $width = $port_plan->{width} || 1;
     my $width_str = ($width > 1) ? "[" . ($width - 1) . ":0] " : "";
     my $signed_str = ($port_plan->{signed} // 0) ? "signed " : "";
+    my $type_keyword = _state_model_keyword($port_plan->{state_model});
+    if (defined $type_keyword) {
+        return "  $port_plan->{direction} ${type_keyword} ${signed_str}${width_str}$port_plan->{name}";
+    }
     if ($port_plan->{direction} eq 'output' && $port_plan->{storage} eq 'reg') {
         return "  output reg " . ($signed_str || " ") . "${width_str}$port_plan->{name}";
     }
 
     return "  $port_plan->{direction}  $port_plan->{storage} ${signed_str}${width_str}$port_plan->{name}";
+}
+
+sub _state_model_keyword ($state_model) {
+    return undef unless defined $state_model && !ref($state_model);
+    return 'bit' if $state_model eq 'two_state';
+    return 'logic' if $state_model eq 'four_state';
+    return undef;
 }
 
 sub generate_state_encoding ($self, $fsm_module) {
