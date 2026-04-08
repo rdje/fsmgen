@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-08: declaration-order symbol reuse is only a temporary aggregate-language boundary
+- Saved the steering clarification after the first shipped aggregate reuse
+  slice.
+- Important continuity note:
+  - current aggregate symbol reuse is still limited to previously declared
+    constants, enum members, and earlier whole list-valued roots,
+  - that order sensitivity is not the desired end-state,
+  - the intended next language rule for `+constants`, `+enums`, and future
+    `+types` is root-wide or package-wide declarative scope with one semantic
+    resolution pass,
+  - normal non-cyclic references should not depend on declaration order,
+  - and explicit dependency cycles must fail clearly instead of being guessed
+    through parser order.
+
 ## 2026-04-08: later aggregate values now reuse earlier named scalar ingredients
 - Saved the next bounded aggregate-authoring slice after whole-list aggregate
   roots landed.

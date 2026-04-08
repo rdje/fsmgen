@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-08: declaration-order aggregate reuse is a temporary boundary, not the target language rule
+- Clarified the intended end-state for the just-shipped aggregate symbol-reuse
+  slice.
+- Current shipped behavior:
+  - later direct-root, composition-top, and `?pkg:name` aggregate values may
+    reuse previously declared local/package constants, enum members, and
+    earlier whole list-valued roots,
+  - but the contract is still intentionally order-sensitive because the active
+    parser/canonicalization path resolves those ingredients during the current
+    read/build pass.
+- Steering for future implementation:
+  - `+constants`, `+enums`, and future `+types` should move toward one
+    root-wide or package-wide declarative scope instead of parser-order
+    semantics,
+  - normal non-cyclic references should resolve regardless of declaration
+    order,
+  - explicit dependency cycles must fail clearly,
+  - and this should be delivered as one semantic resolution phase shared by
+    direct roots, composition tops, and semantic packages rather than three
+    separate ad hoc parser-local rules.
+
 ## 2026-04-08: later aggregate values should be able to reuse earlier named scalar ingredients
 - Continued the aggregate/type lane by removing another low-value authoring
   friction point instead of pushing users back toward magic numerics inside

@@ -1697,6 +1697,13 @@ Exit criteria:
   earlier whole list-valued roots such as `(HEADER (mode.BUSY RESET_BYTE))`
   and `(PACKET (HEADER mode.IDLE))`, while forward references and hash-root
   packing remain intentionally out of contract.
+- Steering note for the next symbol/type slice: that declaration-order boundary
+  is a shipped stepping stone, not the desired end-state. The intended language
+  contract for `+constants`, `+enums`, and future `+types` is root-wide or
+  package-wide declarative scope with one semantic resolution pass, so normal
+  non-cyclic references do not depend on declaration order while explicit
+  dependency cycles still fail clearly and whole hash-root packing stays
+  intentionally separate until record semantics are real.
 - `R11`: direct generated roots now also preserve one bounded `symbol_contract`
   through forward `intent_hir` and mirrored `module_info`, so local
   constants/enums, canonical aggregate payloads, scalar-leaf summaries, and
