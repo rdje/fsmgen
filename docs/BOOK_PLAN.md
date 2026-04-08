@@ -23,6 +23,14 @@ The migration is still incomplete:
 - and the book should keep absorbing user-facing material until it becomes the
   default learning surface.
 
+The book must be treated as a live project artifact:
+
+- it evolves alongside the shipped user-facing surface,
+- new user-visible features should update the relevant chapter material as part
+  of shipping,
+- and stale examples or stale support wording in the book are product bugs, not
+  optional cleanup.
+
 ## Why split the guide
 
 The current

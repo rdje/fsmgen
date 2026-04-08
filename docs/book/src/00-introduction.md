@@ -11,6 +11,10 @@ This book is the progressive front door for FSMGen:
 - learn the mental model before the full reference,
 - then move into composition, packages, types, debugging, and embedding.
 
+It should also be treated as a live book, not a static manual snapshot.
+When FSMGen's user-facing surface changes, this book is expected to change with
+it.
+
 ## What FSMGen Is Good At
 
 FSMGen is designed for:
@@ -45,6 +49,12 @@ The repository still keeps a few focused technical references:
 The goal is not to duplicate every narrow technical artifact here immediately.
 The goal is to give users one friendly path through the product while the
 remaining deep reference material is folded into the book incrementally.
+
+That means this book should keep evolving alongside the project:
+
+- new shipped features should appear here,
+- examples should stay current and realistic,
+- and stale user-facing guidance should be treated as a real quality gap.
 
 ## Building The Book
 

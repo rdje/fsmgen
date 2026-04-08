@@ -6776,6 +6776,9 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `docs/USER_GUIDE.md` remains the broad live reference during the migration
   and focused docs such as `docs/COMPOSITION_SCOPE.md` remain the precise
   support-boundary companions.
+- The book is also now explicitly a live project artifact: shipped user-facing
+  changes are expected to update the relevant chapter material, and stale book
+  examples/support wording should be treated as real documentation defects.
 - Local mdBook output lives under `docs/book/book/` and should stay ignored;
   doc validation should build the book but must not leave generated HTML as a
   tracked repo change.

@@ -9064,3 +9064,10 @@ It is an exact-delay pulse request:
 - Local doc build hygiene matters too: the generated mdBook output directory
   `docs/book/book/` should stay ignored so validating the book never dirties
   the repo with build artifacts.
+- The book should now be treated as a live project book, not a one-time doc
+  export:
+  - it must evolve alongside shipped user-facing behavior,
+  - new user-visible features should update the relevant book chapters as part
+    of landing that feature,
+  - and stale support wording or stale examples inside the book should be
+    treated as real product-quality bugs.
