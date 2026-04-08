@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-08: future semantic types should carry backend-neutral meaning first
+- Saved one more steering note for the richer future `+types` lane.
+- Important continuity note:
+  - the authored `.fsm` surface should stay intent-level rather than exposing
+    raw backend spellings like SV `logic signed` or VHDL
+    `std_logic_vector` as the main contract,
+  - the internal type model should eventually carry width, signedness,
+    2-state versus 4-state behavior, and role/category as semantic meaning,
+  - backend lowering should choose concrete carriers late from that meaning,
+    for example SV `bit` / `logic` plus signedness or VHDL
+    `std_logic_vector` / `signed` / `unsigned`,
+  - and explicit source-level type spellings should remain overrides or
+    anchors when inference is not enough, not the default authoring style.
+
 ## 2026-04-08: bounded scalar `+types` now ship through one declarative resolver
 - Saved the first real `+types` slice after the declaration-scope and
   symbol-contract groundwork landed.

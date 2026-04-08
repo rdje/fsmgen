@@ -219,7 +219,14 @@ Deliverable themes:
     - fixed-size arrays,
     - arrays of records,
     - and named aliases / subtypes,
+  - keep that frontend type core semantic rather than backend-spelled:
+    - carry width, signedness, 2-state versus 4-state behavior, and value/category role as internal meaning,
+    - avoid treating raw backend spellings like SV `logic signed [7:0]` or VHDL `std_logic_vector` as the source-language contract,
   - prefer packed-struct semantics as the default SystemVerilog lowering for frontend record/struct types so the portable contract does not depend on looser unpacked-struct synthesis behavior,
+  - lower concrete backend carriers late from that semantic model:
+    - SystemVerilog may need `bit` versus `logic` and signed versus unsigned vectors,
+    - VHDL may need `std_logic_vector` versus `signed` / `unsigned`,
+    - but the authored `.fsm` surface should stay intent-level unless an explicit override is genuinely needed,
   - defer backend-specific or semantically sharp-edged features such as unions and user-visible promises of free aggregate-to-vector casting until the portable core is stable,
   - keep the future VHDL promise narrower and evidence-based: nested record/array aggregates may be supported where the backend can lower and regression-lock them honestly, but the frontend should not promise unlimited nesting across all targets before that backend exists,
   - prefer convention over configuration by making type inference the default path for most signals and ports:

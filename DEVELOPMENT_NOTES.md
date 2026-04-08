@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-08: future type lowering should stay semantic first and backend-specific only at the edge
+- Saved one more steering rule for the future richer `+types` lane after the
+  first scalar alias slice landed.
+- Important design direction:
+  - `.fsm` authoring should stay intent-level rather than mirroring raw
+    backend type spellings,
+  - the internal type model should grow semantic properties such as width,
+    signedness, 2-state versus 4-state behavior, and role/category,
+  - future backend lowering should then choose the right HDL carriers late,
+    for example SV `bit` versus `logic`, signed versus unsigned vectors, or
+    VHDL `std_logic_vector` versus `signed` / `unsigned`,
+  - and explicit source-level type spellings should stay as overrides or
+    anchors only when one safe inferred semantic meaning is not enough.
+- Why this matters:
+  - SystemVerilog and VHDL both need richer backend-specific carrier choices
+    than the current bounded width-alias slice expresses,
+  - but promoting those raw backend spellings directly into `.fsm` would
+    violate the intent-level surface the project is steering toward.
+
 ## 2026-04-08: the first bounded `+types` slice should be real scalar semantics, not parser sugar
 - Continued the aggregate/type lane by taking the already-shipped
   declarative-scope resolver pattern seriously instead of sneaking type aliases

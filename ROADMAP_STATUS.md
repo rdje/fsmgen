@@ -740,8 +740,11 @@ Deliverables:
   - and per-instance tuning parameters should remain a separate module/composition contract unless a later generic/global-constant lane proves a subset truly belongs in packages too.
 - Define one bounded portable synthesizable-type lane:
   - bits / bit-vectors, enums, records / packed-struct-like aggregates, fixed-size arrays, arrays of records, and named aliases / subtypes should become a deliberate frontend type core,
+  - that frontend type core should stay backend-neutral and carry semantic properties such as width, signedness, 2-state versus 4-state behavior, and value/category role, instead of exposing raw SystemVerilog or VHDL surface spelling as the source-language contract,
+  - authored `.fsm` types should stay intent-level even when future backends need sharper lowering distinctions such as SV `bit` versus `logic`, signed versus unsigned vectors, or VHDL `std_logic_vector` versus `signed` / `unsigned`,
   - SystemVerilog aggregate lowering should prefer packed-struct semantics by default for the portable struct/record contract instead of relying on looser tool-specific unpacked-struct behavior,
   - that type core should stay portable across SystemVerilog and future VHDL instead of promising backend-specific conveniences such as free aggregate-to-vector casting,
+  - backend lowering should choose concrete HDL carriers late from that semantic type model, for example SV `bit` / `logic` plus signedness or VHDL `std_logic_vector` / `signed` / `unsigned`, and only use more specialized carriers such as `bit_vector` when the semantic contract truly asks for them,
   - future VHDL lowering may support nested record/array structure only for the subset the backend can prove and regression-lock as synthesizable, rather than promising unlimited nesting up front,
   - type inference should be the default path for most signal and port declarations, with explicit type declarations mainly acting as overrides, disambiguation anchors, and interface-stability controls,
   - aggregate declarations should also infer by default from authored member/index/LHS/RHS usage rather than only from explicit declarations,
