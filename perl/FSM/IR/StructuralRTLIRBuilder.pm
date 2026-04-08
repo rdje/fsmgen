@@ -46,6 +46,12 @@ sub build_from_generated_module_info ($class, %args) {
             my $type = (ref($signal) && $signal->can('type')) ? $signal->type : undef;
             my $signed = (ref($signal) && $signal->can('signed')) ? $signal->signed : 0;
             my $state_model = (ref($signal) && $signal->can('state_model')) ? $signal->state_model : undef;
+            my $declared_type_name = (ref($signal) && $signal->can('declared_type_name'))
+                ? $signal->declared_type_name
+                : undef;
+            my $declared_type_spec = (ref($signal) && $signal->can('declared_type_spec'))
+                ? $signal->declared_type_spec
+                : undef;
 
             my $port_entry = {
                 name => $signal_name,
@@ -55,6 +61,8 @@ sub build_from_generated_module_info ($class, %args) {
                 type => $type,
             };
             $port_entry->{state_model} = $state_model if defined $state_model;
+            $port_entry->{declared_type_name} = $declared_type_name if defined $declared_type_name;
+            $port_entry->{declared_type_spec} = $declared_type_spec if defined $declared_type_spec;
             push @ports, $port_entry;
             $seen_ports{$signal_name} = 1;
         }
@@ -122,7 +130,11 @@ sub build_from_composition_plan ($class, $composition_plan, $target_language = '
                     origin_kind => $_->origin_kind,
                     };
                     my $state_model = $_->can('state_model') ? $_->state_model : undef;
+                    my $declared_type_name = $_->can('declared_type_name') ? $_->declared_type_name : undef;
+                    my $declared_type_spec = $_->can('declared_type_spec') ? $_->declared_type_spec : undef;
                     $port_entry->{state_model} = $state_model if defined $state_model;
+                    $port_entry->{declared_type_name} = $declared_type_name if defined $declared_type_name;
+                    $port_entry->{declared_type_spec} = $declared_type_spec if defined $declared_type_spec;
                     $port_entry;
                 }
             } @{$composition_plan->ports || []}
@@ -155,7 +167,11 @@ sub build_from_composition_plan ($class, $composition_plan, $target_language = '
                                 type => $_->type,
                                 };
                                 my $state_model = $_->can('state_model') ? $_->state_model : undef;
+                                my $declared_type_name = $_->can('declared_type_name') ? $_->declared_type_name : undef;
+                                my $declared_type_spec = $_->can('declared_type_spec') ? $_->declared_type_spec : undef;
                                 $interface_entry->{state_model} = $state_model if defined $state_model;
+                                $interface_entry->{declared_type_name} = $declared_type_name if defined $declared_type_name;
+                                $interface_entry->{declared_type_spec} = $declared_type_spec if defined $declared_type_spec;
                                 $interface_entry;
                             }
                         } @{$_->interface_ports || []}

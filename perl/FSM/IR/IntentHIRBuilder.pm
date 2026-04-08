@@ -284,17 +284,27 @@ sub analyze_signals ($class, $signals) {
         fsm_debug("  Final computed width: $width", 2);
 
         if ($dir eq 'output') {
-            push @{$analysis{outputs}}, {
+            my $entry = {
                 name => $sig_name,
                 width => $width,
                 signal => $signal,
             };
+            $entry->{declared_type_name} = $signal->declared_type_name
+                if $signal->can('declared_type_name') && defined $signal->declared_type_name;
+            $entry->{declared_type_spec} = $signal->declared_type_spec
+                if $signal->can('declared_type_spec') && defined $signal->declared_type_spec;
+            push @{$analysis{outputs}}, $entry;
         } else {
-            push @{$analysis{inputs}}, {
+            my $entry = {
                 name => $sig_name,
                 width => $width,
                 signal => $signal,
             };
+            $entry->{declared_type_name} = $signal->declared_type_name
+                if $signal->can('declared_type_name') && defined $signal->declared_type_name;
+            $entry->{declared_type_spec} = $signal->declared_type_spec
+                if $signal->can('declared_type_spec') && defined $signal->declared_type_spec;
+            push @{$analysis{inputs}}, $entry;
         }
 
         if ($width > 1) {

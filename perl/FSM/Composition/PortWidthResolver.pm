@@ -34,11 +34,15 @@ sub resolve_port_contract ($class, %args) {
         width => 1,
         signed => 0,
         state_model => undef,
+        declared_type_name => undef,
+        declared_type_spec => undef,
     } unless defined $width_token;
     return {
         width => 0 + $width_token,
         signed => 0,
         state_model => undef,
+        declared_type_name => undef,
+        declared_type_spec => undef,
     } if $width_token =~ /\A\d+\z/ && $width_token > 0;
 
     if ($width_token =~ /\A\d+\z/) {
@@ -53,16 +57,22 @@ sub resolve_port_contract ($class, %args) {
             width => 0 + $type_spec->{width},
             signed => ($type_spec->{signed} // 0) ? 1 : 0,
             state_model => $type_spec->{state_model},
+            declared_type_name => $width_token,
+            declared_type_spec => $type_spec,
         } if $type_spec && ref($type_spec) eq 'HASH' && defined $type_spec->{width} && $type_spec->{width} > 0;
         return {
             width => undef,
             signed => ($type_spec->{signed} // 0) ? 1 : 0,
             state_model => $type_spec->{state_model},
+            declared_type_name => $width_token,
+            declared_type_spec => $type_spec,
         } if $allow_unresolved_imported_type_refs && $class->_is_deferred_imported_type_alias($type_spec);
         return {
             width => undef,
             signed => ($type_spec->{signed} // 0) ? 1 : 0,
             state_model => $type_spec->{state_model},
+            declared_type_name => $width_token,
+            declared_type_spec => $type_spec,
         } if $allow_unresolved_imported_type_refs
             && FSM::Package::DeclarativeTypeSupport->has_deferred_imported_aliases($type_spec);
     }
@@ -73,6 +83,8 @@ sub resolve_port_contract ($class, %args) {
             width => $resolved_scalar_width,
             signed => 0,
             state_model => undef,
+            declared_type_name => undef,
+            declared_type_spec => undef,
         } if defined $resolved_scalar_width && $resolved_scalar_width > 0;
     }
 
@@ -83,6 +95,8 @@ sub resolve_port_contract ($class, %args) {
             width => undef,
             signed => 0,
             state_model => undef,
+            declared_type_name => undef,
+            declared_type_spec => undef,
         };
     }
 
@@ -123,6 +137,10 @@ sub resolve_declared_port_widths ($class, %args) {
                 if $port->can('set_signed');
             $port->set_state_model($resolved_contract->{state_model})
                 if $port->can('set_state_model');
+            $port->set_declared_type_name($resolved_contract->{declared_type_name})
+                if $port->can('set_declared_type_name');
+            $port->set_declared_type_spec($resolved_contract->{declared_type_spec})
+                if $port->can('set_declared_type_spec');
         }
     }
 

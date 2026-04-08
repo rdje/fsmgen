@@ -1307,3 +1307,10 @@ The first honest `R11` slices are now:
   aggregate type shape plus authored `member_order`, and the current live SV
   lowering keeps the authored contract honest by mapping those aggregate types
   to packed vector widths instead of frontend-shaped typedef syntax.
+- Forward-IR note: the next honest typed-boundary step on top of that shipped
+  `+types` lane is now landed too: when a live direct-root `+size`,
+  composition `?ports`, or realized generated-child interface boundary comes
+  from a named type alias, `structural_rtl_ir` plus mirrored `module_info`
+  now preserve `declared_type_name` and canonical `declared_type_spec`
+  instead of flattening authored type identity down to width, signedness, and
+  state-model only.

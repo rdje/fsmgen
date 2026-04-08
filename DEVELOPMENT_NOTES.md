@@ -1,5 +1,49 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-08: declared type identity should survive the live structural boundary
+- Continued the new `+types` lane by preserving authored type identity deeper
+  than raw packed width once scalar and aggregate aliases were already live.
+- Landed behavior:
+  - direct-root `+size` entries that resolve through named type aliases now
+    preserve `declared_type_name` plus canonical `declared_type_spec` on live
+    signal objects,
+  - composition `?ports` that resolve through named type aliases now preserve
+    that same metadata on top-port objects,
+  - realized generated-child interface ports now also preserve the child's
+    declared type identity when the child source declared those widths through
+    named aliases,
+  - and `structural_rtl_ir` plus mirrored `module_info` now export that
+    declared type identity on direct module ports, composition top ports, and
+    realized child interface ports instead of forcing later typed lowering or
+    embedder inspection to reconstruct authored type names from width,
+    signedness, and state-model alone.
+- Why this boundary is deliberate:
+  - it keeps the current live emitted HDL contract unchanged,
+  - but it gives the forward IR one honest typed-boundary handoff for future
+    aggregate-aware compatibility checks and richer backend-owned type
+    lowering,
+  - and it avoids parser-residue rediscovery by promoting the authored alias
+    identity into the normal structural export surface on purpose.
+
+## 2026-04-08: documentation quality is a product requirement, not cleanup
+- Saved one explicit adoption rule after the latest language-growth work:
+  every shipped user-facing feature must leave behind real documentation, not
+  just changelog residue.
+- Required documentation standard going forward:
+  - document intent first, not just syntax,
+  - explain the live supported boundary plainly,
+  - include useful, realistic, copyable examples rather than only toy forms,
+  - make failure modes understandable enough that users are not intimidated by
+    the tool,
+  - and treat user-facing docs as part of shipping the feature rather than a
+    later cleanup pass.
+- Practical owner surfaces:
+  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+    for live syntax/behavior and realistic examples,
+  - [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
+    for composition-specific contract boundaries,
+  - and the roadmap/history notes for steering, rationale, and continuity.
+
 ## 2026-04-08: the first live aggregate `+types` slice should stay semantic and packed-width-first
 - Continued the new `+types` lane by opening the first honest aggregate step
   instead of stopping at scalar aliases once width/signed/state-model were in

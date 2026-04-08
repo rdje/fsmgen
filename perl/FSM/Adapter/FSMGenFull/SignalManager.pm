@@ -98,6 +98,11 @@ sub register_signal($self, $signal_name, %attributes) {
             $existing->{type} = $normalized_attrs{type} if defined $normalized_attrs{type};
             $existing->{signed} = $normalized_attrs{signed} ? 1 : 0 if exists $normalized_attrs{signed};
             $existing->{state_model} = $normalized_attrs{state_model} if exists $normalized_attrs{state_model};
+            $existing->{declared_type_name} = $normalized_attrs{declared_type_name}
+                if exists $normalized_attrs{declared_type_name};
+            if (exists $normalized_attrs{declared_type_spec}) {
+                $existing->{declared_type_spec} = _clone_type_spec($normalized_attrs{declared_type_spec});
+            }
             $existing->{clock_domain} = $normalized_attrs{clock_domain} if exists $normalized_attrs{clock_domain};
             $existing->{reset_domain} = $normalized_attrs{reset_domain} if exists $normalized_attrs{reset_domain};
             
@@ -314,6 +319,10 @@ sub get_signal_summary($self) {
             width => $signal->width,
             is_output => $signal->get_attribute('is_output') // 0,
         };
+        $summary{$signal_name}{declared_type_name} = $signal->declared_type_name
+            if $signal->can('declared_type_name') && defined $signal->declared_type_name;
+        $summary{$signal_name}{declared_type_spec} = $signal->declared_type_spec
+            if $signal->can('declared_type_spec') && defined $signal->declared_type_spec;
     }
     return \%summary;
 }

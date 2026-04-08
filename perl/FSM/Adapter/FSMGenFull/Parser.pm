@@ -529,6 +529,8 @@ sub parse_size_section($self, $size_ast) {
             width => $width_contract->{width},
             signed => ($width_contract->{signed} // 0),
             state_model => $width_contract->{state_model},
+            declared_type_name => $width_contract->{declared_type_name},
+            declared_type_spec => $width_contract->{declared_type_spec},
             width_declared => 1,
         );
 
@@ -541,6 +543,8 @@ sub parse_size_section($self, $size_ast) {
                 width => $width_contract->{width},
                 signed => ($width_contract->{signed} // 0),
                 state_model => $width_contract->{state_model},
+                declared_type_name => $width_contract->{declared_type_name},
+                declared_type_spec => $width_contract->{declared_type_spec},
                 is_output => 1,
                 is_aux_output => 1,
                 width_declared => 1,
@@ -553,6 +557,8 @@ sub parse_size_section($self, $size_ast) {
                 width => $width_contract->{width},
                 signed => ($width_contract->{signed} // 0),
                 state_model => $width_contract->{state_model},
+                declared_type_name => $width_contract->{declared_type_name},
+                declared_type_spec => $width_contract->{declared_type_spec},
                 is_output => 1,
                 is_aux_output => 1,
                 width_declared => 1,
@@ -720,6 +726,8 @@ sub resolve_declared_width_contract($self, %args) {
                 width => 0 + $resolved_type->{width},
                 signed => ($resolved_type->{signed} // 0) ? 1 : 0,
                 state_model => $resolved_type->{state_model},
+                declared_type_name => $width_token,
+                declared_type_spec => $resolved_type,
             };
         }
 

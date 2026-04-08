@@ -1,5 +1,36 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-08: declared type identity now survives through structural boundary metadata
+- Saved the next honest typed-boundary slice after packed aggregate aliases
+  landed.
+- Important continuity note:
+  - direct-root `+size` entries that resolve through named type aliases now
+    preserve `declared_type_name` plus canonical `declared_type_spec` on live
+    signals,
+  - composition `?ports` now preserve that same metadata on top-port objects
+    when their width tokens came from named type aliases,
+  - realized generated-child interface ports now preserve the child source's
+    declared type identity when that interface was declared through named
+    aliases,
+  - and `structural_rtl_ir` plus mirrored `module_info` now export that
+    metadata on direct module ports, composition top ports, and realized child
+    interface ports instead of flattening everything down to width, signedness,
+    and state-model alone.
+
+## 2026-04-08: user-facing docs must ship with the feature
+- Saved one explicit product-level rule for future sessions:
+  documentation quality is part of feature completion, not a later polish
+  phase.
+- Important continuity note:
+  - every shipped user-facing language or CLI feature should be documented in
+    the live user docs, not only in `CHANGES.md`,
+  - docs should explain intent and supported boundaries plainly,
+  - examples should be realistic and copyable so users feel invited to use the
+    tool rather than intimidated by it,
+  - and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+    plus [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
+    are the primary user-facing owners for that contract.
+
 ## 2026-04-08: packed aggregate type aliases now ride the live `+types` lane
 - Saved the next honest widening after scalar width/signed/state-model aliases
   landed cleanly.

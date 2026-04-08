@@ -1752,6 +1752,13 @@ Exit criteria:
   aggregate type shape and member order, and the live SystemVerilog lowering
   currently maps those aggregate aliases to one packed vector width instead of
   exposing backend typedef syntax as the authored contract.
+- `R11`: that same declarative type lane now also preserves declared type
+  identity on the live structural boundary: whenever direct-root `+size`,
+  composition `?ports`, or realized generated-child interface ports come from
+  named type aliases, `structural_rtl_ir` and mirrored `module_info` now
+  preserve `declared_type_name` plus canonical `declared_type_spec` instead of
+  forcing later typed lowering or embedder inspection to rediscover authored
+  type intent from width/signed/state-model alone.
 - `R11`: direct generated roots now also preserve one bounded `symbol_contract`
   through forward `intent_hir` and mirrored `module_info`, so local
   constants/enums, canonical aggregate payloads, scalar-leaf summaries, and

@@ -520,6 +520,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - when one of those width entries resolves to an explicit `(two_state ...)` or `(four_state ...)` scalar type alias, the generated SystemVerilog boundary/internal declarations now also preserve that state-model intent as `bit` or `logic`, for example `input bit [7:0] IN`, `logic signed [7:0] OUT`, or `input logic signed [7:0] IN`.
   - those same direct-root `(+size ...)` width entries may now also use local or imported positive integer scalar symbols such as `(OUT BYTE_W)` or `(FLAG shared.FLAG_W)` when the resolved symbol is one positive integer literal value.
   - local and imported types resolve through one declarative-scope pass, so normal non-cyclic references do not depend on declaration order.
+  - when one of those width entries resolves through a named type alias, the forward `structural_rtl_ir` boundary and mirrored `module_info` now also preserve `declared_type_name` plus the resolved canonical `declared_type_spec` on those module ports, so embedders can still see the authored type contract instead of only the flattened width/signed/state-model result.
 - Composition-top note:
   - inside `?top:name`, local `(+types ...)` declarations may now drive local `?ports` width aliases such as `out_data>byte_t`, `out_flag>flag_t`, `out_header>header_t`, or `out_frame>frame_t`.
   - imported package type aliases may now also drive `?ports` widths through package-qualified tokens such as `out_data>shared.byte` or `out_frame>shared.frame_t`.
@@ -527,6 +528,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - when those local or imported `?ports` width aliases resolve to signed scalar types, emitted Verilog-family top ports now preserve that signedness, for example `input signed [7:0] in_data` or `output signed [7:0] out_data`.
   - when those local or imported `?ports` width aliases resolve to explicit `(two_state ...)` or `(four_state ...)` scalar types, emitted Verilog-family top ports now also preserve that state-model intent as `bit` or `logic`, for example `input bit [7:0] in_data`, `output bit [7:0] out_data`, or `input logic signed [7:0] in_data`.
   - composition `?ports` width tokens may now also use local or imported positive integer scalar symbols such as `out_data>BYTE_W` or `out_data>shared.BYTE_W` when the resolved symbol is one positive integer literal value.
+  - when a declared `?ports` width token resolves through a named type alias, composition-top `structural_rtl_ir` now preserves `declared_type_name` plus the resolved canonical `declared_type_spec` on those top ports, and realized generated-child interface ports preserve the same metadata when the child source declared those ports through named `+types`.
 - Malformed shapes like `(+types)`, `(+types BROKEN)`, malformed entries like `(+types (type only_name))`, and explicit type dependency cycles are rejected explicitly.
 
 `(+import ...)`:
@@ -544,6 +546,7 @@ Forward IR note:
 - direct `?fsm` / `?dt` results now also preserve one bounded `symbol_contract` through `intent_hir` and mirrored `module_info`
 - composition `?top` results now preserve that same bounded `symbol_contract` through composition-top `intent_hir` and mirrored `module_info`
 - that surface currently carries local constant/enum/type names and counts, canonical constant payloads, canonical scalar type specs, scalar-leaf convenience payloads, aggregate-root path summaries, and imported package names/counts
+- the sibling `structural_rtl_ir` surface now also preserves `declared_type_name` plus canonical `declared_type_spec` on direct-root module ports, composition top ports, and realized generated-child interface ports whenever those live boundaries came from named type aliases instead of plain numeric width tokens
 - it is meant as a semantic export/inspection surface for embedders and future compiler work, not as evidence that whole-aggregate assignment/type flow is already shipped
 
 Regression-backed examples:

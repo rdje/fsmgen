@@ -26,6 +26,8 @@ package FSM::CoreAST::Signal;
         $hash_to_bless->{type} = $args{type} // 'wire';
         $hash_to_bless->{signed} = ($args{signed} // 0) ? 1 : 0;
         $hash_to_bless->{state_model} = $args{state_model};
+        $hash_to_bless->{declared_type_name} = $args{declared_type_name};
+        $hash_to_bless->{declared_type_spec} = _clone_structured_value($args{declared_type_spec});
         $hash_to_bless->{clock_domain} = $args{clock_domain};
         $hash_to_bless->{reset_domain} = $args{reset_domain};
         $hash_to_bless->{attributes} = $args{attributes} // {};
@@ -46,6 +48,8 @@ package FSM::CoreAST::Signal;
     sub type($self) { $self->{type} }
     sub signed($self) { $self->{signed} }
     sub state_model($self) { $self->{state_model} }
+    sub declared_type_name($self) { $self->{declared_type_name} }
+    sub declared_type_spec($self) { return _clone_structured_value($self->{declared_type_spec}) }
     sub clock_domain($self) { $self->{clock_domain} }
     sub reset_domain($self) { $self->{reset_domain} }
     sub attributes($self) { $self->{attributes} }
@@ -126,6 +130,22 @@ package FSM::CoreAST::Signal;
         for my $fanin_signal (@$fanin_signals) {
             $fanin_signal->add_fanout_signal($self) if $fanin_signal && $fanin_signal->can('add_fanout_signal');
         }
+    }
+
+    sub _clone_structured_value($value) {
+        return undef unless defined $value;
+
+        if (ref($value) eq 'HASH') {
+            return {
+                map { $_ => _clone_structured_value($value->{$_}) } sort keys %$value
+            };
+        }
+
+        if (ref($value) eq 'ARRAY') {
+            return [ map { _clone_structured_value($_) } @$value ];
+        }
+
+        return $value;
     }
 
 #=============================================================================
