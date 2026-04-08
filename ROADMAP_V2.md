@@ -1314,3 +1314,10 @@ The first honest `R11` slices are now:
   now preserve `declared_type_name` and canonical `declared_type_spec`
   instead of flattening authored type identity down to width, signedness, and
   state-model only.
+- Forward-IR note: that preserved declared-type boundary now also feeds the
+  live same-name composition contract: undeclared top-port inference, plain
+  explicit top-port same-name convention, declared `=name` connect-by-name,
+  and inferred same-name internal-carrier re-export now reject width-equal
+  but declared-type-incompatible child families, and inferred undeclared top
+  ports preserve one shared declared type contract when the eligible child
+  evidence is uniform.

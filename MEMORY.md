@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-08: same-name composition matching is now declared-type-aware
+- Saved the next typed-composition slice after declared type identity survived
+  the structural boundary.
+- Important continuity note:
+  - same-name undeclared top-input inference now rejects width-equal child
+    input families when their preserved `declared_type_spec` contracts differ,
+  - plain explicit top-port same-name convention, declared `=name`
+    connect-by-name, and inferred internal-carrier re-export now consume that
+    same declared-type boundary too,
+  - and inferred undeclared top ports now preserve one shared
+    `declared_type_name` / canonical `declared_type_spec` when the child-side
+    evidence is uniform.
+
 ## 2026-04-08: declared type identity now survives through structural boundary metadata
 - Saved the next honest typed-boundary slice after packed aggregate aliases
   landed.

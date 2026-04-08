@@ -380,6 +380,69 @@ subtest 'undeclared top-output builder rejects several top-facing same-name chil
     );
 };
 
+subtest 'undeclared top-input builder preserves one uniform declared type contract' => sub {
+    my $ports = FSM::Composition::TopPortInferenceBuilder->augment_undeclared_top_inputs(
+        ports => [],
+        toplinks => [],
+        realized_instances => [
+            realized_instance('left',
+                input_port('payload', 8, undef,
+                    declared_type_name => 'byte_t',
+                    declared_type_spec => bits_spec(8),
+                ),
+            ),
+            realized_instance('right',
+                input_port('payload', 8, undef,
+                    declared_type_name => 'byte_t',
+                    declared_type_spec => bits_spec(8),
+                ),
+            ),
+        ],
+        fsm_file => 'fixture.fsm',
+        header => 'fixture',
+    );
+
+    is(scalar(@$ports), 1, 'builder infers one undeclared top input');
+    is($ports->[0]->declared_type_name, 'byte_t', 'builder preserves the shared declared type name on inferred top inputs');
+    is($ports->[0]->declared_type_spec->{width}, 8, 'builder preserves the shared declared type spec on inferred top inputs');
+};
+
+subtest 'undeclared top-input builder rejects conflicting declared type contracts' => sub {
+    my $exception = eval {
+        FSM::Composition::TopPortInferenceBuilder->augment_undeclared_top_inputs(
+            ports => [],
+            toplinks => [],
+            realized_instances => [
+                realized_instance('left',
+                    input_port('payload', 8, undef,
+                        declared_type_name => 'byte_t',
+                        declared_type_spec => bits_spec(8),
+                    ),
+                ),
+                realized_instance('right',
+                    input_port('payload', 8, undef,
+                        declared_type_name => 'header_t',
+                        declared_type_spec => record_spec(
+                            tag => bit_spec(),
+                            payload => bits_spec(7),
+                        ),
+                    ),
+                ),
+            ],
+            fsm_file => 'fixture.fsm',
+            header => 'fixture',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/undeclared top-input inference is blocked because same-name child inputs disagree on declared type contract/s,
+        'builder rejects undeclared top-input inference across incompatible declared type contracts',
+    );
+};
+
 done_testing();
 
 sub realized_instance {
@@ -398,21 +461,53 @@ sub realized_instance {
 }
 
 sub input_port {
-    my ($name, $width, $type) = @_;
+    my ($name, $width, $type, %extra) = @_;
     return FSM::Composition::Port->new(
         name => $name,
         direction => 'input',
         width => $width,
         type => $type,
+        %extra,
     );
 }
 
 sub output_port {
-    my ($name, $width, $type) = @_;
+    my ($name, $width, $type, %extra) = @_;
     return FSM::Composition::Port->new(
         name => $name,
         direction => 'output',
         width => $width,
         type => $type,
+        %extra,
     );
+}
+
+sub bit_spec {
+    return {
+        kind => 'bit',
+        width => 1,
+        signed => 0,
+    };
+}
+
+sub bits_spec {
+    my ($width) = @_;
+    return {
+        kind => 'bits',
+        width => $width,
+        signed => 0,
+    };
+}
+
+sub record_spec {
+    my (%members) = @_;
+    my $width = 0;
+    $width += ($_->{width} // 0) for values %members;
+    return {
+        kind => 'record',
+        member_order => [sort keys %members],
+        members => \%members,
+        signed => 0,
+        width => $width,
+    };
 }

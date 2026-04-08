@@ -66,6 +66,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R11` Composition contract strengthening.
 - Current next decision point:
+  - The next typed-composition safety slice is now also shipped: same-name composition convention and undeclared top-port inference now consume preserved `declared_type_name` / canonical `declared_type_spec` directly, so width-equal but alias-incompatible child families are blocked instead of being silently flattened to width-only agreement, and inferred undeclared top ports now preserve one shared declared type contract when the child-side evidence is uniform.
+  - The next honest typed seam is to turn that preserved declared-type boundary into richer aggregate-aware compatibility and lowering work, rather than rediscovering type intent from packed width alone.
   - The bounded direct SystemVerilog internal declaration family now also has an explicit owner in [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/InternalDeclarationEmitter.pm), covering internal storage and helper-register declaration rendering from the enable-graph declaration plan.
   - The first bounded direct SystemVerilog scaffold family now has an explicit owner in [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm), covering header, module declaration, state encoding, and state register rendering for the older direct generated-module backend path.
   - The direct SystemVerilog AST-factorization and substituted-AST recovery family now also has an explicit owner in [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm), and the older direct [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog.pm) package is now gone from the live path.
@@ -1759,6 +1761,13 @@ Exit criteria:
   preserve `declared_type_name` plus canonical `declared_type_spec` instead of
   forcing later typed lowering or embedder inspection to rediscover authored
   type intent from width/signed/state-model alone.
+- `R11`: that preserved declared-type boundary now also participates in the
+  live same-name composition contract: undeclared top-input inference, plain
+  explicit top-port same-name convention, declared `=name` connect-by-name,
+  and inferred same-name internal-carrier re-export now all reject
+  width-equal-but-type-incompatible child evidence, while inferred undeclared
+  top ports preserve one shared declared type contract when the child-side
+  family agrees.
 - `R11`: direct generated roots now also preserve one bounded `symbol_contract`
   through forward `intent_hir` and mirrored `module_info`, so local
   constants/enums, canonical aggregate payloads, scalar-leaf summaries, and

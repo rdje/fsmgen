@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-08: same-name composition contracts must consume declared types, not width alone
+- Continued the typed composition lane immediately after preserving declared
+  type identity on the live structural boundary.
+- Landed behavior:
+  - undeclared same-name top-input inference now blocks when width-equal child
+    inputs disagree on `declared_type_spec`,
+  - plain explicit top-port same-name convention and declared `=name`
+    connect-by-name now also block on that same declared-type disagreement
+    instead of flattening everything to width-only compatibility,
+  - inferred same-name internal carriers and explicit top-output re-export now
+    consume the same declared-type contract boundary too,
+  - and inferred undeclared top ports now preserve one shared
+    `declared_type_name` / canonical `declared_type_spec` when the eligible
+    child-side family is uniform.
+- Why this boundary matters:
+  - preserving declared type identity only in exported metadata would not be
+    enough if live composition matching still ignored it,
+  - width-equal aliases such as a packed `record` and a flat `(bits 8)` can be
+    semantically different even when they lower to the same packed width today,
+  - and this keeps future typed aggregate lowering honest by making the
+    convention/inference families consume the same authored type contract that
+    later lowering and diagnostics will need.
+
 ## 2026-04-08: declared type identity should survive the live structural boundary
 - Continued the new `+types` lane by preserving authored type identity deeper
   than raw packed width once scalar and aggregate aliases were already live.

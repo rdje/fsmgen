@@ -93,6 +93,82 @@ subtest 'same-name top-output builder keeps one unique top-facing child output' 
     is($links->[0]->origin_kind, 'inferred_plain_explicit_top_output_link', 'builder preserves the bounded top-output origin kind');
 };
 
+subtest 'same-name top-input builder rejects incompatible declared type contracts' => sub {
+    my $exception = eval {
+        FSM::Composition::SameNameLinkBuilder->build_top_input_links(
+            ports => [
+                FSM::Composition::Port->new(
+                    name => 'payload',
+                    direction => 'input',
+                    width => 8,
+                    declared_type_name => 'header_t',
+                    declared_type_spec => record_spec(
+                        tag => bit_spec(),
+                        payload => bits_spec(7),
+                    ),
+                ),
+            ],
+            explicit_links => [],
+            realized_instances => [
+                realized_instance('left', input_port('payload', 8, undef,
+                    declared_type_name => 'byte_t',
+                    declared_type_spec => bits_spec(8),
+                )),
+                realized_instance('right', input_port('payload', 8, undef,
+                    declared_type_name => 'byte_t',
+                    declared_type_spec => bits_spec(8),
+                )),
+            ],
+            fsm_file => 'fixture.fsm',
+            header => 'fixture',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/same-name top-input convention is blocked because same-name child inputs do not all match that declared type contract/s,
+        'builder rejects explicit same-name top-input fanout across incompatible declared type contracts',
+    );
+};
+
+subtest 'same-name top-output builder rejects incompatible declared type contracts' => sub {
+    my $exception = eval {
+        FSM::Composition::SameNameLinkBuilder->build_top_output_links(
+            ports => [
+                FSM::Composition::Port->new(
+                    name => 'status',
+                    direction => 'output',
+                    width => 8,
+                    declared_type_name => 'header_t',
+                    declared_type_spec => record_spec(
+                        tag => bit_spec(),
+                        payload => bits_spec(7),
+                    ),
+                ),
+            ],
+            explicit_links => [],
+            realized_instances => [
+                realized_instance('producer', output_port('status', 8, undef,
+                    declared_type_name => 'byte_t',
+                    declared_type_spec => bits_spec(8),
+                )),
+            ],
+            fsm_file => 'fixture.fsm',
+            header => 'fixture',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/same-name top-output convention is blocked because the remaining top-facing child output 'producer\.status' preserves incompatible declared type/s,
+        'builder rejects explicit same-name top-output re-export across incompatible declared type contracts',
+    );
+};
+
 subtest 'same-name internal-carrier builder emits re-export plus sink links' => sub {
     my $links = FSM::Composition::SameNameLinkBuilder->build_internal_same_name_links(
         ports => [
@@ -153,6 +229,38 @@ subtest 'same-name internal-carrier builder rejects top-input re-export attempts
     );
 };
 
+subtest 'same-name internal-carrier builder rejects conflicting declared type contracts' => sub {
+    my $exception = eval {
+        FSM::Composition::SameNameLinkBuilder->build_internal_same_name_links(
+            ports => [],
+            explicit_links => [],
+            realized_instances => [
+                realized_instance('producer', output_port('payload', 8, undef,
+                    declared_type_name => 'byte_t',
+                    declared_type_spec => bits_spec(8),
+                )),
+                realized_instance('consumer', input_port('payload', 8, undef,
+                    declared_type_name => 'header_t',
+                    declared_type_spec => record_spec(
+                        tag => bit_spec(),
+                        payload => bits_spec(7),
+                    ),
+                )),
+            ],
+            fsm_file => 'fixture.fsm',
+            header => 'fixture',
+        );
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/undeclared internal-carrier inference is blocked because same-name child ports disagree on declared type contract/s,
+        'builder rejects inferred internal carriers across incompatible declared type contracts',
+    );
+};
+
 done_testing();
 
 sub realized_instance {
@@ -171,21 +279,53 @@ sub realized_instance {
 }
 
 sub input_port {
-    my ($name, $width, $type) = @_;
+    my ($name, $width, $type, %extra) = @_;
     return FSM::Composition::Port->new(
         name => $name,
         direction => 'input',
         width => $width,
         type => $type,
+        %extra,
     );
 }
 
 sub output_port {
-    my ($name, $width, $type) = @_;
+    my ($name, $width, $type, %extra) = @_;
     return FSM::Composition::Port->new(
         name => $name,
         direction => 'output',
         width => $width,
         type => $type,
+        %extra,
     );
+}
+
+sub bit_spec {
+    return {
+        kind => 'bit',
+        width => 1,
+        signed => 0,
+    };
+}
+
+sub bits_spec {
+    my ($width) = @_;
+    return {
+        kind => 'bits',
+        width => $width,
+        signed => 0,
+    };
+}
+
+sub record_spec {
+    my (%members) = @_;
+    my $width = 0;
+    $width += ($_->{width} // 0) for values %members;
+    return {
+        kind => 'record',
+        member_order => [sort keys %members],
+        members => \%members,
+        signed => 0,
+        width => $width,
+    };
 }

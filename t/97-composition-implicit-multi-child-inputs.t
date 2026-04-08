@@ -17,6 +17,7 @@ my $tempdir = tempdir(CLEANUP => 1);
 my $success_path = File::Spec->catfile($tempdir, 'implicit_multi_child_inputs_top.fsm');
 my $success_out_path = File::Spec->catfile($tempdir, 'implicit_multi_child_inputs_top.sv');
 my $width_mismatch_path = File::Spec->catfile($tempdir, 'implicit_multi_child_input_width_mismatch_top.fsm');
+my $declared_type_mismatch_path = File::Spec->catfile($tempdir, 'implicit_multi_child_input_declared_type_mismatch_top.fsm');
 
 write_file(
     $success_path,
@@ -116,6 +117,60 @@ write_file(
 FSM
 );
 
+write_file(
+    $declared_type_mismatch_path,
+    <<'FSM'
+(?top:implicit_multi_child_input_declared_type_mismatch_top
+  (?ports:public_io
+    result_data>8
+  )
+  (?fsmc:left left_src)
+  (?fsmc:right right_src)
+  (?toplink:wiring
+    /left.output_data/result_data/
+  )
+)
+
+(?fsm:left_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type byte_t (bits 8))
+  )
+  (-state0
+    (<shared_cfg
+      (output_data> <= 8'1)
+    )
+  )
+  (+size
+    (shared_cfg byte_t)
+    (output_data 8)
+  )
+)
+
+(?fsm:right_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type header_t (record (tag bit) (payload (bits 7))))
+  )
+  (-state0
+    (<shared_cfg
+      (spare_out> <= 1)
+    )
+  )
+  (+size
+    (shared_cfg header_t)
+    (spare_out 1)
+  )
+)
+FSM
+);
+
 my $pipeline = FSM::Pipeline::HDLGenerator->new(
     debug_level => 0,
     target_language => 'systemverilog',
@@ -174,6 +229,20 @@ subtest 'undeclared shared top-input inference rejects width disagreement' => su
         $exception,
         qr/omits top port 'shared_cfg', .*undeclared top-input inference is blocked because same-name child inputs disagree on width.*left\.shared_cfg\[input, width=8\].*right\.shared_cfg\[input, width=4\]/s,
         'undeclared shared top-input inference now says the convention is blocked when widths disagree',
+    );
+};
+
+subtest 'undeclared shared top-input inference rejects declared type disagreement' => sub {
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($declared_type_mismatch_path);
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/omits top port 'shared_cfg', .*undeclared top-input inference is blocked because same-name child inputs disagree on declared type contract.*left\.shared_cfg\[declared_type='byte_t'\].*right\.shared_cfg\[declared_type='header_t'\]/s,
+        'undeclared shared top-input inference now says the convention is blocked when declared type contracts disagree',
     );
 };
 

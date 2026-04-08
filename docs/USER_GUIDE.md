@@ -244,9 +244,10 @@ Package note:
 - `C4` lane: declared connect-by-name through `=name` in `?ports` for one or more generated children, one or more `?rtl` children, or any mixture of those generated and external RTL children
   - top outputs still require exactly one matching child output
   - top inputs may fan out to one or more matching child inputs of the same name and width
+  - when those ports came from named type aliases, matching now also requires one compatible declared type contract instead of width-only coincidence
 - In explicit-link `C2` / `C3`, plain explicit top ports may now also adopt the same-name convention in a narrower way:
-  - plain explicit top inputs may fan out to matching child inputs when same-name child-side evidence keeps one direction plus exact width/type agreement,
-  - plain explicit top outputs may bind one unique same-name top-facing child output when that child-side evidence is still exact,
+  - plain explicit top inputs may fan out to matching child inputs when same-name child-side evidence keeps one direction plus exact width/type agreement and any preserved declared type contract stays compatible,
+  - plain explicit top outputs may bind one unique same-name top-facing child output when that child-side evidence is still exact, including any preserved declared type contract,
   - and explicit top-boundary links still override that convention locally.
 - `C5` diagnostics: duplicate-driver rejection, explicit-link width mismatch rejection, connect-by-name ambiguity rejection, connect-by-name unknown-endpoint rejection, and width mismatch rejection
 - `C6` scoped rejection of legacy out-of-scope composition constructs
@@ -1017,11 +1018,12 @@ This currently works because:
 - source-side top expressions such as `payload_bus[15:8]` and `status_bus[0]` may now also participate in that omitted/empty-`?ports` inference, including inferable bit/slice operands inside a bounded comma-separated concat source, with the inferred base-port width coming from the highest referenced bit,
 - when those bounded concat sources also include child-output operands such as `producer.payload[7:4]`, omitted/empty-`?ports` inference still derives only the real undeclared top operands from that mixed source instead of treating child-output operands as inferred top-boundary evidence,
 - undeclared top-facing child inputs may now be inferred when the child-side evidence is unambiguous and those inputs are not already consumed by explicit child-to-child links,
+- when those same-name child inputs preserved `declared_type_name` / `declared_type_spec` from named aliases, undeclared top-input inference now also requires one compatible declared type contract and preserves that declared type on the inferred top port,
 - undeclared unique top-facing child outputs may now also be inferred when they are not already consumed by explicit child-to-child links,
-- plain explicit top inputs may now also reuse that same-name convention when compatible child inputs keep one direction plus exact width/type agreement,
-- plain explicit top outputs may now also reuse that same-name convention when one unique same-name child output remains top-facing,
+- plain explicit top inputs may now also reuse that same-name convention when compatible child inputs keep one direction plus exact width/type agreement plus any preserved declared type contract,
+- plain explicit top outputs may now also reuse that same-name convention when one unique same-name child output remains top-facing and any preserved declared type contract stays compatible,
 - undeclared same-name internal child-to-child carriers may now be inferred when one unique child output and one or more child inputs share the same name and no explicit link already touches that name family,
-- those inferred same-name carriers stay internal by default, but an explicit same-name top output may adopt and re-export one of them when width/type metadata still match,
+- those inferred same-name carriers stay internal by default, but an explicit same-name top output may adopt and re-export one of them when width/type metadata and any preserved declared type contract still match,
 - explicit-link tops may now also route one declared top input directly to one or more declared top outputs through explicit top-output assignments while sibling child-input consumers reuse that same top input without an invented helper carrier,
 - explicit link widths and endpoint roles must match exactly.
 
@@ -1150,7 +1152,7 @@ This currently works because:
 - `=enable<` and `=output_data>8` declare that those top ports must be resolved by same-name matching rather than by explicit `?toplink` wiring,
 - each declared top output has exactly one compatible child output,
 - each declared top input has one or more compatible child inputs,
-- compatibility means same name, same direction, and same width,
+- compatibility means same name, same direction, same width, and when named type aliases preserved declared type identity, one compatible declared type contract too,
 - ambiguous or missing matches fail explicitly.
 
 Realistic `=name` patterns:

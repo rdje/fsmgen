@@ -76,6 +76,25 @@ sub build_top_input_links ($class, %args) {
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
             }
 
+            my @typed_same_name_candidates = grep {
+                defined FSM::Composition::InterfacePortBuilder->declared_type_signature($_->{port})
+            } @same_name_candidates;
+            my %declared_type_signatures = map {
+                FSM::Composition::InterfacePortBuilder->declared_type_signature($_->{port}) => 1
+            } @typed_same_name_candidates;
+            if (keys(%declared_type_signatures) > 1) {
+                my $candidates = join(', ', map {
+                    $_->{instance_name}.'.'.$_->{port}->name.
+                    "[declared_type='".FSM::Composition::InterfacePortBuilder->declared_type_label($_->{port})."']"
+                } @typed_same_name_candidates);
+                confess
+                    "Composition source '$header' in '$fsm_file' declares top input '".$top_port->name."', ".
+                    "but same-name top-input convention is blocked because same-name child inputs disagree on declared type contract. ".
+                    "Seen typed child inputs: $candidates. ".
+                    "Use explicit '?toplink' wiring or align the declared type contracts. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+            }
+
             my $declared_type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($top_port->type);
             my @type_incompatible_candidates = grep {
                 FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}->type) ne $declared_type
@@ -91,6 +110,25 @@ sub build_top_input_links ($class, %args) {
                     "Seen same-name child endpoints: $candidates. ".
                     "Use explicit '?toplink' wiring or align the interface types. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+            }
+
+            my $top_declared_type_label = FSM::Composition::InterfacePortBuilder->declared_type_label($top_port);
+            if (defined $top_declared_type_label) {
+                my @declared_type_incompatible_candidates = grep {
+                    FSM::Composition::InterfacePortBuilder->declared_type_conflicts($top_port, $_->{port})
+                } @same_name_candidates;
+                if (@declared_type_incompatible_candidates) {
+                    my $candidates = join(', ', map {
+                        $_->{instance_name}.'.'.$_->{port}->name.
+                        "[declared_type='".FSM::Composition::InterfacePortBuilder->declared_type_label($_->{port})."']"
+                    } @declared_type_incompatible_candidates);
+                    confess
+                        "Composition source '$header' in '$fsm_file' declares top input '".$top_port->name."' with declared type '$top_declared_type_label', ".
+                        "but same-name top-input convention is blocked because same-name child inputs do not all match that declared type contract. ".
+                        "Seen incompatible typed child inputs: $candidates. ".
+                        "Use explicit '?toplink' wiring or align the declared type contracts. ".
+                        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+                }
             }
         }
 
@@ -164,6 +202,8 @@ sub build_top_output_links ($class, %args) {
                 my $candidate = $top_facing_output_candidates[0];
                 my $candidate_type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($candidate->{port}->type);
                 my $declared_type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($top_port->type);
+                my $candidate_declared_type = FSM::Composition::InterfacePortBuilder->declared_type_label($candidate->{port});
+                my $declared_top_declared_type = FSM::Composition::InterfacePortBuilder->declared_type_label($top_port);
 
                 confess
                     "Composition source '$header' in '$fsm_file' declares top output '".$top_port->name."' with width ".$top_port->width.", ".
@@ -178,6 +218,14 @@ sub build_top_output_links ($class, %args) {
                     "Use explicit '?toplink' wiring or align the interface types. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                     unless $candidate_type eq $declared_type;
+
+                confess
+                    "Composition source '$header' in '$fsm_file' declares top output '".$top_port->name."' with declared type '$declared_top_declared_type', ".
+                    "but same-name top-output convention is blocked because the remaining top-facing child output '".$candidate->{instance_name}.'.'.$candidate->{port}->name."' preserves incompatible declared type '$candidate_declared_type'. ".
+                    "Use explicit '?toplink' wiring or align the declared type contracts. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                    if defined($declared_top_declared_type)
+                        && FSM::Composition::InterfacePortBuilder->declared_type_conflicts($top_port, $candidate->{port});
 
                 push @links, FSM::Composition::Link->new(
                     source => $candidate->{instance_name}.'.'.$candidate->{port}->name,
@@ -271,6 +319,25 @@ sub build_internal_same_name_links ($class, %args) {
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
+        my @typed_candidates = grep {
+            defined FSM::Composition::InterfacePortBuilder->declared_type_signature($_->{port})
+        } @candidates;
+        my %declared_type_signatures = map {
+            FSM::Composition::InterfacePortBuilder->declared_type_signature($_->{port}) => 1
+        } @typed_candidates;
+        if (keys(%declared_type_signatures) > 1) {
+            my $seen = join(', ', map {
+                $_->{instance_name}.'.'.$_->{port}->name.
+                "[declared_type='".FSM::Composition::InterfacePortBuilder->declared_type_label($_->{port})."']"
+            } @typed_candidates);
+            confess
+                "Composition source '$header' in '$fsm_file' omits explicit same-name internal wiring for '$port_name', ".
+                "but undeclared internal-carrier inference is blocked because same-name child ports disagree on declared type contract. ".
+                "Seen typed child ports: $seen. ".
+                "The current bounded inference slice only infers internal same-name carriers when all participating typed child ports agree on one declared type contract too. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
         my $resolved_width = $candidates[0]{port}->width;
         my $resolved_type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($candidates[0]{port}->type);
         if ($declared_top_port) {
@@ -288,6 +355,7 @@ sub build_internal_same_name_links ($class, %args) {
                 "The current bounded convention-over-configuration slice only re-exports an inferred same-name internal carrier when the explicit top output matches the child-side type metadata exactly. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                 unless $declared_top_type eq $resolved_type;
+
         }
 
         if (@output_candidates > 1) {
@@ -305,6 +373,17 @@ sub build_internal_same_name_links ($class, %args) {
 
         my $source = $output_candidates[0];
         my $source_endpoint = $source->{instance_name}.'.'.$source->{port}->name;
+        if ($declared_top_port) {
+            my $declared_top_declared_type = FSM::Composition::InterfacePortBuilder->declared_type_label($declared_top_port);
+            my $resolved_declared_type = FSM::Composition::InterfacePortBuilder->declared_type_label($source->{port});
+            confess
+                "Composition source '$header' in '$fsm_file' declares top output '$port_name' with declared type '$declared_top_declared_type', ".
+                "but explicit top-output re-export is blocked because the same-name internal-carrier family resolves to incompatible declared type '$resolved_declared_type'. ".
+                "The current bounded convention-over-configuration slice only re-exports an inferred same-name internal carrier when the explicit top output matches the child-side declared type contract exactly. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                if defined($declared_top_declared_type)
+                    && FSM::Composition::InterfacePortBuilder->declared_type_conflicts($declared_top_port, $source->{port});
+        }
         if ($declared_top_port) {
             push @links, FSM::Composition::Link->new(
                 source => $source_endpoint,

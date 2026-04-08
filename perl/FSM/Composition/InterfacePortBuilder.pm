@@ -130,11 +130,170 @@ sub normalized_interface_type ($class, $type) {
     return defined($type) && length($type) ? $type : 'data';
 }
 
+sub declared_type_name ($class, $port) {
+    return undef unless defined $port;
+    return $port->{declared_type_name}
+        if ref($port) eq 'HASH' && exists $port->{declared_type_name};
+    return $port->declared_type_name
+        if ref($port) && $port->can('declared_type_name');
+    return undef;
+}
+
+sub declared_type_spec ($class, $port) {
+    return undef unless defined $port;
+    return _clone_structured_value($port->{declared_type_spec})
+        if ref($port) eq 'HASH' && exists $port->{declared_type_spec};
+    return $port->declared_type_spec
+        if ref($port) && $port->can('declared_type_spec');
+    return undef;
+}
+
+sub declared_type_signature ($class, $port_or_spec) {
+    my $spec = (
+        ref($port_or_spec) eq 'HASH' && exists $port_or_spec->{kind}
+            ? $port_or_spec
+            : $class->declared_type_spec($port_or_spec)
+    );
+    return undef unless ref($spec) eq 'HASH';
+    return _type_spec_signature($spec);
+}
+
+sub declared_type_label ($class, $port_or_contract) {
+    my $name = $class->declared_type_name($port_or_contract);
+    return $name if defined($name) && length($name);
+
+    my $spec = (
+        ref($port_or_contract) eq 'HASH' && exists $port_or_contract->{kind}
+            ? $port_or_contract
+            : $class->declared_type_spec($port_or_contract)
+    );
+    return undef unless ref($spec) eq 'HASH';
+    return _type_spec_label($spec);
+}
+
+sub declared_type_conflicts ($class, $left, $right) {
+    my $left_signature = $class->declared_type_signature($left);
+    my $right_signature = $class->declared_type_signature($right);
+    return 0 unless defined $left_signature && defined $right_signature;
+    return $left_signature ne $right_signature ? 1 : 0;
+}
+
+sub uniform_declared_type_contract ($class, $ports) {
+    my @ports = ref($ports) eq 'ARRAY' ? @$ports : @_;
+    return {
+        declared_type_name => undef,
+        declared_type_spec => undef,
+    } unless @ports;
+
+    my @signatures;
+    my @names;
+    my $template_spec;
+    for my $port (@ports) {
+        my $signature = $class->declared_type_signature($port);
+        return {
+            declared_type_name => undef,
+            declared_type_spec => undef,
+        } unless defined $signature;
+
+        push @signatures, $signature;
+        push @names, $class->declared_type_name($port);
+        $template_spec //= $class->declared_type_spec($port);
+    }
+
+    my %signatures = map { $_ => 1 } @signatures;
+    return {
+        declared_type_name => undef,
+        declared_type_spec => undef,
+    } unless keys(%signatures) == 1;
+
+    my $uniform_name = $names[0];
+    for my $name (@names) {
+        if (!defined($uniform_name) || !defined($name) || $uniform_name ne $name) {
+            $uniform_name = undef;
+            last;
+        }
+    }
+
+    return {
+        declared_type_name => $uniform_name,
+        declared_type_spec => _clone_structured_value($template_spec),
+    };
+}
+
 sub _port_type ($port) {
     return undef unless defined $port;
     return $port->{type} if ref($port) eq 'HASH';
     return $port->type if ref($port) && $port->can('type');
     return undef;
+}
+
+sub _type_spec_signature ($value) {
+    return 'undef' unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return '{'.join(',', map {
+            $_.'=>'. _type_spec_signature($value->{$_})
+        } sort keys %$value).'}';
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return '['.join(',', map { _type_spec_signature($_) } @$value).']';
+    }
+
+    return "$value";
+}
+
+sub _type_spec_label ($spec) {
+    return 'unknown' unless ref($spec) eq 'HASH';
+
+    my $kind = $spec->{kind} || '';
+    if ($kind eq 'bit') {
+        my $label = 'bit';
+        $label = "signed $label" if $spec->{signed};
+        $label = ($spec->{state_model} || '').' '.$label if defined $spec->{state_model};
+        $label =~ s/\A\s+|\s+\z//g;
+        return $label;
+    }
+
+    if ($kind eq 'bits') {
+        my $label = 'bits['.($spec->{width} // '?').']';
+        $label = "signed $label" if $spec->{signed};
+        $label = ($spec->{state_model} || '').' '.$label if defined $spec->{state_model};
+        $label =~ s/\A\s+|\s+\z//g;
+        return $label;
+    }
+
+    if ($kind eq 'list') {
+        return 'list<'.join(', ', map { _type_spec_label($_) } @{ $spec->{items} || [] }).'>';
+    }
+
+    if ($kind eq 'record') {
+        return 'record{'.join(', ', map {
+            $_.':'. _type_spec_label(($spec->{members} || {})->{$_})
+        } @{ $spec->{member_order} || [] }).'}';
+    }
+
+    if ($kind eq 'deferred_imported_alias') {
+        return $spec->{imported_type_ref} // 'deferred_imported_alias';
+    }
+
+    return $kind;
+}
+
+sub _clone_structured_value ($value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone_structured_value($value->{$_}) } sort keys %$value
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone_structured_value($_) } @$value ];
+    }
+
+    return $value;
 }
 
 1;
@@ -158,6 +317,21 @@ ports.
 
 Normalizes a missing or empty interface type into the default semantic C<data>
 type.
+
+=head2 declared_type_name / declared_type_spec / declared_type_signature / declared_type_label
+
+Expose the bounded declared-type metadata and canonical comparison helpers now
+used by typed composition matching and inference.
+
+=head2 declared_type_conflicts
+
+Returns true only when both compared ports preserve declared type specs and
+those canonical specs differ.
+
+=head2 uniform_declared_type_contract
+
+Returns one shared declared-type contract only when every supplied port carries
+the same declared type spec; otherwise returns an empty contract.
 
 =head2 _port_type
 

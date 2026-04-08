@@ -190,6 +190,8 @@ sub augment_from_explicit_links ($class, %args) {
             direction => $_->{direction},
             width => $_->{width},
             type => $_->{type},
+            declared_type_name => $_->{declared_type_name},
+            declared_type_spec => $_->{declared_type_spec},
             raw_token => undef,
             binding_mode => 'explicit',
             origin_kind => 'inferred_explicit_toplink_port',
@@ -274,12 +276,36 @@ sub augment_undeclared_top_inputs ($class, %args) {
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
+        my @typed_input_candidates = grep {
+            defined FSM::Composition::InterfacePortBuilder->declared_type_signature($_->{port})
+        } @input_candidates;
+        my %declared_type_signatures = map {
+            FSM::Composition::InterfacePortBuilder->declared_type_signature($_->{port}) => 1
+        } @typed_input_candidates;
+        if (keys(%declared_type_signatures) > 1) {
+            my $candidates = join(', ', map {
+                $_->{instance_name}.'.'.$_->{port}->name.
+                "[declared_type='".FSM::Composition::InterfacePortBuilder->declared_type_label($_->{port})."']"
+            } @typed_input_candidates);
+            confess
+                "Composition source '$header' in '$fsm_file' omits top port '$port_name', ".
+                "but undeclared top-input inference is blocked because same-name child inputs disagree on declared type contract. ".
+                "Seen typed child inputs: $candidates. ".
+                "The current bounded inference slice only infers undeclared top inputs when all same-name typed child inputs agree on one declared type contract too. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
         my $template = $input_candidates[0]{port};
+        my $declared_type_contract = FSM::Composition::InterfacePortBuilder->uniform_declared_type_contract(
+            [ map { $_->{port} } @input_candidates ]
+        );
         push @inferred_ports, FSM::Composition::Port->new(
             name => $template->name,
             direction => 'input',
             width => $template->width,
             type => FSM::Composition::InterfacePortBuilder->normalized_interface_type($template->type),
+            declared_type_name => $declared_type_contract->{declared_type_name},
+            declared_type_spec => $declared_type_contract->{declared_type_spec},
             raw_token => undef,
             binding_mode => $same_name_undeclared_top_input_links{$template->name}
                 ? 'explicit'
@@ -356,6 +382,8 @@ sub augment_undeclared_top_outputs ($class, %args) {
             direction => 'output',
             width => $template->width,
             type => FSM::Composition::InterfacePortBuilder->normalized_interface_type($template->type),
+            declared_type_name => FSM::Composition::InterfacePortBuilder->declared_type_name($template),
+            declared_type_spec => FSM::Composition::InterfacePortBuilder->declared_type_spec($template),
             raw_token => $source_endpoint,
             binding_mode => 'implicit_unique_output',
             origin_kind => 'inferred_undeclared_top_output_port',
@@ -369,6 +397,8 @@ sub augment_undeclared_top_outputs ($class, %args) {
 sub _record_inferred_top_port ($class, $inferred_specs, $top_name, $direction, $child_endpoint, $evidence, $fsm_file, $header) {
     my $width = $child_endpoint->{port}->width;
     my $type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($child_endpoint->{port}->type);
+    my $declared_type_name = FSM::Composition::InterfacePortBuilder->declared_type_name($child_endpoint->{port});
+    my $declared_type_spec = FSM::Composition::InterfacePortBuilder->declared_type_spec($child_endpoint->{port});
     return $class->_record_inferred_top_port_requirement(
         $inferred_specs,
         $top_name,
@@ -376,6 +406,8 @@ sub _record_inferred_top_port ($class, $inferred_specs, $top_name, $direction, $
         $width,
         $width,
         $type,
+        $declared_type_name,
+        $declared_type_spec,
         $evidence,
         $fsm_file,
         $header,
@@ -385,6 +417,8 @@ sub _record_inferred_top_port ($class, $inferred_specs, $top_name, $direction, $
 sub _record_inferred_top_expression_port ($class, $inferred_specs, $top_name, $expression_spec, $child_endpoint, $evidence, $fsm_file, $header) {
     my $type = FSM::Composition::InterfacePortBuilder->normalized_interface_type($child_endpoint->{port}->type);
     my $required_width = $class->_required_top_width_for_expression_spec($expression_spec);
+    my $declared_type_name = FSM::Composition::InterfacePortBuilder->declared_type_name($child_endpoint->{port});
+    my $declared_type_spec = FSM::Composition::InterfacePortBuilder->declared_type_spec($child_endpoint->{port});
     return $class->_record_inferred_top_port_requirement(
         $inferred_specs,
         $top_name,
@@ -392,6 +426,8 @@ sub _record_inferred_top_expression_port ($class, $inferred_specs, $top_name, $e
         $required_width,
         undef,
         $type,
+        $declared_type_name,
+        $declared_type_spec,
         $evidence,
         $fsm_file,
         $header,
@@ -433,6 +469,8 @@ sub _record_inferred_ports_from_top_expression ($class, $inferred_specs, $declar
         $inferred_width,
         $inferred_width,
         $type,
+        undef,
+        undef,
         $evidence,
         $fsm_file,
         $header,
@@ -732,7 +770,7 @@ sub _analyze_top_expression_for_inference ($class, $declared_by_name, $inferred_
     confess "TopPortInferenceBuilder requires a supported top-expression inference rule";
 }
 
-sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $direction, $required_width, $exact_width, $type, $evidence, $fsm_file, $header) {
+sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $direction, $required_width, $exact_width, $type, $declared_type_name, $declared_type_spec, $evidence, $fsm_file, $header) {
     my $existing = $inferred_specs->{$top_name};
     my $evidence_changed = 0;
     my $shape_changed = 0;
@@ -755,6 +793,33 @@ sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $
                 "but explicit top-link port inference is blocked because the linked child endpoints disagree on interface type ('".$existing->{type}."' vs '$type'). ".
                 "Seen explicit link evidence: $seen. ".
                 "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on type metadata too. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        my $existing_declared_type_label = FSM::Composition::InterfacePortBuilder->declared_type_label({
+            declared_type_name => $existing->{declared_type_name},
+            declared_type_spec => $existing->{declared_type_spec},
+        });
+        my $incoming_declared_type_label = FSM::Composition::InterfacePortBuilder->declared_type_label({
+            declared_type_name => $declared_type_name,
+            declared_type_spec => $declared_type_spec,
+        });
+        if (FSM::Composition::InterfacePortBuilder->declared_type_conflicts(
+            {
+                declared_type_name => $existing->{declared_type_name},
+                declared_type_spec => $existing->{declared_type_spec},
+            },
+            {
+                declared_type_name => $declared_type_name,
+                declared_type_spec => $declared_type_spec,
+            },
+        )) {
+            my $seen = join(', ', @{$existing->{evidence}}, $evidence);
+            confess
+                "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
+                "but explicit top-link port inference is blocked because the linked child endpoints disagree on declared type contract ('".$existing_declared_type_label."' vs '".$incoming_declared_type_label."'). ".
+                "Seen explicit link evidence: $seen. ".
+                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on one declared type contract too. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
@@ -792,6 +857,16 @@ sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $
             push @{$existing->{evidence}}, $evidence;
             $evidence_changed = 1;
         }
+        if (!defined($declared_type_spec) || !defined($existing->{declared_type_spec})) {
+            if (defined($existing->{declared_type_name}) || defined($existing->{declared_type_spec})) {
+                $existing->{declared_type_name} = undef;
+                $existing->{declared_type_spec} = undef;
+                $shape_changed = 1;
+            }
+        } elsif (defined($existing->{declared_type_name}) && (!defined($declared_type_name) || $existing->{declared_type_name} ne $declared_type_name)) {
+            $existing->{declared_type_name} = undef;
+            $shape_changed = 1;
+        }
         if (defined($exact_width) && (!defined($existing->{exact_width}) || $existing->{exact_width} != $exact_width)) {
             $existing->{exact_width} = $exact_width;
             $shape_changed = 1;
@@ -812,6 +887,8 @@ sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $
         width => $required_width,
         exact_width => $exact_width,
         type => $type,
+        declared_type_name => $declared_type_name,
+        declared_type_spec => $declared_type_spec,
         evidence => [$evidence],
     };
     return 1;
