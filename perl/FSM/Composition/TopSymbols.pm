@@ -7,6 +7,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::Package::Symbols;
+use FSM::Package::ScalarWidthSupport;
 
 sub new ($class, %args) {
     my $local_symbols = $args{local_symbols} || FSM::Package::Symbols->new(
@@ -119,6 +120,15 @@ sub resolve_type ($self, $type_name) {
     }
 
     return undef;
+}
+
+sub resolve_positive_integer_scalar ($self, $symbol_name) {
+    return undef unless defined($symbol_name) && !ref($symbol_name);
+
+    my $resolved_scalar_payload = $self->resolve_actual_payload($symbol_name);
+    return FSM::Package::ScalarWidthSupport->positive_integer_from_literal_like(
+        $resolved_scalar_payload,
+    );
 }
 
 sub finalize_imported_type_aliases ($self) {

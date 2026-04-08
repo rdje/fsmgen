@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-08: positive integer scalar symbols now feed the live width-token paths
+- Saved the next bounded width-lane widening after imported/local scalar type
+  alias support landed cleanly.
+- Important continuity note:
+  - direct-root `+size` entries may now use local or imported positive
+    integer scalar symbols such as `BYTE_W` or `shared_cfg.BYTE_W`,
+  - composition `?ports` width tokens may now use those same local/imported
+    positive integer scalar symbols,
+  - one shared helper in
+    [perl/FSM/Package/ScalarWidthSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/ScalarWidthSupport.pm)
+    now owns “does this scalar payload mean one positive integer width?” so
+    the direct and composition width paths stay aligned,
+  - and the next honest type-lane seam is no longer “shared numeric widths,”
+    but richer semantic properties beyond raw width such as signedness and
+    2-state versus 4-state intent.
+
 ## 2026-04-08: composition local type aliases may now target imported package scalar types
 - Saved the next bounded follow-on slice after direct package-qualified
   imported composition width tokens landed.

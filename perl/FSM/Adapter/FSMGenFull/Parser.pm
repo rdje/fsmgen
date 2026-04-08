@@ -699,11 +699,14 @@ sub resolve_declared_width_token($self, %args) {
     if ($self->is_contract_type_reference($width_token)) {
         my $resolved_width = $self->{signal_manager}->resolve_type_width($width_token);
         return $resolved_width if defined $resolved_width && $resolved_width > 0;
+
+        my $resolved_scalar_width = $self->{signal_manager}->resolve_positive_integer_scalar($width_token);
+        return $resolved_scalar_width if defined $resolved_scalar_width && $resolved_scalar_width > 0;
     }
 
     Carp::confess
         "Malformed '+size' entry for signal '$signal_name'. ".
-        "Each '+size' entry must use an HDL-identifier-compatible signal name and either a positive integer width or a named scalar type such as 'bit', 'byte', or 'pkg_name.byte'. ".
+        "Each '+size' entry must use an HDL-identifier-compatible signal name and either a positive integer width, a named scalar type such as 'bit', 'byte', or 'pkg_name.byte', or a positive integer scalar symbol such as 'BYTE_W' or 'pkg_name.BYTE_W'. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 

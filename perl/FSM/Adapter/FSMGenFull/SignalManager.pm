@@ -8,6 +8,7 @@ no warnings 'experimental::signatures';
 use Data::Dumper;
 use FSM::CoreAST;
 use FSM::Debug;
+use FSM::Package::ScalarWidthSupport;
 
 sub new($class, %args) {
     return bless {
@@ -261,6 +262,14 @@ sub resolve_type_width($self, $type_name) {
     return undef unless $spec && ref($spec) eq 'HASH';
     return undef unless defined $spec->{width};
     return 0 + $spec->{width};
+}
+
+sub resolve_positive_integer_scalar($self, $symbol_name) {
+    return undef unless defined $symbol_name;
+    return undef unless exists $self->{constants}{$symbol_name};
+    return FSM::Package::ScalarWidthSupport->positive_integer_from_literal_like(
+        $self->{constants}{$symbol_name},
+    );
 }
 
 # Summaries

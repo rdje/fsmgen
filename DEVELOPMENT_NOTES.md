@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-08: authored width tokens should accept positive integer scalar symbols through one semantic width extractor
+- Continued the aggregate/type lane by closing the obvious usability gap after
+  scalar type aliases landed, instead of forcing users to wrap every shared
+  numeric width inside a named type first.
+- Landed behavior:
+  - direct-root `+size` entries may now use local or imported positive
+    integer scalar symbols such as `BYTE_W` and `shared_cfg.BYTE_W`,
+  - composition `?ports` width tokens may now use those same local/imported
+    positive integer scalar symbols on the live width path,
+  - one shared helper in
+    [perl/FSM/Package/ScalarWidthSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/ScalarWidthSupport.pm)
+    now owns extraction of one positive integer width from canonical scalar
+    payloads and literal-like spellings,
+  - and the direct-root and composition width-token owners now both reuse
+    that helper instead of drifting into separate parser-local numeric rules.
+- Why this boundary is deliberate:
+  - it keeps the user surface dynamic and convenient when authors already have
+    a shared numeric symbol such as `BYTE_W`,
+  - it still rejects zero/negative/non-numeric payloads explicitly instead of
+    guessing,
+  - and it avoids pretending every shared numeric width wants to be a type
+    alias when sometimes it is simply one named integer value.
+
 ## 2026-04-08: composition local type aliases should collapse onto imported package types through one deferred semantic marker
 - Continued the aggregate/type lane by taking the just-shipped imported
   composition width-token work one bounded step further instead of leaving

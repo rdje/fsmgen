@@ -45,6 +45,11 @@ sub resolve_width_token ($class, %args) {
             if $allow_unresolved_imported_type_refs && $class->_is_deferred_imported_type_alias($type_spec);
     }
 
+    if ($top_symbols && $class->is_contract_type_reference($width_token)) {
+        my $resolved_scalar_width = $top_symbols->resolve_positive_integer_scalar($width_token);
+        return $resolved_scalar_width if defined $resolved_scalar_width && $resolved_scalar_width > 0;
+    }
+
     if ($allow_unresolved_imported_type_refs
         && $class->is_contract_type_reference($width_token)
         && $width_token =~ /\./) {
@@ -52,7 +57,7 @@ sub resolve_width_token ($class, %args) {
     }
 
     confess "Composition top '$top_name' contains '?ports' token '$token', ".
-        "but composition port sizing is blocked because width token '$width_token' is neither a positive integer nor a resolved scalar type alias.".
+        "but composition port sizing is blocked because width token '$width_token' is neither a positive integer, a resolved scalar type alias, nor a positive integer scalar symbol.".
         $docs_hint;
 }
 

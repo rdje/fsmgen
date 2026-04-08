@@ -1715,6 +1715,13 @@ Exit criteria:
   package scalar types, explicit type dependency cycles now fail clearly, and
   forward `symbol_contract` / mirrored `module_info` now also preserve local
   type names/counts plus canonical scalar type specs.
+- `R11`: that same bounded width-token lane now also accepts positive integer
+  scalar symbols on live authored width positions, so direct-root `+size`
+  entries may now use local/imported scalar names such as `BYTE_W` or
+  `shared.BYTE_W`, composition `?ports` may now use those same local/imported
+  scalar width symbols, and one shared scalar-width extraction helper now
+  keeps that numeric-width boundary aligned instead of splitting it into
+  parser-local special cases.
 - `R11`: direct generated roots now also preserve one bounded `symbol_contract`
   through forward `intent_hir` and mirrored `module_info`, so local
   constants/enums, canonical aggregate payloads, scalar-leaf summaries, and
