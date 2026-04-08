@@ -1332,3 +1332,8 @@ The first honest `R11` slices are now:
   driven by one typed child-output family, so the structural RTL handoff no
   longer drops named aggregate/scalar type identity at internal net boundaries
   before later aggregate-aware lowering or embedder inspection can consume it.
+- Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
+  approachable, the preferred shape is a book-like docs set with one Markdown
+  file per major topic, a landing-page/table-of-contents role for
+  `docs/USER_GUIDE.md`, and progressive beginner-to-advanced examples rather
+  than one monolithic reference wall.

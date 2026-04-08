@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-09: user docs should eventually become a book-like set
+- Saved one explicit docs-architecture rule for future sessions.
+- Important continuity note:
+  - when `docs/USER_GUIDE.md` grows too large, split it into a book-like set
+    with one Markdown file per major topic/chapter,
+  - keep `docs/USER_GUIDE.md` as the landing page / table of contents,
+  - organize chapters from beginner to advanced so users can learn FSMGen
+    incrementally,
+  - and keep realistic examples spread across that doc set so the surface
+    stays approachable.
+
 ## 2026-04-08: inferred composition carrier nets now preserve declared type identity
 - Saved the next typed structural handoff slice after explicit `?toplink`
   compatibility became declared-type-aware.

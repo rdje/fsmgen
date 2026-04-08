@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-09: when the guide gets too large, split it into a book-like docs set
+- Saved an explicit documentation-architecture rule for future language and
+  feature growth.
+- Preferred docs shape once the monolithic user guide becomes too large:
+  - turn the docs into a book-like set with one Markdown file per major topic
+    or chapter,
+  - order those chapters from beginner to advanced so users can master FSMGen
+    incrementally instead of facing one giant page,
+  - keep the main `docs/USER_GUIDE.md` as the landing page / table of contents
+    into that book-like set,
+  - separate tutorial/progression material from precise support-boundary
+    references,
+  - and keep plenty of realistic, copyable examples throughout so the docs
+    feel inviting rather than intimidating.
+- Why this matters:
+  - the current product goal is not only correctness, but wide adoption through
+    approachable, example-rich documentation,
+  - and a book-like structure is the honest next step once one guide page
+    starts hiding discoverability instead of helping it.
+
 ## 2026-04-08: inferred composition carrier nets should keep declared type identity too
 - Continued the typed composition / structural handoff lane after explicit
   `?toplink` compatibility became declared-type-aware.

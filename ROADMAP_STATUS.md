@@ -66,6 +66,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R11` Composition contract strengthening.
 - Current next decision point:
+  - Documentation strategy note: when `docs/USER_GUIDE.md` becomes too large, split it into a book-like docs set with one Markdown file per major topic, keep `docs/USER_GUIDE.md` as the landing page / table of contents, and lean on realistic examples throughout so users can master FSMGen incrementally.
   - The next typed structural-handoff slice is now also shipped: inferred composition carrier nets now preserve `declared_type_name` / canonical `declared_type_spec` when they are driven by one typed child-output family, so internal structural connectivity no longer drops named aggregate/scalar type identity at the net boundary.
   - The next honest seam is to use that now-shared typed net/port boundary for richer aggregate-aware compatibility and lowering, rather than re-inferring aggregate meaning from packed widths after planning.
   - The next typed-composition compatibility slice is now also shipped: explicit port-to-port `?toplink` bindings now consume preserved `declared_type_name` / canonical `declared_type_spec` too, so width-equal but alias-incompatible endpoints are blocked with the same failure-summary surface instead of slipping through explicit-link planning.
