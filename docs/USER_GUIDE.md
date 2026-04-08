@@ -181,7 +181,7 @@ Combinational DT note:
 - Root form `(?top:top_name ...)` with an HDL-identifier-compatible top name (`[A-Za-z_]\\w*`)
 - Bounded top-root symbol sections `(+constants ...)` and `(+enums ...)`
   - composition-top `+constants` entries may now be scalar literals, non-empty lists, or nested hash-like aggregates written as `(member value)` pairs
-  - later composition-top aggregate values may also reuse previously declared local constants and enum members as scalar ingredients
+  - composition-top aggregate values may now reuse same-scope local constants and enum members as scalar ingredients regardless of declaration order, as long as the symbol dependency graph stays acyclic
   - composition-top aggregate references may now resolve either to a scalar leaf such as `BYTES[1]`, `FRAME.flag`, or `NEST.header.nibble`, or to one whole list-valued aggregate root such as `=HEADER` or `=TAIL` on the bounded `?toplink` actual/concat path
   - whole hash-like aggregate roots still require member access; for example `=FRAME.flag` is supported but `=FRAME` remains blocked
 - Bounded package roots `(?pkg:package_name ...)` for shared named scalar values, bounded named aggregate values, and enum families
@@ -222,12 +222,12 @@ Package note:
 - `?pkg:name` roots are reusable declaration containers, not HDL-generating roots.
 - Local composition-top symbol note:
   - composition-top `(+constants ...)` entries may now also be scalar literals, non-empty lists, or nested hash-like aggregates written as `(member value)` pairs.
-  - later composition-top aggregate values may now also reuse previously declared local constants and enum members as scalar ingredients.
+  - composition-top aggregate values may now also reuse same-scope local constants and enum members as scalar ingredients regardless of declaration order, with explicit dependency cycles rejected.
   - local composition-top references may now resolve either to a scalar leaf such as `BYTES[1]`, `FRAME.flag`, or `NEST.header.nibble`, or to one whole list-valued aggregate root such as `HEADER` or `TAIL` on the bounded literal-actual path.
   - unresolved whole hash-like aggregate references such as `FRAME` are currently outside that bounded literal-actual path.
 - The active package slice is still intentionally bounded:
   - package `(+constants ...)` entries may now be scalar literals, non-empty lists, or nested hash-like aggregates written as `(member value)` pairs.
-  - later package aggregate values may now also reuse previously declared package constants and enum members as scalar ingredients.
+  - package aggregate values may now also reuse same-scope package constants and enum members as scalar ingredients regardless of declaration order, with explicit dependency cycles rejected.
   - imported package references may now resolve either to a scalar leaf such as `shared.BYTES[1]`, `shared.FRAME.flag`, or `shared.NEST.header.nibble`, or to one whole list-valued aggregate root such as `shared.HEADER` or `shared.TAIL`.
   - unresolved whole hash-like aggregate references such as `shared.FRAME` are rejected explicitly instead of degrading into generic signal names.
 - Bounded direct `?fsm` / `?dt` roots may now also use `(+import pkg_name ...)`, and namespaced package scalar leaves such as `shared.RESET_BYTE`, `shared.mode.BUSY`, `shared.BYTES[1]`, and `shared.FRAME.flag` plus whole list-valued package aggregate roots such as `shared.BYTES` or `shared.TAIL` now resolve as literals in assignment RHS expressions and guard equality conditions on that direct-root path.
@@ -469,7 +469,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
 - References to those names resolve as literals in assignment RHS expressions and guard equality conditions.
 - Direct-root note:
   - inside `?fsm:name` and `?dt:name`, `(+constants ...)` also has a bounded aggregate extension where values may be non-empty lists or nested hash-like `(member value)` aggregates.
-  - later direct-root aggregate values may now also reuse previously declared local constants and enum members as scalar ingredients.
+  - direct-root aggregate values may now also reuse same-scope local constants and enum members as scalar ingredients regardless of declaration order, with explicit dependency cycles rejected.
   - the live direct-root path now accepts scalar leaves such as `BYTES[1]`, `FRAME.flag`, or `NEST.header.nibble`, and whole list-valued aggregate roots such as `BYTES` or `TAIL`.
   - whole hash-like aggregate roots still require member access; for example `FRAME.flag` is supported but `FRAME` remains blocked.
 - Composition-top note:

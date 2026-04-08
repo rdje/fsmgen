@@ -191,7 +191,7 @@ FSM
     );
 };
 
-subtest 'local aggregate values may reuse earlier local constants and enums' => sub {
+subtest 'local aggregate values resolve same-scope constants and enums regardless of declaration order' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'direct_local_named_aggregate_values.fsm');
     my $output_path = File::Spec->catfile($tempdir, 'direct_local_named_aggregate_values.sv');
@@ -204,17 +204,17 @@ subtest 'local aggregate values may reuse earlier local constants and enums' => 
     (clock clk)
     (sreset rstn)
   )
+  (+constants
+    (PACKET (HEADER mode.IDLE))
+    (FLAGS ((busy mode.BUSY)))
+    (HEADER (mode.BUSY RESET_BYTE))
+    (RESET_BYTE 8'hA5)
+  )
   (+enums
     (mode
       (IDLE 0)
       (BUSY 1)
     )
-  )
-  (+constants
-    (RESET_BYTE 8'hA5)
-    (HEADER (mode.BUSY RESET_BYTE))
-    (PACKET (HEADER mode.IDLE))
-    (FLAGS ((busy mode.BUSY)))
   )
   (+size
     (SEL 10)
@@ -278,6 +278,63 @@ FSM
         qr/\bPACKET\b|\bHEADER\b|\bRESET_BYTE\b|mode\.BUSY|FLAGS\.busy/s,
         'CLI output lowers named aggregate ingredients before emission',
     );
+};
+
+subtest 'direct-root declarative symbol cycles fail explicitly' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_local_symbol_cycle.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_local_symbol_cycle.sv');
+
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_local_symbol_cycle
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+constants
+    (A B)
+    (B A)
+  )
+  (+size
+    (OUT 1)
+  )
+  (idle
+    (OUT = A)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug => 0,
+    );
+    my $pipeline_error = eval {
+        $pipeline->generate_hdl_from_file($fsm_path);
+        undef;
+    };
+    $pipeline_error = $@ if !$pipeline_error;
+
+    like(
+        $pipeline_error,
+        qr/Malformed declarative symbol scope in source 'direct_local_symbol_cycle'.*Cycle:\s*constant 'A' -> constant 'B' -> constant 'A'/s,
+        'pipeline reports the explicit direct-root symbol dependency cycle',
+    );
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '--output', $output_path, $fsm_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+
+    ok(!$success, 'CLI rejects direct-root declarative symbol cycles');
+    ok(!-e $output_path, 'CLI does not emit HDL for direct-root declarative symbol cycles');
+    like(
+        $combined_output,
+        qr/Malformed declarative symbol scope in source 'direct_local_symbol_cycle'.*Cycle:\s*constant 'A' -> constant 'B' -> constant 'A'/s,
+        'CLI surfaces the explicit direct-root symbol dependency cycle',
+    );
+    isnt($error_code, 0, 'CLI exits non-zero for direct-root declarative symbol cycles');
 };
 
 subtest 'pipeline and CLI reject unresolved local aggregate roots in direct-root expressions' => sub {

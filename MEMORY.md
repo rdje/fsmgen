@@ -1,27 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
-## 2026-04-08: declaration-order symbol reuse is only a temporary aggregate-language boundary
-- Saved the steering clarification after the first shipped aggregate reuse
-  slice.
+## 2026-04-08: declarative symbol scope now ships for constants and enums
+- Saved the follow-through after the declaration-scope steering note.
 - Important continuity note:
-  - current aggregate symbol reuse is still limited to previously declared
-    constants, enum members, and earlier whole list-valued roots,
-  - that order sensitivity is not the desired end-state,
-  - the intended next language rule for `+constants`, `+enums`, and future
-    `+types` is root-wide or package-wide declarative scope with one semantic
-    resolution pass,
-  - normal non-cyclic references should not depend on declaration order,
-  - and explicit dependency cycles must fail clearly instead of being guessed
-    through parser order.
+  - direct roots, composition tops, and `?pkg:name` packages now resolve
+    `+constants` / `+enums` through one shared declarative resolver instead of
+    parser order,
+  - aggregate values may now reuse same-scope constants, enum members, and
+    whole list-valued roots regardless of declaration order,
+  - explicit dependency cycles now fail clearly on those same lanes,
+  - and the next honest continuation is future `+types` on that same semantic
+    resolution path rather than any return to parser-order behavior.
 
 ## 2026-04-08: later aggregate values now reuse earlier named scalar ingredients
 - Saved the next bounded aggregate-authoring slice after whole-list aggregate
   roots landed.
 - Important continuity note:
-  - later direct-root, composition-top, and `?pkg:name` aggregate values may
-    now reuse previously declared constants, enum members, and earlier whole
-    list-valued roots such as `(HEADER (mode.BUSY RESET_BYTE))` and
-    `(PACKET (HEADER mode.IDLE))`,
+  - direct-root, composition-top, and `?pkg:name` aggregate values may now
+    reuse same-scope constants, enum members, and whole list-valued roots such
+    as `(HEADER (mode.BUSY RESET_BYTE))` and `(PACKET (HEADER mode.IDLE))`
+    regardless of declaration order,
   - one shared symbol-projection helper now owns how canonical symbol payloads
     are fed back into scalar-expression parsing across direct roots,
     composition tops, packages, and imported package projection,

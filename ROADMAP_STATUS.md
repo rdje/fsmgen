@@ -1690,19 +1690,18 @@ Exit criteria:
   `=shared.HEADER`, while whole hash-like roots such as `FRAME` or
   `shared.FRAME` still fail explicitly until field-order/type semantics are
   made real.
-- `R11`: later bounded aggregate values may now reuse previously declared named
-  scalar ingredients instead of forcing raw numerics at every leaf: direct
-  roots, composition tops, and `?pkg:name` packages may now build later
-  aggregate values from earlier local/package constants, enum members, and
-  earlier whole list-valued roots such as `(HEADER (mode.BUSY RESET_BYTE))`
-  and `(PACKET (HEADER mode.IDLE))`, while forward references and hash-root
-  packing remain intentionally out of contract.
-- Steering note for the next symbol/type slice: that declaration-order boundary
-  is a shipped stepping stone, not the desired end-state. The intended language
-  contract for `+constants`, `+enums`, and future `+types` is root-wide or
-  package-wide declarative scope with one semantic resolution pass, so normal
-  non-cyclic references do not depend on declaration order while explicit
-  dependency cycles still fail clearly and whole hash-root packing stays
+- `R11`: bounded aggregate values now reuse same-scope named scalar
+  ingredients through one declarative-resolution pass instead of parser order:
+  direct roots, composition tops, and `?pkg:name` packages may now build
+  aggregate values from local/package constants, enum members, and whole
+  list-valued roots such as `(PACKET (HEADER mode.IDLE))` and
+  `(HEADER (mode.BUSY RESET_BYTE))` regardless of declaration order, while
+  explicit dependency cycles now fail clearly and hash-root packing remains
+  intentionally out of contract.
+- Steering note for the next symbol/type slice: that declarative-scope
+  resolver is now shipped for `+constants` / `+enums`; future `+types` should
+  join that same semantic resolution lane instead of reintroducing
+  parser-order semantics, while whole hash-root packing still stays
   intentionally separate until record semantics are real.
 - `R11`: direct generated roots now also preserve one bounded `symbol_contract`
   through forward `intent_hir` and mirrored `module_info`, so local

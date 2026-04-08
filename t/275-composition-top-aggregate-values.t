@@ -142,7 +142,7 @@ FSM
     unlike($combined_output, qr/hash-like aggregate roots still require member access|whole aggregate actual roots/s, 'successful whole-list composition CLI run does not report aggregate-root failures');
 };
 
-subtest 'pipeline and CLI resolve named ingredients inside composition-root aggregate values' => sub {
+subtest 'pipeline and CLI resolve same-scope named ingredients inside composition-root aggregate values regardless of declaration order' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'top_named_aggregate_actuals.fsm');
     my $output_path = File::Spec->catfile($tempdir, 'top_named_aggregate_actuals.sv');
@@ -151,17 +151,17 @@ subtest 'pipeline and CLI resolve named ingredients inside composition-root aggr
         $composition_path,
         <<'FSM'
 (?top:top_named_aggregate_actuals
+  (+constants
+    (PACKET (HEADER mode.IDLE))
+    (FLAGS ((busy mode.BUSY)))
+    (HEADER (mode.BUSY RESET_BYTE))
+    (RESET_BYTE 8'hA5)
+  )
   (+enums
     (mode
       (IDLE 0)
       (BUSY 1)
     )
-  )
-  (+constants
-    (RESET_BYTE 8'hA5)
-    (HEADER (mode.BUSY RESET_BYTE))
-    (PACKET (HEADER mode.IDLE))
-    (FLAGS ((busy mode.BUSY)))
   )
   (?ports:public_io
     packet_out>10
@@ -202,6 +202,61 @@ FSM
     ok(-e $output_path, 'CLI emits HDL for named aggregate ingredients inside composition-top constants');
     ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for named aggregate ingredients inside composition-top constants');
     unlike($combined_output, qr/composition top symbol literal support is blocked|aggregate value support is blocked/s, 'successful named composition aggregate CLI run does not report symbol-value failures');
+};
+
+subtest 'pipeline and CLI reject composition-top declarative symbol cycles explicitly' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'top_symbol_cycle.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'top_symbol_cycle.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:top_symbol_cycle
+  (+constants
+    (A B)
+    (B A)
+  )
+  (?ports:public_io
+    out_bit>
+  )
+  (?toplink:wiring
+    /=A/out_bit/
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+    );
+
+    my $pipeline_error = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $pipeline_error = $@ if !$pipeline_error;
+
+    like(
+        $pipeline_error,
+        qr/Composition top 'top_symbol_cycle' contains a declarative symbol dependency cycle, .*Cycle:\s*constant 'A' -> constant 'B' -> constant 'A'/s,
+        'pipeline reports the explicit composition-top symbol dependency cycle',
+    );
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '-o', $output_path, $composition_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+
+    ok(!$success, 'CLI rejects composition-top declarative symbol cycles');
+    ok(!-e $output_path, 'CLI does not emit HDL for composition-top declarative symbol cycles');
+    like(
+        $combined_output,
+        qr/Composition top 'top_symbol_cycle' contains a declarative symbol dependency cycle, .*Cycle:\s*constant 'A' -> constant 'B' -> constant 'A'/s,
+        'CLI surfaces the explicit composition-top symbol dependency cycle',
+    );
+    isnt($error_code, 0, 'CLI exits non-zero for composition-top declarative symbol cycles');
 };
 
 subtest 'pipeline and CLI resolve composition-root aggregate leaves for concat operands' => sub {

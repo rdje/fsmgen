@@ -209,7 +209,7 @@ FSM
     );
 };
 
-subtest 'pipeline and CLI resolve named ingredients inside package aggregate values' => sub {
+subtest 'pipeline and CLI resolve same-scope named ingredients inside package aggregate values regardless of declaration order' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
     mkdir $libdir or die "Cannot create $libdir: $!";
@@ -221,17 +221,17 @@ subtest 'pipeline and CLI resolve named ingredients inside package aggregate val
         $package_path,
         <<'FSM'
 (?pkg:shared_external
+  (+constants
+    (PACKET (HEADER mode.IDLE))
+    (FLAGS ((busy mode.BUSY)))
+    (HEADER (mode.BUSY RESET_BYTE))
+    (RESET_BYTE 8'hA5)
+  )
   (+enums
     (mode
       (IDLE 0)
       (BUSY 1)
     )
-  )
-  (+constants
-    (RESET_BYTE 8'hA5)
-    (HEADER (mode.BUSY RESET_BYTE))
-    (PACKET (HEADER mode.IDLE))
-    (FLAGS ((busy mode.BUSY)))
   )
 )
 FSM
@@ -307,6 +307,77 @@ FSM
         qr/shared_external\.PACKET|shared_external\.HEADER|shared_external\.RESET_BYTE|shared_external\.FLAGS\.busy|shared_external\.mode\.BUSY/s,
         'CLI output lowers named package aggregate ingredients before emission',
     );
+};
+
+subtest 'pipeline and CLI reject package declarative symbol cycles explicitly' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
+    mkdir $libdir or die "Cannot create $libdir: $!";
+
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_package_symbol_cycle.fsm');
+    my $package_path = File::Spec->catfile($libdir, 'shared_external.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_package_symbol_cycle.sv');
+
+    write_file(
+        $package_path,
+        <<'FSM'
+(?pkg:shared_external
+  (+constants
+    (A B)
+    (B A)
+  )
+)
+FSM
+    );
+
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:direct_package_symbol_cycle
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+import shared_external)
+  (+size
+    (OUT 1)
+  )
+  (idle
+    (OUT = shared_external.A)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug => 0,
+        source_search_paths => [$libdir],
+    );
+    my $pipeline_error = eval {
+        $pipeline->generate_hdl_from_file($fsm_path);
+        undef;
+    };
+    $pipeline_error = $@ if !$pipeline_error;
+
+    like(
+        $pipeline_error,
+        qr/Package 'shared_external' contains a declarative symbol dependency cycle, .*Cycle:\s*constant 'A' -> constant 'B' -> constant 'A'/s,
+        'pipeline reports the explicit package symbol dependency cycle',
+    );
+
+    my @cmd = ('./bin/fsmgen', '--quiet', '--path', $libdir, '--output', $output_path, $fsm_path);
+    my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+
+    ok(!$success, 'CLI rejects package declarative symbol cycles');
+    ok(!-e $output_path, 'CLI does not emit HDL for package declarative symbol cycles');
+    like(
+        $combined_output,
+        qr/Package 'shared_external' contains a declarative symbol dependency cycle, .*Cycle:\s*constant 'A' -> constant 'B' -> constant 'A'/s,
+        'CLI surfaces the explicit package symbol dependency cycle',
+    );
+    isnt($error_code, 0, 'CLI exits non-zero for package declarative symbol cycles');
 };
 
 subtest 'pipeline and CLI resolve package aggregate leaves for composition actuals' => sub {

@@ -9,6 +9,7 @@ no warnings 'experimental::signatures';
 
 use FSM::Adapter::FSMGenFull::ExpressionBuilder;
 use FSM::Adapter::FSMGenFull::SignalManager;
+use FSM::Package::DeclarativeSymbolResolver;
 use FSM::Package::Spec;
 use FSM::Package::SignalManagerProjectionSupport;
 use FSM::Package::Symbols;
@@ -57,6 +58,8 @@ sub parse_package_root ($self, $package_ast) {
         debug => ($self->{debug} ? 1 : 0),
         signal_manager => $symbol_manager,
     );
+    my @pending_constant_entries;
+    my @pending_enum_entries;
 
     for my $child (@$children) {
         confess
@@ -74,24 +77,20 @@ sub parse_package_root ($self, $package_ast) {
             if ref($child_header);
 
         if (defined($child_header) && $child_header eq '+constants') {
-            $self->parse_package_constants_block(
+            push @pending_constant_entries, @{ $self->parse_package_constants_block(
                 $package_name,
                 $child,
                 $symbols,
-                $symbol_manager,
-                $expression_builder,
-            );
+            ) };
             next;
         }
 
         if (defined($child_header) && $child_header eq '+enums') {
-            $self->parse_package_enums_block(
+            push @pending_enum_entries, @{ $self->parse_package_enums_block(
                 $package_name,
                 $child,
                 $symbols,
-                $symbol_manager,
-                $expression_builder,
-            );
+            ) };
             next;
         }
 
@@ -100,6 +99,15 @@ sub parse_package_root ($self, $package_ast) {
             "but package child kind support is blocked because the active package parser currently accepts only '+constants' and '+enums'.";
     }
 
+    $self->resolve_pending_package_symbols(
+        $package_name,
+        $symbols,
+        $symbol_manager,
+        $expression_builder,
+        \@pending_constant_entries,
+        \@pending_enum_entries,
+    );
+
     return FSM::Package::Spec->new(
         name => $package_name,
         symbols => $symbols,
@@ -107,7 +115,7 @@ sub parse_package_root ($self, $package_ast) {
     );
 }
 
-sub parse_package_constants_block ($self, $package_name, $child_ast, $symbols, $symbol_manager, $expression_builder) {
+sub parse_package_constants_block ($self, $package_name, $child_ast, $symbols) {
     my (undef, $constants_list) = @$child_ast;
 
     confess
@@ -115,6 +123,7 @@ sub parse_package_constants_block ($self, $package_name, $child_ast, $symbols, $
         "but package symbol section shape is blocked because '+constants' currently requires a non-empty list of '(NAME value)' entries where the value is either a literal scalar, a non-empty list aggregate, or a non-empty hash-like aggregate."
         unless ref($constants_list) eq 'ARRAY' && @$constants_list;
 
+    my @constant_entries;
     for my $constant_def (@$constants_list) {
         confess
             "Package '$package_name' contains malformed '+constants' entry, ".
@@ -129,32 +138,17 @@ sub parse_package_constants_block ($self, $package_name, $child_ast, $symbols, $
             "but package symbol token shape is blocked because each '+constants' entry must use an HDL-identifier-compatible name."
             unless $self->is_contract_identifier($resolved_name);
 
-        my $canonical_payload = $self->canonicalize_package_constant_payload(
-            package_name => $package_name,
-            section_header => '+constants',
-            symbol_kind => 'constant',
-            symbol_name => $resolved_name,
+        push @constant_entries, {
+            name => $resolved_name,
             value_ast => $value,
-            expression_builder => $expression_builder,
-        );
-
-        $symbols->store_constant($resolved_name, $canonical_payload);
-        FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
-            signal_manager => $symbol_manager,
-            symbols => FSM::Package::Symbols->new(
-                constants => {
-                    $resolved_name => $canonical_payload,
-                },
-            ),
-            expression_builder => $expression_builder,
-        );
+        };
     }
 
     $symbols->push_raw_block($child_ast);
-    return $symbols;
+    return \@constant_entries;
 }
 
-sub parse_package_enums_block ($self, $package_name, $child_ast, $symbols, $symbol_manager, $expression_builder) {
+sub parse_package_enums_block ($self, $package_name, $child_ast, $symbols) {
     my (undef, $enums_list) = @$child_ast;
 
     confess
@@ -162,6 +156,7 @@ sub parse_package_enums_block ($self, $package_name, $child_ast, $symbols, $symb
         "but package symbol section shape is blocked because '+enums' currently requires a non-empty list of '(enum_name (MEMBER value) ...)' definitions."
         unless ref($enums_list) eq 'ARRAY' && @$enums_list;
 
+    my @enum_entries;
     for my $enum_def (@$enums_list) {
         confess
             "Package '$package_name' contains malformed '+enums' definition, ".
@@ -178,7 +173,7 @@ sub parse_package_enums_block ($self, $package_name, $child_ast, $symbols, $symb
                 && ref($members_list) eq 'ARRAY'
                 && @$members_list;
 
-        my %enum_values;
+        my @member_entries;
         for my $member_def (@$members_list) {
             confess
                 "Package '$package_name' contains malformed '+enums' member for enum '$resolved_enum_name', ".
@@ -196,30 +191,93 @@ sub parse_package_enums_block ($self, $package_name, $child_ast, $symbols, $symb
                     && defined($resolved_member_value)
                     && !ref($resolved_member_value);
 
-            $enum_values{$resolved_member_name} = $self->canonicalize_package_symbol_literal_payload(
-                package_name => $package_name,
-                section_header => '+enums',
-                symbol_kind => 'enum member',
-                symbol_name => $resolved_enum_name.'.'.$resolved_member_name,
+            push @member_entries, {
+                name => $resolved_member_name,
                 value_token => $resolved_member_value,
-                expression_builder => $expression_builder,
-            );
+            };
         }
 
-        $symbols->store_enum($resolved_enum_name, \%enum_values);
-        FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
-            signal_manager => $symbol_manager,
-            symbols => FSM::Package::Symbols->new(
-                enums => {
-                    $resolved_enum_name => \%enum_values,
-                },
-            ),
-            expression_builder => $expression_builder,
-        );
+        push @enum_entries, {
+            name => $resolved_enum_name,
+            members => \@member_entries,
+        };
     }
 
     $symbols->push_raw_block($child_ast);
-    return $symbols;
+    return \@enum_entries;
+}
+
+sub resolve_pending_package_symbols ($self, $package_name, $symbols, $symbol_manager, $expression_builder, $constant_entries, $enum_entries) {
+    $constant_entries ||= [];
+    $enum_entries ||= [];
+    return 1 unless @$constant_entries || @$enum_entries;
+
+    FSM::Package::DeclarativeSymbolResolver->resolve_symbols(
+        constant_entries => $constant_entries,
+        enum_entries => $enum_entries,
+        value_items => sub ($value_ast) { return $self->package_value_items($value_ast) },
+        unwrap_scalar_token => sub ($value) { return $self->unwrap_scalar_token($value) },
+        is_contract_identifier => sub ($value) { return $self->is_contract_identifier($value) },
+        resolve_constant_payload => sub ($entry) {
+            return $self->canonicalize_package_constant_payload(
+                package_name => $package_name,
+                section_header => '+constants',
+                symbol_kind => 'constant',
+                symbol_name => $entry->{name},
+                value_ast => $entry->{value_ast},
+                expression_builder => $expression_builder,
+            );
+        },
+        resolve_enum_member_payload => sub ($enum_entry, $member_entry) {
+            return $self->canonicalize_package_symbol_literal_payload(
+                package_name => $package_name,
+                section_header => '+enums',
+                symbol_kind => 'enum member',
+                symbol_name => $enum_entry->{name}.'.'.$member_entry->{name},
+                value_token => $member_entry->{value_token},
+                expression_builder => $expression_builder,
+            );
+        },
+        store_constant => sub ($name, $payload) {
+            $symbols->store_constant($name, $payload);
+            FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
+                signal_manager => $symbol_manager,
+                symbols => FSM::Package::Symbols->new(
+                    constants => {
+                        $name => $payload,
+                    },
+                ),
+                expression_builder => $expression_builder,
+            );
+            return $payload;
+        },
+        store_enum => sub ($enum_name, $members_hashref) {
+            $symbols->store_enum($enum_name, $members_hashref);
+            FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
+                signal_manager => $symbol_manager,
+                symbols => FSM::Package::Symbols->new(
+                    enums => {
+                        $enum_name => $members_hashref,
+                    },
+                ),
+                expression_builder => $expression_builder,
+            );
+            return $members_hashref;
+        },
+        cycle_error => sub (%cycle) {
+            my @chain = map {
+                my $node_type = $_->{type} eq 'enum' ? 'enum' : 'constant';
+                $node_type . " '" . ($_->{name} // 'unknown') . "'";
+            } @{ $cycle{chain} || [] };
+
+            confess
+                "Package '$package_name' contains a declarative symbol dependency cycle, ".
+                "but package symbol scope now resolves normal non-cyclic '+constants'/'+enums' references without depending on declaration order and still blocks cycles explicitly. ".
+                "Cycle: ".join(' -> ', @chain).".";
+        },
+    );
+
+    return 1;
 }
 
 sub decode_package_name ($self, $header) {

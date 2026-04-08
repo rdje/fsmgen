@@ -17,6 +17,7 @@ use FSM::Composition::Link;
 use FSM::Composition::PortsBlock;
 use FSM::Composition::TopLink;
 use FSM::Composition::TopSymbols;
+use FSM::Package::DeclarativeSymbolResolver;
 use FSM::Package::Symbols;
 use FSM::Package::SignalManagerProjectionSupport;
 
@@ -77,6 +78,8 @@ sub parse_top ($self, $top_ast) {
     my @toplinks;
     my @package_imports;
     my $top_symbols = FSM::Composition::TopSymbols->new();
+    my @pending_constant_entries;
+    my @pending_enum_entries;
     my @inline_top_items;
     my $symbol_manager = FSM::Adapter::FSMGenFull::SignalManager->new(
         debug => ($self->{debug} ? 1 : 0),
@@ -95,24 +98,20 @@ sub parse_top ($self, $top_ast) {
         confess "Composition top '$top_name' contains a non-list child item" unless ref($child) eq 'ARRAY';
 
         if (@$child && defined($child->[0]) && !ref($child->[0]) && $child->[0] eq '+constants') {
-            $self->parse_top_constants_block(
+            push @pending_constant_entries, @{ $self->parse_top_constants_block(
                 $top_name,
                 $child,
                 $top_symbols,
-                $symbol_manager,
-                $expression_builder,
-            );
+            ) };
             next;
         }
 
         if (@$child && defined($child->[0]) && !ref($child->[0]) && $child->[0] eq '+enums') {
-            $self->parse_top_enums_block(
+            push @pending_enum_entries, @{ $self->parse_top_enums_block(
                 $top_name,
                 $child,
                 $top_symbols,
-                $symbol_manager,
-                $expression_builder,
-            );
+            ) };
             next;
         }
 
@@ -133,6 +132,15 @@ sub parse_top ($self, $top_ast) {
             confess "Internal error: unknown parsed composition child kind '$kind'";
         }
     }
+
+    $self->resolve_pending_top_symbols(
+        $top_name,
+        $top_symbols,
+        $symbol_manager,
+        $expression_builder,
+        \@pending_constant_entries,
+        \@pending_enum_entries,
+    );
 
     if (@inline_top_items) {
         my $rendered = join ', ', @inline_top_items;
@@ -226,7 +234,7 @@ sub parse_top_child ($self, $top_name, $child_ast) {
         $self->scope_docs_suffix;
 }
 
-sub parse_top_constants_block ($self, $top_name, $child_ast, $top_symbols, $symbol_manager, $expression_builder) {
+sub parse_top_constants_block ($self, $top_name, $child_ast, $top_symbols) {
     my (undef, $constants_list) = @$child_ast;
 
     confess
@@ -235,6 +243,7 @@ sub parse_top_constants_block ($self, $top_name, $child_ast, $top_symbols, $symb
         $self->scope_docs_suffix
         unless ref($constants_list) eq 'ARRAY' && @$constants_list;
 
+    my @constant_entries;
     for my $constant_def (@$constants_list) {
         confess
             "Composition top '$top_name' contains malformed '+constants' entry, ".
@@ -251,32 +260,17 @@ sub parse_top_constants_block ($self, $top_name, $child_ast, $top_symbols, $symb
             $self->scope_docs_suffix
             unless $self->is_contract_identifier($resolved_name);
 
-        my $canonical_payload = $self->canonicalize_top_constant_payload(
-            top_name => $top_name,
-            section_header => '+constants',
-            symbol_kind => 'constant',
-            symbol_name => $resolved_name,
+        push @constant_entries, {
+            name => $resolved_name,
             value_ast => $value,
-            expression_builder => $expression_builder,
-        );
-
-        $top_symbols->store_constant($resolved_name, $canonical_payload);
-        FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
-            signal_manager => $symbol_manager,
-            symbols => FSM::Package::Symbols->new(
-                constants => {
-                    $resolved_name => $canonical_payload,
-                },
-            ),
-            expression_builder => $expression_builder,
-        );
+        };
     }
 
     $top_symbols->push_raw_block($child_ast);
-    return $top_symbols;
+    return \@constant_entries;
 }
 
-sub parse_top_enums_block ($self, $top_name, $child_ast, $top_symbols, $symbol_manager, $expression_builder) {
+sub parse_top_enums_block ($self, $top_name, $child_ast, $top_symbols) {
     my (undef, $enums_list) = @$child_ast;
 
     confess
@@ -285,6 +279,7 @@ sub parse_top_enums_block ($self, $top_name, $child_ast, $top_symbols, $symbol_m
         $self->scope_docs_suffix
         unless ref($enums_list) eq 'ARRAY' && @$enums_list;
 
+    my @enum_entries;
     for my $enum_def (@$enums_list) {
         confess
             "Composition top '$top_name' contains malformed '+enums' definition, ".
@@ -303,7 +298,7 @@ sub parse_top_enums_block ($self, $top_name, $child_ast, $top_symbols, $symbol_m
                 && ref($members_list) eq 'ARRAY'
                 && @$members_list;
 
-        my %enum_values;
+        my @member_entries;
         for my $member_def (@$members_list) {
             confess
                 "Composition top '$top_name' contains malformed '+enums' member for enum '$resolved_enum_name', ".
@@ -323,30 +318,94 @@ sub parse_top_enums_block ($self, $top_name, $child_ast, $top_symbols, $symbol_m
                     && defined($resolved_member_value)
                     && !ref($resolved_member_value);
 
-            $enum_values{$resolved_member_name} = $self->canonicalize_top_symbol_literal_payload(
-                top_name => $top_name,
-                section_header => '+enums',
-                symbol_kind => 'enum member',
-                symbol_name => $resolved_enum_name.'.'.$resolved_member_name,
+            push @member_entries, {
+                name => $resolved_member_name,
                 value_token => $resolved_member_value,
-                expression_builder => $expression_builder,
-            );
+            };
         }
 
-        $top_symbols->store_enum($resolved_enum_name, \%enum_values);
-        FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
-            signal_manager => $symbol_manager,
-            symbols => FSM::Package::Symbols->new(
-                enums => {
-                    $resolved_enum_name => \%enum_values,
-                },
-            ),
-            expression_builder => $expression_builder,
-        );
+        push @enum_entries, {
+            name => $resolved_enum_name,
+            members => \@member_entries,
+        };
     }
 
     $top_symbols->push_raw_block($child_ast);
-    return $top_symbols;
+    return \@enum_entries;
+}
+
+sub resolve_pending_top_symbols ($self, $top_name, $top_symbols, $symbol_manager, $expression_builder, $constant_entries, $enum_entries) {
+    $constant_entries ||= [];
+    $enum_entries ||= [];
+    return 1 unless @$constant_entries || @$enum_entries;
+
+    FSM::Package::DeclarativeSymbolResolver->resolve_symbols(
+        constant_entries => $constant_entries,
+        enum_entries => $enum_entries,
+        value_items => sub ($value_ast) { return $self->top_value_items($value_ast) },
+        unwrap_scalar_token => sub ($value) { return $self->unwrap_scalar_token($value) },
+        is_contract_identifier => sub ($value) { return $self->is_contract_identifier($value) },
+        resolve_constant_payload => sub ($entry) {
+            return $self->canonicalize_top_constant_payload(
+                top_name => $top_name,
+                section_header => '+constants',
+                symbol_kind => 'constant',
+                symbol_name => $entry->{name},
+                value_ast => $entry->{value_ast},
+                expression_builder => $expression_builder,
+            );
+        },
+        resolve_enum_member_payload => sub ($enum_entry, $member_entry) {
+            return $self->canonicalize_top_symbol_literal_payload(
+                top_name => $top_name,
+                section_header => '+enums',
+                symbol_kind => 'enum member',
+                symbol_name => $enum_entry->{name}.'.'.$member_entry->{name},
+                value_token => $member_entry->{value_token},
+                expression_builder => $expression_builder,
+            );
+        },
+        store_constant => sub ($name, $payload) {
+            $top_symbols->store_constant($name, $payload);
+            FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
+                signal_manager => $symbol_manager,
+                symbols => FSM::Package::Symbols->new(
+                    constants => {
+                        $name => $payload,
+                    },
+                ),
+                expression_builder => $expression_builder,
+            );
+            return $payload;
+        },
+        store_enum => sub ($enum_name, $members_hashref) {
+            $top_symbols->store_enum($enum_name, $members_hashref);
+            FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
+                signal_manager => $symbol_manager,
+                symbols => FSM::Package::Symbols->new(
+                    enums => {
+                        $enum_name => $members_hashref,
+                    },
+                ),
+                expression_builder => $expression_builder,
+            );
+            return $members_hashref;
+        },
+        cycle_error => sub (%cycle) {
+            my @chain = map {
+                my $node_type = $_->{type} eq 'enum' ? 'enum' : 'constant';
+                $node_type . " '" . ($_->{name} // 'unknown') . "'";
+            } @{ $cycle{chain} || [] };
+
+            confess
+                "Composition top '$top_name' contains a declarative symbol dependency cycle, ".
+                "but composition top symbol scope now resolves normal non-cyclic '+constants'/'+enums' references without depending on declaration order and still blocks cycles explicitly. ".
+                "Cycle: ".join(' -> ', @chain).".".
+                $self->scope_docs_suffix;
+        },
+    );
+
+    return 1;
 }
 
 sub parse_top_import_block ($self, $top_name, $child_ast) {

@@ -1,35 +1,34 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
-## 2026-04-08: declaration-order aggregate reuse is a temporary boundary, not the target language rule
-- Clarified the intended end-state for the just-shipped aggregate symbol-reuse
-  slice.
-- Current shipped behavior:
-  - later direct-root, composition-top, and `?pkg:name` aggregate values may
-    reuse previously declared local/package constants, enum members, and
-    earlier whole list-valued roots,
-  - but the contract is still intentionally order-sensitive because the active
-    parser/canonicalization path resolves those ingredients during the current
-    read/build pass.
+## 2026-04-08: declarative symbol scope now resolves aggregate named ingredients without declaration-order dependence
+- Continued the aggregate/type lane by replacing the last parser-order boundary
+  in local/package constant and enum reuse with one shared declarative-scope
+  resolver.
+- Landed behavior:
+  - direct roots, composition tops, and `?pkg:name` packages now resolve
+    `+constants` / `+enums` through one shared
+    [perl/FSM/Package/DeclarativeSymbolResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/DeclarativeSymbolResolver.pm)
+    pass instead of parser-order canonicalization,
+  - aggregate values may now reuse same-scope constants, enum members, and
+    whole list-valued roots regardless of declaration order,
+  - and explicit dependency cycles such as `A -> B -> A` now fail clearly on
+    those same direct/composition/package lanes instead of degrading into
+    unresolved-symbol fallout.
 - Steering for future implementation:
-  - `+constants`, `+enums`, and future `+types` should move toward one
-    root-wide or package-wide declarative scope instead of parser-order
-    semantics,
-  - normal non-cyclic references should resolve regardless of declaration
-    order,
-  - explicit dependency cycles must fail clearly,
-  - and this should be delivered as one semantic resolution phase shared by
-    direct roots, composition tops, and semantic packages rather than three
-    separate ad hoc parser-local rules.
+  - future `+types` should join that same semantic resolution lane,
+  - whole hash-root packing still needs its own real record contract,
+  - and symbol families should not regress toward parser-order semantics now
+    that one shared declarative resolver exists.
 
 ## 2026-04-08: later aggregate values should be able to reuse earlier named scalar ingredients
 - Continued the aggregate/type lane by removing another low-value authoring
   friction point instead of pushing users back toward magic numerics inside
   aggregate literals.
 - Landed behavior:
-  - later direct-root, composition-top, and `?pkg:name` aggregate values may
-    now reuse previously declared local/package constants, enum members, and
-    earlier whole list-valued roots such as `(HEADER (mode.BUSY RESET_BYTE))`
-    and `(PACKET (HEADER mode.IDLE))`,
+  - direct-root, composition-top, and `?pkg:name` aggregate values may now
+    reuse same-scope local/package constants, enum members, and whole
+    list-valued roots such as `(HEADER (mode.BUSY RESET_BYTE))` and
+    `(PACKET (HEADER mode.IDLE))` regardless of declaration order,
   - one shared
     [perl/FSM/Package/SignalManagerProjectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/SignalManagerProjectionSupport.pm)
     helper now owns how canonical symbol payloads are projected back into the
@@ -40,10 +39,10 @@ This document captures engineering rationale, design constraints, and working de
 - Why this boundary is deliberate:
   - aggregate authoring should be low-friction and should not force raw
     numerics once one safe named meaning already exists,
-  - but the contract is still intentionally order-sensitive and limited to
-    previously declared symbols,
-  - so forward references and whole hash-root packing remain explicitly out of
-    contract.
+  - normal declaration order should not matter inside the bounded
+    `+constants` / `+enums` lane,
+  - but explicit dependency cycles and whole hash-root packing remain
+    intentionally blocked.
 
 ## 2026-04-07: whole aggregate widening should start with list roots, not fake record packing
 - Continued the aggregate/type lane after composition-top symbol contracts

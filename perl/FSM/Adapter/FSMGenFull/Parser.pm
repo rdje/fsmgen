@@ -9,6 +9,7 @@ no warnings 'experimental::signatures';
 use Data::Dumper;
 use FSM::CoreAST;
 use FSM::Debug;
+use FSM::Package::DeclarativeSymbolResolver;
 use FSM::Package::SignalManagerProjectionSupport;
 use FSM::Package::Symbols;
 use FSM::SourceClassifier;
@@ -132,6 +133,9 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
     my $top_level_forms_desc = $self->supported_top_level_forms_description($root_kind, $is_flat_ast);
     my $supported_directives_desc = $self->supported_directives_description($root_kind);
     
+    my @pending_constant_entries;
+    my @pending_enum_entries;
+
     for my $element (@$fsm_contents) {
         Carp::confess
             "Malformed top-level " . ($root_kind eq 'dt' ? 'DT' : 'FSM') . " body item '".$self->describe_top_level_source_root([$element])."' in source '$module_name'. ".
@@ -151,15 +155,43 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
             fsm_debug("Parsing +size block", 3);
             $self->parse_size_section($element);
         } elsif ($element_name eq '+constants') {
-            fsm_debug("Parsing constants section", 3);
-            $self->parse_constants_section($element);
+            fsm_debug("Collecting constants section", 3);
+            push @pending_constant_entries, @{ $self->parse_constants_section($element) };
         } elsif ($element_name eq '+enums') {
-            fsm_debug("Parsing enums section", 3);
-            $self->parse_enums_section($element);
+            fsm_debug("Collecting enums section", 3);
+            push @pending_enum_entries, @{ $self->parse_enums_section($element) };
         } elsif ($element_name eq '+import') {
             fsm_debug("Parsing import section", 3);
             $self->parse_import_section($module_name, $element);
-        } elsif ($element_name eq '+define') {
+        }
+    }
+
+    $self->resolve_pending_direct_root_symbols(
+        $module_name,
+        \@pending_constant_entries,
+        \@pending_enum_entries,
+    );
+
+    for my $element (@$fsm_contents) {
+        next unless ref($element) eq 'ARRAY';
+        my $element_name = $element->[0];
+
+        if (
+            defined($element_name)
+            && !ref($element_name)
+            && (
+                $element_name eq '+fsm'
+                || $element_name eq '+system'
+                || $element_name eq '+size'
+                || $element_name eq '+constants'
+                || $element_name eq '+enums'
+                || $element_name eq '+import'
+            )
+        ) {
+            next;
+        }
+
+        if ($element_name eq '+define') {
             fsm_debug("Parsing define directive", 3);
             $self->parse_define_directive($element);
         } elsif ($element_name eq '+params') {
@@ -339,9 +371,6 @@ sub describe_top_level_source_root($self, $raw_ast) {
 
 sub parse_constants_section($self, $constants_ast) {
     my (undef, $constants_list) = @$constants_ast;
-    my $module_name = ($self->{fsm_module} && $self->{fsm_module}->can('name'))
-        ? $self->{fsm_module}->name
-        : 'source';
 
     Carp::confess
         "Malformed '+constants' section. ".
@@ -349,6 +378,7 @@ sub parse_constants_section($self, $constants_ast) {
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless ref($constants_list) eq 'ARRAY' && @$constants_list;
 
+    my @constant_entries;
     for my $constant_def (@$constants_list) {
         Carp::confess
             "Malformed '+constants' entry. ".
@@ -365,29 +395,18 @@ sub parse_constants_section($self, $constants_ast) {
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
             unless $self->is_contract_identifier($resolved_name);
 
-        my $canonical_payload = $self->canonicalize_constant_payload(
-            module_name => $module_name,
-            section_header => '+constants',
-            symbol_kind => 'constant',
-            symbol_name => $resolved_name,
-            value_ast => $value,
-        );
-
         $self->{signal_manager}->record_constant_definition($resolved_name);
-        FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
-            signal_manager => $self->{signal_manager},
-            symbols => FSM::Package::Symbols->new(
-                constants => {
-                    $resolved_name => $canonical_payload,
-                },
-            ),
-            expression_builder => $self->{expression_builder},
-        );
-
-        if ($self->{fsm_module} && $self->{fsm_module}->can('direct_root_symbols')) {
-            $self->{fsm_module}->direct_root_symbols->store_constant($resolved_name, $canonical_payload);
-        }
+        push @constant_entries, {
+            name => $resolved_name,
+            value_ast => $value,
+        };
     }
+
+    if ($self->{fsm_module} && $self->{fsm_module}->can('direct_root_symbols')) {
+        $self->{fsm_module}->direct_root_symbols->push_raw_block($constants_ast);
+    }
+
+    return \@constant_entries;
 }
 
 sub parse_size_section($self, $size_ast) {
@@ -1141,6 +1160,7 @@ sub parse_enums_section($self, $enums_ast) {
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless ref($enums_list) eq 'ARRAY' && @$enums_list;
 
+    my @enum_entries;
     for my $enum_def (@$enums_list) {
         Carp::confess
             "Malformed '+enums' definition. ".
@@ -1159,7 +1179,7 @@ sub parse_enums_section($self, $enums_ast) {
                 && ref($members_list) eq 'ARRAY'
                 && @$members_list;
 
-        my %enum_values;
+        my @member_entries;
         for my $member_def (@$members_list) {
             Carp::confess
                 "Malformed '+enums' member for enum '$resolved_enum_name'. ".
@@ -1179,37 +1199,98 @@ sub parse_enums_section($self, $enums_ast) {
                     && defined($resolved_member_value)
                     && !ref($resolved_member_value);
 
-            $enum_values{$resolved_member_name} = $resolved_member_value;
+            push @member_entries, {
+                name => $resolved_member_name,
+                value_token => $resolved_member_value,
+            };
         }
-        my $enum_module_name = ($self->{fsm_module} && $self->{fsm_module}->can('name'))
-            ? ($self->{fsm_module}->name // 'source')
-            : 'source';
-        my %canonical_enum_values = map {
-            $_ => $self->canonicalize_constant_literal_payload(
-                module_name => $enum_module_name,
+        push @enum_entries, {
+            name => $resolved_enum_name,
+            members => \@member_entries,
+        };
+    }
+
+    if ($self->{fsm_module} && $self->{fsm_module}->can('direct_root_symbols')) {
+        $self->{fsm_module}->direct_root_symbols->push_raw_block($enums_ast);
+    }
+
+    return \@enum_entries;
+}
+
+sub resolve_pending_direct_root_symbols($self, $module_name, $constant_entries, $enum_entries) {
+    $constant_entries ||= [];
+    $enum_entries ||= [];
+    return 1 unless @$constant_entries || @$enum_entries;
+
+    my $direct_root_symbols = ($self->{fsm_module} && $self->{fsm_module}->can('direct_root_symbols'))
+        ? $self->{fsm_module}->direct_root_symbols
+        : FSM::Package::Symbols->new();
+
+    FSM::Package::DeclarativeSymbolResolver->resolve_symbols(
+        constant_entries => $constant_entries,
+        enum_entries => $enum_entries,
+        value_items => sub ($value_ast) { return $self->constant_value_items($value_ast) },
+        unwrap_scalar_token => sub ($value) { return $self->unwrap_scalar_token($value) },
+        is_contract_identifier => sub ($value) { return $self->is_contract_identifier($value) },
+        resolve_constant_payload => sub ($entry) {
+            return $self->canonicalize_constant_payload(
+                module_name => $module_name,
+                section_header => '+constants',
+                symbol_kind => 'constant',
+                symbol_name => $entry->{name},
+                value_ast => $entry->{value_ast},
+            );
+        },
+        resolve_enum_member_payload => sub ($enum_entry, $member_entry) {
+            return $self->canonicalize_constant_literal_payload(
+                module_name => $module_name,
                 section_header => '+enums',
                 symbol_kind => 'enum member',
-                symbol_name => $resolved_enum_name.'.'.$_,
-                value_token => $enum_values{$_},
-            )
-        } sort keys %enum_values;
-        FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
-            signal_manager => $self->{signal_manager},
-            symbols => FSM::Package::Symbols->new(
-                enums => {
-                    $resolved_enum_name => \%canonical_enum_values,
-                },
-            ),
-            expression_builder => $self->{expression_builder},
-        );
-
-        if ($self->{fsm_module} && $self->{fsm_module}->can('direct_root_symbols')) {
-            $self->{fsm_module}->direct_root_symbols->store_enum(
-                $resolved_enum_name,
-                \%canonical_enum_values,
+                symbol_name => $enum_entry->{name}.'.'.$member_entry->{name},
+                value_token => $member_entry->{value_token},
             );
-        }
-    }
+        },
+        store_constant => sub ($name, $payload) {
+            $direct_root_symbols->store_constant($name, $payload);
+            FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
+                signal_manager => $self->{signal_manager},
+                symbols => FSM::Package::Symbols->new(
+                    constants => {
+                        $name => $payload,
+                    },
+                ),
+                expression_builder => $self->{expression_builder},
+            );
+            return $payload;
+        },
+        store_enum => sub ($enum_name, $members_hashref) {
+            $direct_root_symbols->store_enum($enum_name, $members_hashref);
+            FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
+                signal_manager => $self->{signal_manager},
+                symbols => FSM::Package::Symbols->new(
+                    enums => {
+                        $enum_name => $members_hashref,
+                    },
+                ),
+                expression_builder => $self->{expression_builder},
+            );
+            return $members_hashref;
+        },
+        cycle_error => sub (%cycle) {
+            my @chain = map {
+                my $node_type = $_->{type} eq 'enum' ? 'enum' : 'constant';
+                $node_type . " '" . ($_->{name} // 'unknown') . "'";
+            } @{ $cycle{chain} || [] };
+
+            Carp::confess
+                "Malformed declarative symbol scope in source '$module_name'. ".
+                "The active '+constants'/'+enums' contract now resolves normal non-cyclic references without depending on declaration order, but symbol dependency cycles are blocked. ".
+                "Cycle: ".join(' -> ', @chain).". ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        },
+    );
+
+    return 1;
 }
 
 sub parse_import_section($self, $module_name, $imports_ast) {
