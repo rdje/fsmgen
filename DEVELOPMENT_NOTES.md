@@ -1,5 +1,29 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-08: the first bounded `+types` slice should be real scalar semantics, not parser sugar
+- Continued the aggregate/type lane by taking the already-shipped
+  declarative-scope resolver pattern seriously instead of sneaking type aliases
+  through parser order or doc-only future syntax.
+- Landed behavior:
+  - direct `?fsm` / `?dt` roots, composition `?top` roots, and `?pkg:name`
+    packages now accept bounded `+types` declarations for `bit`, `(bits N)`,
+    and named scalar aliases,
+  - those aliases resolve through one shared
+    [perl/FSM/Package/DeclarativeTypeResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/DeclarativeTypeResolver.pm)
+    pass instead of parser order,
+  - direct-root `+size` and local composition `?ports` widths may now use
+    those scalar type names,
+  - explicit dependency cycles fail clearly,
+  - and forward `symbol_contract` / mirrored `module_info` now preserve local
+    type names/counts plus canonical scalar type specs.
+- Why this boundary is deliberate:
+  - it ships one honest scalar type lane now without pretending aggregate type
+    inference or record typing is already solved,
+  - it keeps composition `?ports` type aliases local-only for now instead of
+    half-shipping imported top-port type lookup,
+  - and it gives the future richer `+types` work one real semantic resolver
+    instead of another parser-local special case.
+
 ## 2026-04-08: whole map aggregate roots now lower as packed literals
 - Continued the aggregate/type lane by consuming the new symbol-contract and
   declarative-resolution groundwork instead of introducing a disconnected

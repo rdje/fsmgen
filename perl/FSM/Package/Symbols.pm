@@ -10,12 +10,14 @@ sub new ($class, %args) {
     return bless {
         constants => $args{constants} || {},
         enums => $args{enums} || {},
+        types => $args{types} || {},
         raw_blocks => $args{raw_blocks} || [],
     }, $class;
 }
 
 sub constants ($self) { return $self->{constants} }
 sub enums ($self) { return $self->{enums} }
+sub types ($self) { return $self->{types} }
 sub raw_blocks ($self) { return $self->{raw_blocks} }
 
 sub store_constant ($self, $name, $payload) {
@@ -29,6 +31,11 @@ sub store_enum ($self, $enum_name, $members_hashref) {
         %{ $members_hashref || {} },
     };
     return $self->{enums}{$enum_name};
+}
+
+sub store_type ($self, $type_name, $type_hashref) {
+    $self->{types}{$type_name} = $type_hashref;
+    return $type_hashref;
 }
 
 sub push_raw_block ($self, $block_ast) {
@@ -68,6 +75,12 @@ sub resolve_payload ($self, $symbol_name) {
     return undef;
 }
 
+sub resolve_type ($self, $type_name) {
+    return undef unless defined($type_name) && !ref($type_name);
+    return _clone($self->{types}{$type_name}) if exists $self->{types}{$type_name};
+    return undef;
+}
+
 sub constant_scalar_leaves ($self) {
     my %leaf_payloads;
 
@@ -92,14 +105,17 @@ sub summary ($self) {
     return {
         constants => scalar(keys %{ $self->{constants} || {} }),
         enums => scalar(keys %{ $self->{enums} || {} }),
+        types => scalar(keys %{ $self->{types} || {} }),
     };
 }
 
 sub as_hashref ($self) {
     my $constants = _clone($self->{constants} || {});
     my $enums = _clone($self->{enums} || {});
+    my $types = _clone($self->{types} || {});
     my $constant_names = [ sort keys %{ $self->{constants} || {} } ];
     my $enum_names = [ sort keys %{ $self->{enums} || {} } ];
+    my $type_names = [ sort keys %{ $self->{types} || {} } ];
     my $constant_scalar_leaves = $self->constant_scalar_leaves || {};
     my $constant_aggregate_paths = [ sort keys %{ $self->constant_aggregate_paths || {} } ];
 
@@ -110,6 +126,9 @@ sub as_hashref ($self) {
         enum_count => scalar(@$enum_names),
         enum_names => $enum_names,
         enums => $enums,
+        type_count => scalar(@$type_names),
+        type_names => $type_names,
+        types => $types,
         constant_scalar_leaves => _clone($constant_scalar_leaves),
         constant_aggregate_paths => $constant_aggregate_paths,
     };

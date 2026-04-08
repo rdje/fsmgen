@@ -24,6 +24,7 @@ sub new ($class, %args) {
 sub local_symbols ($self) { return $self->{local_symbols} }
 sub constants ($self) { return $self->{local_symbols}->constants }
 sub enums ($self) { return $self->{local_symbols}->enums }
+sub types ($self) { return $self->{local_symbols}->types }
 sub imported_packages ($self) { return $self->{imported_packages} }
 sub raw_blocks ($self) { return $self->{raw_blocks} }
 
@@ -33,6 +34,10 @@ sub store_constant ($self, $name, $payload) {
 
 sub store_enum ($self, $enum_name, $members_hashref) {
     return $self->{local_symbols}->store_enum($enum_name, $members_hashref);
+}
+
+sub store_type ($self, $type_name, $type_hashref) {
+    return $self->{local_symbols}->store_type($type_name, $type_hashref);
 }
 
 sub push_raw_block ($self, $block_ast) {
@@ -72,6 +77,22 @@ sub resolve_payload ($self, $symbol_name) {
         my $package_symbols = $self->{imported_packages}{$package_name};
         return undef unless $package_symbols && $package_symbols->can('resolve_payload');
         return $package_symbols->resolve_payload($package_symbol);
+    }
+
+    return undef;
+}
+
+sub resolve_type ($self, $type_name) {
+    return undef unless defined($type_name) && !ref($type_name);
+
+    my $resolved_local_type = $self->{local_symbols}->resolve_type($type_name);
+    return $resolved_local_type if defined $resolved_local_type;
+
+    if ($type_name =~ /\A([A-Za-z_]\w*)\.(.+)\z/) {
+        my ($package_name, $package_type) = ($1, $2);
+        my $package_symbols = $self->{imported_packages}{$package_name};
+        return undef unless $package_symbols && $package_symbols->can('resolve_type');
+        return $package_symbols->resolve_type($package_type);
     }
 
     return undef;

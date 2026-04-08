@@ -18,6 +18,7 @@ use FSM::Composition::PortsBlock;
 use FSM::Composition::TopLink;
 use FSM::Composition::TopSymbols;
 use FSM::Package::DeclarativeSymbolResolver;
+use FSM::Package::DeclarativeTypeResolver;
 use FSM::Package::Symbols;
 use FSM::Package::SignalManagerProjectionSupport;
 
@@ -75,11 +76,13 @@ sub parse_top ($self, $top_ast) {
 
     my @instances;
     my @ports_blocks;
+    my @pending_ports_blocks;
     my @toplinks;
     my @package_imports;
     my $top_symbols = FSM::Composition::TopSymbols->new();
     my @pending_constant_entries;
     my @pending_enum_entries;
+    my @pending_type_entries;
     my @inline_top_items;
     my $symbol_manager = FSM::Adapter::FSMGenFull::SignalManager->new(
         debug => ($self->{debug} ? 1 : 0),
@@ -115,8 +118,37 @@ sub parse_top ($self, $top_ast) {
             next;
         }
 
+        if (@$child && defined($child->[0]) && !ref($child->[0]) && $child->[0] eq '+types') {
+            push @pending_type_entries, @{ $self->parse_top_types_block(
+                $top_name,
+                $child,
+                $top_symbols,
+            ) };
+            next;
+        }
+
         if (@$child && defined($child->[0]) && !ref($child->[0]) && $child->[0] eq '+import') {
             push @package_imports, @{$self->parse_top_import_block($top_name, $child)};
+            next;
+        }
+
+        if (@$child && defined($child->[0]) && !ref($child->[0]) && $child->[0] =~ /^\?ports(?::(\w*))?$/) {
+            my $items = $child->[1] // [];
+            confess
+                "Composition top '$top_name' contains child '$child->[0]', ".
+                "but composition child item-list shape is blocked because that child does not contain a proper item list.".
+                $self->scope_docs_suffix
+                unless ref($items) eq 'ARRAY';
+            confess
+                "Composition top '$top_name' contains child '$child->[0]', ".
+                "but composition child item-list shape is blocked because dotted-pair payloads are outside the current active composition parser contract.".
+                $self->scope_docs_suffix
+                if @$items && !ref($items->[0]) && $items->[0] eq '.';
+            push @pending_ports_blocks, [
+                $child,
+                (defined($1) && length($1) ? $1 : undef),
+                $items,
+            ];
             next;
         }
 
@@ -133,6 +165,13 @@ sub parse_top ($self, $top_ast) {
         }
     }
 
+    $self->resolve_pending_top_types(
+        $top_name,
+        $top_symbols,
+        $symbol_manager,
+        \@pending_type_entries,
+    );
+
     $self->resolve_pending_top_symbols(
         $top_name,
         $top_symbols,
@@ -141,6 +180,11 @@ sub parse_top ($self, $top_ast) {
         \@pending_constant_entries,
         \@pending_enum_entries,
     );
+
+    for my $pending_ports (@pending_ports_blocks) {
+        my ($child_ast, $block_name, $items) = @$pending_ports;
+        push @ports_blocks, $self->parse_ports_block($top_name, $child_ast, $block_name, $items, $top_symbols);
+    }
 
     if (@inline_top_items) {
         my $rendered = join ', ', @inline_top_items;
@@ -164,19 +208,19 @@ sub parse_top ($self, $top_ast) {
 sub parse_top_child ($self, $top_name, $child_ast) {
     confess
         "Composition top '$top_name' contains a child entry that is empty or missing its header, ".
-        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', or '+import'.".
+        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', '+types', or '+import'.".
         $self->scope_docs_suffix
         unless @$child_ast;
 
     my $header = $child_ast->[0];
     confess
         "Composition top '$top_name' contains a child entry that is empty or missing its header, ".
-        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', or '+import'.".
+        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', '+types', or '+import'.".
         $self->scope_docs_suffix
         unless defined($header) && length($header);
     confess
         "Composition top '$top_name' contains a child entry that does not begin with a string header, ".
-        "but composition child header shape is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', or '+import'.".
+        "but composition child header shape is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', '+types', or '+import'.".
         $self->scope_docs_suffix
         if ref($header);
 
@@ -230,7 +274,7 @@ sub parse_top_child ($self, $top_name, $child_ast) {
 
     confess
         "Composition top '$top_name' contains child '$header', ".
-        "but composition child kind support is blocked because the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?toplink', '+constants', '+enums', and '+import'.".
+        "but composition child kind support is blocked because the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?toplink', '+constants', '+enums', '+types', and '+import'.".
         $self->scope_docs_suffix;
 }
 
@@ -334,6 +378,64 @@ sub parse_top_enums_block ($self, $top_name, $child_ast, $top_symbols) {
     return \@enum_entries;
 }
 
+sub parse_top_types_block ($self, $top_name, $child_ast, $top_symbols) {
+    my (undef, $types_list) = @$child_ast;
+
+    confess
+        "Composition top '$top_name' contains malformed '+types' section, ".
+        "but composition top type section shape is blocked because '+types' currently requires a non-empty list of '(type NAME bit)', '(type NAME (bits N))', or '(type NAME other_type)' entries.".
+        $self->scope_docs_suffix
+        unless ref($types_list) eq 'ARRAY' && @$types_list;
+
+    my @type_entries;
+    for my $type_def (@$types_list) {
+        confess
+            "Composition top '$top_name' contains malformed '+types' entry, ".
+            "but composition top type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', or '(type NAME other_type)'.".
+            $self->scope_docs_suffix
+            unless ref($type_def) eq 'ARRAY' && @$type_def >= 2;
+
+        my ($keyword, $name, $spec_ast);
+        if (@$type_def >= 3) {
+            ($keyword, $name) = @$type_def[0, 1];
+            $spec_ast = @$type_def == 3
+                ? $type_def->[2]
+                : [ @$type_def[2 .. $#$type_def] ];
+        } elsif (@$type_def == 2 && ref($type_def->[1]) eq 'ARRAY' && @{$type_def->[1]} >= 2) {
+            $keyword = $type_def->[0];
+            $name = $type_def->[1][0];
+            $spec_ast = @{$type_def->[1]} == 2
+                ? $type_def->[1][1]
+                : [ @{$type_def->[1]}[1 .. $#{$type_def->[1]}] ];
+        } else {
+            confess
+                "Composition top '$top_name' contains malformed '+types' entry, ".
+                "but composition top type entry shape is blocked because each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', or '(type NAME other_type)'.".
+                $self->scope_docs_suffix;
+        }
+
+        my $resolved_keyword = $self->unwrap_scalar_token($keyword);
+        my $resolved_name = $self->unwrap_scalar_token($name);
+
+        confess
+            "Composition top '$top_name' contains malformed '+types' entry for type '".$self->describe_contract_name($resolved_name)."', ".
+            "but composition top type token shape is blocked because each '+types' entry must begin with the literal keyword 'type' and use an HDL-identifier-compatible type name.".
+            $self->scope_docs_suffix
+            unless defined($resolved_keyword)
+                && !ref($resolved_keyword)
+                && $resolved_keyword eq 'type'
+                && $self->is_contract_identifier($resolved_name);
+
+        push @type_entries, {
+            name => $resolved_name,
+            spec_ast => $spec_ast,
+        };
+    }
+
+    $top_symbols->push_raw_block($child_ast);
+    return \@type_entries;
+}
+
 sub resolve_pending_top_symbols ($self, $top_name, $top_symbols, $symbol_manager, $expression_builder, $constant_entries, $enum_entries) {
     $constant_entries ||= [];
     $enum_entries ||= [];
@@ -400,6 +502,51 @@ sub resolve_pending_top_symbols ($self, $top_name, $top_symbols, $symbol_manager
             confess
                 "Composition top '$top_name' contains a declarative symbol dependency cycle, ".
                 "but composition top symbol scope now resolves normal non-cyclic '+constants'/'+enums' references without depending on declaration order and still blocks cycles explicitly. ".
+                "Cycle: ".join(' -> ', @chain).".".
+                $self->scope_docs_suffix;
+        },
+    );
+
+    return 1;
+}
+
+sub resolve_pending_top_types ($self, $top_name, $top_symbols, $symbol_manager, $type_entries) {
+    $type_entries ||= [];
+    return 1 unless @$type_entries;
+
+    FSM::Package::DeclarativeTypeResolver->resolve_types(
+        type_entries => $type_entries,
+        unwrap_scalar_token => sub ($value) { return $self->unwrap_scalar_token($value) },
+        unwrap_single_nested_list => sub ($value) { return $self->unwrap_single_nested_list($value) },
+        is_contract_identifier => sub ($value) { return $self->is_contract_identifier($value) },
+        resolve_type_spec => sub ($entry) {
+            return $self->canonicalize_top_type_spec(
+                top_name => $top_name,
+                type_name => $entry->{name},
+                spec_ast => $entry->{spec_ast},
+                top_symbols => $top_symbols,
+            );
+        },
+        store_type => sub ($type_name, $type_spec) {
+            $top_symbols->store_type($type_name, $type_spec);
+            FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
+                signal_manager => $symbol_manager,
+                symbols => FSM::Package::Symbols->new(
+                    types => {
+                        $type_name => $type_spec,
+                    },
+                ),
+            );
+            return $type_spec;
+        },
+        cycle_error => sub (%cycle) {
+            my @chain = map {
+                "type '" . ($_->{name} // 'unknown') . "'";
+            } @{ $cycle{chain} || [] };
+
+            confess
+                "Composition top '$top_name' contains a declarative type dependency cycle, ".
+                "but composition top type scope now resolves normal non-cyclic scalar type aliases without depending on declaration order and still blocks cycles explicitly. ".
                 "Cycle: ".join(' -> ', @chain).".".
                 $self->scope_docs_suffix;
         },
@@ -511,7 +658,7 @@ sub parse_dtc_child ($self, $top_name, $child_ast, $child_name, $items) {
     );
 }
 
-sub parse_ports_block ($self, $top_name, $child_ast, $block_name, $items) {
+sub parse_ports_block ($self, $top_name, $child_ast, $block_name, $items, $top_symbols = undef) {
     my @ports;
 
     for my $item (@$items) {
@@ -527,7 +674,7 @@ sub parse_ports_block ($self, $top_name, $child_ast, $block_name, $items) {
                 $self->scope_docs_suffix;
         }
 
-        push @ports, $self->parse_port_token($top_name, $item);
+        push @ports, $self->parse_port_token($top_name, $item, $top_symbols);
     }
 
     return FSM::Composition::PortsBlock->new(
@@ -537,23 +684,28 @@ sub parse_ports_block ($self, $top_name, $child_ast, $block_name, $items) {
     );
 }
 
-sub parse_port_token ($self, $top_name, $token) {
-    $token =~ /^(?<binding>=)?(?<port>\w+)(?:(?<direction>[<>])(?<size>\d+)?(?:[:](?<type>\w+))?)?$/o;
+sub parse_port_token ($self, $top_name, $token, $top_symbols = undef) {
+    $token =~ /^(?<binding>=)?(?<port>\w+)(?:(?<direction>[<>])(?<size>(?:[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)?|\d+))?(?:[:](?<type>\w+))?)?$/o;
     my ($binding, $port, $direction, $size, $type) = @+{qw/binding port direction size type/};
 
     confess "Composition top '$top_name' contains '?ports' token '$token', ".
         "but composition port token shape is blocked because it is not a valid explicit top-port token for the current active contract.".
         $self->scope_docs_suffix
         unless $port;
-    confess "Composition top '$top_name' contains '?ports' token '$token', ".
-        "but composition port sizing is blocked because it declares non-positive width '$size'.".
-        $self->scope_docs_suffix
-        if defined($size) && $size < 1;
+    my $resolved_width = 1;
+    if (defined $direction) {
+        $resolved_width = $self->resolve_top_port_width_token(
+            top_name => $top_name,
+            token => $token,
+            width_token => $size,
+            top_symbols => $top_symbols,
+        );
+    }
 
     return FSM::Composition::Port->new(
         name => $port,
         direction => defined($direction) ? ($direction eq '<' ? 'input' : 'output') : 'input',
-        width => $size // 1,
+        width => $resolved_width,
         type => $type,
         binding_mode => defined($binding) ? 'connect_by_name' : 'explicit',
         raw_token => $token,
@@ -692,6 +844,14 @@ sub unwrap_scalar_token ($self, $value) {
     return $unwrapped;
 }
 
+sub unwrap_single_nested_list ($self, $value) {
+    my $unwrapped = $value;
+    while (ref($unwrapped) eq 'ARRAY' && @$unwrapped == 1 && ref($unwrapped->[0]) eq 'ARRAY') {
+        $unwrapped = $unwrapped->[0];
+    }
+    return $unwrapped;
+}
+
 sub is_contract_identifier ($self, $value) {
     return defined($value)
         && !ref($value)
@@ -700,6 +860,78 @@ sub is_contract_identifier ($self, $value) {
 
 sub describe_contract_name ($self, $value) {
     return defined($value) && !ref($value) ? $value : 'unknown';
+}
+
+sub is_contract_type_reference ($self, $value) {
+    return defined($value)
+        && !ref($value)
+        && $value =~ /\A(?:[A-Za-z_]\w*)(?:\.[A-Za-z_]\w*)?\z/;
+}
+
+sub resolve_top_port_width_token ($self, %args) {
+    my $top_name = $args{top_name} // 'top';
+    my $token = $args{token} // '?ports';
+    my $width_token = $args{width_token};
+    my $top_symbols = $args{top_symbols};
+
+    return 1 unless defined $width_token;
+    return 0 + $width_token if $width_token =~ /\A\d+\z/ && $width_token > 0;
+
+    if ($width_token =~ /\A\d+\z/) {
+        confess "Composition top '$top_name' contains '?ports' token '$token', ".
+            "but composition port sizing is blocked because it declares non-positive width '$width_token'.".
+            $self->scope_docs_suffix;
+    }
+
+    if ($top_symbols && $self->is_contract_type_reference($width_token)) {
+        my $type_spec = $top_symbols->resolve_type($width_token);
+        return 0 + $type_spec->{width}
+            if $type_spec && ref($type_spec) eq 'HASH' && defined $type_spec->{width} && $type_spec->{width} > 0;
+    }
+
+    confess "Composition top '$top_name' contains '?ports' token '$token', ".
+        "but composition port sizing is blocked because width token '$width_token' is neither a positive integer nor a previously resolved local scalar type alias.".
+        $self->scope_docs_suffix;
+}
+
+sub canonicalize_top_type_spec ($self, %args) {
+    my $top_name = $args{top_name} // 'top';
+    my $type_name = $args{type_name} // 'unknown';
+    my $spec_ast = $args{spec_ast};
+    my $top_symbols = $args{top_symbols};
+
+    my $scalar = $self->unwrap_scalar_token($spec_ast);
+    if (defined($scalar) && !ref($scalar)) {
+        return {
+            kind => 'bit',
+            width => 1,
+        } if $scalar eq 'bit';
+
+        if ($top_symbols && $self->is_contract_type_reference($scalar)) {
+            my $resolved_spec = $top_symbols->resolve_type($scalar);
+            return $resolved_spec if $resolved_spec;
+        }
+    }
+
+    my $cursor = $self->unwrap_single_nested_list($spec_ast);
+    if (ref($cursor) eq 'ARRAY' && @$cursor == 2) {
+        my $head = $self->unwrap_scalar_token($cursor->[0]);
+        my $width_token = $self->unwrap_scalar_token($cursor->[1]);
+
+        if (defined($head) && !ref($head) && $head eq 'bits'
+            && defined($width_token) && !ref($width_token)
+            && $width_token =~ /\A\d+\z/ && $width_token > 0) {
+            return {
+                kind => 'bits',
+                width => 0 + $width_token,
+            };
+        }
+    }
+
+    confess
+        "Composition top '$top_name' contains malformed '+types' entry for type '$type_name', ".
+        "but the first active '+types' lane supports only 'bit', '(bits N)', or aliases to already-resolved local scalar types.".
+        $self->scope_docs_suffix;
 }
 
 sub canonicalize_top_symbol_literal_payload ($self, %args) {

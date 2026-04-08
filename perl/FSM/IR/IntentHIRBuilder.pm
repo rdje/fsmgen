@@ -178,6 +178,7 @@ sub build_direct_root_symbol_contract ($class, $fsm_module) {
     my $has_local_symbols = (
         ($symbol_contract->{constant_count} // 0) > 0
         || ($symbol_contract->{enum_count} // 0) > 0
+        || ($symbol_contract->{type_count} // 0) > 0
     );
     my $has_imports = ($symbol_contract->{package_import_count} // 0) > 0;
 
@@ -216,6 +217,7 @@ sub build_composition_top_symbol_contract ($class, $composition_plan) {
     my $has_local_symbols = (
         ($symbol_contract->{constant_count} // 0) > 0
         || ($symbol_contract->{enum_count} // 0) > 0
+        || ($symbol_contract->{type_count} // 0) > 0
     );
     my $has_imports = ($symbol_contract->{package_import_count} // 0) > 0;
 

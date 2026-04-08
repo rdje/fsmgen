@@ -56,6 +56,14 @@ sub project_symbols_into_signal_manager ($class, %args) {
         }
     }
 
+    for my $type_name (sort keys %{ $symbols->types || {} }) {
+        my $type_spec = $symbols->types->{$type_name};
+        $signal_manager->store_type(
+            $qualify->($type_name),
+            $type_spec,
+        );
+    }
+
     return $signal_manager;
 }
 

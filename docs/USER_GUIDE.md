@@ -14,7 +14,7 @@ Current limitation:
 - Composition/top-level generation is implemented in a deliberately narrow active model.
 - The currently shipped composition boundary is:
   - one `?top:name`,
-  - zero or more bounded `(+constants ...)` / `(+enums ...)` declaration blocks and zero or more bounded `(+import ...)` package-import blocks inside that `?top` root,
+  - zero or more bounded `(+constants ...)` / `(+enums ...)` / `(+types ...)` declaration blocks and zero or more bounded `(+import ...)` package-import blocks inside that `?top` root,
   - zero or one `?ports` block,
   - one or more child instances, currently `?fsmc`, `?dtc`, and `?rtl`,
   - generated child sources realized either from the same file or from external searchable `.fsm` child sources,
@@ -78,7 +78,7 @@ Standard used here:
 ### Fully supported single-module constructs
 - Root form `(?fsm:module_name ...)` with an HDL-identifier-compatible module name (`[A-Za-z_]\\w*`)
 - Root form `(?dt:module_name ...)` with an HDL-identifier-compatible module name (`[A-Za-z_]\\w*`)
-  - top-level standalone-DT content is currently limited to the conventional `(+system ...)` form, `(+size ...)`, `(+constants ...)`, `(+enums ...)`, `(+define ...)`, `(+params ...)`, bounded `(+import ...)`, compact top-level `(:= signal=value)` directives, and general DT blocks like `(-foo ...)`
+  - top-level standalone-DT content is currently limited to the conventional `(+system ...)` form, `(+size ...)`, `(+constants ...)`, `(+enums ...)`, bounded `(+types ...)`, `(+define ...)`, `(+params ...)`, bounded `(+import ...)`, compact top-level `(:= signal=value)` directives, and general DT blocks like `(-foo ...)`
   - explicit conventional `(+system ...)` yields `clk` / `rstn` in standalone-DT roots too
   - without explicit `(+system ...)`, purely combinational `?dt:name` modules expose no implicit system ports
   - without explicit `(+system ...)`, any `?dt:name` module that contains at least one sequential assignment implicitly exposes `clk` / `rst_n`
@@ -112,6 +112,7 @@ Reset-state note:
 - Symbol-definition sections:
   - `(+constants ...)`
   - `(+enums ...)`
+  - `(+types ...)`
   - `(+define ...)`
   - `(+params ...)`
 - Bounded package-import sections:
@@ -506,6 +507,20 @@ This is the current `R8` draft normative contract for the symbol-definition and 
 - Those references resolve as literals in assignment RHS expressions and guard equality conditions.
 - Malformed shapes like `(+enums)`, `(+enums BROKEN)`, `(+enums (mode))`, and malformed members like `(+enums (mode BROKEN))` are rejected explicitly.
 
+`(+types ...)`:
+- Defines bounded scalar named types.
+- Shape:
+  - non-empty list of `(type NAME bit)`, `(type NAME (bits N))`, or `(type NAME other_type)` entries
+- Current active use:
+  - `(+types (type flag_t bit) (type byte_t (bits 8)) (type byte_alias shared.byte_t))`
+- Direct-root note:
+  - inside `?fsm:name` and `?dt:name`, `(+size ...)` width entries may now use local or imported scalar type names such as `(OUT byte_t)` or `(FLAG shared.flag_t)`.
+  - local and imported scalar types resolve through one declarative-scope pass, so normal non-cyclic references do not depend on declaration order.
+- Composition-top note:
+  - inside `?top:name`, local `(+types ...)` declarations may now drive local `?ports` width aliases such as `out_data>byte_t` or `out_flag>flag_t`.
+  - this first shipped composition slice is intentionally local-only for `?ports`; imported package type aliases are not yet promised on the top-port-width path.
+- Malformed shapes like `(+types)`, `(+types BROKEN)`, malformed entries like `(+types (type only_name))`, and explicit type dependency cycles are rejected explicitly.
+
 `(+import ...)`:
 - Imports one or more shared package namespaces from bounded `?pkg:name` roots.
 - Shape:
@@ -520,7 +535,7 @@ This is the current `R8` draft normative contract for the symbol-definition and 
 Forward IR note:
 - direct `?fsm` / `?dt` results now also preserve one bounded `symbol_contract` through `intent_hir` and mirrored `module_info`
 - composition `?top` results now preserve that same bounded `symbol_contract` through composition-top `intent_hir` and mirrored `module_info`
-- that surface currently carries local constant/enum names and counts, canonical constant payloads, scalar-leaf convenience payloads, aggregate-root path summaries, and imported package names/counts
+- that surface currently carries local constant/enum/type names and counts, canonical constant payloads, canonical scalar type specs, scalar-leaf convenience payloads, aggregate-root path summaries, and imported package names/counts
 - it is meant as a semantic export/inspection surface for embedders and future compiler work, not as evidence that whole-aggregate assignment/type flow is already shipped
 
 Regression-backed examples:
@@ -554,7 +569,7 @@ Regression-backed examples:
 Boundary note:
 - This slice locks direct-root symbol resolution in assignment RHS expressions and guard equality conditions.
 - It also locks namespaced package import resolution on that same direct-root path plus bounded composition-top package-import use on `?toplink` literal-actual positions.
-- It also locks the malformed section/entry boundary for `+constants`, `+define`, `+params`, `+enums`, and `+import`, so these families no longer rely on incidental Perl list-unpacking errors.
+- It also locks the malformed section/entry boundary for `+constants`, `+define`, `+params`, `+enums`, `+types`, and `+import`, so these families no longer rely on incidental Perl list-unpacking errors.
 - Broader semantics for these families should be documented explicitly if and when the contract is widened beyond that current active use.
 
 ### Draft normative contract for top-level source kinds

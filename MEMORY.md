@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-08: bounded scalar `+types` now ship through one declarative resolver
+- Saved the first real `+types` slice after the declaration-scope and
+  symbol-contract groundwork landed.
+- Important continuity note:
+  - direct `?fsm` / `?dt` roots, composition `?top` roots, and `?pkg:name`
+    packages now accept bounded scalar type aliases for `bit`, `(bits N)`, and
+    named scalar aliases,
+  - direct-root `+size` and local composition `?ports` widths may now use
+    those aliases regardless of declaration order,
+  - explicit type cycles now fail clearly,
+  - imported package scalar types now feed the direct-root width path through
+    the normal package projection lane,
+  - composition `?ports` type aliases are intentionally local-only in this
+    first slice,
+  - and forward `symbol_contract` / mirrored `module_info` now preserve local
+    type names/counts plus canonical scalar type specs for both direct and
+    composition results.
+
 ## 2026-04-08: whole map aggregate roots now ship on the packed literal path
 - Saved the next aggregate/type slice after declarative symbol scope landed.
 - Important continuity note:

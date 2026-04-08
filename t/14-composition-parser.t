@@ -207,6 +207,7 @@ is_deeply(
     {
         constants => 2,
         enums => 1,
+        types => 0,
     },
     'parser records composition-root +constants and +enums as typed top symbols',
 );
@@ -248,6 +249,7 @@ is_deeply(
     {
         constants => 3,
         enums => 0,
+        types => 0,
     },
     'parser records composition-root aggregate +constants as typed top symbols too',
 );

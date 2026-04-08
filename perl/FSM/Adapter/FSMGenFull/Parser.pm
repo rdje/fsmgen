@@ -10,6 +10,7 @@ use Data::Dumper;
 use FSM::CoreAST;
 use FSM::Debug;
 use FSM::Package::DeclarativeSymbolResolver;
+use FSM::Package::DeclarativeTypeResolver;
 use FSM::Package::SignalManagerProjectionSupport;
 use FSM::Package::Symbols;
 use FSM::SourceClassifier;
@@ -133,8 +134,10 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
     my $top_level_forms_desc = $self->supported_top_level_forms_description($root_kind, $is_flat_ast);
     my $supported_directives_desc = $self->supported_directives_description($root_kind);
     
+    my @pending_size_sections;
     my @pending_constant_entries;
     my @pending_enum_entries;
+    my @pending_type_entries;
 
     for my $element (@$fsm_contents) {
         Carp::confess
@@ -152,25 +155,37 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
             fsm_debug("Parsing +system block", 3);
             $self->parse_system_section($element);
         } elsif ($element_name eq '+size') {
-            fsm_debug("Parsing +size block", 3);
-            $self->parse_size_section($element);
+            fsm_debug("Collecting +size block", 3);
+            push @pending_size_sections, $element;
         } elsif ($element_name eq '+constants') {
             fsm_debug("Collecting constants section", 3);
             push @pending_constant_entries, @{ $self->parse_constants_section($element) };
         } elsif ($element_name eq '+enums') {
             fsm_debug("Collecting enums section", 3);
             push @pending_enum_entries, @{ $self->parse_enums_section($element) };
+        } elsif ($element_name eq '+types') {
+            fsm_debug("Collecting types section", 3);
+            push @pending_type_entries, @{ $self->parse_types_section($element) };
         } elsif ($element_name eq '+import') {
             fsm_debug("Parsing import section", 3);
             $self->parse_import_section($module_name, $element);
         }
     }
 
+    $self->resolve_pending_direct_root_types(
+        $module_name,
+        \@pending_type_entries,
+    );
+
     $self->resolve_pending_direct_root_symbols(
         $module_name,
         \@pending_constant_entries,
         \@pending_enum_entries,
     );
+
+    for my $size_ast (@pending_size_sections) {
+        $self->parse_size_section($size_ast);
+    }
 
     for my $element (@$fsm_contents) {
         next unless ref($element) eq 'ARRAY';
@@ -185,6 +200,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
                 || $element_name eq '+size'
                 || $element_name eq '+constants'
                 || $element_name eq '+enums'
+                || $element_name eq '+types'
                 || $element_name eq '+import'
             )
         ) {
@@ -334,9 +350,9 @@ sub root_contract_label($self, $root_kind = 'fsm') {
 }
 
 sub supported_directives_description($self, $root_kind = 'fsm') {
-    return "The active contract currently supports only the conventional '+system' form, '+size', '+constants', '+enums', '+import', '+define', and '+params' inside '?dt:name'"
+    return "The active contract currently supports only the conventional '+system' form, '+size', '+constants', '+enums', '+types', '+import', '+define', and '+params' inside '?dt:name'"
         if $root_kind eq 'dt';
-    return "The active contract currently supports only '+system', '+size', '+constants', '+enums', '+import', '+define', and '+params' inside '?fsm:name'";
+    return "The active contract currently supports only '+system', '+size', '+constants', '+enums', '+types', '+import', '+define', and '+params' inside '?fsm:name'";
 }
 
 sub supported_top_level_forms_description($self, $root_kind = 'fsm', $is_flat_ast = 0) {
@@ -409,6 +425,67 @@ sub parse_constants_section($self, $constants_ast) {
     return \@constant_entries;
 }
 
+sub parse_types_section($self, $types_ast) {
+    my (undef, $types_list) = @$types_ast;
+
+    Carp::confess
+        "Malformed '+types' section. ".
+        "The active contract supports '+types' only as a non-empty list of '(type NAME bit)', '(type NAME (bits N))', or '(type NAME other_type)' entries. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless ref($types_list) eq 'ARRAY' && @$types_list;
+
+    my @type_entries;
+    for my $type_def (@$types_list) {
+        Carp::confess
+            "Malformed '+types' entry. ".
+            "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', or '(type NAME other_type)'. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless ref($type_def) eq 'ARRAY' && @$type_def >= 2;
+
+        my ($keyword, $name, $spec_ast);
+        if (@$type_def >= 3) {
+            ($keyword, $name) = @$type_def[0, 1];
+            $spec_ast = @$type_def == 3
+                ? $type_def->[2]
+                : [ @$type_def[2 .. $#$type_def] ];
+        } elsif (@$type_def == 2 && ref($type_def->[1]) eq 'ARRAY' && @{$type_def->[1]} >= 2) {
+            $keyword = $type_def->[0];
+            $name = $type_def->[1][0];
+            $spec_ast = @{$type_def->[1]} == 2
+                ? $type_def->[1][1]
+                : [ @{$type_def->[1]}[1 .. $#{$type_def->[1]}] ];
+        } else {
+            Carp::confess
+                "Malformed '+types' entry. ".
+                "Each '+types' entry must use the shape '(type NAME bit)', '(type NAME (bits N))', or '(type NAME other_type)'. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        }
+
+        my $resolved_keyword = $self->unwrap_scalar_token($keyword);
+        my $resolved_name = $self->unwrap_scalar_token($name);
+
+        Carp::confess
+            "Malformed '+types' entry for type '".$self->describe_contract_name($resolved_name)."'. ".
+            "Each '+types' entry must begin with the literal keyword 'type' and use an HDL-identifier-compatible type name. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless defined($resolved_keyword)
+                && !ref($resolved_keyword)
+                && $resolved_keyword eq 'type'
+                && $self->is_contract_identifier($resolved_name);
+
+        push @type_entries, {
+            name => $resolved_name,
+            spec_ast => $spec_ast,
+        };
+    }
+
+    if ($self->{fsm_module} && $self->{fsm_module}->can('direct_root_symbols')) {
+        $self->{fsm_module}->direct_root_symbols->push_raw_block($types_ast);
+    }
+
+    return \@type_entries;
+}
+
 sub parse_size_section($self, $size_ast) {
     my (undef, $size_entries) = @$size_ast;
 
@@ -435,19 +512,20 @@ sub parse_size_section($self, $size_ast) {
 
         Carp::confess
             "Malformed '+size' entry for signal '$resolved_sig'. ".
-            "Each '+size' entry must use an HDL-identifier-compatible signal name and a positive integer width. ".
+            "Each '+size' entry must use an HDL-identifier-compatible signal name and either a positive integer width or a named scalar type. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
             unless defined($resolved_sig)
                 && !ref($resolved_sig)
-                && $resolved_sig =~ /\A[A-Za-z_]\w*\z/
-                && defined($resolved_width)
-                && !ref($resolved_width)
-                && $resolved_width =~ /\A\d+\z/
-                && $resolved_width > 0;
+                && $resolved_sig =~ /\A[A-Za-z_]\w*\z/;
+
+        my $declared_width = $self->resolve_declared_width_token(
+            signal_name => $resolved_sig,
+            width_token => $resolved_width,
+        );
 
         $self->{signal_manager}->register_signal(
             $resolved_sig,
-            width => $resolved_width,
+            width => $declared_width,
             width_declared => 1,
         );
 
@@ -457,7 +535,7 @@ sub parse_size_section($self, $size_ast) {
         if ($self->{signal_manager}->get_signal($next_aux)) {
             $self->{signal_manager}->register_signal(
                 $next_aux,
-                width => $resolved_width,
+                width => $declared_width,
                 is_output => 1,
                 is_aux_output => 1,
                 width_declared => 1,
@@ -467,7 +545,7 @@ sub parse_size_section($self, $size_ast) {
         if ($self->{signal_manager}->get_signal($q_aux)) {
             $self->{signal_manager}->register_signal(
                 $q_aux,
-                width => $resolved_width,
+                width => $declared_width,
                 is_output => 1,
                 is_aux_output => 1,
                 width_declared => 1,
@@ -600,6 +678,72 @@ sub is_contract_identifier($self, $value) {
 
 sub describe_contract_name($self, $value) {
     return defined($value) && !ref($value) ? $value : 'unknown';
+}
+
+sub is_contract_type_reference($self, $value) {
+    return defined($value)
+        && !ref($value)
+        && $value =~ /\A(?:[A-Za-z_]\w*)(?:\.[A-Za-z_]\w*)?\z/;
+}
+
+sub resolve_declared_width_token($self, %args) {
+    my $signal_name = $args{signal_name} // 'signal';
+    my $width_token = $args{width_token};
+
+    return 0 + $width_token
+        if defined($width_token)
+            && !ref($width_token)
+            && $width_token =~ /\A\d+\z/
+            && $width_token > 0;
+
+    if ($self->is_contract_type_reference($width_token)) {
+        my $resolved_width = $self->{signal_manager}->resolve_type_width($width_token);
+        return $resolved_width if defined $resolved_width && $resolved_width > 0;
+    }
+
+    Carp::confess
+        "Malformed '+size' entry for signal '$signal_name'. ".
+        "Each '+size' entry must use an HDL-identifier-compatible signal name and either a positive integer width or a named scalar type such as 'bit', 'byte', or 'pkg_name.byte'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+}
+
+sub canonicalize_scalar_type_spec($self, %args) {
+    my $module_name = $args{module_name} // 'source';
+    my $type_name = $args{type_name} // 'unknown';
+    my $spec_ast = $args{spec_ast};
+
+    my $scalar = $self->unwrap_scalar_token($spec_ast);
+    if (defined($scalar) && !ref($scalar)) {
+        return {
+            kind => 'bit',
+            width => 1,
+        } if $scalar eq 'bit';
+
+        if ($self->is_contract_type_reference($scalar)) {
+            my $resolved_spec = $self->{signal_manager}->resolve_type($scalar);
+            return $resolved_spec if $resolved_spec;
+        }
+    }
+
+    my $cursor = $self->unwrap_single_nested_list($spec_ast);
+    if (ref($cursor) eq 'ARRAY' && @$cursor == 2) {
+        my $head = $self->unwrap_scalar_token($cursor->[0]);
+        my $width_token = $self->unwrap_scalar_token($cursor->[1]);
+
+        if (defined($head) && !ref($head) && $head eq 'bits'
+            && defined($width_token) && !ref($width_token)
+            && $width_token =~ /\A\d+\z/ && $width_token > 0) {
+            return {
+                kind => 'bits',
+                width => 0 + $width_token,
+            };
+        }
+    }
+
+    Carp::confess
+        "Malformed '+types' entry for type '$type_name' in source '$module_name'. ".
+        "The first active '+types' lane supports only 'bit', '(bits N)', or aliases to already-resolved scalar types. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 
 sub canonicalize_constant_literal_payload($self, %args) {
@@ -1293,6 +1437,55 @@ sub resolve_pending_direct_root_symbols($self, $module_name, $constant_entries, 
             Carp::confess
                 "Malformed declarative symbol scope in source '$module_name'. ".
                 "The active '+constants'/'+enums' contract now resolves normal non-cyclic references without depending on declaration order, but symbol dependency cycles are blocked. ".
+                "Cycle: ".join(' -> ', @chain).". ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        },
+    );
+
+    return 1;
+}
+
+sub resolve_pending_direct_root_types($self, $module_name, $type_entries) {
+    $type_entries ||= [];
+    return 1 unless @$type_entries;
+
+    my $direct_root_symbols = ($self->{fsm_module} && $self->{fsm_module}->can('direct_root_symbols'))
+        ? $self->{fsm_module}->direct_root_symbols
+        : FSM::Package::Symbols->new();
+
+    FSM::Package::DeclarativeTypeResolver->resolve_types(
+        type_entries => $type_entries,
+        unwrap_scalar_token => sub ($value) { return $self->unwrap_scalar_token($value) },
+        unwrap_single_nested_list => sub ($value) { return $self->unwrap_single_nested_list($value) },
+        is_contract_identifier => sub ($value) { return $self->is_contract_identifier($value) },
+        resolve_type_spec => sub ($entry) {
+            return $self->canonicalize_scalar_type_spec(
+                module_name => $module_name,
+                type_name => $entry->{name},
+                spec_ast => $entry->{spec_ast},
+            );
+        },
+        store_type => sub ($type_name, $type_spec) {
+            $direct_root_symbols->store_type($type_name, $type_spec);
+            FSM::Package::SignalManagerProjectionSupport->project_symbols_into_signal_manager(
+                signal_manager => $self->{signal_manager},
+                symbols => FSM::Package::Symbols->new(
+                    types => {
+                        $type_name => $type_spec,
+                    },
+                ),
+                expression_builder => $self->{expression_builder},
+            );
+            return $type_spec;
+        },
+        cycle_error => sub (%cycle) {
+            my @chain = map {
+                "type '" . ($_->{name} // 'unknown') . "'";
+            } @{ $cycle{chain} || [] };
+
+            Carp::confess
+                "Malformed declarative type scope in source '$module_name'. ".
+                "The active '+types' contract resolves normal non-cyclic scalar type aliases without depending on declaration order, but type dependency cycles are blocked. ".
                 "Cycle: ".join(' -> ', @chain).". ".
                 "See docs/USER_GUIDE.md for the current supported boundary.\n";
         },

@@ -20,6 +20,7 @@ sub new($class, %args) {
         enums => {},           # +enums: enum_name -> {member -> value}
         defines => {},         # +define: name -> value_expression
         params => {},          # +params: name -> parameter_value
+        types => {},           # +types: name -> scalar type spec
         aggregate_symbols => {}, # aggregate-valued symbol roots that must resolve to scalar leaves
         aggregate_payloads => {}, # aggregate-valued symbol roots that can lower whole-list payloads
     }, $class;
@@ -180,6 +181,10 @@ sub store_param($self, $name, $value) {
     $self->{params}{$name} = $value;
 }
 
+sub store_type($self, $name, $type_spec) {
+    $self->{types}{$name} = $type_spec;
+}
+
 sub store_aggregate_symbol($self, $name, $payload = undef) {
     $self->{aggregate_symbols}{$name} = 1 if defined $name && length $name;
     $self->{aggregate_payloads}{$name} = $payload if defined $name && length $name && defined $payload;
@@ -244,6 +249,20 @@ sub resolve_symbol($self, $symbol_name) {
     return undef;
 }
 
+sub resolve_type($self, $type_name) {
+    return undef unless defined $type_name;
+    my $spec = $self->{types}{$type_name};
+    return undef unless defined $spec;
+    return _clone_type_spec($spec);
+}
+
+sub resolve_type_width($self, $type_name) {
+    my $spec = $self->resolve_type($type_name);
+    return undef unless $spec && ref($spec) eq 'HASH';
+    return undef unless defined $spec->{width};
+    return 0 + $spec->{width};
+}
+
 # Summaries
 sub get_symbol_summary($self) {
     my $constant_definition_count = scalar(keys %{$self->{constant_definitions} || {}});
@@ -253,9 +272,26 @@ sub get_symbol_summary($self) {
         enums => scalar(keys %{$self->{enums}}),
         defines => scalar(keys %{$self->{defines}}),
         params => scalar(keys %{$self->{params}}),
+        types => scalar(keys %{$self->{types}}),
         aggregate_symbols => scalar(keys %{$self->{aggregate_symbols}}),
     );
     return \%summary;
+}
+
+sub _clone_type_spec($value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone_type_spec($value->{$_}) } sort keys %$value
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone_type_spec($_) } @$value ];
+    }
+
+    return $value;
 }
 
 sub get_signal_summary($self) {

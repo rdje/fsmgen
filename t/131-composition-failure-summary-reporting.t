@@ -50,7 +50,7 @@ FSM
     is($report->{blocked_boundary_label}, 'child kind support', 'failure report exposes a CLI-friendly blocked-boundary label');
     is(
         $report->{blocked_reason},
-        "the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?toplink', '+constants', '+enums', and '+import'",
+        "the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?toplink', '+constants', '+enums', '+types', and '+import'",
         'failure report preserves the concise blocked reason for parser-scoped failures',
     );
 };
@@ -324,7 +324,7 @@ FSM
     is($report->{blocked_boundary_label}, 'child structure', 'failure report exposes a CLI-friendly blocked-boundary label for empty child entries');
     is(
         $report->{blocked_reason},
-        "every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', or '+import'",
+        "every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', '+types', or '+import'",
         'failure report preserves the concise empty-child-entry reason',
     );
 };
@@ -366,7 +366,7 @@ FSM
     is($report->{blocked_boundary_label}, 'child header shape', 'failure report exposes a CLI-friendly blocked-boundary label for non-string child headers');
     is(
         $report->{blocked_reason},
-        "every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', or '+import'",
+        "every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', '+types', or '+import'",
         'failure report preserves the concise non-string child-header reason',
     );
 };
@@ -6852,10 +6852,10 @@ FSM
     like($combined_output, qr/Blocked boundary:\s+child kind support/s, 'CLI reports the blocked composition boundary');
     like(
         $combined_output,
-        qr/Reason:\s+the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', '\+enums', and '\+import'/s,
+        qr/Reason:\s+the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', '\+enums', '\+types', and '\+import'/s,
         'CLI reports the concise blocked reason',
     );
-    like($combined_output, qr/composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', '\+enums', and '\+import'/s, 'CLI still surfaces the original blocked diagnostic text');
+    like($combined_output, qr/composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', '\+enums', '\+types', and '\+import'/s, 'CLI still surfaces the original blocked diagnostic text');
 };
 
 subtest 'CLI prints mapping-directive context for blocked ?ports mapping failures' => sub {
@@ -7244,7 +7244,7 @@ FSM
     unlike($combined_output, qr/Construct:\s+/s, 'CLI does not invent a construct for blocked empty child entries');
     like($combined_output, qr/Context:\s+Child entry 'missing header'/s, 'CLI reports empty child-entry context in the summary');
     like($combined_output, qr/Blocked boundary:\s+child structure/s, 'CLI reports the blocked child-structure boundary');
-    like($combined_output, qr/Reason:\s+every child must start with a real string header such as '\?fsmc:name', '\?dtc:name', '\?rtl:module', '\?ports', '\?toplink:name', '\+constants', '\+enums', or '\+import'/s, 'CLI reports the concise empty child-entry reason');
+    like($combined_output, qr/Reason:\s+every child must start with a real string header such as '\?fsmc:name', '\?dtc:name', '\?rtl:module', '\?ports', '\?toplink:name', '\+constants', '\+enums', '\+types', or '\+import'/s, 'CLI reports the concise empty child-entry reason');
 };
 
 subtest 'CLI prints child-entry context for blocked non-string child headers' => sub {
@@ -7279,7 +7279,7 @@ FSM
     unlike($combined_output, qr/Construct:\s+/s, 'CLI does not invent a construct for blocked non-string child headers');
     like($combined_output, qr/Context:\s+Child entry 'non-string header'/s, 'CLI reports non-string child-header context in the summary');
     like($combined_output, qr/Blocked boundary:\s+child header shape/s, 'CLI reports the blocked child-header-shape boundary');
-    like($combined_output, qr/Reason:\s+every child must start with a real string header such as '\?fsmc:name', '\?dtc:name', '\?rtl:module', '\?ports', '\?toplink:name', '\+constants', '\+enums', or '\+import'/s, 'CLI reports the concise non-string child-header reason');
+    like($combined_output, qr/Reason:\s+every child must start with a real string header such as '\?fsmc:name', '\?dtc:name', '\?rtl:module', '\?ports', '\?toplink:name', '\+constants', '\+enums', '\+types', or '\+import'/s, 'CLI reports the concise non-string child-header reason');
 };
 
 subtest 'CLI prints child context for blocked unnamed ?fsmc source-count failures' => sub {

@@ -1701,6 +1701,14 @@ Exit criteria:
   join that same semantic resolution lane instead of reintroducing
   parser-order semantics, while richer typed record/aggregate semantics still
   stay intentionally separate from this bounded packed-literal aggregate lane.
+- `R11`: the first real bounded `+types` slice is now shipped on that same
+  declarative-scope lane: direct `?fsm` / `?dt` roots, composition `?top`
+  roots, and `?pkg:name` packages now accept bounded scalar type aliases for
+  `bit`, `(bits N)`, and named scalar aliases without declaration-order
+  dependence, direct-root `+size` plus local composition `?ports` widths may
+  now use those scalar type names, explicit type dependency cycles now fail
+  clearly, and forward `symbol_contract` / mirrored `module_info` now also
+  preserve local type names/counts plus canonical scalar type specs.
 - `R11`: direct generated roots now also preserve one bounded `symbol_contract`
   through forward `intent_hir` and mirrored `module_info`, so local
   constants/enums, canonical aggregate payloads, scalar-leaf summaries, and
