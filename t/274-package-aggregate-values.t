@@ -544,21 +544,21 @@ FSM
     unlike($combined_output, qr/hash-like aggregate roots still require member access|whole aggregate actual roots/s, 'successful whole package-list composition CLI run does not report aggregate-root failures');
 };
 
-subtest 'pipeline and CLI reject unresolved aggregate package roots in direct-root expressions' => sub {
+subtest 'pipeline and CLI resolve whole package map aggregate roots for direct-root expressions' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');
     mkdir $libdir or die "Cannot create $libdir: $!";
 
-    my $fsm_path = File::Spec->catfile($tempdir, 'bad_package_aggregate_root_ref.fsm');
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_package_map_aggregate_root.fsm');
     my $package_path = File::Spec->catfile($libdir, 'shared_external.fsm');
-    my $output_path = File::Spec->catfile($tempdir, 'bad_package_aggregate_root_ref.sv');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_package_map_aggregate_root.sv');
 
     write_file(
         $package_path,
         <<'FSM'
 (?pkg:shared_external
   (+constants
-    (FRAME ((mode 3) (flag 1)))
+    (FRAME ((mode 2'b10) (flag 1)))
   )
 )
 FSM
@@ -567,17 +567,20 @@ FSM
     write_file(
         $fsm_path,
         <<'FSM'
-(?fsm:bad_package_aggregate_root_ref
+(?fsm:direct_package_map_aggregate_root
   (+import shared_external)
   (+system
     (clock clk)
     (sreset rstn)
   )
   (+size
-    (OUT 8)
+    (SEL 3)
+    (OUT 3)
+    (HIT 1)
   )
   (idle
     (OUT = shared_external.FRAME)
+    (HIT = 1 <SEL=shared_external.FRAME)
   )
 )
 FSM
@@ -589,31 +592,45 @@ FSM
         target_language => 'systemverilog',
         source_search_paths => [$libdir],
     );
+    my $result = $pipeline->generate_hdl_from_file($fsm_path);
+    my $fsm_module = $result->{fsm_module};
+    my $hdl = $result->{hdl_code};
 
-    my $pipeline_error = eval {
-        $pipeline->generate_hdl_from_file($fsm_path);
-        undef;
-    };
-    $pipeline_error = $@ if !$pipeline_error;
+    my %assignment_by_target = %{ assignments_by_target($fsm_module, 'idle') };
+    is_literal_assignment($assignment_by_target{OUT}, '101', 3, 'OUT resolves whole package map aggregate root to one literal');
 
-    like(
-        $pipeline_error,
-        qr/whole aggregate roots only for list-valued aggregates|Unsupported aggregate-valued symbol 'shared_external\.FRAME'/s,
-        'pipeline rejects unresolved aggregate package roots with a targeted direct-root diagnostic',
+    my %conditional_by_target = %{ conditionals_by_target($fsm_module, 'idle') };
+    assert_condition_equality(
+        $conditional_by_target{HIT}->condition,
+        'SEL',
+        '101',
+        'whole package map aggregate root resolves in direct-root condition context',
+    );
+    is(
+        $conditional_by_target{HIT}->condition->right->width,
+        3,
+        'whole package map aggregate root preserves packed width in condition context',
     );
 
     my @cmd = ('./bin/fsmgen', '--quiet', '--path', $libdir, '-o', $output_path, $fsm_path);
     my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
     my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+    my $output_text = slurp_file($output_path);
 
-    ok(!$success, 'CLI rejects unresolved aggregate package roots');
-    ok(!-e $output_path, 'CLI does not emit HDL for unresolved aggregate package roots');
-    like(
-        $combined_output,
-        qr/whole aggregate roots only for list-valued aggregates|Unsupported aggregate-valued symbol 'shared_external\.FRAME'/s,
-        'CLI surfaces the targeted aggregate-root boundary',
+    ok($success, 'CLI accepts whole package map aggregate roots');
+    ok(-e $output_path, 'CLI emits HDL for whole package map aggregate roots');
+    ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for whole package map aggregate roots');
+    unlike($combined_output, qr/Unsupported aggregate-valued symbol|packed literal/s, 'successful whole package-map aggregate CLI run does not report aggregate-root failures');
+    unlike(
+        $hdl,
+        qr/shared_external\.FRAME/s,
+        'pipeline output lowers whole package map aggregate roots before emission',
     );
-    isnt($error_code, 0, 'CLI exits non-zero for unresolved aggregate package roots');
+    unlike(
+        $output_text,
+        qr/shared_external\.FRAME/s,
+        'CLI output also lowers whole package map aggregate roots before emission',
+    );
 };
 
 subtest 'pipeline and CLI reject mixed package aggregate value shapes' => sub {

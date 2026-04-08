@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-08: whole map aggregate roots now ship on the packed literal path
+- Saved the next aggregate/type slice after declarative symbol scope landed.
+- Important continuity note:
+  - direct `?fsm` / `?dt` roots now accept whole map/hash-like aggregate
+    roots such as `FRAME` and `shared.FRAME` in assignment RHS expressions
+    and guard equality conditions,
+  - bounded composition actual/concat positions now accept those same whole
+    roots such as `=FRAME` and `=shared.FRAME`,
+  - canonical aggregate payloads now preserve authored `member_order`,
+  - whole hash-like roots now pack members left to right in declaration order
+    when every nested leaf still lowers to one scalar literal,
+  - and duplicate member names now fail explicitly instead of silently
+    overwriting earlier members.
+
 ## 2026-04-08: declarative symbol scope now ships for constants and enums
 - Saved the follow-through after the declaration-scope steering note.
 - Important continuity note:
@@ -23,8 +37,8 @@ This is the live continuity document for fast session recovery after crashes, re
   - one shared symbol-projection helper now owns how canonical symbol payloads
     are fed back into scalar-expression parsing across direct roots,
     composition tops, packages, and imported package projection,
-  - and the boundary stays honest: this is previous-symbol reuse only, not
-    forward references or whole hash-root packing.
+  - and the boundary stays honest: this is named-ingredient reuse, not a full
+    typed aggregate system by itself.
 
 ## 2026-04-07: whole list aggregate roots now lower on the live direct/composition paths
 - Saved the next aggregate/type groundwork slice after composition-top

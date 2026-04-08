@@ -57,7 +57,7 @@ This document defines the concrete `R6` scope for composition-oriented work in t
 The currently shipped composition behavior is intentionally bounded:
 - exactly one top-level `?top:name`,
 - zero or one `?ports` block,
-- zero or more bounded `+constants` / `+enums` blocks plus zero or more bounded `+import` blocks at that `?top` root, with top-root `+constants` now also allowing bounded aggregate values, whole list-valued aggregate roots on the live literal path, and aggregate values that reuse same-scope local constants and enum members regardless of declaration order as long as the symbol dependency graph stays acyclic,
+- zero or more bounded `+constants` / `+enums` blocks plus zero or more bounded `+import` blocks at that `?top` root, with top-root `+constants` now also allowing bounded aggregate values, whole aggregate roots on the live literal path, authored-member-order packing for hash-like roots, and aggregate values that reuse same-scope local constants and enum members regardless of declaration order as long as the symbol dependency graph stays acyclic,
 - zero or more embedded `?pkg:name` roots in the same file and zero or more external `?pkg:name` package sources resolved through the normal search roots, with packages currently carrying shared named scalar values, bounded named aggregate values, enum families, and aggregate values that reuse same-scope package constants and enum members regardless of declaration order as long as the symbol dependency graph stays acyclic,
 - one or more child instances, currently `?fsmc`, `?dtc`, and `?rtl`,
 - every generated child must reference exactly one active child source, either embedded in the same file or resolved from an external `.fsm` file,

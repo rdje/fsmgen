@@ -368,29 +368,33 @@ FSM
     isnt($error_code, 0, 'CLI exits non-zero for mixed composition-root aggregate value shapes');
 };
 
-subtest 'pipeline and CLI reject whole hash-like composition-root aggregate actuals' => sub {
+subtest 'pipeline and CLI resolve whole composition-root map aggregate actuals' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $composition_path = File::Spec->catfile($tempdir, 'bad_top_hash_aggregate_actual.fsm');
-    my $output_path = File::Spec->catfile($tempdir, 'bad_top_hash_aggregate_actual.sv');
+    my $composition_path = File::Spec->catfile($tempdir, 'top_map_aggregate_actuals.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'top_map_aggregate_actuals.sv');
 
     write_file(
         $composition_path,
         <<'FSM'
-(?top:bad_top_hash_aggregate_actual
+(?top:top_map_aggregate_actuals
   (+constants
-    (FRAME ((mode 3) (flag 1)))
+    (FRAME ((mode 2'b10) (flag 1)))
+    (TAIL (1 0))
   )
   (?ports:public_io
-    status_out>2
+    status_out>3
+    packed_out>5
   )
   (?rtl:uart_tx)
   (?toplink:wiring
     /=FRAME/status_out/
+    /=TAIL,=FRAME/packed_out/
+    /=FRAME/uart_tx.status_in/
   )
 )
 
 (?rtlif:uart_tx
-  dummy<1:data
+  status_in<3:data
 )
 FSM
     );
@@ -400,31 +404,21 @@ FSM
         quiet => 1,
         target_language => 'systemverilog',
     );
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+    my $hdl = $result->{hdl_code};
 
-    my $pipeline_error = eval {
-        $pipeline->generate_hdl_from_file($composition_path);
-        undef;
-    };
-    $pipeline_error = $@ if !$pipeline_error;
-
-    like(
-        $pipeline_error,
-        qr/hash-like aggregate roots still require member access/s,
-        'pipeline rejects whole hash-like composition aggregate actuals explicitly',
-    );
+    like($hdl, qr/assign\s+status_out\s*=\s*3'b101\s*;/, 'generated HDL emits whole map aggregate root direct actual on top output');
+    like($hdl, qr/assign\s+packed_out\s*=\s*\{2'b10,\s*3'b101\}\s*;/, 'generated HDL emits whole map aggregate root concat operand on top output');
+    like($hdl, qr/\.status_in\(3'b101\)/, 'generated HDL binds whole map aggregate root into child inputs');
 
     my @cmd = ('./bin/fsmgen', '--quiet', '-o', $output_path, $composition_path);
     my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
     my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
 
-    ok(!$success, 'CLI rejects whole hash-like composition aggregate actuals');
-    ok(!-e $output_path, 'CLI does not emit HDL for whole hash-like composition aggregate actuals');
-    like(
-        $combined_output,
-        qr/hash-like aggregate roots still require member access/s,
-        'CLI surfaces the whole hash-like composition aggregate boundary',
-    );
-    isnt($error_code, 0, 'CLI exits non-zero for whole hash-like composition aggregate actuals');
+    ok($success, 'CLI accepts whole map composition aggregate actuals');
+    ok(-e $output_path, 'CLI emits HDL for whole map composition aggregate actuals');
+    ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for whole map composition aggregate actuals');
+    unlike($combined_output, qr/hash-like aggregate roots still require member access|packed literal/s, 'successful whole-map composition CLI run does not report aggregate-root failures');
 };
 
 done_testing();

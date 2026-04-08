@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-08: whole map aggregate roots now lower as packed literals
+- Continued the aggregate/type lane by consuming the new symbol-contract and
+  declarative-resolution groundwork instead of introducing a disconnected
+  syntax-only `+types` stub.
+- Landed behavior:
+  - whole hash-like aggregate roots such as `FRAME`, `shared.FRAME`, and
+    `=FRAME` now lower on the same direct-root and bounded composition
+    literal paths that already handled whole list roots,
+  - canonical aggregate payloads now preserve authored `member_order`,
+  - hash-like roots now pack members left to right in authored declaration
+    order, recursively, whenever every nested leaf still lowers to one scalar
+    literal,
+  - and duplicate member names now fail explicitly instead of silently
+    overwriting record fields during canonicalization.
+- Why this boundary is deliberate:
+  - this ships one honest packed-record-literal contract right now,
+  - it aligns with the packed-first SV direction already recorded for future
+    aggregate lowering,
+  - but it still does not claim full typed record semantics, member
+    operations, or backend-portable aggregate typing are finished.
+
 ## 2026-04-08: declarative symbol scope now resolves aggregate named ingredients without declaration-order dependence
 - Continued the aggregate/type lane by replacing the last parser-order boundary
   in local/package constant and enum reuse with one shared declarative-scope
@@ -16,7 +37,8 @@ This document captures engineering rationale, design constraints, and working de
     unresolved-symbol fallout.
 - Steering for future implementation:
   - future `+types` should join that same semantic resolution lane,
-  - whole hash-root packing still needs its own real record contract,
+  - richer typed record semantics still need their own real type contract
+    above this packed-literal root slice,
   - and symbol families should not regress toward parser-order semantics now
     that one shared declarative resolver exists.
 
@@ -41,8 +63,8 @@ This document captures engineering rationale, design constraints, and working de
     numerics once one safe named meaning already exists,
   - normal declaration order should not matter inside the bounded
     `+constants` / `+enums` lane,
-  - but explicit dependency cycles and whole hash-root packing remain
-    intentionally blocked.
+  - but explicit dependency cycles still need to fail clearly even as the
+    aggregate-root contract widens.
 
 ## 2026-04-07: whole aggregate widening should start with list roots, not fake record packing
 - Continued the aggregate/type lane after composition-top symbol contracts

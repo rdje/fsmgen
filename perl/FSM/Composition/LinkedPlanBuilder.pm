@@ -752,13 +752,10 @@ sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header, %opts) {
                 connection_expr => bit_vector_literal_expr($bits),
             };
         }
-
-        if (($reason || '') eq 'hash_aggregate') {
-            confess
-                "Composition source '$header' in '$fsm_file' uses actual endpoint '=$payload', ".
-                "but explicit actual binding is blocked because whole aggregate actual roots currently support only list-valued aggregates with scalar literal leaves; hash-like aggregate roots still require member access such as '=$payload.member'. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-        }
+        confess
+            "Composition source '$header' in '$fsm_file' uses actual endpoint '=$payload', ".
+            "but explicit actual binding is blocked because that whole aggregate root did not lower to one packed literal; reason '$reason' is outside the current aggregate-actual contract. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
 
     if ($payload =~ /\A'b(.+)\z/i) {
@@ -1511,8 +1508,9 @@ sub _parse_top_expression_spec ($class, $endpoint, %opts) {
             if (!defined($bits)) {
                 my $aggregate_payload = $class->_resolve_top_symbol_payload($1, $opts{top_symbols});
                 if (defined $aggregate_payload) {
-                    my (undef, undef, $reason) = FSM::Package::PayloadLiteralSupport->payload_to_bits_and_width($aggregate_payload);
-                    if (($reason || '') eq 'hash_aggregate') {
+                    my $reason;
+                    ($bits, $width, $reason) = FSM::Package::PayloadLiteralSupport->payload_to_bits_and_width($aggregate_payload);
+                    if (!defined $bits) {
                         return {
                             raw => $endpoint,
                             expr_kind => 'unsupported_aggregate_literal',
@@ -1520,8 +1518,6 @@ sub _parse_top_expression_spec ($class, $endpoint, %opts) {
                             reason => $reason,
                         };
                     }
-
-                    ($bits, $width, undef) = FSM::Package::PayloadLiteralSupport->payload_to_bits_and_width($aggregate_payload);
                 }
             }
         }
@@ -2057,9 +2053,10 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
 
     if ($expr_kind eq 'unsupported_aggregate_literal') {
         my $symbol_name = $spec->{symbol_name} || $spec->{raw} || 'aggregate';
+        my $reason = $spec->{reason} || 'unsupported_aggregate';
         confess
             "Composition source '$header' in '$fsm_file' uses top expression '$endpoint', ".
-            "but explicit link endpoint resolution is blocked because whole aggregate actual operands currently support only list-valued aggregates with scalar literal leaves; hash-like aggregate roots still require member access such as '=$symbol_name.member'. ".
+            "but explicit link endpoint resolution is blocked because whole aggregate actual operand '$symbol_name' did not lower to one packed literal; reason '$reason' is outside the current aggregate-actual contract. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
 

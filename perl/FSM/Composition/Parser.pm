@@ -790,9 +790,16 @@ sub canonicalize_top_constant_payload ($self, %args) {
 
     if ($hash_like_entries && !$non_hash_entries) {
         my %members;
+        my @member_order;
         for my $entry (@$value_items) {
             my ($member_name_ast, $member_value_ast) = @$entry;
             my $member_name = $self->unwrap_scalar_token($member_name_ast);
+            confess
+                "Composition top '$top_name' contains '$section_header' entry for $symbol_kind '$symbol_name' with duplicate member '$member_name', ".
+                "but composition top aggregate packing is blocked because hash-like aggregate values must use each member name at most once so one packed member order remains unambiguous.".
+                $self->scope_docs_suffix
+                if exists $members{$member_name};
+            push @member_order, $member_name;
             $members{$member_name} = $self->canonicalize_top_constant_payload(
                 top_name => $top_name,
                 section_header => $section_header,
@@ -805,6 +812,7 @@ sub canonicalize_top_constant_payload ($self, %args) {
 
         return {
             kind => 'map',
+            member_order => \@member_order,
             members => \%members,
         };
     }

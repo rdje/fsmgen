@@ -684,9 +684,16 @@ sub canonicalize_constant_payload($self, %args) {
 
     if ($hash_like_entries && !$non_hash_entries) {
         my %members;
+        my @member_order;
         for my $entry (@$value_items) {
             my ($member_name_ast, $member_value_ast) = @$entry;
             my $member_name = $self->unwrap_scalar_token($member_name_ast);
+            Carp::confess
+                "Malformed '$section_header' entry for $symbol_kind '$symbol_name' in source '$module_name' with duplicate member '$member_name'. ".
+                "Hash-like aggregate values must use each member name at most once so one packed aggregate order remains unambiguous. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                if exists $members{$member_name};
+            push @member_order, $member_name;
             $members{$member_name} = $self->canonicalize_constant_payload(
                 module_name => $module_name,
                 section_header => $section_header,
@@ -698,6 +705,7 @@ sub canonicalize_constant_payload($self, %args) {
 
         return {
             kind => 'map',
+            member_order => \@member_order,
             members => \%members,
         };
     }

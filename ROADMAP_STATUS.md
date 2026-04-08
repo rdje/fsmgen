@@ -1683,26 +1683,24 @@ Exit criteria:
   whole-aggregate local-symbol flow/types remain future work.
 - `R11`: that same aggregate-value lane now also covers whole list-valued
   aggregate roots on the existing direct/composition literal paths: direct
-  `?fsm` / `?dt` expressions may now lower local or imported list roots such
-  as `BYTES`, `TAIL`, or `shared.BYTES` into one literal when every leaf is a
-  scalar literal, and bounded composition actual/concat positions may now use
-  those same whole list-valued roots such as `=HEADER`, `=TAIL`, or
-  `=shared.HEADER`, while whole hash-like roots such as `FRAME` or
-  `shared.FRAME` still fail explicitly until field-order/type semantics are
-  made real.
+  `?fsm` / `?dt` expressions may now lower local or imported aggregate roots
+  such as `BYTES`, `TAIL`, `FRAME`, or `shared.FRAME` into one literal when
+  every leaf is a scalar literal, bounded composition actual/concat positions
+  may now use those same whole roots such as `=HEADER`, `=TAIL`, `=FRAME`, or
+  `=shared.FRAME`, and hash-like roots now pack authored members left to right
+  in declaration order instead of staying blocked behind scalar-leaf-only use.
 - `R11`: bounded aggregate values now reuse same-scope named scalar
   ingredients through one declarative-resolution pass instead of parser order:
   direct roots, composition tops, and `?pkg:name` packages may now build
   aggregate values from local/package constants, enum members, and whole
-  list-valued roots such as `(PACKET (HEADER mode.IDLE))` and
+  aggregate roots such as `(PACKET (HEADER mode.IDLE))` and
   `(HEADER (mode.BUSY RESET_BYTE))` regardless of declaration order, while
-  explicit dependency cycles now fail clearly and hash-root packing remains
-  intentionally out of contract.
+  explicit dependency cycles now fail clearly.
 - Steering note for the next symbol/type slice: that declarative-scope
   resolver is now shipped for `+constants` / `+enums`; future `+types` should
   join that same semantic resolution lane instead of reintroducing
-  parser-order semantics, while whole hash-root packing still stays
-  intentionally separate until record semantics are real.
+  parser-order semantics, while richer typed record/aggregate semantics still
+  stay intentionally separate from this bounded packed-literal aggregate lane.
 - `R11`: direct generated roots now also preserve one bounded `symbol_contract`
   through forward `intent_hir` and mirrored `module_info`, so local
   constants/enums, canonical aggregate payloads, scalar-leaf summaries, and

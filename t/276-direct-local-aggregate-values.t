@@ -337,27 +337,30 @@ FSM
     isnt($error_code, 0, 'CLI exits non-zero for direct-root declarative symbol cycles');
 };
 
-subtest 'pipeline and CLI reject unresolved local aggregate roots in direct-root expressions' => sub {
+subtest 'pipeline and CLI resolve whole local map aggregate roots in direct-root expressions' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $fsm_path = File::Spec->catfile($tempdir, 'bad_local_aggregate_root_ref.fsm');
-    my $output_path = File::Spec->catfile($tempdir, 'bad_local_aggregate_root_ref.sv');
+    my $fsm_path = File::Spec->catfile($tempdir, 'direct_local_map_aggregate_root.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'direct_local_map_aggregate_root.sv');
 
     write_file(
         $fsm_path,
         <<'FSM'
-(?fsm:bad_local_aggregate_root_ref
+(?fsm:direct_local_map_aggregate_root
   (+system
     (clock clk)
     (sreset rstn)
   )
   (+constants
-    (FRAME ((mode 3) (flag 1)))
+    (FRAME ((mode 2'b10) (flag 1)))
   )
   (+size
-    (OUT 8)
+    (SEL 3)
+    (OUT 3)
+    (HIT 1)
   )
   (idle
     (OUT = FRAME)
+    (HIT = 1 <SEL=FRAME)
   )
 )
 FSM
@@ -367,31 +370,45 @@ FSM
         target_language => 'systemverilog',
         debug => 0,
     );
-    my $pipeline_error = eval {
-        $pipeline->generate_hdl_from_file($fsm_path);
-        undef;
-    };
-    $pipeline_error = $@ if !$pipeline_error;
+    my $result = $pipeline->generate_hdl_from_file($fsm_path);
+    my $fsm_module = $result->{fsm_module};
+    my $hdl = $result->{hdl_code};
 
-    ok($pipeline_error, 'pipeline rejects unresolved local aggregate roots');
-    like(
-        $pipeline_error,
-        qr/whole aggregate roots only for list-valued aggregates|Unsupported aggregate-valued symbol 'FRAME'/s,
-        'pipeline surfaces the targeted unresolved local hash-aggregate boundary',
+    my %assignment_by_target = %{ assignments_by_target($fsm_module, 'idle') };
+    is_literal_assignment($assignment_by_target{OUT}, '101', 3, 'OUT resolves whole local map aggregate root to one literal');
+
+    my %conditional_by_target = %{ conditionals_by_target($fsm_module, 'idle') };
+    assert_condition_equality(
+        $conditional_by_target{HIT}->condition,
+        'SEL',
+        '101',
+        'whole local map aggregate root resolves in direct-root condition context',
+    );
+    is(
+        $conditional_by_target{HIT}->condition->right->width,
+        3,
+        'whole local map aggregate root preserves packed width in condition context',
     );
 
     my @cmd = ('./bin/fsmgen', '--quiet', '--output', $output_path, $fsm_path);
     my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);
     my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []});
+    my $output_text = slurp_file($output_path);
 
-    ok(!$success, 'CLI rejects unresolved local aggregate roots');
-    ok(!-e $output_path, 'CLI does not emit HDL for unresolved local aggregate roots');
-    like(
-        $combined_output,
-        qr/whole aggregate roots only for list-valued aggregates|Unsupported aggregate-valued symbol 'FRAME'/s,
-        'CLI surfaces the targeted unresolved local hash-aggregate boundary',
+    ok($success, 'CLI accepts whole local map aggregate roots');
+    ok(-e $output_path, 'CLI emits HDL for whole local map aggregate roots');
+    ok(!defined($error_code) || $error_code == 0, 'CLI exits successfully for whole local map aggregate roots');
+    unlike($combined_output, qr/Unsupported aggregate-valued symbol|packed literal/s, 'successful whole-map aggregate CLI run does not report aggregate-root failures');
+    unlike(
+        $hdl,
+        qr/\bFRAME\b/s,
+        'pipeline output lowers whole local map aggregate roots before emission',
     );
-    isnt($error_code, 0, 'CLI exits non-zero for unresolved local aggregate roots');
+    unlike(
+        $output_text,
+        qr/\bFRAME\b/s,
+        'CLI output lowers whole local map aggregate roots before emission',
+    );
 };
 
 subtest 'pipeline and CLI reject mixed local aggregate value shapes' => sub {

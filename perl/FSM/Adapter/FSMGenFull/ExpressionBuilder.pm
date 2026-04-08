@@ -373,13 +373,11 @@ sub parse_scalar_expression($self, $scalar) {
             fsm_debug("          AGGREGATE ROOT RESOLVED: '$scalar' -> ${width}'b$bits", 3);
             return FSM::CoreAST::Literal->new($bits, width => $width, radix => 'binary');
         }
-
-        if (($reason || '') eq 'hash_aggregate') {
-            Carp::confess
-                "Unsupported aggregate-valued symbol '$scalar'. ".
-                "The active scalar-expression lane currently supports whole aggregate roots only for list-valued aggregates with scalar literal leaves; hash-like aggregate roots still require member access such as '$scalar.member'. ".
-                "See docs/USER_GUIDE.md for the current supported boundary.\n";
-        }
+        Carp::confess
+            "Unsupported aggregate-valued symbol '$scalar'. ".
+            "The active scalar-expression lane currently requires whole aggregate roots to lower to one packed literal with scalar literal leaves. ".
+            "This aggregate could not be lowered because '$reason' is outside that bounded contract. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }
 
     my $aggregate_prefix = $self->{signal_manager}->aggregate_symbol_prefix_for($scalar);

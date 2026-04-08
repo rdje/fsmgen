@@ -43,7 +43,29 @@ sub _payload_to_bits_and_width ($class, $payload) {
     }
 
     if ($kind eq 'map') {
-        return (undef, undef, 'hash_aggregate');
+        my $members = $payload->{members};
+        return (undef, undef, 'malformed_payload') unless ref($members) eq 'HASH' && keys %$members;
+
+        my $member_order = $payload->{member_order};
+        my @ordered_members = (
+            ref($member_order) eq 'ARRAY' && @$member_order
+                ? @$member_order
+                : sort keys %$members
+        );
+        return (undef, undef, 'empty_map') unless @ordered_members;
+
+        my @member_bits;
+        my $total_width = 0;
+
+        for my $member_name (@ordered_members) {
+            return (undef, undef, 'malformed_payload') unless exists $members->{$member_name};
+            my ($bits, $width, $reason) = $class->_payload_to_bits_and_width($members->{$member_name});
+            return (undef, undef, $reason) unless defined $bits;
+            push @member_bits, $bits;
+            $total_width += $width;
+        }
+
+        return (join('', @member_bits), $total_width, undef);
     }
 
     return (undef, undef, 'malformed_payload');

@@ -117,6 +117,7 @@ FSM
     is($symbol_contract->{enum_count}, 1, 'symbol contract counts declared local enums');
     is_deeply($symbol_contract->{enum_names}, ['mode'], 'symbol contract preserves stable local enum names');
     is($symbol_contract->{constants}{FRAME}{kind}, 'map', 'symbol contract preserves aggregate constant payload shape');
+    is_deeply($symbol_contract->{constants}{FRAME}{member_order}, ['mode', 'flag'], 'symbol contract preserves authored aggregate member order');
     is($symbol_contract->{constants}{FRAME}{members}{flag}{payload}, '1', 'symbol contract preserves nested aggregate scalar payloads');
     is($symbol_contract->{constant_scalar_leaves}{'BYTES[1]'}, "8'h3C", 'symbol contract exposes scalar-leaf convenience payloads');
     is($symbol_contract->{constant_scalar_leaves}{'FRAME.flag'}, '1', 'symbol contract exposes aggregate member scalar leaves');
