@@ -1337,3 +1337,7 @@ The first honest `R11` slices are now:
   file per major topic, a landing-page/table-of-contents role for
   `docs/USER_GUIDE.md`, and progressive beginner-to-advanced examples rather
   than one monolithic reference wall.
+- Documentation planning note: that split is now concrete enough to plan
+  immediately, and the live migration outline now lives in
+  [docs/BOOK_PLAN.md](/Users/richarddje/Documents/github/fsmgen/docs/BOOK_PLAN.md)
+  rather than only in steering notes.

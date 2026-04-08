@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-09: the docs split now has a concrete plan artifact
+- Saved the next documentation follow-through step after deciding the guide is
+  already large enough to justify planning the split.
+- Important continuity note:
+  - the concrete migration plan now lives in
+    [docs/BOOK_PLAN.md](/Users/richarddje/Documents/github/fsmgen/docs/BOOK_PLAN.md),
+  - `docs/USER_GUIDE.md` is intended to become the landing page / table of
+    contents,
+  - the future `docs/book/` set should carry the progressive chapter flow,
+  - and focused precision references like
+    [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
+    should stay separate.
+
 ## 2026-04-09: user docs should eventually become a book-like set
 - Saved one explicit docs-architecture rule for future sessions.
 - Important continuity note:

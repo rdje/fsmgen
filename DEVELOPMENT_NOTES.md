@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-09: the documentation split should now be planned concretely
+- Promoted the earlier “book-like docs” direction into a concrete migration
+  plan because the current
+  [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+  is already large enough that planning the split is justified now, not later.
+- Planning decision:
+  - keep `docs/USER_GUIDE.md` as the landing page / table of contents,
+  - move the bulk of the teaching/reference material into a chaptered
+    `docs/book/` set,
+  - keep focused precision references such as
+    [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
+    separate,
+  - and make the split incremental so documentation quality does not dip while
+    the migration is in progress.
+- The live planning artifact is now
+  [docs/BOOK_PLAN.md](/Users/richarddje/Documents/github/fsmgen/docs/BOOK_PLAN.md).
+
 ## 2026-04-09: when the guide gets too large, split it into a book-like docs set
 - Saved an explicit documentation-architecture rule for future language and
   feature growth.
