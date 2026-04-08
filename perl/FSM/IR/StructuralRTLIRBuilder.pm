@@ -141,11 +141,18 @@ sub build_from_composition_plan ($class, $composition_plan, $target_language = '
         ],
         nets => [
             map {
-                +{
+                do {
+                    my $net_entry = {
                     name => $_->name,
                     width => $_->width,
                     source => $_->source,
                     targets => [@{$_->targets || []}],
+                    };
+                    my $declared_type_name = $_->can('declared_type_name') ? $_->declared_type_name : undef;
+                    my $declared_type_spec = $_->can('declared_type_spec') ? $_->declared_type_spec : undef;
+                    $net_entry->{declared_type_name} = $declared_type_name if defined $declared_type_name;
+                    $net_entry->{declared_type_spec} = $declared_type_spec if defined $declared_type_spec;
+                    $net_entry;
                 }
             } @{$composition_plan->nets || []}
         ],

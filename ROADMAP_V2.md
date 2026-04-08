@@ -1327,3 +1327,8 @@ The first honest `R11` slices are now:
   explicitly; width-equal but alias-incompatible endpoints are now blocked on
   that path too, with the bounded failure-summary surface preserving concise
   child-endpoint or top-port context for those mismatches.
+- Forward-IR note: inferred composition carrier nets now also preserve
+  `declared_type_name` plus canonical `declared_type_spec` when they are
+  driven by one typed child-output family, so the structural RTL handoff no
+  longer drops named aggregate/scalar type identity at internal net boundaries
+  before later aggregate-aware lowering or embedder inspection can consume it.

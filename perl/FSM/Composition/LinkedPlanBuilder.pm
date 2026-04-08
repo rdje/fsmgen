@@ -2377,6 +2377,8 @@ sub ensure_child_source_carrier ($class, $source, $targets, $top_ports_by_name, 
         width => $source->{port}->width,
         source => $source->{raw},
         targets => [grep { defined($_) && length($_) } @{$targets || []}],
+        declared_type_name => FSM::Composition::InterfacePortBuilder->declared_type_name($source->{port}),
+        declared_type_spec => FSM::Composition::InterfacePortBuilder->declared_type_spec($source->{port}),
     );
 
     $carrier_signal_by_source->{$source_key} = $net_name;

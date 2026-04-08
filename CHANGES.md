@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-08
+### inferred composition carrier nets now preserve declared type identity
+- Updated [perl/FSM/Composition/Net.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Net.pm), [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm), and [perl/FSM/IR/StructuralRTLIRBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIRBuilder.pm) so inferred internal carrier nets now preserve `declared_type_name` plus canonical `declared_type_spec` whenever they are driven by one typed child-output family, instead of flattening those internal carriers back to width-only metadata.
+- Updated [t/281-structural-declared-type-contracts.t](/Users/richarddje/Documents/github/fsmgen/t/281-structural-declared-type-contracts.t) to lock both the live composition-plan net objects and exported `structural_rtl_ir` net entries for typed carrier nets.
+
 ### explicit port-to-port `?toplink` bindings now honor declared type contracts too
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so explicit plain port-to-port `?toplink` bindings no longer validate only role plus packed width: when both endpoints preserve `declared_type_name` plus canonical `declared_type_spec` from named aliases, explicit-link planning now blocks width-equal but declared-type-incompatible bindings instead of silently flattening them to width-only compatibility.
 - Updated [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) so blocked explicit-link declared-type mismatches keep concise child-endpoint or top-port context in the non-quiet failure-summary path rather than burying the endpoint only in raw exception text.

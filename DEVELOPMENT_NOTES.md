@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-08: inferred composition carrier nets should keep declared type identity too
+- Continued the typed composition / structural handoff lane after explicit
+  `?toplink` compatibility became declared-type-aware.
+- Landed behavior:
+  - inferred internal carrier nets now preserve `declared_type_name` plus
+    canonical `declared_type_spec` when the driving child-output family came
+    from a named type alias,
+  - the live composition plan now keeps that typed net metadata directly on
+    `FSM::Composition::Net`,
+  - and exported `structural_rtl_ir->{nets}` now preserves the same typed net
+    metadata instead of flattening internal carriers to width-only summaries.
+- Why this boundary matters:
+  - later aggregate-aware lowering should not have to rediscover whether an
+    internal carrier was a packed `record` versus a flat `(bits N)` bus from
+    width alone,
+  - and once ports plus explicit-link compatibility already consumed declared
+    type identity, leaving internal carriers untyped would have kept one major
+    structural blind spot in the forward IR.
+
 ## 2026-04-08: explicit port-to-port `?toplink` bindings must not bypass declared types
 - Continued the typed composition hardening immediately after same-name
   convention and undeclared top-port inference became declared-type-aware.

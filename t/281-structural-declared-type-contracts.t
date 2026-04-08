@@ -176,6 +176,79 @@ FSM
     is($realized_frame_child_ports_by_name{OUT_FRAME}->declared_type_spec->{width}, 9, 'realized frame child interface port objects mirror declared aggregate width');
 };
 
+subtest 'composition structural_rtl_ir preserves declared type identity on inferred carrier nets' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'typed_composition_structural_net_ir.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:typed_composition_structural_net_ir
+  (+types
+    (type frame_t (record (tag bit) (payload (bits 7))))
+  )
+  (?ports:public_io
+    out_byte>8
+  )
+  (?dtc:producer producer_src)
+  (?dtc:consumer consumer_src)
+  (?toplink:wiring
+    /producer.OUT_FRAME/consumer.IN_FRAME/
+    /consumer.OUT_BYTE/out_byte/
+  )
+)
+
+(?dt:producer_src
+  (+types
+    (type frame_t (record (tag bit) (payload (bits 7))))
+  )
+  (+size
+    (OUT_FRAME frame_t)
+  )
+  (-pass
+    (OUT_FRAME = 8'hA5)
+  )
+)
+
+(?dt:consumer_src
+  (+types
+    (type frame_t (record (tag bit) (payload (bits 7))))
+  )
+  (+size
+    (IN_FRAME frame_t)
+    (OUT_BYTE 8)
+  )
+  (-pass
+    (OUT_BYTE = IN_FRAME)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+    );
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+    my $structural_rtl_ir = $result->{structural_rtl_ir};
+    my ($carrier_net) = grep { $_->{name} eq 'comp_link_producer_OUT_FRAME' } @{ $structural_rtl_ir->{nets} || [] };
+    my ($planned_carrier_net) = grep { $_->name eq 'comp_link_producer_OUT_FRAME' } @{ $result->{composition_plan}->nets || [] };
+
+    ok($carrier_net, 'composition structural RTL IR preserves the inferred typed carrier net');
+    is($carrier_net->{declared_type_name}, 'frame_t', 'composition structural carrier net preserves the source declared type name');
+    is($carrier_net->{declared_type_spec}{kind}, 'record', 'composition structural carrier net preserves the source declared type kind');
+    is_deeply(
+        $carrier_net->{declared_type_spec}{member_order},
+        ['tag', 'payload'],
+        'composition structural carrier net preserves the source declared type member order',
+    );
+
+    ok($planned_carrier_net, 'composition plan preserves the inferred typed carrier net');
+    is($planned_carrier_net->declared_type_name, 'frame_t', 'composition plan carrier net preserves the source declared type name');
+    is($planned_carrier_net->declared_type_spec->{width}, 8, 'composition plan carrier net preserves the source declared type width');
+};
+
 done_testing();
 
 sub write_file {

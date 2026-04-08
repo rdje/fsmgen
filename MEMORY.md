@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-08: inferred composition carrier nets now preserve declared type identity
+- Saved the next typed structural handoff slice after explicit `?toplink`
+  compatibility became declared-type-aware.
+- Important continuity note:
+  - inferred internal carrier nets now preserve `declared_type_name` plus
+    canonical `declared_type_spec` when they are driven by one typed
+    child-output family,
+  - the live `composition_plan->nets` objects carry that metadata directly,
+  - and exported `structural_rtl_ir->{nets}` now preserves the same typed net
+    identity instead of flattening internal carriers to width-only metadata.
+
 ## 2026-04-08: explicit plain `?toplink` bindings are now declared-type-aware too
 - Saved the next typed-composition compatibility slice after same-name
   convention and undeclared top-port inference were hardened.
