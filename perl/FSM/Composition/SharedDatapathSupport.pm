@@ -349,7 +349,7 @@ sub augment_plan ($class, %args) {
         my $lifted_next_signal = $class->lifted_next_name($signal_name);
         my $lifted_register_signal = $class->lifted_register_name($signal_name);
         my $lifted_comb_signal = $class->lifted_comb_name($signal_name);
-        my $width_decl = $width > 1 ? sprintf("[%d:0] ", $width - 1) : '';
+        my $runtime_net_contract = $class->_lifted_runtime_net_contract($candidate);
 
         $candidate->{lifted_runtime_kind} = $runtime_mode;
         my @runtime_lines;
@@ -358,9 +358,17 @@ sub augment_plan ($class, %args) {
             || $runtime_mode eq 'combinational_shared_public_fanout')
         {
             $candidate->{lifted_runtime_signal} = $lifted_comb_signal;
+            _ensure_composition_net(
+                $nets,
+                $lifted_comb_signal,
+                $width,
+                $candidate->{declared_type_name},
+                $candidate->{declared_type_spec},
+                $runtime_net_contract->{declaration_keyword},
+                $runtime_net_contract->{signed},
+                $runtime_net_contract->{state_model},
+            );
             @runtime_lines = (
-                "    logic ${width_decl}${lifted_comb_signal};",
-                "",
                 "    always_comb begin",
                 "      ${lifted_comb_signal} = 1'b0;",
             );
@@ -380,11 +388,28 @@ sub augment_plan ($class, %args) {
             $candidate->{lifted_runtime_next_signal} = $lifted_next_signal;
             $candidate->{lifted_runtime_signal} = $lifted_register_signal;
             $candidate->{lifted_runtime_reset_value} = $candidate->{reset_value};
+            _ensure_composition_net(
+                $nets,
+                $lifted_next_signal,
+                $width,
+                $candidate->{declared_type_name},
+                $candidate->{declared_type_spec},
+                $runtime_net_contract->{declaration_keyword},
+                $runtime_net_contract->{signed},
+                $runtime_net_contract->{state_model},
+            );
+            _ensure_composition_net(
+                $nets,
+                $lifted_register_signal,
+                $width,
+                $candidate->{declared_type_name},
+                $candidate->{declared_type_spec},
+                $runtime_net_contract->{declaration_keyword},
+                $runtime_net_contract->{signed},
+                $runtime_net_contract->{state_model},
+            );
 
             @runtime_lines = (
-                "    logic ${width_decl}${lifted_next_signal};",
-                "    logic ${width_decl}${lifted_register_signal};",
-                "",
                 "    always_comb begin",
                 "      ${lifted_next_signal} = ${lifted_register_signal};",
             );
@@ -482,7 +507,7 @@ sub augment_plan ($class, %args) {
     return $composition_plan;
 }
 
-sub _ensure_composition_net ($nets, $name, $width = 1, $declared_type_name = undef, $declared_type_spec = undef) {
+sub _ensure_composition_net ($nets, $name, $width = 1, $declared_type_name = undef, $declared_type_spec = undef, $declaration_keyword = undef, $signed = 0, $state_model = undef) {
     return unless defined($name) && length($name);
     return if grep { ($_->name || '') eq $name } @{$nets || []};
 
@@ -491,9 +516,33 @@ sub _ensure_composition_net ($nets, $name, $width = 1, $declared_type_name = und
         width => $width,
         source => undef,
         targets => [],
+        declaration_keyword => $declaration_keyword,
+        signed => $signed,
+        state_model => $state_model,
         declared_type_name => $declared_type_name,
         declared_type_spec => $declared_type_spec,
     );
+}
+
+sub _lifted_runtime_net_contract ($class, $candidate) {
+    my $declared_type_spec = ref($candidate) eq 'HASH'
+        ? $candidate->{declared_type_spec}
+        : undef;
+    my $state_model = ref($declared_type_spec) eq 'HASH'
+        ? ($declared_type_spec->{state_model} // undef)
+        : undef;
+    my $signed = ref($declared_type_spec) eq 'HASH'
+        ? (($declared_type_spec->{signed} // 0) ? 1 : 0)
+        : 0;
+    my $declaration_keyword = defined($state_model) && $state_model eq 'two_state'
+        ? 'bit'
+        : 'logic';
+
+    return {
+        declaration_keyword => $declaration_keyword,
+        signed => $signed,
+        state_model => $state_model,
+    };
 }
 
 sub _ensure_instance_port_binding ($instance, $port_name, $signal_name) {

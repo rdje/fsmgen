@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-09: lifted shared-datapath carriers should not hide only in auxiliary text
+- Continued the typed shared-datapath lane after candidate discovery and raw
+  contributor nets were already declared-type-aware.
+- Landed behavior:
+  - lifted runtime carriers such as `*_shared_q`, `*_shared_next`, and
+    `*_shared_comb` are now explicit composition nets instead of existing only
+    as declaration text inside `auxiliary_assignments`,
+  - those lifted nets now preserve an explicit declaration kind for the
+    structural emitter, so the generated HDL still emits `logic` declarations
+    without also producing duplicate `wire` declarations,
+  - and uniform typed shared-datapath families now carry their declared type
+    contract onto those lifted runtime nets too.
+- Why this boundary matters:
+  - once shared-datapath runtime was real behavior, leaving the lifted carriers
+    as “strings only” in auxiliary text kept the structural IR and the emitted
+    HDL out of sync,
+  - and promoting those carriers into first-class structural nets gives later
+    lowering, inspection, and embedding work one honest handoff instead of a
+    half-structural, half-text-only runtime surface.
+
 ## 2026-04-09: the book and continuity notes must stay separate on purpose
 - Saved one docs-governance rule after clarifying what different repo docs are
   for.

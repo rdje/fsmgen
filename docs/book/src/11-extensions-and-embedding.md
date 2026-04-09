@@ -111,6 +111,10 @@ also now preserves declared type contracts conservatively:
   type contract
 - and the raw contributor nets synthesized during shared-datapath lifting keep
   contributor-side declared type identity in the structural export
+- lifted shared runtime carriers such as `*_shared_q`, `*_shared_next`, and
+  `*_shared_comb` now also live in that structural net surface with an explicit
+  declaration kind instead of existing only as declaration text in auxiliary
+  HDL sections
 
 That is already useful for downstream tooling even though the long-term public
 embedding/API stabilization lane (`R13`) is still not started.

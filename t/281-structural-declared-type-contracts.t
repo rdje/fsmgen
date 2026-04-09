@@ -416,6 +416,10 @@ FSM
 
     is($candidate->{declared_type_name}, 'byte_t', 'shared-datapath candidate preserves the uniform declared type name in module_info');
     is($candidate->{declared_type_spec}{signed}, 1, 'shared-datapath candidate preserves the uniform declared type signedness in module_info');
+    is($nets_by_name{status_bus_shared_next}{declaration_keyword}, 'logic', 'lifted shared next-value net is exported as an explicit logic declaration');
+    is($nets_by_name{status_bus_shared_next}{declared_type_name}, 'byte_t', 'lifted shared next-value net preserves the candidate declared type name');
+    is($nets_by_name{status_bus_shared_q}{declaration_keyword}, 'logic', 'lifted shared register net is exported as an explicit logic declaration');
+    is($nets_by_name{status_bus_shared_q}{declared_type_spec}{signed}, 1, 'lifted shared register net preserves the candidate declared type signedness');
     is($nets_by_name{shared_dp_raw_left_status_bus}{declared_type_name}, 'byte_t', 'left raw shared-datapath structural net preserves the contributor declared type name');
     is($nets_by_name{shared_dp_raw_left_status_bus}{declared_type_spec}{state_model}, 'four_state', 'left raw shared-datapath structural net preserves the contributor declared type state model');
     is($nets_by_name{shared_dp_raw_right_status_bus}{declared_type_spec}{width}, 8, 'right raw shared-datapath structural net preserves the contributor declared type width');

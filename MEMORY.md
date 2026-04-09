@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-09: lifted shared-datapath carriers now exist as real structural nets
+- Saved the next typed shared-datapath-runtime slice after typed candidate
+  discovery and raw contributor nets landed.
+- Important continuity note:
+  - lifted runtime carriers such as `*_shared_q`, `*_shared_next`, and
+    `*_shared_comb` are now explicit composition/structural nets instead of
+    existing only as declaration text in `auxiliary_assignments`,
+  - those lifted nets preserve an explicit declaration kind so the structural
+    emitter can still emit `logic` declarations without duplicate `wire`
+    declarations,
+  - and uniform typed shared-datapath families now carry their declared type
+    contract onto those lifted runtime nets too.
+
 ## 2026-04-09: do not confuse the public book with continuity notes
 - Saved one documentation-boundary rule for future sessions.
 - Important continuity note:

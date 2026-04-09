@@ -962,6 +962,11 @@ The first honest `R11` slices are now:
   their declared type contracts disagree, while uniform typed families now
   preserve one candidate-level declared type contract plus typed raw
   contributor nets.
+- Forward-IR note: lifted shared-datapath runtime carriers now also live as
+  explicit structural nets with declaration-kind metadata instead of existing
+  only as declaration text in auxiliary HDL, and uniform typed shared
+  families now carry that declared type contract onto the lifted runtime nets
+  too.
 - Forward-IR note: shared-datapath planning itself now also prefers that typed
   `bound_connection_expr` surface when it needs a true flat leaf-carrier name,
   so compatibility mirrors no longer outrank the structural AST in those

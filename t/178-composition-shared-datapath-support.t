@@ -227,6 +227,8 @@ subtest 'shared-datapath support augments one plan with registered shared re-exp
             'status_bus_multi_value_conflict',
             'status_bus__8_d1_shared_en',
             'status_bus__8_d1_multi_src_conflict',
+            'status_bus_shared_next',
+            'status_bus_shared_q',
             'shared_dp_raw_left_status_bus',
             'shared_dp_raw_right_status_bus',
         ],
@@ -235,6 +237,9 @@ subtest 'shared-datapath support augments one plan with registered shared re-exp
     my %nets_by_name = map { $_->name => $_ } @{$plan->nets || []};
     is($nets_by_name{shared_dp_raw_left_status_bus}->declared_type_name, 'byte_t', 'support preserves declared type identity on the left raw-source carrier net');
     is($nets_by_name{shared_dp_raw_right_status_bus}->declared_type_spec->{signed}, 1, 'support preserves declared type signedness on the right raw-source carrier net');
+    is($nets_by_name{status_bus_shared_next}->declaration_keyword, 'logic', 'support promotes the lifted next-value carrier into one explicit logic net');
+    is($nets_by_name{status_bus_shared_q}->declared_type_name, 'byte_t', 'support preserves declared type identity on the lifted shared register net');
+    is($nets_by_name{status_bus_shared_q}->signed, 1, 'support preserves signedness on the lifted shared register net');
     ok(!defined($nets_by_name{status_bus_shared_en}->declared_type_name), 'helper enable nets stay intentionally untyped');
 
     my %left_bindings = map { $_->{port_name} => $_->{signal_name} } @{$plan->instances->[0]->port_bindings};
@@ -250,8 +255,8 @@ subtest 'shared-datapath support augments one plan with registered shared re-exp
     my $aux = join("\n", @{$plan->auxiliary_assignments || []});
     like($aux, qr/assign status_bus__8_d1_shared_en = left_status_bus__8_d1_src_en \| right_status_bus__8_d1_src_en;/, 'support emits the aggregate enable helper assignment');
     like($aux, qr/assign status_bus__8_d1_multi_src_conflict = \(left_status_bus__8_d1_src_en & right_status_bus__8_d1_src_en\);/, 'support emits the same-value conflict helper assignment');
-    like($aux, qr/logic \[7:0\] status_bus_shared_next;/, 'support emits the lifted next-value declaration');
-    like($aux, qr/logic \[7:0\] status_bus_shared_q;/, 'support emits the lifted shared register declaration');
+    unlike($aux, qr/logic \[7:0\] status_bus_shared_next;/, 'support no longer hides the lifted next-value declaration only in auxiliary text');
+    unlike($aux, qr/logic \[7:0\] status_bus_shared_q;/, 'support no longer hides the lifted shared register declaration only in auxiliary text');
     like($aux, qr/assign left_status = status_bus_shared_q;/, 'support re-exports the lifted shared register through the first top output');
     like($aux, qr/assign right_status = status_bus_shared_q;/, 'support re-exports the lifted shared register through the second top output');
 };

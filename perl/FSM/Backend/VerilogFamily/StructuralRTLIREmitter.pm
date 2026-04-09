@@ -52,9 +52,12 @@ sub emit_module ($class, $structural_rtl_ir) {
     my @net_lines = map {
         my $width = ($_->{width} || 1) > 1 ? sprintf("[%d:0] ", $_->{width} - 1) : '';
         my $signed = ($_->{signed} // 0) ? 'signed ' : '';
+        my $declaration_keyword = $_->{declaration_keyword} // 'wire';
         my $state_model = _state_model_keyword($_->{state_model});
-        my $type_prefix = defined($state_model) ? "${state_model} ${signed}" : $signed;
-        sprintf("    wire %s%s%s;", $type_prefix, $width, $_->{name})
+        my $type_prefix = $declaration_keyword eq 'wire'
+            ? (defined($state_model) ? "${state_model} ${signed}" : $signed)
+            : $signed;
+        sprintf("    %s %s%s%s;", $declaration_keyword, $type_prefix, $width, $_->{name})
     } @nets;
 
     my @instance_blocks = map {

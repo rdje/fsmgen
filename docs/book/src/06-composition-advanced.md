@@ -168,6 +168,15 @@ that declared type contract and the private raw contributor nets synthesized by
 shared-datapath lifting preserve the same contributor-side type identity in the
 structural export.
 
+The lifted runtime carriers now follow that same rule too:
+
+- `*_shared_q`
+- `*_shared_next`
+- `*_shared_comb`
+
+They are now explicit structural nets with a real declaration kind instead of
+existing only as declaration text hidden in auxiliary HDL sections.
+
 ## Whole Aggregate Actuals
 
 Whole aggregate roots such as `=FRAME` are now live on the typed actual path.

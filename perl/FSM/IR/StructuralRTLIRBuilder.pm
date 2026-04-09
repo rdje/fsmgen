@@ -148,8 +148,14 @@ sub build_from_composition_plan ($class, $composition_plan, $target_language = '
                     source => $_->source,
                     targets => [@{$_->targets || []}],
                     };
+                    my $declaration_keyword = $_->can('declaration_keyword') ? $_->declaration_keyword : undef;
+                    my $signed = $_->can('signed') ? $_->signed : 0;
+                    my $state_model = $_->can('state_model') ? $_->state_model : undef;
                     my $declared_type_name = $_->can('declared_type_name') ? $_->declared_type_name : undef;
                     my $declared_type_spec = $_->can('declared_type_spec') ? $_->declared_type_spec : undef;
+                    $net_entry->{declaration_keyword} = $declaration_keyword if defined $declaration_keyword;
+                    $net_entry->{signed} = $signed if $signed;
+                    $net_entry->{state_model} = $state_model if defined $state_model;
                     $net_entry->{declared_type_name} = $declared_type_name if defined $declared_type_name;
                     $net_entry->{declared_type_spec} = $declared_type_spec if defined $declared_type_spec;
                     $net_entry;
