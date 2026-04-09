@@ -1402,6 +1402,11 @@ The first honest `R11` slices are now:
   aggregate projections reuse one typed child-output carrier before applying
   member/item access, and authored list indexes lower through the same
   generated packed-typedef field convention such as `.item_1`.
+- Reporting/embedding note: the composition provenance endpoint surface now
+  resolves those aggregate source paths against preserved declared type specs
+  too, so `in_frame.tag`, `in_frame.payload[1]`, and
+  `producer.OUT_FRAME.payload[1]` report leaf width/type facts instead of
+  falling back to whole-base widths or generic bit/slice defaults.
 - Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
   approachable, the preferred shape is a book-like docs set with one Markdown
   file per major topic, a landing-page/table-of-contents role for

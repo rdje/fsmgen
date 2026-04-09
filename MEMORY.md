@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-10: composition aggregate source provenance now resolves leaf facts
+- Saved one hardening slice for the aggregate source-expression lane.
+- Important continuity note:
+  - `FSM::Composition::ProvenanceReportBuilder->endpoint_context` now resolves
+    declared aggregate top-port and generated-child source paths against the
+    preserved declared type spec,
+  - metadata for expressions like `in_frame.tag`, `in_frame.payload[1]`, and
+    `producer.OUT_FRAME.payload[1]` now reports the leaf width/type instead of
+    the whole base endpoint width or a generic bit-like default,
+  - and base top-port / child-endpoint contexts now carry
+    `declared_type_name` / `declared_type_spec` when available for embedding
+    consumers.
+
 ## 2026-04-10: composition links can now source typed aggregate members/items
 - Saved the next typed aggregate composition slice.
 - Important continuity note:

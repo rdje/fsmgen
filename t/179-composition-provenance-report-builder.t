@@ -160,6 +160,108 @@ FSM
     is($child_expr_context->{base_endpoint}, 'producer.serial_payload', 'child-expression context keeps the base child endpoint');
 };
 
+subtest 'provenance report builder projects typed aggregate expression widths' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'composition_provenance_builder_aggregate_context_top.fsm');
+    my $rtl_metadata_path = File::Spec->catfile($tempdir, 'sink.rtlif');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:composition_provenance_builder_aggregate_context_top
+  (+types
+    (type pair_t (list bit (bits 4) bit))
+    (type frame_t (record (tag (bits 4)) (flag bit) (payload pair_t)))
+  )
+  (?ports:public_io
+    in_frame<frame_t
+    tag_out>4
+  )
+  (?dtc:producer producer_src)
+  (?rtl:sink)
+  (?toplink:wiring
+    /in_frame.tag/tag_out/
+    /in_frame.payload[1]/sink.top_nibble/
+    /producer.OUT_FRAME.payload[1]/sink.child_nibble/
+    /producer.OUT_FRAME.flag/sink.child_flag/
+  )
+)
+
+(?dt:producer_src
+  (+types
+    (type pair_t (list bit (bits 4) bit))
+    (type frame_t (record (tag (bits 4)) (flag bit) (payload pair_t)))
+  )
+  (+size
+    (OUT_FRAME frame_t)
+  )
+  (-pass
+    (OUT_FRAME = 11'b10100111100)
+  )
+)
+FSM
+    );
+
+    write_file(
+        $rtl_metadata_path,
+        <<'RTLIF'
+(?rtlif:sink
+  top_nibble<4:data
+  child_nibble<4:data
+  child_flag<1:data
+)
+RTLIF
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+    my $top_member_context = FSM::Composition::ProvenanceReportBuilder->endpoint_context(
+        composition_plan => $result->{composition_plan},
+        endpoint => 'in_frame.tag',
+        structural_rtl_ir => $result->{structural_rtl_ir},
+        intent_hir => $result->{intent_hir},
+        target_language => 'systemverilog',
+    );
+    my $top_list_item_context = FSM::Composition::ProvenanceReportBuilder->endpoint_context(
+        composition_plan => $result->{composition_plan},
+        endpoint => 'in_frame.payload[1]',
+        structural_rtl_ir => $result->{structural_rtl_ir},
+        intent_hir => $result->{intent_hir},
+        target_language => 'systemverilog',
+    );
+    my $child_list_item_context = FSM::Composition::ProvenanceReportBuilder->endpoint_context(
+        composition_plan => $result->{composition_plan},
+        endpoint => 'producer.OUT_FRAME.payload[1]',
+        structural_rtl_ir => $result->{structural_rtl_ir},
+        intent_hir => $result->{intent_hir},
+        target_language => 'systemverilog',
+    );
+    my $child_flag_context = FSM::Composition::ProvenanceReportBuilder->endpoint_context(
+        composition_plan => $result->{composition_plan},
+        endpoint => 'producer.OUT_FRAME.flag',
+        structural_rtl_ir => $result->{structural_rtl_ir},
+        intent_hir => $result->{intent_hir},
+        target_language => 'systemverilog',
+    );
+
+    is($top_member_context->{kind}, 'top_expression', 'builder classifies top aggregate member access as a top expression');
+    is($top_member_context->{width}, 4, 'top aggregate record member context keeps resolved leaf width');
+    is($top_member_context->{expression_type_spec}{width}, 4, 'top aggregate record member context keeps resolved leaf type');
+    is($top_list_item_context->{width}, 4, 'top aggregate list item context keeps resolved item width');
+    is($top_list_item_context->{expression_type_spec}{kind}, 'bits', 'top aggregate list item context keeps resolved item type');
+    is($child_list_item_context->{kind}, 'child_expression', 'builder classifies child aggregate item access as a child expression');
+    is($child_list_item_context->{base_endpoint}, 'producer.OUT_FRAME', 'child aggregate item context keeps the base endpoint');
+    is($child_list_item_context->{width}, 4, 'child aggregate list item context keeps resolved item width');
+    is($child_list_item_context->{expression_type_spec}{width}, 4, 'child aggregate list item context keeps resolved item type');
+    is($child_flag_context->{width}, 1, 'child aggregate record member context keeps resolved one-bit leaf width');
+    is($child_flag_context->{expression_type_spec}{kind}, 'bit', 'child aggregate record member context keeps resolved bit leaf type');
+};
+
 done_testing();
 
 sub write_file {

@@ -102,6 +102,11 @@ composition links when the base endpoint preserves a declared aggregate type:
 For generated-child output paths, FSMGen first binds the whole child output to
 one typed carrier and then applies the member/item access to that carrier.
 
+The same leaf facts are preserved in the structured reporting surface:
+composition provenance endpoint contexts resolve `in_frame.tag` or
+`producer.OUT_FRAME.payload[1]` to the aggregate leaf width/type, not just the
+packed width of the whole base endpoint.
+
 This is still deliberate and bounded. Broader inference-first aggregate growth
 without explicit declared anchors remains future work; the backend should
 never pretend a richer type surface is stable before it really is.

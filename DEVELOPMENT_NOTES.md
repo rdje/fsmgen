@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-10: aggregate source-expression metadata must match emitted semantics
+- Hardened the composition aggregate source-expression lane after HDL emission
+  and structural binding behavior already accepted declared aggregate paths.
+- Landed behavior:
+  - provenance endpoint contexts for `in_frame.tag`, `in_frame.payload[1]`,
+    and `producer.OUT_FRAME.payload[1]` now resolve the aggregate path against
+    the preserved declared type spec,
+  - those contexts report the leaf width and leaf type spec instead of the
+    whole aggregate base width or a slice-like default,
+  - and top-port / child-endpoint contexts now keep their declared type
+    contract when the structural IR already has it.
+- Why this boundary matters:
+  - embedders and reports should see the same typed facts that the HDL emitter
+    used, not a second approximate interpretation of the endpoint string,
+  - and this keeps the “generation is the final AST/IR walk” rule honest by
+    making the observable metadata match the planned aggregate expression
+    contract before any downstream tool consumes it.
+
 ## 2026-04-10: composition aggregate member sources should resolve before emission
 - Continued the typed aggregate expression lane after direct-root
   `AggregateRef` support landed.

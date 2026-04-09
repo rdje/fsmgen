@@ -23,6 +23,7 @@ use FSM::Composition::LinkedPlanBuilder;
 use FSM::Composition::InterfacePortBuilder;
 use FSM::IR::IntentHIR;
 use FSM::IR::StructuralRTLIRBuilder;
+use FSM::Package::PayloadTypeSupport;
 
 =head2 build_report
 
@@ -476,7 +477,7 @@ sub endpoint_context ($class, %args) {
     );
 
     if (my $top_port = $structural_rtl_ir->top_port($endpoint)) {
-        return {
+        my $context = {
             kind => 'top_port',
             name => $top_port->{name},
             endpoint => $top_port->{name},
@@ -484,17 +485,30 @@ sub endpoint_context ($class, %args) {
             width => $top_port->{width},
             type => $top_port->{type},
         };
+        $context->{declared_type_name} = $top_port->{declared_type_name}
+            if defined $top_port->{declared_type_name};
+        $context->{declared_type_spec} = _clone_structured_value($top_port->{declared_type_spec})
+            if ref($top_port->{declared_type_spec}) eq 'HASH';
+        return $context;
     }
 
     if (my $top_expr_port_name = FSM::Composition::LinkedPlanBuilder->top_expression_base_port_name($endpoint)) {
         if (my $top_port = $structural_rtl_ir->top_port($top_expr_port_name)) {
             my $spec = FSM::Composition::LinkedPlanBuilder->top_expression_spec($endpoint) || {};
+            my ($aggregate_type_spec, $aggregate_width) = (
+                ($spec->{expr_kind} || '') eq 'aggregate_ref'
+                    ? $class->_aggregate_path_type_spec_and_width(
+                        $top_port->{declared_type_spec},
+                        $spec->{path_text},
+                    )
+                    : (undef, undef)
+            );
             my $width = ($spec->{expr_kind} || '') eq 'bit_select'
                 ? 1
                 : (($spec->{expr_kind} || '') eq 'slice'
                     ? abs(($spec->{msb} || 0) - ($spec->{lsb} || 0)) + 1
-                    : $top_port->{width});
-            return {
+                    : (defined($aggregate_width) ? $aggregate_width : $top_port->{width}));
+            my $context = {
                 kind => 'top_expression',
                 name => $top_expr_port_name,
                 endpoint => $endpoint,
@@ -502,6 +516,13 @@ sub endpoint_context ($class, %args) {
                 width => $width,
                 type => $top_port->{type},
             };
+            $context->{declared_type_name} = $top_port->{declared_type_name}
+                if defined $top_port->{declared_type_name};
+            $context->{declared_type_spec} = _clone_structured_value($top_port->{declared_type_spec})
+                if ref($top_port->{declared_type_spec}) eq 'HASH';
+            $context->{expression_type_spec} = _clone_structured_value($aggregate_type_spec)
+                if ref($aggregate_type_spec) eq 'HASH';
+            return $context;
         }
     }
 
@@ -513,17 +534,30 @@ sub endpoint_context ($class, %args) {
         );
 
         if (($base_context->{kind} || '') eq 'child_endpoint') {
+            my ($aggregate_type_spec, $aggregate_width) = (
+                ($child_expr_spec->{expr_kind} || '') eq 'aggregate_ref'
+                    ? $class->_aggregate_path_type_spec_and_width(
+                        $base_context->{declared_type_spec},
+                        $child_expr_spec->{path_text},
+                    )
+                    : (undef, undef)
+            );
             my $width = ($child_expr_spec->{expr_kind} || '') eq 'bit_select'
                 ? 1
-                : abs(($child_expr_spec->{msb} || 0) - ($child_expr_spec->{lsb} || 0)) + 1;
+                : (($child_expr_spec->{expr_kind} || '') eq 'slice'
+                    ? abs(($child_expr_spec->{msb} || 0) - ($child_expr_spec->{lsb} || 0)) + 1
+                    : (defined($aggregate_width) ? $aggregate_width : $base_context->{width}));
 
-            return {
+            my $context = {
                 %$base_context,
                 kind => 'child_expression',
                 endpoint => $endpoint,
                 base_endpoint => $base_endpoint,
                 width => $width,
             };
+            $context->{expression_type_spec} = _clone_structured_value($aggregate_type_spec)
+                if ref($aggregate_type_spec) eq 'HASH';
+            return $context;
         }
     }
 
@@ -549,7 +583,7 @@ sub endpoint_context ($class, %args) {
     my $source_root_kind = $child->{source_root_kind}
         // $class->_source_root_kind_for_instance_kind($instance_kind);
 
-    return {
+    my $context = {
         kind => 'child_endpoint',
         endpoint => $endpoint,
         instance_name => ($child->{instance_name} // $endpoint_entry->{instance_name} // $instance_name),
@@ -568,6 +602,11 @@ sub endpoint_context ($class, %args) {
         lowered_rtl_ir => ($child->{lowered_rtl_ir} || {}),
         structural_rtl_ir => ($child->{structural_rtl_ir} || {}),
     };
+    $context->{declared_type_name} = $port->{declared_type_name}
+        if $port && defined $port->{declared_type_name};
+    $context->{declared_type_spec} = _clone_structured_value($port->{declared_type_spec})
+        if $port && ref($port->{declared_type_spec}) eq 'HASH';
+    return $context;
 }
 
 =head2 endpoint_example_label
@@ -872,6 +911,80 @@ sub _structural_rtl_ir_object ($class, $composition_plan, $structural_rtl_ir = u
         $structural_rtl_ir,
         ($target_language // 'systemverilog'),
     );
+}
+
+sub _aggregate_path_type_spec_and_width ($class, $root_type_spec, $path_text) {
+    return (undef, undef) unless ref($root_type_spec) eq 'HASH';
+    return (undef, undef) unless defined($path_text) && length($path_text);
+
+    my $current_type_spec = $root_type_spec;
+    my $remaining = $path_text;
+    while (length $remaining) {
+        if ($remaining =~ s/\A\.([A-Za-z_]\w*)//) {
+            my $member_name = $1;
+            return (undef, undef) unless ($current_type_spec->{kind} || '') eq 'record';
+            my $members = $current_type_spec->{members} || {};
+            return (undef, undef) unless exists $members->{$member_name};
+            $current_type_spec = $members->{$member_name};
+            next;
+        }
+
+        if ($remaining =~ s/\A\[(\d+)(?::(\d+))?\]//) {
+            my ($first_index, $second_index) = ($1, $2);
+            my $kind = $current_type_spec->{kind} || '';
+
+            if ($kind eq 'list') {
+                return (undef, undef) if defined $second_index;
+                my $items = $current_type_spec->{items} || [];
+                return (undef, undef) unless $first_index < @$items;
+                $current_type_spec = $items->[$first_index];
+                next;
+            }
+
+            if ($kind eq 'bit' || $kind eq 'bits') {
+                my $scalar_width = $current_type_spec->{width} // 0;
+                if (defined $second_index) {
+                    my ($high, $low) = ($first_index, $second_index);
+                    my $max_index = $high > $low ? $high : $low;
+                    return (undef, undef) unless $scalar_width > 0 && $max_index < $scalar_width;
+
+                    my $slice_width = abs($high - $low) + 1;
+                    $current_type_spec = FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($slice_width);
+                    next;
+                }
+
+                return (undef, undef) unless $scalar_width > 0 && $first_index < $scalar_width;
+                $current_type_spec = FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width(1);
+                next;
+            }
+
+            return (undef, undef);
+        }
+
+        return (undef, undef);
+    }
+
+    my $width = ref($current_type_spec) eq 'HASH' ? ($current_type_spec->{width} // undef) : undef;
+    return (_clone_structured_value($current_type_spec), $width)
+        if defined($width) && $width > 0;
+
+    return (undef, undef);
+}
+
+sub _clone_structured_value ($value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => _clone_structured_value($value->{$_}) } sort keys %$value
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone_structured_value($_) } @$value ];
+    }
+
+    return $value;
 }
 
 =head2 _source_root_kind_for_instance_kind

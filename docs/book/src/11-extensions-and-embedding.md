@@ -102,6 +102,12 @@ typed signal, an inferred list-like concat/repeat expression, or a whole
 aggregate actual root without reconstructing that meaning from packed width
 alone.
 
+Composition provenance endpoint contexts also preserve typed aggregate source
+expression facts. For example, `in_frame.tag` and
+`producer.OUT_FRAME.payload[1]` report the resolved aggregate leaf width/type
+when their base endpoint carries a declared aggregate type, rather than forcing
+embedders to infer that path from string spelling or whole-base widths.
+
 On the composition side, `module_info.composition_shared_datapath_candidates`
 also now preserves declared type contracts conservatively:
 

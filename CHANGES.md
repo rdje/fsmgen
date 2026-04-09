@@ -1,5 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-10
+### composition aggregate source expressions now report leaf width/type metadata
+- Updated [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm) so composition provenance endpoint contexts resolve declared aggregate source paths such as `in_frame.tag`, `in_frame.payload[1]`, and `producer.OUT_FRAME.payload[1]` to their leaf width and leaf type spec instead of falling back to whole-base widths or slice-like defaults.
+- Top-port and child-endpoint provenance contexts now preserve `declared_type_name` / `declared_type_spec` when that structural metadata is available, so embedding/reporting consumers can inspect aggregate source-expression facts without reconstructing the declared type contract from packed widths.
+- Updated [t/179-composition-provenance-report-builder.t](/Users/richarddje/Documents/github/fsmgen/t/179-composition-provenance-report-builder.t) to lock top aggregate member/item contexts plus generated-child aggregate member/item contexts through the provenance builder.
+
 ## 2026-04-09
 ### direct aggregate-typed signal expressions now preserve member and list access
 - Added `FSM::CoreAST::AggregateRef` in [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) and updated [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) so declared aggregate-typed direct-root signals now parse `FRAME.field`, `FRAME.payload[1]`, and scalar subselects as typed AST leaves instead of collapsing them back to the base signal before generation.
