@@ -1,5 +1,29 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-09: direct and composition aggregate typedef lowering should share one Verilog-family contract
+- Continued the typed aggregate HDL-lowering lane after composition-top
+  typedef emission landed.
+- Landed behavior:
+  - direct generated-module SystemVerilog emission now carries aggregate
+    `declared_type_name` / canonical `declared_type_spec` metadata from
+    module/internal declaration planning into emitted packed typedefs,
+  - direct module-header typedefs are emitted before the ANSI module
+    declaration when aggregate typed ports need them,
+  - direct internal/helper aggregate declarations emit typedefs inside the
+    module before the declarations that use them,
+  - and structural composition emission now reuses the same Verilog-family
+    typedef helper instead of keeping a separate copy of the record/list
+    lowering rules.
+- Why this boundary matters:
+  - direct `?fsm` / `?dt` roots and composition tops should not diverge on how
+    user-authored aggregate aliases become HDL declarations,
+  - the final generated SystemVerilog should remain a visual representation of
+    the typed AST/IR contract instead of rediscovering aggregate intent from
+    raw packed widths,
+  - and keeping the helper shared gives future signedness/state-model/member
+    access work one place to harden before any additional Verilog-family
+    backend surfaces consume aggregate typedefs.
+
 ## 2026-04-09: preserved aggregate type identity should reach emitted composition HDL too
 - Continued the typed aggregate/composition lane after declared type identity
   already survived ports, nets, bindings, whole actuals, source expressions,
@@ -19,8 +43,8 @@ This document captures engineering rationale, design constraints, and working de
     stopping at width-only vector declarations on the final SV boundary would
     still throw away the most user-visible part of that contract,
   - and this gives composition tops one honest backend-owned aggregate
-    lowering story without pretending the older direct generated-module path
-    has already been upgraded too.
+    lowering story; the matching direct generated-module path is now covered by
+    the shared Verilog-family typedef helper described above.
 
 ## 2026-04-09: lifted shared-datapath carriers should not hide only in auxiliary text
 - Continued the typed shared-datapath lane after candidate discovery and raw

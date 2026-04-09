@@ -25,13 +25,17 @@ subtest 'scaffold emitter rebuilds the regular-state direct backend prefix from 
   )
   (+types
     (type signed_byte (four_state (signed (bits 8))))
+    (type frame_t (record (tag (bits 4)) (flag bit)))
   )
   (+size
     (OUT signed_byte)
     (IN signed_byte)
+    (FRAME frame_t)
+    (IN_FRAME frame_t)
   )
   (idle
     (OUT <= IN)
+    (FRAME> = IN_FRAME)
   )
 )
 FSM
@@ -53,7 +57,10 @@ FSM
         'scaffold emitter rebuilds the same regular-state prefix as the direct backend output',
     );
     like($scaffold, qr/localparam\s+IDLE\s*=\s*1'd0;/, 'regular-state scaffold keeps the state encoding block');
+    like($scaffold, qr/typedef struct packed \{\n\s+logic \[3:0\] tag;\n\s+logic flag;\n\} frame_t__fsmgen_t; \/\/ frame_t\s*\n\s*module/s, 'regular-state scaffold emits aggregate port typedefs before the module header');
     like($scaffold, qr/input\s+logic\s+signed\s+\[7:0\]\s+IN\b/s, 'regular-state scaffold keeps explicit four-state signed module-port declarations from semantic types');
+    like($scaffold, qr/input\s+frame_t__fsmgen_t\s+IN_FRAME\b/s, 'regular-state scaffold uses aggregate typedefs on direct input ports');
+    like($scaffold, qr/output\s+frame_t__fsmgen_t\s+FRAME\b/s, 'regular-state scaffold uses aggregate typedefs on direct output ports');
     like($scaffold, qr/always_ff\s*@\(posedge clk or negedge rstn\)/, 'regular-state scaffold keeps the sequential state block');
 };
 

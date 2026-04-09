@@ -39,6 +39,7 @@ flattened path.
 When inspecting emitted SystemVerilog, look for:
 
 - module interface first
+- any generated packed typedefs for aggregate aliases
 - declared registers and wires
 - factored intermediate expressions
 - unified mux/default logic
@@ -48,7 +49,6 @@ When inspecting emitted SystemVerilog, look for:
 For composition tops, also inspect:
 
 - top ports
-- any generated packed typedefs for aggregate aliases
 - instance bindings
 - auxiliary assignments
 - inferred internal carrier nets

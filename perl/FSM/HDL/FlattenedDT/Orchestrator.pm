@@ -34,6 +34,7 @@ sub reset_generation_state ($self) {
     $ctx->{declared_port_signals} = {};
     $ctx->{port_directions} = {};
 
+    delete $ctx->{verilog_family_typedef_state};
     delete $ctx->{binary_logical_op_counts};
     delete $ctx->{ast_factorizer};
     delete $ctx->{fsm_module};

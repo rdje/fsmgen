@@ -112,19 +112,13 @@ Example:
 )
 ```
 
-Current lowering still uses packed width for emitted HDL, but the semantic type
-identity is preserved through the pipeline so compatibility checks can use more
-than width alone.
+The semantic type identity is preserved through the pipeline so compatibility
+checks can use more than width alone. On the SystemVerilog path, direct
+generated modules and composition tops also preserve that identity into the
+emitted declaration surface by synthesizing backend-owned packed typedefs for
+declared aggregate aliases instead of flattening them back to raw vectors.
 
-One important current nuance:
-
-- direct `?fsm` / `?dt` generation still lowers aggregate aliases to packed
-  widths on the old flattened backend path
-- composition-top SystemVerilog emission now synthesizes backend-owned local
-  packed typedefs for aggregate aliases instead of flattening those top
-  boundaries all the way back to raw vectors
-
-That means a composition top may emit shapes like:
+That means SystemVerilog may emit shapes like:
 
 ```systemverilog
 typedef struct packed {
@@ -225,10 +219,12 @@ What is shipped today:
 - packed list and record aliases
 - semantic imports from `?pkg`
 - declared-type preservation across the live pipeline
+- direct generated-module packed typedef emission for aggregate aliases
 - composition-top packed typedef emission for aggregate aliases
 
 What is still future work:
 
 - broader inference-first typing so users need fewer explicit anchors
-- direct generated-module aggregate typedef lowering beyond packed-width-only emission
+- deeper type-directed aggregate member/index access in emitted expressions
+- VHDL aggregate-type lowering beyond current scalar/width-safe surfaces
 - richer public type/export surfaces for embedders

@@ -159,6 +159,10 @@ sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports 
     my %aux_signed;
     my %signal_state_model;
     my %aux_state_model;
+    my %signal_declared_type_name;
+    my %aux_declared_type_name;
+    my %signal_declared_type_spec;
+    my %aux_declared_type_spec;
     my %signals = %{$fsm_module->signals || {}};
 
     my $state_plan = $self->build_state_register_plan($fsm_module);
@@ -176,17 +180,27 @@ sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports 
         my $multiplexer_type = $lhs_analysis->{multiplexer}->{type} || 'comb';
         my $lhs_signed = _signal_signed($signals{$lhs});
         my $lhs_state_model = _signal_state_model($signals{$lhs});
+        my $lhs_declared_type_name = _signal_declared_type_name($signals{$lhs});
+        my $lhs_declared_type_spec = _signal_declared_type_spec($signals{$lhs});
         if (!$lhs_signed && $lhs_analysis->{lhs_ast} && ref($lhs_analysis->{lhs_ast}) && $lhs_analysis->{lhs_ast}->can('signal')) {
             $lhs_signed = _signal_signed($lhs_analysis->{lhs_ast}->signal);
         }
         if (!defined($lhs_state_model) && $lhs_analysis->{lhs_ast} && ref($lhs_analysis->{lhs_ast}) && $lhs_analysis->{lhs_ast}->can('signal')) {
             $lhs_state_model = _signal_state_model($lhs_analysis->{lhs_ast}->signal);
         }
+        if (!defined($lhs_declared_type_name) && $lhs_analysis->{lhs_ast} && ref($lhs_analysis->{lhs_ast}) && $lhs_analysis->{lhs_ast}->can('signal')) {
+            $lhs_declared_type_name = _signal_declared_type_name($lhs_analysis->{lhs_ast}->signal);
+        }
+        if (!defined($lhs_declared_type_spec) && $lhs_analysis->{lhs_ast} && ref($lhs_analysis->{lhs_ast}) && $lhs_analysis->{lhs_ast}->can('signal')) {
+            $lhs_declared_type_spec = _signal_declared_type_spec($lhs_analysis->{lhs_ast}->signal);
+        }
 
         unless ($declared_ports{$lhs}) {
             $signal_decls{$lhs} = $width;
             $signal_signed{$lhs} = $lhs_signed;
             $signal_state_model{$lhs} = $lhs_state_model if defined $lhs_state_model;
+            $signal_declared_type_name{$lhs} = $lhs_declared_type_name if defined $lhs_declared_type_name;
+            $signal_declared_type_spec{$lhs} = $lhs_declared_type_spec if defined $lhs_declared_type_spec;
         }
 
         if ($multiplexer_type eq 'flop' && ($assignment_type eq 'register_out' || $assignment_type eq 'register_out_dual')) {
@@ -195,6 +209,8 @@ sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports 
                 $aux_decls{$next_name} = $width;
                 $aux_signed{$next_name} = $lhs_signed;
                 $aux_state_model{$next_name} = $lhs_state_model if defined $lhs_state_model;
+                $aux_declared_type_name{$next_name} = $lhs_declared_type_name if defined $lhs_declared_type_name;
+                $aux_declared_type_spec{$next_name} = $lhs_declared_type_spec if defined $lhs_declared_type_spec;
             }
         } elsif ($multiplexer_type eq 'flop' && ($assignment_type eq 'register_in' || $assignment_type eq 'register_in_dual')) {
             my $q_name = "${lhs}_q";
@@ -202,6 +218,8 @@ sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports 
                 $aux_decls{$q_name} = $width;
                 $aux_signed{$q_name} = $lhs_signed;
                 $aux_state_model{$q_name} = $lhs_state_model if defined $lhs_state_model;
+                $aux_declared_type_name{$q_name} = $lhs_declared_type_name if defined $lhs_declared_type_name;
+                $aux_declared_type_spec{$q_name} = $lhs_declared_type_spec if defined $lhs_declared_type_spec;
             }
         } elsif ($assignment_type eq 'pulse_delayed') {
             my $delay_cycles = $ctx->{enable_graph_assignment_support}->get_pulse_delay_cycles_for_lhs($lhs, $lhs_analysis);
@@ -222,6 +240,10 @@ sub build_internal_signal_declaration_plan ($self, $fsm_module, $declared_ports 
         aux_signed => \%aux_signed,
         signal_state_model => \%signal_state_model,
         aux_state_model => \%aux_state_model,
+        signal_declared_type_name => \%signal_declared_type_name,
+        aux_declared_type_name => \%aux_declared_type_name,
+        signal_declared_type_spec => \%signal_declared_type_spec,
+        aux_declared_type_spec => \%aux_declared_type_spec,
     };
 }
 
@@ -328,6 +350,8 @@ sub build_module_declaration_plan ($self, $fsm_module) {
             width => $signal_width,
             signed => _signal_signed($signal),
             state_model => _signal_state_model($signal),
+            declared_type_name => _signal_declared_type_name($signal),
+            declared_type_spec => _signal_declared_type_spec($signal),
         };
 
         if ($is_output) {
@@ -367,6 +391,28 @@ sub _signal_state_model ($signal) {
         if ref($signal) && $signal->can('get_attribute') && defined $signal->get_attribute('state_model');
     return $signal->attributes->{state_model}
         if ref($signal) && $signal->can('attributes') && $signal->attributes && exists $signal->attributes->{state_model};
+    return undef;
+}
+
+sub _signal_declared_type_name ($signal) {
+    return undef unless $signal;
+    return $signal->declared_type_name
+        if ref($signal) && $signal->can('declared_type_name');
+    return $signal->get_attribute('declared_type_name')
+        if ref($signal) && $signal->can('get_attribute') && defined $signal->get_attribute('declared_type_name');
+    return $signal->attributes->{declared_type_name}
+        if ref($signal) && $signal->can('attributes') && $signal->attributes && exists $signal->attributes->{declared_type_name};
+    return undef;
+}
+
+sub _signal_declared_type_spec ($signal) {
+    return undef unless $signal;
+    return $signal->declared_type_spec
+        if ref($signal) && $signal->can('declared_type_spec');
+    return $signal->get_attribute('declared_type_spec')
+        if ref($signal) && $signal->can('get_attribute') && defined $signal->get_attribute('declared_type_spec');
+    return $signal->attributes->{declared_type_spec}
+        if ref($signal) && $signal->can('attributes') && $signal->attributes && exists $signal->attributes->{declared_type_spec};
     return undef;
 }
 

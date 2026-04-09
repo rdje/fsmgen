@@ -20,6 +20,8 @@ use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Backend::VerilogFamily::TypeDeclarationSupport;
+
 sub new ($class, %args) {
     my $flattened_dt = $args{flattened_dt}
       or die "[InternalDeclarationEmitter.pm][new()] Missing required 'flattened_dt' argument";
@@ -41,24 +43,81 @@ sub generate_internal_signal_declarations ($self, $fsm_module) {
     my %aux_signed = %{$declaration_plan->{aux_signed} || {}};
     my %signal_state_model = %{$declaration_plan->{signal_state_model} || {}};
     my %aux_state_model = %{$declaration_plan->{aux_state_model} || {}};
+    my %signal_declared_type_name = %{$declaration_plan->{signal_declared_type_name} || {}};
+    my %aux_declared_type_name = %{$declaration_plan->{aux_declared_type_name} || {}};
+    my %signal_declared_type_spec = %{$declaration_plan->{signal_declared_type_spec} || {}};
+    my %aux_declared_type_spec = %{$declaration_plan->{aux_declared_type_spec} || {}};
 
     return "" unless (%signal_decls || %aux_decls);
+    $ctx->{verilog_family_typedef_state} //= FSM::Backend::VerilogFamily::TypeDeclarationSupport->typedef_state;
+
+    my @typed_declaration_entries = (
+        _typed_declaration_entries(\%signal_decls, \%signal_signed, \%signal_state_model, \%signal_declared_type_name, \%signal_declared_type_spec),
+        _typed_declaration_entries(\%aux_decls, \%aux_signed, \%aux_state_model, \%aux_declared_type_name, \%aux_declared_type_spec),
+    );
+    my ($typedef_lines, $aggregate_typedef_lookup) =
+        FSM::Backend::VerilogFamily::TypeDeclarationSupport->collect_declared_aggregate_typedefs(
+            \@typed_declaration_entries,
+            $ctx->{verilog_family_typedef_state},
+        );
 
     my $hdl = "  // Internal signal declarations\n";
-    $hdl .= _render_reg_declarations(\%signal_decls, \%signal_signed, \%signal_state_model);
+    if (@$typedef_lines) {
+        $hdl .= join("\n", map { length($_) ? "  $_" : "" } @$typedef_lines) . "\n";
+    }
+    $hdl .= _render_reg_declarations(
+        \%signal_decls,
+        \%signal_signed,
+        \%signal_state_model,
+        \%signal_declared_type_name,
+        \%signal_declared_type_spec,
+        $aggregate_typedef_lookup,
+    );
 
     if (%aux_decls) {
         $hdl .= "  // Internal mux helper registers\n";
-        $hdl .= _render_reg_declarations(\%aux_decls, \%aux_signed, \%aux_state_model);
+        $hdl .= _render_reg_declarations(
+            \%aux_decls,
+            \%aux_signed,
+            \%aux_state_model,
+            \%aux_declared_type_name,
+            \%aux_declared_type_spec,
+            $aggregate_typedef_lookup,
+        );
     }
     $hdl .= "\n";
 
     return $hdl;
 }
 
-sub _render_reg_declarations ($decls, $signed_map = undef, $state_model_map = undef) {
+sub _typed_declaration_entries ($decls, $signed_map, $state_model_map, $declared_type_name_map, $declared_type_spec_map) {
+    my @entries;
+    for my $signal_name (sort keys %{$decls || {}}) {
+        push @entries, {
+            name => $signal_name,
+            width => $decls->{$signal_name},
+            signed => ($signed_map->{$signal_name} // 0) ? 1 : 0,
+            state_model => $state_model_map->{$signal_name},
+            declared_type_name => $declared_type_name_map->{$signal_name},
+            declared_type_spec => $declared_type_spec_map->{$signal_name},
+        };
+    }
+    return @entries;
+}
+
+sub _render_reg_declarations ($decls, $signed_map = undef, $state_model_map = undef, $declared_type_name_map = undef, $declared_type_spec_map = undef, $aggregate_typedef_lookup = undef) {
     my $hdl = "";
     for my $signal_name (sort keys %{$decls || {}}) {
+        my $typedef_name = FSM::Backend::VerilogFamily::TypeDeclarationSupport->aggregate_typedef_name_for({
+            name => $signal_name,
+            declared_type_name => $declared_type_name_map ? $declared_type_name_map->{$signal_name} : undef,
+            declared_type_spec => $declared_type_spec_map ? $declared_type_spec_map->{$signal_name} : undef,
+        }, $aggregate_typedef_lookup);
+        if (defined $typedef_name) {
+            $hdl .= "  ${typedef_name} ${signal_name};\n";
+            next;
+        }
+
         my $width = $decls->{$signal_name} || 1;
         my $width_str = ($width > 1) ? "[" . ($width - 1) . ":0] " : "";
         my $signed_str = ($signed_map && ($signed_map->{$signal_name} // 0)) ? "signed " : "";
@@ -74,10 +133,7 @@ sub _render_reg_declarations ($decls, $signed_map = undef, $state_model_map = un
 }
 
 sub _state_model_keyword ($state_model) {
-    return undef unless defined $state_model && !ref($state_model);
-    return 'bit' if $state_model eq 'two_state';
-    return 'logic' if $state_model eq 'four_state';
-    return undef;
+    return FSM::Backend::VerilogFamily::TypeDeclarationSupport->state_model_keyword($state_model);
 }
 
 1;

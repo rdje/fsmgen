@@ -80,8 +80,10 @@ FSM
     is($symbol_contract->{types}{pair_t}{kind}, 'list', 'direct aggregate symbol contract preserves list type shape');
     is($symbol_contract->{types}{pair_t}{width}, 6, 'direct aggregate symbol contract preserves packed list width');
     is_deeply($module_info->{symbol_contract}, $symbol_contract, 'module_info mirrors direct aggregate symbol contracts');
-    like($hdl, qr/\breg\s+\[5:0\]\s+PAIR_OUT\b/s, 'generated HDL uses packed list width on direct aggregate-typed signals');
-    like($hdl, qr/\breg\s+\[12:0\]\s+FRAME_OUT\b/s, 'generated HDL uses packed record width on direct aggregate-typed signals');
+    like($hdl, qr/typedef struct packed \{\n\s+logic \[3:0\] tag;\n\s+logic flag;\n\s+struct packed \{\n\s+logic \[3:0\] item_0;\n\s+logic \[3:0\] item_1;\n\s+\} payload;\n\s+\} local_frame__fsmgen_t; \/\/ local_frame/s, 'generated HDL emits a packed typedef for direct aggregate record signals');
+    like($hdl, qr/typedef struct packed \{\n\s+logic item_0;\n\s+logic \[3:0\] item_1;\n\s+logic item_2;\n\s+\} pair_t__fsmgen_t; \/\/ pair_t/s, 'generated HDL emits a packed typedef for direct aggregate list signals');
+    like($hdl, qr/\blocal_frame__fsmgen_t\s+FRAME_OUT\b/s, 'generated HDL declares direct aggregate record signals through their typedef');
+    like($hdl, qr/\bpair_t__fsmgen_t\s+PAIR_OUT\b/s, 'generated HDL declares direct aggregate list signals through their typedef');
 
     my @cmd = ('./bin/fsmgen', '--quiet', '--path', $libdir, '--output', $output_path, $fsm_path);
     my ($success, $error_code, $full_buf, $stdout_buf, $stderr_buf) = run(command => \@cmd, verbose => 0);

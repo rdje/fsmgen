@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-09: direct aggregate aliases now emit SV typedefs too
+- Saved the matching direct generated-module aggregate-lowering slice after
+  composition typedef emission landed.
+- Important continuity note:
+  - direct `?fsm` / `?dt` SystemVerilog module/internal declaration planning
+    now preserves aggregate declared type metadata into emitted packed
+    typedefs instead of flattening those declarations back to raw vectors,
+  - module-header aggregate typedefs are emitted before the module when typed
+    ports need them, while internal/helper aggregate typedefs are emitted
+    inside the module before the declarations that use them,
+  - and both direct generated modules and structural composition emission now
+    share [perl/FSM/Backend/VerilogFamily/TypeDeclarationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/TypeDeclarationSupport.pm) for record/list typedef lowering.
+
 ## 2026-04-09: composition aggregate aliases now reach emitted SV typedefs
 - Saved the next typed aggregate-lowering slice after structural type identity
   already survived planning and structural export.

@@ -19,6 +19,7 @@ use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Backend::VerilogFamily::TypeDeclarationSupport;
 use FSM::Debug;
 
 sub new ($class, %args) {
@@ -48,13 +49,23 @@ sub generate_header ($self, $fsm_module) {
 
 sub generate_module_declaration ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
-    my $hdl = "module " . $fsm_module->name . " (\n";
     my $module_plan = $ctx->{enable_graph_module_planning_support}->build_module_declaration_plan($fsm_module);
-    my @base_ports = map { _render_module_port_plan($_) } @{$module_plan->{base_ports} || []};
-    my @inputs = map { _render_module_port_plan($_) } @{$module_plan->{inputs} || []};
-    my @outputs = map { _render_module_port_plan($_) } @{$module_plan->{outputs} || []};
+    $ctx->{verilog_family_typedef_state} //= FSM::Backend::VerilogFamily::TypeDeclarationSupport->typedef_state;
+    my ($typedef_lines, $aggregate_typedef_lookup) =
+        FSM::Backend::VerilogFamily::TypeDeclarationSupport->collect_declared_aggregate_typedefs(
+            [ @{$module_plan->{base_ports} || []}, @{$module_plan->{inputs} || []}, @{$module_plan->{outputs} || []} ],
+            $ctx->{verilog_family_typedef_state},
+        );
+    my @base_ports = map { _render_module_port_plan($_, $aggregate_typedef_lookup) } @{$module_plan->{base_ports} || []};
+    my @inputs = map { _render_module_port_plan($_, $aggregate_typedef_lookup) } @{$module_plan->{inputs} || []};
+    my @outputs = map { _render_module_port_plan($_, $aggregate_typedef_lookup) } @{$module_plan->{outputs} || []};
 
     my @all_ports = (@base_ports, @inputs, @outputs);
+    my $hdl = "";
+    if (@$typedef_lines) {
+        $hdl .= join("\n", @$typedef_lines) . "\n\n";
+    }
+    $hdl .= "module " . $fsm_module->name . " (\n";
     for my $i (0 .. $#all_ports) {
         $hdl .= $all_ports[$i];
         if ($i < $#all_ports) {
@@ -71,7 +82,12 @@ sub generate_module_declaration ($self, $fsm_module) {
     return $hdl;
 }
 
-sub _render_module_port_plan ($port_plan) {
+sub _render_module_port_plan ($port_plan, $aggregate_typedef_lookup = undef) {
+    my $typedef_name = FSM::Backend::VerilogFamily::TypeDeclarationSupport
+        ->aggregate_typedef_name_for($port_plan, $aggregate_typedef_lookup);
+    return "  $port_plan->{direction} ${typedef_name} $port_plan->{name}"
+        if defined $typedef_name;
+
     my $width = $port_plan->{width} || 1;
     my $width_str = ($width > 1) ? "[" . ($width - 1) . ":0] " : "";
     my $signed_str = ($port_plan->{signed} // 0) ? "signed " : "";
@@ -87,10 +103,7 @@ sub _render_module_port_plan ($port_plan) {
 }
 
 sub _state_model_keyword ($state_model) {
-    return undef unless defined $state_model && !ref($state_model);
-    return 'bit' if $state_model eq 'two_state';
-    return 'logic' if $state_model eq 'four_state';
-    return undef;
+    return FSM::Backend::VerilogFamily::TypeDeclarationSupport->state_model_keyword($state_model);
 }
 
 sub generate_state_encoding ($self, $fsm_module) {
