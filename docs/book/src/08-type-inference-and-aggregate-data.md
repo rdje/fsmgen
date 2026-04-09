@@ -123,6 +123,27 @@ But the guardrail remains:
 - if the backend cannot honor the inferred shape honestly, generation must fail
   explicitly
 
+## Future Pack And Deconstruct Direction
+
+FSMGen may also grow an intent-level way to pack and deconstruct aggregate-like
+values in assignments. This is a future direction, not shipped behavior yet.
+
+The shape to keep in mind is:
+
+- an RHS pack form would build one target from several static-width
+  expressions
+- an LHS deconstruct form would split one RHS into several legal static
+  lvalues
+- authored left-to-right order should map high-to-low in the packed value
+- total widths and element type compatibility must be checked before HDL
+  generation
+- overlapping or duplicated LHS ranges should fail unless a future semantic
+  pass defines deliberate merge or priority behavior
+
+The important boundary is the same one used elsewhere in FSMGen: the frontend
+should normalize and validate the meaning first, then the backend should emit
+the already-upright AST/IR.
+
 ## Practical Guidance Today
 
 Today, if you want the strongest current contract:

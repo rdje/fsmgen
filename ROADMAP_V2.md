@@ -242,6 +242,19 @@ Deliverable themes:
     - mixed integer spellings should be accepted whenever the frontend can normalize them onto one safe semantic meaning,
     - aggregate authoring should feel similarly low-friction, with the engine autovivifying intermediate list/record structure from usage whenever that recovery is honest,
     - and the engine should prefer behind-the-scenes normalization/coercion only when that meaning is honest and backend-portable, otherwise it should stop with an explicit diagnostic,
+  - keep future pack/deconstruct assignment syntax in the same intent-level
+    family rather than treating it as raw HDL concatenation:
+    - a future RHS pack form may compose one LHS from static-width expressions,
+    - a future LHS deconstruct form may split one RHS across multiple legal
+      static lvalues,
+    - authored left-to-right ordering should map high-to-low in the packed
+      value,
+    - exact total-width agreement, declared/assigned operand legality, and
+      compatible element types should be checked before generation,
+    - overlapping or duplicate LHS ranges should fail unless a later semantic
+      pass deliberately defines priority/merge behavior,
+    - and the backend should receive normalized AST/IR assignments instead of
+      inferring deconstruction from renderer-side text,
   - keep the initial operational contract narrower than the eventual syntax surface:
     - member/field reads and writes,
     - fixed-index and bounded array-element access,

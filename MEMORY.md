@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-10: future pack/deconstruct assignment syntax is only steering for now
+- Saved one future aggregate assignment idea for later implementation.
+- Important continuity note:
+  - RHS packing and LHS deconstruction/destructuring look reasonable for
+    FSMGen if they stay intent-level rather than becoming a verbatim clone of
+    SV/VHDL syntax,
+  - a future RHS pack would combine static-width expressions into one target,
+    while a future LHS deconstruct would split one RHS across legal static
+    lvalues,
+  - authored left-to-right should map high-to-low in the packed value,
+  - pre-generation checks must enforce declared/assigned operand legality,
+    exact total-width compatibility, no accidental overlapping or duplicated
+    LHS ranges, and coherent assignment-family semantics,
+  - and generation should receive normalized AST/IR assignments rather than
+    rediscovering pack/deconstruct semantics while rendering HDL.
+
 ## 2026-04-09: direct aggregate-typed signal access is now first-class AST
 - Saved the next direct typed aggregate expression slice after direct
   aggregate typedef emission.

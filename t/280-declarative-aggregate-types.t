@@ -149,6 +149,122 @@ FSM
     unlike($hdl, qr/\bOUT_TAG\s*=\s*IN_FRAME(?:\[[^\]]+\])?;/s, 'record member RHS is not flattened into the base aggregate signal');
 };
 
+subtest 'direct-root aggregate-typed signal access failures are explicit before generation' => sub {
+    my @cases = (
+        {
+            name => 'bad_aggregate_missing_member',
+            source => <<'FSM',
+(?fsm:bad_aggregate_missing_member
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type frame_t (record (tag (bits 4)) (flag bit)))
+  )
+  (+size
+    (IN_FRAME frame_t)
+    (OUT 4)
+  )
+  (idle
+    (OUT = IN_FRAME.missing)
+  )
+)
+FSM
+            error => qr/Malformed typed aggregate signal access 'IN_FRAME\.missing'.*Record type for 'IN_FRAME' has no member 'missing'/s,
+        },
+        {
+            name => 'bad_aggregate_scalar_member',
+            source => <<'FSM',
+(?fsm:bad_aggregate_scalar_member
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type byte_t (bits 8))
+  )
+  (+size
+    (IN byte_t)
+    (OUT 1)
+  )
+  (idle
+    (OUT = IN.flag)
+  )
+)
+FSM
+            error => qr/Malformed typed aggregate signal access 'IN\.flag'.*Signal 'IN' has scalar type 'bits\[8\]', so record member access is not available/s,
+        },
+        {
+            name => 'bad_aggregate_untyped_member',
+            source => <<'FSM',
+(?fsm:bad_aggregate_untyped_member
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (IN 8)
+    (OUT 1)
+  )
+  (idle
+    (OUT = IN.flag)
+  )
+)
+FSM
+            error => qr/Malformed typed aggregate signal access 'IN\.flag'.*Signal 'IN' has no declared aggregate type/s,
+        },
+        {
+            name => 'bad_aggregate_list_range',
+            source => <<'FSM',
+(?fsm:bad_aggregate_list_range
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type pair_t (list bit (bits 4) bit))
+    (type frame_t (record (tag (bits 4)) (payload pair_t)))
+  )
+  (+size
+    (IN_FRAME frame_t)
+    (OUT 4)
+  )
+  (idle
+    (OUT = IN_FRAME.payload[1:0])
+  )
+)
+FSM
+            error => qr/Malformed typed aggregate signal access 'IN_FRAME\.payload\[1:0\]'.*List item access currently accepts one constant index, not a range/s,
+        },
+    );
+
+    for my $case (@cases) {
+        my $tempdir = tempdir(CLEANUP => 1);
+        my $fsm_path = File::Spec->catfile($tempdir, "$case->{name}.fsm");
+
+        write_file($fsm_path, $case->{source});
+
+        my $pipeline = FSM::Pipeline::HDLGenerator->new(
+            debug_level => 0,
+            quiet => 1,
+            target_language => 'systemverilog',
+        );
+
+        my $pipeline_error = eval {
+            $pipeline->generate_hdl_from_file($fsm_path);
+            undef;
+        };
+        $pipeline_error = $@ if !$pipeline_error;
+
+        like(
+            $pipeline_error,
+            $case->{error},
+            "$case->{name} fails before generation with a specific typed aggregate diagnostic",
+        );
+    }
+};
+
 subtest 'composition ?ports accept packed list and record aliases, including local aliases with imported aggregate members' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');

@@ -1,5 +1,35 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-10: future pack/deconstruct assignments should stay intent-level
+- Saved one future aggregate-assignment direction after discussing RHS
+  concatenation and LHS deconstruction/destructuring.
+- Preferred direction:
+  - treat the feature as intent-level packing/deconstruction rather than a
+    promise to mirror every target-HDL concatenation syntax,
+  - allow an RHS pack form to build one target from a static-width composition
+    of expressions,
+  - allow an LHS deconstruct form to split one RHS across multiple legal
+    static lvalues,
+  - keep the ordering rule explicit and SV-familiar: authored left-to-right
+    maps high-to-low in the packed value,
+  - require exact total-width agreement unless a deliberate, reviewed
+    adaptation/conversion form is introduced,
+  - reject overlapping or duplicate LHS targets unless a later pass defines
+    intentional priority semantics,
+  - start with static widths and static indexes/slices before considering any
+    dynamic subselects,
+  - and normalize the result into checked AST/IR assignments before
+    generation, so backends still walk an already-upright representation.
+- Why this belongs below the semantic frontend:
+  - generation should emit the already-validated AST/IR, not infer concat or
+    deconstruction semantics from renderer-side text,
+  - the same lvalue legality, declaration, assignment, width, and type checks
+    needed for ordinary assignments should apply to every packed/deconstructed
+    element,
+  - and a future syntax such as `(pack A B)` on RHS or LHS should be judged by
+    intent clarity and validation quality rather than by how closely it copies
+    one backend language.
+
 ## 2026-04-09: typed aggregate signal access belongs in the AST before generation
 - Continued the direct typed aggregate lane after direct aggregate typedef
   declarations landed.
