@@ -359,6 +359,9 @@ sub _is_factorizable_sub_expression ($self, $ast) {
     if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
         return 0;
     }
+    if ($ast->isa('FSM::CoreAST::AggregateRef')) {
+        return 0;
+    }
 
     if ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
         fsm_debug("FACTORIZABLE: Unary operation - ALWAYS FACTOR", 3);
@@ -480,7 +483,7 @@ sub ast_contains_intermediate_signals ($self, $ast) {
     my $ctx = $self->{flattened_dt};
     return 0 unless $ast && blessed($ast);
 
-    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef') || $ast->isa('FSM::CoreAST::AggregateRef')) {
         my $signal_name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast) || 'unknown';
         my $ast_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($ast) } || 'unknown';
         fsm_debug("  SECOND_PASS_FILTER: Bare signal reference '$signal_name' (AST: $ast_sv) - NOT factorizable", 3);
@@ -533,7 +536,7 @@ sub ast_has_intermediate_signals_recursive ($self, $ast) {
     my $ctx = $self->{flattened_dt};
     return 0 unless $ast && blessed($ast);
 
-    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef') || $ast->isa('FSM::CoreAST::AggregateRef')) {
         my $signal_name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
         if ($signal_name && $ctx->{enable_graph_signal_support}->is_intermediate_signal($signal_name)) {
             return 1;
@@ -604,7 +607,7 @@ sub _ast_contains_frequently_used_logical_operation ($self, $ast, $visited_signa
     my $signal_name;
     if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
         $signal_name = eval { $ast->signal_name } || $ast->{signal_name};
-    } elsif ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+    } elsif ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef') || $ast->isa('FSM::CoreAST::AggregateRef')) {
         $signal_name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
     }
 

@@ -312,6 +312,7 @@ sub _validate_assignment_aggregate_contract ($self, $lhs, $assignment, $violatio
     my $lhs_ast = $assignment->{lhs_ast};
     return unless blessed($lhs_ast);
     return if $lhs_ast->isa('FSM::CoreAST::IndexedRef') || $lhs_ast->isa('FSM::AST::IndexedRef');
+    return if $lhs_ast->isa('FSM::CoreAST::AggregateRef');
     return unless $lhs_ast->isa('FSM::CoreAST::SignalRef') || $lhs_ast->isa('FSM::AST::SignalRef');
     return if $lhs_ast->can('slice') && $lhs_ast->slice;
 
@@ -429,7 +430,8 @@ sub _collect_signal_operand_names ($self, $ast, $signal_names, $seen_node_ids, $
     } elsif ($ast->isa('FSM::AST::SignalRef')
         || $ast->isa('FSM::CoreAST::SignalRef')
         || $ast->isa('FSM::AST::IndexedRef')
-        || $ast->isa('FSM::CoreAST::IndexedRef'))
+        || $ast->isa('FSM::CoreAST::IndexedRef')
+        || $ast->isa('FSM::CoreAST::AggregateRef'))
     {
         $signal_name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
     }

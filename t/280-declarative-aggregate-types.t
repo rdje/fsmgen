@@ -95,6 +95,60 @@ FSM
     unlike($combined_output, qr/declarative type|aggregate type alias/s, 'successful direct aggregate type CLI run does not report type failures');
 };
 
+subtest 'direct-root aggregate-typed signal expressions preserve member and list item access' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $fsm_path = File::Spec->catfile($tempdir, 'typed_aggregate_signal_access.fsm');
+
+    write_file(
+        $fsm_path,
+        <<'FSM'
+(?fsm:typed_aggregate_signal_access
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type pair_t (list bit (bits 4) bit))
+    (type frame_t (record (tag (bits 4)) (flag bit) (payload pair_t)))
+  )
+  (+size
+    (IN_FRAME frame_t)
+    (IN_FLAG 1)
+    (IN_NIBBLE 4)
+    (OUT_TAG 4)
+    (OUT_FLAG 1)
+    (OUT_PAYLOAD_MID 4)
+    (OUT_FRAME frame_t)
+  )
+  (idle
+    (OUT_TAG = IN_FRAME.tag)
+    (OUT_FLAG = IN_FRAME.flag)
+    (OUT_PAYLOAD_MID = IN_FRAME.payload[1])
+    (OUT_FRAME.tag = IN_FRAME.tag)
+    (OUT_FRAME.flag = IN_FLAG)
+    (OUT_FRAME.payload[1] = IN_NIBBLE)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+    );
+    my $result = $pipeline->generate_hdl_from_file($fsm_path);
+    my $hdl = $result->{hdl_code};
+
+    like($hdl, qr/\/\/ OUT_TAG <- IN_FRAME\.tag\b/s, 'generated HDL preserves record member RHS access');
+    like($hdl, qr/\/\/ OUT_FLAG <- IN_FRAME\.flag\b/s, 'generated HDL preserves single-bit record member RHS access');
+    like($hdl, qr/\/\/ OUT_PAYLOAD_MID <- IN_FRAME\.payload\.item_1\b/s, 'generated HDL lowers intent-level list index to generated list field access');
+    like($hdl, qr/\bOUT_TAG\s*=\s*IN_FRAME\.tag;/s, 'final mux assigns record member to scalar output without collapsing to base signal');
+    like($hdl, qr/\bOUT_PAYLOAD_MID\s*=\s*IN_FRAME\.payload\.item_1;/s, 'final mux assigns nested list item to scalar output without collapsing to base signal');
+    like($hdl, qr/\bOUT_FRAME\s*=\s*\{\s*IN_FRAME\.tag,\s*IN_FLAG,\s*1'b0,\s*IN_NIBBLE,\s*1'b0\s*\};/s, 'partial aggregate LHS writes map to the correct packed base-signal ranges');
+    unlike($hdl, qr/\bOUT_TAG\s*=\s*IN_FRAME(?:\[[^\]]+\])?;/s, 'record member RHS is not flattened into the base aggregate signal');
+};
+
 subtest 'composition ?ports accept packed list and record aliases, including local aliases with imported aggregate members' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $libdir = File::Spec->catdir($tempdir, 'pkg_lib');

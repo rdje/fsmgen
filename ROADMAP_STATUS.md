@@ -1842,6 +1842,12 @@ Exit criteria:
   `bound_connection_expr` for the main contributor summary line, so the first
   candidate line itself no longer collapses typed contributor bindings back to
   endpoint-only text.
+- `R11`: direct aggregate-typed signal expressions now also preserve typed
+  member/list access in the AST before generation: declared aggregate
+  `+size` signals can be read as `FRAME.field` or `FRAME.payload[1]`, list
+  indexes render through the generated packed typedef field convention such as
+  `.item_1`, and partial aggregate LHS writes map through the declared
+  aggregate path to the correct packed base-signal ranges before mux emission.
 - `R11`: the structural helper layer now also owns one reusable
   `binding_signal_summary` projection over flat leaf carrier name, broader
   dependency names, and cloned typed binding expression payload, so those

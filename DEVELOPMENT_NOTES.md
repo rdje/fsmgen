@@ -1,5 +1,29 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-09: typed aggregate signal access belongs in the AST before generation
+- Continued the direct typed aggregate lane after direct aggregate typedef
+  declarations landed.
+- Landed behavior:
+  - declared aggregate-typed direct-root signals now parse record/list/scalar
+    access paths such as `IN_FRAME.tag`, `IN_FRAME.payload[1]`, and
+    `IN_FRAME.tag[3:0]` into a first-class `CoreAST::AggregateRef`,
+  - the node carries the base signal, aggregate path, resolved type spec, and
+    resolved width so renderers and validators do not rediscover that meaning
+    from strings,
+  - SystemVerilog emission renders record members through authored field names
+    and list elements through the deterministic packed typedef fields such as
+    `item_1`,
+  - and partial aggregate LHS writes map back to the correct packed
+    base-signal ranges before mux generation.
+- Why this boundary matters:
+  - generation should remain a walk over an already-upright AST,
+  - `FRAME.tag` must never silently become `FRAME[3:0]` or a base-signal
+    reference because that corrupts both width inference and visual HDL
+    intent,
+  - and keeping this as typed AST content gives pre-generation validation and
+    future inference/autovivification work one explicit semantic object to
+    harden rather than another renderer-side heuristic.
+
 ## 2026-04-09: direct and composition aggregate typedef lowering should share one Verilog-family contract
 - Continued the typed aggregate HDL-lowering lane after composition-top
   typedef emission landed.

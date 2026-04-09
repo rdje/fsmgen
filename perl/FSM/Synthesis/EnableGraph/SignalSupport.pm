@@ -81,6 +81,12 @@ sub generate_ast_based_signal_name($self, $ast) {
         my $signal_name = $self->{flattened_dt}->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
         return $signal_name || "unknown_signal";
 
+    } elsif ($ast->isa('FSM::CoreAST::AggregateRef')) {
+        my $aggregate_name = eval { $ast->to_systemverilog() } || 'aggregate_ref';
+        $aggregate_name =~ s/[^a-zA-Z0-9_]+/_/g;
+        $aggregate_name =~ s/^_+|_+$//g;
+        return $aggregate_name || 'aggregate_ref';
+
     } elsif ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal')) {
         my $value = $ast->value;
         if ($value eq "1'b1") {
@@ -262,7 +268,8 @@ sub _collect_intermediate_signals_from_ast($self, $ast, $signal_names, $seen_nod
     if ($ast->isa('FSM::AST::SignalRef') ||
         $ast->isa('FSM::CoreAST::SignalRef') ||
         $ast->isa('FSM::AST::IndexedRef') ||
-        $ast->isa('FSM::CoreAST::IndexedRef'))
+        $ast->isa('FSM::CoreAST::IndexedRef') ||
+        $ast->isa('FSM::CoreAST::AggregateRef'))
     {
         my $signal_name = $self->{flattened_dt}->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
         if (defined($signal_name) && $signal_name ne '' && $self->is_intermediate_signal($signal_name)) {

@@ -101,7 +101,7 @@ sub _analyze_ast_element($self, $element) {
 sub _analyze_condition_references($self, $condition) {
     return unless $condition;
     
-    if ($condition->isa('FSM::CoreAST::SignalRef')) {
+    if ($condition->isa('FSM::CoreAST::SignalRef') || $condition->isa('FSM::CoreAST::AggregateRef')) {
         $self->_analyze_signal_ref_usage($condition->signal, 'CONDITION');
     } elsif ($condition->isa('FSM::CoreAST::BinaryOp')) {
         $self->_analyze_condition_references($condition->left) if $condition->left;
@@ -117,7 +117,7 @@ sub _analyze_action_element($self, $action) {
     fsm_debug("    ACTION ELEMENT: Type = " . ref($action), 3);
     
     if ($action->isa('FSM::CoreAST::Assignment') || $action->isa('FSM::CoreAST::RegisterAssignment')) {
-        if ($action->target && $action->target->isa('FSM::CoreAST::SignalRef')) {
+        if ($action->target && $action->target->can('signal')) {
             my $signal_name = $action->target->signal->name;
             my $usage = $self->{signal_manager}->initialize_signal_usage($signal_name);
             $usage->{assigned_to}++;
@@ -157,7 +157,7 @@ sub _analyze_expression_references($self, $expr, $context = 'RHS') {
     
     fsm_debug("    EXPRESSION ANALYSIS: Type = " . ref($expr) . " in context '$context'", 3);
     
-    if ($expr->isa('FSM::CoreAST::SignalRef')) {
+    if ($expr->isa('FSM::CoreAST::SignalRef') || $expr->isa('FSM::CoreAST::AggregateRef')) {
         $self->_analyze_signal_ref_usage($expr->signal, $context);
     } elsif ($expr->isa('FSM::CoreAST::BinaryOp')) {
         $self->_analyze_expression_references($expr->left, "$context.left") if $expr->left;

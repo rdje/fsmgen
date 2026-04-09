@@ -992,6 +992,85 @@ package FSM::CoreAST::IndexedRef;
         return "${signal_name}[${index_str}]";
     }
 
+# Aggregate Reference: signal.member / signal.item_N / signal.member[index]
+package FSM::CoreAST::AggregateRef;
+    our @ISA = qw(FSM::CoreAST::Expression);
+
+    sub new($class, $signal, $path, %args) {
+        Carp::confess "AggregateRef requires a signal" unless $signal;
+        Carp::confess "AggregateRef requires a non-empty aggregate path"
+            unless ref($path) eq 'ARRAY' && @$path;
+
+        my $self = $class->SUPER::new(type => 'aggregate_ref', %args);
+        $self->{signal} = $signal;
+        $self->{path} = _clone_structured_value($path);
+        $self->{type_spec} = _clone_structured_value($args{type_spec});
+        $self->{width} = $args{width};
+        return $self;
+    }
+
+    sub signal($self) { $self->{signal} }
+    sub path($self) { _clone_structured_value($self->{path}) }
+    sub type_spec($self) { _clone_structured_value($self->{type_spec}) }
+    sub width($self) { $self->{width} }
+
+    sub get_signals($self) { [$self->{signal}] }
+
+    sub to_verilog($self) {
+        return $self->_render_reference('sv');
+    }
+
+    sub to_systemverilog($self) {
+        return $self->_render_reference('sv');
+    }
+
+    sub to_vhdl($self) {
+        return $self->_render_reference('vhdl');
+    }
+
+    sub _render_reference($self, $language) {
+        my $expr = $self->{signal}->name;
+        for my $segment (@{$self->{path}}) {
+            my $kind = $segment->{kind} || '';
+            if ($kind eq 'member') {
+                $expr .= "." . $segment->{name};
+            } elsif ($kind eq 'item') {
+                $expr .= "." . $self->_render_item_field_name($segment->{index});
+            } elsif ($kind eq 'bit_index') {
+                my $index = $segment->{index};
+                $expr .= $language eq 'vhdl' ? "($index)" : "[$index]";
+            } elsif ($kind eq 'bit_slice') {
+                my ($high, $low) = ($segment->{high}, $segment->{low});
+                $expr .= $language eq 'vhdl' ? "($high downto $low)" : "[$high:$low]";
+            } else {
+                Carp::confess "Unsupported AggregateRef path segment kind '$kind'";
+            }
+        }
+        return $expr;
+    }
+
+    sub _render_item_field_name($self, $index) {
+        Carp::confess "AggregateRef list item requires a numeric index"
+            unless defined($index) && $index =~ /^\d+$/;
+        return "item_$index";
+    }
+
+    sub _clone_structured_value($value) {
+        return undef unless defined $value;
+
+        if (ref($value) eq 'HASH') {
+            return {
+                map { $_ => _clone_structured_value($value->{$_}) } sort keys %$value
+            };
+        }
+
+        if (ref($value) eq 'ARRAY') {
+            return [ map { _clone_structured_value($_) } @$value ];
+        }
+
+        return $value;
+    }
+
 # Conditional Expression: condition ? true_val : false_val
 package FSM::CoreAST::ConditionalExpression;
     our @ISA = qw(FSM::CoreAST::Expression);

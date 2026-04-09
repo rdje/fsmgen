@@ -46,6 +46,12 @@ sub name_ast_expression($self, $ast_expr) {
     elsif ($ast_expr->isa('FSM::CoreAST::SignalRef')) {
         return $self->name_signal_ref_ast($ast_expr);
     }
+    elsif ($ast_expr->isa('FSM::CoreAST::AggregateRef')) {
+        my $aggregate_name = $ast_expr->to_systemverilog;
+        $aggregate_name =~ s/[^a-zA-Z0-9_]+/_/g;
+        $aggregate_name =~ s/^_+|_+$//g;
+        return $aggregate_name || 'aggregate_ref';
+    }
     elsif ($ast_expr->isa('FSM::CoreAST::Literal')) {
         return $self->name_literal_ast($ast_expr);
     }
@@ -835,6 +841,13 @@ sub infer_ast_width($self, $ast) {
             return 1; # Single bit select
         }
     }
+    elsif ($ast->isa('FSM::CoreAST::AggregateRef')) {
+        my $width = $ast->width;
+        return $width if defined($width) && $width > 0;
+        my $type_spec = $ast->type_spec;
+        return $type_spec->{width} if ref($type_spec) eq 'HASH' && $type_spec->{width};
+        return 1;
+    }
     elsif ($ast->isa('FSM::CoreAST::Literal')) {
         return $ast->width // 32;
     }
@@ -1350,6 +1363,9 @@ sub _traverse_native_ast_for_complexity($self, $node, $result, $current_depth) {
             $self->_traverse_native_ast_for_complexity($node->index, $result, $current_depth + 1);
         }
     }
+    elsif ($node->isa('FSM::CoreAST::AggregateRef')) {
+        # Aggregate refs are typed leaves; their path is metadata, not another expression tree.
+    }
     elsif ($node->isa('FSM::CoreAST::FunctionCall')) {
         for my $arg (@{$node->arguments}) {
             $self->_traverse_native_ast_for_complexity($arg, $result, $current_depth + 1);
@@ -1383,6 +1399,7 @@ sub should_factor_ast_native($self, $ast_node) {
     
     # Don't factor simple nodes
     if ($ast_node->isa('FSM::CoreAST::SignalRef') || 
+        $ast_node->isa('FSM::CoreAST::AggregateRef') ||
         $ast_node->isa('FSM::AST::SignalRef') ||
         $ast_node->isa('FSM::CoreAST::Literal') ||
         $ast_node->isa('FSM::AST::Literal') ||

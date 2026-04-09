@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-09: direct aggregate-typed signal access is now first-class AST
+- Saved the next direct typed aggregate expression slice after direct
+  aggregate typedef emission.
+- Important continuity note:
+  - direct-root `+size` signals with declared aggregate aliases now parse
+    `FRAME.member` and `FRAME.list_member[1]`-style access into
+    `FSM::CoreAST::AggregateRef` instead of silently collapsing the expression
+    to the base signal,
+  - the aggregate ref carries resolved path/type/width metadata and renders SV
+    list indexes through the generated packed typedef field convention such as
+    `.item_1`,
+  - partial aggregate LHS writes now map back to the correct packed
+    base-signal bit ranges during assignment analysis,
+  - and [t/280-declarative-aggregate-types.t](/Users/richarddje/Documents/github/fsmgen/t/280-declarative-aggregate-types.t) now locks RHS aggregate member/list access plus partial aggregate LHS packing in generated SV.
+
 ## 2026-04-09: direct aggregate aliases now emit SV typedefs too
 - Saved the matching direct generated-module aggregate-lowering slice after
   composition typedef emission landed.

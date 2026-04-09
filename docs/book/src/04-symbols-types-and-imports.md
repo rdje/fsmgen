@@ -134,6 +134,38 @@ typedef struct packed {
 Record members keep authored field names. List members use deterministic
 synthetic names like `item_0`, `item_1`, and so on.
 
+Typed aggregate signals can also be read in direct-root expressions when the
+base signal has a declared aggregate type:
+
+```lisp
+(+types
+  (type pair_t (list bit (bits 4) bit))
+  (type frame_t
+    (record
+      (tag (bits 4))
+      (flag bit)
+      (payload pair_t)))
+)
+
+(+size
+  (IN_FRAME frame_t)
+  (OUT_TAG 4)
+  (OUT_PAYLOAD_MID 4)
+)
+
+(idle
+  (OUT_TAG = IN_FRAME.tag)
+  (OUT_PAYLOAD_MID = IN_FRAME.payload[1])
+)
+```
+
+The source stays intent-level: record fields use `.field`, and list elements
+use `[N]`. On the current SystemVerilog path, the generated list field spelling
+then follows the typedef convention, so `IN_FRAME.payload[1]` emits as
+`IN_FRAME.payload.item_1`. Partial aggregate LHS writes such as
+`OUT_FRAME.tag = IN_FRAME.tag` are also mapped through the typed AST to the
+correct packed base-signal range before generation.
+
 ## Width Tokens From Types And Scalars
 
 Direct-root `+size` and composition `?ports` widths may now come from:
@@ -221,10 +253,13 @@ What is shipped today:
 - declared-type preservation across the live pipeline
 - direct generated-module packed typedef emission for aggregate aliases
 - composition-top packed typedef emission for aggregate aliases
+- direct-root typed aggregate signal member/list-item access in expressions
+  and partial aggregate LHS writes on the SystemVerilog path
 
 What is still future work:
 
 - broader inference-first typing so users need fewer explicit anchors
-- deeper type-directed aggregate member/index access in emitted expressions
+- broader inference-first aggregate member/index typing without explicit
+  declared aggregate anchors
 - VHDL aggregate-type lowering beyond current scalar/width-safe surfaces
 - richer public type/export surfaces for embedders

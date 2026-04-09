@@ -63,17 +63,34 @@ Record packing currently follows authored member order.
 
 ## Packed Lowering Rule
 
-Today, the live SV path still lowers declared aggregate aliases primarily as
-packed-width carriers.
+Today, the live SV path preserves declared aggregate aliases into backend-owned
+packed typedefs on the shipped direct generated-module and composition-top
+surfaces.
 
 That means:
 
 - type identity is preserved semantically
 - compatibility checks can use the aggregate shape
-- but emitted HDL is not yet claiming full frontend-shaped typed struct flow
+- emitted SystemVerilog declarations can keep record fields and deterministic
+  list fields visible through packed structs
 
-This is deliberate. The backend should never pretend a richer type surface is
-stable before it really is.
+Typed aggregate direct-root expressions now also preserve declared member and
+list-item access when the base signal has a known aggregate type:
+
+```lisp
+(idle
+  (OUT_TAG = IN_FRAME.tag)
+  (OUT_PAYLOAD_MID = IN_FRAME.payload[1])
+)
+```
+
+The authored list index stays `[1]` in `.fsm`, while the current SV lowering
+uses the generated packed-struct field, for example
+`IN_FRAME.payload.item_1`.
+
+This is still deliberate and bounded. Broader inference-first aggregate growth
+without explicit declared anchors remains future work; the backend should
+never pretend a richer type surface is stable before it really is.
 
 ## SystemVerilog And VHDL Intent
 
@@ -114,6 +131,8 @@ Today, if you want the strongest current contract:
 - use `record` and `list` aliases for aggregate intent
 - use aggregate constants and package-backed shared values to avoid magic
   numbers
-- expect packed-width lowering in emitted HDL for now
+- use declared aggregate signal access such as `FRAME.flag` and
+  `FRAME.payload[1]` when you want the emitted SV to preserve that typed
+  member/item intent
 
 That gives you the best current mix of usability and correctness.

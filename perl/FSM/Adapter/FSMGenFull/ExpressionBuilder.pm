@@ -10,6 +10,7 @@ use Data::Dumper;
 use FSM::CoreAST;
 use FSM::Debug;
 use FSM::Package::PayloadLiteralSupport;
+use FSM::Package::PayloadTypeSupport;
 
 sub new($class, %args) {
     # Requires a signal_manager
@@ -387,6 +388,9 @@ sub parse_scalar_expression($self, $scalar) {
             "The active scalar-expression lane currently requires member/index access all the way to a scalar leaf, for example '$aggregate_prefix.member' or '$aggregate_prefix\[0\]'. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }
+
+    my $typed_aggregate_ref = $self->parse_typed_aggregate_signal_reference($scalar);
+    return $typed_aggregate_ref if $typed_aggregate_ref;
     
     if ($scalar =~ /^(\d+)'([bdhxBDHX])([0-9a-fA-F_]+)$/) {
         my ($width, $radix_char, $value) = ($1, lc($2), $3);
@@ -463,6 +467,164 @@ sub parse_scalar_expression($self, $scalar) {
             "Guard-prefixed tokens belong in condition position, not inside ordinary expressions. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }
+}
+
+sub parse_typed_aggregate_signal_reference($self, $scalar) {
+    return undef unless defined($scalar) && $scalar =~ /\A([a-zA-Z_]\w*)((?:\.[a-zA-Z_]\w*|\[\d+(?::\d+)?\])+)(?:'(\d+))?(\>)?\z/;
+
+    my ($base_name, $path_text, $width_annotation, $output_marker) = ($1, $2, $3, $4);
+    my $signal = $self->{signal_manager}->get_signal($base_name);
+    return undef unless $signal;
+
+    my $type_spec = eval { $signal->declared_type_spec };
+    if (ref($type_spec) ne 'HASH') {
+        Carp::confess
+            "Malformed typed aggregate signal access '$scalar'. ".
+            "Signal '$base_name' has no declared aggregate type, so member access is not available. ".
+            "Declare an aggregate `+types` alias and use it from `+size` before accessing fields.\n"
+            if $path_text =~ /^\./;
+        return undef;
+    }
+
+    my $root_kind = $type_spec->{kind} || '';
+    if ($root_kind ne 'list' && $root_kind ne 'record') {
+        Carp::confess
+            "Malformed typed aggregate signal access '$scalar'. ".
+            "Signal '$base_name' has scalar type '".
+            FSM::Package::PayloadTypeSupport->type_spec_label($type_spec).
+            "', so record member access is not available.\n"
+            if $path_text =~ /^\./;
+        return undef;
+    }
+
+    my ($path, $resolved_type_spec) = $self->resolve_typed_aggregate_signal_path(
+        $base_name,
+        $path_text,
+        $type_spec,
+        $scalar,
+    );
+
+    my $resolved_width = ref($resolved_type_spec) eq 'HASH' ? ($resolved_type_spec->{width} // undef) : undef;
+    Carp::confess
+        "Unsupported typed aggregate signal access '$scalar'. ".
+        "The resolved aggregate leaf has no positive packed width. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless defined($resolved_width) && $resolved_width > 0;
+
+    if (defined($width_annotation) && $width_annotation != $resolved_width) {
+        my $type_label = FSM::Package::PayloadTypeSupport->type_spec_label($resolved_type_spec);
+        Carp::confess
+            "Malformed typed aggregate signal access '$scalar'. ".
+            "Width annotation '$width_annotation' does not match resolved path width '$resolved_width' ($type_label). ".
+            "Remove the annotation or declare a matching aggregate member type before generation.\n";
+    }
+
+    if (defined($output_marker)) {
+        $signal = $self->{signal_manager}->register_signal(
+            $base_name,
+            is_output => 1,
+        );
+    }
+
+    return FSM::CoreAST::AggregateRef->new(
+        $signal,
+        $path,
+        type_spec => $resolved_type_spec,
+        width => $resolved_width,
+    );
+}
+
+sub resolve_typed_aggregate_signal_path($self, $base_name, $path_text, $root_type_spec, $raw_scalar) {
+    my $remaining = $path_text;
+    my $current_type_spec = $root_type_spec;
+    my @path;
+
+    while (length $remaining) {
+        if ($remaining =~ s/\A\.([a-zA-Z_]\w*)//) {
+            my $member_name = $1;
+            my $kind = $current_type_spec->{kind} || '';
+
+            Carp::confess
+                "Malformed typed aggregate signal access '$raw_scalar'. ".
+                "Member access '.$member_name' is only valid on record-typed values; current path type is '".
+                FSM::Package::PayloadTypeSupport->type_spec_label($current_type_spec)."'. ".
+                "Use '[N]' for list items or declare a record member before generation.\n"
+                unless $kind eq 'record';
+
+            my $members = $current_type_spec->{members} || {};
+            Carp::confess
+                "Malformed typed aggregate signal access '$raw_scalar'. ".
+                "Record type for '$base_name' has no member '$member_name'. ".
+                "Known members: " . join(', ', @{ $current_type_spec->{member_order} || [] }) . ".\n"
+                unless exists $members->{$member_name};
+
+            push @path, { kind => 'member', name => $member_name };
+            $current_type_spec = $members->{$member_name};
+            next;
+        }
+
+        if ($remaining =~ s/\A\[(\d+)(?::(\d+))?\]//) {
+            my ($first_index, $second_index) = ($1, $2);
+            my $kind = $current_type_spec->{kind} || '';
+
+            if ($kind eq 'list') {
+                Carp::confess
+                    "Malformed typed aggregate signal access '$raw_scalar'. ".
+                    "List item access currently accepts one constant index, not a range. ".
+                    "Select one list element with '[N]' before generation.\n"
+                    if defined $second_index;
+
+                my $items = $current_type_spec->{items} || [];
+                Carp::confess
+                    "Malformed typed aggregate signal access '$raw_scalar'. ".
+                    "List index '$first_index' is outside the declared item range 0..".
+                    (@$items ? $#$items : -1).".\n"
+                    unless $first_index < @$items;
+
+                push @path, { kind => 'item', index => 0 + $first_index };
+                $current_type_spec = $items->[$first_index];
+                next;
+            }
+
+            if ($kind eq 'bit' || $kind eq 'bits') {
+                my $scalar_width = $current_type_spec->{width} // 0;
+                if (defined $second_index) {
+                    my ($high, $low) = ($first_index, $second_index);
+                    my $max_index = $high > $low ? $high : $low;
+                    Carp::confess
+                        "Malformed typed aggregate signal access '$raw_scalar'. ".
+                        "Scalar slice [$high:$low] exceeds resolved scalar width '$scalar_width'.\n"
+                        unless $scalar_width > 0 && $max_index < $scalar_width;
+
+                    my $slice_width = abs($high - $low) + 1;
+                    push @path, { kind => 'bit_slice', high => 0 + $high, low => 0 + $low };
+                    $current_type_spec = FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($slice_width);
+                    next;
+                }
+
+                Carp::confess
+                    "Malformed typed aggregate signal access '$raw_scalar'. ".
+                    "Scalar index '$first_index' exceeds resolved scalar width '$scalar_width'.\n"
+                    unless $scalar_width > 0 && $first_index < $scalar_width;
+
+                push @path, { kind => 'bit_index', index => 0 + $first_index };
+                $current_type_spec = FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width(1);
+                next;
+            }
+
+            Carp::confess
+                "Malformed typed aggregate signal access '$raw_scalar'. ".
+                "Index access is valid on list and scalar bit-vector values; current path type is '".
+                FSM::Package::PayloadTypeSupport->type_spec_label($current_type_spec)."'.\n";
+        }
+
+        Carp::confess
+            "Malformed typed aggregate signal access '$raw_scalar'. ".
+            "Could not parse remaining path '$remaining'. ".
+            "Use record member access like '.field' and list/scalar constant indexes like '[0]'.\n";
+    }
+
+    return (\@path, $current_type_spec);
 }
 
 sub parse_sexpr_expression($self, $sexpr) {

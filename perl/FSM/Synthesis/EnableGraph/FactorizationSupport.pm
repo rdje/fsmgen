@@ -362,7 +362,7 @@ sub ast_contains_signal ($self, $ast, $signal_name) {
     my $ctx = $self->{flattened_dt};
     return 0 unless $ast && blessed($ast);
 
-    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef') || $ast->isa('FSM::CoreAST::AggregateRef')) {
         my $ast_signal_name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
         return 1 if $ast_signal_name && $ast_signal_name eq $signal_name;
     }

@@ -289,7 +289,11 @@ sub convert_condition_to_ast ($self, $condition_node) {
 
     fsm_debug("    CONVERT_CONDITION_AST: Node type: " . ref($condition_node));
 
-    if ($condition_node->isa('FSM::CoreAST::SignalRef')) {
+    if ($condition_node->isa('FSM::CoreAST::AggregateRef')) {
+        fsm_debug("    CONVERT_CONDITION_AST: AggregateRef -> keep typed aggregate AST leaf", 3);
+        return $condition_node;
+
+    } elsif ($condition_node->isa('FSM::CoreAST::SignalRef')) {
         my $signal_name = $condition_node->signal->name;
         fsm_debug("    CONVERT_CONDITION_AST: SignalRef -> signal_ref('$signal_name')", 3);
         return FSM::AST::Utils::signal_ref($signal_name);
@@ -454,6 +458,8 @@ sub extract_rhs_capture_value ($self, $expr) {
     } elsif ($expr->isa('FSM::CoreAST::SignalRef')) {
         return $expr->signal->name;
     } elsif ($expr->isa('FSM::CoreAST::IndexedRef')) {
+        return $expr->to_systemverilog;
+    } elsif ($expr->isa('FSM::CoreAST::AggregateRef')) {
         return $expr->to_systemverilog;
     } elsif ($expr->isa('FSM::CoreAST::BinaryOp')) {
         my $left = $self->extract_rhs_capture_value($expr->left);

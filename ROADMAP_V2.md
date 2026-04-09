@@ -1372,9 +1372,15 @@ The first honest `R11` slices are now:
   aliases, so typed top ports, typed structural nets, direct module ports, and
   direct internal/helper declarations no longer flatten all the way back to raw
   vector declarations at the final emitted HDL boundary. The next honest seams
-  are deeper type-directed aggregate expression/member access, VHDL aggregate
-  lowering, and public type/export surface stabilization rather than
-  packed-width-only direct SV declaration emission.
+  are broader inference-first aggregate access, VHDL aggregate lowering, and
+  public type/export surface stabilization rather than packed-width-only
+  direct SV declaration emission.
+- Backend-lowering note: the first direct typed aggregate expression slice is
+  now also landed. Declared aggregate direct-root signals can be read through
+  typed AST member/list paths such as `FRAME.tag` and `FRAME.payload[1]`, list
+  indexes render through the generated packed typedef fields such as
+  `.item_1`, and partial aggregate LHS writes now map through the declared
+  aggregate path to packed base-signal ranges before mux emission.
 - Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
   approachable, the preferred shape is a book-like docs set with one Markdown
   file per major topic, a landing-page/table-of-contents role for

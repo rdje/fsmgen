@@ -481,7 +481,7 @@ sub track_ast_intermediate_signals ($self, $ast) {
 
     fsm_debug("TRACK_INTERMEDIATE: Traversing AST: " . ref($ast));
 
-    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef') || $ast->isa('FSM::CoreAST::AggregateRef')) {
         my $signal_name;
 
         if ($ast->can('name') && defined($ast->name)) {

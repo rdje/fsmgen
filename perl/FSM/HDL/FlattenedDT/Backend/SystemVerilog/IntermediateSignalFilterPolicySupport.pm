@@ -93,6 +93,11 @@ sub should_filter_ast_based ($self, $ast, $signal_name, $signal_info) {
         return 1;
     }
 
+    if ($ast->isa('FSM::CoreAST::AggregateRef')) {
+        fsm_debug("  AST_FILTER: Bare aggregate reference - FILTERING", 3);
+        return 1;
+    }
+
     if ($ast->isa('FSM::AST::UnaryOp') || $ast->isa('FSM::CoreAST::UnaryOp')) {
         if ($self->is_simple_negation($ast)) {
             if ($usage_count >= 2) {
@@ -201,7 +206,11 @@ sub is_simple_negation ($self, $ast) {
     my $operand = $ast->operand;
     return 0 unless $operand && blessed($operand);
 
-    return ($operand->isa('FSM::AST::SignalRef') || $operand->isa('FSM::CoreAST::SignalRef'));
+    return (
+        $operand->isa('FSM::AST::SignalRef')
+        || $operand->isa('FSM::CoreAST::SignalRef')
+        || $operand->isa('FSM::CoreAST::AggregateRef')
+    );
 }
 
 =head2 is_simple_comparison
@@ -222,8 +231,8 @@ sub is_simple_comparison ($self, $ast) {
     my $right = $ast->right;
     return 0 unless $left && blessed($left) && $right && blessed($right);
 
-    my $has_signal = ($left->isa('FSM::AST::SignalRef') || $left->isa('FSM::CoreAST::SignalRef')) ||
-                     ($right->isa('FSM::AST::SignalRef') || $right->isa('FSM::CoreAST::SignalRef'));
+    my $has_signal = ($left->isa('FSM::AST::SignalRef') || $left->isa('FSM::CoreAST::SignalRef') || $left->isa('FSM::CoreAST::AggregateRef')) ||
+                     ($right->isa('FSM::AST::SignalRef') || $right->isa('FSM::CoreAST::SignalRef') || $right->isa('FSM::CoreAST::AggregateRef'));
     my $has_literal = ($left->isa('FSM::AST::Literal') || $left->isa('FSM::CoreAST::Literal')) ||
                       ($right->isa('FSM::AST::Literal') || $right->isa('FSM::CoreAST::Literal'));
 

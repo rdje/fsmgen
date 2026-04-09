@@ -292,6 +292,12 @@ sub extract_ast_structure {
             type => "signal_ref",
             signal => $signal_name  # This makes different signals have different structural IDs
         };
+    } elsif ($ast->isa('FSM::CoreAST::AggregateRef')) {
+        return {
+            type => "aggregate_ref",
+            signal => $self->extract_signal_name_from_ast_node($ast) || "unknown_signal",
+            path => eval { $ast->to_systemverilog() } || "unknown_path",
+        };
     } else {
         return { type => lc($ast_type) };
     }
@@ -349,6 +355,7 @@ sub is_simple_expression {
     
     # Signal references are simple
     return 1 if $ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef');
+    return 1 if $ast->isa('FSM::CoreAST::AggregateRef');
 
     # Truthiness-style comparisons are semantically simple and should stay inline.
     return 1 if $self->is_truthiness_comparison($ast);
@@ -396,6 +403,7 @@ sub is_truthiness_signal_operand {
     return 0 unless $ast && blessed($ast);
     return 1 if $ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef');
     return 1 if $ast->isa('FSM::AST::IndexedRef') || $ast->isa('FSM::CoreAST::IndexedRef');
+    return 1 if $ast->isa('FSM::CoreAST::AggregateRef');
     return 1 if $ast->isa('FSM::HDL::IntermediateSignalRef');
     return 0;
 }
@@ -436,6 +444,11 @@ sub operand_is_single_bit {
 
     if ($ast->isa('FSM::CoreAST::IndexedRef') || $ast->isa('FSM::AST::IndexedRef')) {
         return 1;
+    }
+
+    if ($ast->isa('FSM::CoreAST::AggregateRef')) {
+        my $width = eval { $ast->width };
+        return defined($width) && $width == 1 ? 1 : 0;
     }
 
     if ($ast->isa('FSM::CoreAST::SignalRef')) {
@@ -590,6 +603,11 @@ sub generate_ast_based_name {
         # Try multiple methods to extract the actual signal name
         my $signal_name = $self->extract_signal_name_from_ast_node($ast);
         return $signal_name || "unknown_sig";
+    } elsif ($ast->isa('FSM::CoreAST::AggregateRef')) {
+        my $aggregate_name = eval { $ast->to_systemverilog() } || "aggregate_ref";
+        $aggregate_name =~ s/[^a-zA-Z0-9_]+/_/g;
+        $aggregate_name =~ s/^_+|_+$//g;
+        return $aggregate_name || "aggregate_ref";
     } elsif ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal')) {
         my $val = $ast->can('value') ? $ast->value : "lit";
         $val =~ s/[^a-zA-Z0-9_]//g; # basic sanitization

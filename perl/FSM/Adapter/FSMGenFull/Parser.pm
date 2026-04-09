@@ -1268,12 +1268,7 @@ sub validate_no_combinational_self_dependency($self) {
 }
 sub get_target_base_signal_name($self, $raw_signal_name, $target_expr) {
     if ($target_expr) {
-        if ($target_expr->isa('FSM::CoreAST::SignalRef') && $target_expr->signal && $target_expr->signal->can('name')) {
-            my $name = eval { $target_expr->signal->name() };
-            my $normalized = $self->normalize_signal_name($name);
-            return $normalized if $normalized ne '';
-        }
-        if ($target_expr->isa('FSM::CoreAST::IndexedRef') && $target_expr->signal && $target_expr->signal->can('name')) {
+        if ($target_expr->can('signal') && $target_expr->signal && $target_expr->signal->can('name')) {
             my $name = eval { $target_expr->signal->name() };
             my $normalized = $self->normalize_signal_name($name);
             return $normalized if $normalized ne '';
@@ -1313,6 +1308,11 @@ sub get_target_base_signal_width($self, $target_expr, $fallback_width) {
                 if ($required_width > $resolved_width) {
                     $resolved_width = $required_width;
                 }
+            }
+        } elsif ($target_expr->isa('FSM::CoreAST::AggregateRef')) {
+            my $signal_width = eval { $target_expr->signal && $target_expr->signal->width };
+            if (defined($signal_width) && $signal_width > $resolved_width) {
+                $resolved_width = $signal_width;
             }
         }
     }
@@ -2078,6 +2078,12 @@ sub parse_signal_action($self, $action) {
     } elsif (ref($target_expr) eq 'FSM::CoreAST::IndexedRef') {
         $lhs_width = 1;
         $lhs_explicit = 1;
+    } elsif (ref($target_expr) eq 'FSM::CoreAST::AggregateRef'
+        && $target_expr->can('width')
+        && defined($target_expr->width)
+        && $target_expr->width > 0) {
+        $lhs_width = $target_expr->width;
+        $lhs_explicit = 1;
     } elsif (ref($target_expr) eq 'FSM::CoreAST::SignalRef'
         && $target_expr->signal
         && defined($target_expr->signal->width)
@@ -2099,6 +2105,12 @@ sub parse_signal_action($self, $action) {
         $rhs_explicit = 1;
     } elsif (ref($source_expr) eq 'FSM::CoreAST::IndexedRef') {
         $rhs_width = 1;
+        $rhs_explicit = 1;
+    } elsif (ref($source_expr) eq 'FSM::CoreAST::AggregateRef'
+        && $source_expr->can('width')
+        && defined($source_expr->width)
+        && $source_expr->width > 0) {
+        $rhs_width = $source_expr->width;
         $rhs_explicit = 1;
     } elsif (ref($source_expr) eq 'FSM::CoreAST::SignalRef'
         && $source_expr->signal
@@ -2152,9 +2164,7 @@ sub parse_signal_action($self, $action) {
     
     my $output_exposure = ($signal_name =~ />$/) ? 'explicit' : 'auto';
     if ($output_exposure eq 'auto') {
-        if (ref($target_expr) eq 'FSM::CoreAST::SignalRef' && $target_expr->signal && $target_expr->signal->can('get_attribute')) {
-            $output_exposure = $target_expr->signal->get_attribute('is_output') ? 'explicit' : 'auto';
-        } elsif (ref($target_expr) eq 'FSM::CoreAST::IndexedRef' && $target_expr->signal && $target_expr->signal->can('get_attribute')) {
+        if (ref($target_expr) && $target_expr->can('signal') && $target_expr->signal && $target_expr->signal->can('get_attribute')) {
             $output_exposure = $target_expr->signal->get_attribute('is_output') ? 'explicit' : 'auto';
         }
     }
