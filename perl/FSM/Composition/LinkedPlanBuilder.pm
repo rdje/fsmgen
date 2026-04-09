@@ -209,6 +209,7 @@ sub build_plan ($class, %args) {
 
         $class->assert_declared_type_compatibility($source, $target, $fsm_file, $header);
         $class->assert_actual_aggregate_type_compatibility($source, $target, $fsm_file, $header);
+        $class->assert_expression_aggregate_type_compatibility($source, $target, $fsm_file, $header);
 
         my $target_key = $target->{key};
         if ($reserved_targets{$target_key}) {
@@ -736,6 +737,35 @@ sub assert_actual_aggregate_type_compatibility ($class, $source, $target, $fsm_f
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
+sub assert_expression_aggregate_type_compatibility ($class, $source, $target, $fsm_file, $header) {
+    return unless ref($source) eq 'HASH';
+    return unless (($source->{kind} || '') eq 'top_expr' || ($source->{kind} || '') eq 'child_expr');
+    return unless ($target->{kind} || '') eq 'top_port' || ($target->{kind} || '') eq 'child_port';
+
+    my $source_type_spec = $source->{inferred_type_spec};
+    return unless ref($source_type_spec) eq 'HASH';
+
+    my $target_declared_type_spec = FSM::Composition::InterfacePortBuilder->declared_type_spec($target->{port});
+    return unless ref($target_declared_type_spec) eq 'HASH';
+
+    my $target_kind = $target_declared_type_spec->{kind} || '';
+    return unless $target_kind eq 'list' || $target_kind eq 'record';
+    return if FSM::Package::PayloadTypeSupport->payload_compatible_with_type_spec(
+        $source_type_spec,
+        $target_declared_type_spec,
+    );
+
+    my $source_type_label = FSM::Package::PayloadTypeSupport->type_spec_label($source_type_spec);
+    my $target_type_label = FSM::Composition::InterfacePortBuilder->declared_type_label($target_declared_type_spec);
+    my $source_label = (($source->{kind} || '') eq 'top_expr') ? 'top expression' : 'child expression';
+
+    confess
+        "Composition source '$header' in '$fsm_file' uses $source_label '".$source->{raw}."' as an explicit link source, ".
+        "but explicit aggregate-expression binding is blocked because expression contract '$source_type_label' does not match target declared type '$target_type_label' on '".$target->{raw}."'. ".
+        "The current typed composition slice only allows top/child source expressions to target preserved aggregate contracts when aggregate shape stays compatible too. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+}
+
 sub _resolve_actual_endpoint ($class, $endpoint, $fsm_file, $header, %opts) {
     return undef unless defined($endpoint) && length($endpoint);
     return undef unless $endpoint =~ /^=(.+)$/;
@@ -1116,6 +1146,7 @@ sub _resolve_child_expression_endpoint ($class, $endpoint, $instances_by_name, $
             instance => $instance,
             port_name => $port_name,
             port => $port,
+            inferred_type_spec => FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width(1),
         };
     }
 
@@ -1156,6 +1187,7 @@ sub _resolve_child_expression_endpoint ($class, $endpoint, $instances_by_name, $
             instance => $instance,
             port_name => $port_name,
             port => $port,
+            inferred_type_spec => FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width(abs($msb - $lsb) + 1),
         };
     }
 
@@ -1403,6 +1435,7 @@ sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $in
             width => $resolved_spec->{width},
             type => $single_base_port ? $single_base_port->type : undef,
         },
+        inferred_type_spec => $class->_clone_structured_value($resolved_spec->{type_spec}),
         connection_expr => $resolved_spec->{connection_expr},
     };
 }
@@ -2091,6 +2124,7 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
             connection_expr => signal_ref_expr($port_name),
             base_ports => [$top_port],
             child_base_sources => [],
+            type_spec => $class->_endpoint_declared_or_scalar_type_spec($top_port),
         };
     }
 
@@ -2100,6 +2134,7 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
             connection_expr => bit_vector_literal_expr($spec->{bits}),
             base_ports => [],
             child_base_sources => [],
+            type_spec => FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($spec->{width}),
         };
     }
 
@@ -2154,6 +2189,7 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
                 connection_expr => signal_ref_expr("$instance_name.$port_name"),
                 base_ports => [],
                 child_base_sources => [$base_endpoint],
+                type_spec => $class->_endpoint_declared_or_scalar_type_spec($port),
             };
         }
 
@@ -2169,6 +2205,7 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
                 connection_expr => bit_select_expr("$instance_name.$port_name", $spec->{index}),
                 base_ports => [],
                 child_base_sources => [$base_endpoint],
+                type_spec => FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width(1),
             };
         }
 
@@ -2183,6 +2220,7 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
             connection_expr => slice_expr("$instance_name.$port_name", $spec->{msb}, $spec->{lsb}),
             base_ports => [],
             child_base_sources => [$base_endpoint],
+            type_spec => FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width(abs($spec->{msb} - $spec->{lsb}) + 1),
         };
     }
 
@@ -2190,6 +2228,7 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
         my @operand_exprs;
         my @base_ports;
         my @child_base_sources;
+        my @operand_type_specs;
         my %seen_port_name;
         my %seen_child_base_key;
         my $width = 0;
@@ -2206,6 +2245,7 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
             );
             push @operand_exprs, $resolved_operand->{connection_expr};
             $width += $resolved_operand->{width};
+            push @operand_type_specs, $class->_clone_structured_value($resolved_operand->{type_spec});
             for my $base_port (@{$resolved_operand->{base_ports} || []}) {
                 next if $seen_port_name{$base_port->name}++;
                 push @base_ports, $base_port;
@@ -2221,6 +2261,12 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
             connection_expr => concat_expr(@operand_exprs),
             base_ports => \@base_ports,
             child_base_sources => \@child_base_sources,
+            type_spec => {
+                kind => 'list',
+                width => $width,
+                signed => 0,
+                items => \@operand_type_specs,
+            },
         };
     }
 
@@ -2240,6 +2286,15 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
             connection_expr => repeat_expr($spec->{repeat_count}, $resolved_operand->{connection_expr}),
             base_ports => [@{$resolved_operand->{base_ports} || []}],
             child_base_sources => [@{$resolved_operand->{child_base_sources} || []}],
+            type_spec => {
+                kind => 'list',
+                width => ($spec->{repeat_count} || 0) * $resolved_operand->{width},
+                signed => 0,
+                items => [
+                    map { $class->_clone_structured_value($resolved_operand->{type_spec}) }
+                        1 .. ($spec->{repeat_count} || 0)
+                ],
+            },
         };
     }
 
@@ -2281,7 +2336,16 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
         connection_expr => $connection_expr,
         base_ports => [$top_port],
         child_base_sources => [],
+        type_spec => FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($expr_width),
     };
+}
+
+sub _endpoint_declared_or_scalar_type_spec ($class, $port) {
+    my $declared_type_spec = FSM::Composition::InterfacePortBuilder->declared_type_spec($port);
+    return $declared_type_spec if ref($declared_type_spec) eq 'HASH';
+
+    my $width = ref($port) eq 'HASH' ? $port->{width} : $port->width;
+    return FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($width);
 }
 
 sub endpoint_width ($class, $endpoint) {
@@ -2604,6 +2668,23 @@ sub clone_realized_instance_with_bindings ($class, $instance, $port_bindings) {
         module_info => $instance->module_info,
         hdl_code => $instance->hdl_code,
     );
+}
+
+sub _clone_structured_value ($class, $value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return {
+            map { $_ => $class->_clone_structured_value($value->{$_}) }
+                keys %$value
+        };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [map { $class->_clone_structured_value($_) } @$value];
+    }
+
+    return $value;
 }
 
 1;

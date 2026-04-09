@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-09: typed aggregate direct targets now also check source expressions
+- Saved the next typed aggregate slice after whole aggregate actuals and direct
+  whole aggregate assignments became declared-type-aware.
+- Important continuity note:
+  - source-side top expressions and child expressions now preserve one inferred
+    typed expression contract on the explicit-link path,
+  - whole typed signal refs keep declared aggregate identity, bit/slice forms
+    become scalar `bit` / `bits[N]`, and bounded concat/repeat forms become
+    ordered `list<...>` contracts,
+  - and width-equal but aggregate-shape-incompatible expression bindings into
+    typed aggregate direct targets are now rejected explicitly instead of
+    slipping through on packed width alone.
+
 ## 2026-04-09: direct whole aggregate RHS assignments now honor typed aggregate targets
 - Saved the matching direct-root aggregate-typing slice after composition whole
   aggregate actuals became declared-type-aware.

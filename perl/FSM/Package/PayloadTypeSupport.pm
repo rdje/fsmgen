@@ -28,6 +28,10 @@ sub type_spec_label ($class, $type_spec) {
     return $class->_type_spec_label($type_spec);
 }
 
+sub scalar_type_spec_from_width ($class, $width) {
+    return $class->_scalar_type_spec_from_width($width);
+}
+
 sub _payload_to_type_spec ($class, $payload) {
     return undef unless defined $payload;
 
@@ -238,5 +242,9 @@ ordered-field/item based.
 =head2 type_spec_label
 
 Formats one canonical type spec into a compact user-facing label.
+
+=head2 scalar_type_spec_from_width
+
+Returns one canonical unsigned scalar type spec for a positive packed width.
 
 =cut

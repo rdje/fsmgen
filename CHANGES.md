@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-09
+### source-side top and child expressions now honor typed aggregate direct targets
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so source-side top expressions and child expressions now preserve one inferred typed expression contract on the live explicit-link path: whole typed signal refs keep their declared aggregate contract, bit/slice forms become scalar `bit` / `bits[N]` contracts, and bounded concat/repeat forms become ordered `list<...>` contracts.
+- That same explicit-link planning path now blocks width-equal but aggregate-shape-incompatible expression bindings when the direct target preserved an aggregate `declared_type_spec`, instead of validating those expression-driven bindings on packed width alone.
+- Updated [perl/FSM/Package/PayloadTypeSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/PayloadTypeSupport.pm) so the shared payload-type owner also exposes the bounded scalar-width-to-type helper used by the new expression-shape inference path.
+- Added [t/282-composition-aggregate-source-expression-contracts.t](/Users/richarddje/Documents/github/fsmgen/t/282-composition-aggregate-source-expression-contracts.t) and updated [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) to lock compatible typed-list expression success plus blocked top-expression failure-summary/CLI coverage for width-equal but aggregate-shape-incompatible typed targets.
+
 ### direct-root whole aggregate RHS assignments now honor typed aggregate contracts
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so direct-root assignments now preserve whole-aggregate RHS provenance through `source_provenance` whenever a raw RHS token such as `FRAME` or `shared.FRAME` resolved to one bounded aggregate root on the live literal path.
 - Updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm) so pre-generation validation now blocks width-equal whole aggregate RHS assignments when the full LHS signal preserved an incompatible aggregate `declared_type_spec`, instead of validating only by packed width before emission.

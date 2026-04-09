@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-09: typed direct targets should not treat source expressions as width-only
+- Continued the typed aggregate lane after whole aggregate actual roots and
+  direct whole aggregate RHS assignments were already declared-type-aware.
+- Landed behavior:
+  - source-side top expressions and child expressions now preserve one
+    inferred typed expression contract on the explicit-link path,
+  - whole typed signal refs keep their declared aggregate contract,
+  - bit/slice forms become scalar `bit` / `bits[N]` contracts,
+  - bounded concat and repeat forms become ordered `list<...>` contracts,
+  - and typed aggregate direct targets now reject width-equal but
+    aggregate-shape-incompatible expression bindings instead of validating
+    those links on packed width alone.
+- Why this boundary matters:
+  - once whole aggregate actuals and direct aggregate assignments already
+    respected typed aggregate contracts, leaving expression-driven direct
+    bindings as width-only would have split one authored type system into
+    several different runtime stories,
+  - and this keeps the next aggregate-aware lowering slice on one honest typed
+    handoff instead of having to rediscover concat/repeat intent from flat
+    widths after planning.
+
 ## 2026-04-09: direct whole aggregate RHS assignments should honor typed aggregate targets too
 - Continued the typed aggregate lane immediately after composition whole
   aggregate actual roots became declared-type-aware.

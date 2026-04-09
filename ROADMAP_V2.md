@@ -1341,6 +1341,11 @@ The first honest `R11` slices are now:
   consume that same declared-type boundary before emission, so `(OUT = FRAME)`
   no longer slips through typed aggregate `+size` targets on packed width
   alone when the preserved target aggregate contract is shape-incompatible.
+- Forward-IR note: source-side top expressions and child expressions now also
+  consume that same declared-type boundary on direct explicit-link targets, so
+  width-equal but aggregate-shape-incompatible concat/repeat/bit-slice/whole-
+  signal expression sources are now blocked explicitly instead of slipping
+  through typed composition planning on packed width alone.
 - Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
   approachable, the preferred shape is a book-like docs set with one Markdown
   file per major topic, a landing-page/table-of-contents role for
