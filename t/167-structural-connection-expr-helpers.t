@@ -993,6 +993,115 @@ subtest 'bounded bit-vector literal connection expressions render through the he
 
 };
 
+subtest 'aggregate declared-type ports and nets emit packed typedefs through the structural backend' => sub {
+    my $frame_t_spec = {
+        kind => 'record',
+        width => 9,
+        member_order => ['flag', 'payload'],
+        members => {
+            flag => {
+                kind => 'bit',
+                width => 1,
+                signed => 0,
+                state_model => 'two_state',
+            },
+            payload => {
+                kind => 'bits',
+                width => 8,
+                signed => 0,
+                state_model => 'four_state',
+            },
+        },
+    };
+    my $status_t_spec = {
+        kind => 'list',
+        width => 5,
+        items => [
+            {
+                kind => 'bit',
+                width => 1,
+                signed => 0,
+                state_model => 'two_state',
+            },
+            {
+                kind => 'bits',
+                width => 4,
+                signed => 0,
+                state_model => 'four_state',
+            },
+        ],
+    };
+
+    my $structural_rtl_ir = FSM::IR::StructuralRTLIR->new(
+        module_name => 'structural_typed_aggregate_top',
+        source_root_kind => 'top',
+        target_language => 'systemverilog',
+        ports => [
+            {
+                name => 'in_frame',
+                direction => 'input',
+                width => 9,
+                declared_type_name => 'frame_t',
+                declared_type_spec => $frame_t_spec,
+            },
+            {
+                name => 'out_status',
+                direction => 'output',
+                width => 5,
+                declared_type_name => 'status_t',
+                declared_type_spec => $status_t_spec,
+            },
+        ],
+        nets => [
+            {
+                name => 'frame_bus',
+                width => 9,
+                declaration_keyword => 'wire',
+                declared_type_name => 'frame_t',
+                declared_type_spec => $frame_t_spec,
+            },
+            {
+                name => 'status_q',
+                width => 5,
+                declaration_keyword => 'logic',
+                declared_type_name => 'status_t',
+                declared_type_spec => $status_t_spec,
+            },
+        ],
+        instances => [],
+        declared_links => [],
+        resolved_links => [],
+        auxiliary_assignments => [],
+    );
+
+    my $rendered = FSM::Backend::VerilogFamily::StructuralRTLIREmitter->emit_module($structural_rtl_ir);
+    like(
+        $rendered,
+        qr/typedef struct packed \{\n\s+bit flag;\n\s+logic \[7:0\] payload;\n\} frame_t__fsmgen_t; \/\/ frame_t/s,
+        'structural backend emits a packed struct typedef for declared record aliases',
+    );
+    like(
+        $rendered,
+        qr/typedef struct packed \{\n\s+bit item_0;\n\s+logic \[3:0\] item_1;\n\} status_t__fsmgen_t; \/\/ status_t/s,
+        'structural backend emits a deterministic packed struct typedef for declared list aliases',
+    );
+    like(
+        $rendered,
+        qr/module structural_typed_aggregate_top \(\n\s+input frame_t__fsmgen_t in_frame,\n\s+output status_t__fsmgen_t out_status\n\);/s,
+        'structural backend reuses the generated aggregate typedefs on typed module ports',
+    );
+    like(
+        $rendered,
+        qr/wire frame_t__fsmgen_t frame_bus;/s,
+        'structural backend reuses aggregate typedefs on typed wire nets',
+    );
+    like(
+        $rendered,
+        qr/status_t__fsmgen_t status_q;/s,
+        'structural backend reuses aggregate typedefs on typed variable-style nets',
+    );
+};
+
 subtest 'verilog-family structural emitter rejects unsupported target-language values directly' => sub {
     my $structural_rtl_ir = FSM::IR::StructuralRTLIR->new(
         module_name => 'structural_vhdl_top',

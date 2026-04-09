@@ -116,6 +116,30 @@ Current lowering still uses packed width for emitted HDL, but the semantic type
 identity is preserved through the pipeline so compatibility checks can use more
 than width alone.
 
+One important current nuance:
+
+- direct `?fsm` / `?dt` generation still lowers aggregate aliases to packed
+  widths on the old flattened backend path
+- composition-top SystemVerilog emission now synthesizes backend-owned local
+  packed typedefs for aggregate aliases instead of flattening those top
+  boundaries all the way back to raw vectors
+
+That means a composition top may emit shapes like:
+
+```systemverilog
+typedef struct packed {
+  logic [3:0] tag;
+  logic flag;
+  struct packed {
+    logic [3:0] item_0;
+    logic [3:0] item_1;
+  } payload;
+} frame_t__fsmgen_t;
+```
+
+Record members keep authored field names. List members use deterministic
+synthetic names like `item_0`, `item_1`, and so on.
+
 ## Width Tokens From Types And Scalars
 
 Direct-root `+size` and composition `?ports` widths may now come from:
@@ -201,9 +225,10 @@ What is shipped today:
 - packed list and record aliases
 - semantic imports from `?pkg`
 - declared-type preservation across the live pipeline
+- composition-top packed typedef emission for aggregate aliases
 
 What is still future work:
 
 - broader inference-first typing so users need fewer explicit anchors
-- deeper aggregate-aware lowering beyond packed-width-only emission
+- direct generated-module aggregate typedef lowering beyond packed-width-only emission
 - richer public type/export surfaces for embedders

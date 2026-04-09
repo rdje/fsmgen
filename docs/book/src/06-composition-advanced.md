@@ -150,6 +150,17 @@ That declared type information now affects:
 So width-equal but type-incompatible endpoints now fail explicitly instead of
 slipping through.
 
+That same declared aggregate identity now reaches the emitted SystemVerilog
+surface too. When a composition top port or typed structural net preserves a
+named aggregate alias, the structural emitter now synthesizes one backend-owned
+packed typedef for it instead of flattening everything back to raw vectors.
+
+- record aliases keep authored field names
+- list aliases become deterministic packed structs with `item_0`, `item_1`,
+  ... field names
+- imported aliases are sanitized into local emitted typedef identifiers such as
+  `shared_types__frame_t__fsmgen_t`
+
 ## Typed Shared-Datapath Families
 
 The shared-datapath lane is conservative when typed child outputs are involved.

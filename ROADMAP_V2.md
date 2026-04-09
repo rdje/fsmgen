@@ -1365,6 +1365,14 @@ The first honest `R11` slices are now:
   already known, so typed signal bindings, source expressions, and whole
   aggregate actual roots no longer drop back to width-only binding metadata
   before later lowering, reporting, or embedder inspection.
+- Backend-lowering note: the next aggregate-aware final-mile slice is now also
+  landed on the composition path: structural SystemVerilog emission now
+  synthesizes backend-owned local packed typedefs for declared aggregate
+  aliases, so typed top ports and typed structural nets no longer flatten all
+  the way back to raw vector declarations at the final emitted composition
+  boundary. The remaining honest seam is the direct generated-module backend,
+  which still lowers named aggregate aliases to packed widths on the final
+  emitted HDL path.
 - Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
   approachable, the preferred shape is a book-like docs set with one Markdown
   file per major topic, a landing-page/table-of-contents role for

@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-09: preserved aggregate type identity should reach emitted composition HDL too
+- Continued the typed aggregate/composition lane after declared type identity
+  already survived ports, nets, bindings, whole actuals, source expressions,
+  and shared-datapath runtime carriers.
+- Landed behavior:
+  - composition-top structural SystemVerilog emission now synthesizes
+    backend-owned local packed typedefs for declared aggregate aliases instead
+    of flattening typed top ports and typed structural nets back to raw packed
+    vectors,
+  - record aliases keep authored field names in those emitted typedefs,
+  - list aliases lower as deterministic packed structs with synthetic
+    `item_0`, `item_1`, ... members,
+  - and imported package-qualified alias names are sanitized into stable local
+    emitted identifiers rather than leaking dots into invalid SV identifiers.
+- Why this boundary matters:
+  - once the planner and structural IR already preserved aggregate identity,
+    stopping at width-only vector declarations on the final SV boundary would
+    still throw away the most user-visible part of that contract,
+  - and this gives composition tops one honest backend-owned aggregate
+    lowering story without pretending the older direct generated-module path
+    has already been upgraded too.
+
 ## 2026-04-09: lifted shared-datapath carriers should not hide only in auxiliary text
 - Continued the typed shared-datapath lane after candidate discovery and raw
   contributor nets were already declared-type-aware.

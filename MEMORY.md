@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-09: composition aggregate aliases now reach emitted SV typedefs
+- Saved the next typed aggregate-lowering slice after structural type identity
+  already survived planning and structural export.
+- Important continuity note:
+  - composition-top structural SystemVerilog emission now creates backend-owned
+    local packed typedefs for declared aggregate aliases instead of flattening
+    typed top ports and typed structural nets all the way back to raw vectors,
+  - record aliases keep authored member names, list aliases become stable
+    packed structs with `item_N` members,
+  - and imported package-qualified alias names are sanitized into valid local
+    emitted typedef identifiers.
+
 ## 2026-04-09: lifted shared-datapath carriers now exist as real structural nets
 - Saved the next typed shared-datapath-runtime slice after typed candidate
   discovery and raw contributor nets landed.
