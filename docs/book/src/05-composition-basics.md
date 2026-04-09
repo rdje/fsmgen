@@ -44,6 +44,32 @@ The `=name` forms are declared same-name connect-by-name ports. They mean:
 - “this top port must bind by the same name”
 - not “infer whatever seems convenient”
 
+## Inference-First Top Boundaries
+
+The preferred authoring model is:
+
+- omit `?ports` when the top boundary can be inferred honestly,
+- add `?ports` when you want to disambiguate, rename, constrain, or freeze the
+  public interface,
+- and fail explicitly when several different public boundaries would all be
+  plausible.
+
+In other words, `?ports` is best treated as an interface-control surface, not
+as mandatory boilerplate.
+
+That means `?ports` is especially useful for:
+
+- disambiguating multi-child boundaries,
+- forcing a stable published interface,
+- renaming ports at the top boundary,
+- attaching explicit width/type intent when inference is underconstrained,
+- and using declared same-name forms like `=status>` or `=enable<`.
+
+This is also why the current composition inference work keeps adding more
+safe omitted-`?ports` paths: the long-term goal is that authoring a clean
+composition should feel lightweight, while still refusing to guess when the
+boundary is ambiguous.
+
 ## Single-Child Passthrough
 
 Generated-child example:

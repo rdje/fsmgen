@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-09: `?ports` should behave more like an override surface than required boilerplate
+- Saved one composition authoring rule for future sessions.
+- Important continuity note:
+  - the preferred direction is that `?ports` stays optional whenever the top
+    boundary can be inferred safely,
+  - future omitted-`?ports` widening should keep aiming at inference-first
+    public boundaries,
+  - and `?ports` should mainly be used to disambiguate, rename, freeze, or
+    explicitly constrain the public interface rather than being required on
+    every honest composition.
+
 ## 2026-04-09: typed aggregate direct targets now also check source expressions
 - Saved the next typed aggregate slice after whole aggregate actuals and direct
   whole aggregate assignments became declared-type-aware.

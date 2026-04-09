@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-09: `?ports` should trend toward override/disambiguation, not mandatory boilerplate
+- Saved one composition-ergonomics rule after discussing the intended author
+  experience for top boundaries.
+- Preferred direction:
+  - `?ports` should be optional by default whenever one safe public boundary
+    can be inferred from child interfaces plus explicit links,
+  - top-boundary inference should keep widening only where one honest answer
+    exists,
+  - and `?ports` should mainly act as the explicit override/disambiguation
+    surface for renaming, freezing a published interface, attaching explicit
+    width/type intent, or forcing declared same-name `=name` behavior.
+- Why this matters:
+  - the project's saved “dynamic-feeling authoring surface” goal is not
+    compatible with requiring users to restate obvious top interfaces by hand
+    all the time,
+  - but the right answer is still inference-with-hard-failure-on-ambiguity,
+    not hidden broad auto-wiring.
+
 ## 2026-04-09: typed direct targets should not treat source expressions as width-only
 - Continued the typed aggregate lane after whole aggregate actual roots and
   direct whole aggregate RHS assignments were already declared-type-aware.

@@ -313,6 +313,7 @@ First shipped `R11` slice now in tree:
   - bounded explicit-link `C2` / `C3` omitted/empty-`?ports` inference when explicit `?toplink` endpoints themselves still make the top boundary unambiguous, including renamed top-boundary signals plus source-side top-port bit/slice expressions whose highest referenced bit still yields one compatible inferred top-input contract,
   - bounded explicit-link `C2` / `C3` undeclared top-input inference when same-name child inputs remain top-facing and agree exactly on direction, width, and type metadata,
   - bounded explicit-link `C2` / `C3` undeclared top-output inference when exactly one same-name child output remains top-facing and is not already consumed by explicit child-to-child wiring,
+  - saved ergonomics direction: `?ports` should increasingly act as the explicit override/disambiguation surface for the public boundary rather than as required boilerplate, so future composition inference work should prefer omission-by-default when one safe top boundary can be recovered honestly,
   - bounded explicit-link `C2` / `C3` plain-explicit-top-port same-name convention when child-side evidence is still exact and safe:
     - plain explicit top inputs may fan out by same name when compatible child inputs agree exactly on direction, width, and type metadata,
     - plain explicit top outputs may adopt one unique same-name top-facing child output when that child-side evidence stays exact,
