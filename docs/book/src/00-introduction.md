@@ -15,6 +15,20 @@ It should also be treated as a live book, not a static manual snapshot.
 When FSMGen's user-facing surface changes, this book is expected to change with
 it.
 
+This book is the public-facing documentation surface.
+
+That means:
+
+- it should explain what FSMGen does,
+- how to use it,
+- why the user-facing model works the way it does,
+- and what the current shipped boundaries really are.
+
+Internal continuity files still exist in the repo, but they have a different
+job: they help maintainers preserve implementation continuity across crashes,
+handoffs, and long-running feature work. They are not a substitute for putting
+user-facing behavior into the book.
+
 ## What FSMGen Is Good At
 
 FSMGen is designed for:
@@ -44,11 +58,13 @@ The repository still keeps a few focused technical references:
 - `docs/USER_GUIDE.md`: broad live reference during the migration
 - `docs/COMPOSITION_SCOPE.md`: precise composition support boundary
 - `docs/EXTENSION_MODEL.md`: typed extension boundary
-- `ROADMAP_STATUS.md`: live roadmap and current implementation lane
+- `ROADMAP_STATUS.md`: live roadmap and current implementation lane for the
+  maintainer side
 
-The goal is not to duplicate every narrow technical artifact here immediately.
-The goal is to give users one friendly path through the product while the
-remaining deep reference material is folded into the book incrementally.
+The goal is not to duplicate every narrow maintainer artifact here immediately.
+The goal is to give users one friendly, transparent path through the product
+while the remaining user-facing deep reference material is folded into the book
+incrementally.
 
 That means this book should keep evolving alongside the project:
 

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-09: do not confuse the public book with continuity notes
+- Saved one documentation-boundary rule for future sessions.
+- Important continuity note:
+  - `docs/book/` is the public-facing user documentation surface and should
+    carry every user-visible feature with real explanation and examples,
+  - files like `DEVELOPMENT_NOTES.md`, `MEMORY.md`, `ROADMAP_STATUS.md`,
+    `ROADMAP_V2.md`, and `CHANGES.md` are continuity artifacts for maintainer
+    recovery and implementation steering,
+  - and continuity coverage does not count as complete user documentation.
+
 ## 2026-04-09: shared-datapath typing now refuses incompatible typed families
 - Saved the next typed shared-datapath slice after structural binding
   contracts became explicit.

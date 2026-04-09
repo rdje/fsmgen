@@ -31,6 +31,25 @@ The book must be treated as a live project artifact:
 - and stale examples or stale support wording in the book are product bugs, not
   optional cleanup.
 
+The book and the continuity notes have different jobs:
+
+- the mdBook under `docs/book/` is the public-facing product documentation that
+  users and the outside world should read to understand what FSMGen does, how
+  to use it, and the rationale behind the user-facing design,
+- continuity artifacts such as `DEVELOPMENT_NOTES.md`, `MEMORY.md`,
+  `ROADMAP_STATUS.md`, `ROADMAP_V2.md`, and `CHANGES.md` exist to preserve
+  implementation continuity, rationale breadcrumbs, and session recovery
+  context across crashes or handoffs,
+- and those continuity docs are not substitutes for chaptered public
+  documentation in the book.
+
+Practical rule:
+
+- every user-facing feature should eventually land in the book with a clear
+  chapter/section and realistic examples,
+- while the continuity docs may still record engineering rationale and rollout
+  sequencing for maintainers.
+
 ## Why split the guide
 
 The current

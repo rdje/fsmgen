@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-09: the book and continuity notes must stay separate on purpose
+- Saved one docs-governance rule after clarifying what different repo docs are
+  for.
+- Important boundary:
+  - the mdBook under `docs/book/` is the public-facing product documentation
+    and should be what users read to understand what FSMGen does, how to use
+    it, and the rationale behind user-facing behavior,
+  - continuity artifacts such as this file, `MEMORY.md`, `ROADMAP_STATUS.md`,
+    `ROADMAP_V2.md`, and `CHANGES.md` exist to preserve implementation
+    continuity, rationale breadcrumbs, and recovery context for maintainers,
+  - and no user-facing feature should be treated as “documented enough” just
+    because it appears only in continuity notes or commit-oriented history.
+
 ## 2026-04-09: shared-datapath typing should be conservative and explicit
 - Continued the typed composition lane after same-name inference, explicit
   port links, inferred carrier nets, direct whole aggregate actuals, direct
