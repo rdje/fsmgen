@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-09: shared-datapath typing now refuses incompatible typed families
+- Saved the next typed shared-datapath slice after structural binding
+  contracts became explicit.
+- Important continuity note:
+  - shared-datapath candidate discovery no longer merges one family when
+    width-equal typed child outputs preserve incompatible declared type
+    contracts,
+  - uniform typed contributor families now preserve one candidate-level
+    declared type contract in exported metadata,
+  - typed contributor entries keep their own declared type identity too,
+  - and private raw contributor nets synthesized during shared-datapath
+    lifting now preserve contributor-side declared type identity in the
+    structural export instead of flattening those carriers back to width-only
+    metadata.
+
 ## 2026-04-09: typed composition bindings now preserve source contracts too
 - Saved the next typed structural-handoff slice after direct typed gates were
   already landed.

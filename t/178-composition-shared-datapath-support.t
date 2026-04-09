@@ -119,6 +119,13 @@ subtest 'shared-datapath support augments one plan with registered shared re-exp
         {
             signal_name => 'status_bus',
             width => 8,
+            declared_type_name => 'byte_t',
+            declared_type_spec => {
+                kind => 'bits',
+                width => 8,
+                signed => 1,
+                state_model => 'four_state',
+            },
             storage_class => 'registered',
             reset_value => "8'h00",
             peer_read_policy => 'registered_loopback',
@@ -151,17 +158,49 @@ subtest 'shared-datapath support augments one plan with registered shared re-exp
                         {
                             endpoint => 'left.status_bus',
                             source_enable_signal => FSM::Composition::SharedDatapathSupport->source_value_enable_name('left', 'status_bus', $rhs_value),
+                            declared_type_name => 'byte_t',
+                            declared_type_spec => {
+                                kind => 'bits',
+                                width => 8,
+                                signed => 1,
+                                state_model => 'four_state',
+                            },
                         },
                         {
                             endpoint => 'right.status_bus',
                             source_enable_signal => FSM::Composition::SharedDatapathSupport->source_value_enable_name('right', 'status_bus', $rhs_value),
+                            declared_type_name => 'byte_t',
+                            declared_type_spec => {
+                                kind => 'bits',
+                                width => 8,
+                                signed => 1,
+                                state_model => 'four_state',
+                            },
                         },
                     ],
                 },
             ],
             contributors => [
-                { endpoint => 'left.status_bus' },
-                { endpoint => 'right.status_bus' },
+                {
+                    endpoint => 'left.status_bus',
+                    declared_type_name => 'byte_t',
+                    declared_type_spec => {
+                        kind => 'bits',
+                        width => 8,
+                        signed => 1,
+                        state_model => 'four_state',
+                    },
+                },
+                {
+                    endpoint => 'right.status_bus',
+                    declared_type_name => 'byte_t',
+                    declared_type_spec => {
+                        kind => 'bits',
+                        width => 8,
+                        signed => 1,
+                        state_model => 'four_state',
+                    },
+                },
             ],
         },
     ];
@@ -193,6 +232,10 @@ subtest 'shared-datapath support augments one plan with registered shared re-exp
         ],
         'support adds the bounded helper and raw-source net set',
     );
+    my %nets_by_name = map { $_->name => $_ } @{$plan->nets || []};
+    is($nets_by_name{shared_dp_raw_left_status_bus}->declared_type_name, 'byte_t', 'support preserves declared type identity on the left raw-source carrier net');
+    is($nets_by_name{shared_dp_raw_right_status_bus}->declared_type_spec->{signed}, 1, 'support preserves declared type signedness on the right raw-source carrier net');
+    ok(!defined($nets_by_name{status_bus_shared_en}->declared_type_name), 'helper enable nets stay intentionally untyped');
 
     my %left_bindings = map { $_->{port_name} => $_->{signal_name} } @{$plan->instances->[0]->port_bindings};
     my %right_bindings = map { $_->{port_name} => $_->{signal_name} } @{$plan->instances->[1]->port_bindings};

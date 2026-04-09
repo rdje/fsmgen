@@ -123,7 +123,7 @@ sub build_candidates ($class, %args) {
             my $binding_metadata = binding_signal_summary_metadata(
                 $binding_signals_by_port->{$port->{name}}
             );
-            push @{$candidate_groups{$key}{contributors}}, {
+            my $contributor = {
                 kind => ($child->{kind} // $instance->{kind}),
                 instance_name => ($child->{instance_name} // $instance->{instance_name}),
                 module_name => ($child->{module_name} // $instance->{module_name}),
@@ -136,6 +136,12 @@ sub build_candidates ($class, %args) {
                 output_drive_family => $output_drive_family,
                 drive_intent => $class->drive_intent_from_output_drive_family($output_drive_family),
             };
+            my $declared_type_name = FSM::Composition::InterfacePortBuilder->declared_type_name($port);
+            my $declared_type_spec = FSM::Composition::InterfacePortBuilder->declared_type_spec($port);
+            $contributor->{declared_type_name} = $declared_type_name if defined $declared_type_name;
+            $contributor->{declared_type_spec} = $declared_type_spec if defined $declared_type_spec;
+            push @{$candidate_groups{$key}{contributors}}, $contributor;
+            push @{$candidate_groups{$key}{contributor_ports}}, $port;
             $candidate_groups{$key}{signal_name} = $port->{name};
             $candidate_groups{$key}{width} = $port->{width} || 1;
             $candidate_groups{$key}{interface_type} = $normalized_type;
@@ -153,12 +159,18 @@ sub build_candidates ($class, %args) {
                 $binding_signals_by_port->{$port->{name}}
             );
 
-            push @{$peer_input_groups{$key}}, {
+            my $peer_input = {
                 instance_name => ($child->{instance_name} // $instance->{instance_name}),
                 module_name => ($child->{module_name} // $instance->{module_name}),
                 endpoint => (($instance->{instance_name} // 'unknown').'.'.($port->{name} // 'unknown')),
                 %{$class->_project_shared_datapath_binding_metadata($binding_metadata)},
             };
+            my $declared_type_name = FSM::Composition::InterfacePortBuilder->declared_type_name($port);
+            my $declared_type_spec = FSM::Composition::InterfacePortBuilder->declared_type_spec($port);
+            $peer_input->{declared_type_name} = $declared_type_name if defined $declared_type_name;
+            $peer_input->{declared_type_spec} = $declared_type_spec if defined $declared_type_spec;
+
+            push @{$peer_input_groups{$key}}, $peer_input;
         }
     }
 
@@ -173,6 +185,17 @@ sub build_candidates ($class, %args) {
             ($a->{endpoint} // '') cmp ($b->{endpoint} // '')
         } @{$group->{contributors} || []};
         next unless @contributors >= 2;
+
+        my @contributor_ports = @{$group->{contributor_ports} || []};
+        my %typed_declared_type_signatures = map {
+            my $signature = FSM::Composition::InterfacePortBuilder->declared_type_signature($_);
+            defined($signature) ? ($signature => 1) : ();
+        } @contributor_ports;
+        next if keys(%typed_declared_type_signatures) > 1;
+
+        my $declared_type_contract = FSM::Composition::InterfacePortBuilder->uniform_declared_type_contract(
+            \@contributor_ports
+        );
 
         my %top_output_signals;
         for my $contributor (@contributors) {
@@ -274,7 +297,7 @@ sub build_candidates ($class, %args) {
 
         my $multi_value_conflict_signal = FSM::Composition::SharedDatapathSupport->multi_value_conflict_name($group->{signal_name});
 
-        push @candidates, {
+        my $candidate = {
             signal_name => $group->{signal_name},
             width => $group->{width},
             interface_type => $group->{interface_type},
@@ -302,6 +325,12 @@ sub build_candidates ($class, %args) {
             aggregate_enable_family_count => scalar(@aggregate_enable_families),
             aggregate_enable_families => \@aggregate_enable_families,
         };
+        $candidate->{declared_type_name} = $declared_type_contract->{declared_type_name}
+            if defined $declared_type_contract->{declared_type_name};
+        $candidate->{declared_type_spec} = $declared_type_contract->{declared_type_spec}
+            if defined $declared_type_contract->{declared_type_spec};
+
+        push @candidates, $candidate;
     }
 
     return \@candidates;

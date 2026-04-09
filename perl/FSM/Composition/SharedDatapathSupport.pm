@@ -417,7 +417,13 @@ sub augment_plan ($class, %args) {
             next unless defined($instance_name) && defined($port_name);
             my $instance = $instances_by_name{$instance_name} || next;
             my $raw_signal = $class->raw_source_name($instance_name, $signal_name);
-            _ensure_composition_net($nets, $raw_signal, $width);
+            _ensure_composition_net(
+                $nets,
+                $raw_signal,
+                $width,
+                $contributor->{declared_type_name},
+                $contributor->{declared_type_spec},
+            );
             _set_instance_port_binding($instance, $port_name, $raw_signal);
         }
 
@@ -476,7 +482,7 @@ sub augment_plan ($class, %args) {
     return $composition_plan;
 }
 
-sub _ensure_composition_net ($nets, $name, $width = 1) {
+sub _ensure_composition_net ($nets, $name, $width = 1, $declared_type_name = undef, $declared_type_spec = undef) {
     return unless defined($name) && length($name);
     return if grep { ($_->name || '') eq $name } @{$nets || []};
 
@@ -485,6 +491,8 @@ sub _ensure_composition_net ($nets, $name, $width = 1) {
         width => $width,
         source => undef,
         targets => [],
+        declared_type_name => $declared_type_name,
+        declared_type_spec => $declared_type_spec,
     );
 }
 

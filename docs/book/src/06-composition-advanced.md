@@ -150,6 +150,24 @@ That declared type information now affects:
 So width-equal but type-incompatible endpoints now fail explicitly instead of
 slipping through.
 
+## Typed Shared-Datapath Families
+
+The shared-datapath lane is conservative when typed child outputs are involved.
+
+- same-name child-output families still need exact name, width, and interface
+  agreement
+- and when those child outputs also preserve declared type identity from named
+  aliases, the shared-datapath family only forms when that typed contributor
+  evidence remains compatible too
+
+That means width-equal but declared-type-incompatible outputs do not collapse
+into one shared-datapath family just because they are both called `status_bus`.
+
+When the typed contributor evidence is uniform, the candidate metadata keeps
+that declared type contract and the private raw contributor nets synthesized by
+shared-datapath lifting preserve the same contributor-side type identity in the
+structural export.
+
 ## Whole Aggregate Actuals
 
 Whole aggregate roots such as `=FRAME` are now live on the typed actual path.

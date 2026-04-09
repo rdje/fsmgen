@@ -102,6 +102,16 @@ typed signal, an inferred list-like concat/repeat expression, or a whole
 aggregate actual root without reconstructing that meaning from packed width
 alone.
 
+On the composition side, `module_info.composition_shared_datapath_candidates`
+also now preserves declared type contracts conservatively:
+
+- width-equal typed child-output families do not collapse into one candidate
+  when their declared type contracts disagree
+- uniform typed shared-datapath families preserve one candidate-level declared
+  type contract
+- and the raw contributor nets synthesized during shared-datapath lifting keep
+  contributor-side declared type identity in the structural export
+
 That is already useful for downstream tooling even though the long-term public
 embedding/API stabilization lane (`R13`) is still not started.
 

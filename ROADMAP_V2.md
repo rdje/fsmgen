@@ -956,6 +956,12 @@ The first honest `R11` slices are now:
   also preserve the actual typed binding expression through
   `bound_connection_expr`, so later consumers can reuse real structural AST
   nodes instead of reconstructing binding shape from names-only summaries.
+- Forward-IR note: same-name shared-datapath family discovery now also
+  consumes preserved declared type identity conservatively, so width-equal
+  typed child output families no longer collapse into one candidate when
+  their declared type contracts disagree, while uniform typed families now
+  preserve one candidate-level declared type contract plus typed raw
+  contributor nets.
 - Forward-IR note: shared-datapath planning itself now also prefers that typed
   `bound_connection_expr` surface when it needs a true flat leaf-carrier name,
   so compatibility mirrors no longer outrank the structural AST in those

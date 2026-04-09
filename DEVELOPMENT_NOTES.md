@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-09: shared-datapath typing should be conservative and explicit
+- Continued the typed composition lane after same-name inference, explicit
+  port links, inferred carrier nets, direct whole aggregate actuals, direct
+  aggregate assignments, source expressions, and structural bindings were
+  already declared-type-aware.
+- Landed behavior:
+  - same-name shared-datapath candidate discovery now refuses to collapse one
+    family when width-equal typed child outputs disagree on declared type
+    contract,
+  - uniform typed shared-datapath contributor families now preserve one
+    candidate-level declared type contract in exported metadata,
+  - typed contributor entries keep their own declared type identity on that
+    candidate surface,
+  - and private raw contributor nets synthesized during shared-datapath
+    lifting now preserve contributor-side declared type identity instead of
+    flattening those new carriers back to width-only metadata.
+- Why this boundary matters:
+  - shared-datapath lifting is optional runtime structure, so it should stay
+    more conservative than plain width-based grouping once real type evidence
+    exists instead of inventing another compatibility loophole,
+  - and preserving the same typed contract on candidate metadata plus raw
+    lifted carriers gives later aggregate-aware lowering and embedder
+    inspection one honest handoff instead of asking downstream consumers to
+    rediscover type meaning from packed width after shared-datapath rewriting.
+
 ## 2026-04-09: typed composition bindings should preserve source contracts, not just width
 - Continued the typed aggregate/composition lane after direct target gates
   were already shape-aware for same-name inference, explicit port links,

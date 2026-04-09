@@ -349,6 +349,78 @@ FSM
     is($planned_binding_by_port{CONST_FRAME}{connection_type_spec}{kind}, 'record', 'composition plan binding preserves the whole aggregate actual contract');
 };
 
+subtest 'composition structural shared-datapath raw nets preserve declared type identity for uniform typed contributors' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'typed_shared_datapath_structural_nets.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:typed_shared_datapath_structural_nets
+  (?ports:public_io
+    clk
+    rstn
+    left_status>8
+    right_status>8
+  )
+  (?fsmc:left left_src)
+  (?fsmc:right right_src)
+  (?toplink:wiring
+    /left.status_bus/left_status/
+    /right.status_bus/right_status/
+  )
+)
+
+(?fsm:left_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (status_bus byte_t)
+  )
+  (IDLE
+    (status_bus> <= 8'1)
+  )
+)
+
+(?fsm:right_src
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+types
+    (type byte_t (four_state (signed (bits 8))))
+  )
+  (+size
+    (status_bus byte_t)
+  )
+  (IDLE
+    (status_bus> <= 8'2)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+    );
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+    my %nets_by_name = map { $_->{name} => $_ } @{ $result->{structural_rtl_ir}{nets} || [] };
+    my ($candidate) = @{ $result->{module_info}{composition_shared_datapath_candidates} || [] };
+
+    is($candidate->{declared_type_name}, 'byte_t', 'shared-datapath candidate preserves the uniform declared type name in module_info');
+    is($candidate->{declared_type_spec}{signed}, 1, 'shared-datapath candidate preserves the uniform declared type signedness in module_info');
+    is($nets_by_name{shared_dp_raw_left_status_bus}{declared_type_name}, 'byte_t', 'left raw shared-datapath structural net preserves the contributor declared type name');
+    is($nets_by_name{shared_dp_raw_left_status_bus}{declared_type_spec}{state_model}, 'four_state', 'left raw shared-datapath structural net preserves the contributor declared type state model');
+    is($nets_by_name{shared_dp_raw_right_status_bus}{declared_type_spec}{width}, 8, 'right raw shared-datapath structural net preserves the contributor declared type width');
+};
+
 done_testing();
 
 sub write_file {
