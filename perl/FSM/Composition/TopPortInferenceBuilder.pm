@@ -83,7 +83,14 @@ sub augment_from_explicit_links ($class, %args) {
             my ($target_top_name) = $target =~ /^(\w+)$/;
             my $source_is_top = defined $source_top_name;
             my $target_is_top = defined $target_top_name;
-            my $source_top_expr_spec = FSM::Composition::LinkedPlanBuilder->top_expression_spec($source);
+            my $source_child_expr_spec = FSM::Composition::LinkedPlanBuilder->child_expression_spec($source);
+            my ($source_instance_name, $source_port_name) = $source =~ /^(\w+)\.(\w+)$/;
+            my $source_is_realized_child_endpoint = defined($source_port_name)
+                && exists($instances_by_name{$source_instance_name})
+                && exists($child_ports_by_instance{$source_instance_name}{$source_port_name});
+            my $source_top_expr_spec = ($source_child_expr_spec || $source_is_realized_child_endpoint)
+                ? undef
+                : FSM::Composition::LinkedPlanBuilder->top_expression_spec($source);
 
             if ($source_is_top && !$declared_by_name{$source_top_name} && $target =~ /^\w+\.\w+$/) {
                 my $child_endpoint = FSM::Composition::LinkedPlanBuilder->resolve_endpoint(
@@ -132,7 +139,6 @@ sub augment_from_explicit_links ($class, %args) {
                 };
             }
 
-            my $source_child_expr_spec = FSM::Composition::LinkedPlanBuilder->child_expression_spec($source);
             if ($target_is_top && !$declared_by_name{$target_top_name} && ($source =~ /^\w+\.\w+$/ || $source_child_expr_spec)) {
                 my $child_endpoint = FSM::Composition::LinkedPlanBuilder->resolve_endpoint(
                     $source,
@@ -563,7 +569,10 @@ sub _annotate_expression_spec_child_widths ($class, $expression_spec, $instances
     }
 
     return \%annotated
-        unless $expr_kind eq 'child_signal_ref' || $expr_kind eq 'child_bit_select' || $expr_kind eq 'child_slice';
+        unless $expr_kind eq 'child_signal_ref'
+            || $expr_kind eq 'child_bit_select'
+            || $expr_kind eq 'child_slice'
+            || $expr_kind eq 'child_aggregate_ref';
 
     my $instance_name = $expression_spec->{instance_name} || '';
     my $port_name = $expression_spec->{port_name} || '';
@@ -606,6 +615,21 @@ sub _annotate_expression_spec_child_widths ($class, $expression_spec, $instances
         return \%annotated;
     }
 
+    if ($expr_kind eq 'child_aggregate_ref') {
+        my (undef, undef, $resolved_width) = FSM::Composition::LinkedPlanBuilder->_resolve_aggregate_path_connection(
+            base_expr => FSM::IR::StructuralRTLIR::ConnectionExpr::signal_ref_expr("$instance_name.$port_name"),
+            root_type_spec => FSM::Composition::InterfacePortBuilder->declared_type_spec($port),
+            path_text => $expression_spec->{path_text},
+            raw => $expression_spec->{raw},
+            context_label => 'child expression',
+            base_label => "child endpoint '$instance_name.$port_name'",
+            fsm_file => $fsm_file,
+            header => $header,
+        );
+        $annotated{width} = $resolved_width;
+        return \%annotated;
+    }
+
     confess
         "Composition source '$header' in '$fsm_file' uses child expression '".$expression_spec->{raw}."', ".
         "but explicit top-link port inference is blocked because slice bounds [".$expression_spec->{msb}.':'.$expression_spec->{lsb}."] fall outside declared width $base_width of child endpoint '$instance_name.$port_name'. ".
@@ -629,7 +653,13 @@ sub _expression_spec_mentions_undeclared_top_inputs ($class, $expression_spec, $
         if $expr_kind eq 'literal'
         || $expr_kind eq 'child_signal_ref'
         || $expr_kind eq 'child_bit_select'
-        || $expr_kind eq 'child_slice';
+        || $expr_kind eq 'child_slice'
+        || $expr_kind eq 'child_aggregate_ref';
+
+    if ($expr_kind eq 'aggregate_ref') {
+        my $port_name = $expression_spec->{port_name} || '';
+        return !$declared_by_name->{$port_name};
+    }
 
     if ($expr_kind eq 'repeat') {
         return $class->_expression_spec_mentions_undeclared_top_inputs($expression_spec->{operand}, $declared_by_name);
@@ -704,7 +734,7 @@ sub _analyze_top_expression_for_inference ($class, $declared_by_name, $inferred_
         };
     }
 
-    if ($expr_kind eq 'child_signal_ref' || $expr_kind eq 'child_bit_select' || $expr_kind eq 'child_slice') {
+    if ($expr_kind eq 'aggregate_ref' || $expr_kind eq 'child_signal_ref' || $expr_kind eq 'child_bit_select' || $expr_kind eq 'child_slice' || $expr_kind eq 'child_aggregate_ref') {
         return {
             progress => 0,
             known_exact_width => $class->_expression_spec_width($expression_spec),
@@ -904,6 +934,9 @@ sub _required_top_width_for_expression_spec ($class, $expression_spec) {
         ? ($expression_spec->{msb} || 0)
         : ($expression_spec->{lsb} || 0)) + 1
         if $expr_kind eq 'slice' || $expr_kind eq 'child_slice';
+    return $expression_spec->{width}
+        if ($expr_kind eq 'aggregate_ref' || $expr_kind eq 'child_aggregate_ref')
+            && defined($expression_spec->{width});
     confess "TopPortInferenceBuilder requires a supported top-expression width rule";
 }
 
@@ -915,6 +948,9 @@ sub _expression_spec_width ($class, $expression_spec) {
         if $expr_kind eq 'bit_select' || $expr_kind eq 'child_bit_select';
     return abs(($expression_spec->{msb} || 0) - ($expression_spec->{lsb} || 0)) + 1
         if $expr_kind eq 'slice' || $expr_kind eq 'child_slice';
+    return $expression_spec->{width}
+        if ($expr_kind eq 'aggregate_ref' || $expr_kind eq 'child_aggregate_ref')
+            && defined($expression_spec->{width});
 
     if ($expr_kind eq 'concat') {
         my $width = 0;

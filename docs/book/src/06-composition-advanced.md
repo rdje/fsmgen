@@ -18,8 +18,12 @@ Current shipped source-side families include:
 
 - top-port bit selects like `status_bus[0]`
 - top-port slices like `payload_bus[15:8]`
+- typed aggregate top-port member/item sources like `in_frame.tag` and
+  `in_frame.payload[1]`
 - child-output bit selects like `producer.payload[0]`
 - child-output slices like `producer.payload[7:4]`
+- typed aggregate generated-child output member/item sources like
+  `producer.OUT_FRAME.tag` and `producer.OUT_FRAME.payload[1]`
 - bounded concat expressions
 - bounded repeat groups
 
@@ -29,8 +33,20 @@ Example:
 (?toplink:wiring
   /payload_bus[15:8]/byte_sink.data_in/
   /producer.payload[7:4]/consumer.nibble_in/
+  /in_frame.tag/tag_out/
+  /producer.OUT_FRAME.payload[1]/consumer.payload_mid/
 )
 ```
+
+For typed aggregate member/item sources, the base endpoint must preserve a
+declared aggregate type. Record members use their authored names. List items
+use authored `[N]` syntax in `.fsm`, and the current SystemVerilog lowering
+maps that to the generated packed-list field name such as `.item_1`.
+
+When the base is a generated child output, FSMGen still follows the normal
+projected-child-source rule: it creates one typed carrier for the whole child
+output, binds the child output to that carrier, and then applies member/item
+access to the carrier for each target.
 
 ## Structural Actuals
 

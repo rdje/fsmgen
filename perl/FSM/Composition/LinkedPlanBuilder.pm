@@ -31,6 +31,8 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     bit_select_expr
     bit_vector_literal_expr
     concat_expr
+    index_access_expr
+    member_access_expr
     normalized_binding
     open_expr
     repeat_expr
@@ -1211,6 +1213,50 @@ sub _resolve_child_expression_endpoint ($class, $endpoint, $instances_by_name, $
         };
     }
 
+    if ($endpoint =~ /\A(\w+)\.(\w+)((?:\.[A-Za-z_]\w*|\[\d+(?::\d+)?\])+)\z/) {
+        my ($instance_name, $port_name, $path_text) = ($1, $2, $3);
+        my $instance = $instances_by_name->{$instance_name};
+        confess
+            "Composition source '$header' in '$fsm_file' uses child expression '$endpoint', ".
+            "but explicit link endpoint resolution is blocked because no realized child instance named '$instance_name' exists. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $instance;
+
+        my $port = $child_ports_by_instance->{$instance_name}{$port_name};
+        confess
+            "Composition source '$header' in '$fsm_file' uses child expression '$endpoint', ".
+            "but explicit link endpoint resolution is blocked because instance '$instance_name' has no port named '$port_name'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $port;
+
+        my ($connection_expr, $resolved_type_spec, $resolved_width) = $class->_resolve_aggregate_path_connection(
+            base_expr => signal_ref_expr("$instance_name.$port_name"),
+            root_type_spec => FSM::Composition::InterfacePortBuilder->declared_type_spec($port),
+            path_text => $path_text,
+            raw => $endpoint,
+            context_label => 'child expression',
+            base_label => "child endpoint '$instance_name.$port_name'",
+            fsm_file => $fsm_file,
+            header => $header,
+        );
+
+        return {
+            raw => $endpoint,
+            key => "child_expr:$endpoint",
+            base_key => "child:$instance_name.$port_name",
+            base_raw => "$instance_name.$port_name",
+            kind => 'child_expr',
+            expr_kind => 'aggregate_ref',
+            expr_width => $resolved_width,
+            connection_expr => $connection_expr,
+            instance_name => $instance_name,
+            instance => $instance,
+            port_name => $port_name,
+            port => $port,
+            inferred_type_spec => $resolved_type_spec,
+        };
+    }
+
     return undef;
 }
 
@@ -1404,6 +1450,16 @@ sub child_expression_spec ($class, $endpoint) {
         };
     }
 
+    if ($endpoint =~ /\A(\w+)\.(\w+)((?:\.[A-Za-z_]\w*|\[\d+(?::\d+)?\])+)\z/) {
+        return {
+            raw => $endpoint,
+            instance_name => $1,
+            port_name => $2,
+            expr_kind => 'aggregate_ref',
+            path_text => $3,
+        };
+    }
+
     return undef;
 }
 
@@ -1427,6 +1483,10 @@ sub _resolve_top_expression_endpoint ($class, $endpoint, $top_ports_by_name, $in
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
     return undef unless $spec;
+    return undef
+        if (($spec->{expr_kind} || '') eq 'aggregate_ref')
+        && !$top_ports_by_name->{$spec->{port_name} || ''};
+
     my $resolved_spec = $class->_resolve_top_expression_spec(
         $spec,
         $top_ports_by_name,
@@ -1489,7 +1549,7 @@ sub _collect_top_expression_child_specs ($class, $spec) {
     return [] unless ref($spec) eq 'HASH';
 
     my $expr_kind = $spec->{expr_kind} || '';
-    if ($expr_kind eq 'child_signal_ref' || $expr_kind eq 'child_bit_select' || $expr_kind eq 'child_slice') {
+    if ($expr_kind eq 'child_signal_ref' || $expr_kind eq 'child_bit_select' || $expr_kind eq 'child_slice' || $expr_kind eq 'child_aggregate_ref') {
         return [{
             %$spec,
         }];
@@ -1599,6 +1659,25 @@ sub _parse_top_expression_spec ($class, $endpoint, %opts) {
             expr_kind => 'child_slice',
             msb => 0 + $3,
             lsb => 0 + $4,
+        };
+    }
+
+    if ($opts{allow_child_ref} && $endpoint =~ /\A(\w+)\.(\w+)((?:\.[A-Za-z_]\w*|\[\d+(?::\d+)?\])+)\z/) {
+        return {
+            raw => $endpoint,
+            instance_name => $1,
+            port_name => $2,
+            expr_kind => 'child_aggregate_ref',
+            path_text => $3,
+        };
+    }
+
+    if ($endpoint =~ /\A(\w+)((?:\.[A-Za-z_]\w*|\[\d+(?::\d+)?\])+)\z/) {
+        return {
+            raw => $endpoint,
+            port_name => $1,
+            expr_kind => 'aggregate_ref',
+            path_text => $2,
         };
     }
 
@@ -2167,11 +2246,42 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
 
-    if ($expr_kind eq 'child_signal_ref' || $expr_kind eq 'child_bit_select' || $expr_kind eq 'child_slice') {
+    if ($expr_kind eq 'child_signal_ref' || $expr_kind eq 'child_bit_select' || $expr_kind eq 'child_slice' || $expr_kind eq 'child_aggregate_ref') {
         my $instance_name = $spec->{instance_name} || '';
         my $port_name = $spec->{port_name} || '';
         my $instance = $instances_by_name->{$instance_name};
         my $context_label = $expr_kind eq 'child_signal_ref' ? 'child endpoint' : 'child expression';
+
+        if (!$instance) {
+            my $top_port = $top_ports_by_name->{$instance_name};
+            if ($top_port) {
+                my $path_text = $expr_kind eq 'child_aggregate_ref'
+                    ? '.'.$port_name.($spec->{path_text} || '')
+                    : $expr_kind eq 'child_bit_select'
+                        ? '.'.$port_name.'['.$spec->{index}.']'
+                        : $expr_kind eq 'child_slice'
+                            ? '.'.$port_name.'['.$spec->{msb}.':'.$spec->{lsb}.']'
+                            : '.'.$port_name;
+                my ($connection_expr, $resolved_type_spec, $resolved_width) = $class->_resolve_aggregate_path_connection(
+                    base_expr => signal_ref_expr($instance_name),
+                    root_type_spec => FSM::Composition::InterfacePortBuilder->declared_type_spec($top_port),
+                    path_text => $path_text,
+                    raw => $spec->{raw},
+                    context_label => 'top expression',
+                    base_label => "top port '$instance_name'",
+                    fsm_file => $fsm_file,
+                    header => $header,
+                );
+
+                return {
+                    width => $resolved_width,
+                    connection_expr => $connection_expr,
+                    base_ports => [$top_port],
+                    child_base_sources => [],
+                    type_spec => $resolved_type_spec,
+                };
+            }
+        }
 
         confess
             "Composition source '$header' in '$fsm_file' uses $context_label '".$spec->{raw}."', ".
@@ -2226,6 +2336,27 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
                 base_ports => [],
                 child_base_sources => [$base_endpoint],
                 type_spec => FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width(1),
+            };
+        }
+
+        if ($expr_kind eq 'child_aggregate_ref') {
+            my ($connection_expr, $resolved_type_spec, $resolved_width) = $class->_resolve_aggregate_path_connection(
+                base_expr => signal_ref_expr("$instance_name.$port_name"),
+                root_type_spec => FSM::Composition::InterfacePortBuilder->declared_type_spec($port),
+                path_text => $spec->{path_text},
+                raw => $spec->{raw},
+                context_label => 'child expression',
+                base_label => "child endpoint '$instance_name.$port_name'",
+                fsm_file => $fsm_file,
+                header => $header,
+            );
+
+            return {
+                width => $resolved_width,
+                connection_expr => $connection_expr,
+                base_ports => [],
+                child_base_sources => [$base_endpoint],
+                type_spec => $resolved_type_spec,
             };
         }
 
@@ -2318,6 +2449,36 @@ sub _resolve_top_expression_spec ($class, $spec, $top_ports_by_name, $instances_
         };
     }
 
+    if ($expr_kind eq 'aggregate_ref') {
+        my $port_name = $spec->{port_name} || '';
+        my $top_port = $top_ports_by_name->{$port_name};
+
+        confess
+            "Composition source '$header' in '$fsm_file' references top expression '$endpoint', ".
+            "but explicit link endpoint resolution is blocked because '?ports' declares no top port named '$port_name'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $top_port;
+
+        my ($connection_expr, $resolved_type_spec, $resolved_width) = $class->_resolve_aggregate_path_connection(
+            base_expr => signal_ref_expr($port_name),
+            root_type_spec => FSM::Composition::InterfacePortBuilder->declared_type_spec($top_port),
+            path_text => $spec->{path_text},
+            raw => $spec->{raw},
+            context_label => 'top expression',
+            base_label => "top port '$port_name'",
+            fsm_file => $fsm_file,
+            header => $header,
+        );
+
+        return {
+            width => $resolved_width,
+            connection_expr => $connection_expr,
+            base_ports => [$top_port],
+            child_base_sources => [],
+            type_spec => $resolved_type_spec,
+        };
+    }
+
     my $port_name = $spec->{port_name};
     my $top_port = $top_ports_by_name->{$port_name};
 
@@ -2366,6 +2527,138 @@ sub _endpoint_declared_or_scalar_type_spec ($class, $port) {
 
     my $width = ref($port) eq 'HASH' ? $port->{width} : $port->width;
     return FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($width);
+}
+
+sub _resolve_aggregate_path_connection ($class, %args) {
+    my $raw = $args{raw} // '';
+    my $context_label = $args{context_label} || 'expression';
+    my $base_label = $args{base_label} || 'base endpoint';
+    my $root_type_spec = $args{root_type_spec};
+    my $path_text = $args{path_text} // '';
+    my $connection_expr = $args{base_expr};
+    my $fsm_file = $args{fsm_file};
+    my $header = $args{header};
+
+    confess
+        "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+        "but explicit link endpoint resolution is blocked because $base_label has no declared aggregate type. ".
+        "Declare an aggregate '+types' alias on the endpoint before using member or item access in composition links. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless ref($root_type_spec) eq 'HASH';
+
+    my $root_kind = $root_type_spec->{kind} || '';
+    confess
+        "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+        "but explicit link endpoint resolution is blocked because $base_label has scalar type '".
+        FSM::Package::PayloadTypeSupport->type_spec_label($root_type_spec).
+        "', so aggregate member or item access is not available. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless $root_kind eq 'record' || $root_kind eq 'list';
+
+    my $remaining = $path_text;
+    my $current_type_spec = $root_type_spec;
+
+    while (length $remaining) {
+        if ($remaining =~ s/\A\.([A-Za-z_]\w*)//) {
+            my $member_name = $1;
+            my $kind = $current_type_spec->{kind} || '';
+
+            confess
+                "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+                "but explicit link endpoint resolution is blocked because member access '.$member_name' is only valid on record-typed values; current path type is '".
+                FSM::Package::PayloadTypeSupport->type_spec_label($current_type_spec)."'. ".
+                "Use '[N]' for list items or declare a record member before generation. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                unless $kind eq 'record';
+
+            my $members = $current_type_spec->{members} || {};
+            confess
+                "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+                "but explicit link endpoint resolution is blocked because record type for $base_label has no member '$member_name'. ".
+                "Known members: " . join(', ', @{ $current_type_spec->{member_order} || [] }) . ". ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                unless exists $members->{$member_name};
+
+            $connection_expr = member_access_expr($connection_expr, $member_name);
+            $current_type_spec = $members->{$member_name};
+            next;
+        }
+
+        if ($remaining =~ s/\A\[(\d+)(?::(\d+))?\]//) {
+            my ($first_index, $second_index) = ($1, $2);
+            my $kind = $current_type_spec->{kind} || '';
+
+            if ($kind eq 'list') {
+                confess
+                    "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+                    "but explicit link endpoint resolution is blocked because list item access currently accepts one constant index, not a range. ".
+                    "Select one list element with '[N]' before generation. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                    if defined $second_index;
+
+                my $items = $current_type_spec->{items} || [];
+                confess
+                    "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+                    "but explicit link endpoint resolution is blocked because list index '$first_index' is outside the declared item range 0..".
+                    (@$items ? $#$items : -1).". ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                    unless $first_index < @$items;
+
+                $connection_expr = member_access_expr($connection_expr, 'item_'.(0 + $first_index));
+                $current_type_spec = $items->[$first_index];
+                next;
+            }
+
+            if ($kind eq 'bit' || $kind eq 'bits') {
+                my $scalar_width = $current_type_spec->{width} // 0;
+                if (defined $second_index) {
+                    my ($high, $low) = ($first_index, $second_index);
+                    my $max_index = $high > $low ? $high : $low;
+                    confess
+                        "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+                        "but explicit link endpoint resolution is blocked because scalar slice [$high:$low] exceeds resolved scalar width '$scalar_width'. ".
+                        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                        unless $scalar_width > 0 && $max_index < $scalar_width;
+
+                    my $slice_width = abs($high - $low) + 1;
+                    $connection_expr = slice_expr($connection_expr, $high, $low);
+                    $current_type_spec = FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($slice_width);
+                    next;
+                }
+
+                confess
+                    "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+                    "but explicit link endpoint resolution is blocked because scalar index '$first_index' exceeds resolved scalar width '$scalar_width'. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                    unless $scalar_width > 0 && $first_index < $scalar_width;
+
+                $connection_expr = bit_select_expr($connection_expr, $first_index);
+                $current_type_spec = FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width(1);
+                next;
+            }
+
+            confess
+                "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+                "but explicit link endpoint resolution is blocked because index access is valid on list and scalar bit-vector values; current path type is '".
+                FSM::Package::PayloadTypeSupport->type_spec_label($current_type_spec)."'. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        confess
+            "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+            "but explicit link endpoint resolution is blocked because aggregate path '$remaining' could not be parsed. ".
+            "Use record member access like '.field' and list/scalar constant indexes like '[0]'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    my $resolved_width = ref($current_type_spec) eq 'HASH' ? ($current_type_spec->{width} // undef) : undef;
+    confess
+        "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+        "but explicit link endpoint resolution is blocked because the resolved aggregate leaf has no positive packed width. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless defined($resolved_width) && $resolved_width > 0;
+
+    return ($connection_expr, $class->_clone_structured_value($current_type_spec), $resolved_width);
 }
 
 sub endpoint_width ($class, $endpoint) {
@@ -2417,6 +2710,11 @@ sub source_connection_expr_for_carrier ($class, $source, $carrier_signal_name) {
 
         return slice_expr($carrier_signal_name, $source->{msb}, $source->{lsb})
             if (($source->{expr_kind} || '') eq 'slice');
+
+        return $class->rebind_source_expr_with_child_carriers(
+            $source->{connection_expr},
+            { $source->{base_raw} => $carrier_signal_name },
+        ) if (($source->{expr_kind} || '') eq 'aggregate_ref');
     }
 
     confess "Unsupported source kind '$kind' reached source_connection_expr_for_carrier.\n";
@@ -2433,6 +2731,20 @@ sub rebind_source_expr_with_child_carriers ($class, $expr, $carrier_by_child_bas
 
     if ($kind eq 'bit_select') {
         return bit_select_expr(
+            $class->rebind_source_expr_with_child_carriers($expr->{source_expr}, $carrier_by_child_base_endpoint),
+            $expr->{index},
+        );
+    }
+
+    if ($kind eq 'member_access') {
+        return member_access_expr(
+            $class->rebind_source_expr_with_child_carriers($expr->{source_expr}, $carrier_by_child_base_endpoint),
+            $expr->{member_name},
+        );
+    }
+
+    if ($kind eq 'index_access') {
+        return index_access_expr(
             $class->rebind_source_expr_with_child_carriers($expr->{source_expr}, $carrier_by_child_base_endpoint),
             $expr->{index},
         );

@@ -3355,11 +3355,11 @@ FSM
     ok($report, 'pipeline derives a composition failure report from blocked unsupported-endpoint failures');
     is($report->{top_name}, 'unsupported_endpoint_failure_summary_top', 'failure report preserves the top name for blocked unsupported-endpoint failures');
     is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked unsupported-endpoint failures');
-    is($report->{context_label}, 'Endpoint', 'failure report classifies unsupported explicit endpoints as endpoint context');
+    is($report->{context_label}, 'Child expression', 'failure report classifies aggregate-child endpoint syntax as child-expression context');
     is($report->{context_value}, "'producer.output_data.extra'", 'failure report preserves the unsupported explicit endpoint');
-    is($report->{context_summary}, "Endpoint 'producer.output_data.extra'", 'failure report exposes a concise unsupported-endpoint summary');
+    is($report->{context_summary}, "Child expression 'producer.output_data.extra'", 'failure report exposes a concise child-expression summary');
     is($report->{blocked_boundary}, 'explicit link endpoint resolution', 'failure report preserves the blocked endpoint-resolution boundary for unsupported endpoints');
-    is($report->{blocked_reason}, 'that syntax is unsupported', 'failure report preserves the concise unsupported-endpoint reason');
+    is($report->{blocked_reason}, "child endpoint 'producer.output_data' has no declared aggregate type. Declare an aggregate '+types' alias on the endpoint before using member or item access in composition links", 'failure report preserves the concise missing-aggregate-type reason');
 };
 
 subtest 'pipeline derives top-expression context from blocked top-expression range failures' => sub {
@@ -5913,9 +5913,9 @@ FSM
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for unsupported explicit endpoints');
     like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked unsupported-endpoint failures');
-    like($combined_output, qr/Context:\s+Endpoint 'producer\.output_data\.extra'/s, 'CLI reports the unsupported explicit endpoint as summary context');
+    like($combined_output, qr/Context:\s+Child expression 'producer\.output_data\.extra'/s, 'CLI reports the child aggregate expression as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for unsupported endpoint syntax');
-    like($combined_output, qr/Reason:\s+that syntax is unsupported/s, 'CLI reports the concise unsupported-endpoint reason');
+    like($combined_output, qr/Reason:\s+child endpoint 'producer\.output_data' has no declared aggregate type\. Declare an aggregate '\+types' alias on the endpoint before using member or item access in composition links/s, 'CLI reports the concise missing-aggregate-type reason');
 };
 
 subtest 'CLI prints top-expression context in blocked top-expression range summaries' => sub {

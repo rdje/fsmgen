@@ -1,5 +1,32 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-10: composition aggregate member sources should resolve before emission
+- Continued the typed aggregate expression lane after direct-root
+  `AggregateRef` support landed.
+- Landed behavior:
+  - explicit composition links may now source declared aggregate top-port
+    members/items such as `in_frame.tag` and `in_frame.payload[1]`,
+  - explicit composition links may also source declared aggregate generated
+    child-output members/items such as `producer.OUT_FRAME.tag` and
+    `producer.OUT_FRAME.payload[1]`,
+  - projected child aggregate sources reuse the existing base-carrier rule, so
+    one typed carrier such as `comp_link_producer_OUT_FRAME` is bound to the
+    child output and member/item expressions are applied to that carrier,
+  - list item access lowers through the same packed-list field convention as
+    the direct backend, e.g. authored `[1]` becomes `.item_1` on the emitted
+    packed typedef,
+  - and structural binding metadata keeps the resolved leaf type contract so
+    downstream IR/reporting surfaces do not fall back to packed width only.
+- Why this boundary matters:
+  - composition planning now validates declared aggregate paths before HDL
+    generation instead of asking the backend to interpret dotted text,
+  - source-side aggregate access stays source-side for this slice; target-side
+    deconstruction remains a future semantic assignment feature,
+  - and the syntax overlap between `child.port` and `top_record.member` is
+    resolved conservatively by preferring realized child endpoints when they
+    exist while still allowing declared top aggregate members when the base is
+    a top port.
+
 ## 2026-04-10: future pack/deconstruct assignments should stay intent-level
 - Saved one future aggregate-assignment direction after discussing RHS
   concatenation and LHS deconstruction/destructuring.

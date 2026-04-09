@@ -105,7 +105,7 @@ subtest 'shared system ports now say declared connect-by-name is blocked' => sub
     );
 };
 
-subtest 'unsupported explicit endpoint syntax now says endpoint resolution is blocked' => sub {
+subtest 'child aggregate-member endpoints without declared aggregate types are blocked' => sub {
     my $exception = eval {
         $pipeline->generate_hdl_from_file($unsupported_endpoint_path);
         undef;
@@ -114,8 +114,8 @@ subtest 'unsupported explicit endpoint syntax now says endpoint resolution is bl
 
     like(
         $exception,
-        qr/uses explicit endpoint 'producer\.output_data\.extra', .*explicit link endpoint resolution is blocked because that syntax is unsupported.*accept only top-port names, source-side top-port bit\/slice expressions like 'data_bus\[3\]' or 'data_bus\[7:4\]', source-side child-port bit\/slice expressions like 'producer\.payload\[3\]' or 'producer\.payload\[7:4\]', or 'instance\.port' child endpoints/s,
-        'unsupported explicit endpoint syntax now says endpoint resolution is blocked',
+        qr/uses child expression 'producer\.output_data\.extra', .*explicit link endpoint resolution is blocked because child endpoint 'producer\.output_data' has no declared aggregate type.*Declare an aggregate '\+types' alias on the endpoint before using member or item access in composition links/s,
+        'child aggregate-member endpoints without declared aggregate types are blocked',
     );
 };
 

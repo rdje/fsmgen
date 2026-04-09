@@ -1394,6 +1394,14 @@ The first honest `R11` slices are now:
   indexes render through the generated packed typedef fields such as
   `.item_1`, and partial aggregate LHS writes now map through the declared
   aggregate path to packed base-signal ranges before mux emission.
+- Forward-IR note: the matching bounded composition source-expression slice is
+  now also landed. Explicit `?toplink` sources may read declared aggregate
+  top-port members/items such as `in_frame.tag` and `in_frame.payload[1]`, and
+  declared aggregate generated-child output members/items such as
+  `producer.OUT_FRAME.tag` and `producer.OUT_FRAME.payload[1]`. Generated-child
+  aggregate projections reuse one typed child-output carrier before applying
+  member/item access, and authored list indexes lower through the same
+  generated packed-typedef field convention such as `.item_1`.
 - Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
   approachable, the preferred shape is a book-like docs set with one Markdown
   file per major topic, a landing-page/table-of-contents role for

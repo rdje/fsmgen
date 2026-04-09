@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-10: composition links can now source typed aggregate members/items
+- Saved the next typed aggregate composition slice.
+- Important continuity note:
+  - `?toplink` source-side expressions now accept declared aggregate top-port
+    paths such as `in_frame.tag` and `in_frame.payload[1]`,
+  - they also accept declared aggregate generated-child output paths such as
+    `producer.OUT_FRAME.tag` and `producer.OUT_FRAME.payload[1]`,
+  - child-output aggregate projections reuse the existing child-source carrier
+    rule, preserving the child output's declared aggregate type on the carrier
+    before applying member/item access,
+  - authored list indexes still lower through the packed typedef field
+    convention such as `.item_1`,
+  - and [t/282-composition-aggregate-source-expression-contracts.t](/Users/richarddje/Documents/github/fsmgen/t/282-composition-aggregate-source-expression-contracts.t) now locks both top-port and child-output aggregate member/item source bindings through pipeline and CLI generated HDL.
+
 ## 2026-04-10: future pack/deconstruct assignment syntax is only steering for now
 - Saved one future aggregate assignment idea for later implementation.
 - Important continuity note:

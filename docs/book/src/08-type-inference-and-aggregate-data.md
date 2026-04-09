@@ -88,6 +88,20 @@ The authored list index stays `[1]` in `.fsm`, while the current SV lowering
 uses the generated packed-struct field, for example
 `IN_FRAME.payload.item_1`.
 
+The same bounded member/item idea is also shipped on the source side of
+composition links when the base endpoint preserves a declared aggregate type:
+
+```lisp
+(?toplink:wiring
+  /in_frame.tag/tag_out/
+  /in_frame.payload[1]/sink.payload_mid/
+  /producer.OUT_FRAME.flag/sink.enable/
+)
+```
+
+For generated-child output paths, FSMGen first binds the whole child output to
+one typed carrier and then applies the member/item access to that carrier.
+
 This is still deliberate and bounded. Broader inference-first aggregate growth
 without explicit declared anchors remains future work; the backend should
 never pretend a richer type surface is stable before it really is.
