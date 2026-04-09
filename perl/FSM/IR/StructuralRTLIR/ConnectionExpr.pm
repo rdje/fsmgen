@@ -211,11 +211,18 @@ sub normalized_binding ($binding) {
         $connection_expr = signal_ref_expr($signal_name);
     }
 
-    return {
+    my $normalized = {
         port_name => $port_name,
         signal_name => $signal_name,
         connection_expr => $connection_expr,
     };
+
+    $normalized->{connection_type_name} = $binding->{connection_type_name}
+        if exists($binding->{connection_type_name}) && defined($binding->{connection_type_name});
+    $normalized->{connection_type_spec} = _clone($binding->{connection_type_spec})
+        if exists($binding->{connection_type_spec}) && defined($binding->{connection_type_spec});
+
+    return $normalized;
 }
 
 sub binding_expr ($binding) {
@@ -285,13 +292,20 @@ sub binding_signal_summary ($binding) {
         bound_signal => '',
         bound_signals => [],
         bound_connection_expr => undef,
+        bound_connection_type_name => undef,
+        bound_connection_type_spec => undef,
     } unless ref($binding) eq 'HASH';
 
-    return {
+    my $summary = {
         bound_signal => binding_signal_name($binding),
         bound_signals => [ @{binding_signal_names($binding)} ],
         bound_connection_expr => _clone(binding_expr($binding)),
     };
+    $summary->{bound_connection_type_name} = $binding->{connection_type_name}
+        if exists($binding->{connection_type_name}) && defined($binding->{connection_type_name});
+    $summary->{bound_connection_type_spec} = _clone($binding->{connection_type_spec})
+        if exists($binding->{connection_type_spec}) && defined($binding->{connection_type_spec});
+    return $summary;
 }
 
 sub binding_signal_summaries_by_port ($bindings) {
@@ -323,11 +337,16 @@ sub binding_signal_summary_metadata ($value) {
         ? $value
         : binding_signal_summary($value);
 
-    return {
+    my $metadata = {
         bound_signal => $summary->{bound_signal} || '',
         bound_signals => [@{$summary->{bound_signals} || []}],
         bound_connection_expr => _clone($summary->{bound_connection_expr}),
     };
+    $metadata->{bound_connection_type_name} = $summary->{bound_connection_type_name}
+        if exists($summary->{bound_connection_type_name}) && defined($summary->{bound_connection_type_name});
+    $metadata->{bound_connection_type_spec} = _clone($summary->{bound_connection_type_spec})
+        if exists($summary->{bound_connection_type_spec}) && defined($summary->{bound_connection_type_spec});
+    return $metadata;
 }
 
 sub binding_signal_summary_leaf_signal ($summary) {

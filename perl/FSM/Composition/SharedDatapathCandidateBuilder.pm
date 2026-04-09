@@ -129,7 +129,7 @@ sub build_candidates ($class, %args) {
                 module_name => ($child->{module_name} // $instance->{module_name}),
                 source_name => ($child->{source_name} // $instance->{source_name}),
                 endpoint => (($instance->{instance_name} // 'unknown').'.'.($port->{name} // 'unknown')),
-                %$binding_metadata,
+                %{$class->_project_shared_datapath_binding_metadata($binding_metadata)},
                 intent_hir => ($child->{intent_hir} || {}),
                 lowered_rtl_ir => ($child->{lowered_rtl_ir} || {}),
                 structural_rtl_ir => ($child->{structural_rtl_ir} || {}),
@@ -157,7 +157,7 @@ sub build_candidates ($class, %args) {
                 instance_name => ($child->{instance_name} // $instance->{instance_name}),
                 module_name => ($child->{module_name} // $instance->{module_name}),
                 endpoint => (($instance->{instance_name} // 'unknown').'.'.($port->{name} // 'unknown')),
-                %$binding_metadata,
+                %{$class->_project_shared_datapath_binding_metadata($binding_metadata)},
             };
         }
     }
@@ -399,6 +399,20 @@ sub drive_intent_from_output_drive_family ($class, $output_drive_family) {
                 }
             } @{$output_drive_family->{rhs_enable_families} || []}
         ],
+    };
+}
+
+sub _project_shared_datapath_binding_metadata ($class, $binding_metadata) {
+    return {
+        bound_signal => '',
+        bound_signals => [],
+        bound_connection_expr => undef,
+    } unless ref($binding_metadata) eq 'HASH';
+
+    return {
+        bound_signal => $binding_metadata->{bound_signal} || '',
+        bound_signals => [@{$binding_metadata->{bound_signals} || []}],
+        bound_connection_expr => _clone($binding_metadata->{bound_connection_expr}),
     };
 }
 

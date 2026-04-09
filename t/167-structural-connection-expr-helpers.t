@@ -1165,6 +1165,41 @@ subtest 'normalized binding cloning and backfilling now live in the structural h
     );
 };
 
+subtest 'normalized bindings and summaries preserve connection type contracts' => sub {
+    my $binding = normalized_binding({
+        port_name => 'frame_in',
+        signal_name => 'shared_frame',
+        connection_type_name => 'frame_t',
+        connection_type_spec => {
+            kind => 'record',
+            width => 9,
+            member_order => ['flag', 'payload'],
+            members => {
+                flag => { kind => 'bit', width => 1, signed => 0 },
+                payload => { kind => 'bits', width => 8, signed => 0 },
+            },
+        },
+    });
+
+    is($binding->{connection_type_name}, 'frame_t', 'normalized binding preserves the authored connection type name');
+    is($binding->{connection_type_spec}{kind}, 'record', 'normalized binding preserves the connection type kind');
+    is_deeply(
+        $binding->{connection_type_spec}{member_order},
+        ['flag', 'payload'],
+        'normalized binding preserves connection type member order',
+    );
+
+    my $summary = binding_signal_summary($binding);
+    is($summary->{bound_connection_type_name}, 'frame_t', 'binding summaries preserve the connection type name');
+    is($summary->{bound_connection_type_spec}{width}, 9, 'binding summaries preserve the connection type width');
+
+    my $metadata = binding_signal_summary_metadata($binding);
+    $binding->{connection_type_spec}{members}{payload}{width} = 99;
+
+    is($metadata->{bound_connection_type_name}, 'frame_t', 'binding summary metadata preserves the connection type name');
+    is($metadata->{bound_connection_type_spec}{members}{payload}{width}, 8, 'binding summary metadata clones the connection type payload instead of aliasing caller-owned state');
+};
+
 subtest 'unsupported structural connection kinds fail explicitly' => sub {
     my $error = eval {
         binding_expr_text({

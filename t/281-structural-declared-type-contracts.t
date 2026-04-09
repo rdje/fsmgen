@@ -249,6 +249,106 @@ FSM
     is($planned_carrier_net->declared_type_spec->{width}, 8, 'composition plan carrier net preserves the source declared type width');
 };
 
+subtest 'composition structural bindings preserve connection type contracts for typed signals expressions and actuals' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'typed_binding_type_contracts.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:typed_binding_type_contracts
+  (+types
+    (type frame_t (record (flag bit) (payload (bits 7))))
+    (type status_t (list bit (bits 4)))
+  )
+  (+constants
+    (FRAME_CONST ((flag 1) (payload 7'h25)))
+  )
+  (?ports:public_io
+    in_frame<frame_t
+    status_bus<2
+    payload_bus<4
+    helper_in<1
+    helper_out>1
+    out_frame>frame_t
+    out_status>status_t
+    out_const>frame_t
+  )
+  (?dtc:consumer consumer_src)
+  (?dtc:helper helper_src)
+  (?toplink:wiring
+    /in_frame/consumer.IN_FRAME/
+    /status_bus[0],payload_bus[3:0]/consumer.STATUS_LIST/
+    /=FRAME_CONST/consumer.CONST_FRAME/
+    /helper_in/helper.HELPER_IN/
+    /helper.HELPER_OUT/helper_out/
+    /consumer.OUT_FRAME/out_frame/
+    /consumer.OUT_STATUS/out_status/
+    /consumer.OUT_CONST/out_const/
+  )
+)
+
+(?dt:consumer_src
+  (+types
+    (type frame_t (record (flag bit) (payload (bits 7))))
+    (type status_t (list bit (bits 4)))
+  )
+  (+size
+    (IN_FRAME frame_t)
+    (STATUS_LIST status_t)
+    (CONST_FRAME frame_t)
+    (OUT_FRAME frame_t)
+    (OUT_STATUS status_t)
+    (OUT_CONST frame_t)
+  )
+  (-pass
+    (OUT_FRAME = IN_FRAME)
+    (OUT_STATUS = STATUS_LIST)
+    (OUT_CONST = CONST_FRAME)
+  )
+)
+
+(?dt:helper_src
+  (+size
+    (HELPER_IN 1)
+    (HELPER_OUT 1)
+  )
+  (-pass
+    (HELPER_OUT = HELPER_IN)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        quiet => 1,
+        target_language => 'systemverilog',
+    );
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+    my $structural_rtl_ir = $result->{structural_rtl_ir};
+    my ($consumer_instance) = grep { $_->{instance_name} eq 'consumer' } @{ $structural_rtl_ir->{instances} || [] };
+    my ($planned_consumer) = grep { $_->instance_name eq 'consumer' } @{ $result->{composition_plan}->instances || [] };
+    my %binding_by_port = map { $_->{port_name} => $_ } @{ $consumer_instance->{port_bindings} || [] };
+    my %planned_binding_by_port = map { $_->{port_name} => $_ } @{ $planned_consumer->port_bindings || [] };
+
+    is($binding_by_port{IN_FRAME}{connection_type_name}, 'frame_t', 'structural child-input binding preserves the typed signal source alias name');
+    is($binding_by_port{IN_FRAME}{connection_type_spec}{kind}, 'record', 'structural child-input binding preserves the typed signal source spec');
+    is($binding_by_port{STATUS_LIST}{connection_type_spec}{kind}, 'list', 'structural child-input binding preserves the inferred aggregate-expression contract');
+    is($binding_by_port{STATUS_LIST}{connection_type_spec}{items}[1]{width}, 4, 'structural child-input binding preserves the inferred aggregate-expression leaf widths');
+    ok(!defined $binding_by_port{STATUS_LIST}{connection_type_name}, 'inferred aggregate-expression bindings stay unnamed');
+    is($binding_by_port{CONST_FRAME}{connection_type_spec}{kind}, 'record', 'structural child-input binding preserves the whole aggregate actual contract');
+    is_deeply(
+        $binding_by_port{CONST_FRAME}{connection_type_spec}{member_order},
+        ['flag', 'payload'],
+        'structural child-input binding preserves the whole aggregate actual member order',
+    );
+
+    is($planned_binding_by_port{IN_FRAME}{connection_type_name}, 'frame_t', 'composition plan binding preserves the typed signal source alias name');
+    is($planned_binding_by_port{STATUS_LIST}{connection_type_spec}{kind}, 'list', 'composition plan binding preserves the inferred aggregate-expression contract');
+    is($planned_binding_by_port{CONST_FRAME}{connection_type_spec}{kind}, 'record', 'composition plan binding preserves the whole aggregate actual contract');
+};
+
 done_testing();
 
 sub write_file {

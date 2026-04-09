@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-09
+### structural instance bindings now preserve typed connection contracts
+- Updated [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) so normalized structural bindings and binding-summary metadata can now preserve `connection_type_name` plus canonical `connection_type_spec` beside `signal_name` and `connection_expr`, instead of throwing typed source contracts away once binding normalization runs.
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so live explicit-link planning now carries those binding type contracts through plain typed signal bindings, source-side top/child expression bindings, whole aggregate actual bindings, and child-output carrier rebindings on both realized `composition_plan` instances and exported `structural_rtl_ir` instances.
+- Updated [t/167-structural-connection-expr-helpers.t](/Users/richarddje/Documents/github/fsmgen/t/167-structural-connection-expr-helpers.t) and [t/281-structural-declared-type-contracts.t](/Users/richarddje/Documents/github/fsmgen/t/281-structural-declared-type-contracts.t) to lock helper-level cloning/summary behavior plus the end-to-end structural binding contract for typed signal, inferred aggregate-expression, and whole aggregate actual bindings.
+
 ### source-side top and child expressions now honor typed aggregate direct targets
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so source-side top expressions and child expressions now preserve one inferred typed expression contract on the live explicit-link path: whole typed signal refs keep their declared aggregate contract, bit/slice forms become scalar `bit` / `bits[N]` contracts, and bounded concat/repeat forms become ordered `list<...>` contracts.
 - That same explicit-link planning path now blocks width-equal but aggregate-shape-incompatible expression bindings when the direct target preserved an aggregate `declared_type_spec`, instead of validating those expression-driven bindings on packed width alone.

@@ -1347,6 +1347,13 @@ The first honest `R11` slices are now:
   width-equal but aggregate-shape-incompatible concat/repeat/bit-slice/whole-
   signal expression sources are now blocked explicitly instead of slipping
   through typed composition planning on packed width alone.
+- Forward-IR note: the next typed binding-handoff slice is now also landed:
+  realized composition-plan instance bindings plus exported
+  `structural_rtl_ir` instance bindings now preserve `connection_type_name`
+  and canonical `connection_type_spec` whenever one typed source contract is
+  already known, so typed signal bindings, source expressions, and whole
+  aggregate actual roots no longer drop back to width-only binding metadata
+  before later lowering, reporting, or embedder inspection.
 - Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
   approachable, the preferred shape is a book-like docs set with one Markdown
   file per major topic, a landing-page/table-of-contents role for

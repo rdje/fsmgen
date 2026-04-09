@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-09: typed composition bindings now preserve source contracts too
+- Saved the next typed structural-handoff slice after direct typed gates were
+  already landed.
+- Important continuity note:
+  - normalized structural bindings now preserve `connection_type_name` plus
+    canonical `connection_type_spec` whenever the planner already knows one
+    typed source contract,
+  - that now covers plain typed signal bindings, inferred top/child expression
+    bindings, whole aggregate actual bindings, and child-output carrier
+    rebindings on both `composition_plan` instances and exported
+    `structural_rtl_ir`,
+  - and downstream lowering/reporting/embedder work should consume those
+    preserved binding contracts directly instead of reconstructing aggregate
+    meaning from width alone.
+
 ## 2026-04-09: `?ports` should behave more like an override surface than required boilerplate
 - Saved one composition authoring rule for future sessions.
 - Important continuity note:

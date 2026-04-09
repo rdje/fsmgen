@@ -89,6 +89,19 @@ Embedders can already consume structured result data such as:
 - `structural_rtl_ir`
 - composition reports
 
+On the current live path, `structural_rtl_ir` instance bindings are not just
+flat signal names anymore. They can preserve:
+
+- `connection_expr` for the structural source shape
+- `connection_type_name` when a binding reuses a declared named type alias
+- `connection_type_spec` when the planner already knows the typed signal,
+  expression, or whole-aggregate actual contract
+
+That means embedding tools can inspect whether a binding came from a plain
+typed signal, an inferred list-like concat/repeat expression, or a whole
+aggregate actual root without reconstructing that meaning from packed width
+alone.
+
 That is already useful for downstream tooling even though the long-term public
 embedding/API stabilization lane (`R13`) is still not started.
 

@@ -224,6 +224,10 @@ sub build_plan ($class, %args) {
             my $bound_connection_expr = (($source->{kind} || '') =~ /^actual_/)
                 ? $class->actual_connection_expr_for_target($source, $target_width, $fsm_file, $header)
                 : $source->{connection_expr};
+            my $binding_type_contract = $class->_binding_connection_type_contract(
+                $source,
+                $target_width,
+            );
 
             if (($source->{kind} || '') eq 'top_expr') {
                 for my $top_port_name (@{$source->{base_port_names} || []}) {
@@ -277,6 +281,7 @@ sub build_plan ($class, %args) {
             $bindings_by_instance{$target->{instance_name}}{$target->{port}->name} = normalized_binding({
                 port_name => $target->{port}->name,
                 connection_expr => $bound_connection_expr,
+                %$binding_type_contract,
             });
             push @resolved_links, {
                 link => $link,
@@ -330,7 +335,12 @@ sub build_plan ($class, %args) {
         elsif (!$group_has_child_expr && @top_output_targets == 1) {
             $carrier_signal_name = $top_output_targets[0]{target}{port}->name;
             $carrier_signal_by_source{$source_key} = $carrier_signal_name;
-            $bindings_by_instance{$source->{instance_name}}{$source->{port}->name} = $carrier_signal_name;
+            my $binding_type_contract = $class->_binding_connection_type_contract($source, undef);
+            $bindings_by_instance{$source->{instance_name}}{$source->{port}->name} = normalized_binding({
+                port_name => $source->{port}->name,
+                signal_name => $carrier_signal_name,
+                %$binding_type_contract,
+            });
         }
         else {
             my $preferred_net_name;
@@ -391,14 +401,24 @@ sub build_plan ($class, %args) {
         }
 
         if (($source->{kind} || '') eq 'child_expr') {
+            my $binding_type_contract = $class->_binding_connection_type_contract(
+                $source,
+                undef,
+            );
             $bindings_by_instance{$target->{instance_name}}{$target->{port}->name} = normalized_binding({
                 port_name => $target->{port}->name,
                 connection_expr => $class->source_connection_expr_for_carrier($source, $carrier_signal_name),
+                %$binding_type_contract,
             });
             next;
         }
 
-        $bindings_by_instance{$target->{instance_name}}{$target->{port}->name} = $carrier_signal_name;
+        my $binding_type_contract = $class->_binding_connection_type_contract($source, undef);
+        $bindings_by_instance{$target->{instance_name}}{$target->{port}->name} = normalized_binding({
+            port_name => $target->{port}->name,
+            signal_name => $carrier_signal_name,
+            %$binding_type_contract,
+        });
     }
 
     for my $top_port_name (sort keys %{$top_ports_by_name || {}}) {
@@ -2465,7 +2485,12 @@ sub ensure_child_source_carrier ($class, $source, $targets, $top_ports_by_name, 
                 push @{$net->targets}, $target;
             }
         }
-        $bindings_by_instance->{$source->{instance_name}}{$source->{port}->name} = $existing_carrier;
+        my $binding_type_contract = $class->_binding_connection_type_contract($source, undef);
+        $bindings_by_instance->{$source->{instance_name}}{$source->{port}->name} = normalized_binding({
+            port_name => $source->{port}->name,
+            signal_name => $existing_carrier,
+            %$binding_type_contract,
+        });
         return $existing_carrier;
     }
 
@@ -2480,7 +2505,12 @@ sub ensure_child_source_carrier ($class, $source, $targets, $top_ports_by_name, 
     );
 
     $carrier_signal_by_source->{$source_key} = $net_name;
-    $bindings_by_instance->{$source->{instance_name}}{$source->{port}->name} = $net_name;
+    my $binding_type_contract = $class->_binding_connection_type_contract($source, undef);
+    $bindings_by_instance->{$source->{instance_name}}{$source->{port}->name} = normalized_binding({
+        port_name => $source->{port}->name,
+        signal_name => $net_name,
+        %$binding_type_contract,
+    });
     return $net_name;
 }
 
@@ -2639,6 +2669,69 @@ sub actual_connection_expr_for_target ($class, $source, $target_width, $fsm_file
     }
 
     confess "Unsupported actual kind '".$source->{kind}."' reached actual_connection_expr_for_target.\n";
+}
+
+sub _binding_connection_type_contract ($class, $source, $target_width = undef) {
+    return {
+        connection_type_name => undef,
+        connection_type_spec => undef,
+    } unless ref($source) eq 'HASH';
+
+    my $kind = $source->{kind} || '';
+    if ($kind =~ /^actual_/) {
+        my $aggregate_type_spec = $source->{aggregate_type_spec};
+        if (ref($aggregate_type_spec) eq 'HASH') {
+            return {
+                connection_type_name => undef,
+                connection_type_spec => $class->_clone_structured_value($aggregate_type_spec),
+            };
+        }
+
+        return {
+            connection_type_name => undef,
+            connection_type_spec => undef,
+        } if $kind eq 'actual_open';
+
+        my $effective_width = (
+            $kind eq 'actual_scalar_literal'
+                || $kind eq 'actual_unsized_binary'
+                || $kind eq 'actual_unsized_decimal'
+                || $kind eq 'actual_unsized_signed_decimal'
+                || $kind eq 'actual_unsized_signed_binary'
+                || $kind eq 'actual_unsized_signed_octal'
+                || $kind eq 'actual_unsized_signed_hex'
+                || $kind eq 'actual_unsized_octal'
+                || $kind eq 'actual_unsized_hex'
+        )
+            ? $target_width
+            : $class->endpoint_width($source);
+
+        return {
+            connection_type_name => undef,
+            connection_type_spec => FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($effective_width),
+        };
+    }
+
+    if ($kind eq 'top_expr' || $kind eq 'child_expr') {
+        return {
+            connection_type_name => undef,
+            connection_type_spec => $class->_clone_structured_value($source->{inferred_type_spec}),
+        };
+    }
+
+    if ($kind eq 'top_port' || $kind eq 'child_port') {
+        return {
+            connection_type_name => FSM::Composition::InterfacePortBuilder->declared_type_name($source->{port}),
+            connection_type_spec => $class->_clone_structured_value(
+                $class->_endpoint_declared_or_scalar_type_spec($source->{port})
+            ),
+        };
+    }
+
+    return {
+        connection_type_name => undef,
+        connection_type_spec => undef,
+    };
 }
 
 sub allocate_net_name ($class, $source, $top_ports_by_name, $existing_nets, $preferred_name = undef) {

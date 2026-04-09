@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-09: typed composition bindings should preserve source contracts, not just width
+- Continued the typed aggregate/composition lane after direct target gates
+  were already shape-aware for same-name inference, explicit port links,
+  whole aggregate actuals, direct aggregate assignments, and source
+  expressions.
+- Landed behavior:
+  - normalized structural bindings now preserve `connection_type_name` plus
+    canonical `connection_type_spec` when one typed source contract is known,
+  - explicit-link planning now carries that binding contract through plain
+    typed signal bindings, inferred top/child expression bindings, whole
+    aggregate actual bindings, and child-output carrier rebindings,
+  - and binding summary metadata now mirrors the same typed contract instead
+    of exposing only `bound_signal`, `bound_signals`, and `bound_connection_expr`.
+- Why this boundary matters:
+  - once direct typed gates already reject aggregate-shape mismatches, dropping
+    back to width-only metadata on the structural binding handoff would force
+    later lowering/reporting/embedder paths to rediscover meaning that the
+    planner already knew,
+  - and preserving one honest binding contract is the cleaner basis for future
+    aggregate-aware lowering than scattering more width-reconstruction logic
+    across downstream consumers.
+
 ## 2026-04-09: `?ports` should trend toward override/disambiguation, not mandatory boilerplate
 - Saved one composition-ergonomics rule after discussing the intended author
   experience for top boundaries.
