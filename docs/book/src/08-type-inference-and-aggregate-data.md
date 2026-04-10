@@ -205,8 +205,10 @@ Current guardrails:
   fragment, not against the whole `frame_t` record
 - when the RHS is itself `(concat ...)` or `(cat ...)`, deconstruct fragments
   that line up exactly with whole RHS concat operands keep those operands
-  directly; if an aligned operand is typed aggregate data, that operand's
-  type-shape contract is preserved for the pre-generation validator
+  directly; nested RHS concat fragments are handled the same way, aligned
+  nested operands keep ordered list shape, and typed record targets can map
+  exact aligned operands onto record member order before the pre-generation
+  validator runs
 
 The important boundary is the same one used elsewhere in FSMGen: the frontend
 should normalize and validate the meaning first, then the backend should emit

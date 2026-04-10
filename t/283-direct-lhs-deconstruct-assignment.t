@@ -352,6 +352,141 @@ FSM
     );
 };
 
+subtest 'direct LHS concat deconstruct preserves nested RHS concat operand contracts' => sub {
+    my $compatible_fsm_module = parse_fsm_module(
+        'direct_lhs_deconstruct_nested_rhs_concat_operand_contract',
+        <<'FSM'
+(?fsm:direct_lhs_deconstruct_nested_rhs_concat_operand_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+  )
+  (+size
+    (FLAG 1)
+    (DATA 2)
+    (TAG_IN 4)
+    (PAYLOAD payload_t)
+    (TAG 4)
+  )
+  (idle
+    ((concat PAYLOAD TAG) = (concat (concat FLAG DATA) TAG_IN))
+  )
+)
+FSM
+    );
+
+    my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($compatible_fsm_module);
+
+    like(
+        $hdl,
+        qr/\bPAYLOAD\s*=\s*\{FLAG,\s*DATA\};/s,
+        'nested aligned RHS concat fragment drives the aggregate target as the nested concat expression',
+    );
+    like($hdl, qr/\bTAG\s*=\s*TAG_IN;/s, 'nested aligned RHS concat low sibling still drives directly');
+    unlike(
+        $hdl,
+        qr/\(\{\{FLAG,\s*DATA\},\s*TAG_IN\}\)\[\d+(?::\d+)?\]/s,
+        'nested aligned RHS concat fragments avoid selecting from the whole concat blob',
+    );
+
+    my $compatible_record_fsm_module = parse_fsm_module(
+        'direct_lhs_deconstruct_nested_rhs_concat_record_contract',
+        <<'FSM'
+(?fsm:direct_lhs_deconstruct_nested_rhs_concat_record_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+    (type frame_t (record (tag (bits 4)) (payload payload_t)))
+  )
+  (+size
+    (TAG_IN 4)
+    (PAYLOAD_IN payload_t)
+    (EXTRA_IN 1)
+    (OUT frame_t)
+    (EXTRA 1)
+  )
+  (idle
+    ((concat OUT EXTRA) = (concat (concat TAG_IN PAYLOAD_IN) EXTRA_IN))
+  )
+)
+FSM
+    );
+
+    my $record_hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($compatible_record_fsm_module);
+
+    like(
+        $record_hdl,
+        qr/\bOUT\s*=\s*\{TAG_IN,\s*PAYLOAD_IN\};/s,
+        'nested aligned RHS concat fragment maps onto record member order for a typed record deconstruct target',
+    );
+
+    like(
+        generation_failure(
+            'direct_lhs_deconstruct_bad_nested_rhs_concat_operand_contract',
+            <<'FSM'
+(?fsm:direct_lhs_deconstruct_bad_nested_rhs_concat_operand_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+  )
+  (+size
+    (FLAG 1)
+    (DATA 2)
+    (TAG_IN 4)
+    (PAYLOAD payload_t)
+    (TAG 4)
+  )
+  (idle
+    ((concat PAYLOAD TAG) = (concat (concat DATA FLAG) TAG_IN))
+  )
+)
+FSM
+        ),
+        qr/assignment to 'PAYLOAD' uses whole aggregate RHS '\{DATA, FLAG\}' with contract 'list<bits\[2\], bit>' that does not match declared type 'list<bit, bits\[2\]>'/s,
+        'nested aligned RHS concat operands keep their own list-shape contract during deconstruct validation',
+    );
+
+    like(
+        generation_failure(
+            'direct_lhs_deconstruct_bad_nested_rhs_concat_record_contract',
+            <<'FSM'
+(?fsm:direct_lhs_deconstruct_bad_nested_rhs_concat_record_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+    (type bad_payload_t (record (mode (bits 2)) (flag bit)))
+    (type frame_t (record (tag (bits 4)) (payload payload_t)))
+  )
+  (+size
+    (TAG_IN 4)
+    (BAD_PAYLOAD bad_payload_t)
+    (EXTRA_IN 1)
+    (OUT frame_t)
+    (EXTRA 1)
+  )
+  (idle
+    ((concat OUT EXTRA) = (concat (concat TAG_IN BAD_PAYLOAD) EXTRA_IN))
+  )
+)
+FSM
+        ),
+        qr/assignment to 'OUT' uses whole aggregate RHS '\{TAG_IN, BAD_PAYLOAD\}' with contract 'record\{tag:bits\[4\], payload:record\{mode:bits\[2\], flag:bit\}\}' that does not match declared type 'record\{tag:bits\[4\], payload:list<bit, bits\[2\]>\}'/s,
+        'nested aligned RHS concat operands map onto record member order before deconstruct validation rejects bad nested member shape',
+    );
+};
+
 done_testing();
 
 sub parse_fsm_module {

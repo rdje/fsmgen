@@ -1436,9 +1436,11 @@ The first honest `R11` slices are now:
   concat operand list, nested concat operands keep nested list shape, and typed
   record targets can map exact top-level operands onto record member order.
   That blocks width-equal but shape/order-incompatible concat assignments
-  before HDL emission. LHS
-  deconstruction remains a separate future semantic feature rather than
-  something inferred from raw concat text.
+  before HDL emission. The matching bounded LHS deconstruct form is now
+  shipped too: deconstruct fragments aligned to RHS concat operands keep those
+  operands instead of selecting from a whole concat blob, and nested RHS concat
+  fragments now preserve aligned nested operand list shape plus target-aware
+  record member mapping before the pre-generation validator runs.
 - Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
   approachable, the preferred shape is a book-like docs set with one Markdown
   file per major topic, a landing-page/table-of-contents role for
