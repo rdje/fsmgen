@@ -93,7 +93,7 @@ FSM
 
     like($hdl, qr/\blogic\s+\[7:0\]\s+status_bus_shared_next;/s, 'top HDL declares the lifted shared next-value register signal');
     like($hdl, qr/\blogic\s+\[7:0\]\s+status_bus_shared_q;/s, 'top HDL declares the lifted shared register');
-    like($hdl, qr/always_ff @\(posedge clk or negedge rstn\)/s, 'top HDL emits the lifted shared register runtime');
+    like($hdl, qr/always_ff @\(posedge clk\)/s, 'top HDL emits the lifted shared register runtime');
     like($hdl, qr/assign left_status = status_bus_shared_q;/s, 'top HDL fans out the lifted register to the first public top output');
     like($hdl, qr/assign right_status = status_bus_shared_q;/s, 'top HDL fans out the lifted register to the second public top output');
     like($hdl, qr/left_src left \([\s\S]*?\.status_bus\(shared_dp_raw_left_status_bus\)/s, 'left contributor output now binds to a private raw source net');

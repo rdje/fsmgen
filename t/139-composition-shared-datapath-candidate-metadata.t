@@ -204,6 +204,9 @@ FSM
                 lifted_runtime_signal => 'status_bus_shared_q',
                 lifted_runtime_next_signal => 'status_bus_shared_next',
                 lifted_runtime_reset_value => "8'h00",
+                lifted_runtime_reset_active_level => 1,
+                lifted_runtime_reset_kind => 'sync',
+                lifted_runtime_reset_keyword => 'sreset',
                 aggregate_target_enable_signal => 'status_bus_shared_en',
                 multi_value_conflict_signal => 'status_bus_multi_value_conflict',
                 multi_value_assertion => {

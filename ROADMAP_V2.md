@@ -125,7 +125,7 @@ First bounded slice:
 - then tighten the `?fsmc` child contract so strict mode accepts only canonical `?fsm:` roots there instead of continuing to tolerate legacy `+fsm` child residue,
 - then narrow the direct module-root alias family so strict mode accepts canonical `?mod:` while leaving `?module:` as default-mode compatibility only,
 - then reject the legacy empty `(+size)` no-op form in strict mode as the first section-level compatibility-residue cut while leaving default-mode compatibility intact,
-- then reject the legacy explicit `(asreset rstn)` `+system` spelling in strict mode while leaving default-mode compatibility intact,
+- then reject legacy or misleading explicit reset spellings such as `(asreset rstn)` and `(sreset rstn)` in strict mode while leaving default-mode compatibility intact, with canonical reset intent carried by `(sreset reset)` for synchronous active-high reset and `(areset rst_n)` for asynchronous active-low reset,
 - then reject the legacy compact top-level `(:= signal=value)` directive on the current `?fsm:` / `?dt:` path in strict mode while leaving default-mode compatibility intact, even though the current strict surface still lacks a canonical replacement for that compatibility form,
 - and use that first slice to establish the support-tier enforcement pattern before widening it to other compatibility residue.
 

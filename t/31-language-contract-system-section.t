@@ -85,12 +85,12 @@ FSM
     like($error, qr/Unsupported '\+system' clock name 'core_clk'/, 'bad clock name gets a targeted diagnostic');
 };
 
-subtest 'unsupported +system directives are rejected explicitly' => sub {
-    my $error = parse_failure(<<'FSM');
-(?fsm:bad_system_directive
+subtest 'conventional +system section also accepts the canonical areset spelling' => sub {
+    my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
+(?fsm:system_contract_areset_keyword
   (+system
     (clock clk)
-    (areset rstn)
+    (areset rst_n)
   )
   (-dt
     (A = 1)
@@ -98,7 +98,13 @@ subtest 'unsupported +system directives are rejected explicitly' => sub {
 )
 FSM
 
-    like($error, qr/Unsupported '\+system' entry 'areset'/, 'unsupported system directive gets a targeted diagnostic');
+    is($fsm_module->attributes->{system_contract}{clock}, 'clk', 'areset form keeps the conventional clock name');
+    is($fsm_module->attributes->{system_contract}{reset}, 'rst_n', 'areset form keeps the canonical active-low reset name');
+    is($fsm_module->attributes->{system_contract}{reset_keyword}, 'areset', 'areset form records the canonical reset keyword');
+    is($fsm_module->attributes->{system_contract}{reset_kind}, 'async', 'areset form records asynchronous reset semantics');
+    is($fsm_module->attributes->{system_contract}{reset_active_level}, 0, 'areset form records active-low reset semantics');
+    ok($adapter->{signal_manager}->get_signal('clk')->is_clock, 'areset form still registers clk as a clock signal');
+    ok($adapter->{signal_manager}->get_signal('rst_n')->is_reset, 'areset form still registers rst_n as a reset signal');
 };
 
 subtest 'incomplete +system sections are rejected explicitly' => sub {

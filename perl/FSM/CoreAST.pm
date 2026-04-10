@@ -1920,13 +1920,17 @@ package FSM::CoreAST::FSMModule;
     sub effective_system_contract($self) {
         my $explicit = $self->explicit_system_contract;
         if (ref($explicit) eq 'HASH') {
+            my $reset_keyword = (
+                $explicit->{reset_keyword}
+                // _reset_keyword_from_name($explicit->{reset} // '')
+            );
+            my ($reset_kind, $reset_active_level) = _reset_policy_from_keyword($reset_keyword);
             return {
                 clock => ($explicit->{clock} // 'clk'),
                 reset => ($explicit->{reset} // 'rst_n'),
-                reset_keyword => (
-                    $explicit->{reset_keyword}
-                    // (($explicit->{reset} // '') =~ /_n$/ ? 'asreset' : 'sreset')
-                ),
+                reset_keyword => $reset_keyword,
+                reset_kind => $reset_kind,
+                reset_active_level => $reset_active_level,
                 implicit => 0,
                 declare_ports => 1,
             };
@@ -1935,13 +1939,29 @@ package FSM::CoreAST::FSMModule;
         return {
             clock => 'clk',
             reset => 'rst_n',
-            reset_keyword => 'asreset',
+            reset_keyword => 'areset',
+            reset_kind => 'async',
+            reset_active_level => 0,
             implicit => 1,
             declare_ports => $self->requires_implicit_system_ports,
         };
     }
 
     sub system($self) { return $self->effective_system_contract }
+
+    sub _reset_keyword_from_name($reset_name) {
+        return _looks_active_low_reset_name($reset_name) ? 'areset' : 'sreset';
+    }
+
+    sub _looks_active_low_reset_name($reset_name) {
+        return defined($reset_name)
+            && $reset_name =~ /(?:_n|n)\z/i;
+    }
+
+    sub _reset_policy_from_keyword($reset_keyword) {
+        return ('sync', 1) if defined($reset_keyword) && $reset_keyword eq 'sreset';
+        return ('async', 0);
+    }
     
     sub add_state($self, $state) {
         push $self->{states}->@*, $state;

@@ -31,7 +31,7 @@ write_file(
 (?fsm:strict_compact_init_direct
   (+system
     (clock clk)
-    (sreset rstn)
+    (sreset reset)
   )
   (+size
     (tester_reset 1)

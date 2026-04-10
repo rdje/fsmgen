@@ -124,7 +124,7 @@ end process fsm_proc;
 });
 
     $self->register_template('state_case', q{            when {{state_name}} =>
-{{assignments}}{{transitions}});
+{{assignments}}{{transitions}}});
 
     $self->register_template('assignment', q{                {{target}} <= {{expression}};});
     $self->register_template('transition', q{                if {{condition}} then
@@ -187,8 +187,8 @@ endmodule
     $self->register_template('port', q{    {{direction}} {{type}} {{name}}});
     $self->register_template('signal', q{    {{type}} {{name}};});
 
-    $self->register_template('always_ff', q{always_ff @(posedge {{clock}}, negedge {{reset}}) begin
-    if (!{{reset}}) begin
+    $self->register_template('always_ff', q{always_ff @({{event_control}}) begin
+    if ({{reset_condition}}) begin
         {{reset_assignments}}
     end else begin
         case ({{state_signal}})

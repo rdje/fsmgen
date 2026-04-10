@@ -7,8 +7,8 @@
     end
     next_I = I_next;
   end
-  always_ff @(posedge clk or negedge rstn) begin
-    if (!rstn) begin
+  always_ff @(posedge clk) begin
+    if (rstn) begin
       I <= 1'b0;
     end else begin
       I <= I_next;

@@ -38,7 +38,9 @@ sub build_realized_child_interface_ports ($class, $module_info) {
         $module_info->{system_contract} || {
             clock => 'clk',
             reset => 'rst_n',
-            reset_keyword => 'asreset',
+            reset_keyword => 'areset',
+            reset_kind => 'async',
+            reset_active_level => 0,
             implicit => 1,
         },
     );

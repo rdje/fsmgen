@@ -573,7 +573,7 @@ sub parse_system_section($self, $system_ast) {
 
     Carp::confess
         "The active '+system' contract currently supports only the conventional shared system declaration ".
-        "'(+system (clock clk) (sreset rstn))' or '(+system (clock clk) (asreset rstn))'. ".
+        "'(+system (clock clk) (sreset reset))' or '(+system (clock clk) (areset rst_n))'. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless ref($system_entries) eq 'ARRAY' && @$system_entries;
 
@@ -583,7 +583,7 @@ sub parse_system_section($self, $system_ast) {
     for my $entry (@$system_entries) {
         Carp::confess
             "Unsupported '+system' entry structure. ".
-            "The active contract currently supports only '(clock clk)' plus one reset declaration naming 'rstn' via '(sreset rstn)' or '(asreset rstn)' inside '+system'. ".
+            "The active contract currently supports only '(clock clk)' plus one reset declaration via '(sreset reset)' or '(areset rst_n)' inside '+system'. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
             unless ref($entry) eq 'ARRAY' && @$entry == 2;
 
@@ -592,19 +592,19 @@ sub parse_system_section($self, $system_ast) {
 
         Carp::confess
             "Unsupported '+system' entry '$directive'. ".
-            "The active contract currently supports only '(clock clk)' plus '(sreset rstn)' or '(asreset rstn)'. ".
+            "The active contract currently supports only '(clock clk)' plus '(sreset reset)' or '(areset rst_n)'. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
             unless defined $directive && !ref($directive);
 
         Carp::confess
             "Unsupported '+system' entry structure. ".
-            "The active contract currently supports only '(clock clk)' plus one reset declaration naming 'rstn' via '(sreset rstn)' or '(asreset rstn)' inside '+system'. ".
+            "The active contract currently supports only '(clock clk)' plus one reset declaration via '(sreset reset)' or '(areset rst_n)' inside '+system'. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
             unless defined $resolved_name && !ref($resolved_name);
 
         Carp::confess
             "Duplicate '+system' entry '$directive'. ".
-            "The active contract currently expects exactly one '(clock clk)' and one reset declaration naming 'rstn'. ".
+            "The active contract currently expects exactly one '(clock clk)' and one reset declaration. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
             if $seen{$directive}++;
 
@@ -616,32 +616,34 @@ sub parse_system_section($self, $system_ast) {
                 unless defined $resolved_name && !ref($resolved_name) && $resolved_name eq 'clk';
 
             $parsed{clock} = $resolved_name;
-        } elsif ($directive eq 'sreset' || $directive eq 'asreset') {
+        } elsif ($directive eq 'sreset' || $directive eq 'areset' || $directive eq 'asreset') {
             Carp::confess
                 "Duplicate '+system' reset declaration '$directive'. ".
-                "The active contract currently expects exactly one reset declaration naming 'rstn'. ".
+                "The active contract currently expects exactly one reset declaration. ".
                 "See docs/USER_GUIDE.md for the current supported boundary.\n"
                 if $parsed{reset};
 
             Carp::confess
                 "Unsupported '+system' reset name '$resolved_name'. ".
-                "The active contract currently supports only '(sreset rstn)' or '(asreset rstn)'. ".
+                "Reset declarations must use an HDL-identifier-compatible reset signal name. ".
                 "See docs/USER_GUIDE.md for the current supported boundary.\n"
-                unless defined $resolved_name && !ref($resolved_name) && $resolved_name eq 'rstn';
+                unless $self->is_contract_identifier($resolved_name);
 
             $parsed{reset} = $resolved_name;
             $parsed{reset_keyword} = $directive;
+            $parsed{reset_kind} = $directive eq 'sreset' ? 'sync' : 'async';
+            $parsed{reset_active_level} = $directive eq 'sreset' ? 1 : 0;
         } else {
             Carp::confess
                 "Unsupported '+system' entry '$directive'. ".
-                "The active contract currently supports only '(clock clk)' plus '(sreset rstn)' or '(asreset rstn)'. ".
+                "The active contract currently supports only '(clock clk)' plus '(sreset reset)' or '(areset rst_n)'. ".
                 "See docs/USER_GUIDE.md for the current supported boundary.\n";
         }
     }
 
     Carp::confess
         "Incomplete '+system' section. ".
-        "The active contract currently expects exactly '(clock clk)' and one reset declaration naming 'rstn'. ".
+        "The active contract currently expects exactly '(clock clk)' and one reset declaration. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless $parsed{clock} && $parsed{reset};
 
@@ -650,6 +652,8 @@ sub parse_system_section($self, $system_ast) {
         clock => $parsed{clock},
         reset => $parsed{reset},
         reset_keyword => $parsed{reset_keyword},
+        reset_kind => $parsed{reset_kind},
+        reset_active_level => $parsed{reset_active_level},
     };
     $fsm_module->{clock_domains}{default} = $parsed{clock};
     $fsm_module->{reset_domains}{default} = $parsed{reset};

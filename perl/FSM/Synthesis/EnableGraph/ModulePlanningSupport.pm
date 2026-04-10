@@ -112,7 +112,9 @@ sub effective_system_contract ($self, $fsm_module = undef) {
     return {
         clock => 'clk',
         reset => 'rst_n',
-        reset_keyword => 'asreset',
+        reset_keyword => 'areset',
+        reset_kind => 'async',
+        reset_active_level => 0,
         implicit => 1,
     };
 }
@@ -135,6 +137,59 @@ Return the effective reset signal name for one semantic FSM/DT module.
 
 sub effective_reset_name ($self, $fsm_module = undef) {
     return $self->effective_system_contract($fsm_module)->{reset};
+}
+
+=head2 effective_reset_policy
+
+Return the normalized reset policy for one semantic FSM/DT module.
+
+=cut
+
+sub effective_reset_policy ($self, $fsm_module = undef) {
+    my $system_contract = $self->effective_system_contract($fsm_module);
+    my $reset_keyword = $system_contract->{reset_keyword} // '';
+    my $reset_kind = $system_contract->{reset_kind}
+        // ($reset_keyword eq 'sreset' ? 'sync' : 'async');
+    my $reset_active_level = exists($system_contract->{reset_active_level})
+        ? ($system_contract->{reset_active_level} ? 1 : 0)
+        : ($reset_kind eq 'sync' ? 1 : 0);
+
+    return {
+        kind => $reset_kind,
+        active_level => $reset_active_level,
+        keyword => $reset_keyword,
+    };
+}
+
+=head2 sequential_event_control
+
+Return the SystemVerilog event control body for a reset-aware sequential block.
+
+=cut
+
+sub sequential_event_control ($self, $fsm_module = undef) {
+    my $clock_name = $self->effective_clock_name($fsm_module);
+    my $reset_name = $self->effective_reset_name($fsm_module);
+    my $reset_policy = $self->effective_reset_policy($fsm_module);
+
+    return "posedge $clock_name"
+        if $reset_policy->{kind} eq 'sync';
+
+    my $reset_edge = $reset_policy->{active_level} ? 'posedge' : 'negedge';
+    return "posedge $clock_name or $reset_edge $reset_name";
+}
+
+=head2 reset_condition_expr
+
+Return the SystemVerilog reset-active condition expression.
+
+=cut
+
+sub reset_condition_expr ($self, $fsm_module = undef) {
+    my $reset_name = $self->effective_reset_name($fsm_module);
+    my $reset_policy = $self->effective_reset_policy($fsm_module);
+
+    return $reset_policy->{active_level} ? $reset_name : "!$reset_name";
 }
 
 =head2 build_internal_signal_declaration_plan

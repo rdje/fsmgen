@@ -58,12 +58,12 @@ unlike(
 );
 like(
     $pulse_n0->{hdl},
-    qr/\bif\s*\(!rstn\)\s*begin\s*\n\s*PPOS\s*<=\s*1'b0;\s*\n\s*end\s*else\s*begin/s,
+    qr/\bif\s*\(rstn\)\s*begin\s*\n\s*PPOS\s*<=\s*1'b0;\s*\n\s*end\s*else\s*begin/s,
     "PPOS <0 1 reset/rest level is 0"
 );
 like(
     $pulse_n0->{hdl},
-    qr/\bif\s*\(!rstn\)\s*begin\s*\n\s*PNEG\s*<=\s*1'b1;\s*\n\s*end\s*else\s*begin/s,
+    qr/\bif\s*\(rstn\)\s*begin\s*\n\s*PNEG\s*<=\s*1'b1;\s*\n\s*end\s*else\s*begin/s,
     "PNEG <0 0 reset/rest level is 1"
 );
 

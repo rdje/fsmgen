@@ -7,8 +7,8 @@
       K = L;
     end
   end
-  always_ff @(posedge clk or negedge rstn) begin
-    if (!rstn) begin
+  always_ff @(posedge clk) begin
+    if (rstn) begin
       K_q <= 1'b0;
     end else begin
       K_q <= K;

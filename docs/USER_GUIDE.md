@@ -91,7 +91,7 @@ Standard used here:
 - Root form `(?fsm:module_name ...)` with an HDL-identifier-compatible module name (`[A-Za-z_]\\w*`)
 - Root form `(?dt:module_name ...)` with an HDL-identifier-compatible module name (`[A-Za-z_]\\w*`)
   - top-level standalone-DT content is currently limited to the conventional `(+system ...)` form, `(+size ...)`, `(+constants ...)`, `(+enums ...)`, bounded `(+types ...)`, `(+define ...)`, `(+params ...)`, bounded `(+import ...)`, compact top-level `(:= signal=value)` directives, and general DT blocks like `(-foo ...)`
-  - explicit conventional `(+system ...)` yields `clk` / `rstn` in standalone-DT roots too
+  - explicit `(+system ...)` yields `clk` plus the authored reset signal in standalone-DT roots too
   - without explicit `(+system ...)`, purely combinational `?dt:name` modules expose no implicit system ports
   - without explicit `(+system ...)`, any `?dt:name` module that contains at least one sequential assignment implicitly exposes `clk` / `rst_n`
   - driven non-intermediate targets in `?dt:name` are exposed as module outputs by default
@@ -107,9 +107,10 @@ Standard used here:
   - flattened sibling form with a first top-level entry `(+fsm module_name)` and sibling `(+system ...)`, state blocks, and `(+size ...)`
   - nested legacy root form `(+fsm module_name ...)`
   - supported in default mode only; the current first strict-mode slice rejects this legacy family and requires `?fsm:module_name`
-- Conventional `(+system ...)` section declaring the shared system pair:
-  - `(+system (clock clk) (sreset rstn))`
-  - `(+system (clock clk) (asreset rstn))`
+- Conventional `(+system ...)` section declaring the shared system pair and reset policy:
+  - `(+system (clock clk) (sreset reset))` for synchronous active-high reset
+  - `(+system (clock clk) (areset rst_n))` for asynchronous active-low reset
+  - default mode still accepts legacy `(asreset rstn)` and misleading `(sreset rstn)` compatibility forms, but strict mode rejects them
 - Regular state blocks like `(s0 ...)`, `(idle ...)`
   - regular FSM-state DT names must be HDL-identifier-compatible (`[A-Za-z_]\\w*`)
 - Special reset states `(-syncrst ...)`, `(-syncreset ...)`, `(-asyncrst ...)`, and `(-asyncreset ...)`
@@ -202,7 +203,7 @@ Combinational DT note:
   - those symbols currently feed only `?toplink` literal-actual positions, and aggregate imports may now resolve either to a scalar leaf or to one whole aggregate root such as `=pkg_name.HEADER` or `=pkg_name.FRAME`
   - imported hash-like aggregate roots follow that same authored-member packing order when lowered whole
 - Explicit `(?ports:block ...)` blocks with flat port tokens
-- Port tokens like `clk`, `rstn`, `data_in<8`, `txd>`, and `=final_data>8`
+- Port tokens like `clk`, `reset`, `rst_n`, `data_in<8`, `txd>`, and `=final_data>8`
 - `(?fsmc:instance child_source)` with exactly one child FSM source token
   - or `(?fsmc:instance)` on named children, which defaults the child source to `instance`
   - the active child source may be embedded in the same file as `?fsm:name`
@@ -215,7 +216,7 @@ Combinational DT note:
   - strict mode narrows this child contract to the canonical `?dt:name` root family only
   - or resolved from an external `.fsm` file beside the composition source, through repeated `--path DIR` roots, then through `FSMLIB`
   - combinational `?dtc` children expose only their real user-facing interface ports
-  - standalone `?dtc` children with explicit conventional `(+system ...)` expose `clk` / `rstn`
+  - standalone `?dtc` children with explicit conventional `(+system ...)` expose `clk` plus their authored reset signal
   - standalone `?dtc` children without explicit `(+system ...)` expose implicit `clk` / `rst_n` only when they contain sequential assignments
 - `(?rtl:module)` for external RTL children
 - External RTL interface loading via sidecar `<module>.rtlif`
@@ -316,12 +317,12 @@ Package note:
 - VHDL generation
 - Non-conventional `(+system ...)` forms, including:
   - alternative clock names,
-  - alternative reset names,
+  - malformed reset identifiers,
   - additional system directives,
   - and partial `+system` declarations that do not match the conventional shared pair
 - Unsupported top-level directive sections outside the current supported family, for example:
   - `(+clock clk)`
-  - `(+asreset rstn)`
+  - `(+areset rst_n)`
   - `(+bogus ...)`
 - Unsupported tagged top-level source kinds outside the active source family, for example:
   - `(?define:legacy_template ...)`
@@ -723,7 +724,7 @@ Boundary note:
   - strict mode also rejects `?mod:` / `?module:` when they are used specifically as `?dtc` child roots and requires canonical `?dt:` there,
   - strict mode also rejects the long direct-root alias `?module:` and requires canonical `?mod:` for module/entity-architecture roots,
   - strict mode also rejects the legacy empty `(+size)` no-op section and requires either explicit width entries or no `+size` section at all,
-  - strict mode also rejects the legacy explicit `(+system (clock clk) (asreset rstn))` spelling and currently requires the canonical explicit `(+system (clock clk) (sreset rstn))` form when `+system` is present,
+  - strict mode also rejects legacy or misleading reset spellings such as `(+system (clock clk) (asreset rstn))` and `(+system (clock clk) (sreset rstn))`; use `(+system (clock clk) (sreset reset))` for synchronous active-high reset or `(+system (clock clk) (areset rst_n))` for asynchronous active-low reset,
   - strict mode also rejects the legacy compact top-level `(:= signal=value)` directive on the current `?fsm:` / `?dt:` direct-root path and under generated-child realization, and currently has no canonical strict-mode replacement for that compatibility form,
   - requires the modern explicit `?fsm:module_name` root form for FSM sources,
   - and otherwise leaves the currently accepted `?dt:`, `?mod:`, and `?top:` roots unchanged while their broader contracts continue to settle.
@@ -732,7 +733,7 @@ Boundary note:
   - strict mode currently accepts `?fsm:name`, `?dt:name`, `?mod:name`, and `?top:name`,
   - strict mode currently accepts only canonical `?fsm:name` roots under `?fsmc`,
   - strict mode currently accepts only canonical `?dt:name` roots under `?dtc`,
-  - and strict mode currently rejects legacy `+fsm` under `?fsmc`, `?mod:` / `?module:` under `?dtc`, direct-root `?module:`, empty `(+size)` no-op sections, explicit `(+system ... (asreset rstn))`, and compact top-level `(:= signal=value)` directives on the current `?fsm:` / `?dt:` direct-root path.
+  - and strict mode currently rejects legacy `+fsm` under `?fsmc`, `?mod:` / `?module:` under `?dtc`, direct-root `?module:`, empty `(+size)` no-op sections, legacy/misleading explicit reset spellings such as `(+system ... (asreset rstn))` and `(+system ... (sreset rstn))`, and compact top-level `(:= signal=value)` directives on the current `?fsm:` / `?dt:` direct-root path.
 - Strict-mode failures now also keep the same `Source file: '...'` context line as other top-level pipeline failures.
 - This is the first support-tier enforcement slice, not the final full strict-mode surface.
 
@@ -767,7 +768,9 @@ Current meaning:
 
 Current top-level boundary:
 - Supported:
-  - conventional `(+system (clock clk) (sreset rstn))` or `(+system (clock clk) (asreset rstn))`
+  - conventional `(+system (clock clk) (sreset reset))` for synchronous active-high reset
+  - conventional `(+system (clock clk) (areset rst_n))` for asynchronous active-low reset
+  - default-mode compatibility also accepts legacy `(asreset rstn)` and misleading `(sreset rstn)` forms, but strict mode rejects them
   - `(+size ...)`
   - `(+constants ...)`
   - `(+enums ...)`
@@ -780,13 +783,13 @@ Current top-level boundary:
   - dedicated reset-state blocks such as `(-syncrst ...)`
 
 System-port rule:
-- explicit conventional `(+system ...)` inside a standalone-DT root exposes `clk` / `rstn`
+- explicit conventional `(+system ...)` inside a standalone-DT root exposes `clk` plus the authored reset signal, for example `reset` for `sreset` or `rst_n` for `areset`
 - without explicit `(+system ...)`, purely combinational standalone-DT `?dt:name` roots expose no implicit `clk` / `rst_n`
 - without explicit `(+system ...)`, if any sequential assignment appears in that standalone-DT `?dt:name` source, generation implicitly exposes `clk` / `rst_n`
 
 Boundary note:
 - The semantic split from `?fsm:name` is the control model, not “combinational-only” versus “sequential-capable”.
-- Explicit conventional `(+system ...)` now gives reusable standalone-DT roots and `?dtc` composition children one deliberate way to align with the shared `clk` / `rstn` contract when that interface stability matters.
+- Explicit conventional `(+system ...)` now gives reusable standalone-DT roots and `?dtc` composition children one deliberate way to align with an authored shared clock/reset contract when that interface stability matters.
 - The current shipped standalone-DT slice is centered on `?dt:name`.
 - The live implementation also currently accepts `?mod:name` and `?module:name` on the same direct-root machinery in default mode, but strict mode now narrows that alias family to canonical `?mod:name` while broader reusable-module interface questions remain future `R11` work.
 - Direct standalone-DT generation and realized `?dtc` children now also surface stable block-enable metadata through `module_info`: `standalone_dt_count`, `standalone_dt_names`, `standalone_dt_enable_families`, and one grouped `standalone_dt_module_enable_family` summary.
@@ -860,49 +863,53 @@ Accepted form:
 ```lisp
 (+system
   (clock clk)
-  (sreset rstn)
+  (sreset reset)
 )
 ```
 
-Also accepted in default mode:
+Also accepted and canonical for asynchronous active-low reset:
 ```lisp
 (+system
   (clock clk)
-  (asreset rstn)
+  (areset rst_n)
 )
 ```
 
 Current meaning:
-- If `+system` is present, the active contract currently treats it as a declarative confirmation of the conventional shared system-input pair:
+- If `+system` is present, the active contract currently treats it as a declarative confirmation of the shared system-input pair:
   - `clk`
-  - `rstn`
+  - the authored reset signal
+- `(sreset reset)` means synchronous active-high reset; generated SystemVerilog uses `always_ff @(posedge clk)` plus `if (reset)`.
+- `(areset rst_n)` means asynchronous active-low reset; generated SystemVerilog uses `always_ff @(posedge clk or negedge rst_n)` plus `if (!rst_n)`.
 - If `+system` is absent, the active generator now falls back to one implicit system contract:
   - clock `clk`
   - asynchronous active-low reset `rst_n`
 - The parser now validates that exact boundary explicitly instead of silently ignoring richer legacy `+system` content.
 - The parser records:
   - default clock domain `clk`,
-  - default reset domain `rstn`,
-  - and typed system signals for `clk` and `rstn`.
+  - default reset domain using the authored reset name,
+  - typed system signals for the authored clock/reset names,
+  - reset kind (`sync` or `async`),
+  - and reset active level (`1` for `sreset`, `0` for `areset` / legacy `asreset`).
 - Strict mode narrows the explicit reset spelling further:
-  - default mode still accepts `(asreset rstn)` as compatibility residue,
-  - strict mode rejects `(asreset rstn)`,
-  - and strict mode currently requires `(sreset rstn)` when an explicit `+system` reset declaration is present.
+  - default mode still accepts `(asreset rstn)` as legacy async active-low compatibility residue,
+  - default mode still accepts misleading `(sreset rstn)` compatibility residue but treats it as synchronous active-high because the keyword says `sreset`,
+  - strict mode rejects `(asreset rstn)` and asks for canonical `(areset rst_n)`,
+  - and strict mode rejects `(sreset rstn)` because an active-low-looking name is misleading for synchronous active-high reset.
 
 Current boundary:
 - Supported:
   - exactly one `(clock clk)`
-  - exactly one reset declaration naming `rstn` via:
-    - `(sreset rstn)`
-    - or `(asreset rstn)`
+  - exactly one reset declaration via:
+    - `(sreset reset)` or another HDL-identifier-compatible active-high-looking reset name
+    - `(areset rst_n)` or another HDL-identifier-compatible active-low-looking reset name
+    - `(asreset rstn)` in default mode only as a legacy alias for async active-low reset
 - Rejected explicitly:
   - malformed entry structures such as `BROKEN` or `(clock clk extra)` inside `(+system ...)`
   - alternative clock names such as `(clock core_clk)`
-  - alternative synchronous-reset names such as `(sreset reset)`
-  - alternative reset names such as `(asreset reset_async_n)`
-  - unsupported directives such as `(areset rstn)` or other legacy `+system` entries
+  - malformed reset identifiers such as `(sreset reset-name)` or `(areset rst-n)`
   - duplicate clock entries such as two `(clock clk)` declarations
-  - duplicate reset declarations, including mixed `(sreset rstn)` plus `(asreset rstn)`
+  - duplicate reset declarations, including mixed `(sreset reset)` plus `(areset rst_n)`
   - incomplete `+system` sections
 
 Regression-backed example:
@@ -910,7 +917,7 @@ Regression-backed example:
 (?fsm:system_contract
   (+system
     (clock clk)
-    (sreset rstn)
+    (sreset reset)
   )
   (-dt
     (A = B)
@@ -920,10 +927,10 @@ Regression-backed example:
 
 Boundary note:
 - This slice makes the conventional shared-system declaration explicit and regression-backed.
-- It accepts the two current shipped explicit `+system` reset declarations already present in the active tree, but it does not yet widen the contract into arbitrary system metadata, custom clock/reset names, or richer reset-mode differentiation.
-- The accepted explicit `(?fsm:name ... (+system ...))` spelling `(sreset rstn)` is compatibility residue from the shipped tree, not a polarity-aware naming recommendation.
-- Strict mode now treats the alternate explicit `(asreset rstn)` spelling as compatibility residue too and narrows the explicit `+system` reset spelling to `(sreset rstn)` for now.
-- The forward/default async-reset convention remains `rst_n`, including the implicit no-`+system` path and the planned `?top:name` / sequential `?dt:name` lanes.
+- It now treats reset kind and polarity as semantic metadata instead of deriving behavior from the signal name alone.
+- The accepted explicit `(sreset rstn)` spelling is default-mode compatibility residue from the shipped tree, not a polarity-aware naming recommendation.
+- Strict mode now treats `(asreset rstn)` and `(sreset rstn)` as compatibility residue and narrows the explicit `+system` reset spelling to `(sreset reset)` for synchronous active-high reset or `(areset rst_n)` for asynchronous active-low reset.
+- The forward/default async-reset convention remains `rst_n`, including the implicit no-`+system` path.
 - The active generator now also has one explicit implicit-default rule:
   - if no `+system` section is present at all, generation uses `clk` plus asynchronous active-low `rst_n`.
 
@@ -986,7 +993,7 @@ Current narrow composition example:
 (?fsm:child_ctrl_src
   (+system
     (clock clk)
-    (sreset rstn)
+    (sreset reset)
   )
   (-state0
     (output_data> <= 8'1)
@@ -1033,7 +1040,7 @@ Current narrow multi-child example:
 (?top:two_child_top
   (?ports:public_io
     clk
-    rstn
+    rst_n
     result_data>8
   )
   (?fsmc:producer producer_src)
@@ -1047,7 +1054,7 @@ Current narrow multi-child example:
 
 This currently works because:
 - every generated child resolves to one active `?fsm:name` or `?dt:name` source, either embedded or external,
-- `clk` and `rstn` use the shared system-input contract,
+- `clk` and `rst_n` use the shared system-input contract,
 - non-system connections are expressed explicitly through `?toplink`,
 - `?ports` may now be omitted or empty in explicit-link `C2` / `C3` when explicit `?toplink` endpoints themselves still imply the missing top ports honestly, including renamed top-boundary names,
 - source-side top expressions such as `payload_bus[15:8]` and `status_bus[0]` may now also participate in that omitted/empty-`?ports` inference, including inferable bit/slice operands inside a bounded comma-separated concat source, with the inferred base-port width coming from the highest referenced bit,
@@ -1270,7 +1277,7 @@ This is useful when:
 (?top:uart_bridge_top
   (?ports:public_io
     clk
-    rstn
+    rst_n
     =txd>
   )
   (?rtl:uart_tx)
@@ -1281,7 +1288,7 @@ With sidecar interface metadata:
 ```lisp
 (?rtlif:uart_tx
   clk
-  rstn
+  rst_n
   data_in<8
   txd>
 )
@@ -1327,6 +1334,7 @@ Practical rules for `=name`:
 - use it only when the top-level name should intentionally stay the same as the child endpoint name,
 - use normal explicit `?toplink` when you need renaming, remapping, or multiple non-system connections,
 - do not use `=clk`, `=rstn`, or `=rst_n`; those already use the dedicated shared system-input contract,
+- use `reset`-style names for synchronous active-high resets and `rst_n`-style names for asynchronous active-low resets,
 - a top-output match is valid only when exactly one child output has the same name and width.
 - a top-input match is valid when one or more child inputs have the same name and width.
 - if widths do not match, generation fails before emission and the diagnostic names both endpoints and their widths.
@@ -1336,7 +1344,7 @@ Current narrow mixed FSM + external RTL example:
 (?top:fsm_plus_rtl_top
   (?ports:public_io
     clk
-    rstn
+    rst_n
     serial_out>
   )
   (?fsmc:producer producer_src)
@@ -1352,7 +1360,7 @@ With sidecar interface metadata in `uart_tx.rtlif`:
 ```lisp
 (?rtlif:uart_tx
   clk
-  rstn
+  rst_n
   data_in<8
   txd>
 )

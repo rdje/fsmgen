@@ -20,6 +20,7 @@ mkdir $libdir or die "Cannot create $libdir: $!";
 
 my $direct_path = File::Spec->catfile($tempdir, 'strict_asreset_direct.fsm');
 my $direct_out_path = File::Spec->catfile($tempdir, 'strict_asreset_direct.sv');
+my $sync_low_name_path = File::Spec->catfile($tempdir, 'strict_sreset_low_name_direct.fsm');
 
 my $child_top_path = File::Spec->catfile($tempdir, 'strict_asreset_child_top.fsm');
 my $child_out_path = File::Spec->catfile($tempdir, 'strict_asreset_child_top.sv');
@@ -32,6 +33,24 @@ write_file(
   (+system
     (clock clk)
     (asreset rstn)
+  )
+  (+size
+    (A 1)
+  )
+  (-dt
+    (A = 1)
+  )
+)
+FSM
+);
+
+write_file(
+    $sync_low_name_path,
+    <<'FSM'
+(?fsm:strict_sreset_low_name_direct
+  (+system
+    (clock clk)
+    (sreset rstn)
   )
   (+size
     (A 1)
@@ -107,8 +126,28 @@ subtest 'shared frontend strict boundary rejects the legacy explicit asreset spe
 
     like(
         $error,
-        qr/Strict mode rejects the legacy '\(asreset rstn\)' \+system spelling in source '\Q$direct_path\E'.*Use the canonical '\(sreset rstn\)' form inside '\+system'/s,
+        qr/Strict mode rejects the legacy or misleading '\(asreset rstn\)' \+system spelling in source '\Q$direct_path\E'.*Use '\(sreset reset\)' for synchronous active-high reset or '\(areset rst_n\)' for asynchronous active-low reset/s,
         'shared frontend keeps the canonical explicit +system migration hint',
+    );
+};
+
+subtest 'shared frontend strict boundary rejects misleading active-low-looking sreset names' => sub {
+    my $raw_ast = Lispish::multi($sync_low_name_path);
+
+    my $error = eval {
+        FSM::Pipeline::SourceFrontend->enforce_strict_source_boundary(
+            raw_ast => $raw_ast,
+            strict_mode => 1,
+            source_label => $sync_low_name_path,
+        );
+        undef;
+    };
+    $error = $@ if !$error;
+
+    like(
+        $error,
+        qr/Strict mode rejects the legacy or misleading '\(sreset rstn\)' \+system spelling in source '\Q$sync_low_name_path\E'.*Use '\(sreset reset\)' for synchronous active-high reset or '\(areset rst_n\)' for asynchronous active-low reset/s,
+        'shared frontend rejects sreset with active-low-looking reset names in strict mode',
     );
 };
 
@@ -128,7 +167,7 @@ subtest 'strict pipeline and CLI reject explicit asreset at the top level' => su
 
     like(
         $pipeline_error,
-        qr/Source file:\s+'\Q$direct_path\E'.*Strict mode rejects the legacy '\(asreset rstn\)' \+system spelling.*Use the canonical '\(sreset rstn\)' form inside '\+system'/s,
+        qr/Source file:\s+'\Q$direct_path\E'.*Strict mode rejects the legacy or misleading '\(asreset rstn\)' \+system spelling.*Use '\(sreset reset\)' for synchronous active-high reset or '\(areset rst_n\)' for asynchronous active-low reset/s,
         'strict pipeline keeps source-file context around the explicit asreset boundary',
     );
 
@@ -148,7 +187,7 @@ subtest 'strict pipeline and CLI reject explicit asreset at the top level' => su
 
     like(
         $combined_output,
-        qr/Source file:\s+'\Q$direct_path\E'.*Strict mode rejects the legacy '\(asreset rstn\)' \+system spelling.*Use the canonical '\(sreset rstn\)' form inside '\+system'/s,
+        qr/Source file:\s+'\Q$direct_path\E'.*Strict mode rejects the legacy or misleading '\(asreset rstn\)' \+system spelling.*Use '\(sreset reset\)' for synchronous active-high reset or '\(areset rst_n\)' for asynchronous active-low reset/s,
         'CLI strict mode surfaces the same explicit asreset migration hint',
     );
 };
@@ -170,7 +209,7 @@ subtest 'strict mode also rejects external ?fsmc children that use explicit asre
 
     like(
         $pipeline_error,
-        qr/Source file:\s+'\Q$child_path\E'.*Parent composition source:\s+'\Q$child_top_path\E'.*Generated child source:\s+'\?fsmc' 'child_async_reset'.*Strict mode rejects the legacy '\(asreset rstn\)' \+system spelling in source 'child_async_reset'.*Use the canonical '\(sreset rstn\)' form inside '\+system'/s,
+        qr/Source file:\s+'\Q$child_path\E'.*Parent composition source:\s+'\Q$child_top_path\E'.*Generated child source:\s+'\?fsmc' 'child_async_reset'.*Strict mode rejects the legacy or misleading '\(asreset rstn\)' \+system spelling in source 'child_async_reset'.*Use '\(sreset reset\)' for synchronous active-high reset or '\(areset rst_n\)' for asynchronous active-low reset/s,
         'strict pipeline keeps full child-source context around the explicit asreset boundary',
     );
 
@@ -190,7 +229,7 @@ subtest 'strict mode also rejects external ?fsmc children that use explicit asre
 
     like(
         $combined_output,
-        qr/Source file:\s+'\Q$child_path\E'.*Parent composition source:\s+'\Q$child_top_path\E'.*Generated child source:\s+'\?fsmc' 'child_async_reset'.*Strict mode rejects the legacy '\(asreset rstn\)' \+system spelling in source 'child_async_reset'.*Use the canonical '\(sreset rstn\)' form inside '\+system'/s,
+        qr/Source file:\s+'\Q$child_path\E'.*Parent composition source:\s+'\Q$child_top_path\E'.*Generated child source:\s+'\?fsmc' 'child_async_reset'.*Strict mode rejects the legacy or misleading '\(asreset rstn\)' \+system spelling in source 'child_async_reset'.*Use '\(sreset reset\)' for synchronous active-high reset or '\(areset rst_n\)' for asynchronous active-low reset/s,
         'CLI strict mode surfaces the same explicit asreset child-source boundary',
     );
 };

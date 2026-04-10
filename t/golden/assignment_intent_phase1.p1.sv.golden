@@ -1,7 +1,7 @@
   // Unified Multiplexer for LHS: P1
   // Delayed pulse logic for: P1 (<3, exact Q+3)
-  always_ff @(posedge clk or negedge rstn) begin
-    if (!rstn) begin
+  always_ff @(posedge clk) begin
+    if (rstn) begin
       P1 <= 1'b0;
       P1_pulse_delay_pipe <= {3{1'b0}};
     end else begin

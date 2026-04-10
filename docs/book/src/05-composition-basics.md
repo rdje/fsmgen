@@ -15,7 +15,7 @@ Current child kinds are:
 (?top:top_name
   (?ports:public_io
     clk
-    rstn
+    rst_n
     result_data>8
   )
   (?fsmc:producer producer_src)
@@ -32,7 +32,8 @@ Top ports live in one `?ports` block.
 Common forms:
 
 - `clk`
-- `rstn`
+- `reset`
+- `rst_n`
 - `data_in<8`
 - `data_out>8`
 - `=status>`
@@ -82,7 +83,7 @@ Generated-child example:
 (?fsm:child_ctrl_src
   (+system
     (clock clk)
-    (sreset rstn)
+    (sreset reset)
   )
   (+size
     (output_data 8)
@@ -103,7 +104,7 @@ Once you have multiple children, the normal tool is `?toplink`.
 (?top:two_child_top
   (?ports:public_io
     clk
-    rstn
+    rst_n
     result_data>8
   )
   (?fsmc:producer producer_src)
@@ -151,7 +152,7 @@ External RTL is declared with `?rtl` and described by `.rtlif` metadata.
 (?top:fsm_plus_rtl_top
   (?ports:public_io
     clk
-    rstn
+    rst_n
     serial_out>
   )
   (?fsmc:producer producer_src)
@@ -168,7 +169,7 @@ With metadata:
 ```lisp
 (?rtlif:uart_tx
   clk
-  rstn
+  rst_n
   data_in<8
   txd>
 )

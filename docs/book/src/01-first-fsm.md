@@ -24,7 +24,7 @@ Useful first commands:
 (?fsm:counter_demo
   (+system
     (clock clk)
-    (sreset rstn)
+    (sreset reset)
   )
   (+size
     (start 1)
@@ -51,10 +51,21 @@ Useful first commands:
 This shows the core ideas:
 
 - `?fsm:name` declares one FSM root
-- `+system` declares clock/reset convention
+- `+system` declares clock/reset convention; `(sreset reset)` is synchronous active-high
 - `+size` declares signal widths
 - states such as `idle` and `run` contain assignments and transitions
 - `<...` guards gate actions
+
+## Reset Naming
+
+FSMGen treats reset kind and polarity as intent:
+
+- `(sreset reset)` means synchronous active-high reset
+- `(areset rst_n)` means asynchronous active-low reset
+- names ending in `_n` or `n` should be reserved for active-low reset signals
+
+Default mode still accepts some older compatibility spellings, but strict mode
+rejects misleading combinations such as `(sreset rstn)`.
 
 ## What To Expect In The Output
 

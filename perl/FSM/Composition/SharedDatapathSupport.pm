@@ -388,6 +388,11 @@ sub augment_plan ($class, %args) {
             $candidate->{lifted_runtime_next_signal} = $lifted_next_signal;
             $candidate->{lifted_runtime_signal} = $lifted_register_signal;
             $candidate->{lifted_runtime_reset_value} = $candidate->{reset_value};
+            my $reset_policy = $class->_composition_reset_policy($composition_plan, $candidate);
+            $candidate->{lifted_runtime_reset_kind} = $reset_policy->{kind};
+            $candidate->{lifted_runtime_reset_active_level} = $reset_policy->{active_level};
+            $candidate->{lifted_runtime_reset_keyword} = $reset_policy->{keyword}
+                if defined($reset_policy->{keyword}) && length($reset_policy->{keyword});
             _ensure_composition_net(
                 $nets,
                 $lifted_next_signal,
@@ -427,8 +432,8 @@ sub augment_plan ($class, %args) {
             push @runtime_lines,
                 "    end",
                 "",
-                "    always_ff @(posedge $clock_name or negedge $reset_name) begin",
-                "      if (!$reset_name) begin",
+                "    always_ff @(" . $class->_sequential_event_control($clock_name, $reset_name, $reset_policy) . ") begin",
+                "      if (" . $class->_reset_condition_expr($reset_name, $reset_policy) . ") begin",
                 "        ${lifted_register_signal} <= $candidate->{reset_value};",
                 "      end else begin",
                 "        ${lifted_register_signal} <= ${lifted_next_signal};",
@@ -543,6 +548,121 @@ sub _lifted_runtime_net_contract ($class, $candidate) {
         signed => $signed,
         state_model => $state_model,
     };
+}
+
+sub _composition_reset_policy ($class, $composition_plan, $candidate) {
+    my @policies;
+    my %seen_policy;
+    for my $contract (@{$class->_candidate_system_contracts($composition_plan, $candidate)}) {
+        my $policy = $class->_reset_policy_from_system_contract($contract);
+        next unless ref($policy) eq 'HASH';
+        my $signature = join "\x1E", $policy->{kind}, $policy->{active_level};
+        next if $seen_policy{$signature}++;
+        push @policies, $policy;
+    }
+
+    if (@policies > 1) {
+        my $signal_name = ref($candidate) eq 'HASH'
+            ? ($candidate->{signal_name} || 'unknown_signal')
+            : 'unknown_signal';
+        my $details = join ', ', map {
+            ($_->{kind} || 'unknown') . '/' . ($_->{active_level} ? 'active_high' : 'active_low')
+        } @policies;
+        confess "Shared-datapath lifted register for '$signal_name' has incompatible child reset policies: $details";
+    }
+
+    return $policies[0] if @policies;
+
+    return {
+        kind => 'async',
+        active_level => 0,
+        keyword => 'areset',
+    };
+}
+
+sub _candidate_system_contracts ($class, $composition_plan, $candidate) {
+    my %instances_by_name = map {
+        (($_->instance_name || '') => $_)
+    } @{$composition_plan->instances || []};
+    my %wanted_instances;
+    my @contracts;
+
+    for my $contributor (@{ref($candidate) eq 'HASH' ? ($candidate->{contributors} || []) : []}) {
+        next unless ref($contributor) eq 'HASH';
+        push @contracts, @{$class->_system_contracts_from_payload($contributor)};
+
+        my ($instance_name) = ($contributor->{endpoint} || '') =~ /^(\w+)\./;
+        $wanted_instances{$instance_name} = 1 if defined($instance_name) && length($instance_name);
+    }
+
+    for my $peer_input (@{ref($candidate) eq 'HASH' ? ($candidate->{peer_input_endpoints} || []) : []}) {
+        next unless ref($peer_input) eq 'HASH';
+        my ($instance_name) = ($peer_input->{endpoint} || '') =~ /^(\w+)\./;
+        $wanted_instances{$instance_name} = 1 if defined($instance_name) && length($instance_name);
+    }
+
+    for my $instance_name (sort keys %wanted_instances) {
+        my $instance = $instances_by_name{$instance_name} || next;
+        push @contracts, @{$class->_system_contracts_from_payload($instance->module_info)};
+    }
+
+    my %seen_contract;
+    my @unique_contracts;
+    for my $contract (@contracts) {
+        next unless ref($contract) eq 'HASH';
+        my $signature = join "\x1E",
+            ($contract->{clock} // ''),
+            ($contract->{reset} // ''),
+            ($contract->{reset_keyword} // ''),
+            ($contract->{reset_kind} // ''),
+            (exists($contract->{reset_active_level}) ? ($contract->{reset_active_level} ? 1 : 0) : '');
+        next if $seen_contract{$signature}++;
+        push @unique_contracts, $contract;
+    }
+
+    return \@unique_contracts;
+}
+
+sub _system_contracts_from_payload ($class, $payload) {
+    return [] unless ref($payload) eq 'HASH';
+
+    my @contracts;
+    push @contracts, $payload->{system_contract}
+        if ref($payload->{system_contract}) eq 'HASH';
+    push @contracts, $payload->{intent_hir}{system_contract}
+        if ref($payload->{intent_hir}) eq 'HASH'
+            && ref($payload->{intent_hir}{system_contract}) eq 'HASH';
+
+    return \@contracts;
+}
+
+sub _reset_policy_from_system_contract ($class, $system_contract) {
+    return undef unless ref($system_contract) eq 'HASH';
+
+    my $reset_keyword = $system_contract->{reset_keyword} // '';
+    my $reset_kind = $system_contract->{reset_kind}
+        // ($reset_keyword eq 'sreset' ? 'sync' : 'async');
+    my $reset_active_level = exists($system_contract->{reset_active_level})
+        ? ($system_contract->{reset_active_level} ? 1 : 0)
+        : ($reset_kind eq 'sync' ? 1 : 0);
+
+    return {
+        kind => $reset_kind,
+        active_level => $reset_active_level,
+        keyword => $reset_keyword,
+    };
+}
+
+sub _sequential_event_control ($class, $clock_name, $reset_name, $reset_policy) {
+    return "posedge $clock_name"
+        if (($reset_policy->{kind} || '') eq 'sync');
+
+    my $reset_edge = ($reset_policy->{active_level} || 0) ? 'posedge' : 'negedge';
+    return "posedge $clock_name or $reset_edge $reset_name";
+}
+
+sub _reset_condition_expr ($class, $reset_name, $reset_policy) {
+    return ($reset_policy->{active_level} || 0) ? $reset_name : "!$reset_name";
 }
 
 sub _ensure_instance_port_binding ($instance, $port_name, $signal_name) {

@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-10: reset policy now matches sreset/areset intent
+- Saved the reset-contract correction slice.
+- Important continuity note:
+  - canonical `(sreset reset)` is synchronous active-high,
+  - canonical `(areset rst_n)` is asynchronous active-low,
+  - default mode still accepts legacy `(asreset rstn)` and misleading
+    `(sreset rstn)` compatibility forms,
+  - strict mode now rejects `(asreset rstn)` and active-low-looking `sreset`
+    names such as `(sreset rstn)`,
+  - `FSM::Synthesis::EnableGraph::ModulePlanningSupport` now owns reset-aware
+    SystemVerilog event-control and reset-condition helpers,
+  - direct SystemVerilog state registers, flop muxes, and delayed-pulse logic
+    now consume those helpers,
+  - lifted composition shared-datapath registers now recover reset policy
+    from participating generated children and reject incompatible child
+    policies instead of hardcoding active-low asynchronous reset,
+  - the legacy template-backed SystemVerilog backend now honors the same reset
+    policy metadata and has a regression in
+    [t/282-legacy-systemverilog-backend-reset-policy.t](/Users/richarddje/Documents/github/fsmgen/t/282-legacy-systemverilog-backend-reset-policy.t),
+  - and docs/book examples now teach active-high synchronous reset names like
+    `reset` and active-low asynchronous reset names like `rst_n`.
+
 ## 2026-04-10: direct RHS concat pack now has a first shipped slice
 - Saved one bounded pack/deconstruct-lane implementation step.
 - Important continuity note:

@@ -223,11 +223,12 @@ sub enforce_strict_source_boundary ($class, %args) {
         }
 
         for my $item (@$body_items) {
-            next unless $class->_has_legacy_asreset_system_entry($item);
+            my $reset_issue = $class->_strict_system_reset_contract_issue($item);
+            next unless $reset_issue;
 
             confess
-                "Strict mode rejects the legacy '(asreset rstn)' +system spelling in source '$source_label'. "
-              . "Use the canonical '(sreset rstn)' form inside '+system', "
+                "Strict mode rejects the legacy or misleading '$reset_issue->{form}' +system spelling in source '$source_label'. "
+              . "Use '(sreset reset)' for synchronous active-high reset or '(areset rst_n)' for asynchronous active-low reset, "
               . "or re-run without strict mode if you need legacy compatibility. "
               . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
         }
@@ -422,7 +423,7 @@ sub _is_legacy_empty_size_section ($class, $node) {
     return 0;
 }
 
-sub _has_legacy_asreset_system_entry ($class, $node) {
+sub _strict_system_reset_contract_issue ($class, $node) {
     return 0 unless ref($node) eq 'ARRAY';
     return 0 unless defined($node->[0]) && !ref($node->[0]) && $node->[0] eq '+system';
     return 0 unless ref($node->[1]) eq 'ARRAY';
@@ -430,10 +431,27 @@ sub _has_legacy_asreset_system_entry ($class, $node) {
     for my $entry (@{$node->[1]}) {
         next unless ref($entry) eq 'ARRAY';
         next unless defined($entry->[0]) && !ref($entry->[0]);
-        return 1 if $entry->[0] eq 'asreset';
+        my ($directive, $name) = @$entry;
+        next unless defined($directive) && !ref($directive);
+        next unless $directive eq 'sreset' || $directive eq 'areset' || $directive eq 'asreset';
+        my $unwrapped_name = $class->_unwrap_scalar_token($name);
+        my $reset_name = defined($unwrapped_name) && !ref($unwrapped_name) ? $unwrapped_name : 'unknown';
+        my $form = "($directive $reset_name)";
+
+        return { form => $form, reason => 'legacy_asreset_alias' }
+            if $directive eq 'asreset';
+        return { form => $form, reason => 'active_high_name_looks_active_low' }
+            if $directive eq 'sreset' && $class->_looks_active_low_reset_name($reset_name);
+        return { form => $form, reason => 'active_low_name_does_not_look_active_low' }
+            if $directive eq 'areset' && !$class->_looks_active_low_reset_name($reset_name);
     }
 
     return 0;
+}
+
+sub _looks_active_low_reset_name ($class, $reset_name) {
+    return defined($reset_name)
+        && $reset_name =~ /(?:_n|n)\z/i;
 }
 
 sub _is_legacy_compact_init_directive ($class, $node) {

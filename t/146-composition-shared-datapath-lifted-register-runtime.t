@@ -110,7 +110,7 @@ FSM
     like($hdl, qr/always_comb begin\s+status_bus_shared_next = status_bus_shared_q;/s, 'top HDL defaults the lifted next value from the lifted register');
     like($hdl, qr/if \(status_bus__8_d1_shared_en\) begin\s+status_bus_shared_next = 8'd1;/s, 'top HDL updates the lifted next value from the first aggregate value family');
     like($hdl, qr/if \(status_bus__8_d2_shared_en\) begin\s+status_bus_shared_next = 8'd2;/s, 'top HDL updates the lifted next value from the second aggregate value family');
-    like($hdl, qr/always_ff \@\(posedge clk or negedge rstn\) begin\s+if \(!rstn\) begin\s+status_bus_shared_q <= 8'h00;/s, 'top HDL emits the lifted shared register with the recovered reset value');
+    like($hdl, qr/always_ff \@\(posedge clk\) begin\s+if \(rstn\) begin\s+status_bus_shared_q <= 8'h00;/s, 'top HDL emits the lifted shared register with the recovered reset value');
 
     like($hdl, qr/\bwire\s+\[7:0\]\s+shared_dp_raw_left_status_bus;/s, 'top HDL declares the raw left contributor output binding');
     like($hdl, qr/\bwire\s+\[7:0\]\s+shared_dp_raw_right_status_bus;/s, 'top HDL declares the raw right contributor output binding');

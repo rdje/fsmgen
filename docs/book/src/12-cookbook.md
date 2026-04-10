@@ -8,7 +8,7 @@ This chapter collects practical, copyable patterns.
 (?fsm:counter_demo
   (+system
     (clock clk)
-    (sreset rstn)
+    (sreset reset)
   )
   (+size
     (start 1)
@@ -76,7 +76,7 @@ Use this when:
 (?top:two_child_top
   (?ports:public_io
     clk
-    rstn
+    rst_n
     result_data>8
   )
   (?fsmc:producer producer_src)

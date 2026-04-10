@@ -78,7 +78,9 @@ sub build_from_fsm_module ($class, %args) {
                 : {
                     clock => 'clk',
                     reset => 'rst_n',
-                    reset_keyword => 'asreset',
+                    reset_keyword => 'areset',
+                    reset_kind => 'async',
+                    reset_active_level => 0,
                     implicit => 1,
                 }
         ),

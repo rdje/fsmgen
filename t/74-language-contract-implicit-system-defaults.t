@@ -41,6 +41,8 @@ FSM
 
     is($system->{clock}, 'clk', 'implicit default keeps clk as the clock name');
     is($system->{reset}, 'rst_n', 'implicit default uses rst_n as the reset name');
+    is($system->{reset_kind}, 'async', 'implicit default uses asynchronous reset semantics');
+    is($system->{reset_active_level}, 0, 'implicit default uses active-low reset semantics');
     ok($system->{implicit}, 'implicit default marks the system contract as implicit');
     like($hdl, qr/\binput\s+wire\s+clk\b/s, 'generated HDL declares clk as an input');
     like($hdl, qr/\binput\s+wire\s+rst_n\b/s, 'generated HDL declares rst_n as an input');
@@ -58,7 +60,7 @@ FSM
     like($cli_hdl, qr/\binput\s+wire\s+rst_n\b/s, 'CLI output also uses rst_n as the implicit reset name');
 };
 
-subtest 'explicit conventional +system still overrides the implicit rst_n default' => sub {
+subtest 'explicit legacy sreset name still overrides the implicit rst_n default but uses active-high sync semantics' => sub {
     my $fsm_path = File::Spec->catfile($tempdir, 'explicit_system_override.fsm');
 
     write_file(
@@ -82,9 +84,12 @@ FSM
 
     is($system->{clock}, 'clk', 'explicit +system keeps clk as the clock name');
     is($system->{reset}, 'rstn', 'explicit +system keeps rstn as the declared reset name');
+    is($system->{reset_kind}, 'sync', 'sreset records synchronous reset semantics');
+    is($system->{reset_active_level}, 1, 'sreset records active-high reset semantics');
     ok(!$system->{implicit}, 'explicit +system is not marked as implicit');
     like($hdl, qr/\binput\s+wire\s+rstn\b/s, 'generated HDL declares rstn for explicit +system');
-    like($hdl, qr/always_ff\s*@\(posedge\s+clk\s+or\s+negedge\s+rstn\)/s, 'generated HDL uses explicit rstn in sequential sensitivity lists');
+    like($hdl, qr/always_ff\s*@\(posedge\s+clk\)/s, 'generated HDL uses synchronous reset event control for sreset');
+    like($hdl, qr/if\s*\(rstn\)/s, 'generated HDL uses active-high reset test for sreset');
     unlike($hdl, qr/\brst_n\b/s, 'explicit +system does not get rewritten to rst_n');
 };
 

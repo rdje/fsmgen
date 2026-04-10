@@ -26,7 +26,7 @@ write_file(
 (?fsm:strict_modern_ok
   (+system
     (clock clk)
-    (sreset rstn)
+    (sreset reset)
   )
   (+size
     (OUT 1)
@@ -45,7 +45,7 @@ write_file(
 (+fsm strict_flat_legacy)
 (+system
   (clock clk)
-  (sreset rstn)
+  (sreset reset)
 )
 (+size
   (OUT 1)
@@ -63,7 +63,7 @@ write_file(
 (+fsm strict_nested_legacy
   (+system
     (clock clk)
-    (sreset rstn)
+    (sreset reset)
   )
   (+size
     (OUT 1)

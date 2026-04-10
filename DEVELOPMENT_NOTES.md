@@ -1,5 +1,40 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-10: reset keyword semantics now own reset kind and polarity
+- Corrected the reset contract so `+system` reset semantics come from intent,
+  not from a misleading historical example:
+  - `(sreset reset)` means synchronous active-high reset,
+  - `(areset rst_n)` means asynchronous active-low reset,
+  - legacy `(asreset rstn)` remains default-mode compatibility as an async
+    active-low alias,
+  - and legacy/misleading `(sreset rstn)` remains default-mode compatibility
+    but is treated as synchronous active-high because the keyword says
+    `sreset`.
+- Landed behavior:
+  - `FSM::CoreAST::FSMModule::effective_system_contract` now returns
+    `reset_kind` and `reset_active_level`,
+  - `FSM::Adapter::FSMGenFull::Parser` accepts canonical `areset` and records
+    reset policy metadata,
+  - `FSM::Synthesis::EnableGraph::ModulePlanningSupport` owns reset-aware
+    SystemVerilog event-control and condition helpers,
+  - direct SystemVerilog state-register, ordinary flop, and delayed-pulse
+    emission now consumes those helpers,
+  - composition lifted shared-datapath registers now recover the reset policy
+    from the participating generated children and abort on incompatible
+    child reset policies rather than emitting a stale active-low async block,
+  - the legacy template-backed `FSM::Backend::SystemVerilog` path now also
+    consumes reset-policy metadata instead of hardcoding async active-low
+    reset, and its same-file `use parent` inheritance has been made loadable,
+  - and strict mode now rejects `(asreset rstn)` plus active-low-looking
+    `sreset` names such as `(sreset rstn)` with a canonical hint.
+- Design note:
+  - default mode keeps compatibility so old fixtures and existing users are not
+    broken abruptly,
+  - strict mode is the clean surface and should be the place where misleading
+    reset names are blocked,
+  - docs should teach `reset` / `sreset` for active-high synchronous resets and
+    `rst_n` / `areset` for active-low asynchronous resets.
+
 ## 2026-04-10: direct RHS pack expressions now have a first bounded concat form
 - Landed the first shipped slice of the pack/deconstruct steering lane by
   enabling direct assignment RHS `(concat ...)` expressions and the short

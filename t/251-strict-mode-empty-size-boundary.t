@@ -24,7 +24,7 @@ write_file(
 (?fsm:strict_empty_size
   (+system
     (clock clk)
-    (sreset rstn)
+    (sreset reset)
   )
   (+size)
   (+size

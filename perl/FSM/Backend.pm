@@ -49,7 +49,7 @@ package FSM::Backend::Base {
 # VHDL backend
 package FSM::Backend::VHDL {
     use v5.20;
-    use parent 'FSM::Backend::Base';
+    use parent -norequire, 'FSM::Backend::Base';
     use strict;
     use warnings;
     use feature qw(signatures);
@@ -243,7 +243,7 @@ package FSM::Backend::VHDL {
 # SystemVerilog backend
 package FSM::Backend::SystemVerilog {
     use v5.20;
-    use parent 'FSM::Backend::Base';
+    use parent -norequire, 'FSM::Backend::Base';
     use strict;
     use warnings;
     use feature qw(signatures);
@@ -372,8 +372,10 @@ package FSM::Backend::SystemVerilog {
         $reset_state ||= $template->format_state_name($states[0]->name) if @states;
 
         # Get clock and reset from system or assume defaults
-        my $clock = $module->system()->{clock} // 'clk';
-        my $reset = $module->system()->{reset} // 'rst_n';
+        my $system_contract = $module->system();
+        my $clock = $system_contract->{clock} // 'clk';
+        my $reset = $system_contract->{reset} // 'rst_n';
+        my $reset_policy = $self->_reset_policy_from_system_contract($system_contract);
 
         # Generate reset assignments
         my $reset_assignments = "        current_state <= $reset_state;\n";
@@ -421,13 +423,42 @@ package FSM::Backend::SystemVerilog {
         }
 
         return $template->render('always_ff',
-            clock => $clock,
-            reset => $reset,
+            event_control => $self->_sequential_event_control($clock, $reset, $reset_policy),
+            reset_condition => $self->_reset_condition_expr($reset, $reset_policy),
             reset_assignments => $reset_assignments,
             state_signal => 'current_state',
             state_cases => $state_cases,
             reset_state => $reset_state
         );
+    }
+
+    sub _reset_policy_from_system_contract($self, $system_contract) {
+        $system_contract = {} unless ref($system_contract) eq 'HASH';
+
+        my $reset_keyword = $system_contract->{reset_keyword} // '';
+        my $reset_kind = $system_contract->{reset_kind}
+            // ($reset_keyword eq 'sreset' ? 'sync' : 'async');
+        my $reset_active_level = exists($system_contract->{reset_active_level})
+            ? ($system_contract->{reset_active_level} ? 1 : 0)
+            : ($reset_kind eq 'sync' ? 1 : 0);
+
+        return {
+            kind => $reset_kind,
+            active_level => $reset_active_level,
+            keyword => $reset_keyword,
+        };
+    }
+
+    sub _sequential_event_control($self, $clock_name, $reset_name, $reset_policy) {
+        return "posedge $clock_name"
+            if (($reset_policy->{kind} || '') eq 'sync');
+
+        my $reset_edge = ($reset_policy->{active_level} || 0) ? 'posedge' : 'negedge';
+        return "posedge $clock_name or $reset_edge $reset_name";
+    }
+
+    sub _reset_condition_expr($self, $reset_name, $reset_policy) {
+        return ($reset_policy->{active_level} || 0) ? $reset_name : "!$reset_name";
     }
 
     sub _calculate_state_bits($self, $num_states) {

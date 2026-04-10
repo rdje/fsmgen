@@ -61,7 +61,7 @@ FSM
     like($scaffold, qr/input\s+logic\s+signed\s+\[7:0\]\s+IN\b/s, 'regular-state scaffold keeps explicit four-state signed module-port declarations from semantic types');
     like($scaffold, qr/input\s+frame_t__fsmgen_t\s+IN_FRAME\b/s, 'regular-state scaffold uses aggregate typedefs on direct input ports');
     like($scaffold, qr/output\s+frame_t__fsmgen_t\s+FRAME\b/s, 'regular-state scaffold uses aggregate typedefs on direct output ports');
-    like($scaffold, qr/always_ff\s*@\(posedge clk or negedge rstn\)/, 'regular-state scaffold keeps the sequential state block');
+    like($scaffold, qr/always_ff\s*@\(posedge clk\)\s*begin\s+if\s*\(rstn\)/s, 'regular-state scaffold keeps synchronous active-high sreset behavior');
 };
 
 subtest 'scaffold emitter rebuilds the standalone-dt direct backend prefix and keeps the no-state comment' => sub {

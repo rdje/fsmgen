@@ -118,9 +118,10 @@ sub generate_state_encoding ($self, $fsm_module) {
 }
 
 sub generate_state_register ($self, $fsm_module) {
-    my $state_plan = $self->{flattened_dt}->{enable_graph_module_planning_support}->build_state_register_plan($fsm_module);
-    my $clock_name = $self->{flattened_dt}->{enable_graph_module_planning_support}->effective_clock_name($fsm_module);
-    my $reset_name = $self->{flattened_dt}->{enable_graph_module_planning_support}->effective_reset_name($fsm_module);
+    my $module_planning = $self->{flattened_dt}->{enable_graph_module_planning_support};
+    my $state_plan = $module_planning->build_state_register_plan($fsm_module);
+    my $event_control = $module_planning->sequential_event_control($fsm_module);
+    my $reset_condition = $module_planning->reset_condition_expr($fsm_module);
 
     if (!$state_plan->{has_state_registers}) {
         fsm_debug("FSM has no regular states - only standalone decision trees. Skipping state register generation.", 3);
@@ -131,8 +132,8 @@ sub generate_state_register ($self, $fsm_module) {
     $hdl .= "  reg [" . ($state_plan->{state_bits} - 1) . ":0] current_state, next_state;\n\n";
 
     $hdl .= "  // State sequential logic\n";
-    $hdl .= "  always_ff @(posedge $clock_name or negedge $reset_name) begin\n";
-    $hdl .= "    if (!$reset_name) begin\n";
+    $hdl .= "  always_ff @($event_control) begin\n";
+    $hdl .= "    if ($reset_condition) begin\n";
     $hdl .= "      current_state <= $state_plan->{reset_state_name};\n";
     $hdl .= "    end else begin\n";
     $hdl .= "      current_state <= next_state;\n";

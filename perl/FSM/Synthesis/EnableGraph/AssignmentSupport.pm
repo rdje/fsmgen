@@ -786,14 +786,14 @@ sub generate_unified_pulse_delay_logic ($self, $lhs, $lhs_analysis) {
 
     my @request_signals = map { $_->{enable_signal} } @{$lhs_analysis->{multiplexer}->{enables} || []};
     my $request_expr = @request_signals ? join(' | ', @request_signals) : "1'b0";
-    my $clock_name = $ctx->{enable_graph_module_planning_support}->effective_clock_name();
-    my $reset_name = $ctx->{enable_graph_module_planning_support}->effective_reset_name();
+    my $event_control = $ctx->{enable_graph_module_planning_support}->sequential_event_control();
+    my $reset_condition = $ctx->{enable_graph_module_planning_support}->reset_condition_expr();
 
     my $hdl = "  // Delayed pulse logic for: $lhs_name (<$delay_cycles, exact Q+$delay_cycles)\n";
 
     if ($delay_cycles == 0) {
-        $hdl .= "  always_ff @(posedge $clock_name or negedge $reset_name) begin\n";
-        $hdl .= "    if (!$reset_name) begin\n";
+        $hdl .= "  always_ff @($event_control) begin\n";
+        $hdl .= "    if ($reset_condition) begin\n";
         $hdl .= "      $lhs_name <= $rest_level;\n";
         $hdl .= "    end else begin\n";
         $hdl .= "      $lhs_name <= ($request_expr) ? $pulse_level : $rest_level;\n";
@@ -811,8 +811,8 @@ sub generate_unified_pulse_delay_logic ($self, $lhs, $lhs_analysis) {
         ? "1'b0"
         : '{' . $delay_cycles . "{1'b0}}";
 
-    $hdl .= "  always_ff @(posedge $clock_name or negedge $reset_name) begin\n";
-    $hdl .= "    if (!$reset_name) begin\n";
+    $hdl .= "  always_ff @($event_control) begin\n";
+    $hdl .= "    if ($reset_condition) begin\n";
     $hdl .= "      $lhs_name <= $rest_level;\n";
     $hdl .= "      $pipe_name <= $pipe_reset;\n";
     $hdl .= "    end else begin\n";
@@ -912,8 +912,8 @@ sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
     my $signal_support = $ctx->{enable_graph_signal_support};
     my $lhs_ast = $lhs_analysis->{lhs_ast};
     my $lhs_name = blessed($lhs_ast) && $lhs_ast->can('name') ? $lhs_ast->name() : 'UNKNOWN';
-    my $clock_name = $ctx->{enable_graph_module_planning_support}->effective_clock_name();
-    my $reset_name = $ctx->{enable_graph_module_planning_support}->effective_reset_name();
+    my $event_control = $ctx->{enable_graph_module_planning_support}->sequential_event_control();
+    my $reset_condition = $ctx->{enable_graph_module_planning_support}->reset_condition_expr();
     my $assignment_type = $self->get_signal_assignment_type($lhs, $lhs_analysis);
     my $enable_graph = $ctx->{enable_graph};
 
@@ -946,8 +946,8 @@ sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
 
         my $reset_value = $signal_support->get_reset_value_from_ast($lhs_ast);
 
-        $hdl .= "  always_ff @(posedge $clock_name or negedge $reset_name) begin\n";
-        $hdl .= "    if (!$reset_name) begin\n";
+        $hdl .= "  always_ff @($event_control) begin\n";
+        $hdl .= "    if ($reset_condition) begin\n";
         $hdl .= "      $lhs_name <= $reset_value;\n";
         $hdl .= "    end else begin\n";
         $hdl .= "      $lhs_name <= ${lhs_name}_next;\n";
@@ -979,8 +979,8 @@ sub generate_unified_flop_mux ($self, $lhs, $lhs_analysis) {
 
         my $reset_value = $signal_support->get_reset_value_from_ast($lhs_ast);
 
-        $hdl .= "  always_ff @(posedge $clock_name or negedge $reset_name) begin\n";
-        $hdl .= "    if (!$reset_name) begin\n";
+        $hdl .= "  always_ff @($event_control) begin\n";
+        $hdl .= "    if ($reset_condition) begin\n";
         $hdl .= "      ${lhs_name}_q <= $reset_value;\n";
         $hdl .= "    end else begin\n";
         $hdl .= "      ${lhs_name}_q <= $lhs_name;\n";
