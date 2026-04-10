@@ -187,6 +187,88 @@ FSM
     );
 };
 
+subtest 'operand-contract validation preserves typed aggregate RHS signal contracts' => sub {
+    my $compatible_fsm_module = parse_fsm_module(
+        'sv_assignment_typed_signal_aggregate_contract',
+        <<'FSM'
+(?fsm:sv_assignment_typed_signal_aggregate_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+    (type frame_t (record (tag (bits 4)) (payload payload_t)))
+  )
+  (+size
+    (IN_FRAME frame_t)
+    (OUT frame_t)
+  )
+  (idle
+    (OUT = IN_FRAME)
+  )
+)
+FSM
+    );
+
+    my $compatible_backend = prepare_flattened_backend($compatible_fsm_module);
+    $compatible_backend->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
+    my $compatible_block = $compatible_backend->{backend_sv_consolidated_intermediate_stage_preparation_support}
+        ->prepare_consolidated_intermediate_block($compatible_fsm_module);
+
+    my $compatible_error = capture_error(sub {
+        $compatible_backend->{backend_sv_operand_contract_validation_support}
+            ->validate_pre_generation_operand_contract($compatible_fsm_module, $compatible_block);
+    });
+
+    is(
+        $compatible_error,
+        '',
+        'validator accepts compatible typed aggregate RHS signal contracts',
+    );
+
+    my $incompatible_fsm_module = parse_fsm_module(
+        'sv_assignment_bad_typed_signal_aggregate_contract',
+        <<'FSM'
+(?fsm:sv_assignment_bad_typed_signal_aggregate_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type wrong_t (list bit (bits 2)))
+    (type bad_record_t (record (mode (bits 2)) (flag bit)))
+  )
+  (+size
+    (BAD_VALUE bad_record_t)
+    (OUT wrong_t)
+  )
+  (idle
+    (OUT = BAD_VALUE)
+  )
+)
+FSM
+    );
+
+    my $incompatible_backend = prepare_flattened_backend($incompatible_fsm_module);
+    $incompatible_backend->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
+    my $incompatible_block = $incompatible_backend->{backend_sv_consolidated_intermediate_stage_preparation_support}
+        ->prepare_consolidated_intermediate_block($incompatible_fsm_module);
+
+    my $incompatible_error = capture_error(sub {
+        $incompatible_backend->{backend_sv_operand_contract_validation_support}
+            ->validate_pre_generation_operand_contract($incompatible_fsm_module, $incompatible_block);
+    });
+
+    like(
+        $incompatible_error,
+        qr/assignment to 'OUT' uses whole aggregate RHS 'BAD_VALUE' with contract 'record\{mode:bits\[2\], flag:bit\}' that does not match declared type 'list<bit, bits\[2\]>'/s,
+        'validator rejects width-equal typed aggregate RHS signals when the typed LHS keeps an incompatible aggregate contract',
+    );
+};
+
 subtest 'operand-contract validation uses aggregate leaf contracts for partial LHS writes' => sub {
     my $compatible_fsm_module = parse_fsm_module(
         'sv_assignment_partial_aggregate_leaf_contract',

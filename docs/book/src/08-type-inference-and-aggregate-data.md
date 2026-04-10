@@ -193,10 +193,11 @@ Current guardrails:
 - if a deconstruct target's total width does not match the RHS width, generation
   aborts before HDL emission
 - overlapping or duplicated deconstruct LHS ranges fail before generation
-- when the RHS is a whole aggregate constant, exact nested source fragments
-  keep their own aggregate type-shape contract, so splitting `FRAME` into
-  `tag` and `payload` checks a `payload_t` target against `FRAME.payload`, not
-  against the whole `FRAME` record
+- when the RHS is a whole aggregate constant, a typed aggregate signal, or a
+  typed aggregate sub-root, exact nested source fragments keep their own
+  aggregate type-shape contract, so splitting `FRAME` or `IN_FRAME` into `tag`
+  and `payload` checks a `payload_t` target against the source `payload`
+  fragment, not against the whole `frame_t` record
 
 The important boundary is the same one used elsewhere in FSMGen: the frontend
 should normalize and validate the meaning first, then the backend should emit

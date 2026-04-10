@@ -216,6 +216,71 @@ FSM
         qr/assignment to 'PAYLOAD' uses whole aggregate RHS 'BAD\[2:0\]' with contract 'record\{mode:bits\[2\], flag:bit\}' that does not match declared type 'list<bit, bits\[2\]>'/s,
         'aggregate deconstruct rejects incompatible typed source fragments against the target fragment contract',
     );
+
+    my $typed_signal_fsm_module = parse_fsm_module(
+        'direct_lhs_deconstruct_typed_signal_fragment_contract',
+        <<'FSM'
+(?fsm:direct_lhs_deconstruct_typed_signal_fragment_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+    (type frame_t (record (tag (bits 4)) (payload payload_t)))
+  )
+  (+size
+    (IN_FRAME frame_t)
+    (TAG 4)
+    (PAYLOAD payload_t)
+    (OUT frame_t)
+  )
+  (idle
+    ((concat TAG PAYLOAD) = IN_FRAME)
+    ((concat OUT.tag OUT.payload) = IN_FRAME)
+  )
+)
+FSM
+    );
+
+    my $typed_signal_hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($typed_signal_fsm_module);
+
+    like($typed_signal_hdl, qr/\bTAG\s*=\s*IN_FRAME\[6:3\];/s, 'typed aggregate RHS signal high fragment drives the scalar tag target');
+    like($typed_signal_hdl, qr/\bPAYLOAD\s*=\s*IN_FRAME\[2:0\];/s, 'typed aggregate RHS signal low fragment drives the compatible aggregate payload target');
+    like(
+        $typed_signal_hdl,
+        qr/\bOUT\s*=\s*\{IN_FRAME\[6:3\],\s*IN_FRAME\[2:0\]\};/s,
+        'typed aggregate RHS signal fragments rejoin through partial aggregate LHS normalization',
+    );
+
+    like(
+        generation_failure(
+            'direct_lhs_deconstruct_bad_typed_signal_fragment_contract',
+            <<'FSM'
+(?fsm:direct_lhs_deconstruct_bad_typed_signal_fragment_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+    (type bad_payload_t (record (mode (bits 2)) (flag bit)))
+    (type bad_frame_t (record (tag (bits 4)) (payload bad_payload_t)))
+  )
+  (+size
+    (BAD_FRAME bad_frame_t)
+    (TAG 4)
+    (PAYLOAD payload_t)
+  )
+  (idle
+    ((concat TAG PAYLOAD) = BAD_FRAME)
+  )
+)
+FSM
+        ),
+        qr/assignment to 'PAYLOAD' uses whole aggregate RHS 'BAD_FRAME\[2:0\]' with contract 'record\{mode:bits\[2\], flag:bit\}' that does not match declared type 'list<bit, bits\[2\]>'/s,
+        'aggregate deconstruct rejects incompatible typed RHS signal fragments against the target fragment contract',
+    );
 };
 
 done_testing();

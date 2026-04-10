@@ -2459,7 +2459,7 @@ sub parse_signal_action($self, $action) {
         raw_condition_suffix => defined($full_condition) ? (ref($full_condition) ? ref($full_condition) : $full_condition) : undef,
         had_compound_modifier => $compound_spec ? 1 : 0,
     );
-    my $aggregate_contract = $self->resolve_direct_assignment_aggregate_contract($value_expr);
+    my $aggregate_contract = $self->resolve_direct_assignment_aggregate_contract($value_expr, $source_expr);
     if ($aggregate_contract) {
         $source_provenance{aggregate_symbol_name} = $aggregate_contract->{symbol_name};
         $source_provenance{aggregate_type_spec} = $aggregate_contract->{type_spec};
@@ -2625,23 +2625,50 @@ sub parse_signal_action($self, $action) {
     return $assignment;
 }
 
-sub resolve_direct_assignment_aggregate_contract($self, $value_expr) {
-    return undef if ref($value_expr);
-    return undef unless defined($value_expr) && length($value_expr);
+sub resolve_direct_assignment_aggregate_contract($self, $value_expr, $source_expr = undef) {
+    if (!ref($value_expr) && defined($value_expr) && length($value_expr)) {
+        my $aggregate_payload = $self->{signal_manager}->resolve_aggregate_symbol_payload($value_expr);
+        if (defined $aggregate_payload) {
+            my $type_spec = FSM::Package::PayloadTypeSupport->payload_to_type_spec($aggregate_payload);
+            if (ref($type_spec) eq 'HASH' && $self->is_aggregate_type_spec($type_spec)) {
+                return {
+                    symbol_name => $value_expr,
+                    type_spec => $type_spec,
+                };
+            }
+        }
+    }
 
-    my $aggregate_payload = $self->{signal_manager}->resolve_aggregate_symbol_payload($value_expr);
-    return undef unless defined $aggregate_payload;
+    return undef unless $source_expr && blessed($source_expr);
 
-    my $type_spec = FSM::Package::PayloadTypeSupport->payload_to_type_spec($aggregate_payload);
-    return undef unless ref($type_spec) eq 'HASH';
+    my ($type_spec, $symbol_name);
+    if ($source_expr->isa('FSM::CoreAST::SignalRef')) {
+        return undef if $source_expr->slice;
+        my $signal = $source_expr->signal;
+        return undef unless $signal && blessed($signal) && $signal->can('declared_type_spec');
 
-    my $kind = $type_spec->{kind} || '';
-    return undef unless $kind eq 'list' || $kind eq 'record';
+        $type_spec = $signal->declared_type_spec;
+        $symbol_name = eval { $source_expr->to_systemverilog };
+        $symbol_name ||= $signal->can('name') ? $signal->name : undef;
+    } elsif ($source_expr->isa('FSM::CoreAST::AggregateRef')) {
+        $type_spec = $source_expr->type_spec;
+        $symbol_name = eval { $source_expr->to_systemverilog };
+    } else {
+        return undef;
+    }
+
+    return undef unless ref($type_spec) eq 'HASH' && $self->is_aggregate_type_spec($type_spec);
 
     return {
-        symbol_name => $value_expr,
+        symbol_name => $symbol_name,
         type_spec => $type_spec,
     };
+}
+
+sub is_aggregate_type_spec($self, $type_spec) {
+    return 0 unless ref($type_spec) eq 'HASH';
+    my $kind = $type_spec->{kind} || '';
+    return ($kind eq 'list' || $kind eq 'record') ? 1 : 0;
 }
 
 sub resolve_single_bit_logic_level($self, $source_expr, $raw_value_expr) {
