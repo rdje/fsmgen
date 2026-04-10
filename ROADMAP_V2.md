@@ -1422,6 +1422,9 @@ The first honest `R11` slices are now:
   like `TAIL` assigned to `OUT.payload` against the `payload` leaf type
   contract rather than the normalized whole `OUT` contract, while
   width-equal but shape-incompatible leaf writes still fail before emission.
+  The contract is now locked through direct pipeline/CLI coverage too, and the
+  backend validator fallback delegates target-contract extraction to the
+  assignment-support owner instead of carrying a second AST walker.
 - Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
   approachable, the preferred shape is a book-like docs set with one Markdown
   file per major topic, a landing-page/table-of-contents role for

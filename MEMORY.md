@@ -10,10 +10,12 @@ This is the live continuity document for fast session recovery after crashes, re
   - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm)
     now validates whole aggregate RHS values against the actual aggregate leaf
     target contract, such as `OUT.payload`, instead of the normalized base
-    signal contract,
+    signal contract, and delegates fallback target-contract extraction back to
+    the assignment-support owner,
   - and [t/270-systemverilog-assignment-width-contract-validation.t](/Users/richarddje/Documents/github/fsmgen/t/270-systemverilog-assignment-width-contract-validation.t)
     locks both compatible aggregate leaf writes and incompatible width-equal
-    shape failures before emission.
+    shape failures before emission, while [t/276-direct-local-aggregate-values.t](/Users/richarddje/Documents/github/fsmgen/t/276-direct-local-aggregate-values.t)
+    now locks the same behavior end to end through pipeline and CLI runs.
 
 ## 2026-04-10: aggregate path traversal now has one package-level owner
 - Saved the follow-up hardening slice after composition aggregate path

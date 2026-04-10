@@ -389,24 +389,9 @@ sub _aggregate_assignment_contract_from_provenance ($self, $lhs, $assignment, $s
 }
 
 sub _target_aggregate_contract_from_lhs_ast ($self, $lhs, $lhs_ast) {
-    return unless blessed($lhs_ast);
-
-    if ($lhs_ast->isa('FSM::CoreAST::AggregateRef')) {
-        my $target_type_spec = $lhs_ast->type_spec;
-        my $target_display = eval { $lhs_ast->to_systemverilog } || $lhs;
-        return ($target_type_spec, $target_display);
-    }
-
-    return if $lhs_ast->isa('FSM::CoreAST::IndexedRef') || $lhs_ast->isa('FSM::AST::IndexedRef');
-    return unless $lhs_ast->isa('FSM::CoreAST::SignalRef') || $lhs_ast->isa('FSM::AST::SignalRef');
-    return if $lhs_ast->can('slice') && $lhs_ast->slice;
-
-    my $target_signal = $lhs_ast->can('signal') ? $lhs_ast->signal : undef;
-    return unless $target_signal && blessed($target_signal);
-    return unless $target_signal->can('declared_type_spec');
-
-    my $target_type_spec = $target_signal->declared_type_spec;
-    return ($target_type_spec, $lhs);
+    my $assignment_support = $self->{flattened_dt}{enable_graph_assignment_support};
+    return unless $assignment_support && $assignment_support->can('assignment_target_aggregate_contract');
+    return $assignment_support->assignment_target_aggregate_contract($lhs, $lhs_ast);
 }
 
 sub _validate_named_expression ($self, $label, $expression, $inventory, $violations) {

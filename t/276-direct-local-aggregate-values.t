@@ -532,6 +532,126 @@ FSM
     isnt($error_code, 0, 'CLI exits non-zero for incompatible typed whole local aggregate roots');
 };
 
+subtest 'pipeline and CLI validate whole aggregate roots against partial aggregate leaf targets' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $good_path = File::Spec->catfile($tempdir, 'direct_local_typed_partial_aggregate_leaf.fsm');
+    my $good_output_path = File::Spec->catfile($tempdir, 'direct_local_typed_partial_aggregate_leaf.sv');
+    my $bad_path = File::Spec->catfile($tempdir, 'bad_direct_local_typed_partial_aggregate_leaf.fsm');
+    my $bad_output_path = File::Spec->catfile($tempdir, 'bad_direct_local_typed_partial_aggregate_leaf.sv');
+
+    write_file(
+        $good_path,
+        <<'FSM'
+(?fsm:direct_local_typed_partial_aggregate_leaf
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+constants
+    (TAIL (1 const_2b10))
+  )
+  (+types
+    (type tail_t (list bit (bits 2)))
+    (type frame_t (record (tag (bits 3)) (payload tail_t)))
+  )
+  (+size
+    (OUT frame_t)
+  )
+  (idle
+    (OUT.payload = TAIL)
+  )
+)
+FSM
+    );
+
+    write_file(
+        $bad_path,
+        <<'FSM'
+(?fsm:bad_direct_local_typed_partial_aggregate_leaf
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+constants
+    (BAD ((mode const_2b10) (flag 1)))
+  )
+  (+types
+    (type tail_t (list bit (bits 2)))
+    (type frame_t (record (tag (bits 3)) (payload tail_t)))
+  )
+  (+size
+    (OUT frame_t)
+  )
+  (idle
+    (OUT.payload = BAD)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug => 0,
+    );
+    my $result = $pipeline->generate_hdl_from_file($good_path);
+    my $hdl = $result->{hdl_code};
+    like(
+        $hdl,
+        qr/\bOUT\s*=\s*\{\s*3'b000,\s*3'b110\s*\};/s,
+        'pipeline accepts compatible whole aggregate roots on partial aggregate leaf targets',
+    );
+    unlike(
+        $hdl,
+        qr/\bTAIL\b/s,
+        'pipeline lowers compatible partial aggregate leaf roots before emission',
+    );
+
+    my @good_cmd = ('./bin/fsmgen', '--quiet', '--output', $good_output_path, $good_path);
+    my ($good_success, $good_error_code, $good_full_buf, $good_stdout_buf, $good_stderr_buf) = run(command => \@good_cmd, verbose => 0);
+    my $good_combined_output = join('', @{$good_stdout_buf || []}, @{$good_stderr_buf || []});
+    my $good_output_text = slurp_file($good_output_path);
+
+    ok($good_success, 'CLI accepts compatible whole aggregate roots on partial aggregate leaf targets');
+    ok(-e $good_output_path, 'CLI emits HDL for compatible partial aggregate leaf targets');
+    ok(!defined($good_error_code) || $good_error_code == 0, 'CLI exits successfully for compatible partial aggregate leaf targets');
+    unlike($good_combined_output, qr/aggregate contract|whole aggregate RHS/s, 'successful partial aggregate leaf CLI run does not report aggregate-contract failures');
+    like(
+        $good_output_text,
+        qr/\bOUT\s*=\s*\{\s*3'b000,\s*3'b110\s*\};/s,
+        'CLI output preserves the packed leaf update on the base signal',
+    );
+    unlike(
+        $good_output_text,
+        qr/\bTAIL\b/s,
+        'CLI output lowers compatible partial aggregate leaf roots before emission',
+    );
+
+    my $pipeline_error = eval {
+        $pipeline->generate_hdl_from_file($bad_path);
+        undef;
+    };
+    $pipeline_error = $@ if !$pipeline_error;
+
+    like(
+        $pipeline_error,
+        qr/assignment to 'OUT\.payload' uses whole aggregate RHS 'BAD' with contract 'record\{mode:bits\[2\], flag:bit\}' that does not match declared type 'list<bit, bits\[2\]>'/s,
+        'pipeline rejects incompatible whole aggregate roots against partial aggregate leaf targets',
+    );
+
+    my @bad_cmd = ('./bin/fsmgen', '--quiet', '--output', $bad_output_path, $bad_path);
+    my ($bad_success, $bad_error_code, $bad_full_buf, $bad_stdout_buf, $bad_stderr_buf) = run(command => \@bad_cmd, verbose => 0);
+    my $bad_combined_output = join('', @{$bad_stdout_buf || []}, @{$bad_stderr_buf || []});
+
+    ok(!$bad_success, 'CLI rejects incompatible whole aggregate roots against partial aggregate leaf targets');
+    ok(!-e $bad_output_path, 'CLI does not emit HDL for incompatible partial aggregate leaf targets');
+    like(
+        $bad_combined_output,
+        qr/assignment to 'OUT\.payload' uses whole aggregate RHS 'BAD' with contract 'record\{mode:bits\[2\], flag:bit\}' that does not match declared type 'list<bit, bits\[2\]>'/s,
+        'CLI surfaces the blocked partial aggregate leaf contract mismatch',
+    );
+    isnt($bad_error_code, 0, 'CLI exits non-zero for incompatible partial aggregate leaf targets');
+};
+
 subtest 'pipeline and CLI reject mixed local aggregate value shapes' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $fsm_path = File::Spec->catfile($tempdir, 'bad_local_aggregate_shape.fsm');

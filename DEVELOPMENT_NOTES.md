@@ -15,11 +15,19 @@ This document captures engineering rationale, design constraints, and working de
     whole `OUT` frame contract,
   - and an incompatible width-equal whole aggregate RHS still fails before
     generation with the leaf target named in the diagnostic.
+- Follow-up hardening:
+  - the end-to-end direct-root pipeline and CLI paths now regression-lock the
+    same compatible and incompatible `OUT.payload = TAIL/BAD` contract,
+  - and the backend validator fallback now asks `AssignmentSupport` for target
+    aggregate contract extraction instead of keeping a duplicate AST walker in
+    the validation package.
 - Why this boundary matters:
   - partial LHS normalization is an implementation detail for mux lowering,
     not permission to lose the authored target type,
   - pre-generation validation should see the upright semantic assignment that
     the user wrote, even if the backend later emits one full-width mux input,
+  - keeping target-contract extraction in the assignment-support owner reduces
+    another small drift risk between normalization and validation,
   - and this keeps the “generation is the final AST/IR walk” rule honest by
     checking aggregate shape compatibility before renderer-side text exists.
 
