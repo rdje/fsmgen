@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-10
+### direct assignment RHS pack expressions now support concat
+- Updated [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) so direct expression parsing now accepts `(concat ...)` plus the `(cat ...)` alias as a first bounded RHS pack form, preserving a `FSM::CoreAST::Concatenation` node instead of rejecting the operator as future syntax.
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so direct concat RHS width is inferred from exact-width operands before generation, allowing exact matches while preserving the authored RHS display for mismatch diagnostics.
+- Updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm) so pre-generation width-contract failures prefer the authored RHS rendering rather than any internal failed adaptation AST.
+- Updated [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t) and [t/270-systemverilog-assignment-width-contract-validation.t](/Users/richarddje/Documents/github/fsmgen/t/270-systemverilog-assignment-width-contract-validation.t) to lock direct concat/cat parsing, emitted SystemVerilog concat text, and pre-generation rejection of width-mismatched direct RHS pack expressions.
+
 ### partial aggregate LHS whole-aggregate RHS checks now use the leaf target contract
 - Updated [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm) so partial LHS normalization preserves per-assignment whole-aggregate source contracts together with the original aggregate leaf target contract before collapsing those writes into one base-signal mux assignment.
 - Updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm) so pre-generation validation compares a whole aggregate RHS against the actual aggregate leaf LHS contract, such as `OUT.payload`, rather than the normalized base signal contract, such as `OUT`.

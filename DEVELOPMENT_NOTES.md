@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-10: direct RHS pack expressions now have a first bounded concat form
+- Landed the first shipped slice of the pack/deconstruct steering lane by
+  enabling direct assignment RHS `(concat ...)` expressions and the short
+  `(cat ...)` alias.
+- Landed behavior:
+  - `FSM::Adapter::FSMGenFull::ExpressionBuilder` now recognizes `concat` /
+    `cat` as a dedicated expression family and preserves a
+    `FSM::CoreAST::Concatenation` node,
+  - direct concat operands must have exact widths before generation from
+    declared signal widths, bit/slice or aggregate leaf access, or explicitly
+    sized literal constants,
+  - `FSM::Adapter::FSMGenFull::Parser` now records the summed concat RHS width
+    in the existing assignment width contract,
+  - and the pre-generation SystemVerilog validator now reports the authored
+    RHS rendering, such as `{HI, LO}`, rather than a failed temporary padded or
+    truncated AST when it rejects a width mismatch.
+- Why this boundary matters:
+  - RHS pack is now a real AST-level expression, not renderer-side raw HDL
+    text,
+  - exact width agreement is checked before HDL emission,
+  - this gives users a practical way to compose one target from static-width
+    pieces while keeping the “generation just walks the upright AST” rule,
+  - and LHS deconstruction remains a separate future semantic feature rather
+    than being inferred from concat text.
+
 ## 2026-04-10: aggregate assignment validation must follow leaf targets through mux normalization
 - Hardened the pre-generation aggregate contract gate after partial aggregate
   LHS lowering gained correct packed ranges but whole-aggregate RHS validation

@@ -158,20 +158,35 @@ But the guardrail remains:
 - if the backend cannot honor the inferred shape honestly, generation must fail
   explicitly
 
-## Future Pack And Deconstruct Direction
+## Current RHS Pack And Future Deconstruct Direction
 
-FSMGen may also grow an intent-level way to pack and deconstruct aggregate-like
-values in assignments. This is a future direction, not shipped behavior yet.
+FSMGen now has a first bounded direct assignment RHS pack form:
 
-The shape to keep in mind is:
+```lisp
+(idle
+  (OUT = (concat HEADER PAYLOAD))
+  (ALIAS_OUT = (cat HEADER PAYLOAD))
+)
+```
 
-- an RHS pack form would build one target from several static-width
-  expressions
-- an LHS deconstruct form would split one RHS into several legal static
-  lvalues
+This is an intent-level expression, not raw renderer text. The authored
+operands are ordered left to right and emitted high to low in SystemVerilog,
+for example `{HEADER, PAYLOAD}`.
+
+Current guardrails:
+
+- direct RHS pack uses `(concat ...)` or the shorter `(cat ...)` alias
+- operands must have exact widths from declared signal widths, bit/slice or
+  typed aggregate leaf access, or explicitly sized literal constants
+- total width is checked before HDL generation
+- if the RHS pack width does not match the LHS width, generation aborts through
+  the pre-generation assignment-width contract instead of silently padding or
+  truncating
+
+LHS deconstruction remains future work:
+
+- an LHS deconstruct form would split one RHS into several legal static lvalues
 - authored left-to-right order should map high-to-low in the packed value
-- total widths and element type compatibility must be checked before HDL
-  generation
 - overlapping or duplicated LHS ranges should fail unless a future semantic
   pass defines deliberate merge or priority behavior
 

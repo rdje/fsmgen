@@ -276,7 +276,10 @@ sub _validate_assignment_width_contract ($self, $lhs, $lhs_analysis, $assignment
     my $lhs_width = $self->{flattened_dt}{enable_graph_assignment_support}
         ->get_lhs_width_from_analysis($lhs_analysis);
     my $rhs_width = $width_contract->{rhs_width};
-    my $rhs_display = defined($source_provenance->{raw_value_expr})
+    my $rhs_display = defined($source_provenance->{raw_value_expr_rendered})
+            && $source_provenance->{raw_value_expr_rendered} ne ''
+        ? $source_provenance->{raw_value_expr_rendered}
+        : defined($source_provenance->{raw_value_expr})
             && $source_provenance->{raw_value_expr} ne ''
             && $source_provenance->{raw_value_expr} !~ /^(?:ARRAY|HASH)$/
         ? $source_provenance->{raw_value_expr}

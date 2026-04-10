@@ -438,10 +438,15 @@ Operator expressions:
   - `(mask = (^ x y z))`
   - `(alias_sum = (add a b c d))`
   - `(alias_xor = (xor x y z))`
+  - `(packed = (concat header payload))`
+  - `(alias_packed = (cat header payload))`
   - `(inv = (not ready))`
 
 Boundary note:
 - The active contract now includes the systematic shorthand guard family for simple truthiness and inline comparisons.
+- Direct assignment RHS pack expressions now support `(concat ...)` with the shorter `(cat ...)` alias. Operands are authored left to right and emitted high to low as a SystemVerilog concat such as `{header, payload}`.
+- Direct RHS concat operands must have exact widths before generation, currently from declared signal widths, bit/slice or typed aggregate leaf access, or explicitly sized literal constants. Width mismatches against the LHS are rejected by the pre-generation width contract instead of being silently padded or truncated.
+- LHS deconstruction, where one RHS is split across several authored LHS targets, is still future work and is not inferred from raw HDL text.
 - Broader future language ideas may still refine the canonical spelling later, but the shorthand forms above are now real supported syntax in the active tool.
 - Malformed guard shorthand payloads such as `<mode=` or `<==3` are now rejected explicitly instead of falling through to generic expression-token errors.
 - Inline scalar comparison tokens such as `cnt[2:1]!=2'2` are part of the active expression surface.

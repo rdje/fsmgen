@@ -7,6 +7,7 @@ use Carp qw(confess);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use Data::Dumper;
+use Scalar::Util qw(blessed);
 use FSM::CoreAST;
 use FSM::Debug;
 use FSM::Package::AggregatePathSupport;
@@ -162,10 +163,11 @@ sub normalize_expression_operator($self, $operator) {
         gt  => '>',
         ge  => '>=',
         not => '!',
+        cat => 'concat',
     );
 
     my $normalized = $operator_aliases{$operator} // $operator;
-    my %supported = map { $_ => 1 } qw(! == != < <= > >= & | ^ + - * / %);
+    my %supported = map { $_ => 1 } qw(! == != < <= > >= & | ^ + - * / % concat);
     return $supported{$normalized} ? $normalized : undef;
 }
 
@@ -173,6 +175,7 @@ sub operator_family_for($self, $normalized_operator) {
     return 'unary' if defined $normalized_operator && $normalized_operator eq '!';
     return 'comparison'
         if defined $normalized_operator && $normalized_operator =~ /^(?:==|!=|<|<=|>|>=)$/;
+    return 'concat' if defined $normalized_operator && $normalized_operator eq 'concat';
     return 'nary'
         if defined $normalized_operator && $normalized_operator =~ /^(?:&|\||\^|\+|-|\*|\/|%)$/;
     return undef;
@@ -230,7 +233,7 @@ sub parse_recursive_expression($self, $expr) {
 
     Carp::confess
         "Unsupported expression operator '$operator'. ".
-        "Active expression operators currently include '!', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '&', '|', '^' and their documented aliases. ".
+        "Active expression operators currently include '!', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '&', '|', '^', 'concat' and their documented aliases. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless $operator_family;
 
@@ -263,6 +266,19 @@ sub parse_recursive_expression($self, $expr) {
 
     return $self->build_chained_relational_expression($normalized_operator, \@parsed_operands)
         if $operator_family eq 'comparison';
+
+    if ($operator_family eq 'concat') {
+        my $concat = FSM::CoreAST::Concatenation->new(@parsed_operands);
+        my $concat_width = $self->infer_exact_expression_width($concat);
+
+        Carp::confess
+            "Malformed concat expression with " . scalar(@parsed_operands) . " operand(s). ".
+            "Direct RHS concat operands must have exact widths from declared signal widths, bit/slice or aggregate leaf access, or explicitly sized literal constants before generation. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless defined($concat_width) && $concat_width > 0;
+
+        return $concat;
+    }
 
     return $self->finalize_nary_expression($normalized_operator, \@parsed_operands);
 }
@@ -647,8 +663,70 @@ sub parse_sexpr_expression($self, $sexpr) {
     
     Carp::confess
         "Unsupported expression operator '$operator'. ".
-        "Active expression operators currently include '!', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '&', '|', '^' and their documented aliases. ".
+        "Active expression operators currently include '!', '==', '!=', '<', '<=', '>', '>=', '+', '-', '*', '/', '%', '&', '|', '^', 'concat' and their documented aliases. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n";
+}
+
+sub infer_exact_expression_width($self, $expr) {
+    return undef unless $expr && blessed($expr);
+
+    if ($expr->isa('FSM::CoreAST::Literal')) {
+        my $width = $expr->width;
+        return (defined($width) && $width > 0) ? $width : undef;
+    }
+
+    if ($expr->isa('FSM::CoreAST::SignalRef')) {
+        if ($expr->slice) {
+            my ($high, $low) = @{$expr->slice};
+            return abs($high - $low) + 1;
+        }
+
+        my $signal = $expr->signal;
+        return undef unless $signal && $signal->can('width');
+        my $width = $signal->width;
+        return (defined($width) && $width > 0) ? $width : undef;
+    }
+
+    if ($expr->isa('FSM::CoreAST::IndexedRef')) {
+        return 1;
+    }
+
+    if ($expr->isa('FSM::CoreAST::AggregateRef')) {
+        my $width = $expr->width;
+        return $width if defined($width) && $width > 0;
+
+        my $type_spec = $expr->type_spec;
+        return $type_spec->{width}
+            if ref($type_spec) eq 'HASH' && defined($type_spec->{width}) && $type_spec->{width} > 0;
+        return undef;
+    }
+
+    if ($expr->isa('FSM::CoreAST::UnaryOp')) {
+        return 1 if $expr->operator eq '!';
+        return $self->infer_exact_expression_width($expr->operand);
+    }
+
+    if ($expr->isa('FSM::CoreAST::BinaryOp')) {
+        my $operator = $expr->operator;
+        return 1 if defined($operator) && $operator =~ /^(?:==|!=|<|>|<=|>=)$/;
+
+        my $left_width = $self->infer_exact_expression_width($expr->left);
+        my $right_width = $self->infer_exact_expression_width($expr->right);
+        return undef unless defined($left_width) && defined($right_width);
+        return $left_width > $right_width ? $left_width : $right_width;
+    }
+
+    if ($expr->isa('FSM::CoreAST::Concatenation')) {
+        my $total_width = 0;
+        for my $operand (@{$expr->operands}) {
+            my $operand_width = $self->infer_exact_expression_width($operand);
+            return undef unless defined($operand_width) && $operand_width > 0;
+            $total_width += $operand_width;
+        }
+        return $total_width > 0 ? $total_width : undef;
+    }
+
+    return undef;
 }
 
 sub parse_signal_reference($self, $signal_spec) {

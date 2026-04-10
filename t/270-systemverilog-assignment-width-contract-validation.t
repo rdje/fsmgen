@@ -91,6 +91,59 @@ FSM
     );
 };
 
+subtest 'operand-contract validation rejects direct RHS concat width mismatches before emission' => sub {
+    my $fsm_module = parse_fsm_module(
+        'sv_assignment_direct_concat_width_contract',
+        <<'FSM'
+(?fsm:sv_assignment_direct_concat_width_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (BUS 8)
+    (HI 3)
+    (LO 4)
+  )
+  (idle
+    (BUS = (concat HI LO))
+  )
+)
+FSM
+    );
+
+    my $backend = prepare_flattened_backend($fsm_module);
+    $backend->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
+    my $prepared_block = $backend->{backend_sv_consolidated_intermediate_stage_preparation_support}
+        ->prepare_consolidated_intermediate_block($fsm_module);
+
+    my $error = capture_error(sub {
+        $backend->{backend_sv_operand_contract_validation_support}
+            ->validate_pre_generation_operand_contract($fsm_module, $prepared_block);
+    });
+
+    like(
+        $error,
+        qr/assignment to 'BUS' uses RHS '\{HI, LO\}' with incompatible width 7 for LHS width 8; .*implicit widening/s,
+        'validator rejects direct RHS concat implicit widening before emission',
+    );
+
+    my $pipeline_backend = prepare_flattened_backend($fsm_module);
+    my $pipeline_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport->new(
+        flattened_dt => $pipeline_backend,
+    );
+    my $pipeline_error = capture_error(sub {
+        $pipeline_support->generate_systemverilog_module($fsm_module);
+    });
+
+    like(
+        $pipeline_error,
+        qr/assignment to 'BUS' uses RHS '\{HI, LO\}' with incompatible width 7 for LHS width 8/s,
+        'generation pipeline surfaces the direct RHS concat width mismatch',
+    );
+};
+
 subtest 'operand-contract validation rejects width-equal whole aggregate RHS values against incompatible typed aggregate LHS contracts' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_assignment_aggregate_contract',

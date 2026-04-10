@@ -2044,6 +2044,7 @@ sub parse_signal_action($self, $action) {
 
     my $target_expr = $self->{expression_builder}->parse_signal_reference($signal_name);
     my $source_expr = $self->{expression_builder}->parse_expression($value_expr);
+    my $raw_source_expr_display;
     my ($compound_operator_used, $compound_delta_used);
     
     if ($compound_spec) {
@@ -2059,6 +2060,7 @@ sub parse_signal_action($self, $action) {
         
         fsm_debug("[Parser.pm][parse_signal_action()] Applied compound modifier '$compound_op' with delta '$delta_spec' on '$signal_name'", 3);
     }
+    $raw_source_expr_display = eval { $source_expr->to_systemverilog };
     
     my $target_base_signal = $self->get_target_base_signal_name($signal_name, $target_expr);
     if ($operator eq '=') {
@@ -2112,6 +2114,12 @@ sub parse_signal_action($self, $action) {
         && $source_expr->width > 0) {
         $rhs_width = $source_expr->width;
         $rhs_explicit = 1;
+    } elsif (ref($source_expr) eq 'FSM::CoreAST::Concatenation') {
+        my $concat_width = $self->{expression_builder}->infer_exact_expression_width($source_expr);
+        if (defined($concat_width) && $concat_width > 0) {
+            $rhs_width = $concat_width;
+            $rhs_explicit = 1;
+        }
     } elsif (ref($source_expr) eq 'FSM::CoreAST::SignalRef'
         && $source_expr->signal
         && defined($source_expr->signal->width)
@@ -2173,6 +2181,7 @@ sub parse_signal_action($self, $action) {
         raw_signal_name => $signal_name,
         raw_operator => $operator,
         raw_value_expr => ref($value_expr) ? ref($value_expr) : $value_expr,
+        raw_value_expr_rendered => $raw_source_expr_display,
         raw_condition_suffix => defined($full_condition) ? (ref($full_condition) ? ref($full_condition) : $full_condition) : undef,
         had_compound_modifier => $compound_spec ? 1 : 0,
     );

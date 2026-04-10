@@ -218,6 +218,10 @@ subtest 'broader operator expressions keep their documented lowering' => sub {
     (quo 8)
     (rem 8)
     (alias_sum 8)
+    (packed 8)
+    (alias_packed 8)
+    (hi 3)
+    (lo 5)
     (mask 1)
     (alias_xor 1)
     (a 8)
@@ -235,6 +239,8 @@ subtest 'broader operator expressions keep their documented lowering' => sub {
     (quo = (/ a b c d))
     (rem = (% a b c d))
     (alias_sum = (add a b c d))
+    (packed = (concat hi lo))
+    (alias_packed = (cat hi lo))
     (mask = (^ x y z))
     (alias_xor = (xor x y z))
   )
@@ -242,7 +248,7 @@ subtest 'broader operator expressions keep their documented lowering' => sub {
 FSM
 
     my $elements = state_elements($fsm_module, '-math');
-    is(scalar(@$elements), 8, 'math DT has the expected number of assignments');
+    is(scalar(@$elements), 10, 'math DT has the expected number of assignments');
 
     my %assignment_by_target = map {
         extract_target_name($_) => $_
@@ -286,6 +292,16 @@ FSM
         [qw(a b c d)],
         'word alias add lowers to +'
     );
+    assert_concat_expression(
+        $assignment_by_target{packed}->source,
+        [qw(hi lo)],
+        'direct RHS concat lowering'
+    );
+    assert_concat_expression(
+        $assignment_by_target{alias_packed}->source,
+        [qw(hi lo)],
+        'direct RHS cat alias lowering'
+    );
 
     ok($assignment_by_target{mask}->source->isa('FSM::CoreAST::SignalRef'), 'n-ary ^ lowering uses an intermediate signal in the active parser');
     ok($assignment_by_target{alias_xor}->source->isa('FSM::CoreAST::SignalRef'), 'word alias xor also uses an intermediate signal');
@@ -304,6 +320,8 @@ FSM
 
     my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
     like($hdl, qr/module\s+operator_contract\b/s, 'operator-contract FSM still generates HDL through the active backend');
+    like($hdl, qr/\bpacked\s*=\s*\{\s*hi,\s*lo\s*\}/s, 'operator-contract HDL emits direct RHS concat as an SV concat');
+    like($hdl, qr/\balias_packed\s*=\s*\{\s*hi,\s*lo\s*\}/s, 'operator-contract HDL emits direct RHS cat alias as an SV concat');
 };
 
 done_testing();
@@ -364,6 +382,18 @@ sub assert_left_associative_binary_tree {
         } else {
             $node = $node->left;
         }
+    }
+}
+
+sub assert_concat_expression {
+    my ($expr, $expected_leaves, $label) = @_;
+
+    ok($expr->isa('FSM::CoreAST::Concatenation'), "$label keeps a Concatenation node");
+    my @operands = @{$expr->operands || []};
+    is(scalar(@operands), scalar(@$expected_leaves), "$label keeps the expected operand count");
+
+    for my $i (0 .. $#$expected_leaves) {
+        is(expr_leaf_name($operands[$i]), $expected_leaves->[$i], "$label keeps operand $expected_leaves->[$i] at position $i");
     }
 }
 

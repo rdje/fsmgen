@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-10: direct RHS concat pack now has a first shipped slice
+- Saved one bounded pack/deconstruct-lane implementation step.
+- Important continuity note:
+  - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm)
+    now accepts direct RHS `(concat ...)` and `(cat ...)` forms and preserves
+    them as `FSM::CoreAST::Concatenation`,
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
+    now records exact summed concat RHS widths in assignment width contracts,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm)
+    now prefers the authored RHS rendering in width-contract diagnostics, so
+    mismatch errors name `{HI, LO}` instead of a failed internal padded AST,
+  - and [t/29-language-contract-core-forms.t](/Users/richarddje/Documents/github/fsmgen/t/29-language-contract-core-forms.t)
+    plus [t/270-systemverilog-assignment-width-contract-validation.t](/Users/richarddje/Documents/github/fsmgen/t/270-systemverilog-assignment-width-contract-validation.t)
+    lock parsing, emitted SV concat text, and pre-generation width rejection.
+- LHS deconstruction is still future work; do not imply it shipped with this
+  RHS pack slice.
+
 ## 2026-04-10: partial aggregate LHS validation now keeps leaf contracts
 - Saved one pre-generation validation hardening slice for aggregate
   assignments.
