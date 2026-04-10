@@ -184,6 +184,11 @@ Current guardrails:
 - pack and deconstruct operands must have exact widths from declared signal
   widths, bit/slice or typed aggregate leaf access, or explicitly sized literal
   constants on the RHS pack path
+- when direct RHS concat drives a declared aggregate target, FSMGen infers a
+  source shape contract before generation: list targets compare against the
+  ordered concat operand list, nested concat operands keep nested list shape,
+  and record targets map exact top-level concat operands onto record member
+  order
 - deconstruct LHS operands must be static writable lvalues: whole signals,
   static bit/slice references, or typed aggregate leaf references
 - total width is checked before HDL generation

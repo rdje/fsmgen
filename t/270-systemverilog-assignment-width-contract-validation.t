@@ -269,6 +269,255 @@ FSM
     );
 };
 
+subtest 'operand-contract validation infers direct RHS concat aggregate contracts for typed targets' => sub {
+    my $compatible_list_fsm_module = parse_fsm_module(
+        'sv_assignment_concat_list_contract',
+        <<'FSM'
+(?fsm:sv_assignment_concat_list_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+  )
+  (+size
+    (FLAG 1)
+    (DATA 2)
+    (OUT payload_t)
+  )
+  (idle
+    (OUT = (concat FLAG DATA))
+  )
+)
+FSM
+    );
+
+    my $compatible_list_backend = prepare_flattened_backend($compatible_list_fsm_module);
+    $compatible_list_backend->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
+    my $compatible_list_block = $compatible_list_backend->{backend_sv_consolidated_intermediate_stage_preparation_support}
+        ->prepare_consolidated_intermediate_block($compatible_list_fsm_module);
+
+    my $compatible_list_error = capture_error(sub {
+        $compatible_list_backend->{backend_sv_operand_contract_validation_support}
+            ->validate_pre_generation_operand_contract($compatible_list_fsm_module, $compatible_list_block);
+    });
+
+    is(
+        $compatible_list_error,
+        '',
+        'validator accepts direct RHS concat whose inferred list shape matches the typed list target',
+    );
+
+    my $bad_list_fsm_module = parse_fsm_module(
+        'sv_assignment_bad_concat_list_contract',
+        <<'FSM'
+(?fsm:sv_assignment_bad_concat_list_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+  )
+  (+size
+    (FLAG 1)
+    (DATA 2)
+    (OUT payload_t)
+  )
+  (idle
+    (OUT = (concat DATA FLAG))
+  )
+)
+FSM
+    );
+
+    my $bad_list_backend = prepare_flattened_backend($bad_list_fsm_module);
+    $bad_list_backend->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
+    my $bad_list_block = $bad_list_backend->{backend_sv_consolidated_intermediate_stage_preparation_support}
+        ->prepare_consolidated_intermediate_block($bad_list_fsm_module);
+
+    my $bad_list_error = capture_error(sub {
+        $bad_list_backend->{backend_sv_operand_contract_validation_support}
+            ->validate_pre_generation_operand_contract($bad_list_fsm_module, $bad_list_block);
+    });
+
+    like(
+        $bad_list_error,
+        qr/assignment to 'OUT' uses whole aggregate RHS '\{DATA, FLAG\}' with contract 'list<bits\[2\], bit>' that does not match declared type 'list<bit, bits\[2\]>'/s,
+        'validator rejects width-equal direct RHS concat when inferred list item order does not match the typed list target',
+    );
+
+    my $compatible_nested_list_fsm_module = parse_fsm_module(
+        'sv_assignment_nested_concat_list_contract',
+        <<'FSM'
+(?fsm:sv_assignment_nested_concat_list_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+    (type frame_t (list payload_t (bits 4)))
+  )
+  (+size
+    (FLAG 1)
+    (DATA 2)
+    (TAG 4)
+    (OUT frame_t)
+  )
+  (idle
+    (OUT = (concat (concat FLAG DATA) TAG))
+  )
+)
+FSM
+    );
+
+    my $compatible_nested_list_backend = prepare_flattened_backend($compatible_nested_list_fsm_module);
+    $compatible_nested_list_backend->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
+    my $compatible_nested_list_block = $compatible_nested_list_backend->{backend_sv_consolidated_intermediate_stage_preparation_support}
+        ->prepare_consolidated_intermediate_block($compatible_nested_list_fsm_module);
+
+    my $compatible_nested_list_error = capture_error(sub {
+        $compatible_nested_list_backend->{backend_sv_operand_contract_validation_support}
+            ->validate_pre_generation_operand_contract($compatible_nested_list_fsm_module, $compatible_nested_list_block);
+    });
+
+    is(
+        $compatible_nested_list_error,
+        '',
+        'validator accepts nested direct RHS concat whose nested list shape matches the typed list target',
+    );
+
+    my $bad_nested_list_fsm_module = parse_fsm_module(
+        'sv_assignment_bad_nested_concat_list_contract',
+        <<'FSM'
+(?fsm:sv_assignment_bad_nested_concat_list_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+    (type frame_t (list payload_t (bits 4)))
+  )
+  (+size
+    (FLAG 1)
+    (DATA 2)
+    (TAG 4)
+    (OUT frame_t)
+  )
+  (idle
+    (OUT = (concat (concat DATA FLAG) TAG))
+  )
+)
+FSM
+    );
+
+    my $bad_nested_list_backend = prepare_flattened_backend($bad_nested_list_fsm_module);
+    $bad_nested_list_backend->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
+    my $bad_nested_list_block = $bad_nested_list_backend->{backend_sv_consolidated_intermediate_stage_preparation_support}
+        ->prepare_consolidated_intermediate_block($bad_nested_list_fsm_module);
+
+    my $bad_nested_list_error = capture_error(sub {
+        $bad_nested_list_backend->{backend_sv_operand_contract_validation_support}
+            ->validate_pre_generation_operand_contract($bad_nested_list_fsm_module, $bad_nested_list_block);
+    });
+
+    like(
+        $bad_nested_list_error,
+        qr/assignment to 'OUT' uses whole aggregate RHS '\{\{DATA, FLAG\}, TAG\}' with contract 'list<list<bits\[2\], bit>, bits\[4\]>' that does not match declared type 'list<list<bit, bits\[2\]>, bits\[4\]>'/s,
+        'validator rejects width-equal nested direct RHS concat when inferred nested list item order does not match the typed list target',
+    );
+
+    my $compatible_record_fsm_module = parse_fsm_module(
+        'sv_assignment_concat_record_contract',
+        <<'FSM'
+(?fsm:sv_assignment_concat_record_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+    (type frame_t (record (tag (bits 4)) (payload payload_t)))
+  )
+  (+size
+    (TAG 4)
+    (PAYLOAD payload_t)
+    (OUT frame_t)
+  )
+  (idle
+    (OUT = (concat TAG PAYLOAD))
+  )
+)
+FSM
+    );
+
+    my $compatible_record_backend = prepare_flattened_backend($compatible_record_fsm_module);
+    $compatible_record_backend->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
+    my $compatible_record_block = $compatible_record_backend->{backend_sv_consolidated_intermediate_stage_preparation_support}
+        ->prepare_consolidated_intermediate_block($compatible_record_fsm_module);
+
+    my $compatible_record_error = capture_error(sub {
+        $compatible_record_backend->{backend_sv_operand_contract_validation_support}
+            ->validate_pre_generation_operand_contract($compatible_record_fsm_module, $compatible_record_block);
+    });
+
+    is(
+        $compatible_record_error,
+        '',
+        'validator accepts direct RHS concat whose inferred record member order matches the typed record target',
+    );
+
+    my $bad_record_fsm_module = parse_fsm_module(
+        'sv_assignment_bad_concat_record_contract',
+        <<'FSM'
+(?fsm:sv_assignment_bad_concat_record_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+    (type bad_payload_t (record (mode (bits 2)) (flag bit)))
+    (type frame_t (record (tag (bits 4)) (payload payload_t)))
+  )
+  (+size
+    (TAG 4)
+    (BAD_PAYLOAD bad_payload_t)
+    (OUT frame_t)
+  )
+  (idle
+    (OUT = (concat TAG BAD_PAYLOAD))
+  )
+)
+FSM
+    );
+
+    my $bad_record_backend = prepare_flattened_backend($bad_record_fsm_module);
+    $bad_record_backend->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
+    my $bad_record_block = $bad_record_backend->{backend_sv_consolidated_intermediate_stage_preparation_support}
+        ->prepare_consolidated_intermediate_block($bad_record_fsm_module);
+
+    my $bad_record_error = capture_error(sub {
+        $bad_record_backend->{backend_sv_operand_contract_validation_support}
+            ->validate_pre_generation_operand_contract($bad_record_fsm_module, $bad_record_block);
+    });
+
+    like(
+        $bad_record_error,
+        qr/assignment to 'OUT' uses whole aggregate RHS '\{TAG, BAD_PAYLOAD\}' with contract 'record\{tag:bits\[4\], payload:record\{mode:bits\[2\], flag:bit\}\}' that does not match declared type 'record\{tag:bits\[4\], payload:list<bit, bits\[2\]>\}'/s,
+        'validator rejects width-equal direct RHS concat when an inferred record member has the wrong aggregate shape',
+    );
+};
+
 subtest 'operand-contract validation uses aggregate leaf contracts for partial LHS writes' => sub {
     my $compatible_fsm_module = parse_fsm_module(
         'sv_assignment_partial_aggregate_leaf_contract',

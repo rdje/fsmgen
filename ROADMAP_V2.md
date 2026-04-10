@@ -1430,9 +1430,15 @@ The first honest `R11` slices are now:
   `CoreAST::Concatenation` node, emit SystemVerilog concat text from that AST,
   and feed exact summed operand width into the existing pre-generation
   assignment-width contract so mismatches fail before emission with the
-  authored RHS expression in the diagnostic. LHS deconstruction remains a
-  separate future semantic feature rather than something inferred from raw
-  concat text.
+  authored RHS expression in the diagnostic. When a direct RHS concat drives a
+  declared aggregate target, the frontend also infers an ordered source
+  aggregate contract before generation: typed list targets compare against the
+  concat operand list, nested concat operands keep nested list shape, and typed
+  record targets can map exact top-level operands onto record member order.
+  That blocks width-equal but shape/order-incompatible concat assignments
+  before HDL emission. LHS
+  deconstruction remains a separate future semantic feature rather than
+  something inferred from raw concat text.
 - Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
   approachable, the preferred shape is a book-like docs set with one Markdown
   file per major topic, a landing-page/table-of-contents role for
