@@ -1416,6 +1416,12 @@ The first honest `R11` slices are now:
   frontend-neutral path segments, and direct assignment lowering consumes the
   same owner for packed base-signal range projection on partial aggregate LHS
   writes.
+- Validation note: partial aggregate LHS normalization now preserves
+  per-assignment whole-aggregate source/target contracts through the
+  base-signal mux lowering step, so pre-generation validation compares values
+  like `TAIL` assigned to `OUT.payload` against the `payload` leaf type
+  contract rather than the normalized whole `OUT` contract, while
+  width-equal but shape-incompatible leaf writes still fail before emission.
 - Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
   approachable, the preferred shape is a book-like docs set with one Markdown
   file per major topic, a landing-page/table-of-contents role for

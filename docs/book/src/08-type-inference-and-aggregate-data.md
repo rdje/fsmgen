@@ -107,6 +107,22 @@ composition provenance endpoint contexts resolve `in_frame.tag` or
 `producer.OUT_FRAME.payload[1]` to the aggregate leaf width/type, not just the
 packed width of the whole base endpoint.
 
+Whole aggregate RHS values also participate in the pre-generation type-shape
+gate. For whole-signal writes, FSMGen compares the aggregate RHS shape against
+the target signal's declared aggregate type. For partial aggregate writes, the
+check follows the authored leaf target:
+
+```lisp
+(idle
+  (OUT.payload = TAIL)
+)
+```
+
+Here `TAIL` must match the declared type of `OUT.payload`, not merely the
+packed width of `OUT` or the packed width of `payload`. Compatible aggregate
+leaf writes are accepted; width-equal but list-vs-record or otherwise
+shape-incompatible writes fail before HDL emission.
+
 This is still deliberate and bounded. Broader inference-first aggregate growth
 without explicit declared anchors remains future work; the backend should
 never pretend a richer type surface is stable before it really is.

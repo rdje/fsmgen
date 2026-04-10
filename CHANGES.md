@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-10
+### partial aggregate LHS whole-aggregate RHS checks now use the leaf target contract
+- Updated [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm) so partial LHS normalization preserves per-assignment whole-aggregate source contracts together with the original aggregate leaf target contract before collapsing those writes into one base-signal mux assignment.
+- Updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm) so pre-generation validation compares a whole aggregate RHS against the actual aggregate leaf LHS contract, such as `OUT.payload`, rather than the normalized base signal contract, such as `OUT`.
+- Updated [t/270-systemverilog-assignment-width-contract-validation.t](/Users/richarddje/Documents/github/fsmgen/t/270-systemverilog-assignment-width-contract-validation.t) to lock both sides of the contract: compatible whole aggregate RHS values are accepted on aggregate leaf LHS writes, and width-equal but shape-incompatible values are still rejected with leaf-target diagnostics before emission.
+
 ### aggregate path traversal now has one package-level owner
 - Added [perl/FSM/Package/AggregatePathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/AggregatePathSupport.pm) as the shared type-directed resolver for declared aggregate paths, returning reusable record/list/scalar path segments plus leaf type/width facts and stable failure codes.
 - Extended that package-level owner with packed base-signal range resolution for resolved aggregate leaves, so direct partial aggregate LHS lowering can reuse the same record/list/scalar path contract instead of carrying a second offset walker.

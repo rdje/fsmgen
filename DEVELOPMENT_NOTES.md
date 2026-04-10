@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-10: aggregate assignment validation must follow leaf targets through mux normalization
+- Hardened the pre-generation aggregate contract gate after partial aggregate
+  LHS lowering gained correct packed ranges but whole-aggregate RHS validation
+  still reasoned from the normalized base-signal assignment in one path.
+- Landed behavior:
+  - `FSM::Synthesis::EnableGraph::AssignmentSupport` now preserves
+    per-assignment aggregate source/target contract entries before partial
+    writes collapse into one base-signal mux assignment,
+  - `FSM::HDL::FlattenedDT::Backend::SystemVerilog::OperandContractValidationSupport`
+    consumes those entries before emission,
+  - a compatible whole aggregate RHS such as `TAIL` assigned to
+    `OUT.payload` now checks against the `payload` leaf contract, not the
+    whole `OUT` frame contract,
+  - and an incompatible width-equal whole aggregate RHS still fails before
+    generation with the leaf target named in the diagnostic.
+- Why this boundary matters:
+  - partial LHS normalization is an implementation detail for mux lowering,
+    not permission to lose the authored target type,
+  - pre-generation validation should see the upright semantic assignment that
+    the user wrote, even if the backend later emits one full-width mux input,
+  - and this keeps the “generation is the final AST/IR walk” rule honest by
+    checking aggregate shape compatibility before renderer-side text exists.
+
 ## 2026-04-10: aggregate path traversal belongs below direct/composition callers
 - Hardened the aggregate type-expression lane after the composition resolver
   existed but direct-root typed aggregate parsing still carried a parallel path

@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-10: partial aggregate LHS validation now keeps leaf contracts
+- Saved one pre-generation validation hardening slice for aggregate
+  assignments.
+- Important continuity note:
+  - [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm)
+    now preserves per-assignment aggregate source/target contract entries
+    while partial LHS writes are normalized into full base-signal mux inputs,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm)
+    now validates whole aggregate RHS values against the actual aggregate leaf
+    target contract, such as `OUT.payload`, instead of the normalized base
+    signal contract,
+  - and [t/270-systemverilog-assignment-width-contract-validation.t](/Users/richarddje/Documents/github/fsmgen/t/270-systemverilog-assignment-width-contract-validation.t)
+    locks both compatible aggregate leaf writes and incompatible width-equal
+    shape failures before emission.
+
 ## 2026-04-10: aggregate path traversal now has one package-level owner
 - Saved the follow-up hardening slice after composition aggregate path
   traversal was centralized.

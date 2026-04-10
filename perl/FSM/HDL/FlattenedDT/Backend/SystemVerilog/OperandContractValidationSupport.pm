@@ -301,18 +301,103 @@ sub _validate_assignment_aggregate_contract ($self, $lhs, $assignment, $violatio
     my $source_provenance = ref($assignment->{source_provenance}) eq 'HASH'
         ? $assignment->{source_provenance}
         : {};
+
+    my @contracts = ref($source_provenance->{aggregate_assignment_contracts}) eq 'ARRAY'
+        ? @{$source_provenance->{aggregate_assignment_contracts}}
+        : ();
+    if (!@contracts) {
+        my $fallback_contract = $self->_aggregate_assignment_contract_from_provenance(
+            $lhs,
+            $assignment,
+            $source_provenance,
+        );
+        @contracts = ($fallback_contract) if $fallback_contract;
+    }
+
+    for my $contract (@contracts) {
+        next unless ref($contract) eq 'HASH';
+
+        my $source_aggregate_type_spec = ref($contract->{source_aggregate_type_spec}) eq 'HASH'
+            ? $contract->{source_aggregate_type_spec}
+            : undef;
+        next unless $source_aggregate_type_spec;
+
+        my $source_kind = $source_aggregate_type_spec->{kind} || '';
+        next unless $source_kind eq 'list' || $source_kind eq 'record';
+
+        my $target_declared_type_spec = ref($contract->{target_aggregate_type_spec}) eq 'HASH'
+            ? $contract->{target_aggregate_type_spec}
+            : undef;
+        next unless $target_declared_type_spec;
+
+        my $target_kind = $target_declared_type_spec->{kind} || '';
+        next unless $target_kind eq 'list' || $target_kind eq 'record';
+
+        next if FSM::Package::PayloadTypeSupport->payload_compatible_with_type_spec(
+            $source_aggregate_type_spec,
+            $target_declared_type_spec,
+        );
+
+        my $rhs_display = defined($contract->{aggregate_symbol_name})
+                && $contract->{aggregate_symbol_name} ne ''
+            ? $contract->{aggregate_symbol_name}
+            : (
+                defined($contract->{raw_value_expr})
+                    && $contract->{raw_value_expr} ne ''
+                    && $contract->{raw_value_expr} !~ /^(?:ARRAY|HASH)$/
+                ? $contract->{raw_value_expr}
+                : (
+                    defined($assignment->{rhs}) && $assignment->{rhs} ne ''
+                        ? $assignment->{rhs}
+                        : '<unknown>'
+                )
+            );
+
+        my $target_display = defined($contract->{target_display}) && $contract->{target_display} ne ''
+            ? $contract->{target_display}
+            : $lhs;
+        my $source_type_label = FSM::Package::PayloadTypeSupport->type_spec_label($source_aggregate_type_spec);
+        my $target_type_label = FSM::Package::PayloadTypeSupport->type_spec_label($target_declared_type_spec);
+
+        push @$violations,
+            "assignment to '$target_display' uses whole aggregate RHS '$rhs_display' with contract '$source_type_label'"
+            . " that does not match declared type '$target_type_label'; the current contract blocks width-equal aggregate-shape mismatch before generation";
+    }
+}
+
+sub _aggregate_assignment_contract_from_provenance ($self, $lhs, $assignment, $source_provenance) {
     my $source_aggregate_type_spec = ref($source_provenance->{aggregate_type_spec}) eq 'HASH'
         ? $source_provenance->{aggregate_type_spec}
         : undef;
     return unless $source_aggregate_type_spec;
 
-    my $source_kind = $source_aggregate_type_spec->{kind} || '';
-    return unless $source_kind eq 'list' || $source_kind eq 'record';
-
     my $lhs_ast = $assignment->{lhs_ast};
+    my ($target_declared_type_spec, $target_display) = $self->_target_aggregate_contract_from_lhs_ast($lhs, $lhs_ast);
+    return unless ref($target_declared_type_spec) eq 'HASH';
+
+    my %contract = (
+        source_aggregate_type_spec => $source_aggregate_type_spec,
+        target_aggregate_type_spec => $target_declared_type_spec,
+        target_display => $target_display,
+    );
+    $contract{aggregate_symbol_name} = $source_provenance->{aggregate_symbol_name}
+        if defined($source_provenance->{aggregate_symbol_name}) && $source_provenance->{aggregate_symbol_name} ne '';
+    $contract{raw_value_expr} = $source_provenance->{raw_value_expr}
+        if defined($source_provenance->{raw_value_expr}) && $source_provenance->{raw_value_expr} ne '';
+
+    return \%contract;
+}
+
+sub _target_aggregate_contract_from_lhs_ast ($self, $lhs, $lhs_ast) {
     return unless blessed($lhs_ast);
+
+    if ($lhs_ast->isa('FSM::CoreAST::AggregateRef')) {
+        my $target_type_spec = $lhs_ast->type_spec;
+        my $target_display = eval { $lhs_ast->to_systemverilog } || $lhs;
+        return ($target_type_spec, $target_display);
+    }
+
     return if $lhs_ast->isa('FSM::CoreAST::IndexedRef') || $lhs_ast->isa('FSM::AST::IndexedRef');
-    return if $lhs_ast->isa('FSM::CoreAST::AggregateRef');
     return unless $lhs_ast->isa('FSM::CoreAST::SignalRef') || $lhs_ast->isa('FSM::AST::SignalRef');
     return if $lhs_ast->can('slice') && $lhs_ast->slice;
 
@@ -320,38 +405,8 @@ sub _validate_assignment_aggregate_contract ($self, $lhs, $assignment, $violatio
     return unless $target_signal && blessed($target_signal);
     return unless $target_signal->can('declared_type_spec');
 
-    my $target_declared_type_spec = $target_signal->declared_type_spec;
-    return unless ref($target_declared_type_spec) eq 'HASH';
-
-    my $target_kind = $target_declared_type_spec->{kind} || '';
-    return unless $target_kind eq 'list' || $target_kind eq 'record';
-
-    return if FSM::Package::PayloadTypeSupport->payload_compatible_with_type_spec(
-        $source_aggregate_type_spec,
-        $target_declared_type_spec,
-    );
-
-    my $rhs_display = defined($source_provenance->{aggregate_symbol_name})
-            && $source_provenance->{aggregate_symbol_name} ne ''
-        ? $source_provenance->{aggregate_symbol_name}
-        : (
-            defined($source_provenance->{raw_value_expr})
-                && $source_provenance->{raw_value_expr} ne ''
-                && $source_provenance->{raw_value_expr} !~ /^(?:ARRAY|HASH)$/
-            ? $source_provenance->{raw_value_expr}
-            : (
-                defined($assignment->{rhs}) && $assignment->{rhs} ne ''
-                    ? $assignment->{rhs}
-                    : '<unknown>'
-            )
-        );
-
-    my $source_type_label = FSM::Package::PayloadTypeSupport->type_spec_label($source_aggregate_type_spec);
-    my $target_type_label = FSM::Package::PayloadTypeSupport->type_spec_label($target_declared_type_spec);
-
-    push @$violations,
-        "assignment to '$lhs' uses whole aggregate RHS '$rhs_display' with contract '$source_type_label'"
-        . " that does not match declared type '$target_type_label'; the current contract blocks width-equal aggregate-shape mismatch before generation";
+    my $target_type_spec = $target_signal->declared_type_spec;
+    return ($target_type_spec, $lhs);
 }
 
 sub _validate_named_expression ($self, $label, $expression, $inventory, $violations) {

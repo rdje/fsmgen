@@ -134,6 +134,92 @@ FSM
     );
 };
 
+subtest 'operand-contract validation uses aggregate leaf contracts for partial LHS writes' => sub {
+    my $compatible_fsm_module = parse_fsm_module(
+        'sv_assignment_partial_aggregate_leaf_contract',
+        <<'FSM'
+(?fsm:sv_assignment_partial_aggregate_leaf_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+constants
+    (TAIL (1 const_2b10))
+  )
+  (+types
+    (type tail_t (list bit (bits 2)))
+    (type frame_t (record (tag (bits 3)) (payload tail_t)))
+  )
+  (+size
+    (OUT frame_t)
+  )
+  (idle
+    (OUT.payload = TAIL)
+  )
+)
+FSM
+    );
+
+    my $compatible_backend = prepare_flattened_backend($compatible_fsm_module);
+    $compatible_backend->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
+    my $compatible_block = $compatible_backend->{backend_sv_consolidated_intermediate_stage_preparation_support}
+        ->prepare_consolidated_intermediate_block($compatible_fsm_module);
+
+    my $compatible_error = capture_error(sub {
+        $compatible_backend->{backend_sv_operand_contract_validation_support}
+            ->validate_pre_generation_operand_contract($compatible_fsm_module, $compatible_block);
+    });
+
+    is(
+        $compatible_error,
+        '',
+        'validator accepts compatible whole aggregate RHS values assigned to aggregate leaf LHS targets',
+    );
+
+    my $incompatible_fsm_module = parse_fsm_module(
+        'sv_assignment_bad_partial_aggregate_leaf_contract',
+        <<'FSM'
+(?fsm:sv_assignment_bad_partial_aggregate_leaf_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+constants
+    (BAD ((mode const_2b10) (flag 1)))
+  )
+  (+types
+    (type tail_t (list bit (bits 2)))
+    (type frame_t (record (tag (bits 3)) (payload tail_t)))
+  )
+  (+size
+    (OUT frame_t)
+  )
+  (idle
+    (OUT.payload = BAD)
+  )
+)
+FSM
+    );
+
+    my $incompatible_backend = prepare_flattened_backend($incompatible_fsm_module);
+    $incompatible_backend->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
+    my $incompatible_block = $incompatible_backend->{backend_sv_consolidated_intermediate_stage_preparation_support}
+        ->prepare_consolidated_intermediate_block($incompatible_fsm_module);
+
+    my $incompatible_error = capture_error(sub {
+        $incompatible_backend->{backend_sv_operand_contract_validation_support}
+            ->validate_pre_generation_operand_contract($incompatible_fsm_module, $incompatible_block);
+    });
+
+    like(
+        $incompatible_error,
+        qr/assignment to 'OUT\.payload' uses whole aggregate RHS 'BAD' with contract 'record\{mode:bits\[2\], flag:bit\}' that does not match declared type 'list<bit, bits\[2\]>'/s,
+        'validator rejects incompatible whole aggregate RHS values against the aggregate leaf LHS contract instead of the base signal contract',
+    );
+};
+
 subtest 'generation pipeline support runs width-contract validation before final HDL emission' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_assignment_width_pipeline_contract',

@@ -230,8 +230,81 @@ sub materialize_assignment_group ($self, $lhs_name_key, $lhs_ast, $signal_width,
         %{ref($first_assignment->{source_provenance}) eq 'HASH' ? $first_assignment->{source_provenance} : {}},
         partial_write_group_size => scalar(@$group_assignments),
     };
+    my $aggregate_contracts = $self->aggregate_assignment_contract_entries($lhs_name_key, $group_assignments);
+    $normalized{source_provenance}{aggregate_assignment_contracts} = $aggregate_contracts
+        if @$aggregate_contracts;
 
     return \%normalized;
+}
+
+=head2 aggregate_assignment_contract_entries
+
+Preserve raw per-assignment aggregate source/target contracts before partial
+LHS writes collapse into one base-signal mux assignment.
+
+=cut
+
+sub aggregate_assignment_contract_entries ($self, $lhs_name_key, $group_assignments) {
+    my @contracts;
+
+    for my $assignment (@{$group_assignments || []}) {
+        next unless ref($assignment) eq 'HASH';
+        my $source_provenance = ref($assignment->{source_provenance}) eq 'HASH'
+            ? $assignment->{source_provenance}
+            : {};
+        my $source_aggregate_type_spec = ref($source_provenance->{aggregate_type_spec}) eq 'HASH'
+            ? $source_provenance->{aggregate_type_spec}
+            : undef;
+        next unless $source_aggregate_type_spec;
+
+        my ($target_type_spec, $target_display) = $self->assignment_target_aggregate_contract(
+            $lhs_name_key,
+            $assignment->{lhs_ast},
+        );
+        next unless ref($target_type_spec) eq 'HASH';
+
+        my %entry = (
+            source_aggregate_type_spec => FSM::Package::AggregatePathSupport->clone_structured_value($source_aggregate_type_spec),
+            target_aggregate_type_spec => FSM::Package::AggregatePathSupport->clone_structured_value($target_type_spec),
+            target_display => $target_display,
+        );
+        $entry{aggregate_symbol_name} = $source_provenance->{aggregate_symbol_name}
+            if defined($source_provenance->{aggregate_symbol_name}) && $source_provenance->{aggregate_symbol_name} ne '';
+        $entry{raw_value_expr} = $source_provenance->{raw_value_expr}
+            if defined($source_provenance->{raw_value_expr}) && $source_provenance->{raw_value_expr} ne '';
+
+        push @contracts, \%entry;
+    }
+
+    return \@contracts;
+}
+
+=head2 assignment_target_aggregate_contract
+
+Return the declared aggregate target type for one raw LHS AST, including the
+leaf contract for C<AggregateRef> partial writes.
+
+=cut
+
+sub assignment_target_aggregate_contract ($self, $lhs_name_key, $lhs_ast) {
+    return unless blessed($lhs_ast);
+
+    if ($lhs_ast->isa('FSM::CoreAST::AggregateRef')) {
+        my $target_type_spec = $lhs_ast->type_spec;
+        my $target_display = eval { $lhs_ast->to_systemverilog } || $lhs_name_key;
+        return ($target_type_spec, $target_display);
+    }
+
+    return if $lhs_ast->isa('FSM::CoreAST::IndexedRef') || $lhs_ast->isa('FSM::AST::IndexedRef');
+    return unless $lhs_ast->isa('FSM::CoreAST::SignalRef') || $lhs_ast->isa('FSM::AST::SignalRef');
+    return if $lhs_ast->can('slice') && $lhs_ast->slice;
+
+    my $target_signal = $lhs_ast->can('signal') ? $lhs_ast->signal : undef;
+    return unless $target_signal && blessed($target_signal) && $target_signal->can('declared_type_spec');
+
+    my $target_type_spec = $target_signal->declared_type_spec;
+    my $target_display = $lhs_ast->can('to_systemverilog') ? eval { $lhs_ast->to_systemverilog } : undef;
+    return ($target_type_spec, $target_display || $lhs_name_key);
 }
 
 =head2 get_target_signal_width
