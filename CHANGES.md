@@ -1,10 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-10
-### composition aggregate path traversal now has one shared owner
-- Added [perl/FSM/Composition/AggregatePathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/AggregatePathSupport.pm) as the shared composition-side resolver for declared aggregate member/item paths, including record members, list items, scalar subselects after aggregate leaves, generated `item_N` list-field lowering, and stable failure codes for invalid paths.
-- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so explicit-link planning keeps its rich user-facing diagnostics while delegating the actual aggregate path traversal to that shared owner.
-- Updated [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm) so provenance leaf width/type projection consumes the same path resolver instead of maintaining a second best-effort walker.
+### aggregate path traversal now has one package-level owner
+- Added [perl/FSM/Package/AggregatePathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/AggregatePathSupport.pm) as the shared type-directed resolver for declared aggregate paths, returning reusable record/list/scalar path segments plus leaf type/width facts and stable failure codes.
+- Updated [perl/FSM/Composition/AggregatePathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/AggregatePathSupport.pm) into a composition-specific wrapper that consumes the package-level path segments and folds them onto structural connection expressions instead of owning traversal itself.
+- Updated [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) so direct-root typed aggregate signal references such as `FRAME.tag` and `FRAME.payload[1]` consume the same path resolver while preserving the existing direct user-facing diagnostics.
+- Added [t/284-package-aggregate-path-support.t](/Users/richarddje/Documents/github/fsmgen/t/284-package-aggregate-path-support.t) to lock the package-level resolver contract while keeping the existing direct and composition aggregate regressions green.
+
+### composition planning and provenance now share aggregate path support
+- Introduced [perl/FSM/Composition/AggregatePathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/AggregatePathSupport.pm) as the shared composition-side aggregate path support layer for declared member/item paths, including record members, list items, scalar subselects after aggregate leaves, generated `item_N` list-field lowering, and stable failure codes for invalid paths.
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so explicit-link planning keeps its rich user-facing diagnostics while delegating the actual aggregate path handling to that shared support layer.
+- Updated [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm) so provenance leaf width/type projection consumes the same aggregate path support instead of maintaining a second best-effort walker.
 - Added [t/283-composition-aggregate-path-support.t](/Users/richarddje/Documents/github/fsmgen/t/283-composition-aggregate-path-support.t) to lock shared success/failure semantics for the aggregate path primitive.
 
 ### composition aggregate source expressions now report leaf width/type metadata

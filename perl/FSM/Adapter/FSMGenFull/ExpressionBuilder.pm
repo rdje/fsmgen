@@ -9,6 +9,7 @@ no warnings 'experimental::signatures';
 use Data::Dumper;
 use FSM::CoreAST;
 use FSM::Debug;
+use FSM::Package::AggregatePathSupport;
 use FSM::Package::PayloadLiteralSupport;
 use FSM::Package::PayloadTypeSupport;
 
@@ -497,19 +498,12 @@ sub parse_typed_aggregate_signal_reference($self, $scalar) {
         return undef;
     }
 
-    my ($path, $resolved_type_spec) = $self->resolve_typed_aggregate_signal_path(
+    my ($path, $resolved_type_spec, $resolved_width) = $self->resolve_typed_aggregate_signal_path(
         $base_name,
         $path_text,
         $type_spec,
         $scalar,
     );
-
-    my $resolved_width = ref($resolved_type_spec) eq 'HASH' ? ($resolved_type_spec->{width} // undef) : undef;
-    Carp::confess
-        "Unsupported typed aggregate signal access '$scalar'. ".
-        "The resolved aggregate leaf has no positive packed width. ".
-        "See docs/USER_GUIDE.md for the current supported boundary.\n"
-        unless defined($resolved_width) && $resolved_width > 0;
 
     if (defined($width_annotation) && $width_annotation != $resolved_width) {
         my $type_label = FSM::Package::PayloadTypeSupport->type_spec_label($resolved_type_spec);
@@ -535,96 +529,111 @@ sub parse_typed_aggregate_signal_reference($self, $scalar) {
 }
 
 sub resolve_typed_aggregate_signal_path($self, $base_name, $path_text, $root_type_spec, $raw_scalar) {
-    my $remaining = $path_text;
-    my $current_type_spec = $root_type_spec;
-    my @path;
+    my $result = FSM::Package::AggregatePathSupport->resolve(
+        root_type_spec => $root_type_spec,
+        path_text => $path_text,
+    );
 
-    while (length $remaining) {
-        if ($remaining =~ s/\A\.([a-zA-Z_]\w*)//) {
-            my $member_name = $1;
-            my $kind = $current_type_spec->{kind} || '';
+    $self->confess_typed_aggregate_signal_path_error($result, $base_name, $raw_scalar)
+        unless $result->{ok};
 
-            Carp::confess
-                "Malformed typed aggregate signal access '$raw_scalar'. ".
-                "Member access '.$member_name' is only valid on record-typed values; current path type is '".
-                FSM::Package::PayloadTypeSupport->type_spec_label($current_type_spec)."'. ".
-                "Use '[N]' for list items or declare a record member before generation.\n"
-                unless $kind eq 'record';
+    return (
+        FSM::Package::AggregatePathSupport->clone_structured_value($result->{path_segments}),
+        FSM::Package::AggregatePathSupport->clone_structured_value($result->{type_spec}),
+        $result->{width},
+    );
+}
 
-            my $members = $current_type_spec->{members} || {};
-            Carp::confess
-                "Malformed typed aggregate signal access '$raw_scalar'. ".
-                "Record type for '$base_name' has no member '$member_name'. ".
-                "Known members: " . join(', ', @{ $current_type_spec->{member_order} || [] }) . ".\n"
-                unless exists $members->{$member_name};
+sub confess_typed_aggregate_signal_path_error($self, $error, $base_name, $raw_scalar) {
+    my $code = $error->{code} || 'unknown';
 
-            push @path, { kind => 'member', name => $member_name };
-            $current_type_spec = $members->{$member_name};
-            next;
-        }
-
-        if ($remaining =~ s/\A\[(\d+)(?::(\d+))?\]//) {
-            my ($first_index, $second_index) = ($1, $2);
-            my $kind = $current_type_spec->{kind} || '';
-
-            if ($kind eq 'list') {
-                Carp::confess
-                    "Malformed typed aggregate signal access '$raw_scalar'. ".
-                    "List item access currently accepts one constant index, not a range. ".
-                    "Select one list element with '[N]' before generation.\n"
-                    if defined $second_index;
-
-                my $items = $current_type_spec->{items} || [];
-                Carp::confess
-                    "Malformed typed aggregate signal access '$raw_scalar'. ".
-                    "List index '$first_index' is outside the declared item range 0..".
-                    (@$items ? $#$items : -1).".\n"
-                    unless $first_index < @$items;
-
-                push @path, { kind => 'item', index => 0 + $first_index };
-                $current_type_spec = $items->[$first_index];
-                next;
-            }
-
-            if ($kind eq 'bit' || $kind eq 'bits') {
-                my $scalar_width = $current_type_spec->{width} // 0;
-                if (defined $second_index) {
-                    my ($high, $low) = ($first_index, $second_index);
-                    my $max_index = $high > $low ? $high : $low;
-                    Carp::confess
-                        "Malformed typed aggregate signal access '$raw_scalar'. ".
-                        "Scalar slice [$high:$low] exceeds resolved scalar width '$scalar_width'.\n"
-                        unless $scalar_width > 0 && $max_index < $scalar_width;
-
-                    my $slice_width = abs($high - $low) + 1;
-                    push @path, { kind => 'bit_slice', high => 0 + $high, low => 0 + $low };
-                    $current_type_spec = FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($slice_width);
-                    next;
-                }
-
-                Carp::confess
-                    "Malformed typed aggregate signal access '$raw_scalar'. ".
-                    "Scalar index '$first_index' exceeds resolved scalar width '$scalar_width'.\n"
-                    unless $scalar_width > 0 && $first_index < $scalar_width;
-
-                push @path, { kind => 'bit_index', index => 0 + $first_index };
-                $current_type_spec = FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width(1);
-                next;
-            }
-
-            Carp::confess
-                "Malformed typed aggregate signal access '$raw_scalar'. ".
-                "Index access is valid on list and scalar bit-vector values; current path type is '".
-                FSM::Package::PayloadTypeSupport->type_spec_label($current_type_spec)."'.\n";
-        }
-
+    if ($code eq 'missing_declared_type') {
         Carp::confess
             "Malformed typed aggregate signal access '$raw_scalar'. ".
-            "Could not parse remaining path '$remaining'. ".
+            "Signal '$base_name' has no declared aggregate type, so member access is not available. ".
+            "Declare an aggregate `+types` alias and use it from `+size` before accessing fields.\n";
+    }
+
+    if ($code eq 'scalar_root') {
+        Carp::confess
+            "Malformed typed aggregate signal access '$raw_scalar'. ".
+            "Signal '$base_name' has scalar type '".($error->{current_type_label} || 'unknown').
+            "', so record member access is not available.\n";
+    }
+
+    if ($code eq 'empty_path') {
+        Carp::confess
+            "Malformed typed aggregate signal access '$raw_scalar'. ".
+            "Could not parse an empty aggregate path. ".
             "Use record member access like '.field' and list/scalar constant indexes like '[0]'.\n";
     }
 
-    return (\@path, $current_type_spec);
+    if ($code eq 'member_on_non_record') {
+        Carp::confess
+            "Malformed typed aggregate signal access '$raw_scalar'. ".
+            "Member access '.".$error->{member_name}."' is only valid on record-typed values; current path type is '".
+            ($error->{current_type_label} || 'unknown')."'. ".
+            "Use '[N]' for list items or declare a record member before generation.\n";
+    }
+
+    if ($code eq 'unknown_member') {
+        Carp::confess
+            "Malformed typed aggregate signal access '$raw_scalar'. ".
+            "Record type for '$base_name' has no member '".$error->{member_name}."'. ".
+            "Known members: " . join(', ', @{ $error->{known_members} || [] }) . ".\n";
+    }
+
+    if ($code eq 'list_range_not_supported') {
+        Carp::confess
+            "Malformed typed aggregate signal access '$raw_scalar'. ".
+            "List item access currently accepts one constant index, not a range. ".
+            "Select one list element with '[N]' before generation.\n";
+    }
+
+    if ($code eq 'list_index_out_of_range') {
+        Carp::confess
+            "Malformed typed aggregate signal access '$raw_scalar'. ".
+            "List index '".$error->{index}."' is outside the declared item range 0..".
+            ($error->{max_index} // -1).".\n";
+    }
+
+    if ($code eq 'scalar_slice_out_of_range') {
+        Carp::confess
+            "Malformed typed aggregate signal access '$raw_scalar'. ".
+            "Scalar slice [".$error->{high}.":".$error->{low}."] exceeds resolved scalar width '".$error->{scalar_width}."'.\n";
+    }
+
+    if ($code eq 'scalar_index_out_of_range') {
+        Carp::confess
+            "Malformed typed aggregate signal access '$raw_scalar'. ".
+            "Scalar index '".$error->{index}."' exceeds resolved scalar width '".$error->{scalar_width}."'.\n";
+    }
+
+    if ($code eq 'index_on_non_indexable') {
+        Carp::confess
+            "Malformed typed aggregate signal access '$raw_scalar'. ".
+            "Index access is valid on list and scalar bit-vector values; current path type is '".
+            ($error->{current_type_label} || 'unknown')."'.\n";
+    }
+
+    if ($code eq 'parse_error') {
+        Carp::confess
+            "Malformed typed aggregate signal access '$raw_scalar'. ".
+            "Could not parse remaining path '".($error->{remaining} || '')."'. ".
+            "Use record member access like '.field' and list/scalar constant indexes like '[0]'.\n";
+    }
+
+    if ($code eq 'missing_leaf_width') {
+        Carp::confess
+            "Unsupported typed aggregate signal access '$raw_scalar'. ".
+            "The resolved aggregate leaf has no positive packed width. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n";
+    }
+
+    Carp::confess
+        "Malformed typed aggregate signal access '$raw_scalar'. ".
+        "Aggregate path resolution failed unexpectedly. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
 }
 
 sub parse_sexpr_expression($self, $sexpr) {

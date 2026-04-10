@@ -1,13 +1,34 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
-## 2026-04-10: aggregate path traversal should have one composition owner
+## 2026-04-10: aggregate path traversal belongs below direct/composition callers
+- Hardened the aggregate type-expression lane after the composition resolver
+  existed but direct-root typed aggregate parsing still carried a parallel path
+  walker.
+- Landed behavior:
+  - `FSM::Package::AggregatePathSupport` now owns the type-directed traversal
+    for declared aggregate paths,
+  - it returns frontend-neutral path segments plus the resolved leaf type/width
+    facts,
+  - `FSM::Composition::AggregatePathSupport` is now a structural-connection
+    wrapper over those path segments rather than the semantic traversal owner,
+  - and direct `FSM::Adapter::FSMGenFull::ExpressionBuilder` now consumes the
+    same package-level resolver while keeping the existing direct diagnostics.
+- Why this boundary matters:
+  - aggregate access must mean the same thing in direct AST construction,
+    composition structural bindings, provenance reporting, and generated HDL,
+  - the package/type layer is the right owner for record/list/scalar path
+    semantics because the semantics are not inherently composition-specific,
+  - and wrapper layers should add target representation, diagnostics, or
+    structural lowering without rediscovering the type walk.
+
+## 2026-04-10: composition planning and provenance should share aggregate path support
 - Hardened the composition aggregate source-expression lane after planning and
   provenance reporting had both learned to resolve declared aggregate paths.
 - Landed behavior:
-  - `FSM::Composition::AggregatePathSupport` now owns the shared traversal for
-    declared aggregate member/item paths,
+  - `FSM::Composition::AggregatePathSupport` introduced the shared
+    composition-side support layer for declared aggregate member/item paths,
   - explicit-link planning still owns the rich user-facing diagnostics, but it
-    delegates record/list/scalar path walking to the shared helper,
+    delegates record/list/scalar path handling to the shared support layer,
   - provenance reporting now consumes that same helper for leaf width/type
     projection instead of carrying a second best-effort walker,
   - and the helper returns structured failure codes so non-diagnostic callers
@@ -15,7 +36,7 @@ This document captures engineering rationale, design constraints, and working de
 - Why this boundary matters:
   - the same authored path must mean the same thing in validation, structural
     binding, emitted HDL, and embedding/reporting metadata,
-  - and centralizing the walker reduces the chance that a future aggregate
+  - and centralizing the composition-side support reduces the chance that a future aggregate
     widening fixes one surface while silently leaving another surface on older
     semantics.
 
