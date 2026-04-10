@@ -11,8 +11,12 @@ This is the live continuity document for fast session recovery after crashes, re
     expressions for composition,
   - [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm)
     now consumes that same resolver for direct-root typed aggregate AST refs,
+  - [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm)
+    now consumes the same package-level helper for packed base-signal range
+    mapping on partial aggregate LHS writes,
   - and [t/284-package-aggregate-path-support.t](/Users/richarddje/Documents/github/fsmgen/t/284-package-aggregate-path-support.t)
-    locks the frontend-neutral path segment and failure-code contract.
+    locks the frontend-neutral path segment, packed-range, and failure-code
+    contract.
 
 ## 2026-04-10: composition aggregate path support now has one wrapper
 - Saved one internal hardening slice for aggregate source-expression work.

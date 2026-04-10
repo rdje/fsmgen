@@ -9,15 +9,22 @@ This document captures engineering rationale, design constraints, and working de
     for declared aggregate paths,
   - it returns frontend-neutral path segments plus the resolved leaf type/width
     facts,
+  - it also resolves those path segments into packed base-signal ranges for
+    assignment lowering,
   - `FSM::Composition::AggregatePathSupport` is now a structural-connection
     wrapper over those path segments rather than the semantic traversal owner,
   - and direct `FSM::Adapter::FSMGenFull::ExpressionBuilder` now consumes the
-    same package-level resolver while keeping the existing direct diagnostics.
+    same package-level resolver while keeping the existing direct diagnostics,
+  - while direct `FSM::Synthesis::EnableGraph::AssignmentSupport` now consumes
+    the same package-level packed-range resolver for partial aggregate LHS
+    mux construction.
 - Why this boundary matters:
   - aggregate access must mean the same thing in direct AST construction,
     composition structural bindings, provenance reporting, and generated HDL,
   - the package/type layer is the right owner for record/list/scalar path
     semantics because the semantics are not inherently composition-specific,
+  - packed range projection is part of that same semantic contract because it
+    determines which physical bits a partial aggregate LHS actually writes,
   - and wrapper layers should add target representation, diagnostics, or
     structural lowering without rediscovering the type walk.
 

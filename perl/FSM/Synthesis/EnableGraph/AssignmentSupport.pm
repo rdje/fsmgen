@@ -46,6 +46,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::Debug;
+use FSM::Package::AggregatePathSupport;
 use Scalar::Util qw(blessed);
 
 =head2 new
@@ -296,108 +297,15 @@ sub aggregate_ref_target_range ($self, $aggregate_ref) {
     return unless blessed($aggregate_ref) && $aggregate_ref->isa('FSM::CoreAST::AggregateRef');
 
     my $signal = $aggregate_ref->signal;
-    my $current_type_spec = $signal && $signal->can('declared_type_spec')
+    my $root_type_spec = $signal && $signal->can('declared_type_spec')
         ? $signal->declared_type_spec
         : undef;
-    return unless ref($current_type_spec) eq 'HASH';
-
-    my $base_low = 0;
-    for my $segment (@{ $aggregate_ref->path || [] }) {
-        my $kind = $segment->{kind} || '';
-        my $type_kind = $current_type_spec->{kind} || '';
-
-        if ($kind eq 'member') {
-            return unless $type_kind eq 'record';
-            my $member_name = $segment->{name};
-            my $members = $current_type_spec->{members} || {};
-            return unless exists $members->{$member_name};
-
-            my $offset = $self->record_member_low_offset($current_type_spec, $member_name);
-            return unless defined $offset;
-
-            $base_low += $offset;
-            $current_type_spec = $members->{$member_name};
-            next;
-        }
-
-        if ($kind eq 'item') {
-            return unless $type_kind eq 'list';
-            my $index = $segment->{index};
-            my $items = $current_type_spec->{items} || [];
-            return unless defined($index) && $index =~ /^\d+$/ && $index < @$items;
-
-            my $offset = $self->list_item_low_offset($current_type_spec, $index);
-            return unless defined $offset;
-
-            $base_low += $offset;
-            $current_type_spec = $items->[$index];
-            next;
-        }
-
-        if ($kind eq 'bit_index') {
-            return unless $type_kind eq 'bit' || $type_kind eq 'bits';
-            my $index = $segment->{index};
-            my $width = $current_type_spec->{width} // 0;
-            return unless defined($index) && $index =~ /^\d+$/ && $width > 0 && $index < $width;
-
-            $base_low += $index;
-            $current_type_spec = { kind => 'bit', width => 1, signed => 0 };
-            next;
-        }
-
-        if ($kind eq 'bit_slice') {
-            return unless $type_kind eq 'bit' || $type_kind eq 'bits';
-            my ($high, $low) = ($segment->{high}, $segment->{low});
-            my $width = $current_type_spec->{width} // 0;
-            return unless defined($high) && defined($low) && $high =~ /^\d+$/ && $low =~ /^\d+$/;
-
-            my $slice_high = $high > $low ? $high : $low;
-            my $slice_low = $high > $low ? $low : $high;
-            return unless $width > 0 && $slice_high < $width;
-
-            $base_low += $slice_low;
-            $current_type_spec = {
-                kind => ($slice_high == $slice_low ? 'bit' : 'bits'),
-                width => $slice_high - $slice_low + 1,
-                signed => 0,
-            };
-            next;
-        }
-
-        return;
-    }
-
-    my $resolved_width = $current_type_spec->{width} // 0;
-    return unless $resolved_width > 0;
-
-    return ($base_low + $resolved_width - 1, $base_low);
-}
-
-sub record_member_low_offset ($self, $record_type_spec, $member_name) {
-    my $members = $record_type_spec->{members} || {};
-    my $order = $record_type_spec->{member_order} || [];
-    my $offset = 0;
-
-    for my $ordered_member (reverse @$order) {
-        return $offset if $ordered_member eq $member_name;
-        return unless exists $members->{$ordered_member};
-        $offset += $members->{$ordered_member}{width} // 0;
-    }
-
-    return undef;
-}
-
-sub list_item_low_offset ($self, $list_type_spec, $target_index) {
-    my $items = $list_type_spec->{items} || [];
-    return undef unless defined($target_index) && $target_index =~ /^\d+$/ && $target_index < @$items;
-
-    my $offset = 0;
-    for my $index (reverse 0 .. $#$items) {
-        return $offset if $index == $target_index;
-        $offset += $items->[$index]{width} // 0;
-    }
-
-    return undef;
+    my $range = FSM::Package::AggregatePathSupport->resolve_packed_range(
+        root_type_spec => $root_type_spec,
+        path_segments => $aggregate_ref->path,
+    );
+    return unless $range->{ok};
+    return ($range->{high}, $range->{low});
 }
 
 =head2 initial_group_source_expr

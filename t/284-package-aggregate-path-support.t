@@ -71,6 +71,35 @@ subtest 'package aggregate path support resolves scalar subselect path segments'
     );
 };
 
+subtest 'package aggregate path support resolves packed base-signal ranges' => sub {
+    my $tag_range = FSM::Package::AggregatePathSupport->resolve_packed_range(
+        root_type_spec => $frame_t,
+        path_text => '.tag',
+    );
+    ok($tag_range->{ok}, 'record member packed range resolves successfully');
+    is($tag_range->{high}, 10, 'record member packed range keeps the high bound');
+    is($tag_range->{low}, 7, 'record member packed range keeps the low bound');
+
+    my $payload_item_range = FSM::Package::AggregatePathSupport->resolve_packed_range(
+        root_type_spec => $frame_t,
+        path_segments => [
+            { kind => 'member', name => 'payload' },
+            { kind => 'item', index => 1 },
+        ],
+    );
+    ok($payload_item_range->{ok}, 'list item packed range resolves successfully from path segments');
+    is($payload_item_range->{high}, 4, 'list item packed range keeps the high bound');
+    is($payload_item_range->{low}, 1, 'list item packed range keeps the low bound');
+
+    my $tag_slice_range = FSM::Package::AggregatePathSupport->resolve_packed_range(
+        root_type_spec => $frame_t,
+        path_text => '.tag[3:1]',
+    );
+    ok($tag_slice_range->{ok}, 'scalar subselect packed range resolves successfully');
+    is($tag_slice_range->{high}, 10, 'scalar subselect packed range keeps the high bound');
+    is($tag_slice_range->{low}, 8, 'scalar subselect packed range keeps the low bound');
+};
+
 subtest 'package aggregate path support reports stable failure codes' => sub {
     my $scalar_root = FSM::Package::AggregatePathSupport->resolve(
         root_type_spec => { kind => 'bits', width => 4, signed => 0 },

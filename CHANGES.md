@@ -3,8 +3,10 @@ This is the persistent technical change history for FSMGen.
 ## 2026-04-10
 ### aggregate path traversal now has one package-level owner
 - Added [perl/FSM/Package/AggregatePathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package/AggregatePathSupport.pm) as the shared type-directed resolver for declared aggregate paths, returning reusable record/list/scalar path segments plus leaf type/width facts and stable failure codes.
+- Extended that package-level owner with packed base-signal range resolution for resolved aggregate leaves, so direct partial aggregate LHS lowering can reuse the same record/list/scalar path contract instead of carrying a second offset walker.
 - Updated [perl/FSM/Composition/AggregatePathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/AggregatePathSupport.pm) into a composition-specific wrapper that consumes the package-level path segments and folds them onto structural connection expressions instead of owning traversal itself.
 - Updated [perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm) so direct-root typed aggregate signal references such as `FRAME.tag` and `FRAME.payload[1]` consume the same path resolver while preserving the existing direct user-facing diagnostics.
+- Updated [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm) so `AggregateRef` LHS range mapping delegates to the package-level packed-range resolver.
 - Added [t/284-package-aggregate-path-support.t](/Users/richarddje/Documents/github/fsmgen/t/284-package-aggregate-path-support.t) to lock the package-level resolver contract while keeping the existing direct and composition aggregate regressions green.
 
 ### composition planning and provenance now share aggregate path support
