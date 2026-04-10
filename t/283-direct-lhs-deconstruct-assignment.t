@@ -283,6 +283,75 @@ FSM
     );
 };
 
+subtest 'direct LHS concat deconstruct preserves aligned RHS concat operand contracts' => sub {
+    my $compatible_fsm_module = parse_fsm_module(
+        'direct_lhs_deconstruct_rhs_concat_operand_contract',
+        <<'FSM'
+(?fsm:direct_lhs_deconstruct_rhs_concat_operand_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+    (type frame_t (record (tag (bits 4)) (payload payload_t)))
+  )
+  (+size
+    (TAG_IN 4)
+    (GOOD_PAYLOAD payload_t)
+    (TAG 4)
+    (PAYLOAD payload_t)
+    (OUT frame_t)
+  )
+  (idle
+    ((concat TAG PAYLOAD) = (concat TAG_IN GOOD_PAYLOAD))
+    ((concat OUT.tag OUT.payload) = (concat TAG_IN GOOD_PAYLOAD))
+  )
+)
+FSM
+    );
+
+    my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($compatible_fsm_module);
+
+    like($hdl, qr/\bTAG\s*=\s*TAG_IN;/s, 'aligned RHS concat high operand drives the scalar target without selecting the whole concat');
+    like($hdl, qr/\bPAYLOAD\s*=\s*GOOD_PAYLOAD;/s, 'aligned typed RHS concat aggregate operand drives the matching aggregate target directly');
+    like(
+        $hdl,
+        qr/\bOUT\s*=\s*\{TAG_IN,\s*GOOD_PAYLOAD\};/s,
+        'aligned RHS concat operands rejoin through partial aggregate LHS normalization without packed-blob part-selects',
+    );
+    unlike($hdl, qr/\(\{TAG_IN,\s*GOOD_PAYLOAD\}\)\[\d+(?::\d+)?\]/s, 'aligned RHS concat fragments avoid selecting from the whole concat blob');
+
+    like(
+        generation_failure(
+            'direct_lhs_deconstruct_bad_rhs_concat_operand_contract',
+            <<'FSM'
+(?fsm:direct_lhs_deconstruct_bad_rhs_concat_operand_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+    (type bad_payload_t (record (mode (bits 2)) (flag bit)))
+  )
+  (+size
+    (TAG_IN 4)
+    (BAD_PAYLOAD bad_payload_t)
+    (TAG 4)
+    (PAYLOAD payload_t)
+  )
+  (idle
+    ((concat TAG PAYLOAD) = (concat TAG_IN BAD_PAYLOAD))
+  )
+)
+FSM
+        ),
+        qr/assignment to 'PAYLOAD' uses whole aggregate RHS 'BAD_PAYLOAD' with contract 'record\{mode:bits\[2\], flag:bit\}' that does not match declared type 'list<bit, bits\[2\]>'/s,
+        'aligned RHS concat aggregate operands keep their own type contract during deconstruct validation',
+    );
+};
+
 done_testing();
 
 sub parse_fsm_module {

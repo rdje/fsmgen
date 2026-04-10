@@ -198,6 +198,10 @@ Current guardrails:
   aggregate type-shape contract, so splitting `FRAME` or `IN_FRAME` into `tag`
   and `payload` checks a `payload_t` target against the source `payload`
   fragment, not against the whole `frame_t` record
+- when the RHS is itself `(concat ...)` or `(cat ...)`, deconstruct fragments
+  that line up exactly with whole RHS concat operands keep those operands
+  directly; if an aligned operand is typed aggregate data, that operand's
+  type-shape contract is preserved for the pre-generation validator
 
 The important boundary is the same one used elsewhere in FSMGen: the frontend
 should normalize and validate the meaning first, then the backend should emit

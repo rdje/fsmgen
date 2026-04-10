@@ -322,7 +322,15 @@ sub capture_lhs_deconstruct_assignment_from_ast ($self, $dt_name, $assignment_no
 
         my %fragment_provenance = %$source_provenance;
         delete $fragment_provenance{aggregate_type_spec};
-        if (defined($source_provenance->{aggregate_symbol_name}) && $source_provenance->{aggregate_symbol_name} ne '') {
+        my $aligned_concat_symbol_name = $self->source_fragment_aggregate_symbol_name(
+            $rhs_expr,
+            $total_width,
+            $source_high,
+            $source_low,
+        );
+        if (defined($aligned_concat_symbol_name) && $aligned_concat_symbol_name ne '') {
+            $fragment_provenance{aggregate_symbol_name} = $aligned_concat_symbol_name;
+        } elsif (defined($source_provenance->{aggregate_symbol_name}) && $source_provenance->{aggregate_symbol_name} ne '') {
             my $aggregate_symbol_name = $source_provenance->{aggregate_symbol_name};
             $fragment_provenance{aggregate_symbol_name} = $source_high == $source_low
                 ? $aggregate_symbol_name . "[$source_high]"
@@ -330,6 +338,7 @@ sub capture_lhs_deconstruct_assignment_from_ast ($self, $dt_name, $assignment_no
         }
         my $fragment_aggregate_type_spec = $self->source_fragment_aggregate_type_spec(
             $source_provenance,
+            $rhs_expr,
             $total_width,
             $source_high,
             $source_low,
@@ -378,6 +387,20 @@ Render the RHS slice that feeds one deconstructed LHS operand.
 =cut
 
 sub source_fragment_capture_value ($self, $rhs_expr, $total_width, $source_high, $source_low) {
+    my $aligned_concat_fragment = $self->source_aligned_concat_fragment(
+        $rhs_expr,
+        $total_width,
+        $source_high,
+        $source_low,
+    );
+    if ($aligned_concat_fragment) {
+        my @operand_strings = map {
+            $self->extract_rhs_capture_value($_)
+        } @{$aligned_concat_fragment->{operands}};
+        return $operand_strings[0] if @operand_strings == 1;
+        return '{' . join(', ', @operand_strings) . '}';
+    }
+
     my $source_sv = $self->extract_rhs_capture_value($rhs_expr);
     return $source_sv
         if $source_high == $total_width - 1 && $source_low == 0;
@@ -393,6 +416,110 @@ sub wrap_sv_expr_for_select ($self, $expr) {
     return "($expr)";
 }
 
+=head2 source_aligned_concat_fragment
+
+Return the original RHS concat operand span when one deconstruct fragment
+matches complete concat operand boundaries exactly.
+
+=cut
+
+sub source_aligned_concat_fragment ($self, $rhs_expr, $total_width, $source_high, $source_low) {
+    return unless $rhs_expr && blessed($rhs_expr) && $rhs_expr->isa('FSM::CoreAST::Concatenation');
+    return unless defined($total_width)
+        && defined($source_high)
+        && defined($source_low)
+        && $total_width > 0
+        && $source_high >= $source_low
+        && $source_high < $total_width;
+
+    my @operands = @{$rhs_expr->operands || []};
+    return unless @operands;
+
+    my @selected_operands;
+    my ($selected_high, $selected_low);
+    my $next_high = $total_width - 1;
+    for my $operand (@operands) {
+        my $operand_width = $self->infer_exact_source_width($operand);
+        return unless defined($operand_width) && $operand_width > 0;
+
+        my $operand_high = $next_high;
+        my $operand_low = $operand_high - $operand_width + 1;
+        return if $operand_low < 0;
+
+        my $overlaps = $source_low <= $operand_high && $source_high >= $operand_low;
+        if ($overlaps) {
+            return unless $source_low <= $operand_low && $source_high >= $operand_high;
+            push @selected_operands, $operand;
+            $selected_high //= $operand_high;
+            $selected_low = $operand_low;
+        }
+
+        $next_high = $operand_low - 1;
+    }
+
+    return unless @selected_operands;
+    return unless defined($selected_high) && defined($selected_low);
+    return unless $selected_high == $source_high && $selected_low == $source_low;
+
+    return {
+        operands => \@selected_operands,
+        high => $selected_high,
+        low => $selected_low,
+    };
+}
+
+sub infer_exact_source_width ($self, $expr) {
+    return unless $expr && blessed($expr);
+
+    if ($expr->can('width')) {
+        my $width = eval { $expr->width };
+        return $width if defined($width) && $width > 0;
+    }
+
+    if ($expr->isa('FSM::CoreAST::SignalRef')) {
+        if ($expr->slice) {
+            my ($high, $low) = @{$expr->slice};
+            return abs($high - $low) + 1;
+        }
+        my $signal = $expr->signal;
+        return unless $signal && $signal->can('width');
+        my $width = $signal->width;
+        return $width if defined($width) && $width > 0;
+    }
+
+    return 1 if $expr->isa('FSM::CoreAST::IndexedRef');
+
+    if ($expr->isa('FSM::CoreAST::Concatenation')) {
+        my $total_width = 0;
+        for my $operand (@{$expr->operands || []}) {
+            my $operand_width = $self->infer_exact_source_width($operand);
+            return unless defined($operand_width) && $operand_width > 0;
+            $total_width += $operand_width;
+        }
+        return $total_width if $total_width > 0;
+    }
+
+    return;
+}
+
+sub source_fragment_aggregate_symbol_name ($self, $rhs_expr, $total_width, $source_high, $source_low) {
+    my $aligned_concat_fragment = $self->source_aligned_concat_fragment(
+        $rhs_expr,
+        $total_width,
+        $source_high,
+        $source_low,
+    );
+    return unless $aligned_concat_fragment;
+
+    my @operands = @{$aligned_concat_fragment->{operands} || []};
+    return unless @operands == 1;
+    return unless $self->aggregate_type_spec_from_source_expr($operands[0]);
+
+    my $symbol_name = $self->extract_rhs_capture_value($operands[0]);
+    return $symbol_name if defined($symbol_name) && $symbol_name ne '';
+    return;
+}
+
 =head2 source_fragment_aggregate_type_spec
 
 Return the aggregate/scalar type contract for one deconstructed RHS slice when
@@ -402,7 +529,19 @@ back to a scalar width contract.
 
 =cut
 
-sub source_fragment_aggregate_type_spec ($self, $source_provenance, $total_width, $source_high, $source_low) {
+sub source_fragment_aggregate_type_spec ($self, $source_provenance, $rhs_expr, $total_width, $source_high, $source_low) {
+    my $aligned_concat_fragment = $self->source_aligned_concat_fragment(
+        $rhs_expr,
+        $total_width,
+        $source_high,
+        $source_low,
+    );
+    if ($aligned_concat_fragment) {
+        my @operands = @{$aligned_concat_fragment->{operands} || []};
+        return $self->aggregate_type_spec_from_source_expr($operands[0])
+            if @operands == 1;
+    }
+
     return unless ref($source_provenance) eq 'HASH';
     my $source_type_spec = ref($source_provenance->{aggregate_type_spec}) eq 'HASH'
         ? $source_provenance->{aggregate_type_spec}
@@ -424,6 +563,28 @@ sub source_fragment_aggregate_type_spec ($self, $source_provenance, $total_width
         high => $source_high,
         low => $source_low,
     );
+}
+
+sub aggregate_type_spec_from_source_expr ($self, $expr) {
+    return unless $expr && blessed($expr);
+
+    my $type_spec;
+    if ($expr->isa('FSM::CoreAST::SignalRef')) {
+        return if $expr->slice;
+        my $signal = $expr->signal;
+        return unless $signal && blessed($signal) && $signal->can('declared_type_spec');
+        $type_spec = $signal->declared_type_spec;
+    } elsif ($expr->isa('FSM::CoreAST::AggregateRef')) {
+        $type_spec = $expr->type_spec;
+    } else {
+        return;
+    }
+
+    return unless ref($type_spec) eq 'HASH';
+    my $kind = $type_spec->{kind} || '';
+    return unless $kind eq 'list' || $kind eq 'record';
+
+    return FSM::Package::AggregatePathSupport->clone_structured_value($type_spec);
 }
 
 =head2 capture_transition_from_ast
