@@ -117,13 +117,7 @@ sub _analyze_action_element($self, $action) {
     fsm_debug("    ACTION ELEMENT: Type = " . ref($action), 3);
     
     if ($action->isa('FSM::CoreAST::Assignment') || $action->isa('FSM::CoreAST::RegisterAssignment')) {
-        if ($action->target && $action->target->can('signal')) {
-            my $signal_name = $action->target->signal->name;
-            my $usage = $self->{signal_manager}->initialize_signal_usage($signal_name);
-            $usage->{assigned_to}++;
-            push @{$usage->{contexts}}, 'LHS';
-            fsm_debug("    SIGNAL ASSIGNMENT: '$signal_name' in context 'LHS' (total assigns: $usage->{assigned_to})", 3);
-        }
+        $self->_analyze_assignment_target($action->target, 'LHS') if $action->target;
         
         if ($action->source) {
             $self->_analyze_expression_references($action->source, 'RHS');
@@ -143,6 +137,31 @@ sub _analyze_action_element($self, $action) {
         }
     } elsif ($action->isa('FSM::CoreAST::StateTransition')) {
         fsm_debug("    STATE TRANSITION: -> $action->{target_state}", 3);
+    }
+}
+
+sub _analyze_assignment_target($self, $target, $context = 'LHS') {
+    return unless $target;
+
+    if ($target->isa('FSM::CoreAST::SignalRef')
+        || $target->isa('FSM::CoreAST::IndexedRef')
+        || $target->isa('FSM::CoreAST::AggregateRef')) {
+        if ($target->can('signal') && $target->signal) {
+            my $signal_name = $target->signal->name;
+            my $usage = $self->{signal_manager}->initialize_signal_usage($signal_name);
+            $usage->{assigned_to}++;
+            push @{$usage->{contexts}}, $context;
+            fsm_debug("    SIGNAL ASSIGNMENT: '$signal_name' in context '$context' (total assigns: $usage->{assigned_to})", 3);
+        }
+        return;
+    }
+
+    if ($target->isa('FSM::CoreAST::Concatenation')) {
+        my $index = 0;
+        for my $operand (@{$target->operands || []}) {
+            $self->_analyze_assignment_target($operand, "$context.deconstruct[$index]");
+            $index++;
+        }
     }
 }
 
@@ -174,6 +193,12 @@ sub _analyze_expression_references($self, $expr, $context = 'RHS') {
             push @{$usage->{contexts}}, "$context.indexed";
         }
         $self->_analyze_expression_references($expr->index, "$context.index") if $expr->index;
+    } elsif ($expr->isa('FSM::CoreAST::Concatenation')) {
+        my $index = 0;
+        for my $operand (@{$expr->operands || []}) {
+            $self->_analyze_expression_references($operand, "$context.concat[$index]");
+            $index++;
+        }
     }
 }
 

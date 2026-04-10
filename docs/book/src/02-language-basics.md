@@ -34,6 +34,18 @@ Current quick reference:
 - `A <=+ expr`: synchronous with auxiliary `*_r` surface
 - `A <N 0` or `A <N 1`: delayed pulse form
 
+The LHS may also use a bounded deconstruct target when one packed RHS should
+feed several static lvalues:
+
+```lisp
+((concat HIGH LOW) = DATA)
+((cat REG_HI REG_LO) <- NEXT_DATA)
+```
+
+The split is intentional source syntax, not emitted HDL pasted into the
+renderer. `HIGH` receives the high RHS slice, `LOW` receives the low slice, and
+the same high-to-low rule applies to later operands.
+
 ## Combinational Safety Rule
 
 Combinational `=` is not allowed to create direct or indirect RHS feedback to
@@ -52,6 +64,7 @@ The current live expression surface includes:
 - comparison operators such as `==`, `!=`, `<`, `<=`, `>`, `>=`
 - arithmetic and bitwise operators such as `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`
 - word aliases such as `add`, `sub`, `and`, `or`, `xor`
+- RHS pack expressions with `(concat ...)` or the shorter `(cat ...)` alias
 
 ## Guards, Tests, and Updates
 

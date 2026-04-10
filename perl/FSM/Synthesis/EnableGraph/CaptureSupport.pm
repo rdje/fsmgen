@@ -199,6 +199,15 @@ Capture one AST assignment node into the prepared LHS-assignment registry.
 sub capture_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_stack) {
     my $lhs_signal_ast = $assignment_node->target;
     my $rhs_expr = $assignment_node->source;
+
+    if ($lhs_signal_ast && blessed($lhs_signal_ast) && $lhs_signal_ast->isa('FSM::CoreAST::Concatenation')) {
+        return $self->capture_lhs_deconstruct_assignment_from_ast(
+            $dt_name,
+            $assignment_node,
+            $condition_stack,
+        );
+    }
+
     my $lhs_name = $self->extract_signal_name_from_ast($lhs_signal_ast) // 'unknown_lhs';
 
     fsm_debug("\n*** PHASE1 ASSIGNMENT NODE REACHED (AST WEB) ***", 3);
@@ -249,6 +258,123 @@ sub capture_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_s
     );
 
     fsm_debug("*** PHASE1 ASSIGNMENT NODE COMPLETE (AST WEB) ***\n", 3);
+}
+
+=head2 capture_lhs_deconstruct_assignment_from_ast
+
+Split one C<Concatenation> LHS assignment into ordinary static partial
+captures before assignment analysis. Authored operands map left-to-right onto
+the high-to-low slices of the single RHS expression.
+
+=cut
+
+sub capture_lhs_deconstruct_assignment_from_ast ($self, $dt_name, $assignment_node, $condition_stack) {
+    my $lhs_concat_ast = $assignment_node->target;
+    my $rhs_expr = $assignment_node->source;
+    my @operands = @{$lhs_concat_ast->operands || []};
+
+    my $condition_ast = $self->create_condition_expression($condition_stack);
+    my $capture_metadata = $self->extract_assignment_capture_metadata($assignment_node);
+    my $operator = $capture_metadata->{operator};
+    my $assignment_intent = $capture_metadata->{assignment_intent};
+    my $source_provenance = ref($capture_metadata->{source_provenance}) eq 'HASH'
+        ? $capture_metadata->{source_provenance}
+        : {};
+    my $deconstruct_contract = ref($source_provenance->{lhs_deconstruct}) eq 'HASH'
+        ? $source_provenance->{lhs_deconstruct}
+        : {};
+    my @operand_widths = ref($deconstruct_contract->{operand_widths}) eq 'ARRAY'
+        ? @{$deconstruct_contract->{operand_widths}}
+        : ();
+    my $total_width = $deconstruct_contract->{total_width};
+
+    die "[CaptureSupport.pm][capture_lhs_deconstruct_assignment_from_ast()] Missing LHS deconstruct width contract"
+        unless @operands
+            && @operand_widths == @operands
+            && defined($total_width)
+            && $total_width > 0;
+
+    fsm_debug("\n*** PHASE1 LHS DECONSTRUCT ASSIGNMENT NODE REACHED (AST WEB) ***", 3);
+    fsm_debug("  DT: $dt_name", 3);
+    fsm_debug("  LHS operand count: " . scalar(@operands), 3);
+    fsm_debug("  RHS width: $total_width", 3);
+
+    my $next_high = $total_width - 1;
+    for my $index (0 .. $#operands) {
+        my $lhs_operand_ast = $operands[$index];
+        my $operand_width = $operand_widths[$index];
+        die "[CaptureSupport.pm][capture_lhs_deconstruct_assignment_from_ast()] Invalid LHS deconstruct operand width"
+            unless defined($operand_width) && $operand_width > 0;
+
+        my $source_high = $next_high;
+        my $source_low = $source_high - $operand_width + 1;
+        my $lhs_name = $self->extract_signal_name_from_ast($lhs_operand_ast);
+        die "[CaptureSupport.pm][capture_lhs_deconstruct_assignment_from_ast()] Could not recover LHS deconstruct operand signal name"
+            unless defined($lhs_name) && $lhs_name ne '';
+
+        my $fragment_rhs = $self->source_fragment_capture_value(
+            $rhs_expr,
+            $total_width,
+            $source_high,
+            $source_low,
+        );
+
+        my %fragment_provenance = %$source_provenance;
+        $fragment_provenance{lhs_deconstruct_fragment} = {
+            index => $index,
+            source_high => $source_high,
+            source_low => $source_low,
+            lhs_width => $operand_width,
+        };
+        $fragment_provenance{raw_value_expr_rendered} = $fragment_rhs;
+        $fragment_provenance{width_contract} = {
+            lhs_width => $operand_width,
+            rhs_width => $operand_width,
+            lhs_explicit => 1,
+            rhs_explicit => 1,
+            resolution => 'exact_match',
+            final_width => $operand_width,
+        };
+
+        $self->register_assignment_capture(
+            dt => $dt_name,
+            lhs_name_key => $lhs_name,
+            lhs_ast => $lhs_operand_ast,
+            conditions_ast => $condition_ast,
+            rhs => $fragment_rhs,
+            operator => $operator,
+            assignment_intent => $assignment_intent,
+            source_provenance => \%fragment_provenance,
+            output_exposure => $capture_metadata->{output_exposure},
+        );
+
+        fsm_debug("    LHS deconstruct fragment[$index]: $lhs_name <= $fragment_rhs", 3);
+        $next_high = $source_low - 1;
+    }
+
+    fsm_debug("*** PHASE1 LHS DECONSTRUCT ASSIGNMENT NODE COMPLETE (AST WEB) ***\n", 3);
+}
+
+=head2 source_fragment_capture_value
+
+Render the RHS slice that feeds one deconstructed LHS operand.
+
+=cut
+
+sub source_fragment_capture_value ($self, $rhs_expr, $total_width, $source_high, $source_low) {
+    my $source_sv = $self->extract_rhs_capture_value($rhs_expr);
+    return $source_sv
+        if $source_high == $total_width - 1 && $source_low == 0;
+
+    my $wrapped_source = $self->wrap_sv_expr_for_select($source_sv);
+    return "${wrapped_source}[$source_high]"
+        if $source_high == $source_low;
+    return "${wrapped_source}[$source_high:$source_low]";
+}
+
+sub wrap_sv_expr_for_select ($self, $expr) {
+    return $expr if defined($expr) && $expr =~ /^[a-zA-Z_][a-zA-Z0-9_]*$/;
+    return "($expr)";
 }
 
 =head2 capture_transition_from_ast

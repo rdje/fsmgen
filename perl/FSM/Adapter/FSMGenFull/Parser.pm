@@ -7,8 +7,10 @@ use Carp qw(confess);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use Data::Dumper;
+use Scalar::Util qw(blessed);
 use FSM::CoreAST;
 use FSM::Debug;
+use FSM::Package::AggregatePathSupport;
 use FSM::Package::DeclarativeSymbolResolver;
 use FSM::Package::DeclarativeTypeSupport;
 use FSM::Package::DeclarativeTypeResolver;
@@ -976,6 +978,7 @@ sub validate_transition_targets($self, $fsm_module) {
 
 sub is_compound_update_shorthand($self, $action_target, $action_spec) {
     return 0 unless defined $action_target;
+    return 0 if ref($action_target);
     return 0 unless ref($action_spec) eq 'ARRAY' && @$action_spec >= 1;
     
     # Supported forms:
@@ -1280,6 +1283,240 @@ sub get_target_base_signal_name($self, $raw_signal_name, $target_expr) {
     }
 
     return $self->normalize_signal_name($raw_signal_name);
+}
+
+sub describe_assignment_target($self, $raw_target, $target_expr = undef) {
+    if ($target_expr && blessed($target_expr) && $target_expr->can('to_systemverilog')) {
+        my $rendered = eval { $target_expr->to_systemverilog };
+        return $rendered if defined($rendered) && $rendered ne '';
+    }
+
+    return 'undef' unless defined $raw_target;
+    if (ref($raw_target) eq 'ARRAY') {
+        return '(' . join(' ', map {
+            !defined($_) ? 'undef'
+                : ref($_) eq 'ARRAY' ? 'ARRAY'
+                : ref($_) ? ref($_)
+                : $_
+        } @$raw_target) . ')';
+    }
+    return ref($raw_target) || $raw_target;
+}
+
+sub validate_assignment_lhs_target($self, $raw_target, $target_expr) {
+    my $target_display = $self->describe_assignment_target($raw_target, $target_expr);
+
+    if ($target_expr && blessed($target_expr) && $target_expr->isa('FSM::CoreAST::Concatenation')) {
+        return $self->validate_lhs_deconstruct_target($target_display, $target_expr);
+    }
+
+    return undef if $self->is_static_assignment_lvalue($target_expr);
+
+    my $target_type = defined($target_expr) && ref($target_expr) ? ref($target_expr) : 'undef';
+    Carp::confess
+        "Malformed assignment target '$target_display'. ".
+        "Assignment LHS forms must be writable signal references, static bit/slice references, typed aggregate leaf references, or a bounded '(concat ...)' / '(cat ...)' LHS deconstruct made only of those static lvalues. ".
+        "Got '$target_type'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+}
+
+sub is_static_assignment_lvalue($self, $target_expr) {
+    return 0 unless $target_expr && blessed($target_expr);
+    return 1 if $target_expr->isa('FSM::CoreAST::SignalRef');
+    return 1 if $target_expr->isa('FSM::CoreAST::IndexedRef');
+    return 1 if $target_expr->isa('FSM::CoreAST::AggregateRef');
+    return 0;
+}
+
+sub validate_lhs_deconstruct_target($self, $target_display, $target_expr) {
+    my @operands = @{$target_expr->operands || []};
+    Carp::confess
+        "Malformed LHS deconstruct target '$target_display'. ".
+        "LHS deconstruct requires at least two static writable operands inside '(concat ...)' or '(cat ...)'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless @operands >= 2;
+
+    my @operand_widths;
+    my @operand_displays;
+    my @ranges;
+    my $total_width = 0;
+
+    for my $operand (@operands) {
+        my $operand_display = $self->describe_assignment_target(undef, $operand);
+        Carp::confess
+            "Malformed LHS deconstruct target '$target_display'. ".
+            "Operand '$operand_display' is not a legal static writable LHS operand; use a signal, bit/slice, or typed aggregate leaf reference. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless $self->is_static_assignment_lvalue($operand);
+
+        my $operand_width = $self->{expression_builder}->infer_exact_expression_width($operand);
+        Carp::confess
+            "Malformed LHS deconstruct target '$target_display'. ".
+            "Operand '$operand_display' has no exact positive width; every deconstruct operand must be width-resolved before generation. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless defined($operand_width) && $operand_width > 0;
+
+        my ($base_name, $high, $low) = $self->assignment_lvalue_range($operand);
+        if (defined($base_name) && $base_name ne '') {
+            for my $range (@ranges) {
+                next unless $range->{base_name} eq $base_name;
+                my $overlaps = $low <= $range->{high} && $high >= $range->{low};
+                if ($overlaps) {
+                    Carp::confess
+                        "Malformed LHS deconstruct target '$target_display'. ".
+                        "Operand '$operand_display' overlaps an earlier write range on '$base_name'. ".
+                        "LHS deconstruct operands must not overlap or duplicate target bits. ".
+                        "See docs/USER_GUIDE.md for the current supported boundary.\n";
+                }
+            }
+            push @ranges, {
+                base_name => $base_name,
+                high => $high,
+                low => $low,
+                display => $operand_display,
+            };
+        }
+
+        push @operand_widths, $operand_width;
+        push @operand_displays, $operand_display;
+        $total_width += $operand_width;
+    }
+
+    return {
+        target_display => $target_display,
+        operand_widths => \@operand_widths,
+        operand_displays => \@operand_displays,
+        total_width => $total_width,
+    };
+}
+
+sub assignment_lvalue_range($self, $target_expr) {
+    return unless $target_expr && blessed($target_expr);
+
+    if ($target_expr->isa('FSM::CoreAST::SignalRef')) {
+        my $signal = $target_expr->signal;
+        my $name = $signal && $signal->can('name') ? $signal->name : undef;
+        return unless defined($name) && $name ne '';
+
+        if ($target_expr->slice) {
+            my ($raw_high, $raw_low) = @{$target_expr->slice};
+            my ($high, $low) = $raw_high >= $raw_low
+                ? ($raw_high, $raw_low)
+                : ($raw_low, $raw_high);
+            return ($name, $high, $low);
+        }
+
+        my $width = $signal && $signal->can('width') ? $signal->width : 1;
+        $width = 1 unless defined($width) && $width > 0;
+        return ($name, $width - 1, 0);
+    }
+
+    if ($target_expr->isa('FSM::CoreAST::IndexedRef')) {
+        my $signal = $target_expr->signal;
+        my $name = $signal && $signal->can('name') ? $signal->name : undef;
+        my $index = $target_expr->index;
+        $index = $index->value if blessed($index) && $index->can('value');
+        return ($name, $index, $index)
+            if defined($name) && $name ne '' && defined($index) && $index =~ /^\d+$/;
+        return;
+    }
+
+    if ($target_expr->isa('FSM::CoreAST::AggregateRef')) {
+        my $signal = $target_expr->signal;
+        my $name = $signal && $signal->can('name') ? $signal->name : undef;
+        my $root_type_spec = $signal && $signal->can('declared_type_spec')
+            ? $signal->declared_type_spec
+            : undef;
+        my $range = FSM::Package::AggregatePathSupport->resolve_packed_range(
+            root_type_spec => $root_type_spec,
+            path_segments => $target_expr->path,
+        );
+        return ($name, $range->{high}, $range->{low})
+            if defined($name) && $name ne '' && $range->{ok};
+    }
+
+    return;
+}
+
+sub infer_assignment_lhs_width($self, $raw_target, $target_expr, $deconstruct_contract = undef) {
+    if ($deconstruct_contract) {
+        my $width = $deconstruct_contract->{total_width};
+        return ($width, 1) if defined($width) && $width > 0;
+    }
+
+    if (!ref($raw_target) && defined($raw_target) && $raw_target =~ /'(\d+)$/) {
+        return ($1, 1);
+    }
+
+    if ($target_expr && blessed($target_expr)) {
+        if ($target_expr->isa('FSM::CoreAST::SignalRef') && $target_expr->slice) {
+            my ($high, $low) = @{$target_expr->slice};
+            return (abs($high - $low) + 1, 1);
+        }
+
+        if ($target_expr->isa('FSM::CoreAST::IndexedRef')) {
+            return (1, 1);
+        }
+
+        if ($target_expr->isa('FSM::CoreAST::AggregateRef')
+            && $target_expr->can('width')
+            && defined($target_expr->width)
+            && $target_expr->width > 0) {
+            return ($target_expr->width, 1);
+        }
+
+        if ($target_expr->isa('FSM::CoreAST::SignalRef')
+            && $target_expr->signal
+            && defined($target_expr->signal->width)
+            && $target_expr->signal->width > 0
+            && (
+                $target_expr->signal->width > 1
+                || ($target_expr->signal->can('get_attribute') && $target_expr->signal->get_attribute('width_declared'))
+            )) {
+            return ($target_expr->signal->width, 1);
+        }
+    }
+
+    return (undef, 0);
+}
+
+sub assignment_target_base_specs($self, $target_expr, $fallback_width = undef) {
+    my $is_concat_target = $target_expr && blessed($target_expr) && $target_expr->isa('FSM::CoreAST::Concatenation');
+    my @targets = ($target_expr);
+    if ($is_concat_target) {
+        @targets = @{$target_expr->operands || []};
+    }
+
+    my @specs;
+    my %seen;
+    for my $target (@targets) {
+        next unless $target && blessed($target) && $target->can('signal') && $target->signal && $target->signal->can('name');
+        my $name = $target->signal->name;
+        my $normalized = $self->normalize_signal_name($name);
+        next if $normalized eq '' || $seen{$normalized}++;
+        push @specs, {
+            name => $normalized,
+            width => $self->get_target_base_signal_width($target, $is_concat_target ? undef : $fallback_width),
+        };
+    }
+
+    return @specs;
+}
+
+sub assignment_target_has_explicit_output_marker($self, $raw_target, $target_expr) {
+    return 1 if !ref($raw_target) && defined($raw_target) && $raw_target =~ />$/;
+
+    my @targets = ($target_expr);
+    if ($target_expr && blessed($target_expr) && $target_expr->isa('FSM::CoreAST::Concatenation')) {
+        @targets = @{$target_expr->operands || []};
+    }
+
+    for my $target (@targets) {
+        next unless $target && blessed($target) && $target->can('signal') && $target->signal && $target->signal->can('get_attribute');
+        return 1 if $target->signal->get_attribute('is_output');
+    }
+
+    return 0;
 }
 
 sub get_target_base_signal_width($self, $target_expr, $fallback_width) {
@@ -1721,7 +1958,9 @@ sub parse_decision_tree($self, $tree_ast) {
     my $dt = FSM::CoreAST::DecisionTree->new(name => 'main_dt');
     
     my @elements_to_parse;
-    if (ref($tree_ast->[0]) eq 'ARRAY') {
+    if ($self->is_array_target_assignment_action($tree_ast)) {
+        @elements_to_parse = ($tree_ast);
+    } elsif (ref($tree_ast->[0]) eq 'ARRAY') {
         @elements_to_parse = @$tree_ast;
     } else {
         @elements_to_parse = ($tree_ast);
@@ -1735,6 +1974,19 @@ sub parse_decision_tree($self, $tree_ast) {
     }
     
     return $dt;
+}
+
+sub is_array_target_assignment_action($self, $action) {
+    return 0 unless ref($action) eq 'ARRAY' && @$action >= 2;
+    my ($target, $spec) = @$action[0, 1];
+    return 0 unless ref($target) eq 'ARRAY';
+    return 0 unless ref($spec) eq 'ARRAY' && @$spec >= 2 && !ref($spec->[0]);
+    return 0 unless $spec->[0] =~ /^(?:=|<-|<-=|<=|<=\+|<[0-9]+)$/;
+
+    my $head = $target->[0];
+    return 0 if ref($head);
+    my $normalized_operator = $self->{expression_builder}->normalize_expression_operator($head);
+    return defined($normalized_operator) && $normalized_operator eq 'concat' ? 1 : 0;
 }
 
 sub describe_action_for_error($self, $action) {
@@ -1761,27 +2013,30 @@ sub parse_action($self, $action) {
         unless ref($action) eq 'ARRAY' && @$action >= 2;
     
     my ($action_target, $action_spec) = @$action;
-    fsm_debug("      Parsing action: $action_target", 3);
+    my $action_target_display = defined($action_target)
+        ? (ref($action_target) ? ref($action_target) : $action_target)
+        : 'undef';
+    fsm_debug("      Parsing action: $action_target_display", 3);
     
-    if ($action_target eq '->') {
+    if (!ref($action_target) && $action_target eq '->') {
         return $self->parse_transition_new_format($action);
-    } elsif ($action_target =~ /^\?repeat:/) {
+    } elsif (!ref($action_target) && $action_target =~ /^\?repeat:/) {
         Carp::confess
             "Unsupported generic/template repeat action '$action_target'. ".
             "The active contract does not support legacy '?repeat:...' expansion forms. ".
             "Expand the template before parsing or keep it in legacy-only sources. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n";
-    } elsif ($action_target =~ /^\?\[[^\]]+\]$/) {
+    } elsif (!ref($action_target) && $action_target =~ /^\?\[[^\]]+\]$/) {
         Carp::confess
             "Unsupported generic/template test selector '$action_target'. ".
             "The active contract does not support legacy placeholder selectors like '?[NAME]'. ".
             "Expand the template before parsing or keep it in legacy-only sources. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n";
-    } elsif ($action_target =~ /^\?/) {
+    } elsif (!ref($action_target) && $action_target =~ /^\?/) {
         return $self->parse_test_node_new_format($action);
     } elsif ($self->is_compound_update_shorthand($action_target, $action_spec)) {
         return $self->parse_compound_update_shorthand($action);
-    } elsif ($action_target =~ /^[<>]/) {
+    } elsif (!ref($action_target) && $action_target =~ /^[<>]/) {
         return $self->parse_nested_condition_new_format($action);
     } elsif (ref($action_spec) eq 'ARRAY' && @$action_spec >= 2) {
         return $self->parse_signal_action($action);
@@ -1928,7 +2183,9 @@ sub parse_test_node_new_format($self, $action) {
                     unless defined $branch_action;
 
                 if (ref($branch_action) eq 'ARRAY') {
-                    if (@$branch_action > 0 && ref($branch_action->[0]) eq 'ARRAY') {
+                    if (@$branch_action > 0
+                        && ref($branch_action->[0]) eq 'ARRAY'
+                        && !$self->is_array_target_assignment_action($branch_action)) {
                         for my $nested_assignment (@$branch_action) {
                             my $parsed_action = $self->parse_action($nested_assignment);
                             push @parsed_actions, $parsed_action if $parsed_action;
@@ -1994,7 +2251,10 @@ sub parse_nested_condition_new_format($self, $action) {
     
     my @parsed_actions;
     for my $nested_action (@actions_to_parse) {
-        if (ref($nested_action) eq 'ARRAY' && @$nested_action > 0 && ref($nested_action->[0]) eq 'ARRAY') {
+        if (ref($nested_action) eq 'ARRAY'
+            && @$nested_action > 0
+            && ref($nested_action->[0]) eq 'ARRAY'
+            && !$self->is_array_target_assignment_action($nested_action)) {
             for my $inner_action (@$nested_action) {
                 my $parsed_action = $self->parse_action($inner_action);
                 push @parsed_actions, $parsed_action if $parsed_action;
@@ -2029,13 +2289,14 @@ sub parse_signal_action($self, $action) {
     return undef unless ref($operation_spec) eq 'ARRAY' && @$operation_spec >= 2;
     
     my ($operator, $value_expr, @operation_tail) = @$operation_spec;
+    my $signal_name_display = $self->describe_assignment_target($signal_name);
     
     my $compound_spec;
     my @condition_parts;
     for my $tail (@operation_tail) {
         if ($self->is_inline_compound_modifier_spec($tail)) {
             Carp::confess
-                "Duplicate inline compound modifier '".$self->describe_inline_compound_modifier($tail)."' on signal '$signal_name'. ".
+                "Duplicate inline compound modifier '".$self->describe_inline_compound_modifier($tail)."' on signal '$signal_name_display'. ".
                 "Only one inline compound modifier may follow the RHS expression. ".
                 "See docs/USER_GUIDE.md for the current supported boundary.\n"
                 if $compound_spec;
@@ -2047,12 +2308,14 @@ sub parse_signal_action($self, $action) {
     my $full_condition = $self->build_full_condition_from_parts(@condition_parts);
 
     my $target_expr = $self->{expression_builder}->parse_signal_reference($signal_name);
+    my $lhs_deconstruct_contract = $self->validate_assignment_lhs_target($signal_name, $target_expr);
+    $signal_name_display = $self->describe_assignment_target($signal_name, $target_expr);
     my $source_expr = $self->{expression_builder}->parse_expression($value_expr);
     my $raw_source_expr_display;
     my ($compound_operator_used, $compound_delta_used);
     
     if ($compound_spec) {
-        my ($compound_op, $delta_spec) = $self->normalize_inline_compound_modifier($signal_name, $compound_spec);
+        my ($compound_op, $delta_spec) = $self->normalize_inline_compound_modifier($signal_name_display, $compound_spec);
         
         my $delta_expr = $self->{expression_builder}->parse_expression($delta_spec);
         $delta_expr //= FSM::CoreAST::Literal->new('1');
@@ -2062,45 +2325,28 @@ sub parse_signal_action($self, $action) {
         $compound_operator_used = $compound_op;
         $compound_delta_used = $delta_spec;
         
-        fsm_debug("[Parser.pm][parse_signal_action()] Applied compound modifier '$compound_op' with delta '$delta_spec' on '$signal_name'", 3);
+        fsm_debug("[Parser.pm][parse_signal_action()] Applied compound modifier '$compound_op' with delta '$delta_spec' on '$signal_name_display'", 3);
     }
     $raw_source_expr_display = eval { $source_expr->to_systemverilog };
     
-    my $target_base_signal = $self->get_target_base_signal_name($signal_name, $target_expr);
+    my @target_base_specs = $self->assignment_target_base_specs($target_expr);
+    my $target_base_signal = @target_base_specs == 1
+        ? $target_base_specs[0]{name}
+        : '';
     if ($operator eq '=') {
-        $self->record_combinational_dependencies($target_base_signal, $source_expr);
+        for my $target_base_spec (@target_base_specs) {
+            $self->record_combinational_dependencies($target_base_spec->{name}, $source_expr);
+        }
     }
 
     my ($lhs_width, $rhs_width, $final_width);
     my ($lhs_explicit, $rhs_explicit) = (0, 0);
 
-    if ($signal_name =~ /'(\d+)$/) {
-        $lhs_width = $1;
-        $lhs_explicit = 1;
-    } elsif (ref($target_expr) eq 'FSM::CoreAST::SignalRef' && $target_expr->slice) {
-        my ($high, $low) = @{$target_expr->slice};
-        $lhs_width = abs($high - $low) + 1;
-        $lhs_explicit = 1;
-    } elsif (ref($target_expr) eq 'FSM::CoreAST::IndexedRef') {
-        $lhs_width = 1;
-        $lhs_explicit = 1;
-    } elsif (ref($target_expr) eq 'FSM::CoreAST::AggregateRef'
-        && $target_expr->can('width')
-        && defined($target_expr->width)
-        && $target_expr->width > 0) {
-        $lhs_width = $target_expr->width;
-        $lhs_explicit = 1;
-    } elsif (ref($target_expr) eq 'FSM::CoreAST::SignalRef'
-        && $target_expr->signal
-        && defined($target_expr->signal->width)
-        && $target_expr->signal->width > 0
-        && (
-            $target_expr->signal->width > 1
-            || ($target_expr->signal->can('get_attribute') && $target_expr->signal->get_attribute('width_declared'))
-        )) {
-        $lhs_width = $target_expr->signal->width;
-        $lhs_explicit = 1;
-    }
+    ($lhs_width, $lhs_explicit) = $self->infer_assignment_lhs_width(
+        $signal_name,
+        $target_expr,
+        $lhs_deconstruct_contract,
+    );
 
     if ($source_expr && $source_expr->can('width') && $source_expr->width) {
         $rhs_width = $source_expr->width;
@@ -2143,9 +2389,25 @@ sub parse_signal_action($self, $action) {
         rhs_explicit => $rhs_explicit ? 1 : 0,
     );
 
-    if ($lhs_explicit && $rhs_explicit) {
+    if ($lhs_deconstruct_contract) {
+        Carp::confess
+            "Malformed LHS deconstruct assignment '$signal_name_display'. ".
+            "The RHS must have an exact positive width before generation so the deconstruct split is unambiguous. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless $rhs_explicit && defined($rhs_width) && $rhs_width > 0;
+
+        Carp::confess
+            "Malformed LHS deconstruct assignment '$signal_name_display'. ".
+            "LHS deconstruct total width $lhs_width does not match RHS width $rhs_width. ".
+            "FSMGen will not silently pad or truncate deconstruct assignments; align the RHS explicitly before generation. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless $lhs_width == $rhs_width;
+
+        $width_contract{resolution} = 'exact_match';
+        $final_width = $lhs_width;
+    } elsif ($lhs_explicit && $rhs_explicit) {
         if ($lhs_width != $rhs_width) {
-            $self->{expression_builder}->handle_width_mismatch($lhs_width, $rhs_width, $signal_name, $value_expr, \$source_expr);
+            $self->{expression_builder}->handle_width_mismatch($lhs_width, $rhs_width, $signal_name_display, $value_expr, \$source_expr);
             $width_contract{resolution} = $lhs_width > $rhs_width
                 ? 'rhs_expanded_to_lhs'
                 : 'rhs_truncated_to_lhs';
@@ -2167,14 +2429,22 @@ sub parse_signal_action($self, $action) {
     }
     $width_contract{final_width} = $final_width if defined $final_width;
 
-    my $target_base_width = $self->get_target_base_signal_width($target_expr, $final_width);
-    if ($target_base_signal ne '' && $target_base_width > 1) {
-        $self->{signal_manager}->register_signal($target_base_signal, width => $target_base_width);
+    @target_base_specs = $self->assignment_target_base_specs($target_expr, $final_width);
+    $target_base_signal = @target_base_specs == 1
+        ? $target_base_specs[0]{name}
+        : '';
+    for my $target_base_spec (@target_base_specs) {
+        if ($target_base_spec->{name} ne '' && $target_base_spec->{width} > 1) {
+            $self->{signal_manager}->register_signal($target_base_spec->{name}, width => $target_base_spec->{width});
+        }
     }
     
     $target_expr = $self->{expression_builder}->parse_signal_reference($signal_name); 
+    if ($lhs_deconstruct_contract) {
+        $lhs_deconstruct_contract = $self->validate_assignment_lhs_target($signal_name, $target_expr);
+    }
     
-    my $output_exposure = ($signal_name =~ />$/) ? 'explicit' : 'auto';
+    my $output_exposure = $self->assignment_target_has_explicit_output_marker($signal_name, $target_expr) ? 'explicit' : 'auto';
     if ($output_exposure eq 'auto') {
         if (ref($target_expr) && $target_expr->can('signal') && $target_expr->signal && $target_expr->signal->can('get_attribute')) {
             $output_exposure = $target_expr->signal->get_attribute('is_output') ? 'explicit' : 'auto';
@@ -2182,7 +2452,7 @@ sub parse_signal_action($self, $action) {
     }
     
     my %source_provenance = (
-        raw_signal_name => $signal_name,
+        raw_signal_name => ref($signal_name) ? $signal_name_display : $signal_name,
         raw_operator => $operator,
         raw_value_expr => ref($value_expr) ? ref($value_expr) : $value_expr,
         raw_value_expr_rendered => $raw_source_expr_display,
@@ -2199,6 +2469,8 @@ sub parse_signal_action($self, $action) {
         $source_provenance{compound_delta} = $compound_delta_used;
     }
     $source_provenance{width_contract} = \%width_contract;
+    $source_provenance{lhs_deconstruct} = $lhs_deconstruct_contract
+        if $lhs_deconstruct_contract;
 
     my $assignment;
     if ($operator eq '<-') {
@@ -2218,13 +2490,16 @@ sub parse_signal_action($self, $action) {
             },
         );
     } elsif ($operator eq '<-=') {
-        my $next_output_name = "next_$target_base_signal";
-        $self->{signal_manager}->register_signal(
-            $next_output_name,
-            width => $target_base_width,
-            is_output => 1,
-            is_aux_output => 1,
-        );
+        my $next_output_name = $target_base_signal ne '' ? "next_$target_base_signal" : undef;
+        for my $target_base_spec (@target_base_specs) {
+            my $aux_output_name = "next_$target_base_spec->{name}";
+            $self->{signal_manager}->register_signal(
+                $aux_output_name,
+                width => $target_base_spec->{width},
+                is_output => 1,
+                is_aux_output => 1,
+            );
+        }
         $assignment = FSM::CoreAST::RegisterAssignment->new(
             target => $target_expr,
             source => $source_expr,
@@ -2239,7 +2514,7 @@ sub parse_signal_action($self, $action) {
                 lhs_binding => 'flop_q_output',
                 hold_policy => 'q_feedback_when_no_enable',
                 expose_next_output => 1,
-                auxiliary_output_name => $next_output_name,
+                (defined($next_output_name) ? (auxiliary_output_name => $next_output_name) : ()),
             },
         );
     } elsif ($operator eq '<=') {
@@ -2260,13 +2535,16 @@ sub parse_signal_action($self, $action) {
             },
         );
     } elsif ($operator eq '<=+') {
-        my $q_output_name = $target_base_signal . '_r';
-        $self->{signal_manager}->register_signal(
-            $q_output_name,
-            width => $target_base_width,
-            is_output => 1,
-            is_aux_output => 1,
-        );
+        my $q_output_name = $target_base_signal ne '' ? $target_base_signal . '_r' : undef;
+        for my $target_base_spec (@target_base_specs) {
+            my $aux_output_name = $target_base_spec->{name} . '_r';
+            $self->{signal_manager}->register_signal(
+                $aux_output_name,
+                width => $target_base_spec->{width},
+                is_output => 1,
+                is_aux_output => 1,
+            );
+        }
         $assignment = FSM::CoreAST::RegisterAssignment->new(
             target => $target_expr,
             source => $source_expr,
@@ -2282,7 +2560,7 @@ sub parse_signal_action($self, $action) {
                 immediate_visibility => 'same_cycle_on_d_input',
                 hold_policy => 'q_feedback_when_no_enable',
                 expose_q_output => 1,
-                auxiliary_output_name => $q_output_name,
+                (defined($q_output_name) ? (auxiliary_output_name => $q_output_name) : ()),
             },
         );
     } elsif ($operator =~ /^<(\d+)$/) {
@@ -2326,7 +2604,7 @@ sub parse_signal_action($self, $action) {
         );
     } else {
         Carp::confess
-            "Unsupported assignment operator '$operator' for signal '$signal_name'. ".
+            "Unsupported assignment operator '$operator' for signal '$signal_name_display'. ".
             "Decision-tree assignments must use one of '=', '<-', '<-=', '<=', '<=+', or a delayed-pulse form like '<1'. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n";
     }

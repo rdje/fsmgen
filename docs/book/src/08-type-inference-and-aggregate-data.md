@@ -158,37 +158,41 @@ But the guardrail remains:
 - if the backend cannot honor the inferred shape honestly, generation must fail
   explicitly
 
-## Current RHS Pack And Future Deconstruct Direction
+## Current RHS Pack And Bounded LHS Deconstruct
 
-FSMGen now has a first bounded direct assignment RHS pack form:
+FSMGen now has bounded direct assignment pack and deconstruct forms:
 
 ```lisp
 (idle
   (OUT = (concat HEADER PAYLOAD))
   (ALIAS_OUT = (cat HEADER PAYLOAD))
+  ((concat OUT_HEADER OUT_PAYLOAD) = IN_WORD)
+  ((cat REG_HI REG_LO) <- NEXT_WORD)
 )
 ```
 
-This is an intent-level expression, not raw renderer text. The authored
-operands are ordered left to right and emitted high to low in SystemVerilog,
-for example `{HEADER, PAYLOAD}`.
+These are intent-level expressions, not raw renderer text. RHS pack operands
+are ordered left to right and emitted high to low in SystemVerilog, for example
+`{HEADER, PAYLOAD}`. LHS deconstruct operands use the same authored order:
+the leftmost target receives the high RHS slice and the rightmost target
+receives the low RHS slice.
 
 Current guardrails:
 
 - direct RHS pack uses `(concat ...)` or the shorter `(cat ...)` alias
-- operands must have exact widths from declared signal widths, bit/slice or
-  typed aggregate leaf access, or explicitly sized literal constants
+- direct LHS deconstruct uses a `(concat ...)` or `(cat ...)` assignment target
+- pack and deconstruct operands must have exact widths from declared signal
+  widths, bit/slice or typed aggregate leaf access, or explicitly sized literal
+  constants on the RHS pack path
+- deconstruct LHS operands must be static writable lvalues: whole signals,
+  static bit/slice references, or typed aggregate leaf references
 - total width is checked before HDL generation
 - if the RHS pack width does not match the LHS width, generation aborts through
   the pre-generation assignment-width contract instead of silently padding or
   truncating
-
-LHS deconstruction remains future work:
-
-- an LHS deconstruct form would split one RHS into several legal static lvalues
-- authored left-to-right order should map high-to-low in the packed value
-- overlapping or duplicated LHS ranges should fail unless a future semantic
-  pass defines deliberate merge or priority behavior
+- if a deconstruct target's total width does not match the RHS width, generation
+  aborts before HDL emission
+- overlapping or duplicated deconstruct LHS ranges fail before generation
 
 The important boundary is the same one used elsewhere in FSMGen: the frontend
 should normalize and validate the meaning first, then the backend should emit
