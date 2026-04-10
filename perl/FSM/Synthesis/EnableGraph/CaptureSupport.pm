@@ -47,8 +47,8 @@ use Scalar::Util qw(blessed);
 
 use FSM::AST::Node;
 use FSM::Debug;
+use FSM::Package::AggregateExpressionTypeSupport;
 use FSM::Package::AggregatePathSupport;
-use FSM::Package::PayloadTypeSupport;
 
 =head2 new
 
@@ -567,7 +567,13 @@ sub source_fragment_aggregate_type_spec ($self, $source_provenance, $rhs_expr, $
         my @operands = @{$aligned_concat_fragment->{operands} || []};
         return $self->aggregate_type_spec_from_source_expr($operands[0])
             if @operands == 1;
-        return $self->concat_operand_type_spec_for_target(\@operands, $target_expr)
+        return FSM::Package::AggregateExpressionTypeSupport->concat_operand_type_spec_for_target(
+            operands => \@operands,
+            target_expr => $target_expr,
+            width_resolver => sub($expr) {
+                return $self->infer_exact_source_width($expr);
+            },
+        )
             if @operands > 1;
     }
 
@@ -597,134 +603,15 @@ sub source_fragment_aggregate_type_spec ($self, $source_provenance, $rhs_expr, $
 sub aggregate_type_spec_from_source_expr ($self, $expr) {
     return unless $expr && blessed($expr);
 
-    my $type_spec;
-    if ($expr->isa('FSM::CoreAST::SignalRef')) {
-        return if $expr->slice;
-        my $signal = $expr->signal;
-        return unless $signal && blessed($signal) && $signal->can('declared_type_spec');
-        $type_spec = $signal->declared_type_spec;
-    } elsif ($expr->isa('FSM::CoreAST::AggregateRef')) {
-        $type_spec = $expr->type_spec;
-    } elsif ($expr->isa('FSM::CoreAST::Concatenation')) {
-        $type_spec = $self->concat_expression_list_type_spec($expr);
-    } else {
-        return;
-    }
-
-    return unless ref($type_spec) eq 'HASH';
-    my $kind = $type_spec->{kind} || '';
-    return unless $kind eq 'list' || $kind eq 'record';
+    my $type_spec = FSM::Package::AggregateExpressionTypeSupport->source_expression_type_spec(
+        $expr,
+        width_resolver => sub($source_expr) {
+            return $self->infer_exact_source_width($source_expr);
+        },
+    );
+    return unless FSM::Package::AggregateExpressionTypeSupport->is_aggregate_type_spec($type_spec);
 
     return FSM::Package::AggregatePathSupport->clone_structured_value($type_spec);
-}
-
-sub concat_expression_list_type_spec ($self, $expr) {
-    return unless $expr && blessed($expr) && $expr->isa('FSM::CoreAST::Concatenation');
-    return $self->concat_operand_list_type_spec(@{$expr->operands || []});
-}
-
-sub concat_operand_type_spec_for_target ($self, $operands, $target_expr = undef) {
-    return unless ref($operands) eq 'ARRAY' && @$operands;
-
-    my $concat_list_type_spec = $self->concat_operand_list_type_spec(@$operands);
-    return unless ref($concat_list_type_spec) eq 'HASH';
-
-    my $target_type_spec = $self->assignment_target_declared_type_spec($target_expr);
-    return $concat_list_type_spec
-        unless ref($target_type_spec) eq 'HASH'
-            && ($target_type_spec->{kind} || '') eq 'record';
-
-    my @item_specs = @{$concat_list_type_spec->{items} || []};
-    my @member_order = @{$target_type_spec->{member_order} || []};
-    return $concat_list_type_spec unless @item_specs == @member_order;
-
-    my %members;
-    for my $index (0 .. $#member_order) {
-        $members{$member_order[$index]} = FSM::Package::AggregatePathSupport->clone_structured_value($item_specs[$index]);
-    }
-
-    return {
-        kind => 'record',
-        width => $concat_list_type_spec->{width},
-        signed => 0,
-        member_order => \@member_order,
-        members => \%members,
-    };
-}
-
-sub concat_operand_list_type_spec ($self, @operands) {
-    return unless @operands;
-
-    my @item_specs;
-    my $total_width = 0;
-    for my $operand (@operands) {
-        my $item_spec = $self->source_expression_type_spec($operand);
-        return unless ref($item_spec) eq 'HASH';
-        push @item_specs, $item_spec;
-        $total_width += $item_spec->{width} // 0;
-    }
-    return unless @item_specs && $total_width > 0;
-
-    return {
-        kind => 'list',
-        width => $total_width,
-        signed => 0,
-        items => [ map { FSM::Package::AggregatePathSupport->clone_structured_value($_) } @item_specs ],
-    };
-}
-
-sub assignment_target_declared_type_spec ($self, $target_expr) {
-    return unless $target_expr && blessed($target_expr);
-
-    if ($target_expr->isa('FSM::CoreAST::AggregateRef')) {
-        return $target_expr->type_spec;
-    }
-
-    return unless $target_expr->isa('FSM::CoreAST::SignalRef');
-    return if $target_expr->slice;
-
-    my $signal = $target_expr->signal;
-    return unless $signal && blessed($signal) && $signal->can('declared_type_spec');
-    return $signal->declared_type_spec;
-}
-
-sub source_expression_type_spec ($self, $expr) {
-    return unless $expr && blessed($expr);
-
-    if ($expr->isa('FSM::CoreAST::SignalRef')) {
-        if ($expr->slice) {
-            my ($high, $low) = @{$expr->slice};
-            return FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width(abs($high - $low) + 1);
-        }
-
-        my $signal = $expr->signal;
-        if ($signal && blessed($signal) && $signal->can('declared_type_spec')) {
-            my $declared_type_spec = $signal->declared_type_spec;
-            return FSM::Package::AggregatePathSupport->clone_structured_value($declared_type_spec)
-                if ref($declared_type_spec) eq 'HASH';
-        }
-    }
-
-    if ($expr->isa('FSM::CoreAST::AggregateRef')) {
-        my $type_spec = $expr->type_spec;
-        return FSM::Package::AggregatePathSupport->clone_structured_value($type_spec)
-            if ref($type_spec) eq 'HASH';
-    }
-
-    if ($expr->isa('FSM::CoreAST::IndexedRef')) {
-        return FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width(1);
-    }
-
-    if ($expr->isa('FSM::CoreAST::Concatenation')) {
-        my $concat_type_spec = $self->concat_expression_list_type_spec($expr);
-        return $concat_type_spec if ref($concat_type_spec) eq 'HASH';
-    }
-
-    my $width = $self->infer_exact_source_width($expr);
-    return FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($width)
-        if defined($width) && $width > 0;
-
-    return;
 }
 
 =head2 capture_transition_from_ast

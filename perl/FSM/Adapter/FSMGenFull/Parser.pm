@@ -10,6 +10,7 @@ use Data::Dumper;
 use Scalar::Util qw(blessed);
 use FSM::CoreAST;
 use FSM::Debug;
+use FSM::Package::AggregateExpressionTypeSupport;
 use FSM::Package::AggregatePathSupport;
 use FSM::Package::DeclarativeSymbolResolver;
 use FSM::Package::DeclarativeTypeSupport;
@@ -2630,7 +2631,7 @@ sub resolve_direct_assignment_aggregate_contract($self, $value_expr, $source_exp
         my $aggregate_payload = $self->{signal_manager}->resolve_aggregate_symbol_payload($value_expr);
         if (defined $aggregate_payload) {
             my $type_spec = FSM::Package::PayloadTypeSupport->payload_to_type_spec($aggregate_payload);
-            if (ref($type_spec) eq 'HASH' && $self->is_aggregate_type_spec($type_spec)) {
+            if (FSM::Package::AggregateExpressionTypeSupport->is_aggregate_type_spec($type_spec)) {
                 return {
                     symbol_name => $value_expr,
                     type_spec => $type_spec,
@@ -2643,7 +2644,13 @@ sub resolve_direct_assignment_aggregate_contract($self, $value_expr, $source_exp
 
     my ($type_spec, $symbol_name);
     if ($source_expr->isa('FSM::CoreAST::Concatenation')) {
-        $type_spec = $self->concat_direct_assignment_type_spec($source_expr, $target_expr);
+        $type_spec = FSM::Package::AggregateExpressionTypeSupport->concat_expression_type_spec_for_target(
+            source_expr => $source_expr,
+            target_expr => $target_expr,
+            width_resolver => sub($expr) {
+                return $self->{expression_builder}->infer_exact_expression_width($expr);
+            },
+        );
         $symbol_name = eval { $source_expr->to_systemverilog };
     } elsif ($source_expr->isa('FSM::CoreAST::SignalRef')) {
         return undef if $source_expr->slice;
@@ -2660,128 +2667,12 @@ sub resolve_direct_assignment_aggregate_contract($self, $value_expr, $source_exp
         return undef;
     }
 
-    return undef unless ref($type_spec) eq 'HASH' && $self->is_aggregate_type_spec($type_spec);
+    return undef unless FSM::Package::AggregateExpressionTypeSupport->is_aggregate_type_spec($type_spec);
 
     return {
         symbol_name => $symbol_name,
         type_spec => $type_spec,
     };
-}
-
-sub concat_direct_assignment_type_spec($self, $source_expr, $target_expr = undef) {
-    return undef unless $source_expr && blessed($source_expr) && $source_expr->isa('FSM::CoreAST::Concatenation');
-
-    my $target_type_spec = $self->assignment_target_declared_type_spec($target_expr);
-    return undef unless ref($target_type_spec) eq 'HASH' && $self->is_aggregate_type_spec($target_type_spec);
-
-    my $concat_list_type_spec = $self->concat_expression_list_type_spec($source_expr);
-    return undef unless ref($concat_list_type_spec) eq 'HASH';
-
-    my @item_specs = @{$concat_list_type_spec->{items} || []};
-    my $total_width = $concat_list_type_spec->{width} // 0;
-    return undef unless @item_specs && $total_width > 0;
-
-    my $target_kind = $target_type_spec->{kind} || '';
-    if ($target_kind eq 'record') {
-        my @member_order = @{$target_type_spec->{member_order} || []};
-        if (@member_order == @item_specs) {
-            my %members;
-            for my $index (0 .. $#member_order) {
-                $members{$member_order[$index]} = FSM::Package::AggregatePathSupport->clone_structured_value($item_specs[$index]);
-            }
-            return {
-                kind => 'record',
-                width => $total_width,
-                signed => 0,
-                member_order => \@member_order,
-                members => \%members,
-            };
-        }
-    }
-
-    return $concat_list_type_spec;
-}
-
-sub concat_expression_list_type_spec($self, $source_expr) {
-    return undef unless $source_expr && blessed($source_expr) && $source_expr->isa('FSM::CoreAST::Concatenation');
-
-    my @operands = @{$source_expr->operands || []};
-    return undef unless @operands;
-
-    my @item_specs;
-    my $total_width = 0;
-    for my $operand (@operands) {
-        my $item_spec = $self->source_expression_type_spec($operand);
-        return undef unless ref($item_spec) eq 'HASH';
-        push @item_specs, $item_spec;
-        $total_width += $item_spec->{width} // 0;
-    }
-    return undef unless @item_specs && $total_width > 0;
-
-    return {
-        kind => 'list',
-        width => $total_width,
-        signed => 0,
-        items => [ map { FSM::Package::AggregatePathSupport->clone_structured_value($_) } @item_specs ],
-    };
-}
-
-sub assignment_target_declared_type_spec($self, $target_expr) {
-    return undef unless $target_expr && blessed($target_expr);
-
-    if ($target_expr->isa('FSM::CoreAST::AggregateRef')) {
-        return $target_expr->type_spec;
-    }
-
-    return undef unless $target_expr->isa('FSM::CoreAST::SignalRef');
-    return undef if $target_expr->slice;
-
-    my $signal = $target_expr->signal;
-    return undef unless $signal && blessed($signal) && $signal->can('declared_type_spec');
-    return $signal->declared_type_spec;
-}
-
-sub source_expression_type_spec($self, $expr) {
-    return undef unless $expr && blessed($expr);
-
-    if ($expr->isa('FSM::CoreAST::SignalRef')) {
-        if ($expr->slice) {
-            my ($high, $low) = @{$expr->slice};
-            return FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width(abs($high - $low) + 1);
-        }
-
-        my $signal = $expr->signal;
-        if ($signal && blessed($signal) && $signal->can('declared_type_spec')) {
-            my $declared_type_spec = $signal->declared_type_spec;
-            return $declared_type_spec if ref($declared_type_spec) eq 'HASH';
-        }
-    }
-
-    if ($expr->isa('FSM::CoreAST::AggregateRef')) {
-        my $type_spec = $expr->type_spec;
-        return $type_spec if ref($type_spec) eq 'HASH';
-    }
-
-    if ($expr->isa('FSM::CoreAST::IndexedRef')) {
-        return FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width(1);
-    }
-
-    if ($expr->isa('FSM::CoreAST::Concatenation')) {
-        my $concat_type_spec = $self->concat_expression_list_type_spec($expr);
-        return $concat_type_spec if ref($concat_type_spec) eq 'HASH';
-    }
-
-    my $width = $self->{expression_builder}->infer_exact_expression_width($expr);
-    return FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($width)
-        if defined($width) && $width > 0;
-
-    return undef;
-}
-
-sub is_aggregate_type_spec($self, $type_spec) {
-    return 0 unless ref($type_spec) eq 'HASH';
-    my $kind = $type_spec->{kind} || '';
-    return ($kind eq 'list' || $kind eq 'record') ? 1 : 0;
 }
 
 sub resolve_single_bit_logic_level($self, $source_expr, $raw_value_expr) {

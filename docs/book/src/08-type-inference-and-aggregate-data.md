@@ -212,7 +212,11 @@ Current guardrails:
 
 The important boundary is the same one used elsewhere in FSMGen: the frontend
 should normalize and validate the meaning first, then the backend should emit
-the already-upright AST/IR.
+the already-upright AST/IR. The shared implementation owner for CoreAST
+concat/list/record expression-shape inference is
+`FSM::Package::AggregateExpressionTypeSupport`; the direct parser and
+EnableGraph capture path both use that owner with their local exact-width
+resolver instead of carrying parallel list/record walkers.
 
 ## Practical Guidance Today
 

@@ -1440,7 +1440,12 @@ The first honest `R11` slices are now:
   shipped too: deconstruct fragments aligned to RHS concat operands keep those
   operands instead of selecting from a whole concat blob, and nested RHS concat
   fragments now preserve aligned nested operand list shape plus target-aware
-  record member mapping before the pre-generation validator runs.
+  record member mapping before the pre-generation validator runs. The
+  CoreAST aggregate-expression type-shape inference for those pack/deconstruct
+  paths now has one package owner,
+  `FSM::Package::AggregateExpressionTypeSupport`, consumed by both the direct
+  parser and EnableGraph capture path with local exact-width resolvers instead
+  of parallel concat/list/record walkers.
 - Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
   approachable, the preferred shape is a book-like docs set with one Markdown
   file per major topic, a landing-page/table-of-contents role for
