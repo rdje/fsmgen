@@ -1407,6 +1407,10 @@ The first honest `R11` slices are now:
   too, so `in_frame.tag`, `in_frame.payload[1]`, and
   `producer.OUT_FRAME.payload[1]` report leaf width/type facts instead of
   falling back to whole-base widths or generic bit/slice defaults.
+- Ownership note: composition aggregate path traversal now has a shared owner
+  in `FSM::Composition::AggregatePathSupport`, so explicit-link planning and
+  provenance reporting consume the same record/list/scalar path semantics
+  rather than keeping parallel walkers that could drift.
 - Documentation note: once `docs/USER_GUIDE.md` becomes too large to stay
   approachable, the preferred shape is a book-like docs set with one Markdown
   file per major topic, a landing-page/table-of-contents role for

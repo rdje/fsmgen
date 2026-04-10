@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-10
+### composition aggregate path traversal now has one shared owner
+- Added [perl/FSM/Composition/AggregatePathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/AggregatePathSupport.pm) as the shared composition-side resolver for declared aggregate member/item paths, including record members, list items, scalar subselects after aggregate leaves, generated `item_N` list-field lowering, and stable failure codes for invalid paths.
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) so explicit-link planning keeps its rich user-facing diagnostics while delegating the actual aggregate path traversal to that shared owner.
+- Updated [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm) so provenance leaf width/type projection consumes the same path resolver instead of maintaining a second best-effort walker.
+- Added [t/283-composition-aggregate-path-support.t](/Users/richarddje/Documents/github/fsmgen/t/283-composition-aggregate-path-support.t) to lock shared success/failure semantics for the aggregate path primitive.
+
 ### composition aggregate source expressions now report leaf width/type metadata
 - Updated [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm) so composition provenance endpoint contexts resolve declared aggregate source paths such as `in_frame.tag`, `in_frame.payload[1]`, and `producer.OUT_FRAME.payload[1]` to their leaf width and leaf type spec instead of falling back to whole-base widths or slice-like defaults.
 - Top-port and child-endpoint provenance contexts now preserve `declared_type_name` / `declared_type_spec` when that structural metadata is available, so embedding/reporting consumers can inspect aggregate source-expression facts without reconstructing the declared type contract from packed widths.

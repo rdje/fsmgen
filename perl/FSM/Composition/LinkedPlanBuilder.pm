@@ -22,6 +22,7 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::Composition::Link;
+use FSM::Composition::AggregatePathSupport;
 use FSM::Composition::InterfacePortBuilder;
 use FSM::Composition::Net;
 use FSM::Composition::Plan;
@@ -2533,132 +2534,138 @@ sub _resolve_aggregate_path_connection ($class, %args) {
     my $raw = $args{raw} // '';
     my $context_label = $args{context_label} || 'expression';
     my $base_label = $args{base_label} || 'base endpoint';
-    my $root_type_spec = $args{root_type_spec};
-    my $path_text = $args{path_text} // '';
-    my $connection_expr = $args{base_expr};
     my $fsm_file = $args{fsm_file};
     my $header = $args{header};
 
-    confess
-        "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
-        "but explicit link endpoint resolution is blocked because $base_label has no declared aggregate type. ".
-        "Declare an aggregate '+types' alias on the endpoint before using member or item access in composition links. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless ref($root_type_spec) eq 'HASH';
+    my $result = FSM::Composition::AggregatePathSupport->resolve(
+        root_type_spec => $args{root_type_spec},
+        path_text => $args{path_text},
+        base_expr => $args{base_expr},
+    );
 
-    my $root_kind = $root_type_spec->{kind} || '';
-    confess
-        "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
-        "but explicit link endpoint resolution is blocked because $base_label has scalar type '".
-        FSM::Package::PayloadTypeSupport->type_spec_label($root_type_spec).
-        "', so aggregate member or item access is not available. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless $root_kind eq 'record' || $root_kind eq 'list';
+    $class->_confess_aggregate_path_resolution_error(
+        $result,
+        raw => $raw,
+        context_label => $context_label,
+        base_label => $base_label,
+        fsm_file => $fsm_file,
+        header => $header,
+    ) unless $result->{ok};
 
-    my $remaining = $path_text;
-    my $current_type_spec = $root_type_spec;
+    return (
+        $result->{connection_expr},
+        $class->_clone_structured_value($result->{type_spec}),
+        $result->{width},
+    );
+}
 
-    while (length $remaining) {
-        if ($remaining =~ s/\A\.([A-Za-z_]\w*)//) {
-            my $member_name = $1;
-            my $kind = $current_type_spec->{kind} || '';
+sub _confess_aggregate_path_resolution_error ($class, $error, %args) {
+    my $raw = $args{raw} // '';
+    my $context_label = $args{context_label} || 'expression';
+    my $base_label = $args{base_label} || 'base endpoint';
+    my $fsm_file = $args{fsm_file};
+    my $header = $args{header};
+    my $code = $error->{code} || 'unknown';
 
-            confess
-                "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
-                "but explicit link endpoint resolution is blocked because member access '.$member_name' is only valid on record-typed values; current path type is '".
-                FSM::Package::PayloadTypeSupport->type_spec_label($current_type_spec)."'. ".
-                "Use '[N]' for list items or declare a record member before generation. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-                unless $kind eq 'record';
-
-            my $members = $current_type_spec->{members} || {};
-            confess
-                "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
-                "but explicit link endpoint resolution is blocked because record type for $base_label has no member '$member_name'. ".
-                "Known members: " . join(', ', @{ $current_type_spec->{member_order} || [] }) . ". ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-                unless exists $members->{$member_name};
-
-            $connection_expr = member_access_expr($connection_expr, $member_name);
-            $current_type_spec = $members->{$member_name};
-            next;
-        }
-
-        if ($remaining =~ s/\A\[(\d+)(?::(\d+))?\]//) {
-            my ($first_index, $second_index) = ($1, $2);
-            my $kind = $current_type_spec->{kind} || '';
-
-            if ($kind eq 'list') {
-                confess
-                    "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
-                    "but explicit link endpoint resolution is blocked because list item access currently accepts one constant index, not a range. ".
-                    "Select one list element with '[N]' before generation. ".
-                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-                    if defined $second_index;
-
-                my $items = $current_type_spec->{items} || [];
-                confess
-                    "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
-                    "but explicit link endpoint resolution is blocked because list index '$first_index' is outside the declared item range 0..".
-                    (@$items ? $#$items : -1).". ".
-                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-                    unless $first_index < @$items;
-
-                $connection_expr = member_access_expr($connection_expr, 'item_'.(0 + $first_index));
-                $current_type_spec = $items->[$first_index];
-                next;
-            }
-
-            if ($kind eq 'bit' || $kind eq 'bits') {
-                my $scalar_width = $current_type_spec->{width} // 0;
-                if (defined $second_index) {
-                    my ($high, $low) = ($first_index, $second_index);
-                    my $max_index = $high > $low ? $high : $low;
-                    confess
-                        "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
-                        "but explicit link endpoint resolution is blocked because scalar slice [$high:$low] exceeds resolved scalar width '$scalar_width'. ".
-                        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-                        unless $scalar_width > 0 && $max_index < $scalar_width;
-
-                    my $slice_width = abs($high - $low) + 1;
-                    $connection_expr = slice_expr($connection_expr, $high, $low);
-                    $current_type_spec = FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($slice_width);
-                    next;
-                }
-
-                confess
-                    "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
-                    "but explicit link endpoint resolution is blocked because scalar index '$first_index' exceeds resolved scalar width '$scalar_width'. ".
-                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-                    unless $scalar_width > 0 && $first_index < $scalar_width;
-
-                $connection_expr = bit_select_expr($connection_expr, $first_index);
-                $current_type_spec = FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width(1);
-                next;
-            }
-
-            confess
-                "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
-                "but explicit link endpoint resolution is blocked because index access is valid on list and scalar bit-vector values; current path type is '".
-                FSM::Package::PayloadTypeSupport->type_spec_label($current_type_spec)."'. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-        }
-
+    if ($code eq 'missing_declared_type') {
         confess
             "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
-            "but explicit link endpoint resolution is blocked because aggregate path '$remaining' could not be parsed. ".
+            "but explicit link endpoint resolution is blocked because $base_label has no declared aggregate type. ".
+            "Declare an aggregate '+types' alias on the endpoint before using member or item access in composition links. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    if ($code eq 'empty_path') {
+        confess
+            "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+            "but explicit link endpoint resolution is blocked because aggregate path resolution received an empty path. ".
             "Use record member access like '.field' and list/scalar constant indexes like '[0]'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
     }
 
-    my $resolved_width = ref($current_type_spec) eq 'HASH' ? ($current_type_spec->{width} // undef) : undef;
+    if ($code eq 'scalar_root') {
+        confess
+            "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+            "but explicit link endpoint resolution is blocked because $base_label has scalar type '".
+            ($error->{current_type_label} || 'unknown').
+            "', so aggregate member or item access is not available. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    if ($code eq 'member_on_non_record') {
+        confess
+            "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+            "but explicit link endpoint resolution is blocked because member access '.".$error->{member_name}."' is only valid on record-typed values; current path type is '".
+            ($error->{current_type_label} || 'unknown')."'. ".
+            "Use '[N]' for list items or declare a record member before generation. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    if ($code eq 'unknown_member') {
+        confess
+            "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+            "but explicit link endpoint resolution is blocked because record type for $base_label has no member '".$error->{member_name}."'. ".
+            "Known members: " . join(', ', @{ $error->{known_members} || [] }) . ". ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    if ($code eq 'list_range_not_supported') {
+        confess
+            "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+            "but explicit link endpoint resolution is blocked because list item access currently accepts one constant index, not a range. ".
+            "Select one list element with '[N]' before generation. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    if ($code eq 'list_index_out_of_range') {
+        confess
+            "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+            "but explicit link endpoint resolution is blocked because list index '".$error->{index}."' is outside the declared item range 0..".
+            ($error->{max_index} // -1).". ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    if ($code eq 'scalar_slice_out_of_range') {
+        confess
+            "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+            "but explicit link endpoint resolution is blocked because scalar slice [".$error->{high}.":".$error->{low}."] exceeds resolved scalar width '".$error->{scalar_width}."'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    if ($code eq 'scalar_index_out_of_range') {
+        confess
+            "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+            "but explicit link endpoint resolution is blocked because scalar index '".$error->{index}."' exceeds resolved scalar width '".$error->{scalar_width}."'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    if ($code eq 'index_on_non_indexable') {
+        confess
+            "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+            "but explicit link endpoint resolution is blocked because index access is valid on list and scalar bit-vector values; current path type is '".
+            ($error->{current_type_label} || 'unknown')."'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    if ($code eq 'parse_error') {
+        confess
+            "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+            "but explicit link endpoint resolution is blocked because aggregate path '".($error->{remaining} || '')."' could not be parsed. ".
+            "Use record member access like '.field' and list/scalar constant indexes like '[0]'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    if ($code eq 'missing_leaf_width') {
+        confess
+            "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
+            "but explicit link endpoint resolution is blocked because the resolved aggregate leaf has no positive packed width. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
     confess
         "Composition source '$header' in '$fsm_file' uses $context_label '$raw', ".
-        "but explicit link endpoint resolution is blocked because the resolved aggregate leaf has no positive packed width. ".
-        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-        unless defined($resolved_width) && $resolved_width > 0;
-
-    return ($connection_expr, $class->_clone_structured_value($current_type_spec), $resolved_width);
+        "but explicit link endpoint resolution is blocked because aggregate path resolution failed unexpectedly. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
 sub endpoint_width ($class, $endpoint) {

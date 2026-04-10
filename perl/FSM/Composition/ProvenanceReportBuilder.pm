@@ -20,10 +20,10 @@ use feature qw(signatures);
 no warnings 'experimental::signatures';
 
 use FSM::Composition::LinkedPlanBuilder;
+use FSM::Composition::AggregatePathSupport;
 use FSM::Composition::InterfacePortBuilder;
 use FSM::IR::IntentHIR;
 use FSM::IR::StructuralRTLIRBuilder;
-use FSM::Package::PayloadTypeSupport;
 
 =head2 build_report
 
@@ -487,7 +487,7 @@ sub endpoint_context ($class, %args) {
         };
         $context->{declared_type_name} = $top_port->{declared_type_name}
             if defined $top_port->{declared_type_name};
-        $context->{declared_type_spec} = _clone_structured_value($top_port->{declared_type_spec})
+        $context->{declared_type_spec} = FSM::Composition::AggregatePathSupport->clone_structured_value($top_port->{declared_type_spec})
             if ref($top_port->{declared_type_spec}) eq 'HASH';
         return $context;
     }
@@ -518,9 +518,9 @@ sub endpoint_context ($class, %args) {
             };
             $context->{declared_type_name} = $top_port->{declared_type_name}
                 if defined $top_port->{declared_type_name};
-            $context->{declared_type_spec} = _clone_structured_value($top_port->{declared_type_spec})
+            $context->{declared_type_spec} = FSM::Composition::AggregatePathSupport->clone_structured_value($top_port->{declared_type_spec})
                 if ref($top_port->{declared_type_spec}) eq 'HASH';
-            $context->{expression_type_spec} = _clone_structured_value($aggregate_type_spec)
+            $context->{expression_type_spec} = FSM::Composition::AggregatePathSupport->clone_structured_value($aggregate_type_spec)
                 if ref($aggregate_type_spec) eq 'HASH';
             return $context;
         }
@@ -555,7 +555,7 @@ sub endpoint_context ($class, %args) {
                 base_endpoint => $base_endpoint,
                 width => $width,
             };
-            $context->{expression_type_spec} = _clone_structured_value($aggregate_type_spec)
+            $context->{expression_type_spec} = FSM::Composition::AggregatePathSupport->clone_structured_value($aggregate_type_spec)
                 if ref($aggregate_type_spec) eq 'HASH';
             return $context;
         }
@@ -604,7 +604,7 @@ sub endpoint_context ($class, %args) {
     };
     $context->{declared_type_name} = $port->{declared_type_name}
         if $port && defined $port->{declared_type_name};
-    $context->{declared_type_spec} = _clone_structured_value($port->{declared_type_spec})
+    $context->{declared_type_spec} = FSM::Composition::AggregatePathSupport->clone_structured_value($port->{declared_type_spec})
         if $port && ref($port->{declared_type_spec}) eq 'HASH';
     return $context;
 }
@@ -914,77 +914,10 @@ sub _structural_rtl_ir_object ($class, $composition_plan, $structural_rtl_ir = u
 }
 
 sub _aggregate_path_type_spec_and_width ($class, $root_type_spec, $path_text) {
-    return (undef, undef) unless ref($root_type_spec) eq 'HASH';
-    return (undef, undef) unless defined($path_text) && length($path_text);
-
-    my $current_type_spec = $root_type_spec;
-    my $remaining = $path_text;
-    while (length $remaining) {
-        if ($remaining =~ s/\A\.([A-Za-z_]\w*)//) {
-            my $member_name = $1;
-            return (undef, undef) unless ($current_type_spec->{kind} || '') eq 'record';
-            my $members = $current_type_spec->{members} || {};
-            return (undef, undef) unless exists $members->{$member_name};
-            $current_type_spec = $members->{$member_name};
-            next;
-        }
-
-        if ($remaining =~ s/\A\[(\d+)(?::(\d+))?\]//) {
-            my ($first_index, $second_index) = ($1, $2);
-            my $kind = $current_type_spec->{kind} || '';
-
-            if ($kind eq 'list') {
-                return (undef, undef) if defined $second_index;
-                my $items = $current_type_spec->{items} || [];
-                return (undef, undef) unless $first_index < @$items;
-                $current_type_spec = $items->[$first_index];
-                next;
-            }
-
-            if ($kind eq 'bit' || $kind eq 'bits') {
-                my $scalar_width = $current_type_spec->{width} // 0;
-                if (defined $second_index) {
-                    my ($high, $low) = ($first_index, $second_index);
-                    my $max_index = $high > $low ? $high : $low;
-                    return (undef, undef) unless $scalar_width > 0 && $max_index < $scalar_width;
-
-                    my $slice_width = abs($high - $low) + 1;
-                    $current_type_spec = FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($slice_width);
-                    next;
-                }
-
-                return (undef, undef) unless $scalar_width > 0 && $first_index < $scalar_width;
-                $current_type_spec = FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width(1);
-                next;
-            }
-
-            return (undef, undef);
-        }
-
-        return (undef, undef);
-    }
-
-    my $width = ref($current_type_spec) eq 'HASH' ? ($current_type_spec->{width} // undef) : undef;
-    return (_clone_structured_value($current_type_spec), $width)
-        if defined($width) && $width > 0;
-
-    return (undef, undef);
-}
-
-sub _clone_structured_value ($value) {
-    return undef unless defined $value;
-
-    if (ref($value) eq 'HASH') {
-        return {
-            map { $_ => _clone_structured_value($value->{$_}) } sort keys %$value
-        };
-    }
-
-    if (ref($value) eq 'ARRAY') {
-        return [ map { _clone_structured_value($_) } @$value ];
-    }
-
-    return $value;
+    return FSM::Composition::AggregatePathSupport->resolve_type_path(
+        root_type_spec => $root_type_spec,
+        path_text => $path_text,
+    );
 }
 
 =head2 _source_root_kind_for_instance_kind

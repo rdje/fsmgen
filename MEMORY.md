@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-10: composition aggregate path traversal now has one owner
+- Saved one internal hardening slice for aggregate source-expression work.
+- Important continuity note:
+  - [perl/FSM/Composition/AggregatePathSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/AggregatePathSupport.pm)
+    now owns shared declared aggregate member/item path traversal,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    keeps the rich explicit-link diagnostics on top of that shared resolver,
+  - [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm)
+    now uses the same resolver for leaf width/type reporting,
+  - and [t/283-composition-aggregate-path-support.t](/Users/richarddje/Documents/github/fsmgen/t/283-composition-aggregate-path-support.t)
+    locks the helper's success and stable failure-code surface.
+
 ## 2026-04-10: composition aggregate source provenance now resolves leaf facts
 - Saved one hardening slice for the aggregate source-expression lane.
 - Important continuity note:
