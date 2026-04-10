@@ -47,6 +47,7 @@ use Scalar::Util qw(blessed);
 
 use FSM::AST::Node;
 use FSM::Debug;
+use FSM::Package::AggregatePathSupport;
 
 =head2 new
 
@@ -320,6 +321,21 @@ sub capture_lhs_deconstruct_assignment_from_ast ($self, $dt_name, $assignment_no
         );
 
         my %fragment_provenance = %$source_provenance;
+        delete $fragment_provenance{aggregate_type_spec};
+        if (defined($source_provenance->{aggregate_symbol_name}) && $source_provenance->{aggregate_symbol_name} ne '') {
+            my $aggregate_symbol_name = $source_provenance->{aggregate_symbol_name};
+            $fragment_provenance{aggregate_symbol_name} = $source_high == $source_low
+                ? $aggregate_symbol_name . "[$source_high]"
+                : $aggregate_symbol_name . "[$source_high:$source_low]";
+        }
+        my $fragment_aggregate_type_spec = $self->source_fragment_aggregate_type_spec(
+            $source_provenance,
+            $total_width,
+            $source_high,
+            $source_low,
+        );
+        $fragment_provenance{aggregate_type_spec} = $fragment_aggregate_type_spec
+            if ref($fragment_aggregate_type_spec) eq 'HASH';
         $fragment_provenance{lhs_deconstruct_fragment} = {
             index => $index,
             source_high => $source_high,
@@ -375,6 +391,39 @@ sub source_fragment_capture_value ($self, $rhs_expr, $total_width, $source_high,
 sub wrap_sv_expr_for_select ($self, $expr) {
     return $expr if defined($expr) && $expr =~ /^[a-zA-Z_][a-zA-Z0-9_]*$/;
     return "($expr)";
+}
+
+=head2 source_fragment_aggregate_type_spec
+
+Return the aggregate/scalar type contract for one deconstructed RHS slice when
+the source RHS carried a whole-aggregate type contract. Exact subaggregate
+fragments keep their nested list/record type; arbitrary partial slices fall
+back to a scalar width contract.
+
+=cut
+
+sub source_fragment_aggregate_type_spec ($self, $source_provenance, $total_width, $source_high, $source_low) {
+    return unless ref($source_provenance) eq 'HASH';
+    my $source_type_spec = ref($source_provenance->{aggregate_type_spec}) eq 'HASH'
+        ? $source_provenance->{aggregate_type_spec}
+        : undef;
+    return unless $source_type_spec;
+    return unless defined($total_width)
+        && defined($source_high)
+        && defined($source_low)
+        && $total_width > 0
+        && $source_high >= $source_low
+        && $source_high < $total_width;
+
+    my $type_width = $source_type_spec->{width};
+    return unless defined($type_width) && $type_width == $total_width;
+
+    return FSM::Package::AggregatePathSupport->type_spec_for_packed_fragment(
+        root_type_spec => $source_type_spec,
+        total_width => $total_width,
+        high => $source_high,
+        low => $source_low,
+    );
 }
 
 =head2 capture_transition_from_ast

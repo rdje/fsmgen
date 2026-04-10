@@ -300,6 +300,99 @@ sub resolve_packed_range ($class, %args) {
     };
 }
 
+=head2 type_spec_for_packed_fragment
+
+Return the type contract for one packed bit range relative to an aggregate root.
+Exact nested record/list fragments keep their aggregate type; arbitrary
+cross-member fragments fall back to a scalar width contract.
+
+=cut
+
+sub type_spec_for_packed_fragment ($class, %args) {
+    my $root_type_spec = $args{root_type_spec};
+    return unless ref($root_type_spec) eq 'HASH';
+
+    my ($high, $low) = ($args{high}, $args{low});
+    return unless defined($high)
+        && defined($low)
+        && $high =~ /^\d+$/
+        && $low =~ /^\d+$/
+        && $high >= $low;
+
+    my $root_width = $root_type_spec->{width};
+    return unless defined($root_width) && $root_width > 0 && $high < $root_width;
+
+    if (defined $args{total_width}) {
+        my $total_width = $args{total_width};
+        return unless $total_width == $root_width;
+    }
+
+    return $class->_type_spec_for_relative_packed_fragment($root_type_spec, 0 + $high, 0 + $low);
+}
+
+sub _type_spec_for_relative_packed_fragment ($class, $type_spec, $high, $low) {
+    return unless ref($type_spec) eq 'HASH';
+    my $width = $type_spec->{width};
+    return unless defined($width) && $width > 0;
+    return unless defined($high) && defined($low) && $high >= $low && $low >= 0 && $high < $width;
+
+    return $class->clone_structured_value($type_spec)
+        if $low == 0 && $high == $width - 1;
+
+    my $kind = $type_spec->{kind} || '';
+    if ($kind eq 'record') {
+        return $class->_record_fragment_type_spec($type_spec, $high, $low);
+    }
+    if ($kind eq 'list') {
+        return $class->_list_fragment_type_spec($type_spec, $high, $low);
+    }
+
+    return FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($high - $low + 1);
+}
+
+sub _record_fragment_type_spec ($class, $type_spec, $high, $low) {
+    my $members = $type_spec->{members} || {};
+    for my $member_name (@{$type_spec->{member_order} || []}) {
+        next unless exists $members->{$member_name};
+        my $member_type_spec = $members->{$member_name};
+        my $member_low = $class->record_member_low_offset($type_spec, $member_name);
+        next unless defined $member_low;
+        my $member_width = $member_type_spec->{width};
+        next unless defined($member_width) && $member_width > 0;
+        my $member_high = $member_low + $member_width - 1;
+
+        next unless $low >= $member_low && $high <= $member_high;
+        return $class->_type_spec_for_relative_packed_fragment(
+            $member_type_spec,
+            $high - $member_low,
+            $low - $member_low,
+        );
+    }
+
+    return FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($high - $low + 1);
+}
+
+sub _list_fragment_type_spec ($class, $type_spec, $high, $low) {
+    my $items = $type_spec->{items} || [];
+    for my $index (0 .. $#$items) {
+        my $item_type_spec = $items->[$index];
+        my $item_low = $class->list_item_low_offset($type_spec, $index);
+        next unless defined $item_low;
+        my $item_width = $item_type_spec->{width};
+        next unless defined($item_width) && $item_width > 0;
+        my $item_high = $item_low + $item_width - 1;
+
+        next unless $low >= $item_low && $high <= $item_high;
+        return $class->_type_spec_for_relative_packed_fragment(
+            $item_type_spec,
+            $high - $item_low,
+            $low - $item_low,
+        );
+    }
+
+    return FSM::Package::PayloadTypeSupport->scalar_type_spec_from_width($high - $low + 1);
+}
+
 sub record_member_low_offset ($class, $record_type_spec, $member_name) {
     my $members = $record_type_spec->{members} || {};
     my $order = $record_type_spec->{member_order} || [];

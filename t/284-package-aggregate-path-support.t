@@ -100,6 +100,44 @@ subtest 'package aggregate path support resolves packed base-signal ranges' => s
     is($tag_slice_range->{low}, 8, 'scalar subselect packed range keeps the low bound');
 };
 
+subtest 'package aggregate path support resolves packed fragment type specs' => sub {
+    my $payload_fragment = FSM::Package::AggregatePathSupport->type_spec_for_packed_fragment(
+        root_type_spec => $frame_t,
+        total_width => 11,
+        high => 5,
+        low => 0,
+    );
+    is($payload_fragment->{kind}, 'list', 'exact payload packed fragment keeps the nested list type');
+    is($payload_fragment->{width}, 6, 'exact payload packed fragment keeps the nested list width');
+
+    my $payload_item_fragment = FSM::Package::AggregatePathSupport->type_spec_for_packed_fragment(
+        root_type_spec => $frame_t,
+        total_width => 11,
+        high => 4,
+        low => 1,
+    );
+    is($payload_item_fragment->{kind}, 'bits', 'exact nested list item fragment resolves to the item type');
+    is($payload_item_fragment->{width}, 4, 'exact nested list item fragment keeps the item width');
+
+    my $tag_slice_fragment = FSM::Package::AggregatePathSupport->type_spec_for_packed_fragment(
+        root_type_spec => $frame_t,
+        total_width => 11,
+        high => 9,
+        low => 8,
+    );
+    is($tag_slice_fragment->{kind}, 'bits', 'scalar sub-fragment resolves to a scalar bits type');
+    is($tag_slice_fragment->{width}, 2, 'scalar sub-fragment keeps the selected width');
+
+    my $cross_member_fragment = FSM::Package::AggregatePathSupport->type_spec_for_packed_fragment(
+        root_type_spec => $frame_t,
+        total_width => 11,
+        high => 6,
+        low => 1,
+    );
+    is($cross_member_fragment->{kind}, 'bits', 'cross-member fragment falls back to a scalar width contract');
+    is($cross_member_fragment->{width}, 6, 'cross-member scalar fallback keeps the packed fragment width');
+};
+
 subtest 'package aggregate path support reports stable failure codes' => sub {
     my $scalar_root = FSM::Package::AggregatePathSupport->resolve(
         root_type_spec => { kind => 'bits', width => 4, signed => 0 },

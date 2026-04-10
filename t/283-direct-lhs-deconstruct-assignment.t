@@ -148,6 +148,76 @@ FSM
     );
 };
 
+subtest 'direct LHS concat deconstruct preserves aggregate RHS fragment contracts' => sub {
+    my $compatible_fsm_module = parse_fsm_module(
+        'direct_lhs_deconstruct_aggregate_fragment_contract',
+        <<'FSM'
+(?fsm:direct_lhs_deconstruct_aggregate_fragment_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+constants
+    (FRAME ((tag 4'b1010) (payload (1 2'b10))))
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+    (type frame_t (record (tag (bits 4)) (payload payload_t)))
+  )
+  (+size
+    (TAG 4)
+    (PAYLOAD payload_t)
+    (OUT frame_t)
+  )
+  (idle
+    ((concat TAG PAYLOAD) = FRAME)
+    ((concat OUT.tag OUT.payload) = FRAME)
+  )
+)
+FSM
+    );
+
+    my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($compatible_fsm_module);
+
+    like($hdl, qr/\bTAG\s*=\s*\(7'b1010110\)\[6:3\];/s, 'aggregate deconstruct high fragment drives the scalar tag target');
+    like($hdl, qr/\bPAYLOAD\s*=\s*\(7'b1010110\)\[2:0\];/s, 'aggregate deconstruct low fragment drives the compatible aggregate payload target');
+    like(
+        $hdl,
+        qr/\bOUT\s*=\s*\{\(7'b1010110\)\[6:3\],\s*\(7'b1010110\)\[2:0\]\};/s,
+        'same-base aggregate deconstruct fragments rejoin through partial aggregate LHS normalization',
+    );
+
+    like(
+        generation_failure(
+            'direct_lhs_deconstruct_bad_aggregate_fragment_contract',
+            <<'FSM'
+(?fsm:direct_lhs_deconstruct_bad_aggregate_fragment_contract
+  (+system
+    (clock clk)
+    (sreset rst)
+  )
+  (+constants
+    (BAD ((tag 4'b1010) (payload ((mode 2'b10) (flag 1)))))
+  )
+  (+types
+    (type payload_t (list bit (bits 2)))
+    (type frame_t (record (tag (bits 4)) (payload payload_t)))
+  )
+  (+size
+    (TAG 4)
+    (PAYLOAD payload_t)
+  )
+  (idle
+    ((concat TAG PAYLOAD) = BAD)
+  )
+)
+FSM
+        ),
+        qr/assignment to 'PAYLOAD' uses whole aggregate RHS 'BAD\[2:0\]' with contract 'record\{mode:bits\[2\], flag:bit\}' that does not match declared type 'list<bit, bits\[2\]>'/s,
+        'aggregate deconstruct rejects incompatible typed source fragments against the target fragment contract',
+    );
+};
+
 done_testing();
 
 sub parse_fsm_module {
@@ -171,6 +241,19 @@ sub parse_failure {
     my $error = '';
     eval {
         parse_fsm_module($basename, $fsm_text);
+        1;
+    } or do {
+        $error = $@ || 'unknown error';
+    };
+    return $error;
+}
+
+sub generation_failure {
+    my ($basename, $fsm_text) = @_;
+    my $error = '';
+    eval {
+        my $fsm_module = parse_fsm_module($basename, $fsm_text);
+        FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
         1;
     } or do {
         $error = $@ || 'unknown error';
