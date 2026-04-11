@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-11
+### `.rtlif` system-role failures now keep concise composition summaries
+- Extended [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so output-direction `clock` / `reset` `.rtlif` metadata failures keep the offending token, resolved metadata file, blocked `RTL interface metadata system-port direction` boundary, and concise reason in both pipeline reports and non-quiet CLI composition-failure summaries.
+- This locks the already-general [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) behavior for the new `.rtlif` system-role direction diagnostic without needing production-code changes.
+
 ### `.rtlif` system-role metadata is now input-only
 - Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so typed `.rtlif` `clock` and `reset` tokens reject output-direction spellings such as `core_clk>:clock` or `rst_async_n>:reset`.
 - Kept ordinary `data` outputs valid, so external RTL payload/status ports such as `txd>:data` remain expressible while system-role categories stay honest composition inputs.

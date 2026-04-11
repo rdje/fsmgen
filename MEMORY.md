@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-11: `.rtlif` system-port direction summaries are now locked
+- Saved the bounded `R11` failure-summary hardening follow-up for the new
+  `.rtlif` system-role direction diagnostic.
+- Important continuity note:
+  - [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t)
+    now covers both pipeline and CLI summaries for
+    `core_clk>:clock`-style failures,
+  - those summaries keep the resolved `RTL metadata file`, token context,
+    blocked `RTL interface metadata system-port direction` boundary, and
+    concise reason,
+  - [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm)
+    did not need a production-code change because its existing extraction
+    rules already handled the new diagnostic shape,
+  - and future `.rtlif` contract diagnostics should continue to get both raw
+    validator coverage and short-summary coverage when they introduce a new
+    blocked boundary.
+
 ## 2026-04-11: `.rtlif` clock/reset categories are now system-input-only
 - Saved the bounded `R11` `.rtlif` contract-hardening slice.
 - Important continuity note:

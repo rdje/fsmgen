@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: `.rtlif` system-role direction failures stay summary-backed
+- Added explicit regression coverage in
+  [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t)
+  for the new blocked `.rtlif` system-port direction diagnostic.
+- Landed behavior:
+  - pipeline-level failure reports now lock the resolved `RTL metadata file`,
+    `Token 'core_clk>:clock'` context, blocked
+    `RTL interface metadata system-port direction` boundary, and the concise
+    reason that the token resolves to `clock` while declaring an output
+    direction,
+  - non-quiet `bin/fsmgen` runs now have the same summary contract locked at
+    CLI level,
+  - and [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm)
+    needed no production-code change because its existing blocked-boundary,
+    token-context, artifact, and reason extraction rules were already general
+    enough.
+- Why this boundary matters:
+  - the raw validator failure from
+    [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm)
+    is not the whole user experience,
+  - malformed external interface metadata should fail before generation while
+    also producing the short, scannable composition summary users see first,
+  - and explicit tests keep the new `.rtlif` contract from silently regressing
+    into raw exception text only.
+
 ## 2026-04-11: `.rtlif` system roles are input-only
 - Landed a bounded `R11` composition-contract hardening slice in
   [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm).
