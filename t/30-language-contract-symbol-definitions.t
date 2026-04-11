@@ -12,6 +12,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use Lispish;
 use FSM::Adapter::FSMGenFull;
 use FSM::HDL::FlattenedDT;
+use FSM::IR::IntentHIRBuilder;
 
 my $tempdir = tempdir(CLEANUP => 1);
 
@@ -24,6 +25,9 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
   (+define (D0 8'4))
   (+params
     (P0 8)
+    (P_HEX 0x10)
+    (P_BIN 0b1010)
+    (P_LIST (8'hA5 8'h3C))
   )
   (+enums
     (mode
@@ -40,6 +44,9 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (B 8)
     (C 8)
     (D 8)
+    (E 8)
+    (F 4)
+    (W 16)
     (Z 8)
     (SEL 8)
     (FLAG 1)
@@ -50,6 +57,9 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (B = D0)
     (C = P0)
     (D = mode.BUSY)
+    (E = P_HEX)
+    (F = P_BIN)
+    (W = P_LIST)
     (Z = ZERO)
     (FLAG = 1 <SEL=C0)
     (BUSY_SEEN = 1 <SEL=mode.BUSY)
@@ -60,11 +70,11 @@ FSM
 my $symbol_summary = $adapter->{signal_manager}->get_symbol_summary;
 is($symbol_summary->{constants}, 2, '+constants summary count is correct');
 is($symbol_summary->{defines}, 1, '+define summary count is correct');
-is($symbol_summary->{params}, 1, '+params summary count is correct');
+is($symbol_summary->{params}, 4, '+params summary count is correct');
 is($symbol_summary->{enums}, 1, '+enums summary count is correct');
 
 my $elements = state_elements($fsm_module, '-dt');
-is(scalar(@$elements), 7, 'symbol-contract DT has the expected number of elements');
+is(scalar(@$elements), 10, 'symbol-contract DT has the expected number of elements');
 
 my %assignment_by_target;
 my @conditional_assignments;
@@ -82,7 +92,24 @@ is_literal_assignment($assignment_by_target{A}, '3', 8, 'C0 constant resolves to
 is_literal_assignment($assignment_by_target{B}, '4', 8, 'D0 define resolves to an 8-bit literal');
 is_literal_assignment($assignment_by_target{C}, '8', undef, 'P0 param resolves to a scalar literal');
 is_literal_assignment($assignment_by_target{D}, '1', undef, 'mode.BUSY enum member resolves to a literal');
+is_literal_assignment($assignment_by_target{E}, "'h10", undef, 'P_HEX param resolves to a canonical unsized hex literal');
+is_literal_assignment($assignment_by_target{F}, "'b1010", undef, 'P_BIN param resolves to a canonical unsized binary literal');
+is_literal_assignment($assignment_by_target{W}, '1010010100111100', 16, 'P_LIST aggregate param resolves to one packed literal');
 is_literal_assignment($assignment_by_target{Z}, '0', 8, 'ZERO constant resolves through const_8b0');
+
+my $params = $fsm_module->parameters;
+is($params->{P_HEX}{value_text}, "'h10", 'semantic module records canonical hex parameter text');
+is($params->{P_LIST}{value_kind}, 'list', 'semantic module records aggregate parameter kind');
+is($params->{P_LIST}{value_width}, 16, 'semantic module records packed aggregate parameter width');
+
+my $intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
+    fsm_module => $fsm_module,
+);
+is_deeply(
+    $intent_hir->parameter_names,
+    [qw(P0 P_BIN P_HEX P_LIST)],
+    'Intent HIR exposes direct-root parameter names from semantic module metadata'
+);
 
 is(scalar(@conditional_assignments), 2, 'symbol-contract DT has the expected number of conditional assignments');
 

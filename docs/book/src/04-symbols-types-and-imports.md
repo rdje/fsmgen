@@ -13,6 +13,32 @@ The current canonical intent-level families are:
 Compatibility families such as `+define` and `+params` still exist in the live
 tree, but they are not the long-term center of gravity for the language.
 
+## Parameters
+
+Use `+params` for direct-root parameter values when the source is describing a
+configuration knob rather than a general shared constant. The direct-root
+surface now uses the same bounded parameter/generic value normalization policy
+as external RTL interface metadata.
+
+```lisp
+(+params
+  (WIDTH 0x10)
+  (RESET_VALUE 8'hA5)
+  (LANES (8'hA5 8'h3C))
+)
+```
+
+Scalar values may use decimal, sized SystemVerilog-style literals, unsized
+SystemVerilog-style based literals, or `0x` / `0b` / `0o` prefixes. Bounded
+literal list/record payloads are also accepted when they can lower to one packed
+literal. That keeps the authoring surface convenient while preserving a concrete
+semantic value before generation.
+
+In the current direct-root path, `+params` values resolve as semantic literals in
+expressions. They are not yet emitted as HDL `parameter` declarations on
+generated modules; generated-child parameter override binding remains a separate
+future contract.
+
 ## Constants
 
 Use `+constants` for named scalar values and bounded aggregate values.

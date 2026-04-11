@@ -9,7 +9,7 @@ no warnings 'experimental::signatures';
 
 use File::Basename qw(dirname);
 use File::Spec;
-use FSM::Composition::ParameterValueSupport;
+use FSM::ParameterValueSupport;
 use FSM::Composition::Port;
 use FSM::SourcePathResolver;
 use Lispish;
@@ -312,7 +312,7 @@ sub parse_parameter_declarations_block ($self, $module_name, $params_block, $met
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless $self->_is_contract_identifier($name);
 
-        my $value_info = FSM::Composition::ParameterValueSupport->canonical_value(
+        my $value_info = FSM::ParameterValueSupport->canonical_value(
             value_ast => $value_ast,
             context => "RTL interface metadata '$metadata_path' parameter/generic '$name'",
             docs_hint => " See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md",

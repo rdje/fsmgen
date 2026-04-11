@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
+use Carp ();
 use Data::Dumper;
 use FSM::CoreAST;
 use FSM::Debug;
@@ -249,8 +250,12 @@ sub resolve_symbol($self, $symbol_name) {
     
     # 4. Check params (used in expressions like {DATA_WIDTH}'b0)
     if (exists $self->{params}{$symbol_name}) {
-        fsm_debug("      RESOLVED: $symbol_name as param -> $self->{params}{$symbol_name}", 3);
-        return FSM::CoreAST::Literal->new($self->{params}{$symbol_name});
+        my $param_value = $self->{params}{$symbol_name};
+        my $param_text = ref($param_value) eq 'HASH'
+            ? ($param_value->{value_text} // '')
+            : $param_value;
+        fsm_debug("      RESOLVED: $symbol_name as param -> $param_text", 3);
+        return _literal_from_parameter_value($param_value);
     }
     
     # Not found in symbol tables
@@ -308,6 +313,28 @@ sub _clone_type_spec($value) {
     }
 
     return $value;
+}
+
+sub _literal_from_parameter_value($param_value) {
+    my $text = ref($param_value) eq 'HASH'
+        ? $param_value->{value_text}
+        : $param_value;
+    Carp::confess("Internal error: stored parameter value is missing canonical text")
+        unless defined $text;
+
+    if ($text =~ /\A(\d+)'b([01]+)\z/i) {
+        return FSM::CoreAST::Literal->new($2, width => 0 + $1, radix => 'binary');
+    }
+
+    if ($text =~ /\A(\d+)'d([0-9]+)\z/i) {
+        return FSM::CoreAST::Literal->new($2, width => 0 + $1, radix => 'decimal');
+    }
+
+    if ($text =~ /\A(\d+)'h([0-9A-Fa-f]+)\z/i) {
+        return FSM::CoreAST::Literal->new(uc($2), width => 0 + $1, radix => 'hex');
+    }
+
+    return FSM::CoreAST::Literal->new($text);
 }
 
 sub get_signal_summary($self) {

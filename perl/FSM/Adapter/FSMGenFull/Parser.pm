@@ -18,6 +18,7 @@ use FSM::Package::DeclarativeTypeResolver;
 use FSM::Package::PayloadTypeSupport;
 use FSM::Package::SignalManagerProjectionSupport;
 use FSM::Package::Symbols;
+use FSM::ParameterValueSupport;
 use FSM::SourceClassifier;
 
 sub new($class, %args) {
@@ -1818,30 +1819,45 @@ sub parse_params_section($self, $params_ast) {
 
     Carp::confess
         "Malformed '+params' section. ".
-        "The active contract supports '+params' only as a non-empty list of '(NAME scalar_value)' entries. ".
+        "The active contract supports '+params' only as a non-empty list of '(NAME value)' scalar or aggregate entries. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless ref($params_list) eq 'ARRAY' && @$params_list;
 
     for my $param_def (@$params_list) {
         Carp::confess
             "Malformed '+params' entry. ".
-            "Each '+params' entry must be a pair '(NAME scalar_value)'. ".
+            "Each '+params' entry must be a pair '(NAME value)'. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
             unless ref($param_def) eq 'ARRAY' && @$param_def == 2;
 
         my ($name, $value_array) = @$param_def;
         my $resolved_name = $self->unwrap_scalar_token($name);
-        my $resolved_value = $self->unwrap_scalar_token($value_array);
 
         Carp::confess
             "Malformed '+params' entry for parameter '".$self->describe_contract_name($resolved_name)."'. ".
-            "Each '+params' entry must use an HDL-identifier-compatible name and a scalar value token. ".
+            "Each '+params' entry must use an HDL-identifier-compatible name. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
-            unless $self->is_contract_identifier($resolved_name)
-                && defined($resolved_value)
-                && !ref($resolved_value);
+            unless $self->is_contract_identifier($resolved_name);
 
-        $self->{signal_manager}->store_param($resolved_name, $resolved_value);
+        Carp::confess
+            "Malformed '+params' entry for parameter '".$self->describe_contract_name($resolved_name)."'. ".
+            "Each '+params' entry must provide a scalar or aggregate value. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            unless defined $value_array;
+
+        my $value_info = FSM::ParameterValueSupport->canonical_value(
+            value_ast => $value_array,
+            context => "Direct source parameter '$resolved_name'",
+            docs_hint => " See docs/USER_GUIDE.md for the current supported boundary.",
+        );
+        $self->{signal_manager}->store_param($resolved_name, $value_info);
+
+        if ($self->{fsm_module} && $self->{fsm_module}->can('parameters')) {
+            $self->{fsm_module}->parameters->{$resolved_name} = {
+                %$value_info,
+                origin_kind => 'direct_root_parameter',
+            };
+        }
     }
 }
 

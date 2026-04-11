@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-11: direct `+params` now share parameter/generic value normalization
+- Saved the bounded `R11` direct-parameter normalization slice.
+- Important continuity note:
+  - [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm)
+    is now the neutral owner for bounded scalar and aggregate parameter/generic
+    value normalization,
+  - [perl/FSM/Composition/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterValueSupport.pm)
+    remains as a compatibility shim rather than the semantic owner,
+  - direct-root `(+params ...)` now accepts scalar integer forms such as `8`,
+    `8'hA5`, `'hA5`, `0xA5`, `0b1010`, and `0o77`, plus bounded literal
+    aggregate payloads that lower to one packed literal,
+  - direct parameter metadata is now recorded on the semantic module so Intent
+    HIR exposes `parameter_names` for direct roots,
+  - malformed direct `+params` entries still fail through the parser-fronted
+    targeted diagnostics before HDL emission,
+  - and generated-child parameterization remains a follow-up because that needs
+    explicit source-level override binding, not just late HDL instance text.
+
 ## 2026-04-11: external `?rtl` parameter/generic overrides now have a first semantic slice
 - Saved the bounded `R11` external-RTL parameter/generic override slice.
 - Important continuity note:
@@ -13,7 +31,7 @@ This is the live continuity document for fast session recovery after crashes, re
     such as `8`, `8'hA5`, `'hA5`, `0xA5`, `0b1010`, and `0o77`, plus bounded
     literal aggregate payloads such as `(8'hA5 8'h3C)` and
     `((mode 2'b10) (flag 1))`,
-  - [perl/FSM/Composition/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterValueSupport.pm)
+  - [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm)
     owns that normalization policy and preserves inferred list/record type
     shape while lowering aggregate values to one packed literal for the current
     Verilog-family backend,

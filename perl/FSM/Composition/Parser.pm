@@ -18,7 +18,7 @@ use FSM::Composition::Link;
 use FSM::Composition::PortsBlock;
 use FSM::Composition::TopLink;
 use FSM::Composition::TopSymbols;
-use FSM::Composition::ParameterValueSupport;
+use FSM::ParameterValueSupport;
 use FSM::Package::DeclarativeTypeSupport;
 use FSM::Package::DeclarativeSymbolResolver;
 use FSM::Package::DeclarativeTypeResolver;
@@ -783,7 +783,7 @@ sub parse_rtl_parameter_override_block ($self, $top_name, $child_name, $params_b
             if $seen{$name};
         $seen{$name} = 1;
 
-        my $value_info = FSM::Composition::ParameterValueSupport->canonical_value(
+        my $value_info = FSM::ParameterValueSupport->canonical_value(
             value_ast => $value_ast,
             context => "Composition top '$top_name' contains '?rtl' child '$child_name' parameter override '$name'",
             docs_hint => $self->scope_docs_suffix,

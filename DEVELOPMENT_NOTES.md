@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: parameter/generic value normalization now has a neutral owner
+- Moved the bounded scalar/list/map parameter value policy into
+  [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm).
+- Rationale:
+  - parameter/generic normalization is no longer only a composition concern now
+    that direct-root `+params` consumes the same value surface,
+  - keeping the old composition package as a shim avoids a gratuitous break in
+    any in-repo or external caller that still imports the composition path,
+  - and generated-child parameterization should build on this semantic value
+    owner later, but must still add an explicit source-level override contract
+    before we emit any generated-child HDL instance override text.
+- Direct `+params` now records canonical value metadata on the semantic module,
+  so forward Intent HIR can see direct-root parameter names instead of leaving
+  `parameters` empty.
+
 ## 2026-04-11: external RTL parameter/generic overrides are semantic metadata
 - Landed the first bounded external-RTL parameter/generic override slice.
 - Current supported authoring shape:
