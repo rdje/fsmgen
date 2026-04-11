@@ -223,7 +223,7 @@ Combinational DT note:
 - External RTL interface loading via sidecar `<module>.rtlif`
   - or via an embedded `(?rtlif:module_name ...)` companion root in the same composition source
   - flat `(?rtlif:module_name ...)` roots with explicit port tokens
-  - optional `(params (NAME default_value) ...)` declaration blocks for scalar or aggregate external RTL parameters/generics
+  - optional `(params (NAME default_value) ...)` declaration blocks for scalar or aggregate external RTL parameters/generics; defaults may be literal values or package-qualified symbols from packages imported by the consuming composition source
   - token forms such as `clk`, `data_in<8`, `txd>`, `core_clk:clock`, and `rst_async_n:reset`
   - explicit type annotations currently limited to `:data`, `:clock`, and `:reset`
   - typed `:clock` / `:reset` metadata lets custom-named RTL system ports auto-wire through mixed composition
@@ -1434,7 +1434,8 @@ Current `.rtlif` token contract:
 - only `data`, `clock`, and `reset` are currently accepted as explicit port types
 - typed `clock` / `reset` tokens are system-input roles; they let custom-named RTL system ports auto-wire without falling back to `clk` / `rst_n` naming, but output-direction forms such as `core_clk>:clock` or `rst_async_n>:reset` are rejected
 - ordinary typed data outputs remain valid, for example `txd>:data`
-- per-instance parameter/generic overrides must name parameters/generics declared by the loaded `.rtlif` `(params ...)` block; the shipped value surface accepts scalar integer literals such as `8`, `8'hA5`, `'hA5`, `0xA5`, `0b1010`, and `0o77`, plus bounded literal list/record payloads such as `(8'hA5 8'h3C)` and `((mode 2'b10) (flag 1))`; override values may also reuse resolved composition-top or imported package symbols such as `WIDTH_VALUE`, `mode.BUSY`, `shared.RESET_VALUE`, or aggregate roots like `shared.LANES`; unresolved override symbols abort before generation; aggregate overrides must match the aggregate shape inferred from the `.rtlif` default value; validated overrides are preserved through the composition plan and structural RTL IR and lower to SystemVerilog `#(...)` instance parameters for the Verilog-family backend.
+- `.rtlif` parameter/generic defaults accept scalar integer literals such as `8`, `8'hA5`, `'hA5`, `0xA5`, `0b1010`, and `0o77`, bounded literal list/record payloads such as `(8'hA5 8'h3C)` and `((mode 2'b10) (flag 1))`, and package-qualified symbols from packages imported by the consuming composition source, such as `param_pkg.DEFAULT_WIDTH`, `param_pkg.DEFAULT_LANES`, or `param_pkg.frame_mode.RUN`; unresolved default symbols abort before generation
+- per-instance parameter/generic overrides must name parameters/generics declared by the loaded `.rtlif` `(params ...)` block; the shipped override value surface accepts the same scalar integer literals and bounded literal list/record payloads; override values may also reuse resolved composition-top or imported package symbols such as `WIDTH_VALUE`, `mode.BUSY`, `shared.RESET_VALUE`, or aggregate roots like `shared.LANES`; unresolved override symbols abort before generation; aggregate overrides must match the aggregate shape inferred from the `.rtlif` default value; validated overrides are preserved through the composition plan and structural RTL IR and lower to SystemVerilog `#(...)` instance parameters for the Verilog-family backend.
 
 Example parameterized external RTL instance:
 ```lisp
@@ -1474,10 +1475,10 @@ Example parameterized external RTL instance:
 
 (?rtlif:uart_tx
   (params
-    (WIDTH 8)
-    (RESET_VALUE 8'h00)
-    (LANES (8'h00 8'h00))
-    (FRAME ((mode 2'b00) (flag 0)))
+    (WIDTH param_pkg.DEFAULT_WIDTH)
+    (RESET_VALUE param_pkg.DEFAULT_RESET)
+    (LANES param_pkg.DEFAULT_LANES)
+    (FRAME param_pkg.DEFAULT_FRAME)
   )
   core_clk:clock
   rst_async_n:reset
@@ -1487,6 +1488,10 @@ Example parameterized external RTL instance:
 
 (?pkg:param_pkg
   (+constants
+    (DEFAULT_WIDTH 8)
+    (DEFAULT_RESET 8'h00)
+    (DEFAULT_LANES (8'h00 8'h00))
+    (DEFAULT_FRAME ((mode 2'b00) (flag 0)))
     (RESET_A5 8'hA5)
     (FLAG_ON 1)
   )

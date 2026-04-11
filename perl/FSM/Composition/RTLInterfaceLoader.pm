@@ -30,6 +30,7 @@ sub load_interface ($self, %args) {
     my $source_file = $args{source_file}
         or confess "RTLInterfaceLoader requires 'source_file'";
     my $embedded_raw_ast = $args{embedded_raw_ast};
+    my $top_symbols = $args{top_symbols};
 
     if (defined $embedded_raw_ast) {
         my $embedded_rtlif_ast = $self->_with_rtl_child_context(
@@ -49,7 +50,7 @@ sub load_interface ($self, %args) {
                 source_file => $source_file,
                 module_name => $module_name,
                 code => sub {
-                    return $self->parse_metadata_ast($module_name, $embedded_rtlif_ast, $metadata_path);
+                    return $self->parse_metadata_ast($module_name, $embedded_rtlif_ast, $metadata_path, $top_symbols);
                 },
             );
             return {
@@ -87,7 +88,7 @@ sub load_interface ($self, %args) {
         metadata_path => $metadata_path,
         context_kind => 'external_metadata',
         code => sub {
-            return $self->parse_metadata_ast($module_name, $raw_ast, $metadata_path);
+            return $self->parse_metadata_ast($module_name, $raw_ast, $metadata_path, $top_symbols);
         },
     );
 
@@ -127,7 +128,7 @@ sub embedded_metadata_label ($self, $source_file, $module_name) {
     return "$source_file:?rtlif:$module_name";
 }
 
-sub parse_metadata_ast ($self, $module_name, $raw_ast, $metadata_path) {
+sub parse_metadata_ast ($self, $module_name, $raw_ast, $metadata_path, $top_symbols = undef) {
     my $rtlif_ast = $self->find_rtlif_root($raw_ast, $module_name);
     confess
         "Composition references external RTL module '$module_name', ".
@@ -166,7 +167,7 @@ sub parse_metadata_ast ($self, $module_name, $raw_ast, $metadata_path) {
                     "but RTL interface metadata parameter declaration uniqueness is blocked because declared interface metadata '$metadata_path' repeats '(params ...)' under '?rtlif:$module_name'. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                     if @parameter_declarations;
-                my $declarations = $self->parse_parameter_declarations_block($module_name, $item, $metadata_path);
+                my $declarations = $self->parse_parameter_declarations_block($module_name, $item, $metadata_path, $top_symbols);
                 for my $declaration (@$declarations) {
                     confess
                         "Composition references external RTL module '$module_name', ".
@@ -287,7 +288,7 @@ sub parse_port_token ($self, $module_name, $token, $metadata_path) {
     );
 }
 
-sub parse_parameter_declarations_block ($self, $module_name, $params_block, $metadata_path) {
+sub parse_parameter_declarations_block ($self, $module_name, $params_block, $metadata_path, $top_symbols = undef) {
     my $entries = $params_block->[1] // [];
 
     confess
@@ -316,6 +317,9 @@ sub parse_parameter_declarations_block ($self, $module_name, $params_block, $met
             value_ast => $value_ast,
             context => "RTL interface metadata '$metadata_path' parameter/generic '$name'",
             docs_hint => " See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md",
+            resolve_symbol_payload => sub ($symbol_name) {
+                return $self->_resolve_package_parameter_default_symbol($symbol_name, $top_symbols);
+            },
         );
 
         my $raw_value = $self->_unwrap_scalar_token($value_ast);
@@ -335,6 +339,18 @@ sub parse_parameter_declarations_block ($self, $module_name, $params_block, $met
     }
 
     return \@declarations;
+}
+
+sub _resolve_package_parameter_default_symbol ($self, $symbol_name, $top_symbols) {
+    return undef unless defined($symbol_name) && !ref($symbol_name);
+    return undef unless $top_symbols && $top_symbols->can('imported_packages');
+    return undef unless $top_symbols->can('resolve_payload');
+
+    my ($package_name) = $symbol_name =~ /\A([A-Za-z_]\w*)\./;
+    return undef unless defined $package_name;
+    return undef unless exists(($top_symbols->imported_packages || {})->{$package_name});
+
+    return $top_symbols->resolve_payload($symbol_name);
 }
 
 sub _unwrap_scalar_token ($self, $value) {

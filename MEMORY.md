@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-11: `.rtlif` declaration defaults can reuse imported package symbols
+- Saved the bounded `R11` package-backed `.rtlif` default-value slice.
+- Important continuity note:
+  - `.rtlif` `(params (NAME default_value) ...)` defaults may now use
+    package-qualified symbols from packages imported by the consuming
+    composition source, such as `param_pkg.DEFAULT_WIDTH`,
+    `param_pkg.DEFAULT_LANES`, or `param_pkg.frame_mode.RUN`,
+  - [perl/FSM/Composition/RTLChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLChildRealizer.pm)
+    passes the post-import top symbol table into
+    [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm),
+  - the loader resolves only package-qualified names whose first segment is an
+    imported package, so sidecar metadata does not silently depend on
+    unqualified top-local constants or enums,
+  - unresolved package-qualified defaults still fail before planning or HDL
+    emission,
+  - [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t)
+    now locks package-backed scalar/list/record `.rtlif` defaults plus the
+    unresolved-default no-output failure,
+  - and generated-child parameterization plus VHDL generic-map lowering remain
+    explicit future contracts.
+
 ## 2026-04-11: external `?rtl` parameter overrides can reuse top/package symbols
 - Saved the bounded `R11` external-RTL symbolic override-value slice.
 - Important continuity note:
@@ -18,9 +39,8 @@ This is the live continuity document for fast session recovery after crashes, re
   - [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
     now records the updated `120` / `119` import-tree snapshot and the new
     parameter-override resolver owner in the composition spine,
-  - `.rtlif` parameter/generic declaration defaults remain literal/aggregate
-    values for now because interface metadata does not yet have its own import
-    contract,
+  - `.rtlif` parameter/generic declaration defaults are now superseded by the
+    later package-backed default-value slice above,
   - and generated-child parameterization plus VHDL generic-map lowering remain
     explicit future work.
 
@@ -40,9 +60,8 @@ This is the live continuity document for fast session recovery after crashes, re
   - [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t)
     now proves constant-backed, enum-backed, and aggregate-backed params lower
     to the expected semantic literal payloads and remain visible in Intent HIR,
-  - and generated-child parameterization, VHDL generic-map lowering, plus
-    package-backed `.rtlif` declaration defaults remain explicit future
-    contracts.
+  - and generated-child parameterization plus VHDL generic-map lowering remain
+    explicit future contracts.
 
 ## 2026-04-11: direct `+params` now share parameter/generic value normalization
 - Saved the bounded `R11` direct-parameter normalization slice.

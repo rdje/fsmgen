@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-11
+### `.rtlif` parameter defaults can reuse imported package values
+- Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) and [perl/FSM/Composition/RTLChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLChildRealizer.pm) so external RTL interface metadata `(params (NAME default_value) ...)` declarations may use package-qualified symbols from packages imported by the consuming composition source.
+- Kept the default-value scope intentionally reusable: `.rtlif` defaults resolve `pkg.NAME`, `pkg.AGG.member`, or `pkg.enum.MEMBER` through imported packages, but do not resolve unqualified composition-top-local names.
+- Extended [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) so package-backed `.rtlif` scalar/list/record defaults preserve shape for override validation and unresolved package-backed defaults fail through both pipeline and CLI without emitting HDL.
+- Updated the user guide, mdBook composition chapters, composition scope, legacy mapping note, roadmap docs, memory, and development notes so package-backed `.rtlif` defaults are recorded as shipped rather than future work.
+
 ### external `?rtl` parameter overrides can reuse semantic symbols
 - Added [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm) so deferred symbolic external-RTL parameter/generic override values resolve after composition package imports are available and before planning, realization, or HDL emission.
 - Updated [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm), [perl/FSM/Composition/PackageImportResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PackageImportResolver.pm), and [perl/FSM/Composition/Instance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Instance.pm) so `?rtl` `(params (NAME value) ...)` override values may reuse composition-top constants, enums, aggregate roots, and imported package symbols while unresolved value names still abort before generation.

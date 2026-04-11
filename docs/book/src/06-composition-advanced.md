@@ -314,10 +314,10 @@ the specific `?rtl` instance:
 
 (?rtlif:uart_tx
   (params
-    (WIDTH 8)
-    (RESET_VALUE 8'h00)
-    (LANES (8'h00 8'h00))
-    (FRAME ((mode 2'b00) (flag 0)))
+    (WIDTH param_pkg.DEFAULT_WIDTH)
+    (RESET_VALUE param_pkg.DEFAULT_RESET)
+    (LANES param_pkg.DEFAULT_LANES)
+    (FRAME param_pkg.DEFAULT_FRAME)
   )
   core_clk:clock
   rst_async_n:reset
@@ -327,6 +327,10 @@ the specific `?rtl` instance:
 
 (?pkg:param_pkg
   (+constants
+    (DEFAULT_WIDTH 8)
+    (DEFAULT_RESET 8'h00)
+    (DEFAULT_LANES (8'h00 8'h00))
+    (DEFAULT_FRAME ((mode 2'b00) (flag 0)))
     (RESET_A5 8'hA5)
     (FLAG_ON 1)
   )
@@ -336,16 +340,20 @@ the specific `?rtl` instance:
 The shipped value surface accepts scalar integer literals such as `8`, `8'hA5`,
 `'hA5`, `0xA5`, `0b1010`, and `0o77`, plus bounded literal aggregate payloads
 such as `(8'hA5 8'h3C)` and `((mode 2'b10) (flag 1))`. It also accepts resolved
-composition-top and imported-package symbols, including enum members and whole
-aggregate roots. Overrides must name entries in the `.rtlif` `(params ...)`
-block. Aggregate overrides must also match the aggregate shape inferred from
-the `.rtlif` default value before generation continues. Unresolved symbolic
-override values fail after package import resolution and before planning or HDL
-emission. Validated values survive into the composition plan and structural RTL
-IR, and the current Verilog-family backend lowers them to SystemVerilog `#(...)`
-instance parameters by packing aggregates into one literal. VHDL generic-map
-lowering and package-backed `.rtlif` declaration defaults are still future
-follow-ups.
+composition-top and imported-package symbols for instance overrides, including
+enum members and whole aggregate roots. `.rtlif` declaration defaults may use
+literal values or package-qualified symbols from packages imported by the
+consuming composition source, such as `param_pkg.DEFAULT_WIDTH` or
+`param_pkg.DEFAULT_LANES`; they deliberately do not depend on unqualified
+top-local names so sidecar metadata stays reusable. Overrides must name entries
+in the `.rtlif` `(params ...)` block. Aggregate overrides must also match the
+aggregate shape inferred from the `.rtlif` default value before generation
+continues. Unresolved symbolic declaration defaults or override values fail
+after package import resolution and before planning or HDL emission. Validated
+values survive into the composition plan and structural RTL IR, and the current
+Verilog-family backend lowers them to SystemVerilog `#(...)` instance
+parameters by packing aggregates into one literal. VHDL generic-map lowering is
+still a future backend follow-up.
 
 ## Current Boundary
 

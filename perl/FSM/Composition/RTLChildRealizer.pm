@@ -33,10 +33,14 @@ sub realize_rtl_child_instance ($class, %args) {
     my $composition_spec = $args{composition_spec};
 
     my $module_name = $instance->module_name;
+    my $top_symbols = $composition_spec && $composition_spec->top
+        ? $composition_spec->top->top_symbols
+        : undef;
     my $loaded = $rtl_interface_loader->load_interface(
         module_name => $module_name,
         source_file => $fsm_file,
         embedded_raw_ast => $composition_spec ? $composition_spec->raw_ast : undef,
+        top_symbols => $top_symbols,
     );
     my $parameter_overrides = $class->validate_parameter_overrides(
         instance => $instance,

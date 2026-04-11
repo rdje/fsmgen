@@ -329,10 +329,10 @@ subtest 'rtl instance parameter overrides lower through structural IR into SV in
 
 (?rtlif:uart_tx
   (params
-    (WIDTH 8)
-    (RESET_VALUE 8'h00)
-    (LANES (8'h00 8'h00))
-    (FRAME ((mode 2'b00) (flag 0)))
+    (WIDTH param_pkg.DEFAULT_WIDTH)
+    (RESET_VALUE param_pkg.DEFAULT_RESET)
+    (LANES param_pkg.DEFAULT_LANES)
+    (FRAME param_pkg.DEFAULT_FRAME)
   )
   core_clk:clock
   rst_async_n:reset
@@ -342,6 +342,10 @@ subtest 'rtl instance parameter overrides lower through structural IR into SV in
 
 (?pkg:param_pkg
   (+constants
+    (DEFAULT_WIDTH 8)
+    (DEFAULT_RESET 8'h00)
+    (DEFAULT_LANES (8'h00 8'h00))
+    (DEFAULT_FRAME ((mode 2'b00) (flag 0)))
     (RESET_A5 8'hA5)
     (FLAG_ON 1)
   )
@@ -384,6 +388,16 @@ FSM
         [qw(mode flag)],
         'composition plan preserves record aggregate member order for parameter overrides',
     );
+    my %declarations = map { $_->{name} => $_ } @{$result->{composition_plan}->instances->[0]->module_info->{parameter_declarations}};
+    is($declarations{WIDTH}{raw_default_value}, 'param_pkg.DEFAULT_WIDTH', 'rtlif defaults preserve package-symbol raw scalar token');
+    is($declarations{WIDTH}{default_value_text}, '8', 'rtlif defaults resolve package-backed scalar values');
+    is($declarations{LANES}{raw_default_value}, 'param_pkg.DEFAULT_LANES', 'rtlif defaults preserve package-symbol raw aggregate token');
+    is($declarations{LANES}{default_value_text}, "16'b0000000000000000", 'rtlif defaults resolve package-backed list aggregate shape');
+    is_deeply(
+        $declarations{FRAME}{default_value_type_spec}{member_order},
+        [qw(mode flag)],
+        'rtlif defaults resolve package-backed record aggregate shape',
+    );
     is_deeply(
         $result->{structural_rtl_ir}{instances}[0]{parameter_overrides},
         $result->{composition_plan}->instances->[0]->parameter_overrides,
@@ -410,6 +424,84 @@ FSM
 
     ok($success, 'CLI succeeds for parameterized external RTL instance composition');
     ok(-e $output_path, 'CLI writes HDL for parameterized external RTL instance composition');
+};
+
+subtest 'rtlif parameter default value names must resolve before generation' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'unknown_rtlif_parameter_default_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'unknown_rtlif_parameter_default_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:unknown_rtlif_parameter_default_top
+  (+import
+    param_pkg
+  )
+  (?ports:public_io
+    core_clk
+    rst_async_n
+    payload_in<8
+    serial_out>
+  )
+  (?rtl:u_uart uart_tx
+    (params
+      (WIDTH 8)
+    )
+  )
+  (?toplink:wiring
+    /payload_in/u_uart.data_in/
+    /u_uart.txd/serial_out/
+  )
+)
+
+(?rtlif:uart_tx
+  (params
+    (WIDTH param_pkg.NO_SUCH_DEFAULT)
+  )
+  core_clk:clock
+  rst_async_n:reset
+  data_in<8:data
+  txd>:data
+)
+
+(?pkg:param_pkg
+  (+constants
+    (RESET_A5 8'hA5)
+  )
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@ if !$exception;
+
+    like(
+        $exception,
+        qr/parameter\/generic 'WIDTH'.*param_pkg\.NO_SUCH_DEFAULT/s,
+        'pipeline rejects unresolved RTL interface parameter default value symbols',
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+    ok(!$success, 'CLI rejects unresolved RTL interface parameter default value symbols');
+    ok(!-e $output_path, 'CLI does not emit HDL when RTL interface parameter default value resolution fails');
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []}, ($error_message || ''));
+    like(
+        $combined_output,
+        qr/parameter\/generic 'WIDTH'.*param_pkg\.NO_SUCH_DEFAULT/s,
+        'CLI surfaces unresolved RTL interface parameter default value diagnostics',
+    );
 };
 
 subtest 'rtl aggregate parameter overrides must match the rtlif default shape' => sub {

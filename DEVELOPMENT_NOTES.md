@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: `.rtlif` defaults may use imported package symbols
+- `.rtlif` parameter/generic declaration defaults can now reuse package-qualified
+  symbols from packages imported by the consuming composition source, for
+  example `param_pkg.DEFAULT_WIDTH`, `param_pkg.DEFAULT_LANES`, or
+  `param_pkg.frame_mode.RUN`.
+- The implementation deliberately resolves through imported packages only:
+  - [perl/FSM/Composition/RTLChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLChildRealizer.pm)
+    passes the post-import composition `TopSymbols` into
+    [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm),
+  - the loader accepts only package-qualified names whose first path segment is
+    one of the imported packages,
+  - unqualified top-local symbols deliberately remain out of scope for `.rtlif`
+    defaults so reusable sidecar interface metadata does not become
+    composition-top-context-sensitive,
+  - and unresolved package-qualified defaults still fail before composition
+    planning, realization, structural IR, or backend emission.
+- This closes the earlier package-backed default gap while keeping generated-child
+  parameterization and VHDL generic-map lowering as separate contracts.
+
 ## 2026-04-11: external RTL parameter overrides resolve semantic symbols before planning
 - `?rtl` per-instance `(params (NAME value) ...)` overrides can now point at
   composition-top constants, enum members, whole aggregate roots, and imported
@@ -17,9 +36,6 @@ This document captures engineering rationale, design constraints, and working de
   - and override-name validation plus aggregate-shape validation remain owned
     by the `.rtlif` declaration contract and RTL child realizer.
 - Deliberate non-goals for this slice:
-  - `.rtlif` parameter/generic declaration defaults still use the bounded
-    literal/aggregate declaration surface until interface metadata gets its
-    own package/import contract,
   - generated-child parameterization remains separate,
   - and VHDL generic-map lowering remains a backend follow-up.
 
@@ -36,9 +52,9 @@ This document captures engineering rationale, design constraints, and working de
   - unresolved bare names still fail as invalid parameter/generic values,
   - and params deliberately do not depend on other params yet, avoiding
     accidental order-sensitive dependency chains or cycles.
-- This is a direct-root convenience slice. Generated-child parameterization,
-  VHDL generic-map lowering, and package-backed `.rtlif` declaration defaults
-  still need explicit binding contracts rather than late backend shortcuts.
+- This is a direct-root convenience slice. Generated-child parameterization and
+  VHDL generic-map lowering still need explicit binding contracts rather than
+  late backend shortcuts.
 
 ## 2026-04-11: parameter/generic value normalization now has a neutral owner
 - Moved the bounded scalar/list/map parameter value policy into
@@ -88,8 +104,8 @@ This document captures engineering rationale, design constraints, and working de
 - Follow-ups:
   - VHDL generic-map lowering,
   - generated-child parameterization,
-  - package-backed `.rtlif` declaration defaults or other external metadata
-    named values,
+  - richer external metadata named values beyond the current imported-package
+    `.rtlif` default scope,
   - and richer typed/non-literal parameter domains beyond the current literal
     scalar and aggregate payload surface.
 
