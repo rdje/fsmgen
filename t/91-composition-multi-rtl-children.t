@@ -202,6 +202,89 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for generated-child plus multiple rtl composition');
 };
 
+subtest 'one rtl interface can be instantiated several times with explicit instance aliases' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'aliased_reused_rtl_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'aliased_reused_rtl_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:aliased_reused_rtl_top
+  (?ports:public_io
+    core_clk
+    rst_async_n
+    payload_a<8
+    payload_b<8
+    serial_a>
+    serial_b>
+  )
+  (?rtl:u_uart_a uart_tx)
+  (?rtl:u_uart_b uart_tx)
+  (?toplink:wiring
+    /payload_a/u_uart_a.data_in/
+    /u_uart_a.txd/serial_a/
+    /payload_b/u_uart_b.data_in/
+    /u_uart_b.txd/serial_b/
+  )
+)
+
+(?rtlif:uart_tx
+  core_clk:clock
+  rst_async_n:reset
+  data_in<8:data
+  txd>:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C3', 'aliased repeated rtl composition uses the C3 lane');
+    is(scalar(@{$result->{composition_plan}->instances}), 2, 'aliased repeated rtl composition realizes two rtl children');
+    is_deeply(
+        [map { $_->instance_name } @{$result->{composition_plan}->instances}],
+        ['u_uart_a', 'u_uart_b'],
+        'aliased repeated rtl composition keeps distinct instance names',
+    );
+    is_deeply(
+        [map { $_->module_name } @{$result->{composition_plan}->instances}],
+        ['uart_tx', 'uart_tx'],
+        'aliased repeated rtl composition reuses one rtl module/interface contract',
+    );
+
+    my %first_bindings = map { $_->{port_name} => $_->{signal_name} } @{$result->{composition_plan}->instances->[0]->port_bindings};
+    my %second_bindings = map { $_->{port_name} => $_->{signal_name} } @{$result->{composition_plan}->instances->[1]->port_bindings};
+
+    is($first_bindings{core_clk}, 'core_clk', 'first aliased rtl instance clock is auto-wired');
+    is($first_bindings{rst_async_n}, 'rst_async_n', 'first aliased rtl instance reset is auto-wired');
+    is($first_bindings{data_in}, 'payload_a', 'first aliased rtl instance uses its own input payload');
+    is($first_bindings{txd}, 'serial_a', 'first aliased rtl instance drives its own top output');
+    is($second_bindings{core_clk}, 'core_clk', 'second aliased rtl instance clock is auto-wired');
+    is($second_bindings{rst_async_n}, 'rst_async_n', 'second aliased rtl instance reset is auto-wired');
+    is($second_bindings{data_in}, 'payload_b', 'second aliased rtl instance uses its own input payload');
+    is($second_bindings{txd}, 'serial_b', 'second aliased rtl instance drives its own top output');
+
+    my $hdl = $result->{hdl_code};
+    like($hdl, qr/\buart_tx\s+u_uart_a\s*\(/s, 'generated HDL instantiates the first aliased rtl child');
+    like($hdl, qr/\buart_tx\s+u_uart_b\s*\(/s, 'generated HDL instantiates the second aliased rtl child');
+    unlike($hdl, qr/\bmodule\s+uart_tx\b/s, 'generated HDL still does not regenerate the reused external rtl child');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+
+    ok($success, 'CLI succeeds for aliased repeated rtl composition');
+    ok(-e $output_path, 'CLI writes HDL for aliased repeated rtl composition');
+};
+
 done_testing();
 
 sub write_file {

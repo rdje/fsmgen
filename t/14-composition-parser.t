@@ -52,11 +52,7 @@ write_file(
     =output_data>8
   )
   (?fsmc:child_ctrl child_ctrl_src)
-  (?rtl:uart_tx
-    clk
-    rstn
-    txd>
-  )
+  (?rtl:uart_tx)
   (?toplink:loopback_bus
     /child_ctrl.output_data/txd/
   )
@@ -95,6 +91,7 @@ is($explicit_spec->top->instances->[0]->kind, 'fsmc', 'first typed child preserv
 is($explicit_spec->top->instances->[0]->name, 'child_ctrl', 'fsmc child preserves declared child name');
 is($explicit_spec->top->instances->[0]->source_name, 'child_ctrl_src', 'fsmc child preserves source name');
 is($explicit_spec->top->instances->[1]->kind, 'rtl', 'second typed child preserves rtl kind');
+ok(!defined($explicit_spec->top->instances->[1]->name), 'rtl shorthand leaves instance alias undefined before realization');
 is($explicit_spec->top->instances->[1]->module_name, 'uart_tx', 'rtl child preserves module name');
 is(scalar(@{$explicit_spec->top->toplinks}), 1, 'parser records one toplink block');
 isa_ok($explicit_spec->top->toplinks->[0], 'FSM::Composition::TopLink');
@@ -226,6 +223,17 @@ is(
     '1',
     'top symbols resolve enum members onto canonical literal payloads',
 );
+
+my $aliased_rtl_spec = $parser->parse_source(
+    scalar Lispish::single(\'(?top:aliased_rtl_parse
+  (?rtl:u_uart_a uart_tx)
+)'),
+);
+
+is(scalar(@{$aliased_rtl_spec->top->instances}), 1, 'parser records one aliased rtl child instance');
+is($aliased_rtl_spec->top->instances->[0]->kind, 'rtl', 'aliased rtl child preserves rtl kind');
+is($aliased_rtl_spec->top->instances->[0]->name, 'u_uart_a', 'aliased rtl child preserves explicit instance name');
+is($aliased_rtl_spec->top->instances->[0]->module_name, 'uart_tx', 'aliased rtl child preserves source module/interface name');
 
 my $aggregate_symbol_top_spec = $parser->parse_source(
     scalar Lispish::single(\'(?top:aggregate_symbol_top

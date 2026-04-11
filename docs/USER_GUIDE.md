@@ -218,7 +218,8 @@ Combinational DT note:
   - combinational `?dtc` children expose only their real user-facing interface ports
   - standalone `?dtc` children with explicit conventional `(+system ...)` expose `clk` plus their authored reset signal
   - standalone `?dtc` children without explicit `(+system ...)` expose implicit `clk` / `rst_n` only when they contain sequential assignments
-- `(?rtl:module)` for external RTL children
+- `(?rtl:module)` for external RTL children when the instance name matches the module name
+- `(?rtl:instance module)` for reusing one external RTL module/interface contract under several instance names
 - External RTL interface loading via sidecar `<module>.rtlif`
   - or via an embedded `(?rtlif:module_name ...)` companion root in the same composition source
   - flat `(?rtlif:module_name ...)` roots with explicit port tokens
@@ -1411,12 +1412,16 @@ This currently works because:
 Current `.rtlif` token contract:
 - metadata uses one flat `(?rtlif:module_name ...)` root
 - when a composition source contains an embedded `(?rtlif:module_name ...)` companion root, that local declaration takes precedence over any sidecar `<module>.rtlif` file
+- `(?rtl:module_name)` is shorthand for one external RTL instance whose instance name and module name are both `module_name`
+- `(?rtl:instance_name module_name)` instantiates that external RTL module under a distinct instance name, so several `?rtl` children can reuse one `(?rtlif:module_name ...)` interface contract
+- explicit links always refer to the realized instance name, for example `u_uart_a.data_in`, not the shared `?rtlif` root name
 - declaration order is preserved
 - `port`, `port<8`, and `port>` still work as the compact forms
 - `port:data`, `port<8:data`, `core_clk:clock`, and `rst_async_n:reset` are also valid
 - only `data`, `clock`, and `reset` are currently accepted as explicit port types
 - typed `clock` / `reset` tokens are system-input roles; they let custom-named RTL system ports auto-wire without falling back to `clk` / `rst_n` naming, but output-direction forms such as `core_clk>:clock` or `rst_async_n>:reset` are rejected
 - ordinary typed data outputs remain valid, for example `txd>:data`
+- per-instance parameter/generic overrides are planned as a semantic instantiation contract that survives into IR and backend-specific parameter/generic maps; they are not accepted inside `?rtl` child payloads yet, because FSMGen should not smuggle raw target-HDL text into structural generation without validation.
 
 ## 4) Useful options
 - `-o, --output <file>` : output file path

@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-11: `?rtl` aliases now reuse one `.rtlif` contract
+- Saved the bounded `R11` external-RTL reuse slice.
+- Important continuity note:
+  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm)
+    now parses `(?rtl:instance_name module_name)` as an explicit instance
+    alias while keeping `(?rtl:module_name)` as shorthand,
+  - [t/14-composition-parser.t](/Users/richarddje/Documents/github/fsmgen/t/14-composition-parser.t)
+    locks parser-level shorthand and alias behavior,
+  - [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t)
+    locks the end-to-end case where `u_uart_a` and `u_uart_b` both reuse the
+    `uart_tx` `.rtlif` contract,
+  - [t/291-composition-rtl-child-source-shape-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/291-composition-rtl-child-source-shape-diagnostics.t)
+    locks rejection of nested `?rtl` payloads and multi-module alias payloads
+    through both pipeline and CLI,
+  - and per-instance parameter/generic overrides remain the next semantic
+    instantiation seam because no typed override field exists yet in
+    `Instance`, `RealizedInstance`, or `Structural RTL IR` instance emission.
+
 ## 2026-04-11: root/structure `.rtlif` failures are now in the corpus
 - Saved the bounded `R12` support-accounting follow-up for missing `.rtlif`
   roots, empty roots, nested sidecar structures, and duplicate embedded roots.

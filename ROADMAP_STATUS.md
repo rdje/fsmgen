@@ -64,9 +64,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- `R12` Regression corpus and support accounting.
+- `R11` Composition contract strengthening.
 - Current next decision point:
-  - The current `R12` slices promoted the recently hardened `.rtlif` output-direction system-role rejection, duplicate-port declaration rejection, unsupported port type rejection, invalid token-shape rejection, non-positive width rejection, missing-root rejection, empty-root rejection, nested-structure rejection, and duplicate embedded-root rejection into the regression corpus, each using isolated sidecar module names where sidecars are involved so the existing `uart_tx` missing-sidecar and focused diagnostic fixtures keep their exact meaning.
+  - The current `R11` slice adds explicit external-RTL instance aliases: `(?rtl:module_name)` remains the shorthand where the instance and module/interface contract share one name, while `(?rtl:instance_name module_name)` realizes a distinct instance from the shared `(?rtlif:module_name ...)` contract and lets one `.rtlif` root back several instances.
+  - Per-instance parameter/generic overrides are now recorded as the next semantic instantiation contract for `?rtl` and later generated-child instantiation too: they need typed override values preserved through instance, realized plan, forward IR, structural IR, and target backend lowering before SystemVerilog parameter overrides or VHDL generic maps are emitted.
+  - The recent `R12` slices promoted the hardened `.rtlif` output-direction system-role rejection, duplicate-port declaration rejection, unsupported port type rejection, invalid token-shape rejection, non-positive width rejection, missing-root rejection, empty-root rejection, nested-structure rejection, and duplicate embedded-root rejection into the regression corpus, each using isolated sidecar module names where sidecars are involved so the existing `uart_tx` missing-sidecar and focused diagnostic fixtures keep their exact meaning.
   - Documentation strategy note: the guide is now considered large enough that the split should be planned concretely, and that plan now lives in [docs/BOOK_PLAN.md](/Users/richarddje/Documents/github/fsmgen/docs/BOOK_PLAN.md) with `docs/USER_GUIDE.md` as the intended landing page / table of contents for a future chaptered `docs/book/` set.
   - Documentation strategy note: when `docs/USER_GUIDE.md` becomes too large, split it into a book-like docs set with one Markdown file per major topic, keep `docs/USER_GUIDE.md` as the landing page / table of contents, and lean on realistic examples throughout so users can master FSMGen incrementally.
   - The next typed structural-handoff slice is now also shipped: inferred composition carrier nets now preserve `declared_type_name` / canonical `declared_type_spec` when they are driven by one typed child-output family, so internal structural connectivity no longer drops named aggregate/scalar type identity at the net boundary.
@@ -781,6 +783,12 @@ Deliverables:
 - Harden mixed generated-child / `?rtl` flows before broader composition syntax is considered.
 Status: `in progress`
 Done:
+- The next external-RTL reuse slice is now shipped:
+  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) now accepts `(?rtl:instance_name module_name)` beside `(?rtl:module_name)`, preserving the explicit instance alias while continuing to load the interface contract from `module_name`,
+  - the parser rejects nested `?rtl` payloads with a parameter/generic override boundary instead of accepting raw target-HDL text before a typed override IR exists,
+  - [t/14-composition-parser.t](/Users/richarddje/Documents/github/fsmgen/t/14-composition-parser.t) locks parser-level shorthand and alias semantics,
+  - [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) locks the end-to-end C3 path where one `(?rtlif:uart_tx ...)` contract backs `u_uart_a` and `u_uart_b`,
+  - and [t/291-composition-rtl-child-source-shape-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/291-composition-rtl-child-source-shape-diagnostics.t) locks the blocked nested-payload and multi-module-alias diagnostics through both pipeline and CLI.
 - Composition actual-literal lowering now has a dedicated owner:
   - [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm) now owns open/numeric actual endpoint parsing, exact-width literal lowering, intrinsic-width concat-operand literal lowering, target-width direct-actual widening and overflow rejection, and actual binding type-contract construction,
   - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) now delegates that policy while keeping explicit-link planning, symbol lookup, aggregate compatibility checks, carrier allocation, and user-facing composition diagnostics,
@@ -1517,6 +1525,7 @@ Done:
   - top-input fanout success across multiple same-name child inputs,
   - and mixed-direction same-name rejection for declared top-input connect-by-name.
 Left:
+- Define and implement semantic per-instance parameter/generic overrides for `?rtl` and later generated-child instantiation, carrying typed values through `FSM::Composition::Instance`, `FSM::Composition::RealizedInstance`, `Intent HIR` / `Lowered RTL IR` / `Structural RTL IR`, and backend-specific SV parameter override / VHDL generic-map emission only after validation.
 - Decide whether later work should keep the now-formalized `.rtlif` interface-source family as embedded-root plus sidecar metadata, or place a stronger interface-source contract above it.
 - Turn the new shared-datapath extraction direction into a real contract:
   - direct child-owned outputs vs multiply-assigned lifted shared-datapath targets beyond the now-shipped discovery/metadata/helper/runtime/assertion slices,

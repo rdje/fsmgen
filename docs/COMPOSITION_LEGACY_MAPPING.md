@@ -141,11 +141,13 @@ Reason:
 ### 6. How `?rtl` interface loading is narrowed
 Legacy `?rtl` loaded interface information through the old environment-specific entity/database path (`entity_loader(...)`) and then pushed that data through plugin-style port-mapping helpers.
 
-Active `R6` direction:
+Active modern direction, started in `R6` and widened in `R11`:
 - keep `?rtl` as an external-interface binding concept,
 - but load it from a typed sidecar metadata artifact (`<module>.rtlif`) during composition planning,
+- allow the modern `(?rtl:instance module)` form when one declared RTL module/interface contract must be instantiated several times under distinct instance names,
 - treat typed `.rtlif` `clock` and `reset` categories as system-input roles rather than HDL data types, so output-direction system-role tokens are rejected while ordinary `data` outputs remain valid,
-- and do not parse or regenerate the external RTL child at this composition layer.
+- do not parse or regenerate the external RTL child at this composition layer,
+- and keep per-instance parameter/generic override support as a future semantic instantiation contract rather than reviving raw legacy template/plugin parameter passing.
 
 Reason:
 - this preserves the real composition need, interface-aware wiring and validation,

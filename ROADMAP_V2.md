@@ -180,6 +180,8 @@ Deliverable themes:
   - decide whether `FSM::ExpressionNamer` is real remaining surface or compatibility residue that should eventually be retired,
   - remove stale CLI/help compatibility wording from `bin/fsmgen`,
   - and revisit the global-state shape in `FSM::Debug` before `R13` embedding/API work makes that harder to change,
+- allow one external RTL interface contract such as `(?rtlif:uart_tx ...)` to be instantiated several times through explicit `?rtl` instance aliases such as `(?rtl:u_uart_a uart_tx)` and `(?rtl:u_uart_b uart_tx)`,
+- keep per-instance parameter/generic overrides as a typed semantic instantiation contract that survives into IR and target lowering, not as raw template text hidden in `?rtl` payloads,
 - define one bounded multi-FSM shared-datapath composition lane instead of reopening broad implicit composition:
   - one `fsmgen` run may build one top from one `.fsm` source or from several `.fsm` sources,
   - some child outputs remain directly owned by their source FSMs,
@@ -852,6 +854,10 @@ The first honest `R11` slices are now:
 2. let explicit local overrides stay precise without forcing whole-interface restatement,
 3. keep pushing shared-datapath and reusable-module feature slices before returning to contract-hardening-only work,
 4. keep `R8` paused except when a feature slice necessarily touches a still-unlocked boundary.
+- External-RTL instantiation note:
+  - `(?rtl:module)` is the shorthand instance form,
+  - `(?rtl:instance module)` is the explicit alias form for reusing one declared `?rtlif:module` contract under several instance names,
+  - and parameter/generic overrides remain a planned typed-instantiation seam rather than a raw `?rtl` payload.
 - Execution-cadence note:
   - after a backend/debt-reduction slice, strongly prefer the next slice to land in a visibly user-facing lane such as language contract, strict mode, diagnostics, or reusable assets,
   - and only keep stacking consolidation slices when the next feature is still materially blocked by that cleanup.

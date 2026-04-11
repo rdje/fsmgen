@@ -175,6 +175,41 @@ With metadata:
 )
 ```
 
+If you need two instances of the same external RTL module, keep one interface
+contract and give each `?rtl` child its own instance name:
+
+```lisp
+(?top:dual_uart_top
+  (?ports:public_io
+    clk
+    rst_n
+    data_a<8
+    data_b<8
+    tx_a>
+    tx_b>
+  )
+  (?rtl:u_uart_a uart_tx)
+  (?rtl:u_uart_b uart_tx)
+  (?toplink:wiring
+    /data_a/u_uart_a.data_in/
+    /u_uart_a.txd/tx_a/
+    /data_b/u_uart_b.data_in/
+    /u_uart_b.txd/tx_b/
+  )
+)
+
+(?rtlif:uart_tx
+  clk:clock
+  rst_n:reset
+  data_in<8:data
+  txd>:data
+)
+```
+
+Here `uart_tx` is the reused RTL module/interface contract, while `u_uart_a`
+and `u_uart_b` are the actual child instance names used in links and emitted
+HDL.
+
 ## Current Boundary
 
 Composition is no longer single-child-only. The shipped live lanes already

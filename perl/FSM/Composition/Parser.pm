@@ -247,12 +247,7 @@ sub parse_top_child ($self, $top_name, $child_ast) {
         return ('instance', $self->parse_dtc_child($top_name, $child_ast, $child_name, $items));
     }
     if ($header =~ /^\?rtl:(\w+)$/) {
-        return ('instance', FSM::Composition::Instance->new(
-            kind => 'rtl',
-            module_name => $1,
-            raw_items => $items,
-            raw_ast => $child_ast,
-        ));
+        return ('instance', $self->parse_rtl_child($top_name, $child_ast, $1, $items));
     }
     if ($header =~ /^\?ports(?::(\w*))?$/) {
         my $block_name = defined($1) && length($1) ? $1 : undef;
@@ -656,6 +651,45 @@ sub parse_dtc_child ($self, $top_name, $child_ast, $child_name, $items) {
         kind => 'dtc',
         name => $child_name,
         source_name => $scalar_items[0],
+        raw_items => $items,
+        raw_ast => $child_ast,
+    );
+}
+
+sub parse_rtl_child ($self, $top_name, $child_ast, $child_name, $items) {
+    my @scalar_items = grep { !ref($_) } @$items;
+    my @non_scalar_items = grep { ref($_) } @$items;
+
+    if (@non_scalar_items) {
+        confess
+            "Composition top '$top_name' contains '?rtl' child '$child_name', ".
+            "but composition external-RTL child source shape is blocked because the active composition parser currently accepts either '(?rtl:module)' or '(?rtl:instance module)' as the flat RTL child declaration form. ".
+            "Parameter/generic override blocks are planned as a separate semantic instantiation contract and are not accepted in '?rtl' child payloads yet.".
+            $self->scope_docs_suffix;
+    }
+
+    if (!@scalar_items) {
+        return FSM::Composition::Instance->new(
+            kind => 'rtl',
+            module_name => $child_name,
+            raw_items => $items,
+            raw_ast => $child_ast,
+        );
+    }
+
+    if (@scalar_items != 1 || $scalar_items[0] !~ /^\w+$/) {
+        my $count = scalar(@scalar_items);
+        confess
+            "Composition top '$top_name' contains '?rtl' child '$child_name' with $count RTL module references, ".
+            "but composition external-RTL child source count is blocked because the active composition parser currently accepts exactly one flat RTL module name after '?rtl:instance' when an explicit instance name is needed. ".
+            "Use '(?rtl:$child_name module_name)' for instance aliasing, or '(?rtl:module_name)' when the instance name should match the module name.".
+            $self->scope_docs_suffix;
+    }
+
+    return FSM::Composition::Instance->new(
+        kind => 'rtl',
+        name => $child_name,
+        module_name => $scalar_items[0],
         raw_items => $items,
         raw_ast => $child_ast,
     );

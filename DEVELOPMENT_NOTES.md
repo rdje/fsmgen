@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: `?rtl` instance aliases are the reusable external-RTL form
+- Landed the missing external-RTL instantiation piece for the current
+  composition contract:
+  - `(?rtl:module_name)` stays the compact shorthand,
+  - `(?rtl:instance_name module_name)` now means “instantiate external RTL
+    module/interface `module_name` as child instance `instance_name`,”
+  - links and emitted HDL use the explicit instance name,
+  - and interface metadata still comes from the shared `(?rtlif:module_name
+    ...)` root or `<module_name>.rtlif` sidecar.
+- Why this is the right shape:
+  - it mirrors generated-child aliasing such as `(?fsmc:child source)` without
+    forcing users to duplicate `.rtlif` roots for repeated external modules,
+  - it keeps `.rtlif` as module/interface metadata, not instance metadata,
+  - and it keeps external RTL internals opaque to composition generation.
+- Parameter/generic override boundary:
+  - the current structural instance model carries module name, instance name,
+    interface ports, and bindings, but no typed override list,
+  - so nested payloads such as parameter blocks under `?rtl` remain rejected,
+  - a future override slice should add semantic override data to the instance
+    and IR layers first, validate override names/values against the child
+    contract, and only then lower to SystemVerilog parameter overrides or VHDL
+    generic maps.
+
 ## 2026-04-11: `.rtlif` root/structure failures are now part of support accounting
 - Promoted four root/structure-level `.rtlif` metadata rejections into the
   regression corpus together.

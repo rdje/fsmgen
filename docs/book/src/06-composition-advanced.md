@@ -267,6 +267,16 @@ input, but `core_clk>:clock` and `rst_async_n>:reset` are rejected because they
 claim that the external RTL child drives the system lane. Use `data` for
 ordinary payload/status outputs, for example `txd>:data`.
 
+`?rtl` also has a reusable-instance form. `(?rtl:module)` means the instance
+name equals the module/interface name. `(?rtl:instance module)` means “create
+instance `instance` of external RTL module `module`,” and the corresponding
+`.rtlif` root remains `(?rtlif:module ...)`.
+
+Per-instance parameter/generic overrides are intentionally not accepted yet.
+They should become a semantic instantiation contract that survives into IR and
+then lowers to SystemVerilog parameter overrides or VHDL generic maps only
+after validation, not a raw target-HDL text escape hatch.
+
 ## Current Boundary
 
 This advanced lane is deliberately rich but still bounded:
