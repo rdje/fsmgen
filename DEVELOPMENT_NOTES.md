@@ -1,5 +1,42 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: external RTL parameter/generic overrides are semantic metadata
+- Landed the first bounded external-RTL parameter/generic override slice.
+- Current supported authoring shape:
+  - `.rtlif` owns the module/interface declaration contract through one
+    optional `(params (NAME default_value) ...)` block beside port tokens,
+  - `?rtl` owns per-instance overrides through `(params (NAME value) ...)`,
+  - the nested `(module module_name)` block is accepted when the instance name
+    and module/interface contract name differ and the author wants the
+    parameterized form to stay fully structural,
+  - flat alias plus params is also valid, for example
+    `(?rtl:u_uart uart_tx (params (WIDTH 16)))`.
+- The intentional first value boundary is scalar integer literals plus bounded
+  literal aggregate payloads:
+  - scalar examples include `8`, `8'hA5`, `'hA5`, `0xA5`, `0b1010`, and
+    `0o77`,
+  - aggregate examples include list values such as `(8'hA5 8'h3C)` and
+    record-like map values such as `((mode 2'b10) (flag 1))`,
+  - aggregate payloads preserve inferred list/record type shape and currently
+    lower to one packed literal for SystemVerilog instance-parameter emission,
+  - richer non-literal values should be added only when they can be resolved
+    semantically before backend lowering,
+  - and raw target-HDL text is still not an escape hatch.
+- Validation rule:
+  - every override name must be declared in the loaded `.rtlif` contract,
+  - aggregate overrides must match the aggregate shape inferred from the
+    `.rtlif` default value,
+  - duplicate declarations or duplicate overrides are rejected before HDL
+    emission,
+  - and the SystemVerilog backend only emits `#(...)` overrides after those
+    checks pass.
+- Follow-ups:
+  - VHDL generic-map lowering,
+  - generated-child parameterization,
+  - named/package-backed parameter values,
+  - and richer typed/non-literal parameter domains beyond the current literal
+    scalar and aggregate payload surface.
+
 ## 2026-04-11: `?rtl` instance aliases are the reusable external-RTL form
 - Landed the missing external-RTL instantiation piece for the current
   composition contract:
@@ -15,13 +52,11 @@ This document captures engineering rationale, design constraints, and working de
   - it keeps `.rtlif` as module/interface metadata, not instance metadata,
   - and it keeps external RTL internals opaque to composition generation.
 - Parameter/generic override boundary:
-  - the current structural instance model carries module name, instance name,
-    interface ports, and bindings, but no typed override list,
-  - so nested payloads such as parameter blocks under `?rtl` remain rejected,
-  - a future override slice should add semantic override data to the instance
-    and IR layers first, validate override names/values against the child
-    contract, and only then lower to SystemVerilog parameter overrides or VHDL
-    generic maps.
+  - the alias slice originally left overrides as the next semantic seam,
+  - that seam is now superseded by the later 2026-04-11 external RTL
+    parameter/generic override slice above,
+  - unsupported nested payloads under `?rtl` remain rejected so only the
+    semantic `(module ...)` and `(params ...)` forms are accepted.
 
 ## 2026-04-11: `.rtlif` root/structure failures are now part of support accounting
 - Promoted four root/structure-level `.rtlif` metadata rejections into the

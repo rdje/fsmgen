@@ -20,22 +20,21 @@ my $pipeline = FSM::Pipeline::HDLGenerator->new(
     quiet => 1,
 );
 
-subtest 'nested ?rtl payloads now keep parameter override syntax blocked' => sub {
+subtest 'unsupported nested ?rtl payloads keep a semantic source-shape boundary' => sub {
     expect_failure(
         name => 'nested_rtl_payload_top',
         body => <<'FSM',
 (?top:nested_rtl_payload_top
   (?rtl:u_uart
-    (module uart_tx)
-    (params
+    (options
       (WIDTH 8)
     )
   )
 )
 FSM
-        pipeline_regex => qr/Composition top 'nested_rtl_payload_top' contains '\?rtl' child 'u_uart', .*composition external-RTL child source shape is blocked because the active composition parser currently accepts either '\(\?rtl:module\)' or '\(\?rtl:instance module\)' as the flat RTL child declaration form\. Parameter\/generic override blocks are planned as a separate semantic instantiation contract and are not accepted in '\?rtl' child payloads yet/s,
-        cli_regex => qr/Parameter\/generic override blocks are planned as a separate semantic instantiation contract and are not accepted in '\?rtl' child payloads yet/s,
-        cli_failure_name => 'nested ?rtl parameter override payloads',
+        pipeline_regex => qr/Composition top 'nested_rtl_payload_top' contains '\?rtl' child 'u_uart' with unsupported nested block 'options', .*composition external-RTL child source shape is blocked because nested '\?rtl' payloads currently accept only '\(module module_name\)' and '\(params \(NAME value\) \.\.\.\)' semantic blocks/s,
+        cli_regex => qr/composition external-RTL child source shape is blocked because nested '\?rtl' payloads currently accept only '\(module module_name\)' and '\(params \(NAME value\) \.\.\.\)' semantic blocks/s,
+        cli_failure_name => 'unsupported nested ?rtl payloads',
     );
 };
 

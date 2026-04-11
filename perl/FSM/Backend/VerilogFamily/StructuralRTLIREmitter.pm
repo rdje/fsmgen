@@ -53,12 +53,23 @@ sub emit_module ($class, $structural_rtl_ir) {
         my @connection_lines = map {
             sprintf("        .%s(%s)", $_->{port_name}, binding_expr_text($_, $target_language))
         } @{$instance->{port_bindings} || []};
+        my @parameter_lines = map {
+            sprintf("        .%s(%s)", $_->{name}, $_->{value_text})
+        } @{$instance->{parameter_overrides} || []};
 
-        join("\n",
-            "    ".$instance->{module_name}." ".$instance->{instance_name}." (",
-            join(",\n", @connection_lines),
-            "    );",
-        );
+        @parameter_lines
+            ? join("\n",
+                "    ".$instance->{module_name}." #(",
+                join(",\n", @parameter_lines),
+                "    ) ".$instance->{instance_name}." (",
+                join(",\n", @connection_lines),
+                "    );",
+            )
+            : join("\n",
+                "    ".$instance->{module_name}." ".$instance->{instance_name}." (",
+                join(",\n", @connection_lines),
+                "    );",
+            );
     } @instances;
 
     my @body_lines;

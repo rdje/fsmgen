@@ -9,6 +9,7 @@ no warnings 'experimental::signatures';
 
 use File::Basename qw(dirname);
 use File::Spec;
+use FSM::Composition::ParameterValueSupport;
 use FSM::Composition::Port;
 use FSM::SourcePathResolver;
 use Lispish;
@@ -44,7 +45,7 @@ sub load_interface ($self, %args) {
         );
         if ($embedded_rtlif_ast) {
             my $metadata_path = $self->embedded_metadata_label($source_file, $module_name);
-            my $ports = $self->_with_rtl_child_context(
+            my $metadata = $self->_with_rtl_child_context(
                 source_file => $source_file,
                 module_name => $module_name,
                 code => sub {
@@ -54,7 +55,8 @@ sub load_interface ($self, %args) {
             return {
                 module_name => $module_name,
                 metadata_path => $metadata_path,
-                interface_ports => $ports,
+                interface_ports => $metadata->{ports},
+                parameter_declarations => $metadata->{parameter_declarations},
                 raw_ast => $embedded_rtlif_ast,
             };
         }
@@ -79,7 +81,7 @@ sub load_interface ($self, %args) {
             return $raw_ast;
         },
     );
-    my $ports = $self->_with_rtl_child_context(
+    my $metadata = $self->_with_rtl_child_context(
         source_file => $source_file,
         module_name => $module_name,
         metadata_path => $metadata_path,
@@ -92,7 +94,8 @@ sub load_interface ($self, %args) {
     return {
         module_name => $module_name,
         metadata_path => $metadata_path,
-        interface_ports => $ports,
+        interface_ports => $metadata->{ports},
+        parameter_declarations => $metadata->{parameter_declarations},
         raw_ast => $raw_ast,
     };
 }
@@ -149,13 +152,39 @@ sub parse_metadata_ast ($self, $module_name, $raw_ast, $metadata_path) {
 
     my @ports;
     my %ports_by_name;
+    my @parameter_declarations;
+    my %parameters_by_name;
     for my $item (@$items) {
-        confess
-            "Composition references external RTL module '$module_name', ".
-            "but RTL interface metadata flatness is blocked because declared interface metadata '$metadata_path' contains nested structure under '?rtlif:$module_name'. ".
-            "The active C3 lane only accepts flat explicit port tokens. ".
-            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
-            if ref($item);
+        if (ref($item)) {
+            my $nested_header = ref($item) eq 'ARRAY' && @$item && !ref($item->[0])
+                ? $item->[0]
+                : undef;
+
+            if (defined($nested_header) && $nested_header eq 'params') {
+                confess
+                    "Composition references external RTL module '$module_name', ".
+                    "but RTL interface metadata parameter declaration uniqueness is blocked because declared interface metadata '$metadata_path' repeats '(params ...)' under '?rtlif:$module_name'. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                    if @parameter_declarations;
+                my $declarations = $self->parse_parameter_declarations_block($module_name, $item, $metadata_path);
+                for my $declaration (@$declarations) {
+                    confess
+                        "Composition references external RTL module '$module_name', ".
+                        "but RTL interface metadata parameter declaration uniqueness is blocked because declared interface metadata '$metadata_path' repeats parameter/generic '".$declaration->{name}."'. ".
+                        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                        if $parameters_by_name{$declaration->{name}};
+                    $parameters_by_name{$declaration->{name}} = 1;
+                    push @parameter_declarations, $declaration;
+                }
+                next;
+            }
+
+            confess
+                "Composition references external RTL module '$module_name', ".
+                "but RTL interface metadata flatness is blocked because declared interface metadata '$metadata_path' contains nested structure under '?rtlif:$module_name'. ".
+                "The active C3 lane accepts flat explicit port tokens plus one optional '(params (NAME value) ...)' declaration block, not arbitrary nested metadata. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
 
         my $port = $self->parse_port_token($module_name, $item, $metadata_path);
         confess
@@ -174,7 +203,10 @@ sub parse_metadata_ast ($self, $module_name, $raw_ast, $metadata_path) {
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @ports;
 
-    return \@ports;
+    return {
+        ports => \@ports,
+        parameter_declarations => \@parameter_declarations,
+    };
 }
 
 sub find_rtlif_root ($self, $raw_ast, $module_name) {
@@ -253,6 +285,74 @@ sub parse_port_token ($self, $module_name, $token, $metadata_path) {
         raw_token => $token,
         origin_kind => 'rtlif_declared_port',
     );
+}
+
+sub parse_parameter_declarations_block ($self, $module_name, $params_block, $metadata_path) {
+    my $entries = $params_block->[1] // [];
+
+    confess
+        "Composition references external RTL module '$module_name', ".
+        "but RTL interface metadata parameter declaration shape is blocked because '(params ...)' in declared interface metadata '$metadata_path' must contain one or more '(NAME default_value)' scalar or aggregate declarations. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless ref($entries) eq 'ARRAY' && @$entries;
+
+    my @declarations;
+    for my $entry (@$entries) {
+        confess
+            "Composition references external RTL module '$module_name', ".
+            "but RTL interface metadata parameter declaration shape is blocked because '(params ...)' entries in declared interface metadata '$metadata_path' must use '(NAME default_value)'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless ref($entry) eq 'ARRAY' && @$entry == 2;
+
+        my ($name_ast, $value_ast) = @$entry;
+        my $name = $self->_unwrap_scalar_token($name_ast);
+        confess
+            "Composition references external RTL module '$module_name', ".
+            "but RTL interface metadata parameter declaration token shape is blocked because parameter/generic '".$self->_describe_contract_name($name)."' in declared interface metadata '$metadata_path' is not HDL-identifier-compatible. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $self->_is_contract_identifier($name);
+
+        my $value_info = FSM::Composition::ParameterValueSupport->canonical_value(
+            value_ast => $value_ast,
+            context => "RTL interface metadata '$metadata_path' parameter/generic '$name'",
+            docs_hint => " See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md",
+        );
+
+        my $raw_value = $self->_unwrap_scalar_token($value_ast);
+        my $declaration = {
+            name => $name,
+            default_value_text => $value_info->{value_text},
+            default_value_kind => $value_info->{value_kind},
+            default_value_payload => $value_info->{value_payload},
+            origin_kind => 'rtlif_parameter_declaration',
+        };
+        $declaration->{raw_default_value} = $raw_value if defined($raw_value) && !ref($raw_value);
+        $declaration->{raw_default_value_ast} = $value_ast if ref($raw_value);
+        $declaration->{default_value_width} = $value_info->{value_width} if defined $value_info->{value_width};
+        $declaration->{default_value_type_spec} = $value_info->{value_type_spec} if ref($value_info->{value_type_spec}) eq 'HASH';
+
+        push @declarations, $declaration;
+    }
+
+    return \@declarations;
+}
+
+sub _unwrap_scalar_token ($self, $value) {
+    my $unwrapped = $value;
+    while (ref($unwrapped) eq 'ARRAY' && @$unwrapped == 1) {
+        $unwrapped = $unwrapped->[0];
+    }
+    return $unwrapped;
+}
+
+sub _is_contract_identifier ($self, $value) {
+    return defined($value)
+        && !ref($value)
+        && $value =~ /\A[A-Za-z_]\w*\z/;
+}
+
+sub _describe_contract_name ($self, $value) {
+    return defined($value) && !ref($value) ? $value : 'unknown';
 }
 
 sub _with_rtl_child_context ($self, %args) {

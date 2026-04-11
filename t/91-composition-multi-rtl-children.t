@@ -285,6 +285,251 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for aliased repeated rtl composition');
 };
 
+subtest 'rtl instance parameter overrides lower through structural IR into SV instance parameters' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'parameterized_rtl_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'parameterized_rtl_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:parameterized_rtl_top
+  (?ports:public_io
+    core_clk
+    rst_async_n
+    payload_in<16
+    serial_out>
+  )
+  (?rtl:u_uart
+    (module uart_tx)
+    (params
+      (WIDTH 16)
+      (RESET_VALUE 8'hA5)
+      (LANES (8'hA5 8'h3C))
+      (FRAME ((mode 2'b10) (flag 1)))
+    )
+  )
+  (?toplink:wiring
+    /payload_in/u_uart.data_in/
+    /u_uart.txd/serial_out/
+  )
+)
+
+(?rtlif:uart_tx
+  (params
+    (WIDTH 8)
+    (RESET_VALUE 8'h00)
+    (LANES (8'h00 8'h00))
+    (FRAME ((mode 2'b00) (flag 0)))
+  )
+  core_clk:clock
+  rst_async_n:reset
+  data_in<16:data
+  txd>:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C3', 'parameterized rtl explicit-link composition uses the C3 lane');
+    my $parameter_overrides = $result->{composition_plan}->instances->[0]->parameter_overrides;
+    is_deeply(
+        [map { $_->{name} } @$parameter_overrides],
+        [qw(WIDTH RESET_VALUE LANES FRAME)],
+        'composition plan preserves validated parameter override order',
+    );
+    my %overrides = map { $_->{name} => $_ } @$parameter_overrides;
+    is($overrides{WIDTH}{value_text}, '16', 'composition plan preserves scalar decimal parameter override text');
+    is($overrides{WIDTH}{value_kind}, 'scalar', 'composition plan marks scalar parameter overrides');
+    is($overrides{WIDTH}{raw_value}, '16', 'composition plan preserves raw scalar parameter override token');
+    is($overrides{WIDTH}{origin_kind}, 'rtl_instance_parameter_override', 'composition plan keeps parameter override provenance');
+    is($overrides{RESET_VALUE}{value_text}, "8'hA5", 'composition plan preserves sized based scalar parameter override text');
+    is($overrides{RESET_VALUE}{value_width}, 8, 'composition plan infers width for sized based scalar parameter overrides');
+    is($overrides{LANES}{value_text}, "16'b1010010100111100", 'composition plan packs list aggregate parameter overrides');
+    is($overrides{LANES}{value_kind}, 'list', 'composition plan marks list aggregate parameter overrides');
+    is($overrides{LANES}{value_width}, 16, 'composition plan infers packed width for list aggregate parameter overrides');
+    is($overrides{FRAME}{value_text}, "3'b101", 'composition plan packs record aggregate parameter overrides');
+    is($overrides{FRAME}{value_kind}, 'map', 'composition plan marks record-like aggregate parameter overrides');
+    is_deeply(
+        $overrides{FRAME}{value_type_spec}{member_order},
+        [qw(mode flag)],
+        'composition plan preserves record aggregate member order for parameter overrides',
+    );
+    is_deeply(
+        $result->{structural_rtl_ir}{instances}[0]{parameter_overrides},
+        $result->{composition_plan}->instances->[0]->parameter_overrides,
+        'structural RTL IR preserves parameter override values for backend lowering',
+    );
+    is_deeply(
+        $result->{intent_hir}{composition_children}[0]{parameter_overrides},
+        $result->{composition_plan}->instances->[0]->parameter_overrides,
+        'intent HIR child export preserves parameter override values for reporting and later lowering',
+    );
+    is(
+        $result->{intent_hir}{composition_children}[0]{parameter_override_count},
+        4,
+        'intent HIR child export reports the parameter override count',
+    );
+
+    my $hdl = $result->{hdl_code};
+    like($hdl, qr/\buart_tx\s+#\(\s*\.WIDTH\(16\),\s*\.RESET_VALUE\(8'hA5\),\s*\.LANES\(16'b1010010100111100\),\s*\.FRAME\(3'b101\)\s*\)\s+u_uart\s*\(/s, 'generated HDL emits SV parameter overrides on the external RTL instance');
+    unlike($hdl, qr/\bmodule\s+uart_tx\b/s, 'generated HDL does not regenerate the parameterized external rtl child');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+
+    ok($success, 'CLI succeeds for parameterized external RTL instance composition');
+    ok(-e $output_path, 'CLI writes HDL for parameterized external RTL instance composition');
+};
+
+subtest 'rtl aggregate parameter overrides must match the rtlif default shape' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'bad_aggregate_rtl_parameter_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'bad_aggregate_rtl_parameter_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:bad_aggregate_rtl_parameter_top
+  (?ports:public_io
+    core_clk
+    rst_async_n
+    payload_in<16
+    serial_out>
+  )
+  (?rtl:u_uart
+    (module uart_tx)
+    (params
+      (LANES (8'hA5))
+    )
+  )
+  (?toplink:wiring
+    /payload_in/u_uart.data_in/
+    /u_uart.txd/serial_out/
+  )
+)
+
+(?rtlif:uart_tx
+  (params
+    (LANES (8'h00 8'h00))
+  )
+  core_clk:clock
+  rst_async_n:reset
+  data_in<16:data
+  txd>:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@ if !$exception;
+
+    like(
+        $exception,
+        qr/RTL parameter\/generic override validation is blocked because override 'LANES' uses list<.*> while interface metadata '.*bad_aggregate_rtl_parameter_top\.fsm:\?rtlif:uart_tx' declares list<.*>.*Aggregate parameter\/generic overrides must match the aggregate shape/s,
+        'pipeline rejects aggregate parameter overrides that do not match the rtlif default shape',
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+    ok(!$success, 'CLI rejects aggregate RTL parameter shape mismatches');
+    ok(!-e $output_path, 'CLI does not emit HDL when aggregate RTL parameter shape validation fails');
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []}, ($error_message || ''));
+    like(
+        $combined_output,
+        qr/override 'LANES' uses list<.*> while interface metadata '.*bad_aggregate_rtl_parameter_top\.fsm:\?rtlif:uart_tx' declares list<.*>/s,
+        'CLI surfaces aggregate RTL parameter shape validation diagnostics',
+    );
+};
+
+subtest 'rtl instance parameter overrides must be declared by the rtlif contract' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'unknown_rtl_parameter_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'unknown_rtl_parameter_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:unknown_rtl_parameter_top
+  (?ports:public_io
+    core_clk
+    rst_async_n
+    payload_in<8
+    serial_out>
+  )
+  (?rtl:u_uart uart_tx
+    (params
+      (MODE 1)
+    )
+  )
+  (?toplink:wiring
+    /payload_in/u_uart.data_in/
+    /u_uart.txd/serial_out/
+  )
+)
+
+(?rtlif:uart_tx
+  (params
+    (WIDTH 8)
+  )
+  core_clk:clock
+  rst_async_n:reset
+  data_in<8:data
+  txd>:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@ if !$exception;
+
+    like(
+        $exception,
+        qr/RTL parameter\/generic override validation is blocked because override 'MODE' has no matching declaration in interface metadata/s,
+        'pipeline rejects overrides that are not declared in the rtlif contract',
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+    ok(!$success, 'CLI rejects undeclared RTL parameter override');
+    ok(!-e $output_path, 'CLI does not emit HDL when RTL parameter override validation fails');
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []}, ($error_message || ''));
+    like(
+        $combined_output,
+        qr/override 'MODE' has no matching declaration in interface metadata/s,
+        'CLI surfaces undeclared RTL parameter override validation diagnostics',
+    );
+};
+
 done_testing();
 
 sub write_file {

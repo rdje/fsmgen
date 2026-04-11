@@ -272,10 +272,57 @@ name equals the module/interface name. `(?rtl:instance module)` means “create
 instance `instance` of external RTL module `module`,” and the corresponding
 `.rtlif` root remains `(?rtlif:module ...)`.
 
-Per-instance parameter/generic overrides are intentionally not accepted yet.
-They should become a semantic instantiation contract that survives into IR and
-then lowers to SystemVerilog parameter overrides or VHDL generic maps only
-after validation, not a raw target-HDL text escape hatch.
+Per-instance parameter/generic overrides are now a semantic instantiation
+contract, not a raw target-HDL text escape hatch. Declare the parameter/generic
+names and defaults in the external interface contract, then override them on
+the specific `?rtl` instance:
+
+```lisp
+(?top:parameterized_rtl_top
+  (?ports:public_io
+    core_clk
+    rst_async_n
+    payload_in<16
+    serial_out>
+  )
+  (?rtl:u_uart
+    (module uart_tx)
+    (params
+      (WIDTH 16)
+      (RESET_VALUE 8'hA5)
+      (LANES (8'hA5 8'h3C))
+      (FRAME ((mode 2'b10) (flag 1)))
+    )
+  )
+  (?toplink:wiring
+    /payload_in/u_uart.data_in/
+    /u_uart.txd/serial_out/
+  )
+)
+
+(?rtlif:uart_tx
+  (params
+    (WIDTH 8)
+    (RESET_VALUE 8'h00)
+    (LANES (8'h00 8'h00))
+    (FRAME ((mode 2'b00) (flag 0)))
+  )
+  core_clk:clock
+  rst_async_n:reset
+  data_in<16:data
+  txd>:data
+)
+```
+
+The first shipped value surface accepts scalar integer literals such as `8`,
+`8'hA5`, `'hA5`, `0xA5`, `0b1010`, and `0o77`, plus bounded literal aggregate
+payloads such as `(8'hA5 8'h3C)` and `((mode 2'b10) (flag 1))`. Overrides must
+name entries in the `.rtlif` `(params ...)` block. Aggregate overrides must also
+match the aggregate shape inferred from the `.rtlif` default value before
+generation continues. Validated values survive into the composition plan and
+structural RTL IR, and the current Verilog-family backend lowers them to
+SystemVerilog `#(...)` instance parameters by packing aggregates into one
+literal. VHDL generic-map lowering is still a future backend follow-up.
 
 ## Current Boundary
 

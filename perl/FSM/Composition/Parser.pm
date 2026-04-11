@@ -18,6 +18,7 @@ use FSM::Composition::Link;
 use FSM::Composition::PortsBlock;
 use FSM::Composition::TopLink;
 use FSM::Composition::TopSymbols;
+use FSM::Composition::ParameterValueSupport;
 use FSM::Package::DeclarativeTypeSupport;
 use FSM::Package::DeclarativeSymbolResolver;
 use FSM::Package::DeclarativeTypeResolver;
@@ -659,19 +660,49 @@ sub parse_dtc_child ($self, $top_name, $child_ast, $child_name, $items) {
 sub parse_rtl_child ($self, $top_name, $child_ast, $child_name, $items) {
     my @scalar_items = grep { !ref($_) } @$items;
     my @non_scalar_items = grep { ref($_) } @$items;
+    my $module_name;
+    my @parameter_overrides;
 
-    if (@non_scalar_items) {
+    for my $nested_item (@non_scalar_items) {
         confess
             "Composition top '$top_name' contains '?rtl' child '$child_name', ".
-            "but composition external-RTL child source shape is blocked because the active composition parser currently accepts either '(?rtl:module)' or '(?rtl:instance module)' as the flat RTL child declaration form. ".
-            "Parameter/generic override blocks are planned as a separate semantic instantiation contract and are not accepted in '?rtl' child payloads yet.".
+            "but composition external-RTL child source shape is blocked because nested '?rtl' payloads must use supported semantic blocks '(module module_name)' and '(params (NAME value) ...)', not raw target-HDL text.".
+            $self->scope_docs_suffix
+            unless ref($nested_item) eq 'ARRAY' && @$nested_item && !ref($nested_item->[0]);
+
+        my $nested_header = $nested_item->[0];
+        if ($nested_header eq 'module') {
+            confess
+                "Composition top '$top_name' contains '?rtl' child '$child_name' with multiple RTL module references, ".
+                "but composition external-RTL child source count is blocked because a parameterized '?rtl' instance may declare at most one module source using either a flat module name or a '(module module_name)' block.".
+                $self->scope_docs_suffix
+                if defined $module_name;
+            $module_name = $self->parse_rtl_module_block($top_name, $child_name, $nested_item);
+            next;
+        }
+
+        if ($nested_header eq 'params') {
+            confess
+                "Composition top '$top_name' contains '?rtl' child '$child_name' with multiple '(params ...)' blocks, ".
+                "but composition external-RTL parameter override shape is blocked because each RTL instance may use at most one parameter/generic override block.".
+                $self->scope_docs_suffix
+                if @parameter_overrides;
+            @parameter_overrides = @{$self->parse_rtl_parameter_override_block($top_name, $child_name, $nested_item)};
+            next;
+        }
+
+        confess
+            "Composition top '$top_name' contains '?rtl' child '$child_name' with unsupported nested block '$nested_header', ".
+            "but composition external-RTL child source shape is blocked because nested '?rtl' payloads currently accept only '(module module_name)' and '(params (NAME value) ...)' semantic blocks.".
             $self->scope_docs_suffix;
     }
 
     if (!@scalar_items) {
         return FSM::Composition::Instance->new(
             kind => 'rtl',
-            module_name => $child_name,
+            name => (defined($module_name) ? $child_name : undef),
+            module_name => ($module_name // $child_name),
+            parameter_overrides => \@parameter_overrides,
             raw_items => $items,
             raw_ast => $child_ast,
         );
@@ -686,13 +717,95 @@ sub parse_rtl_child ($self, $top_name, $child_ast, $child_name, $items) {
             $self->scope_docs_suffix;
     }
 
+    confess
+        "Composition top '$top_name' contains '?rtl' child '$child_name' with both flat module reference '$scalar_items[0]' and nested module block '$module_name', ".
+        "but composition external-RTL child source count is blocked because a parameterized '?rtl' instance may declare only one module source.".
+        $self->scope_docs_suffix
+        if defined $module_name;
+
     return FSM::Composition::Instance->new(
         kind => 'rtl',
         name => $child_name,
         module_name => $scalar_items[0],
+        parameter_overrides => \@parameter_overrides,
         raw_items => $items,
         raw_ast => $child_ast,
     );
+}
+
+sub parse_rtl_module_block ($self, $top_name, $child_name, $module_block) {
+    my $module_items = $module_block->[1] // [];
+    confess
+        "Composition top '$top_name' contains '?rtl' child '$child_name' with malformed '(module ...)' block, ".
+        "but composition external-RTL child source shape is blocked because '(module ...)' must contain exactly one HDL-identifier-compatible module/interface contract name.".
+        $self->scope_docs_suffix
+        unless ref($module_items) eq 'ARRAY' && @$module_items == 1;
+
+    my $module_name = $self->unwrap_scalar_token($module_items->[0]);
+    confess
+        "Composition top '$top_name' contains '?rtl' child '$child_name' with malformed module reference '".$self->describe_contract_name($module_name)."', ".
+        "but composition external-RTL child source shape is blocked because RTL module/interface contract names must be HDL-identifier-compatible.".
+        $self->scope_docs_suffix
+        unless $self->is_contract_identifier($module_name);
+
+    return $module_name;
+}
+
+sub parse_rtl_parameter_override_block ($self, $top_name, $child_name, $params_block) {
+    my $entries = $params_block->[1] // [];
+    confess
+        "Composition top '$top_name' contains '?rtl' child '$child_name' with malformed '(params ...)' block, ".
+        "but composition external-RTL parameter override shape is blocked because '(params ...)' must contain one or more '(NAME value)' scalar or aggregate override entries.".
+        $self->scope_docs_suffix
+        unless ref($entries) eq 'ARRAY' && @$entries;
+
+    my @overrides;
+    my %seen;
+    for my $entry (@$entries) {
+        confess
+            "Composition top '$top_name' contains '?rtl' child '$child_name' with malformed parameter override entry, ".
+            "but composition external-RTL parameter override shape is blocked because each override must use '(NAME value)'.".
+            $self->scope_docs_suffix
+            unless ref($entry) eq 'ARRAY' && @$entry == 2;
+
+        my ($name_ast, $value_ast) = @$entry;
+        my $name = $self->unwrap_scalar_token($name_ast);
+        confess
+            "Composition top '$top_name' contains '?rtl' child '$child_name' with malformed parameter override name '".$self->describe_contract_name($name)."', ".
+            "but composition external-RTL parameter override token shape is blocked because parameter/generic names must be HDL-identifier-compatible.".
+            $self->scope_docs_suffix
+            unless $self->is_contract_identifier($name);
+
+        confess
+            "Composition top '$top_name' contains '?rtl' child '$child_name' with duplicate parameter override '$name', ".
+            "but composition external-RTL parameter override uniqueness is blocked because each instance override may bind a parameter/generic name at most once.".
+            $self->scope_docs_suffix
+            if $seen{$name};
+        $seen{$name} = 1;
+
+        my $value_info = FSM::Composition::ParameterValueSupport->canonical_value(
+            value_ast => $value_ast,
+            context => "Composition top '$top_name' contains '?rtl' child '$child_name' parameter override '$name'",
+            docs_hint => $self->scope_docs_suffix,
+        );
+
+        my $raw_value = $self->unwrap_scalar_token($value_ast);
+        my $override = {
+            name => $name,
+            value_text => $value_info->{value_text},
+            value_kind => $value_info->{value_kind},
+            value_payload => $value_info->{value_payload},
+            origin_kind => 'rtl_instance_parameter_override',
+        };
+        $override->{raw_value} = $raw_value if defined($raw_value) && !ref($raw_value);
+        $override->{raw_value_ast} = $value_ast if ref($raw_value);
+        $override->{value_width} = $value_info->{value_width} if defined $value_info->{value_width};
+        $override->{value_type_spec} = $value_info->{value_type_spec} if ref($value_info->{value_type_spec}) eq 'HASH';
+
+        push @overrides, $override;
+    }
+
+    return \@overrides;
 }
 
 sub parse_ports_block ($self, $top_name, $child_ast, $block_name, $items, $top_symbols = undef) {

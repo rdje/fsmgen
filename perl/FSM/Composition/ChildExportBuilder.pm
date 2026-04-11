@@ -67,6 +67,8 @@ sub build_child_exports ($class, %args) {
             standalone_dt_count => ($intent_hir->{standalone_dt_count} || 0),
             output_drive_family_count => ($lowered_rtl_ir->{output_drive_family_count} || 0),
             standalone_dt_multi_drive_target_count => ($lowered_rtl_ir->{standalone_dt_multi_drive_target_count} || 0),
+            parameter_override_count => scalar(@{$instance->{parameter_overrides} || []}),
+            parameter_overrides => _clone($instance->{parameter_overrides} || []),
             intent_hir => $intent_hir,
             lowered_rtl_ir => $lowered_rtl_ir,
             structural_rtl_ir => $child_structural_rtl_ir,

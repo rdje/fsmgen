@@ -192,6 +192,9 @@ sub build_from_composition_plan ($class, $composition_plan, $target_language = '
                     port_bindings => [
                         map { normalized_binding($_) } @{$_->port_bindings || []}
                     ],
+                    parameter_overrides => [
+                        map { _clone($_) } @{$_->parameter_overrides || []}
+                    ],
                 }
             } @{$composition_plan->instances || []}
         ],
@@ -238,6 +241,17 @@ sub coerce ($class, $structural_rtl_ir, $default_target_language = 'systemverilo
         resolved_links => ($structural_rtl_ir_hash->{resolved_links} || []),
         auxiliary_assignments => ($structural_rtl_ir_hash->{auxiliary_assignments} || []),
     );
+}
+
+sub _clone ($value) {
+    return undef unless defined $value;
+    if (ref($value) eq 'HASH') {
+        return { map { $_ => _clone($value->{$_}) } keys %$value };
+    }
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone($_) } @$value ];
+    }
+    return $value;
 }
 
 1;

@@ -857,7 +857,7 @@ The first honest `R11` slices are now:
 - External-RTL instantiation note:
   - `(?rtl:module)` is the shorthand instance form,
   - `(?rtl:instance module)` is the explicit alias form for reusing one declared `?rtlif:module` contract under several instance names,
-  - and parameter/generic overrides remain a planned typed-instantiation seam rather than a raw `?rtl` payload.
+  - and the first shipped parameter/generic override seam stays semantic: `.rtlif` declares scalar or bounded aggregate `(params (NAME default_value) ...)` entries, `?rtl` instances override declared names through `(params (NAME value) ...)`, aggregate overrides are checked against the `.rtlif` default's inferred aggregate shape, and the current Verilog-family backend lowers validated overrides to SystemVerilog `#(...)` instance parameters.
 - Execution-cadence note:
   - after a backend/debt-reduction slice, strongly prefer the next slice to land in a visibly user-facing lane such as language contract, strict mode, diagnostics, or reusable assets,
   - and only keep stacking consolidation slices when the next feature is still materially blocked by that cleanup.

@@ -55,6 +55,73 @@ RTLIF
     is($ports{txd}->type, 'data', 'typed data output token preserves explicit data type');
 };
 
+subtest '.rtlif parameter declarations preserve canonical defaults' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+
+    write_file(
+        $metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  (params
+    (WIDTH 0x10)
+    (RESET_VALUE 8'hA5)
+    (LANES (8'hA5 8'h3C))
+    (FRAME ((mode 2'b10) (flag 1)))
+  )
+  core_clk:clock
+  rst_async_n:reset
+  data_in<16:data
+  txd>:data
+)
+RTLIF
+    );
+
+    my $loader = FSM::Composition::RTLInterfaceLoader->new();
+    my $loaded = $loader->load_interface(
+        module_name => 'uart_tx',
+        source_file => File::Spec->catfile($tempdir, 'dummy_top.fsm'),
+    );
+
+    is_deeply(
+        [map { $_->{name} } @{$loaded->{parameter_declarations}}],
+        [qw(WIDTH RESET_VALUE LANES FRAME)],
+        'loader preserves declared RTL parameter/generic default order',
+    );
+    my %params = map { $_->{name} => $_ } @{$loaded->{parameter_declarations}};
+    is($params{WIDTH}{default_value_text}, "'h10", 'loader canonicalizes unsized hex-style parameter defaults');
+    is($params{WIDTH}{default_value_kind}, 'scalar', 'loader marks scalar parameter defaults');
+    is_deeply(
+        $params{WIDTH}{default_value_payload},
+        { kind => 'scalar', payload => "'h10" },
+        'loader keeps the canonical scalar parameter payload',
+    );
+    is($params{WIDTH}{raw_default_value}, '0x10', 'loader preserves the raw scalar parameter default token');
+    is($params{WIDTH}{origin_kind}, 'rtlif_parameter_declaration', 'loader keeps parameter declaration provenance');
+    is($params{RESET_VALUE}{default_value_text}, "8'hA5", 'loader preserves sized based parameter defaults');
+    is($params{RESET_VALUE}{default_value_width}, 8, 'loader infers width for sized based scalar parameter defaults');
+    is($params{LANES}{default_value_text}, "16'b1010010100111100", 'loader packs list aggregate parameter defaults for backend lowering');
+    is($params{LANES}{default_value_kind}, 'list', 'loader marks list aggregate parameter defaults');
+    is($params{LANES}{default_value_width}, 16, 'loader infers packed width for list aggregate parameter defaults');
+    is_deeply(
+        [map { $_->{payload} } @{$params{LANES}{default_value_payload}{items}}],
+        ["8'hA5", "8'h3C"],
+        'loader keeps the ordered list aggregate parameter payload',
+    );
+    is($params{FRAME}{default_value_text}, "3'b101", 'loader packs record aggregate parameter defaults for backend lowering');
+    is($params{FRAME}{default_value_kind}, 'map', 'loader marks record-like aggregate parameter defaults');
+    is_deeply(
+        $params{FRAME}{default_value_type_spec}{member_order},
+        [qw(mode flag)],
+        'loader preserves record aggregate member order for parameter defaults',
+    );
+    is_deeply(
+        [map { $_->name } @{$loaded->{interface_ports}}],
+        ['core_clk', 'rst_async_n', 'data_in', 'txd'],
+        'parameter declaration blocks do not disturb declared port order',
+    );
+};
+
 subtest 'mixed composition auto-wires custom typed rtl clock/reset ports' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'typed_rtl_system_ports_top.fsm');

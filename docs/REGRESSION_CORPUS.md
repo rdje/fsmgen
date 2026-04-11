@@ -66,7 +66,7 @@ more than one contract for it, for example:
   `?rtl` sidecar metadata, invalid `.rtlif` system-role directions, and
   duplicate `.rtlif` port declarations, unsupported `.rtlif` port types,
   invalid `.rtlif` port tokens, non-positive `.rtlif` port widths, missing
-  `.rtlif` roots, empty `.rtlif` roots, nested `.rtlif` structures, and
+  `.rtlif` roots, empty `.rtlif` roots, unsupported nested `.rtlif` structures, and
   duplicate embedded `.rtlif` roots.
 
 ## Current named entries

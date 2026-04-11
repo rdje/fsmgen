@@ -12,6 +12,7 @@ sub new ($class, %args) {
         name => $args{name},
         source_name => $args{source_name},
         module_name => $args{module_name},
+        parameter_overrides => $args{parameter_overrides} || [],
         raw_items => $args{raw_items} || [],
         raw_ast => $args{raw_ast},
     }, $class;
@@ -21,6 +22,7 @@ sub kind ($self) { return $self->{kind} }
 sub name ($self) { return $self->{name} }
 sub source_name ($self) { return $self->{source_name} }
 sub module_name ($self) { return $self->{module_name} }
+sub parameter_overrides ($self) { return $self->{parameter_overrides} }
 sub raw_items ($self) { return $self->{raw_items} }
 sub raw_ast ($self) { return $self->{raw_ast} }
 

@@ -1,5 +1,34 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-11: external `?rtl` parameter/generic overrides now have a first semantic slice
+- Saved the bounded `R11` external-RTL parameter/generic override slice.
+- Important continuity note:
+  - `.rtlif` roots may now include one `(params (NAME default_value) ...)`
+    block beside declaration-ordered port tokens,
+  - `?rtl` instances may now include semantic `(params (NAME value) ...)`
+    override blocks, either with flat alias syntax such as
+    `(?rtl:u_uart uart_tx (params (WIDTH 16)))` or nested module syntax such
+    as `(?rtl:u_uart (module uart_tx) (params (WIDTH 16)))`,
+  - override/default values currently accept bounded scalar integer literals
+    such as `8`, `8'hA5`, `'hA5`, `0xA5`, `0b1010`, and `0o77`, plus bounded
+    literal aggregate payloads such as `(8'hA5 8'h3C)` and
+    `((mode 2'b10) (flag 1))`,
+  - [perl/FSM/Composition/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterValueSupport.pm)
+    owns that normalization policy and preserves inferred list/record type
+    shape while lowering aggregate values to one packed literal for the current
+    Verilog-family backend,
+  - override names are validated against the loaded `.rtlif` declaration
+    contract before structural generation, and aggregate overrides must match
+    the aggregate shape inferred from the `.rtlif` default value,
+  - validated overrides now flow through
+    [perl/FSM/Composition/Instance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Instance.pm),
+    [perl/FSM/Composition/RealizedInstance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RealizedInstance.pm),
+    structural RTL IR, and the current Verilog-family backend,
+  - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)
+    lowers the shipped slice to SystemVerilog `#(...)` instance parameters,
+  - and VHDL generic-map lowering, generated-child parameterization, and
+    richer non-literal semantic override values remain follow-up work.
+
 ## 2026-04-11: `?rtl` aliases now reuse one `.rtlif` contract
 - Saved the bounded `R11` external-RTL reuse slice.
 - Important continuity note:
@@ -12,11 +41,10 @@ This is the live continuity document for fast session recovery after crashes, re
     locks the end-to-end case where `u_uart_a` and `u_uart_b` both reuse the
     `uart_tx` `.rtlif` contract,
   - [t/291-composition-rtl-child-source-shape-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/291-composition-rtl-child-source-shape-diagnostics.t)
-    locks rejection of nested `?rtl` payloads and multi-module alias payloads
+    now locks rejection of unsupported nested `?rtl` payloads and multi-module alias payloads
     through both pipeline and CLI,
-  - and per-instance parameter/generic overrides remain the next semantic
-    instantiation seam because no typed override field exists yet in
-    `Instance`, `RealizedInstance`, or `Structural RTL IR` instance emission.
+  - and the parameter/generic override seam that was noted here is now
+    superseded by the later 2026-04-11 semantic override slice above.
 
 ## 2026-04-11: root/structure `.rtlif` failures are now in the corpus
 - Saved the bounded `R12` support-accounting follow-up for missing `.rtlif`

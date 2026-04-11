@@ -223,6 +223,7 @@ Combinational DT note:
 - External RTL interface loading via sidecar `<module>.rtlif`
   - or via an embedded `(?rtlif:module_name ...)` companion root in the same composition source
   - flat `(?rtlif:module_name ...)` roots with explicit port tokens
+  - optional `(params (NAME default_value) ...)` declaration blocks for scalar or aggregate external RTL parameters/generics
   - token forms such as `clk`, `data_in<8`, `txd>`, `core_clk:clock`, and `rst_async_n:reset`
   - explicit type annotations currently limited to `:data`, `:clock`, and `:reset`
   - typed `:clock` / `:reset` metadata lets custom-named RTL system ports auto-wire through mixed composition
@@ -1410,10 +1411,11 @@ This currently works because:
 - non-system mixed-child connections remain explicit through `?toplink`.
 
 Current `.rtlif` token contract:
-- metadata uses one flat `(?rtlif:module_name ...)` root
+- metadata uses one `(?rtlif:module_name ...)` root with flat port tokens plus one optional semantic `(params (NAME default_value) ...)` declaration block
 - when a composition source contains an embedded `(?rtlif:module_name ...)` companion root, that local declaration takes precedence over any sidecar `<module>.rtlif` file
 - `(?rtl:module_name)` is shorthand for one external RTL instance whose instance name and module name are both `module_name`
 - `(?rtl:instance_name module_name)` instantiates that external RTL module under a distinct instance name, so several `?rtl` children can reuse one `(?rtlif:module_name ...)` interface contract
+- `(?rtl:instance_name (module module_name) (params (NAME value) ...))` is the semantic parameterized instance form; the same shorthand can omit `(module ...)` when the `?rtl` child name is already the module/interface name
 - explicit links always refer to the realized instance name, for example `u_uart_a.data_in`, not the shared `?rtlif` root name
 - declaration order is preserved
 - `port`, `port<8`, and `port>` still work as the compact forms
@@ -1421,7 +1423,45 @@ Current `.rtlif` token contract:
 - only `data`, `clock`, and `reset` are currently accepted as explicit port types
 - typed `clock` / `reset` tokens are system-input roles; they let custom-named RTL system ports auto-wire without falling back to `clk` / `rst_n` naming, but output-direction forms such as `core_clk>:clock` or `rst_async_n>:reset` are rejected
 - ordinary typed data outputs remain valid, for example `txd>:data`
-- per-instance parameter/generic overrides are planned as a semantic instantiation contract that survives into IR and backend-specific parameter/generic maps; they are not accepted inside `?rtl` child payloads yet, because FSMGen should not smuggle raw target-HDL text into structural generation without validation.
+- per-instance parameter/generic overrides must name parameters/generics declared by the loaded `.rtlif` `(params ...)` block; the first shipped value surface accepts scalar integer literals such as `8`, `8'hA5`, `'hA5`, `0xA5`, `0b1010`, and `0o77`, plus bounded literal list/record payloads such as `(8'hA5 8'h3C)` and `((mode 2'b10) (flag 1))`; aggregate overrides must match the aggregate shape inferred from the `.rtlif` default value; validated overrides are preserved through the composition plan and structural RTL IR and lower to SystemVerilog `#(...)` instance parameters for the Verilog-family backend.
+
+Example parameterized external RTL instance:
+```lisp
+(?top:parameterized_rtl_top
+  (?ports:public_io
+    core_clk
+    rst_async_n
+    payload_in<16
+    serial_out>
+  )
+  (?rtl:u_uart
+    (module uart_tx)
+    (params
+      (WIDTH 16)
+      (RESET_VALUE 8'hA5)
+      (LANES (8'hA5 8'h3C))
+      (FRAME ((mode 2'b10) (flag 1)))
+    )
+  )
+  (?toplink:wiring
+    /payload_in/u_uart.data_in/
+    /u_uart.txd/serial_out/
+  )
+)
+
+(?rtlif:uart_tx
+  (params
+    (WIDTH 8)
+    (RESET_VALUE 8'h00)
+    (LANES (8'h00 8'h00))
+    (FRAME ((mode 2'b00) (flag 0)))
+  )
+  core_clk:clock
+  rst_async_n:reset
+  data_in<16:data
+  txd>:data
+)
+```
 
 ## 4) Useful options
 - `-o, --output <file>` : output file path

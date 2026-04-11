@@ -185,6 +185,7 @@ sub _clone_realized_instance_with_bindings ($instance, $port_bindings) {
         source_name => $instance->source_name,
         interface_ports => $instance->interface_ports,
         port_bindings => $port_bindings || [],
+        parameter_overrides => $instance->parameter_overrides,
         module_info => $instance->module_info,
         hdl_code => $instance->hdl_code,
     );

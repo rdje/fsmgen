@@ -28,6 +28,7 @@ sub new ($class, %args) {
         source_name => $args{source_name},
         interface_ports => $args{interface_ports} || [],
         port_bindings => _normalize_port_bindings($args{port_bindings} || []),
+        parameter_overrides => _clone($args{parameter_overrides} || []),
         module_info => $args{module_info},
         hdl_code => $args{hdl_code},
     }, $class;
@@ -39,12 +40,24 @@ sub module_name ($self) { return $self->{module_name} }
 sub source_name ($self) { return $self->{source_name} }
 sub interface_ports ($self) { return $self->{interface_ports} }
 sub port_bindings ($self) { return $self->{port_bindings} }
+sub parameter_overrides ($self) { return $self->{parameter_overrides} }
 sub module_info ($self) { return $self->{module_info} }
 sub hdl_code ($self) { return $self->{hdl_code} }
 
 sub _normalize_port_bindings ($bindings) {
     return [] unless ref($bindings) eq 'ARRAY';
     return [ map { normalized_binding($_) } @$bindings ];
+}
+
+sub _clone ($value) {
+    return undef unless defined $value;
+    if (ref($value) eq 'HASH') {
+        return { map { $_ => _clone($value->{$_}) } keys %$value };
+    }
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone($_) } @$value ];
+    }
+    return $value;
 }
 
 1;
@@ -81,6 +94,11 @@ Returns the normalized realized child interface port list.
 =head2 port_bindings
 
 Returns the normalized structural binding list currently attached to the child.
+
+=head2 parameter_overrides
+
+Returns the validated parameter/generic override list attached to this realized
+child instance.
 
 =head2 module_info
 
