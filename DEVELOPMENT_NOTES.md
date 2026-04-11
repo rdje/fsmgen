@@ -1,11 +1,46 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: composition actual literal policy belongs below the planner
+- Extracted composition open/numeric actual literal policy out of
+  [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  into [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm).
+- Landed behavior:
+  - direct actual endpoint parsing for `=open`, scalar `=0` / `=1`,
+    unsized binary/decimal/octal/hex forms, signed unsized forms, bare
+    decimal/hex spellings, and exact-width literal forms now lives in the
+    support owner,
+  - top-expression concat literal operands now ask the same owner for
+    intrinsic-width literal lowering,
+  - direct actual bindings now ask the same owner for target-width widening,
+    signed/unsigned overflow rejection, and actual binding type-contract
+    construction,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    still owns the higher-level planning context: explicit-link role checks,
+    top-symbol lookup, aggregate compatibility checks, child-source carriers,
+    and diagnostics,
+  - and [t/286-composition-actual-literal-support.t](/Users/richarddje/Documents/github/fsmgen/t/286-composition-actual-literal-support.t)
+    locks the support owner directly while the existing structural-actual and
+    top-expression concat tests keep the end-to-end path honest.
+- Why this boundary matters:
+  - numeric literal policy is a semantic support concern, not the core job of
+    the linked-plan builder,
+  - keeping exact-width, intrinsic-width, and target-width lowering in one
+    owner reduces drift risk as signedness/state-model/type policy becomes
+    sharper,
+  - the generated HDL still remains a representation of planned structural
+    expressions rather than a place that rediscovers numeric intent,
+  - and the live import-tree snapshot now honestly shows
+    [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
+    as the largest reachable file again, while [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    remains a composition-planning seam instead of the numeric-literal owner.
+
 ## 2026-04-11: bootstrap import-tree refresh should track semantic package growth
 - Executed the README/session bootstrap path and refreshed the saved
   [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
   import-tree analysis because the old `2026-04-02` measurement was no
   longer honest.
-- Current measurement:
+- Bootstrap measurement at that point, later superseded by the actual-literal
+  extraction note above:
   - static project-owned closure rooted at [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen): `116` files total,
   - reachable `.pm` packages: `115`,
   - largest reachable package by line count:

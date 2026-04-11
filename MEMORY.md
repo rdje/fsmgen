@@ -1,15 +1,42 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-11: composition actual literal policy now has one owner
+- Saved the `R11` composition actual-literal extraction slice.
+- Important continuity note:
+  - [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm)
+    now owns composition open/numeric actual endpoint parsing, exact-width
+    literal lowering, intrinsic-width concat-operand literal lowering,
+    target-width direct-actual widening and overflow rejection, and actual
+    binding type-contract construction,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    now delegates actual literal policy while keeping explicit-link planning,
+    symbol lookup, aggregate compatibility checks, carrier allocation, and the
+    rich composition diagnostics,
+  - [t/286-composition-actual-literal-support.t](/Users/richarddje/Documents/github/fsmgen/t/286-composition-actual-literal-support.t)
+    locks the support owner directly,
+  - existing end-to-end coverage in [t/262-composition-structural-actual-toplinks.t](/Users/richarddje/Documents/github/fsmgen/t/262-composition-structural-actual-toplinks.t),
+    [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t),
+    and [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t)
+    stays green against the delegated path,
+  - the static import closure from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
+    now measures `117` reachable project files and `116` reachable `.pm`
+    packages,
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+    now records the new post-extraction hotspot shape: [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
+    is again the largest reachable file, while [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    remains a major `R11` composition-planning seam instead of owning actual
+    literal mechanics inline.
+
 ## 2026-04-11: session bootstrap refreshed the `bin/fsmgen` import-tree snapshot
 - Saved the README/session-bootstrap execution pass.
 - Important continuity note:
   - [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) remains the single entry point,
   - [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md) still asks a new session to read the README-linked docs, analyze [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) plus its project-owned import tree, refresh [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) if stale, and then continue against [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md),
-  - the current static import closure from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now measures `116` reachable project files and `115` reachable `.pm` packages,
+  - the bootstrap-time static import closure from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) measured `116` reachable project files and `115` reachable `.pm` packages before the later same-day actual-literal extraction superseded that count,
   - the new measurement makes the semantic `FSM::Package::*` family visible as a first-class live spine under direct and composition paths,
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) is now the largest reachable file in the static closure because explicit-link actuals, source expressions, aggregate checks, and binding type contracts have accumulated there,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) was then the largest reachable file in the static closure because explicit-link actuals, source expressions, aggregate checks, and binding type contracts had accumulated there,
   - [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) is now refreshed to the `2026-04-11` import-tree snapshot,
-  - and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) now points future sessions at the `116` / `115` measured snapshot instead of the stale `97` / `96` one.
+  - and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) pointed future sessions at the `116` / `115` measured snapshot instead of the stale `97` / `96` one before the later same-day `117` / `116` refresh.
 
 ## 2026-04-10: reset policy now matches sreset/areset intent
 - Saved the reset-contract correction slice.
