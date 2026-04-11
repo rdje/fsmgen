@@ -278,56 +278,17 @@ sub augment_undeclared_top_inputs ($class, %args) {
         next unless @input_candidates;
         next unless @input_candidates == @candidates;
 
-        my %widths = map { $_->{port}->width => 1 } @input_candidates;
-        if (keys(%widths) > 1) {
-            my $candidates = join(', ', map {
-                $_->{instance_name}.'.'.$_->{port}->name.
-                '['.$_->{port}->direction.', width='.$_->{port}->width.']'
-            } @input_candidates);
-            confess
-                "Composition source '$header' in '$fsm_file' omits top port '$port_name', ".
-                "but undeclared top-input inference is blocked because same-name child inputs disagree on width. ".
-                "Seen child inputs: $candidates. ".
-                "The current bounded inference slice only infers undeclared top inputs when all same-name child inputs agree exactly on width. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-        }
-
-        my %types = map { FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}->type) => 1 } @input_candidates;
-        if (keys(%types) > 1) {
-            my $candidates = join(', ', map {
-                $_->{instance_name}.'.'.$_->{port}->name.
-                '['.$_->{port}->direction.', width='.$_->{port}->width.', type='.FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}->type).']'
-            } @input_candidates);
-            confess
-                "Composition source '$header' in '$fsm_file' omits top port '$port_name', ".
-                "but undeclared top-input inference is blocked because same-name child inputs disagree on interface type. ".
-                "Seen child inputs: $candidates. ".
-                "The current bounded inference slice only infers undeclared top inputs when all same-name child inputs agree exactly on type metadata too. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-        }
-
-        my @typed_input_candidates = grep {
-            defined FSM::Composition::InterfacePortBuilder->declared_type_signature($_->{port})
-        } @input_candidates;
-        my %declared_type_signatures = map {
-            FSM::Composition::InterfacePortBuilder->declared_type_signature($_->{port}) => 1
-        } @typed_input_candidates;
-        if (keys(%declared_type_signatures) > 1) {
-            my $candidates = join(', ', map {
-                $_->{instance_name}.'.'.$_->{port}->name.
-                "[declared_type='".FSM::Composition::InterfacePortBuilder->declared_type_label($_->{port})."']"
-            } @typed_input_candidates);
-            confess
-                "Composition source '$header' in '$fsm_file' omits top port '$port_name', ".
-                "but undeclared top-input inference is blocked because same-name child inputs disagree on declared type contract. ".
-                "Seen typed child inputs: $candidates. ".
-                "The current bounded inference slice only infers undeclared top inputs when all same-name typed child inputs agree on one declared type contract too. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-        }
-
         my $template = $input_candidates[0]{port};
-        my $declared_type_contract = FSM::Composition::InterfacePortBuilder->uniform_declared_type_contract(
-            [ map { $_->{port} } @input_candidates ]
+        my $declared_type_contract = $class->_same_name_input_contract_or_confess(
+            $port_name,
+            \@input_candidates,
+            $fsm_file,
+            $header,
+            subject => "top port '$port_name'",
+            blocked_reason => 'undeclared top-input inference',
+            width_rule => 'The current bounded inference slice only infers undeclared top inputs when all same-name child inputs agree exactly on width.',
+            type_rule => 'The current bounded inference slice only infers undeclared top inputs when all same-name child inputs agree exactly on type metadata too.',
+            declared_type_rule => 'The current bounded inference slice only infers undeclared top inputs when all same-name typed child inputs agree on one declared type contract too.',
         );
         push @inferred_ports, FSM::Composition::Port->new(
             name => $template->name,
@@ -800,55 +761,18 @@ sub _record_inferred_aggregate_roots_from_same_name_inputs ($class, $inferred_sp
         my @input_candidates = grep { ($_->{port}->direction || '') eq 'input' } @candidates;
         next unless @input_candidates && @input_candidates == @candidates;
 
-        my %widths = map { $_->{port}->width => 1 } @input_candidates;
-        if (keys(%widths) > 1) {
-            my $candidates = join(', ', map {
-                $_->{instance_name}.'.'.$_->{port}->name.
-                '['.$_->{port}->direction.', width='.$_->{port}->width.']'
-            } @input_candidates);
-            confess
-                "Composition source '$header' in '$fsm_file' omits aggregate top port '$root_name', ".
-                "but explicit top-link port inference is blocked because same-name child inputs disagree on width while trying to infer that aggregate root for top expression(s) '".join("', '", @{$aggregate_root_evidence->{$root_name}})."'. ".
-                "Seen child inputs: $candidates. ".
-                "The current bounded inference slice only infers aggregate roots from same-name child inputs when all such inputs agree exactly on width. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-        }
-
-        my %types = map { FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}->type) => 1 } @input_candidates;
-        if (keys(%types) > 1) {
-            my $candidates = join(', ', map {
-                $_->{instance_name}.'.'.$_->{port}->name.
-                '['.$_->{port}->direction.', width='.$_->{port}->width.', type='.FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}->type).']'
-            } @input_candidates);
-            confess
-                "Composition source '$header' in '$fsm_file' omits aggregate top port '$root_name', ".
-                "but explicit top-link port inference is blocked because same-name child inputs disagree on interface type while trying to infer that aggregate root for top expression(s) '".join("', '", @{$aggregate_root_evidence->{$root_name}})."'. ".
-                "Seen child inputs: $candidates. ".
-                "The current bounded inference slice only infers aggregate roots from same-name child inputs when all such inputs agree exactly on type metadata too. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-        }
-
-        my @typed_input_candidates = grep {
-            defined FSM::Composition::InterfacePortBuilder->declared_type_signature($_->{port})
-        } @input_candidates;
-        my %declared_type_signatures = map {
-            FSM::Composition::InterfacePortBuilder->declared_type_signature($_->{port}) => 1
-        } @typed_input_candidates;
-        if (keys(%declared_type_signatures) > 1) {
-            my $candidates = join(', ', map {
-                $_->{instance_name}.'.'.$_->{port}->name.
-                "[declared_type='".FSM::Composition::InterfacePortBuilder->declared_type_label($_->{port})."']"
-            } @typed_input_candidates);
-            confess
-                "Composition source '$header' in '$fsm_file' omits aggregate top port '$root_name', ".
-                "but explicit top-link port inference is blocked because same-name child inputs disagree on declared type contract while trying to infer that aggregate root for top expression(s) '".join("', '", @{$aggregate_root_evidence->{$root_name}})."'. ".
-                "Seen typed child inputs: $candidates. ".
-                "The current bounded inference slice only infers aggregate roots from same-name child inputs when all such inputs agree on one declared type contract too. ".
-                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
-        }
-
-        my $declared_type_contract = FSM::Composition::InterfacePortBuilder->uniform_declared_type_contract(
-            [ map { $_->{port} } @input_candidates ]
+        my $expression_context = " while trying to infer that aggregate root for top expression(s) '".join("', '", @{$aggregate_root_evidence->{$root_name}})."'";
+        my $declared_type_contract = $class->_same_name_input_contract_or_confess(
+            $root_name,
+            \@input_candidates,
+            $fsm_file,
+            $header,
+            subject => "aggregate top port '$root_name'",
+            blocked_reason => 'explicit top-link port inference',
+            context_suffix => $expression_context,
+            width_rule => 'The current bounded inference slice only infers aggregate roots from same-name child inputs when all such inputs agree exactly on width.',
+            type_rule => 'The current bounded inference slice only infers aggregate roots from same-name child inputs when all such inputs agree exactly on type metadata too.',
+            declared_type_rule => 'The current bounded inference slice only infers aggregate roots from same-name child inputs when all such inputs agree on one declared type contract too.',
         );
         my $declared_type_spec = $declared_type_contract->{declared_type_spec};
         next unless ref($declared_type_spec) eq 'HASH'
@@ -871,6 +795,67 @@ sub _record_inferred_aggregate_roots_from_same_name_inputs ($class, $inferred_sp
             $header,
         );
     }
+}
+
+sub _same_name_input_contract_or_confess ($class, $port_name, $input_candidates, $fsm_file, $header, %args) {
+    my @input_candidates = @{$input_candidates || []};
+    my $subject = $args{subject} || "top port '$port_name'";
+    my $blocked_reason = $args{blocked_reason} || 'same-name top-input inference';
+    my $context_suffix = $args{context_suffix} || '';
+    my $width_rule = $args{width_rule} || 'The current bounded inference slice only infers same-name top inputs when all same-name child inputs agree exactly on width.';
+    my $type_rule = $args{type_rule} || 'The current bounded inference slice only infers same-name top inputs when all same-name child inputs agree exactly on type metadata too.';
+    my $declared_type_rule = $args{declared_type_rule} || 'The current bounded inference slice only infers same-name top inputs when all typed same-name child inputs agree on one declared type contract too.';
+
+    my %widths = map { $_->{port}->width => 1 } @input_candidates;
+    if (keys(%widths) > 1) {
+        my $candidates = join(', ', map {
+            $_->{instance_name}.'.'.$_->{port}->name.
+            '['.$_->{port}->direction.', width='.$_->{port}->width.']'
+        } @input_candidates);
+        confess
+            "Composition source '$header' in '$fsm_file' omits $subject, ".
+            "but $blocked_reason is blocked because same-name child inputs disagree on width$context_suffix. ".
+            "Seen child inputs: $candidates. ".
+            "$width_rule ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    my %types = map { FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}->type) => 1 } @input_candidates;
+    if (keys(%types) > 1) {
+        my $candidates = join(', ', map {
+            $_->{instance_name}.'.'.$_->{port}->name.
+            '['.$_->{port}->direction.', width='.$_->{port}->width.', type='.FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}->type).']'
+        } @input_candidates);
+        confess
+            "Composition source '$header' in '$fsm_file' omits $subject, ".
+            "but $blocked_reason is blocked because same-name child inputs disagree on interface type$context_suffix. ".
+            "Seen child inputs: $candidates. ".
+            "$type_rule ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    my @typed_input_candidates = grep {
+        defined FSM::Composition::InterfacePortBuilder->declared_type_signature($_->{port})
+    } @input_candidates;
+    my %declared_type_signatures = map {
+        FSM::Composition::InterfacePortBuilder->declared_type_signature($_->{port}) => 1
+    } @typed_input_candidates;
+    if (keys(%declared_type_signatures) > 1) {
+        my $candidates = join(', ', map {
+            $_->{instance_name}.'.'.$_->{port}->name.
+            "[declared_type='".FSM::Composition::InterfacePortBuilder->declared_type_label($_->{port})."']"
+        } @typed_input_candidates);
+        confess
+            "Composition source '$header' in '$fsm_file' omits $subject, ".
+            "but $blocked_reason is blocked because same-name child inputs disagree on declared type contract$context_suffix. ".
+            "Seen typed child inputs: $candidates. ".
+            "$declared_type_rule ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    return FSM::Composition::InterfacePortBuilder->uniform_declared_type_contract(
+        [ map { $_->{port} } @input_candidates ]
+    );
 }
 
 sub _analyze_top_expression_for_inference ($class, $declared_by_name, $inferred_specs, $expression_spec, $child_endpoint, $evidence, $fsm_file, $header, %opts) {

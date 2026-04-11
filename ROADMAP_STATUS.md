@@ -793,6 +793,7 @@ Done:
   - [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm) now treats declared or same-block inferred aggregate top-port paths such as `in_frame.tag` as exact-width operands while sizing one remaining omitted whole top-port concat operand,
   - expression width annotation is deferred until after whole-root explicit-link top-port inference has collected the current `?toplink` block's first-pass evidence, so the inferred-root behavior is order-independent within that block,
   - aggregate roots needed by explicit top expressions may now also seed from unlinked same-name child inputs when those child inputs provide one uniform record/list declared-type contract,
+  - ordinary undeclared top-input inference and aggregate-root seeding now share one same-name child-input compatibility helper for width/type/declared-type checks,
   - undeclared aggregate roots now fail with a user-facing declared-root diagnostic instead of leaking the internal exact-width assertion,
   - and [t/288-composition-aggregate-top-expression-inference.t](/Users/richarddje/Documents/github/fsmgen/t/288-composition-aggregate-top-expression-inference.t) locks the accepted declared-root path, explicit same-block inferred-root path in both authoring orders, same-name typed child-input inferred-root path, and the blocked undeclared-root diagnostic.
 - The scoped `R6` composition lane is complete.

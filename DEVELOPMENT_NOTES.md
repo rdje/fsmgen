@@ -23,6 +23,9 @@ This document captures engineering rationale, design constraints, and working de
   - aggregate roots needed by explicit top expressions may now also be seeded
     from unlinked same-name child inputs, but only when those child inputs
     provide one uniform record/list declared-type contract,
+  - the same-name child-input compatibility policy is now centralized in one
+    helper, so ordinary undeclared top-input inference and aggregate-root
+    seeding share the same width/type/declared-type checks,
   - the inference pass now reuses the same aggregate-path resolver and
     diagnostics boundary as planning rather than carrying a second width
     walker,
