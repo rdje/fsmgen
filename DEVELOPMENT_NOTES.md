@@ -16,6 +16,10 @@ This document captures engineering rationale, design constraints, and working de
   - declared aggregate top-port paths now contribute exact leaf widths to
     explicit-toplink concat/repeat inference before the remaining whole
     top-port operand is sized,
+  - expression width annotation now runs after the first pass has collected
+    whole-root inferred top ports from the current `?toplink` block, so an
+    aggregate root inferred from a typed child input can immediately support
+    later or earlier member/item operands such as `in_frame.tag`,
   - the inference pass now reuses the same aggregate-path resolver and
     diagnostics boundary as planning rather than carrying a second width
     walker,

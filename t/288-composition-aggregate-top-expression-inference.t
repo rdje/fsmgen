@@ -65,6 +65,78 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for aggregate top-expression concat inference');
 };
 
+subtest 'previously inferred aggregate top-port roots contribute exact width to concat inference' => sub {
+    my @cases = (
+        {
+            name => 'whole_root_link_first',
+            toplinks => <<'FSM',
+    /in_frame/consumer.IN_FRAME/
+    /in_frame.tag,payload/sink.data_in/
+    /consumer.OUT_FLAG/flag_out/
+FSM
+        },
+        {
+            name => 'aggregate_path_link_first',
+            toplinks => <<'FSM',
+    /in_frame.tag,payload/sink.data_in/
+    /in_frame/consumer.IN_FRAME/
+    /consumer.OUT_FLAG/flag_out/
+FSM
+        },
+    );
+
+    for my $case (@cases) {
+        my $tempdir = tempdir(CLEANUP => 1);
+        my $composition_path = File::Spec->catfile($tempdir, $case->{name}.'.fsm');
+
+        write_file(
+            $composition_path,
+            <<"FSM"
+(?top:$case->{name}
+  (?dtc:consumer consumer_src)
+  (?rtl:sink)
+  (?toplink:wiring
+$case->{toplinks}  )
+)
+
+(?dt:consumer_src
+  (+types
+    (type frame_t (record (tag (bits 4)) (flag bit)))
+  )
+  (+size
+    (IN_FRAME frame_t)
+    (OUT_FLAG 1)
+  )
+  (-pass
+    (OUT_FLAG = IN_FRAME.flag)
+  )
+)
+
+(?rtlif:sink
+  data_in<8:data
+)
+FSM
+        );
+
+        my $pipeline = FSM::Pipeline::HDLGenerator->new(
+            debug_level => 0,
+            target_language => 'systemverilog',
+            quiet => 1,
+        );
+        my $result = $pipeline->generate_hdl_from_file($composition_path);
+        my %ports = map { $_->name => $_ } @{$result->{composition_plan}->ports};
+        my $hdl = $result->{hdl_code};
+
+        ok($ports{in_frame}, "$case->{name}: aggregate root top port is inferred from the typed child input");
+        is($ports{in_frame}->declared_type_spec->{kind}, 'record', "$case->{name}: inferred aggregate root keeps its record contract");
+        is($ports{in_frame}->width, 5, "$case->{name}: inferred aggregate root keeps its packed width");
+        ok($ports{payload}, "$case->{name}: remaining whole top-port concat operand is inferred");
+        is($ports{payload}->width, 4, "$case->{name}: aggregate path leaves a four-bit remainder for payload");
+        like($hdl, qr/\binput\s+frame_t__fsmgen_t\s+in_frame\b/s, "$case->{name}: generated HDL exposes inferred aggregate input with typedef");
+        like($hdl, qr/\.data_in\(\{in_frame\.tag,\s*payload\}\)/s, "$case->{name}: generated HDL binds inferred aggregate path plus payload concat");
+    }
+};
+
 subtest 'undeclared aggregate roots fail with a user-facing inference diagnostic' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'undeclared_aggregate_root_top.fsm');

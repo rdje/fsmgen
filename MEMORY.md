@@ -1,21 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
-## 2026-04-11: aggregate top-expression inference sees declared roots
+## 2026-04-11: aggregate top-expression inference sees declared and inferred roots
 - Saved the next bounded `R11` aggregate top-expression inference slice.
 - Important continuity note:
   - [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm)
-    now treats declared aggregate top-port paths such as `in_frame.tag` as
-    exact-width operands while inferring one remaining omitted whole top-port
-    operand in explicit-toplink concat/repeat inference,
+    now treats declared or already inferred aggregate top-port paths such as
+    `in_frame.tag` as exact-width operands while inferring one remaining
+    omitted whole top-port operand in explicit-toplink concat/repeat inference,
   - this mirrors the planner's existing fallback for ambiguous two-part tokens:
-    if `in_frame` is a declared top port, `in_frame.tag` is a top aggregate
-    path rather than a missing child endpoint,
+    if `in_frame` is a declared or inferred top port with an aggregate
+    contract, `in_frame.tag` is a top aggregate path rather than a missing
+    child endpoint,
+  - expression width annotation is intentionally deferred until after
+    whole-root top-port inference scans the current `?toplink` block, so the
+    accepted inferred-root behavior is order-independent within that block,
   - undeclared aggregate roots still do not autovivify broadly; they now fail
     with a user-facing diagnostic that says the root top port needs a declared
     aggregate type before member/item access can guide inference,
   - [t/288-composition-aggregate-top-expression-inference.t](/Users/richarddje/Documents/github/fsmgen/t/288-composition-aggregate-top-expression-inference.t)
-    locks both the accepted `/in_frame.tag,payload/sink.data_in/` case and the
-    blocked undeclared-root diagnostic,
+    locks the accepted `/in_frame.tag,payload/sink.data_in/` case for both
+    declared roots and same-block inferred roots, plus the blocked
+    undeclared-root diagnostic,
   - and the next honest aggregate-inference seam remains broader
     autovivification only when the frontend can recover one safe shape and the
     backend can lower it honestly.

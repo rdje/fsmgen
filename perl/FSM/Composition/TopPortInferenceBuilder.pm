@@ -117,14 +117,6 @@ sub augment_from_explicit_links ($class, %args) {
                 && $target =~ /^\w+\.\w+$/
                 && $class->_expression_spec_mentions_undeclared_top_inputs($source_top_expr_spec, \%declared_by_name))
             {
-                $source_top_expr_spec = $class->_annotate_expression_spec_known_widths(
-                    $source_top_expr_spec,
-                    \%instances_by_name,
-                    \%child_ports_by_instance,
-                    \%declared_by_name,
-                    $fsm_file,
-                    $header,
-                );
                 my $child_endpoint = FSM::Composition::LinkedPlanBuilder->resolve_endpoint(
                     $target,
                     {},
@@ -162,6 +154,18 @@ sub augment_from_explicit_links ($class, %args) {
                 );
             }
         }
+    }
+
+    for my $expression_link (@expression_links) {
+        $expression_link->{expression_spec} = $class->_annotate_expression_spec_known_widths(
+            $expression_link->{expression_spec},
+            \%instances_by_name,
+            \%child_ports_by_instance,
+            \%declared_by_name,
+            \%inferred_specs,
+            $fsm_file,
+            $header,
+        );
     }
 
     my $made_progress = 1;
@@ -535,11 +539,12 @@ sub _assert_top_expression_inference_is_resolved ($class, $declared_by_name, $in
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
-sub _annotate_expression_spec_known_widths ($class, $expression_spec, $instances_by_name, $child_ports_by_instance, $declared_by_name, $fsm_file, $header) {
+sub _annotate_expression_spec_known_widths ($class, $expression_spec, $instances_by_name, $child_ports_by_instance, $declared_by_name, $inferred_specs, $fsm_file, $header) {
     return undef unless ref($expression_spec) eq 'HASH';
 
     my %annotated = %$expression_spec;
     $declared_by_name ||= {};
+    $inferred_specs ||= {};
     my $expr_kind = $expression_spec->{expr_kind} || '';
 
     if ($expr_kind eq 'concat') {
@@ -550,6 +555,7 @@ sub _annotate_expression_spec_known_widths ($class, $expression_spec, $instances
                     $instances_by_name,
                     $child_ports_by_instance,
                     $declared_by_name,
+                    $inferred_specs,
                     $fsm_file,
                     $header,
                 )
@@ -564,6 +570,7 @@ sub _annotate_expression_spec_known_widths ($class, $expression_spec, $instances
             $instances_by_name,
             $child_ports_by_instance,
             $declared_by_name,
+            $inferred_specs,
             $fsm_file,
             $header,
         );
@@ -585,7 +592,7 @@ sub _annotate_expression_spec_known_widths ($class, $expression_spec, $instances
     my $context_label = $expr_kind eq 'child_signal_ref' ? 'child endpoint' : 'child expression';
 
     if (!$instance) {
-        my $top_port = $declared_by_name->{$instance_name};
+        my $top_port = $declared_by_name->{$instance_name} || $inferred_specs->{$instance_name};
         if ($top_port) {
             my $path_text = $class->_top_aggregate_path_text_from_child_like_spec($expression_spec);
             my (undef, undef, $resolved_width) = FSM::Composition::LinkedPlanBuilder->_resolve_aggregate_path_connection(

@@ -109,10 +109,11 @@ inference. For example, in a source concat such as:
 ```
 
 `in_frame.tag` contributes the declared leaf width when `in_frame` already has
-a declared aggregate type, so `payload` can be inferred from the remaining
-target width. This is still not broad aggregate autovivification: if `in_frame`
-is not declared or previously inferred as one aggregate contract, FSMGen asks
-for that root contract explicitly.
+a declared aggregate type or has been inferred from another whole-root link to
+a typed child input in the same `?toplink` block, so `payload` can be inferred
+from the remaining target width. This is still not broad aggregate
+autovivification: if `in_frame` is not declared or previously inferred as one
+aggregate contract, FSMGen asks for that root contract explicitly.
 
 For generated-child output paths, FSMGen first binds the whole child output to
 one typed carrier and then applies the member/item access to that carrier.
