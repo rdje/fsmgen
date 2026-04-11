@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: `.rtlif` token/type/width failures are now part of support accounting
+- Promoted three focused token-scoped `.rtlif` metadata rejections into the
+  regression corpus together.
+- Landed behavior:
+  - [t/corpus/invalid_rtlif_port_type_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtlif_port_type_top.fsm)
+    plus [t/corpus/invalid_type_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_type_uart_tx.rtlif)
+    records unsupported explicit port type `status`,
+  - [t/corpus/invalid_rtlif_port_token_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtlif_port_token_top.fsm)
+    plus [t/corpus/invalid_token_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_token_uart_tx.rtlif)
+    records an invalid token shape using `data-in<8:data`,
+  - [t/corpus/invalid_rtlif_port_width_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtlif_port_width_top.fsm)
+    plus [t/corpus/invalid_width_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_width_uart_tx.rtlif)
+    records non-positive explicit width `data_in<0:data`,
+  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    now proves all three corpus entries reject through both the pipeline API
+    and `bin/fsmgen` CLI without emitting HDL.
+- Why this boundary matters:
+  - these are small sidecar-token contract failures, but each blocks a
+    different pre-generation invariant: type support, token grammar, and
+    positive width,
+  - the fixtures use unique external module names so they do not interfere
+    with the existing `uart_tx` focused diagnostics,
+  - and the `R12` corpus now spans the main `.rtlif` sidecar validation
+    families that previously lived only in focused diagnostics tests.
+
 ## 2026-04-11: `.rtlif` duplicate-port rejection is now part of support accounting
 - Promoted the focused `.rtlif` duplicate-port rejection into the regression
   corpus.

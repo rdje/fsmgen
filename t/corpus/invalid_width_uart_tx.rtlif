@@ -1,0 +1,6 @@
+(?rtlif:invalid_width_uart_tx
+  core_clk:clock
+  rst_async_n:reset
+  data_in<0:data
+  txd>:data
+)

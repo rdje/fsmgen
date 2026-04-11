@@ -64,7 +64,8 @@ more than one contract for it, for example:
   the CLI, and that rejection is part of the supported contract. This bucket
   now covers missing external generated-child source lookup, missing external
   `?rtl` sidecar metadata, invalid `.rtlif` system-role directions, and
-  duplicate `.rtlif` port declarations.
+  duplicate `.rtlif` port declarations, unsupported `.rtlif` port types,
+  invalid `.rtlif` port tokens, and non-positive `.rtlif` port widths.
 
 ## Current named entries
 
@@ -90,6 +91,9 @@ more than one contract for it, for example:
 | `contract.missing_dt_child_source` | [t/corpus/missing_dt_child_source_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_dt_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.invalid_rtl_system_port_direction` | [t/corpus/invalid_rtl_system_direction_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtl_system_direction_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.duplicate_rtlif_port_declaration` | [t/corpus/duplicate_rtlif_port_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/duplicate_rtlif_port_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.invalid_rtlif_port_type` | [t/corpus/invalid_rtlif_port_type_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtlif_port_type_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.invalid_rtlif_port_token` | [t/corpus/invalid_rtlif_port_token_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtlif_port_token_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.invalid_rtlif_port_width` | [t/corpus/invalid_rtlif_port_width_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtlif_port_width_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 
 ## Current locking tests
 

@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-11: token-scoped `.rtlif` failures are now in the corpus
+- Saved the bounded `R12` support-accounting follow-up for unsupported
+  `.rtlif` port types, invalid `.rtlif` port tokens, and non-positive `.rtlif`
+  port widths.
+- Important continuity note:
+  - `contract.invalid_rtlif_port_type`, `contract.invalid_rtlif_port_token`,
+    and `contract.invalid_rtlif_port_width` are now classified as
+    `expected_failure` under `composition_contract_rejection_pipeline_cli`,
+  - the static fixture pairs are `invalid_rtlif_port_type_top.fsm` /
+    `invalid_type_uart_tx.rtlif`, `invalid_rtlif_port_token_top.fsm` /
+    `invalid_token_uart_tx.rtlif`, and `invalid_rtlif_port_width_top.fsm` /
+    `invalid_width_uart_tx.rtlif`,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now expects `23` catalog entries and `13` explicit expected-failure
+    entries,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    proves all three reject through both pipeline and CLI with their respective
+    `RTL interface metadata port typing`, `RTL interface metadata token shape`,
+    and `RTL interface metadata port sizing` boundaries,
+  - and the focused diagnostics remain separately locked in
+    [t/119-composition-rtlif-type-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/119-composition-rtlif-type-diagnostics.t),
+    [t/120-composition-rtlif-token-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/120-composition-rtlif-token-diagnostics.t),
+    and [t/121-composition-rtlif-width-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/121-composition-rtlif-width-diagnostics.t).
+
 ## 2026-04-11: duplicate `.rtlif` port declarations are now in the corpus
 - Saved the bounded `R12` support-accounting follow-up for the `.rtlif`
   duplicate-port declaration contract.
@@ -10,8 +34,9 @@ This is the live continuity document for fast session recovery after crashes, re
   - `contract.duplicate_rtlif_port_declaration` is classified as
     `expected_failure` under `composition_contract_rejection_pipeline_cli`,
   - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
-    now expects `20` catalog entries and `10` explicit expected-failure
-    entries,
+    then expected `20` catalog entries and `10` explicit expected-failure
+    entries before the later token-scoped `.rtlif` corpus slice raised the
+    current counts to `23` and `13`,
   - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
     proves the fixture rejects through both pipeline and CLI with the blocked
     `RTL interface metadata port declaration uniqueness` boundary,
@@ -29,8 +54,9 @@ This is the live continuity document for fast session recovery after crashes, re
     `expected_failure` under `composition_contract_rejection_pipeline_cli`,
   - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
     then expected `19` catalog entries and `9` explicit expected-failure
-    entries before the later duplicate-port corpus slice raised the current
-    counts to `20` and `10`,
+    entries before the later duplicate-port corpus slice raised that snapshot
+    to `20` and `10`, and the later token-scoped `.rtlif` slice raised the
+    current counts to `23` and `13`,
   - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
     proves the fixture rejects through both pipeline and CLI with the blocked
     `RTL interface metadata system-port direction` boundary,

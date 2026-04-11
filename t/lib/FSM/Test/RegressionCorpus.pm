@@ -220,6 +220,33 @@ my @REGRESSION_CORPUS = (
         source_kind => 'composition',
         expected_error_pattern => qr/RTL metadata file:\s+'.*duplicate_port_uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'duplicate_port_uart_tx'.*RTL interface metadata port declaration uniqueness is blocked because declared interface metadata '.*duplicate_port_uart_tx\.rtlif' repeats port 'txd'/s,
     },
+    {
+        id => 'contract.invalid_rtlif_port_type',
+        relpath => 't/corpus/invalid_rtlif_port_type_top.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        expected_error_pattern => qr/RTL metadata file:\s+'.*invalid_type_uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'invalid_type_uart_tx'.*RTL interface metadata port typing is blocked because token 'data_in<8:status' in declared interface metadata '.*invalid_type_uart_tx\.rtlif' resolves to unsupported port type 'status'/s,
+    },
+    {
+        id => 'contract.invalid_rtlif_port_token',
+        relpath => 't/corpus/invalid_rtlif_port_token_top.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        expected_error_pattern => qr/RTL metadata file:\s+'.*invalid_token_uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'invalid_token_uart_tx'.*RTL interface metadata token shape is blocked because token 'data-in<8:data' in declared interface metadata '.*invalid_token_uart_tx\.rtlif' is an invalid port token/s,
+    },
+    {
+        id => 'contract.invalid_rtlif_port_width',
+        relpath => 't/corpus/invalid_rtlif_port_width_top.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        expected_error_pattern => qr/RTL metadata file:\s+'.*invalid_width_uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'invalid_width_uart_tx'.*RTL interface metadata port sizing is blocked because token 'data_in<0:data' in declared interface metadata '.*invalid_width_uart_tx\.rtlif' declares non-positive port width '0'/s,
+    },
 );
 
 sub regression_corpus_entries {
