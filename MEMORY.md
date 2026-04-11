@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-12: direct `+params` now resolve sibling parameter defaults safely
+- Saved the bounded `R11` direct param-to-param default slice.
+- Important continuity note:
+  - direct-root `+params` blocks are now collected and resolved as one dependency graph before direct behavior blocks are parsed,
+  - same-root direct parameter defaults may reuse other direct params, including forward references and aggregate parameter aliases,
+  - dependency order is no longer user-visible when the graph is acyclic, while duplicate parameter names and cycles fail before generation with targeted diagnostics,
+  - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
+    now parses `+define` before resolving collected `+params`, then parses behavior after parameter metadata is available,
+  - [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
+    can expose resolved parameter payloads through the parameter/generic value resolver,
+  - [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t),
+    [t/51-language-contract-symbol-definition-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/51-language-contract-symbol-definition-boundary.t),
+    and [t/76-language-contract-symbol-definition-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/76-language-contract-symbol-definition-entrypoints.t)
+    lock sibling/forward references, aggregate parameter aliases, cycle diagnostics, and no-output CLI behavior.
+
 ## 2026-04-12: generated-child parameter overrides now target child `+params`
 - Saved the bounded `R11` generated-child parameter/generic override slice.
 - Important continuity note:
@@ -57,8 +72,8 @@ This is the live continuity document for fast session recovery after crashes, re
   - [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t)
     now locks package-backed scalar/list/record `.rtlif` defaults plus the
     unresolved-default no-output failure,
-  - and generated-child parameterization plus VHDL generic-map lowering remain
-    explicit future contracts.
+  - and VHDL generic-map lowering remains an explicit future contract, while
+    generated-child parameterization is covered by the 2026-04-12 slice above.
 
 ## 2026-04-11: external `?rtl` parameter overrides can reuse top/package symbols
 - Saved the bounded `R11` external-RTL symbolic override-value slice.
@@ -80,8 +95,8 @@ This is the live continuity document for fast session recovery after crashes, re
     parameter-override resolver owner in the composition spine,
   - `.rtlif` parameter/generic declaration defaults are now superseded by the
     later package-backed default-value slice above,
-  - and generated-child parameterization plus VHDL generic-map lowering remain
-    explicit future work.
+  - and VHDL generic-map lowering remains explicit future work, while
+    generated-child parameterization is covered by the 2026-04-12 slice above.
 
 ## 2026-04-11: direct `+params` can reuse named semantic values
 - Saved the bounded `R11` direct-parameter symbol-reuse slice.
@@ -94,13 +109,13 @@ This is the live continuity document for fast session recovery after crashes, re
     payload resolver for this use case,
   - [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
     owns the direct-root parameter-value symbol lookup,
-  - params intentionally do not depend on other params yet, so unresolved bare
-    names still fail before generation instead of becoming raw HDL text,
+  - the earlier no-param-to-param boundary is now superseded by the 2026-04-12
+    direct param-to-param dependency-graph slice above,
   - [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t)
     now proves constant-backed, enum-backed, and aggregate-backed params lower
     to the expected semantic literal payloads and remain visible in Intent HIR,
-  - and generated-child parameterization plus VHDL generic-map lowering remain
-    explicit future contracts.
+  - and VHDL generic-map lowering remains an explicit future contract, while
+    generated-child parameterization is covered by the 2026-04-12 slice above.
 
 ## 2026-04-11: direct `+params` now share parameter/generic value normalization
 - Saved the bounded `R11` direct-parameter normalization slice.

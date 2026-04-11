@@ -28,6 +28,7 @@ as external RTL interface metadata.
   (RESET_PARAM RESET_BYTE)
   (MODE_PARAM mode.BUSY)
   (LANE_PARAM LANES)
+  (WIDTH_ALIAS WIDTH)
 )
 ```
 
@@ -39,10 +40,11 @@ semantic value before generation.
 
 Direct-root `+params` values may also reuse resolved semantic symbols:
 same-root constants, whole aggregate constant roots, enum members such as
-`mode.BUSY`, and already-parsed direct `+define` values. They do not currently
-form recursive param-to-param dependency chains; if a value is meant to be shared
-by multiple parameters, name it once through `+constants` or `+enums`, then point
-the parameter values at that semantic name.
+`mode.BUSY`, direct `+define` values, and other same-root direct `+params`.
+Parameter-to-parameter references are resolved as one acyclic dependency graph,
+so declaration order does not matter when there is one safe answer. Cycles such
+as `(P_A P_B)` plus `(P_B P_A)` are rejected before HDL emission instead of
+being guessed or left for the backend.
 
 In the current direct-root path, references to `+params` remain named parameter
 references in expressions instead of being substituted back to their default
@@ -62,7 +64,8 @@ FSMGen keeps width inference conservative here. Explicitly sized defaults and
 packed aggregate defaults can contribute exact width where the semantic checker
 requires it, but unsized scalar defaults such as `(WIDTH 16)` remain
 width-implicit until the HDL context resolves them. Generated-child parameter
-override binding remains a separate future contract.
+override binding is now a separate instance-side contract that targets these
+direct `+params` declarations.
 
 ## Constants
 

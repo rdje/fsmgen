@@ -149,6 +149,52 @@ FSM
     like($combined_output, qr/Malformed '\+params' entry for parameter 'P0'/, 'CLI surfaces the explicit +params boundary');
 };
 
+subtest 'pipeline and CLI do not emit HDL for cyclic +params dependencies' => sub {
+    my $fsm_path = write_fsm('cyclic_params_cli.fsm', <<'FSM');
+(?fsm:cyclic_params_cli
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_A P_B)
+    (P_B P_A)
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug => 0,
+    );
+    my $pipeline_error = eval {
+        $pipeline->generate_hdl_from_file($fsm_path);
+        undef;
+    };
+    $pipeline_error = $@ if !$pipeline_error;
+    ok($pipeline_error, 'pipeline rejects cyclic +params dependencies');
+    like($pipeline_error, qr/Malformed '\+params' dependency graph.*parameter dependency cycles are blocked/s, 'pipeline surfaces the +params dependency graph boundary');
+
+    my $out_path = File::Spec->catfile($tempdir, 'cyclic_params_cli.sv');
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $out_path, '--quiet', $fsm_path],
+    );
+
+    ok(!$success, 'CLI rejects cyclic +params dependencies');
+    ok(!-e $out_path, 'CLI does not emit output for cyclic +params dependencies');
+
+    my $combined_output = join(
+        '',
+        @{ $stdout_buf || [] },
+        @{ $stderr_buf || [] },
+        ($error_message || ''),
+    );
+    like($combined_output, qr/parameter dependency cycles are blocked/s, 'CLI surfaces the +params dependency graph boundary');
+};
+
 done_testing();
 
 sub write_fsm {

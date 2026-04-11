@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-12
+### direct `+params` can now reuse sibling parameter defaults
+- Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so direct-root `+define` declarations are parsed before direct `+params`, all `+params` blocks are collected together, and parameter defaults resolve as one acyclic dependency graph before behavioral blocks are parsed.
+- Updated [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm) so the parameter/generic value resolver can expose already-resolved parameter payloads for later semantic normalization.
+- Extended [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t), [t/51-language-contract-symbol-definition-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/51-language-contract-symbol-definition-boundary.t), and [t/76-language-contract-symbol-definition-entrypoints.t](/Users/richarddje/Documents/github/fsmgen/t/76-language-contract-symbol-definition-entrypoints.t) to lock sibling and forward direct-parameter references, aggregate parameter aliases, duplicate-name rejection, cycle diagnostics, and no-output pipeline/CLI behavior for cyclic `+params` dependencies.
+- Updated the user guide, mdBook symbols chapter, roadmap status, memory, and development notes so the `+params` contract now says declaration order does not matter when the parameter dependency graph is acyclic.
+
 ### generated `?fsmc` / `?dtc` children now support semantic parameter overrides
 - Updated [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so generated child instances may carry one semantic `(params (NAME value) ...)` block, while named children can still omit the explicit source token and default it to the instance name.
 - Generalized [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm) so deferred override values resolve composition-top and imported-package symbols for all child kinds, not just external `?rtl`.

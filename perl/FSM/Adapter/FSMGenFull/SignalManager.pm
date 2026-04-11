@@ -247,6 +247,12 @@ sub resolve_parameter_value_symbol_payload($self, $symbol_name) {
         }
     }
 
+    if (exists $self->{params}{$symbol_name}) {
+        return _clone_type_spec($self->{params}{$symbol_name}{value_payload})
+            if ref($self->{params}{$symbol_name}) eq 'HASH'
+                && ref($self->{params}{$symbol_name}{value_payload}) eq 'HASH';
+    }
+
     return undef;
 }
 

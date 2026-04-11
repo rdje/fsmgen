@@ -535,18 +535,20 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - `(+params (P0 8))`
   - `(+params (WIDTH 0x10) (LANES (8'hA5 8'h3C)))`
   - `(+params (RESET_PARAM RESET_BYTE) (MODE_PARAM mode.BUSY) (LANE_PARAM LANES))`
+  - `(+params (ALIAS_WIDTH WIDTH) (WIDTH 16) (LANE_ALIAS LANES))`
 - Values use the same bounded parameter/generic value normalizer as external RTL metadata:
   - scalar integer literals such as `8`, `8'hA5`, `'hA5`, `0xA5`, `0b1010`, and `0o77`
   - bounded literal aggregate payloads such as `(8'hA5 8'h3C)` or `((mode 2'b10) (flag 1))`, which lower to one packed literal when used as whole values
 - Values may also reuse resolved semantic value symbols:
   - same-root `+constants`, including bounded whole aggregate roots
   - enum members such as `mode.BUSY`
-  - direct `+define` values that have already been parsed before the `+params` block
-- Direct `+params` do not yet form recursive param-to-param dependencies; use `+constants` or `+enums` for shared named values, then reference those names from `+params`.
+  - same-root direct `+define` values
+  - same-root direct `+params`, including forward references and aggregate parameter aliases
+- Param-to-param references are resolved as one acyclic dependency graph, so declaration order does not matter when there is one safe answer; dependency cycles such as `(P_A P_B)` plus `(P_B P_A)` are rejected before HDL emission.
 - References to those names remain named parameter references in direct-root expressions instead of being substituted back to their default literals.
 - Direct SystemVerilog module generation emits a `#(...)` `parameter NAME = default_value` block for these direct-root params, so a generated module can still expose true HDL configuration knobs.
 - Width handling stays conservative: explicitly sized parameter defaults and packed aggregate defaults can contribute exact width where the semantic checker requires it, while unsized scalar defaults such as `(P0 8)` remain width-implicit until their HDL context resolves them.
-- Malformed shapes like `(+params)`, `(+params BROKEN)`, and malformed entries like `(+params (P0))` are rejected explicitly.
+- Malformed shapes like `(+params)`, `(+params BROKEN)`, malformed entries like `(+params (P0))`, duplicate parameter names, and dependency cycles are rejected explicitly.
 
 `(+enums ...)`:
 - Defines named enumerations with member/value pairs.

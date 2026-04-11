@@ -32,6 +32,10 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (P_FROM_CONST C0)
     (P_FROM_ENUM mode.BUSY)
     (P_FROM_AGG BYTE_PAIR)
+    (P_FROM_PARAM P0)
+    (P_FROM_PARAM_FORWARD P_FORWARD_BASE)
+    (P_FORWARD_BASE 8'h3C)
+    (P_AGG_FROM_PARAM P_LIST)
   )
   (+enums
     (mode
@@ -53,6 +57,9 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (G 8)
     (H 1)
     (I 16)
+    (J 8)
+    (K 8)
+    (L 16)
     (W 16)
     (Z 8)
     (SEL 8)
@@ -70,6 +77,9 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (G = P_FROM_CONST)
     (H = P_FROM_ENUM)
     (I = P_FROM_AGG)
+    (J = P_FROM_PARAM)
+    (K = P_FROM_PARAM_FORWARD)
+    (L = P_AGG_FROM_PARAM)
     (W = P_LIST)
     (Z = ZERO)
     (FLAG = 1 <SEL=C0)
@@ -82,11 +92,11 @@ FSM
 my $symbol_summary = $adapter->{signal_manager}->get_symbol_summary;
 is($symbol_summary->{constants}, 3, '+constants summary count is correct');
 is($symbol_summary->{defines}, 1, '+define summary count is correct');
-is($symbol_summary->{params}, 7, '+params summary count is correct');
+is($symbol_summary->{params}, 11, '+params summary count is correct');
 is($symbol_summary->{enums}, 1, '+enums summary count is correct');
 
 my $elements = state_elements($fsm_module, '-dt');
-is(scalar(@$elements), 14, 'symbol-contract DT has the expected number of elements');
+is(scalar(@$elements), 17, 'symbol-contract DT has the expected number of elements');
 
 my %assignment_by_target;
 my @conditional_assignments;
@@ -109,6 +119,9 @@ is_parameter_ref_assignment($assignment_by_target{F}, 'P_BIN', undef, 'P_BIN par
 is_parameter_ref_assignment($assignment_by_target{G}, 'P_FROM_CONST', 8, 'P_FROM_CONST param remains a named parameter reference with explicit default width');
 is_parameter_ref_assignment($assignment_by_target{H}, 'P_FROM_ENUM', undef, 'P_FROM_ENUM param remains a named parameter reference');
 is_parameter_ref_assignment($assignment_by_target{I}, 'P_FROM_AGG', 16, 'P_FROM_AGG param remains a named packed aggregate parameter reference');
+is_parameter_ref_assignment($assignment_by_target{J}, 'P_FROM_PARAM', undef, 'P_FROM_PARAM remains a named parameter reference after resolving a sibling param default');
+is_parameter_ref_assignment($assignment_by_target{K}, 'P_FROM_PARAM_FORWARD', 8, 'P_FROM_PARAM_FORWARD remains a named parameter reference after resolving a forward sibling param default');
+is_parameter_ref_assignment($assignment_by_target{L}, 'P_AGG_FROM_PARAM', 16, 'P_AGG_FROM_PARAM remains a named packed aggregate parameter reference after resolving a sibling aggregate param default');
 is_parameter_ref_assignment($assignment_by_target{W}, 'P_LIST', 16, 'P_LIST aggregate param remains a named packed aggregate parameter reference');
 is_literal_assignment($assignment_by_target{Z}, '0', 8, 'ZERO constant resolves through const_8b0');
 
@@ -119,13 +132,18 @@ is($params->{P_LIST}{value_width}, 16, 'semantic module records packed aggregate
 is($params->{P_FROM_CONST}{value_width}, 8, 'semantic module preserves width from referenced constant parameter value');
 is($params->{P_FROM_AGG}{value_kind}, 'list', 'semantic module records referenced aggregate parameter kind');
 is($params->{P_FROM_AGG}{value_width}, 16, 'semantic module records referenced aggregate parameter width');
+is($params->{P_FROM_PARAM}{value_text}, '8', 'semantic module resolves sibling scalar parameter defaults');
+is($params->{P_FROM_PARAM_FORWARD}{value_text}, "8'h3C", 'semantic module resolves forward sibling scalar parameter defaults');
+is($params->{P_FROM_PARAM_FORWARD}{value_width}, 8, 'semantic module preserves width from forward sibling scalar parameter defaults');
+is($params->{P_AGG_FROM_PARAM}{value_kind}, 'list', 'semantic module records sibling aggregate parameter kind');
+is($params->{P_AGG_FROM_PARAM}{value_width}, 16, 'semantic module records sibling aggregate parameter width');
 
 my $intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
     fsm_module => $fsm_module,
 );
 is_deeply(
     $intent_hir->parameter_names,
-    [qw(P0 P_BIN P_FROM_AGG P_FROM_CONST P_FROM_ENUM P_HEX P_LIST)],
+    [qw(P0 P_AGG_FROM_PARAM P_BIN P_FORWARD_BASE P_FROM_AGG P_FROM_CONST P_FROM_ENUM P_FROM_PARAM P_FROM_PARAM_FORWARD P_HEX P_LIST)],
     'Intent HIR exposes direct-root parameter names from semantic module metadata'
 );
 
@@ -165,8 +183,12 @@ like($hdl, qr/module\s+symbol_contract\s*#\(/s, 'direct SystemVerilog module emi
 like($hdl, qr/parameter\s+P0\s*=\s*8\b/s, 'direct SystemVerilog module declares scalar decimal parameter');
 like($hdl, qr/parameter\s+P_HEX\s*=\s*'h10\b/s, 'direct SystemVerilog module declares canonical unsized hex parameter');
 like($hdl, qr/parameter\s+P_LIST\s*=\s*16'b1010010100111100\b/s, 'direct SystemVerilog module declares packed aggregate parameter');
+like($hdl, qr/parameter\s+P_FROM_PARAM_FORWARD\s*=\s*8'h3C\b/s, 'direct SystemVerilog module declares forward sibling parameter default');
+like($hdl, qr/parameter\s+P_AGG_FROM_PARAM\s*=\s*16'b1010010100111100\b/s, 'direct SystemVerilog module declares sibling aggregate parameter default');
 like($hdl, qr/\bC\s*=\s*P0\b/s, 'generated HDL keeps scalar parameter reference on RHS');
 like($hdl, qr/\bW\s*=\s*P_LIST\b/s, 'generated HDL keeps aggregate parameter reference on RHS');
+like($hdl, qr/\bK\s*=\s*P_FROM_PARAM_FORWARD\b/s, 'generated HDL keeps forward-derived parameter reference on RHS');
+like($hdl, qr/\bL\s*=\s*P_AGG_FROM_PARAM\b/s, 'generated HDL keeps sibling aggregate-derived parameter reference on RHS');
 like($hdl, qr/\bSEL\s*==\s*P0\b/s, 'generated HDL keeps scalar parameter reference in guard equality');
 
 done_testing();

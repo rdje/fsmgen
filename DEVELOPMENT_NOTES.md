@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-12: direct params resolve as an acyclic dependency graph
+- Direct-root `+params` may now reuse same-root direct parameters, including
+  forward references and aggregate parameter aliases.
+- Rationale:
+  - the authoring surface should feel convention-first and low-ceremony rather
+    than forcing users to restate common parameter values through separate
+    constants just to reuse them once,
+  - resolving collected `+params` as a graph avoids an arbitrary declaration
+    order rule while still keeping the behavior deterministic,
+  - cycles remain a hard pre-generation error because there is no honest single
+    default value to emit or validate,
+  - behavior blocks are parsed only after direct parameter metadata exists, so
+    expressions see named `ParameterRef` leaves rather than literal defaults,
+  - and the implementation still lowers parameter defaults through
+    `FSM::ParameterValueSupport`, so the widened surface stays semantic rather
+    than becoming raw HDL text.
+
 ## 2026-04-12: generated-child parameter overrides stay semantic
 - Generated `?fsmc` / `?dtc` child parameterization now uses the same semantic
   `(params (NAME value) ...)` instance override surface as external `?rtl`, but
@@ -99,11 +116,10 @@ This document captures engineering rationale, design constraints, and working de
     lowering to one packed literal,
   - enum members remain scalar semantic values,
   - unresolved bare names still fail as invalid parameter/generic values,
-  - and params deliberately do not depend on other params yet, avoiding
-    accidental order-sensitive dependency chains or cycles.
-- This is a direct-root convenience slice. Generated-child parameterization and
-  VHDL generic-map lowering still need explicit binding contracts rather than
-  late backend shortcuts.
+  - and the earlier no-param-to-param boundary is now superseded by the
+    2026-04-12 direct params dependency-graph entry above.
+- This is a direct-root convenience slice. VHDL generic-map lowering still needs
+  an explicit backend binding contract rather than late backend shortcuts.
 
 ## 2026-04-11: parameter/generic value normalization now has a neutral owner
 - Moved the bounded scalar/list/map parameter value policy into
@@ -113,9 +129,8 @@ This document captures engineering rationale, design constraints, and working de
     that direct-root `+params` consumes the same value surface,
   - keeping the old composition package as a shim avoids a gratuitous break in
     any in-repo or external caller that still imports the composition path,
-  - and generated-child parameterization should build on this semantic value
-    owner later, but must still add an explicit source-level override contract
-    before we emit any generated-child HDL instance override text.
+  - and generated-child parameterization now builds on this semantic value owner
+    through the 2026-04-12 generated-child override contract above.
 - Direct `+params` now records canonical value metadata on the semantic module,
   so forward Intent HIR can see direct-root parameter names instead of leaving
   `parameters` empty.

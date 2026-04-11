@@ -193,6 +193,25 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
         $self->parse_size_section($size_ast);
     }
 
+    my @pending_param_entries;
+    for my $element (@$fsm_contents) {
+        next unless ref($element) eq 'ARRAY';
+        my $element_name = $element->[0];
+
+        if ($element_name eq '+define') {
+            fsm_debug("Parsing define directive", 3);
+            $self->parse_define_directive($element);
+        } elsif ($element_name eq '+params') {
+            fsm_debug("Collecting params section", 3);
+            push @pending_param_entries, @{ $self->parse_params_section($element) };
+        }
+    }
+
+    $self->resolve_pending_direct_root_params(
+        $module_name,
+        \@pending_param_entries,
+    );
+
     for my $element (@$fsm_contents) {
         next unless ref($element) eq 'ARRAY';
         my $element_name = $element->[0];
@@ -208,18 +227,14 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
                 || $element_name eq '+enums'
                 || $element_name eq '+types'
                 || $element_name eq '+import'
+                || $element_name eq '+define'
+                || $element_name eq '+params'
             )
         ) {
             next;
         }
 
-        if ($element_name eq '+define') {
-            fsm_debug("Parsing define directive", 3);
-            $self->parse_define_directive($element);
-        } elsif ($element_name eq '+params') {
-            fsm_debug("Parsing params section", 3);
-            $self->parse_params_section($element);
-        } elsif ($element_name eq ':=') {
+        if ($element_name eq ':=') {
             fsm_debug("Parsing init/reset directive", 3);
             $self->parse_init_assignment_directive($element);
         } elsif (
@@ -1823,6 +1838,7 @@ sub parse_params_section($self, $params_ast) {
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless ref($params_list) eq 'ARRAY' && @$params_list;
 
+    my @param_entries;
     for my $param_def (@$params_list) {
         Carp::confess
             "Malformed '+params' entry. ".
@@ -1845,23 +1861,88 @@ sub parse_params_section($self, $params_ast) {
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
             unless defined $value_array;
 
-        my $value_info = FSM::ParameterValueSupport->canonical_value(
+        push @param_entries, {
+            name => $resolved_name,
             value_ast => $value_array,
-            context => "Direct source parameter '$resolved_name'",
-            docs_hint => " See docs/USER_GUIDE.md for the current supported boundary.",
+        };
+    }
+
+    return \@param_entries;
+}
+
+sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
+    $param_entries ||= [];
+    return 1 unless @$param_entries;
+
+    my %entry_by_name;
+    my @param_order;
+    for my $entry (@$param_entries) {
+        my $name = $entry->{name};
+        Carp::confess
+            "Malformed '+params' entry for parameter '".$self->describe_contract_name($name)."' in source '$module_name'. ".
+            "Each '+params' declaration may bind a parameter/generic name at most once so one default value remains unambiguous. ".
+            "See docs/USER_GUIDE.md for the current supported boundary.\n"
+            if exists $entry_by_name{$name};
+        $entry_by_name{$name} = $entry;
+        push @param_order, $name;
+    }
+
+    my %resolved;
+    my %visiting;
+    my @stack;
+    my $docs_hint = " See docs/USER_GUIDE.md for the current supported boundary.";
+
+    my $resolve_param;
+    $resolve_param = sub ($name) {
+        return $resolved{$name} if exists $resolved{$name};
+
+        if ($visiting{$name}) {
+            my @cycle = (@stack, $name);
+            Carp::confess
+                "Malformed '+params' dependency graph in source '$module_name'. ".
+                "The active '+params' contract resolves normal non-cyclic parameter references without depending on declaration order, but parameter dependency cycles are blocked. ".
+                "Cycle: ".join(' -> ', map { "parameter '$_'" } @cycle).". ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n";
+        }
+
+        my $entry = $entry_by_name{$name}
+            or return undef;
+
+        $visiting{$name} = 1;
+        push @stack, $name;
+        my $value_info = FSM::ParameterValueSupport->canonical_value(
+            value_ast => $entry->{value_ast},
+            context => "Direct source parameter '$name'",
+            docs_hint => $docs_hint,
             resolve_symbol_payload => sub ($symbol_name) {
+                if (exists $entry_by_name{$symbol_name}) {
+                    my $symbol_value_info = $resolve_param->($symbol_name);
+                    return $symbol_value_info->{value_payload} if ref($symbol_value_info) eq 'HASH';
+                    return undef;
+                }
                 return $self->{signal_manager}->resolve_parameter_value_symbol_payload($symbol_name);
             },
         );
-        $self->{signal_manager}->store_param($resolved_name, $value_info);
+        pop @stack;
+        delete $visiting{$name};
+
+        $resolved{$name} = $value_info;
+        return $value_info;
+    };
+
+    for my $name (@param_order) {
+        my $value_info = $resolve_param->($name);
+        $self->{signal_manager}->store_param($name, $value_info);
 
         if ($self->{fsm_module} && $self->{fsm_module}->can('parameters')) {
-            $self->{fsm_module}->parameters->{$resolved_name} = {
+            $self->{fsm_module}->parameters->{$name} = {
                 %$value_info,
                 origin_kind => 'direct_root_parameter',
             };
         }
     }
+
+    return 1;
 }
 
 sub parse_init_assignment_directive($self, $init_ast) {

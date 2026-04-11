@@ -163,6 +163,52 @@ FSM
     );
 };
 
+subtest 'cyclic parameter value references are rejected before generation' => sub {
+    my $params_cycle_error = parse_failure(<<'FSM');
+(?fsm:cyclic_param_symbol_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_A P_B)
+    (P_B P_A)
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $params_cycle_error,
+        qr/Malformed '\+params' dependency graph.*parameter dependency cycles are blocked.*parameter 'P_A' -> parameter 'P_B' -> parameter 'P_A'/s,
+        'cyclic +params references get a targeted dependency-graph diagnostic'
+    );
+};
+
+subtest 'duplicate parameter declarations are rejected before generation' => sub {
+    my $params_duplicate_error = parse_failure(<<'FSM');
+(?fsm:duplicate_param_symbol_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_A 1)
+    (P_A 2)
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $params_duplicate_error,
+        qr/Malformed '\+params' entry for parameter 'P_A'.*may bind a parameter\/generic name at most once/s,
+        'duplicate +params declarations get a targeted uniqueness diagnostic'
+    );
+};
+
 subtest 'pipeline and CLI do not emit HDL for malformed symbol-definition sections' => sub {
     my $fsm_path = write_fsm('bad_symbols_cli.fsm', <<'FSM');
 (?fsm:bad_symbols_cli
