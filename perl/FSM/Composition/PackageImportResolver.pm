@@ -7,6 +7,7 @@ use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Composition::ParameterOverrideResolver;
 use FSM::Composition::PortWidthResolver;
 use FSM::Package::ImportResolver;
 
@@ -41,6 +42,12 @@ sub resolve_imports ($class, %args) {
 
     $top_symbols->finalize_imported_type_aliases
         if $top_symbols->can('finalize_imported_type_aliases');
+
+    FSM::Composition::ParameterOverrideResolver->resolve_deferred_overrides(
+        top => $top,
+        top_symbols => $top_symbols,
+        docs_hint => " See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md",
+    );
 
     FSM::Composition::PortWidthResolver->resolve_declared_port_widths(
         top => $top,

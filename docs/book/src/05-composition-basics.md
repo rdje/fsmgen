@@ -213,10 +213,12 @@ HDL.
 If an external RTL module is parameterized, keep that contract semantic too:
 declare supported parameter/generic names in an optional `.rtlif`
 `(params (NAME default_value) ...)` block, then override declared names on the
-specific `?rtl` instance. Values may be scalar integer literals or bounded
-literal list/record payloads; aggregate overrides are checked against the
-aggregate shape inferred from the `.rtlif` default before HDL is emitted. The
-advanced composition chapter shows the full pattern.
+specific `?rtl` instance. Values may be scalar integer literals, bounded
+literal list/record payloads, or resolved composition-top/imported-package
+symbols such as `WIDTH_VALUE`, `mode.BUSY`, or `shared.LANES`; aggregate
+overrides are checked against the aggregate shape inferred from the `.rtlif`
+default before HDL is emitted. The advanced composition chapter shows the full
+pattern.
 
 ## Current Boundary
 

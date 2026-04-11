@@ -1434,11 +1434,23 @@ Current `.rtlif` token contract:
 - only `data`, `clock`, and `reset` are currently accepted as explicit port types
 - typed `clock` / `reset` tokens are system-input roles; they let custom-named RTL system ports auto-wire without falling back to `clk` / `rst_n` naming, but output-direction forms such as `core_clk>:clock` or `rst_async_n>:reset` are rejected
 - ordinary typed data outputs remain valid, for example `txd>:data`
-- per-instance parameter/generic overrides must name parameters/generics declared by the loaded `.rtlif` `(params ...)` block; the first shipped value surface accepts scalar integer literals such as `8`, `8'hA5`, `'hA5`, `0xA5`, `0b1010`, and `0o77`, plus bounded literal list/record payloads such as `(8'hA5 8'h3C)` and `((mode 2'b10) (flag 1))`; aggregate overrides must match the aggregate shape inferred from the `.rtlif` default value; validated overrides are preserved through the composition plan and structural RTL IR and lower to SystemVerilog `#(...)` instance parameters for the Verilog-family backend.
+- per-instance parameter/generic overrides must name parameters/generics declared by the loaded `.rtlif` `(params ...)` block; the shipped value surface accepts scalar integer literals such as `8`, `8'hA5`, `'hA5`, `0xA5`, `0b1010`, and `0o77`, plus bounded literal list/record payloads such as `(8'hA5 8'h3C)` and `((mode 2'b10) (flag 1))`; override values may also reuse resolved composition-top or imported package symbols such as `WIDTH_VALUE`, `mode.BUSY`, `shared.RESET_VALUE`, or aggregate roots like `shared.LANES`; unresolved override symbols abort before generation; aggregate overrides must match the aggregate shape inferred from the `.rtlif` default value; validated overrides are preserved through the composition plan and structural RTL IR and lower to SystemVerilog `#(...)` instance parameters for the Verilog-family backend.
 
 Example parameterized external RTL instance:
 ```lisp
 (?top:parameterized_rtl_top
+  (+constants
+    (OVERRIDE_WIDTH 16)
+    (LOCAL_LANES (8'hA5 8'h3C))
+  )
+  (+enums
+    (frame_mode
+      (RUN 2'b10)
+    )
+  )
+  (+import
+    param_pkg
+  )
   (?ports:public_io
     core_clk
     rst_async_n
@@ -1448,10 +1460,10 @@ Example parameterized external RTL instance:
   (?rtl:u_uart
     (module uart_tx)
     (params
-      (WIDTH 16)
-      (RESET_VALUE 8'hA5)
-      (LANES (8'hA5 8'h3C))
-      (FRAME ((mode 2'b10) (flag 1)))
+      (WIDTH OVERRIDE_WIDTH)
+      (RESET_VALUE param_pkg.RESET_A5)
+      (LANES LOCAL_LANES)
+      (FRAME ((mode frame_mode.RUN) (flag param_pkg.FLAG_ON)))
     )
   )
   (?toplink:wiring
@@ -1471,6 +1483,13 @@ Example parameterized external RTL instance:
   rst_async_n:reset
   data_in<16:data
   txd>:data
+)
+
+(?pkg:param_pkg
+  (+constants
+    (RESET_A5 8'hA5)
+    (FLAG_ON 1)
+  )
 )
 ```
 

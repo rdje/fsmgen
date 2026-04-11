@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-11
+### external `?rtl` parameter overrides can reuse semantic symbols
+- Added [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm) so deferred symbolic external-RTL parameter/generic override values resolve after composition package imports are available and before planning, realization, or HDL emission.
+- Updated [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm), [perl/FSM/Composition/PackageImportResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/PackageImportResolver.pm), and [perl/FSM/Composition/Instance.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Instance.pm) so `?rtl` `(params (NAME value) ...)` override values may reuse composition-top constants, enums, aggregate roots, and imported package symbols while unresolved value names still abort before generation.
+- Extended [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t) so local-symbol and package-symbol overrides lower to the same validated SV `#(...)` instance parameter text, and unresolved override value symbols produce a no-output failure.
+- Refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the updated `120` reachable project files / `119` reachable `.pm` packages snapshot with the new parameter-override resolver owner in the composition spine.
+
 ### direct `+params` can now reuse named semantic values
 - Updated [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm), [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm), and [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm) so direct `(+params ...)` values may reuse resolved constants, enum members, bounded aggregate constant roots, and already-parsed direct `+define` literals through the same semantic value normalizer used for literal payloads.
 - Kept the contract non-recursive for now: params do not implicitly depend on other params, and unresolved bare names still fail as invalid parameter/generic values instead of becoming raw HDL text.

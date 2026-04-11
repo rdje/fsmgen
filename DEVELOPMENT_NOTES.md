@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: external RTL parameter overrides resolve semantic symbols before planning
+- `?rtl` per-instance `(params (NAME value) ...)` overrides can now point at
+  composition-top constants, enum members, whole aggregate roots, and imported
+  package symbols such as `shared.WIDTH` or `shared.LANES`.
+- Implementation boundary:
+  - the composition parser still canonicalizes literal/aggregate override
+    values immediately,
+  - semantic-looking values that cannot be resolved during parse are preserved
+    as deferred override values,
+  - [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm)
+    resolves those deferred values after package imports populate
+    `TopSymbols`,
+  - unresolved value symbols still fail before composition planning,
+    realization, structural IR, or backend emission,
+  - and override-name validation plus aggregate-shape validation remain owned
+    by the `.rtlif` declaration contract and RTL child realizer.
+- Deliberate non-goals for this slice:
+  - `.rtlif` parameter/generic declaration defaults still use the bounded
+    literal/aggregate declaration surface until interface metadata gets its
+    own package/import contract,
+  - generated-child parameterization remains separate,
+  - and VHDL generic-map lowering remains a backend follow-up.
+
 ## 2026-04-11: direct params may reuse named semantic values
 - Direct-root `(+params ...)` now resolves value tokens through the same semantic
   symbol table that backs constants, enum members, aggregate constant roots, and
@@ -14,7 +37,7 @@ This document captures engineering rationale, design constraints, and working de
   - and params deliberately do not depend on other params yet, avoiding
     accidental order-sensitive dependency chains or cycles.
 - This is a direct-root convenience slice. Generated-child parameterization,
-  VHDL generic-map lowering, and package-backed/external named parameter values
+  VHDL generic-map lowering, and package-backed `.rtlif` declaration defaults
   still need explicit binding contracts rather than late backend shortcuts.
 
 ## 2026-04-11: parameter/generic value normalization now has a neutral owner
@@ -65,7 +88,8 @@ This document captures engineering rationale, design constraints, and working de
 - Follow-ups:
   - VHDL generic-map lowering,
   - generated-child parameterization,
-  - package-backed or external named parameter values,
+  - package-backed `.rtlif` declaration defaults or other external metadata
+    named values,
   - and richer typed/non-literal parameter domains beyond the current literal
     scalar and aggregate payload surface.
 

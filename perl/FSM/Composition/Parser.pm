@@ -783,20 +783,34 @@ sub parse_rtl_parameter_override_block ($self, $top_name, $child_name, $params_b
             if $seen{$name};
         $seen{$name} = 1;
 
-        my $value_info = FSM::ParameterValueSupport->canonical_value(
+        my $raw_value = $self->unwrap_scalar_token($value_ast);
+        my $value_info = $self->canonicalize_rtl_parameter_override_value(
+            top_name => $top_name,
+            child_name => $child_name,
+            name => $name,
             value_ast => $value_ast,
-            context => "Composition top '$top_name' contains '?rtl' child '$child_name' parameter override '$name'",
-            docs_hint => $self->scope_docs_suffix,
         );
 
-        my $raw_value = $self->unwrap_scalar_token($value_ast);
-        my $override = {
-            name => $name,
-            value_text => $value_info->{value_text},
-            value_kind => $value_info->{value_kind},
-            value_payload => $value_info->{value_payload},
-            origin_kind => 'rtl_instance_parameter_override',
-        };
+        my $override = { name => $name };
+        if (($value_info->{value_kind} // '') eq 'deferred_symbol') {
+            %$override = (
+                %$override,
+                value_kind => 'deferred_symbol',
+                value_payload => $value_info->{value_payload},
+                origin_kind => 'rtl_instance_parameter_override',
+                deferred_reason => $value_info->{deferred_reason},
+            );
+            $override->{deferred_value_symbol} = $raw_value if defined($raw_value) && !ref($raw_value);
+            $override->{raw_value_ast} = $value_ast;
+        } else {
+            %$override = (
+                %$override,
+                value_text => $value_info->{value_text},
+                value_kind => $value_info->{value_kind},
+                value_payload => $value_info->{value_payload},
+                origin_kind => 'rtl_instance_parameter_override',
+            );
+        }
         $override->{raw_value} = $raw_value if defined($raw_value) && !ref($raw_value);
         $override->{raw_value_ast} = $value_ast if ref($raw_value);
         $override->{value_width} = $value_info->{value_width} if defined $value_info->{value_width};
@@ -806,6 +820,55 @@ sub parse_rtl_parameter_override_block ($self, $top_name, $child_name, $params_b
     }
 
     return \@overrides;
+}
+
+sub canonicalize_rtl_parameter_override_value ($self, %args) {
+    my $top_name = $args{top_name} // 'top';
+    my $child_name = $args{child_name} // 'unknown';
+    my $name = $args{name} // 'unknown';
+    my $value_ast = $args{value_ast};
+
+    my $value_info = eval {
+        FSM::ParameterValueSupport->canonical_value(
+            value_ast => $value_ast,
+            context => "Composition top '$top_name' contains '?rtl' child '$child_name' parameter override '$name'",
+            docs_hint => $self->scope_docs_suffix,
+        );
+    };
+    return $value_info unless $@;
+
+    my $error = $@;
+    die $error unless $self->parameter_value_ast_contains_symbol_reference($value_ast);
+
+    return {
+        value_kind => 'deferred_symbol',
+        value_payload => {
+            kind => 'deferred_symbol',
+            payload => $value_ast,
+        },
+        deferred_reason => "$error",
+    };
+}
+
+sub parameter_value_ast_contains_symbol_reference ($self, $value_ast) {
+    my $scalar_value = $self->unwrap_scalar_token($value_ast);
+    return 1
+        if defined($scalar_value)
+        && !ref($scalar_value)
+        && $self->looks_like_parameter_value_symbol_reference($scalar_value);
+
+    return 0 unless ref($value_ast) eq 'ARRAY';
+
+    for my $item (@$value_ast) {
+        return 1 if $self->parameter_value_ast_contains_symbol_reference($item);
+    }
+
+    return 0;
+}
+
+sub looks_like_parameter_value_symbol_reference ($self, $value) {
+    return 0 unless defined($value) && !ref($value);
+    return $value =~ /\A[A-Za-z_]\w*(?:(?:\.[A-Za-z_]\w*)|(?:\[\d+\]))*\z/ ? 1 : 0;
 }
 
 sub parse_ports_block ($self, $top_name, $child_ast, $block_name, $items, $top_symbols = undef) {

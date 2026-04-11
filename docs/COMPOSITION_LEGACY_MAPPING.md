@@ -145,7 +145,7 @@ Active modern direction, started in `R6` and widened in `R11`:
 - keep `?rtl` as an external-interface binding concept,
 - but load it from a typed sidecar metadata artifact (`<module>.rtlif`) during composition planning,
 - allow the modern `(?rtl:instance module)` form when one declared RTL module/interface contract must be instantiated several times under distinct instance names,
-- allow bounded scalar and aggregate per-instance parameter/generic overrides through declared `.rtlif` `(params (NAME default_value) ...)` metadata plus semantic `?rtl` `(params (NAME value) ...)` override blocks that are name-validated and aggregate-shape-validated before target lowering,
+- allow bounded scalar, aggregate, and resolved composition-top/package-symbol per-instance parameter/generic overrides through declared `.rtlif` `(params (NAME default_value) ...)` metadata plus semantic `?rtl` `(params (NAME value) ...)` override blocks that are name-validated and aggregate-shape-validated before target lowering,
 - treat typed `.rtlif` `clock` and `reset` categories as system-input roles rather than HDL data types, so output-direction system-role tokens are rejected while ordinary `data` outputs remain valid,
 - do not parse or regenerate the external RTL child at this composition layer,
 - and keep richer generated-child parameterization / VHDL generic-map lowering as future semantic follow-ups rather than reviving raw legacy template/plugin parameter passing.

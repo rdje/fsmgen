@@ -23,6 +23,10 @@ sub name ($self) { return $self->{name} }
 sub source_name ($self) { return $self->{source_name} }
 sub module_name ($self) { return $self->{module_name} }
 sub parameter_overrides ($self) { return $self->{parameter_overrides} }
+sub set_parameter_overrides ($self, $parameter_overrides) {
+    $self->{parameter_overrides} = $parameter_overrides || [];
+    return $self->{parameter_overrides};
+}
 sub raw_items ($self) { return $self->{raw_items} }
 sub raw_ast ($self) { return $self->{raw_ast} }
 

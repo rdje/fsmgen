@@ -294,6 +294,18 @@ subtest 'rtl instance parameter overrides lower through structural IR into SV in
         $composition_path,
         <<'FSM'
 (?top:parameterized_rtl_top
+  (+constants
+    (OVERRIDE_WIDTH 16)
+    (LOCAL_LANES (8'hA5 8'h3C))
+  )
+  (+enums
+    (frame_mode
+      (RUN 2'b10)
+    )
+  )
+  (+import
+    param_pkg
+  )
   (?ports:public_io
     core_clk
     rst_async_n
@@ -303,10 +315,10 @@ subtest 'rtl instance parameter overrides lower through structural IR into SV in
   (?rtl:u_uart
     (module uart_tx)
     (params
-      (WIDTH 16)
-      (RESET_VALUE 8'hA5)
-      (LANES (8'hA5 8'h3C))
-      (FRAME ((mode 2'b10) (flag 1)))
+      (WIDTH OVERRIDE_WIDTH)
+      (RESET_VALUE param_pkg.RESET_A5)
+      (LANES LOCAL_LANES)
+      (FRAME ((mode frame_mode.RUN) (flag param_pkg.FLAG_ON)))
     )
   )
   (?toplink:wiring
@@ -326,6 +338,13 @@ subtest 'rtl instance parameter overrides lower through structural IR into SV in
   rst_async_n:reset
   data_in<16:data
   txd>:data
+)
+
+(?pkg:param_pkg
+  (+constants
+    (RESET_A5 8'hA5)
+    (FLAG_ON 1)
+  )
 )
 FSM
     );
@@ -349,12 +368,14 @@ FSM
     my %overrides = map { $_->{name} => $_ } @$parameter_overrides;
     is($overrides{WIDTH}{value_text}, '16', 'composition plan preserves scalar decimal parameter override text');
     is($overrides{WIDTH}{value_kind}, 'scalar', 'composition plan marks scalar parameter overrides');
-    is($overrides{WIDTH}{raw_value}, '16', 'composition plan preserves raw scalar parameter override token');
+    is($overrides{WIDTH}{raw_value}, 'OVERRIDE_WIDTH', 'composition plan preserves local-symbol raw scalar parameter override token');
     is($overrides{WIDTH}{origin_kind}, 'rtl_instance_parameter_override', 'composition plan keeps parameter override provenance');
     is($overrides{RESET_VALUE}{value_text}, "8'hA5", 'composition plan preserves sized based scalar parameter override text');
+    is($overrides{RESET_VALUE}{raw_value}, 'param_pkg.RESET_A5', 'composition plan preserves package-symbol raw scalar parameter override token');
     is($overrides{RESET_VALUE}{value_width}, 8, 'composition plan infers width for sized based scalar parameter overrides');
     is($overrides{LANES}{value_text}, "16'b1010010100111100", 'composition plan packs list aggregate parameter overrides');
     is($overrides{LANES}{value_kind}, 'list', 'composition plan marks list aggregate parameter overrides');
+    is($overrides{LANES}{raw_value}, 'LOCAL_LANES', 'composition plan preserves local aggregate raw parameter override token');
     is($overrides{LANES}{value_width}, 16, 'composition plan infers packed width for list aggregate parameter overrides');
     is($overrides{FRAME}{value_text}, "3'b101", 'composition plan packs record aggregate parameter overrides');
     is($overrides{FRAME}{value_kind}, 'map', 'composition plan marks record-like aggregate parameter overrides');
@@ -527,6 +548,75 @@ FSM
         $combined_output,
         qr/override 'MODE' has no matching declaration in interface metadata/s,
         'CLI surfaces undeclared RTL parameter override validation diagnostics',
+    );
+};
+
+subtest 'rtl instance parameter override value names must resolve before generation' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'unknown_rtl_parameter_value_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'unknown_rtl_parameter_value_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:unknown_rtl_parameter_value_top
+  (?ports:public_io
+    core_clk
+    rst_async_n
+    payload_in<8
+    serial_out>
+  )
+  (?rtl:u_uart uart_tx
+    (params
+      (WIDTH NO_SUCH_SYMBOL)
+    )
+  )
+  (?toplink:wiring
+    /payload_in/u_uart.data_in/
+    /u_uart.txd/serial_out/
+  )
+)
+
+(?rtlif:uart_tx
+  (params
+    (WIDTH 8)
+  )
+  core_clk:clock
+  rst_async_n:reset
+  data_in<8:data
+  txd>:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@ if !$exception;
+
+    like(
+        $exception,
+        qr/parameter override 'WIDTH'.*NO_SUCH_SYMBOL/s,
+        'pipeline rejects unresolved RTL parameter override value symbols',
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+    ok(!$success, 'CLI rejects unresolved RTL parameter override value symbols');
+    ok(!-e $output_path, 'CLI does not emit HDL when RTL parameter override value resolution fails');
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []}, ($error_message || ''));
+    like(
+        $combined_output,
+        qr/parameter override 'WIDTH'.*NO_SUCH_SYMBOL/s,
+        'CLI surfaces unresolved RTL parameter override value diagnostics',
     );
 };
 
