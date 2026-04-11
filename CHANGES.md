@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-11
+### composition source-expression spec support now has a dedicated owner
+- Added [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm) as the shared composition owner for bounded explicit-toplink source-expression parsing, including top/child bit and slice forms, aggregate paths, concat groups, repeat groups, literal operands, top-symbol payload lookup, and inference/child-base collection.
+- Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) to delegate source-expression spec parsing and collection to that owner while preserving endpoint resolution, aggregate compatibility, carrier allocation, binding preservation, and composition diagnostics in the planner.
+- Added [t/287-composition-source-expression-spec-support.t](/Users/richarddje/Documents/github/fsmgen/t/287-composition-source-expression-spec-support.t) to lock the extracted support owner directly, and kept the existing concat/top-output/aggregate composition regressions green through the delegated path.
+- Refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the new `118` reachable project files / `117` reachable `.pm` packages snapshot and recorded the next post-extraction hotspot shape.
+
 ### composition actual literal support now has a dedicated owner
 - Added [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm) as the shared composition owner for open/numeric actual endpoint parsing, exact-width literal lowering, intrinsic-width concat literal operands, target-width direct-actual widening and overflow rejection, plus actual binding type-contract construction.
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) to delegate literal actual policy to that owner while preserving explicit-link planning, top-symbol lookup, aggregate compatibility, child-source carrier handling, and composition diagnostics in the planner.
@@ -9,7 +15,7 @@ This is the persistent technical change history for FSMGen.
 
 ### `bin/fsmgen` import-tree bootstrap snapshot refreshed
 - Executed the [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) / [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md) startup path by rereading the referenced onboarding, roadmap, user-facing, architecture, continuity, and commit-workflow docs, then remeasuring the project-owned `FSM::...` import closure rooted at [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
-- Refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) from the older `2026-04-02` snapshot to the then-current `2026-04-11` static closure: `116` reachable project files total and `115` reachable `.pm` packages, later superseded the same day by the actual-literal support extraction snapshot above.
+- Refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) from the older `2026-04-02` snapshot to the then-current `2026-04-11` static closure: `116` reachable project files total and `115` reachable `.pm` packages, later superseded the same day by the actual-literal and source-expression support extraction snapshots above.
 - Updated the import-tree package-family counts and line-count hotspot read so the semantic [perl/FSM/Package](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package) family, [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm), and the current direct-backend/package/type seams are visible before the next `R11` implementation slice.
 - Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the live status board no longer points new sessions at the stale `97` / `96` import-tree measurement.
 

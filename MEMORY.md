@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-11: composition source-expression parsing now has one owner
+- Saved the `R11` composition source-expression spec extraction slice.
+- Important continuity note:
+  - [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm)
+    now owns bounded explicit-toplink source-expression parsing for top/child
+    bit-selects, slices, aggregate paths, concat groups, repeat groups,
+    literal operands, top-symbol payload lookup, and inference/child-base
+    collection,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    now delegates that parser/spec surface while keeping endpoint resolution,
+    aggregate compatibility, carrier allocation, binding preservation, and the
+    rich composition diagnostics,
+  - [t/287-composition-source-expression-spec-support.t](/Users/richarddje/Documents/github/fsmgen/t/287-composition-source-expression-spec-support.t)
+    locks the support owner directly,
+  - existing composition expression coverage in [t/264-composition-toplink-concat-expressions.t](/Users/richarddje/Documents/github/fsmgen/t/264-composition-toplink-concat-expressions.t),
+    [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t),
+    and [t/275-composition-top-aggregate-values.t](/Users/richarddje/Documents/github/fsmgen/t/275-composition-top-aggregate-values.t)
+    stays green through the delegated path,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    now measures `1824` lines after the extraction,
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+    now records the updated `118` reachable project files and `117`
+    reachable `.pm` packages snapshot.
+
 ## 2026-04-11: composition actual literal policy now has one owner
 - Saved the `R11` composition actual-literal extraction slice.
 - Important continuity note:
@@ -19,8 +43,9 @@ This is the live continuity document for fast session recovery after crashes, re
     and [t/267-composition-top-expression-top-outputs.t](/Users/richarddje/Documents/github/fsmgen/t/267-composition-top-expression-top-outputs.t)
     stays green against the delegated path,
   - the static import closure from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
-    now measures `117` reachable project files and `116` reachable `.pm`
-    packages,
+    measured `117` reachable project files and `116` reachable `.pm`
+    packages before the later same-day source-expression support extraction
+    superseded that count,
   - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
     now records the new post-extraction hotspot shape: [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm)
     is again the largest reachable file, while [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
@@ -36,7 +61,7 @@ This is the live continuity document for fast session recovery after crashes, re
   - the new measurement makes the semantic `FSM::Package::*` family visible as a first-class live spine under direct and composition paths,
   - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) was then the largest reachable file in the static closure because explicit-link actuals, source expressions, aggregate checks, and binding type contracts had accumulated there,
   - [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) is now refreshed to the `2026-04-11` import-tree snapshot,
-  - and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) pointed future sessions at the `116` / `115` measured snapshot instead of the stale `97` / `96` one before the later same-day `117` / `116` refresh.
+  - and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) pointed future sessions at the `116` / `115` measured snapshot instead of the stale `97` / `96` one before the later same-day `117` / `116` and then `118` / `117` refreshes.
 
 ## 2026-04-10: reset policy now matches sreset/areset intent
 - Saved the reset-contract correction slice.

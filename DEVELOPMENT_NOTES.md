@@ -1,5 +1,34 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: composition source-expression parsing belongs below the planner too
+- Extracted the bounded explicit-toplink source-expression parser out of
+  [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+  into [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm).
+- Landed behavior:
+  - top/child bit-select and slice source specs, aggregate source paths, concat
+    groups, repeat groups, literal operands, top-symbol payload lookup, and
+    source-expression inference/child-base collection now live in the support
+    owner,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    still owns the higher-level planning context: endpoint resolution,
+    aggregate compatibility checks, carrier allocation, binding preservation,
+    and diagnostics,
+  - and [t/287-composition-source-expression-spec-support.t](/Users/richarddje/Documents/github/fsmgen/t/287-composition-source-expression-spec-support.t)
+    locks the support owner directly while the existing concat/top-output and
+    aggregate composition tests keep the end-to-end path honest.
+- Why this boundary matters:
+  - source-expression token parsing is a stable syntactic/spec contract, while
+    resolving those specs against concrete top ports, child ports, aggregate
+    types, and carrier rules is still planner work,
+  - keeping source-expression parsing beside the actual-literal owner reduces
+    the chance that later concat/repeat/aggregate widening becomes another
+    inline `LinkedPlanBuilder` island,
+  - the generated HDL still receives planned structural connection
+    expressions rather than rediscovering authored source syntax,
+  - and the live import-tree snapshot now records the source-expression owner
+    explicitly with [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    reduced to `1824` lines.
+
 ## 2026-04-11: composition actual literal policy belongs below the planner
 - Extracted composition open/numeric actual literal policy out of
   [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
@@ -40,7 +69,7 @@ This document captures engineering rationale, design constraints, and working de
   import-tree analysis because the old `2026-04-02` measurement was no
   longer honest.
 - Bootstrap measurement at that point, later superseded by the actual-literal
-  extraction note above:
+  and source-expression extraction notes above:
   - static project-owned closure rooted at [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen): `116` files total,
   - reachable `.pm` packages: `115`,
   - largest reachable package by line count:
