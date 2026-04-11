@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-11: session bootstrap refreshed the `bin/fsmgen` import-tree snapshot
+- Saved the README/session-bootstrap execution pass.
+- Important continuity note:
+  - [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) remains the single entry point,
+  - [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md) still asks a new session to read the README-linked docs, analyze [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) plus its project-owned import tree, refresh [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) if stale, and then continue against [ROADMAP_V2.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_V2.md),
+  - the current static import closure from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) now measures `116` reachable project files and `115` reachable `.pm` packages,
+  - the new measurement makes the semantic `FSM::Package::*` family visible as a first-class live spine under direct and composition paths,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) is now the largest reachable file in the static closure because explicit-link actuals, source expressions, aggregate checks, and binding type contracts have accumulated there,
+  - [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) is now refreshed to the `2026-04-11` import-tree snapshot,
+  - and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) now points future sessions at the `116` / `115` measured snapshot instead of the stale `97` / `96` one.
+
 ## 2026-04-10: reset policy now matches sreset/areset intent
 - Saved the reset-contract correction slice.
 - Important continuity note:

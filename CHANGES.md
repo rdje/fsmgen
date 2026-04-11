@@ -1,5 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-11
+### `bin/fsmgen` import-tree bootstrap snapshot refreshed
+- Executed the [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) / [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md) startup path by rereading the referenced onboarding, roadmap, user-facing, architecture, continuity, and commit-workflow docs, then remeasuring the project-owned `FSM::...` import closure rooted at [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
+- Refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) from the older `2026-04-02` snapshot to the current `2026-04-11` static closure: `116` reachable project files total and `115` reachable `.pm` packages.
+- Updated the import-tree package-family counts and line-count hotspot read so the semantic [perl/FSM/Package](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package) family, [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm), and the current direct-backend/package/type seams are visible before the next `R11` implementation slice.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so the live status board no longer points new sessions at the stale `97` / `96` import-tree measurement.
+
 ## 2026-04-10
 ### reset kind and polarity now drive emitted SystemVerilog
 - Updated [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm), [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm), and [perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/ModulePlanningSupport.pm) so explicit `+system` reset declarations preserve reset kind and polarity: `(sreset reset)` is synchronous active-high, `(areset rst_n)` is asynchronous active-low, and legacy `(asreset rstn)` remains default-mode compatibility.

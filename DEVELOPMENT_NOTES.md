@@ -1,5 +1,31 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: bootstrap import-tree refresh should track semantic package growth
+- Executed the README/session bootstrap path and refreshed the saved
+  [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
+  import-tree analysis because the old `2026-04-02` measurement was no
+  longer honest.
+- Current measurement:
+  - static project-owned closure rooted at [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen): `116` files total,
+  - reachable `.pm` packages: `115`,
+  - largest reachable package by line count:
+    [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm),
+  - and the semantic [perl/FSM/Package](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Package) family is now explicit in the live spine with `13` reachable packages.
+- Engineering read:
+  - the package/type family growth is expected and desirable because named
+    values, packages, type aliases, aggregate payload lowering, aggregate path
+    traversal, and aggregate expression shape inference now have shared owners,
+  - the next risk is not that those package files exist, but that package/type
+    semantics must stay shared across direct, composition, and future backend
+    consumers instead of drifting into parser-local forks,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)
+    is now a real future extraction seam because explicit-link source
+    expressions, literal actuals, aggregate compatibility, and binding-type
+    preservation all meet there,
+  - and the older direct backend remains the other major convergence target
+    until direct roots can follow the cleaner `StructuralRTLIR -> backend
+    emitter` shape that composition already uses more honestly.
+
 ## 2026-04-10: reset keyword semantics now own reset kind and polarity
 - Corrected the reset contract so `+system` reset semantics come from intent,
   not from a misleading historical example:
