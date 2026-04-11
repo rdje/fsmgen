@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-12
+### future authored DT enable control is now recorded
+- Documented the current hidden/default DT activity model in [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md): authored DT/state blocks conceptually have a `dt_enable`, but the `.fsm` language does not yet expose a way to drive it, so normal blocks behave as if that enable is tied to `1` once their surrounding root/state context is active.
+- Added an advanced future-feature note to [docs/book/src/03-decision-trees-and-fsms.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/03-decision-trees-and-fsms.md) describing an authored semantic DT enable expression that defaults to `1`, may be driven by an input or bounded logical expression, and should be validated/preserved in AST/IR before HDL generation.
+- Updated [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), and [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md) so future reusable-DT/FSM work remembers this as an intent-level feature for independently activatable DT/state regions, including multiple-entry-state-like behavior.
+
 ### direct `+params` can now reuse sibling parameter defaults
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) so direct-root `+define` declarations are parsed before direct `+params`, all `+params` blocks are collected together, and parameter defaults resolve as one acyclic dependency graph before behavioral blocks are parsed.
 - Updated [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm) so the parameter/generic value resolver can expose already-resolved parameter payloads for later semantic normalization.

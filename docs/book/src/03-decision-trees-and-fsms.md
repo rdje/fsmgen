@@ -64,6 +64,27 @@ Example:
 )
 ```
 
+## Advanced Future: DT Enable Control
+
+Every DT/state block has a conceptual activity input: its `dt_enable`.
+Today the author-facing `.fsm` language does not expose that input directly.
+Normal authored DT/state blocks behave as if `dt_enable` is tied to `1` once
+their surrounding root or state-selection context is active.
+
+The intended future advanced feature is to expose that hidden control as a
+semantic DT enable expression, still defaulting to `1` for existing sources.
+An author should eventually be able to bind a DT/state block's enable to a
+signal or bounded logical expression, for example an OR of several event/control
+inputs. That would make it possible to model independently activatable
+state-like regions, including designs that behave like they have multiple
+initial/entry states.
+
+This must be implemented as frontend intent, not as a late HDL-generation
+shortcut. The parser should capture the authored enable expression, validation
+should prove the referenced operands and widths before generation, the AST/IR
+should preserve the DT enable contract, and only then should the selected HDL
+backend emit the gated behavior.
+
 ## Practical Guidance
 
 Prefer:

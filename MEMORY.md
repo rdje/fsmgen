@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-12: future authored DT enable control is recorded
+- Captured the user steering around the hidden DT/state activity input.
+- Important continuity note:
+  - current `.fsm` authoring effectively treats each normal DT/state block's conceptual `dt_enable` as tied to `1` once its surrounding root/state context is active,
+  - this should become an advanced semantic feature later: an authored DT/state enable expression that defaults to `1`, can be driven by an input signal or bounded logical expression such as an OR of several conditions, and is checked before generation,
+  - the feature should support independently activatable DT/state regions, including designs that behave like they have multiple initial/entry states,
+  - this must be represented in frontend AST/IR and validation rather than patched into generated HDL late,
+  - [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/book/src/03-decision-trees-and-fsms.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/03-decision-trees-and-fsms.md), and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) now carry the steering note.
+
 ## 2026-04-12: direct `+params` now resolve sibling parameter defaults safely
 - Saved the bounded `R11` direct param-to-param default slice.
 - Important continuity note:

@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-12: DT enable control should become an authored semantic surface
+- Current authored DT/state blocks have a conceptual `dt_enable`, but the
+  `.fsm` surface does not expose it yet; normal blocks behave as if that enable
+  is tied to `1` once the surrounding root or state-selection context is active.
+- Future direction:
+  - expose DT/state enable as an advanced semantic expression with default `1`,
+  - allow the expression to reference a signal or bounded logical combination of
+    signals/conditions,
+  - validate referenced operands, widths, and legality before generation,
+  - preserve the enable expression in AST/IR instead of lowering it through a
+    renderer-only shortcut,
+  - and use it to model independently activatable DT/state regions, including
+    designs that behave like they have multiple initial/entry states.
+- Rationale:
+  - DTs are more general than always-on state-local action trees,
+  - making the activity input explicit unlocks powerful control patterns without
+    changing the default behavior for existing `.fsm` sources,
+  - and keeping it intent-level lets future SV/VHDL backends share one semantic
+    contract instead of each inventing local enable wiring.
+
 ## 2026-04-12: direct params resolve as an acyclic dependency graph
 - Direct-root `+params` may now reuse same-root direct parameters, including
   forward references and aggregate parameter aliases.

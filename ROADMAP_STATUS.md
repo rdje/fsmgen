@@ -759,7 +759,8 @@ Deliverables:
   - `?top:name` and sequential `?dt:name` should keep `rst_n` as the default async-reset convention even though the current explicit `?fsm` `+system` compatibility residue still spells `rstn`,
   - `?dt:name` output-driving semantics stay aligned with current DT handling inside `?fsm:name`,
   - multiple internal `(-foo ...)` blocks may assign the same target without structural rejection,
-  - and generated enable families should support explicit mutual-exclusion assertions instead of relying on an over-broad conflict ban,
+  - generated enable families should support explicit mutual-exclusion assertions instead of relying on an over-broad conflict ban,
+  - and a future advanced DT enable-control surface should expose the conceptual per-DT/state `dt_enable` as a semantic expression that defaults to `1`, can be driven by an input or bounded logical expression, and is validated/preserved in AST/IR before backend emission so multiple independently activatable entry/state regions can be modeled honestly,
   - `?top:name` remains the explicit composition-root concept unless a later family-level root-syntax decision introduces aliases such as `?mod:name` or `?module:name`,
   - reusable-source lookup should grow through existing `FSMLIB` semantics plus repeatable per-invocation `--path DIR` roots,
   - a future reusable declarative package lane should exist for sharable named scalar values, named aggregate values, `+enums`, and future `+types`,
@@ -1540,6 +1541,7 @@ Left:
   - decide whether unnamed reusable DT roots such as `?dt:` exist at all,
   - extend the current shipped `?dt:name` interface rule into a fuller reusable-module contract beyond the now-shipped multi-block enable, grouped shared-target, assertion, and composition-facing child-export metadata surfaces,
   - define how multi-`(-foo ...)` standalone DT modules expose block-level and module-level enable families beyond those current metadata/export summaries,
+  - define the authored advanced DT enable-control contract for overriding the current implicit `dt_enable = 1` behavior with a signal or bounded logical expression, including how it interacts with FSM state selection and multiple initial/entry-state-like regions,
   - extend the now-shipped implicit-system rule split between `?fsm:name` and `?dt:name` into the broader reuse/composition contract,
   - extend the now-shipped generated-child contract beyond the current `?fsmc` / `?dtc` `C1` / `C2` / `C3` plus generated-only and mixed-lane `C4` slices into reusable-module interface/export rules,
   - and extend the now-shipped `--path` / `FSMLIB` lookup slice beyond bare top-level inputs, generated child sources, and `.rtlif` metadata lookup.
