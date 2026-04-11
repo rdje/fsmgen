@@ -93,6 +93,7 @@ Concat operands may currently include:
 
 - whole top ports
 - top-port bit/slice forms
+- declared aggregate top-port member/item forms such as `in_frame.tag`
 - child-output operands
 - scalar actuals
 - intrinsic-width unsized based literals
@@ -137,6 +138,20 @@ This infers:
 
 The same inference path also understands bounded concat and bounded repeat
 groups, but it still refuses ambiguous multi-operand guessing.
+
+Declared aggregate top-port paths can now help that inference too:
+
+```lisp
+(?toplink:wiring
+  /in_frame.tag,payload/sink.data_in/
+)
+```
+
+If `in_frame` is already declared with an aggregate type and `in_frame.tag` is
+four bits, FSMGen can use that exact leaf width while sizing the remaining
+omitted whole operand `payload` from the target remainder. If `in_frame` is not
+declared, FSMGen fails explicitly instead of guessing an aggregate shape from
+the member name alone.
 
 ## Top Outputs And Fanout
 

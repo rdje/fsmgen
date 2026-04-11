@@ -22,6 +22,7 @@ no warnings 'experimental::signatures';
 use FSM::Composition::InterfacePortBuilder;
 use FSM::Composition::LinkedPlanBuilder;
 use FSM::Composition::Port;
+use FSM::IR::StructuralRTLIR::ConnectionExpr qw(signal_ref_expr);
 
 sub augment_ports ($class, %args) {
     my $ports = $args{ports} || [];
@@ -116,10 +117,11 @@ sub augment_from_explicit_links ($class, %args) {
                 && $target =~ /^\w+\.\w+$/
                 && $class->_expression_spec_mentions_undeclared_top_inputs($source_top_expr_spec, \%declared_by_name))
             {
-                $source_top_expr_spec = $class->_annotate_expression_spec_child_widths(
+                $source_top_expr_spec = $class->_annotate_expression_spec_known_widths(
                     $source_top_expr_spec,
                     \%instances_by_name,
                     \%child_ports_by_instance,
+                    \%declared_by_name,
                     $fsm_file,
                     $header,
                 );
@@ -533,19 +535,21 @@ sub _assert_top_expression_inference_is_resolved ($class, $declared_by_name, $in
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
-sub _annotate_expression_spec_child_widths ($class, $expression_spec, $instances_by_name, $child_ports_by_instance, $fsm_file, $header) {
+sub _annotate_expression_spec_known_widths ($class, $expression_spec, $instances_by_name, $child_ports_by_instance, $declared_by_name, $fsm_file, $header) {
     return undef unless ref($expression_spec) eq 'HASH';
 
     my %annotated = %$expression_spec;
+    $declared_by_name ||= {};
     my $expr_kind = $expression_spec->{expr_kind} || '';
 
     if ($expr_kind eq 'concat') {
         $annotated{operands} = [
             map {
-                $class->_annotate_expression_spec_child_widths(
+                $class->_annotate_expression_spec_known_widths(
                     $_,
                     $instances_by_name,
                     $child_ports_by_instance,
+                    $declared_by_name,
                     $fsm_file,
                     $header,
                 )
@@ -555,10 +559,11 @@ sub _annotate_expression_spec_child_widths ($class, $expression_spec, $instances
     }
 
     if ($expr_kind eq 'repeat') {
-        my $annotated_operand = $class->_annotate_expression_spec_child_widths(
+        my $annotated_operand = $class->_annotate_expression_spec_known_widths(
             $expression_spec->{operand},
             $instances_by_name,
             $child_ports_by_instance,
+            $declared_by_name,
             $fsm_file,
             $header,
         );
@@ -578,6 +583,25 @@ sub _annotate_expression_spec_child_widths ($class, $expression_spec, $instances
     my $port_name = $expression_spec->{port_name} || '';
     my $instance = $instances_by_name->{$instance_name};
     my $context_label = $expr_kind eq 'child_signal_ref' ? 'child endpoint' : 'child expression';
+
+    if (!$instance) {
+        my $top_port = $declared_by_name->{$instance_name};
+        if ($top_port) {
+            my $path_text = $class->_top_aggregate_path_text_from_child_like_spec($expression_spec);
+            my (undef, undef, $resolved_width) = FSM::Composition::LinkedPlanBuilder->_resolve_aggregate_path_connection(
+                base_expr => signal_ref_expr($instance_name),
+                root_type_spec => FSM::Composition::InterfacePortBuilder->declared_type_spec($top_port),
+                path_text => $path_text,
+                raw => $expression_spec->{raw},
+                context_label => 'top expression',
+                base_label => "top port '$instance_name'",
+                fsm_file => $fsm_file,
+                header => $header,
+            );
+            $annotated{width} = $resolved_width;
+            return \%annotated;
+        }
+    }
 
     confess
         "Composition source '$header' in '$fsm_file' uses $context_label '".$expression_spec->{raw}."', ".
@@ -638,6 +662,25 @@ sub _annotate_expression_spec_child_widths ($class, $expression_spec, $instances
 
     $annotated{width} = abs(($expression_spec->{msb} || 0) - ($expression_spec->{lsb} || 0)) + 1;
     return \%annotated;
+}
+
+sub _top_aggregate_path_text_from_child_like_spec ($class, $expression_spec) {
+    my $expr_kind = $expression_spec->{expr_kind} || '';
+    my $port_name = $expression_spec->{port_name} || '';
+
+    return '.'.$port_name
+        if $expr_kind eq 'child_signal_ref';
+
+    return '.'.$port_name.'['.($expression_spec->{index} || 0).']'
+        if $expr_kind eq 'child_bit_select';
+
+    return '.'.$port_name.'['.($expression_spec->{msb} || 0).':'.($expression_spec->{lsb} || 0).']'
+        if $expr_kind eq 'child_slice';
+
+    return '.'.$port_name.($expression_spec->{path_text} || '')
+        if $expr_kind eq 'child_aggregate_ref';
+
+    confess "TopPortInferenceBuilder requires a child-like top aggregate path spec";
 }
 
 sub _expression_spec_mentions_undeclared_top_inputs ($class, $expression_spec, $declared_by_name) {
@@ -734,7 +777,18 @@ sub _analyze_top_expression_for_inference ($class, $declared_by_name, $inferred_
         };
     }
 
-    if ($expr_kind eq 'aggregate_ref' || $expr_kind eq 'child_signal_ref' || $expr_kind eq 'child_bit_select' || $expr_kind eq 'child_slice' || $expr_kind eq 'child_aggregate_ref') {
+    if ($expr_kind eq 'aggregate_ref') {
+        return $class->_analyze_aggregate_top_expression_for_inference(
+            $declared_by_name,
+            $inferred_specs,
+            $expression_spec,
+            $evidence,
+            $fsm_file,
+            $header,
+        );
+    }
+
+    if ($expr_kind eq 'child_signal_ref' || $expr_kind eq 'child_bit_select' || $expr_kind eq 'child_slice' || $expr_kind eq 'child_aggregate_ref') {
         return {
             progress => 0,
             known_exact_width => $class->_expression_spec_width($expression_spec),
@@ -798,6 +852,36 @@ sub _analyze_top_expression_for_inference ($class, $declared_by_name, $inferred_
     }
 
     confess "TopPortInferenceBuilder requires a supported top-expression inference rule";
+}
+
+sub _analyze_aggregate_top_expression_for_inference ($class, $declared_by_name, $inferred_specs, $expression_spec, $evidence, $fsm_file, $header) {
+    my $port_name = $expression_spec->{port_name} || '';
+    my $root_contract = $declared_by_name->{$port_name} || $inferred_specs->{$port_name};
+    if (!$root_contract) {
+        confess
+            "Composition source '$header' in '$fsm_file' omits top port '$port_name', ".
+            "but explicit top-link port inference is blocked because top expression '".$expression_spec->{raw}."' uses aggregate member/item access before the root top port has a declared aggregate type. ".
+            "Seen explicit link evidence: $evidence. ".
+            "Declare the aggregate root in '?ports' with a '+types' alias, or first bind the whole root to one child endpoint that can infer a compatible declared aggregate contract. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+    }
+
+    my (undef, undef, $resolved_width) = FSM::Composition::LinkedPlanBuilder->_resolve_aggregate_path_connection(
+        base_expr => signal_ref_expr($port_name),
+        root_type_spec => FSM::Composition::InterfacePortBuilder->declared_type_spec($root_contract),
+        path_text => $expression_spec->{path_text},
+        raw => $expression_spec->{raw},
+        context_label => 'top expression',
+        base_label => "top port '$port_name'",
+        fsm_file => $fsm_file,
+        header => $header,
+    );
+
+    return {
+        progress => 0,
+        known_exact_width => $resolved_width,
+        unresolved_signal_refs => [],
+    };
 }
 
 sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $direction, $required_width, $exact_width, $type, $declared_type_name, $declared_type_spec, $evidence, $fsm_file, $header) {

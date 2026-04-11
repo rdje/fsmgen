@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-11
+### aggregate top-expression inference now sees declared aggregate paths
+- Updated [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm) so explicit-toplink concat inference treats declared aggregate top-port paths such as `in_frame.tag` as exact-width operands when sizing one remaining omitted whole top-port operand.
+- That inference path now mirrors the planner's existing top-aggregate fallback for tokens that could look like `instance.port`: if `in_frame` is a declared aggregate top port, `in_frame.tag` contributes the declared leaf width instead of being misread as a missing child endpoint during inference.
+- Undeclared aggregate roots now fail with a user-facing diagnostic that explains a declared aggregate root/type is required before member or item access can guide inference, instead of leaking the internal `TopPortInferenceBuilder` exact-width assertion.
+- Added [t/288-composition-aggregate-top-expression-inference.t](/Users/richarddje/Documents/github/fsmgen/t/288-composition-aggregate-top-expression-inference.t) to lock accepted aggregate-path concat inference plus the blocked undeclared-root diagnostic.
+
 ### composition source-expression spec support now has a dedicated owner
 - Added [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm) as the shared composition owner for bounded explicit-toplink source-expression parsing, including top/child bit and slice forms, aggregate paths, concat groups, repeat groups, literal operands, top-symbol payload lookup, and inference/child-base collection.
 - Updated [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) to delegate source-expression spec parsing and collection to that owner while preserving endpoint resolution, aggregate compatibility, carrier allocation, binding preservation, and composition diagnostics in the planner.

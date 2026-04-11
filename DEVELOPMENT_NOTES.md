@@ -1,5 +1,39 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: aggregate top-expression paths must participate in inference
+- Landed a bounded `R11` feature/diagnostic slice in
+  [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm).
+- Problem found:
+  - the explicit-link planner already knew how to reinterpret a two-part token
+    such as `in_frame.tag` as a declared aggregate top-port path when
+    `in_frame` is a top port rather than a child instance,
+  - but the top-port inference pre-pass still annotated only child-output
+    widths in that ambiguous-looking path family,
+  - so a concat such as `/in_frame.tag,payload/sink.data_in/` could not use
+    the declared width of `in_frame.tag` while sizing the omitted whole
+    operand `payload`.
+- Landed behavior:
+  - declared aggregate top-port paths now contribute exact leaf widths to
+    explicit-toplink concat/repeat inference before the remaining whole
+    top-port operand is sized,
+  - the inference pass now reuses the same aggregate-path resolver and
+    diagnostics boundary as planning rather than carrying a second width
+    walker,
+  - undeclared aggregate roots such as `in_frame.tag` now fail with an
+    authored top-port diagnostic that says a declared aggregate root/type is
+    needed before member/item access can guide inference,
+  - and [t/288-composition-aggregate-top-expression-inference.t](/Users/richarddje/Documents/github/fsmgen/t/288-composition-aggregate-top-expression-inference.t)
+    locks both the accepted concat-inference case and the blocked diagnostic.
+- Why this boundary matters:
+  - this keeps the convention-over-configuration direction moving without
+    pretending broad aggregate autovivification is done,
+  - aggregate member/item access may help infer neighboring operands only when
+    the aggregate root already has one declared or previously inferred
+    aggregate contract,
+  - and it removes an internal assertion from a user-facing composition error
+    path, which keeps pre-generation validation aligned with the “upright AST /
+    IR before generation” rule.
+
 ## 2026-04-11: composition source-expression parsing belongs below the planner too
 - Extracted the bounded explicit-toplink source-expression parser out of
   [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm)

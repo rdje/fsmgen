@@ -1187,7 +1187,7 @@ Current narrow top-concat explicit-link example:
 
 This currently works because:
 - the `/source/target/` token still stays flat, but the source side may now be one bounded comma-separated concat expression,
-- concat operands may currently be declared whole top-port refs, top-port bit/slice refs, child-output operands, one-bit scalar actuals `=0` / `=1`, intrinsic-width unsized binary/decimal/octal/hex actuals such as `=0b10`, `='b10`, `=170`, `=0d170`, `='d170`, `=0o7`, `='o7`, `=0xA5`, `='hA5`, or `=A5`, intrinsic-width unsized signed decimal actuals such as `=-1`, `=0d-1`, or `='sd-1`, intrinsic-width unsized signed binary/octal/hex actuals such as `='sb1010`, `='so7`, or `='shA`, exact-width binary/decimal/signed-decimal/octal/hex literal actuals in unsigned or signed form, or bounded repeat groups such as `{3{status_bus[0]}}` or `{2{producer.serial_lo}}`,
+- concat operands may currently be declared whole top-port refs, top-port bit/slice refs, declared aggregate top-port member/item refs such as `in_frame.tag` or `in_frame.payload[1]`, child-output operands, one-bit scalar actuals `=0` / `=1`, intrinsic-width unsized binary/decimal/octal/hex actuals such as `=0b10`, `='b10`, `=170`, `=0d170`, `='d170`, `=0o7`, `='o7`, `=0xA5`, `='hA5`, or `=A5`, intrinsic-width unsized signed decimal actuals such as `=-1`, `=0d-1`, or `='sd-1`, intrinsic-width unsized signed binary/octal/hex actuals such as `='sb1010`, `='so7`, or `='shA`, exact-width binary/decimal/signed-decimal/octal/hex literal actuals in unsigned or signed form, or bounded repeat groups such as `{3{status_bus[0]}}` or `{2{producer.serial_lo}}`,
 - underscore-separated digit spellings are also accepted on those intrinsic-width unsized binary/decimal/octal/hex and exact-width concat literals, for example `=0b1_0`, `=1_70`, `=0d1_70`, `=0xA_5`, `=A_5`, `=2'b1_0`, or `=8'hA_5`,
 - unsized decimal actuals such as `=170` or `=0d170` now also work inside bounded concat by taking the minimum width required by their numeric value instead of borrowing width from the child-input target,
 - unsized signed decimal actuals such as `=-1`, `=0d-1`, or `='sd-1` now also work inside bounded concat by taking the minimum signed width required by their numeric value instead of borrowing width from the child-input target,
@@ -1214,10 +1214,33 @@ This currently works because:
 - the same inference path now also sees `name[index]` / `name[msb:lsb]` operands that appear inside a bounded comma-separated concat source,
 - the same inference path now also sizes one undeclared repeated whole-port operand from a bounded repeat group such as `{2{payload_bus}}` when the child-input remainder width divides evenly across the repeat count,
 - one remaining undeclared whole-port concat operand may now also pick up an exact width from the remaining child-input target width when the other concat operands are already exact,
+- declared aggregate top-port member/item operands such as `in_frame.tag` also count as exact-width operands for that remainder calculation when `in_frame` already has a declared aggregate type,
 - but several still-unsized undeclared whole-port concat operands still fail explicitly instead of guessing several widths from one child-input target,
 - and uneven repeat-width splits such as `{2{payload_bus}}` into a 5-bit child input now also fail explicitly instead of guessing one per-copy width,
 - top expressions still stay source-side only,
 - and they may now target realized child input ports or declared top outputs.
+
+Current narrow aggregate-path concat inference example:
+```lisp
+(?top:frame_sink_top
+  (+types
+    (type frame_t (record (tag (bits 4)) (flag bit)))
+  )
+  (?ports:public_io
+    in_frame<frame_t
+  )
+  (?rtl:sink)
+  (?toplink:wiring
+    /in_frame.tag,payload/sink.data_in/
+  )
+)
+```
+
+Here `in_frame.tag` contributes its declared four-bit leaf width, so if
+`sink.data_in` is eight bits the omitted whole top input `payload` is inferred
+as four bits. If `in_frame` is not declared, FSMGen now fails with an explicit
+diagnostic asking for a declared aggregate root instead of trying to autovivify
+an aggregate shape from `in_frame.tag` alone.
 
 Current narrow declared connect-by-name example:
 ```lisp
