@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-11
+### direct `+params` can now reuse named semantic values
+- Updated [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm), [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm), and [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm) so direct `(+params ...)` values may reuse resolved constants, enum members, bounded aggregate constant roots, and already-parsed direct `+define` literals through the same semantic value normalizer used for literal payloads.
+- Kept the contract non-recursive for now: params do not implicitly depend on other params, and unresolved bare names still fail as invalid parameter/generic values instead of becoming raw HDL text.
+- Extended [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t) so constant-backed, enum-backed, and aggregate-backed direct params lower to the expected typed literal payloads and remain visible to Intent HIR.
+
 ### direct `+params` now use the shared parameter/generic value normalizer
 - Added [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm) as the neutral owner for bounded scalar and aggregate parameter/generic value normalization, and kept [perl/FSM/Composition/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterValueSupport.pm) as a compatibility shim.
 - Updated [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) and [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm) so direct `(+params ...)` entries accept the same bounded scalar integer literal formats and packed aggregate payloads as external RTL parameter/generic metadata, while recording parameter metadata on the semantic module for Intent HIR.

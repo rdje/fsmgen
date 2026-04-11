@@ -1849,6 +1849,9 @@ sub parse_params_section($self, $params_ast) {
             value_ast => $value_array,
             context => "Direct source parameter '$resolved_name'",
             docs_hint => " See docs/USER_GUIDE.md for the current supported boundary.",
+            resolve_symbol_payload => sub ($symbol_name) {
+                return $self->{signal_manager}->resolve_parameter_value_symbol_payload($symbol_name);
+            },
         );
         $self->{signal_manager}->store_param($resolved_name, $value_info);
 

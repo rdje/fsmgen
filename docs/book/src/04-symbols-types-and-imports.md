@@ -25,6 +25,9 @@ as external RTL interface metadata.
   (WIDTH 0x10)
   (RESET_VALUE 8'hA5)
   (LANES (8'hA5 8'h3C))
+  (RESET_PARAM RESET_BYTE)
+  (MODE_PARAM mode.BUSY)
+  (LANE_PARAM LANES)
 )
 ```
 
@@ -33,6 +36,13 @@ SystemVerilog-style based literals, or `0x` / `0b` / `0o` prefixes. Bounded
 literal list/record payloads are also accepted when they can lower to one packed
 literal. That keeps the authoring surface convenient while preserving a concrete
 semantic value before generation.
+
+Direct-root `+params` values may also reuse resolved semantic symbols:
+same-root constants, whole aggregate constant roots, enum members such as
+`mode.BUSY`, and already-parsed direct `+define` values. They do not currently
+form recursive param-to-param dependency chains; if a value is meant to be shared
+by multiple parameters, name it once through `+constants` or `+enums`, then point
+the parameter values at that semantic name.
 
 In the current direct-root path, `+params` values resolve as semantic literals in
 expressions. They are not yet emitted as HDL `parameter` declarations on

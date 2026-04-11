@@ -7,6 +7,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use Carp ();
 use Data::Dumper;
+use Scalar::Util qw(blessed);
 use FSM::CoreAST;
 use FSM::Debug;
 use FSM::Package::ScalarWidthSupport;
@@ -222,6 +223,33 @@ sub resolve_aggregate_symbol_payload($self, $name) {
     return $self->{aggregate_payloads}{$name};
 }
 
+sub resolve_parameter_value_symbol_payload($self, $symbol_name) {
+    return undef unless defined $symbol_name && !ref($symbol_name);
+
+    my $aggregate_payload = $self->resolve_aggregate_symbol_payload($symbol_name);
+    return $aggregate_payload if defined $aggregate_payload;
+
+    if (exists $self->{constants}{$symbol_name}) {
+        return _literal_to_parameter_payload($self->{constants}{$symbol_name});
+    }
+
+    if (exists $self->{defines}{$symbol_name}) {
+        return _literal_to_parameter_payload($self->{defines}{$symbol_name});
+    }
+
+    if ($symbol_name =~ /^([a-zA-Z_]\w*)\.([a-zA-Z_]\w*)$/) {
+        my ($enum_name, $member_name) = ($1, $2);
+        if (exists $self->{enums}{$enum_name} && exists $self->{enums}{$enum_name}{$member_name}) {
+            return {
+                kind => 'scalar',
+                payload => $self->{enums}{$enum_name}{$member_name},
+            };
+        }
+    }
+
+    return undef;
+}
+
 # Symbol resolution methods
 sub resolve_symbol($self, $symbol_name) {
     # Check in order: constants, defines, enum members, params
@@ -335,6 +363,29 @@ sub _literal_from_parameter_value($param_value) {
     }
 
     return FSM::CoreAST::Literal->new($text);
+}
+
+sub _literal_to_parameter_payload($literal_expr) {
+    return undef unless defined $literal_expr;
+    return undef unless blessed($literal_expr) && $literal_expr->isa('FSM::CoreAST::Literal');
+
+    my $value = $literal_expr->value;
+    my $width = $literal_expr->width;
+    my $radix = $literal_expr->radix // 'decimal';
+
+    return {
+        kind => 'scalar',
+        payload => $value,
+    } unless defined $width;
+
+    my $prefix = $radix eq 'binary' ? 'b'
+        : $radix eq 'hex' ? 'h'
+        : 'd';
+
+    return {
+        kind => 'scalar',
+        payload => $width."'".$prefix.$value,
+    };
 }
 
 sub get_signal_summary($self) {

@@ -141,6 +141,28 @@ FSM
     like($enums_member_error, qr/Malformed '\+enums' member for enum 'mode'/, 'bad enum member payload gets a targeted diagnostic');
 };
 
+subtest 'unresolved parameter value names are rejected before generation' => sub {
+    my $params_symbol_error = parse_failure(<<'FSM');
+(?fsm:bad_param_symbol_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD NO_SUCH_SYMBOL)
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $params_symbol_error,
+        qr/Direct source parameter 'P_BAD'.*parameter\/generic values currently accept scalar integer literals.*NO_SUCH_SYMBOL/s,
+        'unresolved +params value names remain invalid semantic values'
+    );
+};
+
 subtest 'pipeline and CLI do not emit HDL for malformed symbol-definition sections' => sub {
     my $fsm_path = write_fsm('bad_symbols_cli.fsm', <<'FSM');
 (?fsm:bad_symbols_cli

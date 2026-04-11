@@ -530,9 +530,15 @@ This is the current `R8` draft normative contract for the symbol-definition and 
 - Current active use:
   - `(+params (P0 8))`
   - `(+params (WIDTH 0x10) (LANES (8'hA5 8'h3C)))`
+  - `(+params (RESET_PARAM RESET_BYTE) (MODE_PARAM mode.BUSY) (LANE_PARAM LANES))`
 - Values use the same bounded parameter/generic value normalizer as external RTL metadata:
   - scalar integer literals such as `8`, `8'hA5`, `'hA5`, `0xA5`, `0b1010`, and `0o77`
   - bounded literal aggregate payloads such as `(8'hA5 8'h3C)` or `((mode 2'b10) (flag 1))`, which lower to one packed literal when used as whole values
+- Values may also reuse resolved semantic value symbols:
+  - same-root `+constants`, including bounded whole aggregate roots
+  - enum members such as `mode.BUSY`
+  - direct `+define` values that have already been parsed before the `+params` block
+- Direct `+params` do not yet form recursive param-to-param dependencies; use `+constants` or `+enums` for shared named values, then reference those names from `+params`.
 - References to those names resolve as literals in assignment RHS expressions and guard equality conditions.
 - Current direct-root behavior is semantic substitution, not backend HDL `parameter` declaration emission.
 - Malformed shapes like `(+params)`, `(+params BROKEN)`, and malformed entries like `(+params (P0))` are rejected explicitly.

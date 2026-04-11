@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: direct params may reuse named semantic values
+- Direct-root `(+params ...)` now resolves value tokens through the same semantic
+  symbol table that backs constants, enum members, aggregate constant roots, and
+  already-parsed direct `+define` literals.
+- The important boundary is still pre-generation semantic normalization:
+  - referenced scalar constants preserve their width/radix metadata before
+    lowering,
+  - referenced aggregate constants preserve list/record payload shape before
+    lowering to one packed literal,
+  - enum members remain scalar semantic values,
+  - unresolved bare names still fail as invalid parameter/generic values,
+  - and params deliberately do not depend on other params yet, avoiding
+    accidental order-sensitive dependency chains or cycles.
+- This is a direct-root convenience slice. Generated-child parameterization,
+  VHDL generic-map lowering, and package-backed/external named parameter values
+  still need explicit binding contracts rather than late backend shortcuts.
+
 ## 2026-04-11: parameter/generic value normalization now has a neutral owner
 - Moved the bounded scalar/list/map parameter value policy into
   [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm).
@@ -48,7 +65,7 @@ This document captures engineering rationale, design constraints, and working de
 - Follow-ups:
   - VHDL generic-map lowering,
   - generated-child parameterization,
-  - named/package-backed parameter values,
+  - package-backed or external named parameter values,
   - and richer typed/non-literal parameter domains beyond the current literal
     scalar and aggregate payload surface.
 

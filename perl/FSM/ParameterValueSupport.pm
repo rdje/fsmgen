@@ -29,8 +29,14 @@ sub canonical_value ($class, %args) {
     my $context = $args{context} // 'Parameter/generic value';
     my $docs_hint = $args{docs_hint} // '';
     my $value_ast = exists($args{value_ast}) ? $args{value_ast} : $args{value};
+    my $resolve_symbol_payload = $args{resolve_symbol_payload};
 
-    my $payload = $class->_canonical_payload($value_ast, $context, $docs_hint);
+    my $payload = $class->_canonical_payload(
+        $value_ast,
+        $context,
+        $docs_hint,
+        $resolve_symbol_payload,
+    );
     my ($bits, $width, $reason) = FSM::Package::PayloadLiteralSupport->payload_to_bits_and_width($payload);
     my $type_spec = FSM::Package::PayloadTypeSupport->payload_to_type_spec($payload);
 
@@ -60,9 +66,26 @@ sub canonical_value ($class, %args) {
     return \%result;
 }
 
-sub _canonical_payload ($class, $value_ast, $context, $docs_hint) {
+sub _canonical_payload ($class, $value_ast, $context, $docs_hint, $resolve_symbol_payload = undef) {
+    return $class->_canonical_existing_payload(
+        $value_ast,
+        $context,
+        $docs_hint,
+        $resolve_symbol_payload,
+    ) if ref($value_ast) eq 'HASH' && exists $value_ast->{kind};
+
     my $scalar_value = $class->_unwrap_scalar_token($value_ast);
     if (defined($scalar_value) && !ref($scalar_value)) {
+        if ($resolve_symbol_payload) {
+            my $resolved_payload = $resolve_symbol_payload->($scalar_value);
+            return $class->_canonical_payload(
+                $resolved_payload,
+                "$context symbol '$scalar_value'",
+                $docs_hint,
+                $resolve_symbol_payload,
+            ) if defined $resolved_payload;
+        }
+
         return {
             kind => 'scalar',
             payload => $class->_canonical_scalar_value_text($scalar_value, $context, $docs_hint),
@@ -108,6 +131,7 @@ sub _canonical_payload ($class, $value_ast, $context, $docs_hint) {
                 $member_value_ast,
                 "$context member '$member_name'",
                 $docs_hint,
+                $resolve_symbol_payload,
             );
         }
 
@@ -131,10 +155,84 @@ sub _canonical_payload ($class, $value_ast, $context, $docs_hint) {
                     $value_items->[$_],
                     "$context item $_",
                     $docs_hint,
+                    $resolve_symbol_payload,
                 )
             } 0 .. $#$value_items
         ],
     };
+}
+
+sub _canonical_existing_payload ($class, $payload, $context, $docs_hint, $resolve_symbol_payload = undef) {
+    my $kind = $payload->{kind} || '';
+
+    if ($kind eq 'scalar') {
+        return {
+            kind => 'scalar',
+            payload => $class->_canonical_scalar_value_text(
+                $payload->{payload},
+                $context,
+                $docs_hint,
+            ),
+        };
+    }
+
+    if ($kind eq 'list') {
+        my $items = $payload->{items};
+        confess
+            "$context is blocked because aggregate parameter/generic list values must be non-empty.".
+            $docs_hint."\n"
+            unless ref($items) eq 'ARRAY' && @$items;
+
+        return {
+            kind => 'list',
+            items => [
+                map {
+                    $class->_canonical_payload(
+                        $items->[$_],
+                        "$context item $_",
+                        $docs_hint,
+                        $resolve_symbol_payload,
+                    )
+                } 0 .. $#$items
+            ],
+        };
+    }
+
+    if ($kind eq 'map') {
+        my $members = $payload->{members};
+        my $member_order = $payload->{member_order};
+        confess
+            "$context is blocked because aggregate parameter/generic map values must be non-empty.".
+            $docs_hint."\n"
+            unless ref($members) eq 'HASH' && keys %$members;
+
+        my @member_order = ref($member_order) eq 'ARRAY' && @$member_order
+            ? @$member_order
+            : sort keys %$members;
+        my %canonical_members;
+        for my $member_name (@member_order) {
+            confess
+                "$context is blocked because aggregate parameter/generic map values are missing member '$member_name'.".
+                $docs_hint."\n"
+                unless exists $members->{$member_name};
+            $canonical_members{$member_name} = $class->_canonical_payload(
+                $members->{$member_name},
+                "$context member '$member_name'",
+                $docs_hint,
+                $resolve_symbol_payload,
+            );
+        }
+
+        return {
+            kind => 'map',
+            member_order => \@member_order,
+            members => \%canonical_members,
+        };
+    }
+
+    confess
+        "$context is blocked because parameter/generic values must be scalar integer literals or non-empty list/map aggregate payloads.".
+        $docs_hint."\n";
 }
 
 sub _canonical_scalar_value_text ($class, $value, $context, $docs_hint) {

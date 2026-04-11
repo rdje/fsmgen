@@ -21,6 +21,7 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
   (+constants
     (C0 8'3)
     (ZERO const_8b0)
+    (BYTE_PAIR (8'hA5 8'h3C))
   )
   (+define (D0 8'4))
   (+params
@@ -28,6 +29,9 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (P_HEX 0x10)
     (P_BIN 0b1010)
     (P_LIST (8'hA5 8'h3C))
+    (P_FROM_CONST C0)
+    (P_FROM_ENUM mode.BUSY)
+    (P_FROM_AGG BYTE_PAIR)
   )
   (+enums
     (mode
@@ -46,6 +50,9 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (D 8)
     (E 8)
     (F 4)
+    (G 8)
+    (H 1)
+    (I 16)
     (W 16)
     (Z 8)
     (SEL 8)
@@ -59,6 +66,9 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (D = mode.BUSY)
     (E = P_HEX)
     (F = P_BIN)
+    (G = P_FROM_CONST)
+    (H = P_FROM_ENUM)
+    (I = P_FROM_AGG)
     (W = P_LIST)
     (Z = ZERO)
     (FLAG = 1 <SEL=C0)
@@ -68,13 +78,13 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
 FSM
 
 my $symbol_summary = $adapter->{signal_manager}->get_symbol_summary;
-is($symbol_summary->{constants}, 2, '+constants summary count is correct');
+is($symbol_summary->{constants}, 3, '+constants summary count is correct');
 is($symbol_summary->{defines}, 1, '+define summary count is correct');
-is($symbol_summary->{params}, 4, '+params summary count is correct');
+is($symbol_summary->{params}, 7, '+params summary count is correct');
 is($symbol_summary->{enums}, 1, '+enums summary count is correct');
 
 my $elements = state_elements($fsm_module, '-dt');
-is(scalar(@$elements), 10, 'symbol-contract DT has the expected number of elements');
+is(scalar(@$elements), 13, 'symbol-contract DT has the expected number of elements');
 
 my %assignment_by_target;
 my @conditional_assignments;
@@ -94,6 +104,9 @@ is_literal_assignment($assignment_by_target{C}, '8', undef, 'P0 param resolves t
 is_literal_assignment($assignment_by_target{D}, '1', undef, 'mode.BUSY enum member resolves to a literal');
 is_literal_assignment($assignment_by_target{E}, "'h10", undef, 'P_HEX param resolves to a canonical unsized hex literal');
 is_literal_assignment($assignment_by_target{F}, "'b1010", undef, 'P_BIN param resolves to a canonical unsized binary literal');
+is_literal_assignment($assignment_by_target{G}, '3', 8, 'P_FROM_CONST param reuses a constant payload');
+is_literal_assignment($assignment_by_target{H}, '1', undef, 'P_FROM_ENUM param reuses an enum-member payload');
+is_literal_assignment($assignment_by_target{I}, '1010010100111100', 16, 'P_FROM_AGG param reuses an aggregate constant payload');
 is_literal_assignment($assignment_by_target{W}, '1010010100111100', 16, 'P_LIST aggregate param resolves to one packed literal');
 is_literal_assignment($assignment_by_target{Z}, '0', 8, 'ZERO constant resolves through const_8b0');
 
@@ -101,13 +114,16 @@ my $params = $fsm_module->parameters;
 is($params->{P_HEX}{value_text}, "'h10", 'semantic module records canonical hex parameter text');
 is($params->{P_LIST}{value_kind}, 'list', 'semantic module records aggregate parameter kind');
 is($params->{P_LIST}{value_width}, 16, 'semantic module records packed aggregate parameter width');
+is($params->{P_FROM_CONST}{value_width}, 8, 'semantic module preserves width from referenced constant parameter value');
+is($params->{P_FROM_AGG}{value_kind}, 'list', 'semantic module records referenced aggregate parameter kind');
+is($params->{P_FROM_AGG}{value_width}, 16, 'semantic module records referenced aggregate parameter width');
 
 my $intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
     fsm_module => $fsm_module,
 );
 is_deeply(
     $intent_hir->parameter_names,
-    [qw(P0 P_BIN P_HEX P_LIST)],
+    [qw(P0 P_BIN P_FROM_AGG P_FROM_CONST P_FROM_ENUM P_HEX P_LIST)],
     'Intent HIR exposes direct-root parameter names from semantic module metadata'
 );
 

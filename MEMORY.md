@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-11: direct `+params` can reuse named semantic values
+- Saved the bounded `R11` direct-parameter symbol-reuse slice.
+- Important continuity note:
+  - direct-root `(+params ...)` values can now point at resolved `+constants`,
+    enum members such as `mode.BUSY`, whole aggregate constant roots, and
+    already-parsed direct `+define` literals,
+  - [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm)
+    remains the neutral normalization owner and now accepts an optional symbol
+    payload resolver for this use case,
+  - [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
+    owns the direct-root parameter-value symbol lookup,
+  - params intentionally do not depend on other params yet, so unresolved bare
+    names still fail before generation instead of becoming raw HDL text,
+  - [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t)
+    now proves constant-backed, enum-backed, and aggregate-backed params lower
+    to the expected semantic literal payloads and remain visible in Intent HIR,
+  - and generated-child parameterization plus package-backed/external named
+    parameter values remain explicit future contracts.
+
 ## 2026-04-11: direct `+params` now share parameter/generic value normalization
 - Saved the bounded `R11` direct-parameter normalization slice.
 - Important continuity note:
