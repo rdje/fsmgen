@@ -355,6 +355,62 @@ Verilog-family backend lowers them to SystemVerilog `#(...)` instance
 parameters by packing aggregates into one literal. VHDL generic-map lowering is
 still a future backend follow-up.
 
+Generated `?fsmc` and `?dtc` children now use the same semantic override
+surface, but the declaration contract lives in the realized child source's
+direct `(+params ...)` block rather than in `.rtlif` metadata:
+
+```lisp
+(?top:parameterized_generated_child_top
+  (+constants
+    (OVERRIDE_WIDTH 16)
+    (TOP_LANES (8'hA5 8'h3C))
+  )
+  (?ports:public_io
+    clk
+    rstn
+    payload_in<16
+    payload_out>16
+  )
+  (?fsmc:u_child child_src
+    (params
+      (WIDTH OVERRIDE_WIDTH)
+      (LANES TOP_LANES)
+    )
+  )
+  (?toplink:wiring
+    /payload_in/u_child.in_data/
+    /u_child.out_data/payload_out/
+  )
+)
+
+(?fsm:child_src
+  (+params
+    (WIDTH 8)
+    (LANES (8'h00 8'h00))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (in_data 16)
+    (out_data 16)
+  )
+  (-idle
+    (out_data> = LANES <in_data=WIDTH)
+  )
+)
+```
+
+The parser accepts at most one `(params (NAME value) ...)` block under each
+generated-child instance. Symbolic override values resolve after composition
+imports, undeclared override names fail against the generated child's direct
+`+params` declarations, scalar overrides stay width-flexible, aggregate
+overrides must match the child default's aggregate shape, and current
+Verilog-family emission lowers valid generated-child overrides to
+SystemVerilog `#(...)` instance parameters. VHDL generic-map lowering remains a
+backend follow-up.
+
 ## Current Boundary
 
 This advanced lane is deliberately rich but still bounded:

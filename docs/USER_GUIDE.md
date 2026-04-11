@@ -206,11 +206,15 @@ Combinational DT note:
 - Port tokens like `clk`, `reset`, `rst_n`, `data_in<8`, `txd>`, and `=final_data>8`
 - `(?fsmc:instance child_source)` with exactly one child FSM source token
   - or `(?fsmc:instance)` on named children, which defaults the child source to `instance`
+  - optionally with one semantic parameter/generic override block such as `(?fsmc:u_child child_src (params (WIDTH 16) (LANES TOP_LANES)))`
+  - generated-child overrides must name direct `(+params ...)` declarations in the child source; scalar values stay width-flexible and aggregate values must match the child parameter default's inferred aggregate shape before generation
   - the active child source may be embedded in the same file as `?fsm:name`
   - or resolved from an external `.fsm` file beside the composition source, through repeated `--path DIR` roots, then through `FSMLIB`
   - strict mode narrows this child contract to the canonical `?fsm:name` root family only
 - `(?dtc:instance child_source)` with exactly one standalone-DT child source token
   - or `(?dtc:instance)` on named children, which defaults the child source to `instance`
+  - optionally with one semantic parameter/generic override block such as `(?dtc:u_filter filter_src (params (WIDTH 16)))`
+  - generated-child overrides follow the same direct-child `+params` declaration, symbol-resolution, scalar, and aggregate-shape rules as `?fsmc`
   - the active child source may be embedded in the same file as `?dt:name`
   - the current live path also accepts embedded or external `?mod:name` / `?module:name` child roots there, even though those roots are not semantically identical to `?dt:name`
   - strict mode narrows this child contract to the canonical `?dt:name` root family only
@@ -1437,6 +1441,7 @@ Current `.rtlif` token contract:
 - ordinary typed data outputs remain valid, for example `txd>:data`
 - `.rtlif` parameter/generic defaults accept scalar integer literals such as `8`, `8'hA5`, `'hA5`, `0xA5`, `0b1010`, and `0o77`, bounded literal list/record payloads such as `(8'hA5 8'h3C)` and `((mode 2'b10) (flag 1))`, and package-qualified symbols from packages imported by the consuming composition source, such as `param_pkg.DEFAULT_WIDTH`, `param_pkg.DEFAULT_LANES`, or `param_pkg.frame_mode.RUN`; unresolved default symbols abort before generation
 - per-instance parameter/generic overrides must name parameters/generics declared by the loaded `.rtlif` `(params ...)` block; the shipped override value surface accepts the same scalar integer literals and bounded literal list/record payloads; override values may also reuse resolved composition-top or imported package symbols such as `WIDTH_VALUE`, `mode.BUSY`, `shared.RESET_VALUE`, or aggregate roots like `shared.LANES`; unresolved override symbols abort before generation; aggregate overrides must match the aggregate shape inferred from the `.rtlif` default value; validated overrides are preserved through the composition plan and structural RTL IR and lower to SystemVerilog `#(...)` instance parameters for the Verilog-family backend.
+- generated `?fsmc` / `?dtc` child instances use the same semantic override surface with `(?fsmc:u_child child_src (params (NAME value) ...))` or `(?dtc:u_child child_src (params (NAME value) ...))`; named children may still omit the explicit source token and default to the child name; each override name must match a direct `(+params ...)` declaration in the realized child source; scalar overrides are width-flexible, aggregate overrides must match the aggregate shape inferred from the child's parameter default, and valid values are preserved through the composition plan, Intent HIR, structural RTL IR, and current SystemVerilog `#(...)` generated-child instance emission.
 
 Example parameterized external RTL instance:
 ```lisp
@@ -1495,6 +1500,50 @@ Example parameterized external RTL instance:
     (DEFAULT_FRAME ((mode 2'b00) (flag 0)))
     (RESET_A5 8'hA5)
     (FLAG_ON 1)
+  )
+)
+```
+
+Example parameterized generated child:
+```lisp
+(?top:parameterized_generated_child_top
+  (+constants
+    (OVERRIDE_WIDTH 16)
+    (TOP_LANES (8'hA5 8'h3C))
+  )
+  (?ports:public_io
+    clk
+    rstn
+    payload_in<16
+    payload_out>16
+  )
+  (?fsmc:u_child child_src
+    (params
+      (WIDTH OVERRIDE_WIDTH)
+      (LANES TOP_LANES)
+    )
+  )
+  (?toplink:wiring
+    /payload_in/u_child.in_data/
+    /u_child.out_data/payload_out/
+  )
+)
+
+(?fsm:child_src
+  (+params
+    (WIDTH 8)
+    (LANES (8'h00 8'h00))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (in_data 16)
+    (out_data 16)
+  )
+  (-idle
+    (out_data> = LANES <in_data=WIDTH)
   )
 )
 ```

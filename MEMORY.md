@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-12: generated-child parameter overrides now target child `+params`
+- Saved the bounded `R11` generated-child parameter/generic override slice.
+- Important continuity note:
+  - `?fsmc` and `?dtc` instances may now carry one semantic `(params (NAME value) ...)` block, including the defaulted-source form on named children,
+  - [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm)
+    shares the parameter override parser across external `?rtl` and generated-child instances while preserving `origin_kind => generated_child_parameter_override`,
+  - [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm)
+    now resolves deferred composition-top and imported-package symbols for every instance that carries overrides, not only `?rtl`,
+  - [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm)
+    validates override names against the realized child's direct `(+params ...)` declarations and validates aggregate override shape against the child default's inferred aggregate type,
+  - valid generated-child overrides now preserve through realized instances, Intent HIR, structural RTL IR, and current SystemVerilog `#(...)` generated-child instance emission,
+  - [t/292-composition-generated-child-parameter-overrides.t](/Users/richarddje/Documents/github/fsmgen/t/292-composition-generated-child-parameter-overrides.t)
+    locks success, undeclared-override rejection, aggregate-shape rejection, and CLI no-output failures,
+  - and the remaining parameter/generic follow-ups are now VHDL generic-map lowering plus richer non-literal semantic values, not the generated-child SV path.
+
 ## 2026-04-11: direct `+params` now preserve parameter references through SV emission
 - Saved the bounded `R11` direct-parameter reference-preservation slice.
 - Important continuity note:
@@ -20,9 +35,9 @@ This is the live continuity document for fast session recovery after crashes, re
   - [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t)
     now proves `ParameterRef` AST preservation plus generated SV references
     such as `C = P0` and `W = P_LIST`,
-  - and generated-child parameterization remains follow-up work because instance
-    override binding must now target these real child-module parameters rather
-    than fake literal-substituted internals.
+  - and that follow-up is now covered by the 2026-04-12 generated-child
+    override slice above, which targets these real child-module parameters
+    rather than fake literal-substituted internals.
 
 ## 2026-04-11: `.rtlif` declaration defaults can reuse imported package symbols
 - Saved the bounded `R11` package-backed `.rtlif` default-value slice.
@@ -102,8 +117,8 @@ This is the live continuity document for fast session recovery after crashes, re
     HIR exposes `parameter_names` for direct roots,
   - malformed direct `+params` entries still fail through the parser-fronted
     targeted diagnostics before HDL emission,
-  - and generated-child parameterization remains a follow-up because that needs
-    explicit source-level override binding, not just late HDL instance text.
+  - and the explicit source-level override binding follow-up is now covered by
+    the 2026-04-12 generated-child override slice above.
 
 ## 2026-04-11: external `?rtl` parameter/generic overrides now have a first semantic slice
 - Saved the bounded `R11` external-RTL parameter/generic override slice.
@@ -131,8 +146,9 @@ This is the live continuity document for fast session recovery after crashes, re
     structural RTL IR, and the current Verilog-family backend,
   - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)
     lowers the shipped slice to SystemVerilog `#(...)` instance parameters,
-  - and VHDL generic-map lowering, generated-child parameterization, and
-    richer non-literal semantic override values remain follow-up work.
+  - and VHDL generic-map lowering plus richer non-literal semantic override
+    values remain follow-up work; the generated-child SV override path is now
+    covered by the 2026-04-12 slice above.
 
 ## 2026-04-11: `?rtl` aliases now reuse one `.rtlif` contract
 - Saved the bounded `R11` external-RTL reuse slice.

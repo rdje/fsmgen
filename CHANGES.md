@@ -1,5 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-12
+### generated `?fsmc` / `?dtc` children now support semantic parameter overrides
+- Updated [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm) so generated child instances may carry one semantic `(params (NAME value) ...)` block, while named children can still omit the explicit source token and default it to the instance name.
+- Generalized [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm) so deferred override values resolve composition-top and imported-package symbols for all child kinds, not just external `?rtl`.
+- Updated [perl/FSM/Composition/GeneratedChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GeneratedChildRealizer.pm) so generated-child overrides must target direct child-source `(+params ...)` declarations, aggregate overrides must match the child default's inferred aggregate shape, and valid overrides preserve into realized instances, Intent HIR, structural RTL IR, and current SystemVerilog `#(...)` instance emission.
+- Added [t/292-composition-generated-child-parameter-overrides.t](/Users/richarddje/Documents/github/fsmgen/t/292-composition-generated-child-parameter-overrides.t) and extended [t/14-composition-parser.t](/Users/richarddje/Documents/github/fsmgen/t/14-composition-parser.t) to lock successful scalar/aggregate generated-child overrides, undeclared-override rejection, aggregate-shape rejection, defaulted child-source parsing with params, and generated SV output.
+- Updated the user guide, mdBook composition chapters, composition scope, legacy mapping note, roadmap status, memory, and development notes so generated-child parameterization is recorded as shipped; VHDL generic-map lowering and richer non-literal semantic values remain follow-ups.
+
 ## 2026-04-11
 ### direct `+params` now remain HDL parameter references in generated modules
 - Added [FSM::CoreAST::ParameterRef](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) and updated [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm) so direct-root parameter uses in expressions preserve the parameter name instead of substituting the default literal into the AST.

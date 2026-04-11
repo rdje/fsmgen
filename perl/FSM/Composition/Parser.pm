@@ -578,62 +578,79 @@ sub parse_top_import_block ($self, $top_name, $child_ast) {
 }
 
 sub parse_fsmc_child ($self, $top_name, $child_ast, $child_name, $items) {
-    my @scalar_items = grep { !ref($_) } @$items;
-    my @non_scalar_items = grep { ref($_) } @$items;
-
-    if (@non_scalar_items) {
-        confess
-            "Composition top '$top_name' contains '?fsmc' child ".
-            ($child_name ? "'$child_name'" : 'without a name').
-            ", but composition child source shape is blocked because the active composition parser currently requires exactly one flat FSM source name per '?fsmc'.".
-            $self->scope_docs_suffix;
-    }
-
-    if (!@scalar_items && $child_name) {
-        return FSM::Composition::Instance->new(
-            kind => 'fsmc',
-            name => $child_name,
-            source_name => $child_name,
-            raw_items => $items,
-            raw_ast => $child_ast,
-        );
-    }
-
-    if (@scalar_items != 1) {
-        my $count = scalar(@scalar_items);
-        confess
-            "Composition top '$top_name' contains '?fsmc' child ".
-            ($child_name ? "'$child_name'" : 'without a name').
-            " with $count FSM source names, but composition child source count is blocked because the active composition parser currently requires exactly one FSM source name per '?fsmc'.".
-            $self->scope_docs_suffix;
-    }
-
-    return FSM::Composition::Instance->new(
+    return $self->parse_generated_child(
+        top_name => $top_name,
+        child_ast => $child_ast,
+        child_name => $child_name,
+        items => $items,
         kind => 'fsmc',
-        name => $child_name,
-        source_name => $scalar_items[0],
-        raw_items => $items,
-        raw_ast => $child_ast,
+        child_kind_label => '?fsmc',
+        source_family => 'FSM',
     );
 }
 
 sub parse_dtc_child ($self, $top_name, $child_ast, $child_name, $items) {
+    return $self->parse_generated_child(
+        top_name => $top_name,
+        child_ast => $child_ast,
+        child_name => $child_name,
+        items => $items,
+        kind => 'dtc',
+        child_kind_label => '?dtc',
+        source_family => 'standalone-DT',
+    );
+}
+
+sub parse_generated_child ($self, %args) {
+    my $top_name = $args{top_name};
+    my $child_ast = $args{child_ast};
+    my $child_name = $args{child_name};
+    my $items = $args{items};
+    my $kind = $args{kind};
+    my $child_kind_label = $args{child_kind_label};
+    my $source_family = $args{source_family};
     my @scalar_items = grep { !ref($_) } @$items;
     my @non_scalar_items = grep { ref($_) } @$items;
+    my @parameter_overrides;
 
-    if (@non_scalar_items) {
+    for my $nested_item (@non_scalar_items) {
         confess
-            "Composition top '$top_name' contains '?dtc' child ".
+            "Composition top '$top_name' contains '$child_kind_label' child ".
             ($child_name ? "'$child_name'" : 'without a name').
-            ", but composition child source shape is blocked because the active composition parser currently requires exactly one flat standalone-DT source name per '?dtc'.".
+            ", but composition generated-child source shape is blocked because nested '$child_kind_label' payloads must use supported semantic blocks '(params (NAME value) ...)', not raw target-HDL text.".
+            $self->scope_docs_suffix
+            unless ref($nested_item) eq 'ARRAY' && @$nested_item && !ref($nested_item->[0]);
+
+        my $nested_header = $nested_item->[0];
+        if ($nested_header eq 'params') {
+            confess
+                "Composition top '$top_name' contains '$child_kind_label' child ".
+                ($child_name ? "'$child_name'" : 'without a name').
+                " with multiple '(params ...)' blocks, but composition generated-child parameter override shape is blocked because each generated child instance may use at most one parameter/generic override block.".
+                $self->scope_docs_suffix
+                if @parameter_overrides;
+            @parameter_overrides = @{$self->parse_generated_parameter_override_block(
+                top_name => $top_name,
+                child_name => $child_name,
+                child_kind_label => $child_kind_label,
+                params_block => $nested_item,
+            )};
+            next;
+        }
+
+        confess
+            "Composition top '$top_name' contains '$child_kind_label' child ".
+            ($child_name ? "'$child_name'" : 'without a name').
+            " with unsupported nested block '$nested_header', but composition generated-child source shape is blocked because nested '$child_kind_label' payloads currently accept only '(params (NAME value) ...)' semantic blocks.".
             $self->scope_docs_suffix;
     }
 
     if (!@scalar_items && $child_name) {
         return FSM::Composition::Instance->new(
-            kind => 'dtc',
+            kind => $kind,
             name => $child_name,
             source_name => $child_name,
+            parameter_overrides => \@parameter_overrides,
             raw_items => $items,
             raw_ast => $child_ast,
         );
@@ -642,16 +659,17 @@ sub parse_dtc_child ($self, $top_name, $child_ast, $child_name, $items) {
     if (@scalar_items != 1) {
         my $count = scalar(@scalar_items);
         confess
-            "Composition top '$top_name' contains '?dtc' child ".
+            "Composition top '$top_name' contains '$child_kind_label' child ".
             ($child_name ? "'$child_name'" : 'without a name').
-            " with $count standalone-DT source names, but composition child source count is blocked because the active composition parser currently requires exactly one standalone-DT source name per '?dtc'.".
+            " with $count $source_family source names, but composition child source count is blocked because the active composition parser currently requires exactly one $source_family source name per '$child_kind_label'.".
             $self->scope_docs_suffix;
     }
 
     return FSM::Composition::Instance->new(
-        kind => 'dtc',
+        kind => $kind,
         name => $child_name,
         source_name => $scalar_items[0],
+        parameter_overrides => \@parameter_overrides,
         raw_items => $items,
         raw_ast => $child_ast,
     );
@@ -752,10 +770,41 @@ sub parse_rtl_module_block ($self, $top_name, $child_name, $module_block) {
 }
 
 sub parse_rtl_parameter_override_block ($self, $top_name, $child_name, $params_block) {
+    return $self->parse_parameter_override_block(
+        top_name => $top_name,
+        child_name => $child_name,
+        child_kind_label => '?rtl',
+        override_family => 'external-RTL',
+        origin_kind => 'rtl_instance_parameter_override',
+        params_block => $params_block,
+    );
+}
+
+sub parse_generated_parameter_override_block ($self, %args) {
+    return $self->parse_parameter_override_block(
+        top_name => $args{top_name},
+        child_name => $args{child_name},
+        child_kind_label => $args{child_kind_label},
+        override_family => 'generated-child',
+        origin_kind => 'generated_child_parameter_override',
+        params_block => $args{params_block},
+    );
+}
+
+sub parse_parameter_override_block ($self, %args) {
+    my $top_name = $args{top_name} // 'top';
+    my $child_name = $args{child_name};
+    my $child_kind_label = $args{child_kind_label} // '?child';
+    my $override_family = $args{override_family} // 'child';
+    my $origin_kind = $args{origin_kind} // 'child_parameter_override';
+    my $params_block = $args{params_block};
+    my $child_display = defined($child_name) && $child_name ne ''
+        ? $child_name
+        : 'unnamed';
     my $entries = $params_block->[1] // [];
     confess
-        "Composition top '$top_name' contains '?rtl' child '$child_name' with malformed '(params ...)' block, ".
-        "but composition external-RTL parameter override shape is blocked because '(params ...)' must contain one or more '(NAME value)' scalar or aggregate override entries.".
+        "Composition top '$top_name' contains '$child_kind_label' child '$child_display' with malformed '(params ...)' block, ".
+        "but composition $override_family parameter override shape is blocked because '(params ...)' must contain one or more '(NAME value)' scalar or aggregate override entries.".
         $self->scope_docs_suffix
         unless ref($entries) eq 'ARRAY' && @$entries;
 
@@ -763,30 +812,31 @@ sub parse_rtl_parameter_override_block ($self, $top_name, $child_name, $params_b
     my %seen;
     for my $entry (@$entries) {
         confess
-            "Composition top '$top_name' contains '?rtl' child '$child_name' with malformed parameter override entry, ".
-            "but composition external-RTL parameter override shape is blocked because each override must use '(NAME value)'.".
+            "Composition top '$top_name' contains '$child_kind_label' child '$child_display' with malformed parameter override entry, ".
+            "but composition $override_family parameter override shape is blocked because each override must use '(NAME value)'.".
             $self->scope_docs_suffix
             unless ref($entry) eq 'ARRAY' && @$entry == 2;
 
         my ($name_ast, $value_ast) = @$entry;
         my $name = $self->unwrap_scalar_token($name_ast);
         confess
-            "Composition top '$top_name' contains '?rtl' child '$child_name' with malformed parameter override name '".$self->describe_contract_name($name)."', ".
-            "but composition external-RTL parameter override token shape is blocked because parameter/generic names must be HDL-identifier-compatible.".
+            "Composition top '$top_name' contains '$child_kind_label' child '$child_display' with malformed parameter override name '".$self->describe_contract_name($name)."', ".
+            "but composition $override_family parameter override token shape is blocked because parameter/generic names must be HDL-identifier-compatible.".
             $self->scope_docs_suffix
             unless $self->is_contract_identifier($name);
 
         confess
-            "Composition top '$top_name' contains '?rtl' child '$child_name' with duplicate parameter override '$name', ".
-            "but composition external-RTL parameter override uniqueness is blocked because each instance override may bind a parameter/generic name at most once.".
+            "Composition top '$top_name' contains '$child_kind_label' child '$child_display' with duplicate parameter override '$name', ".
+            "but composition $override_family parameter override uniqueness is blocked because each instance override may bind a parameter/generic name at most once.".
             $self->scope_docs_suffix
             if $seen{$name};
         $seen{$name} = 1;
 
         my $raw_value = $self->unwrap_scalar_token($value_ast);
-        my $value_info = $self->canonicalize_rtl_parameter_override_value(
+        my $value_info = $self->canonicalize_parameter_override_value(
             top_name => $top_name,
-            child_name => $child_name,
+            child_name => $child_display,
+            child_kind_label => $child_kind_label,
             name => $name,
             value_ast => $value_ast,
         );
@@ -797,7 +847,7 @@ sub parse_rtl_parameter_override_block ($self, $top_name, $child_name, $params_b
                 %$override,
                 value_kind => 'deferred_symbol',
                 value_payload => $value_info->{value_payload},
-                origin_kind => 'rtl_instance_parameter_override',
+                origin_kind => $origin_kind,
                 deferred_reason => $value_info->{deferred_reason},
             );
             $override->{deferred_value_symbol} = $raw_value if defined($raw_value) && !ref($raw_value);
@@ -808,7 +858,7 @@ sub parse_rtl_parameter_override_block ($self, $top_name, $child_name, $params_b
                 value_text => $value_info->{value_text},
                 value_kind => $value_info->{value_kind},
                 value_payload => $value_info->{value_payload},
-                origin_kind => 'rtl_instance_parameter_override',
+                origin_kind => $origin_kind,
             );
         }
         $override->{raw_value} = $raw_value if defined($raw_value) && !ref($raw_value);
@@ -823,15 +873,23 @@ sub parse_rtl_parameter_override_block ($self, $top_name, $child_name, $params_b
 }
 
 sub canonicalize_rtl_parameter_override_value ($self, %args) {
+    return $self->canonicalize_parameter_override_value(
+        %args,
+        child_kind_label => '?rtl',
+    );
+}
+
+sub canonicalize_parameter_override_value ($self, %args) {
     my $top_name = $args{top_name} // 'top';
     my $child_name = $args{child_name} // 'unknown';
+    my $child_kind_label = $args{child_kind_label} // '?child';
     my $name = $args{name} // 'unknown';
     my $value_ast = $args{value_ast};
 
     my $value_info = eval {
         FSM::ParameterValueSupport->canonical_value(
             value_ast => $value_ast,
-            context => "Composition top '$top_name' contains '?rtl' child '$child_name' parameter override '$name'",
+            context => "Composition top '$top_name' contains '$child_kind_label' child '$child_name' parameter override '$name'",
             docs_hint => $self->scope_docs_suffix,
         );
     };

@@ -96,6 +96,53 @@ Generated-child example:
 
 This works because the top can honestly expose the realized child interface.
 
+Generated children can also be parameterized semantically. Declare the
+supported names in the child source with `(+params ...)`, then override those
+names on the `?fsmc` or `?dtc` instance:
+
+```lisp
+(?top:parameterized_child_top
+  (+constants
+    (TOP_WIDTH 16)
+    (TOP_LANES (8'hA5 8'h3C))
+  )
+  (?ports:public_io
+    clk
+    reset
+    data_in<16
+    data_out>16
+  )
+  (?fsmc:child child_ctrl_src
+    (params
+      (WIDTH TOP_WIDTH)
+      (LANES TOP_LANES)
+    )
+  )
+)
+
+(?fsm:child_ctrl_src
+  (+params
+    (WIDTH 8)
+    (LANES (8'h00 8'h00))
+  )
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (data_in 16)
+    (data_out 16)
+  )
+  (idle
+    (data_out> = LANES <data_in=WIDTH)
+  )
+)
+```
+
+Scalar overrides are intentionally width-flexible at the intent layer.
+Aggregate overrides must match the list/record shape inferred from the child
+parameter default before HDL is emitted.
+
 ## Explicit Child-To-Child Wiring
 
 Once you have multiple children, the normal tool is `?toplink`.

@@ -139,8 +139,8 @@ $nested_fsm_source_error = $@;
 
 like(
     $nested_fsm_source_error,
-    qr/contains '\?fsmc' child 'combo', .*composition child source shape is blocked because the active composition parser currently requires exactly one flat FSM source name per '\?fsmc'/s,
-    'parser now says nested fsmc source payloads block composition child source shape',
+    qr/contains '\?fsmc' child 'combo' with unsupported nested block 'opt', .*composition generated-child source shape is blocked because nested '\?fsmc' payloads currently accept only '\(params \(NAME value\) \.\.\.\)' semantic blocks/s,
+    'parser now says unsupported nested fsmc payloads block generated-child source shape',
 );
 
 my $dt_child_path = File::Spec->catfile($tempdir, 'dt_child_top.fsm');
@@ -174,6 +174,44 @@ is($dt_child_spec->top->instances->[0]->source_name, 'route_src', 'dtc child pre
 ok(
     exists $dt_child_spec->embedded_dt_sources->{route_src},
     'parser records embedded DT roots alongside the typed composition top',
+);
+
+my $parameterized_generated_spec = $parser->parse_source(
+    scalar Lispish::multi(\<<'FSM'),
+(?top:parameterized_generated_top
+  (?fsmc:u_ctrl ctrl_src
+    (params
+      (WIDTH 16)
+      (LANES (8'hA5 8'h3C))
+    )
+  )
+  (?dtc:router
+    (params
+      (MODE 1)
+    )
+  )
+)
+FSM
+);
+
+is(scalar(@{$parameterized_generated_spec->top->instances}), 2, 'parser records parameterized generated children');
+is($parameterized_generated_spec->top->instances->[0]->kind, 'fsmc', 'parameterized fsmc child preserves kind');
+is($parameterized_generated_spec->top->instances->[0]->name, 'u_ctrl', 'parameterized fsmc child preserves instance name');
+is($parameterized_generated_spec->top->instances->[0]->source_name, 'ctrl_src', 'parameterized fsmc child preserves source name');
+is_deeply(
+    [map { $_->{name} } @{$parameterized_generated_spec->top->instances->[0]->parameter_overrides}],
+    [qw(WIDTH LANES)],
+    'parser preserves generated fsmc parameter override order',
+);
+is($parameterized_generated_spec->top->instances->[0]->parameter_overrides->[0]{origin_kind}, 'generated_child_parameter_override', 'parser marks fsmc overrides as generated-child overrides');
+is($parameterized_generated_spec->top->instances->[0]->parameter_overrides->[1]{value_kind}, 'list', 'parser preserves aggregate generated-child parameter override kind');
+is($parameterized_generated_spec->top->instances->[1]->kind, 'dtc', 'parameterized dtc child preserves kind');
+is($parameterized_generated_spec->top->instances->[1]->name, 'router', 'parameterized dtc child preserves instance name');
+is($parameterized_generated_spec->top->instances->[1]->source_name, 'router', 'parameterized named dtc child defaults source name even with params block');
+is_deeply(
+    [map { $_->{name} } @{$parameterized_generated_spec->top->instances->[1]->parameter_overrides}],
+    ['MODE'],
+    'parser preserves generated dtc parameter overrides with defaulted source name',
 );
 
 my $symbol_top_spec = $parser->parse_source(
@@ -346,8 +384,8 @@ $nested_dtc_source_error = $@;
 
 like(
     $nested_dtc_source_error,
-    qr/contains '\?dtc' child 'combo', .*composition child source shape is blocked because the active composition parser currently requires exactly one flat standalone-DT source name per '\?dtc'/s,
-    'parser now says nested dtc source payloads block composition child source shape',
+    qr/contains '\?dtc' child 'combo' with unsupported nested block 'opt', .*composition generated-child source shape is blocked because nested '\?dtc' payloads currently accept only '\(params \(NAME value\) \.\.\.\)' semantic blocks/s,
+    'parser now says unsupported nested dtc payloads block generated-child source shape',
 );
 
 done_testing();

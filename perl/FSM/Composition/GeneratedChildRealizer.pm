@@ -29,6 +29,7 @@ use FSM::Composition::RealizedInstance;
 use FSM::Composition::SharedDatapathSupport;
 use FSM::IR::IntentHIRBuilder;
 use FSM::IR::StructuralRTLIRBuilder;
+use FSM::Package::PayloadTypeSupport;
 use FSM::Pipeline::GeneratedModuleInfoBuilder;
 use FSM::Pipeline::SourceFrontend;
 
@@ -248,6 +249,12 @@ sub _realize_generated_child ($class, %args) {
                 fsm_file => ($args{child_source_path} // $fsm_file),
                 source_path_resolver => $pipeline->{source_path_resolver},
             );
+            my $parameter_overrides = $class->validate_parameter_overrides(
+                instance => $instance,
+                child_module => $child_module,
+                source_name => $source_name,
+                declared_child_kind => $declared_child_kind,
+            );
             my $child_intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
                 fsm_module => $child_module,
             );
@@ -299,11 +306,86 @@ sub _realize_generated_child ($class, %args) {
                 module_name => $child_module->name,
                 source_name => $source_name,
                 interface_ports => $child_interface_ports,
+                parameter_overrides => $parameter_overrides,
                 module_info => $child_module_info,
                 hdl_code => $child_hdl_code,
             );
         },
     );
+}
+
+sub validate_parameter_overrides ($class, %args) {
+    my $instance = $args{instance}
+        or confess "GeneratedChildRealizer requires an instance";
+    my $child_module = $args{child_module}
+        or confess "GeneratedChildRealizer requires a child_module";
+    my $source_name = $args{source_name} // 'unknown';
+    my $declared_child_kind = $args{declared_child_kind} // '?' . ($instance->kind // 'child');
+
+    my @overrides = @{$instance->parameter_overrides || []};
+    return [] unless @overrides;
+
+    my $module_name = $child_module->name;
+    my $instance_name = $instance->name // $module_name;
+    my $parameter_declarations = $child_module->parameters || {};
+
+    for my $override (@overrides) {
+        my $name = $override->{name} // '';
+        confess
+            "Composition references generated child instance '$instance_name' of module '$module_name', ".
+            "but generated-child parameter/generic override validation is blocked because override '$name' has no matching direct '+params' declaration in child source '$source_name'. ".
+            "Declare the parameter/generic in '(+params (NAME default_value) ...)' under the generated child source before overriding it from '$declared_child_kind:$instance_name'. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless exists $parameter_declarations->{$name};
+
+        my $declaration = $parameter_declarations->{$name};
+        $class->validate_parameter_override_type_shape(
+            module_name => $module_name,
+            instance_name => $instance_name,
+            source_name => $source_name,
+            declaration_name => $name,
+            declaration => $declaration,
+            override => $override,
+        );
+    }
+
+    return _clone(\@overrides);
+}
+
+sub validate_parameter_override_type_shape ($class, %args) {
+    my $module_name = $args{module_name} // 'unknown';
+    my $instance_name = $args{instance_name} // $module_name;
+    my $source_name = $args{source_name} // 'unknown';
+    my $declaration_name = $args{declaration_name} // 'unknown';
+    my $declaration = $args{declaration}
+        or confess "GeneratedChildRealizer requires a declaration";
+    my $override = $args{override}
+        or confess "GeneratedChildRealizer requires an override";
+    my $name = $override->{name} // $declaration_name;
+
+    my $decl_kind = $declaration->{value_kind} // 'scalar';
+    my $override_kind = $override->{value_kind} // 'scalar';
+    return 1 if $decl_kind eq 'scalar' && $override_kind eq 'scalar';
+
+    my $decl_label = _value_type_label($declaration->{value_type_spec}, $decl_kind);
+    my $override_label = _value_type_label($override->{value_type_spec}, $override_kind);
+    confess
+        "Composition references generated child instance '$instance_name' of module '$module_name', ".
+        "but generated-child parameter/generic override validation is blocked because override '$name' uses $override_label while child source '$source_name' declares $decl_label. ".
+        "Aggregate parameter/generic overrides must match the aggregate shape inferred from the generated child's '+params' default value; scalar numeric parameters remain width-flexible. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless $decl_kind ne 'scalar' && $override_kind ne 'scalar';
+
+    my $decl_spec = $declaration->{value_type_spec};
+    my $override_spec = $override->{value_type_spec};
+    confess
+        "Composition references generated child instance '$instance_name' of module '$module_name', ".
+        "but generated-child parameter/generic override validation is blocked because override '$name' uses $override_label while child source '$source_name' declares $decl_label. ".
+        "Aggregate parameter/generic overrides must match the aggregate shape inferred from the generated child's '+params' default value before backend emission. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless FSM::Package::PayloadTypeSupport->payload_compatible_with_type_spec($override_spec, $decl_spec);
+
+    return 1;
 }
 
 sub _load_external_generated_child_source ($class, %args) {
@@ -445,6 +527,23 @@ sub _wrong_kind_note ($class, $child_kind, $child_root_kind) {
     return $child_root_kind eq 'fsm'
         ? "FSM child roots are shipped as composition children, but '?dtc' specifically requires a standalone-DT child source. Use '?fsmc' for FSM children instead."
         : "The active standalone-DT composition contract currently expects '?dt:name', '?mod:name', or '?module:name' child roots for '?dtc'.";
+}
+
+sub _value_type_label ($type_spec, $fallback_kind) {
+    return FSM::Package::PayloadTypeSupport->type_spec_label($type_spec)
+        if ref($type_spec) eq 'HASH';
+    return $fallback_kind // 'unknown';
+}
+
+sub _clone ($value) {
+    return undef unless defined $value;
+    if (ref($value) eq 'HASH') {
+        return { map { $_ => _clone($value->{$_}) } keys %$value };
+    }
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _clone($_) } @$value ];
+    }
+    return $value;
 }
 
 1;

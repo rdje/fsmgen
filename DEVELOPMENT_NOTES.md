@@ -1,5 +1,29 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-12: generated-child parameter overrides stay semantic
+- Generated `?fsmc` / `?dtc` child parameterization now uses the same semantic
+  `(params (NAME value) ...)` instance override surface as external `?rtl`, but
+  validates against the realized generated child module's direct `(+params ...)`
+  declarations instead of an `.rtlif` sidecar.
+- Rationale:
+  - this keeps generated-child parameterization at the intent layer instead of
+    introducing raw target-HDL text under `?fsmc` / `?dtc`,
+  - the previous `ParameterRef` slice made child internals overrideable in a
+    meaningful way because direct generated modules now preserve parameter
+    references instead of substituting literal defaults,
+  - one shared parameter-override parser and resolver keeps composition-top and
+    imported-package symbol reuse consistent across external and generated
+    children,
+  - generated-child override-name validation must happen after realization,
+    because only then does the tool know the child's direct `+params`
+    declaration set,
+  - aggregate override checks compare the override payload shape with the
+    child's parameter default shape before backend emission, preserving the
+    "generation walks a validated AST/IR" rule,
+  - and current Verilog-family lowering may emit SystemVerilog `#(...)`
+    generated-child instance parameters while VHDL generic-map lowering remains
+    a backend follow-up.
+
 ## 2026-04-11: direct params are AST parameter refs, not literal substitution
 - Direct-root `(+params ...)` references now preserve named HDL parameter
   identity through the CoreAST instead of substituting the declared default
@@ -60,7 +84,8 @@ This document captures engineering rationale, design constraints, and working de
   - and override-name validation plus aggregate-shape validation remain owned
     by the `.rtlif` declaration contract and RTL child realizer.
 - Deliberate non-goals for this slice:
-  - generated-child parameterization remains separate,
+  - generated-child parameterization was intentionally separate in this slice
+    and is now covered by the 2026-04-12 generated-child override entry above,
   - and VHDL generic-map lowering remains a backend follow-up.
 
 ## 2026-04-11: direct params may reuse named semantic values
@@ -127,7 +152,6 @@ This document captures engineering rationale, design constraints, and working de
     checks pass.
 - Follow-ups:
   - VHDL generic-map lowering,
-  - generated-child parameterization,
   - richer external metadata named values beyond the current imported-package
     `.rtlif` default scope,
   - and richer typed/non-literal parameter domains beyond the current literal
