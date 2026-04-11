@@ -67,6 +67,7 @@ Notes:
 - Debug traces (`--debug=3`) are the best way to inspect exact enable composition for a specific FSM.
 - Current `.fsm` authoring does not yet expose a way to drive the root DT/state `dt_enable`; normal DT/state blocks behave as if that activity input is tied to `1` once their surrounding state/root is active.
 - Future advanced DT enable control should make that implicit input visible as a semantic, pre-generation-checked expression with default `1`, for example an input signal or a bounded logical expression. That would let an authored DT/state region be activated by several sources and would support richer patterns such as several independently activatable initial/entry regions without hiding the behavior in backend-only wiring.
+- A classic single-initial-state, one-active-state FSM should be understood as the conservative subset of that broader activation-region model. Because externally activated/deactivated regions can create pathological machines, future support must surface drive conflicts, merge/priority policy, assertion hooks, and debug reports rather than silently resolving them in a backend.
 
 ### Assignment operators
 - `A <- expr` : synchronous/flopped assignment

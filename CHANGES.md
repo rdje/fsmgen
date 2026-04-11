@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-12
+### advanced DT activation-region model is now clarified
+- Expanded the mdBook DT/FSM chapter to clarify that classic single-initial-state, one-active-state FSMs are the conservative subset of a broader future activation-region model.
+- Updated the user guide so future authored `dt_enable` support is framed as intent-level activation/deactivation of DT/state regions, with explicit diagnostics for same-target drives, conflicting assignment families, merge/priority policy, assertion hooks, and debug reporting.
+- Updated memory and development notes so future implementation keeps this as a frontend AST/IR and pre-generation validation contract rather than backend-only HDL gating magic.
+
 ### future authored DT enable control is now recorded
 - Documented the current hidden/default DT activity model in [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md): authored DT/state blocks conceptually have a `dt_enable`, but the `.fsm` language does not yet expose a way to drive it, so normal blocks behave as if that enable is tied to `1` once their surrounding root/state context is active.
 - Added an advanced future-feature note to [docs/book/src/03-decision-trees-and-fsms.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/03-decision-trees-and-fsms.md) describing an authored semantic DT enable expression that defaults to `1`, may be driven by an input or bounded logical expression, and should be validated/preserved in AST/IR before HDL generation.

@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-12: DT enable control is an activation-region model
+- Clarified the future authored DT enable-control direction as a broader
+  activation-region model, not just a syntax hook on classic FSM states.
+- A single-initial-state, one-active-state FSM is the conservative subset. The
+  more general model treats state/DT blocks as regions whose activity may come
+  from normal state decode, the default `dt_enable = 1`, an external actor, or a
+  validated logical expression.
+- This should enable multiple active state-like regions and external
+  activation/deactivation outside the strict transition graph, but only with
+  explicit validation/reporting for hazards such as same-target drives,
+  conflicting assignment families, merge/priority policy, assertion hooks, and
+  debug visibility.
+- Implementation steering: keep this as frontend intent plus AST/IR contract and
+  pre-generation diagnostics. Do not implement it as backend-only gating magic.
+
 ## 2026-04-12: DT enable control should become an authored semantic surface
 - Current authored DT/state blocks have a conceptual `dt_enable`, but the
   `.fsm` surface does not expose it yet; normal blocks behave as if that enable

@@ -64,7 +64,7 @@ Example:
 )
 ```
 
-## Advanced Future: DT Enable Control
+## Future Feature: Advanced DT Enable Control
 
 Every DT/state block has a conceptual activity input: its `dt_enable`.
 Today the author-facing `.fsm` language does not expose that input directly.
@@ -78,6 +78,19 @@ signal or bounded logical expression, for example an OR of several event/control
 inputs. That would make it possible to model independently activatable
 state-like regions, including designs that behave like they have multiple
 initial/entry states.
+
+A classic FSM with one reset/initial state and one active state at a time is
+therefore the conservative subset, not the full model. The broader model treats
+states and DT blocks as activation regions: a region can be active because of
+the normal FSM state decode, the default `dt_enable = 1` behavior, an external
+actor, or a validated logical expression. In that model, a state-like region can
+be activated or deactivated outside the strict transition graph.
+
+That power should be allowed, but it must not be invisible. Validation and
+reports should make hazards explicit, including multiple active regions driving
+the same target, conflicting assignment families, the selected merge/priority
+policy, assertion hooks, and debug reporting. This is a power-user feature:
+intent-level semantics, strong diagnostics, and no hidden backend magic.
 
 This must be implemented as frontend intent, not as a late HDL-generation
 shortcut. The parser should capture the authored enable expression, validation

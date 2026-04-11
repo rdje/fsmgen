@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-12: advanced DT enable control means activation regions
+- Saved the clarification that the future authored DT enable-control feature is
+  not merely syntax on a classic FSM. A single-initial-state, one-active-state
+  FSM is the conservative subset; the broader model treats state/DT blocks as
+  activation regions.
+- Important continuity note:
+  - a region's activity may come from normal FSM state decode, the current
+    default `dt_enable = 1`, an external actor, or a validated logical
+    expression,
+  - the feature should permit multiple active state-like regions and external
+    activation/deactivation outside the strict transition graph,
+  - it must also report hazards explicitly: same-target drives, conflicting
+    assignment families, merge/priority policy, assertion hooks, and debug
+    reporting,
+  - this remains a future advanced/power-user feature with intent-level
+    semantics and pre-generation validation, not hidden backend-only HDL magic,
+  - [docs/book/src/03-decision-trees-and-fsms.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/03-decision-trees-and-fsms.md)
+    now carries the richer book explanation, while
+    [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+    carries the short user-facing note.
+
 ## 2026-04-12: future authored DT enable control is recorded
 - Captured the user steering around the hidden DT/state activity input.
 - Important continuity note:
