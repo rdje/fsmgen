@@ -137,6 +137,126 @@ FSM
     }
 };
 
+subtest 'same-name aggregate child inputs can seed aggregate top-expression inference' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'same_name_aggregate_root_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'same_name_aggregate_root_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:same_name_aggregate_root_top
+  (?dtc:consumer consumer_src)
+  (?rtl:sink)
+  (?toplink:wiring
+    /in_frame.tag,payload/sink.data_in/
+    /in_frame.tag/sink.nibble/
+    /consumer.out_flag/flag_out/
+  )
+)
+
+(?dt:consumer_src
+  (+types
+    (type frame_t (record (tag (bits 4)) (flag bit)))
+  )
+  (+size
+    (in_frame frame_t)
+    (out_flag 1)
+  )
+  (-pass
+    (out_flag = in_frame.flag)
+  )
+)
+
+(?rtlif:sink
+  data_in<8:data
+  nibble<4:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+    my %ports = map { $_->name => $_ } @{$result->{composition_plan}->ports};
+    my $hdl = $result->{hdl_code};
+
+    ok($ports{in_frame}, 'same-name child input seeds the aggregate root top port');
+    is($ports{in_frame}->declared_type_spec->{kind}, 'record', 'same-name inferred aggregate root keeps its record contract');
+    is($ports{in_frame}->width, 5, 'same-name inferred aggregate root keeps its packed width');
+    ok($ports{payload}, 'same-name aggregate root still allows the concat remainder operand to be inferred');
+    is($ports{payload}->width, 4, 'same-name aggregate root leaves a four-bit remainder for payload');
+    like($hdl, qr/\binput\s+frame_t__fsmgen_t\s+in_frame\b/s, 'generated HDL exposes the same-name inferred aggregate input with typedef');
+    like($hdl, qr/\.in_frame\(in_frame\)/s, 'generated HDL keeps the same-name child input fanout binding');
+    like($hdl, qr/\.data_in\(\{in_frame\.tag,\s*payload\}\)/s, 'generated HDL binds concat source through the same-name inferred aggregate root');
+    like($hdl, qr/\.nibble\(in_frame\.tag\)/s, 'generated HDL binds direct member source through the same-name inferred aggregate root');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '--quiet', '--output', $output_path, $composition_path],
+        verbose => 0,
+    );
+    ok($success, 'CLI succeeds for same-name aggregate-root top-expression inference');
+    ok(-e $output_path, 'CLI writes HDL for same-name aggregate-root top-expression inference');
+};
+
+subtest 'explicitly linked same-name child inputs do not seed aggregate roots' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'explicitly_linked_same_name_aggregate_root_top.fsm');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:explicitly_linked_same_name_aggregate_root_top
+  (?dtc:consumer consumer_src)
+  (?rtl:sink)
+  (?toplink:wiring
+    /other_frame/consumer.in_frame/
+    /in_frame.tag/sink.nibble/
+    /consumer.out_flag/flag_out/
+  )
+)
+
+(?dt:consumer_src
+  (+types
+    (type frame_t (record (tag (bits 4)) (flag bit)))
+  )
+  (+size
+    (in_frame frame_t)
+    (out_flag 1)
+  )
+  (-pass
+    (out_flag = in_frame.flag)
+  )
+)
+
+(?rtlif:sink
+  nibble<4:data
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $exception = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $exception = $@;
+
+    like(
+        $exception,
+        qr/omits top port 'in_frame', .*explicit top-link port inference is blocked because top expression 'in_frame\.tag' uses aggregate member\/item access before the root top port has a declared aggregate type/s,
+        'pipeline does not reuse an explicitly linked same-name child input as aggregate-root inference evidence',
+    );
+};
+
 subtest 'undeclared aggregate roots fail with a user-facing inference diagnostic' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'undeclared_aggregate_root_top.fsm');

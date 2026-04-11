@@ -68,6 +68,8 @@ sub augment_from_explicit_links ($class, %args) {
     my %child_ports_by_instance;
     my %inferred_specs;
     my @expression_links;
+    my %same_name_aggregate_root_evidence;
+    my %explicitly_linked_child_input_names;
 
     for my $instance (@$realized_instances) {
         $instances_by_name{$instance->instance_name} = $instance;
@@ -82,6 +84,9 @@ sub augment_from_explicit_links ($class, %args) {
 
             my ($source_top_name) = $source =~ /^(\w+)$/;
             my ($target_top_name) = $target =~ /^(\w+)$/;
+            my ($target_child_input_name) = $target =~ /^\w+\.(\w+)$/;
+            $explicitly_linked_child_input_names{$target_child_input_name} = 1
+                if defined $target_child_input_name;
             my $source_is_top = defined $source_top_name;
             my $target_is_top = defined $target_top_name;
             my $source_child_expr_spec = FSM::Composition::LinkedPlanBuilder->child_expression_spec($source);
@@ -131,6 +136,9 @@ sub augment_from_explicit_links ($class, %args) {
                     child_endpoint => $child_endpoint,
                     expression_spec => $source_top_expr_spec,
                 };
+                for my $root_name (@{$class->_aggregate_root_names_requiring_top_contract($source_top_expr_spec, \%instances_by_name)}) {
+                    push @{$same_name_aggregate_root_evidence{$root_name}}, $source.' -> '.$target;
+                }
             }
 
             if ($target_is_top && !$declared_by_name{$target_top_name} && ($source =~ /^\w+\.\w+$/ || $source_child_expr_spec)) {
@@ -155,6 +163,16 @@ sub augment_from_explicit_links ($class, %args) {
             }
         }
     }
+
+    $class->_record_inferred_aggregate_roots_from_same_name_inputs(
+        \%inferred_specs,
+        \%declared_by_name,
+        _port_groups_from_instances($realized_instances),
+        \%same_name_aggregate_root_evidence,
+        \%explicitly_linked_child_input_names,
+        $fsm_file,
+        $header,
+    );
 
     for my $expression_link (@expression_links) {
         $expression_link->{expression_spec} = $class->_annotate_expression_spec_known_widths(
@@ -723,6 +741,136 @@ sub _expression_spec_mentions_undeclared_top_inputs ($class, $expression_spec, $
     }
 
     confess "TopPortInferenceBuilder requires a supported top-expression operand kind";
+}
+
+sub _aggregate_root_names_requiring_top_contract ($class, $expression_spec, $instances_by_name) {
+    return [] unless ref($expression_spec) eq 'HASH';
+
+    my $expr_kind = $expression_spec->{expr_kind} || '';
+    if ($expr_kind eq 'aggregate_ref') {
+        my $port_name = $expression_spec->{port_name} || '';
+        return length($port_name) ? [$port_name] : [];
+    }
+
+    if ($expr_kind eq 'child_signal_ref'
+        || $expr_kind eq 'child_bit_select'
+        || $expr_kind eq 'child_slice'
+        || $expr_kind eq 'child_aggregate_ref')
+    {
+        my $instance_name = $expression_spec->{instance_name} || '';
+        return []
+            if !length($instance_name)
+            || $instances_by_name->{$instance_name};
+        return [$instance_name];
+    }
+
+    if ($expr_kind eq 'repeat') {
+        return $class->_aggregate_root_names_requiring_top_contract(
+            $expression_spec->{operand},
+            $instances_by_name,
+        );
+    }
+
+    if ($expr_kind eq 'concat') {
+        my %seen;
+        my @root_names;
+        for my $operand_spec (@{$expression_spec->{operands} || []}) {
+            for my $root_name (@{$class->_aggregate_root_names_requiring_top_contract($operand_spec, $instances_by_name)}) {
+                next if $seen{$root_name}++;
+                push @root_names, $root_name;
+            }
+        }
+        return \@root_names;
+    }
+
+    return [];
+}
+
+sub _record_inferred_aggregate_roots_from_same_name_inputs ($class, $inferred_specs, $declared_by_name, $port_groups, $aggregate_root_evidence, $explicitly_linked_child_input_names, $fsm_file, $header) {
+    return unless ref($aggregate_root_evidence) eq 'HASH';
+    $explicitly_linked_child_input_names ||= {};
+
+    for my $root_name (sort keys %$aggregate_root_evidence) {
+        next if $declared_by_name->{$root_name} || $inferred_specs->{$root_name};
+        next if $explicitly_linked_child_input_names->{$root_name};
+
+        my @candidates = @{$port_groups->{$root_name} || []};
+        next unless @candidates;
+
+        my @input_candidates = grep { ($_->{port}->direction || '') eq 'input' } @candidates;
+        next unless @input_candidates && @input_candidates == @candidates;
+
+        my %widths = map { $_->{port}->width => 1 } @input_candidates;
+        if (keys(%widths) > 1) {
+            my $candidates = join(', ', map {
+                $_->{instance_name}.'.'.$_->{port}->name.
+                '['.$_->{port}->direction.', width='.$_->{port}->width.']'
+            } @input_candidates);
+            confess
+                "Composition source '$header' in '$fsm_file' omits aggregate top port '$root_name', ".
+                "but explicit top-link port inference is blocked because same-name child inputs disagree on width while trying to infer that aggregate root for top expression(s) '".join("', '", @{$aggregate_root_evidence->{$root_name}})."'. ".
+                "Seen child inputs: $candidates. ".
+                "The current bounded inference slice only infers aggregate roots from same-name child inputs when all such inputs agree exactly on width. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        my %types = map { FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}->type) => 1 } @input_candidates;
+        if (keys(%types) > 1) {
+            my $candidates = join(', ', map {
+                $_->{instance_name}.'.'.$_->{port}->name.
+                '['.$_->{port}->direction.', width='.$_->{port}->width.', type='.FSM::Composition::InterfacePortBuilder->normalized_interface_type($_->{port}->type).']'
+            } @input_candidates);
+            confess
+                "Composition source '$header' in '$fsm_file' omits aggregate top port '$root_name', ".
+                "but explicit top-link port inference is blocked because same-name child inputs disagree on interface type while trying to infer that aggregate root for top expression(s) '".join("', '", @{$aggregate_root_evidence->{$root_name}})."'. ".
+                "Seen child inputs: $candidates. ".
+                "The current bounded inference slice only infers aggregate roots from same-name child inputs when all such inputs agree exactly on type metadata too. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        my @typed_input_candidates = grep {
+            defined FSM::Composition::InterfacePortBuilder->declared_type_signature($_->{port})
+        } @input_candidates;
+        my %declared_type_signatures = map {
+            FSM::Composition::InterfacePortBuilder->declared_type_signature($_->{port}) => 1
+        } @typed_input_candidates;
+        if (keys(%declared_type_signatures) > 1) {
+            my $candidates = join(', ', map {
+                $_->{instance_name}.'.'.$_->{port}->name.
+                "[declared_type='".FSM::Composition::InterfacePortBuilder->declared_type_label($_->{port})."']"
+            } @typed_input_candidates);
+            confess
+                "Composition source '$header' in '$fsm_file' omits aggregate top port '$root_name', ".
+                "but explicit top-link port inference is blocked because same-name child inputs disagree on declared type contract while trying to infer that aggregate root for top expression(s) '".join("', '", @{$aggregate_root_evidence->{$root_name}})."'. ".
+                "Seen typed child inputs: $candidates. ".
+                "The current bounded inference slice only infers aggregate roots from same-name child inputs when all such inputs agree on one declared type contract too. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
+        }
+
+        my $declared_type_contract = FSM::Composition::InterfacePortBuilder->uniform_declared_type_contract(
+            [ map { $_->{port} } @input_candidates ]
+        );
+        my $declared_type_spec = $declared_type_contract->{declared_type_spec};
+        next unless ref($declared_type_spec) eq 'HASH'
+            && (($declared_type_spec->{kind} || '') eq 'record' || ($declared_type_spec->{kind} || '') eq 'list');
+
+        my $template = $input_candidates[0]{port};
+        my $same_name_evidence = join(', ', map { $_->{instance_name}.'.'.$_->{port}->name } @input_candidates);
+        my $expression_evidence = join(', ', @{$aggregate_root_evidence->{$root_name}});
+        $class->_record_inferred_top_port_requirement(
+            $inferred_specs,
+            $root_name,
+            'input',
+            $template->width,
+            $template->width,
+            FSM::Composition::InterfacePortBuilder->normalized_interface_type($template->type),
+            $declared_type_contract->{declared_type_name},
+            $declared_type_spec,
+            "same-name child input(s) $same_name_evidence for aggregate top expression(s) $expression_evidence",
+            $fsm_file,
+            $header,
+        );
+    }
 }
 
 sub _analyze_top_expression_for_inference ($class, $declared_by_name, $inferred_specs, $expression_spec, $child_endpoint, $evidence, $fsm_file, $header, %opts) {

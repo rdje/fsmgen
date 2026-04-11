@@ -1214,7 +1214,7 @@ This currently works because:
 - the same inference path now also sees `name[index]` / `name[msb:lsb]` operands that appear inside a bounded comma-separated concat source,
 - the same inference path now also sizes one undeclared repeated whole-port operand from a bounded repeat group such as `{2{payload_bus}}` when the child-input remainder width divides evenly across the repeat count,
 - one remaining undeclared whole-port concat operand may now also pick up an exact width from the remaining child-input target width when the other concat operands are already exact,
-- declared aggregate top-port member/item operands such as `in_frame.tag` also count as exact-width operands for that remainder calculation when `in_frame` already has a declared aggregate type or has been inferred as one aggregate contract from another whole-root explicit link in the same `?toplink` block,
+- declared aggregate top-port member/item operands such as `in_frame.tag` also count as exact-width operands for that remainder calculation when `in_frame` already has a declared aggregate type, has been inferred as one aggregate contract from another whole-root explicit link in the same `?toplink` block, or can be seeded from an unlinked same-name child input with one uniform record/list declared-type contract,
 - but several still-unsized undeclared whole-port concat operands still fail explicitly instead of guessing several widths from one child-input target,
 - and uneven repeat-width splits such as `{2{payload_bus}}` into a 5-bit child input now also fail explicitly instead of guessing one per-copy width,
 - top expressions still stay source-side only,
@@ -1240,10 +1240,12 @@ Here `in_frame.tag` contributes its four-bit leaf width, so if `sink.data_in`
 is eight bits the omitted whole top input `payload` is inferred as four bits.
 The aggregate root may be declared explicitly, as shown above, or inferred from
 another whole-root explicit link to a typed child input in the same `?toplink`
-block. If `in_frame` is neither declared nor inferred as one aggregate
-contract, FSMGen now fails with an explicit diagnostic asking for that root
-contract instead of trying to autovivify an aggregate shape from
-`in_frame.tag` alone.
+block. It may also be inferred from an unlinked same-name child input such as
+`consumer.in_frame` when that child input already carries one uniform
+record/list declared-type contract. If `in_frame` is neither declared nor
+inferred as one aggregate contract, FSMGen now fails with an explicit
+diagnostic asking for that root contract instead of trying to autovivify an
+aggregate shape from `in_frame.tag` alone.
 
 Current narrow declared connect-by-name example:
 ```lisp

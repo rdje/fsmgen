@@ -14,13 +14,17 @@ This is the live continuity document for fast session recovery after crashes, re
   - expression width annotation is intentionally deferred until after
     whole-root top-port inference scans the current `?toplink` block, so the
     accepted inferred-root behavior is order-independent within that block,
+  - aggregate roots needed by explicit top expressions may now also be inferred
+    from an unlinked same-name child input when that child input has one uniform
+    record/list declared-type contract; this lets `in_frame.tag` work when
+    `consumer.in_frame` is already a typed same-name child input,
   - undeclared aggregate roots still do not autovivify broadly; they now fail
     with a user-facing diagnostic that says the root top port needs a declared
     aggregate type before member/item access can guide inference,
   - [t/288-composition-aggregate-top-expression-inference.t](/Users/richarddje/Documents/github/fsmgen/t/288-composition-aggregate-top-expression-inference.t)
     locks the accepted `/in_frame.tag,payload/sink.data_in/` case for both
-    declared roots and same-block inferred roots, plus the blocked
-    undeclared-root diagnostic,
+    declared roots, explicit same-block inferred roots, and same-name typed
+    child-input inferred roots, plus the blocked undeclared-root diagnostic,
   - and the next honest aggregate-inference seam remains broader
     autovivification only when the frontend can recover one safe shape and the
     backend can lower it honestly.

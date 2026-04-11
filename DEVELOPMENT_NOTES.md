@@ -20,6 +20,9 @@ This document captures engineering rationale, design constraints, and working de
     whole-root inferred top ports from the current `?toplink` block, so an
     aggregate root inferred from a typed child input can immediately support
     later or earlier member/item operands such as `in_frame.tag`,
+  - aggregate roots needed by explicit top expressions may now also be seeded
+    from unlinked same-name child inputs, but only when those child inputs
+    provide one uniform record/list declared-type contract,
   - the inference pass now reuses the same aggregate-path resolver and
     diagnostics boundary as planning rather than carrying a second width
     walker,
@@ -34,6 +37,9 @@ This document captures engineering rationale, design constraints, and working de
   - aggregate member/item access may help infer neighboring operands only when
     the aggregate root already has one declared or previously inferred
     aggregate contract,
+  - the same-name seed path deliberately does not infer broad aggregate shape
+    from member spelling alone; it only consumes aggregate type evidence that
+    is already present on a child interface,
   - and it removes an internal assertion from a user-facing composition error
     path, which keeps pre-generation validation aligned with the “upright AST /
     IR before generation” rule.

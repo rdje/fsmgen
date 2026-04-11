@@ -149,11 +149,12 @@ Declared aggregate top-port paths can now help that inference too:
 
 If `in_frame` is already declared with an aggregate type, or has been inferred
 as one aggregate contract from another whole-root link to a typed child input
-in the same `?toplink` block, and `in_frame.tag` is four bits, FSMGen can use
-that exact leaf width while sizing the remaining omitted whole operand
-`payload` from the target remainder. If `in_frame` has no declared or inferred
-aggregate contract, FSMGen fails explicitly instead of guessing an aggregate
-shape from the member name alone.
+in the same `?toplink` block, or can be seeded from an unlinked same-name child
+input with one uniform record/list declared-type contract, and `in_frame.tag`
+is four bits, FSMGen can use that exact leaf width while sizing the remaining
+omitted whole operand `payload` from the target remainder. If `in_frame` has
+no declared or inferred aggregate contract, FSMGen fails explicitly instead of
+guessing an aggregate shape from the member name alone.
 
 ## Top Outputs And Fanout
 
