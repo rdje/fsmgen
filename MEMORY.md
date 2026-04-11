@@ -1,5 +1,33 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-11: root/structure `.rtlif` failures are now in the corpus
+- Saved the bounded `R12` support-accounting follow-up for missing `.rtlif`
+  roots, empty roots, nested sidecar structures, and duplicate embedded roots.
+- Important continuity note:
+  - `contract.missing_rtlif_root`,
+    `contract.empty_rtlif_port_declaration`,
+    `contract.nested_rtlif_port_declaration`, and
+    `contract.duplicate_embedded_rtlif_root` are now classified as
+    `expected_failure` under `composition_contract_rejection_pipeline_cli`,
+  - the static fixture set is `missing_rtlif_root_top.fsm` /
+    `missing_root_uart_tx.rtlif`, `empty_rtlif_port_top.fsm` /
+    `empty_port_uart_tx.rtlif`, `nested_rtlif_port_top.fsm` /
+    `nested_port_uart_tx.rtlif`, plus the same-source
+    `duplicate_embedded_rtlif_top.fsm` embedded-root fixture,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now expects `27` catalog entries and `17` explicit expected-failure
+    entries,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    proves all four reject through both pipeline and CLI with their respective
+    `RTL interface metadata structure`, `RTL interface metadata port presence`,
+    `RTL interface metadata flatness`, and
+    `RTL interface metadata embedded-root uniqueness` boundaries,
+  - and the focused diagnostics remain separately locked in
+    [t/118-composition-rtlif-root-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/118-composition-rtlif-root-diagnostics.t),
+    [t/123-composition-rtlif-empty-port-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/123-composition-rtlif-empty-port-diagnostics.t),
+    [t/124-composition-rtlif-flatness-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/124-composition-rtlif-flatness-diagnostics.t),
+    and [t/125-composition-embedded-rtlif-duplicate-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/125-composition-embedded-rtlif-duplicate-diagnostics.t).
+
 ## 2026-04-11: token-scoped `.rtlif` failures are now in the corpus
 - Saved the bounded `R12` support-accounting follow-up for unsupported
   `.rtlif` port types, invalid `.rtlif` port tokens, and non-positive `.rtlif`
@@ -13,8 +41,9 @@ This is the live continuity document for fast session recovery after crashes, re
     `invalid_token_uart_tx.rtlif`, and `invalid_rtlif_port_width_top.fsm` /
     `invalid_width_uart_tx.rtlif`,
   - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
-    now expects `23` catalog entries and `13` explicit expected-failure
-    entries,
+    then expected `23` catalog entries and `13` explicit expected-failure
+    entries before the later root/structure `.rtlif` corpus slice raised the
+    current counts to `27` and `17`,
   - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
     proves all three reject through both pipeline and CLI with their respective
     `RTL interface metadata port typing`, `RTL interface metadata token shape`,

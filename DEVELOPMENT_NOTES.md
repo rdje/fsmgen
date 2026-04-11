@@ -1,5 +1,36 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: `.rtlif` root/structure failures are now part of support accounting
+- Promoted four root/structure-level `.rtlif` metadata rejections into the
+  regression corpus together.
+- Landed behavior:
+  - [t/corpus/missing_rtlif_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_rtlif_root_top.fsm)
+    plus [t/corpus/missing_root_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_root_uart_tx.rtlif)
+    records a metadata sidecar that exists but omits the required
+    `?rtlif:missing_root_uart_tx` root,
+  - [t/corpus/empty_rtlif_port_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/empty_rtlif_port_top.fsm)
+    plus [t/corpus/empty_port_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/empty_port_uart_tx.rtlif)
+    records an otherwise valid root that declares no ports,
+  - [t/corpus/nested_rtlif_port_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/nested_rtlif_port_top.fsm)
+    plus [t/corpus/nested_port_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/nested_port_uart_tx.rtlif)
+    records a nested sidecar structure under the active flat metadata root,
+  - [t/corpus/duplicate_embedded_rtlif_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/duplicate_embedded_rtlif_top.fsm)
+    records two embedded `?rtlif:embedded_dup_uart_tx` roots in the same
+    composition source,
+  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    now proves all four corpus entries reject through both the pipeline API
+    and `bin/fsmgen` CLI without emitting HDL.
+- Why this boundary matters:
+  - these failures validate the structure of the interface contract before any
+    structural plan or HDL rendering sees it,
+  - the file-based fixtures use unique external module names so they do not
+    interfere with the older focused `uart_tx` diagnostics,
+  - the duplicate embedded-root fixture deliberately has no sidecar because
+    the embedded same-file contract must fail before external lookup,
+  - and the `R12` corpus now spans both token-level and root/structure-level
+    `.rtlif` metadata boundaries instead of leaving the latter only in
+    focused diagnostics tests.
+
 ## 2026-04-11: `.rtlif` token/type/width failures are now part of support accounting
 - Promoted three focused token-scoped `.rtlif` metadata rejections into the
   regression corpus together.

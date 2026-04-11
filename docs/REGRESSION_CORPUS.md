@@ -65,7 +65,9 @@ more than one contract for it, for example:
   now covers missing external generated-child source lookup, missing external
   `?rtl` sidecar metadata, invalid `.rtlif` system-role directions, and
   duplicate `.rtlif` port declarations, unsupported `.rtlif` port types,
-  invalid `.rtlif` port tokens, and non-positive `.rtlif` port widths.
+  invalid `.rtlif` port tokens, non-positive `.rtlif` port widths, missing
+  `.rtlif` roots, empty `.rtlif` roots, nested `.rtlif` structures, and
+  duplicate embedded `.rtlif` roots.
 
 ## Current named entries
 
@@ -94,6 +96,10 @@ more than one contract for it, for example:
 | `contract.invalid_rtlif_port_type` | [t/corpus/invalid_rtlif_port_type_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtlif_port_type_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.invalid_rtlif_port_token` | [t/corpus/invalid_rtlif_port_token_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtlif_port_token_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.invalid_rtlif_port_width` | [t/corpus/invalid_rtlif_port_width_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtlif_port_width_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.missing_rtlif_root` | [t/corpus/missing_rtlif_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_rtlif_root_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.empty_rtlif_port_declaration` | [t/corpus/empty_rtlif_port_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/empty_rtlif_port_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.nested_rtlif_port_declaration` | [t/corpus/nested_rtlif_port_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/nested_rtlif_port_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.duplicate_embedded_rtlif_root` | [t/corpus/duplicate_embedded_rtlif_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/duplicate_embedded_rtlif_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 
 ## Current locking tests
 

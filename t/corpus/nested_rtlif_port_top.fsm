@@ -1,0 +1,13 @@
+(?top:nested_rtlif_port_top
+  (?ports:public_io
+    core_clk
+    rst_async_n
+    payload_in<8
+    serial_out>
+  )
+  (?rtl:nested_port_uart_tx)
+  (?toplink:wiring
+    /payload_in/nested_port_uart_tx.data_in/
+    /nested_port_uart_tx.txd/serial_out/
+  )
+)

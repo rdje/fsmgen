@@ -1,0 +1,8 @@
+(?rtlif:nested_port_uart_tx
+  core_clk:clock
+  rst_async_n:reset
+  (group
+    data_in<8:data
+  )
+  txd>:data
+)

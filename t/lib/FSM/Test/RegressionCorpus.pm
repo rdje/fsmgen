@@ -247,6 +247,42 @@ my @REGRESSION_CORPUS = (
         source_kind => 'composition',
         expected_error_pattern => qr/RTL metadata file:\s+'.*invalid_width_uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'invalid_width_uart_tx'.*RTL interface metadata port sizing is blocked because token 'data_in<0:data' in declared interface metadata '.*invalid_width_uart_tx\.rtlif' declares non-positive port width '0'/s,
     },
+    {
+        id => 'contract.missing_rtlif_root',
+        relpath => 't/corpus/missing_rtlif_root_top.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        expected_error_pattern => qr/RTL interface metadata structure is blocked because declared interface metadata '.*missing_root_uart_tx\.rtlif' does not contain a '\?rtlif:missing_root_uart_tx' root\./s,
+    },
+    {
+        id => 'contract.empty_rtlif_port_declaration',
+        relpath => 't/corpus/empty_rtlif_port_top.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        expected_error_pattern => qr/RTL interface metadata port presence is blocked because declared interface metadata '.*empty_port_uart_tx\.rtlif' declares no ports under '\?rtlif:empty_port_uart_tx'\./s,
+    },
+    {
+        id => 'contract.nested_rtlif_port_declaration',
+        relpath => 't/corpus/nested_rtlif_port_top.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        expected_error_pattern => qr/RTL interface metadata flatness is blocked because declared interface metadata '.*nested_port_uart_tx\.rtlif' contains nested structure under '\?rtlif:nested_port_uart_tx'\./s,
+    },
+    {
+        id => 'contract.duplicate_embedded_rtlif_root',
+        relpath => 't/corpus/duplicate_embedded_rtlif_top.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        expected_error_pattern => qr/RTL interface metadata embedded-root uniqueness is blocked because the active RTL interface contract allows at most one embedded interface root per external RTL module name in the same source\./s,
+    },
 );
 
 sub regression_corpus_entries {
