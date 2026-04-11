@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-11: duplicate `.rtlif` port declarations are now in the corpus
+- Saved the bounded `R12` support-accounting follow-up for the `.rtlif`
+  duplicate-port declaration contract.
+- Important continuity note:
+  - [t/corpus/duplicate_rtlif_port_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/duplicate_rtlif_port_top.fsm)
+    and [t/corpus/duplicate_port_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/duplicate_port_uart_tx.rtlif)
+    now form the static expected-failure fixture,
+  - `contract.duplicate_rtlif_port_declaration` is classified as
+    `expected_failure` under `composition_contract_rejection_pipeline_cli`,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now expects `20` catalog entries and `10` explicit expected-failure
+    entries,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    proves the fixture rejects through both pipeline and CLI with the blocked
+    `RTL interface metadata port declaration uniqueness` boundary,
+  - and the fixture deliberately uses `duplicate_port_uart_tx` so the older
+    `uart_tx` sidecar tests keep their exact diagnostic focus.
+
 ## 2026-04-11: invalid `.rtlif` system-role direction is now in the corpus
 - Saved the bounded `R12` support-accounting follow-up for the recently hardened
   `.rtlif` system-role direction contract.
@@ -10,7 +28,9 @@ This is the live continuity document for fast session recovery after crashes, re
   - `contract.invalid_rtl_system_port_direction` is classified as
     `expected_failure` under `composition_contract_rejection_pipeline_cli`,
   - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
-    now expects `19` catalog entries and `9` explicit expected-failure entries,
+    then expected `19` catalog entries and `9` explicit expected-failure
+    entries before the later duplicate-port corpus slice raised the current
+    counts to `20` and `10`,
   - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
     proves the fixture rejects through both pipeline and CLI with the blocked
     `RTL interface metadata system-port direction` boundary,

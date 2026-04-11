@@ -1,5 +1,30 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: `.rtlif` duplicate-port rejection is now part of support accounting
+- Promoted the focused `.rtlif` duplicate-port rejection into the regression
+  corpus.
+- Landed behavior:
+  - [t/corpus/duplicate_rtlif_port_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/duplicate_rtlif_port_top.fsm)
+    composes an external `?rtl:duplicate_port_uart_tx` child through a small
+    top-level wrapper,
+  - [t/corpus/duplicate_port_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/duplicate_port_uart_tx.rtlif)
+    intentionally repeats `txd>:data`, so the fixture targets the
+    declaration-uniqueness boundary without mixing in system-role or type
+    failures,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    classifies `contract.duplicate_rtlif_port_declaration` as an
+    `expected_failure` under `composition_contract_rejection_pipeline_cli`,
+  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    now proves that the corpus entry rejects through both the pipeline API and
+    `bin/fsmgen` CLI without emitting HDL.
+- Why this boundary matters:
+  - repeated sidecar ports create ambiguous external RTL interface contracts,
+    so they must fail before structural planning/generation,
+  - the fixture uses a unique external module name so it does not interfere
+    with the existing `uart_tx` missing-sidecar and focused diagnostic tests,
+  - and this keeps the `R12` corpus expanding across distinct contract
+    families rather than repeatedly counting only one `.rtlif` failure mode.
+
 ## 2026-04-11: `.rtlif` system-role direction is now part of support accounting
 - Promoted the focused `.rtlif` output-direction system-role rejection into the
   regression corpus, not just the direct contract tests.

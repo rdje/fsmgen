@@ -211,6 +211,15 @@ my @REGRESSION_CORPUS = (
         source_kind => 'composition',
         expected_error_pattern => qr/RTL metadata file:\s+'.*invalid_sysdir_uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'invalid_sysdir_uart_tx'.*RTL interface metadata system-port direction is blocked because token 'core_clk>:clock' in declared interface metadata '.*invalid_sysdir_uart_tx\.rtlif' resolves to 'clock' while declaring an output direction/s,
     },
+    {
+        id => 'contract.duplicate_rtlif_port_declaration',
+        relpath => 't/corpus/duplicate_rtlif_port_top.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        expected_error_pattern => qr/RTL metadata file:\s+'.*duplicate_port_uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'duplicate_port_uart_tx'.*RTL interface metadata port declaration uniqueness is blocked because declared interface metadata '.*duplicate_port_uart_tx\.rtlif' repeats port 'txd'/s,
+    },
 );
 
 sub regression_corpus_entries {

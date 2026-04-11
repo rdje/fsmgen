@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-11
+### duplicate `.rtlif` port declarations are now cataloged in support accounting
+- Added [t/corpus/duplicate_rtlif_port_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/duplicate_rtlif_port_top.fsm) and [t/corpus/duplicate_port_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/duplicate_port_uart_tx.rtlif) as a regression-corpus expected-failure fixture for external RTL metadata that repeats the same declared port.
+- Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) so `contract.duplicate_rtlif_port_declaration` is machine-classified as `expected_failure` under `composition_contract_rejection_pipeline_cli`, proving the `RTL interface metadata port declaration uniqueness` boundary through both pipeline and CLI.
+- Updated [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) so the catalog now accounts for `20` entries and `10` explicit expected-failure contracts, with the composition-contract bucket covering duplicate `.rtlif` port declarations too.
+
 ### invalid `.rtlif` system-role direction is now cataloged in support accounting
 - Added [t/corpus/invalid_rtl_system_direction_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtl_system_direction_top.fsm) and [t/corpus/invalid_sysdir_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_sysdir_uart_tx.rtlif) as a regression-corpus expected-failure fixture for malformed external RTL metadata that declares `clock` / `reset` system roles as outputs.
 - Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) so `contract.invalid_rtl_system_port_direction` is machine-classified as `expected_failure` under `composition_contract_rejection_pipeline_cli`, proving the rejection through both pipeline and CLI.
