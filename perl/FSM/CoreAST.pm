@@ -506,6 +506,53 @@ package FSM::CoreAST::SignalRef;
         return $self->to_verilog();
     }
 
+package FSM::CoreAST::ParameterRef;
+    our @ISA = qw(FSM::CoreAST::Expression);
+
+    sub new($class, $name, %args) {
+        Carp::confess "Parameter reference name required"
+            unless defined($name) && !ref($name) && length($name);
+
+        my $value_info = _clone_parameter_ref_value($args{value_info});
+        my $self = $class->SUPER::new(type => 'parameter_ref', %args);
+        $self->{name} = $name;
+        $self->{value_info} = $value_info;
+        $self->{width} = $args{width};
+        $self->{type_spec} = _clone_parameter_ref_value($args{type_spec});
+        $self->{type_spec} //= _clone_parameter_ref_value($value_info->{value_type_spec})
+            if ref($value_info) eq 'HASH' && ref($value_info->{value_type_spec}) eq 'HASH';
+        $self->{default_value_text} = $args{default_value_text};
+        $self->{default_value_text} //= $value_info->{value_text}
+            if ref($value_info) eq 'HASH' && defined $value_info->{value_text};
+        return $self;
+    }
+
+    sub name($self) { $self->{name} }
+    sub width($self) { $self->{width} }
+    sub type_spec($self) { _clone_parameter_ref_value($self->{type_spec}) }
+    sub value_info($self) { _clone_parameter_ref_value($self->{value_info}) }
+    sub default_value_text($self) { $self->{default_value_text} }
+    sub get_signals($self) { [] }
+    sub to_verilog($self) { $self->{name} }
+    sub to_systemverilog($self) { $self->{name} }
+    sub to_vhdl($self) { $self->{name} }
+
+    sub _clone_parameter_ref_value($value) {
+        return undef unless defined $value;
+
+        if (ref($value) eq 'HASH') {
+            return {
+                map { $_ => _clone_parameter_ref_value($value->{$_}) } sort keys %$value
+            };
+        }
+
+        if (ref($value) eq 'ARRAY') {
+            return [ map { _clone_parameter_ref_value($_) } @$value ];
+        }
+
+        return $value;
+    }
+
 package FSM::CoreAST::Literal;
     our @ISA = qw(FSM::CoreAST::Expression);
     

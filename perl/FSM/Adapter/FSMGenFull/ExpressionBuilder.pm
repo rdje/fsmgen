@@ -380,7 +380,7 @@ sub parse_scalar_expression($self, $scalar) {
 
     my $resolved_symbol = $self->{signal_manager}->resolve_symbol($scalar);
     if ($resolved_symbol) {
-        fsm_debug("          SYMBOL RESOLVED: '$scalar' -> literal/constant", 3);
+        fsm_debug("          SYMBOL RESOLVED: '$scalar' -> semantic symbol", 3);
         return $resolved_symbol;
     }
 
@@ -671,6 +671,11 @@ sub infer_exact_expression_width($self, $expr) {
     return undef unless $expr && blessed($expr);
 
     if ($expr->isa('FSM::CoreAST::Literal')) {
+        my $width = $expr->width;
+        return (defined($width) && $width > 0) ? $width : undef;
+    }
+
+    if ($expr->isa('FSM::CoreAST::ParameterRef')) {
         my $width = $expr->width;
         return (defined($width) && $width > 0) ? $width : undef;
     }

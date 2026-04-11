@@ -81,6 +81,12 @@ sub generate_ast_based_signal_name($self, $ast) {
         my $signal_name = $self->{flattened_dt}->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
         return $signal_name || "unknown_signal";
 
+    } elsif ($ast->isa('FSM::CoreAST::ParameterRef')) {
+        my $parameter_name = eval { $ast->name } || 'parameter_ref';
+        $parameter_name =~ s/[^a-zA-Z0-9_]+/_/g;
+        $parameter_name =~ s/^_+|_+$//g;
+        return $parameter_name || 'parameter_ref';
+
     } elsif ($ast->isa('FSM::CoreAST::AggregateRef')) {
         my $aggregate_name = eval { $ast->to_systemverilog() } || 'aggregate_ref';
         $aggregate_name =~ s/[^a-zA-Z0-9_]+/_/g;

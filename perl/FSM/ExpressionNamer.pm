@@ -851,6 +851,10 @@ sub infer_ast_width($self, $ast) {
     elsif ($ast->isa('FSM::CoreAST::Literal')) {
         return $ast->width // 32;
     }
+    elsif ($ast->isa('FSM::CoreAST::ParameterRef')) {
+        my $width = $ast->width;
+        return (defined($width) && $width > 0) ? $width : 32;
+    }
     elsif ($ast->isa('FSM::CoreAST::UnaryOp')) {
         if ($ast->operator eq '!') {
             return 1; # Logical negation always 1-bit

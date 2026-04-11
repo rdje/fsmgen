@@ -58,6 +58,7 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (SEL 8)
     (FLAG 1)
     (BUSY_SEEN 1)
+    (PARAM_SEEN 1)
   )
   (-dt
     (A = C0)
@@ -73,6 +74,7 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (Z = ZERO)
     (FLAG = 1 <SEL=C0)
     (BUSY_SEEN = 1 <SEL=mode.BUSY)
+    (PARAM_SEEN = 1 <SEL=P0)
   )
 )
 FSM
@@ -84,7 +86,7 @@ is($symbol_summary->{params}, 7, '+params summary count is correct');
 is($symbol_summary->{enums}, 1, '+enums summary count is correct');
 
 my $elements = state_elements($fsm_module, '-dt');
-is(scalar(@$elements), 13, 'symbol-contract DT has the expected number of elements');
+is(scalar(@$elements), 14, 'symbol-contract DT has the expected number of elements');
 
 my %assignment_by_target;
 my @conditional_assignments;
@@ -100,14 +102,14 @@ for my $element (@$elements) {
 
 is_literal_assignment($assignment_by_target{A}, '3', 8, 'C0 constant resolves to an 8-bit literal');
 is_literal_assignment($assignment_by_target{B}, '4', 8, 'D0 define resolves to an 8-bit literal');
-is_literal_assignment($assignment_by_target{C}, '8', undef, 'P0 param resolves to a scalar literal');
+is_parameter_ref_assignment($assignment_by_target{C}, 'P0', undef, 'P0 param remains a named parameter reference');
 is_literal_assignment($assignment_by_target{D}, '1', undef, 'mode.BUSY enum member resolves to a literal');
-is_literal_assignment($assignment_by_target{E}, "'h10", undef, 'P_HEX param resolves to a canonical unsized hex literal');
-is_literal_assignment($assignment_by_target{F}, "'b1010", undef, 'P_BIN param resolves to a canonical unsized binary literal');
-is_literal_assignment($assignment_by_target{G}, '3', 8, 'P_FROM_CONST param reuses a constant payload');
-is_literal_assignment($assignment_by_target{H}, '1', undef, 'P_FROM_ENUM param reuses an enum-member payload');
-is_literal_assignment($assignment_by_target{I}, '1010010100111100', 16, 'P_FROM_AGG param reuses an aggregate constant payload');
-is_literal_assignment($assignment_by_target{W}, '1010010100111100', 16, 'P_LIST aggregate param resolves to one packed literal');
+is_parameter_ref_assignment($assignment_by_target{E}, 'P_HEX', undef, 'P_HEX param remains a named parameter reference');
+is_parameter_ref_assignment($assignment_by_target{F}, 'P_BIN', undef, 'P_BIN param remains a named parameter reference');
+is_parameter_ref_assignment($assignment_by_target{G}, 'P_FROM_CONST', 8, 'P_FROM_CONST param remains a named parameter reference with explicit default width');
+is_parameter_ref_assignment($assignment_by_target{H}, 'P_FROM_ENUM', undef, 'P_FROM_ENUM param remains a named parameter reference');
+is_parameter_ref_assignment($assignment_by_target{I}, 'P_FROM_AGG', 16, 'P_FROM_AGG param remains a named packed aggregate parameter reference');
+is_parameter_ref_assignment($assignment_by_target{W}, 'P_LIST', 16, 'P_LIST aggregate param remains a named packed aggregate parameter reference');
 is_literal_assignment($assignment_by_target{Z}, '0', 8, 'ZERO constant resolves through const_8b0');
 
 my $params = $fsm_module->parameters;
@@ -127,7 +129,7 @@ is_deeply(
     'Intent HIR exposes direct-root parameter names from semantic module metadata'
 );
 
-is(scalar(@conditional_assignments), 2, 'symbol-contract DT has the expected number of conditional assignments');
+is(scalar(@conditional_assignments), 3, 'symbol-contract DT has the expected number of conditional assignments');
 
 my %conditional_by_target = map {
     my $assignment = $_->branches->[0]{actions}[0];
@@ -136,6 +138,7 @@ my %conditional_by_target = map {
 
 ok($conditional_by_target{FLAG}, 'FLAG conditional assignment was captured');
 ok($conditional_by_target{BUSY_SEEN}, 'BUSY_SEEN conditional assignment was captured');
+ok($conditional_by_target{PARAM_SEEN}, 'PARAM_SEEN conditional assignment was captured');
 
 assert_condition_equality(
     $conditional_by_target{FLAG}->condition,
@@ -149,9 +152,22 @@ assert_condition_equality(
     '1',
     'condition using mode.BUSY resolves to equality against literal 1'
 );
+assert_condition_parameter_equality(
+    $conditional_by_target{PARAM_SEEN}->condition,
+    'SEL',
+    'P0',
+    'condition using P0 keeps a parameter reference'
+);
 
 my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
 like($hdl, qr/module\s+symbol_contract\b/s, 'symbol-contract FSM generates HDL through the active backend');
+like($hdl, qr/module\s+symbol_contract\s*#\(/s, 'direct SystemVerilog module emits a parameter block');
+like($hdl, qr/parameter\s+P0\s*=\s*8\b/s, 'direct SystemVerilog module declares scalar decimal parameter');
+like($hdl, qr/parameter\s+P_HEX\s*=\s*'h10\b/s, 'direct SystemVerilog module declares canonical unsized hex parameter');
+like($hdl, qr/parameter\s+P_LIST\s*=\s*16'b1010010100111100\b/s, 'direct SystemVerilog module declares packed aggregate parameter');
+like($hdl, qr/\bC\s*=\s*P0\b/s, 'generated HDL keeps scalar parameter reference on RHS');
+like($hdl, qr/\bW\s*=\s*P_LIST\b/s, 'generated HDL keeps aggregate parameter reference on RHS');
+like($hdl, qr/\bSEL\s*==\s*P0\b/s, 'generated HDL keeps scalar parameter reference in guard equality');
 
 done_testing();
 
@@ -208,6 +224,22 @@ sub is_literal_assignment {
     }
 }
 
+sub is_parameter_ref_assignment {
+    my ($assignment, $expected_name, $expected_width, $label) = @_;
+    ok($assignment, "$label assignment exists");
+    return unless $assignment;
+
+    ok($assignment->source->isa('FSM::CoreAST::ParameterRef'), "$label source is stored as a parameter reference");
+    return unless $assignment->source->isa('FSM::CoreAST::ParameterRef');
+
+    is($assignment->source->name, $expected_name, "$label name matches");
+    if (defined $expected_width) {
+        is($assignment->source->width, $expected_width, "$label width matches");
+    } else {
+        ok(!defined($assignment->source->width), "$label width remains implicit");
+    }
+}
+
 sub assert_condition_equality {
     my ($condition, $lhs_name, $rhs_value, $label) = @_;
     ok($condition->isa('FSM::CoreAST::BinaryOp'), "$label condition is a BinaryOp");
@@ -220,6 +252,20 @@ sub assert_condition_equality {
 
     is($condition->left->signal->name, $lhs_name, "$label left signal matches");
     is($condition->right->value, $rhs_value, "$label right literal matches");
+}
+
+sub assert_condition_parameter_equality {
+    my ($condition, $lhs_name, $rhs_name, $label) = @_;
+    ok($condition->isa('FSM::CoreAST::BinaryOp'), "$label condition is a BinaryOp");
+    return unless $condition->isa('FSM::CoreAST::BinaryOp');
+
+    is($condition->operator, '==', "$label uses equality comparison");
+    ok($condition->left->isa('FSM::CoreAST::SignalRef'), "$label left operand is a signal reference");
+    ok($condition->right->isa('FSM::CoreAST::ParameterRef'), "$label right operand is a parameter reference");
+    return unless $condition->left->isa('FSM::CoreAST::SignalRef') && $condition->right->isa('FSM::CoreAST::ParameterRef');
+
+    is($condition->left->signal->name, $lhs_name, "$label left signal matches");
+    is($condition->right->name, $rhs_name, "$label right parameter matches");
 }
 
 sub write_file {

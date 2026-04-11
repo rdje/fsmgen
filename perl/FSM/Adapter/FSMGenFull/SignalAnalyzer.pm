@@ -183,8 +183,8 @@ sub _analyze_expression_references($self, $expr, $context = 'RHS') {
         $self->_analyze_expression_references($expr->right, "$context.right") if $expr->right;
     } elsif ($expr->isa('FSM::CoreAST::UnaryOp')) {
         $self->_analyze_expression_references($expr->operand, "$context.unary") if $expr->operand;
-    } elsif ($expr->isa('FSM::CoreAST::Literal')) {
-        # Nothing
+    } elsif ($expr->isa('FSM::CoreAST::Literal') || $expr->isa('FSM::CoreAST::ParameterRef')) {
+        # Literals and parameter references do not introduce signal usage.
     } elsif ($expr->isa('FSM::CoreAST::IndexedRef')) {
         if ($expr->signal) {
             my $signal_name = $expr->signal->name;

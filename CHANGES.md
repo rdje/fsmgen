@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-11
+### direct `+params` now remain HDL parameter references in generated modules
+- Added [FSM::CoreAST::ParameterRef](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm) and updated [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm) so direct-root parameter uses in expressions preserve the parameter name instead of substituting the default literal into the AST.
+- Updated the direct SystemVerilog scaffold in [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm) to emit a module `#(...)` `parameter NAME = value` block for semantic module parameters.
+- Taught expression-width, factorization, signal-analysis, operand-contract validation, and enable-graph rendering helpers to treat parameter references as named non-signal leaves; unsized scalar parameter defaults stay width-implicit, while explicitly sized or packed aggregate defaults may contribute exact width.
+- Extended [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t) so parameter-backed assignments carry `ParameterRef` AST leaves and generated SV keeps references such as `C = P0` and `W = P_LIST`.
+
 ### `.rtlif` parameter defaults can reuse imported package values
 - Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) and [perl/FSM/Composition/RTLChildRealizer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLChildRealizer.pm) so external RTL interface metadata `(params (NAME default_value) ...)` declarations may use package-qualified symbols from packages imported by the consuming composition source.
 - Kept the default-value scope intentionally reusable: `.rtlif` defaults resolve `pkg.NAME`, `pkg.AGG.member`, or `pkg.enum.MEMBER` through imported packages, but do not resolve unqualified composition-top-local names.

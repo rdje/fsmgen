@@ -359,6 +359,9 @@ sub _is_factorizable_sub_expression ($self, $ast) {
     if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
         return 0;
     }
+    if ($ast->isa('FSM::CoreAST::ParameterRef')) {
+        return 0;
+    }
     if ($ast->isa('FSM::CoreAST::AggregateRef')) {
         return 0;
     }
@@ -483,7 +486,7 @@ sub ast_contains_intermediate_signals ($self, $ast) {
     my $ctx = $self->{flattened_dt};
     return 0 unless $ast && blessed($ast);
 
-    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef') || $ast->isa('FSM::CoreAST::AggregateRef')) {
+    if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef') || $ast->isa('FSM::CoreAST::AggregateRef') || $ast->isa('FSM::CoreAST::ParameterRef')) {
         my $signal_name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast) || 'unknown';
         my $ast_sv = eval { $ctx->{enable_graph_ast_support}->ast_to_systemverilog($ast) } || 'unknown';
         fsm_debug("  SECOND_PASS_FILTER: Bare signal reference '$signal_name' (AST: $ast_sv) - NOT factorizable", 3);

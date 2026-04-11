@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-11: direct `+params` now preserve parameter references through SV emission
+- Saved the bounded `R11` direct-parameter reference-preservation slice.
+- Important continuity note:
+  - [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm)
+    now has `FSM::CoreAST::ParameterRef` for named HDL parameter leaves,
+  - [perl/FSM/Adapter/FSMGenFull/SignalManager.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/SignalManager.pm)
+    resolves direct-root parameter symbols to `ParameterRef` nodes instead of
+    literal clones of their defaults,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ScaffoldEmitter.pm)
+    emits direct generated-module `#(...)` parameter declarations from semantic
+    module metadata,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/OperandContractValidationSupport.pm)
+    now treats semantic module parameter names as valid non-signal operands
+    during pre-generation operand validation,
+  - unsized scalar parameter defaults remain width-implicit as references, while
+    explicitly sized defaults and packed aggregate defaults can provide exact
+    width where pre-generation width contracts need it,
+  - [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t)
+    now proves `ParameterRef` AST preservation plus generated SV references
+    such as `C = P0` and `W = P_LIST`,
+  - and generated-child parameterization remains follow-up work because instance
+    override binding must now target these real child-module parameters rather
+    than fake literal-substituted internals.
+
 ## 2026-04-11: `.rtlif` declaration defaults can reuse imported package symbols
 - Saved the bounded `R11` package-backed `.rtlif` default-value slice.
 - Important continuity note:

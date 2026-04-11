@@ -1,5 +1,29 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: direct params are AST parameter refs, not literal substitution
+- Direct-root `(+params ...)` references now preserve named HDL parameter
+  identity through the CoreAST instead of substituting the declared default
+  value into each RHS expression.
+- Rationale:
+  - generated-child parameterization would be misleading if direct child modules
+    accepted instance overrides while their internals had already been lowered
+    to literal defaults,
+  - `FSM::CoreAST::ParameterRef` gives pre-generation checks and backend
+    renderers a precise non-signal leaf for parameter use,
+  - direct SystemVerilog generation can now emit real module `parameter`
+    declarations and reference those names from generated expressions,
+  - pre-generation operand validation must treat parameter names as valid
+    non-signal operands so guard expressions such as `<SEL=WIDTH` are checked
+    without requiring a bogus internal signal declaration,
+  - unsized scalar defaults such as `(WIDTH 16)` should not become exact-width
+    contracts just because the normalizer can compute an intrinsic bit count,
+  - explicitly sized defaults and packed aggregate defaults may still provide
+    exact widths when concat/deconstruct/type checks need a positive known
+    width.
+- Generated-child parameterization remains the next separate contract: the
+  source-level instance override binding can now be made meaningful because the
+  generated child module has real parameters to override.
+
 ## 2026-04-11: `.rtlif` defaults may use imported package symbols
 - `.rtlif` parameter/generic declaration defaults can now reuse package-qualified
   symbols from packages imported by the consuming composition source, for

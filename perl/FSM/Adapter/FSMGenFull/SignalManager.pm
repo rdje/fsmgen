@@ -276,14 +276,21 @@ sub resolve_symbol($self, $symbol_name) {
         }
     }
     
-    # 4. Check params (used in expressions like {DATA_WIDTH}'b0)
+    # 4. Check params as named HDL parameters, not as clones of their defaults.
     if (exists $self->{params}{$symbol_name}) {
         my $param_value = $self->{params}{$symbol_name};
         my $param_text = ref($param_value) eq 'HASH'
             ? ($param_value->{value_text} // '')
             : $param_value;
+        my $param_width = _explicit_parameter_ref_width($param_value);
         fsm_debug("      RESOLVED: $symbol_name as param -> $param_text", 3);
-        return _literal_from_parameter_value($param_value);
+        return FSM::CoreAST::ParameterRef->new(
+            $symbol_name,
+            value_info => _clone_type_spec($param_value),
+            width => $param_width,
+            type_spec => ref($param_value) eq 'HASH' ? $param_value->{value_type_spec} : undef,
+            default_value_text => $param_text,
+        );
     }
     
     # Not found in symbol tables
@@ -343,26 +350,18 @@ sub _clone_type_spec($value) {
     return $value;
 }
 
-sub _literal_from_parameter_value($param_value) {
-    my $text = ref($param_value) eq 'HASH'
-        ? $param_value->{value_text}
-        : $param_value;
-    Carp::confess("Internal error: stored parameter value is missing canonical text")
-        unless defined $text;
+sub _explicit_parameter_ref_width($param_value) {
+    return undef unless ref($param_value) eq 'HASH';
+    return undef unless defined($param_value->{value_width}) && $param_value->{value_width} > 0;
 
-    if ($text =~ /\A(\d+)'b([01]+)\z/i) {
-        return FSM::CoreAST::Literal->new($2, width => 0 + $1, radix => 'binary');
-    }
+    my $value_kind = $param_value->{value_kind} // '';
+    return $param_value->{value_width} if $value_kind ne '' && $value_kind ne 'scalar';
 
-    if ($text =~ /\A(\d+)'d([0-9]+)\z/i) {
-        return FSM::CoreAST::Literal->new($2, width => 0 + $1, radix => 'decimal');
-    }
+    my $value_text = $param_value->{value_text};
+    return $param_value->{value_width}
+        if defined($value_text) && $value_text =~ /\A-?\d+'s?[bBoOdDhH]/;
 
-    if ($text =~ /\A(\d+)'h([0-9A-Fa-f]+)\z/i) {
-        return FSM::CoreAST::Literal->new(uc($2), width => 0 + $1, radix => 'hex');
-    }
-
-    return FSM::CoreAST::Literal->new($text);
+    return undef;
 }
 
 sub _literal_to_parameter_payload($literal_expr) {

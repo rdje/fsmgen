@@ -539,8 +539,9 @@ This is the current `R8` draft normative contract for the symbol-definition and 
   - enum members such as `mode.BUSY`
   - direct `+define` values that have already been parsed before the `+params` block
 - Direct `+params` do not yet form recursive param-to-param dependencies; use `+constants` or `+enums` for shared named values, then reference those names from `+params`.
-- References to those names resolve as literals in assignment RHS expressions and guard equality conditions.
-- Current direct-root behavior is semantic substitution, not backend HDL `parameter` declaration emission.
+- References to those names remain named parameter references in direct-root expressions instead of being substituted back to their default literals.
+- Direct SystemVerilog module generation emits a `#(...)` `parameter NAME = default_value` block for these direct-root params, so a generated module can still expose true HDL configuration knobs.
+- Width handling stays conservative: explicitly sized parameter defaults and packed aggregate defaults can contribute exact width where the semantic checker requires it, while unsized scalar defaults such as `(P0 8)` remain width-implicit until their HDL context resolves them.
 - Malformed shapes like `(+params)`, `(+params BROKEN)`, and malformed entries like `(+params (P0))` are rejected explicitly.
 
 `(+enums ...)`:

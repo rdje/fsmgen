@@ -61,11 +61,22 @@ sub generate_module_declaration ($self, $fsm_module) {
     my @outputs = map { _render_module_port_plan($_, $aggregate_typedef_lookup) } @{$module_plan->{outputs} || []};
 
     my @all_ports = (@base_ports, @inputs, @outputs);
+    my @parameter_lines = _render_module_parameter_lines($fsm_module);
     my $hdl = "";
     if (@$typedef_lines) {
         $hdl .= join("\n", @$typedef_lines) . "\n\n";
     }
-    $hdl .= "module " . $fsm_module->name . " (\n";
+    $hdl .= "module " . $fsm_module->name;
+    if (@parameter_lines) {
+        $hdl .= " #(\n";
+        for my $i (0 .. $#parameter_lines) {
+            $hdl .= $parameter_lines[$i];
+            $hdl .= "," if $i < $#parameter_lines;
+            $hdl .= "\n";
+        }
+        $hdl .= ")";
+    }
+    $hdl .= " (\n";
     for my $i (0 .. $#all_ports) {
         $hdl .= $all_ports[$i];
         if ($i < $#all_ports) {
@@ -80,6 +91,22 @@ sub generate_module_declaration ($self, $fsm_module) {
     $ctx->{port_directions} = { %{$module_plan->{port_directions} || {}} };
 
     return $hdl;
+}
+
+sub _render_module_parameter_lines ($fsm_module) {
+    return unless $fsm_module && $fsm_module->can('parameters');
+
+    my $parameters = $fsm_module->parameters || {};
+    my @lines;
+    for my $parameter_name (sort keys %$parameters) {
+        my $parameter_info = $parameters->{$parameter_name};
+        my $value_text = ref($parameter_info) eq 'HASH'
+            ? $parameter_info->{value_text}
+            : $parameter_info;
+        next unless defined($value_text) && length($value_text);
+        push @lines, "  parameter $parameter_name = $value_text";
+    }
+    return @lines;
 }
 
 sub _render_module_port_plan ($port_plan, $aggregate_typedef_lookup = undef) {

@@ -116,6 +116,7 @@ sub ast_contains_factorizable_operators ($self, $ast) {
 
     if ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal') ||
         $ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef') ||
+        $ast->isa('FSM::CoreAST::ParameterRef') ||
         $ast->isa('FSM::CoreAST::AggregateRef')) {
         fsm_debug("    AST_OPERATORS: Found literal/signal reference - NOT factorizable", 3);
         return 0;
@@ -190,6 +191,9 @@ sub _ast_to_systemverilog_internal ($self, $ast, $parent_precedence) {
     if ($ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef')) {
         my $name = $ctx->{enable_graph_capture_support}->extract_signal_name_from_ast($ast);
         return $name || "unknown_signal";
+
+    } elsif ($ast->isa('FSM::CoreAST::ParameterRef')) {
+        return $ast->to_systemverilog();
 
     } elsif ($ast->isa('FSM::CoreAST::AggregateRef')) {
         return $ast->to_systemverilog();
@@ -316,6 +320,7 @@ sub _is_truthiness_signal_operand ($self, $ast) {
     return 1 if $ast->isa('FSM::AST::SignalRef') || $ast->isa('FSM::CoreAST::SignalRef');
     return 1 if $ast->isa('FSM::AST::IndexedRef') || $ast->isa('FSM::CoreAST::IndexedRef');
     return 1 if $ast->isa('FSM::CoreAST::AggregateRef');
+    return 1 if $ast->isa('FSM::CoreAST::ParameterRef');
     return 1 if $ast->isa('FSM::HDL::IntermediateSignalRef');
     return 0;
 }
@@ -611,6 +616,13 @@ sub _operand_is_single_bit ($self, $ast) {
         fsm_debug("      RESULT: " . ($result ? 'single-bit' : 'multi-bit') . " (aggregate path width)", 3);
         return $result;
 
+    } elsif ($ast->isa('FSM::CoreAST::ParameterRef')) {
+        fsm_debug("      PATH: ParameterRef", 3);
+        my $width = eval { $ast->width };
+        my $result = defined($width) && $width == 1 ? 1 : 0;
+        fsm_debug("      RESULT: " . ($result ? 'single-bit' : 'multi-bit') . " (parameter width)", 3);
+        return $result;
+
     } elsif ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp') || $ast->isa('FSM::HDL::SubstitutedBinaryOp')) {
         fsm_debug("      PATH: BinaryOp", 3);
         my $op = eval { $ast->operator } || '';
@@ -704,6 +716,7 @@ sub _operand_needs_parens_for_negation ($self, $operand) {
     return 0 if $operand->isa('FSM::AST::Literal') || $operand->isa('FSM::CoreAST::Literal');
     return 0 if $operand->isa('FSM::AST::IndexedRef') || $operand->isa('FSM::CoreAST::IndexedRef');
     return 0 if $operand->isa('FSM::CoreAST::AggregateRef');
+    return 0 if $operand->isa('FSM::CoreAST::ParameterRef');
     if ($operand->isa('FSM::AST::BinaryOp') || $operand->isa('FSM::CoreAST::BinaryOp') || $operand->isa('FSM::HDL::SubstitutedBinaryOp')) {
         my $operator = eval { $operand->operator } || '';
         return 0 if defined $self->_render_truthiness_comparison($operator, $operand->left, $operand->right);

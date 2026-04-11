@@ -186,6 +186,9 @@ sub build_operand_contract_inventory ($self, $fsm_module, $prepared_block = unde
     );
     my %assigned_internal_signals;
     my %localparam_names = map { ($_->{localparam_name} => 1) } @{$state_plan->{encodings} || []};
+    my %parameter_names = $fsm_module && $fsm_module->can('parameters')
+        ? map { ($_ => 1) } keys %{ $fsm_module->parameters || {} }
+        : ();
 
     if ($state_plan->{has_state_registers}) {
         $declared_internal_signals{current_state} = 1;
@@ -257,6 +260,7 @@ sub build_operand_contract_inventory ($self, $fsm_module, $prepared_block = unde
         declared_internal_signals => \%declared_internal_signals,
         assigned_internal_signals => \%assigned_internal_signals,
         localparam_names => \%localparam_names,
+        parameter_names => \%parameter_names,
     };
 }
 
@@ -419,6 +423,7 @@ sub _validate_named_ast ($self, $label, $ast, $inventory, $violations) {
     for my $signal_name (@operand_names) {
         next if $inventory->{top_level_signals}{$signal_name};
         next if $inventory->{localparam_names}{$signal_name};
+        next if $inventory->{parameter_names}{$signal_name};
 
         unless ($inventory->{declared_internal_signals}{$signal_name}) {
             push @$violations,
@@ -466,6 +471,8 @@ sub _collect_signal_operand_names ($self, $ast, $signal_names, $seen_node_ids, $
 
         return;
     }
+
+    return if $ast->isa('FSM::CoreAST::ParameterRef');
 
     my $signal_name;
     if ($ast->isa('FSM::HDL::IntermediateSignalRef')) {

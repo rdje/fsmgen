@@ -44,10 +44,25 @@ form recursive param-to-param dependency chains; if a value is meant to be share
 by multiple parameters, name it once through `+constants` or `+enums`, then point
 the parameter values at that semantic name.
 
-In the current direct-root path, `+params` values resolve as semantic literals in
-expressions. They are not yet emitted as HDL `parameter` declarations on
-generated modules; generated-child parameter override binding remains a separate
-future contract.
+In the current direct-root path, references to `+params` remain named parameter
+references in expressions instead of being substituted back to their default
+literals. SystemVerilog direct-module generation emits those declarations as a
+`#(...)` parameter block:
+
+```systemverilog
+module example #(
+  parameter WIDTH = 16,
+  parameter LANES = 16'b1010010100111100
+) (
+  input  logic clk
+);
+```
+
+FSMGen keeps width inference conservative here. Explicitly sized defaults and
+packed aggregate defaults can contribute exact width where the semantic checker
+requires it, but unsized scalar defaults such as `(WIDTH 16)` remain
+width-implicit until the HDL context resolves them. Generated-child parameter
+override binding remains a separate future contract.
 
 ## Constants
 
