@@ -62,8 +62,8 @@ more than one contract for it, for example:
 - `composition_contract_rejection_pipeline_cli`: the entry is intentionally
   rejected by the normal composition contract through both the pipeline API and
   the CLI, and that rejection is part of the supported contract. This bucket
-  now covers both missing external generated-child source lookup and missing
-  external `?rtl` sidecar metadata.
+  now covers missing external generated-child source lookup, missing external
+  `?rtl` sidecar metadata, and invalid `.rtlif` system-role directions.
 
 ## Current named entries
 
@@ -87,6 +87,7 @@ more than one contract for it, for example:
 | `contract.missing_rtl_metadata_sidecar` | [t/corpus/missing_rtl_metadata_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_rtl_metadata_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_fsm_child_source` | [t/corpus/missing_fsm_child_source_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_fsm_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 | `contract.missing_dt_child_source` | [t/corpus/missing_dt_child_source_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/missing_dt_child_source_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
+| `contract.invalid_rtl_system_port_direction` | [t/corpus/invalid_rtl_system_direction_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtl_system_direction_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 
 ## Current locking tests
 

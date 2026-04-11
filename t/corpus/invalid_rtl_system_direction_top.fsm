@@ -1,0 +1,13 @@
+(?top:invalid_rtl_system_direction_top
+  (?ports:public_io
+    core_clk
+    rst_async_n
+    payload_in<8
+    serial_out>
+  )
+  (?rtl:invalid_sysdir_uart_tx)
+  (?toplink:wiring
+    /payload_in/invalid_sysdir_uart_tx.data_in/
+    /invalid_sysdir_uart_tx.txd/serial_out/
+  )
+)

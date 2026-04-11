@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-11
+### invalid `.rtlif` system-role direction is now cataloged in support accounting
+- Added [t/corpus/invalid_rtl_system_direction_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtl_system_direction_top.fsm) and [t/corpus/invalid_sysdir_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_sysdir_uart_tx.rtlif) as a regression-corpus expected-failure fixture for malformed external RTL metadata that declares `clock` / `reset` system roles as outputs.
+- Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) so `contract.invalid_rtl_system_port_direction` is machine-classified as `expected_failure` under `composition_contract_rejection_pipeline_cli`, proving the rejection through both pipeline and CLI.
+- Updated [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) so the support-accounting catalog and human-facing corpus ledger include this `.rtlif` contract boundary beside missing child-source and missing sidecar failures.
+
 ### `.rtlif` system-role failures now keep concise composition summaries
 - Extended [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t) so output-direction `clock` / `reset` `.rtlif` metadata failures keep the offending token, resolved metadata file, blocked `RTL interface metadata system-port direction` boundary, and concise reason in both pipeline reports and non-quiet CLI composition-failure summaries.
 - This locks the already-general [perl/FSM/Composition/FailureReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/FailureReportBuilder.pm) behavior for the new `.rtlif` system-role direction diagnostic without needing production-code changes.

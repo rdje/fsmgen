@@ -202,6 +202,15 @@ my @REGRESSION_CORPUS = (
         source_kind => 'composition',
         expected_error_pattern => qr/Expected child source file:\s+'missing_dt_src\.fsm'.*Generated child source:\s+'\?dtc' 'missing_dt_src'.*child-source resolution is blocked because no active standalone-DT child source was found either embedded in the same file or in an external '\.fsm' file/s,
     },
+    {
+        id => 'contract.invalid_rtl_system_port_direction',
+        relpath => 't/corpus/invalid_rtl_system_direction_top.fsm',
+        family => 'composition_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'composition_contract_rejection_pipeline_cli',
+        source_kind => 'composition',
+        expected_error_pattern => qr/RTL metadata file:\s+'.*invalid_sysdir_uart_tx\.rtlif'.*RTL child module:\s+'\?rtl' 'invalid_sysdir_uart_tx'.*RTL interface metadata system-port direction is blocked because token 'core_clk>:clock' in declared interface metadata '.*invalid_sysdir_uart_tx\.rtlif' resolves to 'clock' while declaring an output direction/s,
+    },
 );
 
 sub regression_corpus_entries {

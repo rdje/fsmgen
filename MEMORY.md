@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-11: invalid `.rtlif` system-role direction is now in the corpus
+- Saved the bounded `R12` support-accounting follow-up for the recently hardened
+  `.rtlif` system-role direction contract.
+- Important continuity note:
+  - [t/corpus/invalid_rtl_system_direction_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtl_system_direction_top.fsm)
+    and [t/corpus/invalid_sysdir_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_sysdir_uart_tx.rtlif)
+    now form the static expected-failure fixture,
+  - `contract.invalid_rtl_system_port_direction` is classified as
+    `expected_failure` under `composition_contract_rejection_pipeline_cli`,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now expects `19` catalog entries and `9` explicit expected-failure entries,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    proves the fixture rejects through both pipeline and CLI with the blocked
+    `RTL interface metadata system-port direction` boundary,
+  - and the fixture deliberately uses `invalid_sysdir_uart_tx` so the older
+    `uart_tx` missing-sidecar corpus entry remains a true missing-metadata
+    test.
+
 ## 2026-04-11: `.rtlif` system-port direction summaries are now locked
 - Saved the bounded `R11` failure-summary hardening follow-up for the new
   `.rtlif` system-role direction diagnostic.

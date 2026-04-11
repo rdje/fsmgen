@@ -1,5 +1,31 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: `.rtlif` system-role direction is now part of support accounting
+- Promoted the focused `.rtlif` output-direction system-role rejection into the
+  regression corpus, not just the direct contract tests.
+- Landed behavior:
+  - [t/corpus/invalid_rtl_system_direction_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtl_system_direction_top.fsm)
+    composes an external `?rtl:invalid_sysdir_uart_tx` child through a small
+    top-level wrapper,
+  - [t/corpus/invalid_sysdir_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_sysdir_uart_tx.rtlif)
+    intentionally declares `core_clk>:clock` and `rst_async_n>:reset` while
+    keeping normal `data` ports valid, so the fixture targets the system-role
+    direction contract precisely,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    classifies `contract.invalid_rtl_system_port_direction` as an
+    `expected_failure` under `composition_contract_rejection_pipeline_cli`,
+  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    now proves that the same corpus entry rejects through both the pipeline
+    API and `bin/fsmgen` CLI without emitting HDL.
+- Why this boundary matters:
+  - focused tests prove the loader, pipeline, and summary behavior locally,
+  - support accounting proves the behavior is part of the advertised contract
+    ledger rather than an ad hoc bugfix,
+  - the fixture uses a unique external module name so it does not mask the
+    existing missing-`.rtlif` sidecar fixture for `uart_tx`,
+  - and this keeps the user's “visual bugs should have been caught by
+    regression automatically” rule moving into an auditable corpus shape.
+
 ## 2026-04-11: `.rtlif` system-role direction failures stay summary-backed
 - Added explicit regression coverage in
   [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t)

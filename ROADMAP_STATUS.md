@@ -64,8 +64,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- `R11` Composition contract strengthening.
+- `R12` Regression corpus and support accounting.
 - Current next decision point:
+  - The current `R12` slice promoted the recently hardened `.rtlif` output-direction system-role rejection into the regression corpus as `contract.invalid_rtl_system_port_direction`, using an isolated `invalid_sysdir_uart_tx` sidecar so the existing `uart_tx` missing-sidecar fixture still tests the missing-metadata boundary honestly.
   - Documentation strategy note: the guide is now considered large enough that the split should be planned concretely, and that plan now lives in [docs/BOOK_PLAN.md](/Users/richarddje/Documents/github/fsmgen/docs/BOOK_PLAN.md) with `docs/USER_GUIDE.md` as the intended landing page / table of contents for a future chaptered `docs/book/` set.
   - Documentation strategy note: when `docs/USER_GUIDE.md` becomes too large, split it into a book-like docs set with one Markdown file per major topic, keep `docs/USER_GUIDE.md` as the landing page / table of contents, and lean on realistic examples throughout so users can master FSMGen incrementally.
   - The next typed structural-handoff slice is now also shipped: inferred composition carrier nets now preserve `declared_type_name` / canonical `declared_type_spec` when they are driven by one typed child-output family, so internal structural connectivity no longer drops named aggregate/scalar type identity at the net boundary.
@@ -1616,6 +1617,12 @@ Done:
   - `contract.missing_fsm_child_source` and `contract.missing_dt_child_source` are classified as `expected_failure` under the same `composition_contract_rejection_pipeline_cli` coverage bucket,
   - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that those missing-child composition rejection paths through both pipeline and CLI using the new `Expected child source file:` diagnostics family,
   - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now records that the composition-contract bucket spans both missing external child-source lookup and missing external `.rtlif` sidecars.
+- That same composition-contract bucket now also accounts for malformed `.rtlif` system-role directions instead of leaving the new `.rtlif` hardening only in focused tests:
+  - [t/corpus/invalid_rtl_system_direction_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_rtl_system_direction_top.fsm) and [t/corpus/invalid_sysdir_uart_tx.rtlif](/Users/richarddje/Documents/github/fsmgen/t/corpus/invalid_sysdir_uart_tx.rtlif) now exist as explicit composition-top expected-failure corpus assets for an external RTL sidecar that declares `clock` / `reset` metadata with output direction,
+  - `contract.invalid_rtl_system_port_direction` is classified as `expected_failure` under `composition_contract_rejection_pipeline_cli`,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `19` catalog entries and `9` explicit expected-failure entries,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that the invalid `.rtlif` system-port direction rejection flows through both pipeline and CLI,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now records that the composition-contract bucket spans missing child-source lookup, missing `.rtlif` sidecars, and invalid `.rtlif` system-role directions.
 - The same first catalog now also counts shipped supported language features instead of only imported protocol seeds on the supported side:
   - [t/corpus/partial_lhs_with_size.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/partial_lhs_with_size.fsm) and [t/corpus/partial_lhs_inferred_width.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/partial_lhs_inferred_width.fsm) now exist as named `supported_smoke` direct-root corpus assets for partial indexed/sliced LHS lowering,
   - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records them as `feature.partial_lhs_with_size` and `feature.partial_lhs_inferred_width`,
@@ -1623,7 +1630,7 @@ Done:
   - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now records that `supported_smoke` is no longer only the first imported protocol quartet.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
-- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, first child-root compatibility pair, first malformed-language contract entry, and first composition-contract rejection entry.
+- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, first child-root compatibility pair, first malformed-language contract entry, and the current composition-contract rejection families.
 - Widen golden-output or semantic-check coverage beyond the first supported language-feature entries and the first protocol slice where simple compile smoke is not enough.
 Exit criteria:
 - Support claims can be backed by a maintained corpus and explicit classification, not only by ad hoc focused tests.
