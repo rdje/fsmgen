@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-11
+### `.rtlif` system-role metadata is now input-only
+- Updated [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm) so typed `.rtlif` `clock` and `reset` tokens reject output-direction spellings such as `core_clk>:clock` or `rst_async_n>:reset`.
+- Kept ordinary `data` outputs valid, so external RTL payload/status ports such as `txd>:data` remain expressible while system-role categories stay honest composition inputs.
+- Extended [t/88-rtlif-typed-port-contract.t](/Users/richarddje/Documents/github/fsmgen/t/88-rtlif-typed-port-contract.t) with loader, pipeline, and CLI coverage that rejects the invalid system-role direction and verifies the CLI does not emit HDL for that malformed metadata.
+- Updated the user guide, mdBook composition chapter, composition scope, and legacy mapping docs so the `.rtlif` contract describes `clock` / `reset` as system-input roles rather than HDL data types.
+
 ### aggregate top-expression inference now sees declared and inferred aggregate paths
 - Updated [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm) so explicit-toplink concat inference treats declared aggregate top-port paths such as `in_frame.tag` as exact-width operands when sizing one remaining omitted whole top-port operand.
 - Deferred expression width annotation until after whole-root explicit-link inference has collected the current `?toplink` block's first-pass evidence, so paths such as `in_frame.tag` also work when `in_frame` was inferred from a typed child input in the same block.

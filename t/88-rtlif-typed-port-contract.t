@@ -164,6 +164,89 @@ RTLIF
     like($error, qr/unsupported port type 'status'/, 'loader rejects unsupported explicit type names');
 };
 
+subtest '.rtlif rejects clock and reset outputs' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'bad_rtl_system_direction_top.fsm');
+    my $metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+    my $output_path = File::Spec->catfile($tempdir, 'bad_rtl_system_direction_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:bad_rtl_system_direction_top
+  (?ports:public_io
+    core_clk
+    rst_async_n
+    payload_in<8
+    serial_out>
+  )
+  (?rtl:uart_tx)
+  (?toplink:wiring
+    /payload_in/uart_tx.data_in/
+    /uart_tx.txd/serial_out/
+  )
+)
+FSM
+    );
+
+    write_file(
+        $metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  core_clk>:clock
+  rst_async_n>:reset
+  data_in<8:data
+  txd>:data
+)
+RTLIF
+    );
+
+    my $loader = FSM::Composition::RTLInterfaceLoader->new();
+    my $loader_error = eval {
+        $loader->load_interface(
+            module_name => 'uart_tx',
+            source_file => $composition_path,
+        );
+        undef;
+    };
+    $loader_error = $@ if !$loader_error;
+
+    like(
+        $loader_error,
+        qr/system-port direction is blocked because token 'core_clk>:clock'.*treats 'clock' and 'reset' ports as system inputs only/s,
+        'loader rejects output-direction clock/reset tokens before composition planning',
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+    my $pipeline_error = eval {
+        $pipeline->generate_hdl_from_file($composition_path);
+        undef;
+    };
+    $pipeline_error = $@ if !$pipeline_error;
+
+    like(
+        $pipeline_error,
+        qr/RTL metadata file:\s+'\Q$metadata_path\E'.*system-port direction is blocked because token 'core_clk>:clock'/s,
+        'pipeline preserves sidecar metadata context for blocked rtlif system-port direction',
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+    ok(!$success, 'CLI rejects output-direction clock/reset rtlif tokens');
+    ok(!-e $output_path, 'CLI does not emit HDL for invalid rtlif system-port direction');
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []}, ($error_message || ''));
+    like(
+        $combined_output,
+        qr/system-port direction is blocked because token 'core_clk>:clock'/s,
+        'CLI surfaces blocked rtlif system-port direction diagnostics',
+    );
+};
+
 done_testing();
 
 sub write_file {

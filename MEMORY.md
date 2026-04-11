@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-11: `.rtlif` clock/reset categories are now system-input-only
+- Saved the bounded `R11` `.rtlif` contract-hardening slice.
+- Important continuity note:
+  - [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm)
+    now rejects typed `.rtlif` output-direction system-role tokens such as
+    `core_clk>:clock` and `rst_async_n>:reset`,
+  - the accepted meaning is that `clock` and `reset` are interface-role
+    annotations for external RTL system inputs, not HDL data types and not
+    child-driven system outputs,
+  - ordinary `data` outputs remain valid, for example `txd>:data`,
+  - [t/88-rtlif-typed-port-contract.t](/Users/richarddje/Documents/github/fsmgen/t/88-rtlif-typed-port-contract.t)
+    locks direct loader rejection, pipeline diagnostic context, and CLI
+    failure-without-output behavior,
+  - docs now record the same rule in the user guide, mdBook composition
+    chapter, composition scope, and legacy mapping note,
+  - and the next honest `.rtlif` contract seam remains a stronger
+    interface-source layer above the current flat metadata mini-contract, not
+    loosening the current system-role categories.
+
 ## 2026-04-11: aggregate top-expression inference sees declared and inferred roots
 - Saved the next bounded `R11` aggregate top-expression inference slice.
 - Important continuity note:

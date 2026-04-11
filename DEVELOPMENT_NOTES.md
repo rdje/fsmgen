@@ -1,5 +1,31 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-11: `.rtlif` system roles are input-only
+- Landed a bounded `R11` composition-contract hardening slice in
+  [perl/FSM/Composition/RTLInterfaceLoader.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/RTLInterfaceLoader.pm).
+- Problem found:
+  - typed `.rtlif` metadata already treated `:clock` and `:reset` as system
+    roles for custom-named external RTL system ports,
+  - but the token parser still allowed output-direction spellings such as
+    `core_clk>:clock` and `rst_async_n>:reset`,
+  - which made the metadata claim that an external RTL child drives the
+    composition system lane.
+- Landed behavior:
+  - `clock` and `reset` `.rtlif` tokens are now input-only system-role
+    annotations,
+  - output-direction `clock` / `reset` metadata is rejected before composition
+    planning,
+  - ordinary `data` outputs such as `txd>:data` remain valid,
+  - and [t/88-rtlif-typed-port-contract.t](/Users/richarddje/Documents/github/fsmgen/t/88-rtlif-typed-port-contract.t)
+    locks the rule through direct loader use, pipeline diagnostics, and CLI
+    no-output failure behavior.
+- Why this boundary matters:
+  - `.rtlif` categories are interface roles, not target-HDL data types,
+  - composition can keep auto-wiring custom-named system inputs without
+    reviving hidden bidirectional inference,
+  - and malformed metadata is now blocked before generation, keeping HDL
+    emission as the final rendering of an already-upright structural contract.
+
 ## 2026-04-11: aggregate top-expression paths must participate in inference
 - Landed a bounded `R11` feature/diagnostic slice in
   [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm).

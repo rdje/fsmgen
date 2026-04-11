@@ -238,6 +238,13 @@ sub parse_port_token ($self, $module_name, $token, $metadata_path) {
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless $resolved_type =~ /^(?:data|clock|reset)$/;
 
+    confess
+        "Composition references external RTL module '$module_name', ".
+        "but RTL interface metadata system-port direction is blocked because token '$token' in declared interface metadata '$metadata_path' resolves to '$resolved_type' while declaring an output direction. ".
+        "The active '.rtlif' contract treats 'clock' and 'reset' ports as system inputs only. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        if $resolved_type =~ /^(?:clock|reset)$/ && defined($direction) && $direction eq '>';
+
     return FSM::Composition::Port->new(
         name => $port,
         direction => defined($direction) ? ($direction eq '<' ? 'input' : 'output') : 'input',

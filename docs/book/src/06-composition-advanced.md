@@ -261,6 +261,12 @@ blocked even if the packed widths match.
 Those are interface-role categories, not HDL data types. They help composition
 plan system lanes and ordinary data lanes honestly.
 
+`clock` and `reset` are currently system-input roles. A token such as
+`core_clk:clock` or `rst_async_n:reset` may auto-wire a custom-named RTL system
+input, but `core_clk>:clock` and `rst_async_n>:reset` are rejected because they
+claim that the external RTL child drives the system lane. Use `data` for
+ordinary payload/status outputs, for example `txd>:data`.
+
 ## Current Boundary
 
 This advanced lane is deliberately rich but still bounded:

@@ -298,6 +298,7 @@ Package note:
   - and it now also covers blocked external RTL metadata resolution when a `?rtl` child has no reachable `.rtlif` metadata,
   - and it now also covers blocked external RTL metadata structure when a reachable `.rtlif` file does not contain the required `?rtlif:<module>` root,
   - and it now also covers blocked external RTL metadata port typing when a reachable `.rtlif` token resolves to an unsupported explicit type,
+  - and it now also covers blocked external RTL metadata system-port direction when a reachable `.rtlif` token declares output-direction `clock` / `reset` metadata,
   - and it now also covers blocked external RTL metadata token shape when a reachable `.rtlif` token is syntactically invalid for the active flat port-token contract,
   - and it now also covers blocked external RTL metadata port sizing when a reachable `.rtlif` token declares a non-positive explicit width,
   - and it now also covers blocked external RTL metadata port declaration uniqueness when a reachable `.rtlif` file repeats the same port name,
@@ -1414,7 +1415,8 @@ Current `.rtlif` token contract:
 - `port`, `port<8`, and `port>` still work as the compact forms
 - `port:data`, `port<8:data`, `core_clk:clock`, and `rst_async_n:reset` are also valid
 - only `data`, `clock`, and `reset` are currently accepted as explicit port types
-- typed `clock` / `reset` tokens let custom-named RTL system ports auto-wire without falling back to `clk` / `rst_n` naming
+- typed `clock` / `reset` tokens are system-input roles; they let custom-named RTL system ports auto-wire without falling back to `clk` / `rst_n` naming, but output-direction forms such as `core_clk>:clock` or `rst_async_n>:reset` are rejected
+- ordinary typed data outputs remain valid, for example `txd>:data`
 
 ## 4) Useful options
 - `-o, --output <file>` : output file path

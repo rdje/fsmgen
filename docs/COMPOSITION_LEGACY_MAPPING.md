@@ -144,6 +144,7 @@ Legacy `?rtl` loaded interface information through the old environment-specific 
 Active `R6` direction:
 - keep `?rtl` as an external-interface binding concept,
 - but load it from a typed sidecar metadata artifact (`<module>.rtlif`) during composition planning,
+- treat typed `.rtlif` `clock` and `reset` categories as system-input roles rather than HDL data types, so output-direction system-role tokens are rejected while ordinary `data` outputs remain valid,
 - and do not parse or regenerate the external RTL child at this composition layer.
 
 Reason:
