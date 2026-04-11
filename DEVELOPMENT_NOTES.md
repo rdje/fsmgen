@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-12: bounded scalar parameter/generic expressions are semantic values
+- Added the first bounded expression-valued parameter/generic value slice.
+- Supported expression shape:
+  - operator-first scalar expressions such as `(+ WIDTH 1)`, `(* LANES 2)`, or
+    `(and MASK 8'hF0)`,
+  - operators `+`, `-`, `*`, `/`, `%`, `&`, `|`, and `^`,
+  - aliases `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, and `xor`,
+  - and operands that resolve through the existing semantic scalar
+    parameter/generic value normalization path.
+- This is deliberately not raw HDL text. The normalizer resolves known
+  symbols/payloads first, then emits one parenthesized scalar expression as
+  backend-ready value text.
+- Aggregate operands remain blocked in scalar parameter/generic expressions
+  because aggregate parameter values still require packed literal lowering and,
+  for overrides, shape compatibility before backend emission.
+- Width inference remains conservative for scalar expressions: they stay scalar
+  values but do not claim an exact width unless a later typed parameter contract
+  proves one safely.
+
 ## 2026-04-12: DT enable control is an activation-region model
 - Clarified the future authored DT enable-control direction as a broader
   activation-region model, not just a syntax hook on classic FSM states.

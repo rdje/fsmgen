@@ -40,7 +40,7 @@ sub canonical_value ($class, %args) {
     my ($bits, $width, $reason) = FSM::Package::PayloadLiteralSupport->payload_to_bits_and_width($payload);
     my $type_spec = FSM::Package::PayloadTypeSupport->payload_to_type_spec($payload);
 
-    if (($payload->{kind} || '') eq 'scalar') {
+    if (($payload->{kind} || '') eq 'scalar' || ($payload->{kind} || '') eq 'scalar_expr') {
         my %result = (
             value_text => $payload->{payload},
             value_payload => $payload,
@@ -90,6 +90,16 @@ sub _canonical_payload ($class, $value_ast, $context, $docs_hint, $resolve_symbo
             kind => 'scalar',
             payload => $class->_canonical_scalar_value_text($scalar_value, $context, $docs_hint),
         };
+    }
+
+    if (ref($value_ast) eq 'ARRAY') {
+        my $expression_payload = $class->_canonical_scalar_expression_payload(
+            $value_ast,
+            $context,
+            $docs_hint,
+            $resolve_symbol_payload,
+        );
+        return $expression_payload if defined $expression_payload;
     }
 
     confess
@@ -173,6 +183,18 @@ sub _canonical_existing_payload ($class, $payload, $context, $docs_hint, $resolv
                 $context,
                 $docs_hint,
             ),
+        };
+    }
+
+    if ($kind eq 'scalar_expr') {
+        my $payload_text = $payload->{payload};
+        confess
+            "$context is blocked because parameter/generic scalar expression payloads must already be normalized text.".
+            $docs_hint."\n"
+            unless defined($payload_text) && !ref($payload_text) && length($payload_text);
+        return {
+            kind => 'scalar_expr',
+            payload => $payload_text,
         };
     }
 
@@ -272,6 +294,82 @@ sub _canonical_scalar_value_text ($class, $value, $context, $docs_hint) {
     confess
         "$context is blocked because parameter/generic values currently accept scalar integer literals such as 8, 8'hA5, 'hA5, 0xA5, 0b1010, or 0o77, but saw '$text'.".
         $docs_hint."\n";
+}
+
+sub _canonical_scalar_expression_payload ($class, $value_ast, $context, $docs_hint, $resolve_symbol_payload = undef) {
+    my $expr_ast = $value_ast;
+    while (ref($expr_ast) eq 'ARRAY' && @$expr_ast == 1 && ref($expr_ast->[0]) eq 'ARRAY') {
+        $expr_ast = $expr_ast->[0];
+    }
+
+    return undef unless ref($expr_ast) eq 'ARRAY' && @$expr_ast;
+
+    my ($operator, @operands) = @$expr_ast;
+    return undef if ref($operator);
+
+    my $normalized_operator = $class->_normalize_scalar_expression_operator($operator);
+    return undef unless defined $normalized_operator;
+
+    if (@operands == 1 && ref($operands[0]) eq 'ARRAY') {
+        @operands = @{$operands[0]};
+    }
+
+    confess
+        "$context is blocked because scalar parameter/generic expression operator '$operator' requires at least 2 operands.".
+        $docs_hint."\n"
+        unless @operands >= 2;
+
+    my @operand_texts = map {
+        $class->_canonical_scalar_expression_operand_text(
+            $_,
+            "$context expression operand for '$operator'",
+            $docs_hint,
+            $resolve_symbol_payload,
+        )
+    } @operands;
+
+    return {
+        kind => 'scalar_expr',
+        payload => '(' . join(" $normalized_operator ", @operand_texts) . ')',
+    };
+}
+
+sub _canonical_scalar_expression_operand_text ($class, $operand_ast, $context, $docs_hint, $resolve_symbol_payload = undef) {
+    my $operand_payload = $class->_canonical_payload(
+        $operand_ast,
+        $context,
+        $docs_hint,
+        $resolve_symbol_payload,
+    );
+
+    my $operand_kind = ref($operand_payload) eq 'HASH' ? ($operand_payload->{kind} || '') : '';
+    return $operand_payload->{payload}
+        if ($operand_kind eq 'scalar' || $operand_kind eq 'scalar_expr')
+            && defined($operand_payload->{payload})
+            && !ref($operand_payload->{payload});
+
+    confess
+        "$context is blocked because scalar parameter/generic expressions may use only scalar operands, but this operand resolved to '$operand_kind'.".
+        $docs_hint."\n";
+}
+
+sub _normalize_scalar_expression_operator ($class, $operator) {
+    return undef unless defined($operator) && !ref($operator);
+
+    my %operator_aliases = (
+        add => '+',
+        sub => '-',
+        mul => '*',
+        div => '/',
+        mod => '%',
+        and => '&',
+        or  => '|',
+        xor => '^',
+    );
+
+    my $normalized = $operator_aliases{$operator} // $operator;
+    my %supported = map { $_ => 1 } qw(+ - * / % & | ^);
+    return $supported{$normalized} ? $normalized : undef;
 }
 
 sub _unwrap_scalar_token ($class, $value) {

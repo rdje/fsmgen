@@ -36,6 +36,8 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (P_FROM_PARAM_FORWARD P_FORWARD_BASE)
     (P_FORWARD_BASE 8'h3C)
     (P_AGG_FROM_PARAM P_LIST)
+    (P_EXPR (+ P0 1))
+    (P_EXPR_CHAIN (* P_EXPR 2))
   )
   (+enums
     (mode
@@ -92,7 +94,7 @@ FSM
 my $symbol_summary = $adapter->{signal_manager}->get_symbol_summary;
 is($symbol_summary->{constants}, 3, '+constants summary count is correct');
 is($symbol_summary->{defines}, 1, '+define summary count is correct');
-is($symbol_summary->{params}, 11, '+params summary count is correct');
+is($symbol_summary->{params}, 13, '+params summary count is correct');
 is($symbol_summary->{enums}, 1, '+enums summary count is correct');
 
 my $elements = state_elements($fsm_module, '-dt');
@@ -137,13 +139,16 @@ is($params->{P_FROM_PARAM_FORWARD}{value_text}, "8'h3C", 'semantic module resolv
 is($params->{P_FROM_PARAM_FORWARD}{value_width}, 8, 'semantic module preserves width from forward sibling scalar parameter defaults');
 is($params->{P_AGG_FROM_PARAM}{value_kind}, 'list', 'semantic module records sibling aggregate parameter kind');
 is($params->{P_AGG_FROM_PARAM}{value_width}, 16, 'semantic module records sibling aggregate parameter width');
+is($params->{P_EXPR}{value_text}, '(8 + 1)', 'semantic module records direct scalar parameter expressions');
+is($params->{P_EXPR}{value_kind}, 'scalar', 'direct scalar parameter expressions stay scalar parameter values');
+is($params->{P_EXPR_CHAIN}{value_text}, '((8 + 1) * 2)', 'semantic module records chained direct scalar parameter expressions');
 
 my $intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
     fsm_module => $fsm_module,
 );
 is_deeply(
     $intent_hir->parameter_names,
-    [qw(P0 P_AGG_FROM_PARAM P_BIN P_FORWARD_BASE P_FROM_AGG P_FROM_CONST P_FROM_ENUM P_FROM_PARAM P_FROM_PARAM_FORWARD P_HEX P_LIST)],
+    [qw(P0 P_AGG_FROM_PARAM P_BIN P_EXPR P_EXPR_CHAIN P_FORWARD_BASE P_FROM_AGG P_FROM_CONST P_FROM_ENUM P_FROM_PARAM P_FROM_PARAM_FORWARD P_HEX P_LIST)],
     'Intent HIR exposes direct-root parameter names from semantic module metadata'
 );
 
@@ -185,6 +190,8 @@ like($hdl, qr/parameter\s+P_HEX\s*=\s*'h10\b/s, 'direct SystemVerilog module dec
 like($hdl, qr/parameter\s+P_LIST\s*=\s*16'b1010010100111100\b/s, 'direct SystemVerilog module declares packed aggregate parameter');
 like($hdl, qr/parameter\s+P_FROM_PARAM_FORWARD\s*=\s*8'h3C\b/s, 'direct SystemVerilog module declares forward sibling parameter default');
 like($hdl, qr/parameter\s+P_AGG_FROM_PARAM\s*=\s*16'b1010010100111100\b/s, 'direct SystemVerilog module declares sibling aggregate parameter default');
+like($hdl, qr/parameter\s+P_EXPR\s*=\s*\(8 \+ 1\)/s, 'direct SystemVerilog module declares scalar parameter expression default');
+like($hdl, qr/parameter\s+P_EXPR_CHAIN\s*=\s*\(\(8 \+ 1\) \* 2\)/s, 'direct SystemVerilog module declares chained scalar parameter expression default');
 like($hdl, qr/\bC\s*=\s*P0\b/s, 'generated HDL keeps scalar parameter reference on RHS');
 like($hdl, qr/\bW\s*=\s*P_LIST\b/s, 'generated HDL keeps aggregate parameter reference on RHS');
 like($hdl, qr/\bK\s*=\s*P_FROM_PARAM_FORWARD\b/s, 'generated HDL keeps forward-derived parameter reference on RHS');

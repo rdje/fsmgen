@@ -38,6 +38,22 @@ literal list/record payloads are also accepted when they can lower to one packed
 literal. That keeps the authoring surface convenient while preserving a concrete
 semantic value before generation.
 
+Scalar parameter values may also use bounded operator expressions:
+
+```lisp
+(+params
+  (WIDTH 16)
+  (COUNT_PLUS_ONE (+ WIDTH 1))
+  (MASKED (and 8'hF0 8'h3C))
+)
+```
+
+The current expression operators are `+`, `-`, `*`, `/`, `%`, `&`, `|`, and
+`^`, with word aliases `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, and
+`xor`. Operands must resolve to scalar parameter/generic values; aggregate
+operands remain blocked because aggregates still need a known packed value
+before generation. Width inference stays conservative for expression defaults.
+
 Direct-root `+params` values may also reuse resolved semantic symbols:
 same-root constants, whole aggregate constant roots, enum members such as
 `mode.BUSY`, direct `+define` values, and other same-root direct `+params`.

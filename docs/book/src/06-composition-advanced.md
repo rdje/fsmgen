@@ -355,6 +355,13 @@ Verilog-family backend lowers them to SystemVerilog `#(...)` instance
 parameters by packing aggregates into one literal. VHDL generic-map lowering is
 still a future backend follow-up.
 
+Scalar parameter/generic values on this path may also use bounded operator
+expressions such as `(+ WIDTH 1)`, `(* LANES 2)`, or `(and MASK 8'hF0)`. Those
+expressions resolve semantic scalar operands before planning and lower as
+parenthesized scalar parameter expressions. Aggregate operands remain outside
+this expression slice because aggregate parameter values still need a known
+packed literal and compatible shape contract before backend emission.
+
 Generated `?fsmc` and `?dtc` children now use the same semantic override
 surface, but the declaration contract lives in the realized child source's
 direct `(+params ...)` block rather than in `.rtlif` metadata:
@@ -410,6 +417,12 @@ overrides must match the child default's aggregate shape, and current
 Verilog-family emission lowers valid generated-child overrides to
 SystemVerilog `#(...)` instance parameters. VHDL generic-map lowering remains a
 backend follow-up.
+
+The same bounded scalar expression value surface is accepted for generated-child
+overrides and for the direct `+params` defaults declared in the generated child
+source. For example, `(params (WIDTH_PLUS_ONE (+ WIDTH 1)))` stays semantic:
+the operands resolve before generation, then the current Verilog-family backend
+emits a normal instance parameter expression rather than raw user text.
 
 ## Current Boundary
 

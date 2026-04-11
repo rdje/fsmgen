@@ -163,6 +163,31 @@ FSM
     );
 };
 
+subtest 'scalar parameter expressions reject aggregate operands before generation' => sub {
+    my $params_aggregate_operand_error = parse_failure(<<'FSM');
+(?fsm:bad_param_expression_operand_contract
+  (+constants
+    (LANES (8'hA5 8'h3C))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (+ LANES 1))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $params_aggregate_operand_error,
+        qr/Direct source parameter 'P_BAD' expression operand for '\+'.*scalar parameter\/generic expressions may use only scalar operands.*resolved to 'list'/s,
+        'scalar +params expressions reject aggregate operands before generation'
+    );
+};
+
 subtest 'cyclic parameter value references are rejected before generation' => sub {
     my $params_cycle_error = parse_failure(<<'FSM');
 (?fsm:cyclic_param_symbol_contract

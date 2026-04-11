@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-12
+### scalar parameter/generic expressions now have a bounded semantic value slice
+- Extended [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm) so scalar parameter/generic values may use bounded operator expressions such as `(+ WIDTH 1)`, `(* LANES 2)`, or `(and MASK 8'hF0)` with semantic scalar operands.
+- Locked the new path for direct-root `+params`, `.rtlif` defaults, external `?rtl` instance overrides, generated `?fsmc` / `?dtc` child overrides, and aggregate-operand rejection through [t/30-language-contract-symbol-definitions.t](/Users/richarddje/Documents/github/fsmgen/t/30-language-contract-symbol-definitions.t), [t/51-language-contract-symbol-definition-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/51-language-contract-symbol-definition-boundary.t), [t/91-composition-multi-rtl-children.t](/Users/richarddje/Documents/github/fsmgen/t/91-composition-multi-rtl-children.t), and [t/292-composition-generated-child-parameter-overrides.t](/Users/richarddje/Documents/github/fsmgen/t/292-composition-generated-child-parameter-overrides.t).
+- Updated the user guide, mdBook parameter/composition chapters, roadmap status, memory, and development notes so this is documented as a semantic pre-generation value feature rather than raw HDL passthrough.
+
 ### advanced DT activation-region model is now clarified
 - Expanded the mdBook DT/FSM chapter to clarify that classic single-initial-state, one-active-state FSMs are the conservative subset of a broader future activation-region model.
 - Updated the user guide so future authored `dt_enable` support is framed as intent-level activation/deactivation of DT/state regions, with explicit diagnostics for same-target drives, conflicting assignment families, merge/priority policy, assertion hooks, and debug reporting.

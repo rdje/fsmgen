@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-12: bounded scalar parameter/generic expressions shipped
+- Saved the bounded `R11` scalar expression-valued parameter/generic slice.
+- Important continuity note:
+  - [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm)
+    now accepts operator-first scalar parameter/generic expressions such as
+    `(+ WIDTH 1)`, `(* LANES 2)`, or `(and MASK 8'hF0)`,
+  - this applies to direct-root `+params`, `.rtlif` parameter/generic defaults,
+    external `?rtl` instance overrides, and generated `?fsmc` / `?dtc`
+    overrides,
+  - operands resolve through the semantic scalar value path, including
+    same-root direct params where applicable and composition top/package symbols
+    where those scopes are already valid,
+  - aggregate operands remain blocked because aggregate parameter/generic values
+    still need packed literal lowering and override shape checks,
+  - width inference remains conservative for scalar expressions,
+  - and this is intentionally semantic pre-generation normalization, not raw HDL
+    expression passthrough.
+
 ## 2026-04-12: advanced DT enable control means activation regions
 - Saved the clarification that the future authored DT enable-control feature is
   not merely syntax on a classic FSM. A single-initial-state, one-active-state

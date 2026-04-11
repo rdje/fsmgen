@@ -35,6 +35,7 @@ subtest 'generated child parameter overrides lower through structural IR into SV
     (params
       (WIDTH OVERRIDE_WIDTH)
       (LANES TOP_LANES)
+      (EXPR_WIDTH (+ OVERRIDE_WIDTH 1))
     )
   )
   (?dtc:sink sink_src)
@@ -49,6 +50,7 @@ subtest 'generated child parameter overrides lower through structural IR into SV
   (+params
     (WIDTH 8)
     (LANES (8'h00 8'h00))
+    (EXPR_WIDTH 4)
   )
   (+system
     (clock clk)
@@ -88,7 +90,7 @@ FSM
     is($result->{composition_plan}->lane, 'C2', 'parameterized generated-child composition uses the generated-child C2 lane');
     is_deeply(
         [map { $_->{name} } @$parameter_overrides],
-        [qw(WIDTH LANES)],
+        [qw(WIDTH LANES EXPR_WIDTH)],
         'composition plan preserves generated-child parameter override order',
     );
     my %overrides = map { $_->{name} => $_ } @$parameter_overrides;
@@ -98,6 +100,8 @@ FSM
     is($overrides{LANES}{value_text}, "16'b1010010100111100", 'generated-child aggregate override resolves and packs top aggregate constant');
     is($overrides{LANES}{value_kind}, 'list', 'generated-child aggregate override keeps list kind');
     is($overrides{LANES}{value_width}, 16, 'generated-child aggregate override keeps packed width');
+    is($overrides{EXPR_WIDTH}{value_text}, '(16 + 1)', 'generated-child scalar expression override resolves top constant value');
+    is($overrides{EXPR_WIDTH}{value_kind}, 'scalar', 'generated-child scalar expression override stays scalar');
 
     is_deeply(
         $result->{structural_rtl_ir}{instances}[0]{parameter_overrides},
@@ -111,13 +115,13 @@ FSM
     );
     is(
         $result->{intent_hir}{composition_children}[0]{parameter_override_count},
-        2,
+        3,
         'intent HIR child export reports generated-child parameter override count',
     );
 
     my $hdl = $result->{hdl_code};
-    like($hdl, qr/module\s+child_src\s*#\(\s*parameter\s+LANES\s*=\s*16'b0000000000000000,\s*parameter\s+WIDTH\s*=\s*8\s*\)/s, 'generated child module emits direct parameter declarations');
-    like($hdl, qr/\bchild_src\s+#\(\s*\.WIDTH\(16\),\s*\.LANES\(16'b1010010100111100\)\s*\)\s+u_child\s*\(/s, 'generated top emits SV parameter overrides on the generated-child instance');
+    like($hdl, qr/module\s+child_src\s*#\(\s*parameter\s+EXPR_WIDTH\s*=\s*4,\s*parameter\s+LANES\s*=\s*16'b0000000000000000,\s*parameter\s+WIDTH\s*=\s*8\s*\)/s, 'generated child module emits direct parameter declarations');
+    like($hdl, qr/\bchild_src\s+#\(\s*\.WIDTH\(16\),\s*\.LANES\(16'b1010010100111100\),\s*\.EXPR_WIDTH\(\(16 \+ 1\)\)\s*\)\s+u_child\s*\(/s, 'generated top emits SV parameter overrides on the generated-child instance');
     like($hdl, qr/\bin_data\s*==\s*WIDTH\b/s, 'generated child internals keep scalar parameter reference in guard equality');
     like($hdl, qr/\bout_data\s*=\s*LANES\b/s, 'generated child internals keep aggregate parameter reference on RHS');
 
