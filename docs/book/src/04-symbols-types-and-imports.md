@@ -44,15 +44,20 @@ Scalar parameter values may also use bounded operator expressions:
 (+params
   (WIDTH 16)
   (COUNT_PLUS_ONE (+ WIDTH 1))
+  (BYTE_PLUS_ONE (+ BYTES[1] 1))
+  (MODE_PLUS_ONE (+ FRAME.meta.mode 1))
   (MASKED (and 8'hF0 8'h3C))
 )
 ```
 
 The current expression operators are `+`, `-`, `*`, `/`, `%`, `&`, `|`, and
 `^`, with word aliases `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, and
-`xor`. Operands must resolve to scalar parameter/generic values; aggregate
-operands remain blocked because aggregates still need a known packed value
-before generation. Width inference stays conservative for expression defaults.
+`xor`. Operands must resolve to scalar parameter/generic values. That includes
+scalar leaves inside list/record aggregate constants, package aggregate values,
+and aggregate parameter defaults, for example `BYTES[1]`, `FRAME.flag`, or
+`NESTED.meta.mode`. Whole aggregate roots and aggregate subtrees remain blocked
+because aggregates still need a known packed value before generation. Width
+inference stays conservative for expression defaults.
 
 Direct-root `+params` values may also reuse resolved semantic symbols:
 same-root constants, whole aggregate constant roots, enum members such as

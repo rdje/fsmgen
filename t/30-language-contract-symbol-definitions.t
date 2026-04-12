@@ -22,6 +22,8 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (C0 8'3)
     (ZERO const_8b0)
     (BYTE_PAIR (8'hA5 8'h3C))
+    (FRAME ((mode 2'b10) (flag 1)))
+    (NESTED ((meta ((flag 1) (mode 2'b10))) (payload (8'hA5 8'h3C))))
   )
   (+define (D0 8'4))
   (+params
@@ -37,7 +39,10 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (P_FORWARD_BASE 8'h3C)
     (P_AGG_FROM_PARAM P_LIST)
     (P_EXPR (+ P0 1))
+    (P_EXPR_AGG_LEAF (+ BYTE_PAIR[1] FRAME.flag))
     (P_EXPR_CHAIN (* P_EXPR 2))
+    (P_EXPR_NESTED_AGG_LEAF (+ NESTED.meta.mode NESTED.payload[1]))
+    (P_EXPR_PARAM_AGG_LEAF (+ P_LIST[0] 1))
   )
   (+enums
     (mode
@@ -92,9 +97,9 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
 FSM
 
 my $symbol_summary = $adapter->{signal_manager}->get_symbol_summary;
-is($symbol_summary->{constants}, 3, '+constants summary count is correct');
+is($symbol_summary->{constants}, 5, '+constants summary count is correct');
 is($symbol_summary->{defines}, 1, '+define summary count is correct');
-is($symbol_summary->{params}, 13, '+params summary count is correct');
+is($symbol_summary->{params}, 16, '+params summary count is correct');
 is($symbol_summary->{enums}, 1, '+enums summary count is correct');
 
 my $elements = state_elements($fsm_module, '-dt');
@@ -141,14 +146,17 @@ is($params->{P_AGG_FROM_PARAM}{value_kind}, 'list', 'semantic module records sib
 is($params->{P_AGG_FROM_PARAM}{value_width}, 16, 'semantic module records sibling aggregate parameter width');
 is($params->{P_EXPR}{value_text}, '(8 + 1)', 'semantic module records direct scalar parameter expressions');
 is($params->{P_EXPR}{value_kind}, 'scalar', 'direct scalar parameter expressions stay scalar parameter values');
+is($params->{P_EXPR_AGG_LEAF}{value_text}, "(8'h3C + 1)", 'semantic module records direct scalar expressions using aggregate constant leaves');
 is($params->{P_EXPR_CHAIN}{value_text}, '((8 + 1) * 2)', 'semantic module records chained direct scalar parameter expressions');
+is($params->{P_EXPR_NESTED_AGG_LEAF}{value_text}, "(2'b10 + 8'h3C)", 'semantic module records direct scalar expressions using nested aggregate scalar leaves');
+is($params->{P_EXPR_PARAM_AGG_LEAF}{value_text}, "(8'hA5 + 1)", 'semantic module records direct scalar expressions using aggregate parameter leaves');
 
 my $intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
     fsm_module => $fsm_module,
 );
 is_deeply(
     $intent_hir->parameter_names,
-    [qw(P0 P_AGG_FROM_PARAM P_BIN P_EXPR P_EXPR_CHAIN P_FORWARD_BASE P_FROM_AGG P_FROM_CONST P_FROM_ENUM P_FROM_PARAM P_FROM_PARAM_FORWARD P_HEX P_LIST)],
+    [qw(P0 P_AGG_FROM_PARAM P_BIN P_EXPR P_EXPR_AGG_LEAF P_EXPR_CHAIN P_EXPR_NESTED_AGG_LEAF P_EXPR_PARAM_AGG_LEAF P_FORWARD_BASE P_FROM_AGG P_FROM_CONST P_FROM_ENUM P_FROM_PARAM P_FROM_PARAM_FORWARD P_HEX P_LIST)],
     'Intent HIR exposes direct-root parameter names from semantic module metadata'
 );
 
@@ -191,7 +199,10 @@ like($hdl, qr/parameter\s+P_LIST\s*=\s*16'b1010010100111100\b/s, 'direct SystemV
 like($hdl, qr/parameter\s+P_FROM_PARAM_FORWARD\s*=\s*8'h3C\b/s, 'direct SystemVerilog module declares forward sibling parameter default');
 like($hdl, qr/parameter\s+P_AGG_FROM_PARAM\s*=\s*16'b1010010100111100\b/s, 'direct SystemVerilog module declares sibling aggregate parameter default');
 like($hdl, qr/parameter\s+P_EXPR\s*=\s*\(8 \+ 1\)/s, 'direct SystemVerilog module declares scalar parameter expression default');
+like($hdl, qr/parameter\s+P_EXPR_AGG_LEAF\s*=\s*\(8'h3C \+ 1\)/s, 'direct SystemVerilog module declares aggregate-leaf scalar parameter expression default');
 like($hdl, qr/parameter\s+P_EXPR_CHAIN\s*=\s*\(\(8 \+ 1\) \* 2\)/s, 'direct SystemVerilog module declares chained scalar parameter expression default');
+like($hdl, qr/parameter\s+P_EXPR_NESTED_AGG_LEAF\s*=\s*\(2'b10 \+ 8'h3C\)/s, 'direct SystemVerilog module declares nested aggregate-leaf scalar parameter expression default');
+like($hdl, qr/parameter\s+P_EXPR_PARAM_AGG_LEAF\s*=\s*\(8'hA5 \+ 1\)/s, 'direct SystemVerilog module declares aggregate parameter-leaf scalar expression default');
 like($hdl, qr/\bC\s*=\s*P0\b/s, 'generated HDL keeps scalar parameter reference on RHS');
 like($hdl, qr/\bW\s*=\s*P_LIST\b/s, 'generated HDL keeps aggregate parameter reference on RHS');
 like($hdl, qr/\bK\s*=\s*P_FROM_PARAM_FORWARD\b/s, 'generated HDL keeps forward-derived parameter reference on RHS');

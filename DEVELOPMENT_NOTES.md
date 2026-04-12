@@ -12,9 +12,13 @@ This document captures engineering rationale, design constraints, and working de
 - This is deliberately not raw HDL text. The normalizer resolves known
   symbols/payloads first, then emits one parenthesized scalar expression as
   backend-ready value text.
-- Aggregate operands remain blocked in scalar parameter/generic expressions
-  because aggregate parameter values still require packed literal lowering and,
-  for overrides, shape compatibility before backend emission.
+- Scalar leaves inside list/record aggregate values are valid operands,
+  including nested constant/package leaves and aggregate parameter default
+  leaves such as `P_LIST[0]`.
+- Whole aggregate roots and aggregate subtrees remain blocked in scalar
+  parameter/generic expressions because aggregate parameter values still require
+  packed literal lowering and, for overrides, shape compatibility before backend
+  emission.
 - Width inference remains conservative for scalar expressions: they stay scalar
   values but do not claim an exact width unless a later typed parameter contract
   proves one safely.

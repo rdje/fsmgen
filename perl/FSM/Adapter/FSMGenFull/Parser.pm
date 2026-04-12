@@ -1920,6 +1920,15 @@ sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
                     return $symbol_value_info->{value_payload} if ref($symbol_value_info) eq 'HASH';
                     return undef;
                 }
+                if ($symbol_name =~ /^([a-zA-Z_]\w*)((?:\.[a-zA-Z_]\w*|\[\d+\])+)\z/ && exists $entry_by_name{$1}) {
+                    my ($param_name, $suffix) = ($1, $2);
+                    my $symbol_value_info = $resolve_param->($param_name);
+                    return FSM::ParameterValueSupport->resolve_payload_path(
+                        $symbol_value_info->{value_payload},
+                        $suffix,
+                    ) if ref($symbol_value_info) eq 'HASH';
+                    return undef;
+                }
                 return $self->{signal_manager}->resolve_parameter_value_symbol_payload($symbol_name);
             },
         );

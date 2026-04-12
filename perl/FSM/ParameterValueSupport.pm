@@ -66,6 +66,37 @@ sub canonical_value ($class, %args) {
     return \%result;
 }
 
+sub resolve_payload_path ($class, $payload, $suffix) {
+    return undef unless defined $payload;
+    $suffix //= '';
+    return $class->_clone_payload($payload) if $suffix eq '';
+
+    my $current = $payload;
+    my $remaining = $suffix;
+
+    while (length $remaining) {
+        if ($remaining =~ s/\A\.([A-Za-z_]\w*)//) {
+            return undef unless ref($current) eq 'HASH' && ($current->{kind} || '') eq 'map';
+            $current = ($current->{members} || {})->{$1};
+            return undef unless defined $current;
+            next;
+        }
+
+        if ($remaining =~ s/\A\[(\d+)\]//) {
+            return undef unless ref($current) eq 'HASH' && ($current->{kind} || '') eq 'list';
+            my $items = $current->{items} || [];
+            return undef if $1 > $#$items;
+            $current = $items->[$1];
+            return undef unless defined $current;
+            next;
+        }
+
+        return undef;
+    }
+
+    return $class->_clone_payload($current);
+}
+
 sub _canonical_payload ($class, $value_ast, $context, $docs_hint, $resolve_symbol_payload = undef) {
     return $class->_canonical_existing_payload(
         $value_ast,
@@ -467,6 +498,20 @@ sub _validated_digits ($context, $docs_hint, $base, $digits) {
 sub _strip_underscores ($text) {
     $text =~ s/_//g;
     return $text;
+}
+
+sub _clone_payload ($class, $value) {
+    return undef unless defined $value;
+
+    if (ref($value) eq 'HASH') {
+        return { map { $_ => $class->_clone_payload($value->{$_}) } keys %$value };
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        return [ map { $class->_clone_payload($_) } @$value ];
+    }
+
+    return $value;
 }
 
 1;

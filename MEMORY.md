@@ -12,8 +12,11 @@ This is the live continuity document for fast session recovery after crashes, re
   - operands resolve through the semantic scalar value path, including
     same-root direct params where applicable and composition top/package symbols
     where those scopes are already valid,
-  - aggregate operands remain blocked because aggregate parameter/generic values
-    still need packed literal lowering and override shape checks,
+  - scalar leaves inside list/record aggregates are valid operands, including
+    nested leaves and aggregate parameter default leaves such as `P_LIST[0]`,
+  - whole aggregate roots and aggregate subtrees remain blocked because
+    aggregate parameter/generic values still need packed literal lowering and
+    override shape checks,
   - width inference remains conservative for scalar expressions,
   - and this is intentionally semantic pre-generation normalization, not raw HDL
     expression passthrough.

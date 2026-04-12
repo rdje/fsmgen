@@ -356,11 +356,14 @@ parameters by packing aggregates into one literal. VHDL generic-map lowering is
 still a future backend follow-up.
 
 Scalar parameter/generic values on this path may also use bounded operator
-expressions such as `(+ WIDTH 1)`, `(* LANES 2)`, or `(and MASK 8'hF0)`. Those
+expressions such as `(+ WIDTH 1)`, `(* COUNT 2)`, or `(and MASK 8'hF0)`. Those
 expressions resolve semantic scalar operands before planning and lower as
-parenthesized scalar parameter expressions. Aggregate operands remain outside
-this expression slice because aggregate parameter values still need a known
-packed literal and compatible shape contract before backend emission.
+parenthesized scalar parameter expressions. Scalar leaves inside list/record
+aggregate values are valid operands, including nested leaves such as
+`shared.FRAME.meta.mode` or `LOCAL_BYTES[1]`. Whole aggregate roots and aggregate
+subtrees remain outside this expression slice because aggregate parameter values
+still need a known packed literal and compatible shape contract before backend
+emission.
 
 Generated `?fsmc` and `?dtc` children now use the same semantic override
 surface, but the declaration contract lives in the realized child source's

@@ -11,6 +11,7 @@ use Scalar::Util qw(blessed);
 use FSM::CoreAST;
 use FSM::Debug;
 use FSM::Package::ScalarWidthSupport;
+use FSM::ParameterValueSupport;
 
 sub new($class, %args) {
     return bless {
@@ -251,6 +252,20 @@ sub resolve_parameter_value_symbol_payload($self, $symbol_name) {
         return _clone_type_spec($self->{params}{$symbol_name}{value_payload})
             if ref($self->{params}{$symbol_name}) eq 'HASH'
                 && ref($self->{params}{$symbol_name}{value_payload}) eq 'HASH';
+    }
+
+    if ($symbol_name =~ /^([a-zA-Z_]\w*)((?:\.[a-zA-Z_]\w*|\[\d+\])+)\z/) {
+        my ($param_name, $suffix) = ($1, $2);
+        if (
+            exists $self->{params}{$param_name}
+            && ref($self->{params}{$param_name}) eq 'HASH'
+            && ref($self->{params}{$param_name}{value_payload}) eq 'HASH'
+        ) {
+            return FSM::ParameterValueSupport->resolve_payload_path(
+                $self->{params}{$param_name}{value_payload},
+                $suffix,
+            );
+        }
     }
 
     return undef;
