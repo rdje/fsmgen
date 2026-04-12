@@ -11,11 +11,11 @@ Use it to keep one current, high-signal picture of:
 Refresh this document at the start of a later session whenever the effective entrypoint/import-tree architecture has moved enough that this note is no longer honest.
 
 Current baseline:
-- Reviewed on `2026-04-11`.
+- Reviewed on `2026-04-12`.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
 - Static trace from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) currently reaches `120` project files total, `119` `.pm` packages.
-- The former composition-local parameter/generic helper is now a compatibility shim; the active neutral owner is [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm).
+- The former composition-local parameter/generic helper is now a compatibility shim; the active neutral owner is [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm), including bounded scalar expressions and matching-shape aggregate bitwise expression folding.
 
 ## Executive read
 [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) is a thin CLI/reporting shell.
@@ -52,16 +52,17 @@ owner for bounded explicit-toplink source-expression specs: top/child bit and
 slice forms, aggregate paths, concat groups, repeat groups, literal operands,
 top-symbol payload lookup, and inference/child-base collection now live below
 the planner too.
-The newest external-RTL parameter/generic override slice adds
+The newest parameter/generic semantic-value slice keeps
 [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm)
-as the small scalar/aggregate literal owner for `.rtlif` defaults and `?rtl`
-instance overrides, keeping that value policy out of both the parser and
-backend emitter.
-The newest symbolic external-RTL parameter override slice adds
+as the scalar/aggregate literal, bounded scalar-expression, and matching-shape
+aggregate-bitwise owner for direct `+params`, `.rtlif` defaults, external
+`?rtl` overrides, and generated `?fsmc` / `?dtc` overrides, keeping that value
+policy out of both the parser and backend emitter.
+The newest symbolic parameter override slice uses
 [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm)
-as the post-import owner that resolves deferred `?rtl` parameter/generic
-override values through composition-top and imported-package symbols before
-planning or backend emission.
+as the post-import owner that resolves deferred child parameter/generic override
+values through composition-top and imported-package symbols before planning or
+backend emission.
 
 The heaviest remaining complexity is still the direct single-module HDL backend path centered on:
 - [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
@@ -109,7 +110,7 @@ This is the current static measurement view behind the qualitative assessment
 above.
 
 Reachable package-family counts from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen):
-- `Composition`: `36`
+- `Composition`: `35`
 - `HDL`: `31`
 - `Package`: `13`
 - `Synthesis`: `10`
@@ -119,7 +120,7 @@ Reachable package-family counts from [bin/fsmgen](/Users/richarddje/Documents/gi
 - `Extension`: `3`
 - `Backend`: `3`
 - `AST`: `1`
-- singleton support surfaces: `CoreAST.pm`, `Debug.pm`, `ExpressionNamer.pm`, `SourceClassifier.pm`, `SourcePathResolver.pm`
+- singleton support surfaces: `CoreAST.pm`, `Debug.pm`, `ExpressionNamer.pm`, `ParameterValueSupport.pm`, `SourceClassifier.pm`, `SourcePathResolver.pm`
 
 Current thin-coordinator line counts:
 - [perl/FSM/Pipeline/HDLGenerator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/HDLGenerator.pm): `149`
@@ -136,21 +137,21 @@ Current thin-coordinator line counts:
 - [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm): `153`
 
 Current largest reachable files by line count:
-- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm): `2715`
-- [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm): `2088`
+- [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm): `2824`
+- [perl/FSM/CoreAST.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/CoreAST.pm): `2135`
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm): `1825`
 - [perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/AssignmentSupport.pm): `1444`
-- [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm): `1422`
+- [perl/FSM/ExpressionNamer.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ExpressionNamer.pm): `1426`
+- [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm): `1375`
+- [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm): `1285`
 - [perl/FSM/HDL/ASTFactorization.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/ASTFactorization.pm): `1157`
-- [perl/FSM/Composition/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/Parser.pm): `1317`
 - [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm): `1096`
-- [perl/FSM/Composition/TopPortInferenceBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/TopPortInferenceBuilder.pm): `1061`
 - [perl/FSM/Composition/ProvenanceReportBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ProvenanceReportBuilder.pm): `937`
 
 Interpretation:
 - line count alone is not the same thing as current architectural risk,
 - the parser/core AST/expression infrastructure is still large, and [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) is now the largest reachable file again after literal-actual lowering moved out of [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm),
-- [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) remains a major `R11` planning hotspot because source-expression resolution, aggregate shape checks, carrier allocation, and binding-type preservation still meet there, but open/numeric actual literal policy now has an explicit owner in [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm), source-expression parsing/spec collection now has an explicit owner in [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm), parameter/generic scalar plus aggregate value normalization now has an explicit neutral owner in [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm), and symbolic external-RTL override-value resolution now has a post-import owner in [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm),
+- [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) remains a major `R11` planning hotspot because source-expression resolution, aggregate shape checks, carrier allocation, and binding-type preservation still meet there, but open/numeric actual literal policy now has an explicit owner in [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm), source-expression parsing/spec collection now has an explicit owner in [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm), parameter/generic scalar plus aggregate value normalization and bounded expression folding now has an explicit neutral owner in [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm), and child override-value symbol resolution now has a post-import owner in [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm),
 - the active `R11` change-risk gravity is still the direct backend stack plus
   the package/type layer and a few large composition builders, not the thinned
   top-level pipeline facade.
@@ -201,6 +202,7 @@ bin/fsmgen
      -> FSM::Pipeline::SourceFrontend
      -> FSM::Adapter::FSMGenFull
      -> FSM::Package::* declaration, import, payload, aggregate-path, and aggregate-expression support
+     -> FSM::ParameterValueSupport parameter/generic semantic value normalization
      -> FSM::IR::IntentHIRBuilder
      -> FSM::Pipeline::GeneratedModuleInfoBuilder
         -> FSM::Backend::GeneratedModuleEmitter
@@ -253,7 +255,7 @@ bin/fsmgen
      -> parse_fsm_file
      -> classify_source_ast
      -> parse_composition_source
-     -> FSM::Package::* plus FSM::Composition::PackageImportResolver
+     -> FSM::Package::* plus FSM::ParameterValueSupport plus FSM::Composition::PackageImportResolver
         -> FSM::Composition::ParameterOverrideResolver
      -> FSM::Composition::GenerationOrchestrator
      -> FSM::Composition::PlanBuilder
@@ -455,10 +457,11 @@ top-symbol payload lookup, and inference/child-source collection; [perl/FSM/Comp
 keeps endpoint resolution, aggregate compatibility, carrier allocation, and
 diagnostics.
 [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm)
-now owns symbolic external-RTL parameter override-value resolution after
-package imports have populated composition `TopSymbols`, leaving `.rtlif`
-declaration validation in `RTLChildRealizer` and scalar/aggregate
-normalization in [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm).
+now owns symbolic child parameter override-value resolution after package
+imports have populated composition `TopSymbols`, leaving `.rtlif` declaration
+validation in `RTLChildRealizer`, generated-child override validation in
+`GeneratedChildRealizer`, and scalar/aggregate normalization plus bounded
+expression folding in [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm).
 `PlanBuilder` now also owns the bounded composition-plan orchestration family:
 child realization dispatch, `?ports` shape gating, top-port inference handoff,
 lane selection, and shared-datapath plan augmentation.
@@ -797,7 +800,7 @@ It behaves like a hook system, not a competing architecture.
 ### Current hotspots
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm) is now a thin synthesis-context shell at `75` lines, so the remaining backend gravity lives in the broader `EnableGraph::*` owner family rather than the shell package itself.
 - The direct single-module generation path still has not converged on the same clean `StructuralRTLIR -> backend emitter` shape that the composition path is starting to use, even though it now has its own direct-root orchestrator boundary and a dedicated generated-module backend owner.
-- [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) is no longer the largest reachable file after [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm) took ownership of literal actual policy and [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm) took ownership of source-expression parsing/spec collection. [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm) is the same good shape at smaller scale for direct and external RTL parameter/generic scalar and aggregate values, and [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm) now owns symbolic override-value resolution, but `LinkedPlanBuilder` remains a real composition hotspot because source-expression resolution, aggregate shape checks, carrier allocation, and binding-type preservation still meet there.
+- [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) is no longer the largest reachable file after [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm) took ownership of literal actual policy and [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm) took ownership of source-expression parsing/spec collection. [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm) is the same good shape at smaller scale for direct, external RTL, and generated-child parameter/generic scalar, aggregate, scalar-expression, and aggregate-bitwise values, and [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm) now owns symbolic override-value resolution, but `LinkedPlanBuilder` remains a real composition hotspot because source-expression resolution, aggregate shape checks, carrier allocation, and binding-type preservation still meet there.
 - [perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm), [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm), [perl/FSM/Synthesis/EnableGraph/SignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/SignalSupport.pm), [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm), [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm), [perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm), and [perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm) now carry more of the remaining backend gravity than any single shell package.
 - The remaining `EnableGraph`-family gravity is now narrower than before: module/state/declaration planning, assignment-analysis / mux-emission support, enable-family support, AST capture/conversion support, AST rendering/classification, signal/intermediate support, and factorization policy all have dedicated owners now, and the direct first-pass AST-factorization pipeline plus the iterative fixpoint loop-state/pass helper/pass execution families do too. So the next honest seams are no longer “who owns the first factorization pass,” “who owns the fixpoint pass helpers,” “who owns the fixpoint aggregate loop-state contract,” “who owns the consolidated intermediate dependency graph mechanics,” “who owns the old direct consolidated block shell,” “who owns the old direct consolidated emitter shell,” “who owns the live consolidated intermediate stage-6 handoff,” “who owns the whole post-flattening SystemVerilog assembly sequence,” or “who owns the pre-stage scaffold/declaration/enable/prescan sequence”; they are the remaining lower-level direct-backend planning/stage coordination and broader direct-backend convergence rather than the old direct planning, capture, or WEN/EN clusters.
 - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) is still a meaningful sequencing hotspot even though it no longer owns the whole post-flattening SystemVerilog assembly sequence inline.

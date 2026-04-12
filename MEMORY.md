@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-12: README bootstrap import tree refreshed
+- Executed the README / SESSION_BOOTSTRAP ramp-up pass for this session and
+  refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+  to the current `120` reachable project files and `119` reachable `.pm`
+  packages snapshot.
+- Important continuity note:
+  - [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm)
+    is now documented as a singleton semantic-value owner in the import tree,
+    not hidden inside `Composition`,
+  - it owns scalar/aggregate parameter/generic values, bounded scalar
+    expressions, and matching-shape aggregate bitwise folding across direct
+    `+params`, `.rtlif` defaults, external `?rtl` overrides, and generated
+    `?fsmc` / `?dtc` overrides,
+  - [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
+    and [docs/COMPOSITION_LEGACY_MAPPING.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_LEGACY_MAPPING.md)
+    now distinguish the shipped expression slices from future VHDL generic-map
+    lowering and richer expression domains,
+  - no production-code changes were needed for this bootstrap/documentation
+    pass.
+
 ## 2026-04-12: aggregate parameter/generic bitwise expressions shipped
 - Saved the first bounded aggregate operator-expression slice.
 - Important continuity note:

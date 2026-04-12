@@ -1,6 +1,11 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-12
+### README bootstrap import-tree snapshot was refreshed
+- Re-executed the [README.md](/Users/richarddje/Documents/github/fsmgen/README.md) / [SESSION_BOOTSTRAP.md](/Users/richarddje/Documents/github/fsmgen/SESSION_BOOTSTRAP.md) ramp-up instructions and refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md) to the current `120` reachable project files / `119` reachable `.pm` packages snapshot.
+- Updated the measured family split so `ParameterValueSupport.pm` is recorded as a singleton semantic-value owner rather than being hidden inside the composition family, and refreshed the current largest-file line counts after the scalar-expression and aggregate-bitwise parameter/generic slices.
+- Aligned the composition scope and legacy mapping notes so bounded scalar parameter/generic expressions and matching-shape bitwise aggregate expressions are documented as shipped semantic value slices, while VHDL generic-map lowering and richer expression domains remain future work.
+
 ### aggregate parameter/generic bitwise expressions now fold before generation
 - Extended [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm) so parameter/generic values may use aggregate bitwise expressions such as `(and BYTES BYTE_MASK)`, `(or FRAME FRAME_MASK)`, or `(xor LANE_A LANE_B)` when every operand resolves to a matching list/record aggregate shape.
 - The normalizer folds those expressions leaf-by-leaf into a validated aggregate payload before HDL lowering, so backends still receive ordinary semantic aggregate values rather than raw HDL text or renderer-side aggregate operator semantics.

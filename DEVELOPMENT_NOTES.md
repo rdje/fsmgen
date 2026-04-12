@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-12: README bootstrap import-tree refresh
+- Re-ran the README / session-bootstrap architecture pass after the recent
+  parameter/generic expression work.
+- The live [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
+  transitive project-owned import tree still measures `120` project files and
+  `119` `.pm` packages.
+- The honest family split now treats
+  [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm)
+  as its own singleton semantic-value owner instead of burying it under
+  `Composition`: it owns scalar/aggregate parameter/generic value
+  normalization plus bounded scalar-expression and matching-shape
+  aggregate-bitwise folding for direct `+params`, `.rtlif` defaults, external
+  `?rtl` overrides, and generated `?fsmc` / `?dtc` overrides.
+- The remaining architecture read did not change: [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
+  is still a CLI/reporting shell, `HDLGenerator` is still a thin facade, the
+  composition/forward-IR path remains the cleanest directional architecture, and
+  the direct single-module backend stack remains the heavier convergence seam.
+
 ## 2026-04-12: aggregate parameter/generic bitwise expressions are folded semantically
 - Added the first bounded aggregate operator-expression slice in
   [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm).
