@@ -1,5 +1,35 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-12: aggregate parameter/generic arithmetic folds leafwise
+- Widened the first aggregate parameter/generic expression slice from
+  bitwise-only to bounded leafwise numeric/bitwise folding.
+- Supported aggregate expression shape now includes operator-first expressions
+  using `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`, or aliases `add`, `sub`,
+  `mul`, `div`, `mod`, `and`, `or`, and `xor`.
+- The contract is still intentionally conservative:
+  - every operand must resolve to a list/record aggregate semantic value,
+  - all operands must have matching inferred aggregate shape,
+  - each scalar leaf is treated as an unsigned fixed-width value,
+  - leaf widths must match across operands,
+  - division and modulo by zero are rejected,
+  - and arithmetic overflow or underflow outside that leaf width aborts before
+    HDL emission.
+- The backend still receives one folded aggregate payload that can lower to a
+  packed literal. This remains semantic pre-generation normalization, not raw
+  target-HDL expression passthrough.
+
+## 2026-04-12: generated-child source-shape diagnostics account for params payloads
+- Full regression exposed stale expectations in the generated-child
+  source-shape diagnostic suites.
+- The implementation already treats nested `(params (NAME value) ...)` blocks
+  as the one supported nested payload family for generated `?fsmc` / `?dtc`
+  children, so unsupported nested payloads should report the more precise
+  `composition generated-child source shape` boundary rather than the older
+  flat-source-only child source-shape wording.
+- Updated the tests to preserve that distinction: source-count failures still
+  report the exact source-count contract, while nested non-`params` payloads
+  report the params-capable generated-child payload boundary.
+
 ## 2026-04-12: README bootstrap import-tree refresh
 - Re-ran the README / session-bootstrap architecture pass after the recent
   parameter/generic expression work.
@@ -11,7 +41,7 @@ This document captures engineering rationale, design constraints, and working de
   as its own singleton semantic-value owner instead of burying it under
   `Composition`: it owns scalar/aggregate parameter/generic value
   normalization plus bounded scalar-expression and matching-shape
-  aggregate-bitwise folding for direct `+params`, `.rtlif` defaults, external
+  aggregate-expression folding for direct `+params`, `.rtlif` defaults, external
   `?rtl` overrides, and generated `?fsmc` / `?dtc` overrides.
 - The remaining architecture read did not change: [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
   is still a CLI/reporting shell, `HDLGenerator` is still a thin facade, the
@@ -53,10 +83,10 @@ This document captures engineering rationale, design constraints, and working de
   leaves such as `P_LIST[0]`.
 - Whole aggregate roots and aggregate subtrees remain blocked in scalar
   parameter/generic expressions; aggregate operands belong to the separate
-  bitwise aggregate slice or to future typed aggregate-operator slices.
+  aggregate-expression slice or to future typed aggregate-operator slices.
 - This must not be read as a scalar-only parameter/generic model. Parameters
   and generics may be scalar or aggregate semantic values. The first aggregate
-  bitwise slice now exists; richer aggregate operators should still be defined
+  expression slice now exists; richer aggregate operators should still be defined
   by typed operator contracts over aggregate shapes, with invalid
   operator/type/shape combinations rejected before generation.
 - Width inference remains conservative for scalar expressions: they stay scalar

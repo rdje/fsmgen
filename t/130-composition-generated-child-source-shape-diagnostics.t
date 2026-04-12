@@ -44,8 +44,8 @@ subtest 'nested ?fsmc source payloads now say source shape is blocked' => sub {
   )
 )
 FSM
-        pipeline_regex => qr/Composition top 'nested_fsm_source_top' contains '\?fsmc' child 'child', .*composition child source shape is blocked because the active composition parser currently requires exactly one flat FSM source name per '\?fsmc'/s,
-        cli_regex => qr/composition child source shape is blocked because the active composition parser currently requires exactly one flat FSM source name per '\?fsmc'/s,
+        pipeline_regex => qr/Composition top 'nested_fsm_source_top' contains '\?fsmc' child 'child' with unsupported nested block 'opt', .*composition generated-child source shape is blocked because nested '\?fsmc' payloads currently accept only '\(params \(NAME value\) \.\.\.\)' semantic blocks/s,
+        cli_regex => qr/composition generated-child source shape is blocked because nested '\?fsmc' payloads currently accept only '\(params \(NAME value\) \.\.\.\)' semantic blocks/s,
         cli_failure_name => 'nested ?fsmc source payloads',
     );
 };
@@ -60,8 +60,8 @@ subtest 'unnamed nested ?fsmc source payloads now say source shape is blocked' =
   )
 )
 FSM
-        pipeline_regex => qr/Composition top 'unnamed_nested_fsm_source_top' contains '\?fsmc' child without a name, .*composition child source shape is blocked because the active composition parser currently requires exactly one flat FSM source name per '\?fsmc'/s,
-        cli_regex => qr/composition child source shape is blocked because the active composition parser currently requires exactly one flat FSM source name per '\?fsmc'/s,
+        pipeline_regex => qr/Composition top 'unnamed_nested_fsm_source_top' contains '\?fsmc' child without a name with unsupported nested block 'opt', .*composition generated-child source shape is blocked because nested '\?fsmc' payloads currently accept only '\(params \(NAME value\) \.\.\.\)' semantic blocks/s,
+        cli_regex => qr/composition generated-child source shape is blocked because nested '\?fsmc' payloads currently accept only '\(params \(NAME value\) \.\.\.\)' semantic blocks/s,
         cli_failure_name => 'unnamed nested ?fsmc source payloads',
     );
 };
@@ -90,8 +90,8 @@ subtest 'unnamed nested ?dtc source payloads now say source shape is blocked' =>
   )
 )
 FSM
-        pipeline_regex => qr/Composition top 'unnamed_nested_dt_source_top' contains '\?dtc' child without a name, .*composition child source shape is blocked because the active composition parser currently requires exactly one flat standalone-DT source name per '\?dtc'/s,
-        cli_regex => qr/composition child source shape is blocked because the active composition parser currently requires exactly one flat standalone-DT source name per '\?dtc'/s,
+        pipeline_regex => qr/Composition top 'unnamed_nested_dt_source_top' contains '\?dtc' child without a name with unsupported nested block 'opt', .*composition generated-child source shape is blocked because nested '\?dtc' payloads currently accept only '\(params \(NAME value\) \.\.\.\)' semantic blocks/s,
+        cli_regex => qr/composition generated-child source shape is blocked because nested '\?dtc' payloads currently accept only '\(params \(NAME value\) \.\.\.\)' semantic blocks/s,
         cli_failure_name => 'unnamed nested ?dtc source payloads',
     );
 };
@@ -106,8 +106,8 @@ subtest 'nested ?dtc source payloads now say source shape is blocked' => sub {
   )
 )
 FSM
-        pipeline_regex => qr/Composition top 'nested_dt_source_top' contains '\?dtc' child 'child', .*composition child source shape is blocked because the active composition parser currently requires exactly one flat standalone-DT source name per '\?dtc'/s,
-        cli_regex => qr/composition child source shape is blocked because the active composition parser currently requires exactly one flat standalone-DT source name per '\?dtc'/s,
+        pipeline_regex => qr/Composition top 'nested_dt_source_top' contains '\?dtc' child 'child' with unsupported nested block 'opt', .*composition generated-child source shape is blocked because nested '\?dtc' payloads currently accept only '\(params \(NAME value\) \.\.\.\)' semantic blocks/s,
+        cli_regex => qr/composition generated-child source shape is blocked because nested '\?dtc' payloads currently accept only '\(params \(NAME value\) \.\.\.\)' semantic blocks/s,
         cli_failure_name => 'nested ?dtc source payloads',
     );
 };

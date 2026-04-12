@@ -145,11 +145,11 @@ Active modern direction, started in `R6` and widened in `R11`:
 - keep `?rtl` as an external-interface binding concept,
 - but load it from a typed sidecar metadata artifact (`<module>.rtlif`) during composition planning,
 - allow the modern `(?rtl:instance module)` form when one declared RTL module/interface contract must be instantiated several times under distinct instance names,
-- allow bounded scalar and aggregate `.rtlif` parameter/generic declarations whose defaults may use package-qualified shared symbols, bounded scalar expressions, and matching-shape bitwise aggregate expressions, plus resolved composition-top/package-symbol per-instance `?rtl` `(params (NAME value) ...)` override blocks that are name-validated and aggregate-shape-validated before target lowering,
+- allow bounded scalar and aggregate `.rtlif` parameter/generic declarations whose defaults may use package-qualified shared symbols, bounded scalar expressions, and matching-shape leafwise aggregate expressions, plus resolved composition-top/package-symbol per-instance `?rtl` `(params (NAME value) ...)` override blocks that are name-validated and aggregate-shape-validated before target lowering,
 - allow bounded generated-child `?fsmc` / `?dtc` `(params (NAME value) ...)` override blocks that target direct child-source `(+params ...)` declarations, resolve the same composition-top/package symbols, and validate aggregate shape before target lowering,
 - treat typed `.rtlif` `clock` and `reset` categories as system-input roles rather than HDL data types, so output-direction system-role tokens are rejected while ordinary `data` outputs remain valid,
 - do not parse or regenerate the external RTL child at this composition layer,
-- and keep VHDL generic-map lowering plus richer expression domains beyond the shipped bounded scalar-expression and bitwise aggregate-expression slices as future semantic follow-ups rather than reviving raw legacy template/plugin parameter passing.
+- and keep VHDL generic-map lowering plus richer expression domains beyond the shipped bounded scalar-expression and leafwise aggregate-expression slices as future semantic follow-ups rather than reviving raw legacy template/plugin parameter passing.
 
 Reason:
 - this preserves the real composition need, interface-aware wiring and validation,

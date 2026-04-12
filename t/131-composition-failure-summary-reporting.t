@@ -764,11 +764,11 @@ FSM
     is($report->{context_label}, 'Child', 'failure report classifies blocked ?fsmc source-shape failures as child context');
     is($report->{context_value}, "'child'", 'failure report preserves the named ?fsmc child as context');
     is($report->{context_summary}, "Child 'child'", 'failure report exposes a concise ?fsmc child context summary');
-    is($report->{blocked_boundary}, 'composition child source shape', 'failure report preserves the blocked ?fsmc source-shape boundary');
-    is($report->{blocked_boundary_label}, 'child source shape', 'failure report exposes a CLI-friendly blocked-boundary label for ?fsmc source-shape failures');
+    is($report->{blocked_boundary}, 'composition generated-child source shape', 'failure report preserves the blocked ?fsmc source-shape boundary');
+    is($report->{blocked_boundary_label}, 'generated-child source shape', 'failure report exposes a CLI-friendly blocked-boundary label for ?fsmc source-shape failures');
     is(
         $report->{blocked_reason},
-        "the active composition parser currently requires exactly one flat FSM source name per '?fsmc'",
+        "nested '?fsmc' payloads currently accept only '(params (NAME value) ...)' semantic blocks",
         'failure report preserves the concise ?fsmc source-shape reason',
     );
 };
@@ -850,11 +850,11 @@ FSM
     is($report->{context_label}, 'Child', 'failure report classifies blocked unnamed ?fsmc source-shape failures as child context');
     is($report->{context_value}, "'?fsmc'", 'failure report preserves the unnamed ?fsmc child header as context');
     is($report->{context_summary}, "Child '?fsmc'", 'failure report exposes a concise unnamed ?fsmc child context summary');
-    is($report->{blocked_boundary}, 'composition child source shape', 'failure report preserves the blocked unnamed ?fsmc source-shape boundary');
-    is($report->{blocked_boundary_label}, 'child source shape', 'failure report exposes a CLI-friendly blocked-boundary label for unnamed ?fsmc source-shape failures');
+    is($report->{blocked_boundary}, 'composition generated-child source shape', 'failure report preserves the blocked unnamed ?fsmc source-shape boundary');
+    is($report->{blocked_boundary_label}, 'generated-child source shape', 'failure report exposes a CLI-friendly blocked-boundary label for unnamed ?fsmc source-shape failures');
     is(
         $report->{blocked_reason},
-        "the active composition parser currently requires exactly one flat FSM source name per '?fsmc'",
+        "nested '?fsmc' payloads currently accept only '(params (NAME value) ...)' semantic blocks",
         'failure report preserves the concise unnamed ?fsmc source-shape reason',
     );
 };
@@ -894,11 +894,11 @@ FSM
     is($report->{context_label}, 'Child', 'failure report classifies blocked ?dtc source-shape failures as child context');
     is($report->{context_value}, "'child'", 'failure report preserves the named ?dtc child as context');
     is($report->{context_summary}, "Child 'child'", 'failure report exposes a concise ?dtc child context summary');
-    is($report->{blocked_boundary}, 'composition child source shape', 'failure report preserves the blocked ?dtc source-shape boundary');
-    is($report->{blocked_boundary_label}, 'child source shape', 'failure report exposes a CLI-friendly blocked-boundary label for ?dtc source-shape failures');
+    is($report->{blocked_boundary}, 'composition generated-child source shape', 'failure report preserves the blocked ?dtc source-shape boundary');
+    is($report->{blocked_boundary_label}, 'generated-child source shape', 'failure report exposes a CLI-friendly blocked-boundary label for ?dtc source-shape failures');
     is(
         $report->{blocked_reason},
-        "the active composition parser currently requires exactly one flat standalone-DT source name per '?dtc'",
+        "nested '?dtc' payloads currently accept only '(params (NAME value) ...)' semantic blocks",
         'failure report preserves the concise ?dtc source-shape reason',
     );
 };
@@ -980,11 +980,11 @@ FSM
     is($report->{context_label}, 'Child', 'failure report classifies blocked unnamed ?dtc source-shape failures as child context');
     is($report->{context_value}, "'?dtc'", 'failure report preserves the unnamed ?dtc child header as context');
     is($report->{context_summary}, "Child '?dtc'", 'failure report exposes a concise unnamed ?dtc child context summary');
-    is($report->{blocked_boundary}, 'composition child source shape', 'failure report preserves the blocked unnamed ?dtc source-shape boundary');
-    is($report->{blocked_boundary_label}, 'child source shape', 'failure report exposes a CLI-friendly blocked-boundary label for unnamed ?dtc source-shape failures');
+    is($report->{blocked_boundary}, 'composition generated-child source shape', 'failure report preserves the blocked unnamed ?dtc source-shape boundary');
+    is($report->{blocked_boundary_label}, 'generated-child source shape', 'failure report exposes a CLI-friendly blocked-boundary label for unnamed ?dtc source-shape failures');
     is(
         $report->{blocked_reason},
-        "the active composition parser currently requires exactly one flat standalone-DT source name per '?dtc'",
+        "nested '?dtc' payloads currently accept only '(params (NAME value) ...)' semantic blocks",
         'failure report preserves the concise unnamed ?dtc source-shape reason',
     );
 };
@@ -7901,8 +7901,8 @@ FSM
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked ?fsmc source-shape failures');
     like($combined_output, qr/Construct:\s+\?fsmc/s, 'CLI reports the ?fsmc construct for blocked source-shape failures');
     like($combined_output, qr/Context:\s+Child 'child'/s, 'CLI reports the named ?fsmc child as summary context');
-    like($combined_output, qr/Blocked boundary:\s+child source shape/s, 'CLI reports the blocked ?fsmc source-shape boundary');
-    like($combined_output, qr/Reason:\s+the active composition parser currently requires exactly one flat FSM source name per '\?fsmc'/s, 'CLI reports the concise ?fsmc source-shape reason');
+    like($combined_output, qr/Blocked boundary:\s+generated-child source shape/s, 'CLI reports the blocked ?fsmc source-shape boundary');
+    like($combined_output, qr/Reason:\s+nested '\?fsmc' payloads currently accept only '\(params \(NAME value\) \.\.\.\)' semantic blocks/s, 'CLI reports the concise ?fsmc source-shape reason');
 };
 
 subtest 'CLI prints child-entry context for blocked empty child entries' => sub {
@@ -8043,8 +8043,8 @@ FSM
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked unnamed ?fsmc source-shape failures');
     like($combined_output, qr/Construct:\s+\?fsmc/s, 'CLI reports the ?fsmc construct for blocked unnamed source-shape failures');
     like($combined_output, qr/Context:\s+Child '\?fsmc'/s, 'CLI reports the unnamed ?fsmc child header as summary context');
-    like($combined_output, qr/Blocked boundary:\s+child source shape/s, 'CLI reports the blocked unnamed ?fsmc source-shape boundary');
-    like($combined_output, qr/Reason:\s+the active composition parser currently requires exactly one flat FSM source name per '\?fsmc'/s, 'CLI reports the concise unnamed ?fsmc source-shape reason');
+    like($combined_output, qr/Blocked boundary:\s+generated-child source shape/s, 'CLI reports the blocked unnamed ?fsmc source-shape boundary');
+    like($combined_output, qr/Reason:\s+nested '\?fsmc' payloads currently accept only '\(params \(NAME value\) \.\.\.\)' semantic blocks/s, 'CLI reports the concise unnamed ?fsmc source-shape reason');
 };
 
 subtest 'CLI prints child context for blocked ?dtc source-shape failures' => sub {
@@ -8080,8 +8080,8 @@ FSM
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked ?dtc source-shape failures');
     like($combined_output, qr/Construct:\s+\?dtc/s, 'CLI reports the ?dtc construct for blocked source-shape failures');
     like($combined_output, qr/Context:\s+Child 'child'/s, 'CLI reports the named ?dtc child as summary context');
-    like($combined_output, qr/Blocked boundary:\s+child source shape/s, 'CLI reports the blocked ?dtc source-shape boundary');
-    like($combined_output, qr/Reason:\s+the active composition parser currently requires exactly one flat standalone-DT source name per '\?dtc'/s, 'CLI reports the concise ?dtc source-shape reason');
+    like($combined_output, qr/Blocked boundary:\s+generated-child source shape/s, 'CLI reports the blocked ?dtc source-shape boundary');
+    like($combined_output, qr/Reason:\s+nested '\?dtc' payloads currently accept only '\(params \(NAME value\) \.\.\.\)' semantic blocks/s, 'CLI reports the concise ?dtc source-shape reason');
 };
 
 subtest 'CLI prints child context for blocked unnamed ?dtc source-count failures' => sub {
@@ -8152,8 +8152,8 @@ FSM
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked unnamed ?dtc source-shape failures');
     like($combined_output, qr/Construct:\s+\?dtc/s, 'CLI reports the ?dtc construct for blocked unnamed source-shape failures');
     like($combined_output, qr/Context:\s+Child '\?dtc'/s, 'CLI reports the unnamed ?dtc child header as summary context');
-    like($combined_output, qr/Blocked boundary:\s+child source shape/s, 'CLI reports the blocked unnamed ?dtc source-shape boundary');
-    like($combined_output, qr/Reason:\s+the active composition parser currently requires exactly one flat standalone-DT source name per '\?dtc'/s, 'CLI reports the concise unnamed ?dtc source-shape reason');
+    like($combined_output, qr/Blocked boundary:\s+generated-child source shape/s, 'CLI reports the blocked unnamed ?dtc source-shape boundary');
+    like($combined_output, qr/Reason:\s+nested '\?dtc' payloads currently accept only '\(params \(NAME value\) \.\.\.\)' semantic blocks/s, 'CLI reports the concise unnamed ?dtc source-shape reason');
 };
 
 subtest 'CLI prints child-header context for blocked child item-list shape failures' => sub {

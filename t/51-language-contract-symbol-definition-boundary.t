@@ -163,8 +163,8 @@ FSM
     );
 };
 
-subtest 'aggregate parameter expressions reject unsupported and mismatched operands before generation' => sub {
-    my $non_bitwise_error = parse_failure(<<'FSM');
+subtest 'aggregate parameter expressions reject invalid operands and arithmetic results before generation' => sub {
+    my $mixed_arithmetic_operand_error = parse_failure(<<'FSM');
 (?fsm:bad_param_expression_operator_contract
   (+constants
     (LANES (8'hA5 8'h3C))
@@ -182,9 +182,9 @@ subtest 'aggregate parameter expressions reject unsupported and mismatched opera
 )
 FSM
     like(
-        $non_bitwise_error,
-        qr/Direct source parameter 'P_BAD'.*aggregate parameter\/generic expressions currently support only bitwise operators.*operator '\+'/s,
-        'non-bitwise aggregate +params expressions reject aggregate operands before generation'
+        $mixed_arithmetic_operand_error,
+        qr/Direct source parameter 'P_BAD'.*operator '\+' requires all operands to be aggregate values with matching shape, but operand 2 resolved to 'scalar'/s,
+        'aggregate arithmetic +params expressions reject mixed scalar/aggregate operands before generation'
     );
 
     my $mixed_operand_error = parse_failure(<<'FSM');
@@ -232,6 +232,78 @@ FSM
         $shape_mismatch_error,
         qr/Direct source parameter 'P_BAD'.*operator 'and' requires matching aggregate shapes; operand 1 is 'list<bits\[8\], bits\[8\]>' but operand 2 is 'record\{mode:bits\[2\], flag:bit\}'/s,
         'aggregate +params expressions reject mismatched aggregate shapes before generation'
+    );
+
+    my $overflow_error = parse_failure(<<'FSM');
+(?fsm:bad_param_expression_overflow_contract
+  (+constants
+    (LANES (8'hFF 8'h00))
+    (LANE_INC (8'h01 8'h00))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (+ LANES LANE_INC))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $overflow_error,
+        qr/Direct source parameter 'P_BAD'.*aggregate expression operator '\+' item 0.*aggregate arithmetic operator '\+' overflows leaf width 8/s,
+        'aggregate arithmetic +params expressions reject leaf overflow before generation'
+    );
+
+    my $underflow_error = parse_failure(<<'FSM');
+(?fsm:bad_param_expression_underflow_contract
+  (+constants
+    (LANES (8'h00 8'h02))
+    (LANE_DEC (8'h01 8'h01))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (- LANES LANE_DEC))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $underflow_error,
+        qr/Direct source parameter 'P_BAD'.*aggregate expression operator '-' item 0.*aggregate arithmetic operator '-' underflows leaf width 8/s,
+        'aggregate arithmetic +params expressions reject leaf underflow before generation'
+    );
+
+    my $division_by_zero_error = parse_failure(<<'FSM');
+(?fsm:bad_param_expression_divzero_contract
+  (+constants
+    (LANES (8'hA5 8'h3C))
+    (DIVISOR (8'h01 8'h00))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (/ LANES DIVISOR))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $division_by_zero_error,
+        qr/Direct source parameter 'P_BAD'.*aggregate expression operator '\/' item 1.*division by zero.*operand 2 is zero/s,
+        'aggregate arithmetic +params expressions reject leaf division by zero before generation'
     );
 };
 

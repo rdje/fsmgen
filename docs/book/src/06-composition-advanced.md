@@ -365,12 +365,16 @@ aggregate values are valid operands, including nested leaves such as
 Parameter/generic values are not scalar-only. Scalars and aggregates are both
 valid semantic parameter/generic values on the composition surface where the
 declared/default contracts allow them. The first aggregate operator slice
-supports bitwise `&`, `|`, and `^`, plus `and`, `or`, and `xor` aliases, between
-matching list/record aggregate shapes. The normalizer folds those expressions
-leaf-by-leaf into one aggregate value before the composition plan reaches HDL
-lowering. Richer aggregate operators remain future work until the specific
-operator is defined for the operand aggregate types/shapes and the result can be
-validated before generation.
+supports leafwise numeric and bitwise operators `+`, `-`, `*`, `/`, `%`, `&`,
+`|`, and `^`, plus `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, and `xor`
+aliases, between matching list/record aggregate shapes. The normalizer folds
+those expressions leaf-by-leaf into one aggregate value before the composition
+plan reaches HDL lowering. Arithmetic leaves are unsigned fixed-width values:
+leaf widths must match, division or modulo by zero is rejected, and
+overflow/underflow outside that leaf width aborts before generation. Richer
+aggregate operators remain future work until the specific operator is defined
+for the operand aggregate types/shapes and the result can be validated before
+generation.
 
 Generated `?fsmc` and `?dtc` children now use the same semantic override
 surface, but the declaration contract lives in the realized child source's

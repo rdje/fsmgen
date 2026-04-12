@@ -1,5 +1,39 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-12: aggregate parameter/generic leafwise arithmetic shipped
+- Saved the bounded aggregate arithmetic widening slice.
+- Important continuity note:
+  - [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm)
+    now accepts matching-shape aggregate expressions using leafwise `+`, `-`,
+    `*`, `/`, `%`, `&`, `|`, `^`, plus aliases `add`, `sub`, `mul`, `div`,
+    `mod`, `and`, `or`, and `xor`,
+  - operands must all resolve to matching list/record aggregate semantic
+    values,
+  - arithmetic leaves are unsigned fixed-width folds; leaf widths must match,
+    divide/modulo by zero is rejected, and overflow/underflow outside the leaf
+    width aborts before HDL emission,
+  - the folded aggregate payload still lowers before backend generation rather
+    than passing raw HDL expressions downstream,
+  - this is covered across direct `+params`, `.rtlif` defaults, external `?rtl`
+    overrides, and generated `?fsmc` / `?dtc` overrides,
+  - and richer aggregate operator families beyond this leafwise numeric/bitwise
+    slice remain future typed work rather than raw HDL passthrough.
+
+## 2026-04-12: generated-child source-shape diagnostic tests refreshed
+- During the full regression pass for the aggregate-expression work, the only
+  failures were stale generated-child diagnostic expectations in
+  [t/130-composition-generated-child-source-shape-diagnostics.t](/Users/richarddje/Documents/github/fsmgen/t/130-composition-generated-child-source-shape-diagnostics.t)
+  and [t/131-composition-failure-summary-reporting.t](/Users/richarddje/Documents/github/fsmgen/t/131-composition-failure-summary-reporting.t).
+- Important continuity note:
+  - generated `?fsmc` / `?dtc` children now legitimately accept nested
+    semantic `(params (NAME value) ...)` payload blocks,
+  - unsupported nested child payloads should therefore report the
+    `composition generated-child source shape` boundary and the targeted
+    “nested payloads accept only `(params ...)` semantic blocks” reason,
+  - the older flat-source-only source-shape expectation remains wrong for this
+    payload family, while source-count failures still keep the source-count
+    contract.
+
 ## 2026-04-12: README bootstrap import tree refreshed
 - Executed the README / SESSION_BOOTSTRAP ramp-up pass for this session and
   refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
@@ -10,7 +44,7 @@ This is the live continuity document for fast session recovery after crashes, re
     is now documented as a singleton semantic-value owner in the import tree,
     not hidden inside `Composition`,
   - it owns scalar/aggregate parameter/generic values, bounded scalar
-    expressions, and matching-shape aggregate bitwise folding across direct
+    expressions, and matching-shape aggregate expression folding across direct
     `+params`, `.rtlif` defaults, external `?rtl` overrides, and generated
     `?fsmc` / `?dtc` overrides,
   - [docs/COMPOSITION_SCOPE.md](/Users/richarddje/Documents/github/fsmgen/docs/COMPOSITION_SCOPE.md)
@@ -53,10 +87,10 @@ This is the live continuity document for fast session recovery after crashes, re
     nested leaves and aggregate parameter default leaves such as `P_LIST[0]`,
   - whole aggregate roots and aggregate subtrees remain blocked only as operands
     in this scalar-expression slice; aggregate operands belong to the separate
-    bitwise aggregate slice or to future typed aggregate-operator slices,
+    aggregate-expression slice or to future typed aggregate-operator slices,
   - this must not be read as a scalar-only parameter/generic model: parameters
     and generics may be scalar or aggregate semantic values; the first aggregate
-    bitwise slice now exists, while richer aggregate operator expressions should
+    expression slice now exists, while richer aggregate operator expressions should
     be accepted only when the operator is defined for the operand aggregate
     types/shapes,
   - width inference remains conservative for scalar expressions,

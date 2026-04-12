@@ -64,12 +64,15 @@ defaults.
 This is not a scalar-only parameter/generic model. Parameter/generic values are
 semantic values and may be scalar or aggregate. Aggregate values can be
 declared, reused, overridden, shape-checked, and packed where the existing paths
-support them. The first aggregate-expression slice supports only bitwise `&`,
-`|`, and `^` operations, plus `and`, `or`, and `xor` aliases, between matching
-list/record aggregate shapes. Those expressions are folded leaf-by-leaf into one
-aggregate value before backend lowering. Operators such as aggregate `+` remain
-future work until their type/shape/result contracts are explicit enough to
-validate before generation.
+support them. The first aggregate-expression slice now supports leafwise
+numeric and bitwise operators `+`, `-`, `*`, `/`, `%`, `&`, `|`, and `^`, plus
+`add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, and `xor` aliases, between
+matching list/record aggregate shapes. Those expressions are folded
+leaf-by-leaf into one aggregate value before backend lowering. Arithmetic leaves
+are unsigned and fixed-width: each leaf width must match, division or modulo by
+zero is rejected, and overflow/underflow outside that leaf width aborts before
+generation. Richer aggregate operators remain future work until their
+type/shape/result contracts are explicit enough to validate before generation.
 
 Direct-root `+params` values may also reuse resolved semantic symbols:
 same-root constants, whole aggregate constant roots, enum members such as

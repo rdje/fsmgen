@@ -15,6 +15,7 @@ use v5.20;
 use strict;
 use warnings;
 use Carp qw(confess);
+use Math::BigInt;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
@@ -390,7 +391,7 @@ sub _canonical_expression_payload ($class, $value_ast, $context, $docs_hint, $re
 
 sub _canonical_aggregate_expression_payload ($class, $normalized_operator, $display_operator, $operand_payloads, $context, $docs_hint) {
     confess
-        "$context is blocked because aggregate parameter/generic expressions currently support only bitwise operators '&', '|', '^' and aliases 'and', 'or', 'xor', but saw operator '$display_operator'.".
+        "$context is blocked because aggregate parameter/generic expressions currently support only matching-shape leafwise operators '+', '-', '*', '/', '%', '&', '|', '^' and aliases 'add', 'sub', 'mul', 'div', 'mod', 'and', 'or', 'xor', but saw operator '$display_operator'.".
         $docs_hint."\n"
         unless $class->_is_aggregate_expression_operator($normalized_operator);
 
@@ -438,7 +439,7 @@ sub _canonical_aggregate_expression_payload ($class, $normalized_operator, $disp
             unless $matches_first;
     }
 
-    return $class->_apply_aggregate_bitwise_operator(
+    return $class->_apply_aggregate_expression_operator(
         $normalized_operator,
         $operand_payloads,
         "$context aggregate expression operator '$display_operator'",
@@ -478,15 +479,24 @@ sub _normalize_scalar_expression_operator ($class, $operator) {
 }
 
 sub _is_aggregate_expression_operator ($class, $operator) {
-    return defined($operator) && !ref($operator) && ($operator eq '&' || $operator eq '|' || $operator eq '^');
+    return defined($operator) && !ref($operator) && (
+        $operator eq '+'
+        || $operator eq '-'
+        || $operator eq '*'
+        || $operator eq '/'
+        || $operator eq '%'
+        || $operator eq '&'
+        || $operator eq '|'
+        || $operator eq '^'
+    );
 }
 
-sub _apply_aggregate_bitwise_operator ($class, $operator, $payloads, $context, $docs_hint) {
+sub _apply_aggregate_expression_operator ($class, $operator, $payloads, $context, $docs_hint) {
     my $first_payload = $payloads->[0];
     my $kind = ref($first_payload) eq 'HASH' ? ($first_payload->{kind} || '') : '';
 
     if ($kind eq 'scalar') {
-        return $class->_apply_scalar_bitwise_operator(
+        return $class->_apply_scalar_leaf_operator(
             $operator,
             $payloads,
             $context,
@@ -498,7 +508,7 @@ sub _apply_aggregate_bitwise_operator ($class, $operator, $payloads, $context, $
         my $items = $first_payload->{items} || [];
         my @result_items;
         for my $item_index (0 .. $#$items) {
-            push @result_items, $class->_apply_aggregate_bitwise_operator(
+            push @result_items, $class->_apply_aggregate_expression_operator(
                 $operator,
                 [ map { ($_->{items} || [])->[$item_index] } @$payloads ],
                 "$context item $item_index",
@@ -516,7 +526,7 @@ sub _apply_aggregate_bitwise_operator ($class, $operator, $payloads, $context, $
         my $member_order = $first_payload->{member_order} || [];
         my %result_members;
         for my $member_name (@$member_order) {
-            $result_members{$member_name} = $class->_apply_aggregate_bitwise_operator(
+            $result_members{$member_name} = $class->_apply_aggregate_expression_operator(
                 $operator,
                 [ map { ($_->{members} || {})->{$member_name} } @$payloads ],
                 "$context member '$member_name'",
@@ -532,23 +542,35 @@ sub _apply_aggregate_bitwise_operator ($class, $operator, $payloads, $context, $
     }
 
     confess
-        "$context is blocked because aggregate parameter/generic bitwise expressions require scalar/list/map payloads, but saw '$kind'.".
+        "$context is blocked because aggregate parameter/generic expressions require scalar/list/map payloads, but saw '$kind'.".
         $docs_hint."\n";
 }
 
-sub _apply_scalar_bitwise_operator ($class, $operator, $payloads, $context, $docs_hint) {
+sub _apply_scalar_leaf_operator ($class, $operator, $payloads, $context, $docs_hint) {
+    return $class->_apply_scalar_bitwise_operator($operator, $payloads, $context, $docs_hint)
+        if $operator eq '&' || $operator eq '|' || $operator eq '^';
+
+    return $class->_apply_scalar_arithmetic_operator($operator, $payloads, $context, $docs_hint)
+        if $operator eq '+' || $operator eq '-' || $operator eq '*' || $operator eq '/' || $operator eq '%';
+
+    confess
+        "$context is blocked because internal aggregate expression folding saw unsupported operator '$operator'.".
+        $docs_hint."\n";
+}
+
+sub _aggregate_leaf_bitstrings_and_width ($class, $payloads, $context, $docs_hint) {
     my @bitstrings;
     my $expected_width;
 
     for my $operand_index (0 .. $#$payloads) {
         my ($bits, $width, $reason) = FSM::Package::PayloadLiteralSupport->payload_to_bits_and_width($payloads->[$operand_index]);
         confess
-            "$context is blocked because scalar leaf operand ".($operand_index + 1)." did not lower to bits for aggregate bitwise folding; reason '$reason'.".
+            "$context is blocked because scalar leaf operand ".($operand_index + 1)." did not lower to bits for aggregate expression folding; reason '$reason'.".
             $docs_hint."\n"
             unless defined($bits) && defined($width) && $width > 0;
         if (defined $expected_width) {
             confess
-                "$context is blocked because scalar leaf operand widths must match for aggregate bitwise folding; expected width $expected_width but operand ".($operand_index + 1)." has width $width.".
+                "$context is blocked because scalar leaf operand widths must match for aggregate expression folding; expected width $expected_width but operand ".($operand_index + 1)." has width $width.".
                 $docs_hint."\n"
                 unless $width == $expected_width;
         } else {
@@ -557,9 +579,15 @@ sub _apply_scalar_bitwise_operator ($class, $operator, $payloads, $context, $doc
         push @bitstrings, $bits;
     }
 
-    my @result_bits = split //, $bitstrings[0];
-    for my $operand_index (1 .. $#bitstrings) {
-        my @operand_bits = split //, $bitstrings[$operand_index];
+    return (\@bitstrings, $expected_width);
+}
+
+sub _apply_scalar_bitwise_operator ($class, $operator, $payloads, $context, $docs_hint) {
+    my ($bitstrings, $expected_width) = $class->_aggregate_leaf_bitstrings_and_width($payloads, $context, $docs_hint);
+
+    my @result_bits = split //, $bitstrings->[0];
+    for my $operand_index (1 .. $#$bitstrings) {
+        my @operand_bits = split //, $bitstrings->[$operand_index];
         for my $bit_index (0 .. $#result_bits) {
             if ($operator eq '&') {
                 $result_bits[$bit_index] = ($result_bits[$bit_index] eq '1' && $operand_bits[$bit_index] eq '1') ? '1' : '0';
@@ -569,7 +597,7 @@ sub _apply_scalar_bitwise_operator ($class, $operator, $payloads, $context, $doc
                 $result_bits[$bit_index] = ($result_bits[$bit_index] ne $operand_bits[$bit_index]) ? '1' : '0';
             } else {
                 confess
-                    "$context is blocked because internal aggregate bitwise folding saw unsupported operator '$operator'.".
+                    "$context is blocked because internal aggregate expression folding saw unsupported bitwise operator '$operator'.".
                     $docs_hint."\n";
             }
         }
@@ -578,6 +606,65 @@ sub _apply_scalar_bitwise_operator ($class, $operator, $payloads, $context, $doc
     return {
         kind => 'scalar',
         payload => $expected_width."'b".join('', @result_bits),
+    };
+}
+
+sub _apply_scalar_arithmetic_operator ($class, $operator, $payloads, $context, $docs_hint) {
+    my ($bitstrings, $expected_width) = $class->_aggregate_leaf_bitstrings_and_width($payloads, $context, $docs_hint);
+    my @values = map { Math::BigInt->from_bin('0b'.$_) } @$bitstrings;
+    my $result = shift @values;
+
+    for my $operand_index (0 .. $#values) {
+        my $operand_number = $operand_index + 2;
+        my $operand_value = $values[$operand_index];
+
+        if ($operator eq '+') {
+            $result = $result + $operand_value;
+        } elsif ($operator eq '-') {
+            $result = $result - $operand_value;
+        } elsif ($operator eq '*') {
+            $result = $result * $operand_value;
+        } elsif ($operator eq '/') {
+            confess
+                "$context is blocked because aggregate arithmetic division by zero is not a valid parameter/generic leaf value; operand $operand_number is zero.".
+                $docs_hint."\n"
+                if $operand_value->is_zero();
+            $result = $result / $operand_value;
+        } elsif ($operator eq '%') {
+            confess
+                "$context is blocked because aggregate arithmetic modulo by zero is not a valid parameter/generic leaf value; operand $operand_number is zero.".
+                $docs_hint."\n"
+                if $operand_value->is_zero();
+            $result = $result % $operand_value;
+        } else {
+            confess
+                "$context is blocked because internal aggregate expression folding saw unsupported arithmetic operator '$operator'.".
+                $docs_hint."\n";
+        }
+    }
+
+    confess
+        "$context is blocked because aggregate arithmetic operator '$operator' underflows leaf width $expected_width.".
+        $docs_hint."\n"
+        if $result->bcmp(0) < 0;
+
+    my $max_value = Math::BigInt->new(2);
+    $max_value->bpow($expected_width);
+    $max_value->bsub(1);
+    confess
+        "$context is blocked because aggregate arithmetic operator '$operator' overflows leaf width $expected_width.".
+        $docs_hint."\n"
+        if $result->bcmp($max_value) > 0;
+
+    my $result_bits = $result->as_bin();
+    $result_bits =~ s/\A0b//;
+    $result_bits = '0' unless length $result_bits;
+    $result_bits = ('0' x ($expected_width - length($result_bits))) . $result_bits
+        if length($result_bits) < $expected_width;
+
+    return {
+        kind => 'scalar',
+        payload => $expected_width."'b".$result_bits,
     };
 }
 
