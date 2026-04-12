@@ -163,9 +163,9 @@ FSM
     );
 };
 
-subtest 'scalar parameter expressions reject aggregate operands before generation' => sub {
-    my $params_aggregate_operand_error = parse_failure(<<'FSM');
-(?fsm:bad_param_expression_operand_contract
+subtest 'aggregate parameter expressions reject unsupported and mismatched operands before generation' => sub {
+    my $non_bitwise_error = parse_failure(<<'FSM');
+(?fsm:bad_param_expression_operator_contract
   (+constants
     (LANES (8'hA5 8'h3C))
   )
@@ -182,9 +182,56 @@ subtest 'scalar parameter expressions reject aggregate operands before generatio
 )
 FSM
     like(
-        $params_aggregate_operand_error,
-        qr/Direct source parameter 'P_BAD' expression operand for '\+'.*scalar parameter\/generic expressions may use only scalar operands.*resolved to 'list'/s,
-        'scalar +params expressions reject aggregate operands before generation'
+        $non_bitwise_error,
+        qr/Direct source parameter 'P_BAD'.*aggregate parameter\/generic expressions currently support only bitwise operators.*operator '\+'/s,
+        'non-bitwise aggregate +params expressions reject aggregate operands before generation'
+    );
+
+    my $mixed_operand_error = parse_failure(<<'FSM');
+(?fsm:bad_param_expression_mixed_operand_contract
+  (+constants
+    (LANES (8'hA5 8'h3C))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (and LANES 1))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $mixed_operand_error,
+        qr/Direct source parameter 'P_BAD'.*operator 'and' requires all operands to be aggregate values with matching shape, but operand 2 resolved to 'scalar'/s,
+        'aggregate +params expressions reject mixed scalar/aggregate operands before generation'
+    );
+
+    my $shape_mismatch_error = parse_failure(<<'FSM');
+(?fsm:bad_param_expression_shape_contract
+  (+constants
+    (LANES (8'hA5 8'h3C))
+    (FRAME ((mode 2'b10) (flag 1)))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (and LANES FRAME))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
+FSM
+    like(
+        $shape_mismatch_error,
+        qr/Direct source parameter 'P_BAD'.*operator 'and' requires matching aggregate shapes; operand 1 is 'list<bits\[8\], bits\[8\]>' but operand 2 is 'record\{mode:bits\[2\], flag:bit\}'/s,
+        'aggregate +params expressions reject mismatched aggregate shapes before generation'
     );
 };
 

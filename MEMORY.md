@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-12: aggregate parameter/generic bitwise expressions shipped
+- Saved the first bounded aggregate operator-expression slice.
+- Important continuity note:
+  - [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm)
+    now accepts aggregate bitwise expressions using `&`, `|`, `^`, `and`,
+    `or`, or `xor`,
+  - operands must all resolve to matching list/record aggregate semantic
+    values,
+  - the normalizer folds each scalar leaf into a new aggregate payload before
+    backend lowering,
+  - this is covered across direct `+params`, `.rtlif` defaults, external `?rtl`
+    overrides, and generated `?fsmc` / `?dtc` overrides,
+  - mixed scalar/aggregate operands, mismatched aggregate shapes, and non-bitwise
+    aggregate operators still abort before generation,
+  - and richer aggregate operator families remain future typed work rather than
+    raw HDL passthrough.
+
 ## 2026-04-12: bounded scalar parameter/generic expressions shipped
 - Saved the bounded `R11` scalar expression-valued parameter/generic slice.
 - Important continuity note:
@@ -15,12 +32,13 @@ This is the live continuity document for fast session recovery after crashes, re
   - scalar leaves inside list/record aggregates are valid operands, including
     nested leaves and aggregate parameter default leaves such as `P_LIST[0]`,
   - whole aggregate roots and aggregate subtrees remain blocked only as operands
-    in this scalar-expression slice because aggregate-to-aggregate operators
-    still need typed, shape-aware semantics and override shape checks,
+    in this scalar-expression slice; aggregate operands belong to the separate
+    bitwise aggregate slice or to future typed aggregate-operator slices,
   - this must not be read as a scalar-only parameter/generic model: parameters
-    and generics may be scalar or aggregate semantic values, and future aggregate
-    operator expressions should be accepted only when the operator is defined
-    for the operand aggregate types/shapes,
+    and generics may be scalar or aggregate semantic values; the first aggregate
+    bitwise slice now exists, while richer aggregate operator expressions should
+    be accepted only when the operator is defined for the operand aggregate
+    types/shapes,
   - width inference remains conservative for scalar expressions,
   - and this is intentionally semantic pre-generation normalization, not raw HDL
     expression passthrough.

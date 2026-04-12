@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-12: aggregate parameter/generic bitwise expressions are folded semantically
+- Added the first bounded aggregate operator-expression slice in
+  [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm).
+- Supported aggregate expression shape:
+  - operator-first bitwise expressions using `&`, `|`, `^`, `and`, `or`, or
+    `xor`,
+  - all operands must resolve to list/record aggregate semantic values,
+  - every operand must have the same inferred aggregate shape,
+  - and each scalar leaf must lower to bits with matching leaf width.
+- The normalizer folds the expression leaf-by-leaf into a new aggregate payload
+  before backend lowering. The backend still receives one validated aggregate
+  value that can pack to a literal; it does not need renderer-side aggregate
+  operator semantics.
+- Mixed scalar/aggregate operands, shape mismatches, and non-bitwise aggregate
+  operators such as aggregate `+` are rejected before generation. Richer
+  aggregate operators remain future work until their type/shape/result contracts
+  are explicit.
+
 ## 2026-04-12: bounded scalar parameter/generic expressions are semantic values
 - Added the first bounded expression-valued parameter/generic value slice.
 - Supported expression shape:
@@ -16,13 +34,13 @@ This document captures engineering rationale, design constraints, and working de
   including nested constant/package leaves and aggregate parameter default
   leaves such as `P_LIST[0]`.
 - Whole aggregate roots and aggregate subtrees remain blocked in scalar
-  parameter/generic expressions because aggregate operands require typed
-  aggregate-operator semantics before backend emission.
+  parameter/generic expressions; aggregate operands belong to the separate
+  bitwise aggregate slice or to future typed aggregate-operator slices.
 - This must not be read as a scalar-only parameter/generic model. Parameters
-  and generics may be scalar or aggregate semantic values. Aggregate operator
-  expressions are future work and should be defined by typed operator contracts
-  over aggregate shapes, with invalid operator/type/shape combinations rejected
-  before generation.
+  and generics may be scalar or aggregate semantic values. The first aggregate
+  bitwise slice now exists; richer aggregate operators should still be defined
+  by typed operator contracts over aggregate shapes, with invalid
+  operator/type/shape combinations rejected before generation.
 - Width inference remains conservative for scalar expressions: they stay scalar
   values but do not claim an exact width unless a later typed parameter contract
   proves one safely.

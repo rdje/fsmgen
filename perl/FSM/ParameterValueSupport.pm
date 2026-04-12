@@ -124,7 +124,7 @@ sub _canonical_payload ($class, $value_ast, $context, $docs_hint, $resolve_symbo
     }
 
     if (ref($value_ast) eq 'ARRAY') {
-        my $expression_payload = $class->_canonical_scalar_expression_payload(
+        my $expression_payload = $class->_canonical_expression_payload(
             $value_ast,
             $context,
             $docs_hint,
@@ -327,7 +327,7 @@ sub _canonical_scalar_value_text ($class, $value, $context, $docs_hint) {
         $docs_hint."\n";
 }
 
-sub _canonical_scalar_expression_payload ($class, $value_ast, $context, $docs_hint, $resolve_symbol_payload = undef) {
+sub _canonical_expression_payload ($class, $value_ast, $context, $docs_hint, $resolve_symbol_payload = undef) {
     my $expr_ast = $value_ast;
     while (ref($expr_ast) eq 'ARRAY' && @$expr_ast == 1 && ref($expr_ast->[0]) eq 'ARRAY') {
         $expr_ast = $expr_ast->[0];
@@ -350,8 +350,8 @@ sub _canonical_scalar_expression_payload ($class, $value_ast, $context, $docs_hi
         $docs_hint."\n"
         unless @operands >= 2;
 
-    my @operand_texts = map {
-        $class->_canonical_scalar_expression_operand_text(
+    my @operand_payloads = map {
+        $class->_canonical_payload(
             $_,
             "$context expression operand for '$operator'",
             $docs_hint,
@@ -359,20 +359,94 @@ sub _canonical_scalar_expression_payload ($class, $value_ast, $context, $docs_hi
         )
     } @operands;
 
+    my $saw_aggregate_operand = 0;
+    for my $operand_payload (@operand_payloads) {
+        my $operand_kind = ref($operand_payload) eq 'HASH' ? ($operand_payload->{kind} || '') : '';
+        $saw_aggregate_operand = 1
+            if $operand_kind eq 'list' || $operand_kind eq 'map';
+    }
+
+    return $class->_canonical_aggregate_expression_payload(
+        $normalized_operator,
+        $operator,
+        \@operand_payloads,
+        $context,
+        $docs_hint,
+    ) if $saw_aggregate_operand;
+
+    my @operand_texts = map {
+        $class->_scalar_expression_operand_text_from_payload(
+            $_,
+            "$context expression operand for '$operator'",
+            $docs_hint,
+        )
+    } @operand_payloads;
+
     return {
         kind => 'scalar_expr',
         payload => '(' . join(" $normalized_operator ", @operand_texts) . ')',
     };
 }
 
-sub _canonical_scalar_expression_operand_text ($class, $operand_ast, $context, $docs_hint, $resolve_symbol_payload = undef) {
-    my $operand_payload = $class->_canonical_payload(
-        $operand_ast,
-        $context,
-        $docs_hint,
-        $resolve_symbol_payload,
-    );
+sub _canonical_aggregate_expression_payload ($class, $normalized_operator, $display_operator, $operand_payloads, $context, $docs_hint) {
+    confess
+        "$context is blocked because aggregate parameter/generic expressions currently support only bitwise operators '&', '|', '^' and aliases 'and', 'or', 'xor', but saw operator '$display_operator'.".
+        $docs_hint."\n"
+        unless $class->_is_aggregate_expression_operator($normalized_operator);
 
+    my $first_payload = $operand_payloads->[0];
+    my $first_kind = ref($first_payload) eq 'HASH' ? ($first_payload->{kind} || '') : '';
+    confess
+        "$context is blocked because aggregate parameter/generic expression operator '$display_operator' requires all operands to be aggregate values with matching shape, but operand 1 resolved to '$first_kind'.".
+        $docs_hint."\n"
+        unless $first_kind eq 'list' || $first_kind eq 'map';
+
+    my $first_type_spec = FSM::Package::PayloadTypeSupport->payload_to_type_spec($first_payload);
+    confess
+        "$context is blocked because aggregate parameter/generic expression operator '$display_operator' could not infer a packed aggregate type for operand 1.".
+        $docs_hint."\n"
+        unless ref($first_type_spec) eq 'HASH';
+
+    for my $operand_index (1 .. $#$operand_payloads) {
+        my $operand_payload = $operand_payloads->[$operand_index];
+        my $operand_kind = ref($operand_payload) eq 'HASH' ? ($operand_payload->{kind} || '') : '';
+        confess
+            "$context is blocked because aggregate parameter/generic expression operator '$display_operator' requires all operands to be aggregate values with matching shape, but operand ".($operand_index + 1)." resolved to '$operand_kind'.".
+            $docs_hint."\n"
+            unless $operand_kind eq 'list' || $operand_kind eq 'map';
+
+        my $operand_type_spec = FSM::Package::PayloadTypeSupport->payload_to_type_spec($operand_payload);
+        confess
+            "$context is blocked because aggregate parameter/generic expression operator '$display_operator' could not infer a packed aggregate type for operand ".($operand_index + 1).".".
+            $docs_hint."\n"
+            unless ref($operand_type_spec) eq 'HASH';
+
+        my $matches_first = FSM::Package::PayloadTypeSupport->payload_compatible_with_type_spec(
+            $operand_type_spec,
+            $first_type_spec,
+        ) && FSM::Package::PayloadTypeSupport->payload_compatible_with_type_spec(
+            $first_type_spec,
+            $operand_type_spec,
+        );
+        confess
+            "$context is blocked because aggregate parameter/generic expression operator '$display_operator' requires matching aggregate shapes; operand 1 is '".
+            FSM::Package::PayloadTypeSupport->type_spec_label($first_type_spec).
+            "' but operand ".($operand_index + 1)." is '".
+            FSM::Package::PayloadTypeSupport->type_spec_label($operand_type_spec).
+            "'.".
+            $docs_hint."\n"
+            unless $matches_first;
+    }
+
+    return $class->_apply_aggregate_bitwise_operator(
+        $normalized_operator,
+        $operand_payloads,
+        "$context aggregate expression operator '$display_operator'",
+        $docs_hint,
+    );
+}
+
+sub _scalar_expression_operand_text_from_payload ($class, $operand_payload, $context, $docs_hint) {
     my $operand_kind = ref($operand_payload) eq 'HASH' ? ($operand_payload->{kind} || '') : '';
     return $operand_payload->{payload}
         if ($operand_kind eq 'scalar' || $operand_kind eq 'scalar_expr')
@@ -401,6 +475,110 @@ sub _normalize_scalar_expression_operator ($class, $operator) {
     my $normalized = $operator_aliases{$operator} // $operator;
     my %supported = map { $_ => 1 } qw(+ - * / % & | ^);
     return $supported{$normalized} ? $normalized : undef;
+}
+
+sub _is_aggregate_expression_operator ($class, $operator) {
+    return defined($operator) && !ref($operator) && ($operator eq '&' || $operator eq '|' || $operator eq '^');
+}
+
+sub _apply_aggregate_bitwise_operator ($class, $operator, $payloads, $context, $docs_hint) {
+    my $first_payload = $payloads->[0];
+    my $kind = ref($first_payload) eq 'HASH' ? ($first_payload->{kind} || '') : '';
+
+    if ($kind eq 'scalar') {
+        return $class->_apply_scalar_bitwise_operator(
+            $operator,
+            $payloads,
+            $context,
+            $docs_hint,
+        );
+    }
+
+    if ($kind eq 'list') {
+        my $items = $first_payload->{items} || [];
+        my @result_items;
+        for my $item_index (0 .. $#$items) {
+            push @result_items, $class->_apply_aggregate_bitwise_operator(
+                $operator,
+                [ map { ($_->{items} || [])->[$item_index] } @$payloads ],
+                "$context item $item_index",
+                $docs_hint,
+            );
+        }
+
+        return {
+            kind => 'list',
+            items => \@result_items,
+        };
+    }
+
+    if ($kind eq 'map') {
+        my $member_order = $first_payload->{member_order} || [];
+        my %result_members;
+        for my $member_name (@$member_order) {
+            $result_members{$member_name} = $class->_apply_aggregate_bitwise_operator(
+                $operator,
+                [ map { ($_->{members} || {})->{$member_name} } @$payloads ],
+                "$context member '$member_name'",
+                $docs_hint,
+            );
+        }
+
+        return {
+            kind => 'map',
+            member_order => [ @$member_order ],
+            members => \%result_members,
+        };
+    }
+
+    confess
+        "$context is blocked because aggregate parameter/generic bitwise expressions require scalar/list/map payloads, but saw '$kind'.".
+        $docs_hint."\n";
+}
+
+sub _apply_scalar_bitwise_operator ($class, $operator, $payloads, $context, $docs_hint) {
+    my @bitstrings;
+    my $expected_width;
+
+    for my $operand_index (0 .. $#$payloads) {
+        my ($bits, $width, $reason) = FSM::Package::PayloadLiteralSupport->payload_to_bits_and_width($payloads->[$operand_index]);
+        confess
+            "$context is blocked because scalar leaf operand ".($operand_index + 1)." did not lower to bits for aggregate bitwise folding; reason '$reason'.".
+            $docs_hint."\n"
+            unless defined($bits) && defined($width) && $width > 0;
+        if (defined $expected_width) {
+            confess
+                "$context is blocked because scalar leaf operand widths must match for aggregate bitwise folding; expected width $expected_width but operand ".($operand_index + 1)." has width $width.".
+                $docs_hint."\n"
+                unless $width == $expected_width;
+        } else {
+            $expected_width = $width;
+        }
+        push @bitstrings, $bits;
+    }
+
+    my @result_bits = split //, $bitstrings[0];
+    for my $operand_index (1 .. $#bitstrings) {
+        my @operand_bits = split //, $bitstrings[$operand_index];
+        for my $bit_index (0 .. $#result_bits) {
+            if ($operator eq '&') {
+                $result_bits[$bit_index] = ($result_bits[$bit_index] eq '1' && $operand_bits[$bit_index] eq '1') ? '1' : '0';
+            } elsif ($operator eq '|') {
+                $result_bits[$bit_index] = ($result_bits[$bit_index] eq '1' || $operand_bits[$bit_index] eq '1') ? '1' : '0';
+            } elsif ($operator eq '^') {
+                $result_bits[$bit_index] = ($result_bits[$bit_index] ne $operand_bits[$bit_index]) ? '1' : '0';
+            } else {
+                confess
+                    "$context is blocked because internal aggregate bitwise folding saw unsupported operator '$operator'.".
+                    $docs_hint."\n";
+            }
+        }
+    }
+
+    return {
+        kind => 'scalar',
+        payload => $expected_width."'b".join('', @result_bits),
+    };
 }
 
 sub _unwrap_scalar_token ($class, $value) {

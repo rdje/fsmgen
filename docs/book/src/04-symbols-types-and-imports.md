@@ -38,34 +38,38 @@ literal list/record payloads are also accepted when they can lower to one packed
 literal. That keeps the authoring surface convenient while preserving a concrete
 semantic value before generation.
 
-Scalar parameter values may also use bounded operator expressions:
+Parameter values may also use bounded operator expressions:
 
 ```lisp
 (+params
   (WIDTH 16)
+  (BYTES (8'hA5 8'h3C))
+  (BYTE_MASK (8'hF0 8'h0F))
   (COUNT_PLUS_ONE (+ WIDTH 1))
   (BYTE_PLUS_ONE (+ BYTES[1] 1))
   (MODE_PLUS_ONE (+ FRAME.meta.mode 1))
   (MASKED (and 8'hF0 8'h3C))
+  (BYTES_MASKED (and BYTES BYTE_MASK))
 )
 ```
 
 The current expression operators are `+`, `-`, `*`, `/`, `%`, `&`, `|`, and
 `^`, with word aliases `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, and
-`xor`. Operands must resolve to scalar parameter/generic values. That includes
+`xor`. Scalar expressions may use scalar parameter/generic operands, including
 scalar leaves inside list/record aggregate constants, package aggregate values,
 and aggregate parameter defaults, for example `BYTES[1]`, `FRAME.flag`, or
-`NESTED.meta.mode`. Whole aggregate roots and aggregate subtrees remain blocked
-as operands in this scalar-expression slice because aggregate-to-aggregate
-operator semantics still need typed, shape-aware contracts before generation.
-Width inference stays conservative for expression defaults.
+`NESTED.meta.mode`. Width inference stays conservative for scalar expression
+defaults.
 
 This is not a scalar-only parameter/generic model. Parameter/generic values are
-semantic values and may be scalar or aggregate. Today aggregate values can be
+semantic values and may be scalar or aggregate. Aggregate values can be
 declared, reused, overridden, shape-checked, and packed where the existing paths
-already support them. A future aggregate-expression slice should allow operators
-between aggregate values only when the operator is defined for the operand
-aggregate types/shapes and can be validated before backend lowering.
+support them. The first aggregate-expression slice supports only bitwise `&`,
+`|`, and `^` operations, plus `and`, `or`, and `xor` aliases, between matching
+list/record aggregate shapes. Those expressions are folded leaf-by-leaf into one
+aggregate value before backend lowering. Operators such as aggregate `+` remain
+future work until their type/shape/result contracts are explicit enough to
+validate before generation.
 
 Direct-root `+params` values may also reuse resolved semantic symbols:
 same-root constants, whole aggregate constant roots, enum members such as

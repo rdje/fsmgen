@@ -320,6 +320,7 @@ subtest 'rtl instance parameter overrides lower through structural IR into SV in
       (LANES LOCAL_LANES)
       (FRAME ((mode frame_mode.RUN) (flag param_pkg.FLAG_ON)))
       (EXPR_WIDTH (+ OVERRIDE_WIDTH 1))
+      (LANES_MASKED (and LOCAL_LANES param_pkg.DEFAULT_LANE_MASK))
     )
   )
   (?toplink:wiring
@@ -335,6 +336,7 @@ subtest 'rtl instance parameter overrides lower through structural IR into SV in
     (LANES param_pkg.DEFAULT_LANES)
     (FRAME param_pkg.DEFAULT_FRAME)
     (EXPR_WIDTH (+ param_pkg.DEFAULT_WIDTH 1))
+    (LANES_MASKED (and param_pkg.DEFAULT_LANES param_pkg.DEFAULT_LANE_MASK))
   )
   core_clk:clock
   rst_async_n:reset
@@ -347,6 +349,7 @@ subtest 'rtl instance parameter overrides lower through structural IR into SV in
     (DEFAULT_WIDTH 8)
     (DEFAULT_RESET 8'h00)
     (DEFAULT_LANES (8'h00 8'h00))
+    (DEFAULT_LANE_MASK (8'hF0 8'h0F))
     (DEFAULT_FRAME ((mode 2'b00) (flag 0)))
     (RESET_A5 8'hA5)
     (FLAG_ON 1)
@@ -368,7 +371,7 @@ FSM
     my $parameter_overrides = $result->{composition_plan}->instances->[0]->parameter_overrides;
     is_deeply(
         [map { $_->{name} } @$parameter_overrides],
-        [qw(WIDTH RESET_VALUE LANES FRAME EXPR_WIDTH)],
+        [qw(WIDTH RESET_VALUE LANES FRAME EXPR_WIDTH LANES_MASKED)],
         'composition plan preserves validated parameter override order',
     );
     my %overrides = map { $_->{name} => $_ } @$parameter_overrides;
@@ -392,10 +395,13 @@ FSM
     );
     is($overrides{EXPR_WIDTH}{value_text}, '(16 + 1)', 'composition plan preserves scalar expression parameter override text');
     is($overrides{EXPR_WIDTH}{value_kind}, 'scalar', 'composition plan marks scalar expression parameter overrides as scalar values');
+    is($overrides{LANES_MASKED}{value_text}, "16'b1010000000001100", 'composition plan folds aggregate bitwise parameter override expressions');
+    is($overrides{LANES_MASKED}{value_kind}, 'list', 'composition plan keeps aggregate bitwise override expressions as aggregate values');
     my %declarations = map { $_->{name} => $_ } @{$result->{composition_plan}->instances->[0]->module_info->{parameter_declarations}};
     is($declarations{WIDTH}{raw_default_value}, 'param_pkg.DEFAULT_WIDTH', 'rtlif defaults preserve package-symbol raw scalar token');
     is($declarations{WIDTH}{default_value_text}, '8', 'rtlif defaults resolve package-backed scalar values');
     is($declarations{EXPR_WIDTH}{default_value_text}, '(8 + 1)', 'rtlif defaults resolve package-backed scalar expressions');
+    is($declarations{LANES_MASKED}{default_value_text}, "16'b0000000000000000", 'rtlif defaults resolve package-backed aggregate bitwise expressions');
     is($declarations{LANES}{raw_default_value}, 'param_pkg.DEFAULT_LANES', 'rtlif defaults preserve package-symbol raw aggregate token');
     is($declarations{LANES}{default_value_text}, "16'b0000000000000000", 'rtlif defaults resolve package-backed list aggregate shape');
     is_deeply(
@@ -415,12 +421,12 @@ FSM
     );
     is(
         $result->{intent_hir}{composition_children}[0]{parameter_override_count},
-        5,
+        6,
         'intent HIR child export reports the parameter override count',
     );
 
     my $hdl = $result->{hdl_code};
-    like($hdl, qr/\buart_tx\s+#\(\s*\.WIDTH\(16\),\s*\.RESET_VALUE\(8'hA5\),\s*\.LANES\(16'b1010010100111100\),\s*\.FRAME\(3'b101\),\s*\.EXPR_WIDTH\(\(16 \+ 1\)\)\s*\)\s+u_uart\s*\(/s, 'generated HDL emits SV parameter overrides on the external RTL instance');
+    like($hdl, qr/\buart_tx\s+#\(\s*\.WIDTH\(16\),\s*\.RESET_VALUE\(8'hA5\),\s*\.LANES\(16'b1010010100111100\),\s*\.FRAME\(3'b101\),\s*\.EXPR_WIDTH\(\(16 \+ 1\)\),\s*\.LANES_MASKED\(16'b1010000000001100\)\s*\)\s+u_uart\s*\(/s, 'generated HDL emits SV parameter overrides on the external RTL instance');
     unlike($hdl, qr/\bmodule\s+uart_tx\b/s, 'generated HDL does not regenerate the parameterized external rtl child');
 
     my ($success) = run(

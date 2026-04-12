@@ -355,23 +355,22 @@ Verilog-family backend lowers them to SystemVerilog `#(...)` instance
 parameters by packing aggregates into one literal. VHDL generic-map lowering is
 still a future backend follow-up.
 
-Scalar parameter/generic values on this path may also use bounded operator
+Parameter/generic values on this path may also use bounded operator
 expressions such as `(+ WIDTH 1)`, `(* COUNT 2)`, or `(and MASK 8'hF0)`. Those
 expressions resolve semantic scalar operands before planning and lower as
 parenthesized scalar parameter expressions. Scalar leaves inside list/record
 aggregate values are valid operands, including nested leaves such as
-`shared.FRAME.meta.mode` or `LOCAL_BYTES[1]`. Whole aggregate roots and aggregate
-subtrees remain outside this scalar-expression slice because
-aggregate-to-aggregate operator semantics still need typed, shape-aware
-contracts before backend emission.
+`shared.FRAME.meta.mode` or `LOCAL_BYTES[1]`.
 
 Parameter/generic values are not scalar-only. Scalars and aggregates are both
 valid semantic parameter/generic values on the composition surface where the
-declared/default contracts allow them. The current operator-expression support
-is intentionally a bounded scalar slice; a future aggregate operator slice should
-accept aggregate operands only when the specific operator is defined for the
-operand aggregate types/shapes and the result can be validated before the
-composition plan reaches HDL lowering.
+declared/default contracts allow them. The first aggregate operator slice
+supports bitwise `&`, `|`, and `^`, plus `and`, `or`, and `xor` aliases, between
+matching list/record aggregate shapes. The normalizer folds those expressions
+leaf-by-leaf into one aggregate value before the composition plan reaches HDL
+lowering. Richer aggregate operators remain future work until the specific
+operator is defined for the operand aggregate types/shapes and the result can be
+validated before generation.
 
 Generated `?fsmc` and `?dtc` children now use the same semantic override
 surface, but the declaration contract lives in the realized child source's
@@ -429,11 +428,13 @@ Verilog-family emission lowers valid generated-child overrides to
 SystemVerilog `#(...)` instance parameters. VHDL generic-map lowering remains a
 backend follow-up.
 
-The same bounded scalar expression value surface is accepted for generated-child
+The same bounded expression value surface is accepted for generated-child
 overrides and for the direct `+params` defaults declared in the generated child
 source. For example, `(params (WIDTH_PLUS_ONE (+ WIDTH 1)))` stays semantic:
 the operands resolve before generation, then the current Verilog-family backend
-emits a normal instance parameter expression rather than raw user text.
+emits a normal instance parameter expression rather than raw user text. Aggregate
+bitwise overrides such as `(params (LANES_MASKED (and LANES LANE_MASK)))` fold
+through the same aggregate shape checks before instance emission.
 
 ## Current Boundary
 

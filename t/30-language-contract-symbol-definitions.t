@@ -22,7 +22,9 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (C0 8'3)
     (ZERO const_8b0)
     (BYTE_PAIR (8'hA5 8'h3C))
+    (BYTE_MASK (8'hF0 8'h0F))
     (FRAME ((mode 2'b10) (flag 1)))
+    (FRAME_MASK ((mode 2'b01) (flag 0)))
     (NESTED ((meta ((flag 1) (mode 2'b10))) (payload (8'hA5 8'h3C))))
   )
   (+define (D0 8'4))
@@ -43,6 +45,9 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
     (P_EXPR_CHAIN (* P_EXPR 2))
     (P_EXPR_NESTED_AGG_LEAF (+ NESTED.meta.mode NESTED.payload[1]))
     (P_EXPR_PARAM_AGG_LEAF (+ P_LIST[0] 1))
+    (P_AGG_EXPR_AND (and BYTE_PAIR BYTE_MASK))
+    (P_AGG_EXPR_OR (or FRAME FRAME_MASK))
+    (P_AGG_EXPR_PARAM_XOR (xor P_AGG_EXPR_AND BYTE_MASK))
   )
   (+enums
     (mode
@@ -97,9 +102,9 @@ my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
 FSM
 
 my $symbol_summary = $adapter->{signal_manager}->get_symbol_summary;
-is($symbol_summary->{constants}, 5, '+constants summary count is correct');
+is($symbol_summary->{constants}, 7, '+constants summary count is correct');
 is($symbol_summary->{defines}, 1, '+define summary count is correct');
-is($symbol_summary->{params}, 16, '+params summary count is correct');
+is($symbol_summary->{params}, 19, '+params summary count is correct');
 is($symbol_summary->{enums}, 1, '+enums summary count is correct');
 
 my $elements = state_elements($fsm_module, '-dt');
@@ -150,13 +155,20 @@ is($params->{P_EXPR_AGG_LEAF}{value_text}, "(8'h3C + 1)", 'semantic module recor
 is($params->{P_EXPR_CHAIN}{value_text}, '((8 + 1) * 2)', 'semantic module records chained direct scalar parameter expressions');
 is($params->{P_EXPR_NESTED_AGG_LEAF}{value_text}, "(2'b10 + 8'h3C)", 'semantic module records direct scalar expressions using nested aggregate scalar leaves');
 is($params->{P_EXPR_PARAM_AGG_LEAF}{value_text}, "(8'hA5 + 1)", 'semantic module records direct scalar expressions using aggregate parameter leaves');
+is($params->{P_AGG_EXPR_AND}{value_text}, "16'b1010000000001100", 'semantic module records folded aggregate bitwise and expressions');
+is($params->{P_AGG_EXPR_AND}{value_kind}, 'list', 'aggregate bitwise list expressions stay aggregate parameter values');
+is($params->{P_AGG_EXPR_AND}{value_width}, 16, 'aggregate bitwise list expressions preserve packed width');
+is($params->{P_AGG_EXPR_OR}{value_text}, "3'b111", 'semantic module records folded aggregate bitwise record expressions');
+is($params->{P_AGG_EXPR_OR}{value_kind}, 'map', 'aggregate bitwise record expressions stay aggregate parameter values');
+is_deeply($params->{P_AGG_EXPR_OR}{value_type_spec}{member_order}, [qw(mode flag)], 'aggregate bitwise record expressions preserve member order');
+is($params->{P_AGG_EXPR_PARAM_XOR}{value_text}, "16'b0101000000000011", 'semantic module records aggregate bitwise expressions using aggregate parameter operands');
 
 my $intent_hir = FSM::IR::IntentHIRBuilder->build_from_fsm_module(
     fsm_module => $fsm_module,
 );
 is_deeply(
     $intent_hir->parameter_names,
-    [qw(P0 P_AGG_FROM_PARAM P_BIN P_EXPR P_EXPR_AGG_LEAF P_EXPR_CHAIN P_EXPR_NESTED_AGG_LEAF P_EXPR_PARAM_AGG_LEAF P_FORWARD_BASE P_FROM_AGG P_FROM_CONST P_FROM_ENUM P_FROM_PARAM P_FROM_PARAM_FORWARD P_HEX P_LIST)],
+    [qw(P0 P_AGG_EXPR_AND P_AGG_EXPR_OR P_AGG_EXPR_PARAM_XOR P_AGG_FROM_PARAM P_BIN P_EXPR P_EXPR_AGG_LEAF P_EXPR_CHAIN P_EXPR_NESTED_AGG_LEAF P_EXPR_PARAM_AGG_LEAF P_FORWARD_BASE P_FROM_AGG P_FROM_CONST P_FROM_ENUM P_FROM_PARAM P_FROM_PARAM_FORWARD P_HEX P_LIST)],
     'Intent HIR exposes direct-root parameter names from semantic module metadata'
 );
 
@@ -203,6 +215,9 @@ like($hdl, qr/parameter\s+P_EXPR_AGG_LEAF\s*=\s*\(8'h3C \+ 1\)/s, 'direct System
 like($hdl, qr/parameter\s+P_EXPR_CHAIN\s*=\s*\(\(8 \+ 1\) \* 2\)/s, 'direct SystemVerilog module declares chained scalar parameter expression default');
 like($hdl, qr/parameter\s+P_EXPR_NESTED_AGG_LEAF\s*=\s*\(2'b10 \+ 8'h3C\)/s, 'direct SystemVerilog module declares nested aggregate-leaf scalar parameter expression default');
 like($hdl, qr/parameter\s+P_EXPR_PARAM_AGG_LEAF\s*=\s*\(8'hA5 \+ 1\)/s, 'direct SystemVerilog module declares aggregate parameter-leaf scalar expression default');
+like($hdl, qr/parameter\s+P_AGG_EXPR_AND\s*=\s*16'b1010000000001100\b/s, 'direct SystemVerilog module declares folded aggregate bitwise list expression default');
+like($hdl, qr/parameter\s+P_AGG_EXPR_OR\s*=\s*3'b111\b/s, 'direct SystemVerilog module declares folded aggregate bitwise record expression default');
+like($hdl, qr/parameter\s+P_AGG_EXPR_PARAM_XOR\s*=\s*16'b0101000000000011\b/s, 'direct SystemVerilog module declares folded aggregate bitwise parameter-operand expression default');
 like($hdl, qr/\bC\s*=\s*P0\b/s, 'generated HDL keeps scalar parameter reference on RHS');
 like($hdl, qr/\bW\s*=\s*P_LIST\b/s, 'generated HDL keeps aggregate parameter reference on RHS');
 like($hdl, qr/\bK\s*=\s*P_FROM_PARAM_FORWARD\b/s, 'generated HDL keeps forward-derived parameter reference on RHS');
