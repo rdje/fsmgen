@@ -56,8 +56,16 @@ The current expression operators are `+`, `-`, `*`, `/`, `%`, `&`, `|`, and
 scalar leaves inside list/record aggregate constants, package aggregate values,
 and aggregate parameter defaults, for example `BYTES[1]`, `FRAME.flag`, or
 `NESTED.meta.mode`. Whole aggregate roots and aggregate subtrees remain blocked
-because aggregates still need a known packed value before generation. Width
-inference stays conservative for expression defaults.
+as operands in this scalar-expression slice because aggregate-to-aggregate
+operator semantics still need typed, shape-aware contracts before generation.
+Width inference stays conservative for expression defaults.
+
+This is not a scalar-only parameter/generic model. Parameter/generic values are
+semantic values and may be scalar or aggregate. Today aggregate values can be
+declared, reused, overridden, shape-checked, and packed where the existing paths
+already support them. A future aggregate-expression slice should allow operators
+between aggregate values only when the operator is defined for the operand
+aggregate types/shapes and can be validated before backend lowering.
 
 Direct-root `+params` values may also reuse resolved semantic symbols:
 same-root constants, whole aggregate constant roots, enum members such as

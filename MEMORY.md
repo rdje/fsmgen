@@ -14,9 +14,13 @@ This is the live continuity document for fast session recovery after crashes, re
     where those scopes are already valid,
   - scalar leaves inside list/record aggregates are valid operands, including
     nested leaves and aggregate parameter default leaves such as `P_LIST[0]`,
-  - whole aggregate roots and aggregate subtrees remain blocked because
-    aggregate parameter/generic values still need packed literal lowering and
-    override shape checks,
+  - whole aggregate roots and aggregate subtrees remain blocked only as operands
+    in this scalar-expression slice because aggregate-to-aggregate operators
+    still need typed, shape-aware semantics and override shape checks,
+  - this must not be read as a scalar-only parameter/generic model: parameters
+    and generics may be scalar or aggregate semantic values, and future aggregate
+    operator expressions should be accepted only when the operator is defined
+    for the operand aggregate types/shapes,
   - width inference remains conservative for scalar expressions,
   - and this is intentionally semantic pre-generation normalization, not raw HDL
     expression passthrough.

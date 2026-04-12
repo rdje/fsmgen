@@ -16,9 +16,13 @@ This document captures engineering rationale, design constraints, and working de
   including nested constant/package leaves and aggregate parameter default
   leaves such as `P_LIST[0]`.
 - Whole aggregate roots and aggregate subtrees remain blocked in scalar
-  parameter/generic expressions because aggregate parameter values still require
-  packed literal lowering and, for overrides, shape compatibility before backend
-  emission.
+  parameter/generic expressions because aggregate operands require typed
+  aggregate-operator semantics before backend emission.
+- This must not be read as a scalar-only parameter/generic model. Parameters
+  and generics may be scalar or aggregate semantic values. Aggregate operator
+  expressions are future work and should be defined by typed operator contracts
+  over aggregate shapes, with invalid operator/type/shape combinations rejected
+  before generation.
 - Width inference remains conservative for scalar expressions: they stay scalar
   values but do not claim an exact width unless a later typed parameter contract
   proves one safely.

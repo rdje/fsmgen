@@ -361,9 +361,17 @@ expressions resolve semantic scalar operands before planning and lower as
 parenthesized scalar parameter expressions. Scalar leaves inside list/record
 aggregate values are valid operands, including nested leaves such as
 `shared.FRAME.meta.mode` or `LOCAL_BYTES[1]`. Whole aggregate roots and aggregate
-subtrees remain outside this expression slice because aggregate parameter values
-still need a known packed literal and compatible shape contract before backend
-emission.
+subtrees remain outside this scalar-expression slice because
+aggregate-to-aggregate operator semantics still need typed, shape-aware
+contracts before backend emission.
+
+Parameter/generic values are not scalar-only. Scalars and aggregates are both
+valid semantic parameter/generic values on the composition surface where the
+declared/default contracts allow them. The current operator-expression support
+is intentionally a bounded scalar slice; a future aggregate operator slice should
+accept aggregate operands only when the specific operator is defined for the
+operand aggregate types/shapes and the result can be validated before the
+composition plan reaches HDL lowering.
 
 Generated `?fsmc` and `?dtc` children now use the same semantic override
 surface, but the declaration contract lives in the realized child source's
