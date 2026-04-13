@@ -13,7 +13,7 @@ use FSM::HDL::FlattenedDT;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'generation pipeline support remains a compatibility shell over the extracted live post-flattening owners' => sub {
+subtest 'generation pipeline support remains a compatibility shell over the live post-flattening assembly owner' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_generation_pipeline_support_contract',
         <<'FSM'
@@ -42,12 +42,14 @@ subtest 'generation pipeline support remains a compatibility shell over the extr
 FSM
     );
 
+    my $expected_backend = prepare_flattened_backend($fsm_module);
     my $prepared_backend = prepare_flattened_backend($fsm_module);
     my $pipeline_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport->new(
         flattened_dt => $prepared_backend,
     );
 
-    my $expected_hdl = build_expected_hdl($prepared_backend, $fsm_module);
+    my $expected_hdl = $expected_backend->{backend_sv_post_flattening_assembly_support}
+        ->generate_systemverilog_module($fsm_module);
     my $generated_hdl = $pipeline_support->generate_systemverilog_module($fsm_module);
 
     normalize_generated_date(\$expected_hdl);
@@ -56,7 +58,7 @@ FSM
     is(
         $generated_hdl,
         $expected_hdl,
-        'generation pipeline support compatibility shell rebuilds the same post-flattening HDL sequence as the extracted live owners',
+        'generation pipeline support compatibility shell rebuilds the same post-flattening HDL sequence as the live assembly owner',
     );
 };
 
@@ -85,25 +87,6 @@ sub prepare_flattened_backend {
     $hdl_generator->{enable_graph_signal_support}->set_fsm_module_reference($fsm_module);
     $hdl_generator->{orchestrator}->flatten_all_decision_trees($fsm_module);
     return $hdl_generator;
-}
-
-sub build_expected_hdl {
-    my ($prepared_backend, $fsm_module) = @_;
-
-    my $hdl = $prepared_backend->{backend_sv_scaffold}->generate_header($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_state_encoding($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_state_register($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
-    my $consolidated_intermediate_hdl = $prepared_backend->{backend_sv_consolidated_intermediate_stage_support}
-        ->generate_consolidated_intermediate_block($fsm_module);
-    $hdl .= $prepared_backend->{enable_graph_enable_support}
-        ->generate_enable_conditions($fsm_module);
-    $hdl .= $consolidated_intermediate_hdl;
-    $hdl .= $prepared_backend->{backend_sv_generation_tail_support}
-        ->generate_systemverilog_tail($fsm_module);
-
-    return $hdl;
 }
 
 sub write_file {

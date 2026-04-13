@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-13: post-flattening SystemVerilog assembly owner
+- Continued the `R11` direct-backend convergence lane by moving the live
+  scaffold/declaration/enable/stage/tail assembly sequence out of
+  [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
+  and into a direct SystemVerilog owner:
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm).
+- Rationale:
+  - the orchestrator's honest job is per-run reset, module-reference setup,
+    decision-tree flattening, and handoff to the post-flattening assembly owner,
+  - the post-flattening owner is where the backend sequencing constraint now
+    belongs: generate the prescan-aware consolidated stage first so declarations
+    see the required intermediate-signal state, then emit scaffold, declarations,
+    enable conditions, stage HDL, and tail closeout,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm)
+    remains directly testable as a compatibility shell, but delegates to the
+    live owner so there is only one post-flattening assembly sequence to keep
+    correct,
+  - and this keeps the next direct-backend seam below assembly orchestration,
+    around lower-level planning/stage/tail convergence rather than orchestrator
+    glue.
+
 ## 2026-04-13: consolidated-intermediate stage owns prescan
 - Continued the `R11` direct-backend convergence lane by moving the live
   prescan prerequisite behind the consolidated-intermediate stage owner.

@@ -44,6 +44,7 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalFilterPolic
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalRecoverySupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::OperandContractValidationSupport;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter;
 use FSM::HDL::FlattenedDT::Backend::Verilog;
 
@@ -141,6 +142,7 @@ sub new ($class, %args) {
     $self->{backend_sv_consolidated_intermediate_declaration_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateDeclarationSupport->new(flattened_dt => $self);
     $self->{backend_sv_generation_prescan_preparation_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport->new(flattened_dt => $self);
     $self->{backend_sv_generation_tail_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationTailSupport->new(flattened_dt => $self);
+    $self->{backend_sv_post_flattening_assembly_support} = FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport->new(flattened_dt => $self);
     $self->{backend_verilog} = FSM::HDL::FlattenedDT::Backend::Verilog->new(flattened_dt => $self);
     
     return $self;

@@ -1,5 +1,35 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-13: post-flattening SystemVerilog assembly owner shipped
+- Continued the active `R11` direct-backend convergence lane.
+- Important continuity note:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm)
+    is now the live direct SystemVerilog post-flattening assembly owner,
+    composing scaffold/header/state/register emission, internal declarations,
+    enable-condition emission, the prescan-aware consolidated intermediate
+    stage, and tail closeout,
+  - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
+    now stops at per-run reset, module attachment, decision-tree flattening,
+    and final handoff to that owner,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm)
+    remains a compatibility shell, but now delegates to the live
+    post-flattening assembly owner instead of duplicating the assembly
+    sequence,
+  - [t/293-systemverilog-post-flattening-assembly-support.t](/Users/richarddje/Documents/github/fsmgen/t/293-systemverilog-post-flattening-assembly-support.t)
+    locks the new owner directly, while [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t)
+    locks the compatibility wrapper against it,
+  - focused direct-backend tests passed: [t/10-ast-first-enable-structure.t](/Users/richarddje/Documents/github/fsmgen/t/10-ast-first-enable-structure.t),
+    [t/231-systemverilog-consolidated-intermediate-stage-support.t](/Users/richarddje/Documents/github/fsmgen/t/231-systemverilog-consolidated-intermediate-stage-support.t),
+    [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t),
+    [t/234-systemverilog-generation-tail-support.t](/Users/richarddje/Documents/github/fsmgen/t/234-systemverilog-generation-tail-support.t),
+    [t/238-systemverilog-generation-prescan-preparation-support.t](/Users/richarddje/Documents/github/fsmgen/t/238-systemverilog-generation-prescan-preparation-support.t),
+    [t/269-systemverilog-operand-contract-validation-support.t](/Users/richarddje/Documents/github/fsmgen/t/269-systemverilog-operand-contract-validation-support.t),
+    [t/270-systemverilog-assignment-width-contract-validation.t](/Users/richarddje/Documents/github/fsmgen/t/270-systemverilog-assignment-width-contract-validation.t),
+    and [t/293-systemverilog-post-flattening-assembly-support.t](/Users/richarddje/Documents/github/fsmgen/t/293-systemverilog-post-flattening-assembly-support.t),
+  - and [docs/BIN_FSMGEN_IMPORT_TREE.md](/Users/richarddje/Documents/github/fsmgen/docs/BIN_FSMGEN_IMPORT_TREE.md)
+    now records the measured `121` reachable project files and `120`
+    reachable `.pm` packages snapshot.
+
 ## 2026-04-13: consolidated-intermediate stage prescan handoff shipped
 - Continued the active `R11` direct-backend convergence lane.
 - Important continuity note:

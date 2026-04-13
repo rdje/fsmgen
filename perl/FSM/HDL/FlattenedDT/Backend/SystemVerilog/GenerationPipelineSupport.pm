@@ -2,7 +2,7 @@ package FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport
 
 =head1 NAME
 
-FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport - Compatibility shell for post-flattening direct SystemVerilog assembly
+FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport - Compatibility shell over live post-flattening direct SystemVerilog assembly
 
 =head1 DESCRIPTION
 
@@ -19,22 +19,15 @@ established
 
 =item *
 
-compatibility composition of direct scaffold/internal-declaration assembly,
-direct enable-condition emission, consolidated intermediate stage generation
-through its prescan-aware owner, and the extracted generation-tail owner
+compatibility delegation to the live post-flattening assembly owner
 
 =back
 
-The paired C<FSM::HDL::FlattenedDT::Orchestrator> now keeps per-run reset,
-FSM-module attachment, decision-tree flattening, and live post-flattening
-generation composition, the paired
-C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport>
-keeps logical-operation counting plus WEN/EN prescan after enable-condition
-emission,
-the paired
-C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationTailSupport>
-keeps post-stage WEN/EN/assignment/module closeout, and this package now
-survives only as a compatibility shell outside that live backend path.
+The paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport>
+now owns the live post-flattening scaffold/declaration/enable/stage/tail
+sequence, and this package survives only as a compatibility shell over that
+live owner.
 
 =cut
 
@@ -44,7 +37,7 @@ use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
-use FSM::Debug;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport;
 
 =head2 new
 
@@ -71,26 +64,11 @@ delegating to the extracted live owners.
 
 sub generate_systemverilog_module ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
-    my $consolidated_intermediate_hdl = $ctx->{backend_sv_consolidated_intermediate_stage_support}
-        ->generate_consolidated_intermediate_block($fsm_module);
-
-    my $hdl = $ctx->{backend_sv_scaffold}->generate_header($fsm_module);
-    $hdl .= $ctx->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
-    $hdl .= $ctx->{backend_sv_scaffold}->generate_state_encoding($fsm_module);
-    $hdl .= $ctx->{backend_sv_scaffold}->generate_state_register($fsm_module);
-    $hdl .= $ctx->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
-    fsm_debug("Step 2 - Basic HDL structure generated", 3);
-    $hdl .= $ctx->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
-    fsm_debug("Step 3 - Enable conditions generated", 3);
-
-    # Step 6: Generate consolidated intermediate signals (combining AST factorization + pre-scan)
-    $hdl .= $consolidated_intermediate_hdl;
-    fsm_debug("Step 6 - Consolidated intermediate signals generated", 3);
-
-    $hdl .= $ctx->{backend_sv_generation_tail_support}
-        ->generate_systemverilog_tail($fsm_module);
-
-    return $hdl;
+    my $assembly_support = $ctx->{backend_sv_post_flattening_assembly_support}
+        || FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport->new(
+            flattened_dt => $ctx,
+        );
+    return $assembly_support->generate_systemverilog_module($fsm_module);
 }
 
 1;
@@ -106,7 +84,7 @@ C<FSM::HDL::FlattenedDT> backend context.
 
 =head2 generate_systemverilog_module
 
-Rebuilds the full direct SystemVerilog module body and closeout by
-delegating to the extracted live owners.
+Rebuilds the full direct SystemVerilog module body and closeout by delegating
+to the live post-flattening assembly owner.
 
 =cut

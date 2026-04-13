@@ -374,6 +374,10 @@ ok(
     'live SystemVerilog generation-tail support owns post-stage HDL closeout',
 );
 ok(
+    $hdl->{backend_sv_post_flattening_assembly_support}->can('generate_systemverilog_module'),
+    'live SystemVerilog post-flattening assembly support owns scaffold/declaration/enable/stage/tail module assembly',
+);
+ok(
     !exists $hdl->{backend_sv_generation_pipeline_support},
     'live SystemVerilog backend no longer instantiates the generation-pipeline compatibility shell',
 );
@@ -395,7 +399,7 @@ ok(
 );
 ok(
     $hdl->{orchestrator}->can('generate_systemverilog'),
-    'live SystemVerilog orchestrator keeps the post-flattening HDL assembly entrypoint while delegating lower-level stage work to extracted owners',
+    'live SystemVerilog orchestrator keeps per-run reset/flattening and delegates post-flattening HDL assembly to the extracted owner',
 );
 ok(
     $hdl->{backend_sv_intermediate_recovery_support}->can('resolve_intermediate_signal_runtime_ast'),

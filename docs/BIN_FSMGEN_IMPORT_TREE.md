@@ -14,7 +14,7 @@ Current baseline:
 - Reviewed on `2026-04-13`.
 - Scope is the project-owned transitive `FSM::...` tree reachable from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen).
 - Perl core and non-project helper modules are treated as support dependencies, not as part of the architectural map.
-- Static trace from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) currently reaches `120` project files total, `119` `.pm` packages.
+- Static trace from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen) currently reaches `121` project files total, `120` `.pm` packages.
 - The former composition-local parameter/generic helper is now a compatibility shim; the active neutral owner is [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm), including bounded scalar expressions and matching-shape leafwise aggregate expression folding.
 
 ## Executive read
@@ -69,6 +69,12 @@ as the live consolidated-intermediate stage handoff over prescan preparation,
 prepared-block reconstruction, pre-generation operand-contract validation, and rendering, so
 [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
 no longer coordinates prepared-block internals directly.
+The newest post-flattening assembly slice keeps
+[perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm)
+as the live owner of direct SystemVerilog scaffold/declaration/enable/stage/tail
+assembly after decision-tree flattening, so
+[perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
+now stops at reset, module attachment, flattening, and final assembly handoff.
 
 The heaviest remaining complexity is still the direct single-module HDL backend path centered on:
 - [perl/FSM/Backend/GeneratedModuleEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Backend/GeneratedModuleEmitter.pm)
@@ -77,6 +83,7 @@ The heaviest remaining complexity is still the direct single-module HDL backend 
 - [perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm)
+- [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ASTFactorizationSupport.pm)
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm)
@@ -117,7 +124,7 @@ above.
 
 Reachable package-family counts from [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen):
 - `Composition`: `35`
-- `HDL`: `31`
+- `HDL`: `32`
 - `Package`: `13`
 - `Synthesis`: `10`
 - `IR`: `7`
@@ -133,12 +140,13 @@ Current thin-coordinator line counts:
 - [perl/FSM/Pipeline/SourceGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceGenerationOrchestrator.pm): `169`
 - [perl/FSM/Pipeline/DirectGenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/DirectGenerationOrchestrator.pm): `108`
 - [perl/FSM/Composition/GenerationOrchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/GenerationOrchestrator.pm): `164`
-- [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm): `170`
-- [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm): `91`
+- [perl/FSM/HDL/FlattenedDT.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT.pm): `172`
+- [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm): `75`
 - [perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/DecisionTreeFlatteningSupport.pm): `242`
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm): `100`
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationTailSupport.pm): `93`
 - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm): `105`
+- [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm): `103`
 - [perl/FSM/Synthesis/EnableGraph.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph.pm): `75`
 - [perl/FSM/HDL/Factorization/Fixpoint.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint.pm): `153`
 
@@ -162,10 +170,11 @@ Interpretation:
   the package/type layer and a few large composition builders, not the thinned
   top-level pipeline facade.
 - the next honest seams are no longer the raw recursive flattening cluster in
-  `Orchestrator`, the older generation-pipeline compatibility shell, the
-  older generation-prelude compatibility shell, the older
-  generation-structural-prelude compatibility shell, the older
-  generation-enable-preparation compatibility shell, or the extracted
+  `Orchestrator`, the whole post-flattening SystemVerilog assembly sequence,
+  the older generation-pipeline compatibility shell, the older
+  generation-prelude compatibility shell, the older generation-structural-prelude
+  compatibility shell, the older generation-enable-preparation compatibility shell,
+  or the extracted
   post-stage WEN/EN/assignment/endmodule sequence now owned by
   `GenerationTailSupport`,
 - the remaining seams are now lower-level direct-backend planning/stage/tail
@@ -244,6 +253,7 @@ bin/fsmgen
         -> FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport
         -> FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport
         -> FlattenedDT::Backend::SystemVerilog::GenerationTailSupport
+        -> FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport
         -> FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateAssignmentSupport
         -> FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateDeclarationSupport
         -> HDL::Factorization::Fixpoint
@@ -630,8 +640,10 @@ owns prepared wire-declaration rendering,
 owns live prepared-block reconstruction from the extracted collection, planning, and prepared-block projection owners,
 [ConsolidatedIntermediateRenderingSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm)
 owns final prepared-block rendering from that prepared contract,
-[Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
-now composes live stage preparation plus prepared-block rendering directly at direct backend stage 6,
+[ConsolidatedIntermediateStageSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm)
+now composes live prescan, stage preparation, validation, and prepared-block rendering at direct backend stage 6,
+[PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm)
+now composes the live post-flattening scaffold/declaration/enable/stage/tail assembly handoff,
 [ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm)
 now survives only as a directly testable compatibility shell outside that live path, while
 [ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm)
@@ -809,8 +821,8 @@ It behaves like a hook system, not a competing architecture.
 - The direct single-module generation path still has not converged on the same clean `StructuralRTLIR -> backend emitter` shape that the composition path is starting to use, even though it now has its own direct-root orchestrator boundary and a dedicated generated-module backend owner.
 - [perl/FSM/Composition/LinkedPlanBuilder.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/LinkedPlanBuilder.pm) is no longer the largest reachable file after [perl/FSM/Composition/ActualLiteralSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ActualLiteralSupport.pm) took ownership of literal actual policy and [perl/FSM/Composition/SourceExpressionSpecSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/SourceExpressionSpecSupport.pm) took ownership of source-expression parsing/spec collection. [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm) is the same good shape at smaller scale for direct, external RTL, and generated-child parameter/generic scalar, aggregate, scalar-expression, and leafwise aggregate-expression values, and [perl/FSM/Composition/ParameterOverrideResolver.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Composition/ParameterOverrideResolver.pm) now owns symbolic override-value resolution, but `LinkedPlanBuilder` remains a real composition hotspot because source-expression resolution, aggregate shape checks, carrier allocation, and binding-type preservation still meet there.
 - [perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationPolicySupport.pm), [perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/FactorizationSupport.pm), [perl/FSM/Synthesis/EnableGraph/SignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/SignalSupport.pm), [perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/IntermediateSignalSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalRecoverySupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateNormalizationSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateSelectionSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDependencySupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePlanningSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediatePreparedBlockSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateAssignmentSupport.pm), [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateDeclarationSupport.pm), [perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/LoopStateSupport.pm), [perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassExecutionSupport.pm), and [perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/Factorization/Fixpoint/PassSupport.pm) now carry more of the remaining backend gravity than any single shell package.
-- The remaining `EnableGraph`-family gravity is now narrower than before: module/state/declaration planning, assignment-analysis / mux-emission support, enable-family support, AST capture/conversion support, AST rendering/classification, signal/intermediate support, and factorization policy all have dedicated owners now, and the direct first-pass AST-factorization pipeline plus the iterative fixpoint loop-state/pass helper/pass execution families do too. So the next honest seams are no longer “who owns the first factorization pass,” “who owns the fixpoint pass helpers,” “who owns the fixpoint aggregate loop-state contract,” “who owns the consolidated intermediate dependency graph mechanics,” “who owns the old direct consolidated block shell,” “who owns the old direct consolidated emitter shell,” “who owns the live consolidated intermediate stage-6/prescan handoff,” “who owns the whole post-flattening SystemVerilog assembly sequence,” or “who owns the pre-stage scaffold/declaration/enable/prescan sequence”; they are the remaining lower-level direct-backend planning/stage coordination and broader direct-backend convergence rather than the old direct planning, capture, or WEN/EN clusters.
-- [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) is still a meaningful sequencing hotspot even though it no longer owns the whole post-flattening SystemVerilog assembly sequence inline.
+- The remaining `EnableGraph`-family gravity is now narrower than before: module/state/declaration planning, assignment-analysis / mux-emission support, enable-family support, AST capture/conversion support, AST rendering/classification, signal/intermediate support, and factorization policy all have dedicated owners now, and the direct first-pass AST-factorization pipeline plus the iterative fixpoint loop-state/pass helper/pass execution families do too. So the next honest seams are no longer “who owns the first factorization pass,” “who owns the fixpoint pass helpers,” “who owns the fixpoint aggregate loop-state contract,” “who owns the consolidated intermediate dependency graph mechanics,” “who owns the old direct consolidated block shell,” “who owns the old direct consolidated emitter shell,” “who owns the live consolidated intermediate stage-6/prescan handoff,” “who owns the whole post-flattening SystemVerilog assembly sequence,” or “who owns the pre-stage scaffold/declaration/enable/prescan sequence”; they are the remaining lower-level direct-backend planning/stage coordination and broader direct-backend convergence rather than the old direct planning, capture, assembly, or WEN/EN clusters.
+- [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) is now a smaller sequencing handoff that keeps per-run reset, module attachment, recursive flattening, and final post-flattening assembly delegation.
 - `module_info` and reporting/statistics surfaces still create pressure for the coordinator to know too much, even though the generated-module `module_info` family now has its own explicit owner.
 - `EnableGraph` no longer owns AST rendering/operator-classification directly,
   and the old direct `IntermediateSignalSupport` shell is no longer on the
