@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-13
+### regression corpus now locks direct aggregate shape rejection
+- Added [t/corpus/direct_aggregate_contract_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_aggregate_contract_mismatch.fsm) as a named `expected_failure` direct-root corpus asset for a parsed whole-aggregate assignment whose packed width matches but whose inferred aggregate contract is `record{mode:bits[2], flag:bit}` while the declared target type is `list<bit, bits[2]>`.
+- Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm), [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so this width-equal semantic mismatch is support-accounted in the direct-generation contract bucket alongside the direct RHS concat width rejection.
+
 ### regression corpus now locks direct LHS deconstruct width rejection
 - Added [t/corpus/direct_lhs_deconstruct_width_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_lhs_deconstruct_width_mismatch.fsm) as a named `expected_failure` direct-root corpus asset for an LHS `(concat ...)` deconstruct assignment whose target total width does not match the RHS width.
 - Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm), [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so this malformed authored deconstruct shape is support-accounted as a language-contract expected failure rather than a direct-generation backend contract failure.

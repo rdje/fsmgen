@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-13: corpus now covers width-equal aggregate shape rejection
+- Continued `R12` by adding another direct-generation expected-failure corpus
+  asset, this time for a semantic aggregate contract mismatch where packed
+  width alone would be insufficient.
+- Important continuity note:
+  - [t/corpus/direct_aggregate_contract_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_aggregate_contract_mismatch.fsm)
+    is now a named expected-failure fixture for `(OUT = FRAME)` where `FRAME`
+    is inferred as a record aggregate and `OUT` is declared as a list aggregate
+    of the same packed width,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    records it as `contract.direct_aggregate_contract_mismatch` under
+    `direct_generation_contract_rejection_pipeline_cli`,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    now checks the failure through the existing direct-generation
+    expected-failure harness, including source-file context and the
+    aggregate-contract diagnostic through both pipeline and CLI,
+  - and [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now expects `32` catalog entries and `20` expected-failure entries.
+
 ## 2026-04-13: corpus now covers LHS deconstruct width rejection
 - Continued `R12` by adding a second language-contract expected-failure corpus
   asset for the shipped LHS deconstruct surface.

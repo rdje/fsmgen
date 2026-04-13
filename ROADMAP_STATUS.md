@@ -1683,9 +1683,14 @@ Done:
   - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records it as `contract.direct_lhs_deconstruct_width_mismatch` under the existing `language_contract_rejection_pipeline_cli` coverage bucket because the active frontend rejects that malformed authored assignment before generation,
   - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that failure through both pipeline and CLI via the existing language-contract expected-failure path, and
   - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `31` catalog entries and `19` explicit expected-failure entries.
+- The direct-generation failure side of the corpus now also covers a width-equal aggregate semantic contract rejection:
+  - [t/corpus/direct_aggregate_contract_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_aggregate_contract_mismatch.fsm) now exists as a named `expected_failure` direct-root corpus asset for a whole-aggregate RHS assignment that packs to the same width as the LHS but carries an incompatible record-versus-list aggregate shape,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records it as `contract.direct_aggregate_contract_mismatch` under `direct_generation_contract_rejection_pipeline_cli`,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that this parsed-but-rejected direct-generation contract failure keeps source-file context plus the aggregate-contract diagnostic through both pipeline and CLI, and
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `32` catalog entries and `20` explicit expected-failure entries.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
-- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, first child-root compatibility pair, first malformed-language contract entry, first direct-generation contract entry, and the current composition-contract rejection families.
+- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, first child-root compatibility pair, first malformed-language contract entry, current direct-generation contract entries, and the current composition-contract rejection families.
 - Widen golden-output or semantic-check coverage beyond the current supported language-feature entries and the first protocol slice where simple compile smoke is not enough.
 Exit criteria:
 - Support claims can be backed by a maintained corpus and explicit classification, not only by ad hoc focused tests.

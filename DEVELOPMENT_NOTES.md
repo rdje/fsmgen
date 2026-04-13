@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-13: width-equal aggregate shape mismatch belongs in direct generation contract coverage
+- Continued `R12` by adding a direct-generation expected-failure corpus entry
+  for whole-aggregate assignment type-shape rejection.
+- Rationale:
+  - a same-width aggregate mismatch is the exact failure family the
+    pre-generation validation layer is meant to catch before the HDL backend
+    emits a flattened visual representation,
+  - [t/corpus/direct_aggregate_contract_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_aggregate_contract_mismatch.fsm)
+    deliberately makes `FRAME` and `OUT` both pack to three bits while keeping
+    their contracts incompatible as record versus list,
+  - keeping it under `direct_generation_contract_rejection_pipeline_cli`
+    proves this is not merely a parser shape error or a width arithmetic error,
+  - and the corpus now has direct-generation expected-failure examples for
+    both raw packed-width mismatch and width-equal semantic aggregate mismatch.
+
 ## 2026-04-13: LHS deconstruct width mismatch is support-accounted as language contract
 - Continued `R12` by adding the first LHS deconstruct expected-failure fixture
   to the classified corpus.

@@ -1,0 +1,22 @@
+(?fsm:direct_aggregate_contract_mismatch
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+constants
+    (FRAME ((mode 2'b10) (flag 1)))
+  )
+
+  (+types
+    (type wrong_t (list bit (bits 2)))
+  )
+
+  (+size
+    (OUT wrong_t)
+  )
+
+  (idle
+    (OUT = FRAME)
+  )
+)
