@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-13: direct-generation contract failures get their own corpus bucket
+- Continued `R12` by adding the first parsed direct-generation expected-failure
+  fixture instead of overloading the existing parser-oriented
+  `language_contract_rejection_pipeline_cli` bucket.
+- Rationale:
+  - a direct RHS `(concat ...)` width mismatch is not a source-shape parser
+    failure; it is a semantic pre-generation contract rejection after the
+    source parsed successfully,
+  - giving that family its own `direct_generation_contract_rejection_pipeline_cli`
+    bucket keeps support accounting honest about where the rejection happens,
+  - [t/corpus/direct_rhs_concat_width_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_rhs_concat_width_mismatch.fsm)
+    is deliberately small and mirrors the existing focused width-contract
+    regression shape,
+  - and [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    now proves both pipeline and CLI keep source-file context plus the authored
+    direct assignment-width diagnostic before any HDL is emitted.
+
 ## 2026-04-13: direct LHS deconstruct is now support-accounted
 - Continued `R12` by adding the sibling deconstruct feature to the classified
   support-accounting corpus.

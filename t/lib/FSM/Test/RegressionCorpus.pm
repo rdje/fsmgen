@@ -206,6 +206,15 @@ my @REGRESSION_CORPUS = (
         expected_error_pattern => qr/Malformed '\+size' entry/,
     },
     {
+        id => 'contract.direct_rhs_concat_width_mismatch',
+        relpath => 't/corpus/direct_rhs_concat_width_mismatch.fsm',
+        family => 'direct_generation_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'direct_generation_contract_rejection_pipeline_cli',
+        source_kind => 'fsm',
+        expected_error_pattern => qr/assignment to 'BUS' uses RHS '\{HI, LO\}' with incompatible width 7 for LHS width 8; .*implicit widening/s,
+    },
+    {
         id => 'contract.missing_rtl_metadata_sidecar',
         relpath => 't/corpus/missing_rtl_metadata_top.fsm',
         family => 'composition_contract_fixture',

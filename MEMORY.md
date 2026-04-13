@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-13: corpus now covers direct RHS concat width rejection
+- Continued `R12` by promoting one parsed-but-rejected direct-generation
+  assignment contract into the named expected-failure corpus.
+- Important continuity note:
+  - [t/corpus/direct_rhs_concat_width_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_rhs_concat_width_mismatch.fsm)
+    is now a named expected-failure fixture for a direct RHS `(concat HI LO)`
+    assignment whose total RHS width is too small for `BUS`,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    records it as `contract.direct_rhs_concat_width_mismatch` under the new
+    `direct_generation_contract_rejection_pipeline_cli` coverage bucket,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    now checks the source-file context plus direct assignment-width diagnostic
+    through both pipeline and CLI,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now expects `30` catalog entries and `18` expected-failure entries,
+  - and this keeps pre-generation direct contract failures support-accounted
+    separately from parser-only language-contract failures.
+
 ## 2026-04-13: supported corpus now includes direct LHS deconstruct
 - Continued the `R12` support-accounting lane by promoting the sibling
   deconstruct half of the pack/deconstruct assignment surface into the named

@@ -1,0 +1,14 @@
+(?fsm:direct_rhs_concat_width_mismatch
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (BUS 8)
+    (HI 3)
+    (LO 4)
+  )
+  (idle
+    (BUS = (concat HI LO))
+  )
+)

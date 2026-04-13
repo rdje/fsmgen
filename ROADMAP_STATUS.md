@@ -1673,9 +1673,14 @@ Done:
   - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records it as `feature.direct_lhs_deconstruct_pack` with semantic HDL-shape expectations for high-to-low whole-signal splitting, the `cat` alias, and same-base sliced-fragment rejoining,
   - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) now checks that fixture through both pipeline and CLI, and
   - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `29` catalog entries and `8` named supported-smoke entries.
+- The direct-generation failure side of the corpus now also covers a pre-generation assignment contract rejection:
+  - [t/corpus/direct_rhs_concat_width_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_rhs_concat_width_mismatch.fsm) now exists as a named `expected_failure` direct-root corpus asset for a direct RHS `(concat ...)` assignment whose summed RHS width is too small for the LHS,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records it as `contract.direct_rhs_concat_width_mismatch` under the new `direct_generation_contract_rejection_pipeline_cli` coverage bucket,
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now checks that parsed-but-rejected direct-generation contract failures keep source-file context plus the assignment-width diagnostic through both pipeline and CLI, and
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `30` catalog entries and `18` explicit expected-failure entries.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
-- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, first child-root compatibility pair, first malformed-language contract entry, and the current composition-contract rejection families.
+- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, first child-root compatibility pair, first malformed-language contract entry, first direct-generation contract entry, and the current composition-contract rejection families.
 - Widen golden-output or semantic-check coverage beyond the current supported language-feature entries and the first protocol slice where simple compile smoke is not enough.
 Exit criteria:
 - Support claims can be backed by a maintained corpus and explicit classification, not only by ad hoc focused tests.

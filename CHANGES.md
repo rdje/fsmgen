@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-13
+### regression corpus now locks direct RHS concat width rejection
+- Added [t/corpus/direct_rhs_concat_width_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_rhs_concat_width_mismatch.fsm) as a named `expected_failure` direct-root corpus asset for a parsed direct RHS `(concat ...)` assignment that fails the pre-generation width contract.
+- Added the `direct_generation_contract_rejection_pipeline_cli` coverage bucket to [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm), [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t), and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) so parsed-but-rejected direct-generation contract failures are support-accounted separately from parser language-contract failures.
+
 ### regression corpus now locks direct LHS deconstruct support
 - Added [t/corpus/direct_lhs_deconstruct_pack.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_lhs_deconstruct_pack.fsm) as a named `supported_smoke` direct-root corpus asset for static LHS `(concat ...)` and `(cat ...)` deconstruct assignments.
 - Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm), [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) so the supported language-feature corpus now checks LHS deconstruct split/rejoin HDL shape through both pipeline and CLI.
