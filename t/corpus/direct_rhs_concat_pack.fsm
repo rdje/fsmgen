@@ -1,0 +1,22 @@
+(?fsm:direct_rhs_concat_pack
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (COND 1)
+    (HI 4)
+    (MID 2)
+    (LO 2)
+    (OUT 8)
+    (OUT_CAT 8)
+    (OUT_NESTED 8)
+  )
+  (idle
+    (<COND
+      (OUT = (concat HI MID LO))
+      (OUT_CAT = (cat HI MID LO))
+      (OUT_NESTED = (concat HI (concat MID LO)))
+    )
+  )
+)

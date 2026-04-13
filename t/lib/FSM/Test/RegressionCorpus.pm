@@ -81,6 +81,20 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.direct_rhs_concat_pack',
+        relpath => 't/corpus/direct_rhs_concat_pack.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        expected_module_name => 'direct_rhs_concat_pack',
+        expected_hdl_patterns => [
+            qr/\bOUT\s*=\s*\{HI,\s*MID,\s*LO\};/s,
+            qr/\bOUT_CAT\s*=\s*\{HI,\s*MID,\s*LO\};/s,
+            qr/\bOUT_NESTED\s*=\s*\{HI,\s*\{MID,\s*LO\}\};/s,
+        ],
+    },
+    {
         id => 'legacy.mipicsi2_txccore_ulp.default_compat',
         relpath => 'fsm/mipicsi2_txccore_ulp.fsm',
         family => 'legacy_fixture',

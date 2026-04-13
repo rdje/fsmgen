@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-13: supported corpus now includes direct RHS concat/cat
+- Continued the visible `R12` support-accounting lane after the direct-backend
+  cleanup slices by promoting one more shipped language feature into the
+  machine-checked corpus.
+- Important continuity note:
+  - [t/corpus/direct_rhs_concat_pack.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_rhs_concat_pack.fsm)
+    is now a named supported direct-root fixture for direct RHS `(concat ...)`
+    and `(cat ...)` pack expressions,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    records it as `feature.direct_rhs_concat_pack`,
+  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
+    now checks flat concat, `cat` alias, and nested concat SystemVerilog shape
+    through both pipeline and CLI,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now expects `28` catalog entries and `7` named supported-smoke entries,
+  - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md)
+    lists the new supported feature asset beside the partial-LHS fixtures.
+
 ## 2026-04-13: generation pipeline shell is now a pure delegate too
 - Continued the active `R11` lower-level direct-backend convergence lane by
   removing the remaining fallback construction from the older direct

@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-13: direct RHS pack expressions are now support-accounted
+- Continued `R12` by adding one small user-visible language feature to the
+  classified support-accounting corpus instead of doing a third consecutive
+  direct-backend cleanup slice.
+- Rationale:
+  - direct RHS `(concat ...)` / `(cat ...)` support is already implemented and
+    focused-regression-locked, but a support claim is stronger when the feature
+    also appears as a named corpus asset,
+  - [t/corpus/direct_rhs_concat_pack.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_rhs_concat_pack.fsm)
+    keeps the fixture intentionally direct and small: one flat `(concat ...)`,
+    one `(cat ...)` alias, and one nested `(concat ...)`,
+  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
+    already executes supported language-feature corpus entries through both
+    pipeline and CLI, so the slice only needed a catalog entry plus precise
+    semantic HDL patterns,
+  - and [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now treats the corpus growth as an explicit accounting change (`28`
+    entries, `7` supported-smoke entries), not an incidental fixture addition.
+
 ## 2026-04-13: generation-pipeline shell is a pure post-flattening delegate
 - Continued the `R11` lower-level direct-backend convergence lane by removing
   the last fallback construction from

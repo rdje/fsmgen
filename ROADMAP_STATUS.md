@@ -1663,10 +1663,15 @@ Done:
   - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records them as `feature.partial_lhs_with_size` and `feature.partial_lhs_inferred_width`,
   - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) now checks those entries through both pipeline and CLI while also locking key HDL-shape expectations such as full-width merged partial-write expressions and full-width inferred `next_*` / `*_r` outputs,
   - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now records that `supported_smoke` is no longer only the first imported protocol quartet.
+- That same supported-language-feature corpus slice now also covers direct RHS pack expressions:
+  - [t/corpus/direct_rhs_concat_pack.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_rhs_concat_pack.fsm) now exists as a named `supported_smoke` direct-root corpus asset for direct RHS `(concat ...)` and `(cat ...)` expressions,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records it as `feature.direct_rhs_concat_pack` with semantic HDL-shape expectations for flat concat, `cat` alias, and nested concat emission,
+  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) now checks that fixture through both pipeline and CLI, and
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `28` catalog entries and `7` named supported-smoke entries.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
 - Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, first child-root compatibility pair, first malformed-language contract entry, and the current composition-contract rejection families.
-- Widen golden-output or semantic-check coverage beyond the first supported language-feature entries and the first protocol slice where simple compile smoke is not enough.
+- Widen golden-output or semantic-check coverage beyond the current supported language-feature entries and the first protocol slice where simple compile smoke is not enough.
 Exit criteria:
 - Support claims can be backed by a maintained corpus and explicit classification, not only by ad hoc focused tests.
 
