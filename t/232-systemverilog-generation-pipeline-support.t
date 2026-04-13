@@ -13,6 +13,56 @@ use FSM::HDL::FlattenedDT;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport;
 use FSM::Pipeline::SourceFrontend;
 
+{
+    package Local::SpyPostFlatteningAssemblySupport;
+    use v5.20;
+    use strict;
+    use warnings;
+    use feature qw(signatures);
+    no warnings 'experimental::signatures';
+
+    sub new ($class) {
+        return bless { calls => [] }, $class;
+    }
+
+    sub calls ($self) {
+        return $self->{calls};
+    }
+
+    sub generate_systemverilog_module ($self, $fsm_module) {
+        push @{$self->{calls}}, $fsm_module;
+        return "assembled:$fsm_module->{name}";
+    }
+}
+
+subtest 'generation pipeline support requires only the live post-flattening assembly owner' => sub {
+    my $fsm_module = { name => 'generation_pipeline_shell_contract' };
+    my $assembly_support = Local::SpyPostFlatteningAssemblySupport->new();
+    my $pipeline_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport->new(
+        flattened_dt => {
+            backend_sv_post_flattening_assembly_support => $assembly_support,
+        },
+    );
+
+    my $generated_hdl = $pipeline_support->generate_systemverilog_module($fsm_module);
+
+    is(
+        $generated_hdl,
+        'assembled:generation_pipeline_shell_contract',
+        'generation pipeline shell delegates directly to the post-flattening assembly owner',
+    );
+    is(
+        scalar(@{$assembly_support->calls}),
+        1,
+        'generation pipeline shell calls the assembly owner exactly once',
+    );
+    is(
+        $assembly_support->calls->[0],
+        $fsm_module,
+        'generation pipeline shell passes the FSM module through unchanged',
+    );
+};
+
 subtest 'generation pipeline support remains a compatibility shell over the live post-flattening assembly owner' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_generation_pipeline_support_contract',

@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-13: generation pipeline shell is now a pure delegate too
+- Continued the active `R11` lower-level direct-backend convergence lane by
+  removing the remaining fallback construction from the older direct
+  SystemVerilog generation-pipeline compatibility shell.
+- Important continuity note:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm)
+    now delegates directly to the live
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm)
+    owner with no implicit construction fallback,
+  - [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t)
+    now includes a spy-owner contract proving that the shell only requires and
+    calls the live post-flattening assembly owner,
+  - focused generation-pipeline shell coverage and the focused direct-backend
+    sweep passed after the change (`Files=8, Tests=523`),
+  - and no import-tree package count changed.
+
 ## 2026-04-13: consolidated intermediate shells are now pure delegates
 - Continued the active `R11` lower-level direct-backend convergence lane by
   removing the remaining duplicated fallback implementations from the older

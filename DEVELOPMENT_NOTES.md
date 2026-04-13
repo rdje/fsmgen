@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-13: generation-pipeline shell is a pure post-flattening delegate
+- Continued the `R11` lower-level direct-backend convergence lane by removing
+  the last fallback construction from
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm).
+- Rationale:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm)
+    is now the canonical owner for post-flattening direct SystemVerilog
+    assembly,
+  - the older generation-pipeline compatibility shell should therefore require
+    the live owner on the backend context rather than silently constructing a
+    fresh owner when that field is missing,
+  - [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t)
+    now has a spy-owner slice that proves the shell forwards directly into the
+    assembly owner with no broader backend dependency set,
+  - and this keeps “compatibility shell” semantics consistent with the
+    consolidated-intermediate pure-delegate cleanup: old method name, one
+    canonical live implementation path.
+
 ## 2026-04-13: compatibility consolidated-intermediate shells are pure delegates
 - Continued the `R11` lower-level direct-backend convergence lane by removing
   the remaining detached fallback implementations from the older

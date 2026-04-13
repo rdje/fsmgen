@@ -37,8 +37,6 @@ use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport;
-
 =head2 new
 
 Construct one SystemVerilog generation-pipeline owner bound to a specific
@@ -64,11 +62,9 @@ delegating to the extracted live owners.
 
 sub generate_systemverilog_module ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
-    my $assembly_support = $ctx->{backend_sv_post_flattening_assembly_support}
-        || FSM::HDL::FlattenedDT::Backend::SystemVerilog::PostFlatteningAssemblySupport->new(
-            flattened_dt => $ctx,
-        );
-    return $assembly_support->generate_systemverilog_module($fsm_module);
+
+    return $ctx->{backend_sv_post_flattening_assembly_support}
+        ->generate_systemverilog_module($fsm_module);
 }
 
 1;
