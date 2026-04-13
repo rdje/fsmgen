@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-13: canonical reset policies are now support-accounted
+- Continued `R12` by adding supported-smoke corpus entries for the two reset
+  spellings that should be treated as the canonical direct-root surface.
+- Rationale:
+  - the reset correction is user-visible and easy to regress visually, so it
+    should live in the named support corpus instead of only in focused reset
+    tests,
+  - [t/corpus/direct_sreset_active_high.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_sreset_active_high.fsm)
+    locks `sreset reset` as synchronous active-high intent: generated
+    SystemVerilog must use a clock-only event control and test `reset` as the
+    active condition,
+  - [t/corpus/direct_areset_active_low.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_areset_active_low.fsm)
+    locks `areset rst_n` as asynchronous active-low intent: generated
+    SystemVerilog must include `negedge rst_n` and test `!rst_n`,
+  - and keeping both entries under `direct_root_pipeline_cli` makes the
+    supported reset policy an ordinary language-feature support claim, while
+    strict rejection of legacy/misleading reset spellings stays a separate
+    compatibility-boundary family.
+
 ## 2026-04-13: width-equal aggregate shape mismatch belongs in direct generation contract coverage
 - Continued `R12` by adding a direct-generation expected-failure corpus entry
   for whole-aggregate assignment type-shape rejection.

@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-13: corpus now covers canonical reset policies
+- Continued `R12` by promoting the canonical direct reset semantics into the
+  named supported corpus.
+- Important continuity note:
+  - [t/corpus/direct_sreset_active_high.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_sreset_active_high.fsm)
+    is now a named supported fixture for `(+system (clock clk) (sreset reset))`,
+  - [t/corpus/direct_areset_active_low.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_areset_active_low.fsm)
+    is now a named supported fixture for `(+system (clock clk) (areset rst_n))`,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    records them as `feature.direct_sreset_active_high` and
+    `feature.direct_areset_active_low`,
+  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
+    now checks through both pipeline and CLI that `sreset reset` emits
+    clock-only `always_ff @(posedge clk)` plus `if (reset)`, while `areset
+    rst_n` emits `always_ff @(posedge clk or negedge rst_n)` plus `if
+    (!rst_n)`,
+  - and [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now expects `34` catalog entries and `10` supported-smoke entries.
+
 ## 2026-04-13: corpus now covers width-equal aggregate shape rejection
 - Continued `R12` by adding another direct-generation expected-failure corpus
   asset, this time for a semantic aggregate contract mismatch where packed

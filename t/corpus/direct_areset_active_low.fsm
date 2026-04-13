@@ -1,0 +1,17 @@
+(?fsm:direct_areset_active_low
+  (+system
+    (clock clk)
+    (areset rst_n)
+  )
+
+  (+size
+    (START 1)
+    (DONE 1)
+  )
+
+  (idle
+    (<START
+      (DONE <= 1'b1)
+    )
+  )
+)

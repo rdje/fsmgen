@@ -1,0 +1,17 @@
+(?fsm:direct_sreset_active_high
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (START 1)
+    (DONE 1)
+  )
+
+  (idle
+    (<START
+      (DONE <= 1'b1)
+    )
+  )
+)

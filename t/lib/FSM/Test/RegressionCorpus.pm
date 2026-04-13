@@ -111,6 +111,32 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.direct_sreset_active_high',
+        relpath => 't/corpus/direct_sreset_active_high.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        expected_module_name => 'direct_sreset_active_high',
+        expected_hdl_patterns => [
+            qr/\binput\s+wire\s+reset\b/s,
+            qr/always_ff\s*@\(posedge\s+clk\)\s*begin\s+if\s*\(reset\)\s*begin/s,
+        ],
+    },
+    {
+        id => 'feature.direct_areset_active_low',
+        relpath => 't/corpus/direct_areset_active_low.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        expected_module_name => 'direct_areset_active_low',
+        expected_hdl_patterns => [
+            qr/\binput\s+wire\s+rst_n\b/s,
+            qr/always_ff\s*@\(posedge\s+clk\s+or\s+negedge\s+rst_n\)\s*begin\s+if\s*\(!rst_n\)\s*begin/s,
+        ],
+    },
+    {
         id => 'legacy.mipicsi2_txccore_ulp.default_compat',
         relpath => 'fsm/mipicsi2_txccore_ulp.fsm',
         family => 'legacy_fixture',
