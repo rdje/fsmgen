@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-13
+### consolidated intermediate emitter test now anchors on the live renderer
+- Updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm) POD so the compatibility shell names the live [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm) owner it delegates to.
+- Retargeted [t/200-systemverilog-consolidated-intermediate-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/200-systemverilog-consolidated-intermediate-emitter.t) so the emitter-shell contract is pinned to the live rendering owner instead of manually rebuilding a broader scaffold/declaration/direct-prefix path around the older wrapper.
+
 ### consolidated intermediate block shell now delegates to stage preparation
 - Updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm) so the compatibility shell now delegates prepared-block reconstruction to the live [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm) owner when available, leaving the older collection/planning/projection composition only as a fallback for detached compatibility contexts.
 - Retargeted [t/219-systemverilog-consolidated-intermediate-block-support.t](/Users/richarddje/Documents/github/fsmgen/t/219-systemverilog-consolidated-intermediate-block-support.t) so the block-shell contract is now pinned to the live stage-preparation owner rather than reimplementing the lower-level sequence in the test.

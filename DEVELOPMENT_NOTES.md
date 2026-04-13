@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-13: consolidated emitter tests prove the rendering owner boundary
+- Continued the `R11` lower-level direct-backend convergence lane by retargeting
+  the old consolidated-intermediate emitter regression to the actual live owner
+  boundary.
+- Rationale:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm)
+    is now a compatibility shell; the real prepared-block rendering owner is
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm),
+  - a compatibility-shell test should therefore prove wrapper parity with that
+    live owner, not recreate scaffold/header/internal-declaration/prefix
+    sequencing that belongs to the post-flattening assembly owner,
+  - [t/200-systemverilog-consolidated-intermediate-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/200-systemverilog-consolidated-intermediate-emitter.t)
+    now builds a prepared block through the live stage-preparation owner and
+    compares the emitter output directly to the live renderer output,
+  - and this keeps broad generated-module sequencing covered in the direct
+    assembly tests while narrowing the older emitter test to its honest
+    compatibility contract.
+
 ## 2026-04-13: consolidated block shell delegates to stage preparation
 - Continued the `R11` lower-level direct-backend convergence lane by removing
   the last duplicated prepared-block reconstruction sequence from

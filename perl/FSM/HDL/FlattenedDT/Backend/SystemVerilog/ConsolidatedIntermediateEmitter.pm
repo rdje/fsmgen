@@ -15,7 +15,7 @@ directly testable wrapper:
 =item *
 
 rebuilding consolidated intermediate block rendering from an already prepared
-block contract by delegating to the live generation owner when available
+block contract by delegating to the live rendering owner when available
 
 =back
 

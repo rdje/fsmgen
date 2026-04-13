@@ -591,7 +591,7 @@ while the older
 [ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm)
 package now survives only as a directly testable compatibility shell outside
 the live [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
-import spine,
+import spine and delegates to the live rendering owner when available,
 while the old
 [IntermediateSignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/IntermediateSignalSupport.pm)
 package now survives only as a directly testable compatibility shell outside
@@ -648,7 +648,8 @@ now composes the live post-flattening scaffold/declaration/enable/stage/tail ass
 now survives only as a directly testable compatibility shell outside that live
 path and delegates to the stage-preparation owner when available, while
 [ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm)
-now survives only as a directly testable compatibility shell outside that live path, and
+now survives only as a directly testable compatibility shell outside that live
+path and delegates to the live rendering owner when available, and
 [ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm)
 now survives only as a directly testable compatibility shell outside that live path too.
 The synthesis-side intermediate-signal registry and dependency-recovery family
@@ -764,7 +765,8 @@ It behaves like a hook system, not a competing architecture.
   rather than remaining one more active backend owner.
 - `FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter`
   now survives only as a compatibility-shell test surface outside the live
-  runtime spine rather than remaining one more active backend owner.
+  runtime spine, delegating to the live rendering owner when available rather
+  than remaining one more active backend owner.
 - `FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateAssignmentSupport`
   now also owns the prepared assign-emission half of the direct consolidated
   intermediate path rather than leaving expression recovery plus final assign

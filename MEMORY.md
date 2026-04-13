@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-13: consolidated intermediate emitter test now anchors on rendering owner
+- Continued the active `R11` lower-level direct-backend convergence lane.
+- Important continuity note:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm)
+    already delegated prepared-block rendering to the live
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm)
+    owner when present; its POD now names that rendering owner correctly,
+  - [t/200-systemverilog-consolidated-intermediate-emitter.t](/Users/richarddje/Documents/github/fsmgen/t/200-systemverilog-consolidated-intermediate-emitter.t)
+    now locks the compatibility shell against the live rendering owner instead
+    of rebuilding a wider scaffold/declaration/prefix path manually,
+  - the broader direct module assembly coverage remains in the live
+    post-flattening assembly and generated-module tests,
+  - the focused consolidated-intermediate suite passed after the retargeting,
+  - and no import-tree package count changed.
+
 ## 2026-04-13: consolidated intermediate block shell delegates to stage preparation
 - Continued the active `R11` lower-level direct-backend convergence lane.
 - Important continuity note:

@@ -9,14 +9,13 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
-use FSM::Backend::GeneratedModuleEmitter;
 use FSM::HDL::FlattenedDT;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::InternalDeclarationEmitter;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'consolidated intermediate emitter rebuilds the direct backend prefix through the consolidated wire block' => sub {
+subtest 'consolidated intermediate emitter survives as a compatibility shell over the live rendering owner' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_consolidated_contract',
         <<'FSM'
@@ -46,19 +45,29 @@ FSM
     );
 
     my $prepared_backend = prepare_flattened_backend($fsm_module);
-    my ($prefix, $consolidated_block) = rebuild_prefix_with_consolidated_intermediates($prepared_backend, $fsm_module);
-    my $backend_result = FSM::Backend::GeneratedModuleEmitter->emit_from_fsm_module(
-        fsm_module => $fsm_module,
-        target_language => 'systemverilog',
-        debug_level => 0,
+    my $stage_preparation_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport->new(
+        flattened_dt => $prepared_backend,
     );
-    my $normalized_prefix = normalize_generated_prefix($prefix);
-    my $normalized_hdl = normalize_generated_prefix($backend_result->{hdl_code});
+    my $rendering_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport->new(
+        flattened_dt => $prepared_backend,
+    );
+    my $consolidated_emitter = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter->new(
+        flattened_dt => $prepared_backend,
+    );
+
+    my $prepared_block = $stage_preparation_support->prepare_consolidated_intermediate_block($fsm_module);
+    my $expected_block = $rendering_support->render_prepared_consolidated_intermediate_block($prepared_block);
+    my $consolidated_block = $consolidated_emitter->render_consolidated_intermediate_block($prepared_block);
 
     is(
-        substr($normalized_hdl, 0, length($normalized_prefix)),
-        $normalized_prefix,
-        'consolidated intermediate emitter rebuilds the same direct backend prefix through the consolidated block',
+        $consolidated_block,
+        $expected_block,
+        'consolidated intermediate emitter rebuilds the same block as the live rendering owner',
+    );
+    is(
+        scalar(grep { $_ eq 'A_or_B' } @{ $prepared_block->{sorted_signals} }),
+        1,
+        'prepared block keeps the shared factorized carrier in the dependency-safe render order',
     );
     like(
         $consolidated_block,
@@ -101,56 +110,10 @@ sub prepare_flattened_backend {
     $hdl_generator->{orchestrator}->reset_generation_state();
     $hdl_generator->{enable_graph_signal_support}->set_fsm_module_reference($fsm_module);
     $hdl_generator->{orchestrator}->flatten_all_decision_trees($fsm_module);
-    return $hdl_generator;
-}
-
-sub rebuild_prefix_with_consolidated_intermediates {
-    my ($hdl_generator, $fsm_module) = @_;
-    my $scaffold_emitter = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ScaffoldEmitter->new(
-        flattened_dt => $hdl_generator,
-    );
-    my $declaration_emitter = FSM::HDL::FlattenedDT::Backend::SystemVerilog::InternalDeclarationEmitter->new(
-        flattened_dt => $hdl_generator,
-    );
-    my $consolidated_emitter = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter->new(
-        flattened_dt => $hdl_generator,
-    );
-
-    my $prefix = $scaffold_emitter->generate_header($fsm_module)
-        . $scaffold_emitter->generate_module_declaration($fsm_module)
-        . $scaffold_emitter->generate_state_encoding($fsm_module)
-        . $scaffold_emitter->generate_state_register($fsm_module)
-        . $declaration_emitter->generate_internal_signal_declarations($fsm_module);
-
-    $prefix .= $hdl_generator->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
+    $hdl_generator->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
     $hdl_generator->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
     $hdl_generator->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
-
-    my $all_intermediate_signals = $hdl_generator->{backend_sv_consolidated_intermediate_support}
-        ->collect_consolidated_intermediate_signals($fsm_module);
-    my $plan = $hdl_generator->{backend_sv_consolidated_intermediate_planning_support}
-        ->plan_consolidated_intermediate_signals($all_intermediate_signals);
-    my $prepared_block = $hdl_generator->{backend_sv_consolidated_intermediate_prepared_block_support}
-        ->build_prepared_consolidated_intermediate_block($all_intermediate_signals, $plan);
-    my $consolidated_block = $consolidated_emitter->render_consolidated_intermediate_block($prepared_block);
-
-    return ($prefix . $consolidated_block, $consolidated_block);
-}
-
-sub normalize_generated_prefix {
-    my ($text) = @_;
-    $text //= '';
-    $text =~ s{// Date: .*}{// Date: <normalized>}g;
-    $text =~ s{
-        (//\s+Consolidated\ intermediate\ signals.*?\n)
-        (.*?)
-        (\n\s*//\s+Unified\ WEN/EN\ Signal\ Generation\ from\ Phase\ 1\ Analysis|\z)
-    }{
-        my ($header, $body, $footer) = ($1, $2, $3);
-        my @body_lines = grep { length($_) } split /\n/, $body;
-        $header . join("\n", sort @body_lines) . $footer;
-    }gsex;
-    return $text;
+    return $hdl_generator;
 }
 
 sub write_file {
