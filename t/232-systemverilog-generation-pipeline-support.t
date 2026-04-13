@@ -95,8 +95,6 @@ sub build_expected_hdl {
     $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_state_encoding($fsm_module);
     $hdl .= $prepared_backend->{backend_sv_scaffold}->generate_state_register($fsm_module);
     $hdl .= $prepared_backend->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
-    $prepared_backend->{backend_sv_generation_prescan_preparation_support}
-        ->prepare_enable_prescan();
     my $consolidated_intermediate_hdl = $prepared_backend->{backend_sv_consolidated_intermediate_stage_support}
         ->generate_consolidated_intermediate_block($fsm_module);
     $hdl .= $prepared_backend->{enable_graph_enable_support}

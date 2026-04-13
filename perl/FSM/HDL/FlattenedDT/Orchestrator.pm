@@ -36,6 +36,7 @@ sub reset_generation_state ($self) {
 
     delete $ctx->{verilog_family_typedef_state};
     delete $ctx->{binary_logical_op_counts};
+    delete $ctx->{backend_sv_enable_prescan_prepared};
     delete $ctx->{ast_factorizer};
     delete $ctx->{fsm_module};
 }
@@ -64,8 +65,6 @@ sub generate_systemverilog ($self, $fsm_module) {
     $self->flatten_all_decision_trees($fsm_module);
     fsm_debug("Step 1 - Decision trees flattened", 3);
 
-    $ctx->{backend_sv_generation_prescan_preparation_support}
-        ->prepare_enable_prescan();
     my $consolidated_intermediate_hdl = $ctx->{backend_sv_consolidated_intermediate_stage_support}
         ->generate_consolidated_intermediate_block($fsm_module);
     

@@ -15,8 +15,8 @@ centralizes:
 =item *
 
 full consolidated intermediate block generation for one FSM module by
-composing the extracted stage-preparation, pre-generation validation, and
-rendering owners
+composing the extracted prescan-preparation, stage-preparation,
+pre-generation validation, and rendering owners
 
 =item *
 
@@ -32,7 +32,9 @@ planning, and prepared-block projection owners, the paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport>
 keeps final prepared-block rendering over the extracted declaration and
 assignment owners, the paired operand-contract validator keeps the
-pre-generation AST/declaration/assignment safety checks, and this package now
+pre-generation AST/declaration/assignment safety checks, the paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport>
+keeps logical-operation counting plus WEN/EN prescan, and this package now
 keeps the live composition of those owners for the direct backend path. The older
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport>
 package survives only as a directly testable compatibility shell outside the
@@ -65,12 +67,15 @@ sub new ($class, %args) {
 =head2 generate_consolidated_intermediate_block
 
 Generate the full consolidated intermediate HDL block for one FSM module by
-composing the extracted stage-preparation and rendering owners.
+composing the extracted prescan-preparation, stage-preparation,
+pre-generation validation, and rendering owners.
 
 =cut
 
 sub generate_consolidated_intermediate_block ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
+    $ctx->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
     my $prepared_block = $ctx->{backend_sv_consolidated_intermediate_stage_preparation_support}
         ->prepare_consolidated_intermediate_block($fsm_module);
     $ctx->{backend_sv_operand_contract_validation_support}
@@ -94,7 +99,7 @@ C<FSM::HDL::FlattenedDT> backend context.
 =head2 generate_consolidated_intermediate_block
 
 Generates the full consolidated intermediate HDL block for one FSM module by
-composing the extracted stage-preparation, pre-generation validation, and
-rendering owners.
+composing the extracted prescan-preparation, stage-preparation,
+pre-generation validation, and rendering owners.
 
 =cut

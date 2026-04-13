@@ -86,8 +86,6 @@ sub prepare_flattened_backend {
     $hdl_generator->{enable_graph_signal_support}->set_fsm_module_reference($fsm_module);
     $hdl_generator->{orchestrator}->flatten_all_decision_trees($fsm_module);
     $hdl_generator->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
-    $hdl_generator->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
-    $hdl_generator->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
     return $hdl_generator;
 }
 

@@ -88,8 +88,6 @@ sub prepare_backend_to_stage {
     $hdl_generator->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
     $hdl_generator->{enable_graph_enable_support}
         ->generate_enable_conditions($fsm_module);
-    $hdl_generator->{backend_sv_generation_prescan_preparation_support}
-        ->prepare_enable_prescan();
     $hdl_generator->{backend_sv_consolidated_intermediate_stage_support}
         ->generate_consolidated_intermediate_block($fsm_module);
     return $hdl_generator;

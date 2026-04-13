@@ -24,9 +24,10 @@ prescan-preparation owner before the consolidated intermediate stage runs
 =back
 
 The paired C<FSM::HDL::FlattenedDT::Orchestrator> now reaches
-enable-condition generation and the extracted prescan-preparation owner
-directly after structural-prelude assembly, so this package survives only as
-a compatibility shell outside the live backend path. The paired
+enable-condition generation directly, while the live consolidated-intermediate
+stage owner reaches the extracted prescan-preparation owner before prepared
+block reconstruction. This package survives only as a compatibility shell
+outside the live backend path. The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport>
 keeps logical-operation counting plus WEN/EN prescan over the direct backend
 state.

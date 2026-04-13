@@ -16,7 +16,7 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStage
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStageSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'consolidated intermediate stage support owns the live stage-6 handoff over stage preparation plus rendering' => sub {
+subtest 'consolidated intermediate stage support owns the live stage-6 handoff over prescan, stage preparation, validation, and rendering' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_consolidated_stage_support_contract',
         <<'FSM'
@@ -56,14 +56,21 @@ FSM
         flattened_dt => $prepared_backend,
     );
 
+    $prepared_backend->{backend_sv_generation_prescan_preparation_support}
+        ->prepare_enable_prescan();
     my $prepared_block = $stage_preparation_support->prepare_consolidated_intermediate_block($fsm_module);
     my $expected_block = $rendering_support->render_prepared_consolidated_intermediate_block($prepared_block);
+    delete $prepared_backend->{backend_sv_enable_prescan_prepared};
     my $generated_block = $stage_support->generate_consolidated_intermediate_block($fsm_module);
 
     is(
         $generated_block,
         $expected_block,
-        'stage support rebuilds the same consolidated intermediate HDL block as stage preparation plus rendering',
+        'stage support rebuilds the same consolidated intermediate HDL block as prescan plus stage preparation plus validation plus rendering',
+    );
+    ok(
+        $prepared_backend->{backend_sv_enable_prescan_prepared},
+        'stage support marks the prescan prerequisite as prepared',
     );
 };
 
@@ -136,8 +143,6 @@ sub prepare_flattened_backend {
     $hdl_generator->{enable_graph_signal_support}->set_fsm_module_reference($fsm_module);
     $hdl_generator->{orchestrator}->flatten_all_decision_trees($fsm_module);
     $hdl_generator->{enable_graph_enable_support}->generate_enable_conditions($fsm_module);
-    $hdl_generator->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
-    $hdl_generator->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
     return $hdl_generator;
 }
 

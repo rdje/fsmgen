@@ -13,8 +13,8 @@ generated-module SystemVerilog backend path. This package centralizes:
 
 =item *
 
-the non-emitting preparation that must happen after enable-condition emission
-and before consolidated intermediate generation can run
+the non-emitting preparation that must happen after flattening has populated
+enable-analysis state and before consolidated intermediate generation can run
 
 =item *
 
@@ -23,10 +23,11 @@ the prepared direct backend state
 
 =back
 
-The paired C<FSM::HDL::FlattenedDT::Orchestrator> now reaches this owner
-directly after enable-condition generation, and this package owns the
-side-effect preparation that seeds factorization counts and
-intermediate-signal discovery for the direct backend path.
+The paired
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStageSupport>
+now reaches this owner before prepared-block reconstruction, and this package
+owns the idempotent side-effect preparation that seeds factorization counts
+and intermediate-signal discovery for the direct backend path.
 
 =cut
 
@@ -63,6 +64,7 @@ must happen before consolidated intermediate generation can run.
 
 sub prepare_enable_prescan ($self) {
     my $ctx = $self->{flattened_dt};
+    return if $ctx->{backend_sv_enable_prescan_prepared};
 
     # TIMING FIX: Count logical operations BEFORE any intermediate signal creation!
     fsm_debug("\n*** TIMING FIX: Running logical operation counting BEFORE pre-scan ***", 3);
@@ -73,6 +75,7 @@ sub prepare_enable_prescan ($self) {
     $ctx->{enable_graph_enable_support}->prescan_wen_en_for_intermediate_signals();
     fsm_debug("Step 5 - PRE-SCAN completed (AFTER logical operation counting!)", 3);
 
+    $ctx->{backend_sv_enable_prescan_prepared} = 1;
     return;
 }
 
@@ -90,6 +93,8 @@ C<FSM::HDL::FlattenedDT> backend context.
 =head2 prepare_enable_prescan
 
 Runs the direct backend logical-operation counting and WEN/EN prescan that
-must happen before consolidated intermediate generation can run.
+must happen before consolidated intermediate generation can run. The preparation
+is idempotent within one generation run so compatibility callers and the live
+stage owner can share the same side-effect boundary safely.
 
 =cut

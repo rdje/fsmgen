@@ -1296,8 +1296,9 @@ The first honest `R11` slices are now:
 - Forward-IR note: the paired live direct pre-stage SystemVerilog
   prescan-preparation family now also has an explicit owner in
   `FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport`,
-  so the live direct backend now reaches logical-operation counting and
-  WEN/EN prescan directly after enable-condition emission.
+  so the live consolidated-intermediate stage owner now reaches idempotent
+  logical-operation counting plus WEN/EN prescan before prepared-block
+  reconstruction.
 - Forward-IR note: the older direct pre-stage SystemVerilog structural
   prelude package in
   `FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationStructuralPreludeSupport`

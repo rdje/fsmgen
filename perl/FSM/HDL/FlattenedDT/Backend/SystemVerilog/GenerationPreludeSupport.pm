@@ -23,12 +23,13 @@ direct enable-condition emission and the extracted prescan-preparation owner
 =back
 
 The paired C<FSM::HDL::FlattenedDT::Orchestrator> now reaches the live
-scaffold/internal-declaration owners and prescan owner directly in the live
-backend path, so this package survives as a compatibility shell outside that
-live path. The paired
+scaffold/internal-declaration owners directly in the live backend path, while
+the live consolidated-intermediate stage owner reaches the prescan owner
+before prepared-block reconstruction. This package survives as a compatibility
+shell outside that live path. The paired
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPrescanPreparationSupport>
-now keeps logical-operation counting plus WEN/EN prescan after
-enable-condition generation over the direct backend state.
+now keeps idempotent logical-operation counting plus WEN/EN prescan over the
+direct backend state.
 
 =cut
 

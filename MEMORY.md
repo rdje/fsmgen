@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-13: consolidated-intermediate stage prescan handoff shipped
+- Continued the active `R11` direct-backend convergence lane.
+- Important continuity note:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm)
+    now owns the whole live consolidated-intermediate handoff over prescan,
+    prepared-block reconstruction, pre-generation operand-contract validation,
+    and rendering,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm)
+    is now idempotent per generation run through the
+    `backend_sv_enable_prescan_prepared` guard,
+  - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
+    resets that guard and no longer calls prescan directly,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm)
+    also delegates prescan to the stage owner,
+  - focused tests covering the stage, pipeline compatibility, tail, prescan,
+    validator, and assignment-width paths passed after the change,
+  - and the next honest seam remains direct backend stage/tail convergence and
+    broader `FlattenedDT` simplification rather than orchestrator-level prescan
+    glue.
+
 ## 2026-04-13: consolidated-intermediate stage validation handoff shipped
 - Executed the README / SESSION_BOOTSTRAP ramp-up pass and then continued the
   active `R11` direct-backend convergence lane.

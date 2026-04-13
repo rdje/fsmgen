@@ -50,6 +50,7 @@ FSM
 
     build_expected_prescan_preparation($expected_backend);
     $prescan_preparation_support->prepare_enable_prescan();
+    $prescan_preparation_support->prepare_enable_prescan();
 
     is_deeply(
         $actual_backend->{binary_logical_op_counts},
@@ -67,6 +68,10 @@ FSM
         [sort keys %{$actual_backend->{referenced_intermediate_signals} || {}}],
         [sort keys %{$expected_backend->{referenced_intermediate_signals} || {}}],
         'generation prescan preparation support preserves the same referenced intermediate-signal keys after prescan',
+    );
+    ok(
+        $actual_backend->{backend_sv_enable_prescan_prepared},
+        'generation prescan preparation support records the per-run idempotence guard',
     );
 };
 

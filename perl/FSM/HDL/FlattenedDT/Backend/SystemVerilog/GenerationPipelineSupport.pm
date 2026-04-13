@@ -20,9 +20,8 @@ established
 =item *
 
 compatibility composition of direct scaffold/internal-declaration assembly,
-direct enable-condition emission, the extracted prescan-preparation owner,
-consolidated intermediate stage generation, and the extracted generation-tail
-owner
+direct enable-condition emission, consolidated intermediate stage generation
+through its prescan-aware owner, and the extracted generation-tail owner
 
 =back
 
@@ -72,8 +71,6 @@ delegating to the extracted live owners.
 
 sub generate_systemverilog_module ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
-    $ctx->{backend_sv_generation_prescan_preparation_support}
-        ->prepare_enable_prescan();
     my $consolidated_intermediate_hdl = $ctx->{backend_sv_consolidated_intermediate_stage_support}
         ->generate_consolidated_intermediate_block($fsm_module);
 

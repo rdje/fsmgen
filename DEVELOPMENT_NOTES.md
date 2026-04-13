@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-13: consolidated-intermediate stage owns prescan
+- Continued the `R11` direct-backend convergence lane by moving the live
+  prescan prerequisite behind the consolidated-intermediate stage owner.
+- Rationale:
+  - logical-operation counting plus WEN/EN prescan exists to make consolidated
+    intermediate planning/rendering and the following declaration pass safe,
+  - therefore the generation orchestrator should not coordinate it as a
+    separate lower-level prerequisite before asking for stage HDL,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPrescanPreparationSupport.pm)
+    now records `backend_sv_enable_prescan_prepared` so direct compatibility
+    callers and the live stage owner can share the same side-effect boundary
+    without double-running the preparation,
+  - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
+    clears that guard during per-run reset to preserve generator reuse safety,
+  - and the live top-level sequence now reads as flatten, ask the prescan-aware
+    consolidated stage for its HDL, emit scaffold/declarations, emit enable
+    conditions, append stage HDL, then tail closeout.
+
 ## 2026-04-13: consolidated-intermediate stage owns validation
 - Continued the `R11` direct-backend convergence lane by moving the
   prepared-block validation/rendering handoff behind the live consolidated
