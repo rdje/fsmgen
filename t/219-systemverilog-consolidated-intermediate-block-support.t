@@ -11,9 +11,10 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport;
+use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport;
 use FSM::Pipeline::SourceFrontend;
 
-subtest 'consolidated intermediate block support survives as a compatibility shell over the extracted prepared block owners' => sub {
+subtest 'consolidated intermediate block support survives as a compatibility shell over the live stage-preparation owner' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_consolidated_block_support_contract',
         <<'FSM'
@@ -46,20 +47,17 @@ FSM
     my $support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport->new(
         flattened_dt => $prepared_backend,
     );
+    my $stage_preparation_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport->new(
+        flattened_dt => $prepared_backend,
+    );
 
-    my $all_intermediate_signals = $prepared_backend->{backend_sv_consolidated_intermediate_support}
-        ->collect_consolidated_intermediate_signals($fsm_module);
-    my $plan = $prepared_backend->{backend_sv_consolidated_intermediate_planning_support}
-        ->plan_consolidated_intermediate_signals($all_intermediate_signals);
-    my $expected_block = $prepared_backend->{backend_sv_consolidated_intermediate_prepared_block_support}
-        ->build_prepared_consolidated_intermediate_block($all_intermediate_signals, $plan);
-
+    my $expected_block = $stage_preparation_support->prepare_consolidated_intermediate_block($fsm_module);
     my $block = $support->prepare_consolidated_intermediate_block($fsm_module);
 
     is_deeply(
         $block,
         $expected_block,
-        'block support rebuilds the prepared block handoff from the extracted collection, planning, and prepared-block owners',
+        'block support rebuilds the prepared block handoff by delegating to the live stage-preparation owner',
     );
 
     ok(

@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-13: consolidated intermediate block shell delegates to stage preparation
+- Continued the active `R11` lower-level direct-backend convergence lane.
+- Important continuity note:
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm)
+    now delegates prepared-block reconstruction to the live
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm)
+    owner when that owner is present, instead of duplicating the collection /
+    planning / prepared-block projection sequence,
+  - the older explicit composition remains only as a fallback for detached
+    compatibility contexts,
+  - [t/219-systemverilog-consolidated-intermediate-block-support.t](/Users/richarddje/Documents/github/fsmgen/t/219-systemverilog-consolidated-intermediate-block-support.t)
+    now locks that the compatibility shell matches the live stage-preparation
+    owner,
+  - the focused prepared-block/stage/assembly suite passed after the change,
+  - and no import-tree package count changed.
+
 ## 2026-04-13: direct SystemVerilog contract tests now hit the live assembly owner
 - Continued the active `R11` direct-backend convergence lane with a regression
   proof-boundary hardening slice.

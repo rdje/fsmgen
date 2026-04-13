@@ -586,7 +586,7 @@ while the older
 [ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm)
 package now survives only as a directly testable compatibility shell outside
 the live [bin/fsmgen](/Users/richarddje/Documents/github/fsmgen/bin/fsmgen)
-import spine,
+import spine and delegates to the live stage-preparation owner when available,
 while the older
 [ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm)
 package now survives only as a directly testable compatibility shell outside
@@ -645,7 +645,8 @@ now composes live prescan, stage preparation, validation, and prepared-block ren
 [PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm)
 now composes the live post-flattening scaffold/declaration/enable/stage/tail assembly handoff,
 [ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm)
-now survives only as a directly testable compatibility shell outside that live path, while
+now survives only as a directly testable compatibility shell outside that live
+path and delegates to the stage-preparation owner when available, while
 [ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm)
 now survives only as a directly testable compatibility shell outside that live path, and
 [ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm)
@@ -759,7 +760,8 @@ It behaves like a hook system, not a competing architecture.
   runtime spine rather than remaining one more active backend owner.
 - `FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport`
   now survives only as a compatibility-shell test surface outside the live
-  runtime spine rather than remaining one more active backend owner.
+  runtime spine, delegating to the stage-preparation owner when available
+  rather than remaining one more active backend owner.
 - `FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter`
   now survives only as a compatibility-shell test surface outside the live
   runtime spine rather than remaining one more active backend owner.

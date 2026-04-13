@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-13: consolidated block shell delegates to stage preparation
+- Continued the `R11` lower-level direct-backend convergence lane by removing
+  the last duplicated prepared-block reconstruction sequence from
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm).
+- Rationale:
+  - prepared-block reconstruction now has one live owner,
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm),
+    which composes collection, planning, and prepared-block projection,
+  - the older block-support package is retained only as a compatibility shell,
+    so its first move should be to ask the live owner rather than copy its
+    lower-level sequence,
+  - keeping a fallback path is still useful for detached tests or historical
+    contexts where the newer owner is not present on the backend object,
+  - and the focused compatibility-shell test now compares against the live
+    stage-preparation owner so future changes cannot accidentally fork two
+    subtly different prepared-block contracts.
+
 ## 2026-04-13: direct SV contract checks are anchored on the live assembly path
 - After moving final direct SystemVerilog assembly into
   [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm),
