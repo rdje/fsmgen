@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-13: direct SV contract checks are anchored on the live assembly path
+- After moving final direct SystemVerilog assembly into
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm),
+  the operand-contract and assignment-width regression tests that model final
+  HDL emission should no longer instantiate
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm)
+  as their primary path.
+- Rationale:
+  - pre-generation validation is still owned by the consolidated-intermediate
+    stage boundary, but the final emission proof should pass through the live
+    post-flattening assembly owner that production direct generation now uses,
+  - the generation-pipeline package is retained as a compatibility shell and
+    still has its own focused regression in
+    [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t),
+  - [t/269-systemverilog-operand-contract-validation-support.t](/Users/richarddje/Documents/github/fsmgen/t/269-systemverilog-operand-contract-validation-support.t)
+    and [t/270-systemverilog-assignment-width-contract-validation.t](/Users/richarddje/Documents/github/fsmgen/t/270-systemverilog-assignment-width-contract-validation.t)
+    now prove undeclared/unassigned operands, scalar width mismatches, direct
+    RHS concat mismatches, and aggregate-contract mismatches on the live
+    assembly path,
+  - and this prevents a subtle regression pattern where a compatibility wrapper
+    stays correct while the live assembly path accidentally drifts.
+
 ## 2026-04-13: post-flattening SystemVerilog assembly owner
 - Continued the `R11` direct-backend convergence lane by moving the live
   scaffold/declaration/enable/stage/tail assembly sequence out of

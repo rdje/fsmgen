@@ -11,7 +11,6 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::AST::Node;
 use FSM::HDL::FlattenedDT;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport;
 use FSM::Pipeline::SourceFrontend;
 
 subtest 'operand-contract validation support catches undeclared and declared-but-unassigned internal operands before emission' => sub {
@@ -81,7 +80,7 @@ FSM
     );
 };
 
-subtest 'generation pipeline support runs operand-contract validation before final HDL emission' => sub {
+subtest 'post-flattening assembly support runs operand-contract validation before final HDL emission' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_operand_contract_validation_pipeline_contract',
         <<'FSM'
@@ -104,25 +103,23 @@ FSM
     );
 
     my $prepared_backend = prepare_flattened_backend($fsm_module);
-    my $pipeline_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport->new(
-        flattened_dt => $prepared_backend,
-    );
+    my $assembly_support = $prepared_backend->{backend_sv_post_flattening_assembly_support};
 
     $prepared_backend->{state_enables}{idle} = FSM::AST::SignalRef->new('ghost_internal');
 
     my $error = capture_error(sub {
-        $pipeline_support->generate_systemverilog_module($fsm_module);
+        $assembly_support->generate_systemverilog_module($fsm_module);
     });
 
     like(
         $error,
         qr/Pre-generation operand contract validation failed/,
-        'generation pipeline compatibility shell fails before emission when operand validation breaks',
+        'post-flattening assembly owner fails before emission when operand validation breaks',
     );
     like(
         $error,
         qr/ghost_internal/,
-        'generation pipeline validation failure keeps the offending operand name in the diagnostic',
+        'post-flattening assembly validation failure keeps the offending operand name in the diagnostic',
     );
 };
 

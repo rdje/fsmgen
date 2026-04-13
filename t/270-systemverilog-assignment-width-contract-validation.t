@@ -10,7 +10,6 @@ use FindBin;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::HDL::FlattenedDT;
-use FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport;
 use FSM::Pipeline::SourceFrontend;
 
 subtest 'operand-contract validation rejects implicit assignment width adaptation before emission' => sub {
@@ -129,18 +128,16 @@ FSM
         'validator rejects direct RHS concat implicit widening before emission',
     );
 
-    my $pipeline_backend = prepare_flattened_backend($fsm_module);
-    my $pipeline_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport->new(
-        flattened_dt => $pipeline_backend,
-    );
-    my $pipeline_error = capture_error(sub {
-        $pipeline_support->generate_systemverilog_module($fsm_module);
+    my $assembly_backend = prepare_flattened_backend($fsm_module);
+    my $assembly_support = $assembly_backend->{backend_sv_post_flattening_assembly_support};
+    my $assembly_error = capture_error(sub {
+        $assembly_support->generate_systemverilog_module($fsm_module);
     });
 
     like(
-        $pipeline_error,
+        $assembly_error,
         qr/assignment to 'BUS' uses RHS '\{HI, LO\}' with incompatible width 7 for LHS width 8/s,
-        'generation pipeline surfaces the direct RHS concat width mismatch',
+        'post-flattening assembly owner surfaces the direct RHS concat width mismatch',
     );
 };
 
@@ -604,7 +601,7 @@ FSM
     );
 };
 
-subtest 'generation pipeline support runs width-contract validation before final HDL emission' => sub {
+subtest 'post-flattening assembly support runs width-contract validation before final HDL emission' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_assignment_width_pipeline_contract',
         <<'FSM'
@@ -627,23 +624,21 @@ FSM
     );
 
     my $prepared_backend = prepare_flattened_backend($fsm_module);
-    my $pipeline_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport->new(
-        flattened_dt => $prepared_backend,
-    );
+    my $assembly_support = $prepared_backend->{backend_sv_post_flattening_assembly_support};
 
     my $error = capture_error(sub {
-        $pipeline_support->generate_systemverilog_module($fsm_module);
+        $assembly_support->generate_systemverilog_module($fsm_module);
     });
 
     like(
         $error,
         qr/Pre-generation operand contract validation failed/,
-        'generation pipeline compatibility shell fails before emission when assignment width validation breaks',
+        'post-flattening assembly owner fails before emission when assignment width validation breaks',
     );
     like(
         $error,
         qr/assignment to 'BUS' uses RHS 'A' with incompatible width 1 for LHS width 3/s,
-        'generation pipeline validation keeps assignment width context in the diagnostic',
+        'post-flattening assembly validation keeps assignment width context in the diagnostic',
     );
 
     my $typed_fsm_module = parse_fsm_module(
@@ -671,23 +666,21 @@ FSM
     );
 
     my $typed_backend = prepare_flattened_backend($typed_fsm_module);
-    my $typed_pipeline_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPipelineSupport->new(
-        flattened_dt => $typed_backend,
-    );
+    my $typed_assembly_support = $typed_backend->{backend_sv_post_flattening_assembly_support};
 
     my $typed_error = capture_error(sub {
-        $typed_pipeline_support->generate_systemverilog_module($typed_fsm_module);
+        $typed_assembly_support->generate_systemverilog_module($typed_fsm_module);
     });
 
     like(
         $typed_error,
         qr/Pre-generation operand contract validation failed/,
-        'generation pipeline compatibility shell fails before emission when aggregate contract validation breaks',
+        'post-flattening assembly owner fails before emission when aggregate contract validation breaks',
     );
     like(
         $typed_error,
         qr/assignment to 'OUT' uses whole aggregate RHS 'FRAME' with contract 'record\{mode:bits\[2\], flag:bit\}' that does not match declared type 'list<bit, bits\[2\]>'/s,
-        'generation pipeline validation keeps aggregate contract context in the diagnostic',
+        'post-flattening assembly validation keeps aggregate contract context in the diagnostic',
     );
 };
 

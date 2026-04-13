@@ -1278,6 +1278,13 @@ The first honest `R11` slices are now:
   owner, and `FlattenedDT::Orchestrator` now delegates post-flattening
   scaffold/declaration/enable/stage/tail assembly after reset, module
   attachment, and decision-tree flattening.
+- Forward-IR note: final-emission operand and assignment-width validation
+  regressions now drive the live `PostFlatteningAssemblySupport` owner directly
+  in `t/269-systemverilog-operand-contract-validation-support.t` and
+  `t/270-systemverilog-assignment-width-contract-validation.t`, leaving
+  `t/232-systemverilog-generation-pipeline-support.t` as the dedicated
+  `GenerationPipelineSupport` compatibility-shell anchor rather than the main
+  proof of the live validation path.
 - Forward-IR note: the older direct pre-stage SystemVerilog generation-
   prelude package in
   `FSM::HDL::FlattenedDT::Backend::SystemVerilog::GenerationPreludeSupport`

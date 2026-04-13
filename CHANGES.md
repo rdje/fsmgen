@@ -1,6 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-13
+### direct SV pre-generation contract tests now hit the live assembly owner
+- Retargeted [t/269-systemverilog-operand-contract-validation-support.t](/Users/richarddje/Documents/github/fsmgen/t/269-systemverilog-operand-contract-validation-support.t) and [t/270-systemverilog-assignment-width-contract-validation.t](/Users/richarddje/Documents/github/fsmgen/t/270-systemverilog-assignment-width-contract-validation.t) so final-emission operand and assignment-width failures now run through the live [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm) owner.
+- Kept [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t) as the sole focused compatibility-shell regression for [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm), so future contract coverage does not accidentally depend on the retired wrapper as the primary path.
+
 ### live direct SystemVerilog post-flattening assembly now has an owner
 - Added [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm) as the live owner of post-flattening scaffold/declaration/enable/stage/tail SystemVerilog module assembly.
 - Narrowed [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) so it now keeps per-run reset, module attachment, decision-tree flattening, and final assembly handoff instead of composing the post-flattening HDL sequence inline.

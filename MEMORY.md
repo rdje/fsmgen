@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-13: direct SystemVerilog contract tests now hit the live assembly owner
+- Continued the active `R11` direct-backend convergence lane with a regression
+  proof-boundary hardening slice.
+- Important continuity note:
+  - [t/269-systemverilog-operand-contract-validation-support.t](/Users/richarddje/Documents/github/fsmgen/t/269-systemverilog-operand-contract-validation-support.t)
+    now drives final-emission operand-contract failures through the live
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/PostFlatteningAssemblySupport.pm)
+    owner instead of instantiating the older generation-pipeline compatibility
+    shell,
+  - [t/270-systemverilog-assignment-width-contract-validation.t](/Users/richarddje/Documents/github/fsmgen/t/270-systemverilog-assignment-width-contract-validation.t)
+    now does the same for direct RHS concat width mismatches, scalar width
+    mismatches, and aggregate-contract mismatch diagnostics,
+  - [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t)
+    remains the intentional compatibility-shell regression anchor for
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm),
+  - the focused validation/assembly suite passed after the retargeting, and
+  - this is a proof-boundary hardening slice only; no generated HDL behavior or
+    import-tree package count changed.
+
 ## 2026-04-13: post-flattening SystemVerilog assembly owner shipped
 - Continued the active `R11` direct-backend convergence lane.
 - Important continuity note:
