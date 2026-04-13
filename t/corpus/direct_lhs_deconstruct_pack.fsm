@@ -1,0 +1,23 @@
+(?fsm:direct_lhs_deconstruct_pack
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (COND 1)
+    (DATA 8)
+    (DATA2 8)
+    (HI 4)
+    (LO 4)
+    (CAT_HI 4)
+    (CAT_LO 4)
+    (OUT 8)
+  )
+  (idle
+    (<COND
+      ((concat HI LO) = DATA)
+      ((cat CAT_HI CAT_LO) = DATA2)
+      ((concat OUT[7:4] OUT[3:0]) = DATA)
+    )
+  )
+)

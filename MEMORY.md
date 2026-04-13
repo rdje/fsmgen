@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-13: supported corpus now includes direct LHS deconstruct
+- Continued the `R12` support-accounting lane by promoting the sibling
+  deconstruct half of the pack/deconstruct assignment surface into the named
+  corpus.
+- Important continuity note:
+  - [t/corpus/direct_lhs_deconstruct_pack.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_lhs_deconstruct_pack.fsm)
+    is now a named supported direct-root fixture for static LHS `(concat ...)`
+    and `(cat ...)` deconstruct assignments,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    records it as `feature.direct_lhs_deconstruct_pack`,
+  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t)
+    now checks whole-signal high-to-low splitting, the `cat` alias, and
+    same-base sliced-fragment rejoining through both pipeline and CLI,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now expects `29` catalog entries and `8` named supported-smoke entries,
+  - and the unrelated untracked [fx](/Users/richarddje/Documents/github/fsmgen/fx)
+    path remains untouched.
+
 ## 2026-04-13: supported corpus now includes direct RHS concat/cat
 - Continued the visible `R12` support-accounting lane after the direct-backend
   cleanup slices by promoting one more shipped language feature into the

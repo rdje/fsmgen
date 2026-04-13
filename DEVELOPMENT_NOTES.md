@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-13: direct LHS deconstruct is now support-accounted
+- Continued `R12` by adding the sibling deconstruct feature to the classified
+  support-accounting corpus.
+- Rationale:
+  - direct RHS pack expressions and direct LHS deconstruct assignments are a
+    paired user-facing surface, so after support-accounting RHS `(concat ...)`
+    / `(cat ...)`, the next small auditable slice was to support-account the
+    LHS side too,
+  - [t/corpus/direct_lhs_deconstruct_pack.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_lhs_deconstruct_pack.fsm)
+    keeps the fixture bounded to static writable operands: one `(concat HI LO)`
+    split, one `(cat CAT_HI CAT_LO)` alias split, and one same-base sliced
+    deconstruct that must rejoin as a packed assignment to `OUT`,
+  - the existing supported-feature corpus harness already proves both pipeline
+    and CLI output, so this remains a catalog/accounting slice rather than a
+    generator behavior change,
+  - and the focused deconstruct legality/aggregate-shape behavior stays in
+    [t/283-direct-lhs-deconstruct-assignment.t](/Users/richarddje/Documents/github/fsmgen/t/283-direct-lhs-deconstruct-assignment.t),
+    while the corpus tracks the broad support claim with stable HDL shapes.
+
 ## 2026-04-13: direct RHS pack expressions are now support-accounted
 - Continued `R12` by adding one small user-visible language feature to the
   classified support-accounting corpus instead of doing a third consecutive

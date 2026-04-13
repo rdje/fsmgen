@@ -1668,6 +1668,11 @@ Done:
   - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records it as `feature.direct_rhs_concat_pack` with semantic HDL-shape expectations for flat concat, `cat` alias, and nested concat emission,
   - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) now checks that fixture through both pipeline and CLI, and
   - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `28` catalog entries and `7` named supported-smoke entries.
+- The sibling supported-language-feature corpus slice now also covers direct LHS deconstruct expressions:
+  - [t/corpus/direct_lhs_deconstruct_pack.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_lhs_deconstruct_pack.fsm) now exists as a named `supported_smoke` direct-root corpus asset for static LHS `(concat ...)` and `(cat ...)` deconstruction,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm) now records it as `feature.direct_lhs_deconstruct_pack` with semantic HDL-shape expectations for high-to-low whole-signal splitting, the `cat` alias, and same-base sliced-fragment rejoining,
+  - [t/261-regression-corpus-supported-language-features.t](/Users/richarddje/Documents/github/fsmgen/t/261-regression-corpus-supported-language-features.t) now checks that fixture through both pipeline and CLI, and
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `29` catalog entries and `8` named supported-smoke entries.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
 - Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pair, first child-root compatibility pair, first malformed-language contract entry, and the current composition-contract rejection families.

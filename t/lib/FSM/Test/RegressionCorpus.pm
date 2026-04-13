@@ -95,6 +95,22 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.direct_lhs_deconstruct_pack',
+        relpath => 't/corpus/direct_lhs_deconstruct_pack.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        expected_module_name => 'direct_lhs_deconstruct_pack',
+        expected_hdl_patterns => [
+            qr/\bHI\s*=\s*DATA\[7:4\];/s,
+            qr/\bLO\s*=\s*DATA\[3:0\];/s,
+            qr/\bCAT_HI\s*=\s*DATA2\[7:4\];/s,
+            qr/\bCAT_LO\s*=\s*DATA2\[3:0\];/s,
+            qr/\bOUT\s*=\s*\{DATA\[7:4\],\s*DATA\[3:0\]\};/s,
+        ],
+    },
+    {
         id => 'legacy.mipicsi2_txccore_ulp.default_compat',
         relpath => 'fsm/mipicsi2_txccore_ulp.fsm',
         family => 'legacy_fixture',
