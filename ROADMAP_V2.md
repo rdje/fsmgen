@@ -1265,8 +1265,9 @@ The first honest `R11` slices are now:
 - Forward-IR note: the paired live direct consolidated intermediate stage-6
   generation family now also has an explicit owner in
   `FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStageSupport`,
-  so `FlattenedDT::Orchestrator` no longer hand-composes stage preparation
-  plus rendering inline and the older
+  so `FlattenedDT::Orchestrator` no longer hand-composes prepared-block stage
+  preparation, pre-generation operand-contract validation, and rendering inline
+  and the older
   `FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport`
   now survives only as a compatibility shell over that real live owner.
 - Forward-IR note: the older direct post-flattening SystemVerilog assembly

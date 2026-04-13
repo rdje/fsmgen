@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-13: consolidated-intermediate stage owns validation
+- Continued the `R11` direct-backend convergence lane by moving the
+  prepared-block validation/rendering handoff behind the live consolidated
+  intermediate stage owner.
+- Rationale:
+  - the generation orchestrator should sequence major stages, not understand
+    the internals of a prepared consolidated-intermediate block,
+  - pre-generation operand-contract validation is semantically part of the
+    consolidated-intermediate stage boundary because it validates the prepared
+    block before any corresponding HDL is emitted,
+  - placing that validation inside
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm)
+    makes both the live orchestrator and compatibility wrappers consume the
+    same owner contract,
+  - and the next honest direct-backend seam is now the remaining lower-level
+    planning/stage/tail coordination and broader `FlattenedDT` convergence, not
+    prepared-block validation glue in the orchestrator.
+
 ## 2026-04-12: aggregate parameter/generic arithmetic folds leafwise
 - Widened the first aggregate parameter/generic expression slice from
   bitwise-only to bounded leafwise numeric/bitwise folding.

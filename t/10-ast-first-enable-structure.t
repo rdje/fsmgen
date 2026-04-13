@@ -395,7 +395,7 @@ ok(
 );
 ok(
     $hdl->{orchestrator}->can('generate_systemverilog'),
-    'live SystemVerilog orchestrator now delegates post-flattening HDL assembly through the generation-pipeline owner',
+    'live SystemVerilog orchestrator keeps the post-flattening HDL assembly entrypoint while delegating lower-level stage work to extracted owners',
 );
 ok(
     $hdl->{backend_sv_intermediate_recovery_support}->can('resolve_intermediate_signal_runtime_ast'),

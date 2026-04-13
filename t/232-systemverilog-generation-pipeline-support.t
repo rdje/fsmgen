@@ -97,14 +97,11 @@ sub build_expected_hdl {
     $hdl .= $prepared_backend->{backend_sv_internal_decl}->generate_internal_signal_declarations($fsm_module);
     $prepared_backend->{backend_sv_generation_prescan_preparation_support}
         ->prepare_enable_prescan();
-    my $prepared_block = $prepared_backend->{backend_sv_consolidated_intermediate_stage_preparation_support}
-        ->prepare_consolidated_intermediate_block($fsm_module);
-    $prepared_backend->{backend_sv_operand_contract_validation_support}
-        ->validate_pre_generation_operand_contract($fsm_module, $prepared_block);
+    my $consolidated_intermediate_hdl = $prepared_backend->{backend_sv_consolidated_intermediate_stage_support}
+        ->generate_consolidated_intermediate_block($fsm_module);
     $hdl .= $prepared_backend->{enable_graph_enable_support}
         ->generate_enable_conditions($fsm_module);
-    $hdl .= $prepared_backend->{backend_sv_consolidated_intermediate_rendering_support}
-        ->render_prepared_consolidated_intermediate_block($prepared_block);
+    $hdl .= $consolidated_intermediate_hdl;
     $hdl .= $prepared_backend->{backend_sv_generation_tail_support}
         ->generate_systemverilog_tail($fsm_module);
 

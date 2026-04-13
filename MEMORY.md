@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-13: consolidated-intermediate stage validation handoff shipped
+- Executed the README / SESSION_BOOTSTRAP ramp-up pass and then continued the
+  active `R11` direct-backend convergence lane.
+- Important continuity note:
+  - the live import-tree closure still measures `120` reachable project files
+    and `119` reachable `.pm` packages,
+  - [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm)
+    now owns consolidated-intermediate prepared-block reconstruction,
+    pre-generation operand-contract validation, and rendering as one stage
+    handoff,
+  - [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm)
+    and the compatibility
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm)
+    now request the consolidated-intermediate HDL from that owner instead of
+    hand-composing prepared-block validation/rendering,
+  - [t/231-systemverilog-consolidated-intermediate-stage-support.t](/Users/richarddje/Documents/github/fsmgen/t/231-systemverilog-consolidated-intermediate-stage-support.t)
+    now locks that stage-level validation failure path,
+  - and the next honest seam remains lower-level direct-backend
+    planning/stage/tail coordination plus broader `FlattenedDT` convergence.
+
 ## 2026-04-12: aggregate parameter/generic leafwise arithmetic shipped
 - Saved the bounded aggregate arithmetic widening slice.
 - Important continuity note:

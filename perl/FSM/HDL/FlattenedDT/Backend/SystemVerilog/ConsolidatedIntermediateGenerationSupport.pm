@@ -15,7 +15,8 @@ directly testable wrapper:
 =item *
 
 rebuilding the full consolidated intermediate block from one FSM module by
-delegating to the extracted stage-preparation and rendering owners
+delegating to the live stage owner, including its pre-generation validation
+handoff
 
 =back
 
@@ -79,6 +80,10 @@ sub generate_consolidated_intermediate_block ($self, $fsm_module) {
 
     my $prepared_block = $ctx->{backend_sv_consolidated_intermediate_stage_preparation_support}
         ->prepare_consolidated_intermediate_block($fsm_module);
+    if (my $validation_support = $ctx->{backend_sv_operand_contract_validation_support}) {
+        $validation_support->validate_pre_generation_operand_contract($fsm_module, $prepared_block)
+            if $validation_support->can('validate_pre_generation_operand_contract');
+    }
 
     return $ctx->{backend_sv_consolidated_intermediate_rendering_support}
         ->render_prepared_consolidated_intermediate_block($prepared_block);
@@ -98,6 +103,7 @@ C<FSM::HDL::FlattenedDT> backend context.
 =head2 generate_consolidated_intermediate_block
 
 Rebuilds the full consolidated intermediate HDL block for one FSM module by
-delegating to the extracted stage-preparation and rendering owners.
+delegating to the live stage owner, including its pre-generation validation
+handoff.
 
 =cut

@@ -1,5 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-13
+### direct consolidated-intermediate stage now owns validation handoff
+- Updated [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm) so the live consolidated-intermediate stage now owns prepared-block reconstruction, pre-generation operand-contract validation, and prepared-block rendering as one direct-backend handoff.
+- Narrowed [perl/FSM/HDL/FlattenedDT/Orchestrator.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Orchestrator.pm) and the compatibility [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GenerationPipelineSupport.pm) so they request consolidated-intermediate HDL from the stage owner instead of coordinating prepared-block validation and rendering inline.
+- Kept [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm) as a compatibility wrapper over the live stage owner, with a guarded validation path for fallback contexts.
+- Locked the owner boundary in [t/231-systemverilog-consolidated-intermediate-stage-support.t](/Users/richarddje/Documents/github/fsmgen/t/231-systemverilog-consolidated-intermediate-stage-support.t), refreshed the compatibility expectation in [t/232-systemverilog-generation-pipeline-support.t](/Users/richarddje/Documents/github/fsmgen/t/232-systemverilog-generation-pipeline-support.t), and updated the README bootstrap import-tree note to the unchanged `120` / `119` static closure with refreshed direct-backend line counts.
+
 ## 2026-04-12
 ### aggregate parameter/generic leafwise arithmetic now folds before generation
 - Extended [perl/FSM/ParameterValueSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/ParameterValueSupport.pm) so aggregate parameter/generic expressions now support leafwise numeric operators `+`, `-`, `*`, `/`, and `%` plus aliases `add`, `sub`, `mul`, `div`, and `mod`, alongside the existing bitwise aggregate operators.

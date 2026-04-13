@@ -9,6 +9,7 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
+use FSM::AST::Node;
 use FSM::HDL::FlattenedDT;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRenderingSupport;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport;
@@ -66,6 +67,50 @@ FSM
     );
 };
 
+subtest 'consolidated intermediate stage support runs operand-contract validation before rendering' => sub {
+    my $fsm_module = parse_fsm_module(
+        'sv_consolidated_stage_support_validation_contract',
+        <<'FSM'
+(?fsm:sv_consolidated_stage_support_validation_contract
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (A 1)
+    (OUT1 1)
+  )
+  (idle
+    (<A
+      (OUT1 <= 1)
+    )
+  )
+)
+FSM
+    );
+
+    my $prepared_backend = prepare_flattened_backend($fsm_module);
+    my $stage_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStageSupport->new(
+        flattened_dt => $prepared_backend,
+    );
+
+    $prepared_backend->{state_enables}{idle} = FSM::AST::SignalRef->new('ghost_internal');
+    my $error = capture_error(sub {
+        $stage_support->generate_consolidated_intermediate_block($fsm_module);
+    });
+
+    like(
+        $error,
+        qr/Pre-generation operand contract validation failed/,
+        'stage support fails before rendering when the pre-generation operand contract is broken',
+    );
+    like(
+        $error,
+        qr/ghost_internal/,
+        'stage support validation failure keeps the offending operand name in the diagnostic',
+    );
+};
+
 done_testing();
 
 sub parse_fsm_module {
@@ -101,4 +146,13 @@ sub write_file {
     open my $fh, '>', $path or die "Cannot open $path for write: $!";
     print {$fh} $content or die "Cannot write $path: $!";
     close $fh or die "Cannot close $path: $!";
+}
+
+sub capture_error {
+    my ($code) = @_;
+    my $ok = eval {
+        $code->();
+        1;
+    };
+    return $ok ? '' : ($@ || 'unknown error');
 }

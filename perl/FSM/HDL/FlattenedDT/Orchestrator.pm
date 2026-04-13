@@ -66,10 +66,8 @@ sub generate_systemverilog ($self, $fsm_module) {
 
     $ctx->{backend_sv_generation_prescan_preparation_support}
         ->prepare_enable_prescan();
-    my $prepared_block = $ctx->{backend_sv_consolidated_intermediate_stage_preparation_support}
-        ->prepare_consolidated_intermediate_block($fsm_module);
-    $ctx->{backend_sv_operand_contract_validation_support}
-        ->validate_pre_generation_operand_contract($fsm_module, $prepared_block);
+    my $consolidated_intermediate_hdl = $ctx->{backend_sv_consolidated_intermediate_stage_support}
+        ->generate_consolidated_intermediate_block($fsm_module);
     
     my $hdl = $ctx->{backend_sv_scaffold}->generate_header($fsm_module);
     $hdl .= $ctx->{backend_sv_scaffold}->generate_module_declaration($fsm_module);
@@ -81,8 +79,7 @@ sub generate_systemverilog ($self, $fsm_module) {
     fsm_debug("Step 3 - Enable conditions generated", 3);
 
     # Step 6: Generate consolidated intermediate signals (combining AST factorization + pre-scan)
-    $hdl .= $ctx->{backend_sv_consolidated_intermediate_rendering_support}
-        ->render_prepared_consolidated_intermediate_block($prepared_block);
+    $hdl .= $consolidated_intermediate_hdl;
     fsm_debug("Step 6 - Consolidated intermediate signals generated", 3);
 
     $hdl .= $ctx->{backend_sv_generation_tail_support}
