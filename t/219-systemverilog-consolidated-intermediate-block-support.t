@@ -14,6 +14,56 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlock
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport;
 use FSM::Pipeline::SourceFrontend;
 
+{
+    package Local::SpyStagePreparationSupport;
+    use v5.20;
+    use strict;
+    use warnings;
+    use feature qw(signatures);
+    no warnings 'experimental::signatures';
+
+    sub new ($class) {
+        return bless { calls => [] }, $class;
+    }
+
+    sub calls ($self) {
+        return $self->{calls};
+    }
+
+    sub prepare_consolidated_intermediate_block ($self, $fsm_module) {
+        push @{$self->{calls}}, $fsm_module;
+        return { prepared_by => 'stage_preparation', source_name => $fsm_module->{name} };
+    }
+}
+
+subtest 'consolidated intermediate block support requires only the live stage-preparation owner' => sub {
+    my $fsm_module = { name => 'block_shell_contract' };
+    my $stage_preparation_support = Local::SpyStagePreparationSupport->new();
+    my $support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateBlockSupport->new(
+        flattened_dt => {
+            backend_sv_consolidated_intermediate_stage_preparation_support => $stage_preparation_support,
+        },
+    );
+
+    my $prepared_block = $support->prepare_consolidated_intermediate_block($fsm_module);
+
+    is_deeply(
+        $prepared_block,
+        { prepared_by => 'stage_preparation', source_name => 'block_shell_contract' },
+        'block shell delegates directly to the stage-preparation owner',
+    );
+    is(
+        scalar(@{$stage_preparation_support->calls}),
+        1,
+        'block shell calls the stage-preparation owner exactly once',
+    );
+    is(
+        $stage_preparation_support->calls->[0],
+        $fsm_module,
+        'block shell passes the FSM module through unchanged',
+    );
+};
+
 subtest 'consolidated intermediate block support survives as a compatibility shell over the live stage-preparation owner' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_consolidated_block_support_contract',

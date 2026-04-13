@@ -15,6 +15,56 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateRende
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport;
 use FSM::Pipeline::SourceFrontend;
 
+{
+    package Local::SpyRenderingSupport;
+    use v5.20;
+    use strict;
+    use warnings;
+    use feature qw(signatures);
+    no warnings 'experimental::signatures';
+
+    sub new ($class) {
+        return bless { calls => [] }, $class;
+    }
+
+    sub calls ($self) {
+        return $self->{calls};
+    }
+
+    sub render_prepared_consolidated_intermediate_block ($self, $prepared_block) {
+        push @{$self->{calls}}, $prepared_block;
+        return "rendered:$prepared_block->{name}";
+    }
+}
+
+subtest 'consolidated intermediate emitter requires only the live rendering owner' => sub {
+    my $prepared_block = { name => 'prepared_shell_contract' };
+    my $rendering_support = Local::SpyRenderingSupport->new();
+    my $consolidated_emitter = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateEmitter->new(
+        flattened_dt => {
+            backend_sv_consolidated_intermediate_rendering_support => $rendering_support,
+        },
+    );
+
+    my $consolidated_block = $consolidated_emitter->render_consolidated_intermediate_block($prepared_block);
+
+    is(
+        $consolidated_block,
+        'rendered:prepared_shell_contract',
+        'emitter shell delegates directly to the rendering owner',
+    );
+    is(
+        scalar(@{$rendering_support->calls}),
+        1,
+        'emitter shell calls the rendering owner exactly once',
+    );
+    is(
+        $rendering_support->calls->[0],
+        $prepared_block,
+        'emitter shell passes the prepared block through unchanged',
+    );
+};
+
 subtest 'consolidated intermediate emitter survives as a compatibility shell over the live rendering owner' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_consolidated_contract',

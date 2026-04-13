@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-13: compatibility consolidated-intermediate shells are pure delegates
+- Continued the `R11` lower-level direct-backend convergence lane by removing
+  the remaining detached fallback implementations from the older
+  consolidated-intermediate compatibility shells.
+- Rationale:
+  - once [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStagePreparationSupport.pm),
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateRenderingSupport.pm),
+    and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateStageSupport.pm)
+    became the live owners, keeping fallback copies inside
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateBlockSupport.pm),
+    [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateEmitter.pm),
+    and [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateGenerationSupport.pm)
+    preserved multiple ways to construct the same backend behavior,
+  - compatibility now means “stable old method name that forwards into the
+    canonical owner,” not “second implementation that tries to stay equivalent
+    in detached contexts,”
+  - the focused tests now include spy-owner slices so a shell can be verified
+    with only its live dependency present,
+  - and this makes later direct-backend hardening safer because validation,
+    prepared-block projection, and rendering changes have one canonical path
+    instead of a hidden backup path.
+
 ## 2026-04-13: consolidated emitter tests prove the rendering owner boundary
 - Continued the `R11` lower-level direct-backend convergence lane by retargeting
   the old consolidated-intermediate emitter regression to the actual live owner

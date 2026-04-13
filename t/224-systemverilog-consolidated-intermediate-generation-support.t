@@ -14,6 +14,56 @@ use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGener
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStageSupport;
 use FSM::Pipeline::SourceFrontend;
 
+{
+    package Local::SpyStageSupport;
+    use v5.20;
+    use strict;
+    use warnings;
+    use feature qw(signatures);
+    no warnings 'experimental::signatures';
+
+    sub new ($class) {
+        return bless { calls => [] }, $class;
+    }
+
+    sub calls ($self) {
+        return $self->{calls};
+    }
+
+    sub generate_consolidated_intermediate_block ($self, $fsm_module) {
+        push @{$self->{calls}}, $fsm_module;
+        return "stage-generated:$fsm_module->{name}";
+    }
+}
+
+subtest 'consolidated intermediate generation support requires only the live stage-generation owner' => sub {
+    my $fsm_module = { name => 'generation_shell_contract' };
+    my $stage_support = Local::SpyStageSupport->new();
+    my $generation_support = FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport->new(
+        flattened_dt => {
+            backend_sv_consolidated_intermediate_stage_support => $stage_support,
+        },
+    );
+
+    my $generated_block = $generation_support->generate_consolidated_intermediate_block($fsm_module);
+
+    is(
+        $generated_block,
+        'stage-generated:generation_shell_contract',
+        'generation shell delegates directly to the stage-generation owner',
+    );
+    is(
+        scalar(@{$stage_support->calls}),
+        1,
+        'generation shell calls the stage-generation owner exactly once',
+    );
+    is(
+        $stage_support->calls->[0],
+        $fsm_module,
+        'generation shell passes the FSM module through unchanged',
+    );
+};
+
 subtest 'consolidated intermediate generation support remains a compatibility wrapper over the live stage-generation owner' => sub {
     my $fsm_module = parse_fsm_module(
         'sv_consolidated_generation_support_contract',

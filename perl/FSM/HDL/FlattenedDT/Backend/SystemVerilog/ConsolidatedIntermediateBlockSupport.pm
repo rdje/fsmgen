@@ -15,7 +15,7 @@ directly testable wrapper:
 =item *
 
 rebuilding the prepared consolidated block handoff by delegating to the live
-stage-preparation owner when available
+stage-preparation owner
 
 =back
 
@@ -30,7 +30,7 @@ C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediatePrepare
 keeps prepared block-contract projection, the live
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateStagePreparationSupport>
 package now composes those real owners directly, this package delegates to
-that live owner when it is available, and the narrowed
+that live owner, and the narrowed
 C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateGenerationSupport>
 package now consumes that live prepared-block handoff instead of routing
 through this shell during normal backend generation.
@@ -69,20 +69,9 @@ owners.
 
 sub prepare_consolidated_intermediate_block ($self, $fsm_module) {
     my $ctx = $self->{flattened_dt};
-    my $stage_preparation_support = $ctx->{backend_sv_consolidated_intermediate_stage_preparation_support};
 
-    if ($stage_preparation_support
-        && $stage_preparation_support->can('prepare_consolidated_intermediate_block')) {
-        return $stage_preparation_support->prepare_consolidated_intermediate_block($fsm_module);
-    }
-
-    my $all_intermediate_signals = $ctx->{backend_sv_consolidated_intermediate_support}
-        ->collect_consolidated_intermediate_signals($fsm_module);
-    my $plan = $ctx->{backend_sv_consolidated_intermediate_planning_support}
-        ->plan_consolidated_intermediate_signals($all_intermediate_signals);
-
-    return $ctx->{backend_sv_consolidated_intermediate_prepared_block_support}
-        ->build_prepared_consolidated_intermediate_block($all_intermediate_signals, $plan);
+    return $ctx->{backend_sv_consolidated_intermediate_stage_preparation_support}
+        ->prepare_consolidated_intermediate_block($fsm_module);
 }
 
 1;
