@@ -1,0 +1,14 @@
+(?fsm:direct_lhs_deconstruct_width_mismatch
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (DATA 7)
+    (HI 4)
+    (LO 4)
+  )
+  (idle
+    ((concat HI LO) = DATA)
+  )
+)

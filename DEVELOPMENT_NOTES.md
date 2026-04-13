@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-13: LHS deconstruct width mismatch is support-accounted as language contract
+- Continued `R12` by adding the first LHS deconstruct expected-failure fixture
+  to the classified corpus.
+- Rationale:
+  - unlike the RHS concat assignment-width mismatch, an LHS deconstruct total
+    width mismatch is rejected while the frontend builds the FSM module from
+    the authored assignment form,
+  - keeping it in `language_contract_rejection_pipeline_cli` avoids pretending
+    every assignment-width-looking failure happens in the same pre-generation
+    backend contract phase,
+  - [t/corpus/direct_lhs_deconstruct_width_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_lhs_deconstruct_width_mismatch.fsm)
+    mirrors the focused deconstruct legality test while giving the failure a
+    named corpus identity,
+  - and the existing language-contract expected-failure harness now proves the
+    pipeline and CLI both keep source-file context plus the deconstruct
+    total-width diagnostic.
+
 ## 2026-04-13: direct-generation contract failures get their own corpus bucket
 - Continued `R12` by adding the first parsed direct-generation expected-failure
   fixture instead of overloading the existing parser-oriented

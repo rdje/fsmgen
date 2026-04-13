@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-13: corpus now covers LHS deconstruct width rejection
+- Continued `R12` by adding a second language-contract expected-failure corpus
+  asset for the shipped LHS deconstruct surface.
+- Important continuity note:
+  - [t/corpus/direct_lhs_deconstruct_width_mismatch.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_lhs_deconstruct_width_mismatch.fsm)
+    is now a named expected-failure fixture for an LHS `(concat HI LO)`
+    deconstruct whose total target width is `8` while the RHS `DATA` width is
+    `7`,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    records it as `contract.direct_lhs_deconstruct_width_mismatch` under
+    `language_contract_rejection_pipeline_cli`,
+  - this classification is deliberate because the active frontend rejects that
+    malformed authored LHS form before HDL generation,
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now expects `31` catalog entries and `19` expected-failure entries,
+  - and the direct-generation contract bucket remains reserved for failures
+    like the RHS concat assignment-width case that parse successfully but abort
+    before emission.
+
 ## 2026-04-13: corpus now covers direct RHS concat width rejection
 - Continued `R12` by promoting one parsed-but-rejected direct-generation
   assignment contract into the named expected-failure corpus.

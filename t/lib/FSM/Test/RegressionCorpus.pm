@@ -206,6 +206,15 @@ my @REGRESSION_CORPUS = (
         expected_error_pattern => qr/Malformed '\+size' entry/,
     },
     {
+        id => 'contract.direct_lhs_deconstruct_width_mismatch',
+        relpath => 't/corpus/direct_lhs_deconstruct_width_mismatch.fsm',
+        family => 'language_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'language_contract_rejection_pipeline_cli',
+        source_kind => 'fsm',
+        expected_error_pattern => qr/LHS deconstruct total width 8 does not match RHS width 7/s,
+    },
+    {
         id => 'contract.direct_rhs_concat_width_mismatch',
         relpath => 't/corpus/direct_rhs_concat_width_mismatch.fsm',
         family => 'direct_generation_contract_fixture',
