@@ -1,0 +1,17 @@
+(?fsm:legacy_sreset_rstn
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+
+  (+size
+    (START 1)
+    (DONE 1)
+  )
+
+  (idle
+    (<START
+      (DONE <= 1'b1)
+    )
+  )
+)

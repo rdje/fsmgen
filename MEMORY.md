@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-15: corpus now covers legacy reset strict cuts
+- Continued `R12` by adding the strict-mode compatibility-boundary side of the
+  reset contract to the named corpus.
+- Important continuity note:
+  - [t/corpus/legacy_asreset_rstn.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_asreset_rstn.fsm)
+    is cataloged twice: `legacy.asreset_rstn.default_compat` and
+    `legacy.asreset_rstn.strict_rejection`,
+  - [t/corpus/legacy_sreset_rstn.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_sreset_rstn.fsm)
+    is cataloged twice: `legacy.sreset_rstn.default_compat` and
+    `legacy.sreset_rstn.strict_rejection`,
+  - default mode must still compile both compatibility fixtures through
+    pipeline and CLI,
+  - strict mode must reject both fixtures through pipeline and CLI with the
+    canonical reset migration hint toward `(sreset reset)` or `(areset rst_n)`,
+  - and [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now expects `38` catalog entries, `6` legacy-out-of-scope entries, and
+    `22` expected-failure entries.
+
 ## 2026-04-14: GitHub Actions CI is intentionally disabled
 - The repository was close to exhausting the account's included GitHub Actions
   minutes, so the active regression workflow is intentionally parked outside

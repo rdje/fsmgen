@@ -1,5 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-15
+### regression corpus now locks legacy reset spelling strict cuts
+- Added [t/corpus/legacy_asreset_rstn.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_asreset_rstn.fsm) and [t/corpus/legacy_sreset_rstn.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_sreset_rstn.fsm) as paired default-compatible / strict-rejected corpus assets for reset spelling compatibility residue.
+- Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm), [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so default mode keeps `(asreset rstn)` and `(sreset rstn)` as legacy/compatibility residue while strict mode rejects both with canonical `(sreset reset)` / `(areset rst_n)` guidance.
+
 ## 2026-04-14
 ### GitHub Actions regression workflow is parked
 - Moved the active regression workflow from `.github/workflows/regression.yml` to [.github/workflows-disabled/regression.yml](/Users/richarddje/Documents/github/fsmgen/.github/workflows-disabled/regression.yml) so GitHub Actions will not discover or run it automatically while the account is near its included Actions-minute limit.

@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-15: reset compatibility residue is now support-accounted
+- Continued `R12` by adding paired default-compatible and strict-rejected
+  corpus entries for legacy/misleading reset spellings.
+- Rationale:
+  - after support-accounting canonical `sreset reset` and `areset rst_n`, the
+    matching compatibility-boundary story should also be explicit in the corpus,
+  - `(asreset rstn)` is retained in default mode only as legacy async-active-low
+    residue and should not be presented as the canonical authored surface,
+  - `(sreset rstn)` is retained in default mode only as misleading compatibility
+    residue because the keyword says synchronous active-high while the name
+    looks active-low,
+  - strict mode rejecting both forms keeps the authoring contract honest while
+    preserving old inputs outside strict mode,
+  - and the corpus now records those as support-tier decisions rather than
+    relying only on focused strict-mode tests.
+
 ## 2026-04-13: canonical reset policies are now support-accounted
 - Continued `R12` by adding supported-smoke corpus entries for the two reset
   spellings that should be treated as the canonical direct-root surface.

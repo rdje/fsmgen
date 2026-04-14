@@ -1620,6 +1620,12 @@ Done:
   - `legacy.empty_size_noop.strict_rejection` is classified as `expected_failure` and must keep the strict empty-`(+size)` rejection boundary through pipeline and CLI,
   - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t) now treats strict support-tier expected failures as a broader family instead of only the earlier root-family case,
   - and [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md) now includes the `legacy_section_default_pipeline_cli` and `strict_section_rejection_pipeline_cli` coverage buckets.
+- That same section-level compatibility-residue family now also covers legacy/misleading reset spellings:
+  - [t/corpus/legacy_asreset_rstn.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_asreset_rstn.fsm) now appears twice in the catalog as `legacy.asreset_rstn.default_compat` and `legacy.asreset_rstn.strict_rejection`,
+  - [t/corpus/legacy_sreset_rstn.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_sreset_rstn.fsm) now appears twice in the catalog as `legacy.sreset_rstn.default_compat` and `legacy.sreset_rstn.strict_rejection`,
+  - default mode must still compile both compatibility fixtures through pipeline and CLI,
+  - strict mode must reject both fixtures with the canonical reset migration hint toward `(+system (clock clk) (sreset reset))` or `(+system (clock clk) (areset rst_n))`, and
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `38` catalog entries, `6` legacy-out-of-scope entries, and `22` expected-failure entries.
 - The first slice now also accounts for child-root compatibility residue instead of stopping at direct-root and section-level cases:
   - [t/corpus/legacy_fsm_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_top.fsm) and [t/corpus/legacy_dt_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_top.fsm) now exist as explicit composition-top corpus assets with matching external child-source fixtures under [t/corpus](/Users/richarddje/Documents/github/fsmgen/t/corpus),
   - `legacy.fsm_child_root.default_compat` and `legacy.dt_child_root.default_compat` are classified as `legacy_out_of_scope` and must still compile through pipeline and CLI in default mode with explicit source-search-path realization,
