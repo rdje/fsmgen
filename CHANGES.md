@@ -1,5 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-14
+### GitHub Actions regression workflow is parked
+- Moved the active regression workflow from `.github/workflows/regression.yml` to [.github/workflows-disabled/regression.yml](/Users/richarddje/Documents/github/fsmgen/.github/workflows-disabled/regression.yml) so GitHub Actions will not discover or run it automatically while the account is near its included Actions-minute limit.
+- Added [.github/workflows-disabled/README.md](/Users/richarddje/Documents/github/fsmgen/.github/workflows-disabled/README.md) with the restore command for re-enabling CI later.
+
 ## 2026-04-13
 ### regression corpus now locks canonical direct reset policies
 - Added [t/corpus/direct_sreset_active_high.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_sreset_active_high.fsm) and [t/corpus/direct_areset_active_low.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_areset_active_low.fsm) as named `supported_smoke` direct-root corpus assets for the canonical reset spellings.

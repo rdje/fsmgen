@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-14: GitHub Actions CI is intentionally disabled
+- The repository was close to exhausting the account's included GitHub Actions
+  minutes, so the active regression workflow is intentionally parked outside
+  `.github/workflows/`.
+- Important continuity note:
+  - [.github/workflows-disabled/regression.yml](/Users/richarddje/Documents/github/fsmgen/.github/workflows-disabled/regression.yml)
+    is the former `.github/workflows/regression.yml` workflow,
+  - GitHub will not auto-run it while it stays outside `.github/workflows/`,
+  - [.github/workflows-disabled/README.md](/Users/richarddje/Documents/github/fsmgen/.github/workflows-disabled/README.md)
+    records the `git mv` command needed to re-enable CI later,
+  - and future tasks should not re-enable the workflow unless the user asks.
+
 ## 2026-04-13: corpus now covers canonical reset policies
 - Continued `R12` by promoting the canonical direct reset semantics into the
   named supported corpus.
