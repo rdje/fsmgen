@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: corpus now covers compact init strict cut
+- Continued `R12` by adding the compact top-level `(:= signal=value)` strict
+  compatibility-boundary contract to the named corpus.
+- Important continuity note:
+  - [t/corpus/legacy_compact_init_directive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_compact_init_directive.fsm)
+    is cataloged twice: `legacy.compact_init_directive.default_compat` and
+    `legacy.compact_init_directive.strict_rejection`,
+  - default mode must still compile the fixture through pipeline and CLI,
+  - strict mode must reject it through pipeline and CLI with the explicit
+    no-strict-mode-replacement note for the compact `:=` surface,
+  - and [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now expects `40` catalog entries, `7` legacy-out-of-scope entries, and
+    `23` expected-failure entries.
+
 ## 2026-04-15: corpus now covers legacy reset strict cuts
 - Continued `R12` by adding the strict-mode compatibility-boundary side of the
   reset contract to the named corpus.

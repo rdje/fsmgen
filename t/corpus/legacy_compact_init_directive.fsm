@@ -1,0 +1,17 @@
+(?fsm:legacy_compact_init_directive
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (tester_reset 1)
+    (A 1)
+  )
+
+  (:= tester_reset=1)
+
+  (idle
+    (A = tester_reset)
+  )
+)

@@ -1626,6 +1626,11 @@ Done:
   - default mode must still compile both compatibility fixtures through pipeline and CLI,
   - strict mode must reject both fixtures with the canonical reset migration hint toward `(+system (clock clk) (sreset reset))` or `(+system (clock clk) (areset rst_n))`, and
   - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `38` catalog entries, `6` legacy-out-of-scope entries, and `22` expected-failure entries.
+- That same section-level compatibility-residue family now also covers the legacy compact top-level `:=` directive:
+  - [t/corpus/legacy_compact_init_directive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_compact_init_directive.fsm) now appears twice in the catalog as `legacy.compact_init_directive.default_compat` and `legacy.compact_init_directive.strict_rejection`,
+  - default mode must still compile the compact `(:= signal=value)` compatibility fixture through pipeline and CLI,
+  - strict mode must reject it with the explicit no-strict-mode-replacement note for the compact `:=` surface, and
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t) now records `40` catalog entries, `7` legacy-out-of-scope entries, and `23` expected-failure entries.
 - The first slice now also accounts for child-root compatibility residue instead of stopping at direct-root and section-level cases:
   - [t/corpus/legacy_fsm_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_fsm_child_root_top.fsm) and [t/corpus/legacy_dt_child_root_top.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_dt_child_root_top.fsm) now exist as explicit composition-top corpus assets with matching external child-source fixtures under [t/corpus](/Users/richarddje/Documents/github/fsmgen/t/corpus),
   - `legacy.fsm_child_root.default_compat` and `legacy.dt_child_root.default_compat` are classified as `legacy_out_of_scope` and must still compile through pipeline and CLI in default mode with explicit source-search-path realization,

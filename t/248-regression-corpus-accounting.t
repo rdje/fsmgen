@@ -15,7 +15,7 @@ my @entries = regression_corpus_entries();
 my @protocol_entries = protocol_fixture_entries();
 
 ok(@entries >= 7, 'regression corpus catalog starts with named entries across multiple classifications');
-ok(@entries >= 38, 'regression corpus catalog now covers supported language-feature fixtures plus root-level, section-level, child-root, direct-generation, and composition-contract residue families');
+ok(@entries >= 40, 'regression corpus catalog now covers supported language-feature fixtures plus root-level, section-level, child-root, direct-generation, and composition-contract residue families');
 is(scalar(@protocol_entries), 4, 'first visible corpus slice contains the four named protocol fixtures');
 
 my %allowed_classifications = map { $_ => 1 } qw(
@@ -61,6 +61,8 @@ for my $required_id (qw(
     legacy.asreset_rstn.strict_rejection
     legacy.sreset_rstn.default_compat
     legacy.sreset_rstn.strict_rejection
+    legacy.compact_init_directive.default_compat
+    legacy.compact_init_directive.strict_rejection
     legacy.fsm_child_root.default_compat
     legacy.fsm_child_root.strict_rejection
     legacy.dt_child_root.default_compat
@@ -129,13 +131,13 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
-    6,
-    'catalog now records six explicit legacy-out-of-scope compatibility entries',
+    7,
+    'catalog now records seven explicit legacy-out-of-scope compatibility entries',
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    22,
-    'catalog now records twenty-two explicit expected-failure entries',
+    23,
+    'catalog now records twenty-three explicit expected-failure entries',
 );
 
 done_testing();

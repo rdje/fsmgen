@@ -1,5 +1,10 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-04-16
+### regression corpus now locks compact init strict cut
+- Added [t/corpus/legacy_compact_init_directive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_compact_init_directive.fsm) as a paired default-compatible / strict-rejected corpus asset for the legacy compact top-level `(:= signal=value)` directive.
+- Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm), [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so default mode keeps the compact `:=` surface as compatibility residue while strict mode rejects it with the explicit no-strict-mode-replacement note.
+
 ## 2026-04-15
 ### regression corpus now locks legacy reset spelling strict cuts
 - Added [t/corpus/legacy_asreset_rstn.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_asreset_rstn.fsm) and [t/corpus/legacy_sreset_rstn.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_sreset_rstn.fsm) as paired default-compatible / strict-rejected corpus assets for reset spelling compatibility residue.

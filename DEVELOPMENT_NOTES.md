@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: compact init compatibility residue is now support-accounted
+- Continued `R12` by adding paired default-compatible and strict-rejected
+  corpus entries for the legacy compact top-level `(:= signal=value)` directive.
+- Rationale:
+  - compact `:=` remains accepted in default mode because real historical
+    sources may still rely on it,
+  - strict mode intentionally rejects it because there is not yet an agreed
+    canonical strict-mode replacement for that compact surface,
+  - cataloging both behaviors makes the support-tier boundary explicit: this
+    is retained compatibility residue, not an endorsed modern authoring form,
+  - and the corpus now proves the same boundary through both pipeline and CLI
+    instead of leaving it only in the focused strict-mode test.
+
 ## 2026-04-15: reset compatibility residue is now support-accounted
 - Continued `R12` by adding paired default-compatible and strict-rejected
   corpus entries for legacy/misleading reset spellings.
