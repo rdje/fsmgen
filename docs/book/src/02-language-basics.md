@@ -18,10 +18,69 @@ You are usually writing:
 - `?fsm:name`: state-machine root
 - `?dt:name`: standalone decision-tree root
 - `+system`: clock/reset declaration section
-- `+size`: width declaration section
+- `+size`: width/type declaration section
 - `+constants`, `+enums`, `+types`: symbol and type sections
 - `:=`: init/reset directive
 - `<...`: guard suffix
+
+## Widths
+
+Use `+size` to declare the intended packed width or named type of signals:
+
+```lisp
+(+size
+  (valid 1)
+  (data 8)
+  (frame frame_t)
+)
+```
+
+The width slot is a constant-expression slot. It can use integer literals,
+constants, enum members, params/generics, aggregate scalar leaves, and bounded
+Lisp-ish arithmetic/bitwise expressions:
+
+```lisp
+(+constants
+  (BYTE_W 8)
+  (LANES (4 8))
+)
+(+enums
+  (mode_w
+    (NARROW 4)
+    (WIDE 8)
+  )
+)
+(+params
+  (EXTRA_W 1)
+)
+(+size
+  (data (+ BYTE_W EXTRA_W))
+  (mode mode_w.WIDE)
+  (lane LANES[1])
+  (mask (and 7 3))
+)
+```
+
+The expression must resolve to one positive integer before generation. Unknown
+or aggregate-valued leaves are rejected instead of becoming accidental signals.
+
+## Init/Reset Defaults
+
+Use canonical `:=` pairs for explicit reset/default metadata:
+
+```lisp
+(:= (valid 0))
+(:= (mode_reset (+ RESET_BASE mode.IDLE)))
+(:=
+  (ready 1)
+  (data_reset 8'h00)
+)
+```
+
+The value slot is also an expression slot. It may be a literal, a named
+constant/enum/param, an aggregate scalar leaf, or a nested Lisp-ish expression.
+The older compact form `(:= signal=value)` remains default-mode compatibility
+residue; strict mode points users to the pair form.
 
 ## Assignment Operators
 

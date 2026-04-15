@@ -37,6 +37,48 @@ FSM
     is($signal->{initial_value}, '1', "':=' directive also preserves legacy initial_value metadata");
 };
 
+subtest "canonical Lisp-ish ':=' directives register explicit reset metadata" => sub {
+    my ($module, $adapter) = parse_success(<<'FSM');
+(?fsm:init_directive_canonical_contract
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+constants
+    (BASE_RESET 1)
+  )
+  (+enums
+    (mode_e
+      (RUN 1)
+    )
+  )
+  (+params
+    (EXTRA_RESET 1)
+  )
+  (:=
+    (tester_reset (+ BASE_RESET mode_e.RUN))
+    (mode (+ EXTRA_RESET mode_e.RUN))
+  )
+  (idle
+    (A = tester_reset)
+  )
+)
+FSM
+
+    my @state_names = map { $_->name } @{$module->states};
+    is_deeply(\@state_names, ['idle'], "canonical ':=' directive no longer creates a fake state");
+
+    my $tester_reset = $adapter->{signal_manager}->get_signal('tester_reset');
+    ok($tester_reset, "canonical ':=' directive registers the first target signal");
+    is($tester_reset->get_attribute('reset_value'), '1 + 1', "canonical ':=' directive stores nested constant-expression reset metadata");
+    is($tester_reset->{initial_value}, '1 + 1', "canonical ':=' directive preserves nested expression text as legacy initial_value metadata");
+
+    my $mode = $adapter->{signal_manager}->get_signal('mode');
+    ok($mode, "canonical ':=' directive registers the second target signal");
+    is($mode->get_attribute('reset_value'), 'EXTRA_RESET + 1', "canonical ':=' directive can use params and enums as expression leaves");
+    is($mode->{initial_value}, 'EXTRA_RESET + 1', "canonical ':=' directive preserves param/enum expression text as legacy initial_value metadata");
+};
+
 subtest 'single-token malformed DT actions no longer disappear silently' => sub {
     my $error = parse_failure(<<'FSM');
 (?fsm:broken_single_token_action

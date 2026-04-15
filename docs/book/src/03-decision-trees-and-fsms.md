@@ -41,8 +41,23 @@ Current direct-root reset/init comes from two places:
 - the conventional `+system` contract
 - explicit `:=` directives
 
-Those are still documented as a live contract rather than as a fully frozen
-language forever, so keep an eye on current wording in the reference docs.
+Prefer the canonical pair form:
+
+```lisp
+(:= (valid 0))
+(:= (next_mode mode.IDLE))
+(:= (reset_count (+ RESET_BASE EXTRA_RESET)))
+```
+
+The right-hand side is a constant-expression slot. It can be a literal, a
+named constant, an enum member, a param/generic, an aggregate scalar leaf, or a
+nested Lisp-ish arithmetic/bitwise expression. The older compact
+`(:= signal=value)` spelling is kept as default-mode compatibility residue;
+strict mode rejects it and points to `(:= (signal value))`.
+
+Those reset/init rules are still documented as a live contract rather than as a
+fully frozen language forever, so keep an eye on current wording in the
+reference docs.
 
 ## State Transitions
 

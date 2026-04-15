@@ -1,13 +1,35 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: init/default and width slots are constant-expression surfaces
+- Continued `R8` by realigning two user-facing scalar-looking slots with the
+  broader intent-level language model:
+  - canonical init/reset metadata is now `(:= (signal value))`, where `value`
+    is a parsed expression slot rather than a scalar-token-only slot,
+  - `+size` width entries now accept positive integer constant expressions
+    using literals, constants, enum members, params/generics, aggregate scalar
+    leaves, and the bounded Lisp-ish arithmetic/bitwise operators.
+- Rationale:
+  - authoring should feel dynamic and expressive while the tool works hard
+    behind the scenes to validate the meaning before generation,
+  - magic numbers should be avoidable in reset/default and width positions just
+    as they are in ordinary expressions and parameter/generic values,
+  - the backend should receive resolved AST/metadata rather than a special
+    renderer-only dialect,
+  - legacy compact `(:= signal=value)` remains useful as compatibility residue,
+    but strict mode now has a canonical pair replacement to point users toward,
+  - and explicit reset metadata must be discoverable from the LHS signal object
+    so internal helper flops honor authored reset/default values even when the
+    target is not a top-level module port.
+
 ## 2026-04-16: compact init compatibility residue is now support-accounted
 - Continued `R12` by adding paired default-compatible and strict-rejected
   corpus entries for the legacy compact top-level `(:= signal=value)` directive.
 - Rationale:
   - compact `:=` remains accepted in default mode because real historical
     sources may still rely on it,
-  - strict mode intentionally rejects it because there is not yet an agreed
-    canonical strict-mode replacement for that compact surface,
+  - strict mode intentionally rejects it because the canonical pair form
+    `(:= (signal value))` is the agreed modern replacement for that compact
+    surface,
   - cataloging both behaviors makes the support-tier boundary explicit: this
     is retained compatibility residue, not an endorsed modern authoring form,
   - and the corpus now proves the same boundary through both pipeline and CLI
@@ -2309,11 +2331,13 @@ This document captures engineering rationale, design constraints, and working de
   - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now rejects the compact top-level `(:= signal=value)` directive in strict mode on the current `?fsm:` / `?dt:` path while leaving default-mode compatibility intact,
   - that boundary lives in the same shared direct-root strict owner as the earlier empty-`(+size)` and explicit-`(asreset rstn)` cuts, so it reaches those direct roots and generated child sources while still leaving top-level `?mod:` / `?module:` roots untouched,
   - [t/257-strict-mode-compact-init-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/257-strict-mode-compact-init-boundary.t) now locks the new boundary through the shared frontend plus pipeline and CLI entry points for a direct root and an external `?dtc` child,
-  - and the strict diagnostic is intentionally honest that the current shipped strict surface has no canonical replacement for the compact `:=` compatibility form yet.
+  - and the strict diagnostic now points to the canonical pair replacement
+    `(:= (signal value))` for the compact `:=` compatibility form.
 - Why this is worth shipping:
   - it turns another known compatibility residue into an explicit support-tier choice instead of quietly accepting it in the strict lane,
   - it broadens `R9` further into section-level authored-surface decisions rather than only root-family cleanup,
-  - and it keeps the strict contract truthful by rejecting a compatibility form without pretending a replacement already exists.
+  - and it keeps the strict contract truthful by rejecting a compatibility form
+    while naming the replacement users should adopt.
 
 ## 2026-04-01: `R12` now counts missing generated-child lookup as composition-contract rejection too
 - Continued the visible `R12` lane by widening the same composition-contract bucket that already covered missing external `.rtlif` sidecars into missing external generated-child source lookup too.
@@ -5417,7 +5441,7 @@ This document captures engineering rationale, design constraints, and working de
   - and the parser was treating that as a silent no-op while also silently ignoring malformed non-list payloads.
 - Implementation:
   - [perl/FSM/Adapter/FSMGenFull/Parser.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Adapter/FSMGenFull/Parser.pm) now parses `+size` through an explicit contract helper.
-  - The helper keeps legacy empty `(+size)` supported as a no-op, but requires non-empty forms to be a list of `(signal positive_integer_width)` entries.
+  - The helper keeps legacy empty `(+size)` supported as a no-op, but requires non-empty forms to be a list of `(signal width_or_type)` entries; that width slot has since been widened to positive integer constant expressions as recorded in the 2026-04-16 note above.
 - Focused regression coverage now exists in [t/50-language-contract-size-section-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/50-language-contract-size-section-boundary.t) for:
   - successful parsing/generation with empty `(+size)`,
   - targeted rejection of malformed payloads like `(+size BROKEN)`,

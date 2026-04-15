@@ -1,0 +1,38 @@
+(?fsm:direct_size_expression_widths
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+constants
+    (BASE_W 2)
+    (INC_W 1)
+    (WIDTHS (4 8))
+  )
+
+  (+enums
+    (width_e
+      (FLAG 1)
+    )
+  )
+
+  (+params
+    (PARAM_W (+ BASE_W INC_W))
+  )
+
+  (+size
+    (A (+ BASE_W INC_W))
+    (B (+ PARAM_W width_e.FLAG))
+    (C WIDTHS[1])
+    (D 0x4)
+    (E (and 7 3))
+  )
+
+  (idle
+    (A = 3'b001)
+    (B = 4'b0010)
+    (C = 8'hA5)
+    (D = 4'hC)
+    (E = 3'b111)
+  )
+)

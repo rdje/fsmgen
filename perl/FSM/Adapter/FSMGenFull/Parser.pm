@@ -7,6 +7,7 @@ use Carp qw(confess);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use Data::Dumper;
+use Math::BigInt;
 use Scalar::Util qw(blessed);
 use FSM::CoreAST;
 use FSM::Debug;
@@ -189,10 +190,6 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
         \@pending_enum_entries,
     );
 
-    for my $size_ast (@pending_size_sections) {
-        $self->parse_size_section($size_ast);
-    }
-
     my @pending_param_entries;
     for my $element (@$fsm_contents) {
         next unless ref($element) eq 'ARRAY';
@@ -211,6 +208,10 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
         $module_name,
         \@pending_param_entries,
     );
+
+    for my $size_ast (@pending_size_sections) {
+        $self->parse_size_section($size_ast);
+    }
 
     for my $element (@$fsm_contents) {
         next unless ref($element) eq 'ARRAY';
@@ -523,7 +524,7 @@ sub parse_size_section($self, $size_ast) {
     for my $size_def (@$size_entries) {
         Carp::confess
             "Malformed '+size' entry. ".
-            "Each '+size' entry must be a pair '(signal positive_integer_width)'. ".
+            "Each '+size' entry must be a pair '(signal width_or_type)'. ".
             "See docs/USER_GUIDE.md for the current supported boundary.\n"
             unless ref($size_def) eq 'ARRAY' && @$size_def == 2;
 
@@ -742,7 +743,7 @@ sub resolve_declared_width_contract($self, %args) {
             && $width_token =~ /\A\d+\z/
             && $width_token > 0;
 
-    if ($self->is_contract_type_reference($width_token)) {
+    if (defined($width_token) && !ref($width_token) && $self->is_contract_type_reference($width_token)) {
         my $resolved_type = $self->{signal_manager}->resolve_type($width_token);
         if ($resolved_type && ref($resolved_type) eq 'HASH'
             && defined($resolved_type->{width}) && $resolved_type->{width} > 0) {
@@ -763,10 +764,318 @@ sub resolve_declared_width_contract($self, %args) {
         } if defined $resolved_scalar_width && $resolved_scalar_width > 0;
     }
 
+    my $expression_error;
+    my $resolved_expression_width = eval {
+        $self->resolve_positive_width_expression(
+            $width_token,
+            "Width expression for '+size' signal '$signal_name'",
+        );
+    };
+    $expression_error = $@ if $@;
+    return {
+        width => $resolved_expression_width,
+        signed => 0,
+        state_model => undef,
+    } if defined($resolved_expression_width) && $resolved_expression_width > 0;
+
+    my $expression_detail = $expression_error
+        ? " Width expression resolution failed: $expression_error"
+        : '';
+    $expression_detail =~ s/\s+\z//;
+
     Carp::confess
         "Malformed '+size' entry for signal '$signal_name'. ".
-        "Each '+size' entry must use an HDL-identifier-compatible signal name and either a positive integer width, a named type such as 'bit', 'byte', 'frame_t', or 'pkg_name.byte', or a positive integer scalar symbol such as 'BYTE_W' or 'pkg_name.BYTE_W'. ".
+        "Each '+size' entry must use an HDL-identifier-compatible signal name and either a positive integer width, a named type such as 'bit', 'byte', 'frame_t', or 'pkg_name.byte', or a positive integer constant expression using literals, constants, enum members, params/generics, aggregate scalar leaves, and supported Lisp-ish arithmetic/bitwise operators. ".
+        $expression_detail." ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n";
+}
+
+sub resolve_positive_width_expression($self, $width_expr, $context) {
+    my $value = $self->evaluate_constant_integer_expression($width_expr, $context);
+    return undef unless defined $value;
+
+    Carp::confess "$context must resolve to a positive integer width.\n"
+        unless $value->bcmp(0) > 0;
+
+    return 0 + $value->bstr;
+}
+
+sub evaluate_constant_integer_expression($self, $expr, $context) {
+    my $normalized = $self->unwrap_scalar_token($expr);
+
+    if (defined($normalized) && !ref($normalized)) {
+        return $self->evaluate_constant_integer_scalar($normalized, $context);
+    }
+
+    Carp::confess "$context is malformed because the expression payload is empty.\n"
+        unless ref($normalized) eq 'ARRAY' && @$normalized;
+
+    my ($operator, @operands) = @$normalized;
+    Carp::confess "$context is malformed because the expression operator is not a scalar token.\n"
+        if ref($operator);
+
+    my $normalized_operator = $self->normalize_constant_width_operator($operator);
+    Carp::confess
+        "$context uses unsupported width expression operator '$operator'. ".
+        "Supported operators are '+', '-', '*', '/', '%', '&', '|', '^' and aliases 'add', 'sub', 'mul', 'div', 'mod', 'and', 'or', 'xor'.\n"
+        unless defined $normalized_operator;
+
+    if (@operands == 1 && ref($operands[0]) eq 'ARRAY') {
+        @operands = @{$operands[0]};
+    }
+
+    Carp::confess "$context operator '$operator' requires at least two operands.\n"
+        unless @operands >= 2;
+
+    my @values = map {
+        $self->evaluate_constant_integer_expression($_, "$context operand for '$operator'")
+    } @operands;
+
+    return $self->apply_constant_width_operator($normalized_operator, \@values, $context);
+}
+
+sub normalize_constant_width_operator($self, $operator) {
+    return undef unless defined($operator) && !ref($operator);
+
+    my %operator_aliases = (
+        add => '+',
+        sub => '-',
+        mul => '*',
+        div => '/',
+        mod => '%',
+        and => '&',
+        or  => '|',
+        xor => '^',
+    );
+
+    my $normalized = $operator_aliases{$operator} // $operator;
+    my %supported = map { $_ => 1 } qw(+ - * / % & | ^);
+    return $supported{$normalized} ? $normalized : undef;
+}
+
+sub apply_constant_width_operator($self, $operator, $values, $context) {
+    Carp::confess "$context has no width-expression operands.\n"
+        unless ref($values) eq 'ARRAY' && @$values;
+
+    my $result = $values->[0]->copy;
+    for my $index (1 .. $#$values) {
+        my $operand = $values->[$index];
+        if ($operator eq '+') {
+            $result->badd($operand);
+        } elsif ($operator eq '-') {
+            $result->bsub($operand);
+        } elsif ($operator eq '*') {
+            $result->bmul($operand);
+        } elsif ($operator eq '/') {
+            Carp::confess "$context divides by zero in a width expression.\n"
+                if $operand->is_zero;
+            $result->bdiv($operand);
+        } elsif ($operator eq '%') {
+            Carp::confess "$context takes modulo by zero in a width expression.\n"
+                if $operand->is_zero;
+            $result->bmod($operand);
+        } elsif ($operator eq '&') {
+            $result->band($operand);
+        } elsif ($operator eq '|') {
+            $result->bior($operand);
+        } elsif ($operator eq '^') {
+            $result->bxor($operand);
+        } else {
+            Carp::confess "$context uses unsupported width expression operator '$operator'.\n";
+        }
+    }
+
+    Carp::confess "$context resolved to a negative width-expression value.\n"
+        if $result->bcmp(0) < 0;
+
+    return $result;
+}
+
+sub evaluate_constant_integer_scalar($self, $scalar, $context) {
+    my $literal_value = $self->parse_constant_integer_literal($scalar);
+    return $literal_value if defined $literal_value;
+
+    my $payload = $self->{signal_manager}->resolve_parameter_value_symbol_payload($scalar);
+    if (defined $payload) {
+        return $self->evaluate_constant_integer_payload($payload, "$context symbol '$scalar'");
+    }
+
+    Carp::confess "$context references unknown or non-scalar constant symbol '$scalar'.\n";
+}
+
+sub evaluate_constant_integer_payload($self, $payload, $context) {
+    Carp::confess "$context has no constant payload.\n"
+        unless defined $payload;
+
+    if (!ref($payload)) {
+        my $literal_value = $self->parse_constant_integer_literal($payload);
+        Carp::confess "$context payload '$payload' is not an integer literal.\n"
+            unless defined $literal_value;
+        return $literal_value;
+    }
+
+    Carp::confess "$context has malformed constant payload '".ref($payload)."'.\n"
+        unless ref($payload) eq 'HASH';
+
+    my $kind = $payload->{kind} || '';
+    if ($kind eq 'scalar') {
+        return $self->evaluate_constant_integer_payload($payload->{payload}, $context);
+    }
+
+    if ($kind eq 'scalar_expr') {
+        return $self->evaluate_infix_constant_integer_expression(
+            $payload->{payload},
+            "$context scalar expression",
+        );
+    }
+
+    Carp::confess "$context resolved to aggregate payload kind '$kind', not a scalar integer.\n";
+}
+
+sub evaluate_infix_constant_integer_expression($self, $expr_text, $context) {
+    Carp::confess "$context has no expression text.\n"
+        unless defined($expr_text) && !ref($expr_text) && length($expr_text);
+
+    my @tokens = $self->tokenize_infix_constant_integer_expression($expr_text, $context);
+    my $index = 0;
+    my $value = $self->parse_infix_expression_bp(\@tokens, \$index, 0, $context);
+
+    Carp::confess "$context has trailing tokens after scalar expression.\n"
+        if $index < @tokens;
+
+    return $value;
+}
+
+sub tokenize_infix_constant_integer_expression($self, $expr_text, $context) {
+    my @tokens;
+    pos($expr_text) = 0;
+    while (pos($expr_text) < length($expr_text)) {
+        if ($expr_text =~ /\G\s+/gc) {
+            next;
+        }
+        if ($expr_text =~ /\G([()])\s*/gc) {
+            push @tokens, $1;
+            next;
+        }
+        if ($expr_text =~ /\G([+\-*\/%&|^])\s*/gc) {
+            push @tokens, $1;
+            next;
+        }
+        if ($expr_text =~ /\G([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)?(?:\[\d+\])*)\s*/gc) {
+            push @tokens, $1;
+            next;
+        }
+        if ($expr_text =~ /\G((?:\d+)?'s?[bodh][0-9A-Fa-f_+-]+|0x[0-9A-Fa-f_]+|0b[01_]+|0o[0-7_]+|[+-]?\d[\d_]*)\s*/gci) {
+            push @tokens, $1;
+            next;
+        }
+
+        Carp::confess "$context contains unsupported token near '".substr($expr_text, pos($expr_text), 24)."'.\n";
+    }
+
+    return @tokens;
+}
+
+sub parse_infix_expression_bp($self, $tokens, $index_ref, $min_bp, $context) {
+    Carp::confess "$context ended unexpectedly.\n"
+        if $$index_ref >= @$tokens;
+
+    my $token = $tokens->[$$index_ref++];
+    my $left;
+    if ($token eq '(') {
+        $left = $self->parse_infix_expression_bp($tokens, $index_ref, 0, $context);
+        Carp::confess "$context is missing a closing parenthesis.\n"
+            unless $$index_ref < @$tokens && $tokens->[$$index_ref] eq ')';
+        $$index_ref++;
+    } else {
+        $left = $self->evaluate_constant_integer_scalar($token, $context);
+    }
+
+    while ($$index_ref < @$tokens) {
+        my $operator = $tokens->[$$index_ref];
+        last if $operator eq ')';
+
+        my ($left_bp, $right_bp) = $self->constant_infix_binding_power($operator);
+        last unless defined $left_bp && $left_bp >= $min_bp;
+
+        $$index_ref++;
+        my $right = $self->parse_infix_expression_bp($tokens, $index_ref, $right_bp, $context);
+        $left = $self->apply_constant_width_operator($operator, [$left, $right], $context);
+    }
+
+    return $left;
+}
+
+sub constant_infix_binding_power($self, $operator) {
+    return unless defined($operator) && !ref($operator);
+    return (1, 2) if $operator eq '|';
+    return (3, 4) if $operator eq '^';
+    return (5, 6) if $operator eq '&';
+    return (7, 8) if $operator eq '+' || $operator eq '-';
+    return (9, 10) if $operator eq '*' || $operator eq '/' || $operator eq '%';
+    return;
+}
+
+sub parse_constant_integer_literal($self, $literal) {
+    return undef unless defined($literal) && !ref($literal);
+
+    my $text = $literal;
+    $text =~ s/_//g;
+
+    if ($text =~ /\A([+-]?)(\d+)\z/) {
+        return $self->bigint_from_digits($2, 10, $1);
+    }
+
+    if ($text =~ /\A0b([01]+)\z/i) {
+        return $self->bigint_from_digits($1, 2);
+    }
+
+    if ($text =~ /\A0o([0-7]+)\z/i) {
+        return $self->bigint_from_digits($1, 8);
+    }
+
+    if ($text =~ /\A0x([0-9A-Fa-f]+)\z/i) {
+        return $self->bigint_from_digits($1, 16);
+    }
+
+    if ($text =~ /\A(?:\d+)?'(s?)([bodh])([+-]?[0-9A-Fa-f]+)\z/i) {
+        my ($radix, $digits) = (lc($2), $3);
+        my %base_for = (
+            b => 2,
+            o => 8,
+            d => 10,
+            h => 16,
+        );
+        return $self->bigint_from_digits($digits, $base_for{$radix});
+    }
+
+    return undef;
+}
+
+sub bigint_from_digits($self, $digits, $base, $sign = '') {
+    return undef unless defined($digits) && !ref($digits) && defined($base);
+
+    my $negative = 0;
+    if ($digits =~ s/\A([+-])//) {
+        $negative = $1 eq '-' ? 1 : 0;
+    }
+    $negative = 1 if defined($sign) && $sign eq '-';
+
+    my %value_for = (
+        0 => 0, 1 => 1, 2 => 2, 3 => 3, 4 => 4,
+        5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9,
+        a => 10, b => 11, c => 12, d => 13, e => 14, f => 15,
+    );
+
+    return undef unless length $digits;
+    my $result = Math::BigInt->new(0);
+    for my $char (split //, lc($digits)) {
+        return undef unless exists $value_for{$char} && $value_for{$char} < $base;
+        $result->bmul($base);
+        $result->badd($value_for{$char});
+    }
+    $result->bneg if $negative;
+    return $result;
 }
 
 sub canonicalize_scalar_type_spec($self, %args) {
@@ -1955,44 +2264,183 @@ sub resolve_pending_direct_root_params($self, $module_name, $param_entries) {
 }
 
 sub parse_init_assignment_directive($self, $init_ast) {
-    my (undef, $init_payload) = @$init_ast;
-    my $init_spec = $self->unwrap_scalar_token($init_payload);
+    my (undef, $payload_list) = @$init_ast;
 
     Carp::confess
         "Malformed ':=' directive payload. ".
-        "The active contract currently supports only compact top-level init/reset directives like '(:= signal=literal)'. ".
+        "The active contract supports canonical top-level init/reset directives like '(:= (signal literal))'. ".
+        "Default mode also accepts legacy compact directives like '(:= signal=literal)'. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
-        unless defined $init_spec && !ref($init_spec);
+        unless ref($payload_list) eq 'ARRAY' && @$payload_list;
 
+    my @assignments;
+    if (@$payload_list == 1) {
+        my $init_payload = $self->unwrap_scalar_token($payload_list->[0]);
+        if (defined $init_payload && !ref($init_payload)) {
+            push @assignments, $self->parse_compact_init_assignment_spec($init_payload);
+        } else {
+            push @assignments, $self->parse_canonical_init_assignment_payload($init_payload);
+        }
+    } else {
+        for my $init_payload (@$payload_list) {
+            my $payload = $self->unwrap_scalar_token($init_payload);
+            Carp::confess
+                "Malformed ':=' directive payload. ".
+                "Multiple entries must use canonical pair payloads like '(:= (signal literal) (other value))'. ".
+                "Default-mode legacy compact entries remain single-entry only. ".
+                "See docs/USER_GUIDE.md for the current supported boundary.\n"
+                unless ref($payload) eq 'ARRAY';
+            push @assignments, $self->parse_canonical_init_assignment_payload($payload);
+        }
+    }
+
+    for my $assignment (@assignments) {
+        $self->register_init_assignment(%$assignment);
+    }
+}
+
+sub parse_compact_init_assignment_spec($self, $init_spec) {
     my ($signal_name, $reset_value) = $init_spec =~ /^([a-zA-Z_]\w*)=(.+)$/;
     Carp::confess
         "Unsupported ':=' directive '$init_spec'. ".
-        "The active contract currently supports only compact top-level init/reset directives like '(:= signal=literal)'. ".
+        "The active contract supports canonical top-level init/reset directives like '(:= (signal literal))'. ".
+        "Default mode also accepts legacy compact directives like '(:= signal=literal)'. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         unless defined $signal_name && defined $reset_value;
+
+    return {
+        signal_name => $signal_name,
+        reset_value => $reset_value,
+    };
+}
+
+sub parse_canonical_init_assignment_payload($self, $payload) {
+    Carp::confess
+        "Malformed ':=' directive payload. ".
+        "Canonical ':=' entries must be pairs like '(signal value)'. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless ref($payload) eq 'ARRAY' && @$payload == 2;
+
+    my ($signal_token, $reset_token) = @$payload;
+    my $signal_name = $self->unwrap_scalar_token($signal_token);
+    my $reset_value = $self->unwrap_scalar_token($reset_token);
+
+    Carp::confess
+        "Malformed ':=' directive payload. ".
+        "Canonical ':=' entries must use an HDL-identifier-compatible signal name and a reset/default expression. ".
+        "See docs/USER_GUIDE.md for the current supported boundary.\n"
+        unless defined($signal_name)
+            && !ref($signal_name)
+            && $signal_name =~ /\A[A-Za-z_]\w*\z/
+            && defined($reset_value);
+
+    return {
+        signal_name => $signal_name,
+        reset_value => $reset_value,
+    };
+}
+
+sub register_init_assignment($self, %args) {
+    my $signal_name = $args{signal_name};
+    my $reset_value = $args{reset_value};
+    my $reset_value_display = $self->render_lispish_payload($reset_value);
 
     my $reset_expr = eval { $self->{expression_builder}->parse_expression($reset_value) };
     my $reset_expr_error = $@;
     Carp::confess
-        "Unsupported ':=' reset value '$reset_value' for signal '$signal_name'. ".
-        "The active contract currently expects a valid scalar reset/default expression on the right-hand side. ".
+        "Unsupported ':=' reset value '$reset_value_display' for signal '$signal_name'. ".
+        "The active contract currently expects a valid reset/default expression on the right-hand side. ".
         "See docs/USER_GUIDE.md for the current supported boundary.\n"
         if $reset_expr_error || !$reset_expr;
 
+    my $reset_value_text = $self->expression_to_systemverilog_text($reset_expr);
+    $reset_value_text = $reset_value_display
+        unless defined($reset_value_text) && length($reset_value_text);
+
     my %register_args = (
         attributes => {
-            reset_value => $reset_value,
+            reset_value => $reset_value_text,
+            reset_expr => $reset_expr,
             is_explicit_reset => 1,
         },
     );
-    if ($reset_expr->can('width') && defined($reset_expr->width) && $reset_expr->width > 1) {
-        $register_args{width} = $reset_expr->width;
+    my $reset_width = $self->{expression_builder}->infer_exact_expression_width($reset_expr);
+    if (defined($reset_width) && $reset_width > 1) {
+        $register_args{width} = $reset_width;
     }
 
     my $signal = $self->{signal_manager}->register_signal($signal_name, %register_args);
-    $signal->{initial_value} = $reset_value;
-    $signal->set_attribute('reset_value', $reset_value);
+    $signal->{initial_value} = $reset_value_text;
+    $signal->set_attribute('reset_value', $reset_value_text);
+    $signal->set_attribute('reset_expr', $reset_expr);
     $signal->set_attribute('is_explicit_reset', 1);
+}
+
+sub render_lispish_payload($self, $payload) {
+    return 'undef' unless defined $payload;
+    return $payload unless ref($payload);
+
+    if (ref($payload) eq 'ARRAY') {
+        return '(' . join(' ', map { $self->render_lispish_payload($_) } @$payload) . ')';
+    }
+
+    return ref($payload);
+}
+
+sub expression_to_systemverilog_text($self, $expr) {
+    return undef unless $expr && blessed($expr) && $expr->can('to_systemverilog');
+
+    if ($expr->isa('FSM::CoreAST::BinaryOp')) {
+        my $operator = $expr->operator;
+        my %op_map = (
+            and => '&',
+            or  => '|',
+            xor => '^',
+            add => '+',
+            sub => '-',
+            mul => '*',
+            div => '/',
+            mod => '%',
+        );
+        my $op = $op_map{$operator} // $operator;
+        my $left = $self->expression_to_systemverilog_text($expr->left);
+        my $right = $self->expression_to_systemverilog_text($expr->right);
+        $left = defined($left) && length($left) ? $left : '0';
+        $right = defined($right) && length($right) ? $right : '0';
+
+        return "{$left, $right}" if $op eq 'concat';
+        $left = "($left)" if $expr->left && blessed($expr->left) && $expr->left->isa('FSM::CoreAST::BinaryOp');
+        $right = "($right)" if $expr->right && blessed($expr->right) && $expr->right->isa('FSM::CoreAST::BinaryOp');
+        return "$left $op $right";
+    }
+
+    if ($expr->isa('FSM::CoreAST::UnaryOp')) {
+        my %op_map = (
+            not => '~',
+            neg => '-',
+            pos => '+',
+        );
+        my $op = $op_map{$expr->operator} // $expr->operator;
+        my $operand = $self->expression_to_systemverilog_text($expr->operand);
+        $operand = defined($operand) && length($operand) ? $operand : '0';
+        return "$op($operand)";
+    }
+
+    if ($expr->isa('FSM::CoreAST::Concatenation')) {
+        my @operands = map {
+            my $operand_text = $self->expression_to_systemverilog_text($_);
+            defined($operand_text) && length($operand_text) ? $operand_text : '0';
+        } @{$expr->operands || []};
+        return '{' . join(', ', @operands) . '}';
+    }
+
+    my $text = eval { $expr->to_systemverilog(undef) };
+    return $text if !$@ && defined($text) && length($text);
+
+    $text = eval { $expr->to_systemverilog() };
+    return $text if !$@ && defined($text) && length($text);
+
+    return undef;
 }
 
 

@@ -1,9 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-16
+### canonical init/default and expression-backed +size slots shipped
+- Added the canonical strict-safe `(:= (signal value))` init/reset directive form, including multi-entry directives and nested Lisp-ish expression values that may reference constants, enum members, params/generics, and aggregate scalar leaves.
+- Kept legacy compact `(:= signal=value)` as default-mode compatibility residue while updating strict-mode diagnostics to point to the canonical pair form.
+- Widened direct-root `+size` width entries so they may resolve positive integer constant expressions over literals, constants, enum members, params/generics, aggregate scalar leaves, and bounded arithmetic/bitwise operators before generation.
+- Fixed explicit reset propagation for internal sequential LHS signals by reading reset metadata from the LHS signal object during enable-graph reset lookup.
+- Added [t/corpus/direct_canonical_init_directive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_canonical_init_directive.fsm) and [t/corpus/direct_size_expression_widths.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_widths.fsm) as supported-smoke corpus assets, and updated the user guide plus mdBook language/symbol/FSM chapters.
+
 ### regression corpus now locks compact init strict cut
 - Added [t/corpus/legacy_compact_init_directive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/legacy_compact_init_directive.fsm) as a paired default-compatible / strict-rejected corpus asset for the legacy compact top-level `(:= signal=value)` directive.
-- Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm), [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so default mode keeps the compact `:=` surface as compatibility residue while strict mode rejects it with the explicit no-strict-mode-replacement note.
+- Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm), [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so default mode keeps the compact `:=` surface as compatibility residue while strict mode rejects it with the canonical pair-form migration hint.
 
 ## 2026-04-15
 ### regression corpus now locks legacy reset spelling strict cuts

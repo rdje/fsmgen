@@ -20,6 +20,8 @@ mkdir $libdir or die "Cannot create $libdir: $!";
 
 my $direct_path = File::Spec->catfile($tempdir, 'strict_compact_init_direct.fsm');
 my $direct_out_path = File::Spec->catfile($tempdir, 'strict_compact_init_direct.sv');
+my $canonical_direct_path = File::Spec->catfile($tempdir, 'strict_canonical_init_direct.fsm');
+my $canonical_direct_out_path = File::Spec->catfile($tempdir, 'strict_canonical_init_direct.sv');
 
 my $child_top_path = File::Spec->catfile($tempdir, 'strict_compact_init_child_top.fsm');
 my $child_out_path = File::Spec->catfile($tempdir, 'strict_compact_init_child_top.sv');
@@ -76,6 +78,26 @@ write_file(
 FSM
 );
 
+write_file(
+    $canonical_direct_path,
+    <<'FSM'
+(?fsm:strict_canonical_init_direct
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (tester_reset 1)
+    (A 1)
+  )
+  (:= (tester_reset 1))
+  (idle
+    (A = tester_reset)
+  )
+)
+FSM
+);
+
 subtest "default mode still accepts the compact ':=' directive as compatibility residue" => sub {
     my $pipeline = FSM::Pipeline::HDLGenerator->new(
         target_language => 'systemverilog',
@@ -89,6 +111,29 @@ subtest "default mode still accepts the compact ':=' directive as compatibility 
         qr/\bmodule\s+strict_compact_init_direct\b/s,
         "default-mode pipeline still compiles the compact ':=' form",
     );
+};
+
+subtest "strict mode accepts the canonical Lisp-ish ':=' directive" => sub {
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug_level => 0,
+        quiet => 1,
+        strict_mode => 1,
+    );
+    my $result = $pipeline->generate_hdl_from_file($canonical_direct_path);
+
+    like(
+        $result->{hdl_code},
+        qr/\bmodule\s+strict_canonical_init_direct\b/s,
+        "strict-mode pipeline compiles the canonical ':=' form",
+    );
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--strict', '--quiet', '-o', $canonical_direct_out_path, $canonical_direct_path],
+    );
+
+    ok($success, "CLI strict mode accepts the canonical ':=' form");
+    ok(-e $canonical_direct_out_path, "CLI strict mode emits HDL for the canonical ':=' form");
 };
 
 subtest "shared frontend strict boundary rejects the legacy compact ':=' directive" => sub {
@@ -106,7 +151,7 @@ subtest "shared frontend strict boundary rejects the legacy compact ':=' directi
 
     like(
         $error,
-        qr/Strict mode rejects the legacy compact '\(:= signal=value\)' top-level directive in source '\Q$direct_path\E'.*no strict-mode replacement.*re-run without strict mode if you still need the compact ':=' surface/s,
+        qr/Strict mode rejects the legacy compact '\(:= signal=value\)' top-level directive in source '\Q$direct_path\E'.*Use the canonical '\(:= \(signal value\)\)' form.*re-run without strict mode if you still need the compact ':=' surface/s,
         "shared frontend keeps the explicit compact ':=' support-tier note",
     );
 };
@@ -127,7 +172,7 @@ subtest "strict pipeline and CLI reject compact ':=' at the top level" => sub {
 
     like(
         $pipeline_error,
-        qr/Source file:\s+'\Q$direct_path\E'.*Strict mode rejects the legacy compact '\(:= signal=value\)' top-level directive.*no strict-mode replacement.*compact ':=' surface/s,
+        qr/Source file:\s+'\Q$direct_path\E'.*Strict mode rejects the legacy compact '\(:= signal=value\)' top-level directive.*Use the canonical '\(:= \(signal value\)\)' form.*compact ':=' surface/s,
         "strict pipeline keeps source-file context around the compact ':=' boundary",
     );
 
@@ -147,7 +192,7 @@ subtest "strict pipeline and CLI reject compact ':=' at the top level" => sub {
 
     like(
         $combined_output,
-        qr/Source file:\s+'\Q$direct_path\E'.*Strict mode rejects the legacy compact '\(:= signal=value\)' top-level directive.*no strict-mode replacement.*compact ':=' surface/s,
+        qr/Source file:\s+'\Q$direct_path\E'.*Strict mode rejects the legacy compact '\(:= signal=value\)' top-level directive.*Use the canonical '\(:= \(signal value\)\)' form.*compact ':=' surface/s,
         "CLI strict mode surfaces the same compact ':=' support-tier note",
     );
 };
@@ -169,7 +214,7 @@ subtest "strict mode also rejects external ?dtc children that use compact ':='" 
 
     like(
         $pipeline_error,
-        qr/Source file:\s+'\Q$child_path\E'.*Parent composition source:\s+'\Q$child_top_path\E'.*Generated child source:\s+'\?dtc' 'child_compact_init_dt'.*Strict mode rejects the legacy compact '\(:= signal=value\)' top-level directive in source 'child_compact_init_dt'.*no strict-mode replacement.*compact ':=' surface/s,
+        qr/Source file:\s+'\Q$child_path\E'.*Parent composition source:\s+'\Q$child_top_path\E'.*Generated child source:\s+'\?dtc' 'child_compact_init_dt'.*Strict mode rejects the legacy compact '\(:= signal=value\)' top-level directive in source 'child_compact_init_dt'.*Use the canonical '\(:= \(signal value\)\)' form.*compact ':=' surface/s,
         "strict pipeline keeps full child-source context around the compact ':=' boundary",
     );
 
@@ -189,7 +234,7 @@ subtest "strict mode also rejects external ?dtc children that use compact ':='" 
 
     like(
         $combined_output,
-        qr/Source file:\s+'\Q$child_path\E'.*Parent composition source:\s+'\Q$child_top_path\E'.*Generated child source:\s+'\?dtc' 'child_compact_init_dt'.*Strict mode rejects the legacy compact '\(:= signal=value\)' top-level directive in source 'child_compact_init_dt'.*no strict-mode replacement.*compact ':=' surface/s,
+        qr/Source file:\s+'\Q$child_path\E'.*Parent composition source:\s+'\Q$child_top_path\E'.*Generated child source:\s+'\?dtc' 'child_compact_init_dt'.*Strict mode rejects the legacy compact '\(:= signal=value\)' top-level directive in source 'child_compact_init_dt'.*Use the canonical '\(:= \(signal value\)\)' form.*compact ':=' surface/s,
         "CLI strict mode surfaces the same compact ':=' child-source boundary",
     );
 };

@@ -103,6 +103,39 @@ width-implicit until the HDL context resolves them. Generated-child parameter
 override binding is now a separate instance-side contract that targets these
 direct `+params` declarations.
 
+## Using Symbols In Widths
+
+`+size` width entries are constant-expression slots too. That means you can
+name width ingredients once and reuse them without littering the source with
+magic numbers:
+
+```lisp
+(+constants
+  (BYTE_W 8)
+  (LANES (4 8))
+)
+(+enums
+  (mode_w
+    (CTRL 4)
+    (DATA 8)
+  )
+)
+(+params
+  (EXTRA_W 1)
+  (CTRL_W (+ BYTE_W EXTRA_W))
+)
+(+size
+  (payload (+ BYTE_W EXTRA_W))
+  (mode mode_w.DATA)
+  (lane LANES[1])
+  (ctrl CTRL_W)
+)
+```
+
+The resolved value must be one positive integer before generation. Named types
+still work in this same slot, so `(+size (frame frame_t))` remains the way to
+attach a declared aggregate/scalar type rather than computing a raw width.
+
 ## Constants
 
 Use `+constants` for named scalar values and bounded aggregate values.

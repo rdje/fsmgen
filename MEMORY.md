@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: canonical init and expression-backed +size slots shipped
+- Continued `R8`/`R12` by making canonical top-level init/reset metadata use
+  the strict-safe Lisp-ish pair form `(:= (signal value))` while keeping legacy
+  compact `(:= signal=value)` as default-mode compatibility residue.
+- Important continuity note:
+  - canonical `:=` values are now expression slots, so nested Lisp-ish
+    arithmetic/bitwise expressions may use constants, enum members, params, and
+    aggregate scalar leaves,
+  - `+size` width entries are now constant-expression slots too; params are
+    resolved before size parsing so widths may use constants/enums/params and
+    nested operators when they fold to one positive integer,
+  - [perl/FSM/Synthesis/EnableGraph/SignalSupport.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Synthesis/EnableGraph/SignalSupport.pm)
+    now reads reset metadata from the LHS signal object, so internal flops
+    driven by `<=` preserve explicit `:=` reset values even when the internal
+    signal is not a module port,
+  - [t/corpus/direct_canonical_init_directive.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_canonical_init_directive.fsm)
+    and [t/corpus/direct_size_expression_widths.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_widths.fsm)
+    are named supported-smoke corpus fixtures, and
+  - [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
+    now expects `42` catalog entries and `12` supported-smoke entries.
+
 ## 2026-04-16: corpus now covers compact init strict cut
 - Continued `R12` by adding the compact top-level `(:= signal=value)` strict
   compatibility-boundary contract to the named corpus.
@@ -9,10 +30,11 @@ This is the live continuity document for fast session recovery after crashes, re
     `legacy.compact_init_directive.strict_rejection`,
   - default mode must still compile the fixture through pipeline and CLI,
   - strict mode must reject it through pipeline and CLI with the explicit
-    no-strict-mode-replacement note for the compact `:=` surface,
+    canonical `(:= (signal value))` migration hint for the compact `:=`
+    surface,
   - and [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t)
-    now expects `40` catalog entries, `7` legacy-out-of-scope entries, and
-    `23` expected-failure entries.
+    now expects `42` catalog entries, `7` legacy-out-of-scope entries, `23`
+    expected-failure entries, and `12` supported-smoke entries.
 
 ## 2026-04-15: corpus now covers legacy reset strict cuts
 - Continued `R12` by adding the strict-mode compatibility-boundary side of the
@@ -1801,7 +1823,8 @@ This is the live continuity document for fast session recovery after crashes, re
   - [perl/FSM/Pipeline/SourceFrontend.pm](/Users/richarddje/Documents/github/fsmgen/perl/FSM/Pipeline/SourceFrontend.pm) now rejects the legacy compact top-level `(:= signal=value)` directive in strict mode on the current `?fsm:` / `?dt:` direct-root path while leaving default-mode compatibility unchanged,
   - that check lives in the shared direct-root strict owner, so it reaches those direct roots and generated child sources through the same semantic-module path while still leaving top-level `?mod:` / `?module:` roots unchanged,
   - [t/257-strict-mode-compact-init-boundary.t](/Users/richarddje/Documents/github/fsmgen/t/257-strict-mode-compact-init-boundary.t) now locks the boundary through the shared frontend plus pipeline and CLI entry points for both direct roots and external `?dtc` child sources,
-  - and the shipped strict-mode note is intentionally honest: the current strict surface does not yet provide a canonical replacement for the compatibility `:=` form.
+  - and strict mode now points users at the canonical pair replacement
+    `(:= (signal value))` for the compact compatibility `:=` form.
 
 ## 2026-04-01: the corpus now counts missing generated-child lookup as composition-contract behavior too
 - Continued the visible `R12` lane by widening the composition-contract bucket beyond missing `.rtlif` sidecars into missing external generated-child source lookup too.

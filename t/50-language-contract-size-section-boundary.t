@@ -92,6 +92,51 @@ FSM
     like($width_error, qr/Malformed '\+size' entry for signal 'A'/, 'non-positive width gets a targeted diagnostic');
 };
 
+subtest '+size width entries accept constant-expression values' => sub {
+    my ($fsm_module, $adapter) = parse_success_with_adapter(<<'FSM');
+(?fsm:size_expression_contract
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+constants
+    (BASE_W 2)
+    (INC_W 1)
+    (WIDTHS (4 8))
+  )
+  (+enums
+    (width_e
+      (FLAG 1)
+    )
+  )
+  (+params
+    (PARAM_W (+ BASE_W INC_W))
+  )
+  (+size
+    (A (+ BASE_W INC_W))
+    (B (+ PARAM_W width_e.FLAG))
+    (C WIDTHS[1])
+    (D 0x4)
+    (E (and 7 3))
+  )
+  (idle
+    (A <= 1)
+    (B <= A)
+    (C <= B)
+    (D <= C)
+    (E <= A)
+  )
+)
+FSM
+
+    ok($fsm_module, 'FSM with expression-backed +size widths parses successfully');
+    is($adapter->{signal_manager}->get_signal('A')->width, 3, '+size resolves nested constant arithmetic');
+    is($adapter->{signal_manager}->get_signal('B')->width, 4, '+size resolves params and enum leaves');
+    is($adapter->{signal_manager}->get_signal('C')->width, 8, '+size resolves aggregate scalar leaves');
+    is($adapter->{signal_manager}->get_signal('D')->width, 4, '+size resolves unsized hex literal widths');
+    is($adapter->{signal_manager}->get_signal('E')->width, 3, '+size resolves Lisp-ish bitwise aliases');
+};
+
 subtest 'pipeline and CLI do not emit HDL for malformed +size sections' => sub {
     my $fsm_path = write_fsm('bad_size_cli.fsm', <<'FSM');
 (?fsm:bad_size_cli
@@ -132,6 +177,15 @@ sub parse_success {
     my $raw_ast = Lispish::multi($fsm_path);
     my $adapter = FSM::Adapter::FSMGenFull->new(debug => 0);
     return $adapter->parse_fsm($raw_ast);
+}
+
+sub parse_success_with_adapter {
+    my ($fsm_text) = @_;
+    my $fsm_path = write_fsm('parse_success_' . int(rand(1_000_000)) . '.fsm', $fsm_text);
+    my $raw_ast = Lispish::multi($fsm_path);
+    my $adapter = FSM::Adapter::FSMGenFull->new(debug => 0);
+    my $module = $adapter->parse_fsm($raw_ast);
+    return ($module, $adapter);
 }
 
 sub parse_failure {

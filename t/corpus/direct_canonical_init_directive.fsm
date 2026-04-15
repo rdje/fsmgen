@@ -1,0 +1,19 @@
+(?fsm:direct_canonical_init_directive
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (START 1)
+    (A 1)
+  )
+
+  (:= (A 1'b1))
+
+  (idle
+    (<START
+      (A <= 1'b0)
+    )
+  )
+)

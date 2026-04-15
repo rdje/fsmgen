@@ -54,6 +54,25 @@ FSM
         qr/Unsupported ':=' directive 'BROKEN'/,
         "compact ':=' directive without signal=value gets a targeted diagnostic",
     );
+
+    my $canonical_error = parse_failure(<<'FSM');
+(?fsm:bad_canonical_init_directive_shape
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (:= (tester_reset))
+  (idle
+    (A = 1)
+  )
+)
+FSM
+
+    like(
+        $canonical_error,
+        qr/Malformed ':=' directive payload/,
+        "canonical ':=' directive without a value gets a targeted diagnostic",
+    );
 };
 
 subtest "pipeline and CLI do not emit HDL for malformed ':=' directive shapes" => sub {

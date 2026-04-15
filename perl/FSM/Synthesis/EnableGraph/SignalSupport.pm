@@ -329,6 +329,24 @@ sub get_reset_value_from_ast($self, $lhs_ast) {
         }
     }
 
+    if ($lhs_ast->can('signal')) {
+        my $signal = $lhs_ast->signal;
+        if ($signal && $signal->can('get_attribute')) {
+            my $reset_val = $signal->get_attribute('reset_value');
+            if (defined $reset_val) {
+                fsm_debug("  LHS signal reset_value: '$reset_val'", 3);
+                return $reset_val;
+            }
+        }
+        if ($signal && $signal->can('attributes') && $signal->attributes) {
+            my $reset_val = $signal->attributes->{reset_value};
+            if (defined $reset_val) {
+                fsm_debug("  LHS signal attribute reset_value: '$reset_val'", 3);
+                return $reset_val;
+            }
+        }
+    }
+
     fsm_debug("  No AST reset value, using fallback", 3);
     return $ctx->{enable_graph_assignment_support}->get_reset_value($lhs_name);
 }
@@ -373,6 +391,24 @@ sub get_default_value_from_ast($self, $lhs_ast) {
         if (defined $reset_val) {
             fsm_debug("  Using AST reset_value as default: '$reset_val'", 3);
             return $reset_val;
+        }
+    }
+
+    if ($lhs_ast->can('signal')) {
+        my $signal = $lhs_ast->signal;
+        if ($signal && $signal->can('get_attribute')) {
+            my $reset_val = $signal->get_attribute('reset_value');
+            if (defined $reset_val) {
+                fsm_debug("  Using LHS signal reset_value as default: '$reset_val'", 3);
+                return $reset_val;
+            }
+        }
+        if ($signal && $signal->can('attributes') && $signal->attributes) {
+            my $reset_val = $signal->attributes->{reset_value};
+            if (defined $reset_val) {
+                fsm_debug("  Using LHS signal attribute reset_value as default: '$reset_val'", 3);
+                return $reset_val;
+            }
         }
     }
 

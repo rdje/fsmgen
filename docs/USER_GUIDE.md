@@ -93,7 +93,7 @@ Standard used here:
 ### Fully supported single-module constructs
 - Root form `(?fsm:module_name ...)` with an HDL-identifier-compatible module name (`[A-Za-z_]\\w*`)
 - Root form `(?dt:module_name ...)` with an HDL-identifier-compatible module name (`[A-Za-z_]\\w*`)
-  - top-level standalone-DT content is currently limited to the conventional `(+system ...)` form, `(+size ...)`, `(+constants ...)`, `(+enums ...)`, bounded `(+types ...)`, `(+define ...)`, `(+params ...)`, bounded `(+import ...)`, compact top-level `(:= signal=value)` directives, and general DT blocks like `(-foo ...)`
+  - top-level standalone-DT content is currently limited to the conventional `(+system ...)` form, `(+size ...)`, `(+constants ...)`, `(+enums ...)`, bounded `(+types ...)`, `(+define ...)`, `(+params ...)`, bounded `(+import ...)`, canonical top-level `(:= (signal value))` directives, default-mode compact `(:= signal=value)` compatibility directives, and general DT blocks like `(-foo ...)`
   - explicit `(+system ...)` yields `clk` plus the authored reset signal in standalone-DT roots too
   - without explicit `(+system ...)`, purely combinational `?dt:name` modules expose no implicit system ports
   - without explicit `(+system ...)`, any `?dt:name` module that contains at least one sequential assignment implicitly exposes `clk` / `rst_n`
@@ -134,7 +134,7 @@ Reset-state note:
 - Bounded package-import sections:
   - `(+import pkg_name ...)`
   - imported namespaced package scalar leaves such as `shared.RESET_BYTE`, `shared.mode.BUSY`, `shared.BYTES[1]`, and `shared.FRAME.flag` currently resolve as literals in direct-root assignment RHS expressions and guard equality conditions
-- Compact top-level init/reset directives like `(:= tester_reset=1)`
+- Canonical top-level init/reset directives like `(:= (tester_reset 1))`
 
 Combinational DT note:
 - Both syntaxes are decision trees, but they play different roles.
@@ -494,11 +494,16 @@ Test nodes:
 This is the current `R8` draft normative contract for the symbol-definition and import families that are now regression-backed explicitly.
 
 `(+size ...)`:
-- Declares signal widths through `(signal positive_integer_width)` entries.
+- Declares signal widths through `(signal width_or_type)` entries.
+- `width_or_type` may be:
+  - a positive integer literal such as `1`, `8`, `0x10`, `0b1000`, or `8'h10`
+  - a named scalar or aggregate type such as `bit`, `byte_t`, `frame_t`, or `pkg_name.byte_t`
+  - a positive integer constant expression using literals, same-root/imported constants, enum members, params/generics, aggregate scalar leaves, and the bounded Lisp-ish arithmetic/bitwise operators `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^` plus aliases `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, `xor`
 - The legacy empty form `(+size)` remains supported as a no-op in default mode because it still exists in compatibility coverage.
 - Strict mode rejects the empty no-op form and requires either explicit width entries or no `+size` section at all.
 - Current active use:
   - `(+size (A 8) (B 8))`
+  - `(+size (DATA (+ BYTE_W 1)) (MODE mode.WIDTH) (LANE LANES[0]))`
   - `(+size)`
 - Malformed payloads like `(+size BROKEN)`, malformed entries like `(+size (A))`, and non-positive widths like `(+size (A 0))` are rejected explicitly.
 
@@ -762,7 +767,7 @@ Boundary note:
   - strict mode also rejects the long direct-root alias `?module:` and requires canonical `?mod:` for module/entity-architecture roots,
   - strict mode also rejects the legacy empty `(+size)` no-op section and requires either explicit width entries or no `+size` section at all,
   - strict mode also rejects legacy or misleading reset spellings such as `(+system (clock clk) (asreset rstn))` and `(+system (clock clk) (sreset rstn))`; use `(+system (clock clk) (sreset reset))` for synchronous active-high reset or `(+system (clock clk) (areset rst_n))` for asynchronous active-low reset,
-  - strict mode also rejects the legacy compact top-level `(:= signal=value)` directive on the current `?fsm:` / `?dt:` direct-root path and under generated-child realization, and currently has no canonical strict-mode replacement for that compatibility form,
+  - strict mode also rejects the legacy compact top-level `(:= signal=value)` directive on the current `?fsm:` / `?dt:` direct-root path and under generated-child realization; use canonical `(:= (signal value))` instead,
   - requires the modern explicit `?fsm:module_name` root form for FSM sources,
   - and otherwise leaves the currently accepted `?dt:`, `?mod:`, and `?top:` roots unchanged while their broader contracts continue to settle.
 - In practice:
@@ -813,7 +818,8 @@ Current top-level boundary:
   - `(+enums ...)`
   - `(+define ...)`
   - `(+params ...)`
-  - compact top-level `(:= signal=value)` directives
+  - canonical top-level `(:= (signal value))` directives
+  - default-mode compact top-level `(:= signal=value)` compatibility directives
   - general DT blocks such as `(-foo ...)`
 - Rejected explicitly:
   - regular FSM-state DT blocks such as `(idle ...)`
@@ -974,25 +980,41 @@ Boundary note:
 ### Draft normative contract for the `:=` init/reset directive
 This is the current `R8` draft normative contract for the active top-level init/reset boundary.
 
-Accepted legacy-compatible form:
+Canonical supported form:
+```lisp
+(:= (tester_reset 1))
+(:= (hs_sync_sequence 8'h1d))
+(:=
+  (tester_reset 1)
+  (mode 2'b10)
+)
+(:= (mode_reset (+ RESET_BASE mode.IDLE)))
+(:= (lane_reset (and RESET_MASK DEFAULT_MASK)))
+```
+
+Accepted default-mode compatibility form:
 ```lisp
 (:= tester_reset=1)
-(:= hs_sync_sequence=8'x1d)
+(:= hs_sync_sequence=8'h1d)
 ```
 
 Current meaning:
 - `:=` is a top-level directive, not a state and not a DT action.
-- The current supported payload is the compact single-token form `signal=value`.
+- The canonical supported payload is one or more Lisp-ish pairs `(signal value)`.
+- `value` is an expression slot, not only a scalar token: it may be a literal, a named constant/enum/param, an aggregate scalar leaf, or a nested Lisp-ish arithmetic/bitwise expression using the same active expression surface where the referenced symbols resolve before generation.
+- The legacy compact single-token form `signal=value` remains accepted in default mode as compatibility residue.
 - The directive records explicit reset/default metadata for `signal`.
 - The active shipped examples use scalar RHS values such as:
   - `1`
   - `6'0`
-  - `8'x1d`
+  - `8'h1d`
   - `64'x0123456789abcdef`
 
 Current boundary:
 - Supported:
-  - `(:= signal=literal_or_scalar_expr)` at top level inside `(?fsm:name ...)`
+  - `(:= (signal literal_or_constant_expr))` at top level inside `(?fsm:name ...)` or `(?dt:name ...)`
+  - `(:= (signal literal_or_scalar_expr) (other value))` for multiple canonical entries in one directive
+  - `(:= signal=literal_or_scalar_expr)` in default mode only as compatibility residue
 - Rejected explicitly:
   - malformed non-scalar payload shapes such as `(:= (tester_reset=1 extra))`
   - malformed payloads such as `(:= BROKEN)`
@@ -1002,11 +1024,12 @@ Current boundary:
   - empty guarded blocks such as `(<req)`
 
 Boundary note:
-- This slice makes the legacy compact `:=` form explicit and regression-backed instead of leaving it as accidental parser behavior.
+- The Lisp-ish pair form `(:= (signal value))` is now the canonical strict-mode surface.
+- The legacy compact `:=` form is explicit and regression-backed as default-mode compatibility residue instead of accidental parser behavior.
 - Malformed `:=` payload shapes and malformed compact directives are now regression-backed across parser, pipeline, and CLI too.
 - Default mode still accepts the compact `:=` form as compatibility residue.
-- Strict mode now rejects the compact `:=` form on the current `?fsm:` / `?dt:` direct-root path, and the current shipped strict surface does not yet provide a canonical replacement for it.
-- Future canonical alternatives such as `(:= (lhs value))` or `(lhs := value)` are design ideas only and are preserved in [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), not part of the active contract yet.
+- Strict mode now rejects the compact `:=` form on the current `?fsm:` / `?dt:` direct-root path and points to canonical `(:= (signal value))`.
+- The bare infix alternative `(lhs := value)` remains unsupported.
 
 ## 3) Basic usage
 From repository root:

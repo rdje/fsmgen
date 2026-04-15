@@ -238,8 +238,7 @@ sub enforce_strict_source_boundary ($class, %args) {
 
             confess
                 "Strict mode rejects the legacy compact '(:= signal=value)' top-level directive in source '$source_label'. "
-              . "This compatibility form has no strict-mode replacement in the current shipped contract; "
-              . "use explicit reset behavior in regular FSM/DT logic if that fits your design, "
+              . "Use the canonical '(:= (signal value))' form for strict-mode init/default metadata, "
               . "or re-run without strict mode if you still need the compact ':=' surface. "
               . "See docs/USER_GUIDE.md for the current strict-mode boundary.\n";
         }
@@ -457,7 +456,14 @@ sub _looks_active_low_reset_name ($class, $reset_name) {
 sub _is_legacy_compact_init_directive ($class, $node) {
     return 0 unless ref($node) eq 'ARRAY';
     return 0 unless defined($node->[0]) && !ref($node->[0]) && $node->[0] eq ':=';
-    return 1;
+    for my $payload (@$node[1 .. $#$node]) {
+        my $unwrapped = $class->_unwrap_scalar_token($payload);
+        return 1
+            if defined($unwrapped)
+                && !ref($unwrapped)
+                && $unwrapped =~ /\A[A-Za-z_]\w*=.+\z/;
+    }
+    return 0;
 }
 
 sub _direct_root_package_imports ($class, %args) {

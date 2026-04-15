@@ -320,7 +320,7 @@ FSM
 
     like(
         $pipeline_error,
-        qr/Malformed '\+size' entry for signal 'OUT'.*positive integer width, a named type.*positive integer scalar symbol/s,
+        qr/Malformed '\+size' entry for signal 'OUT'.*positive integer width, a named type.*positive integer constant expression.*must resolve to a positive integer width/s,
         'pipeline reports non-positive direct-root scalar symbol widths explicitly',
     );
 
@@ -332,7 +332,7 @@ FSM
     ok(!-e $output_path, 'CLI does not emit HDL for non-positive direct-root scalar symbol widths');
     like(
         $combined_output,
-        qr/Malformed '\+size' entry for signal 'OUT'.*positive integer width, a named type.*positive integer scalar symbol/s,
+        qr/Malformed '\+size' entry for signal 'OUT'.*positive integer width, a named type.*positive integer constant expression.*must resolve to a positive integer width/s,
         'CLI surfaces the non-positive direct-root scalar symbol width boundary',
     );
     isnt($error_code, 0, 'CLI exits non-zero for non-positive direct-root scalar symbol widths');
