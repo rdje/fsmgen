@@ -1,5 +1,28 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: planned canonical assignment pair form
+- Captured user steering for a future canonical assignment surface:
+  `(assign-op (lhs rhs))` and `(assign-op (lhs rhs) <cond)`.
+- Rationale:
+  - the shape is more consistently Lisp-ish than the current infix assignment
+    forms,
+  - it aligns with the already-shipped canonical reset/default pair form
+    `(:= (signal value))`,
+  - it can express every current assignment family without changing backend
+    semantics: `=`, `<-`, `<=`, `<-=`, `<=+`, and delayed-pulse `<N`,
+  - the optional `<cond>` should be assignment metadata equivalent to today's
+    suffix guards, not an RHS expression,
+  - the pair should allow the full active LHS/RHS surface including bit/slice
+    targets, aggregate leaves, LHS deconstruct, RHS concat, constants, params,
+    and nested Lisp-ish expressions,
+  - and the implementation target should normalize both the new pair form and
+    existing infix forms into the same assignment AST/IR so generation remains a
+    pure walk over normalized semantics.
+- Status:
+  - documented as planned/future syntax only,
+  - not active parser syntax yet,
+  - existing infix forms remain the shipped supported syntax.
+
 ## 2026-04-16: runtime div/mod support belongs in the support corpus
 - Continued `R12` by adding direct runtime RHS division and modulus to the
   named supported-smoke corpus.

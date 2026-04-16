@@ -105,6 +105,56 @@ The split is intentional source syntax, not emitted HDL pasted into the
 renderer. `HIGH` receives the high RHS slice, `LOW` receives the low slice, and
 the same high-to-low rule applies to later operands.
 
+### Planned Canonical Pair Form
+
+FSMGen is moving toward a more regular Lisp-ish assignment spelling, but this
+form is not shipped yet. Treat it as the preferred future direction, not as
+current accepted syntax.
+
+The intended shape is:
+
+```lisp
+(assign-op (lhs rhs))
+(assign-op (lhs rhs) <cond)
+```
+
+where `assign-op` is one of the same assignment families:
+
+```lisp
+(=   (OUT VALUE))
+(<-  (Q D))
+(<=  (Q D))
+(<-= (Q D))
+(<=+ (Q D))
+(<1  (PULSE 1))
+```
+
+The optional third form is assignment-level condition metadata:
+
+```lisp
+(=  (OUT VALUE) <valid)
+(<- (Q D) <enable)
+(=  (OUT (+ A B)) <(& valid ready))
+```
+
+That condition is not part of the RHS expression. It means “perform this
+assignment when the guard is true,” exactly like today’s assignment suffix
+guards.
+
+The same pair form should eventually cover the full LHS/RHS surface:
+
+```lisp
+(=  (OUT (concat HI LO)))
+(=  ((concat HI LO) DATA))
+(<- ((cat REG_HI REG_LO) NEXT_DATA) <load)
+(=  (FRAME.payload TAIL))
+```
+
+The compatibility plan is to keep existing infix forms such as `(OUT = VALUE)`
+and `(Q <- D)` while normalizing both spellings into the same assignment AST/IR.
+Backends should continue to see normalized assignments, not renderer-specific
+syntax.
+
 ## Combinational Safety Rule
 
 Combinational `=` is not allowed to create direct or indirect RHS feedback to

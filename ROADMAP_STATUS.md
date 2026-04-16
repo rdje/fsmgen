@@ -606,6 +606,10 @@ Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.
 - Continue adding focused regression coverage per adopted construct family so support claims are continuously provable.
+- Implement and regression-lock the planned canonical assignment pair form:
+  - `(assign-op (lhs rhs))`,
+  - `(assign-op (lhs rhs) <cond)`,
+  - with existing infix assignment forms retained as compatibility spellings and normalized into the same assignment AST/IR before generation.
 - Decide whether the same partial-LHS lowering contract should now also be widened into future pulse/vector edge cases beyond the current `=`, `<-`, `<=`, `<-=`, and `<=+` family.
 Exit criteria:
 - Every parser-visible active-language construct is bucketed clearly and documented normatively, with matching regression coverage for the supported tier.

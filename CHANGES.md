@@ -1,6 +1,9 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-04-16
+### planned canonical assignment pair form documented
+- Documented the future canonical assignment pair form `(assign-op (lhs rhs))` and guarded form `(assign-op (lhs rhs) <cond)` in [docs/book/src/02-language-basics.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/02-language-basics.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md), [DEVELOPMENT_NOTES.md](/Users/richarddje/Documents/github/fsmgen/DEVELOPMENT_NOTES.md), and [MEMORY.md](/Users/richarddje/Documents/github/fsmgen/MEMORY.md), while marking it clearly as planned syntax rather than active parser support.
+
 ### supported corpus now covers runtime division and modulus expressions
 - Added [t/corpus/direct_runtime_div_mod.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_runtime_div_mod.fsm) as a named `supported_smoke` direct-root corpus asset for runtime RHS `/`, `%`, `div`, and `mod` expressions, including three-operand left-associative forms.
 - Updated [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm), [t/248-regression-corpus-accounting.t](/Users/richarddje/Documents/github/fsmgen/t/248-regression-corpus-accounting.t), [docs/REGRESSION_CORPUS.md](/Users/richarddje/Documents/github/fsmgen/docs/REGRESSION_CORPUS.md), [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md), [docs/book/src/02-language-basics.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/02-language-basics.md), and [ROADMAP_STATUS.md](/Users/richarddje/Documents/github/fsmgen/ROADMAP_STATUS.md) so runtime division/modulus support is documented and support-accounted through both pipeline and CLI.

@@ -465,7 +465,13 @@ Boundary note:
 - LHS deconstruct operands must be static writable lvalues: whole signals, static bit/slice references, or typed aggregate leaf references. Every operand and the RHS must have an exact positive width before generation, total widths must match exactly, and overlapping or duplicated target ranges are rejected instead of relying on renderer-side concat semantics.
 - When a deconstruct RHS is a whole aggregate constant such as `FRAME`, a typed aggregate signal such as `IN_FRAME`, or a typed aggregate sub-root such as `IN_FRAME.payload`, exact nested subaggregate fragments keep their own type-shape contracts. For example, splitting `FRAME` or `IN_FRAME` into `tag` and `payload` fragments checks a typed `payload_t` target against the source `payload` fragment contract rather than against the entire `frame_t` record.
 - When a deconstruct RHS is itself a `(concat ...)` / `(cat ...)`, any deconstruct fragment that exactly matches whole RHS concat operand boundaries keeps those operands instead of becoming a part-select of the whole concat expression. Nested RHS concat fragments are handled the same way: aligned nested operands keep ordered list shape, and typed record targets can map exact aligned operands onto record member order before the pre-generation assignment validator runs.
-- Broader future language ideas may still refine the canonical spelling later, but the shorthand forms above are now real supported syntax in the active tool.
+- Planned canonical assignment pair form:
+  - the preferred future Lisp-ish spelling is `(assign-op (lhs rhs))`, with an optional assignment-level guard as `(assign-op (lhs rhs) <cond)`,
+  - examples include `(= (OUT VALUE))`, `(<- (Q D))`, `(<= (Q D))`, `(<-= (Q D))`, `(<=+ (Q D))`, `(<1 (PULSE 1))`, `(= (OUT (+ A B)) <valid)`, and `(<- ((cat REG_HI REG_LO) NEXT_DATA) <load)`,
+  - this is not active syntax yet; it is a documented language direction,
+  - when implemented, existing infix forms such as `(OUT = VALUE)` and `(Q <- D)` should remain compatibility spellings and normalize into the same assignment AST/IR,
+  - the optional `<cond>` is assignment metadata equivalent to today’s guard suffixes, not part of the RHS expression.
+- Broader future language ideas may still refine the canonical spelling later, but the shorthand forms above are real supported syntax in the active tool while the pair form remains planned.
 - Malformed guard shorthand payloads such as `<mode=` or `<==3` are now rejected explicitly instead of falling through to generic expression-token errors.
 - Inline scalar comparison tokens such as `cnt[2:1]!=2'2` are part of the active expression surface.
 - Malformed inline comparison tokens such as `cnt[2:1]!=` or `=3` are now rejected explicitly instead of falling through to generic expression-token errors.
