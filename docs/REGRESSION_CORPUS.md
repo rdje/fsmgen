@@ -91,6 +91,11 @@ Some `supported_smoke` entries also carry a `strict_supported` marker in the
 machine-readable catalog. That marker is not a replacement coverage bucket. It
 means the same supported fixture must compile through both the strict pipeline
 API and `bin/fsmgen --strict`, preserving the same semantic HDL shape.
+The marker is executable at the catalog level: every `strict_supported` entry
+is run by
+[t/296-regression-corpus-strict-supported-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/296-regression-corpus-strict-supported-behavior.t)
+regardless of fixture family, so future protocol, language-feature, or
+composition entries cannot rely only on family-specific tests.
 
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
@@ -187,6 +192,11 @@ div/mod expressions, and canonical assignment pairs.
   to supported pipeline/CLI corpus entries, that every supported protocol
   fixture is strict-supported, and that every supported direct language-feature
   fixture is strict-supported.
+- [t/296-regression-corpus-strict-supported-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/296-regression-corpus-strict-supported-behavior.t)
+  treats `strict_supported` as an executable catalog-level contract. It runs
+  every marked entry through `strict_mode => 1` and `bin/fsmgen --strict`,
+  checking expected module/top/child modules and any recorded HDL-shape
+  patterns.
 - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
   checks that the current `legacy_out_of_scope` entries and the current
   `expected_failure` entries actually behave according to their recorded

@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-17: strict-supported marker now has one behavior owner
+- Continued `R12` by adding
+  [t/296-regression-corpus-strict-supported-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/296-regression-corpus-strict-supported-behavior.t).
+- The new test treats `strict_supported` as a catalog-level executable
+  contract:
+  - every marked `supported_smoke` entry is run through strict pipeline,
+  - every marked entry is run through `bin/fsmgen --strict`,
+  - direct-root entries must emit their recorded module name,
+  - composition entries must emit their recorded top and child modules,
+  - and entries with `expected_hdl_patterns` must keep those patterns in both
+    strict paths.
+- Continuity note:
+  - when future corpus entries add `strict_supported => 1`, this test should
+    catch missing strict support even if no family-specific strict subtest was
+    updated. Keep family-specific tests for richer domain assertions, but treat
+    this file as the marker's generic behavior owner.
+
 ## 2026-04-17: protocol fixtures are strict-supported
 - Continued `R12` positive support accounting on the protocol smoke slice:
   - [fsm/apb_requester.fsm](/Users/richarddje/Documents/github/fsmgen/fsm/apb_requester.fsm),

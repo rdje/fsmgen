@@ -83,7 +83,9 @@ the supported boundary is machine-checked instead of living only in examples.
 It also keeps positive strict-acceptance markers for canonical supported
 surfaces. The current supported protocol fixtures and supported direct
 language-feature fixtures must pass through both the strict pipeline API and
-`bin/fsmgen --strict`.
+`bin/fsmgen --strict`. The `strict_supported` marker is checked at the catalog
+level, so every marked entry must compile in strict mode even if it belongs to
+a new fixture family later.
 
 ## Backend Expectations
 
