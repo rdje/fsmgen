@@ -162,6 +162,9 @@ modulo by zero, unsupported operators, malformed arity, unresolved symbols, and
 non-positive final widths are rejected as language-contract errors instead of
 being delegated to the backend.
 
+For example, `(pow 2 3)` is intentionally rejected today because `pow` is not
+part of the bounded width-expression operator set.
+
 ## Constants
 
 Use `+constants` for named scalar values and bounded aggregate values.

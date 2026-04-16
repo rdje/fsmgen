@@ -1,0 +1,14 @@
+(?fsm:direct_size_expression_unsupported_operator
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (OUT (pow 2 3))
+  )
+
+  (idle
+    (OUT = 1)
+  )
+)

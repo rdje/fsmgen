@@ -15,7 +15,7 @@ my @entries = regression_corpus_entries();
 my @protocol_entries = protocol_fixture_entries();
 
 ok(@entries >= 7, 'regression corpus catalog starts with named entries across multiple classifications');
-ok(@entries >= 46, 'regression corpus catalog now covers supported language-feature fixtures plus root-level, section-level, child-root, direct-generation, and composition-contract residue families');
+ok(@entries >= 47, 'regression corpus catalog now covers supported language-feature fixtures plus root-level, section-level, child-root, direct-generation, and composition-contract residue families');
 is(scalar(@protocol_entries), 4, 'first visible corpus slice contains the four named protocol fixtures');
 
 my %allowed_classifications = map { $_ => 1 } qw(
@@ -74,6 +74,7 @@ for my $required_id (qw(
     contract.direct_size_expression_unknown_symbol
     contract.direct_size_expression_aggregate_symbol
     contract.direct_size_expression_divide_by_zero
+    contract.direct_size_expression_unsupported_operator
     contract.direct_lhs_deconstruct_width_mismatch
     contract.direct_rhs_concat_width_mismatch
     contract.direct_aggregate_contract_mismatch
@@ -142,8 +143,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    27,
-    'catalog now records twenty-seven explicit expected-failure entries',
+    28,
+    'catalog now records twenty-eight explicit expected-failure entries',
 );
 
 done_testing();

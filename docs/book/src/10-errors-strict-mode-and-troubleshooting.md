@@ -16,6 +16,7 @@ Typical causes:
   where one scalar integer width is required
 - `+size` arithmetic that cannot produce a valid positive integer width, such
   as division by zero
+- `+size` operators outside the bounded supported set, such as `pow`
 
 These should now fail explicitly instead of falling through to vague behavior.
 

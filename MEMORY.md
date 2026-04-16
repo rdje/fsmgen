@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-04-16: corpus now rejects unsupported +size operators
+- Continued `R12` by adding the named operator-family sibling for direct
+  `+size` expressions: only the bounded arithmetic/bitwise width operators are
+  accepted before generation.
+- Important continuity note:
+  - [t/corpus/direct_size_expression_unsupported_operator.fsm](/Users/richarddje/Documents/github/fsmgen/t/corpus/direct_size_expression_unsupported_operator.fsm)
+    uses `(pow 2 3)` as an unsupported authored width operator,
+  - [t/lib/FSM/Test/RegressionCorpus.pm](/Users/richarddje/Documents/github/fsmgen/t/lib/FSM/Test/RegressionCorpus.pm)
+    records it as `contract.direct_size_expression_unsupported_operator` under
+    `language_contract_rejection_pipeline_cli`,
+  - [docs/book/src/04-symbols-types-and-imports.md](/Users/richarddje/Documents/github/fsmgen/docs/book/src/04-symbols-types-and-imports.md)
+    and [docs/USER_GUIDE.md](/Users/richarddje/Documents/github/fsmgen/docs/USER_GUIDE.md)
+    now name unsupported width operators as explicit `+size` contract
+    failures, and
+  - [t/249-regression-corpus-classified-behavior.t](/Users/richarddje/Documents/github/fsmgen/t/249-regression-corpus-classified-behavior.t)
+    proves both pipeline and CLI reject the source without emitting HDL.
+
 ## 2026-04-16: corpus now rejects divide-by-zero +size arithmetic
 - Continued `R12` by adding the named arithmetic-failure sibling for direct
   `+size` expressions: supported width operators still have to fold to one

@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-04-16: width operators stay intentionally bounded
+- Continued `R12` by making unsupported direct `+size` width-expression
+  operators a named expected-failure corpus contract.
+- Rationale:
+  - accepting arbitrary operator names would turn a currently closed
+    width-expression language into an implicit extension surface,
+  - the supported width-expression set must stay small enough that every
+    expression can be folded exactly before generation,
+  - `pow` is a useful negative fixture because it is plausible author intent
+    but not part of the shipped contract, and
+  - this keeps the backend contract crisp: generation receives resolved widths,
+    never symbolic arithmetic it might interpret differently per HDL target.
+
 ## 2026-04-16: width arithmetic failures belong before generation
 - Continued `R12` by giving direct `+size` divide-by-zero arithmetic a named
   expected-failure corpus contract.
